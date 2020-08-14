@@ -195,7 +195,7 @@ class CallbackModule(CallbackBase):
     def v2_runner_on_skipped(self, result):
         category = 'SKIPPED'
         res = {}
-        res['item'] = self._get_item(getattr(result._result, 'results', {}))
+        res['item'] = self._get_item_label(getattr(result._result, 'results', {}))
         logmech.log(result._host.get_name(), category, res, self.task, self._task_count)
 
     def v2_runner_on_unreachable(self, result):
