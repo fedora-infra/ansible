@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 # vim: et ts=4 ai sw=4 sts=0
 import sys
 import json
@@ -18,6 +18,34 @@ date_terms = {
   "today": date.today,
   "yesterday": lambda: date.today() - timedelta(1),
 }
+
+class bcolors:
+    BLUE = '\033[94m'
+    GREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    ERROR = '\033[41m'
+    WHITE = '\033[00m'
+
+
+def format_state(category, txt=None):
+    if not txt:
+        txt = category
+    if category == "OK":
+        color_out = bcolors.GREEN + txt + bcolors.ENDC
+    elif category == "FAILED":
+        color_out = bcolors.FAIL + txt + bcolors.ENDC
+    elif category == "CHANGED":
+        color_out = bcolors.WARNING + txt + bcolors.ENDC
+    elif category == "SKIPPED":
+        color_out = bcolors.BLUE + txt + bcolors.ENDC
+    elif category == "UNREACHABLE":
+        color_out = bcolors.ERROR + txt + bcolors.ENDC
+    else:
+        color_out = bcolors.WHITE + txt + bcolors.ENDC
+    return color_out
+
 
 def parse_info(infofile):
     data = {}
@@ -53,12 +81,12 @@ def parse_args(args):
 
           logview -s ANY -d yesterday -p mirrorlist # list all events from the mirrorlist playbook
 
-
           """
     parser = OptionParser(usage=usage)
     parser.add_option("-d", default='today', dest='datestr', help="time string of when you want logs")
     parser.add_option("-p", default='*', dest='playbook', help="the playbook you want to look for")
     parser.add_option("-H", default=[], dest='hostname', action='append', help="Limit to the specified hostname")
+    parser.add_option("-m", default=False, dest='message', action='store_true', help='Show tasks output')
     parser.add_option("-v", default=False, dest='verbose', action='store_true', help='Verbose')
     parser.add_option("-s", default=[], dest='search_terms', action='append', help="status to search for")
     parser.add_option("-l", default=False, dest="list_pb", action='store_true', help="list playbooks for a specific date")
@@ -83,7 +111,7 @@ def search_logs(opts, logfiles):
          
         try:
             with gzip.open(fn) as f:
-              f.read()
+                f.read()
             open_f = gzip.open(fn, "rt")
         except:
             open_f = open(fn)
@@ -93,40 +121,65 @@ def search_logs(opts, logfiles):
             if len(things) < 5:
                 msg += "(logview error - unhandled line): %r\n" % line
                 continue
-
+        
             # See callback_plugins/logdetail.py for how these lines get created.
             # MSG_FORMAT="%(now)s\t%(count)s\t%(category)s\t%(name)s\t%(data)s\n"
             task_ts, count, category, name, data = things
-
+        
             if category in opts.search_terms or 'ANY' in opts.search_terms:
+                dur = None
                 slurp = json.loads(data)
                 if opts.profile:
                     st = slurp.get('task_start', 0)
                     end = slurp.get('task_end', 0)
                     if st and end:
-                        dur = '%.2f' % (float(end) - float(st))
-                    else:
-                        dur = None
+                        dur = '%.2fs' % (float(end) - float(st))
+        
+                state = format_state(category)
+                c_hostname = format_state(category, hostname)
 
-                msg += '%s\t%s\t%s\t%s\t%s\t%s' % (
-                    timestamp, hostname, task_ts, count, category, name)
+                if category == "STATS":
+                    if type(slurp) == dict:
+                        # ok=2  changed=0  unreachable=0    failed=1    skipped=0    rescued=0    ignored=0
+                        name = 'o:%s c:%s u:%s f:%s s:%s r:%s i:%s' % (
+                            slurp.get("ok", 0),
+                            slurp.get("changed", 0),
+                            slurp.get("unreachable", 0),
+                            slurp.get("failures", 0),
+                            slurp.get("skipped", 0),
+                            slurp.get("rescued", 0),
+                            slurp.get("ignored", 0))
 
+                if not name:
+                    name = slurp.get("task_module")
+
+                msg += '{0: <10} {1: <30} {2: <22} {3: <4} {4: <25}'.format(
+                    timestamp, c_hostname, task_ts, count, state)
+        
+                if dur:
+                    msg += ' {0: <8}'.format(dur,)
+
+                if name:
+                    msg += ' %s' % (name,)
+        
                 if not opts.verbose:
                     if type(slurp) == dict:
-                        for term in ['task_userid', 'cmd']:
+                        for term in ['cmd',]:
                             if term in slurp:
                                 msg += '\t%s:%s' % (term, slurp.get(term, None))
-                    if opts.profile and dur:
-                        msg += '\t%s:%s' % ('dur', dur)
-
+                
+                    if opts.message:
+                        for term in ['msg',]:
+                            if term in slurp:
+                                value = slurp.get(term, None).strip()
+                                if value:
+                                  msg += '\n%s: %s\n' % (term, format_state(category, value))
                     msg += '\n'
                 else:
-                    if opts.profile and dur:
-                        msg += '\t%s:%s' % ('dur', dur)
                     msg += '\n'
                     msg += json.dumps(slurp, indent=4)
                     msg += '\n'
-
+        
     return msg
 
 
