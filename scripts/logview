@@ -41,6 +41,7 @@ def parse_args(args):
     parser = OptionParser(usage=usage)
     parser.add_option("-d", default='today', dest='datestr', help="time string of when you want logs")
     parser.add_option("-p", default='*', dest='playbook', help="the playbook you want to look for")
+    parser.add_option("-H", default=[], dest='hostname', action='append', help="Limit to the specified hostname")
     parser.add_option("-v", default=False, dest='verbose', action='store_true', help='Verbose')
     parser.add_option("-s", default=[], dest='search_terms', action='append', help="status to search for")
     parser.add_option("-l", default=False, dest="list_pb", action='store_true', help="list playbooks for a specific date")
@@ -58,6 +59,10 @@ def search_logs(opts, logfiles):
     for fn in sorted(logfiles):
         hostname = os.path.basename(fn).replace('.log', '').replace('.gz', '')
         timestamp = os.path.basename(os.path.dirname(fn))
+        
+        if opts.hostname and hostname not in opts.hostname:
+            continue
+         
         try:
             with gzip.open(fn) as f:
               f.read()
