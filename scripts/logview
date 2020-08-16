@@ -1,14 +1,16 @@
 #!/usr/bin/python3
+# vim: et ts=4 ai sw=4 sts=0
 import sys
 import json
 from optparse import OptionParser
 import os
 import glob
-from datetime import date, timedelta
 import gzip
+from datetime import datetime, date, timedelta
 import dateutil.parser as dateparser
 import configparser
 from ansible.config.manager import find_ini_config_file
+from collections import Counter
 
 logpath = '/var/log/ansible'
 search_terms = ['CHANGED', 'FAILED']
@@ -17,10 +19,25 @@ date_terms = {
   "yesterday": lambda: date.today() - timedelta(1),
 }
 
+def parse_info(infofile):
+    data = {}
+    with open(infofile) as f:
+        content = f.read()
+    obj_list = [x+'}' for x in content.split('\n}')]
+    plays = []
+    for obj in obj_list[:-1]:
+        js = json.loads(obj)
+        if 'play' in js:
+            plays.append(js)
+        else:
+            data.update(json.loads(obj))
+    data['plays'] = plays
+    return data
+
 
 def date_cheat(datestr):
     dc = date_terms.get(datestr, lambda: dateparser.parse(datestr))
-    return dc().strftime("%Y/%m/%d")
+    return dc()
 
 
 def parse_args(args):
@@ -45,6 +62,7 @@ def parse_args(args):
     parser.add_option("-v", default=False, dest='verbose', action='store_true', help='Verbose')
     parser.add_option("-s", default=[], dest='search_terms', action='append', help="status to search for")
     parser.add_option("-l", default=False, dest="list_pb", action='store_true', help="list playbooks for a specific date")
+    parser.add_option("-L", default=False, dest="list_all_pb", action='store_true', help="list all playbooks ever ran")
     parser.add_option("--profile", default=False, dest="profile", action='store_true', help="output timing input per task")
     (opts, args) = parser.parse_args(args)
 
@@ -119,18 +137,35 @@ def main(args):
         cp.read(cfg)
         logpath = cp.get('callback_logdetail', "log_path", fallback="/var/log/ansible")
     opts, args = parse_args(args)
-    for pb in glob.glob(os.path.join(logpath, opts.playbook)):
-        pb_name = os.path.basename(pb)
-        for pb_logdir in glob.glob(os.path.join(pb, opts.datestr)):
-            if opts.list_pb:
-                print(pb_name)
-                continue
 
-            logfiles = glob.glob(pb_logdir + '/*/*.log')
-            msg = search_logs(opts, logfiles)
-            if msg:
-                print(pb_name)
-                print(msg)
+    if opts.list_pb or opts.list_all_pb:
+        for r,d,f in os.walk(logpath):
+            for file in f:
+                if file.endswith('.info'):
+                    pb = parse_info(os.path.join(r,file))
+                    pb_name = os.path.splitext(os.path.basename(pb['playbook']))[0]
+                    pb_date = datetime.fromtimestamp(pb['playbook_start'])
+                    if opts.list_all_pb or opts.datestr == pb_date.date():
+                        stats = Counter()
+                        for stat in pb['stats'].values():
+                            del stat['task_userid']
+                            stats += Counter(stat)
+
+                        print("%s\tplaybook:%s\tran by:%s\tsummary: ok:%s chd:%s unr:%s faild:%s"
+                            % (pb_date, pb_name, pb['userid'],
+                              stats['ok'], stats['changed'], stats['unreachable'],
+                              stats['failures']))
+
+
+    else:
+        for pb in glob.glob(os.path.join(logpath, opts.playbook)):
+            pb_name = os.path.basename(pb)
+            for pb_logdir in glob.glob(os.path.join(pb, opts.datestr.strftime("%Y/%m/%d"))):
+                logfiles = glob.glob(pb_logdir + '/*/*.log*')
+                msg = search_logs(opts, logfiles)
+                if msg:
+                    print(pb_name)
+                    print(msg)
 
 
 if __name__ == "__main__":
