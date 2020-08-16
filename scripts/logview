@@ -7,6 +7,8 @@ import glob
 from datetime import date, timedelta
 import gzip
 import dateutil.parser as dateparser
+import configparser
+from ansible.config.manager import find_ini_config_file
 
 logpath = '/var/log/ansible'
 search_terms = ['CHANGED', 'FAILED']
@@ -106,6 +108,11 @@ def search_logs(opts, logfiles):
 
 
 def main(args):
+    cfg = find_ini_config_file()
+    if cfg:
+        cp = configparser.ConfigParser()
+        cp.read(cfg)
+        logpath = cp.get('callback_logdetail', "log_path", fallback="/var/log/ansible")
     opts, args = parse_args(args)
     for pb in glob.glob(os.path.join(logpath, opts.playbook)):
         pb_name = os.path.basename(pb)
