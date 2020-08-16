@@ -5,6 +5,7 @@ from optparse import OptionParser
 import os
 import glob
 from datetime import date, timedelta
+import gzip
 import dateutil.parser as dateparser
 
 logpath = '/var/log/ansible'
@@ -53,9 +54,16 @@ def parse_args(args):
 def search_logs(opts, logfiles):
     msg = ''
     for fn in sorted(logfiles):
-        hostname = os.path.basename(fn).replace('.log', '')
+        hostname = os.path.basename(fn).replace('.log', '').replace('.gz', '')
         timestamp = os.path.basename(os.path.dirname(fn))
-        for line in open(fn):
+        try:
+            with gzip.open(fn) as f:
+              f.read()
+            open_f = gzip.open(fn, "rt")
+        except:
+            open_f = open(fn)
+        
+        for line in open_f:
             things = line.split('\t')
             if len(things) < 5:
                 msg += "(logview error - unhandled line): %r\n" % line

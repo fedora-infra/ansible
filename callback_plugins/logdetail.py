@@ -21,6 +21,7 @@ import os
 import time
 import json
 import pwd
+import gzip
 
 try:
     from ansible.utils.hashing import secure_hash
@@ -156,7 +157,7 @@ class LogMech(object):
             name = name.strip()
 
         sanitize_host = host.replace(' ', '_').replace('>', '-')
-        fd = open(self.logpath_play + '/' + sanitize_host + '.log', 'a')
+        fd = gzip.open(self.logpath_play + '/' + sanitize_host + '.log.gz', 'at')
         now = time.strftime(TIME_FORMAT, time.localtime())
         fd.write(MSG_FORMAT % dict(now=now, name=name, count=count, category=category, data=json.dumps(data)))
         fd.close()
