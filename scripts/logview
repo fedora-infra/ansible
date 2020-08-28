@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # vim: et ts=4 ai sw=4 sts=0
 import sys
 import json
@@ -10,42 +10,59 @@ from datetime import datetime, date, timedelta
 import dateutil.parser as dateparser
 import configparser
 from ansible.config.manager import find_ini_config_file
+from ansible.utils.color import hostcolor, stringc
+from ansible import constants as C
 from collections import Counter
 
+if not hasattr(sys.stdout, 'isatty') or not sys.stdout.isatty():
+    HAS_COLOR = False
+else:
+    HAS_COLOR = True
+
 logpath = '/var/log/ansible'
-search_terms = ['CHANGED', 'FAILED']
+default_search_terms = ['CHANGED', 'FAILED']
 date_terms = {
-  "today": date.today,
-  "yesterday": lambda: date.today() - timedelta(1),
+  "today": lambda: datetime.today().replace(hour=0, minute=0, second=0, microsecond=0),
+  "yesterday": lambda: datetime.today().replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(1),
 }
 
-class bcolors:
-    BLUE = '\033[94m'
-    GREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    ERROR = '\033[41m'
-    WHITE = '\033[00m'
 
-
-def format_state(category, txt=None):
+def colorByCat(category, txt=None):
     if not txt:
         txt = category
-    if category == "OK":
-        color_out = bcolors.GREEN + txt + bcolors.ENDC
-    elif category == "FAILED":
-        color_out = bcolors.FAIL + txt + bcolors.ENDC
-    elif category == "CHANGED":
-        color_out = bcolors.WARNING + txt + bcolors.ENDC
-    elif category == "SKIPPED":
-        color_out = bcolors.BLUE + txt + bcolors.ENDC
-    elif category == "UNREACHABLE":
-        color_out = bcolors.ERROR + txt + bcolors.ENDC
+    if 'OK' in category:
+        color_out = stringc(txt, C.COLOR_OK)
+    elif "FAILED" in category:
+        color_out = stringc(txt, C.COLOR_ERROR)
+    elif "CHANGED" in category:
+        color_out = stringc(txt, C.COLOR_CHANGED)
+    elif "SKIPPED" in category:
+        color_out = stringc(txt, C.COLOR_SKIP)
+    elif "UNREACHABLE" in category:
+        color_out = stringc(txt, C.COLOR_UNREACHABLE)
     else:
-        color_out = bcolors.WHITE + txt + bcolors.ENDC
+        # This hack make sure the text width is the same as any other colored text
+        color_out = u'\x1b[0;00m%s\x1b[0m' % (txt,)
+    if not HAS_COLOR:
+      color_out = txt
     return color_out
 
+
+def colorByStats(txt, stats):
+    if stats['failures'] != 0:
+        return stringc(txt, C.COLOR_ERROR)
+    elif stats['unreachable'] != 0:
+        return stringc(txt, C.COLOR_UNREACHABLE)
+    elif stats['changed'] != 0:
+        return stringc(txt, C.COLOR_CHANGED)
+    else:
+        return stringc(txt, C.COLOR_OK)
+
+def colorByCount(txt, count, color):
+    s = "%s%s" % (txt, count)
+    if count > 0 and HAS_COLOR:
+      s = stringc(s, color)
+    return s
 
 def parse_info(infofile):
     data = {}
@@ -62,6 +79,21 @@ def parse_info(infofile):
     data['plays'] = plays
     return data
 
+
+def format_stats(stats):
+    return "%s %s %s %s" % (
+        colorByCount("ok:", stats['ok'], C.COLOR_OK),
+        colorByCount("chg:", stats['changed'], C.COLOR_CHANGED),
+        colorByCount("unr:", stats['unreachable'], C.COLOR_UNREACHABLE),
+        colorByCount("fail:", stats['failures'], C.COLOR_ERROR))
+
+def col_width(rows):
+    widths = []
+    for col in zip(*(rows)):
+        col_width = max(map(len,col))
+        widths.append(col_width)
+    widths[-1] = 0 # don't pad last column
+    return widths
 
 def date_cheat(datestr):
     dc = date_terms.get(datestr, lambda: dateparser.parse(datestr))
@@ -96,11 +128,14 @@ def parse_args(args):
 
     opts.datestr = date_cheat(opts.datestr)
     if not opts.search_terms:
-        opts.search_terms = search_terms
+        opts.search_terms = default_search_terms
+    opts.search_terms = list(map(str.upper, opts.search_terms))
     return opts, args
 
 
 def search_logs(opts, logfiles):
+    rows = []
+    headers = []
     msg = ''
     for fn in sorted(logfiles):
         hostname = os.path.basename(fn).replace('.log', '').replace('.gz', '')
@@ -119,7 +154,7 @@ def search_logs(opts, logfiles):
         for line in open_f:
             things = line.split('\t')
             if len(things) < 5:
-                msg += "(logview error - unhandled line): %r\n" % line
+                print("(logview error - unhandled line): %r\n" % line)
                 continue
         
             # See callback_plugins/logdetail.py for how these lines get created.
@@ -128,6 +163,7 @@ def search_logs(opts, logfiles):
         
             if category in opts.search_terms or 'ANY' in opts.search_terms:
                 dur = None
+                last_col = ""
                 slurp = json.loads(data)
                 if opts.profile:
                     st = slurp.get('task_start', 0)
@@ -135,52 +171,48 @@ def search_logs(opts, logfiles):
                     if st and end:
                         dur = '%.2fs' % (float(end) - float(st))
         
-                state = format_state(category)
-                c_hostname = format_state(category, hostname)
+                state = colorByCat(category)
+                c_hostname = colorByCat(category, hostname)
 
-                if category == "STATS":
+                if "STATS" in category:
                     if type(slurp) == dict:
-                        # ok=2  changed=0  unreachable=0    failed=1    skipped=0    rescued=0    ignored=0
-                        name = 'o:%s c:%s u:%s f:%s s:%s r:%s i:%s' % (
-                            slurp.get("ok", 0),
-                            slurp.get("changed", 0),
-                            slurp.get("unreachable", 0),
-                            slurp.get("failures", 0),
-                            slurp.get("skipped", 0),
-                            slurp.get("rescued", 0),
-                            slurp.get("ignored", 0))
+                        name = format_stats(slurp)
+                        c_hostname = colorByStats(hostname, slurp)
+                        state = colorByStats(category, slurp)
+
+
+                result = [timestamp, c_hostname, task_ts, count, state]
 
                 if not name:
                     name = slurp.get("task_module")
+                result.append(name)
 
-                msg += '{0: <10} {1: <30} {2: <22} {3: <4} {4: <25}'.format(
-                    timestamp, c_hostname, task_ts, count, state)
-        
                 if dur:
-                    msg += ' {0: <8}'.format(dur,)
+                    last_col += "%s " % (dur,)
 
-                if name:
-                    msg += ' %s' % (name,)
-        
                 if not opts.verbose:
                     if type(slurp) == dict:
                         for term in ['cmd',]:
                             if term in slurp:
-                                msg += '\t%s:%s' % (term, slurp.get(term, None))
+                                last_col += '\t%s:%s' % (term, slurp.get(term, None))
                 
                     if opts.message:
-                        for term in ['msg',]:
+                        for term in ['msg', 'stdout']:
                             if term in slurp:
-                                value = slurp.get(term, None).strip()
+                                value = slurp.get(term, None)
+                                if type(value) is list:
+                                  value = "\n".join(value)
                                 if value:
-                                  msg += '\n%s: %s\n' % (term, format_state(category, value))
-                    msg += '\n'
+                                  last_col += '\n%s: %s\n' % (term, colorByCat(category, value.strip()))
                 else:
-                    msg += '\n'
-                    msg += json.dumps(slurp, indent=4)
-                    msg += '\n'
+                    last_col += '\n'
+                    last_col += json.dumps(slurp, indent=4)
+                    last_col += '\n'
+
+                result.append(last_col)
+                rows.append(result)
         
-    return msg
+    return rows
 
 
 def main(args):
@@ -190,36 +222,65 @@ def main(args):
         cp.read(cfg)
         logpath = cp.get('callback_logdetail', "log_path", fallback="/var/log/ansible")
     opts, args = parse_args(args)
+    rows = []
 
+    # List play summary
     if opts.list_pb or opts.list_all_pb:
+        rows.append([ "Date", colorByCat("", "Playbook"), "Ran By", "Hosts", "Stats"])
         for r,d,f in os.walk(logpath):
             for file in f:
                 if file.endswith('.info'):
                     pb = parse_info(os.path.join(r,file))
                     pb_name = os.path.splitext(os.path.basename(pb['playbook']))[0]
                     pb_date = datetime.fromtimestamp(pb['playbook_start'])
-                    if opts.list_all_pb or opts.datestr == pb_date.date():
+                    if (
+                            opts.list_all_pb
+                            or (
+                                opts.datestr != opts.datestr.replace(hour=0, minute=0, second=0, microsecond=0)
+                                and opts.datestr == pb_date)
+                            or (
+                                opts.datestr == opts.datestr.replace(hour=0, minute=0, second=0, microsecond=0)
+                                and opts.datestr.date() == pb_date.date())):
                         stats = Counter()
-                        for stat in pb['stats'].values():
-                            del stat['task_userid']
-                            stats += Counter(stat)
+                        hosts = []
+                        if "stats" in pb:
+                            for host, stat in pb['stats'].items():
+                                del stat['task_userid']
+                                stats += Counter(stat)
+                                hosts.append(host)
+                        host_count = len(set(hosts))
+                        pb_name = colorByStats(pb_name, stats)
+                        summary = format_stats(stats)
+                        # summary = "ok:%s chd:%s unr:%s faild:%s" % (stats['ok'], stats['changed'], stats['unreachable'], stats['failures'])
 
-                        print("%s\tplaybook:%s\tran by:%s\tsummary: ok:%s chd:%s unr:%s faild:%s"
-                            % (pb_date, pb_name, pb['userid'],
-                              stats['ok'], stats['changed'], stats['unreachable'],
-                              stats['failures']))
+
+                        rows.append([ str(pb_date), pb_name, pb['userid'], str(host_count), summary ])
+
+        m_widths = col_width(rows)
+        if len(rows) <= 1:
+            print("no log")
+        else:
+            for row in rows:
+                print("  ".join((val.ljust(width) for val, width in zip(row, m_widths))).strip())
 
 
+    # Play detail
     else:
         for pb in glob.glob(os.path.join(logpath, opts.playbook)):
             pb_name = os.path.basename(pb)
             for pb_logdir in glob.glob(os.path.join(pb, opts.datestr.strftime("%Y/%m/%d"))):
-                logfiles = glob.glob(pb_logdir + '/*/*.log*')
-                msg = search_logs(opts, logfiles)
-                if msg:
+                if opts.datestr != opts.datestr.replace(hour=0, minute=0, second=0, microsecond=0):
+                    logfiles = glob.glob(pb_logdir + '/' + opts.datestr.strftime("%H.%M.%S") + '/*.log*')
+                else:
+                    logfiles = glob.glob(pb_logdir + '/*/*.log*')
+                rows = search_logs(opts, logfiles)
+                if rows:
+                    m_widths = col_width(rows)
                     print(pb_name)
-                    print(msg)
-
+                    for row in rows:
+                        print("  ".join((val.ljust(width) for val, width in zip(row, m_widths))))
+                    #print(pb_name)
+                    #print(msg)
 
 if __name__ == "__main__":
     sys.exit(main(sys.argv[1:]))
