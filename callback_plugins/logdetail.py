@@ -147,7 +147,7 @@ class LogMech(object):
             del(data['invocation'])
 
         if task:
-            name = task.name
+            name = task._name
             data['task_start'] = self._last_task_start
             data['task_end'] = time.time()
             data.update(self.task_to_json(task))
@@ -227,6 +227,7 @@ class CallbackModule(CallbackBase):
 
     def v2_playbook_on_task_start(self, task, is_conditional):
         self.task = task
+        self.task._name = task.name
         self.logmech._last_task_start = time.time()
         self._task_count += 1
 
