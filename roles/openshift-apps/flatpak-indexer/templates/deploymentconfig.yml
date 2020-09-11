@@ -1,0 +1,230 @@
+---
+kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  labels:
+    app: flatpak-indexer
+  name: flatpak-indexer
+spec:
+  replicas: 1
+  selector:
+    app: flatpak-indexer
+    deploymentconfig: flatpak-indexer
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      labels:
+        app: flatpak-indexer
+        deploymentconfig: flatpak-indexer
+    spec:
+      containers:
+      - env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-password
+              key: password
+        - name: REDIS_URL
+          value: redis://redis.flatpak.svc.cluster.local:6379
+        image: flatpak-indexer:latest
+        name: flatpak-indexer
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}
+        volumeMounts:
+        - mountPath: /etc/flatpak-indexer
+          name: indexer-config-volume
+          readOnly: true
+        - mountPath: /etc/koji.conf
+          name: koji-conf-volume
+          readOnly: true
+        - mountPath: /var/www/flatpaks
+          name: index-output-volume
+        - mountPath: /etc/tls/flatpak-indexer
+          name: flatpak-indexer-crt-volume
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: indexer-config
+        name: indexer-config-volume
+      - configMap:
+          defaultMode: 420
+          name: koji-conf
+        name: koji-conf-volume
+      - name: index-output-volume
+        persistentVolumeClaim:
+          claimName: flatpak-indexer-storage
+  test: false
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+    imageChangeParams:
+      automatic: true
+      containerNames:
+      - flatpak-indexer-differ
+      from:
+        kind: ImageStreamTag
+        name: flatpak-indexer:latest
+---
+kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  labels:
+    app: flatpak-indexer-differ
+  name: flatpak-indexer-differ
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    app: flatpak-indexer-differ
+    deploymentconfig: flatpak-indexer-differ
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      labels:
+        app: flatpak-indexer-differ
+        deploymentconfig: flatpak-indexer-differ
+    spec:
+      containers:
+      - env:
+        - name: FLATPAK_INDEXER_COMMAND
+          value: differ
+        - name: REDISCLI_AUTH
+          valueFrom:
+            secretKeyRef:
+              name: redis-password
+              key: password
+        - name: REDIS_URL
+          value: redis://redis.flatpak.svc.cluster.local:6379
+        image: flatpak-indexer:latest
+        name: flatpak-indexer-differ
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources:
+          requests:
+            cpu: 2
+            memory: 1Gi
+          limits:
+            cpu: 2
+            memory: 3Gi
+        volumeMounts:
+        - mountPath: /etc/flatpak-indexer
+          name: indexer-config-volume
+          readOnly: true
+        - mountPath: /var/www/flatpaks
+          name: index-output-volume
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: indexer-config
+        name: indexer-config-volume
+      - name: index-output-volume
+        persistentVolumeClaim:
+          claimName: flatpak-indexer-storage
+  test: false
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+    imageChangeParams:
+      automatic: true
+      containerNames:
+      - flatpak-indexer-differ
+      from:
+        kind: ImageStreamTag
+        name: flatpak-indexer:latest
+---
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: redis
+  name: redis
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    app: redis
+    deploymentconfig: redis
+  strategy:
+    activeDeadlineSeconds: 21600
+    # Recreate so that the old pod is stopped before the new pod is created.
+    # Could also use a StatefulSet
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: redis
+        deploymentconfig: redis
+    spec:
+      containers:
+      - env:
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: redis-password
+                key: password
+        image: redis:latest
+        livenessProbe:
+          exec:
+            command: ['redis-cli', 'ping']
+          failureThreshold: 3
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        name: redis
+        ports:
+        - containerPort: 6379
+          protocol: TCP
+        readinessProbe:
+          exec:
+            command: ['redis-cli', 'ping']
+          failureThreshold: 3
+          periodSeconds: 60
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/lib/redis/data
+          name: redis-data-volume
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      volumes:
+      - name: redis-data-volume
+        persistentVolumeClaim:
+          claimName: flatpak-indexer-redis-storage
+  test: false
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+    imageChangeParams:
+      automatic: true
+      containerNames:
+      - redis
+      from:
+        kind: ImageStreamTag
+        name: redis:latest

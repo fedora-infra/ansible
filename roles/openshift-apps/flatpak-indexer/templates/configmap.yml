@@ -1,0 +1,98 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: indexer-config
+data:
+  config.yaml: |-
+    redis_url: ${REDIS_URL}
+    redis_password: ${REDIS_PASSWORD}
+    koji_config: fedora
+    deltas_dir: ${OUTPUT_DIR}/deltas/
+    icons_dir: ${OUTPUT_DIR}/icons/
+{% if env == 'staging' %}
+    deltas_uri: https://registry{{ env_suffix }}fedoraproject.org/deltas/
+    icons_uri: https://registry{{ env_suffix }}fedoraproject.org/app-icons/
+{% else %}
+    deltas_uri: https://cdn.registry.fedoraproject.org/deltas/
+    icons_uri: https://cdn.registry.fedoraproject.org/app-icons/
+{% endif %}
+    daemon:
+        update_interval: 1800
+    registries:
+        fedora:
+            public_url: https://registry.fedoraproject.org/
+            datasource: fedora
+            force_flatpak_token: true
+    indexes:
+        latest:
+            output: ${OUTPUT_DIR}/fedora/flatpak-latest.json
+            registry: fedora
+            tag: latest
+            bodhi_status: stable
+            extract_icons: True
+            delta_keep_days: 30
+        latest-annotations:
+            output: ${OUTPUT_DIR}/fedora/flatpak-latest-annotations.json
+            registry: fedora
+            tag: latest
+            bodhi_status: stable
+            extract_icons: True
+            delta_keep_days: 30
+            flatpak_annotations: True
+        latest-amd64:
+            output: ${OUTPUT_DIR}/fedora/flatpak-latest-amd64.json
+            registry: fedora
+            architecture: amd64
+            tag: latest
+            bodhi_status: stable
+            extract_icons: True
+            delta_keep_days: 30
+        latest-amd64-annotations:
+            output: ${OUTPUT_DIR}/fedora/flatpak-latest-amd64-annotations.json
+            registry: fedora
+            architecture: amd64
+            tag: latest
+            bodhi_status: stable
+            extract_icons: True
+            delta_keep_days: 30
+            flatpak_annotations: True
+        testing:
+            output: ${OUTPUT_DIR}/fedora/flatpak-testing.json
+            registry: fedora
+            tag: testing
+            bodhi_status: testing
+            extract_icons: True
+        testing-annotations:
+            output: ${OUTPUT_DIR}/fedora/flatpak-testing-annotations.json
+            registry: fedora
+            tag: testing
+            bodhi_status: testing
+            extract_icons: True
+            flatpak_annotations: True
+        testing-amd64:
+            output: ${OUTPUT_DIR}/fedora/flatpak-testing-amd64.json
+            registry: fedora
+            architecture: amd64
+            tag: testing
+            bodhi_status: testing
+            extract_icons: True
+        testing-amd64-annotations:
+            output: ${OUTPUT_DIR}/fedora/flatpak-testing-amd64-annotations.json
+            registry: fedora
+            architecture: amd64
+            tag: testing
+            bodhi_status: testing
+            extract_icons: True
+            flatpak_annotations: True
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: koji-conf
+data:
+  koji.conf: |-
+    [fedora]
+    server = https://koji.fedoraproject.org/kojihub
+    weburl = https://koji.fedoraproject.org/koji
+    topurl = https://kojipkgs.fedoraproject.org/

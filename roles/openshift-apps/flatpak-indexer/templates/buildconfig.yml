@@ -1,0 +1,106 @@
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: flatpak-indexer
+  name: flatpak-indexer-tardiff-build
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: flatpak-indexer-tardiff:latest
+  runPolicy: Serial
+  source:
+    contextDir: differ
+    git:
+      uri: https://github.com/owtaylor/flatpak-indexer.git
+      ref: "{{ flatpak_indexer_git_ref }}"
+    type: Git
+  strategy:
+    dockerStrategy:
+      from:
+        kind: ImageStreamTag
+        name: ubi8-go-toolset:latest
+      noCache: true
+    type: Docker
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+    imageChange: {}
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: flatpak-indexer
+  name: flatpak-indexer-build
+spec:
+  output:
+    to:
+      kind: ImageStream
+      name: flatpak-indexer-tardiff:latest
+  postCommit:
+    command:
+    - tools/test.sh
+  runPolicy: Serial
+  source:
+    images:
+    - from:
+        kind: ImageStreamTag
+        name: flatpak-indexer-tardiff:latest
+      paths:
+      - destinationDir: bin
+        sourcePath: /opt/app-root/tar-diff
+      - destinationDir: bin
+        sourcePath: /usr/bin/time
+    git:
+      uri: https://pagure.io/flatpak-indexer.git
+      ref: "{{ flatpak_indexer_git_ref }}"
+    type: Git
+  strategy:
+    sourceStrategy:
+      env:
+      - name: FLATPAK_INDEXER_UPDATE_TEST_DATA
+        value: "1"
+      from:
+        kind: ImageStreamTag
+        name: ubi8-python-38:latest
+    type: Source
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+    imageChange:
+      from:
+        kind: ImageStreamTag
+        name: flatpak-indexer-tardiff:latest
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: flatpak-indexer
+  name: redis-build
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: redis:latest
+  runPolicy: Serial
+  source:
+    contextDir: redis
+    git:
+      uri: https://github.com/owtaylor/flatpak-indexer.git
+      ref: "{{ flatpak_indexer_git_ref }}"
+    type: Git
+  strategy:
+    dockerStrategy:
+      from:
+        kind: ImageStreamTag
+        name: fedora:latest
+      noCache: true
+    type: Docker
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+    imageChange: {}

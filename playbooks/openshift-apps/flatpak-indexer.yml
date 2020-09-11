@@ -1,0 +1,57 @@
+- name: make the app be real
+  hosts: os_masters_stg[0]
+  user: root
+  gather_facts: False
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/roles/openshift-apps/flatpak-indexer/vars/{{ env }}.yml
+
+  roles:
+  - role: openshift/project
+    app: flatpak-indexer
+    description: Fedora Flatpak Indexer apps
+    appowners:
+    - otaylor
+
+  - role: openshift/object
+    app: flatpak-indexer
+    template: secret.yml
+    objectname: secret.yml
+
+  - role: openshift/object
+    app: flatpak-indexer
+    file: imagestream.yml
+    objectname: imagestream.yml
+
+  - role: openshift/object
+    app: flatpak-indexer
+    template: buildconfig.yml
+    objectname: buildconfig.yml
+
+  - role: openshift/object
+    app: flatpak-indexer
+    file: storage.yml
+    objectname: storage.yml
+
+  - role: openshift/object
+    app: flatpak-indexer
+    template: configmap.yml
+    objectname: configmap.yml
+
+  - role: openshift/start-build
+    app: flatpak-indexer
+    # This will trigger the main build via a imageChange trigger
+    buildname: flatpak-indexer-tardiff-build
+
+  - role: openshift/object
+    app: flatpak-indexer
+    file: service.yml
+    objectname: service.yml
+
+  - role: openshift/object
+    app: flatpak-indexer
+    template: deploymentconfig.yml
+    objectname: deploymentconfig.yml
