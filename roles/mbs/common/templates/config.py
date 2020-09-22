@@ -19,6 +19,8 @@ class BaseConfiguration(object):
     HOST = '0.0.0.0'
     PORT = 5000
 
+    CELERY_BROKER_URL = '{{ mbs_broker_url }}'
+
     # Global network-related values, in seconds
     NET_TIMEOUT = 120
     NET_RETRY_INTERVAL = 30
@@ -62,6 +64,9 @@ class BaseConfiguration(object):
     KRB_KEYTAB = None
     KRB_PRINCIPAL = None
     KRB_CCACHE = None
+
+    # Number of celery workers
+    NUM_WORKERS = {{ mbs_num_workers }}
 
     # AMQ prefixed variables are required only while using 'amq' as messaging backend
     # Addresses to listen to

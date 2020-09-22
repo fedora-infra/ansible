@@ -13,6 +13,8 @@
   notify:
   - restart apache
   - restart fedmsg-hub
+  - restart mbs poller
+  - restart mbs workers
   tags:
   - mbs
   - mbs/common
@@ -36,6 +38,8 @@
   notify:
   - restart apache
   - restart fedmsg-hub
+  - restart mbs poller
+  - restart mbs workers
   tags:
   - mbs
   - mbs/common
@@ -101,6 +105,108 @@
   tags:
   - mbs
   - mbs/common
+
+- name: Configure MBS virtual host in RabbitMQ
+  block:
+  - name: Configure the MBS virtual host
+    run_once: true
+    delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
+    rabbitmq_vhost:
+      name: /mbs
+      state: present
+    tags:
+      - rabbitmq_cluster
+      - config
+      - mbs
+      - mbs/common
+
+  - name: Configure the HA policy for the MBS queues
+    run_once: true
+    delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
+    rabbitmq_policy:
+      name: HA
+      apply_to: queues
+      pattern: .*
+      tags:
+        ha-mode: all
+        ha-sync-mode: automatic  # Auto sync queues to new cluster members
+        ha-sync-batch-size: 10000  # Larger is faster, but must finish in 1 net_ticktime
+      vhost: /mbs
+    tags:
+      - rabbitmq_cluster
+      - config
+      - mbs
+      - mbs/common
+
+  - name: Grant the mbs user access to the MBS vhost
+    run_once: true
+    delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
+    rabbitmq_user:
+      user: "mbs{{ env_suffix }}"
+      password: "{{ mbs_backend_amqp_password }}"
+      vhost: /mbs
+      configure_priv: .*
+      read_priv: .*
+      write_priv: .*
+      update_password: always
+    tags:
+      - rabbitmq_cluster
+      - config
+      - mbs
+      - mbs/common
+  when: not mbs_frontend
+
+- name: Configure the MBS workers and poller
+  block:
+    - name: Add the systemd service files
+      template:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: "0644"
+      with_items:
+      - src: mbs-worker@.service.j2
+        dest: /etc/systemd/system/mbs-worker@.service
+      - src: mbs-poller.service.j2
+        dest: /etc/systemd/system/mbs-poller.service
+      notify:
+      - restart mbs poller
+      - restart mbs workers
+      tags:
+        - mbs
+        - mbs/common
+
+    - name: Enable the MBS workers
+      systemd:
+        name: "mbs-worker@{{ item }}"
+        daemon_reload: yes
+        enabled: yes
+        state: started
+      with_sequence: start=0 end={{ mbs_num_workers - 1 }}
+      tags:
+        - mbs
+        - mbs/common
+
+    - name: Populate the service facts to detect if there are MBS workers to disable
+      service_facts: {}
+      tags:
+        - mbs
+        - mbs/common
+
+    - name: Disable any extra MBS workers
+      systemd:
+        name: "mbs-worker@{{ worker_num }}"
+        enabled: no
+        state: stopped
+      with_items: "{{ ansible_facts.services | select('match', 'mbs-worker@\\d+.service') | list }}"
+      vars:
+        worker_num: "{{ item | regex_search('\\d+') }}"
+      when: (worker_num | int) >= mbs_num_workers
+      tags:
+        - mbs
+        - mbs/common
+  when: not mbs_frontend
 
 - name: create /etc/module-build-service/default-modules directory
   file:
