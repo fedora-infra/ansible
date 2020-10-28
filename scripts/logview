@@ -1,16 +1,23 @@
-#!/usr/bin/python3
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 # vim: et ts=4 ai sw=4 sts=0
 import sys
 import json
-from optparse import OptionParser
+from argparse import ArgumentParser
 import os
+import re
 import glob
 import gzip
-from datetime import datetime, date, timedelta
+from datetime import datetime, timedelta
 import dateutil.parser as dateparser
-import configparser
+try:
+    # Python3
+    import configparser
+except ImportError:
+    # Python2
+    import ConfigParser as configparser
 from ansible.config.manager import find_ini_config_file
-from ansible.utils.color import hostcolor, stringc
+from ansible.utils.color import stringc
 from ansible import constants as C
 from collections import Counter
 
@@ -19,11 +26,13 @@ if not hasattr(sys.stdout, 'isatty') or not sys.stdout.isatty():
 else:
     HAS_COLOR = True
 
-logpath = '/var/log/ansible'
+DEFAULT_LOGPATH = '/var/log/ansible'
 default_search_terms = ['CHANGED', 'FAILED']
 date_terms = {
-  "today": lambda: datetime.today().replace(hour=0, minute=0, second=0, microsecond=0),
-  "yesterday": lambda: datetime.today().replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(1),
+  "today": lambda: datetime.today().replace(
+      hour=0, minute=0, second=0, microsecond=0),
+  "yesterday": lambda: datetime.today().replace(
+      hour=0, minute=0, second=0, microsecond=0) - timedelta(1),
 }
 
 
@@ -44,7 +53,7 @@ def colorByCat(category, txt=None):
         # This hack make sure the text width is the same as any other colored text
         color_out = u'\x1b[0;00m%s\x1b[0m' % (txt,)
     if not HAS_COLOR:
-      color_out = txt
+        color_out = txt
     return color_out
 
 
@@ -58,11 +67,13 @@ def colorByStats(txt, stats):
     else:
         return stringc(txt, C.COLOR_OK)
 
+
 def colorByCount(txt, count, color):
     s = "%s%s" % (txt, count)
     if count > 0 and HAS_COLOR:
-      s = stringc(s, color)
+        s = stringc(s, color)
     return s
+
 
 def parse_info(infofile):
     data = {}
@@ -87,17 +98,24 @@ def format_stats(stats):
         colorByCount("unr:", stats['unreachable'], C.COLOR_UNREACHABLE),
         colorByCount("fail:", stats['failures'], C.COLOR_ERROR))
 
+
 def col_width(rows):
     widths = []
     for col in zip(*(rows)):
-        col_width = max(map(len,col))
+        col_width = max(map(len, col))
         widths.append(col_width)
-    widths[-1] = 0 # don't pad last column
+    widths[-1] = 0  # don't pad last column
     return widths
+
 
 def date_cheat(datestr):
     dc = date_terms.get(datestr, lambda: dateparser.parse(datestr))
     return dc()
+
+
+def date_from_path(path):
+    date_comp = re.search(r'/(\d{4})/(\d{2})/(\d{2})', path)
+    return datetime(*map(int, date_comp.groups()))
 
 
 def parse_args(args):
@@ -114,53 +132,56 @@ def parse_args(args):
           logview -s ANY -d yesterday -p mirrorlist # list all events from the mirrorlist playbook
 
           """
-    parser = OptionParser(usage=usage)
-    parser.add_option("-d", default='today', dest='datestr', help="time string of when you want logs")
-    parser.add_option("-p", default='*', dest='playbook', help="the playbook you want to look for")
-    parser.add_option("-H", default=[], dest='hostname', action='append', help="Limit to the specified hostname")
-    parser.add_option("-m", default=False, dest='message', action='store_true', help='Show tasks output')
-    parser.add_option("-v", default=False, dest='verbose', action='store_true', help='Verbose')
-    parser.add_option("-s", default=[], dest='search_terms', action='append', help="status to search for")
-    parser.add_option("-l", default=False, dest="list_pb", action='store_true', help="list playbooks for a specific date")
-    parser.add_option("-L", default=False, dest="list_all_pb", action='store_true', help="list all playbooks ever ran")
-    parser.add_option("--profile", default=False, dest="profile", action='store_true', help="output timing input per task")
-    (opts, args) = parser.parse_args(args)
+    parser = ArgumentParser(usage=usage)
+    date_group = parser.add_mutually_exclusive_group()
+    date_group.add_argument("-d", default='today', dest='datestr', help="display logs from specified date")
+    date_group.add_argument("--since",  dest="since", help="display logs since specified date")
+    date_group.add_argument("--all", default=False, dest="list_all", action='store_true', help="display all logs")
+    parser.add_argument("-p", default='*', dest='playbook', help="the playbook you want to look for")
+    parser.add_argument("-H", default=[], dest='hostname', action='append', help="Limit to the specified hostname")
+    parser.add_argument("-m", default=False, dest='message', action='store_true', help='Show tasks output')
+    parser.add_argument("-v", default=False, dest='verbose', action='store_true', help='Verbose')
+    parser.add_argument("-s", default=[], dest='search_terms', action='append', help="status to search for")
+    parser.add_argument("-l", default=False, dest="list_pb", action='store_true', help="list playbook runs")
+    parser.add_argument("--profile", default=False, dest="profile", action='store_true', help="output timing input per task")
+    opts = parser.parse_args(args)
 
     opts.datestr = date_cheat(opts.datestr)
     if not opts.search_terms:
         opts.search_terms = default_search_terms
+    if opts.since:
+        opts.since = date_cheat(opts.since)
     opts.search_terms = list(map(str.upper, opts.search_terms))
-    return opts, args
+    return opts
 
 
 def search_logs(opts, logfiles):
     rows = []
-    headers = []
     msg = ''
     for fn in sorted(logfiles):
         hostname = os.path.basename(fn).replace('.log', '').replace('.gz', '')
         timestamp = os.path.basename(os.path.dirname(fn))
-        
+
         if opts.hostname and hostname not in opts.hostname:
             continue
-         
+
         try:
             with gzip.open(fn) as f:
                 f.read()
             open_f = gzip.open(fn, "rt")
-        except:
+        except IOError:
             open_f = open(fn)
-        
+
         for line in open_f:
             things = line.split('\t')
             if len(things) < 5:
-                print("(logview error - unhandled line): %r\n" % line)
+                msg += "(logview error - unhandled line): %r\n" % line
                 continue
-        
+
             # See callback_plugins/logdetail.py for how these lines get created.
             # MSG_FORMAT="%(now)s\t%(count)s\t%(category)s\t%(name)s\t%(data)s\n"
             task_ts, count, category, name, data = things
-        
+
             if category in opts.search_terms or 'ANY' in opts.search_terms:
                 dur = None
                 last_col = ""
@@ -170,7 +191,7 @@ def search_logs(opts, logfiles):
                     end = slurp.get('task_end', 0)
                     if st and end:
                         dur = '%.2fs' % (float(end) - float(st))
-        
+
                 state = colorByCat(category)
                 c_hostname = colorByCat(category, hostname)
 
@@ -180,11 +201,14 @@ def search_logs(opts, logfiles):
                         c_hostname = colorByStats(hostname, slurp)
                         state = colorByStats(category, slurp)
 
-
                 result = [timestamp, c_hostname, task_ts, count, state]
 
                 if not name:
                     name = slurp.get("task_module")
+                try:
+                    name = name.decode('utf8')
+                except AttributeError:
+                    pass
                 result.append(name)
 
                 if dur:
@@ -192,18 +216,18 @@ def search_logs(opts, logfiles):
 
                 if not opts.verbose:
                     if type(slurp) == dict:
-                        for term in ['cmd',]:
+                        for term in ['cmd', ]:
                             if term in slurp:
                                 last_col += '\t%s:%s' % (term, slurp.get(term, None))
-                
+
                     if opts.message:
                         for term in ['msg', 'stdout']:
                             if term in slurp:
                                 value = slurp.get(term, None)
                                 if type(value) is list:
-                                  value = "\n".join(value)
+                                    value = "\n".join(value)
                                 if value:
-                                  last_col += '\n%s: %s\n' % (term, colorByCat(category, value.strip()))
+                                    last_col += '\n%s: %s\n' % (term, colorByCat(category, value.strip()))
                 else:
                     last_col += '\n'
                     last_col += json.dumps(slurp, indent=4)
@@ -211,7 +235,7 @@ def search_logs(opts, logfiles):
 
                 result.append(last_col)
                 rows.append(result)
-        
+
     return rows
 
 
@@ -220,21 +244,26 @@ def main(args):
     if cfg:
         cp = configparser.ConfigParser()
         cp.read(cfg)
-        logpath = cp.get('callback_logdetail', "log_path", fallback="/var/log/ansible")
-    opts, args = parse_args(args)
+        try:
+            logpath = cp.get('callback_logdetail', "log_path")
+        except configparser.NoSectionError:
+            logpath = DEFAULT_LOGPATH
+    opts = parse_args(args)
     rows = []
 
     # List play summary
-    if opts.list_pb or opts.list_all_pb:
-        rows.append([ "Date", colorByCat("", "Playbook"), "Ran By", "Hosts", "Stats"])
-        for r,d,f in os.walk(logpath):
+    if opts.list_pb:
+        rows.append(["Date", colorByCat("", "Playbook"), "Ran By", "Hosts", "Stats"])
+        for r, d, f in os.walk(logpath):
+            if opts.since and f and date_from_path(r) < opts.since:
+                continue
             for file in f:
                 if file.endswith('.info'):
-                    pb = parse_info(os.path.join(r,file))
+                    pb = parse_info(os.path.join(r, file))
                     pb_name = os.path.splitext(os.path.basename(pb['playbook']))[0]
                     pb_date = datetime.fromtimestamp(pb['playbook_start'])
                     if (
-                            opts.list_all_pb
+                            opts.list_all or opts.since
                             or (
                                 opts.datestr != opts.datestr.replace(hour=0, minute=0, second=0, microsecond=0)
                                 and opts.datestr == pb_date)
@@ -253,8 +282,7 @@ def main(args):
                         summary = format_stats(stats)
                         # summary = "ok:%s chd:%s unr:%s faild:%s" % (stats['ok'], stats['changed'], stats['unreachable'], stats['failures'])
 
-
-                        rows.append([ str(pb_date), pb_name, pb['userid'], str(host_count), summary ])
+                        rows.append([str(pb_date), pb_name, pb['userid'], str(host_count), summary])
 
         m_widths = col_width(rows)
         if len(rows) <= 1:
@@ -263,12 +291,19 @@ def main(args):
             for row in rows:
                 print("  ".join((val.ljust(width) for val, width in zip(row, m_widths))).strip())
 
-
     # Play detail
     else:
         for pb in glob.glob(os.path.join(logpath, opts.playbook)):
             pb_name = os.path.basename(pb)
-            for pb_logdir in glob.glob(os.path.join(pb, opts.datestr.strftime("%Y/%m/%d"))):
+            if opts.list_all or opts.since:
+                date_glob = glob.glob(os.path.join(pb, "*/*/*"))
+            else:
+                date_glob = glob.glob(os.path.join(pb, opts.datestr.strftime("%Y/%m/%d")))
+            for pb_logdir in date_glob:
+                if opts.since:
+                    run_date = date_from_path(pb_logdir)
+                    if run_date < opts.since:
+                        continue
                 if opts.datestr != opts.datestr.replace(hour=0, minute=0, second=0, microsecond=0):
                     logfiles = glob.glob(pb_logdir + '/' + opts.datestr.strftime("%H.%M.%S") + '/*.log*')
                 else:
@@ -276,11 +311,11 @@ def main(args):
                 rows = search_logs(opts, logfiles)
                 if rows:
                     m_widths = col_width(rows)
-                    print(pb_name)
+                    print("%s\n-------" % (pb_name,))
                     for row in rows:
                         print("  ".join((val.ljust(width) for val, width in zip(row, m_widths))))
-                    #print(pb_name)
-                    #print(msg)
+                    print("")
+
 
 if __name__ == "__main__":
     sys.exit(main(sys.argv[1:]))

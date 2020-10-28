@@ -15,6 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with Ansible.  If not, see <http://www.gnu.org/licenses/>.
 
+# Make coding more python3-ish
+from __future__ import (absolute_import, division, print_function)
+__metaclass__ = type
+
 DOCUMENTATION = r'''
 callback: logdetail
 callback_type: notification
@@ -48,9 +52,10 @@ except ImportError:
     # Ansible v1 compat
     CallbackBase = object
 
-TIME_FORMAT="%b %d %Y %H:%M:%S"
+TIME_FORMAT = "%b %d %Y %H:%M:%S"
 
-MSG_FORMAT="%(now)s\t%(count)s\t%(category)s\t%(name)s\t%(data)s\n"
+MSG_FORMAT = "%(now)s\t%(count)s\t%(category)s\t%(name)s\t%(data)s\n"
+
 
 def getlogin():
     try:
@@ -58,6 +63,7 @@ def getlogin():
     except OSError as e:
         user = pwd.getpwuid(os.geteuid())[0]
     return user
+
 
 class LogMech(object):
     def __init__(self, logpath):
@@ -91,13 +97,13 @@ class LogMech(object):
     def logpath_play(self):
         # this is all to get our path to look nice ish
         tstamp = time.strftime('%Y/%m/%d/%H.%M.%S', time.localtime(self.started))
-        path = os.path.normpath(self.logpath + '/' + self.playbook_id +  '/' + tstamp + '/')
+        path = os.path.normpath(self.logpath + '/' + self.playbook_id + '/' + tstamp + '/')
 
         if not os.path.exists(path):
             try:
                 os.makedirs(path)
             except OSError as e:
-                if e.errno != 17: # if it is not dir exists then raise it up
+                if e.errno != 17:  # if it is not dir exists then raise it up
                     raise
 
         return path
@@ -132,10 +138,9 @@ class LogMech(object):
             host = 'HOSTMISSING'
 
         if type(data) == dict:
-            name = data.get('module_name',None)
+            name = data.get('module_name', None)
         else:
             name = "unknown"
-
 
         # we're in setup - move the invocation  info up one level
         if 'invocation' in data:
@@ -143,7 +148,7 @@ class LogMech(object):
             if not name and 'module_name' in invoc:
                 name = invoc['module_name']
 
-            #don't add this since it can often contain complete passwords :(
+            # don't add this since it can often contain complete passwords :(
             del(data['invocation'])
 
         if task:
@@ -160,7 +165,7 @@ class LogMech(object):
 
         if self.play_info.get('check', False) and self.play_info.get('diff', False):
             category = 'CHECK_DIFF:' + category
-        elif self.play_info.get('check', False):    
+        elif self.play_info.get('check', False):
             category = 'CHECK:' + category
 
         # Sometimes this is None.. othertimes it's fine.  Othertimes it has
@@ -173,7 +178,6 @@ class LogMech(object):
         now = time.strftime(TIME_FORMAT, time.localtime())
         fd.write(MSG_FORMAT % dict(now=now, name=name, count=count, category=category, data=json.dumps(data)))
         fd.close()
-
 
 
 class CallbackModule(CallbackBase):
@@ -227,7 +231,8 @@ class CallbackModule(CallbackBase):
 
     def v2_playbook_on_task_start(self, task, is_conditional):
         self.task = task
-        self.task._name = task.name
+        if self.task:
+            self.task._name = task.get_name().strip()
         self.logmech._last_task_start = time.time()
         self._task_count += 1
 
@@ -264,8 +269,9 @@ class CallbackModule(CallbackBase):
                 pb_info['extra_vars'] = play._variable_manager.extra_vars
                 pb_info['inventory'] = play._variable_manager._inventory._sources
                 pb_info['playbook_checksum'] = secure_hash(path)
-                pb_info['check'] = self.play_context.check_mode
-                pb_info['diff'] = self.play_context.diff
+                if hasattr(self, "play_context"):
+                    pb_info['check'] = self.play_context.check_mode
+                    pb_info['diff'] = self.play_context.diff
                 self.logmech.play_log(json.dumps(pb_info, indent=4))
 
             self._play_count += 1
@@ -273,16 +279,16 @@ class CallbackModule(CallbackBase):
             info = {}
             info['play'] = play.name
             info['hosts'] = play.hosts
-            info['transport'] = str(self.play_context.connection)
             info['number'] = self._play_count
-            info['check'] = self.play_context.check_mode
-            info['diff'] = self.play_context.diff
+            if hasattr(self, "play_context"):
+                info['transport'] = str(self.play_context.connection)
+                info['check'] = self.play_context.check_mode
+                info['diff'] = self.play_context.diff
             self.logmech.play_info = info
             try:
                 self.logmech.play_log(json.dumps(info, indent=4))
             except TypeError:
                 print(("Failed to conver to JSON:", info))
-
 
     def v2_playbook_on_stats(self, stats):
         results = {}
@@ -292,5 +298,3 @@ class CallbackModule(CallbackBase):
         self.logmech.play_log(json.dumps({'stats': results}, indent=4))
         self.logmech.play_log(json.dumps({'playbook_end': time.time()}, indent=4))
         print(('logs written to: %s' % self.logmech.logpath_play))
-
-
