@@ -118,6 +118,11 @@ def date_from_path(path):
     return datetime(*map(int, date_comp.groups()))
 
 
+def datetime_from_path(path):
+    date_comp = re.search(r'/(\d{4})/(\d{2})/(\d{2})/(\d{2})\.(\d{2})\.(\d{2})', path)
+    return datetime(*map(int, date_comp.groups()))
+
+
 def parse_args(args):
     usage = """
           logview [options] [-d datestr] [-p playbook]
@@ -156,11 +161,12 @@ def parse_args(args):
 
 
 def search_logs(opts, logfiles):
-    rows = []
+    rows = [("Play Date", colorByCat("Hostname"), "Task Time", "Id", colorByCat("State"), "Task Name", "")]
+    # rows = []
     msg = ''
     for fn in sorted(logfiles):
         hostname = os.path.basename(fn).replace('.log', '').replace('.gz', '')
-        timestamp = os.path.basename(os.path.dirname(fn))
+        timestamp = datetime_from_path(fn).strftime("%a %b %d %Y %H:%M:%S")
 
         if opts.hostname and hostname not in opts.hostname:
             continue
@@ -261,7 +267,7 @@ def main(args):
                 if file.endswith('.info'):
                     pb = parse_info(os.path.join(r, file))
                     pb_name = os.path.splitext(os.path.basename(pb['playbook']))[0]
-                    pb_date = datetime.fromtimestamp(pb['playbook_start'])
+                    pb_date = datetime_from_path(r)
                     if (
                             opts.list_all or opts.since
                             or (
@@ -282,7 +288,7 @@ def main(args):
                         summary = format_stats(stats)
                         # summary = "ok:%s chd:%s unr:%s faild:%s" % (stats['ok'], stats['changed'], stats['unreachable'], stats['failures'])
 
-                        rows.append([str(pb_date), pb_name, pb['userid'], str(host_count), summary])
+                        rows.append([pb_date.isoformat(), pb_name, pb['userid'], str(host_count), summary])
 
         m_widths = col_width(rows)
         if len(rows) <= 1:
@@ -300,16 +306,15 @@ def main(args):
             else:
                 date_glob = glob.glob(os.path.join(pb, opts.datestr.strftime("%Y/%m/%d")))
             for pb_logdir in date_glob:
-                if opts.since:
-                    run_date = date_from_path(pb_logdir)
-                    if run_date < opts.since:
-                        continue
+                run_date = date_from_path(pb_logdir)
+                if opts.since and run_date < opts.since:
+                    continue
                 if opts.datestr != opts.datestr.replace(hour=0, minute=0, second=0, microsecond=0):
                     logfiles = glob.glob(pb_logdir + '/' + opts.datestr.strftime("%H.%M.%S") + '/*.log*')
                 else:
                     logfiles = glob.glob(pb_logdir + '/*/*.log*')
                 rows = search_logs(opts, logfiles)
-                if rows:
+                if len(rows) > 1:
                     m_widths = col_width(rows)
                     print("%s\n-------" % (pb_name,))
                     for row in rows:
