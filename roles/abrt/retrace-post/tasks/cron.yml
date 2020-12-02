@@ -37,3 +37,12 @@
     special_time: daily
     state: present
   when: not devel|bool
+
+- name: Create cron job for retrace-server
+  cron:
+    name: "podman prune"
+    user: retrace
+    job: "/usr/bin/podman system prune --all --force >> /var/log/retrace-server/podman_prune.log 2>&1"
+    special_time: daily
+    state: present
+  when: not devel|bool
