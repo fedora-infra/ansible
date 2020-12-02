@@ -23,3 +23,15 @@
     mode: 0755
     owner: retrace
     group: retrace
+
+- file:
+    path: /srv/retrace/home
+    state: directory
+    mode: 0755
+    owner: retrace
+    group: retrace
+
+- name: Set home directory for retrace user
+  user:
+    name: retrace
+    home: /srv/retrace/home

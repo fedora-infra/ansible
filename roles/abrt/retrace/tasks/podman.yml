@@ -9,11 +9,6 @@
     name: httpd
     state: stopped
 
-- name: Set home directory for retrace user
-  user:
-    name: retrace
-    home: /var/lib/retrace
-
 - name: Check if subuid is set for retrace user
   command: cat /etc/subuid
   changed_when: false
