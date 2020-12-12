@@ -9,6 +9,7 @@ RUN curl -o /etc/yum.repos.d/infra-tags.repo https://pagure.io/fedora-infra/ansi
 RUN dnf install -y \
     git                         \
     python3-pip                 \
+    bodhi-docs                  \
     fedora-messaging            \
     httpd                       \
     intltool                    \
