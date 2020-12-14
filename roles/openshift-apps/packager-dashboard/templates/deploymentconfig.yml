@@ -1,0 +1,286 @@
+---
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: packager-dashboard
+    service: packager-dashboard
+  name: packager-dashboard-api-endpoint
+spec:
+  replicas: 1
+  selector:
+    app: packager-dashboard
+    deploymentconfig: packager-dashboard
+  strategy:
+    type: Recreate
+    recreateParams:
+      mid:
+        failurePolicy: Abort
+        execNewPod:
+          containerName: oraculum-frontend
+          # Oraculum would automatically proceed with upgrade_db if necessary
+          # init_db isn't dropping anything, so it's safe to call every time the pod starts
+          command: ["python", "/opt/app-root/src/oraculum/cli.py", "init_db"]
+          # and then just the gunicorn for the frontend part of the backend :)
+  template:
+    metadata:
+      labels:
+        app: packager-dashboard
+        deploymentconfig: packager-dashboard
+    spec:
+      containers:
+      - name: packager-dashboard
+        image: packager-dashboard:latest
+        ports:
+        - containerPort: 5000
+        resources: {}
+        env:
+        # Database
+        - name: POSTGRESQL_USER
+          value: "{{ oraculum_db_user }}"
+        - name: POSTGRESQL_PASSWORD
+          value: "{{ oraculum_db_pass }}"
+        - name: POSTGRESQL_DATABASE
+          value: "{{ oraculum_db_name }}"
+        - name: POSTGRESQL_SERVICE_HOST
+          value: "db01{{ env_suffix }}.iad2.fedoraproject.org"
+        - name: POSTGRESQL_SERVICE_PORT
+          value: "5432"
+        # Redis
+        - name: REDIS_PASSWORD
+          value: "{{ oraculum_redis_pass }}"
+        - name: REDIS_SERVICE_HOST
+          value: "redis.packager-dashboard.svc.cluster.local"
+        - name: REDIS_SERVICE_PORT_REDIS
+          value: "6379"
+        # Misc
+        - name: SECRET_KEY
+          value: "{{ oraculum_secret_key }}"
+        - name: OIDC_CLIENT_SECRETS
+          value: "{{ oraculum_oidc_secrets }}"
+        - name: OPENSHIFT_PROD
+          value: "1"
+        # WatchDog emails
+        - name: SEND_ERROR_EMAILS
+          value: False
+        - name: SMTP_CONFIG
+          value: "{{ oraculum_smtp_confline }}"
+        readinessProbe:
+          timeoutSeconds: 1
+          initialDelaySeconds: 5
+          httpGet:
+            path: /
+            port: 5000
+        livenessProbe:
+          timeoutSeconds: 1
+          initialDelaySeconds: 30
+          httpGet:
+            path: /
+            port: 5000
+
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+    imageChangeParams:
+      automatic: true
+      containerNames:
+      - packager-dashboard
+      from:
+        kind: ImageStreamTag
+        name: packager-dashboard:latest
+---
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: packager-dashboard
+    service: packager-dashboard
+  name: packager-dashboard-worker
+spec:
+  replicas: 1 # Change me to some biiig numba after you got me working
+  selector:
+    app: packager-dashboard
+    deploymentconfig: packager-dashboard
+  strategy:
+    type: Recreate
+    recreateParams:
+      mid:
+        failurePolicy: Abort
+        execNewPod:
+          containerName: oraculum-worker
+          # Oraculum would automatically proceed with upgrade_db if necessary
+          # init_db isn't dropping anything, so it's safe to call every time the pod starts
+          command: ["/bin/sh","-c"]
+          args: ["python /opt/app-root/src/oraculum/cli.py init_db && /usr/bin/celery -A oraculum.celery_app worker -c 2 --loglevel=INFO"]
+  template:
+    metadata:
+      labels:
+        app: packager-dashboard
+        deploymentconfig: packager-dashboard
+    spec:
+      containers:
+      - name: packager-dashboard
+        image: packager-dashboard:latest
+        resources: {}
+        env:
+        # Database
+        - name: POSTGRESQL_USER
+          value: "{{ oraculum_db_user }}"
+        - name: POSTGRESQL_PASSWORD
+          value: "{{ oraculum_db_pass }}"
+        - name: POSTGRESQL_DATABASE
+          value: "{{ oraculum_db_name }}"
+        - name: POSTGRESQL_SERVICE_HOST
+          value: "db01{{ env_suffix }}.iad2.fedoraproject.org"
+        - name: POSTGRESQL_SERVICE_PORT
+          value: "5432"
+        # Redis
+        - name: REDIS_PASSWORD
+          value: "{{ oraculum_redis_pass }}"
+        - name: REDIS_SERVICE_HOST
+          value: "{{ oraculum_redis_host }}"
+        - name: REDIS_SERVICE_PORT_REDIS
+          value: "{{ oraculum_redis_port }}"
+        # Misc
+        - name: SECRET_KEY
+          value: "{{ oraculum_secret_key }}"
+        - name: OIDC_CLIENT_SECRETS
+          value: "{{ oraculum_oidc_secrets }}"
+        - name: OPENSHIFT_PROD
+          value: "1"
+        # WatchDog emails
+        - name: SEND_ERROR_EMAILS
+          value: False
+        - name: SMTP_CONFIG
+          value: "{{ oraculum_smtp_confline }}"
+
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+    imageChangeParams:
+      automatic: true
+      containerNames:
+      - packager-dashboard
+      from:
+        kind: ImageStreamTag
+        name: packager-dashboard:latest
+---
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: packager-dashboard
+    service: packager-dashboard
+  name: packager-dashboard-beat
+spec:
+  replicas: 1 # Never change this to more or less than ONE!
+  selector:
+    app: packager-dashboard
+    deploymentconfig: packager-dashboard
+  strategy:
+    type: Recreate
+    recreateParams:
+      mid:
+        failurePolicy: Abort
+        execNewPod:
+          containerName: oraculum-beat
+          # Oraculum would automatically proceed with upgrade_db if necessary
+          # init_db isn't dropping anything, so it's safe to call every time the pod starts
+          command: ["/bin/sh","-c"]
+          args: ["python /opt/app-root/src/oraculum/cli.py init_db && /usr/bin/celery -A oraculum.celery_app beat --loglevel=INFO"]
+  template:
+    metadata:
+      labels:
+        app: packager-dashboard
+        deploymentconfig: packager-dashboard
+    spec:
+      containers:
+      - name: packager-dashboard
+        image: packager-dashboard:latest
+        resources: {}
+        env:
+        # Database
+        - name: POSTGRESQL_USER
+          value: "{{ oraculum_db_user }}"
+        - name: POSTGRESQL_PASSWORD
+          value: "{{ oraculum_db_pass }}"
+        - name: POSTGRESQL_DATABASE
+          value: "{{ oraculum_db_name }}"
+        - name: POSTGRESQL_SERVICE_HOST
+          value: "db01{{ env_suffix }}.iad2.fedoraproject.org"
+        - name: POSTGRESQL_SERVICE_PORT
+          value: "5432"
+        # Redis
+        - name: REDIS_PASSWORD
+          value: "{{ oraculum_redis_pass }}"
+        - name: REDIS_SERVICE_HOST
+          value: "{{ oraculum_redis_host }}"
+        - name: REDIS_SERVICE_PORT_REDIS
+          value: "{{ oraculum_redis_port }}"
+        # Misc
+        - name: SECRET_KEY
+          value: "{{ oraculum_secret_key }}"
+        - name: OIDC_CLIENT_SECRETS
+          value: "{{ oraculum_oidc_secrets }}"
+        - name: OPENSHIFT_PROD
+          value: "1"
+        # WatchDog emails
+        - name: SEND_ERROR_EMAILS
+          value: False
+        - name: SMTP_CONFIG
+          value: "{{ oraculum_smtp_confline }}"
+
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+    imageChangeParams:
+      automatic: true
+      containerNames:
+      - packager-dashboard
+      from:
+        kind: ImageStreamTag
+        name: packager-dashboard:latest
+---
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: packager-dashboard
+    service: packager-dashboard
+  name: packager-dashboard-redis
+spec:
+  replicas: 1 # Never change this to more or less than ONE!
+  selector:
+    app: packager-dashboard
+    deploymentconfig: packager-dashboard
+  strategy:
+    type: Recreate
+    recreateParams:
+      mid:
+        failurePolicy: Abort
+        execNewPod:
+          containerName: packager-dashboard-redis
+  template:
+    metadata:
+      labels:
+        app: packager-dashboard
+        deploymentconfig: packager-dashboard
+    spec:
+      containers:
+      - name: packager-dashboard-redis
+        image: packager-dashboard-redis:latest
+        resources: {}
+        env:
+        - name: REDIS_PASSWORD
+          value: "{{ oraculum_redis_pass }}"
+
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+    imageChangeParams:
+      automatic: true
+      containerNames:
+      - packager-dashboard-redis
+      from:
+        kind: ImageStreamTag
+        name: packager-dashboard-redis:latest
