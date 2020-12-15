@@ -13,6 +13,16 @@ csi_relationship: |
   - This host provides the frontend part of copr only.
   - It's the point of contact between end users and the copr build system (backend, package singer)
 
+# consumed by roles/copr/certbot
+letsencrypt:
+  predefined_deploy_script: httpd
+  certificates:
+    copr.fedorainfracloud.org:
+      domains:
+      - copr.fedorainfracloud.org
+      challenge_dir: /var/www/html
+      mail: copr-devel@lists.fedorahosted.org
+
 copr_pagure_events:
   io.pagure.prod.pagure: "https://pagure.io/"
   org.fedoraproject.prod.pagure: "https://src.fedoraproject.org/"

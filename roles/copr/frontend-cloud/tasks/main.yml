@@ -89,17 +89,8 @@
   register: alembic_result
   changed_when: alembic_result.stdout is search("Running upgrade")
 
-# TODO: move production to lets-encrypt as well
-- name: install ssl certificates for production
-  import_tasks: "install_certs.yml"
-  when: not devel
-  tags:
-  - config
-
-# development servers use Let's Encrypt
 - name: install letsencrypt ssl certificates for dev
   include_role: name=copr/certbot
-  when: devel|bool
   tags:
   - config
 
