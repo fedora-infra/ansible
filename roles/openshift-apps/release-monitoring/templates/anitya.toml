@@ -19,7 +19,7 @@ db_url = "postgresql://{{ anitya_db_user }}:{{ anitya_db_pass }}@{{ anitya_db_ho
 # List of admins
 anitya_web_admins = [
 {% if env == 'staging' %}
-  "c22eb09f-4407-4582-b14b-0375153d293d", # zlopez stg
+  "7d183b09-d0d7-49e6-8ff3-fc2cce312cc0", # zlopez stg
 {% else %}
   "5dd1b1f2-fee1-44f0-abeb-29df5bf151c7", # zlopez
   "5a11f015-54ee-4319-9092-39c427873575", # tibbs
