@@ -21,28 +21,35 @@
     - pbokoc
     tags:
       - apply-appowners
+      - appowners
+
   - role: openshift/imagestream
     app: docsbuilding
     imagename: builder
+
   - role: openshift/object
     app: docsbuilding
     objectname: buildconfig.yml
     template: buildconfig.yml
+
   - role: openshift/start-build
     app: docsbuilding
     buildname: builder-build
+
   - role: openshift/object
     app: docsbuilding
     template: cron.yml
     objectname: cron.yml
     tags:
       - deploy-cronjob
+
   - role: openshift/object
     app: docsbuilding
     template: cron-translated.yml
     objectname: cron-translated.yml
     tags:
       - deploy-cronjob
+
   - role: openshift/object
     app: docsbuilding
     file: pvc.yml
