@@ -33,9 +33,9 @@ spec:
                 name: zezere
                 key: secret_key
           - name: DEBUG
-            value: no
+            value: "no"
           - name: AUTH_METHOD
-            value: oidc
+            value: "oidc"
           - name: OIDC_OP_AUTHORIZATION_ENDPOINT
             value: "https://id{{ env_suffix }}.fedoraproject.org/openidc/Authorization"
           - name: OIDC_OP_TOKEN_ENDPOINT
@@ -52,11 +52,11 @@ spec:
                 name: zezere
                 key: oidc_client_secret
           - name: OIDC_RP_SIGN_ALGO
-            value: RS256
+            value: "RS256"
           - name: SECURE_PROXY_SSL_HEADER_NAME
-            value: HTTP_X_FORWARDED_PROTO
+            value: "HTTP_X_FORWARDED_PROTO"
           - name: SECURE_PROXY_SSL_HEADER_VALUE
-            value: https
+            value: "https"
           - name: DATABASE_engine
             value: "django.db.backends.postgresql_psycopg2"
           - name: DATABASE_host
