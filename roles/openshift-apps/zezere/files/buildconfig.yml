@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  labels:
+    build: zezere-build
+  name: zezere-build
+spec:
+  runPolicy: Serial
+  source:
+    git:
+      uri: https://github.com/fedora-iot/zezere.git
+      ref: master
+  strategy:
+    sourceStrategy:
+      env:
+        - name: SECRET_KEY
+          value: notsecret
+        - name: ALLOWED_HOSTS
+          value: building.fedoraproject.org
+        - name: DATABASE_engine
+          value: django.db.backends.sqlite3
+      from:
+        kind: DockerImage
+        name: registry.access.redhat.com/rhscl/python-36-rhel7:latest
+  output:
+    to:
+      kind: ImageStreamTag
+      name: zezere:latest

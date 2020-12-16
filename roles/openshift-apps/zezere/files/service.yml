@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: zezere
+  labels:
+    app: zezere
+    service: zezere
+  namespace: zezere
+spec:
+  ports:
+    - name: web
+      port: 8080
+      targetPort: 8080
+  selector:
+    deploymentconfig: zezere

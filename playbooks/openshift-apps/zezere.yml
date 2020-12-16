@@ -1,0 +1,48 @@
+- name: make the app be real
+  hosts: os_masters_stg[0]
+  user: root
+  gather_facts: False
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  roles:
+  - role: openshift/project
+    app: zezere
+    description: Zezere provisioning service
+    appowners:
+    - puiterwijk
+    - pbrobinson
+  - role: openshift/imagestream
+    app: zezere
+    imagename: zezere
+  - role: openshift/object
+    app: zezere
+    objectname: buildconfig.yml
+    file: buildconfig.yml
+  - role: openshift/start-build
+    app: zezere
+    buildname: zezere
+  - role: openshift/object
+    app: zezere
+    file: service.yml
+    objectname: service.yml
+  - role: openshift/route
+    app: zezere
+    routename: zezere
+    host: "provision{{ env_suffix }}.fedoraproject.org"
+    servicename: zezere
+    serviceport: 8080
+  - role: openshift/object
+    app: zezere
+    template: secret.yml
+    objectname: secret.yml
+  - role: openshift/object
+    app: zezere
+    template: deploymentconfig.yml
+    objectname: deploymentconfig.yml
+  - role: openshift/rollout
+    app: zezere
+    dcname: zezere

@@ -1,0 +1,88 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: zezere
+    service: zezere
+  name: zezere
+spec:
+  replicas: 1
+  selector:
+    deploymentconfig: zezere
+  strategy:
+    activeDeadlineSeconds: 21600
+    recreateParams:
+      timeoutSeconds: 600
+  template:
+    metadata:
+      labels:
+        app: zezere
+        deploymentconfig: zezere
+    spec:
+      containers:
+      - name: zezere
+        image: docker-registry.default.svc:5000/zezere/zezere:latest
+        env:
+          - name: ALLOWED_HOSTS
+            value: "*"
+          - name: WEB_CONCURRENCY
+            value: 8
+          - name: SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                name: zezere
+                key: secret_key
+          - name: DEBUG
+            value: no
+          - name: AUTH_METHOD
+            value: oidc
+          - name: OIDC_OP_AUTHORIZATION_ENDPOINT
+            value: "https://id{{ env_suffix }}.fedoraproject.org/openidc/Authorization"
+          - name: OIDC_OP_TOKEN_ENDPOINT
+            value: "https://id{{ env_suffix }}.fedoraproject.org/openidc/Token"
+          - name: OIDC_OP_USER_ENDPOINT
+            value: "https://id{{ env_suffix }}.fedoraproject.org/openidc/UserInfo"
+          - name: OIDC_OP_JWKS_ENDPOINT
+            value: "https://id{{ env_suffix }}.fedoraproject.org/openidc/Jwks"
+          - name: OIDC_RP_CLIENT_ID
+            value: "provisionfpo"
+          - name: OIDC_RP_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: zezere
+                key: oidc_client_secret
+          - name: OIDC_RP_SIGN_ALGO
+            value: RS256
+          - name: SECURE_PROXY_SSL_HEADER_NAME
+            value: HTTP_X_FORWARDED_PROTO
+          - name: SECURE_PROXY_SSL_HEADER_VALUE
+            value: https
+          - name: DATABASE_engine
+            value: "django.db.backends.postgresql_psycopg2"
+          - name: DATABASE_host
+            value: "todo"
+          - name: DATABASE_name
+            value: "todo"
+          - name: DATABASE_user
+            value: "todo"
+          - name: DATABASE_password
+            valueFrom:
+              secretKeyRef:
+                name: zezere
+                key: database_password
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          timeoutSeconds: 1
+          initialDelaySeconds: 5
+          httpGet:
+            path: /
+            port: 8080
+        livenessProbe:
+          timeoutSeconds: 1
+          initialDelaySeconds: 30
+          httpGet:
+            path: /
+            port: 8080
+  triggers:
+  - type: ConfigChange
