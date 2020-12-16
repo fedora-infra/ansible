@@ -9,7 +9,6 @@ RUN curl -o /etc/yum.repos.d/infra-tags.repo https://pagure.io/fedora-infra/ansi
 RUN dnf install -y \
     git                         \
     python3-pip                 \
-    bodhi-docs                  \
     fedora-messaging            \
     httpd                       \
     intltool                    \
@@ -48,6 +47,8 @@ RUN dnf install -y \
     python3-mod_wsgi            \
     python3-gunicorn            \
     python3-whitenoise          \
+    && sed -i '/tsflags/d' /etc/dnf/dnf.conf \
+    && dnf install -y bodhi-docs \
     && pip install koji graphene graphene-sqlalchemy WebOb-GraphQL \
     && dnf clean all
 
