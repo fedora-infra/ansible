@@ -66,6 +66,10 @@ items:
                 popd && \
                 popd && \
                 rm -rf anitya
+# Let's use staging auth server in staging
+{% if env == 'staging' %}
+        RUN sed -i 's/id.fedoraproject.org/id.stg.fedoraproject.org/g' /usr/lib/python3.8/site-packages/social_core/backends/fedora.py
+{% endif %}
         RUN mkdir /httpdir
         RUN chmod 777 /httpdir
         EXPOSE 8080
