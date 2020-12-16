@@ -60,11 +60,11 @@ spec:
           - name: DATABASE_engine
             value: "django.db.backends.postgresql_psycopg2"
           - name: DATABASE_host
-            value: "todo"
+            value: "db01{{ env_suffix }}.iad2.fedoraproject.org"
           - name: DATABASE_name
-            value: "todo"
+            value: "zezere"
           - name: DATABASE_user
-            value: "todo"
+            value: "zezere"
           - name: DATABASE_password
             valueFrom:
               secretKeyRef:
