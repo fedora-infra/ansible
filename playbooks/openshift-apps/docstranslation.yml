@@ -74,12 +74,12 @@
 # actions to delete the project from OpenShift
 ###############################################
 # to run: sudo rbac-playbook -l os_masters_stg[0] -t delete openshift-apps/docstranslation.yml
-  - name: Delete cron jobs
+  - name: Delete project
     include_role:
       name: openshift/object-delete
     vars:
-      objecttype: cronjob
-      objectname: cron
+      objecttype: project
+      objectname: docstranslation
     tags:
     - never
     - delete
