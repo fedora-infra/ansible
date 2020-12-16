@@ -174,7 +174,7 @@
   delegate_to: "rabbitmq01.iad2.fedoraproject.org"
   rabbitmq_user:
     user: centos-odcs-admin
-    password: "{{ (env == 'production')|ternary(rabbitmq_centos-odcs_admin_password_production, rabbitmq_centos-odcs_admin_password_staging) }}"
+    password: "{{ (env == 'production')|ternary(rabbitmq_centos_odcs_admin_password_production, rabbitmq_centos_odcs_admin_password_staging) }}"
     vhost: /centos-odcs
     configure_priv: .*
     read_priv: .*
@@ -187,7 +187,7 @@
   delegate_to: "rabbitmq01.iad2.fedoraproject.org"
   copy:
     dest: /root/.centos-odcs-rabbitmqpass
-    content: "{{ (env == 'production')|ternary(rabbitmq_centos-odcs_admin_password_production, rabbitmq_centos-odcs_admin_password_staging) }}"
+    content: "{{ (env == 'production')|ternary(rabbitmq_centos_odcs_admin_password_production, rabbitmq_centos_odcs_admin_password_staging) }}"
     mode: 0600
     owner: root
     group: root
