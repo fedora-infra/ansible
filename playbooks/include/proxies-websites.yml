@@ -318,7 +318,7 @@
   - role: httpd/website
     site_name: "builds.coreos{{ env_suffix }}.fedoraproject.org"
     sslonly: true
-    certbot: true
+    certbot: false
     tags:
     - builds.coreos.fedoraproject.org
 
