@@ -47,8 +47,7 @@ RUN dnf install -y \
     python3-mod_wsgi            \
     python3-gunicorn            \
     python3-whitenoise          \
-    && sed -i '/tsflags/d' /etc/dnf/dnf.conf \
-    && dnf install -y bodhi-docs \
+    && dnf --setopt='tsflags=' install -y bodhi-docs \
     && pip install koji graphene graphene-sqlalchemy WebOb-GraphQL \
     && dnf clean all
 
