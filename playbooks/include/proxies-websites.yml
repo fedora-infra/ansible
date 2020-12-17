@@ -316,6 +316,13 @@
     - status.raw-updates.coreos.fedoraproject.org
 
   - role: httpd/website
+    site_name: "builds.coreos{{ env_suffix }}.fedoraproject.org"
+    sslonly: true
+    certbot: true
+    tags:
+    - builds.coreos.fedoraproject.org
+
+  - role: httpd/website
     site_name: caiapi.fedoraproject.org
     sslonly: true
     server_aliases: [caiapi.stg.fedoraproject.org]
