@@ -319,6 +319,7 @@
     site_name: "builds.coreos{{ env_suffix }}.fedoraproject.org"
     sslonly: true
     certbot: false
+    cert_name: "{{wildcard_cert_name}}"
     tags:
     - builds.coreos.fedoraproject.org
 
