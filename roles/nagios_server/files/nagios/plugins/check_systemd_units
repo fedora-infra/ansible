@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+# Description : script to check the status of systemd units
+# if they failed, try to restart the service once !!
+
+# Author : Seddik Alaoui Ismaili
+# Version : 1.0
+
+
+# Exits code
+warning_exit="1"
+ok_exit="0"
+
+# Unit list
+unit_list=(pagure_ci
+pagure_ev
+pagure_fast_worker
+pagure_loadjson
+pagure_logcom
+pagure_medium_worker
+pagure_milter
+pagure_mirror
+pagure_slow_worker
+pagure_webhook
+pagure_worker
+pagure_mirror_project_in.timer)
+
+#Element's arrays
+failed_array=()
+active_array=()
+
+# Check units's status
+ echo -e "here the lenght of array : ${#active_array[@]}"
+for element in ${unit_list[@]}; do
+  status=$(systemctl status ${element} |grep -E "Active:"  | awk '{ print $2 }')
+  if [ $status == failed ]; then
+    systemctl restart ${element} && active_array+=($element) || failed_array+=($element)
+  fi
+done
+
+# check the lenght of array and print result/exit code for nagios
+if [ ${#failed_array[@]} -ne "0" ]; then
+  echo -e "WARNING - Failed systemd units after restart : ${failed_array[@]}"
+  exit ${warning_exit}
+elif [ ${#failed_array[@]} -eq "0" ]; then
+  echo -e "OK - Systemd units are active"
+  exit ${ok_exit}
+fi

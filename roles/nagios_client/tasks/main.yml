@@ -304,6 +304,17 @@
   tags:
     - nagios_client
 
+- name: install nrpe check for systemd units
+  template:
+    src={{ item }}.j2 dest=/etc/nrpe.d/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - check_systemd_units.cfg
+  when: inventory_hostname.startswith('pagure02')    
+  notify:
+    - restart nrpe
+  tags:
+    - nagios_client    
+
 - name: Check if the fedmsg group exists
   shell: /usr/bin/getent group fedmsg | /usr/bin/wc -l | tr -d ' '
   register: fedmsg_exists

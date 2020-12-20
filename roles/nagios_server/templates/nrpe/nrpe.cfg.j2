@@ -421,7 +421,7 @@ command[check_fedmsg_cbacklog_mbs_backend_hub]=/usr/lib64/nagios/plugins/check_f
 
 command[check_fedmsg_fmn_digest_last_ran]=/usr/lib64/nagios/plugins/check_fedmsg_producer_last_ran.py fedmsg-hub DigestProducer 90 600
 command[check_fedmsg_fmn_confirm_last_ran]=/usr/lib64/nagios/plugins/check_fedmsg_producer_last_ran.py fedmsg-hub ConfirmationProducer 30 300
-
+command[check_systemd_units]=/usr/lib64/nagios/plugins/check_systemd_units
 # The following are 'action commands' where by an actual action is performed
 # like restarting httpd
 
