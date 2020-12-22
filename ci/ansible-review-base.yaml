@@ -1,8 +1,10 @@
 - hosts: all
   tasks:
-    - name: Install ansible-review
+    - name: Install packages
       package:
-        name: python3-ansible-review
+        name:
+          - ansible-freeipa
+          - python3-ansible-review
         state: latest
 
     - name: Install invocation script
