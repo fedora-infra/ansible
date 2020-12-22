@@ -63,3 +63,9 @@ koschei_cron_jobs:
   - name: track-neuro
     schedule: "23 0-23/3 * * *"
     command: "koschei-track-group neuro-sig"
+  - name: refresh-python
+    schedule: "25 0-23/3 * * *"
+    command: "koschei-refresh-distgit-group koschei/auto-group-python-sig python-sig"
+  - name: track-python
+    schedule: "27 0-23/3 * * *"
+    command: "koschei-admin psql <<<'UPDATE package SET tracked = TRUE WHERE NOT tracked AND id IN (SELECT p.id FROM package p JOIN package_group_relation pgr ON p.base_id = pgr.base_id WHERE pgr.group_id = 76)'"
