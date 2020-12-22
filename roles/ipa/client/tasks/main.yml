@@ -1,3 +1,12 @@
+- name: Install IPA client packages
+  package:
+    name:
+      - freeipa-client
+    state: present
+  tags:
+    - ipa/client
+    - packages
+
 - name: Enroll system as IPA client
   command:
     cmd: ipa-client-install
@@ -7,4 +16,8 @@
          --server={{ ipa_server }}
          -p admin -w {{ ipa_admin_password }}
          -U -N --force-join
+         --mkhomedir
     creates: /etc/ipa/default.conf
+  tags:
+    - ipa/client
+    - config
