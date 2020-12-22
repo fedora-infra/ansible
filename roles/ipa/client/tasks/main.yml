@@ -21,3 +21,11 @@
   tags:
     - ipa/client
     - config
+
+- name: Configure HBAC on IPA cluster
+  delegate_to: "{{ ipa_server }}"
+  import_tasks: hbac.yml
+  # don't muck with prod for now
+  when: env == 'staging'
+  tags:
+    - ipa/client

@@ -1,0 +1,75 @@
+- name: "Warn if `fas_client_groups` is set but `ipa_client_shell_groups` isn't"
+  fail:
+    msg: "`fas_client_groups` is defined but `ipa_client_shell_groups` isn't on an IPA client"
+  ignore_errors: true
+  when: fas_client_groups is defined and ipa_client_shell_groups is not defined
+
+- name: "Convert `fas_client_groups` string to `ipa_client_shell_groups` list if missing"
+  set_fact:
+    ipa_client_shell_groups: "{{ fas_client_groups.split(',') | list }}"
+  when: fas_client_groups is defined and ipa_client_shell_groups is not defined
+
+- name: Add the sshd HBAC service in IPA
+  ipahbacsvc:
+    name: sshd
+    description: SSH daemon
+    ipaadmin_password: "{{ ipa_admin_password }}"
+  tags:
+    - config
+
+- name: Add the shell-access service group in IPA
+  ipahbacsvcgroup:
+    name: shell-access
+    description: Group of shell access services
+    ipaadmin_password: "{{ ipa_admin_password }}"
+    hbacsvc:
+      - sshd
+  tags:
+    - config
+
+- name: Create missing shell access user groups
+  ipagroup:
+    name: "{{ item }}"
+    state: present
+    ipaadmin_password: "{{ ipa_admin_password }}"
+  loop: "{{ ['sysadmin-main'] + (ipa_client_shell_groups | default([])) | list }}"
+
+- name: "Give members of sysadmin-main access anywhere"
+  ipahbacrule:
+    name: "group/sysadmin-main"
+    description: "Give members of group sysadmin-main shell access anywhere"
+    ipaadmin_password: "{{ ipa_admin_password }}"
+    state: present
+    group:
+      - sysadmin-main
+  tags:
+    - config
+
+- name: "Enable group/sysadmin-main HBAC rule"
+  ipahbacrule:
+    name: "group/sysadmin-main"
+    ipaadmin_password: "{{ ipa_admin_password }}"
+    state: enabled
+  tags:
+    - config
+
+- name: "Disable allow_all HBAC rule"
+  ipahbacrule:
+    name: allow_all
+    ipaadmin_password: "{{ ipa_admin_password }}"
+    state: disabled
+  tags:
+    - config
+
+- name: "Give certain groups shell access on {{ ansible_fqdn }}"
+  ipahbacrule:
+    name: "shell-access/host/{{ ansible_fqdn }}"
+    description: "Give members of groups shell access on {{ ansible_fqdn }}"
+    ipaadmin_password: "{{ ipa_admin_password }}"
+    hbacsvcgroup:
+      - shell-access
+    state: present
+    group: "{{ ipa_client_shell_groups | default([]) | list }}"
+    host: "{{ ansible_fqdn }}"
+  tags:
+    - config
