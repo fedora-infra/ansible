@@ -475,3 +475,18 @@
   tags:
   - pagure
   - letsencrypt
+
+- name: Letsencrypt for pagure.io
+  include_role: name=letsencrypt
+  vars:
+    site_name: pagure.io
+    server_aliases:
+    - releases.pagure.org
+    - docs.pagure.org
+    - pagure.org
+    - www.pagure.io
+    - lists.pagurio
+  when: env != 'pagure-staging'
+  tags:
+  - pagure
+  - letsencrypt
