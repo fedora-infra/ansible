@@ -463,47 +463,12 @@
   - pagure
   - logrotate
 
-- name: Letsencrypt for releases.stg.pagure.org
-  include_role: name=letsencrypt
-  vars:
-    site_name: releases.stg.pagure.org
-  when: env == 'pagure-staging'
-  tags:
-  - pagure
-  - letsencrypt
-
-- name: Letsencrypt for docs.stg.pagure.org
-  include_role: name=letsencrypt
-  vars:
-    site_name: docs.stg.pagure.org
-  when: env == 'pagure-staging'
-  tags:
-  - pagure
-  - letsencrypt
-
-- name: Letsencrypt for stg.pagure.org
-  include_role: name=letsencrypt
-  vars:
-    site_name: stg.pagure.org
-  when: env == 'pagure-staging'
-  tags:
-  - pagure
-  - letsencrypt
-
 - name: Letsencrypt for stg.pagure.io
   include_role: name=letsencrypt
   vars:
     site_name: stg.pagure.io
+    server_aliases: [www.stg.pagure.io lists.stg.pagure.io releases.stg.pagure.org docs.stg.pagure.org stg.pagure.org]
   when: env == 'pagure-staging'
-  tags:
-  - pagure
-  - letsencrypt
-
-- name: Letsencrypt for pagure.org
-  include_role: name=letsencrypt
-  vars:
-    site_name: pagure.org
-  when: env != 'pagure-staging'
   tags:
   - pagure
   - letsencrypt
