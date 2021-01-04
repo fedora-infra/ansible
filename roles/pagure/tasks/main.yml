@@ -467,7 +467,12 @@
   include_role: name=letsencrypt
   vars:
     site_name: stg.pagure.io
-    server_aliases: [www.stg.pagure.io lists.stg.pagure.io releases.stg.pagure.org docs.stg.pagure.org stg.pagure.org]
+    server_aliases:
+    - www.stg.pagure.io
+    - lists.stg.pagure.io
+    - releases.stg.pagure.org
+    - docs.stg.pagure.org
+    - stg.pagure.org
   when: env == 'pagure-staging'
   tags:
   - pagure
