@@ -87,6 +87,10 @@ email_overrides_file = "/etc/fedora-messaging/email_overrides.toml"
 # List of accounts we do not want to report about
 ignorable_accounts = ["packagerbot", "zuul"]
 
+# Temp folder to use for toddlers temp files
+temp_folder = "/var/tmp"
+
+
 [consumer_config.default.pdc_config]
 # Configuration to talk to PDC, as understood by pdc-client.
 server = "https://pdc.fedoraproject.org/rest_api/v1/"
