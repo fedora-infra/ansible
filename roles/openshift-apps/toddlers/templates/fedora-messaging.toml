@@ -126,6 +126,9 @@ email_overrides_url = "https://pagure.io/fedora-infra/ansible/raw/master/f/roles
 [consumer_config.clean_retired_packages]
 pdc_active_branches = "https://pdc.fedoraproject.org/extras/active_branches.json"
 
+[consumer_config.packagers_without_bugzilla]
+ignorable_namespaces = ["tests"]
+
 
 [consumer_config.distgit_bugzilla_sync]
 # Sent notifications e-mails about errors to users
