@@ -216,6 +216,11 @@ level = "DEBUG"
 propagate = false
 handlers = ["console"]
 
+[log_config.loggers.toddlers.plugins.distgit_bugzilla_sync]
+level = "DEBUG"
+propagate = false
+handlers = ["console"]
+
 [log_config.root]
 level = "ERROR"
 handlers = ["console"]
