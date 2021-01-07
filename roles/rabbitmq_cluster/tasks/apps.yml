@@ -237,7 +237,7 @@
   delegate_to: "{{ rabbitmq_server }}"
   rabbitmq_user:
     user: centos-odcs
-    vhost: "{{ vhost }}"
+    vhost: /centos-odcs
     read_priv: "^$"  # Publish only, no reading
     write_priv: "amq\\.topic"
     configure_priv: "^$"  # No configuration permissions
