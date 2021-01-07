@@ -516,6 +516,10 @@ bz_server_rest = https://partner-bugzilla.redhat.com/rest/
 # bz_products =
 bz_products = Fedora,Fedora EPEL,Fedora Modules
 
+# Exclude some Releases where Updates are created automatically to touch bugs.
+# Comma separated list of Release.name values
+bz_exclude_rels = ELN
+
 # A template to use for links to Bugzilla tickets. %%s will be filled in with the bug number.
 # buglink = https://bugzilla.redhat.com/show_bug.cgi?id=%%s
 {% if env == 'production' %}
