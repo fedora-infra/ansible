@@ -234,7 +234,8 @@
   - centos-odcs
 
 - name: Create the user in RabbitMQ
-  delegate_to: "{{ rabbitmq_server }}"
+  run_once: true
+  delegate_to: "rabbitmq01.iad2.fedoraproject.org"
   rabbitmq_user:
     user: centos-odcs
     vhost: /centos-odcs
