@@ -16,7 +16,7 @@ spec:
 {% if env == 'staging' %}
       ref: "staging"
 {% else %}
-      ref: "production"
+      ref: "debug"
 {% endif %}
   strategy:
     type: Docker
