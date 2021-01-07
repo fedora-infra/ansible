@@ -232,4 +232,17 @@
     state: present
   tags:
   - centos-odcs
+
+- name: Create the user in RabbitMQ
+  delegate_to: "{{ rabbitmq_server }}"
+  rabbitmq_user:
+    user: centos-odcs
+    vhost: "{{ vhost }}"
+    read_priv: "^$"  # Publish only, no reading
+    write_priv: "amq\\.topic"
+    configure_priv: "^$"  # No configuration permissions
+    state: present
+  tags:
+  - centos-odcs
+
 # CENTOS ODCS END
