@@ -412,6 +412,18 @@
   tags:
   - selinux
 
+# Hotfix(es)
+
+- name: Install the python3-only version of the stream_server so it works
+  copy: src=pagure_stream_server.py
+        dest=/usr/libexec/pagure-ev/pagure_stream_server.py
+        owner=root mode=0755
+  tags:
+  - pagure
+  - hotfix
+  notify:
+  - reload httpd
+
 # Ensure all the services are up and running
 
 - name: Start and enable httpd, postfix, pagure_milter
