@@ -215,21 +215,10 @@ config = dict(
             channel='fedora-releng',
             filters=dict(
                 topic=[
-                    '^((?!(compose.rawhide.*)))',
-                    '^((?!(compose.branched.*)))',
-                    '^((?!(pungi.compose.*)))',
-                    '^((?!(pagure.*)))',
+                    '^((?!(compose.rawhide|compose.branched|pungi.compose|pagure)).)*$',
                 ],
                 body=[
-                    '^((?!(pagure.io/releng.*$)))',
-                    '^((?!(pagure.io/pungi.*$)))',
-                    '^((?!(pagure.io/fedora-comps$)))',
-                    '^((?!(pagure.io/fedora-kickstarts$)))',
-                    '^((?!(compose\/updates\.)$))',
-                    '^((?!(linux\/development)$))',
-                    '^((?!(rpms\/fedora-repos)$))',
-                    '^((?!(rpms\/fedora-release)$))',
-                    '^((?!(rpms\/fedora-packager)$))',
+                    '^((?!(pagure.io\/releng/failed-composes|pagure.io\/releng\/compose-tracker|pagure.io\/pungi|pagure.io\/fedora-comps|pagure.io\/fedora-kickstarts|compose\/updates|linux\/development|rpms\/fedora-repos|rpms\/fedora-release|rpms\/fedora-packager)).)*$',
                 ],
             ),
         ),
