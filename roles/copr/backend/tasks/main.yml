@@ -114,6 +114,13 @@
   tags:
   - config
 
+- name: add gzip content-encoding header by lua script
+  template: src="lighttpd/content-encoding-gzip-if-exists.lua" dest=/etc/lighttpd/content-encoding-gzip-if-exists.lua owner=root group=root mode=0644
+  notify:
+  - restart lighttpd
+  tags:
+  - config
+
 # TODO: move production to Let's Encrypt as well as devel
 - name: install certificates for production
   when: not devel
