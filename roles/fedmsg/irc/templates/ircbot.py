@@ -215,10 +215,21 @@ config = dict(
             channel='fedora-releng',
             filters=dict(
                 topic=[
-                    '^((?!(bodhi.mashtask.complete|pungi.compose.status.change|compose.branched.complete|compose.branched.start|compose.rawhide.complete|compose.rawhide.start|bodhi.updates.|pagure)).)*$',
+                    '^((?!(compose.rawhide.*)))',
+                    '^((?!(compose.branched.*)))',
+                    '^((?!(pungi.compose.*)))',
+                    '^((?!(pagure.*)))',
                 ],
                 body=[
-                    "^((?!(u'success': False|u'status': u'DOOMED'|u'status': u'Retired'|u'prev_status': u'Retired'|compose|bodhi\.updates\.|\/srv\/git\/releng|'name': 'releng'|'name': 'pungi-fedora')).)*$",
+                    '^((?!(pagure.io/releng.*$)))',
+                    '^((?!(pagure.io/pungi.*$)))',
+                    '^((?!(pagure.io/fedora-comps$)))',
+                    '^((?!(pagure.io/fedora-kickstarts$)))',
+                    '^((?!(compose\/updates\.)$))',
+                    '^((?!(linux\/development)$))',
+                    '^((?!(rpms\/fedora-repos)$))',
+                    '^((?!(rpms\/fedora-release)$))',
+                    '^((?!(rpms\/fedora-packager)$))',
                 ],
             ),
         ),
