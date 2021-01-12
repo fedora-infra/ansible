@@ -47,10 +47,10 @@ roles - specific roles to be use in playbooks.
 
 filter_plugins - Jinja filters
 
-master.yml - This is the master playbook, consisting of all
+main.yml - This is the main playbook, consisting of all
              current group and host playbooks. Note that the
              daily cron doesn't run this, it runs even over
-             playbooks that are not yet included in master.
+             playbooks that are not yet included in main.
              This playbook is usefull for making changes over
              multiple groups/hosts usually with -t (tag).
 ```
