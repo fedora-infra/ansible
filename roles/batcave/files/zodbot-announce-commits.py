@@ -116,7 +116,7 @@ def parse_commit(commit):
 
 
 # Get a list of commits to report.
-if branch == 'master':
+if branch == 'main':
     revs = run_command(f"git rev-list ^{old} {new}")["stdout"].split("\n")
     revs = [r for r in revs if r]
     revs.reverse()
