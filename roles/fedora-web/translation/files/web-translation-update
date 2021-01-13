@@ -1,0 +1,17 @@
+#!/bin/bash
+OLD=$(mktemp -d -t fedora_web_trans_XXXX)
+cd $OLD
+
+function clean_tmp() {
+  [ -n "$OLD" ] && rm -Rf "$OLD"
+}
+
+trap clean_tmp exit
+
+git clone https://pagure.io/fedora-websites.git
+cd fedora-websites
+
+for i in *fedoraproject.org; do
+    ( cd $i ; make pushpot )
+done
+

@@ -1,0 +1,50 @@
+- name: Install packages
+  package:
+    name:
+    - babel
+    - git
+    - python-genshi
+    state: present
+  tags:
+  - fedora-web-translation
+
+- name: Create a non root user to run the code
+  user:
+    name: _update_web_trans
+    generate_ssh_key: yes
+    ssh_key_file: .ssh/id_rsa_web_trans
+  register: user_result
+  tags:
+  - fedora-web-translation
+
+- name: Display the public key to add it to pagure
+  debug:
+    var: user_result.ssh_public_key
+
+- copy:
+    src: ssh_config
+    dest: ~_update_web_trans/.ssh/config
+    owner: _update_web_trans
+    group: _update_web_trans
+    mode: 0644
+  tags:
+  - fedora-web-translation
+ 
+- copy:
+    src: web-translation-update
+    dest: /usr/local/bin/web-translation-update
+    owner: root
+    group: root
+    mode: 0755
+  tags:
+  - fedora-web-translation
+
+- copy:
+    src: cron-web-translation-update
+    dest: /etc/cron.d/cron-web-translation-update
+    owner: root
+    group: root
+    mode: 0644
+  tags:
+  - fedora-web-translation
+  when: env == "production" and inventory_hostname.startswith('sundries01')
