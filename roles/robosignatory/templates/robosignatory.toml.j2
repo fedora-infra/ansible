@@ -75,6 +75,7 @@ handlers = ["console"]
     backend = "sigul"
     user = "autopen"
     passphrase_file = "/etc/sigul/autosign.pass"
+    file_signing_key_passphrase_file = "/etc/sigul/autosign.pass"
     config_file = "/etc/sigul/client.conf"
 
     [consumer_config.koji_instances]
@@ -158,6 +159,9 @@ handlers = ["console"]
             to = "f34-updates-testing-pending"
             key = "{{ (env == 'production')|ternary('fedora-34', 'testkey') }}"
             keyid = "{{ (env == 'production')|ternary('45719a39', 'd300e724') }}"
+{% if env == "production" %}
+            file_signing_key = "fedora-files-2021"
+{% endif %}
 
             [consumer_config.koji_instances.primary.tags.sidetags]
             pattern = 'f34-build-side-<seq_id>'
