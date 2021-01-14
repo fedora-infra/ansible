@@ -394,7 +394,6 @@
     ssl: true
     certbot: true
     tags: fedoracommunity
-    when: env == "production"
 
   - role: httpd/website
     site_name: get.fedoraproject.org
@@ -499,7 +498,6 @@
     certbot: true
     tags:
     - whatcanidoforfedora.org
-    when: env == "production"
 
   - role: httpd/website
     site_name: k12linux.org
@@ -735,7 +733,6 @@
     sslonly: true
     certbot: true
     tags: fedorahosted
-    when: env == "production"
 
   - role: httpd/website
     site_name: "id{{ env_suffix }}.fedoraproject.org"
