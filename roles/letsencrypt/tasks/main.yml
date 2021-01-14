@@ -1,3 +1,13 @@
+- name: setup defaults file
+  copy: >
+    dest=/etc/letsencrypt/cli.ini
+    src=cli.ini
+    owner=root
+    group=root
+    mode=0644
+  tags:
+  - letsencrypt
+  
 - name: Generate (or renew) the certificate
   delegate_to: "certgetter01.iad2.fedoraproject.org"
   command: certbot certonly --expand --keep -n --webroot --webroot-path /var/www/html/ -d {{','.join([site_name] + server_aliases)}}
