@@ -58,7 +58,35 @@
   - fedora-web
   when: env == 'staging'
 
+- name: Copy syncStatic script (stg)
+  when: env == "staging"
+  copy: >
+    src=syncStatic.stg.sh dest=/usr/local/bin/syncStatic owner=root group=root
+    mode=0755
+  tags:
+  - fedora-web
+
+- name: Copy syncStatic script (prod)
+  when: env == "production"
+  copy: >
+    src=syncStatic.sh dest=/usr/local/bin/syncStatic owner=root group=root
+    mode=0755
+  tags:
+  - fedora-web
+
+- name: Install the syncStatic and syncTranslations cronjobs
+  copy: >
+    src={{item}}.cron dest=/etc/cron.d/{{item}}.cron
+    owner=root group=root mode=0644
+  with_items:
+  - syncStatic
+  tags:
+  - fedora-web
+  - cron
+
 - name: Remove the syncTranslations cronjob
   file: 
     path: /etc/cron.d/syncTranslations.cron
     state: absent
+  tags:
+  - cron
