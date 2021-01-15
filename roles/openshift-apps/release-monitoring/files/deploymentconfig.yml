@@ -117,7 +117,7 @@ items:
         mid:
           failurePolicy: Abort
           execNewPod:
-            containerName: release-monitoring-check-service
+            containerName: release-monitoring-web
             command:
               - /bin/bash
             args:
@@ -205,7 +205,7 @@ items:
         mid:
           failurePolicy: Abort
           execNewPod:
-            containerName: release-monitoring-librariesio-consumer
+            containerName: release-monitoring-web
             command:
               - /bin/bash
             args:
