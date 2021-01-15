@@ -835,7 +835,7 @@
 
   - role: httpd/redirect
     shortname: 00-coreosbuild
-    website: "builds.coreos.fedoraproject.org"
+    website: "builds.coreos{{ env_suffix }}.fedoraproject.org"
     path: /
     target: https://builds.coreos.fedoraproject.org/browser
     tags:
