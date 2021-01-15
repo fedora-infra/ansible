@@ -114,6 +114,16 @@ items:
       activeDeadlineSeconds: 21600
       recreateParams:
         timeoutSeconds: 600
+        mid:
+          failurePolicy: Abort
+          execNewPod:
+            containerName: release-monitoring-check-service
+            command:
+              - /bin/bash
+            args:
+              - /etc/anitya/wait_for_web_service.sh
+            volumes:
+              - config-volume
       resources: {}
       type: Recreate
     template:
@@ -192,6 +202,16 @@ items:
       activeDeadlineSeconds: 21600
       recreateParams:
         timeoutSeconds: 600
+        mid:
+          failurePolicy: Abort
+          execNewPod:
+            containerName: release-monitoring-librariesio-consumer
+            command:
+              - /bin/bash
+            args:
+              - /etc/anitya/wait_for_web_service.sh
+            volumes:
+              - config-volume
       resources: {}
       type: Recreate
     template:
