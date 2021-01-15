@@ -64,9 +64,8 @@ items:
                 pushd anitya_schema && \
                 pip-3 install . && \
                 popd && \
-                popd
-        #       popd && \
-        #       rm -rf anitya
+                popd && \
+                rm -rf anitya
         # Let's use staging auth server in staging
 {% if env == 'staging' %}
         RUN sed -i 's/id.fedoraproject.org/id.stg.fedoraproject.org/g' /usr/lib/python3.8/site-packages/social_core/backends/fedora.py
