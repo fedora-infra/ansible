@@ -38,6 +38,7 @@
   ipahbacrule:
     name: "group/sysadmin-main"
     description: "Give members of group sysadmin-main shell access anywhere"
+    hostcategory: "all"
     ipaadmin_password: "{{ ipa_admin_password }}"
     state: present
     group:
