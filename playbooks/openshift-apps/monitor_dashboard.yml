@@ -64,6 +64,11 @@
 
   - role: openshift/object
     app: monitor-dashboard
+    file: postgrest_service.yml
+    objectname: postgrest_service.yml
+
+  - role: openshift/object
+    app: monitor-dashboard
     file: route_serviceaccount.yml
     objectname: route_serviceaccount.yml
 
@@ -77,6 +82,16 @@
     app: monitor-dashboard
     file: datagrepper_route.yml
     objectname: datagrepper_route.yml
+
+  - role: openshift/object
+    app: monitor-dashboard
+    file: postgrest_route.yml
+    objectname: postgrest_route.yml
+
+  - role: openshift/object
+    app: monitor-dashboard
+    template: postgrest_deploymentconfig.yml
+    objectname: postgrest_deploymentconfig.yml
 
   - role: openshift/object
     app: monitor-dashboard
