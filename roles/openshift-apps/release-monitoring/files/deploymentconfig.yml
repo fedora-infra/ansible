@@ -19,7 +19,7 @@ items:
           failurePolicy: Abort
           execNewPod:
             containerName: release-monitoring-web
-            command: [ /bin/sh, -i, -c, "alembic-3 -c /etc/anitya/alembic.ini upgrade head" ]
+            command: [ /bin/sh, -i, -c, "alembic-3 -c /etc/anitya/alembic.ini history; alembic-3 -c /etc/anitya/alembic.ini upgrade head" ]
             volumes:
               - config-volume
       resources: {}
@@ -118,7 +118,7 @@ items:
           failurePolicy: Retry
           execNewPod:
             containerName: release-monitoring-web
-            command: [ python3, "/etc/anitya/check_db.py" ]
+            command: [ /bin/bash, -c, "alembic-3 -c /etc/anitya/alembic.ini current | grep '(head)'" ]
             env:
               - name: ANITYA_WEB_CONFIG
                 value: /etc/anitya/anitya.toml
@@ -206,7 +206,7 @@ items:
           failurePolicy: Retry
           execNewPod:
             containerName: release-monitoring-web
-            command: [ python3, "/etc/anitya/check_db.py" ]
+            command: [ /bin/bash, -c, "alembic-3 -c /etc/anitya/alembic.ini current | grep '(head)'" ]
             env:
               - name: ANITYA_WEB_CONFIG
                 value: /etc/anitya/anitya.toml
