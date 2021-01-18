@@ -54,6 +54,9 @@ AcceptEnv XMODIFIERS
 # For repospanner/git
 AuthorizedKeysCommandUser git
 AuthorizedKeysCommand /usr/libexec/pagure/keyhelper.py "%u" "%h" "%t" "%f"
+{% elif env == 'staging' and not sshd_keyhelper %}
+AuthorizedKeysCommandUser nobody
+AuthorizedKeysCommand /usr/bin/sss_ssh_authorizedkeys
 {% endif %}
 
 
