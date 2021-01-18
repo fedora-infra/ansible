@@ -115,13 +115,13 @@ items:
       recreateParams:
         timeoutSeconds: 600
         mid:
-          failurePolicy: Abort
+          failurePolicy: Retry
           execNewPod:
             containerName: release-monitoring-web
-            command:
-              - /bin/bash
-            args:
-              - /etc/anitya/wait_for_web_service.sh
+            command: [ python3, "/etc/anitya/check_db.py" ]
+            env:
+              - name: ANITYA_WEB_CONFIG
+                value: /etc/anitya/anitya.toml
             volumes:
               - config-volume
       resources: {}
@@ -203,13 +203,13 @@ items:
       recreateParams:
         timeoutSeconds: 600
         mid:
-          failurePolicy: Abort
+          failurePolicy: Retry
           execNewPod:
             containerName: release-monitoring-web
-            command:
-              - /bin/bash
-            args:
-              - /etc/anitya/wait_for_web_service.sh
+            command: [ python3, "/etc/anitya/check_db.py" ]
+            env:
+              - name: ANITYA_WEB_CONFIG
+                value: /etc/anitya/anitya.toml
             volumes:
               - config-volume
       resources: {}
