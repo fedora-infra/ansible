@@ -10,12 +10,7 @@
     dest: /usr/local/sbin/
     mode: '0755'
 
-- name: reload systemd
-  command: systemctl daemon-reload
-  when: enable_swap_service.changed
-
 - name: enable enable-swap.sh
   service:
     name: enable-swap
-    state: started
     enabled: yes
