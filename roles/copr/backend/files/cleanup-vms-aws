@@ -1,5 +1,12 @@
 #! /bin/bash
 
+cat <<EOF
+This script doesn't work currently, it is obsoleted by
+the script 'cleanup-vms-aws-resalloc'.  It is kept for documentation purposes or
+future reference.
+EOF
+exit 1
+
 set -e
 
 help_output()
@@ -83,9 +90,9 @@ old_enough()
 aws_command=(
     aws ec2 describe-instances
         --query "Reservations[].Instances[].{Id:InstanceId,Name:Tags[?Key=='Name']|[0].Value,Time:LaunchTime}"
-        --filters "Name=tag-key,Values=FedoraCopr,Name=tag-value,Values=copr"
+        --filters "Name=tag:FedoraGroup,Values=copr"
                   "Name=instance-state-name,Values=running"
-                  "Name=tag-key,Values=CoprPurpose,Name=tag-value,Values=builder"
+                  "Name=tag:CoprPurpose,Values=builder"
         --output text
 )
 
@@ -100,7 +107,7 @@ esac
 
 while read -r aws_id vm_name launch_time; do
     case $vm_name in
-    copr-$prefix-builder*)
+    aws_*_normal_${prefix}_*)
         something_found=true
 
         if tracked "$vm_name"; then
