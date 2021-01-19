@@ -139,7 +139,11 @@ notify_admins = [
     "pingou@fedoraproject.org",
 ]
 # Use fasjson instead of FAS
+{% if env == staging %}
+fasjson = true
+{% else %}
 fasjson = false
+{% endif %}
 
 # PDC types mapping for distgit_bugzilla_sync toddler
 [consumer_config.distgit_bugzilla_sync.pdc_types]
