@@ -16,7 +16,7 @@
     state: present
     pkg: 
     - chrony
-    - libselinux-python
+    - python3-libselinux
   when: ansible_distribution_major_version|int > 7 and ansible_distribution == 'RedHat' and ansible_cmdline.ostree is not defined
   tags:
   - packages
