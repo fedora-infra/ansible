@@ -67,7 +67,7 @@
     name: "{{ item }}"
     state: present
     ipaadmin_password: "{{ ipa_admin_password }}"
-  loop: "{{ ['sysadmin-main'] + (ipa_client_shell_groups | default([])) | list }}"
+  loop: "{{ (ipa_client_shell_groups | default([])) | list }}"
 
 - name: "Give certain groups shell access on {{ ansible_fqdn }}"
   ipahbacrule:
