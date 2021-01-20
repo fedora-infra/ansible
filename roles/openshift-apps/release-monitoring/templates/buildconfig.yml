@@ -44,7 +44,7 @@ items:
                 python3-wtforms && \
             dnf autoremove -y && \
             dnf clean all -y
-        RUN echo $(git clone https://github.com/fedora-infra/anitya.git && \
+        RUN git clone https://github.com/fedora-infra/anitya.git && \
                 pushd anitya && \
 {% if env == 'staging' %}
                 git checkout staging && \
@@ -65,7 +65,7 @@ items:
                 pip-3 install . && \
                 popd && \
                 popd && \
-                rm -rf anitya)
+                rm -rf anitya
         # Let's use staging auth server in staging
 {% if env == 'staging' %}
         RUN sed -i 's/id.fedoraproject.org/id.stg.fedoraproject.org/g' /usr/lib/python3.8/site-packages/social_core/backends/fedora.py
@@ -84,6 +84,8 @@ items:
 {% endif %}
     strategy:
       type: Docker
+      dockerStrategy:
+        noCache: true
     output:
       to:
         kind: ImageStreamTag
