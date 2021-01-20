@@ -19,7 +19,7 @@ items:
           failurePolicy: Abort
           execNewPod:
             containerName: release-monitoring-web
-            command: [ /bin/sh, -i, -c, "alembic-3 -c /etc/anitya/alembic.ini history; alembic-3 -c /etc/anitya/alembic.ini upgrade head" ]
+            command: [ /bin/sh, -i, -c, "ls -l /usr/local/lib/python3.8/site-packages/anitya/db/migrations/versions/;alembic-3 -c /etc/anitya/alembic.ini history; alembic-3 -c /etc/anitya/alembic.ini upgrade head" ]
             volumes:
               - config-volume
       resources: {}
