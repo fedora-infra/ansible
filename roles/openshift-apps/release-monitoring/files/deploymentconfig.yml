@@ -12,7 +12,7 @@ items:
     selector:
       deploymentconfig: release-monitoring-web
     strategy:
-      activeDeadlineSeconds: 21600
+      activeDeadlineSeconds: 900
       recreateParams:
         timeoutSeconds: 600
         mid:
@@ -111,9 +111,9 @@ items:
     selector:
       deploymentconfig: release-monitoring-check-service
     strategy:
-      activeDeadlineSeconds: 21600
+      activeDeadlineSeconds: 900
       recreateParams:
-        timeoutSeconds: 600
+        timeoutSeconds: 30
         mid:
           failurePolicy: Retry
           execNewPod:
@@ -199,9 +199,9 @@ items:
     selector:
       deploymentconfig: release-monitoring-librariesio-consumer
     strategy:
-      activeDeadlineSeconds: 21600
+      activeDeadlineSeconds: 900
       recreateParams:
-        timeoutSeconds: 600
+        timeoutSeconds: 30
         mid:
           failurePolicy: Retry
           execNewPod:
