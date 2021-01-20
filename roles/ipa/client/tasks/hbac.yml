@@ -1,3 +1,38 @@
+## Cluster-wide rules
+
+- name: "Give members of group sysadmin-main access to anything, anywhere"
+  ipahbacrule:
+    name: "group/sysadmin-main"
+    description: "Give members of group sysadmin-main access to anything, anywhere"
+    hostcategory: "all"
+    servicecategory: "all"
+    ipaadmin_password: "{{ ipa_admin_password }}"
+    state: present
+    group:
+      - sysadmin-main
+  tags:
+    - config
+
+- name: "Enable group/sysadmin-main HBAC rule"
+  ipahbacrule:
+    name: "group/sysadmin-main"
+    ipaadmin_password: "{{ ipa_admin_password }}"
+    state: enabled
+  tags:
+    - config
+
+- name: "Disable allow_all HBAC rule"
+  ipahbacrule:
+    name: allow_all
+    ipaadmin_password: "{{ ipa_admin_password }}"
+    state: disabled
+  tags:
+    - config
+
+## Host-specific rules
+
+# shell access
+
 - name: "Warn if `fas_client_groups` is set but `ipa_client_shell_groups` isn't"
   fail:
     msg: "`fas_client_groups` is defined but `ipa_client_shell_groups` isn't on an IPA client"
@@ -33,34 +68,6 @@
     state: present
     ipaadmin_password: "{{ ipa_admin_password }}"
   loop: "{{ ['sysadmin-main'] + (ipa_client_shell_groups | default([])) | list }}"
-
-- name: "Give members of sysadmin-main access anywhere"
-  ipahbacrule:
-    name: "group/sysadmin-main"
-    description: "Give members of group sysadmin-main shell access anywhere"
-    hostcategory: "all"
-    ipaadmin_password: "{{ ipa_admin_password }}"
-    state: present
-    group:
-      - sysadmin-main
-  tags:
-    - config
-
-- name: "Enable group/sysadmin-main HBAC rule"
-  ipahbacrule:
-    name: "group/sysadmin-main"
-    ipaadmin_password: "{{ ipa_admin_password }}"
-    state: enabled
-  tags:
-    - config
-
-- name: "Disable allow_all HBAC rule"
-  ipahbacrule:
-    name: allow_all
-    ipaadmin_password: "{{ ipa_admin_password }}"
-    state: disabled
-  tags:
-    - config
 
 - name: "Give certain groups shell access on {{ ansible_fqdn }}"
   ipahbacrule:
