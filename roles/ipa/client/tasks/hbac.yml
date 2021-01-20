@@ -1,5 +1,8 @@
 ## Cluster-wide rules
 
+- name: Check that sysadmin-main group exists
+  command: "ipa group-show --no-members sysadmin-main"
+
 - name: "Give members of group sysadmin-main access to anything, anywhere"
   ipahbacrule:
     name: "group/sysadmin-main"
@@ -62,11 +65,9 @@
   tags:
     - config
 
-- name: Create missing shell access user groups
-  ipagroup:
-    name: "{{ item }}"
-    state: present
-    ipaadmin_password: "{{ ipa_admin_password }}"
+- name: Check that shell access user groups exist
+  command: "ipa group-show --no-members {{ item }}"
+  changed_when: False
   loop: "{{ (ipa_client_shell_groups | default([])) | list }}"
 
 - name: "Give certain groups shell access on {{ ansible_fqdn }}"
