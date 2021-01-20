@@ -522,7 +522,7 @@
     localpath: /resultsdb
     remotepath: /resultsdb
     balancer_name: resultsdb-stg
-    balancer_members: ['resultsdb-stg01.qa.fedoraproject.org:80']
+    balancer_members: ['resultsdb01.stg.iad2.fedoraproject.org:80']
     http_not_https_yes_this_is_insecure_and_i_feel_bad: true
     when: env == "staging"
 
@@ -532,7 +532,7 @@
     localpath: /resultsdb_api
     remotepath: /resultsdb_api
     balancer_name: resultsdb-stg
-    balancer_members: ['resultsdb-stg01.qa.fedoraproject.org:80']
+    balancer_members: ['resultsdb01.stg.iad2.fedoraproject.org:80']
     http_not_https_yes_this_is_insecure_and_i_feel_bad: true
     when: env == "staging"
 
