@@ -29,3 +29,11 @@
   when: env == 'staging'
   tags:
     - ipa/client
+
+- name: Configure sudo on IPA cluster
+  delegate_to: "{{ ipa_server }}"
+  import_tasks: sudo.yml
+  # don't muck with prod for now
+  when: env == 'staging'
+  tags:
+    - ipa/client
