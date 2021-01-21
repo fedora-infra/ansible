@@ -2,6 +2,7 @@
 
 - name: Check that sysadmin-main group exists
   command: "ipa group-show --no-members sysadmin-main"
+  changed_when: False
 
 - name: "Give members of group sysadmin-main access to anything, anywhere"
   ipahbacrule:
