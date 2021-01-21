@@ -33,6 +33,19 @@
   tags:
     - config
 
+- name: "Let everybody run sudo"
+  ipahbacrule:
+    name: "sudo/all"
+    description: "Allow all users to execute the sudo command"
+    state: present
+    ipaadmin_password: "{{ ipa_admin_password }}"
+    hostcategory: "all"
+    usercategory: "all"
+    hbacsvcgroup:
+      - Sudo
+  tags:
+    - config
+
 ## Host-specific rules
 
 # shell access
