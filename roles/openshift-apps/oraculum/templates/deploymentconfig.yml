@@ -62,7 +62,7 @@ spec:
           value: "1"
         # WatchDog emails
         - name: SEND_ERROR_EMAILS
-          value: false
+          value: "false"
         - name: SMTP_CONFIG
           value: "{{ oraculum_smtp_confline }}"
       volumeMounts:
@@ -158,7 +158,7 @@ spec:
           value: "1"
         # WatchDog emails
         - name: SEND_ERROR_EMAILS
-          value: false
+          value: "false"
         - name: SMTP_CONFIG
           value: "{{ oraculum_smtp_confline }}"
       volumeMounts:
@@ -242,7 +242,7 @@ spec:
           value: "1"
         # WatchDog emails
         - name: SEND_ERROR_EMAILS
-          value: false
+          value: "false"
         - name: SMTP_CONFIG
           value: "{{ oraculum_smtp_confline }}"
       volumeMounts:
