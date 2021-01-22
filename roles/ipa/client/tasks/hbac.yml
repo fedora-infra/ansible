@@ -6,7 +6,7 @@
 
 - name: "Give members of group sysadmin-main access to anything, anywhere"
   ipahbacrule:
-    name: "group/sysadmin-main"
+    name: "usergroup/sysadmin-main"
     description: "Give members of group sysadmin-main access to anything, anywhere"
     hostcategory: "all"
     servicecategory: "all"
@@ -15,9 +15,9 @@
     group:
       - sysadmin-main
 
-- name: "Enable group/sysadmin-main HBAC rule"
+- name: "Enable usergroup/sysadmin-main HBAC rule"
   ipahbacrule:
-    name: "group/sysadmin-main"
+    name: "usergroup/sysadmin-main"
     ipaadmin_password: "{{ ipa_admin_password }}"
     state: enabled
 
@@ -29,7 +29,7 @@
 
 - name: "Let everybody run sudo"
   ipahbacrule:
-    name: "sudo/all"
+    name: "all-users/sudo"
     description: "Allow all users to execute the sudo command"
     state: present
     ipaadmin_password: "{{ ipa_admin_password }}"
@@ -74,7 +74,7 @@
 
 - name: "Give certain groups shell access on {{ ansible_fqdn }}"
   ipahbacrule:
-    name: "shell-access/host/{{ ansible_fqdn }}"
+    name: "host/{{ ansible_fqdn }}/shell-access"
     description: "Give members of groups shell access on {{ ansible_fqdn }}"
     ipaadmin_password: "{{ ipa_admin_password }}"
     hbacsvcgroup:

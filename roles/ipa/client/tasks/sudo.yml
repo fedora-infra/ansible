@@ -5,7 +5,7 @@
 
 - name: "Give members of `sysadmin-main` sudo access to anything, anywhere"
   ipasudorule:
-    name: "group/sysadmin-main"
+    name: "usergroup/sysadmin-main"
     description: "Allow members of `sysadmin-main` to use sudo to do anything, anywhere"
     ipaadmin_password: "{{ ipa_admin_password }}"
     state: present
