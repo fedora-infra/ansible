@@ -73,18 +73,18 @@ spec:
       - name: oraculum-secret-volume
         secret:
           secretName: oraculum-secret
-        readinessProbe:
-          timeoutSeconds: 1
-          initialDelaySeconds: 5
-          httpGet:
-            path: /
-            port: 5000
-        livenessProbe:
-          timeoutSeconds: 1
-          initialDelaySeconds: 30
-          httpGet:
-            path: /
-            port: 5000
+      readinessProbe:
+        timeoutSeconds: 1
+        initialDelaySeconds: 5
+        httpGet:
+          path: /
+          port: 5000
+      livenessProbe:
+        timeoutSeconds: 1
+        initialDelaySeconds: 30
+        httpGet:
+          path: /
+          port: 5000
 
   triggers:
   - type: ConfigChange
@@ -101,14 +101,14 @@ apiVersion: v1
 kind: DeploymentConfig
 metadata:
   labels:
-    app: packager-dashboard
-    service: packager-dashboard
-  name: packager-dashboard-worker
+    app: oraculum
+    service: oraculum
+  name: oraculum-worker
 spec:
   replicas: 1 # Change me to some biiig numba after you got me working
   selector:
-    app: packager-dashboard
-    deploymentconfig: packager-dashboard
+    app: oraculum
+    deploymentconfig: oraculum
   strategy:
     type: Recreate
     recreateParams:
@@ -125,11 +125,11 @@ spec:
   template:
     metadata:
       labels:
-        app: packager-dashboard
-        deploymentconfig: packager-dashboard
+        app: oraculum
+        deploymentconfig: oraculum
     spec:
       containers:
-      - name: packager-dashboard
+      - name: oraculum-worker
         image: packager-dashboard:latest
         resources: {}
         env:
@@ -176,7 +176,7 @@ spec:
     imageChangeParams:
       automatic: true
       containerNames:
-      - packager-dashboard
+      - oraculum-worker
       from:
         kind: ImageStreamTag
         name: packager-dashboard:latest
@@ -185,14 +185,14 @@ apiVersion: v1
 kind: DeploymentConfig
 metadata:
   labels:
-    app: packager-dashboard
-    service: packager-dashboard
-  name: packager-dashboard-beat
+    app: oraculum
+    service: oraculum
+  name: oraculum-beat
 spec:
   replicas: 1 # Never change this to more or less than ONE!
   selector:
-    app: packager-dashboard
-    deploymentconfig: packager-dashboard
+    app: oraculum
+    deploymentconfig: oraculum
   strategy:
     type: Recreate
     recreateParams:
@@ -209,11 +209,11 @@ spec:
   template:
     metadata:
       labels:
-        app: packager-dashboard
-        deploymentconfig: packager-dashboard
+        app: oraculum
+        deploymentconfig: oraculum
     spec:
       containers:
-      - name: packager-dashboard
+      - name: oraculum-beat
         image: packager-dashboard:latest
         resources: {}
         env:
@@ -260,7 +260,7 @@ spec:
     imageChangeParams:
       automatic: true
       containerNames:
-      - packager-dashboard
+      - oraculum-beat
       from:
         kind: ImageStreamTag
         name: packager-dashboard:latest
