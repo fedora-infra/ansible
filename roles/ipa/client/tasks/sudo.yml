@@ -1,5 +1,5 @@
 - name: Check that configured sudo groups exist
-  command: "ipa group-show --no-members {{ item }}"
+  command: "getent group {{ item }}"
   changed_when: False
   loop: "{{ (ipa_client_sudo_groups | default([])) + (ipa_client_sudo_nopasswd_groups | default([])) | list }}"
 

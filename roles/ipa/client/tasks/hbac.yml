@@ -1,7 +1,7 @@
 ## Cluster-wide rules
 
 - name: Check that sysadmin-main group exists
-  command: "ipa group-show --no-members sysadmin-main"
+  command: "getent group sysadmin-main"
   changed_when: False
 
 - name: "Give members of group sysadmin-main access to anything, anywhere"
@@ -68,7 +68,7 @@
       - sshd
 
 - name: Check that shell access user groups exist
-  command: "ipa group-show --no-members {{ item }}"
+  command: "getent group {{ item }}"
   changed_when: False
   loop: "{{ (ipa_client_shell_groups | default([])) | list }}"
 
