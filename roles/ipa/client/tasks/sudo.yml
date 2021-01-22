@@ -16,27 +16,27 @@
     group:
       - sysadmin-main
 
-- name: "Give certain groups sudo access to anything on {{ ansible_fqdn }}"
+- name: "Give certain groups sudo access to anything on host group {{ ipa_host_group }}"
   ipasudorule:
-    name: "host/{{ ansible_fqdn }}"
-    description: "Allow members of groups sudo access to anything on {{ ansible_fqdn }}"
+    name: "hostgroup/{{ ipa_host_group }}"
+    description: "Give members of groups sudo access to anything on host group {{ ipa_host_group }}"
     ipaadmin_password: "{{ ipa_admin_password }}"
     state: present
     group: "{{ ipa_client_sudo_groups | list }}"
-    host: "{{ ansible_fqdn }}"
+    hostgroup: "{{ ipa_host_group }}"
     cmdcategory: "all"
     runasusercategory: "all"
     runasgroupcategory: "all"
   when: ipa_client_sudo_groups is defined and ipa_client_sudo_groups | length > 0
 
-- name: "Give certain groups password-less sudo access to anything on {{ ansible_fqdn }}"
+- name: "Give certain groups password-less sudo access to anything on host group {{ ipa_host_group }}"
   ipasudorule:
-    name: "host/{{ ansible_fqdn }}/nopasswd"
-    description: "Allow members of groups password-less sudo access to anything on {{ ansible_fqdn }}"
+    name: "hostgroup/{{ ipa_host_group }}/nopasswd"
+    description: "Give members of groups password-less sudo access to anything on host group {{ ipa_host_group }}"
     ipaadmin_password: "{{ ipa_admin_password }}"
     state: present
     group: "{{ ipa_client_sudo_groups_nopasswd | list }}"
-    host: "{{ ansible_fqdn }}"
+    hostgroup: "{{ ipa_host_group }}"
     cmdcategory: "all"
     runasusercategory: "all"
     runasgroupcategory: "all"

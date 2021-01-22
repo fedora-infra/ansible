@@ -68,13 +68,13 @@
   changed_when: False
   loop: "{{ (ipa_client_shell_groups | default([])) | list }}"
 
-- name: "Give certain groups shell access on {{ ansible_fqdn }}"
+- name: "Give certain groups shell access on host group {{ ipa_host_group }}"
   ipahbacrule:
-    name: "host/{{ ansible_fqdn }}/shell-access"
-    description: "Give members of groups shell access on {{ ansible_fqdn }}"
+    name: "hostgroup/{{ ipa_host_group }}/shell-access"
+    description: "Give certain groups shell access on host group {{ ansible_fqdn }}"
     ipaadmin_password: "{{ ipa_admin_password }}"
     hbacsvcgroup:
       - shell-access
     state: present
     group: "{{ ipa_client_shell_groups | default([]) | list }}"
-    host: "{{ ansible_fqdn }}"
+    hostgroup: "{{ ipa_host_group }}"
