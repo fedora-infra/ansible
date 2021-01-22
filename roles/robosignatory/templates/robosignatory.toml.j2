@@ -160,7 +160,8 @@ handlers = ["console"]
             key = "{{ (env == 'production')|ternary('fedora-34', 'testkey') }}"
             keyid = "{{ (env == 'production')|ternary('45719a39', 'd300e724') }}"
 {% if env == "production" %}
-            file_signing_key = "fedora-files-2021"
+            # ima file signing - disable for now per fesco
+            # file_signing_key = "fedora-files-2021"
 {% endif %}
 
             [consumer_config.koji_instances.primary.tags.sidetags]
