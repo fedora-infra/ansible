@@ -42,11 +42,11 @@
 
 # shell access
 
-- name: "Warn if `fas_client_groups` is set but `ipa_client_shell_groups` isn't"
+- name: "Warn if `fas_client_groups` is set"
   fail:
-    msg: "`fas_client_groups` is defined but `ipa_client_shell_groups` isn't on an IPA client"
+    msg: "`fas_client_groups` is defined, should be converted to a list and named `ipa_client_shell_groups`"
   ignore_errors: true
-  when: fas_client_groups is defined and ipa_client_shell_groups is not defined
+  when: fas_client_groups is defined
 
 - name: "Convert `fas_client_groups` string to `ipa_client_shell_groups` list if missing"
   set_fact:
