@@ -56,33 +56,33 @@
       - appowners
 
   - role: openshift/object
-    app: packager-dashboard
+    app: oraculum
     template: buildconfig.yml
     objectname: buildconfig.yml
 
   - role: openshift/object
-    app: packager-dashboard
+    app: oraculum
     template: deploymentconfig.yml
     objectname: deploymentconfig.yml
 
   - role: openshift/object
-    app: packager-dashboard
+    app: oraculum
     template: imagestream.yml
     objectname: imagestream.yml
 
   - role: openshift/object
-    app: packager-dashboard
+    app: oraculum
     file: service.yml
     objectname: service.yml
 
   - role: openshift/route
-    app: packager-dashboard
+    app: oraculum
     routename: packager-dashboard
     host: "packager-dashboard{{ env_suffix }}.fedoraproject.org"
     serviceport: 8080-tcp
     servicename: packager-dashboard
 
   - role: openshift/start-build
-    app: packager-dashboard
+    app: oraculum
     buildname: packager-dashboard-build
     objectname: packager-dashboard-build
