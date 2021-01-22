@@ -14,24 +14,18 @@
     state: present
     group:
       - sysadmin-main
-  tags:
-    - config
 
 - name: "Enable group/sysadmin-main HBAC rule"
   ipahbacrule:
     name: "group/sysadmin-main"
     ipaadmin_password: "{{ ipa_admin_password }}"
     state: enabled
-  tags:
-    - config
 
 - name: "Disable allow_all HBAC rule"
   ipahbacrule:
     name: allow_all
     ipaadmin_password: "{{ ipa_admin_password }}"
     state: disabled
-  tags:
-    - config
 
 - name: "Let everybody run sudo"
   ipahbacrule:
@@ -43,8 +37,6 @@
     usercategory: "all"
     hbacsvcgroup:
       - Sudo
-  tags:
-    - config
 
 ## Host-specific rules
 
@@ -66,8 +58,6 @@
     name: sshd
     description: SSH daemon
     ipaadmin_password: "{{ ipa_admin_password }}"
-  tags:
-    - config
 
 - name: Add the shell-access service group in IPA
   ipahbacsvcgroup:
@@ -76,8 +66,6 @@
     ipaadmin_password: "{{ ipa_admin_password }}"
     hbacsvc:
       - sshd
-  tags:
-    - config
 
 - name: Check that shell access user groups exist
   command: "ipa group-show --no-members {{ item }}"
@@ -94,5 +82,3 @@
     state: present
     group: "{{ ipa_client_shell_groups | default([]) | list }}"
     host: "{{ ansible_fqdn }}"
-  tags:
-    - config

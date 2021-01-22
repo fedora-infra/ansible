@@ -29,6 +29,7 @@
   when: env == 'staging'
   tags:
     - ipa/client
+    - config
 
 - name: Configure sudo on IPA cluster
   delegate_to: "{{ ipa_server }}"
@@ -37,3 +38,4 @@
   when: env == 'staging'
   tags:
     - ipa/client
+    - config
