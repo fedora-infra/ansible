@@ -76,13 +76,13 @@ spec:
           timeoutSeconds: 1
           initialDelaySeconds: 5
           httpGet:
-            path: /
+            path: /netboot
             port: 8080
         livenessProbe:
           timeoutSeconds: 1
           initialDelaySeconds: 30
           httpGet:
-            path: /
+            path: /netboot
             port: 8080
   triggers:
   - type: ConfigChange
