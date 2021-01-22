@@ -1,0 +1,5 @@
+## Cluster-wide rules
+
+- name: Check that sysadmin-main group exists
+  command: "getent group sysadmin-main"
+  changed_when: False
