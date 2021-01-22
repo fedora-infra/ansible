@@ -22,6 +22,8 @@ spec:
           # init_db isn't dropping anything, so it's safe to call every time the pod starts
           command: ["python", "/opt/app-root/src/oraculum/cli.py", "init_db"]
           # and then just the gunicorn for the frontend part of the backend :)
+          volumes:
+           - oraculum-secret-volume
   template:
     metadata:
       labels:
@@ -65,6 +67,14 @@ spec:
           value: False
         - name: SMTP_CONFIG
           value: "{{ oraculum_smtp_confline }}"
+      volumeMounts:
+      - name: oraculum-secret-volume
+        mountPath: /opt/app-root/secret/
+        readOnly: true
+      volumes:
+      - name: oraculum-secret-volume
+        secret:
+          secretName: oraculum-secret
         readinessProbe:
           timeoutSeconds: 1
           initialDelaySeconds: 5
@@ -112,6 +122,8 @@ spec:
           # init_db isn't dropping anything, so it's safe to call every time the pod starts
           command: ["/bin/sh","-c"]
           args: ["python /opt/app-root/src/oraculum/cli.py init_db && /usr/bin/celery -A oraculum.celery_app worker -c 2 --loglevel=INFO"]
+          volumes:
+           - oraculum-secret-volume
   template:
     metadata:
       labels:
@@ -153,6 +165,14 @@ spec:
           value: False
         - name: SMTP_CONFIG
           value: "{{ oraculum_smtp_confline }}"
+      volumeMounts:
+      - name: oraculum-secret-volume
+        mountPath: /opt/app-root/secret/
+        readOnly: true
+      volumes:
+      - name: oraculum-secret-volume
+        secret:
+          secretName: oraculum-secret
 
   triggers:
   - type: ConfigChange
@@ -188,6 +208,8 @@ spec:
           # init_db isn't dropping anything, so it's safe to call every time the pod starts
           command: ["/bin/sh","-c"]
           args: ["python /opt/app-root/src/oraculum/cli.py init_db && /usr/bin/celery -A oraculum.celery_app beat --loglevel=INFO"]
+          volumes:
+           - oraculum-secret-volume
   template:
     metadata:
       labels:
@@ -229,6 +251,14 @@ spec:
           value: False
         - name: SMTP_CONFIG
           value: "{{ oraculum_smtp_confline }}"
+      volumeMounts:
+      - name: oraculum-secret-volume
+        mountPath: /opt/app-root/secret/
+        readOnly: true
+      volumes:
+      - name: oraculum-secret-volume
+        secret:
+          secretName: oraculum-secret
 
   triggers:
   - type: ConfigChange
