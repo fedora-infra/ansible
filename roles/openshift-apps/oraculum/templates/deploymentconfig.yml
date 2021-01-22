@@ -58,8 +58,6 @@ spec:
         # Misc
         - name: SECRET_KEY
           value: "{{ oraculum_secret_key }}"
-        - name: OIDC_CLIENT_SECRETS
-          value: "{{ oraculum_oidc_secrets }}"
         - name: OPENSHIFT_PROD
           value: "1"
         # WatchDog emails
@@ -156,8 +154,6 @@ spec:
         # Misc
         - name: SECRET_KEY
           value: "{{ oraculum_secret_key }}"
-        - name: OIDC_CLIENT_SECRETS
-          value: "{{ oraculum_oidc_secrets }}"
         - name: OPENSHIFT_PROD
           value: "1"
         # WatchDog emails
@@ -242,8 +238,6 @@ spec:
         # Misc
         - name: SECRET_KEY
           value: "{{ oraculum_secret_key }}"
-        - name: OIDC_CLIENT_SECRETS
-          value: "{{ oraculum_oidc_secrets }}"
         - name: OPENSHIFT_PROD
           value: "1"
         # WatchDog emails
