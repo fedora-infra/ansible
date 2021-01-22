@@ -649,6 +649,15 @@
     - app.os.fedoraproject.org
 
   - role: httpd/reverseproxy
+    website: "provision{{ env_suffix }}.fedoraproject.org"
+    destname: zezere
+    balancer_name: app-os
+    targettype: openshift
+    keephost: true
+    tags:
+    - zezere
+
+  - role: httpd/reverseproxy
     website: odcs.fedoraproject.org
     destname: odcs
     proxyurl: http://localhost:10066

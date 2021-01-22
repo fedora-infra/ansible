@@ -620,6 +620,14 @@
     cert_name: "{{wildcard_cert_name}}"
 
   - role: httpd/website
+    site_name: "provision{{ env_suffix }}.fedoraproject.org"
+    # Zezere needs non-HTTPS for netboot
+    sslonly: false
+    cert_name: "{{wildcard_cert_name}}"
+    tags:
+    - zezere
+
+  - role: httpd/website
     site_name: os.fedoraproject.org
     sslonly: true
     cert_name: "{{wildcard_cert_name}}"
@@ -728,7 +736,7 @@
 
   - role: httpd/website
     site_name: lists.fedorahosted.org
-    server_aliases: 
+    server_aliases:
       - lists.stg.fedorahosted.org
     sslonly: true
     certbot: true
@@ -963,10 +971,10 @@
   - role: httpd/website
     site_name: fedorahosted.org
     sslonly: true
-    server_aliases: 
-      - git.fedorahosted.org 
-      - bzr.fedorahosted.org 
-      - hg.fedorahosted.org 
+    server_aliases:
+      - git.fedorahosted.org
+      - bzr.fedorahosted.org
+      - hg.fedorahosted.org
       - svn.fedorahosted.org
     certbot: true
     tags: fedorahosted
