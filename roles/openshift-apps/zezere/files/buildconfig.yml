@@ -21,7 +21,7 @@ spec:
           value: django.db.backends.sqlite3
       from:
         kind: DockerImage
-        name: registry.access.redhat.com/rhscl/python-36-rhel7:latest
+        name: registry.access.redhat.com/ubi8/python-38:latest
   output:
     to:
       kind: ImageStreamTag
