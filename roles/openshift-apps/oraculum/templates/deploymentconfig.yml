@@ -277,13 +277,6 @@ spec:
   selector:
     app: packager-dashboard
     deploymentconfig: packager-dashboard
-  strategy:
-    type: Recreate
-    recreateParams:
-      mid:
-        failurePolicy: Abort
-        execNewPod:
-          containerName: packager-dashboard-redis
   template:
     metadata:
       labels:
@@ -297,7 +290,6 @@ spec:
         env:
         - name: REDIS_PASSWORD
           value: "{{ oraculum_redis_pass }}"
-
   triggers:
   - type: ConfigChange
   - type: ImageChange
