@@ -52,7 +52,7 @@ spec:
         - name: REDIS_PASSWORD
           value: "{{ oraculum_redis_pass }}"
         - name: REDIS_SERVICE_HOST
-          value: "packager-dashboard-redis.oraculum.svc.cluster.local"
+          value: "oraculum-redis.oraculum.svc.cluster.local"
         - name: REDIS_SERVICE_PORT_REDIS
           value: "6379"
         # Misc
@@ -144,7 +144,7 @@ spec:
         - name: REDIS_PASSWORD
           value: "{{ oraculum_redis_pass }}"
         - name: REDIS_SERVICE_HOST
-          value: "packager-dashboard-redis.oraculum.svc.cluster.local"
+          value: "oraculum-redis.oraculum.svc.cluster.local"
         - name: REDIS_SERVICE_PORT_REDIS
           value: "6379"
         # Misc
@@ -224,7 +224,7 @@ spec:
         - name: REDIS_PASSWORD
           value: "{{ oraculum_redis_pass }}"
         - name: REDIS_SERVICE_HOST
-          value: "packager-dashboard-redis.oraculum.svc.cluster.local"
+          value: "oraculum-redis.oraculum.svc.cluster.local"
         - name: REDIS_SERVICE_PORT_REDIS
           value: "6379"
         # Misc
