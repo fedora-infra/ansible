@@ -74,13 +74,13 @@ spec:
           initialDelaySeconds: 5
           httpGet:
             path: /
-            port: 5000
+            port: 8080
         livenessProbe:
           timeoutSeconds: 1
           initialDelaySeconds: 30
           httpGet:
             path: /
-            port: 5000
+            port: 8080
       volumes:
       - name: oraculum-secret-volume
         secret:
