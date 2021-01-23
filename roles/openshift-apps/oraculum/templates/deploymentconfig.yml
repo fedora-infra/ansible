@@ -65,26 +65,26 @@ spec:
           value: "false"
         - name: SMTP_CONFIG
           value: "{{ oraculum_smtp_confline }}"
-      volumeMounts:
-      - name: oraculum-secret-volume
-        mountPath: /opt/app-root/secret/
-        readOnly: true
+        volumeMounts:
+        - name: oraculum-secret-volume
+          mountPath: /opt/app-root/secret/
+          readOnly: true
+        readinessProbe:
+          timeoutSeconds: 1
+          initialDelaySeconds: 5
+          httpGet:
+            path: /
+            port: 5000
+        livenessProbe:
+          timeoutSeconds: 1
+          initialDelaySeconds: 30
+          httpGet:
+            path: /
+            port: 5000
       volumes:
       - name: oraculum-secret-volume
         secret:
           secretName: oraculum-secret
-      readinessProbe:
-        timeoutSeconds: 1
-        initialDelaySeconds: 5
-        httpGet:
-          path: /
-          port: 5000
-      livenessProbe:
-        timeoutSeconds: 1
-        initialDelaySeconds: 30
-        httpGet:
-          path: /
-          port: 5000
 
   triggers:
   - type: ConfigChange
@@ -161,10 +161,10 @@ spec:
           value: "false"
         - name: SMTP_CONFIG
           value: "{{ oraculum_smtp_confline }}"
-      volumeMounts:
-      - name: oraculum-secret-volume
-        mountPath: /opt/app-root/secret/
-        readOnly: true
+        volumeMounts:
+        - name: oraculum-secret-volume
+          mountPath: /opt/app-root/secret/
+          readOnly: true
       volumes:
       - name: oraculum-secret-volume
         secret:
@@ -245,10 +245,10 @@ spec:
           value: "false"
         - name: SMTP_CONFIG
           value: "{{ oraculum_smtp_confline }}"
-      volumeMounts:
-      - name: oraculum-secret-volume
-        mountPath: /opt/app-root/secret/
-        readOnly: true
+        volumeMounts:
+        - name: oraculum-secret-volume
+          mountPath: /opt/app-root/secret/
+          readOnly: true
       volumes:
       - name: oraculum-secret-volume
         secret:
