@@ -116,7 +116,7 @@ spec:
         failurePolicy: Abort
         execNewPod:
           containerName: oraculum-worker
-          command: ["/usr/bin/celery", "-A", "oraculum.celery_app", "worker", "-c", "2", "--loglevel=INFO"]
+          command: ["celery", "-A", "oraculum.celery_app", "worker", "-c", "2", "--loglevel=INFO"]
           volumes:
            - oraculum-secret-volume
   template:
@@ -197,7 +197,7 @@ spec:
         failurePolicy: Abort
         execNewPod:
           containerName: oraculum-beat
-          command: ["/usr/bin/celery", "-A", "oraculum.celery_app", "beat", "--loglevel=INFO"]
+          command: ["celery", "-A", "oraculum.celery_app", "beat", "--loglevel=INFO"]
           volumes:
            - oraculum-secret-volume
   template:
