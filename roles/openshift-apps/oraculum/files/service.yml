@@ -10,7 +10,7 @@ spec:
   - name: 5000-tcp
     port: 5000
     protocol: TCP
-    targetPort: 5000
+    targetPort: 8080
   selector:
     app: packager-dashboard
     deploymentconfig: packager-dashboard
