@@ -85,7 +85,7 @@
     routename: packager-dashboard
     host: "packager-dashboard{{ env_suffix }}.fedoraproject.org"
     serviceport: 5000-tcp
-    servicename: packager-dashboard
+    servicename: oraculum-api-endpoint
 
   - role: openshift/start-build
     app: oraculum

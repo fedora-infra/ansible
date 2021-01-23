@@ -4,7 +4,7 @@ kind: DeploymentConfig
 metadata:
   labels:
     app: oraculum
-    service: oraculum
+    service: oraculum-api-endpoint
   name: oraculum-api-endpoint
 spec:
   replicas: 1
@@ -102,7 +102,6 @@ kind: DeploymentConfig
 metadata:
   labels:
     app: oraculum
-    service: oraculum
   name: oraculum-worker
 spec:
   replicas: 1 # Change me to some biiig numba after you got me working
@@ -183,7 +182,6 @@ kind: DeploymentConfig
 metadata:
   labels:
     app: oraculum
-    service: oraculum
   name: oraculum-beat
 spec:
   replicas: 1 # Never change this to more or less than ONE!
@@ -263,22 +261,22 @@ apiVersion: v1
 kind: DeploymentConfig
 metadata:
   labels:
-    app: packager-dashboard
-    service: packager-dashboard
-  name: packager-dashboard-redis
+    app: oraculum
+    service: oraculum-redis
+  name: oraculum-redis
 spec:
   replicas: 1 # Never change this to more or less than ONE!
   selector:
-    app: packager-dashboard
-    deploymentconfig: packager-dashboard
+    app: oraculum
+    deploymentconfig: oraculum-redis
   template:
     metadata:
       labels:
-        app: packager-dashboard
-        deploymentconfig: packager-dashboard
+        app: oraculum
+        deploymentconfig: oraculum-redis
     spec:
       containers:
-      - name: packager-dashboard-redis
+      - name: oraculum-redis
         image: packager-dashboard-redis:latest
         resources: {}
         env:
@@ -290,7 +288,7 @@ spec:
     imageChangeParams:
       automatic: true
       containerNames:
-      - packager-dashboard-redis
+      - oraculum-redis
       from:
         kind: ImageStreamTag
         name: packager-dashboard-redis:latest
