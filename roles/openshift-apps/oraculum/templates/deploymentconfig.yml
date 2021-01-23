@@ -116,10 +116,7 @@ spec:
         failurePolicy: Abort
         execNewPod:
           containerName: oraculum-worker
-          # Oraculum would automatically proceed with upgrade_db if necessary
-          # init_db isn't dropping anything, so it's safe to call every time the pod starts
-          command: ["/bin/sh"]
-          args: ["-c", "python /opt/app-root/src/oraculum/cli.py init_db && /usr/bin/celery -A oraculum.celery_app worker -c 2 --loglevel=INFO"]
+          command: ["/usr/bin/celery", "-A", "oraculum.celery_app", "worker", "-c", "2", "--loglevel=INFO"]
           volumes:
            - oraculum-secret-volume
   template:
@@ -200,10 +197,7 @@ spec:
         failurePolicy: Abort
         execNewPod:
           containerName: oraculum-beat
-          # Oraculum would automatically proceed with upgrade_db if necessary
-          # init_db isn't dropping anything, so it's safe to call every time the pod starts
-          command: ["/bin/sh"]
-          args: ["-c", "python /opt/app-root/src/oraculum/cli.py init_db && /usr/bin/celery -A oraculum.celery_app beat --loglevel=INFO"]
+          command: ["/usr/bin/celery", "-A", "oraculum.celery_app", "beat", "--loglevel=INFO"]
           volumes:
            - oraculum-secret-volume
   template:
