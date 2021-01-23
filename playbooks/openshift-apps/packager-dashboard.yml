@@ -75,6 +75,11 @@
     file: service.yml
     objectname: service.yml
 
+  - role: openshift/object
+    app: oraculum
+    template: secret.yml
+    objectname: secret.yml
+
   - role: openshift/route
     app: oraculum
     routename: packager-dashboard
