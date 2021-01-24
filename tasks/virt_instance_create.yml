@@ -35,60 +35,10 @@
   delay: 20
   when: inventory_hostname not in result.list_vms
 
-- name: ARMv7 copy the kernel out
-  shell: "virt-builder --get-kernel {{ volgroup }}/{{ inventory_hostname }} --output /var/lib/libvirt/images/  | awk -F/ '{print $NF}' > /var/lib/libvirt/images/{{ inventory_hostname }}-details.txt"
-  delegate_to: "{{ vmhost}}"
-  when: env == 'staging' and inventory_hostname.startswith(('buildvm-a32', 'buildvm-armv7','armv7-test')) and ( inventory_hostname not in result.list_vms or armv7kernelupdate is defined )
-  tags:
-    - armv7-kernel
-
-- name: ARMv7 extract the kernel details
-  command: "head -n1 /var/lib/libvirt/images/{{ inventory_hostname }}-details.txt"
-  delegate_to: "{{ vmhost}}"
-  register: host_armv7kernel
-  when: env == 'staging' and inventory_hostname.startswith(('buildvm-a32', 'buildvm-armv7','armv7-test')) and ( inventory_hostname not in result.list_vms or armv7kernelupdate is defined )
-  tags:
-    - armv7-kernel
-
-- name: ARMv7 extract the initrd details
-  command: "tail -n1 /var/lib/libvirt/images/{{ inventory_hostname }}-details.txt"
-  delegate_to: "{{ vmhost}}"
-  register: host_armv7initrd
-  when: env == 'staging' and inventory_hostname.startswith(('buildvm-a32', 'buildvm-armv7','armv7-test')) and ( inventory_hostname not in result.list_vms or armv7kernelupdate is defined )
-  tags:
-    - armv7-kernel
-
-- name: ARMv7 copy the cmdline out
-  shell: "virt-cat -a {{ volgroup }}/{{ inventory_hostname }} /boot/extlinux/extlinux.conf | grep -m1 append | sed -e 's/append //'"
-  delegate_to: "{{ vmhost}}"
-  register: host_cmdline
-  when: env == 'staging' and inventory_hostname.startswith(('buildvm-a32', 'buildvm-armv7','armv7-test')) and ( inventory_hostname not in result.list_vms or armv7kernelupdate is defined )
-  tags:
-    - armv7-kernel
-
-- name: ARMv7 update the virt parameters
-  vars:
-    ansible_python_interpreter: /usr/bin/python3
-  virt_boot: domain={{ inventory_hostname }} kernel=/var/lib/libvirt/images/{{ host_armv7kernel.stdout }} initrd=/var/lib/libvirt/images/{{ host_armv7initrd.stdout }} cmdline={{ host_cmdline.stdout }}
-  delegate_to: "{{ vmhost }}"
-  when: env == 'staging' and inventory_hostname.startswith(('buildvm-a32', 'buildvm-armv7','armv7-test')) and ( inventory_hostname not in result.list_vms or armv7kernelupdate is defined )
-  tags:
-    - armv7-kernel
-
-- name: when armv7kernelupdate is set we are done
-  fail: msg="armv7kernelupdate was set, so kernel has been updated and target booted up"
-  when: env == 'staging' and armv7kernelupdate is defined
-
 - name: start the vm up and set it to autostart
   virt: state=running name={{ inventory_hostname }} autostart=True
   delegate_to: "{{ vmhost }}"
   when: inventory_hostname not in result.list_vms
-
-- name: ARMv7 pause while VM updates
-  pause: seconds=5
-  when: env == 'staging' and inventory_hostname.startswith(('buildvm-a32', 'buildvm-armv7','armv7-test')) and ( inventory_hostname not in result.list_vms or armv7kernelupdate is defined )
-  tags:
-    - armv7-kernel
 
 - name: make sure there is no old ssh host key for the host still around
   local_action: known_hosts path={{item}} host={{ inventory_hostname }} state=absent
