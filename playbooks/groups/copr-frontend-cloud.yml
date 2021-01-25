@@ -1,6 +1,5 @@
 - name: check/create instance
-  hosts: copr_front_dev:copr_front:copr_front_dev_aws:copr_front_aws
-  # hosts: copr_front
+  hosts: copr_front_dev_aws:copr_front_aws
   user: root
   gather_facts: False
 
@@ -23,8 +22,7 @@
       - swap_file_size_mb is defined
 
 - name: cloud basic setup
-  hosts: copr_front_dev:copr_front:copr_front_dev_aws:copr_front_aws
-  # hosts: copr_front
+  hosts: copr_front_dev_aws:copr_front_aws
   gather_facts: True
   vars_files:
    - /srv/web/infra/ansible/vars/global.yml
@@ -40,8 +38,7 @@
     when: datacenter != "aws"
 
 - name: provision instance
-  hosts: copr_front:copr_front_dev:copr_front_dev_aws:copr_front_aws
-  # hosts: copr_front
+  hosts: copr_front_dev_aws:copr_front_aws
   gather_facts: True
 
   vars_files:
