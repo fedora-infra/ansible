@@ -9,7 +9,7 @@
 - name: Ensure IPA host group exists
   ipahostgroup:
     name: "{{ ipa_host_group }}"
-    description: "{{ ipa_host_group_desc | default(ipa_host_group) }}"
+    description: "{{ ipa_host_group_desc | default(omit) }}"
     ipaadmin_password: "{{ ipa_admin_password }}"
     state: present
 
