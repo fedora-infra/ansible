@@ -762,3 +762,12 @@
     targettype: openshift
     keephost: true
     tags: testdays
+
+  - role: httpd/reverseproxy
+    website: packager-dashboard.fedoraproject.org
+    destname: packager-dashboard
+    balancer_name: app-os
+    targettype: openshift
+    keephost: true
+    tags: packager-dashboard
+

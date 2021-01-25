@@ -244,6 +244,13 @@
     tags: testdays
 
   - role: httpd/website
+    site_name: packager-dashboard.fedoraproject.org
+    server_aliases: [packager-dashboard.stg.fedoraproject.org]
+    sslonly: true
+    cert_name: "{{wildcard_cert_name}}"
+    tags: packager-dashboard
+
+  - role: httpd/website
     site_name: smolts.org
     ssl: false
     server_aliases:
