@@ -4,7 +4,7 @@
 # Author: Patrick Uiterwijk <puiterwijk@fedoraproject.org>
 #
 # Copyright 2012 Patrick Uiterwijk. All rights reserved.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
 #
@@ -33,7 +33,7 @@
 import os
 import getpass
 import sys
-import gpgme
+import gpg.core
 from fedora.client import AccountSystem
 from fedora.client import AuthError
 from fedora.client import ServerError
@@ -98,10 +98,9 @@ if not args.no_answer:
     if args.verbose:
         print('Decrypting answer...')
     cipher = BytesIO(details.security_answer.encode('utf-8'))
-    plain = BytesIO()
-    ctx = gpgme.Context()
-    ctx.decrypt(cipher, plain)
-    details.security_answer = plain.getvalue()
+    ctx = gpg.core.Context()
+    plain = ctx.decrypt(cipher)[0].decode('utf8')
+    details.security_answer = plain
 
 print('Security question: %(question)s' % {'question': details.security_question})
 if not args.no_answer:
