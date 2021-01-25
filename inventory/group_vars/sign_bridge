@@ -11,3 +11,9 @@ tcp_ports: [ 44333, 44334 ]
 
 fas_client_groups: sysadmin-releng
 sudoers: "{{ private }}/files/sudo/00releng-sudoers"
+
+ipa_host_group: sign-bridge
+ipa_client_shell_groups:
+- sysadmin-releng
+ipa_client_sudo_groups:
+- sysadmin-releng

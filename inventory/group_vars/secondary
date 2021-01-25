@@ -11,3 +11,20 @@ nfs_mount_opts: "ro,hard,bg,intr,noatime,nodev,nosuid,actimeo=600,nfsvers=3"
 fas_client_groups: sysadmin-noc,alt-sugar,alt-k12linux,altvideos,hosted-content,mips-content,s390_content,fi-apprentice,qa-deltaisos,sysadmin-veteran
 
 host_group: secondary
+
+ipa_host_group: secondary
+ipa_host_group_desc: Serve secondary arch and archived releases
+ipa_client_shell_groups:
+- alt-k12linux
+- alt-sugar
+- altvideos
+- fi-apprentice
+- hosted-content
+- mips-content
+- qa-deltaisos
+- s390_content
+- sysadmin-noc
+- sysadmin-veteran
+ipa_client_sudo_groups:
+- sysadmin-noc
+- sysadmin-veteran

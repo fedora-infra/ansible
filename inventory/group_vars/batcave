@@ -10,6 +10,39 @@ custom_rules: [ '-A INPUT -p tcp -m tcp -s 10.3.163.39 --dport 873 -j ACCEPT', '
 
 fas_client_groups: sysadmin-ask,sysadmin-atomic,sysadmin-cvs,sysadmin-main,sysadmin-web,sysadmin-noc,sysadmin-hosted,sysadmin-releng,sysadmin-qa,sysadmin-tools,sysadmin-cloud,sysadmin-bot,sysadmin-centos,sysadmin-koschei,sysadmin-datanommer,sysadmin-fedimg,fi-apprentice,sysadmin-badges,sysadmin-mbs,sysadmin-veteran,sysadmin-coreos,sysadmin-upstreamfirst,sysadmin-releasemonitoring,sysadmin-fpdc,sysadmin-messaging,sysadmin-libravatar,sysadmin-gnome,sysadmin-copr,sysadmin-osbs,sysadmin-odcs
 
+ipa_host_group: batcave
+ipa_host_group_desc: The Bat Cave
+ipa_client_shell_groups:
+- fi-apprentice
+- sysadmin-ask
+- sysadmin-atomic
+- sysadmin-badges
+- sysadmin-bot
+- sysadmin-centos
+- sysadmin-cloud
+- sysadmin-copr
+- sysadmin-coreos
+- sysadmin-cvs
+- sysadmin-datanommer
+- sysadmin-fedimg
+- sysadmin-fpdc
+- sysadmin-gnome
+- sysadmin-hosted
+- sysadmin-koschei
+- sysadmin-libravatar
+- sysadmin-mbs
+- sysadmin-messaging
+- sysadmin-noc
+- sysadmin-odcs
+- sysadmin-osbs
+- sysadmin-qa
+- sysadmin-releasemonitoring
+- sysadmin-releng
+- sysadmin-tools
+- sysadmin-upstreamfirst
+- sysadmin-veteran
+- sysadmin-web
+
 ansible_base: /srv/web/infra
 freezes: false
 nfs_mount_opts: "rw,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3"

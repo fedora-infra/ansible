@@ -12,6 +12,13 @@ tcp_ports: [ 53 ]
 
 fas_client_groups: sysadmin-main,sysadmin-dns
 
+ipa_host_group: dns
+ipa_host_group_desc: DNS servers
+ipa_client_shell_groups:
+- sysadmin-dns
+ipa_client_sudo_groups:
+- sysadmin-dns
+
 nrpe_procs_warn: 300
 nrpe_procs_crit: 500
 

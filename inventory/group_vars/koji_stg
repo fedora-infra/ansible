@@ -12,7 +12,19 @@ tcp_ports: [ 80, 443, 111, 2049,
 
 udp_ports: [ 111, 2049 ]
 
-fas_client_groups: sysadmin-releng,fi-apprentice,sysadmin-noc,sysadmin-veteran,sysadmin-osbs
+ipa_host_group: kojihub
+ipa_host_group_desc: Koji Hub hosts
+ipa_client_shell_groups:
+- fi-apprentice
+- sysadmin-noc
+- sysadmin-osbs
+- sysadmin-releng
+- sysadmin-veteran
+ipa_client_sudo_groups:
+- sysadmin-noc
+- sysadmin-osbs
+- sysadmin-releng
+- sysadmin-veteran
 
 # These are consumed by a task in roles/fedmsg/base/main.yml
 fedmsg_certs:

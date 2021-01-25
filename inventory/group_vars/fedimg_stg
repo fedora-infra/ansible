@@ -15,8 +15,11 @@ tcp_ports: [
    3007, 3008, 3009, 3010, 3011, 3012, 3013,
 ]
 
-# TODO, restrict this down to just sysadmin-releng
-fas_client_groups: sysadmin-datanommer,sysadmin-releng,sysadmin-fedimg,fi-apprentice,sysadmin-noc,sysadmin-veteran,sysadmin-atomic
+ipa_host_group: fedimg
+ipa_client_shell_groups:
+- sysadmin-releng
+ipa_client_sudo_groups:
+- sysadmin-releng
 
 fedmsg_debug_loopback: True 
 

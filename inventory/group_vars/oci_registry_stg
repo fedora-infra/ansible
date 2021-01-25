@@ -1,7 +1,10 @@
 ---
-fas_client_groups: sysadmin-releng,fi-apprentice,sysadmin-veteran
-
-sudoers: "{{ private }}/files/sudo/00releng-sudoers"
+ipa_host_group: oci-registry
+ipa_host_group_desc: OCI Registry service
+ipa_client_shell_groups:
+- sysadmin-releng
+ipa_client_sudo_groups:
+- sysadmin-releng
 
 tcp_ports: [ 5000 ]
 

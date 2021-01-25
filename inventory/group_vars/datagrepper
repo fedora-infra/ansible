@@ -16,6 +16,18 @@ custom_rules: [
 
 fas_client_groups: sysadmin-noc,sysadmin-datanommer,fi-apprentice,sysadmin-veteran
 
+ipa_host_group: datagrepper
+ipa_host_group_desc: Service to grep through historical message bus data
+ipa_client_shell_groups:
+- fi-apprentice
+- sysadmin-datanommer
+- sysadmin-noc
+- sysadmin-veteran
+ipa_client_sudo_groups:
+- sysadmin-datanommer
+- sysadmin-noc
+- sysadmin-veteran
+
 freezes: false
 
 deployment_type: prod

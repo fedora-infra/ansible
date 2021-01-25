@@ -57,3 +57,15 @@ openqa_amqp_smtp: bastion
 
 # http and NFS
 tcp_ports: [80, 2049]
+
+ipa_host_group: openqa-servers
+ipa_host_group_desc: OpenQA servers
+ipa_client_shell_groups:
+- fi-apprentice
+- sysadmin-noc
+- sysadmin-qa
+- sysadmin-veteran
+ipa_client_sudo_groups:
+- sysadmin-noc
+- sysadmin-qa
+- sysadmin-veteran

@@ -14,6 +14,14 @@ num_cpus: 4
 # the host_vars/$hostname file
 
 fas_client_groups: sysadmin-qa
+
+ipa_host_group: resultsdb
+ipa_host_group_desc: ResultsDB application servers
+ipa_client_shell_groups:
+- sysadmin-qa
+ipa_client_sudo_groups:
+- sysadmin-qa
+
 nrpe_procs_warn: 250
 nrpe_procs_crit: 300
 

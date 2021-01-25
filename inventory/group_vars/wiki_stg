@@ -7,7 +7,18 @@ num_cpus: 2
 deployment_type: stg
 
 tcp_ports: [ 80 ]
-fas_client_groups: sysadmin-noc,fi-apprentice,sysadmin-web,sysadmin-veteran
+
+ipa_host_group: wiki
+ipa_host_group_desc: Fedora Wiki
+ipa_client_shell_groups:
+- fi-apprentice
+- sysadmin-noc
+- sysadmin-veteran
+- sysadmin-web
+ipa_client_sudo_groups:
+- sysadmin-noc
+- sysadmin-veteran
+- sysadmin-web
 
 # mediawiki variables
 wikiname: "fp"

@@ -1,3 +1,16 @@
+ipa_host_group: odcs
+ipa_host_group_desc: On Demand Compose Service
+ipa_client_shell_groups:
+- sysadmin-noc
+- sysadmin-odcs
+- sysadmin-releng
+- sysadmin-veteran
+ipa_client_sudo_groups:
+- sysadmin-noc
+- sysadmin-odcs
+- sysadmin-releng
+- sysadmin-veteran
+
 # Configs executed on releng backends must have "releng_" prefix.
 odcs_raw_config_urls:
   releng_fmc:

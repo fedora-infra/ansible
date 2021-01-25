@@ -14,6 +14,18 @@ custom_rules: [ '-A INPUT -p tcp -m tcp -s 10.3.163.39 --dport 873 -j ACCEPT', '
 fas_client_groups: sysadmin-noc,fi-apprentice,sysadmin-qa,sysadmin-veteran
 sudoers: "{{ private }}/files/sudo/qadevel-sudoers"
 
+ipa_host_group: blockerbugs
+ipa_host_group_desc: Blocker bug tracking service
+ipa_client_shell_groups:
+- fi-apprentice
+- sysadmin-noc
+- sysadmin-qa
+- sysadmin-veteran
+ipa_client_sudo_groups:
+- sysadmin-noc
+- sysadmin-qa
+- sysadmin-veteran
+
 # This gets overridden by whichever node we want to run special cronjobs.
 master_blockerbugs_node: False
 

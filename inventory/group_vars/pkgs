@@ -23,6 +23,18 @@ fas_client_admin_app: PAGURE_CONFIG=/etc/pagure/pagure_hook.cfg HOME=/srv/git /u
 fas_client_ssh_groups: "@cvs,sysadmin-main,sysadmin-cvs,sysadmin-releng,sysadmin-noc,sysadmin-veteran"
 admin_groups: "@sysadmin-cvs @sysadmin-releng"
 
+ipa_host_group: pkgs
+ipa_client_shell_groups:
+- sysadmin-cvs
+- sysadmin-main
+- sysadmin-noc
+- sysadmin-veteran
+ipa_client_sudo_groups:
+- sysadmin-cvs
+- sysadmin-main
+- sysadmin-noc
+- sysadmin-veteran
+
 clamscan_mailto: admin@fedoraproject.org
 clamscan_paths:
 - /srv/cache/lookaside/pkgs

@@ -11,7 +11,15 @@ tcp_ports: [
     # For outbound fedmsg
     3000, 3001, 3002, 3003,
 ]
-fas_client_groups: sysadmin-tools,sysadmin-main
+
+ipa_host_group: mailman
+ipa_host_group_desc: Mailing list services
+ipa_client_shell_groups:
+- sysadmin-tools
+ipa_client_sudo_groups:
+- sysadmin-tools
+
+deployment_type: prod
 
 # These are consumed by a task in roles/fedmsg/base/main.yml
 fedmsg_certs:

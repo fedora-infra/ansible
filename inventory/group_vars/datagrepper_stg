@@ -11,6 +11,16 @@ tcp_ports: [ 80, 443, 6996 ]
 # Neeed for rsync from log01 for logs.
 custom_rules: [ '-A INPUT -p tcp -m tcp -s 10.5.126.13 --dport 873 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT' ]
 
-fas_client_groups: sysadmin-noc,sysadmin-datanommer,fi-apprentice,sysadmin-veteran
+ipa_host_group: datagrepper
+ipa_host_group_desc: Service to grep through historical message bus data
+ipa_client_shell_groups:
+- fi-apprentice
+- sysadmin-datanommer
+- sysadmin-noc
+- sysadmin-veteran
+ipa_client_sudo_groups:
+- sysadmin-datanommer
+- sysadmin-noc
+- sysadmin-veteran
 
 freezes: false

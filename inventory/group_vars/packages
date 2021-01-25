@@ -19,6 +19,18 @@ fas_client_groups: sysadmin-noc,sysadmin-web,sysadmin-veteran,sysadmin-packages
 
 sudoers: "{{ private }}/files/sudo/sysadmin-packages"
 
+ipa_host_group: packages
+ipa_client_shell_groups:
+- sysadmin-noc
+- sysadmin-packages
+- sysadmin-veteran
+- sysadmin-web
+ipa_client_sudo_groups:
+- sysadmin-noc
+- sysadmin-packages
+- sysadmin-veteran
+- sysadmin-web
+
 # These are consumed by a task in roles/fedmsg/base/main.yml
 fedmsg_certs:
 - service: shell

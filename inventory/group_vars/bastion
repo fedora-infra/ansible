@@ -23,6 +23,23 @@ custom_rules: [
 
 fas_client_groups: sysadmin-analysis,sysadmin-ask,sysadmin-atomic,sysadmin-web,sysadmin-main,sysadmin-cvs,sysadmin-noc,sysadmin-releng,sysadmin-dba,sysadmin-hosted,sysadmin-tools,sysadmin-spin,sysadmin-cloud,fi-apprentice,sysadmin-badges,sysadmin-troubleshoot,sysadmin-qa,sysadmin-centos,sysadmin-ppc,sysadmin-koschei,sysadmin-secondary,sysadmin-fedimg,sysadmin-veteran,sysadmin-mbs,pungi-devel,sysadmin-upstreamfirst,sysadmin-releasemonitoring,sysadmin-gnome,sysadmin-copr,sysadmin-coreos,sysadmin-dbgserver,sysadmin-osbs,sysadmin-odcs,sysadmin-kernel
 
+ipa_host_group: bastion
+ipa_host_group_desc: Bastion hosts
+
+# this assumes the `batcave` group exists with at least one host in it
+batcave_ipa_client_shell_groups: "{{ hostvars[groups['batcave'][0]]['ipa_client_shell_groups'] | default([]) }}"
+bastion_ipa_client_shell_groups:
+- pungi-devel
+- sysadmin-analysis
+- sysadmin-dba
+- sysadmin-dbgserver
+- sysadmin-ppc
+- sysadmin-secondary
+- sysadmin-spin
+- sysadmin-troubleshoot
+
+ipa_client_shell_groups: "{{ (bastion_ipa_client_shell_groups + batcave_ipa_client_shell_groups) | sort | unique }}"
+
 #
 # This is a postfix gateway. This will pick up gateway postfix config in base
 #

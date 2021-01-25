@@ -3,4 +3,11 @@ freezes: false
 resolvconf: "{{ files }}/resolv.conf/iad2"
 fas_client_groups: sysadmin-kernel
 sudoers: "{{ private }}/files/sudo/kernel-qa"
+
+ipa_host_group: kernel-qa
+ipa_client_shell_groups:
+- sysadmin-kernel
+ipa_client_sudo_groups:
+- sysadmin-kernel
+
 custom_rules: [ '-A INPUT -p tcp -m tcp -s 192.168.122.0/24 --dport 2049 -j ACCEPT' ]

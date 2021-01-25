@@ -6,7 +6,12 @@ num_cpus: 2
 
 tcp_ports: [ 80, 88, 389, 443, 464, 636 ]
 
-fas_client_groups: sysadmin-main,sysadmin-accounts
+ipa_host_group: ipa
+ipa_host_group_desc: IPA service
+ipa_client_shell_groups:
+- sysadmin-accounts
+ipa_client_sudo_groups:
+- sysadmin-accounts
 
 nrpe_procs_warn: 300
 nrpe_procs_crit: 500

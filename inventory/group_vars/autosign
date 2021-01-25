@@ -17,6 +17,12 @@ ansible_ifcfg_allowlist:
 
 fas_client_groups: sysadmin-releng
 host_group: autosign
+ipa_host_group: autosign
+ipa_host_group_desc: Hosts signing content automatically
+ipa_client_shell_groups:
+- sysadmin-releng
+ipa_client_sudo_groups:
+- sysadmin-releng
 
 fedmsg_error_recipients: []
 

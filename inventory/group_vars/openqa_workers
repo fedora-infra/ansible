@@ -20,3 +20,10 @@ openqa_nfs_worker: true
 
 deployment_type: prod
 freezes: false
+
+ipa_host_group: openqa-workers
+ipa_host_group_desc: OpenQA worker hosts
+ipa_client_shell_groups:
+- sysadmin-qa
+ipa_client_sudo_groups:
+- sysadmin-qa

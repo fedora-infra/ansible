@@ -38,5 +38,14 @@ nfs_mount_opts: "rw,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3"
 fas_client_groups: sysadmin-releng,sysadmin-bodhi
 sudoers: "{{ private }}/files/sudo/00releng-sudoers"
 
+ipa_host_group: bodhi
+ipa_host_group_desc: Bodhi update service
+ipa_client_shell_groups:
+- sysadmin-bodhi
+- sysadmin-releng
+ipa_client_sudo_groups:
+- sysadmin-bodhi
+- sysadmin-releng
+
 ## XXX - note that the csi_ stuff is kept at the host_vars/ level.
 

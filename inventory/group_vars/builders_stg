@@ -6,3 +6,10 @@ nagios_Check_Services:
   nrpe: false
   swap: false
   mail: false
+
+ipa_host_group: kojibuilder
+ipa_host_group_desc: Koji Build hosts
+ipa_client_shell_groups:
+- sysadmin-releng
+ipa_client_sudo_groups:
+- sysadmin-releng

@@ -88,6 +88,18 @@ blocked_ip_v6: [
 
 fas_client_groups: sysadmin-noc,fi-apprentice,sysadmin-web,sysadmin-veteran
 
+ipa_host_group: proxies
+ipa_host_group_desc: Proxies between internal hosts and the Internet
+ipa_client_shell_groups:
+- fi-apprentice
+- sysadmin-noc
+- sysadmin-veteran
+- sysadmin-web
+ipa_client_sudo_groups:
+- sysadmin-noc
+- sysadmin-veteran
+- sysadmin-web
+
 collectd_apache: true
 
 varnish_group: proxies

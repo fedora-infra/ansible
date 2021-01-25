@@ -12,6 +12,17 @@ freezes: false
 # make sure we're using the stg fedsmg bus
 fedmsg_env: stg
 
+ipa_host_group: resultsdb
+ipa_host_group_desc: ResultsDB application servers
+ipa_client_shell_groups:
+- fi-apprentice
+- sysadmin-noc
+- sysadmin-qa
+- sysadmin-veteran
+ipa_client_sudo_groups:
+- sysadmin-noc
+- sysadmin-qa
+- sysadmin-veteran
 
 ############################################################
 # resultsdb details

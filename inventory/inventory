@@ -314,6 +314,14 @@ iddev.fedorainfracloud.org
 noc01.iad2.fedoraproject.org
 noc02.fedoraproject.org
 
+[notifs:children]
+notifs_backend
+notifs_web
+
+[notifs_stg:children]
+notifs_backend_stg
+notifs_web_stg
+
 [notifs_backend]
 notifs-backend01.iad2.fedoraproject.org
 

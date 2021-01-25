@@ -19,6 +19,14 @@ custom_rules: [ '-A INPUT -p tcp -m tcp -s 10.3.163.39 --dport 873 -j ACCEPT', '
 
 fas_client_groups: sysadmin-noc,sysadmin-veteran
 
+ipa_host_group: kerneltest
+ipa_client_shell_groups:
+- sysadmin-noc
+- sysadmin-veteran
+ipa_client_sudo_groups:
+- sysadmin-noc
+- sysadmin-veteran
+
 # These are consumed by a task in roles/fedmsg/base/main.yml
 fedmsg_certs:
 - service: shell
