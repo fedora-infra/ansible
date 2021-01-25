@@ -3,10 +3,10 @@
 # NOTE: make sure there is room/space for this instance on the buildvmhost
 # NOTE: most of these vars_path come from group_vars/releng or from hostvars
 
-- import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml myhosts=releng_compose:releng_stg"
+- import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml myhosts=releng_compose:releng_compose_stg"
 
 - name: Setup releng compose hosts
-  hosts: releng_compose:releng_stg
+  hosts: releng_compose:releng_compose_stg
   user: root
   gather_facts: True
   tags:
@@ -43,32 +43,32 @@
   - role: nfs/client
     mnt_dir: '/mnt/fedora_koji'
     nfs_src_dir: "{{ koji_hub_nfs }}"
-    when: "'releng_stg' not in group_names"
+    when: "'releng_compose_stg' not in group_names"
   - role: nfs/client
     mnt_dir: '/mnt/koji/ostree'
     nfs_src_dir: 'fedora_ostree_content/ostree'
-    when: "'releng_stg' not in group_names and datacenter == 'iad2'"
+    when: "'releng_compose_stg' not in group_names and datacenter == 'iad2'"
   - role: nfs/client
     mnt_dir: '/mnt/koji/compose/ostree'
     nfs_src_dir: 'fedora_ostree_content/compose/ostree'
-    when: "'releng_stg' not in group_names and datacenter == 'iad2'"
+    when: "'releng_compose_stg' not in group_names and datacenter == 'iad2'"
   - role: nfs/client
     mnt_dir: '/mnt/koji/ostree'
     nfs_src_dir: 'fedora_ostree_content/ostree'
-    when: "'releng_stg' not in group_names and datacenter == 'iad2'"
+    when: "'releng_compose_stg' not in group_names and datacenter == 'iad2'"
   - role: nfs/client
     mnt_dir: '/mnt/koji/compose/ostree'
     nfs_src_dir: 'fedora_ostree_content/compose/ostree'
-    when: "'releng_stg' not in group_names and datacenter == 'iad2'"
+    when: "'releng_compose_stg' not in group_names and datacenter == 'iad2'"
 
   - role: nfs/client
     mnt_dir: '/mnt/koji/ostree'
     nfs_src_dir: 'fedora_ostree_content/ostree'
-    when: "'releng_stg' in group_names"
+    when: "'releng_compose_stg' in group_names"
   - role: nfs/client
     mnt_dir: '/mnt/koji/compose/ostree'
     nfs_src_dir: 'fedora_ostree_content/compose/ostree'
-    when: "'releng_stg' in group_names"
+    when: "'releng_compose_stg' in group_names"
 
   - role: nfs/client
     mnt_dir: '/pub'
@@ -110,7 +110,7 @@
   - role: nfs/client
     mnt_dir: '/mnt/fedora_koji_prod'
     nfs_src_dir: "{{ koji_hub_nfs }}"
-    when: "'releng_stg' in group_names"
+    when: "'releng_compose_stg' in group_names"
 
   - fedmsg/base
 
