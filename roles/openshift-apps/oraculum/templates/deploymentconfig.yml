@@ -104,7 +104,7 @@ metadata:
     app: oraculum
   name: oraculum-worker
 spec:
-  replicas: 1 # Change me to some biiig numba after you got me working
+  replicas: 2 # Change me to some biiig numba after you got me working
   selector:
     app: oraculum
     deploymentconfig: oraculum
@@ -117,7 +117,7 @@ spec:
       containers:
       - name: oraculum-worker
         image: packager-dashboard:latest
-        command: ["celery", "-A", "oraculum.celery_app", "worker", "-c", "2", "--loglevel=INFO"]
+        command: ["celery", "-A", "oraculum.celery_app", "worker", "-c", "8", "--loglevel=INFO"]
         resources: {}
         env:
         # Database
