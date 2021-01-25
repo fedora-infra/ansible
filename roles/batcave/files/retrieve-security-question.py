@@ -3,7 +3,7 @@
 # Use this script to retrieve the security_question and security_answer from FAS (requires FAS >= 0.8.14)
 # Author: Patrick Uiterwijk <puiterwijk@fedoraproject.org>
 #
-# Copyright 2012 Patrick Uiterwijk. All rights reserved.
+# Copyright 2012-2021 Patrick Uiterwijk. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
