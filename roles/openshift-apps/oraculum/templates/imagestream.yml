@@ -29,5 +29,8 @@ spec:
     local: false
   tags:
   - name: latest
+    from:
+      kind: ImageStreamTag
+      name: oraculum-frontend
 status:
   dockerImageRepository: ""
