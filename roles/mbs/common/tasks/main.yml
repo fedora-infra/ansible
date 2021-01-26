@@ -13,8 +13,8 @@
   notify:
   - restart apache
   - restart fedmsg-hub
-  - restart mbs poller
-  - restart mbs workers
+#  - restart mbs poller
+#  - restart mbs workers
   tags:
   - mbs
   - mbs/common
@@ -38,8 +38,8 @@
   notify:
   - restart apache
   - restart fedmsg-hub
-  - restart mbs poller
-  - restart mbs workers
+#  - restart mbs poller
+#  - restart mbs workers
   tags:
   - mbs
   - mbs/common
@@ -154,7 +154,7 @@
       - config
       - mbs
       - mbs/common
-  when: not mbs_frontend
+  when: not mbs_frontend and env_suffix == ".stg"
 
 - name: Configure the MBS workers and poller
   block:
@@ -206,7 +206,7 @@
       tags:
         - mbs
         - mbs/common
-  when: not mbs_frontend
+  when: not mbs_frontend and env_suffix == ".stg"
 
 - name: create /etc/module-build-service/default-modules directory
   file:
