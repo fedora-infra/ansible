@@ -30,3 +30,19 @@ spec:
   selector:
     app: oraculum
     deploymentconfig: oraculum-redis
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: oraculum
+  name: oraculum-frontend
+spec:
+  ports:
+  - name: 8080-tcp
+    port: 8080
+    protocol: TCP
+    targetPort: 8000
+  selector:
+    app: oraculum
+    deploymentconfig: oraculum-frontend

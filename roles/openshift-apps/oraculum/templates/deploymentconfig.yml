@@ -274,3 +274,36 @@ spec:
       from:
         kind: ImageStreamTag
         name: packager-dashboard-redis:latest
+---
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: oraculum
+    service: oraculum-frontend
+  name: oraculum-frontend
+spec:
+  replicas: 1 # Never change this to more or less than ONE!
+  selector:
+    app: oraculum
+    deploymentconfig: oraculum-frontend
+  template:
+    metadata:
+      labels:
+        app: oraculum
+        deploymentconfig: oraculum-frontend
+    spec:
+      containers:
+      - name: oraculum-frontend
+        image: packager-dashboard-frontend:latest
+        resources: {}
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+    imageChangeParams:
+      automatic: true
+      containerNames:
+      - oraculum-frontend
+      from:
+        kind: ImageStreamTag
+        name: packager-dashboard-frontend:latest

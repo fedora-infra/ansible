@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: BuildConfig
 metadata:
@@ -21,6 +22,30 @@ spec:
         kind: ImageStreamTag
         namespace: openshift
         name: python:3.6
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+---
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  name: packager-dashboard-frontend-build
+  labels:
+    environment: "packager-dashboard"
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: packager-dashboard-frontend:latest
+  source:
+    type: Git
+    git:
+      uri: 'https://pagure.io/fedora-qa/packager_dashboard.git'
+      ref: 'docker_stuff'
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: Dockerfile
   triggers:
   - type: ConfigChange
   - type: ImageChange

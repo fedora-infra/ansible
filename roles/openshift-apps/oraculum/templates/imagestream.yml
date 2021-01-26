@@ -19,3 +19,13 @@ spec:
     from:
       kind: DockerImage
       name: quay.io/bitnami/redis:latest
+---
+apiVersion: v1
+kind: ImageStream
+metadata:
+   name: oraculum-frontend
+spec:
+  lookupPolicy:
+    local: false
+status:
+  dockerImageRepository: ""
