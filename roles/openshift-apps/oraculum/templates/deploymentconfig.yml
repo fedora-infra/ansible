@@ -295,7 +295,7 @@ spec:
     spec:
       containers:
       - name: oraculum-frontend
-        image: packager-dashboard-frontend:latest
+        image: oraculum-frontend:latest
         resources: {}
   triggers:
   - type: ConfigChange
@@ -306,4 +306,4 @@ spec:
       - oraculum-frontend
       from:
         kind: ImageStreamTag
-        name: packager-dashboard-frontend:latest
+        name: oraculum-frontend:latest
