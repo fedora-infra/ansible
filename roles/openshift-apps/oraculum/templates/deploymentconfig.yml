@@ -294,8 +294,8 @@ spec:
         deploymentconfig: oraculum-frontend
     spec:
       containers:
-      - name: oraculum-frontend
-        image: oraculum-frontend:latest
+      - name: packager-dashboard-frontend
+        image: packager-dashboard-frontend:latest
         resources: {}
   triggers:
   - type: ConfigChange
@@ -303,7 +303,7 @@ spec:
     imageChangeParams:
       automatic: true
       containerNames:
-      - oraculum-frontend
+      - packager-dashboard-frontend
       from:
         kind: ImageStreamTag
-        name: oraculum-frontend:latest
+        name: packager-dashboard-frontend:latest

@@ -34,3 +34,14 @@ spec:
       name: oraculum-frontend
 status:
   dockerImageRepository: ""
+---
+apiVersion: v1
+kind: ImageStream
+metadata:
+   name: packager-dashboard-frontend
+spec:
+  tags:
+  - name: latest
+    from:
+      kind: DockerImage
+      name: quay.io/fzatlouk/packager-dashboard:latest
