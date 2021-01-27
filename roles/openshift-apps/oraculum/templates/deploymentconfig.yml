@@ -261,7 +261,7 @@ spec:
         image: packager-dashboard:latest
         ports:
         - containerPort: 8080
-        command: ["flower", "--url_prefix=_flower", "--port=8080", "--broker=redis://{{ oraculum_redis_pass }}@oraculum-redis.oraculum.svc.cluster.local:6379/", "--address=0.0.0.0", "--basic_auth=frantisekz:{{ oraculum_flower_password }}", "-A", "oraculum.celery_app"]
+        command: ["flower", "--url_prefix=_flower", "--port=8080", "--broker=redis://{{ oraculum_redis_pass }}@oraculum-redis.oraculum.svc.cluster.local:6379", "--address=0.0.0.0", "--basic_auth=frantisekz:{{ oraculum_flower_password }}", "-A", "oraculum.celery_app"]
         resources: {}
         env:
         # Database
