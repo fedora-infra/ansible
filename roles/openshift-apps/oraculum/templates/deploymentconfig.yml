@@ -261,8 +261,45 @@ spec:
         image: packager-dashboard:latest
         ports:
         - containerPort: 8080
-        command: ["flower", "--url_prefix=_flower", "--port=8080", "--broker=redis://{{ oraculum_redis_pass }}@oraculum-redis.oraculum.svc.cluster.local:6379/", "--address=0.0.0.0", "--basic_auth=frantisekz:{{ oraculum_flower_password }}"]
+        command: ["flower", "--url_prefix=_flower", "--port=8080", "--broker=redis://{{ oraculum_redis_pass }}@oraculum-redis.oraculum.svc.cluster.local:6379/", "--address=0.0.0.0", "--basic_auth=frantisekz:{{ oraculum_flower_password }}", "-A", "oraculum.celery_app"]
         resources: {}
+        env:
+        # Database
+        - name: POSTGRESQL_USER
+          value: "{{ oraculum_db_user }}"
+        - name: POSTGRESQL_PASSWORD
+          value: "{{ oraculum_db_pass }}"
+        - name: POSTGRESQL_DATABASE
+          value: "{{ oraculum_db_name }}"
+        - name: POSTGRESQL_SERVICE_HOST
+          value: "db01{{ env_suffix }}.iad2.fedoraproject.org"
+        - name: POSTGRESQL_SERVICE_PORT
+          value: "5432"
+        # Redis
+        - name: REDIS_PASSWORD
+          value: "{{ oraculum_redis_pass }}"
+        - name: REDIS_SERVICE_HOST
+          value: "oraculum-redis.oraculum.svc.cluster.local"
+        - name: REDIS_SERVICE_PORT_REDIS
+          value: "6379"
+        # Misc
+        - name: SECRET_KEY
+          value: "{{ oraculum_secret_key }}"
+        - name: OPENSHIFT_PROD
+          value: "1"
+        # WatchDog emails
+        - name: SEND_ERROR_EMAILS
+          value: "false"
+        - name: SMTP_CONFIG
+          value: "{{ oraculum_smtp_confline }}"
+        volumeMounts:
+        - name: oraculum-secret-volume
+          mountPath: /opt/app-root/secret/
+          readOnly: true
+      volumes:
+      - name: oraculum-secret-volume
+        secret:
+          secretName: oraculum-secret
   triggers:
   - type: ConfigChange
   - type: ImageChange
