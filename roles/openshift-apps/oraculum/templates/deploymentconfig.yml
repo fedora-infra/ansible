@@ -244,6 +244,39 @@ kind: DeploymentConfig
 metadata:
   labels:
     app: oraculum
+  name: oraculum-flower
+spec:
+  replicas: 1 # Never change this to more or less than ONE!
+  selector:
+    app: oraculum
+    deploymentconfig: oraculum
+  template:
+    metadata:
+      labels:
+        app: oraculum
+        deploymentconfig: oraculum
+    spec:
+      containers:
+      - name: oraculum-flower
+        image: packager-dashboard:latest
+        command: ["flower", "--port=8080", "--broker=redis:{{ oraculum_redis_pass }}@//oraculum-redis.oraculum.svc.cluster.local:6379/", "--address=0.0.0.0", "--basic_auth=frantisekz:{{ oraculum_flower_password }}"]
+        resources: {}
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+    imageChangeParams:
+      automatic: true
+      containerNames:
+      - oraculum-flower
+      from:
+        kind: ImageStreamTag
+        name: packager-dashboard:latest
+---
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: oraculum
     service: oraculum-redis
   name: oraculum-redis
 spec:
