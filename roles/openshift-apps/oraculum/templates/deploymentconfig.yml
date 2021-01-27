@@ -297,6 +297,11 @@ spec:
       - name: packager-dashboard-frontend
         image: packager-dashboard-frontend:latest
         resources: {}
+        env:
+        - name: SUBDIR
+          value: "/"
+        - name: API
+          value: "https://packager-dashboard.stg.fedoraproject.org/api/v1/"
   triggers:
   - type: ConfigChange
   - type: ImageChange
