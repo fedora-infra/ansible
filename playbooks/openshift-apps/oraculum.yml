@@ -95,6 +95,8 @@
     path: "/_flower"
     serviceport: 8080-tcp
     servicename: oraculum-flower
+    annotations:
+      haproxy.router.openshift.io/rewrite-target: /
 
   - role: openshift/route
     app: oraculum
