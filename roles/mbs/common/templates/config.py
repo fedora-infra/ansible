@@ -20,6 +20,12 @@ class BaseConfiguration(object):
     PORT = 5000
 
     CELERY_BROKER_URL = '{{ mbs_broker_url }}'
+    CELERY_CONFIG = {
+        'certfile': "/etc/module-build-service/mbs-private-queue{{env_suffix}}.crt",
+        'keyfile': "/etc/module-build-service/mbs-private-queue{{env_suffix}}.key",
+        'ca_certs': "/etc/module-build-service/ca.crt",
+        'broker_login_method': "EXTERNAL",
+    }
 
     # Global network-related values, in seconds
     NET_TIMEOUT = 120

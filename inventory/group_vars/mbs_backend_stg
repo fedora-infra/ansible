@@ -48,6 +48,6 @@ csi_relationship: |
 
     NOTE - this system has a KRB service principal with elevated koji privileges.
 
-mbs_broker_url: "amqp://mbs{{ env_suffix }}:{{ mbs_backend_amqp_password}}@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fmbs"
+mbs_broker_url: "amqps://mbs{{ env_suffix }}@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fmbs"
 mbs_num_workers: 3
 mbs_systemd_wait_for_rabbitmq: true

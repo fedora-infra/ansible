@@ -254,3 +254,24 @@
   - centos-odcs
 
 # CENTOS ODCS END
+
+# MBS BEGIN
+- name: MBS User
+  run_once: true
+  include_role:
+    name: rabbit/user
+  vars:
+     username: mbs{{ env_suffix }}
+
+- name: MBS Queue
+  run_once: true
+  include_role:
+    name: rabbit/queue
+  vars:
+    username: mbs{{ env_suffix }}
+    queue_name: mbs{{ env_suffix }}
+    # TTL: 10 days (in miliseconds)
+    message_ttl: 864000000
+    routing_keys:
+      - "mbs.{{ env_short }}.gitlab.#"
+# MBS END

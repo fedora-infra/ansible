@@ -143,12 +143,10 @@
     delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
     rabbitmq_user:
       user: "mbs{{ env_suffix }}"
-      password: "{{ mbs_backend_amqp_password }}"
       vhost: /mbs
       configure_priv: .*
       read_priv: .*
       write_priv: .*
-      update_password: always
     tags:
       - rabbitmq_cluster
       - config
