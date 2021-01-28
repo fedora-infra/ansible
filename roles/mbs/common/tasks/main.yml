@@ -108,6 +108,39 @@
 
 - name: Configure MBS virtual host in RabbitMQ
   block:
+  - name: copy the MBS rabbitmq private queue crt
+    copy:
+      src: "{{private}}/files/rabbitmq/{{env}}/pki/issued/mbs-private-queue{{env_suffix}}.crt"
+      dest: /etc/module-build-service/mbs-private-queue{{env_suffix}}.crt
+      owner: root
+      group: fedmsg
+      mode: 0640
+    tags:
+      - mbs
+      - mbs/common
+
+  - name: copy the MBS rabbitmq private queue key
+    copy:
+      src: "{{private}}/files/rabbitmq/{{env}}/pki/private/mbs-private-queue{{env_suffix}}.key"
+      dest: /etc/module-build-service/mbs-private-queue{{env_suffix}}.key
+      owner: root
+      group: fedmsg
+      mode: 0640
+    tags:
+      - mbs
+      - mbs/common
+
+  - name: copy the MBS rabbitmq CA cert
+    copy:
+      src: "{{private}}/files/rabbitmq/{{env}}/pki/ca.crt"
+      dest: /etc/module-build-service/ca.crt
+      owner: root
+      group: fedmsg
+      mode: 0640
+    tags:
+      - mbs
+      - mbs/common
+
   - name: Configure the MBS virtual host
     run_once: true
     delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
