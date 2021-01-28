@@ -42,3 +42,6 @@ csi_relationship: |
     It has no special credentials itself.  When a module build it submitted, it
     makes a note in the DB and publishes a fedmsg message.  The mbs backend
     nodes do all the work of talking to koji.
+
+mbs_broker_url: ""
+mbs_num_workers: 3
