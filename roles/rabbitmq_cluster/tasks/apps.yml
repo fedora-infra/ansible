@@ -125,6 +125,13 @@
     name: rabbit/user
   vars:
      username: koji-centos{{ env_suffix }}
+
+- name: CentOS Stream Koji User
+  run_once: true
+  include_role:
+    name: rabbit/user
+  vars:
+     username: centos-koji
 # CENTOS KOJI END
 
 # CENTOS ODCS BEGIN
