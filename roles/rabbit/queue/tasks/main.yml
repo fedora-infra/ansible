@@ -86,6 +86,7 @@
     login_user: admin
     login_password: "{{ (env == 'production')|ternary(rabbitmq_admin_password_production, rabbitmq_admin_password_staging) }}"
   loop: "{{ routing_keys }}"
+  when: routing_keys is defined
   tags:
     - fedora-messaging
     - rabbitmq_cluster
@@ -103,6 +104,7 @@
     login_user: admin
     login_password: "{{ (env == 'production')|ternary(rabbitmq_admin_password_production, rabbitmq_admin_password_staging) }}"
   loop: "{{ routing_keys }}"
+  when: routing_keys is defined
   tags:
     - fedora-messaging
     - rabbitmq_cluster
