@@ -69,7 +69,7 @@ spec:
         configMap:
           name: fedocal-configmap
       - name: secret-volume
-        configMap:
+        secret:
           name: fedocal-secret
       - name: fedora-messaging-ca-volume
         secret:
