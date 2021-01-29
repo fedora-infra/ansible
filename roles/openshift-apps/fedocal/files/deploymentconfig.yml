@@ -43,6 +43,15 @@ spec:
         - name: secret-volume
           mountPath: /opt/app-root/secret/
           readOnly: true
+        - name: fedora-messaging-ca-volume
+          mountPath: /etc/pki/rabbitmq/ca
+          readOnly: true
+        - name: fedora-messaging-key-volume
+          mountPath: /etc/pki/rabbitmq/key
+          readOnly: true
+        - name: fedora-messaging-cert-volume
+          mountPath: /etc/pki/rabbitmq/cert
+          readOnly: true
         readinessProbe:
           timeoutSeconds: 1
           initialDelaySeconds: 5
@@ -62,6 +71,15 @@ spec:
       - name: secret-volume
         configMap:
           name: fedocal-secret
+      - name: fedora-messaging-ca-volume
+        secret:
+          secretName: fedocal-fedora-messaging-ca
+      - name: fedora-messaging-key-volume
+        secret:
+          secretName: fedocal-fedora-messaging-key
+      - name: fedora-messaging-cert-volume
+        secret:
+          secretName: fedocal-fedora-messaging-crt
 
   triggers:
   - type: ConfigChange
