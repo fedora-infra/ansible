@@ -25,6 +25,12 @@
     template: configmap.yml
     objectname: configmap.yml
 
+
+  - role: openshift/object
+    app: monitor-dashboard
+    file: notifiers.yml
+    objectname: notifiers.yml
+
   - role: openshift/object
     app: monitor-dashboard
     file: dashboard_provision_config.yml
