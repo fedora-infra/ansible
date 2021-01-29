@@ -137,7 +137,7 @@
                         "expr": "zincati_identity_rollout_wariness != 0",
                         "format": "time_series",
                         "intervalFactor": 2,
-                        "legendFormat": "{{instance}}",
+                        "legendFormat": {{ '"{{instance}}"' }},
                         "refId": "A"
                      }
                   ],
@@ -230,7 +230,7 @@
                         "expr": "quantile_over_time(0.99, (time() - zincati_update_agent_last_refresh_timestamp)[15m:])",
                         "format": "time_series",
                         "intervalFactor": 2,
-                        "legendFormat": "{{instance}}",
+                        "legendFormat": {{ '"{{instance}}"' }},
                         "refId": "A"
                      }
                   ],
@@ -310,7 +310,7 @@
                         "expr": "sum by (kind) (rate(zincati_cincinnati_update_checks_errors_total[5m]))",
                         "format": "time_series",
                         "intervalFactor": 2,
-                        "legendFormat": "kind: {{kind}}",
+                        "legendFormat": {{'"kind: {{kind}}"'}},
                         "refId": "A"
                      }
                   ],
