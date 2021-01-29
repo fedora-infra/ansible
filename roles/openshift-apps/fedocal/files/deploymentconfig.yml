@@ -70,7 +70,7 @@ spec:
           name: fedocal-configmap
       - name: secret-volume
         secret:
-          name: fedocal-secret
+          secretName: fedocal-secret
       - name: fedora-messaging-ca-volume
         secret:
           secretName: fedocal-fedora-messaging-ca
