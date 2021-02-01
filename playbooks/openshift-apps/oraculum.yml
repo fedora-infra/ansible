@@ -87,6 +87,8 @@
     path: "/api"
     serviceport: 8080-tcp
     servicename: oraculum-api-endpoint
+    annotations:
+      haproxy.router.openshift.io/balance: source
 
   - role: openshift/route
     app: oraculum
