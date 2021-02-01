@@ -89,6 +89,7 @@
     servicename: oraculum-api-endpoint
     annotations:
       haproxy.router.openshift.io/balance: source
+      haproxy.router.openshift.io/disable-cookies: true
 
   - role: openshift/route
     app: oraculum
