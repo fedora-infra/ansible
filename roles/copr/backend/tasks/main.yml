@@ -113,6 +113,7 @@
   - restart lighttpd
   tags:
   - config
+  - lighttpd_config
 
 - name: add gzip content-encoding header by lua script
   template: src="lighttpd/content-encoding-gzip-if-exists.lua" dest=/etc/lighttpd/content-encoding-gzip-if-exists.lua owner=root group=root mode=0644
