@@ -67,6 +67,8 @@ spec:
         # WatchDog emails
         - name: SEND_ERROR_EMAILS
           value: "false"
+        - name: ADMIN_EMAILS
+          value: "fzatlouk@redhat.com"
         - name: SMTP_CONFIG
           value: "{{ oraculum_smtp_confline }}"
         volumeMounts:
@@ -158,6 +160,8 @@ spec:
         # WatchDog emails
         - name: SEND_ERROR_EMAILS
           value: "false"
+        - name: ADMIN_EMAILS
+          value: "fzatlouk@redhat.com"
         - name: SMTP_CONFIG
           value: "{{ oraculum_smtp_confline }}"
         volumeMounts:
@@ -233,6 +237,8 @@ spec:
         # WatchDog emails
         - name: SEND_ERROR_EMAILS
           value: "false"
+        - name: ADMIN_EMAILS
+          value: "fzatlouk@redhat.com"
         - name: SMTP_CONFIG
           value: "{{ oraculum_smtp_confline }}"
         volumeMounts:
@@ -310,6 +316,8 @@ spec:
         # WatchDog emails
         - name: SEND_ERROR_EMAILS
           value: "false"
+        - name: ADMIN_EMAILS
+          value: "fzatlouk@redhat.com"
         - name: SMTP_CONFIG
           value: "{{ oraculum_smtp_confline }}"
         volumeMounts:
