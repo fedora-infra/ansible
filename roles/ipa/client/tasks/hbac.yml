@@ -71,7 +71,7 @@
 - name: "Give certain groups shell access on host group {{ ipa_host_group }}"
   ipahbacrule:
     name: "hostgroup/{{ ipa_host_group }}/shell-access"
-    description: "Give certain groups shell access on host group {{ ansible_fqdn }}"
+    description: "Give certain groups shell access on host group {{ ipa_host_group }}"
     ipaadmin_password: "{{ ipa_admin_password }}"
     hbacsvcgroup:
       - shell-access
