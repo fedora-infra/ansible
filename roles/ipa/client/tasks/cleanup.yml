@@ -1,0 +1,39 @@
+# REMOVEME: As soon as all (affected) hosts have been migrated over from fas_client, 2fa_client to
+# ipa/client, this can go away.
+#
+# Restore pristine sudo configuration, TOTPCGI configuration messes with IPA integration
+
+- name: Check if /etc/pam.d/sudo exists
+  stat:
+    path: /etc/pam.d/sudo
+  register: pam_sudo_stat
+
+- name: Check if /etc/pam.d/sudo needs to be restored
+  lineinfile:
+    name: /etc/pam.d/sudo
+    regexp: 'pam_url\.so'
+    state: absent
+  check_mode: yes
+  changed_when: false
+  register: pam_sudo_pam_url_so
+  when: pam_sudo_stat.stat.exists and not pam_sudo_stat.stat.islnk
+
+- name: Remove butchered sudo pam.d file
+  file:
+    name: /etc/pam.d/sudo
+    state: absent
+  when: pam_sudo_stat.stat.exists and pam_sudo_pam_url_so.found
+
+- name: Uninstall sudo package, but not any dependencies
+  command:
+    cmd: rpm -e --nodeps sudo
+    # We really don't want to use yum/dnf here
+    warn: no
+  failed_when: false
+  when: not pam_sudo_stat.stat.exists or pam_sudo_pam_url_so.found
+
+- name: (Re)install sudo package
+  package:
+    name: sudo
+    state: present
+  when: not pam_sudo_stat.stat.exists or pam_sudo_pam_url_so.found

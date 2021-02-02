@@ -21,6 +21,14 @@
     - ipa/client
     - config
 
+- name: Clean up annoying remnants of previous FAS client installations
+  import_tasks: cleanup.yml
+  # don't muck with prod for now
+  when: env == 'staging'
+  tags:
+    - ipa/client
+    - fas-client-cleanup
+
 - name: Basic configuration for client on IPA cluster
   delegate_to: "{{ ipa_server }}"
   import_tasks: common.yml
