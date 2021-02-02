@@ -19,4 +19,4 @@
     ipaadmin_password: "{{ ipa_admin_password }}"
     action: member
     state: present
-    host: "{{ ansible_fqdn }}"
+    host: "{{ inventory_hostname }}"

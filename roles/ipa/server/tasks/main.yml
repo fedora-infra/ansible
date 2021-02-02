@@ -427,7 +427,7 @@
     - "Self-service Portal Administrators"
     user:
     - noggin
-    ipa_host: "{{ ansible_fqdn }}"
+    ipa_host: "{{ inventory_hostname }}"
     ipa_user: admin
     ipa_pass: "{{ipa_admin_password}}"
     validate_certs: no
@@ -453,7 +453,7 @@
     - admin
     - fas_sync
     - arrfab
-    ipa_host: "{{ ansible_fqdn }}"
+    ipa_host: "{{ inventory_hostname }}"
     ipa_user: admin
     ipa_pass: "{{ipa_admin_password}}"
     validate_certs: no
