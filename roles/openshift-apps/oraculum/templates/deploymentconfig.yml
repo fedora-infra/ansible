@@ -59,11 +59,11 @@ spec:
         - name: SECRET_KEY
           value: "{{ oraculum_secret_key }}"
         - name: OPENSHIFT_PROD
-          {% if env == 'staging' %}
+{% if env == 'staging' %}
           value: "0"
-          {% else %}
+{% else %}
           value: "1"
-          {% endif %}
+{% endif %}
         # WatchDog emails
         - name: SEND_ERROR_EMAILS
           value: "false"
@@ -110,11 +110,11 @@ metadata:
     app: oraculum
   name: oraculum-worker
 spec:
-  {% if env == 'staging' %}
+{% if env == 'staging' %}
   replicas: 2
-  {% else %}
+{% else %}
   replicas: 1 # Change me to some biiig numba after you got me working
-  {% endif %}
+{% endif %}
   selector:
     app: oraculum
     deploymentconfig: oraculum
@@ -152,11 +152,11 @@ spec:
         - name: SECRET_KEY
           value: "{{ oraculum_secret_key }}"
         - name: OPENSHIFT_PROD
-          {% if env == 'staging' %}
+{% if env == 'staging' %}
           value: "0"
-          {% else %}
+{% else %}
           value: "1"
-          {% endif %}
+{% endif %}
         # WatchDog emails
         - name: SEND_ERROR_EMAILS
           value: "false"
@@ -229,11 +229,11 @@ spec:
         - name: SECRET_KEY
           value: "{{ oraculum_secret_key }}"
         - name: OPENSHIFT_PROD
-          {% if env == 'staging' %}
+{% if env == 'staging' %}
           value: "0"
-          {% else %}
+{% else %}
           value: "1"
-          {% endif %}
+{% endif %}
         # WatchDog emails
         - name: SEND_ERROR_EMAILS
           value: "false"
@@ -308,11 +308,11 @@ spec:
         - name: SECRET_KEY
           value: "{{ oraculum_secret_key }}"
         - name: OPENSHIFT_PROD
-          {% if env == 'staging' %}
+{% if env == 'staging' %}
           value: "0"
-          {% else %}
+{% else %}
           value: "1"
-          {% endif %}
+{% endif %}
         # WatchDog emails
         - name: SEND_ERROR_EMAILS
           value: "false"
@@ -401,11 +401,11 @@ spec:
         - name: SUBDIR
           value: "/"
         - name: API
-          {% if env == 'staging' %}
+{% if env == 'staging' %}
           value: "https://packager-dashboard.stg.fedoraproject.org/api/v1/"
-          {% else %}
+{% else %}
           value: "https://packager-dashboard.fedoraproject.org/api/v1/"
-          {% endif %}
+{% endif %}
   triggers:
   - type: ConfigChange
   - type: ImageChange
