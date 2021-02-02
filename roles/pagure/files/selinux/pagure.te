@@ -1,4 +1,4 @@
-module pagure 1.2;
+module pagure 1.3;
 
 require {
     type gitosis_var_lib_t;
@@ -35,6 +35,7 @@ allow httpd_t var_log_t:file { open rename unlink };
 #!!!! This avc can be allowed using the boolean 'domain_can_mmap_files'
 allow httpd_t var_t:file map;
 allow httpd_t var_t:file { getattr open read ioctl };
+allow httpd_t var_t:file { lock unlink write };
 
 #============= postfix_cleanup_t ==============
 allow postfix_cleanup_t var_run_t:sock_file write;
