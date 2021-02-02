@@ -113,7 +113,7 @@ spec:
 {% if env == 'staging' %}
   replicas: 2
 {% else %}
-  replicas: 1 # Change me to some biiig numba after you got me working
+  replicas: 4 # Change me to some biiig numba after you got me working
 {% endif %}
   selector:
     app: oraculum
