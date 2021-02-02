@@ -66,11 +66,15 @@ spec:
 {% endif %}
         # WatchDog emails
         - name: SEND_ERROR_EMAILS
-          value: "false"
+          value: "true"
         - name: ADMIN_EMAILS
-          value: "fzatlouk@redhat.com"
+          value: "['fzatlouk@redhat.com']"
         - name: SMTP_CONFIG
-          value: "{{ oraculum_smtp_confline }}"
+{% if env == 'staging' %}
+          value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard.stg.fedoraproject.org;"
+{% else %}
+          value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard.fedoraproject.org;"
+{% endif %}
         volumeMounts:
         - name: oraculum-secret-volume
           mountPath: /opt/app-root/secret/
@@ -159,11 +163,15 @@ spec:
 {% endif %}
         # WatchDog emails
         - name: SEND_ERROR_EMAILS
-          value: "false"
+          value: "true"
         - name: ADMIN_EMAILS
-          value: "fzatlouk@redhat.com"
+          value: "['fzatlouk@redhat.com']"
         - name: SMTP_CONFIG
-          value: "{{ oraculum_smtp_confline }}"
+{% if env == 'staging' %}
+          value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard.stg.fedoraproject.org;"
+{% else %}
+          value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard.fedoraproject.org;"
+{% endif %}
         volumeMounts:
         - name: oraculum-secret-volume
           mountPath: /opt/app-root/secret/
@@ -236,11 +244,15 @@ spec:
 {% endif %}
         # WatchDog emails
         - name: SEND_ERROR_EMAILS
-          value: "false"
+          value: "true"
         - name: ADMIN_EMAILS
-          value: "fzatlouk@redhat.com"
+          value: "['fzatlouk@redhat.com']"
         - name: SMTP_CONFIG
-          value: "{{ oraculum_smtp_confline }}"
+{% if env == 'staging' %}
+          value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard.stg.fedoraproject.org;"
+{% else %}
+          value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard.fedoraproject.org;"
+{% endif %}
         volumeMounts:
         - name: oraculum-secret-volume
           mountPath: /opt/app-root/secret/
@@ -315,11 +327,15 @@ spec:
 {% endif %}
         # WatchDog emails
         - name: SEND_ERROR_EMAILS
-          value: "false"
+          value: "true"
         - name: ADMIN_EMAILS
-          value: "fzatlouk@redhat.com"
+          value: "['fzatlouk@redhat.com']"
         - name: SMTP_CONFIG
-          value: "{{ oraculum_smtp_confline }}"
+{% if env == 'staging' %}
+          value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard.stg.fedoraproject.org;"
+{% else %}
+          value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard.fedoraproject.org;"
+{% endif %}
         volumeMounts:
         - name: oraculum-secret-volume
           mountPath: /opt/app-root/secret/
