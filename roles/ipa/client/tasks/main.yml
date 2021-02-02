@@ -29,6 +29,7 @@
   tags:
     - ipa/client
     - config
+  throttle: 1
 
 - name: Configure HBAC on IPA cluster
   delegate_to: "{{ ipa_server }}"
@@ -38,6 +39,7 @@
   tags:
     - ipa/client
     - config
+  throttle: 1
 
 - name: Configure sudo on IPA cluster
   delegate_to: "{{ ipa_server }}"
@@ -47,3 +49,4 @@
   tags:
     - ipa/client
     - config
+  throttle: 1
