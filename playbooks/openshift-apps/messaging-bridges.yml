@@ -11,6 +11,7 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
+
   - name: Create the RabbitMQ user
     rabbitmq_user:
       user: "messaging-bridge{{ env_suffix }}.fedoraproject.org"
@@ -22,28 +23,52 @@
     - config
     - rabbitmq_cluster
 
-  - name: Create the RabbitMQ queue amqp_to_zmq
-    rabbitmq_queue:
-      name: amqp_to_zmq
-      vhost: /pubsub
-      login_user: admin
-      login_password: "{{ (env == 'production')|ternary(rabbitmq_admin_password_production, rabbitmq_admin_password_staging) }}"
+- name: setup Queues in RabbitMQ
+  hosts: rabbitmq[0]:rabbitmq_stg[0]:rabbitmq01.iad2.fedoraproject.org
+  user: root
+  gather_facts: False
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  roles:
+
+  - role: rabbit/queue
+    username: "amqp_to_zmq"
+    queue_name: "amqp_to_zmq"
+    routing_keys: "#"
+    thresholds:
+        warning: 10
+        critical: 100
     tags:
     - config
     - rabbitmq_cluster
 
-  - name: Create the RabbitMQ queue for verify-missing
-    rabbitmq_queue:
-      name: amqp_bridge_verify_missing
-      vhost: /pubsub
-      durable: True
-      auto_delete: False
-      message_ttl: 60000
-      login_user: admin
-      login_password: "{{ (env == 'production')|ternary(rabbitmq_admin_password_production, rabbitmq_admin_password_staging) }}"
+  - role: rabbit/queue
+    username: "amqp_bridge_verify_missing"
+    queue_name: "amqp_bridge_verify_missing"
+    routing_keys: "#"
+    message_ttl: 60000
+    thresholds:
+        warning: 10
+        critical: 100
     tags:
     - config
     - rabbitmq_cluster
+
+- name: setup bindings in RabbitMQ
+  hosts: rabbitmq[0]:rabbitmq_stg[0]:rabbitmq01.iad2.fedoraproject.org
+  user: root
+  gather_facts: False
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  tasks:
 
   - name: Create the amqp-to-zmq bindings
     rabbitmq_binding:
