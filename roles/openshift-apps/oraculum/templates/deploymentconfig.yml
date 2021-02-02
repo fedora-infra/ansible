@@ -68,7 +68,7 @@ spec:
         - name: SEND_ERROR_EMAILS
           value: "true"
         - name: ADMIN_EMAILS
-          value: "['fzatlouk@redhat.com']"
+          value: "fzatlouk@redhat.com"
         - name: SMTP_CONFIG
 {% if env == 'staging' %}
           value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard.stg.fedoraproject.org;"
@@ -165,7 +165,7 @@ spec:
         - name: SEND_ERROR_EMAILS
           value: "true"
         - name: ADMIN_EMAILS
-          value: "['fzatlouk@redhat.com']"
+          value: "fzatlouk@redhat.com"
         - name: SMTP_CONFIG
 {% if env == 'staging' %}
           value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard.stg.fedoraproject.org;"
@@ -246,7 +246,7 @@ spec:
         - name: SEND_ERROR_EMAILS
           value: "true"
         - name: ADMIN_EMAILS
-          value: "['fzatlouk@redhat.com']"
+          value: "fzatlouk@redhat.com"
         - name: SMTP_CONFIG
 {% if env == 'staging' %}
           value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard.stg.fedoraproject.org;"
@@ -329,7 +329,7 @@ spec:
         - name: SEND_ERROR_EMAILS
           value: "true"
         - name: ADMIN_EMAILS
-          value: "['fzatlouk@redhat.com']"
+          value: "fzatlouk@redhat.com"
         - name: SMTP_CONFIG
 {% if env == 'staging' %}
           value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard.stg.fedoraproject.org;"
