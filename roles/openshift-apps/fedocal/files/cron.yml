@@ -1,0 +1,59 @@
+---
+# root FEDOCAL_CONFIG=/etc/fedocal/fedocal.cfg /usr/bin/fedocal_cron.py
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: cron
+spec:
+  concurrencyPolicy: Forbid
+  schedule: "*/30 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            parent: "cronfedocal"
+        spec:
+          containers:
+          - name: fedocal-cron
+            image: fedocal:latest
+            command: ["python3"]
+            args: ["/usr/bin/fedocal_cron.py"]
+            env:
+              - name: FEDOCAL_CONFIG
+                value: /opt/app-root/config/fedocal.cfg
+            volumeMounts:
+            - name: config-volume
+              mountPath: /opt/app-root/config/
+              readOnly: true
+            - name: secret-volume
+              mountPath: /opt/app-root/secret/
+              readOnly: true
+            - name: fedora-messaging-ca-volume
+              mountPath: /etc/pki/rabbitmq/ca
+              readOnly: true
+            - name: fedora-messaging-key-volume
+              mountPath: /etc/pki/rabbitmq/key
+              readOnly: true
+            - name: fedora-messaging-cert-volume
+              mountPath: /etc/pki/rabbitmq/cert
+              readOnly: true
+          restartPolicy: Never
+          startingDeadlineSeconds: 600
+        volumes:
+        - name: config-volume
+          configMap:
+            name: fedocal-configmap
+        - name: secret-volume
+          secret:
+            secretName: fedocal-secret
+        - name: fedora-messaging-ca-volume
+          secret:
+            secretName: fedocal-fedora-messaging-ca
+        - name: fedora-messaging-key-volume
+          secret:
+            secretName: fedocal-fedora-messaging-key
+        - name: fedora-messaging-cert-volume
+          secret:
+            secretName: fedocal-fedora-messaging-crt
+
