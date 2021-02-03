@@ -16,7 +16,7 @@ spec:
         spec:
           containers:
           - name: fedocal-cron
-            image: fedocal:latest
+            image: docker-registry.default.svc:5000/fedocal/fedocal:latest
             command: ["python3"]
             args: ["/usr/bin/fedocal_cron.py"]
             env:
