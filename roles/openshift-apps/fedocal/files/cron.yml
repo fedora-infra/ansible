@@ -40,20 +40,20 @@ spec:
               readOnly: true
           restartPolicy: Never
           startingDeadlineSeconds: 600
-        volumes:
-        - name: config-volume
-          configMap:
-            name: fedocal-configmap
-        - name: secret-volume
-          secret:
-            secretName: fedocal-secret
-        - name: fedora-messaging-ca-volume
-          secret:
-            secretName: fedocal-fedora-messaging-ca
-        - name: fedora-messaging-key-volume
-          secret:
-            secretName: fedocal-fedora-messaging-key
-        - name: fedora-messaging-cert-volume
-          secret:
-            secretName: fedocal-fedora-messaging-crt
+          volumes:
+          - name: config-volume
+            configMap:
+              name: fedocal-configmap
+          - name: secret-volume
+            secret:
+              secretName: fedocal-secret
+          - name: fedora-messaging-ca-volume
+            secret:
+              secretName: fedocal-fedora-messaging-ca
+          - name: fedora-messaging-key-volume
+            secret:
+              secretName: fedocal-fedora-messaging-key
+          - name: fedora-messaging-cert-volume
+            secret:
+              secretName: fedocal-fedora-messaging-crt
 
