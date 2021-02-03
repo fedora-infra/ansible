@@ -165,12 +165,12 @@ def get_branch_and_arches(tag, version):
         branch = 'el%s' % version
         arches = ["primary"]
     elif tag == 'module-package-list':
-        branch = 'master'
+        branch = 'rawhide'
         arches = ["primary"]
     else:
         # Fedora
         if version == RAWHIDE:
-            branch = 'master'
+            branch = 'rawhide'
         else:
             branch = tag.split('-')[0]
 
@@ -414,7 +414,7 @@ if __name__ == '__main__':
                 elif namespace in ('modules', 'flatpaks'):
                     # Add modules to f27-modular-updates even if their only branch is '2.4'
                     # Similarly, flatpaks will be built into f29-flatpak-updates-candidate
-                    # if they use the f29 runtime, even from master or stream branches.
+                    # if they use the f29 runtime, even from rawhide or stream branches.
                     pkgs.append(pkg)
 
             # This is a special project, not in dist-git, but which needs to be in
