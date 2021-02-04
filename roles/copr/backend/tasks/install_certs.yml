@@ -1,6 +1,10 @@
 - name: copy httpd ssl certificates
   copy: src="{{ private }}/files/httpd/{{ item }}" dest="/etc/lighttpd/{{ item }}" owner=root group=root mode=0600
   with_items:
+  - copr-be.cloud.fedoraproject.org.key
+  - copr-be.cloud.fedoraproject.org.cert
+  - copr-be.cloud.fedoraproject.org.pem
+  - copr-be.cloud.fedoraproject.org.intermediate.cert
   - copr.fedorainfracloud.org.key
   - copr.fedorainfracloud.org.crt
   - copr.fedorainfracloud.org.pem
