@@ -17,7 +17,7 @@
   - collectd/base
   - hosts
   - { role: fas_client, when: env != "staging" }
-  - { role: ipa/client, when: env == "staging" }/
+  - { role: ipa/client, when: env == "staging" }
   - rsyncd
   - sudo
   - { role: openvpn/client,
