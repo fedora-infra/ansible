@@ -29,8 +29,8 @@
   - nagios_client
   - collectd/base
   - hosts
-  - { role: ipa/client, when: env == "staging" }
   - { role: fas_client, when: env != "staging" }
+  - { role: ipa/client, when: env == "staging" }/
   - sudo
   - rkhunter
   - { role: fedmsg/base, when: env != "staging" }
