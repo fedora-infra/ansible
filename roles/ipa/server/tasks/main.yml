@@ -446,6 +446,70 @@
   when: ipa_initial
 
 
+# User selfservice permissions
+
+- name: Setup the selfservice permission for passwords
+  # When ansible-freeipa is upgraded, we'll get ipaselfservice
+  # ipaselfservice:
+  #   ipaadmin_password: "{{ipa_admin_password}}"
+  #   name: "Users can modify their own password"
+  #   permission: write
+  #   attribute:
+  #   - userPassword
+  #   - krbPrincipalKey
+  #   - sambaLMPassword
+  #   - sambaNTPassword
+  command:
+    argv:
+      - ipa
+      - selfservice-add
+      - "Users can modify their own password"
+      - --permissions=write
+      - --attrs=userPassword
+      - --attrs=krbPrincipalKey
+      - --attrs=sambaLMPassword
+      - --attrs=sambaNTPassword
+  register: output
+  changed_when: "'Added selfservice' in output.stdout"
+  failed_when: "'already exists' not in output.stderr and output.rc != 0"
+  tags:
+  - ipa/server
+  - config
+  when: ipa_initial and env == 'staging'
+
+
+- name: Setup the selfservice permission for addressbook attributes
+  # When ansible-freeipa is upgraded, we'll get ipaselfservice
+  # ipaselfservice:
+  #   ipaadmin_password: "{{ipa_admin_password}}"
+  #   name: "User Self service"
+  #   permission: write
+  #   attribute:
+  #   - givenname
+  #   - sn
+  #   - cn
+  #   - displayname
+  #   - gecos
+  command:
+    argv:
+      - ipa
+      - selfservice-add
+      - "User Self service"
+      - --permissions=write
+      - --attrs=givenName
+      - --attrs=sn
+      - --attrs=cn
+      - --attrs=displayName
+      - --attrs=gecos
+  register: output
+  changed_when: "'Added selfservice' in output.stdout"
+  failed_when: "'already exists' not in output.stderr and output.rc != 0"
+  tags:
+  - ipa/server
+  - config
+  when: ipa_initial and env == 'staging'
+
+
 - name: Set the members of the admin group
   ipa_group:
     name: admins
