@@ -1,0 +1,53 @@
+- name: make the app be real
+  hosts: os_masters[0]
+  user: root
+  gather_facts: False
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  vars:
+
+  roles:
+    - role: openshift/project
+      app: fas-changes
+      description: "Get last changed users in FAS"
+      appowners:
+        - abompard
+      tags:
+        - apply-appowners
+
+    - role: openshift/imagestream
+      app: fas-changes
+      imagename: fas-changes
+
+    - role: openshift/object
+      app: fas-changes
+      template: buildconfig.yml
+      objectname: buildconfig.yml
+
+    - role: openshift/object
+      app: fas-changes
+      template: configmap.yml
+      objectname: configmap.yml
+
+    - role: openshift/object
+      app: fas-changes
+      file: service.yml
+      objectname: service.yml
+
+    - role: openshift/route
+      app: fas-changes
+      routename: fas-changes
+      host: "fas-changes.app.os{{ env_suffix }}.fedoraproject.org"
+      serviceport: web
+      servicename: fas-changes
+      annotations:
+        haproxy.router.openshift.io/timeout: 5m
+
+    - role: openshift/object
+      app: fas-changes
+      template: deploymentconfig.yml
+      objectname: deploymentconfig.yml

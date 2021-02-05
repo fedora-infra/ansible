@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fas-changes
+  labels:
+    app: fas-changes
+spec:
+  ports:
+    - name: web
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: fas-changes
+    deploymentconfig: fas-changes

@@ -1,0 +1,59 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: fas-changes
+  labels:
+    app: fas-changes
+spec:
+  replicas: 1
+  selector:
+    app: fas-changes
+    deploymentconfig: fas-changes
+  strategy:
+    type: Rolling
+    activeDeadlineSeconds: 21600
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: fas-changes
+        deploymentconfig: fas-changes
+    spec:
+      containers:
+        - name: fas-changes
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              #protocol: TCP
+          #resources: {}
+          #terminationMessagePath: /dev/termination-log
+          #terminationMessagePolicy: File
+          volumeMounts:
+            - name: fas-changes-config-volume
+              mountPath: "/etc/fas-changes"
+              readOnly: true
+          env:
+            - name: FLASK_SETTINGS
+              value: "/etc/fas-changes/fas-changes.cfg"
+            # - name: SCRIPT_NAME
+            #   value: "/fas-changes"
+      volumes:
+        - name: fas-changes-config-volume
+          configMap:
+            name: fas-changes-config
+  triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - fas-changes
+        from:
+          kind: ImageStreamTag
+          name: fas-changes:latest
+      type: ImageChange
+    - type: ConfigChange
