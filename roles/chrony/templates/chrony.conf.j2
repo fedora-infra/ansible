@@ -1,5 +1,5 @@
 # setup our servers
-{% if datacenter == 'iad2' and not ansible_hostname.startswith('bastion') %}
+{% if ( datacenter == 'iad2' or datacenter == 'staging' ) and not ansible_hostname.startswith('bastion') %}
 server bastion01.iad2.fedoraproject.org iburst
 server bastion02.iad2.fedoraproject.org iburst
 {% elif datacenter == 'cloud'  and not ansible_hostname.startswith('cloud-noc') %}
