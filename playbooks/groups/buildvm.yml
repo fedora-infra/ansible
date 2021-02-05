@@ -22,6 +22,7 @@
   roles:
     - base
     - hosts
+    - { role: ipa/client, when: env == "staging" }
     - {
         role: nfs/client,
         mnt_dir: "/mnt/fedora_koji",
