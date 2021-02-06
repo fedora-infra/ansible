@@ -11,7 +11,7 @@
   file:
     path: /etc/httpd/conf.d/{{website}}
     state: directory
-    mode: '0744'
+    mode: '0755'
 
 - name: Copy over httpd redirectmatch file for {{shortname}}
   template: >
