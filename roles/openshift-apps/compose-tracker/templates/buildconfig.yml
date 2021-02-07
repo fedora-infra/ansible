@@ -10,7 +10,7 @@ spec:
 {% if env == "staging" %}
       ref: staging
 {% else %}
-      ref: master 
+      ref: main 
 {% endif %}
       uri: https://pagure.io/releng/compose-tracker.git
     type: Git
