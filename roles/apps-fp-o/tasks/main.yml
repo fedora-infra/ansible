@@ -16,7 +16,7 @@
   file:
     path: "{{ item }}"
     state: directory
-    mode: '0775'
+    mode: '2775'
   loop:
     - '/srv/web/apps-fp-o/global/'
     - '/srv/web/apps-fp-o/img/icons/'
