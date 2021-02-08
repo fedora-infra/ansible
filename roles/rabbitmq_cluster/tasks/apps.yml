@@ -257,12 +257,12 @@
   run_once: true
   delegate_to: "rabbitmq01.iad2.fedoraproject.org"
   rabbitmq_vhost:
-    name: /msb-private-queue
+    name: /mbs-private-queue
     state: present
   tags:
-  - msb-private-queue
+  - mbs-private-queue
 
-- name: Configure the HA policy for the msb-private-queue queues
+- name: Configure the HA policy for the mbs-private-queue queues
   run_once: true
   delegate_to: "rabbitmq01.iad2.fedoraproject.org"
   rabbitmq_policy:
