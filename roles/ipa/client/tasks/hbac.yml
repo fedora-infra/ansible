@@ -1,80 +1,101 @@
+---
+## This will only run once per play (as per `main.yml`), so needs to consider all affected hosts.
+
 ## Cluster-wide rules
 
 - name: "Give members of group sysadmin-main access to anything, anywhere"
+  delegate_to: "{{ item.key }}"
   ipahbacrule:
     name: "usergroup/sysadmin-main"
     description: "Give members of group sysadmin-main access to anything, anywhere"
     hostcategory: "all"
     servicecategory: "all"
-    ipaadmin_password: "{{ ipa_admin_password }}"
+    ipaadmin_password: "{{ item.value }}"
     state: present
     group:
       - sysadmin-main
+  loop: "{{ ipa_server_admin_passwords | dict2items }}"
 
 - name: "Enable usergroup/sysadmin-main HBAC rule"
+  delegate_to: "{{ item.key }}"
   ipahbacrule:
     name: "usergroup/sysadmin-main"
-    ipaadmin_password: "{{ ipa_admin_password }}"
+    ipaadmin_password: "{{ item.value }}"
     state: enabled
+  loop: "{{ ipa_server_admin_passwords | dict2items }}"
 
 - name: "Disable allow_all HBAC rule"
+  delegate_to: "{{ item.key }}"
   ipahbacrule:
     name: allow_all
-    ipaadmin_password: "{{ ipa_admin_password }}"
+    ipaadmin_password: "{{ item.value }}"
     state: disabled
+  loop: "{{ ipa_server_admin_passwords | dict2items }}"
 
 - name: "Let everybody run sudo"
+  delegate_to: "{{ item.key }}"
   ipahbacrule:
     name: "all-users/sudo"
     description: "Allow all users to execute the sudo command"
     state: present
-    ipaadmin_password: "{{ ipa_admin_password }}"
+    ipaadmin_password: "{{ item.value }}"
     hostcategory: "all"
     usercategory: "all"
     hbacsvcgroup:
       - Sudo
+  loop: "{{ ipa_server_admin_passwords | dict2items }}"
 
-## Host-specific rules
+- name: Add the sshd HBAC service in IPA
+  delegate_to: "{{ item.key }}"
+  ipahbacsvc:
+    name: sshd
+    description: SSH daemon
+    ipaadmin_password: "{{ item.value }}"
+  loop: "{{ ipa_server_admin_passwords | dict2items }}"
+
+- name: Add the shell-access service group in IPA
+  delegate_to: "{{ item.key }}"
+  ipahbacsvcgroup:
+    name: shell-access
+    description: Group of shell access services
+    ipaadmin_password: "{{ item.value }}"
+    hbacsvc:
+      - sshd
+  loop: "{{ ipa_server_admin_passwords | dict2items }}"
+
+## Host group- & host-specific rules
 
 # shell access
 
 - name: "Warn if `fas_client_groups` is set"
   fail:
-    msg: "`fas_client_groups` is defined, should be converted to a list and named `ipa_client_shell_groups`"
+    msg: >-
+      `fas_client_groups` is defined, please convert to a (group var) list named
+      `ipa_client_shell_groups`
   ignore_errors: true
   when: fas_client_groups is defined
 
-- name: "Convert `fas_client_groups` string to `ipa_client_shell_groups` list if missing"
-  set_fact:
-    ipa_client_shell_groups: "{{ fas_client_groups.split(',') | list }}"
-  when: fas_client_groups is defined and ipa_client_shell_groups is not defined
+- name: "Warn if IPA client variables are unset"
+  fail:
+    msg: "`{{ item }}` is not defined"
+  ignore_errors: true
+  when: lookup('vars', item, default="<undefined-sentinel>") == "<undefined-sentinel>"
+  loop:
+    - ipa_host_group
+    - ipa_host_group_desc
+    - ipa_client_shell_groups
+    - ipa_client_sudo_groups
 
-- name: Add the sshd HBAC service in IPA
-  ipahbacsvc:
-    name: sshd
-    description: SSH daemon
-    ipaadmin_password: "{{ ipa_admin_password }}"
-
-- name: Add the shell-access service group in IPA
-  ipahbacsvcgroup:
-    name: shell-access
-    description: Group of shell access services
-    ipaadmin_password: "{{ ipa_admin_password }}"
-    hbacsvc:
-      - sshd
-
-- name: Check that shell access user groups exist
-  command: "getent group {{ item }}"
-  changed_when: False
-  loop: "{{ (ipa_client_shell_groups | default([])) | list }}"
-
-- name: "Give certain groups shell access on host group {{ ipa_host_group }}"
+- name: Give certain groups shell access per host group
+  delegate_to: "{{ item[0] }}"
   ipahbacrule:
-    name: "hostgroup/{{ ipa_host_group }}/shell-access"
-    description: "Give certain groups shell access on host group {{ ipa_host_group }}"
-    ipaadmin_password: "{{ ipa_admin_password }}"
+    name: "hostgroup/{{ item[1] }}/shell-access"
+    description: "Grant shell access on host group {{ item[1] }}"
+    ipaadmin_password: "{{ ipa_server_admin_passwords[item[0]] }}"
+    action: member
     hbacsvcgroup:
       - shell-access
     state: present
-    group: "{{ ipa_client_shell_groups | default([]) | list }}"
-    hostgroup: "{{ ipa_host_group }}"
+    group: "{{ ipa_server_host_groups_dict[item[0]][item[1]]['shell_groups'] }}"
+    hostgroup: "{{ item[1] }}"
+  loop: "{{ ipa_server_host_groups }}"

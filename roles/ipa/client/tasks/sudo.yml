@@ -1,13 +1,12 @@
-- name: Check that configured sudo groups exist
-  command: "getent group {{ item }}"
-  changed_when: False
-  loop: "{{ (ipa_client_sudo_groups | default([])) + (ipa_client_sudo_nopasswd_groups | default([])) | list }}"
+---
+## This will only run once per play (as per `main.yml`), so needs to consider all affected hosts.
 
 - name: "Give members of `sysadmin-main` sudo access to anything, anywhere"
+  delegate_to: "{{ item.key }}"
   ipasudorule:
     name: "usergroup/sysadmin-main"
     description: "Allow members of `sysadmin-main` to use sudo to do anything, anywhere"
-    ipaadmin_password: "{{ ipa_admin_password }}"
+    ipaadmin_password: "{{ item.value }}"
     state: present
     cmdcategory: "all"
     hostcategory: "all"
@@ -15,31 +14,18 @@
     runasgroupcategory: "all"
     group:
       - sysadmin-main
+  loop: "{{ ipa_server_admin_passwords | dict2items }}"
 
-- name: "Give certain groups sudo access to anything on host group {{ ipa_host_group }}"
+- name: Give certain groups sudo access to anything per host group
+  delegate_to: "{{ item[0] }}"
   ipasudorule:
-    name: "hostgroup/{{ ipa_host_group }}"
-    description: "Give members of groups sudo access to anything on host group {{ ipa_host_group }}"
-    ipaadmin_password: "{{ ipa_admin_password }}"
+    name: "hostgroup/{{ item[1] }}"
+    description: "Grant sudo access to anything on host group {{ item[1] }}"
+    ipaadmin_password: "{{ ipa_server_admin_passwords[item[0]] }}"
     state: present
-    group: "{{ ipa_client_sudo_groups | list }}"
-    hostgroup: "{{ ipa_host_group }}"
+    group: "{{ ipa_server_host_groups_dict[item[0]][item[1]]['sudo_groups'] }}"
+    hostgroup: "{{ item[1] }}"
     cmdcategory: "all"
     runasusercategory: "all"
     runasgroupcategory: "all"
-  when: ipa_client_sudo_groups is defined and ipa_client_sudo_groups | length > 0
-
-## Disabled: Remove "False and" from when: to re-enable
-- name: "Give certain groups password-less sudo access to anything on host group {{ ipa_host_group }}"
-  ipasudorule:
-    name: "hostgroup/{{ ipa_host_group }}/nopasswd"
-    description: "Give members of groups password-less sudo access to anything on host group {{ ipa_host_group }}"
-    ipaadmin_password: "{{ ipa_admin_password }}"
-    state: present
-    group: "{{ ipa_client_sudo_groups_nopasswd | list }}"
-    hostgroup: "{{ ipa_host_group }}"
-    cmdcategory: "all"
-    runasusercategory: "all"
-    runasgroupcategory: "all"
-    options: "!authenticate"
-  when: False and ipa_client_sudo_groups_nopasswd is defined and ipa_client_sudo_groups_nopasswd | length > 0
+  loop: "{{ ipa_server_host_groups }}"
