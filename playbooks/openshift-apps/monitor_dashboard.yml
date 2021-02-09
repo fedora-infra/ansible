@@ -75,6 +75,11 @@
 
   - role: openshift/object
     app: monitor-dashboard
+    file: prest_service.yml
+    objectname: prest_service.yml
+
+  - role: openshift/object
+    app: monitor-dashboard
     file: route_serviceaccount.yml
     objectname: route_serviceaccount.yml
 
@@ -96,8 +101,19 @@
 
   - role: openshift/object
     app: monitor-dashboard
+    file: pgrest_route.yml
+    objectname: prest_route.yml
+
+  - role: openshift/object
+    app: monitor-dashboard
     template: postgrest_deploymentconfig.yml
     objectname: postgrest_deploymentconfig.yml
+
+  - role: openshift/object
+    app: monitor-dashboard
+    template: prest_deploymentconfig.yml
+    objectname: prest_deploymentconfig.yml
+
 
   - role: openshift/object
     app: monitor-dashboard
