@@ -18,7 +18,7 @@ import subprocess
 import sys
 
 _base_path = '/srv/git/repositories'
-_branch_from = 'master'
+_branch_from = 'rawhide' # For rpms namespace only
 
 
 def _get_arguments():
