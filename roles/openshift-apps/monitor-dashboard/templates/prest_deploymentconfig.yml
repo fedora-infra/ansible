@@ -27,13 +27,13 @@ spec:
         - containerPort: 3000
         env:
         - name: PREST_HTTP_PORT
-          value: 3000
+          value: "3000"
         - name: PREST_PG_HOST
           value: db-datanommer01.iad2.fedoraproject.org
         - name: PREST_PG_USER
           value: datanommer_ro
         - name: PREST_PG_PASS
-          value: {{ datanommer_ro_password }}
+          value: "{{ datanommer_ro_password }}"
         - name: PREST_PG_DATABASE
           value: datanommer
   triggers:
