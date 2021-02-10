@@ -10,12 +10,12 @@
   - name: Uninstall IPA client
     command: ipa-client-install --uninstall
 
-  - import_playbook: "{{ basedir }}/playbooks/groups/bodhi-backend.yml"
-  - import_playbook: "{{ basedir }}/playbooks/groups/bugzilla2fedmsg.yml"
-  - import_playbook: "{{ basedir }}/playbooks/groups/github2fedmsg.yml"
-  - import_playbook: "{{ basedir }}/playbooks/groups/ipsilon.yml"
-  - import_playbook: "{{ basedir }}/playbooks/groups/mbs.yml"
-  - import_playbook: "{{ basedir }}/playbooks/groups/osbs/deploy-cluster.yml"
+- import_playbook: "{{ basedir }}/playbooks/groups/bodhi-backend.yml"
+- import_playbook: "{{ basedir }}/playbooks/groups/bugzilla2fedmsg.yml"
+- import_playbook: "{{ basedir }}/playbooks/groups/github2fedmsg.yml"
+- import_playbook: "{{ basedir }}/playbooks/groups/ipsilon.yml"
+- import_playbook: "{{ basedir }}/playbooks/groups/mbs.yml"
+- import_playbook: "{{ basedir }}/playbooks/groups/osbs/deploy-cluster.yml"
 
 
 - name: Remove keytab in OpenShift
@@ -72,13 +72,13 @@
     command: oc -n {{item.app}} secrets unlink {{item.secret_name}} {{item.key}}
     loop: "{{keytabs}}"
 
-  - import_playbook: "{{ basedir }}/playbooks/openshift-apps/elections.yml"
-  - import_playbook: "{{ basedir }}/playbooks/openshift-apps/fasjson.yml"
-  - import_playbook: "{{ basedir }}/playbooks/openshift-apps/ipsilon.yml"
-  - import_playbook: "{{ basedir }}/playbooks/openshift-apps/bodhi.yml"
-  - import_playbook: "{{ basedir }}/playbooks/openshift-apps/coreos-koji-tagger.yml"
-  - import_playbook: "{{ basedir }}/playbooks/openshift-apps/koschei.yml"
-  - import_playbook: "{{ basedir }}/playbooks/openshift-apps/message-tagging-service.yml"
-  - import_playbook: "{{ basedir }}/playbooks/openshift-apps/monitor-gating.yml"
-  - import_playbook: "{{ basedir }}/playbooks/openshift-apps/sso.yml"
-  - import_playbook: "{{ basedir }}/playbooks/openshift-apps/the-new-hotness.yml"
+- import_playbook: "{{ basedir }}/playbooks/openshift-apps/elections.yml"
+- import_playbook: "{{ basedir }}/playbooks/openshift-apps/fasjson.yml"
+- import_playbook: "{{ basedir }}/playbooks/openshift-apps/ipsilon.yml"
+- import_playbook: "{{ basedir }}/playbooks/openshift-apps/bodhi.yml"
+- import_playbook: "{{ basedir }}/playbooks/openshift-apps/coreos-koji-tagger.yml"
+- import_playbook: "{{ basedir }}/playbooks/openshift-apps/koschei.yml"
+- import_playbook: "{{ basedir }}/playbooks/openshift-apps/message-tagging-service.yml"
+- import_playbook: "{{ basedir }}/playbooks/openshift-apps/monitor-gating.yml"
+- import_playbook: "{{ basedir }}/playbooks/openshift-apps/sso.yml"
+- import_playbook: "{{ basedir }}/playbooks/openshift-apps/the-new-hotness.yml"
