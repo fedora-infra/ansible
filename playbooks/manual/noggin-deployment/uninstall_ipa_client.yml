@@ -1,0 +1,77 @@
+- name: Uninstall IPA client
+  hosts: bodhi_backend_stg:bugzilla2fedmsg_stg:github2fedmsg_stg:ipsilon_stg:mbs_stg:osbs_control_stg:osbs_masters_stg:osbs_nodes_stg:osbs_aarch64_masters_stg:osbs_aarch64_nodes_stg
+  user: root
+  vars_files:
+  - /srv/web/infra/ansible/vars/global.yml
+  - /srv/private/ansible/vars.yml
+  - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  tasks:
+  - name: Uninstall IPA client
+    command: ipa-client-install --uninstall
+
+- import_playbook: "{{ basedir }}/playbooks/groups/{{item}}.yml"
+  loop:
+  - bodhi-backend
+  - bugzilla2fedmsg
+  - github2fedmsg
+  - ipsilon
+  - mbs
+  - osbs/deploy-cluster
+
+
+- name: Remove keytab in OpenShift
+  hosts: os_master_stg[0]
+  user: root
+  vars_files:
+  - /srv/web/infra/ansible/vars/global.yml
+  - /srv/private/ansible/vars.yml
+  - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+  vars:
+  - keytabs:
+    - app: elections
+      key: service.keytab
+      secret_name: elections-keytab
+    - app: fasjson
+      key: http
+      secret_name: fasjson-keytab-http
+    - app: ipsilon
+      key: service.keytab
+      secret_name: ipsilon-keytab
+    - app: bodhi
+      key: koji-keytab
+      secret_name: bodhi-keytab
+    - app: coreos-koji-tagger
+      key: koji-keytab
+      secret_name: coreos-koji-tagger-keytab
+    - app: koschei
+      secret_name: keytab
+      key: krb5.keytab
+    - app: message-tagging-service
+      secret_name: keytab
+      key: krb5.keytab
+    - app: monitor-gating
+      key: monitor-gating-keytab
+      secret_name: monitor-gating-keytab
+    - app: simple-koji-ci
+      key: simple-koji-ci-keytab
+      secret_name: simple-koji-ci-keytab
+    - app: sso
+      key: sso-keytab
+      secret_name: sso-keytab
+    - app: the-new-hotness
+      key: koji-keytab
+      secret_name: the-new-hotness-keytab
+
+  tasks:
+  - name: Remove keytab for {{item.app}}
+    file: "/etc/openshift_apps/{{item.app}}/{{item.key}}.kt"
+    state: absent
+    loop: "{{keytabs}}"
+
+  - name: Remove keytab secret for {{item.app}}
+    command: oc -n {{item.app}} secrets unlink {{item.secret_name}} {{item.key}}
+    loop: "{{keytabs}}"
+
+  - import_tasks: "{{ basedir }}/playbooks/openshift-apps/{{item.app}}.yml"
+    loop: "{{keytabs}}"
