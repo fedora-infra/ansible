@@ -40,6 +40,11 @@ bastion_ipa_client_shell_groups:
 ipa_client_shell_groups: "{{ (bastion_ipa_client_shell_groups + batcave_ipa_client_shell_groups) | sort | unique }}"
 
 #
+# Set this to get fasjson-client cron to make the aliases file
+#
+fasjson_aliases: true
+
+#
 # Sometimes there are lots of postfix processes
 #
 nrpe_procs_warn: 1100
