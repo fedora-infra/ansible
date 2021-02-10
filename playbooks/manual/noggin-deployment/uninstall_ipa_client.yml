@@ -62,12 +62,12 @@
       secret_name: the-new-hotness-keytab
 
   tasks:
-  - name: Remove keytab for {{item.app}}
+  - name: Remove keytab
     file: "/etc/openshift_apps/{{item.app}}/{{item.key}}.kt"
     state: absent
     loop: "{{keytabs}}"
 
-  - name: Remove keytab secret for {{item.app}}
+  - name: Remove keytab secret
     command: oc -n {{item.app}} secrets unlink {{item.secret_name}} {{item.key}}
     loop: "{{keytabs}}"
 
