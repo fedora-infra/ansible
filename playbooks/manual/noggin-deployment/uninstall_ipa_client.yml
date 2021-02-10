@@ -63,8 +63,9 @@
 
   tasks:
   - name: Remove keytab
-    file: "/etc/openshift_apps/{{item.app}}/{{item.key}}.kt"
-    state: absent
+    file:
+      path: "/etc/openshift_apps/{{item.app}}/{{item.key}}.kt"
+      state: absent
     loop: "{{keytabs}}"
 
   - name: Remove keytab secret
