@@ -159,6 +159,30 @@
   - ipa/server
   - config
 
+- name: Disable the compat tree
+  shell: echo "{{ipa_dm_password}}" | ipa-compat-manage disable
+  tags:
+  - ipa/server
+  - config
+  when: ipa_initial
+  register: output
+  changed_when: "'Plugin Disabled' in output.stdout"
+  failed_when: "'Plugin Disabled' not in output.stderr and output.rc != 0"
+  notify:
+  - restart ipa
+
+- name: Disable the nis tree
+  shell: echo "{{ipa_dm_password}}" | ipa-nis-manage disable
+  tags:
+  - ipa/server
+  - config
+  when: ipa_initial
+  register: output
+  changed_when: "'Plugin Disabled' in output.stdout"
+  failed_when: "'Plugin Disabled' not in output.stderr and output.rc != 0"
+  notify:
+  - restart ipa
+
 - name: Set the expiration date for the admin user
   ipauser:
     name: admin
