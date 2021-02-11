@@ -460,16 +460,6 @@
   - config
   when: ipa_initial
 
-- name: Destroy admin ticket
-  command: kdestroy -A
-  tags:
-  - ipa/server
-  - keytab
-  - config
-  - krb5
-  when: ipa_initial
-
-
 # User selfservice permissions
 
 - name: Setup the selfservice permission for passwords
@@ -532,6 +522,16 @@
   - ipa/server
   - config
   when: ipa_initial and env == 'staging'
+
+
+- name: Destroy admin ticket
+  command: kdestroy -A
+  tags:
+  - ipa/server
+  - keytab
+  - config
+  - krb5
+  when: ipa_initial
 
 
 - name: Set the members of the admin group
