@@ -166,8 +166,8 @@
   - config
   when: ipa_initial
   register: output
-  changed_when: "'Plugin Disabled' in output.stdout"
-  failed_when: "'Plugin Disabled' not in output.stderr and output.rc != 0"
+  changed_when: "'Disabling plugin' in output.stdout"
+  failed_when: "'Plugin is already disabled' not in output.stderr and output.rc != 0"
   notify:
   - restart ipa
 
@@ -178,8 +178,8 @@
   - config
   when: ipa_initial
   register: output
-  changed_when: "'Plugin Disabled' in output.stdout"
-  failed_when: "'Plugin Disabled' not in output.stderr and output.rc != 0"
+  changed_when: "'Disabling plugin' in output.stdout"
+  failed_when: "'Plugin is already disabled' not in output.stderr and output.rc != 0"
   notify:
   - restart ipa
 
