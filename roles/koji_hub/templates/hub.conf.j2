@@ -85,9 +85,9 @@ MissingPolicyOk = False
 #Plugins = koji-disable-builds-plugin
 #Plugins = darkserver-plugin
 {% if env == 'staging' %}
-Plugins = fedmsg-koji-plugin runroot_hub hub_containerbuild tag2distrepo sidetag_hub rpmautospec_hub
+Plugins = fedmsg-koji-plugin runroot_hub hub_containerbuild tag2distrepo sidetag_hub save_failed_tree rpmautospec_hub
 {% else %}
-Plugins = fedmsg-koji-plugin runroot_hub hub_containerbuild tag2distrepo sidetag_hub
+Plugins = fedmsg-koji-plugin runroot_hub hub_containerbuild tag2distrepo sidetag_hub save_failed_tree
 {% endif %}
 
 [policy]
