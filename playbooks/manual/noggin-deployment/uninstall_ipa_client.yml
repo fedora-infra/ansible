@@ -8,7 +8,8 @@
 
   tasks:
   - name: Uninstall IPA client
-    command: ipa-client-install --uninstall
+    command: ipa-client-install --uninstall --unattended
+    ignore_errors: yes
 
 - import_playbook: "/srv/web/infra/ansible/playbooks/groups/bodhi-backend.yml"
 - import_playbook: "/srv/web/infra/ansible/playbooks/groups/bugzilla2fedmsg.yml"
