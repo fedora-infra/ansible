@@ -361,6 +361,8 @@
   tags:
   - config
   - koji_hub
+  notify:
+  - restart kojira
 
 - name: make an empty /mnt/fedora_koji for stg.
   file: state=directory path=/mnt/fedora_koji/koji owner=root group=root

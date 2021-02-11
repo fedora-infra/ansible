@@ -191,3 +191,8 @@
     state: restarted
   with_sequence: start=0 end={{ mbs_num_workers - 1 }}
   when: not mbs_frontend
+
+- name: restart kojira
+  systemd:
+    name: kojira
+    state: restarted
