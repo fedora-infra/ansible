@@ -1,0 +1,73 @@
+- name: make the app be real
+  hosts: os_masters_stg[0]
+  user: root
+  gather_facts: False
+  
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  roles:
+  - role: openshift/project
+    app: languages
+    description: Localization measurement and tooling
+    appowners:
+    - darknao
+    - jibecfed
+
+  - role: openshift/imagestream
+    app: languages
+    imagename: builder
+
+  - role: openshift/object
+    app: languages
+    objectname: buildconfig.yml
+    template: buildconfig.yml
+
+  - role: openshift/start-build
+    app: languages
+    buildname: build-latest
+
+  - role: openshift/start-build
+    app: languages
+    buildname: build-f33
+
+  - role: openshift/object
+    app: languages
+    template: service.yml
+    objectname: service.yml
+
+  - role: openshift/route
+    app: languages
+    routename: languages
+    host: "languages{{ env_suffix }}.fedoraproject.org"
+    serviceport: web
+    servicename: web
+
+  - role: openshift/object
+    app: languages
+    template: pvc.yml
+    objectname: pvc.yml
+
+  - role: openshift/object
+    app: languages
+    template: deploymentconfig.yml
+    objectname: deploymentconfig.yml
+
+  - role: openshift/object
+    app: languages
+    template: cron.yml
+    objectname: cron.yml
+
+###############################################
+# actions to delete the project from OpenShift
+###############################################
+# to run: sudo rbac-playbook -l os_masters_stg[0] -t delete openshift-apps/languages.yml
+  - role: openshift/object-delete
+    app: languages
+    objecttype: project
+    objectname: languages
+    tags:
+    - never
+    - delete

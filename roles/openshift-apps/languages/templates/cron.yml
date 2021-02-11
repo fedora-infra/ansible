@@ -1,0 +1,229 @@
+{% if env == "production" %}
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: extract-33
+spec:
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 2
+  concurrencyPolicy: Forbid
+  schedule: "0 4 * * *"
+  startingDeadlineSeconds: 500
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          labels:
+            parent: "cron_extract"
+        spec:
+          containers:
+          - name: extract
+            image: "{{ registry }}/{{ app }}/builder:f33"
+            imagePullPolicy: Always
+            command:
+            - ./build.py
+            - "--results"
+            - f33
+            volumeMounts:
+            - name: srpm-data
+              readOnly: false
+              mountPath: /src/results
+          volumes:
+          - name: srpm-data
+            persistentVolumeClaim:
+              claimName: "{{ app }}-storage"
+          restartPolicy: Never
+---
+{% endif %}
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: extract-34
+spec:
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 2
+  concurrencyPolicy: Forbid
+  schedule: "0 4 * * *"
+  startingDeadlineSeconds: 500
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          labels:
+            parent: "cron_extract"
+        spec:
+          containers:
+          - name: extract
+            image: "{{ registry }}/{{ app }}/builder:latest"
+            imagePullPolicy: Always
+            command:
+            - ./build.py
+            - "--results"
+            - f34
+            volumeMounts:
+            - name: srpm-data
+              readOnly: false
+              mountPath: /src/results
+          volumes:
+          - name: srpm-data
+            persistentVolumeClaim:
+              claimName: "{{ app }}-storage"
+          restartPolicy: Never
+---
+{% if env == "production" %}
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: stats-33
+spec:
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 2
+  concurrencyPolicy: Forbid
+  schedule: "0 20 * * *"
+  startingDeadlineSeconds: 500
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          labels:
+            parent: "cron_stats"
+        spec:
+          volumes:
+          - name: srpm-data
+            persistentVolumeClaim:
+              claimName: "{{ app }}-storage"
+          restartPolicy: Never
+          containers:
+          - name: stats
+            image: "{{ registry }}/{{ app }}/builder:latest"
+            imagePullPolicy: Always
+            command: ["/bin/sh", "-c"]
+            args:
+            - >
+              ./build_language_list.py --results f33 --refresh &&
+              ./build_language_list.py --results f33 --analyzealllang &&
+              ./build_tm.py --results f33 --compress &&
+              ./build_stats.py --results f33
+            volumeMounts:
+            - name: srpm-data
+              readOnly: false
+              mountPath: /src/results
+---
+{% endif %}
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: stats-34
+spec:
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 2
+  concurrencyPolicy: Forbid
+  schedule: "0 10 * * *"
+  startingDeadlineSeconds: 500
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          labels:
+            parent: "cron_stats"
+        spec:
+          volumes:
+          - name: srpm-data
+            persistentVolumeClaim:
+              claimName: "{{ app }}-storage"
+          restartPolicy: Never
+          containers:
+          - name: stats
+            image: "{{ registry }}/{{ app }}/builder:latest"
+            imagePullPolicy: Always
+            command: ["/bin/sh", "-c"]
+            args:
+            - >
+              ./build_language_list.py --results f34 --refresh &&
+              ./build_language_list.py --results f34 --analyzealllang &&
+              ./build_tm.py --results f34 --compress &&
+              ./build_stats.py --results f34
+            volumeMounts:
+            - name: srpm-data
+              readOnly: false
+              mountPath: /src/results
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: build-website
+spec:
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 2
+  concurrencyPolicy: Forbid
+  schedule: "0 */2 * * *"
+  startingDeadlineSeconds: 500
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          labels:
+            parent: "cron_stats"
+        spec:
+          volumes:
+          - name: srpm-data
+            persistentVolumeClaim:
+              claimName: "{{ app }}-storage"
+          restartPolicy: Never
+          containers:
+          - name: stats
+            image: "{{ registry }}/{{ app }}/builder:latest"
+            imagePullPolicy: Always
+            command: ["/bin/sh", "-c"]
+            args:
+            - >
+              ./build_website.py -v --results f33 ;
+              ./build_website.py -v --results f34 ;
+              cd website && hugo -D --baseURL https://languages{{ env_suffix }}.fedoraproject.org &&
+              cp -R public /src/results/
+            volumeMounts:
+            - name: srpm-data
+              readOnly: false
+              mountPath: /src/results
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: stats-website
+spec:
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 2
+  concurrencyPolicy: Forbid
+  schedule: "0 * * * *"
+  startingDeadlineSeconds: 500
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          labels:
+            parent: "cron_stats"
+        spec:
+          restartPolicy: Never
+          containers:
+          - image: allinurl/goaccess
+            name: goaccess
+            imagePullPolicy: IfNotPresent
+            args:
+            - "-a"
+            - "--log-format=COMBINED"
+            - "--log-file=/html/logs/access.log"
+            - "--output=/html/public/stats.html"
+            ports:
+            volumeMounts:
+            - name: nginx-data
+              mountPath: /html
+          volumes:
+          - name: nginx-data
+            persistentVolumeClaim:
+              claimName: "{{ app }}-storage"

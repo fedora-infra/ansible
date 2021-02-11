@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  labels:
+    build: build-f33
+  name: build-f33
+spec:
+  successfulBuildsHistoryLimit: 2
+  failedBuildsHistoryLimit: 1
+  runPolicy: Serial
+  source:
+    git:
+      uri: "https://pagure.io/fedora-l10n/fedora-localization-statistics.git"
+      ref: main
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: docker/Dockerfile.33
+  output:
+    to:
+      kind: ImageStreamTag
+      name: builder:f33
+---
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  labels:
+    build: build-latest
+  name: build-latest
+spec:
+  successfulBuildsHistoryLimit: 2
+  failedBuildsHistoryLimit: 1
+  runPolicy: Serial
+  source:
+    git:
+      uri: "https://pagure.io/fedora-l10n/fedora-localization-statistics.git"
+      ref: main
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: docker/Dockerfile.34
+  output:
+    to:
+      kind: ImageStreamTag
+      name: builder:latest
