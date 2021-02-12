@@ -14,6 +14,7 @@
     state: present
     group:
       - sysadmin-main
+  no_log: true
   loop: "{{ ipa_server_admin_passwords | dict2items }}"
 
 - name: "Enable usergroup/sysadmin-main HBAC rule"
@@ -22,6 +23,7 @@
     name: "usergroup/sysadmin-main"
     ipaadmin_password: "{{ item.value }}"
     state: enabled
+  no_log: true
   loop: "{{ ipa_server_admin_passwords | dict2items }}"
 
 - name: "Disable allow_all HBAC rule"
@@ -30,6 +32,7 @@
     name: allow_all
     ipaadmin_password: "{{ item.value }}"
     state: disabled
+  no_log: true
   loop: "{{ ipa_server_admin_passwords | dict2items }}"
 
 - name: "Let everybody run sudo"
@@ -43,6 +46,7 @@
     usercategory: "all"
     hbacsvcgroup:
       - Sudo
+  no_log: true
   loop: "{{ ipa_server_admin_passwords | dict2items }}"
 
 - name: Add the sshd HBAC service in IPA
@@ -51,6 +55,7 @@
     name: sshd
     description: SSH daemon
     ipaadmin_password: "{{ item.value }}"
+  no_log: true
   loop: "{{ ipa_server_admin_passwords | dict2items }}"
 
 - name: Add the shell-access service group in IPA
@@ -61,6 +66,7 @@
     ipaadmin_password: "{{ item.value }}"
     hbacsvc:
       - sshd
+  no_log: true
   loop: "{{ ipa_server_admin_passwords | dict2items }}"
 
 ## Host group- & host-specific rules

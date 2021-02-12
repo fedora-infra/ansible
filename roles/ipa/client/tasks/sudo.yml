@@ -14,6 +14,7 @@
     runasgroupcategory: "all"
     group:
       - sysadmin-main
+  no_log: true
   loop: "{{ ipa_server_admin_passwords | dict2items }}"
 
 - name: Give certain groups sudo access to anything per host group
