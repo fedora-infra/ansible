@@ -93,6 +93,23 @@
       }}
   loop: "{{ ipa_server_host_groups_dict | dict2items }}"
 
+# ipa_server_user_groups ->
+#   [
+#     ["ipa_server_1", "user_group_1"],
+#     ["ipa_server_1", "user_group_2"],
+#     ...
+#     ["ipa_server_2", "user_group_1"],
+#     ...
+#   ]
+- name: Make an iterable list our of IPA server and all involved user groups
+  set_fact:
+    ipa_server_user_groups: >-
+      {{
+        (ipa_server_user_groups | default([]))
+        + ([item.key] | product(item.value.groups) | list)
+      }}
+  loop: "{{ ipa_server_all_groups_hosts_dict | dict2items }}"
+
 # ipa_server_host_user_groups_hosts ->
 #   [
 #     [
