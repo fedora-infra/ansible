@@ -92,16 +92,24 @@
     - ipa_client_shell_groups
     - ipa_client_sudo_groups
 
-- name: Give certain groups shell access per host group
+- name: Ensure shell access HBAC rule exists
   delegate_to: "{{ item[0] }}"
   ipahbacrule:
     name: "hostgroup/{{ item[1] }}/shell-access"
     description: "Grant shell access on host group {{ item[1] }}"
     ipaadmin_password: "{{ ipa_server_admin_passwords[item[0]] }}"
-    action: member
     hbacsvcgroup:
       - shell-access
     state: present
-    group: "{{ ipa_server_host_groups_dict[item[0]][item[1]]['shell_groups'] }}"
     hostgroup: "{{ item[1] }}"
+  loop: "{{ ipa_server_host_groups }}"
+
+- name: Give certain groups shell access per host group
+  delegate_to: "{{ item[0] }}"
+  ipahbacrule:
+    name: "hostgroup/{{ item[1] }}/shell-access"
+    ipaadmin_password: "{{ ipa_server_admin_passwords[item[0]] }}"
+    action: member
+    state: present
+    group: "{{ ipa_server_host_groups_dict[item[0]][item[1]]['shell_groups'] }}"
   loop: "{{ ipa_server_host_groups }}"
