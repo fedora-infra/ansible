@@ -34,5 +34,5 @@
     ipaadmin_password: "{{ ipa_server_admin_passwords[item[0]] }}"
     action: member
     state: present
-    host: "{{ item[2] | list }}"
-  loop: "{{ ipa_server_host_groups_hosts }}"
+    host: "{{ item[4] | list }}"
+  loop: "{{ ipa_server_host_user_groups_hosts }}"
