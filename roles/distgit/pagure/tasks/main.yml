@@ -82,6 +82,7 @@
                owner=pagure group=packager mode=u+rwx,g+rwxs,o+rx
   tags:
   - pagure
+  - hotfix
 
 - name: create the /srv/tmp folder where to clone repos
   file: state=directory
