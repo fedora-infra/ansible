@@ -29,6 +29,7 @@
         nfs_src_dir: "{{ koji_hub_nfs }}",
         when: "env == 'staging' or createrepo or 'runroot' in group_names and not inventory_hostname.startswith('buildvm-s390x')",
       }
+    - { role: ipa/client, when: not inventory_hostname.startswith('bkernel') and env == "staging" }
     - { role: fas_client, when: not inventory_hostname.startswith('bkernel') and env == 'production' }
     - { role: sudo, when: not inventory_hostname.startswith('bkernel') and env == 'production' }
     - koji_builder

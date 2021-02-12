@@ -15,7 +15,8 @@
   - rkhunter
   - nagios_client
   - hosts
-  - fas_client
+  - { role: ipa/client, when: env == "staging" }
+  - { role: fas_client, when: env != "staging" }
   - rsyncd
   - sudo
   - { role: openvpn/client,

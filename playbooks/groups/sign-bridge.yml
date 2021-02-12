@@ -22,6 +22,7 @@
   - base
   - rkhunter
   - hosts
+  - { role: ipa/client, when: env == "staging" }
   - { role: fas_client, when: env != "staging" }
   - sudo
   - nagios_client

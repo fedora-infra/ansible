@@ -18,7 +18,8 @@
 
   roles:
   - base
-  - fas_client
+  - { role: ipa/client, when: env == "staging" }
+  - { role: fas_client, when: env != "staging" }
   - rkhunter
   - nagios_client
   - collectd/base

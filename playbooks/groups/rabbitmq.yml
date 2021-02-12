@@ -19,6 +19,7 @@
   - nagios_client
   - hosts
   - { role: fas_client, when: env != "staging" }
+  - { role: ipa/client, when: env == "staging" }
   - collectd/base
   # RabbitMQ statistics are cluster-wide, only collect them on one member
   - role: collectd/rabbitmq

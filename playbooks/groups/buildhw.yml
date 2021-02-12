@@ -62,7 +62,8 @@
   - { role: clevis, when: "inventory_hostname.startswith(('bkernel', 'buildhw-x86'))" }
   - { role: serial-console, when: inventory_hostname.startswith('bkernel') }
   - hosts
-  - { role: fas_client, when: not inventory_hostname.startswith('bkernel') }
+  - { role: ipa/client, when: not inventory_hostname.startswith('bkernel') and env == "staging" }
+  - { role: fas_client, when: not inventory_hostname.startswith('bkernel') and env != "staging" }
   - { role: sudo, when: not inventory_hostname.startswith('bkernel') }
   - role: keytab/service
     kt_location: /etc/kojid/kojid.keytab

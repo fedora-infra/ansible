@@ -24,6 +24,7 @@
    - { role: nagios_client, tags: ['nagios_client'] }
    - { role: hosts, tags: ['hosts']}
    - { role: fas_client, when: env != "staging", tags: ['fas_client'] }
+   - { role: ipa/client, when: env == "staging", tags: ['ipa/client'] }
    - { role: collectd/base, tags: ['collectd_base'] }
    - { role: sudo, tags: ['sudo'] }
    - { role: openvpn/client,

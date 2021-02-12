@@ -15,7 +15,8 @@
   - hosts
   - rkhunter
   - nagios_client
-  - fas_client
+  - { role: ipa/client, when: env == "staging" }
+  - { role: fas_client, when: env != "staging" }
   - collectd/base
   - rsyncd
   - sudo
