@@ -348,8 +348,8 @@ handlers = ["console"]
             [[consumer_config.koji_instances.primary.tags]]
             from = "eln-rebuild"
             to = "eln-rebuild"
-            key = "{{ (env == 'production')|ternary('fedora-33', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('9570ff31', 'd300e724') }}"
+            key = "{{ (env == 'production')|ternary('fedora-35', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('9867c58f', 'd300e724') }}"
 
             # ELN Side tags
 
