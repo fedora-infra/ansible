@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: fedora-packages-static
+  name: fedora-packages-static
+spec:
+  ports:
+  - name: 80-tcp
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: fedora-packages-static
+    deploymentconfig: fedora-packages-static

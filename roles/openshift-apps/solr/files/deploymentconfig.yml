@@ -1,0 +1,60 @@
+---
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: solr
+    service: solr
+  name: solr
+spec:
+  replicas: 1 # Only 1! Solr is not configured in cloud mode yet.
+  selector:
+    app: solr
+    deploymentconfig: solr
+  strategy:
+    type: Rolling
+  template:
+    metadata:
+      labels:
+        app: solr
+        deploymentconfig: solr
+    spec:
+      containers:
+      - name: solr
+        image: solr:8
+        command:
+        - solr-precreate
+        args:
+        - packages
+        - /opt/solr/server/solr/configsets/packages
+        ports:
+        - containerPort: 8983
+        resources: {}
+        volumeMounts:
+        - name: data-volume
+          mountPath: /var/solr
+        - name: config-volume
+          mountPath: /opt/solr/server/solr/configsets/packages
+          readOnly: true
+        readinessProbe:
+          timeoutSeconds: 1
+          initialDelaySeconds: 30
+          httpGet:
+            path: /
+            port: 8983
+        livenessProbe:
+          timeoutSeconds: 1
+          initialDelaySeconds: 40
+          httpGet:
+            path: /
+            port: 8983
+      volumes:
+      - name: data-volume
+        persistentVolumeClaim:
+            claimName: solr-storage
+      - name: config-volume
+        configMap:
+          name: solr-configmap
+
+  triggers:
+  - type: ConfigChange

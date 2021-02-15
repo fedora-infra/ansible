@@ -1,0 +1,58 @@
+- name: Make fedora-packages-static
+  hosts: os_masters_stg[0]
+  user: root
+  gather_facts: False
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  roles:
+  - role: openshift/project
+    app: fedora-packages-static
+    description: Fedora fedora-packages-static apps
+    appowners:
+    - mymindstorm
+
+  - role: openshift/object
+    app: fedora-packages-static
+    file: imagestream.yml
+    objectname: imagestream.yml
+
+  - role: openshift/object
+    app: fedora-packages-static
+    template: buildconfig.yml
+    objectname: buildconfig.yml
+
+  - role: openshift/object
+    app: fedora-packages-static
+    file: storage.yml
+    objectname: storage.yml
+
+  - role: openshift/object
+    app: fedora-packages-static
+    template: configmap.yml
+    objectname: configmap.yml
+
+  - role: openshift/start-build
+    app: fedora-packages-static
+    buildname: fedora-packages-static-build
+    objectname: fedora-packages-static-build
+
+  - role: openshift/object
+    app: fedora-packages-static
+    file: service.yml
+    objectname: service.yml
+
+  - role: openshift/route
+    app: fedora-packages-static
+    routename: fedora-packages-static
+    host: "packages{{ env_suffix }}.fedoraproject.org"
+    serviceport: 80-tcp
+    servicename: fedora-packages-static
+
+  - role: openshift/object
+    app: fedora-packages-static
+    file: deploymentconfig.yml
+    objectname: deploymentconfig.yml

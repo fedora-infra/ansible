@@ -1,0 +1,28 @@
+---
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  name: fedora-packages-static-build
+  labels:
+    environment: "fedora-packages-static"
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: fedora-packages-static:latest
+  source:
+    type: Git
+    git:
+      uri: https://pagure.io/fedora-packages-static.git
+{% if env == 'staging' %}
+      ref: "staging"
+{% else %}
+      ref: "production"
+{% endif %}
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: Dockerfile
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange

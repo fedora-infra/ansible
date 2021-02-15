@@ -1,0 +1,43 @@
+- name: Make solr
+  hosts: os_masters_stg[0]
+  user: root
+  gather_facts: False
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  roles:
+  - role: openshift/project
+    app: solr
+    description: Fedora solr apps
+    appowners:
+    - mymindstorm
+
+  - role: openshift/object
+    app: solr
+    file: imagestream.yml
+    objectname: imagestream.yml
+
+  - role: openshift/object
+    app: solr
+    file: storage.yml
+    objectname: storage.yml
+
+  - role: openshift/object
+    app: solr
+    template: configmap.yml
+    objectname: configmap.yml
+
+  - role: openshift/object
+    app: solr
+    file: service.yml
+    objectname: service.yml
+
+  - command: "oc adm pod-network join-projects --to=solr fedora-packages-static"
+
+  - role: openshift/object
+    app: solr
+    file: deploymentconfig.yml
+    objectname: deploymentconfig.yml

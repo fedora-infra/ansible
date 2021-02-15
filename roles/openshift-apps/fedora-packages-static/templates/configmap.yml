@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fedora-packages-static-configmap
+  labels:
+    app: fedora-packages-static
+data:
+  solr-url: "http://solr.solr.svc.cluster.local:8983/"
+  sitemap-url: "https://packages{{ env_suffix }}.fedoraproject.org"
