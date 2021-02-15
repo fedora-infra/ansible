@@ -73,7 +73,7 @@ version = 1
 disable_existing_loggers = false
 
 [anitya_log_config.formatters.simple]
-format = "[%(name)s %(levelname)s] %(message)s"
+format = "[%(asctime)s %(name)s %(levelname)s] %(message)s"
 
 [anitya_log_config.handlers.console]
 class = "logging.StreamHandler"
