@@ -120,4 +120,4 @@
     state: present
     group: "{{ ipa_server_host_groups_dict[item[0]][item[1]]['shell_groups'] }}"
   loop: "{{ ipa_server_host_groups }}"
-  when: ipa_server_host_groups is defined
+  when: ipa_server_host_groups is defined and ipa_server_host_groups_dict[item[0]][item[1]]['shell_groups'] is defined

@@ -120,28 +120,22 @@
   loop: "{{ ipa_server_all_groups_hosts_dict | dict2items }}"
   when: ipa_server_all_groups_hosts_dict is defined
 
-# ipa_server_host_user_groups_hosts ->
+# ipa_server_host_groups_hosts ->
 #   [
 #     [
 #       "ipa_server_1",
 #       "host_group_1",
-#       ["user_group_1", ...],  # <-- shell access user groups
-#       ["user_group_2", ...],  # <-- sudo access user groups
 #       ["host_1", ...],
 #     ],
 #     [
 #       "ipa_server_1",
 #       "host_group_2",
-#       ["user_group_3", ...],
-#       ["user_group_4", ...],
 #       ["host_2", ...],
 #     ],
 #     ...
 #     [
 #       "ipa_server_2",
 #       "host_group_1",
-#       ["user_group_5", ...],
-#       ["user_group_6", ...],
 #       ["host_3", ...],
 #     ],
 #     ...
@@ -155,8 +149,6 @@
             [
               item[0],
               item[1],
-              ipa_server_host_groups_dict[item[0]][item[1]]['shell_groups'],
-              ipa_server_host_groups_dict[item[0]][item[1]]['sudo_groups'],
               ipa_server_host_groups_dict[item[0]][item[1]]['hosts'] | list,
             ]
           ]
