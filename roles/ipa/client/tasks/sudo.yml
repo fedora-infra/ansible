@@ -2,11 +2,11 @@
 ## This will only run once per play (as per `main.yml`), so needs to consider all affected hosts.
 
 - name: "Give members of `sysadmin-main` sudo access to anything, anywhere"
-  delegate_to: "{{ item.key }}"
+  delegate_to: "{{ item }}"
   ipasudorule:
     name: "usergroup/sysadmin-main"
     description: "Allow members of `sysadmin-main` to use sudo to do anything, anywhere"
-    ipaadmin_password: "{{ item.value }}"
+    ipaadmin_password: "{{ ipa_server_admin_passwords[item] }}"
     state: present
     cmdcategory: "all"
     hostcategory: "all"
@@ -15,8 +15,8 @@
     group:
       - sysadmin-main
   no_log: true
-  loop: "{{ ipa_server_admin_passwords | dict2items }}"
-  when: ipa_server_admin_passwords is defined
+  loop: "{{ ipa_servers }}"
+  when: ipa_servers is defined
 
 - name: Give certain groups sudo access to anything per host group
   delegate_to: "{{ item[0] }}"

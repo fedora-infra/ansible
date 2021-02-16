@@ -4,76 +4,76 @@
 ## Cluster-wide rules
 
 - name: "Give members of group sysadmin-main access to anything, anywhere"
-  delegate_to: "{{ item.key }}"
+  delegate_to: "{{ item }}"
   ipahbacrule:
     name: "usergroup/sysadmin-main"
     description: "Give members of group sysadmin-main access to anything, anywhere"
     hostcategory: "all"
     servicecategory: "all"
-    ipaadmin_password: "{{ item.value }}"
+    ipaadmin_password: "{{ ipa_server_admin_passwords[item] }}"
     state: present
     group:
       - sysadmin-main
   no_log: true
-  loop: "{{ ipa_server_admin_passwords | dict2items }}"
-  when: ipa_server_admin_passwords is defined
+  loop: "{{ ipa_servers }}"
+  when: ipa_servers is defined
 
 - name: "Enable usergroup/sysadmin-main HBAC rule"
-  delegate_to: "{{ item.key }}"
+  delegate_to: "{{ item }}"
   ipahbacrule:
     name: "usergroup/sysadmin-main"
-    ipaadmin_password: "{{ item.value }}"
+    ipaadmin_password: "{{ ipa_server_admin_passwords[item] }}"
     state: enabled
   no_log: true
-  loop: "{{ ipa_server_admin_passwords | dict2items }}"
-  when: ipa_server_admin_passwords is defined
+  loop: "{{ ipa_servers }}"
+  when: ipa_servers is defined
 
 - name: "Disable allow_all HBAC rule"
-  delegate_to: "{{ item.key }}"
+  delegate_to: "{{ item }}"
   ipahbacrule:
     name: allow_all
-    ipaadmin_password: "{{ item.value }}"
+    ipaadmin_password: "{{ ipa_server_admin_passwords[item] }}"
     state: disabled
   no_log: true
-  loop: "{{ ipa_server_admin_passwords | dict2items }}"
-  when: ipa_server_admin_passwords is defined
+  loop: "{{ ipa_servers }}"
+  when: ipa_servers is defined
 
 - name: "Let everybody run sudo"
-  delegate_to: "{{ item.key }}"
+  delegate_to: "{{ item }}"
   ipahbacrule:
     name: "all-users/sudo"
     description: "Allow all users to execute the sudo command"
     state: present
-    ipaadmin_password: "{{ item.value }}"
+    ipaadmin_password: "{{ ipa_server_admin_passwords[item] }}"
     hostcategory: "all"
     usercategory: "all"
     hbacsvcgroup:
       - Sudo
   no_log: true
-  loop: "{{ ipa_server_admin_passwords | dict2items }}"
-  when: ipa_server_admin_passwords is defined
+  loop: "{{ ipa_servers }}"
+  when: ipa_servers is defined
 
 - name: Add the sshd HBAC service in IPA
-  delegate_to: "{{ item.key }}"
+  delegate_to: "{{ item }}"
   ipahbacsvc:
     name: sshd
     description: SSH daemon
-    ipaadmin_password: "{{ item.value }}"
+    ipaadmin_password: "{{ ipa_server_admin_passwords[item] }}"
   no_log: true
-  loop: "{{ ipa_server_admin_passwords | dict2items }}"
-  when: ipa_server_admin_passwords is defined
+  loop: "{{ ipa_servers }}"
+  when: ipa_servers is defined
 
 - name: Add the shell-access service group in IPA
-  delegate_to: "{{ item.key }}"
+  delegate_to: "{{ item }}"
   ipahbacsvcgroup:
     name: shell-access
     description: Group of shell access services
-    ipaadmin_password: "{{ item.value }}"
+    ipaadmin_password: "{{ ipa_server_admin_passwords[item] }}"
     hbacsvc:
       - sshd
   no_log: true
-  loop: "{{ ipa_server_admin_passwords | dict2items }}"
-  when: ipa_server_admin_passwords is defined
+  loop: "{{ ipa_servers }}"
+  when: ipa_servers is defined
 
 ## Host group- & host-specific rules
 

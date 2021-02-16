@@ -35,7 +35,14 @@
 #     "ipa_server_2": "ipa_password_2",
 #     ...
 #   }
-- name: Create dictionary about IPA servers, host groups, their IPA vars and contained hosts
+#
+# ipa_servers ->
+#   [
+#     "ipa_server_1",
+#     "ipa_server_2",
+#     ...
+#   ]
+- name: Create dictionaries and lists containing IPA configuration for the play
   set_fact:
     ipa_server_host_groups_dict: >-
       {{
@@ -73,6 +80,7 @@
           {hostvars[item]['ipa_server']: hostvars[item]['ipa_admin_password']}
         )
       }}
+    ipa_servers: "{{ ipa_servers | default([]) | union([hostvars[item]['ipa_server']]) }}"
   loop: "{{ ansible_play_hosts }}"
   when: hostvars[item]['ipa_server'] is defined and hostvars[item]['ipa_host_group'] is defined
 
