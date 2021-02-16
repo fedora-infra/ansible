@@ -9,7 +9,7 @@ dns: 8.8.8.8
 has_ipv4: yes
 br0_ipv4: 8.43.85.58
 br0_ipv4_nm: 255.255.254.0
-br0_ipv4_gw: {{ gw }}
+br0_ipv4_gw: "{{ gw }}"
 
 has_ipv6: yes
 br0_ipv6: "2620:52:3:1:dead:beef:cafe:c002"
