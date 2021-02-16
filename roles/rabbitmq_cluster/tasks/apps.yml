@@ -126,7 +126,7 @@
 # CENTOS ODCS BEGIN
 - name: Configure the centos-odcs virtual host
   run_once: true
-  delegate_to: "rabbitmq01.iad2.fedoraproject.org"
+  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
   rabbitmq_vhost:
     name: /centos-odcs
     state: present
@@ -135,7 +135,7 @@
 
 - name: Configure the HA policy for the centos-odcs queues
   run_once: true
-  delegate_to: "rabbitmq01.iad2.fedoraproject.org"
+  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
   rabbitmq_policy:
     name: HA
     apply_to: queues
@@ -150,7 +150,7 @@
 
 - name: Add a policy to limit queues to 1GB and remove after a month of no use
   run_once: true
-  delegate_to: "rabbitmq01.iad2.fedoraproject.org"
+  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
   rabbitmq_policy:
     apply_to: queues
     name: pubsub_sweeper
@@ -167,7 +167,7 @@
 
 - name: Create the centos-odcs-admin user for the centos-odcs vhost (prod)
   run_once: true
-  delegate_to: "rabbitmq01.iad2.fedoraproject.org"
+  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
   rabbitmq_user:
     user: centos-odcs-admin
     password: "{{ (env == 'production')|ternary(rabbitmq_centos_odcs_admin_password_production, rabbitmq_centos_odcs_admin_password_staging) }}"
@@ -180,7 +180,7 @@
 
 - name: Dump the admin password in a file for administrative operations
   run_once: true
-  delegate_to: "rabbitmq01.iad2.fedoraproject.org"
+  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
   copy:
     dest: /root/.centos-odcs-rabbitmqpass
     content: "{{ (env == 'production')|ternary(rabbitmq_centos_odcs_admin_password_production, rabbitmq_centos_odcs_admin_password_staging) }}"
@@ -192,7 +192,7 @@
 
 - name: Grant the admin user access to the centos-odcs vhost
   run_once: true
-  delegate_to: "rabbitmq01.iad2.fedoraproject.org"
+  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
   rabbitmq_user:
     user: admin
     vhost: /centos-odcs
@@ -205,7 +205,7 @@
 
 - name: Grant the nagios-monitoring user access to the centos-odcs vhost
   run_once: true
-  delegate_to: "rabbitmq01.iad2.fedoraproject.org"
+  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
   rabbitmq_user:
     user: nagios-monitoring
     vhost: /centos-odcs
@@ -218,7 +218,7 @@
 
 - name: Create a user for centos-odcs access
   run_once: true
-  delegate_to: "rabbitmq01.iad2.fedoraproject.org"
+  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
   rabbitmq_user:
     user: "centos-odcs-private-queue{{ env_suffix }}"
     vhost: /centos-odcs
@@ -231,7 +231,7 @@
 
 - name: Create the user in RabbitMQ
   run_once: true
-  delegate_to: "rabbitmq01.iad2.fedoraproject.org"
+  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
   rabbitmq_user:
     user: centos-odcs
     vhost: /centos-odcs
@@ -248,7 +248,7 @@
 #
 - name: Configure the mbs-private-queue virtual host
   run_once: true
-  delegate_to: "rabbitmq01.iad2.fedoraproject.org"
+  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
   rabbitmq_vhost:
     name: /mbs-private-queue
     state: present
@@ -257,7 +257,7 @@
 
 - name: Configure the HA policy for the mbs-private-queue queues
   run_once: true
-  delegate_to: "rabbitmq01.iad2.fedoraproject.org"
+  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
   rabbitmq_policy:
     name: HA
     apply_to: queues
@@ -272,7 +272,7 @@
 
 - name: Add a policy to limit queues to 1GB and remove after a month of no use
   run_once: true
-  delegate_to: "rabbitmq01.iad2.fedoraproject.org"
+  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
   rabbitmq_policy:
     apply_to: queues
     name: pubsub_sweeper
@@ -289,7 +289,7 @@
 
 - name: Create the mbs-private-queue user for the mbs-private-queue vhost (prod)
   run_once: true
-  delegate_to: "rabbitmq01.iad2.fedoraproject.org"
+  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
   rabbitmq_user:
     user: mbs-private-queue
     password: "{{ (env == 'production')|ternary(rabbitmq_mbs_private_queue_admin_password_production, rabbitmq_mbs_private_queue_admin_password_staging) }}"
@@ -302,7 +302,7 @@
 
 - name: Dump the admin password in a file for administrative operations
   run_once: true
-  delegate_to: "rabbitmq01.iad2.fedoraproject.org"
+  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
   copy:
     dest: /root/.mbs-private-queue-rabbitmqpass
     content: "{{ (env == 'production')|ternary(rabbitmq_mbs_private_queue_admin_password_production, rabbitmq_mbs_private_queue_admin_password_staging) }}"
@@ -314,7 +314,7 @@
 
 - name: Grant the admin user access to the mbs-private-queue vhost
   run_once: true
-  delegate_to: "rabbitmq01.iad2.fedoraproject.org"
+  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
   rabbitmq_user:
     user: admin
     vhost: /mbs-private-queue
@@ -327,7 +327,7 @@
 
 - name: Grant the nagios-monitoring user access to the mbs-private-queue vhost
   run_once: true
-  delegate_to: "rabbitmq01.iad2.fedoraproject.org"
+  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
   rabbitmq_user:
     user: nagios-monitoring
     vhost: /mbs-private-queue
@@ -340,7 +340,7 @@
 
 - name: Create a user for mbs-private-queue access
   run_once: true
-  delegate_to: "rabbitmq01.iad2.fedoraproject.org"
+  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
   rabbitmq_user:
     user: "mbs-private-queue{{ env_suffix }}"
     vhost: /mbs-private-queue
