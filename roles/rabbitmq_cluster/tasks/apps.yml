@@ -203,19 +203,6 @@
   tags:
   - centos-odcs
 
-- name: Grant the nagios-monitoring user access to the centos-odcs vhost
-  run_once: true
-  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
-  rabbitmq_user:
-    user: nagios-monitoring
-    vhost: /centos-odcs
-    configure_priv: "^$"
-    read_priv: "^$"
-    write_priv: "^$"
-    tags: monitoring
-  tags:
-  - centos-odcs
-
 - name: Create a user for centos-odcs access
   run_once: true
   delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
@@ -322,19 +309,6 @@
     read_priv: .*
     write_priv: .*
     tags: administrator
-  tags:
-  - mbs-private-queue
-
-- name: Grant the nagios-monitoring user access to the mbs-private-queue vhost
-  run_once: true
-  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
-  rabbitmq_user:
-    user: nagios-monitoring
-    vhost: /mbs-private-queue
-    configure_priv: "^$"
-    read_priv: "^$"
-    write_priv: "^$"
-    tags: monitoring
   tags:
   - mbs-private-queue
 
