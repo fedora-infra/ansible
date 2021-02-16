@@ -12,31 +12,6 @@
   notify:
   - restart idmapd
 
-- name: route config for netapp network
-  copy: src=route-eth1.{{ datacenter }} dest=/etc/sysconfig/network-scripts/route-eth1
-  when: (datacenter == 'phx2' or datacenter == 'staging') and ( 'koji' in mnt_dir or 'fedora/app' in mnt_dir or 'fedora_app/app' in mnt_dir )
-  notify:
-  - reload NetworkManager-connections
-  tags:
-  - nfs/client
-
-# if we need to reload nm, we should do it now, not after roles.
-- meta: flush_handlers
-
-- name: check for netapp route
-  command: ip route show
-  register: netapproute
-  check_mode: no
-  changed_when: "1 != 1"
-  tags:
-  - nfs/client
-
-- name: run netapp route if needed in phx2
-  command: /usr/bin/nmcli c up eth1
-  when: netapproute.stdout.find("10.5.88.0") == -1 and datacenter == 'phx2' and not inventory_hostname.startswith(('buildvm-armv7','buildhw-aarch64','buildvm-s390x','koji01.stg', 'odcs-frontend01.stg')) and ( 'koji' in mnt_dir or 'fedora/app' in mnt_dir or 'fedora_app/app' in mnt_dir )
-  tags:
-  - nfs/client
-
 - name: run netapp route if needed in rdu
   command: /usr/bin/nmcli c up eth1
   when: netapproute.stdout.find("172.31.1.0") == -1 and datacenter == 'rdu'
@@ -69,30 +44,6 @@
   with_items:
   - nfs-lock
   when: ansible_distribution_major_version|int == 7 and ansible_distribution == 'RedHat'
-  tags:
-  - nfs/client
-
-- name: enable nfs-related services and run them (rhel6)
-  service: name={{ item }}  enabled=true state=started
-  with_items:
-  - rpcidmapd
-  - rpcbind
-  - nfs
-  - nfslock
-  when: ansible_distribution_major_version|int == 6 and ansible_distribution == 'RedHat'
-  tags:
-  - nfs/client
-
-- name: nfs mount points (phx2)
-  mount: >
-        name={{ mnt_dir }}
-        src=ntap-phx2-c01-fedora01-nfs.storage.phx2.redhat.com:/{{ nfs_src_dir }}
-        fstype=nfs
-        opts={{nfs_mount_opts}}
-        passno=0
-        dump=0
-        state=mounted
-  when: datacenter == 'phx2' and (env != 'staging' or mount_stg is defined)
   tags:
   - nfs/client
 
