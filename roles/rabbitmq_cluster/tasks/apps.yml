@@ -94,13 +94,6 @@
       critical: 10000
 
 # CENTOS GITLAB BEGIN
-- name: CentOS Gitlab User
-  run_once: true
-  include_role:
-    name: rabbit/user
-  vars:
-     username: gitlab-centos{{ env_suffix }}
-
 - name: CentOS Gitlab Queue
   run_once: true
   include_role:
