@@ -12,6 +12,17 @@
   notify:
   - restart idmapd
 
+# if we need to reload nm, we should do it now, not after roles.
+- meta: flush_handlers
+
+- name: check for netapp route
+  command: ip route show
+  register: netapproute
+  check_mode: no
+  changed_when: "1 != 1"
+  tags:
+  - nfs/client
+
 - name: run netapp route if needed in rdu
   command: /usr/bin/nmcli c up eth1
   when: netapproute.stdout.find("172.31.1.0") == -1 and datacenter == 'rdu'
