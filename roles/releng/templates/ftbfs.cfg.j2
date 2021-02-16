@@ -1,4 +1,9 @@
 [bugzilla]
+{% if env == "production" %}
+bugzilla=https://bugzilla.redhat.com/
+{% elif env == 'staging' %}
+bugzilla=https://partner-bugzilla.redhat.com/
+{% endif %}
 username={{ ftbfs_bugzilla_account }}
 password={{ ftbfs_bugzilla_password }}
 tracking=1868278
