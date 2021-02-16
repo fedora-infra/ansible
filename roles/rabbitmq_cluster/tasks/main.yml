@@ -77,7 +77,7 @@
 
 - name: deploy staging cookie
   copy: content="{{rabbitmq_cluster_cookie_staging}}" dest=/var/lib/rabbitmq/.erlang.cookie
-        owner=rabbitmq group=rabbitmq mode=0600
+        owner=rabbitmq group=rabbitmq mode=0400
   when: "env == 'staging'"
   notify:
     - restart rabbitmq
@@ -87,7 +87,7 @@
 
 - name: deploy production cookie
   copy: content="{{rabbitmq_cluster_cookie_production}}" dest=/var/lib/rabbitmq/.erlang.cookie
-        owner=rabbitmq group=rabbitmq mode=0600
+        owner=rabbitmq group=rabbitmq mode=0400
   when: "env == 'production'"
   notify:
     - restart rabbitmq
