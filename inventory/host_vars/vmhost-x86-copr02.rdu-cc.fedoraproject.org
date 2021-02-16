@@ -27,6 +27,8 @@ mac3: "b4:96:91:63:3b:9d"
 mac4: "b4:96:91:63:3b:9e"
 mac5: "b4:96:91:63:3b:9f"
 
+br0_port0_mac: "{{ mac0 }}"
+
 network_connections:
   - name: br0
     state: up
@@ -53,3 +55,4 @@ network_connections:
     type: ethernet
     master: br0
     mac: "{{ br0_port0_mac }}"
+
