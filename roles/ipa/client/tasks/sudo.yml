@@ -16,6 +16,7 @@
       - sysadmin-main
   no_log: true
   loop: "{{ ipa_server_admin_passwords | dict2items }}"
+  when: ipa_server_admin_passwords is defined
 
 - name: Give certain groups sudo access to anything per host group
   delegate_to: "{{ item[0] }}"
@@ -30,3 +31,4 @@
     runasusercategory: "all"
     runasgroupcategory: "all"
   loop: "{{ ipa_server_host_groups }}"
+  when: ipa_server_host_groups is defined

@@ -26,6 +26,7 @@
     ipaadmin_password: "{{ ipa_server_admin_passwords[item[0]] }}"
     state: present
   loop: "{{ ipa_server_host_groups }}"
+  when: ipa_server_host_groups is defined
 
 - name: Ensure hosts are in IPA host groups
   delegate_to: "{{ item[0] }}"
@@ -36,3 +37,4 @@
     state: present
     host: "{{ item[4] | list }}"
   loop: "{{ ipa_server_host_user_groups_hosts }}"
+  when: ipa_server_host_user_groups_hosts is defined

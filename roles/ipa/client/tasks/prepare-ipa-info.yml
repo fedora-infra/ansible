@@ -92,6 +92,7 @@
         + ([item.key] | product(item.value | list) | list)
       }}
   loop: "{{ ipa_server_host_groups_dict | dict2items }}"
+  when: ipa_server_host_groups_dict is defined
 
 # ipa_server_user_groups ->
 #   [
@@ -109,6 +110,7 @@
         + ([item.key] | product(item.value.groups) | list)
       }}
   loop: "{{ ipa_server_all_groups_hosts_dict | dict2items }}"
+  when: ipa_server_all_groups_hosts_dict is defined
 
 # ipa_server_host_user_groups_hosts ->
 #   [
@@ -152,3 +154,4 @@
           ]
       }}
   loop: "{{ ipa_server_host_groups }}"
+  when: ipa_server_host_groups is defined

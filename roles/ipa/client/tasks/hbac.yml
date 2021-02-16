@@ -16,6 +16,7 @@
       - sysadmin-main
   no_log: true
   loop: "{{ ipa_server_admin_passwords | dict2items }}"
+  when: ipa_server_admin_passwords is defined
 
 - name: "Enable usergroup/sysadmin-main HBAC rule"
   delegate_to: "{{ item.key }}"
@@ -25,6 +26,7 @@
     state: enabled
   no_log: true
   loop: "{{ ipa_server_admin_passwords | dict2items }}"
+  when: ipa_server_admin_passwords is defined
 
 - name: "Disable allow_all HBAC rule"
   delegate_to: "{{ item.key }}"
@@ -34,6 +36,7 @@
     state: disabled
   no_log: true
   loop: "{{ ipa_server_admin_passwords | dict2items }}"
+  when: ipa_server_admin_passwords is defined
 
 - name: "Let everybody run sudo"
   delegate_to: "{{ item.key }}"
@@ -48,6 +51,7 @@
       - Sudo
   no_log: true
   loop: "{{ ipa_server_admin_passwords | dict2items }}"
+  when: ipa_server_admin_passwords is defined
 
 - name: Add the sshd HBAC service in IPA
   delegate_to: "{{ item.key }}"
@@ -57,6 +61,7 @@
     ipaadmin_password: "{{ item.value }}"
   no_log: true
   loop: "{{ ipa_server_admin_passwords | dict2items }}"
+  when: ipa_server_admin_passwords is defined
 
 - name: Add the shell-access service group in IPA
   delegate_to: "{{ item.key }}"
@@ -68,6 +73,7 @@
       - sshd
   no_log: true
   loop: "{{ ipa_server_admin_passwords | dict2items }}"
+  when: ipa_server_admin_passwords is defined
 
 ## Host group- & host-specific rules
 
@@ -103,6 +109,7 @@
     state: present
     hostgroup: "{{ item[1] }}"
   loop: "{{ ipa_server_host_groups }}"
+  when: ipa_server_host_groups is defined
 
 - name: Give certain groups shell access per host group
   delegate_to: "{{ item[0] }}"
@@ -113,3 +120,4 @@
     state: present
     group: "{{ ipa_server_host_groups_dict[item[0]][item[1]]['shell_groups'] }}"
   loop: "{{ ipa_server_host_groups }}"
+  when: ipa_server_host_groups is defined
