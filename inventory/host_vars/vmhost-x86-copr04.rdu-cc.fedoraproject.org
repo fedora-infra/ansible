@@ -1,18 +1,53 @@
 ---
-fas_client_groups: sysadmin-copr,sysadmin-main
-sudoers: "{{ private }}/files/sudo/copr-sudoers"
-nrpe_procs_warn: 900
-nrpe_procs_crit: 1000
-br0_ip: 8.43.85.60
-br0_nm: 255.255.254.0
+datacenter: rdu-cc
+
 gw: 8.43.85.254
 dns: 8.8.8.8
 
-has_ipv6: yes
-eth0_ipv6: "2620:52:3:1:dead:beef:cafe:c004"
-eth0_ipv6_gw: "2620:52:3:1:ffff:ffff:ffff:fffe"
+has_ipv4: yes
+br0_ipv4: 8.43.85.60
+br0_ipv4_nm: 23
+br0_ipv4_gw: "{{ gw }}"
 
-datacenter: rdu-cc
-vpn: false
-postfix_group: cloud
-freezes: false
+has_ipv6: yes
+br0_ipv6: "2620:52:3:1:dead:beef:cafe:c004"
+br0_ipv6_nm: 64
+br0_ipv6_gw: "2620:52:3:1:ffff:ffff:ffff:fffe"
+
+mac0: "f4:02:70:d0:04:4a"
+mac1: "f4:02:70:d0:04:4b"
+mac2: "b0:26:28:d1:e0:f0"
+mac3: "b0:26:28:d1:e0:f1"
+mac4: "b4:96:91:63:3a:a0"
+mac5: "b4:96:91:63:3a:a1"
+mac6: "b4:96:91:63:3a:a2"
+mac7: "b4:96:91:63:3a:a3"
+
+br0_port0_mac: "{{ mac0 }}"
+
+network_connections:
+  - name: br0
+    state: up
+    type: bridge
+    autoconnect: yes
+    ip:
+      address: 
+      - "{{ br0_ipv4 }}/{{ br0_ipv4_nm }}"
+      - "{{ br0_ipv6 }}/{{ br0_ipv6_nm }}"
+      gateway4: "{{ br0_ipv4_gw }}"
+      gateway6: "{{ br0_ipv6_gw }}"
+      dns: 
+      - 8.8.8.8
+      - 8.8.4.4
+      - 2001:4860:4860::8888
+      dns_search: 
+      - fedoraproject.org
+      - vpn.fedoraproject.org
+      - rdu-cc.fedoraproject.org
+      dhcp4: no
+      auto6: no
+  - name: br0-port0
+    state: up
+    type: ethernet
+    master: br0
+    mac: "{{ br0_port0_mac }}"
