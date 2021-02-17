@@ -1,28 +1,23 @@
 ---
-fas_client_groups: sysadmin-copr,sysadmin-main
-sudoers: "{{ private }}/files/sudo/copr-sudoers"
-nrpe_procs_warn: 900
-nrpe_procs_crit: 1000
+datacenter: rdu-cc
+
 gw: 8.43.85.254
 dns: 8.8.8.8
 
 has_ipv4: yes
 br0_ipv4: 8.43.85.58
-br0_ipv4_nm: 255.255.254.0
+br0_ipv4_nm: 23
 br0_ipv4_gw: "{{ gw }}"
 
 has_ipv6: yes
 br0_ipv6: "2620:52:3:1:dead:beef:cafe:c002"
+br0_ipv6_nm: 64
 br0_ipv6_gw: "2620:52:3:1:ffff:ffff:ffff:fffe"
 
-datacenter: rdu-cc
-vpn: false
-postfix_group: cloud
-freezes: false
 
 mac0: "f4:02:70:d0:04:5e"
-mac1: "b4:96:91:63:3b:9c"
-mac2: "f4:02:70:d0:04:5f"
+mac1: "f4:02:70:d0:04:5f"
+mac2: "b4:96:91:63:3b:9c"
 mac3: "b4:96:91:63:3b:9d"
 mac4: "b4:96:91:63:3b:9e"
 mac5: "b4:96:91:63:3b:9f"
@@ -36,8 +31,8 @@ network_connections:
     autoconnect: yes
     ip:
       address: 
-      - "{{ br0_ipv4 }}/24"
-      - "{{ br0_ipv6 }}/64"
+      - "{{ br0_ipv4 }}/{{ br0_ipv4_nm }}"
+      - "{{ br0_ipv6 }}/{{ br0_ipv6_nm }}"
       gateway4: "{{ br0_ipv4_gw }}"
       gateway6: "{{ br0_ipv6_gw }}"
       dns: 
@@ -55,4 +50,5 @@ network_connections:
     type: ethernet
     master: br0
     mac: "{{ br0_port0_mac }}"
+
 
