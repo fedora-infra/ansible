@@ -1,4 +1,5 @@
 from os import path
+import ssl
 
 # FIXME: workaround for this moment till confdir, dbdir (installdir etc.) are
 # declared properly somewhere/somehow
@@ -20,12 +21,18 @@ class BaseConfiguration(object):
     PORT = 5000
 
     CELERY_BROKER_URL = '{{ mbs_broker_url }}'
-    CELERY_CONFIG = {
-        'certfile': "/etc/module-build-service/mbs-private-queue{{env_suffix}}.crt",
-        'keyfile': "/etc/module-build-service/mbs-private-queue{{env_suffix}}.key",
-        'ca_certs': "/etc/module-build-service/ca.crt",
-        'broker_login_method': "EXTERNAL",
+    CELERY_BROKER_TRANSPORT_OPTIONS = {
+        "ssl":
+        {
+            'certfile': "/etc/module-build-service/mbs-private-queue{{env_suffix}}.crt",
+            'keyfile': "/etc/module-build-service/mbs-private-queue{{env_suffix}}.key",
+            'ca_certs': "/etc/module-build-service/ca.crt",
+            'cert_reqs': ssl.CERT_REQUIRED,
+            'ssl_version': ssl.PROTOCOL_TLSv1_2,
+        },
     }
+
+    CELERY_BROKER_LOGIN_METHOD = "EXTERNAL"
 
     # Global network-related values, in seconds
     NET_TIMEOUT = 120
