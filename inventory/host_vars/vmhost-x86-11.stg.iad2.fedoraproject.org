@@ -1,0 +1,42 @@
+---
+# This virthost only has stg instances, so it doesn't freeze
+freezes: false
+nested: true
+dns: 10.3.163.33
+
+has_ipv4: yes
+br0_ipv4: 10.3.166.28
+br0_ipv4_nm: 24
+br0_ipv4_gw: 10.3.166.254
+
+mgmt_mac: 2c:ea:7f:f3:6c:be
+mgmt_ipv4: 10.3.160.46
+mac1: E4:43:4B:F7:B7:B8
+mac2: E4:43:4B:F7:B7:BA
+mac3: E4:43:4B:F7:B7:D8
+mac4: E4:43:4B:F7:B7:D9
+
+br0_port0_mac: "{{ mac1 }}"
+
+network_connections:
+  - name: br0
+    state: up
+    type: bridge
+    autoconnect: yes
+    ip:
+      address: 
+      - "{{ br0_ipv4 }}/{{ br0_ipv4_nm }}"
+      gateway4: "{{ br0_ipv4_gw }}"
+      dns: 
+      - "{{ dns }}"
+      dns_search: 
+      - stg.iad2.fedoraproject.org
+      - iad2.fedoraproject.org
+      - fedoraproject.org
+      dhcp4: no
+      auto6: no
+  - name: br0-port0
+    state: up
+    type: ethernet
+    master: br0
+    mac: "{{ br0_port0_mac }}"
