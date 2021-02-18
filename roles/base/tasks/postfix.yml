@@ -1,6 +1,8 @@
 - name: /etc/postfix/main.cf
   copy: src={{ item }} dest=/etc/postfix/main.cf
   with_first_found:
+    - "{{ postfix_maincf }}"
+    - "postfix/main.cf/main.cf.{{ ansible_fqdn }}"
     - "postfix/main.cf/main.cf.{{ inventory_hostname }}"
     - "postfix/main.cf/main.cf.{{ host_group }}"
     - "postfix/main.cf/main.cf.{{ postfix_group }}"
