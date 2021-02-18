@@ -12,7 +12,9 @@ nrpe_procs_crit: 1500
 # See http://infrastructure.fedoraproject.org/csi/security-policy/
 
 vpn: false
-postfix_group: cloud
+postfix_group: copr
+postfix_maincf: "postfix/main.cf/main.cf.copr"
+
 freezes: false
 
 csi_security_category: High
