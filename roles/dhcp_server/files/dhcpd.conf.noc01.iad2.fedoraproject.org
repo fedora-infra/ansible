@@ -630,6 +630,33 @@ host vmhost-x86-10-stg {
      option subnet-mask 255.255.255.0;
 }
 
+host vmhost-x86-11-stg-mgmt {
+     hardware ethernet 2c:ea:7f:f3:6c:be;
+     fixed-address 10.3.160.46;
+     option host-name "vmhost-x86-11-stg";
+}
+host vmhost-x86-11-stg {
+     hardware ethernet E4:43:4B:F7:B7:B8;
+     fixed-address 10.3.166.28;
+     filename "uefi/grubx64.efi";
+     next-server 10.3.163.10;
+     option routers 10.3.166.254;
+     option subnet-mask 255.255.255.0;
+}
+
+host vmhost-x86-12-stg-mgmt {
+     hardware ethernet 2c:ea:7f:f3:82:fc;
+     fixed-address 10.3.160.47;
+     option host-name "vmhost-x86-12-stg";
+}
+host vmhost-x86-12-stg {
+     hardware ethernet E4:43:4B:F7:AD:10;
+     fixed-address 10.3.166.29;
+     filename "uefi/grubx64.efi";
+     next-server 10.3.163.10;
+     option routers 10.3.166.254;
+     option subnet-mask 255.255.255.0;
+}
 
 host bvmhost-x86-01-stg {
      hardware ethernet 24:6E:96:B1:56:20;
@@ -655,6 +682,12 @@ host bvmhost-x86-03-stg {
      option routers 10.3.167.254;
      option subnet-mask 255.255.255.0;
 }
+
+host bvmhost-x86-04-stg-mgmt {
+     hardware ethernet B8:2A:72:FC:EE:68;
+     fixed-address 10.3.160.199;
+     option host-name "bvmhost-x86-04-stg-mgmt";
+}
 host bvmhost-x86-04-stg {
      hardware ethernet EC:F4:BB:D2:8F:00;
      fixed-address 10.3.167.14;
@@ -664,6 +697,19 @@ host bvmhost-x86-04-stg {
      option subnet-mask 255.255.255.0;
 }
 
+host bvmhost-x86-05-stg-mgmt {
+     hardware ethernet 2c:ea:7f:f3:58:4e;
+     fixed-address 10.3.160.157;
+     option host-name "bvmhost-x86-05-stg";
+}
+host bvmhost-x86-05-stg {
+     hardware ethernet E4:43:4B:F7:AC:CC;
+     fixed-address 10.3.167.17;
+     filename "uefi/grubx64.efi";
+     next-server 10.3.163.10;
+     option routers 10.3.166.254;
+     option subnet-mask 255.255.255.0;
+}
 
 
 # Build network
@@ -1028,6 +1074,62 @@ host buildhw-a64-11 {
      option routers 10.3.170.254;
      option host-name "buildhw-a64-11";
 }
+
+host buildhw-a64-21-mgmt {
+     hardware ethernet e8:6a:64:39:18:ef;
+     fixed-address 10.3.160.114;
+     option host-name "bvmhost-a64-21-mgmt";
+}
+host buildhw-a64-21 {
+     hardware ethernet 50:6b:4b:6a:b6:20 ;
+     fixed-address 10.3.170.147;
+     filename "uefi/grubaa64.efi";
+     next-server 10.3.163.10;
+     option routers 10.3.170.254;
+     option subnet-mask 255.255.255.0;
+}
+host buildhw-a64-22-mgmt {
+     hardware ethernet E8:6A:64:39:18:73;
+     fixed-address 10.3.160.116;
+     option host-name "bvmhost-a64-22-mgmt";
+}
+host buildhw-a64-22 {
+     hardware ethernet 50:6b:4b:6a:eb:b0 ;
+     fixed-address 10.3.170.148;
+     filename "uefi/grubaa64.efi";
+     next-server 10.3.163.10;
+     option routers 10.3.170.254;
+     option subnet-mask 255.255.255.0;
+}
+host buildhw-a64-23-mgmt {
+     hardware ethernet E8:6A:64:39:19:67;
+     fixed-address 10.3.160.117;
+     option host-name "bvmhost-a64-23-mgmt";
+}
+host buildhw-a64-23 {
+     hardware ethernet 50:6b:4b:6a:ea:60;
+     fixed-address 10.3.170.149;
+     filename "uefi/grubaa64.efi";
+     next-server 10.3.163.10;
+     option routers 10.3.170.254;
+     option subnet-mask 255.255.255.0;
+}
+host buildhw-a64-24-mgmt {
+     hardware ethernet E8:6A:64:39:19:67;
+     fixed-address 10.3.160.118;
+     option host-name "bvmhost-a64-24-mgmt";
+}
+host buildhw-a64-24 {
+     hardware ethernet 50:6B:4B:6A:C4:90 ;
+     fixed-address 10.3.170.150;
+     filename "uefi/grubaa64.efi";
+     next-server 10.3.163.10;
+     option routers 10.3.170.254;
+     option subnet-mask 255.255.255.0;
+}
+
+
+
 host bkernel02 {
      hardware ethernet d0:94:66:45:8c:0f;
      option routers 10.3.169.254;
@@ -1489,11 +1591,6 @@ host dell-630-01-mgmt {
      hardware ethernet 58:8A:5A:F3:9C:56;
      fixed-address 10.3.160.191;
      option host-name "bvirthost14";
-}
-host system-vmhost-mgmt {
-     hardware ethernet B8:2A:72:FC:EE:68;
-     fixed-address 10.3.160.199;
-     option host-name "vmhost-11-mgmt";
 }
 
 host dell-r6x0-16-mgmt {
