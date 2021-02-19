@@ -1,5 +1,10 @@
 ---
 # NOTE: configuration is based on host groups, i.e. set the ipa_* vars only in group_vars
+#
+# NOTE^2: This will be "active" if only one host with the role is in the play, so we need to filter
+#         on something, this something is the `primary_auth_source` variable which can be either
+#         `fas` or `ipa`. Only hosts that have it set to `ipa` should be listed in the following
+#         variables.
 
 # Thanks to having two environments, staging and prod, this has to deal with the "responsible" IPA
 # server for individual hosts.
@@ -82,7 +87,12 @@
       }}
     ipa_servers: "{{ ipa_servers | default([]) | union([hostvars[item]['ipa_server']]) }}"
   loop: "{{ ansible_play_hosts }}"
-  when: hostvars[item]['ipa_server'] is defined and hostvars[item]['ipa_host_group'] is defined
+  when: >-
+    (hostvars[item]['primary_auth_source'] | default("fas")) == "ipa"
+    and
+    hostvars[item]['ipa_server'] is defined
+    and
+    hostvars[item]['ipa_host_group'] is defined
 
 # ipa_server_host_groups ->
 #   [
