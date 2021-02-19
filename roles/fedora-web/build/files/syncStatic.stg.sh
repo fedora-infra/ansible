@@ -68,4 +68,3 @@ build flocktofedora.org
 build fedoracommunity.org
 build start.fedoraproject.org
 build fedoraproject.org
-build iot.fedoraproject.org
