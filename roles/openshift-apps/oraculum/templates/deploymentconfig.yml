@@ -410,8 +410,8 @@ spec:
         deploymentconfig: oraculum-frontend
     spec:
       containers:
-      - name: packager-dashboard-frontend
-        image: packager-dashboard-frontend:latest
+      - name: oraculum-frontend
+        image: oraculum-frontend:latest
         resources: {}
         env:
         - name: SUBDIR
@@ -428,7 +428,7 @@ spec:
     imageChangeParams:
       automatic: true
       containerNames:
-      - packager-dashboard-frontend
+      - oraculum-frontend
       from:
         kind: ImageStreamTag
-        name: packager-dashboard-frontend:latest
+        name: oraculum-frontend:latest
