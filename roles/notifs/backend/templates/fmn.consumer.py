@@ -97,6 +97,10 @@ config = {
         "base_url": "https://admin.stg.fedoraproject.org/accounts",
     },
     {% else -%}
+    "fasjson": {
+        "active": True,
+        "url": "https://fasjson.fedoraproject.org/v1/"
+    }
     "fas_credentials": {
         "username": "{{fedoraDummyUser}}",
         "password": "{{fedoraDummyUserPassword}}",

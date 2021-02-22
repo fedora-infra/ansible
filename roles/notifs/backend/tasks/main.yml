@@ -7,6 +7,8 @@
   - python-fmn
   - python-psycopg2
   - libsemanage-python
+  - python-gssapi
+  - python-requests-gssapi
   # Needed to produce nice long emails about koji builds
   - koji
   tags:
@@ -21,6 +23,19 @@
   - fmn.consumer.py
   notify:
   - restart fedmsg-hub
+  tags:
+  - notifs
+  - notifs/backend
+
+- name: Hotfix fmn for fasjson
+  copy: >
+    src=fasjson-port/{{ item }} dest=/usr/lib/python2.7/site-packages/fmn/{{ item }}
+  with_items:
+  - consumer.py
+  - fasjson_client.py
+  - fmn_fasshim.py
+  - tasks.py
+  - util.py
   tags:
   - notifs
   - notifs/backend
