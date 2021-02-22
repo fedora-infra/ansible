@@ -362,6 +362,12 @@ handlers = ["console"]
             # openh264 signing
 
             [[consumer_config.koji_instances.primary.tags]]
+            from = "f35-openh264"
+            to = "f35-openh264"
+            key = "{{ (env == 'production')|ternary('fedora-35', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('9867c58f', 'd300e724') }}"
+
+            [[consumer_config.koji_instances.primary.tags]]
             from = "f34-openh264"
             to = "f34-openh264"
             key = "{{ (env == 'production')|ternary('fedora-34', 'testkey') }}"
