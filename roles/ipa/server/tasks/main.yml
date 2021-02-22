@@ -534,6 +534,8 @@
   when: ipa_initial
 
 
+# User groups
+
 - name: Set the members of the admin group
   ipa_group:
     name: admins
@@ -545,6 +547,17 @@
     ipa_user: admin
     ipa_pass: "{{ipa_admin_password}}"
     validate_certs: no
+  tags:
+  - ipa/server
+  - config
+  when: ipa_initial
+
+
+- name: Create the sysadmin-main group
+  ipagroup:
+    ipaadmin_password: "{{ ipa_admin_password }}"
+    name: sysadmin-main
+    description: Fedora Main Sysadmin Group
   tags:
   - ipa/server
   - config
