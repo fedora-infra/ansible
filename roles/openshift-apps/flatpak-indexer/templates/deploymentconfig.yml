@@ -50,8 +50,6 @@ spec:
           readOnly: true
         - mountPath: /var/www/flatpaks
           name: index-output-volume
-        - mountPath: /etc/tls/flatpak-indexer
-          name: flatpak-indexer-crt-volume
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       volumes:
