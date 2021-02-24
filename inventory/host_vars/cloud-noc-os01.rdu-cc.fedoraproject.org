@@ -1,0 +1,65 @@
+---
+freezes: false
+
+datacenter: rdu-cc
+vmhost: vmhost-x64-cc05.rdu-cc.fedoraproject.org
+volgroup: /dev/vg_guests
+mem_size: 8192
+num_cpus: 4
+lvm_size: 20000
+
+
+ks_url: http://infrastructure.fedoraproject.org/repo/rhel/ks/kvm-rhel-8-ext
+ks_repo: http://infrastructure.fedoraproject.org/repo/rhel/RHEL8-x86_64/
+
+dns1: 8.8.8.8
+dns2: 8.8.4.4
+
+has_ipv4: yes
+eth0_ipv4: 8.43.85.49
+eth0_ipv4_nm: 23
+eth0_ipv4_gw: 8.43.85.254
+eth1_ipv4: 172.29.160.2
+eth1_ipv4_nm: 24
+
+mac0: 52:54:00:46:ed:ba
+mac1: 52:54:00:24:8e:bc
+
+network_connections:
+  - name: eth0
+    mac: "{{ mac0 }}"
+    type: ethernet
+    autoconnect: yes
+    ip:
+      address: 
+      - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
+      gateway4: "{{ eth0_ipv4_gw }}"
+      dns: 
+      - "{{ dns1 }}"
+      - "{{ dns2 }}"
+      dns_search: 
+      - rdu-cc.fedoraproject.org
+      - fedoraproject.org
+      dhcp4: no
+      auto6: no
+  - name: eth1
+    mac: "{{ mac1 }}"
+    type: ethernet
+    autoconnect: yes
+    ip:
+      address: 
+      - "{{ eth1_ipv4 }}/{{ eth1_ipv4_nm }}"
+      dhcp4: no
+      auto6: no
+
+virt_install_command_two_nic: virt-install -n {{ inventory_hostname }}
+                 --memory={{ mem_size }},maxmemory={{ max_mem_size }} --memballoon virtio
+                 --disk bus=virtio,path={{ volgroup }}/{{ inventory_hostname }}
+                 --vcpus={{ num_cpus }},maxvcpus={{ max_cpu }} -l {{ ks_repo }} -x
+                 'net.ifnames=0 ksdevice=eth0 ks={{ ks_url }} console=tty0 console=ttyS0
+                  hostname={{ inventory_hostname }} nameserver={{ dns }}
+                  ip={{ eth0_ip }}::{{ gw }}:{{ nm }}:{{ inventory_hostname }}:eth0:none
+                  ip={{ eth1_ip }}:::{{ nm }}:{{ inventory_hostname_short }}-nfs:eth1:none'
+                 --network bridge={{ main_bridge }},model=virtio,mac={{ mac0 }}
+                 --network=bridge={{ nfs_bridge }},model=virtio,mac={{ mac1 }}
+                 --autostart --noautoconsole --watchdog default --rng /dev/random

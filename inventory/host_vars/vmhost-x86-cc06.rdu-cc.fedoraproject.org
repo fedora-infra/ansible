@@ -15,6 +15,8 @@ has_ipv4: yes
 br0_ipv4: 8.43.85.85
 br0_ipv4_nm: 23
 br0_ipv4_gw: "{{ gw }}"
+br1_ipv4: 172.29.161.1
+br1_ipv4_nm: 24
 
 has_ipv6: yes
 br0_ipv6: "2620:52:3:1:dead:beef:cafe:f006"
@@ -27,6 +29,7 @@ mac2: "ec:f4:bb:cd:aa:a0"
 mac3: "ec:f4:bb:cd:aa:a2"
 
 br0_port0_mac: "{{ mac0 }}"
+br1_port0_mac: "{{ mac1 }}"
 
 network_connections:
   - name: br0
@@ -54,3 +57,17 @@ network_connections:
     type: ethernet
     master: br0
     mac: "{{ br0_port0_mac }}"
+  - name: br1
+    state: up
+    type: bridge
+    autoconnect: yes
+    ip:
+      address: 
+      - "{{ br1_ipv4 }}/{{ br1_ipv4_nm }}"
+      dhcp4: no
+      auto6: no
+  - name: br1-port0
+    state: up
+    type: ethernet
+    master: br1
+    mac: "{{ br1_port0_mac }}"
