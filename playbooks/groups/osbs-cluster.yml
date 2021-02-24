@@ -306,6 +306,12 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
+    - name: install fedora dnsmasq specific top-config
+      copy:
+        src: "{{files}}/osbs/fedora-dnsmasq-master.conf.{{env}}"
+        dest: "/etc/dnsmasq.conf"
+      when:
+        is_fedora is defined or (ansible_distribution_major_version|int > 8 and ansible_distribution == 'RedHat')
     - name: Ensures /etc/dnsmasq.d/ dir exists
       file: path="/etc/dnsmasq.d/" state=directory
     - name: install fedora dnsmasq specific config
