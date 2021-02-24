@@ -139,7 +139,7 @@ notify_admins = [
     "pingou@fedoraproject.org",
 ]
 # Use fasjson instead of FAS
-{% if env == staging %}
+{% if env == "staging" %}
 fasjson = true
 {% else %}
 fasjson = false
