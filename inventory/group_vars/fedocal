@@ -17,6 +17,17 @@ custom_rules: [ '-A INPUT -p tcp -m tcp -s 10.3.163.39 --dport 873 -j ACCEPT', '
 
 fas_client_groups: sysadmin-noc,sysadmin-web,sysadmin-veteran
 
+ipa_host_group: fedocal
+ipa_host_group_desc: Fedora calendaring service
+ipa_client_shell_groups:
+- sysadmin-noc
+- sysadmin-web
+- sysadmin-veteran
+ipa_client_sudo_groups:
+- sysadmin-noc
+- sysadmin-web
+- sysadmin-veteran
+
 freezes: false
 
 # These are consumed by a task in roles/fedmsg/base/main.yml

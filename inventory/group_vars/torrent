@@ -8,6 +8,20 @@ tcp_ports: [ 53, 80, 443, 873, "6881:6999" ]
 udp_ports: [ 53 ]
 
 fas_client_groups: sysadmin-web,torrentadmin,sysadmin-noc,torrent-cc,fi-apprentice,sysadmin-veteran
+ipa_host_group: torrent
+ipa_host_group_desc: BitTorrent trackers
+ipa_client_shell_groups:
+- fi-apprentice
+- sysadmin-noc
+- sysadmin-veteran
+- sysadmin-web
+- torrent-cc
+- torrentadmin
+ipa_client_sudo_groups:
+- sysadmin-noc
+- sysadmin-veteran
+- sysadmin-web
+- torrentadmin
 
 nrpe_procs_warn: 300
 nrpe_procs_crit: 500

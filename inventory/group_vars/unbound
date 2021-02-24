@@ -12,5 +12,12 @@ custom_rules: [ '-A INPUT -p tcp -m tcp -s 209.132.184.0/24 --dport 53 -j ACCEPT
                 '-A INPUT -p udp -m udp -s 209.132.181.0/24 --dport 53 -j ACCEPT' ]
 
 fas_client_groups: sysadmin-dns
+ipa_host_group: unbound
+ipa_host_group_desc: Unbound caching DNS
+ipa_client_shell_groups:
+- sysadmin-dns
+ipa_client_sudo_groups:
+- sysadmin-dns
+
 freezes: false
 postfix_group: vpn
