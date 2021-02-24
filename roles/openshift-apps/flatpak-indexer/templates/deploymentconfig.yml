@@ -63,7 +63,7 @@ spec:
         name: koji-conf-volume
       - name: index-output-volume
         persistentVolumeClaim:
-          claimName: flatpak-indexer-storage
+          claimName: flatpak-indexer-storage{{ '-stg' if env == 'staging' else '' }}
   test: false
   triggers:
   - type: ConfigChange
@@ -142,7 +142,7 @@ spec:
         name: indexer-config-volume
       - name: index-output-volume
         persistentVolumeClaim:
-          claimName: flatpak-indexer-storage
+          claimName: flatpak-indexer-storage{{ '-stg' if env == 'staging' else '' }}
   test: false
   triggers:
   - type: ConfigChange
@@ -214,7 +214,7 @@ spec:
       volumes:
       - name: redis-data-volume
         persistentVolumeClaim:
-          claimName: flatpak-indexer-redis-storage
+          claimName: flatpak-indexer-redis-storage{{ '-stg' if env == 'staging' else '' }}
   test: false
   triggers:
   - type: ConfigChange
