@@ -8,7 +8,7 @@ secret_key = '{{ anitya_secret_key }}'
 {% endif %}
 
 # The lifetime of the session, in seconds.
-permanent_session_lifetime = 3600
+permanent_session_lifetime = 86400
 
 {% if env == 'staging' %}
 db_url = "postgresql://{{ anitya_stg_db_user }}:{{ anitya_stg_db_pass }}@{{ anitya_stg_db_host }}/{{ anitya_stg_db_name }}"
