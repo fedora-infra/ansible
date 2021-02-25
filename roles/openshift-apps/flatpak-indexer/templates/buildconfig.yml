@@ -39,7 +39,7 @@ spec:
   output:
     to:
       kind: ImageStream
-      name: flatpak-indexer-tardiff:latest
+      name: flatpak-indexer:latest
   postCommit:
     command:
     - tools/test.sh
@@ -74,6 +74,8 @@ spec:
       from:
         kind: ImageStreamTag
         name: flatpak-indexer-tardiff:latest
+  - type: ImageChange
+    imageChange: {}
 ---
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
