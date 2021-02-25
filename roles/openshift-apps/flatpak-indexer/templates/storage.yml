@@ -9,7 +9,7 @@ spec:
   resources:
     requests:
       storage: 5Gi
-  volumeName: flatpak-indexer-redis-storage{{ '-stg' if env == 'staging' else '' }}
+  volumeName: flatpak-indexer-storage{{ '-stg' if env == 'staging' else '' }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
