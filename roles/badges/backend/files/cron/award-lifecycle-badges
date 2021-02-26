@@ -94,7 +94,7 @@ def main():
             badge = tahrir.get_badge(badge_id=badge_id)
             for person in results:
                 creation = datetime.datetime.strptime(
-                    person.creation.split('.')[0], '%Y-%m-%d %H:%M:%S')
+                    person.creation[:19], '%Y-%m-%d %H:%M:%S')
                 if now - creation > delta:
                     hit_em_up(badge, person)
 
