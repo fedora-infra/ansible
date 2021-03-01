@@ -30,8 +30,7 @@
    - { role: openvpn/client,
        when: deployment_type == "prod" }
    - apache
-   - { role: fedmsg/base,
-       when: deployment_type == "prod" }
+   - fedmsg/base
    - { role: dnf-automatic, tags: ['dnfautomatic'] }
    # Set up for fedora-messaging
    - { role: rabbit/user,

@@ -19,8 +19,7 @@
   - { role: ipa/client, when: env == "staging" }
   - collectd/base
   - apache
-  - { role: fedmsg/base,
-      when: deployment_type == "prod" }
+  - fedmsg/base
   # Set up for fedora-messaging
   - { role: rabbit/user,
       username: "value{{ env_suffix }}"}

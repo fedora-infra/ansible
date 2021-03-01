@@ -33,7 +33,7 @@
   - { role: ipa/client, when: env == "staging" }
   - sudo
   - rkhunter
-  - { role: fedmsg/base, when: env != "staging" }
+  - fedmsg/base
 
   - role: nfs/client
     mnt_dir: '/mnt/fedora_koji'

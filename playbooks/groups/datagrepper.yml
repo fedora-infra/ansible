@@ -20,8 +20,7 @@
   - { role: fas_client, when: env != "staging" }
   - { role: ipa/client, when: env == "staging" }
   - collectd/base
-  - { role: fedmsg/base,
-      when: deployment_type == "prod" }
+  - fedmsg/base
   - { role: rabbit/user,
       username: "datagrepper{{ env_suffix }}"}
   - rsyncd
