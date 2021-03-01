@@ -76,6 +76,19 @@
   tags:
   - pagure
 
+- name: Create the "git" user
+  command: useradd --create-home --home-dir=/srv/git/  git
+           creates=/srv/git/
+  when: env == 'staging'
+  tags:
+  - pagure
+
+- name: Add the git user to the packager group
+  user: name=git group=packager append=yes
+  when: env == 'staging'
+  tags:
+  - pagure
+
 - name: create the /var/log/pagure folder where to store the logs
   file: state=directory
                path=/var/log/pagure
