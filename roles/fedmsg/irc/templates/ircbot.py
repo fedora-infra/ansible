@@ -642,6 +642,27 @@ config = dict(
             ),
         ),
 
+        # channel #centos-ci with centos-infra messages
+        dict(
+            network='chat.freenode.net',
+            port=6667,
+            make_pretty=True,
+            make_terse=True,
+
+            {% if env == 'staging' %}
+            nickname='fm-stg-centos-infra',
+            {% else %}
+            nickname='fm-centos-infra',
+            {% endif %}
+            channel='#centos-ci',
+            filters=dict(
+                topic=[
+                    '^((?!(pagure)).)*$',
+                ],
+                body=['^((?!(centos-infra)).)*$'],
+            ),
+        ),
+
     ],
 
     ### Possible colors are ###
