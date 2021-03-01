@@ -108,7 +108,7 @@ spec:
       - env:
         - name: FLATPAK_INDEXER_COMMAND
           value: differ
-        - name: REDISCLI_AUTH
+        - name: REDIS_PASSWORD
           valueFrom:
             secretKeyRef:
               name: redis-password
