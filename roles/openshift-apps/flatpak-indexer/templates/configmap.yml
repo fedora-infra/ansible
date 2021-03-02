@@ -11,8 +11,8 @@ data:
     deltas_dir: ${OUTPUT_DIR}/deltas/
     icons_dir: ${OUTPUT_DIR}/icons/
 {% if env == 'staging' %}
-    deltas_uri: https://registry{{ env_suffix }}fedoraproject.org/deltas/
-    icons_uri: https://registry{{ env_suffix }}fedoraproject.org/app-icons/
+    deltas_uri: https://registry{{ env_suffix }}.fedoraproject.org/deltas/
+    icons_uri: https://registry{{ env_suffix }}.fedoraproject.org/app-icons/
 {% else %}
     deltas_uri: https://cdn.registry.fedoraproject.org/deltas/
     icons_uri: https://cdn.registry.fedoraproject.org/app-icons/
