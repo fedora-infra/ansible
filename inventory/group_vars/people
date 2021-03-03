@@ -13,6 +13,11 @@ git_basepath: /
 git_daemon_user: nobody
 
 fas_client_groups: "@all"
+ipa_host_group: people
+ipa_host_group_desc: A place for people to host things
+# fedora-contributors is an umbrella group containing all others
+ipa_client_shell_groups:
+- fedora-contributor
 
 fedmsg_certs:
 - service: shell
