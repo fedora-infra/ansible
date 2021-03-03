@@ -41,11 +41,7 @@ spec:
     type: Git
     git:
       uri: 'https://pagure.io/fedora-qa/packager_dashboard.git'
-{% if env == 'staging' %}
-      ref: 'feature/quay'
-{% else %}
       ref: 'master'
-{% endif %}
   strategy:
     type: Docker
     dockerStrategy:
