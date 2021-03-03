@@ -41,11 +41,24 @@ spec:
     type: Git
     git:
       uri: 'https://pagure.io/fedora-qa/packager_dashboard.git'
+{% if env == 'staging' %}
+      ref: 'feature/quay'
+{% else %}
       ref: 'master'
+{% endif %}
   strategy:
     type: Docker
     dockerStrategy:
       dockerfilePath: Dockerfile
+      env:
+      - name: "SUBDIR"
+        value: "/"
+      - name: "API"
+{% if env == 'staging' %}
+        value: "https://packager-dashboard.stg.fedoraproject.org/api/v1/"
+{% else %}
+        value: "https://packager-dashboard.fedoraproject.org/api/v1/"
+{% endif %}
   triggers:
   - type: ConfigChange
   - type: ImageChange
