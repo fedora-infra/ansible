@@ -1,0 +1,160 @@
+- name: make the app be real
+  hosts: os_masters_stg[0]
+  user: root
+  gather_facts: False
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  vars:
+    fas_db_host: "db-fas01{{ env_suffix }}.{{ datacenter }}.fedoraproject.org"
+    gen_cert: false
+    wsgi_procs: 4
+    wsgi_threads: 1
+
+  pre_tasks:
+  - include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
+
+  roles:
+  - role: openshift/project
+    app: fas
+    description: FAS
+    appowners:
+    - puiterwijk
+    - pingou
+    allow_fas_db: true
+  - role: openshift/imagestream
+    app: fas
+    imagename: fas
+  - role: openshift/imagestream
+    app: fas
+    imagename: totpcgi
+  - role: openshift/imagestream
+    app: fas
+    imagename: yubikey
+  - role: openshift/object
+    app: fas
+    template: buildconfig-fas.yml
+    objectname: buildconfig-fas.yml
+  - role: openshift/object
+    app: fas
+    template: buildconfig-yubikey.yml
+    objectname: buildconfig-yubikey.yml
+  - role: openshift/object
+    app: fas
+    template: buildconfig-totpcgi.yml
+    objectname: buildconfig-totpcgi.yml
+  - role: openshift/object
+    app: fas
+    template_fullpath: "{{roles_path}}/fas_server/templates/configmap.yml"
+    objectname: configmap-fas.yml
+  - role: openshift/object
+    app: fas
+    template_fullpath: "{{roles_path}}/yubikey/templates/configmap.yml"
+    objectname: configmap-yubikey.yml
+  - role: openshift/object
+    app: fas
+    template_fullpath: "{{roles_path}}/totpcgi/templates/configmap.yml"
+    objectname: configmap-totpcgi.yml
+  - role: openshift/object
+    app: fas
+    template_fullpath: "{{roles_path}}/totpcgi/templates/configmap.yml"
+    objectname: configmap-totpcgi-vpn.yml
+    when: env == "production"
+  - role: openshift/secret-file
+    app: fas
+    privatefile: "keytabs/{{env}}/fas_sync"
+    key: fas_sync_keytab
+    secret_name: fas-sync-keytab
+  - role: openshift/secret-file
+    app: fas
+    privatefile: "fas-gpg/pubring.gpg"
+    key: pubring.gpg
+    secret_name: fas-gpg-pubring
+  - role: openshift/object
+    app: fas
+    file: service-fas.yml
+    objectname: service-fas.yml
+  - role: openshift/object
+    app: fas
+    file: service-yubikey.yml
+    objectname: service-yubikey.yml
+  - role: openshift/object
+    app: fas
+    file: service-totpcgi.yml
+    objectname: service-totpcgi.yml
+  - role: openshift/object
+    app: fas
+    file: service-totpcgi-vpn.yml
+    objectname: service-totpcgi-vpn.yml
+    when: env == "production"
+  - role: openshift/route
+    app: fas
+    routename: fas
+    host: "admin-test.stg.fedoraproject.org"
+    path: "/accounts"
+    serviceport: dynamic
+    servicename: fas
+    annotations:
+      haproxy.router.openshift.io/timeout: 5m
+  - role: openshift/route
+    app: fas
+    routename: fas-static
+    host: "admin-test.stg.fedoraproject.org"
+    path: "/accounts/static"
+    serviceport: static
+    servicename: fas
+  - role: openshift/route
+    app: fas
+    routename: totpcgi-provision
+    host: "admin-test.stg.fedoraproject.org"
+    path: "/totpcgiprovision"
+    serviceport: provision
+    servicename: totpcgi
+  - role: openshift/route
+    app: fas
+    routename: totpcgi
+    host: "fas-all{{ env_suffix }}.{{ datacenter }}.fedoraproject.org"
+    serviceport: totp
+    servicename: totpcgi
+    termination_passthrough: true
+  - role: openshift/route
+    app: fas
+    routename: totpcgi-vpn
+    host: "fas-all.vpn.fedoraproject.org"
+    serviceport: totp
+    servicename: totpcgi-vpn
+    termination_passthrough: true
+    when: env == "production"
+  - role: openshift/object
+    app: fas
+    template: deploymentconfig-fas.yml
+    objectname: deploymentconfig-fas.yml
+  - role: openshift/object
+    app: fas
+    template: deploymentconfig-yubikey.yml
+    objectname: deploymentconfig-yubikey.yml
+  - role: openshift/object
+    app: fas
+    template: deploymentconfig-totpcgi.yml
+    objectname: deploymentconfig-totpcgi.yml
+  - role: openshift/object
+    app: fas
+    template: deploymentconfig-totpcgi.yml
+    objectname: deploymentconfig-totpcgi-vpn.yml
+    when: env == "production"
+  - role: openshift/secret-tls
+    app: fas
+    key: tls-cert-primary
+    secret_name: tls-cert-primary
+    private_cert: "2fa-certs/keys/fas-all{{ env_suffix }}.{{ datacenter }}.fedoraproject.org.crt"
+    private_key: "2fa-certs/keys/fas-all{{ env_suffix }}.{{ datacenter }}.fedoraproject.org.key"
+  - role: openshift/secret-tls
+    app: fas
+    key: tls-cert-vpn
+    secret_name: tls-cert-vpn
+    private_cert: "2fa-certs/keys/fas-all.vpn.fedoraproject.org.crt"
+    private_key: "2fa-certs/keys/fas-all.vpn.fedoraproject.org.key"
+    when: env == "production"
