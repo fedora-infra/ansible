@@ -1,0 +1,73 @@
+---
+
+# Reenroll IPA clients if their IPA server was reinstalled.
+#
+# Limited to staging hosts (because the staging IPA server was reinstalled lately) to avoid breakage
+# in prod.
+
+- name: Reenroll IPA client
+  hosts: staging
+  user: root
+
+  vars_files:
+  - /srv/web/infra/ansible/vars/global.yml
+  - /srv/private/ansible/vars.yml
+  - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  tasks:
+
+  # Preparation
+
+  - name: Install packages
+    package:
+      name:
+        - freeipa-client
+        - krb5-workstation
+      state: present
+
+  # Checks
+
+  - name: Check if the host can obtain a Kerberos ticket
+    command: kinit -kt /etc/krb5.keytab
+    ignore_errors: yes
+    register: kinit_res
+
+  - name: Ping the IPA server
+    command: ipa ping
+    ignore_errors: yes
+    register: ipa_ping_res
+    when: kinit_res.rc == 0
+
+  - name: Check if /home/fedora exists
+    stat:
+      path: /home/fedora
+      follow: yes
+    register: home_fedora_res
+
+  - name: Do the things, or don't
+    set_fact:
+      reenroll_ipa_client: "{{ (kinit_res.rc != 0 and (ipa_ping_res.rc | default(0)) != 0) | bool }}"
+      fix_home_fedora: >-
+        (kinit_res.rc != 0 and (ipa_ping_res.rc | default(0)) != 0)
+        and home_fedora_res.stat.isdir
+
+  # Do the things
+
+  - name: Unenroll IPA client
+    command: ipa-client-install --uninstall --unattended
+    when: reenroll_ipa_client
+
+  - name: Apply the ipa/client role
+    include_role: ipa/client
+    when: reenroll_ipa_client
+
+  - name: Fix ownership of directories in /home/fedora
+    # assumes that directory name == user name
+    shell:
+      chdir: /home/fedora
+      cmd: >-
+        for dname in */; do
+          uname="${dname%%/}"
+          chown -R "$uname:" "$dname"
+        done
+    when: fix_home_fedora
