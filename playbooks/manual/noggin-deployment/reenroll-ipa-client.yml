@@ -31,25 +31,34 @@
     command: kinit -kt /etc/krb5.keytab
     ignore_errors: yes
     register: kinit_res
+    when: ipa_server is defined
 
   - name: Ping the IPA server
     command: ipa ping
     ignore_errors: yes
     register: ipa_ping_res
-    when: kinit_res.rc == 0
+    when: ipa_server is defined and kinit_res.rc == 0
 
   - name: Check if /home/fedora exists
     stat:
       path: /home/fedora
       follow: yes
     register: home_fedora_res
+    when: ipa_server is defined
 
   - name: Do the things, or don't
     set_fact:
-      reenroll_ipa_client: "{{ (kinit_res.rc != 0 and (ipa_ping_res.rc | default(0)) != 0) | bool }}"
+      reenroll_ipa_client: >-
+        (
+          ipa_server is defined
+          and (kinit_res.rc != 0 or (ipa_ping_res.rc | default(0)) != 0)
+        ) | bool
       fix_home_fedora: >-
-        (kinit_res.rc != 0 and (ipa_ping_res.rc | default(0)) != 0)
-        and home_fedora_res.stat.isdir
+        (
+          ipa_server is defined
+          and (kinit_res.rc != 0 or (ipa_ping_res.rc | default(0)) != 0)
+          and home_fedora_res.stat.isdir
+        ) | bool
 
   # Do the things
 
