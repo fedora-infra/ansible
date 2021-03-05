@@ -86,6 +86,7 @@
       `ipa_client_shell_groups`
   ignore_errors: true
   when: fas_client_groups is defined
+  run_once: false
 
 - name: "Warn if IPA client variables are unset"
   fail:
