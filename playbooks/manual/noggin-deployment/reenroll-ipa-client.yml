@@ -58,7 +58,8 @@
     when: reenroll_ipa_client
 
   - name: Apply the ipa/client role
-    include_role: ipa/client
+    include_role:
+      name: ipa/client
     when: reenroll_ipa_client
 
   - name: Fix ownership of directories in /home/fedora
