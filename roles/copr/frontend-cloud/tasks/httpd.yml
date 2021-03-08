@@ -1,0 +1,90 @@
+---
+
+- name: copy apache files to conf.d (templates)
+  template: src="httpd/{{ item }}" dest="/etc/httpd/conf.d/{{ item }}"
+  with_items:
+  - "coprs.conf"
+  notify:
+  - reload httpd
+  tags:
+  - config
+
+- name: drop old and now unused coprs_ssl.conf
+  file: path=/etc/httpd/conf.d/coprs_ssl.conf state=absent
+  notify:
+  - reload httpd
+  tags:
+  - config
+
+- name: Disable dav_module
+  lineinfile:
+    path: /etc/httpd/conf.modules.d/00-dav.conf
+    regexp: '^LoadModule dav_module modules/mod_dav.so'
+    line: '#LoadModule dav_module modules/mod_dav.so'
+
+- name: Disable dav_fs_module
+  lineinfile:
+    path: /etc/httpd/conf.modules.d/00-dav.conf
+    regexp: '^LoadModule dav_fs_module modules/mod_dav_fs.so'
+    line: '#LoadModule dav_fs_module modules/mod_dav_fs.so'
+
+- name: Disable dav_lock_module
+  lineinfile:
+    path: /etc/httpd/conf.modules.d/00-dav.conf
+    regexp: '^LoadModule dav_lock_module modules/mod_dav_lock.so'
+    line: '#LoadModule dav_lock_module modules/mod_dav_lock.so'
+
+- name: Disable proxy_ftp_module
+  lineinfile:
+    path: /etc/httpd/conf.modules.d/00-proxy.conf
+    regexp: '^LoadModule proxy_ftp_module modules/mod_proxy_ftp.so'
+    line: '#LoadModule proxy_ftp_module modules/mod_proxy_ftp.so'
+
+- name: Disable proxy_http_module
+  lineinfile:
+    path: /etc/httpd/conf.modules.d/00-proxy.conf
+    regexp: '^LoadModule proxy_http_module modules/mod_proxy_http.so'
+    line: '#LoadModule proxy_http_module modules/mod_proxy_http.so'
+
+- name: Disable proxy_ajp_module
+  lineinfile:
+    path: /etc/httpd/conf.modules.d/00-proxy.conf
+    regexp: '^LoadModule proxy_ajp_module modules/mod_proxy_ajp.so'
+    line: '#LoadModule proxy_ajp_module modules/mod_proxy_ajp.so'
+
+- name: Disable watchdog_module
+  lineinfile:
+    path: /etc/httpd/conf.modules.d/00-base.conf
+    regexp: '^LoadModule watchdog_module modules/mod_watchdog.so'
+    line: '#LoadModule watchdog_module modules/mod_watchdog.so'
+
+- name: Disable lua_module
+  lineinfile:
+    path: /etc/httpd/conf.modules.d/00-lua.conf
+    regexp: '^LoadModule lua_module modules/mod_lua.so'
+    line: '#LoadModule lua_module modules/mod_lua.so'
+
+- name: Disable userdir_module
+  lineinfile:
+    path: /etc/httpd/conf.modules.d/00-base.conf
+    regexp: '^LoadModule userdir_module modules/mod_userdir.so'
+    line: '#LoadModule userdir_module modules/mod_userdir.so'
+
+- name: Disable unique_id_module
+  lineinfile:
+    path: /etc/httpd/conf.modules.d/00-base.conf
+    regexp: '^LoadModule unique_id_module modules/mod_unique_id.so'
+    line: '#LoadModule unique_id_module modules/mod_unique_id.so'
+
+- name: Disable suexec_module
+  lineinfile:
+    path: /etc/httpd/conf.modules.d/00-base.conf
+    regexp: '^LoadModule suexec_module modules/mod_suexec.so'
+    line: '#LoadModule suexec_module modules/mod_suexec.so'
+
+- name: Disable substitute_module
+  lineinfile:
+    path: /etc/httpd/conf.modules.d/00-base.conf
+    regexp: '^LoadModule substitute_module modules/mod_substitute.so'
+    line: '#LoadModule substitute_module modules/mod_substitute.so'
+
