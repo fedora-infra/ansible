@@ -52,12 +52,6 @@
     regexp: '^LoadModule proxy_ajp_module modules/mod_proxy_ajp.so'
     line: '#LoadModule proxy_ajp_module modules/mod_proxy_ajp.so'
 
-- name: Disable watchdog_module
-  lineinfile:
-    path: /etc/httpd/conf.modules.d/00-base.conf
-    regexp: '^LoadModule watchdog_module modules/mod_watchdog.so'
-    line: '#LoadModule watchdog_module modules/mod_watchdog.so'
-
 - name: Disable lua_module
   lineinfile:
     path: /etc/httpd/conf.modules.d/00-lua.conf
