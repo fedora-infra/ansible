@@ -1,0 +1,34 @@
+---
+# Define resources for this group of hosts here. 
+lvm_size: 100000
+mem_size: 8192
+num_cpus: 2
+
+deployment_type: stg
+
+# for systems that do not match the above - specify the same parameter in
+# the host_vars/$hostname file
+
+tcp_ports: [ 80, 443]
+
+
+ipa_host_group: value
+ipa_host_group_desc: "Value added: IRC bots, message logging, etc."
+ipa_client_shell_groups:
+- fi-apprentice
+- sysadmin-noc
+- sysadmin-veteran
+- sysadmin-jenkins
+ipa_client_sudo_groups:
+- sysadmin-jenkins
+- sysadmin-noc
+- sysadmin-veteran
+
+
+
+# For the MOTD
+csi_security_category: []
+csi_primary_contact: []
+csi_purpose: []
+csi_relationship: |
+       Test instance for zabbix server
