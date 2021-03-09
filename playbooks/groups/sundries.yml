@@ -71,7 +71,7 @@
     mount_stg: true
   - role: nfs/client
     mnt_dir: '/srv/web/registry-index'
-    nfs_src_dir: '/flatpak-indexer-storage{{ env_short }}'
+    nfs_src_dir: '/flatpak-indexer-storage-{{ env_short }}'
     mount_stg: true
 
 
