@@ -4,18 +4,6 @@
   - fedora-web
   when: env != 'staging'
 
-- name: make registry-signatures dir
-  file: state=directory path=/srv/web/registry-signatures owner=apache group=apache mode=2775 setype=httpd_sys_content_t seuser=system_u
-  tags:
-  - fedora-web
-  when: env == 'staging'
-
-- name: make registry-index dir
-  file: state=directory path=/srv/web/registry-index owner=apache group=sysadmin-releng mode=755 setype=httpd_sys_content_t seuser=system_u
-  tags:
-  - fedora-web
-  when: env != 'staging'
-
 - name: make registry-index dir
   file: state=directory path=/srv/web/registry-index owner=apache group=apache mode=755 setype=httpd_sys_content_t seuser=system_u
   tags:
@@ -31,20 +19,8 @@
   - fedora-web
   - fedora-web/registry
 
-#- name: Copy in the sync-registry-signatures cronjob
-#  copy: src=cron-sync-registry-signatures dest=/etc/cron.d/sync-registry-signatures
-#  tags:
-#  - fedora-web
-#  - fedora-web/registry
-
-- name: Temporarily disable the registry-signatures cronjob
-  file: path=/etc/cron.d/sync-registry-signatures state=absent
-  tags:
-  - fedora-web
-  - fedora-web/registry
-
 - name: Copy in the sync-registry-index cronjob
-  copy: src=cron-sync-registry-index dest=/etc/cron.d/sync-registry-index
+  template: src=cron-sync-registry-index dest=/etc/cron.d/sync-registry-index
   tags:
   - fedora-web
   - fedora-web/registry
