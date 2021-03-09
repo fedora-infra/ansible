@@ -8,6 +8,14 @@
     - ipa/client
     - packages
 
+- name: Clean up annoying remnants of previous FAS client installations
+  import_tasks: cleanup.yml
+  # don't muck with prod for now
+  when: env == 'staging'
+  tags:
+    - ipa/client
+    - fas-client-cleanup
+
 - name: Enroll system as IPA client
   command:
     cmd: ipa-client-install
@@ -21,14 +29,6 @@
   tags:
     - ipa/client
     - config
-
-- name: Clean up annoying remnants of previous FAS client installations
-  import_tasks: cleanup.yml
-  # don't muck with prod for now
-  when: env == 'staging'
-  tags:
-    - ipa/client
-    - fas-client-cleanup
 
 - name: Prepare IPA-related information to make the following more efficient
   delegate_to: localhost

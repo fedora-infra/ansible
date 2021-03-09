@@ -1,5 +1,15 @@
 ---
-# REMOVEME: As soon as all (affected) hosts have been migrated over from fas_client, 2fa_client to
+# Repair nsswitch.conf, the fas_client role installed a version which didn't include sss
+
+- name: Ensure SSSD is consulted when looking up users and groups
+  replace:
+    path: /etc/nsswitch.conf
+    regexp: >-
+      ^(?P<dbchunk>\s*(?:passwd|group|services|netgroup|automount)\s*:\s*)(?P<specchunk>(?:(?!sss(\s|$)).)*)$
+    replace: >-
+      \g<dbchunk>sss \g<specchunk>
+
+# REMOVEME: After all affected hosts have been migrated over from fas_client, 2fa_client to
 # ipa/client, this can go away.
 #
 # Restore pristine sudo configuration, TOTPCGI configuration messes with IPA integration
