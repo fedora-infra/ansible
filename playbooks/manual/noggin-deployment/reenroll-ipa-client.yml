@@ -34,12 +34,14 @@
   - name: Check if the host can obtain a Kerberos ticket
     command: kinit -kt /etc/krb5.keytab
     ignore_errors: yes
+    changed_when: no
     register: kinit_res
     when: ipa_server is defined
 
   - name: Ping the IPA server
     command: ipa ping
     ignore_errors: yes
+    changed_when: no
     register: ipa_ping_res
     when: ipa_server is defined and kinit_res.rc == 0
 
