@@ -152,9 +152,9 @@
 #   ]
 - name: Make semi-flat list of IPA servers, host groups and the user groups and hosts contained
   set_fact:
-    ipa_server_host_user_groups_hosts: >-
+    ipa_server_host_groups_hosts: >-
       {{
-        ipa_server_host_user_groups_hosts | default([])
+        ipa_server_host_groups_hosts | default([])
         + [
             [
               item[0],
