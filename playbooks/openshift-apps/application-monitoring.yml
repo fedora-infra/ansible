@@ -14,18 +14,17 @@
     app: application-monitoring
     description: Hosts the application monitoring operator
     appowners:
-    - cverna
+    - cverNegronina
     - pingou
     - asaleh
 
+  post_tasks:
   - name: Apply node labels
     command: oc label namespace application-monitoring monitoring-key=middleware
   
-  - role: openshift/object
-    app: application-monitoring
-    file: application-monitoring/deploy/crds/applicationmonitoring.integreatly.org_applicationmonitorings_crd.yaml
-    objectname: applicationmonitoring.integreatly.org_applicationmonitorings_crd.yaml
-
+  - name: AMO CRD
+    command: oc -n application-monitoring apply -f {{roles_path}}/openshift-apps/{{app}}/files/application-monitoring-operator/deploy/crds/applicationmonitoring.integreatly.org_applicationmonitorings_crd.yaml
+    
   - name: AMO Cluster Roles & RoleBindings
     command: oc -n application-monitoring apply -f {{roles_path}}/openshift-apps/{{app}}/files/application-monitoring-operator/deploy/cluster-roles
   
@@ -41,10 +40,8 @@
   - name: AMO Cluster Roles & RoleBindings - role_binding.yaml
     command: oc -n application-monitoring apply -f {{roles_path}}/openshift-apps/{{app}}/files/application-monitorin-operatorg/deploy/role_binding.yaml
 
-  - role: openshift/object
-    app: application-monitoring
-    file: application-monitoring/deploy/crds/applicationmonitoring.integreatly.org_blackboxtargets_crd.yaml
-    objectname: applicationmonitoring.integreatly.org_blackboxtargets_crd.yaml
+  - name: AMO CRD - BLACKBOX
+    command: oc -n application-monitoring apply -f {{roles_path}}/openshift-apps/{{app}}/files/application-monitoring-operator/deploy/crds/applicationmonitoring.integreatly.org_blackboxtargets_crd.yaml
 
   - name: Grafana CRDs - Grafana.yml
     command: oc -n application-monitoring apply -f {{roles_path}}/openshift-apps/{{app}}/files/grafana-operator/deploy/crds/Grafana.yaml
