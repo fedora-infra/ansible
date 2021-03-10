@@ -1,7 +1,7 @@
 [updates-testing-modular]
 name=Fedora Modular $releasever - $basearch - Test Updates
 failovermethod=priority
-baseurl=https://infrastructure.fedoraproject.org/pub/fedora-secondary/updates/testing/$releasever/Modular/$basearch/
+baseurl=https://infrastructure.fedoraproject.org/pub{{ archive_if_archived }}/fedora-secondary/updates/testing/$releasever/Modular/$basearch/
 #metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-testing-modular-f$releasever&arch=$basearch
 enabled=0
 gpgcheck=1
@@ -10,7 +10,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
 [updates-testing-modular-debuginfo]
 name=Fedora Modular $releasever - $basearch - Test Updates Debug
 failovermethod=priority
-baseurl=https://infrastructure.fedoraproject.org/pub/fedora-secondary/updates/$releasever/Modular/$basearch/debug/
+baseurl=https://infrastructure.fedoraproject.org/pub{{ archive_if_archived }}/fedora-secondary/updates/$releasever/Modular/$basearch/debug/
 #metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-testing-modular-debug-f$releasever&arch=$basearch
 enabled=0
 gpgcheck=1
@@ -19,7 +19,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
 [updates-testing-modular-source]
 name=Fedora Modular $releasever - Test Updates Source
 failovermethod=priority
-baseurl=https://infrastructure.fedoraproject.org/pub/fedora-secondary/updates/$releasever/Modular/SRPMS/
+baseurl=https://infrastructure.fedoraproject.org/pub{{ archive_if_archived }}/fedora-secondary/updates/$releasever/Modular/SRPMS/
 #metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-testing-modular-source-f$releasever&arch=$basearch
 enabled=0
 gpgcheck=1

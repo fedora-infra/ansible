@@ -2,7 +2,7 @@
 name=Fedora Modular $releasever - $basearch
 failovermethod=priority
 {% if ansible_distribution_major_version|int < ( FedoraBranchedNumber|int if FedoraBranched == True else FedoraRawhideNumber|int )  %}
-baseurl=https://infrastructure.fedoraproject.org/pub/fedora/linux/releases/$releasever/Modular/$basearch/os/
+baseurl=https://infrastructure.fedoraproject.org/pub{{ archive_if_archived }}/fedora/linux/releases/$releasever/Modular/$basearch/os/
 {% else %}
 baseurl=https://infrastructure.fedoraproject.org/pub/fedora/linux/development/$releasever/Modular/$basearch/os/
 {% endif %}
@@ -16,7 +16,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
 name=Fedora Modular $releasever - $basearch - Debug
 failovermethod=priority
 {% if ansible_distribution_major_version|int < ( FedoraBranchedNumber|int if FedoraBranched == True else FedoraRawhideNumber|int )  %}
-baseurl=https://infrastructure.fedoraproject.org/pub/fedora/linux/releases/$releasever/Modular/$basearch/debug/tree/
+baseurl=https://infrastructure.fedoraproject.org/pub{{ archive_if_archived }}/fedora/linux/releases/$releasever/Modular/$basearch/debug/tree/
 {% else %}
 baseurl=https://infrastructure.fedoraproject.org/pub/fedora/linux/development/$releasever/Modular/$basearch/debug/tree/
 {% endif %}
@@ -30,7 +30,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
 name=Fedora Modular $releasever - Source
 failovermethod=priority
 {% if ansible_distribution_major_version|int < ( FedoraBranchedNumber|int if FedoraBranched == True else FedoraRawhideNumber|int )  %}
-baseurl=https://infrastructure.fedoraproject.org/pub/fedora/linux/releases/$releasever/Modular/source/tree/
+baseurl=https://infrastructure.fedoraproject.org/pub{{ archive_if_archived }}/fedora/linux/releases/$releasever/Modular/source/tree/
 {% else %}
 baseurl=https://infrastructure.fedoraproject.org/pub/fedora/linux/development/$releasever/Modular/source/tree/
 {% endif %}

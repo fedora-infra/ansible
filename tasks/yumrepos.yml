@@ -8,6 +8,24 @@
   - packages
   - yumrepos
 
+- name: enable repos for archived Fedora releases
+  set_fact:
+    archive_if_archived: >-
+      {{
+        '/archive'
+        if ansible_distribution_major_version|int < (
+          FedoraPreviousPreviousCycleNumber|int
+          if FedoraPreviousPrevious == True
+          else FedoraPreviousCycleNumber|int
+        )
+        else ''
+      }}
+  when: ansible_distribution == 'Fedora'
+  tags:
+  - config
+  - packages
+  - yumrepos
+
 - name: put rhel repos on rhel systems
   copy: src="{{ files }}/common/rhel{{ ansible_distribution_major_version|int }}.repo" dest="/etc/yum.repos.d/rhel{{ ansible_distribution_major_version|int }}.repo"
   when: ansible_distribution == 'RedHat' and not inventory_hostname.startswith('ppc9') and datacenter != "aws"
