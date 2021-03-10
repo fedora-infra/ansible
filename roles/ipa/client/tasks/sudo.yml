@@ -14,6 +14,7 @@
     runasgroupcategory: "all"
     group:
       - sysadmin-main
+  notify: clean sss caches
   no_log: true
   loop: "{{ ipa_servers }}"
   when: ipa_servers is defined
@@ -30,5 +31,6 @@
     cmdcategory: "all"
     runasusercategory: "all"
     runasgroupcategory: "all"
+  notify: clean sss caches
   loop: "{{ ipa_server_host_groups }}"
   when: ipa_server_host_groups is defined and ipa_server_host_groups_dict[item[0]][item[1]]['sudo_groups'] is defined

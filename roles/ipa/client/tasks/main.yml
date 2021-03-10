@@ -26,6 +26,7 @@
          -U -N --force-join
          --mkhomedir
     creates: /etc/ipa/default.conf
+  notify: clean sss caches
   tags:
     - ipa/client
     - config
