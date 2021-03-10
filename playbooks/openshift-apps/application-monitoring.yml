@@ -1,0 +1,80 @@
+- name: make the app be real
+  hosts: os_masters_stg[0] # only in staging for the ARC deployment
+  user: root
+  gather_facts: False
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  roles:
+  # oc new-project application-monitoring
+  - role: openshift/project
+    app: application-monitoring
+    description: Hosts the application monitoring operator
+    appowners:
+    - cverna
+    - pingou
+    - asaleh
+
+  - name: Apply node labels
+    command: oc label namespace application-monitoring monitoring-key=middleware
+  
+  - role: openshift/object
+    app: application-monitoring
+    file: application-monitoring/deploy/crds/applicationmonitoring.integreatly.org_applicationmonitorings_crd.yaml
+    objectname: applicationmonitoring.integreatly.org_applicationmonitorings_crd.yaml
+
+  - name: AMO Cluster Roles & RoleBindings
+    command: oc -n application-monitoring apply -f {{roles_path}}/openshift-apps/{{app}}/files/application-monitoring-operator/deploy/cluster-roles
+  
+  - name: AMO Cluster Roles & RoleBindings - service_account.yaml
+    command: oc -n application-monitoring apply -f {{roles_path}}/openshift-apps/{{app}}/files/application-monitoring-operator/deploy/service_account.yaml
+
+  - name: AMO Cluster Roles & RoleBindings - service_account.yaml
+    command: oc -n application-monitoring apply -f {{roles_path}}/openshift-apps/{{app}}/files/application-monitoring-operator/deploy/service_account.yaml
+
+  - name: AMO Cluster Roles & RoleBindings - role.yaml
+    command: oc -n application-monitoring apply -f {{roles_path}}/openshift-apps/{{app}}/files/application-monitoring-operator/deploy/role.yaml
+
+  - name: AMO Cluster Roles & RoleBindings - role_binding.yaml
+    command: oc -n application-monitoring apply -f {{roles_path}}/openshift-apps/{{app}}/files/application-monitorin-operatorg/deploy/role_binding.yaml
+
+  - role: openshift/object
+    app: application-monitoring
+    file: application-monitoring/deploy/crds/applicationmonitoring.integreatly.org_blackboxtargets_crd.yaml
+    objectname: applicationmonitoring.integreatly.org_blackboxtargets_crd.yaml
+
+  - name: Grafana CRDs - Grafana.yml
+    command: oc -n application-monitoring apply -f {{roles_path}}/openshift-apps/{{app}}/files/grafana-operator/deploy/crds/Grafana.yaml
+
+  - name: Grafana CRDs - GrafanaDashboard.yml
+    command: oc -n application-monitoring apply -f {{roles_path}}/openshift-apps/{{app}}/files/grafana-operator/deploy/crds/GrafanaDashboard.yaml
+  
+  - name: Grafana CRDs - GrafanaDataSource.yml
+    command: oc -n application-monitoring apply -f {{roles_path}}/openshift-apps/{{app}}/files/grafana-operator/deploy/crds/GrafanaDataSource.yaml
+
+  - name: Prometheus CRDs - monitoring.coreos.com_podmonitors.yaml
+    command: oc -n application-monitoring apply -f {{roles_path}}/openshift-apps/{{app}}/files/prometheus-operator/example/prometheus-operator-crd/monitoring.coreos.com_podmonitors.yaml
+
+  - name: Prometheus CRDs - monitoring.coreos.com_prometheuses.yaml
+    command: oc -n application-monitoring apply -f {{roles_path}}/openshift-apps/{{app}}/files/prometheus-operator/example/prometheus-operator-crd/monitoring.coreos.com_prometheuses.yaml
+
+  - name: Prometheus CRDs - monitoring.coreos.com_alertmanagers.yaml
+    command: oc -n application-monitoring apply -f {{roles_path}}/openshift-apps/{{app}}/files/prometheus-operator/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagers.yaml
+
+  - name: Prometheus CRDs - monitoring.coreos.com_prometheusrules.yaml
+    command: oc -n application-monitoring apply -f {{roles_path}}/openshift-apps/{{app}}/files/prometheus-operator/example/prometheus-operator-crd/monitoring.coreos.com_prometheusrules.yaml
+
+  - name: Prometheus CRDs - monitoring.coreos.com_servicemonitors.yaml
+    command: oc -n application-monitoring apply -f {{roles_path}}/openshift-apps/{{app}}/files/prometheus-operator/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
+
+  - name: Prometheus CRDs - monitoring.coreos.com_thanosrulers.yaml
+    command: oc -n application-monitoring apply -f {{roles_path}}/openshift-apps/{{app}}/files/prometheus-operator/example/prometheus-operator-crd/monitoring.coreos.com_thanosrulers.yaml
+
+  - name: Operator deployment
+    command: oc -n application-monitoring apply -f {{roles_path}}/openshift-apps/{{app}}/files/application-monitoring-operator/deploy/operator.yaml
+
+  - name: ApplicationMonitoring deployment
+    command: oc -n application-monitoring apply -f {{roles_path}}/openshift-apps/{{app}}/files/application-monitoring-operator/deploy/examples/ApplicationMonitoring.yaml
