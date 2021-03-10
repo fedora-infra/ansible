@@ -86,7 +86,7 @@
   lineinfile:
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^maintenance_work_mem ='
-    line: 'maintenance_work_mem = 1GB'
+    line: 'maintenance_work_mem = 500MB'
   notify: restart postgresql
   tags:
   - config
