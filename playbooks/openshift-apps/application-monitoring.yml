@@ -19,7 +19,7 @@
 
   post_tasks:
   - name: Apply node labels
-    command: oc label namespace application-monitoring monitoring-key=middleware
+    command: oc label --overwrite namespace application-monitoring monitoring-key=middleware
   
   - name: AMO CRD
     command: oc -n application-monitoring apply -f {{roles_path}}/openshift-apps/application-monitoring/files/application-monitoring-operator/deploy/crds/applicationmonitoring.integreatly.org_applicationmonitorings_crd.yaml
