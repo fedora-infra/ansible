@@ -14,6 +14,10 @@
   - /srv/private/ansible/vars.yml
   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
+  tags:
+    - ipa/client
+    - reenroll
+
   tasks:
 
   # Preparation
@@ -39,45 +43,27 @@
     register: ipa_ping_res
     when: ipa_server is defined and kinit_res.rc == 0
 
-  - name: Check if /home/fedora exists
-    stat:
-      path: /home/fedora
-      follow: yes
-    register: home_fedora_res
-    when: ipa_server is defined
-
   - name: Do the things, or don't
     set_fact:
-      reenroll_ipa_client: >-
+      do_the_things: >-
         (
           ipa_server is defined
           and (kinit_res.rc != 0 or (ipa_ping_res.rc | default(0)) != 0)
-        ) | bool
-      fix_home_fedora: >-
-        (
-          ipa_server is defined
-          and (kinit_res.rc != 0 or (ipa_ping_res.rc | default(0)) != 0)
-          and home_fedora_res.stat.isdir
         ) | bool
 
   # Do the things
 
   - name: Unenroll IPA client
     command: ipa-client-install --uninstall --unattended
-    when: reenroll_ipa_client
+    when: do_the_things
 
   - name: Apply the ipa/client role
     include_role:
       name: ipa/client
-    when: reenroll_ipa_client
+    when: do_the_things
 
-  - name: Fix ownership of directories in /home/fedora
-    # assumes that directory name == user name
-    shell:
-      chdir: /home/fedora
-      cmd: >-
-        for dname in */; do
-          uname="${dname%%/}"
-          chown -R "$uname:" "$dname"
-        done
-    when: fix_home_fedora
+- name: Fix ownership of directories in /home/fedora
+  import_playbook: fix-home-fedora-ownerships.yml
+  when: do_the_things
+  tags:
+    - fix-ownership

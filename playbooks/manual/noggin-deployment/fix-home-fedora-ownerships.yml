@@ -1,0 +1,40 @@
+---
+- name: Fix ownership of home directories in /home/fedora
+  hosts: all
+  user: root
+
+  vars_files:
+  - /srv/web/infra/ansible/vars/global.yml
+  - /srv/private/ansible/vars.yml
+  - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  tasks:
+  - name: Check if /home/fedora exists
+    stat:
+      path: /home/fedora
+      follow: yes
+    register: home_fedora_res
+
+  - name: Fix ownership of home directories in /home/fedora
+    # assumes that directory name == user name
+    shell:
+      chdir: /home/fedora
+      cmd: >-
+        for dname in */; do
+          dname="${dname%%/}"
+          # skip directories owned by root
+          downer="$(stat --format %U "$dname")"
+          if [ "$downer" = "root" ]; then
+            continue
+          fi
+          # verify the directory actually is the home directory of the same-named user
+          IFS=":" read -r _ _ _ _ _ homedir _ < <(getent passwd "$dname")
+          if [ "$homedir" != "/home/fedora/$dname" ]; then
+            continue
+          fi
+          echo "fixing ownership: $dname"
+          chown -R "$dname:" "$dname"
+        done
+    register: chown_res
+    changed_when: "'fixing ownership:' in chown_res.stdout"
+    when: home_fedora_res.stat.isdir
