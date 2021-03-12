@@ -17,8 +17,9 @@ data:
     deltas_uri: https://cdn.registry.fedoraproject.org/deltas/
     icons_uri: https://cdn.registry.fedoraproject.org/app-icons/
 {% endif %}
+    clean_files_after: 1d
     daemon:
-        update_interval: 1800
+        update_interval: 30m
     registries:
         fedora:
             public_url: https://registry.fedoraproject.org/
@@ -31,14 +32,14 @@ data:
             tag: latest
             bodhi_status: stable
             extract_icons: True
-            delta_keep_days: 30
+            delta_keep: 30d
         latest-annotations:
             output: ${OUTPUT_DIR}/fedora/flatpak-latest-annotations.json
             registry: fedora
             tag: latest
             bodhi_status: stable
             extract_icons: True
-            delta_keep_days: 30
+            delta_keep: 30d
             flatpak_annotations: True
 {% for architecture in [ 'amd64', 'arm64' ] %}
         latest-{{ architecture }}:
@@ -48,7 +49,7 @@ data:
             tag: latest
             bodhi_status: stable
             extract_icons: True
-            delta_keep_days: 30
+            delta_keep: 30d
         latest-{{ architecture }}-annotations:
             output: ${OUTPUT_DIR}/fedora/flatpak-latest-{{ architecture }}-annotations.json
             registry: fedora
@@ -56,7 +57,7 @@ data:
             tag: latest
             bodhi_status: stable
             extract_icons: True
-            delta_keep_days: 30
+            delta_keep: 30d
             flatpak_annotations: True
 {% endfor %}
         testing:
