@@ -54,6 +54,14 @@
   tags:
   - nagios_client
 
+- name: install nrpe check for systemd unit
+  copy: src="script/{{ item }}" dest="{{ libdir }}/nagios/plugins/{{ item }}" mode=0775 owner=nagios group=nagios
+  with_items:
+    - check_systemd_units
+  when: inventory_hostname.startswith('pagure')
+  tags:
+    - nagios_client
+
 # create dirs
 # puppet used to make /var/spool/nagios (owned by nagios.nagios) mode 750
 # and /usr/lib/nagios/plugins (owned by root) mode 755 - but we don't know WHY
