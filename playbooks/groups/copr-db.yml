@@ -14,14 +14,13 @@
    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   pre_tasks:
-  - include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
-  - import_tasks: "{{ tasks_path }}/yumrepos.yml"
-  - name: install langpacks
-    dnf:
-      name:
-        - langpacks-en
-        - glibc-all-langpacks
-    state: latest
+    - include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
+    - import_tasks: "{{ tasks_path }}/yumrepos.yml"
+    - dnf:
+        name:
+          - langpacks-en
+          - glibc-all-langpacks
+      state: latest
 
   roles:
   - base
