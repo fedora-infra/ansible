@@ -1,5 +1,8 @@
 ---
 ansible_user: ec2-user
+ansible_become_user: root
+ansible_become: yes
+
 datacenter: aws
 inventory_hostname: "copr-db-stg.aws.fedoraproject.org"
 inventory_instance_name: copr-db-stg
