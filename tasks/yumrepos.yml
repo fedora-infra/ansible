@@ -57,7 +57,7 @@
   - yumrepos
 
 - name: put epel gpg key on el systems (aws)
-  copy: src="{{ files }}/common/RPM-GPG-KEY-EPEL-8{{ ansible_distribution_major_version|int }}.repo" dest="/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version|int }}.repo"
+  copy: src="{{ files }}/common/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version|int }}.repo" dest="/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version|int }}.repo"
   when: ((ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS') and use_default_epel) and datacenter == "aws"
   tags:
   - config
