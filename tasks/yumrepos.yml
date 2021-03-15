@@ -48,6 +48,32 @@
   - packages
   - yumrepos
 
+- name: put epel repos on el systems (aws)
+  copy: src="{{ files }}/common/original-epel{{ ansible_distribution_major_version|int }}.repo" dest="/etc/yum.repos.d/epel{{ ansible_distribution_major_version|int }}.repo"
+  when: ((ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS') and use_default_epel) and datacenter = "aws"
+  tags:
+  - config
+  - packages
+  - yumrepos
+
+- name: put epel gpg key on el systems (aws)
+  copy: src="{{ files }}/common/RPM-GPG-KEY-EPEL-8{{ ansible_distribution_major_version|int }}.repo" dest="/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version|int }}.repo"
+  when: ((ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS') and use_default_epel) and datacenter = "aws"
+  tags:
+  - config
+  - packages
+  - yumrepos
+
+- name: epel release on el systems (aws)
+  dnf:
+    name: 'epel-release'
+    state: present
+  when: ((ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS') and use_default_epel) and datacenter = "aws"
+  tags:
+  - config
+  - packages
+  - yumrepos
+
 - name: put fedora repos on primary architecture systems
   template: src="{{ files }}/common/{{ item }}" dest="/etc/yum.repos.d/{{ item }}"
   with_items:
