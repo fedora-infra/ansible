@@ -42,7 +42,7 @@
 
 - name: put epel repos on el systems
   copy: src="{{ files }}/common/epel{{ ansible_distribution_major_version|int }}.repo" dest="/etc/yum.repos.d/epel{{ ansible_distribution_major_version|int }}.repo"
-  when: (ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS') and use_default_epel) and datacenter != "aws"
+  when: ((ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS') and use_default_epel) and datacenter != "aws"
   tags:
   - config
   - packages
@@ -50,7 +50,7 @@
 
 - name: put epel repos on el systems (aws)
   copy: src="{{ files }}/common/original-epel{{ ansible_distribution_major_version|int }}.repo" dest="/etc/yum.repos.d/epel{{ ansible_distribution_major_version|int }}.repo"
-  when: (ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS') and use_default_epel) and datacenter = "aws"
+  when: ((ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS') and use_default_epel) and datacenter = "aws"
   tags:
   - config
   - packages
@@ -58,7 +58,7 @@
 
 - name: put epel gpg key on el systems (aws)
   copy: src="{{ files }}/common/RPM-GPG-KEY-EPEL-8{{ ansible_distribution_major_version|int }}.repo" dest="/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version|int }}.repo"
-  when: (ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS') and use_default_epel) and datacenter = "aws"
+  when: ((ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS') and use_default_epel) and datacenter = "aws"
   tags:
   - config
   - packages
@@ -68,7 +68,7 @@
   dnf:
     name: 'epel-release'
     state: present
-  when: (ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS') and use_default_epel) and datacenter = "aws"
+  when: ((ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS') and use_default_epel) and datacenter = "aws"
   tags:
   - config
   - packages
