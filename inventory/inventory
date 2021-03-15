@@ -219,6 +219,7 @@ db01.stg.iad2.fedoraproject.org
 db03.stg.iad2.fedoraproject.org
 db-datanommer01.stg.iad2.fedoraproject.org
 db-koji01.stg.iad2.fedoraproject.org
+copr-db-stg.aws.fedoraproject.org
 
 # clients that talk to the main postgres servers
 [postgres_clients]
@@ -647,6 +648,7 @@ buildvm-x86-05.stg.iad2.fedoraproject.org
 busgateway01.stg.iad2.fedoraproject.org
 compose-x86-01.stg.iad2.fedoraproject.org
 copr-be-dev.aws.fedoraproject.org
+copr-db-stg.aws.fedoraproject.org
 copr-dist-git-dev.aws.fedoraproject.org
 copr-fe-dev.aws.fedoraproject.org
 copr-keygen-dev.aws.fedoraproject.org
@@ -976,6 +978,7 @@ copr_front_dev_aws
 copr_back_dev_aws
 copr_dist_git_dev_aws
 copr_keygen_dev_aws
+copr-db-stg.aws.fedoraproject.org
 
 [copr_all_instances_aws:children]
 copr_aws
@@ -983,6 +986,9 @@ copr_dev_aws
 
 [copr_hypervisor]
 vmhost-x86-copr01.rdu-cc.fedoraproject.org
+
+[copr_db]
+copr-db-stg.aws.fedoraproject.org
 
 # [copr_hypervisors_aarch64]
 # virthost-aarch64-os01.fedorainfracloud.org
