@@ -6,6 +6,11 @@ metadata:
   name: appowner
   namespace: "{{ app }}"
 rules:
+{% if env == "staging" %}
+- apiGroups: ["monitoring.coreos.com"]
+  resources: ["alertmanagers", "prometheuses", "prometheusrules", "servicemonitors", "podmonitors"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+{% endif %}
 - apiGroups:
   - "*"
   attributeRestrictions: null
@@ -74,6 +79,11 @@ rules:
   - get
   - list
   - watch
+{% if env == "staging" %}
+  - create
+  - delete
+  - update
+{% endif %}
 - apiGroups:
   - "*"
   attributeRestrictions: null
@@ -99,6 +109,11 @@ rules:
   - get
   - list
   - watch
+{% if env == "staging" %}
+  - create
+  - delete
+  - update
+{% endif %}
 - apiGroups:
   - batch
   attributeRestrictions: null
@@ -110,6 +125,11 @@ rules:
   - get
   - list
   - watch
+{% if env == "staging" %}
+  - create
+  - delete
+  - update
+{% endif %}
 - apiGroups:
   - build.openshift.io
   attributeRestrictions: null
