@@ -1,0 +1,33 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    labels:
+      build: debuginfod-build
+    name: debuginfod-build
+  spec:
+    runPolicy: Serial
+    source:
+      dockerfile: |-
+        FROM fedora:33
+        LABEL \
+          maintainer="Frank Ch. Eigler <fche@redhat.com>" \
+          name="debuginfod" \
+          vendor="Fedora Infrastructure"
+        WORKDIR /
+        EXPOSE 8002
+        RUN dnf -y install bsdtar elfutils-debuginfod && \
+            dnf autoremove -y
+      type: Dockerfile
+    strategy:
+      type: Docker
+    output:
+      to:
+        kind: ImageStreamTag
+        name: debuginfod:latest
+    triggers:
+    - type: ConfigChange
+    - type: ImageChange
+kind: List
+metadata: {}
