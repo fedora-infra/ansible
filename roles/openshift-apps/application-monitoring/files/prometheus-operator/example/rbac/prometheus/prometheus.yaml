@@ -7,9 +7,12 @@ metadata:
 spec:
   replicas: 2
   serviceAccountName: prometheus
+  serviceMonitorNamespaceSelector:
+    matchLabels:
+      monitoring-key: cpe
   serviceMonitorSelector:
     matchLabels:
-      team: frontend
+      monitoring-key: cpe
   alerting:
     alertmanagers:
     - namespace: application-monitoring

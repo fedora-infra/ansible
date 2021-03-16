@@ -19,7 +19,10 @@
 
   post_tasks:
   - name: Apply node labels
-    command: oc label --overwrite namespace application-monitoring monitoring-key=middleware
+    command: oc label --overwrite namespace application-monitoring monitoring-key=cpe
+
+  - name: Apply node labels for bodhi POC
+    command: oc label --overwrite namespace bodhi monitoring-key=cpe
 
   - name: Copy files
     copy: src={{roles_path}}/openshift-apps/application-monitoring/files/ dest=/etc/openshift_apps/application-monitoring/
