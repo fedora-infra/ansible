@@ -86,8 +86,6 @@
   - bodhi2/backend
 
   - role: zabbix/zabbix-agent
-    zabbix_server: apache
-    zabbix_server_ip: apache
     when: env == "staging"
 
   - role: push-container-registry

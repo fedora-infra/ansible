@@ -38,6 +38,11 @@
     state: yes
   when: ansible_selinux.status == "enabled"
 
+- name: Ensures config directory
+  file:
+    path: "{{ zabbix_agentd_dir }}"
+    state: directory
+
 - name: Configuring Zabbix agentd
   template:
     src: zabbix_agentd.conf.j2
