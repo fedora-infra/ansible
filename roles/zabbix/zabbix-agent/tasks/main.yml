@@ -25,10 +25,11 @@
   register: sepolicy
   with_items:
     - centos-zabbix-agent.pp
+  when: ansible_distribution == "Centos"
 
 - name: reload custom selinux files
   shell: /usr/sbin/semodule -u "/etc/selinux/centos/centos-zabbix-agent.pp"
-  when: ansible_selinux.status == "enabled" and sepolicy.changed
+  when: ansible_distribution == "Centos" and ansible_selinux.status == "enabled" and sepolicy.changed
 
 - name: Allowing zabbix to connect to network resources
   seboolean:
