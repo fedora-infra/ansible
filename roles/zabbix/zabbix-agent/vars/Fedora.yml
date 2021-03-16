@@ -7,3 +7,7 @@ zabbix_pkgs_list:
   - zabbix-selinux
   - bc
   - ncurses-compat-libs  # Needed for some megacli tools and raid monitoring checks through zabbix_sender
+
+zabbix_agentd: /etc/zabbix_agentd.conf
+
+zabbix_agentd_dir: /etc/zabbix/

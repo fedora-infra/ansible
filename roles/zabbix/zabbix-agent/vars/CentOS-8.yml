@@ -6,3 +6,7 @@ zabbix_pkgs_list:
   - zabbix-sender
   - bc
   - ncurses-compat-libs  # Needed for some megacli tools and raid monitoring checks through zabbix_sender
+
+zabbix_agentd: /etc/zabbix/zabbix_agentd.conf
+
+zabbix_agentd_dir: /etc/zabbix/zabbix_agentd.d
