@@ -1,0 +1,72 @@
+- name: Importing specific distro variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - common.yml
+
+- name: Installing Zabbix packages
+  yum:
+    name: "{{ zabbix_pkgs_list }}"
+    state: latest
+  register: pkg_install
+
+- name: Installing selinux dependency packages
+  yum:
+    name: "{{ pkgs_list }}"
+    state: installed
+  tags:
+    - packages
+
+- name: Distributing custom selinux policies
+  copy:
+    src: "selinux/{{ ansible_distribution_version[0] }}/{{ item }}"
+    dest: "/etc/selinux/centos/{{ item }}"
+  register: sepolicy
+  with_items:
+    - centos-zabbix-agent.pp
+
+- name: reload custom selinux files
+  shell: /usr/sbin/semodule -u "/etc/selinux/centos/centos-zabbix-agent.pp"
+  when: ansible_selinux.status == "enabled" and sepolicy.changed
+
+- name: Allowing zabbix to connect to network resources
+  seboolean:
+    name: zabbix_can_network
+    persistent: yes
+    state: yes
+  when: ansible_selinux.status == "enabled"
+
+- name: Configuring Zabbix agentd
+  template:
+    src: zabbix_agentd.conf.j2
+    dest: /etc/zabbix/zabbix_agentd.conf
+  notify: restart_zabbix_agent
+
+- name: Ensuring we have a directory to put zabbix scripts
+  file:
+    state: directory
+    path: /usr/lib/zabbix
+    mode: 0770
+    owner: zabbix
+    group: zabbix
+
+- name: Adding some other conf files under zabbix_agentd.d
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/zabbix/zabbix_agentd.d/{{ item }}"
+    owner: zabbix
+    mode: 0666
+  notify: restart_zabbix_agent
+  with_items:
+    - interface-alias.conf
+
+- name: Enabling Zabbix service
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - zabbix-agent
+
+- include_tasks: tools.yml

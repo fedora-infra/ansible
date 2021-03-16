@@ -1,0 +1,4 @@
+#!/bin/bash
+zabbix_sender -c /etc/zabbix/zabbix_agentd.conf -k sys.net.ip_conntrack -o $(wc -l /proc/net/nf_conntrack|awk '{print $1}') > /dev/null
+
+

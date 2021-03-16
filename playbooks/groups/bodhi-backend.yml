@@ -111,6 +111,11 @@
       warning: 10
       critical: 100
 
+  - role: zabbix/zabbix-agent
+    zabbix_server: apache
+    zabbix_server_ip: apache
+    when: env == "staging"
+
   tasks:
   - name: create secondary volume dir for stg bodhi
     file: dest=/mnt/koji/vol state=directory owner=apache group=apache mode=0755
