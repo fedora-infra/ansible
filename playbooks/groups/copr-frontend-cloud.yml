@@ -48,7 +48,6 @@
 
   roles:
    - base
-   - { role: fas_client, when: env != "staging" }
    - { role: sudo, sudoers: "{{ private }}/files/sudo/copr-sudoers", when: devel|bool }
    - copr/copr-devel-server
    - copr/frontend-cloud
