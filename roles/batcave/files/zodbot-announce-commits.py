@@ -5,6 +5,7 @@
 # But when it breaks, don't yell at him because that's mean.
 # update hook for FI repos -> zodbot.
 
+import os
 import sys
 import subprocess
 import shlex
@@ -116,7 +117,8 @@ def parse_commit(commit):
 
 
 # Get a list of commits to report.
-if branch == 'main':
+cwd = os.getcwd()
+if (cwd.endswith('dns') and branch == 'master') or branch == 'main':
     revs = run_command(f"git rev-list ^{old} {new}")["stdout"].split("\n")
     revs = [r for r in revs if r]
     revs.reverse()
