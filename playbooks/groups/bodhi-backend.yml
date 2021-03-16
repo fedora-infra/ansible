@@ -85,6 +85,11 @@
 
   - bodhi2/backend
 
+  - role: zabbix/zabbix-agent
+    zabbix_server: apache
+    zabbix_server_ip: apache
+    when: env == "staging"
+
   - role: push-container-registry
     cert_dest_dir: "/etc/docker/certs.d/registry{{ env_suffix }}.fedoraproject.org"
     cert_src: "{{private}}/files/docker-registry/{{env}}/pki/issued/containerstable.crt"
