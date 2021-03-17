@@ -54,7 +54,7 @@
     website: zabbix.fedoraproject.org
     destname: zabbix
     remotepath: /zabbix
-    proxyurl: http://localhost:10068
+    proxyurl: "{{ varnish_url }}"
     when: env == "staging"
     tags: zabbix
 
