@@ -54,7 +54,9 @@ items:
         labels:
           app: bodhi-web
           deploymentconfig: bodhi-web
+{% if env == "staging" %}      
           monitoring-key: cpe
+{% endif %}
       spec:
         containers:
         - name: bodhi-web
