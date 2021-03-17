@@ -3,11 +3,11 @@ kind: ServiceMonitor
 metadata:
   labels:
     monitoring-key: 'cpe'
-  name: bodhi-web
+  name: bodhi-service
 spec:
   endpoints:
     - path: /metrics
       port: web
   selector:
     matchLabels:
-      service: web
+      app: bodhi
