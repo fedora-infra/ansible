@@ -849,9 +849,9 @@
     cert_name: "{{wildcard_cert_name}}"
 
   - role: httpd/website
-    site_name: zabbix.fedoraproject.org
+    site_name: zabbix.stg.fedoraproject.org
     sslonly: true
-    server_aliases: [zabbix.stg.fedoraproject.org]
+    #server_aliases: [zabbix.stg.fedoraproject.org]
     cert_name: "{{wildcard_cert_name}}"
     tags: zabbix
     when: env == "staging"
