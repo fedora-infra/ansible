@@ -5,11 +5,12 @@ shared-network mgmt {
     option domain-name "mgmt.rdu-cc.fedoraproject.org";
     option domain-name-servers 8.8.8.8, 1.1.1.1;
 
-    subnet 172.29.160.0 netmask 255.255.255.0 {
+    subnet 172.23.1.0 netmask 255.255.255.0 {
     	   allow booting;
     	   allow bootp;
+           authoritative;
 
-    	   option routers 172.29.160.1;
-	   range 10.29.160.100 10.29.160.249;
-	   };
-};
+    	   option routers 172.23.1.254;
+	   range 172.23.1.100 172.23.1.249;
+	   }
+}
