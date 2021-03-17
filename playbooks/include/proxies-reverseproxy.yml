@@ -51,6 +51,13 @@
     proxyurl: http://noc01.{{ datacenter }}.fedoraproject.org
 
   - role: httpd/reverseproxy
+    website: zabbix.fedoraproject.org
+    destname: zabbix
+    remotepath: /zabbix
+    proxyurl: http://zabbix01.{{ datacenter }}.fedoraproject.org
+    when: env == "staging"
+
+  - role: httpd/reverseproxy
     website: lists.fedoraproject.org
     destname: mailman3
     localpath: /
