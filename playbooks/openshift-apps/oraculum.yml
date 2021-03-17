@@ -90,6 +90,14 @@
 
   - role: openshift/route
     app: oraculum
+    routename: oraculum-oidc-callback
+    host: "packager-dashboard{{ env_suffix }}.fedoraproject.org"
+    path: "/oidc_callback"
+    serviceport: 8080-tcp
+    servicename: oraculum-api-endpoint
+
+  - role: openshift/route
+    app: oraculum
     routename: oraculum-flower
     host: "packager-dashboard{{ env_suffix }}.fedoraproject.org"
     path: "/_flower"
