@@ -11,9 +11,7 @@ lvm_size: 20000
 
 dns1: 8.8.8.8
 dns2: 8.8.4.4
-dns: "{{dns1}}"
 
-virt_install_command: "{{ virt_install_command_two_nic }}"
 ks_url: http://infrastructure.fedoraproject.org/repo/rhel/ks/kvm-rhel-8-ext
 ks_repo: http://infrastructure.fedoraproject.org/repo/rhel/RHEL8-x86_64/
 
@@ -25,10 +23,20 @@ eth1_ipv4: 172.29.160.2
 eth1_ipv4_nm: 24
 
 mac0: 52:54:00:46:ed:ba
-mac_address: "{{ mac0 }}"
 mac1: 52:54:00:24:8e:bc
-mac_address1: "{{ mac0 }}"
 public_hostname: cloud-noc-os01.rdu-cc.fedoraproject.org
+
+virt_install_command: virt-install -n {{ inventory_hostname }}
+                 --memory={{ mem_size }},maxmemory={{ max_mem_size }} --memballoon virtio
+                 --disk bus=virtio,path={{ volgroup }}/{{ inventory_hostname }}
+                 --vcpus={{ num_cpus }},maxvcpus={{ max_cpu }} -l {{ ks_repo }} -x
+                 'net.ifnames=0 ksdevice=eth0 ks={{ ks_url }} console=tty0 console=ttyS0
+                  hostname={{ inventory_hostname }} nameserver={{ dns1 }}
+                  ip={{ eth0_ipv4 }}::{{ eth0_ipv4_gw }}:{{ eth0_ipv4_nm }}:{{ inventory_hostname }}:eth0:none
+                  ip={{ eth1_ipv4 }}:::{{ eth1_ipv4_nm }}:{{ inventory_hostname_short }}-nfs:eth1:none'
+                 --network bridge={{ main_bridge }},model=virtio,mac={{ mac0 }}
+                 --network=bridge={{ nfs_bridge }},model=virtio,mac={{ mac1 }}
+                 --autostart --noautoconsole --watchdog default --rng /dev/random
 
 network_connections:
   - name: eth0
