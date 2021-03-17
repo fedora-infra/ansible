@@ -53,7 +53,7 @@
   - role: httpd/reverseproxy
     website: zabbix.fedoraproject.org
     destname: zabbix
-    remotepath: /zabbix
+    remotepath: /zabbix/
     proxyurl: http://localhost:10068
     keephost: true
     when: env == "staging"
