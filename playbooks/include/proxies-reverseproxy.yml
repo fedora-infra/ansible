@@ -56,6 +56,7 @@
     remotepath: /zabbix
     proxyurl: http://zabbix01.{{ datacenter }}.fedoraproject.org
     when: env == "staging"
+    tags: zabbix
 
   - role: httpd/reverseproxy
     website: lists.fedoraproject.org
