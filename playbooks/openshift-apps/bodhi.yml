@@ -113,6 +113,11 @@
     file: servicemonitor.yml
     objectname: servicemonitor.yml
     when: env != "production"
+  - role: openshift/object
+    app: bodhi
+    file: podmonitor.yml
+    objectname: podmonitor.yml
+    when: env != "production"
   - role: openshift/route
     app: bodhi
     routename: bodhi-web

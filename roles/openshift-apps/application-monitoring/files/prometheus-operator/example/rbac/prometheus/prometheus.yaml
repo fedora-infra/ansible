@@ -13,6 +13,12 @@ spec:
   serviceMonitorSelector:
     matchLabels:
       monitoring-key: cpe
+  podMonitorNamespaceSelector:
+    matchLabels:
+      monitoring-key: cpe
+  podMonitorSelector:
+    matchLabels:
+      monitoring-key: cpe
   alerting:
     alertmanagers:
     - namespace: application-monitoring
