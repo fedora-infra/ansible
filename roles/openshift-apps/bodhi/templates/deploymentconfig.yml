@@ -69,6 +69,9 @@ items:
 {% endif %}
           ports:
           - containerPort: 8080
+{% if env == "staging" %}      
+            name: web
+{% endif %}
           resources: {}
           volumeMounts:
           - name: config-volume
