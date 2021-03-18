@@ -12,5 +12,6 @@
 
   - name: change permissions for relevant tables in the fas db
     shell: psql -1 -v ON_ERROR_STOP=1 fas2 </var/lib/pgsql/fas-readonly.sql
+    become: yes
     become_user: postgres
-    become_method: sudo
+    become_method: su
