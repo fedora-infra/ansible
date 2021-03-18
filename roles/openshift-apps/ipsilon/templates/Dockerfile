@@ -2,7 +2,7 @@ FROM fedora:32
 RUN curl -o /etc/yum.repos.d/infra-tags.repo https://infrastructure.fedoraproject.org/infra/ansible/files/common/fedora-infra-tags.repo
 {% if env == "staging" %}
 RUN curl -o /etc/yum.repos.d/infra-tags-stg.repo https://infrastructure.fedoraproject.org/infra/ansible/files/common/fedora-infra-tags-stg.repo
-RUN curl -o /etc/yum.repos.d/fedora-updates-testing.repo https://src.fedoraproject.org/rpms/fedora-repos/raw/master/f/fedora-updates-testing.repo
+RUN curl -o /etc/yum.repos.d/fedora-updates-testing.repo https://src.fedoraproject.org/rpms/fedora-repos/raw/main/f/fedora-updates-testing.repo
 {% endif %}
 RUN dnf install -y \
 {% if env == "staging" %}

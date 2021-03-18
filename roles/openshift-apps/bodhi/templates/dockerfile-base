@@ -4,7 +4,7 @@ LABEL \
   vendor="Fedora Infrastructure" \
   license="MIT"
 
-RUN curl -o /etc/yum.repos.d/infra-tags.repo https://pagure.io/fedora-infra/ansible/raw/master/f/files/common/fedora-infra-tags.repo
+RUN curl -o /etc/yum.repos.d/infra-tags.repo https://pagure.io/fedora-infra/ansible/raw/main/f/files/common/fedora-infra-tags.repo
 
 RUN dnf install -y \
     git                         \
