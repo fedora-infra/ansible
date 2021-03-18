@@ -1,7 +1,7 @@
 ---
 # create uid - this is normaly done by retrace package
 # but the package is not installed yet at this momement
-- user: name="retrace" group=retrace uid=174
+- user: name="retrace" group=retrace uid=174 homedir=/srv/retrace/home
 
 - file:
     path: /srv/retrace/repos
@@ -30,8 +30,3 @@
     mode: 0755
     owner: retrace
     group: retrace
-
-- name: Set home directory for retrace user
-  user:
-    name: retrace
-    home: /srv/retrace/home
