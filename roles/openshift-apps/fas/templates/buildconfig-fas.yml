@@ -48,6 +48,7 @@ spec:
         curl https://infrastructure.fedoraproject.org/infra/ansible/roles/fas_server/files/0001-bugfix.patch | patch /usr/lib/python2.6/site-packages/CherryPy-2.3.0-py2.6.egg/cherrypy/_cphttptools.py && \
         rm -f /usr/lib/python2.6/site-packages/CherryPy-2.3.0-py2.6.egg/cherrypy/_cphttptools.py{c,o}
 
+      RUN curl https://infrastructure.fedoraproject.org/infra/ansible/roles/fas_server/files/fas-readonly_notice.patch | patch /usr/lib/python2.6/site-packages/fas/templates/master.html
 
       EXPOSE 8080
       EXPOSE 8000
