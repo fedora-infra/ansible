@@ -13,8 +13,7 @@ custom_rules: [
 
 tcp_ports: [80, 8080]
 
-fas_client_groups: sysadmin-releng,sysadmin-noc,sysadmin-veteran
-
+primary_auth_source: ipa
 ipa_host_group: kojipkgs
 ipa_host_group_desc: Koji Packages hosts
 ipa_client_shell_groups:

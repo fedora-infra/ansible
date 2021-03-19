@@ -18,9 +18,7 @@ custom_rules: [
     '-A INPUT -p vrrp -j ACCEPT',
 ]
 
-fas_client_groups: sysadmin-releng
-sudoers: "{{ private }}/files/sudo/00releng-sudoers"
-
+primary_auth_source: ipa
 ipa_host_group: kojihub
 ipa_host_group_desc: Koji Hub hosts
 ipa_client_shell_groups:
