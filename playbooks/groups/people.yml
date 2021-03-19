@@ -59,8 +59,7 @@
   roles:
   - base
   - collectd/base
-  - { role: ipa/client, when: env == "staging" }
-  - { role: fas_client, when: env != "staging" }
+  - ipa/client
   - hosts
   - nagios_client
   - rkhunter
@@ -86,7 +85,6 @@
   - people
 
   tasks:
-  - import_tasks: "{{ tasks_path }}/2fa_client.yml"
   - import_tasks: "{{ tasks_path }}/motd.yml"
 
   handlers:
