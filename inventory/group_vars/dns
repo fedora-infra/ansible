@@ -10,8 +10,7 @@ num_cpus: 2
 udp_ports: [ 53 ]
 tcp_ports: [ 53 ]
 
-fas_client_groups: sysadmin-main,sysadmin-dns
-
+primary_auth_source: ipa
 ipa_host_group: dns
 ipa_host_group_desc: DNS servers
 ipa_client_shell_groups:
