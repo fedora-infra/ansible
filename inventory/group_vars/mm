@@ -1,8 +1,6 @@
 ---
 # Define resources for this group of hosts here.
-fas_client_groups: sysadmin-noc,sysadmin-web,sysadmin-veteran
-sudoers: "{{ private }}/files/sudo/mm2-sudoers"
-
+primary_auth_source: ipa
 ipa_host_group: mirrormanager
 ipa_host_group_desc: Mirror Manager
 ipa_client_shell_groups:
