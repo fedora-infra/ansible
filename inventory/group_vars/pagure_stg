@@ -62,7 +62,16 @@ fedmsg_certs:
 fedmsg_prefix: io.pagure
 fedmsg_env: stg
 
-fas_client_groups: sysadmin-noc,sysadmin-web,sysadmin-veteran
+ipa_host_group: pagure
+ipa_host_group_desc: Pagure GIT Forge
+ipa_client_shell_groups:
+- sysadmin-noc
+- sysadmin-web
+- sysadmin-veteran
+ipa_client_sudo_groups:
+- sysadmin-noc
+- sysadmin-web
+- sysadmin-veteran
 
 freezes: false
 env: pagure-staging
