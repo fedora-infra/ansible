@@ -26,8 +26,7 @@ custom_rules: [
     '-A INPUT -p tcp -m tcp -s 192.168.1.41 --dport 5050 -j ACCEPT',
 ]
 
-fas_client_groups: sysadmin-noc,fi-apprentice,sysadmin-web,sysadmin-mote,sysadmin-veteran
-
+primary_auth_source: ipa
 ipa_host_group: value
 ipa_host_group_desc: "Value added: IRC bots, message logging, etc."
 ipa_client_shell_groups:
