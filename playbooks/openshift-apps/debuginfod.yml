@@ -36,11 +36,6 @@
 
   - role: openshift/object
     app: debuginfod
-    file: deploymentconfig.yml
-    objectname: deploymentconfig.yml
-
-  - role: openshift/object
-    app: debuginfod
     file: storage.yml
     objectname: storage.yml
 
@@ -55,3 +50,8 @@
     app: debuginfod
     buildname: debuginfod-build
     objectname: debuginfod-build
+
+  - role: openshift/object
+    app: debuginfod
+    template: deploymentconfig.yml
+    objectname: deploymentconfig.yml
