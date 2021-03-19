@@ -7,7 +7,7 @@ num_cpus: 2
 tcp_ports: [ 53, 80, 443, 873, "6881:6999" ]
 udp_ports: [ 53 ]
 
-fas_client_groups: sysadmin-web,torrentadmin,sysadmin-noc,torrent-cc,fi-apprentice,sysadmin-veteran
+primary_auth_source: ipa
 ipa_host_group: torrent
 ipa_host_group_desc: BitTorrent trackers
 ipa_client_shell_groups:
