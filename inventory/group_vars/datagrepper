@@ -14,8 +14,7 @@ custom_rules: [
     '-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT',
 ]
 
-fas_client_groups: sysadmin-noc,sysadmin-datanommer,fi-apprentice,sysadmin-veteran
-
+primary_auth_source: ipa
 ipa_host_group: datagrepper
 ipa_host_group_desc: Service to grep through historical message bus data
 ipa_client_shell_groups:
