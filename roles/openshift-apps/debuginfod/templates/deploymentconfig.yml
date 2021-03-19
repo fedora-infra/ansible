@@ -41,7 +41,7 @@ spec:
             memory: 24000Mi
             cpu: 8000m
         volumeMounts:
-         - name: debuginfod-volume{{ '-stg' if env == 'staging' else '' }}
+         - name: debuginfod-storage{{ '-stg' if env == 'staging' else '' }}
            mountPath: /var/cache/debuginfod
            readOnly: false
          - name: fedora-koji
