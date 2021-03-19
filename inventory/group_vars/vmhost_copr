@@ -1,8 +1,14 @@
 ---
 virthost: true
 
-fas_client_groups: sysadmin-copr,sysadmin-main
-sudoers: "{{ private }}/files/sudo/copr-sudoers"
+primary_auth_source: ipa
+ipa_host_group: vmhost-copr
+ipa_host_group_desc: VM hosts for COPR
+ipa_client_shell_groups:
+- sysadmin-copr
+ipa_client_sudo_groups:
+- sysadmin-copr
+
 
 nrpe_procs_warn: 1400
 nrpe_procs_crit: 1500
