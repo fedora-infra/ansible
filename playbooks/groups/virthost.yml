@@ -23,8 +23,7 @@
   - rkhunter
   - nagios_client
   - hosts
-  - { role: ipa/client, when: env == "staging" }
-  - { role: fas_client, when: env != "staging" }
+  - ipa/client
   - collectd/base
   - { role: iscsi_client, when: "inventory_hostname.startswith(('bvirthost', 'buildvmhost-0'))" }
   - { role: iscsi_client, when: "inventory_hostname.startswith(('bvmhost-x86-06', 'bvmhost-x86-07')) and datacenter == 'iad2'" }
@@ -35,8 +34,6 @@
   - { role: serial-console, when: datacenter == 'iad2' and not inventory_hostname.startswith('buildvmhost-s390x') }
 
   tasks:
-  - import_tasks: "{{ tasks_path }}/2fa_client.yml"
-    when: env != 'staging'
   - import_tasks: "{{ tasks_path }}/motd.yml"
 
   handlers:
