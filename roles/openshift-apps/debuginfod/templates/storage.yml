@@ -15,7 +15,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: debuginfod-volume
+  name: debuginfod-storage{{ '-stg' if env == 'staging' else '' }}
 spec:
   storageClassName: ""
   accessModes:
@@ -23,4 +23,4 @@ spec:
   resources:
     requests:
       storage: 300Gi
-  volumeName: debuginfod-volume
+  volumeName: debuginfod-storage{{ '-stg' if env == 'staging' else '' }}
