@@ -18,8 +18,7 @@
 
   roles:
   - base
-  - { role: fas_client, when: env != "staging" }
-  - { role: ipa/client, when: env == "staging" }
+  - ipa/client
   - rkhunter
   - nagios_client
   - { role: ec2_proxy,
@@ -34,8 +33,6 @@
   - apache
 
   tasks:
-  - import_tasks: "{{ tasks_path }}/2fa_client.yml"
-    when: env != 'staging'
   - import_tasks: "{{ tasks_path }}/motd.yml"
 
   # You might think we would want these tasks_path on the proxy nodes, but they
