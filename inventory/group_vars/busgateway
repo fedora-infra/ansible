@@ -15,7 +15,7 @@ tcp_ports: [
     9919,  # The websocket server publishes here.  Proxies need to connect.
 ]
 
-fas_client_groups: sysadmin-noc,sysadmin-datanommer,sysadmin-veteran
+primary_auth_source: ipa
 ipa_host_group: busgateway
 ipa_host_group_desc: Bridge between fedmsg and fedora-messaging
 ipa_client_shell_groups:
