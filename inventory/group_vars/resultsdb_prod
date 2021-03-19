@@ -13,8 +13,7 @@ num_cpus: 4
 # for systems that do not match the above - specify the same parameter in
 # the host_vars/$hostname file
 
-fas_client_groups: sysadmin-qa
-
+primary_auth_source: ipa
 ipa_host_group: resultsdb
 ipa_host_group_desc: ResultsDB application servers
 ipa_client_shell_groups:
