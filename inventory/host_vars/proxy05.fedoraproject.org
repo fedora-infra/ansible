@@ -1,23 +1,51 @@
 ---
+freezes: true
+
+datacenter: host1plus
+
 # This is now a cloud instance provided by host1plus
 # vmhost: none
 
 # This is consumed by the roles/fedora-web/main role
 sponsor: host1plus
-datacenter: host1plus
+
+dns1: 8.8.8.8
+dns2: 8.8.4.4
+
+dns_search1: "vpn.fedoraproject.org"
+dns_search2: "fedoraproject.org"
+
+has_ipv4: yes
+eth0_ipv4: 185.141.165.254
+eth0_ipv4_nm: 23
+eth0_ipv4_gw: 185.141.164.1
+
+mac0: 06:5b:86:00:06:60
+
+network_connections:
+  - name: eth0
+    mac: "{{ mac0 }}"
+    state: up
+    type: ethernet
+    autoconnect: yes
+    ip:
+      address: 
+      - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
+      gateway4: "{{ eth0_ipv4_gw }}"
+      dns: 
+      - "{{ dns1 }}"
+      - "{{ dns2 }}"
+      dns_search: 
+      - "{{ dns_search1 }}" 
+      - "{{ dns_search2 }}" 
+      dhcp4: no
+      auto6: no
+
 postfix_group: vpn
+vpn: true
 
 nrpe_procs_warn: 1200
 nrpe_procs_crit: 1400
-
-nm: 255.255.254.0
-gw: 185.141.164.1
-dns: 8.8.8.8
-eth0_ip: 185.141.165.254
-eth0_nm: 255.255.254.0
-vpn: true
-dns1: 8.8.8.8
-dns2: 8.8.4.4
 
 nagios_Check_Services:
   nrpe: true
