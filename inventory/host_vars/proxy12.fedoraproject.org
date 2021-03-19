@@ -1,30 +1,61 @@
 ---
-nm: 255.255.255.128
-gw: 152.19.134.129
-dns: 8.8.8.8
-dns1: 8.8.8.8
-dns2: 8.8.4.4
+freezes: true
 
-ks_url: http://209.132.181.6/repo/rhel/ks/kvm-fedora
-ks_repo: http://209.132.181.6/pub/fedora/linux/releases/33/Server/x86_64/os/
+datacenter: ibiblio
+
+# This is consumed by the roles/fedora-web/main role
+sponsor: ibiblio
 
 vmhost: ibiblio05.fedoraproject.org
 volgroup: /dev/vg_guests
 
-eth0_ip: 152.19.134.198
-eth0_nm: 255.255.255.128
+mem_size: 16384
+num_cpus: 8
+
+ks_url: http://209.132.181.6/repo/rhel/ks/kvm-fedora
+ks_repo: http://209.132.181.6/pub/fedora/linux/releases/33/Server/x86_64/os/
+
+dns1: 8.8.8.8
+dns2: 8.8.4.4
+
+dns_search1: "vpn.fedoraproject.org"
+dns_search2: "fedoraproject.org"
+
+has_ipv4: yes
+eth0_ipv4: 152.19.134.198
+eth0_ipv4_nm: 25
+eth0_ipv4_gw: 152.19.134.129
+
 has_ipv6: yes
 eth0_ipv6: "2610:28:3090:3001:5054:ff:feda:bbd8"
 eth0_ipv6_gw: "2610:28:3090:3001::1"
 
-# This is consumed by the roles/fedora-web/main role
-sponsor: ibiblio
-datacenter: ibiblio
+mac0: 52:54:00:84:5D:9F
+
+network_connections:
+  - name: eth0
+    mac: "{{ mac0 }}"
+    state: up
+    type: ethernet
+    autoconnect: yes
+    ip:
+      address: 
+      - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
+      - "{{ eth0_ipv6 }}/{{ eth0_ipv6_nm }}"      
+      gateway4: "{{ eth0_ipv4_gw }}"
+      gateway6: "{{ eth0_ipv6_gw }}"
+      dns: 
+      - "{{ dns1 }}"
+      - "{{ dns2 }}"
+      dns_search:
+      - "{{ dns_search1 }}" 
+      - "{{ dns_search2 }}" 
+      dhcp4: no
+      auto6: no
+
 postfix_group: vpn
 vpn: true
 
 nrpe_procs_warn: 1200
 nrpe_procs_crit: 1400
 
-mem_size: 16384
-num_cpus: 8
