@@ -10,8 +10,7 @@ custom_rules: [
     '-A INPUT -p udp -m udp -s 10.5.0.0/16 --dport 53 -j ACCEPT'
 ]
 
-fas_client_groups: sysadmin-main,sysadmin-accounts
-
+primary_auth_source: ipa
 ipa_host_group: ipa
 ipa_host_group_desc: IPA service
 ipa_client_shell_groups:
