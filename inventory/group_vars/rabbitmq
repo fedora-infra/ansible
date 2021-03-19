@@ -32,9 +32,7 @@ custom_rules: [
     '-A INPUT -p tcp -m tcp -s 10.3.163.80 --dport 25672 -j ACCEPT',
 ]
 
-fas_client_groups: sysadmin-main,sysadmin-messaging
-sudoers: "{{ private }}/files/sudo/rabbitmq-sudoers"
-
+primary_auth_source: ipa
 ipa_host_group: rabbitmq
 ipa_host_group_desc: RabbitMQ service
 ipa_shell_groups:

@@ -18,8 +18,7 @@
   - rkhunter
   - nagios_client
   - hosts
-  - { role: fas_client, when: env != "staging" }
-  - { role: ipa/client, when: env == "staging" }
+  - ipa/client
   - collectd/base
   # RabbitMQ statistics are cluster-wide, only collect them on one member
   - role: collectd/rabbitmq
@@ -29,8 +28,6 @@
   - rabbitmq_cluster
 
   tasks:
-  - import_tasks: "{{ tasks_path }}/2fa_client.yml"
-    when: env != "staging"
   - import_tasks: "{{ tasks_path }}/motd.yml"
 
   handlers:
