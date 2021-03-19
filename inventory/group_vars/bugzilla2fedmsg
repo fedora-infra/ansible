@@ -9,9 +9,7 @@ freezes: false
 
 tcp_ports: [ 3000, 3001, 3002, 3003 ]
 
-fas_client_groups: sysadmin-noc,sysadmin-datanommer,sysadmin-veteran
-sudoers: "{{ private }}/files/sudo/bugzilla2fedmsg-sudoers"
-
+primary_auth_source: ipa
 ipa_host_group: bugzilla2fedmsg
 ipa_host_group_desc: Service to bridge Bugzilla events into fedmsg
 ipa_client_shell_groups:
