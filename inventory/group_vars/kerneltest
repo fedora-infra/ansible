@@ -17,8 +17,7 @@ tcp_ports: [ 80 ]
 # Neeed for rsync from log01 for logs.
 custom_rules: [ '-A INPUT -p tcp -m tcp -s 10.3.163.39 --dport 873 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT' ]
 
-fas_client_groups: sysadmin-noc,sysadmin-veteran
-
+primary_auth_source: ipa
 ipa_host_group: kerneltest
 ipa_client_shell_groups:
 - sysadmin-noc
