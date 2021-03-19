@@ -1,5 +1,10 @@
 ---
-fas_client_groups: retrace
+ipa_host_group: retrace
+ipa_host_group_desc: Retrace servers
+ipa_client_shell_groups:
+- retrace
+ipa_client_sudo_groups:
+- retrace
 devel: true
 
 tcp_ports: [22, 80, 443 ]
