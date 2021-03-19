@@ -8,7 +8,6 @@ num_cpus: 2
 # the host_vars/$hostname file
 
 tcp_ports: [ 80, 873 ]
-fas_client_groups: sysadmin-noc,fi-apprentice,sysadmin-web,sysadmin-veteran,sysadmin-releng
 
 # This gets overridden by whichever node we want to run special cronjobs.
 master_sundries_node: False
@@ -21,8 +20,7 @@ rsync_group: sundries
 nrpe_procs_warn: 300
 nrpe_procs_crit: 500
 
-sudoers: "{{ private }}/files/sudo/sundries-sudoers"
-
+primary_auth_source: ipa
 ipa_host_group: sundries
 ipa_host_group_desc: Odds and ends
 ipa_client_shell_groups:
