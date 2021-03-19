@@ -15,10 +15,9 @@ nrpe_procs_warn: 900
 nrpe_procs_crit: 1000
 
 host_group: releng
-fas_client_groups: sysadmin-releng
 freezes: true
-sudoers: "{{ private }}/files/sudo/00releng-sudoers"
 
+primary_auth_source: ipa
 ipa_host_group: releng-compose
 ipa_host_group_desc: Hosts running composes
 ipa_client_shell_groups:
