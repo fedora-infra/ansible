@@ -24,8 +24,7 @@ fedmsg_certs:
   - nagios.host.state.change
   - nagios.service.state.change
 
-fas_client_groups: sysadmin-noc,sysadmin-veteran
-
+primary_auth_source: ipa
 ipa_host_group: nagios
 ipa_host_group_desc: Nagios Monitoring
 ipa_client_shell_groups:
