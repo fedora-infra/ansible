@@ -1,0 +1,12 @@
+- name: run fas_client playbook on bastion for alias changes
+  hosts: bastion
+  user: root
+  gather_facts: True
+
+  vars_files:
+   - /srv/web/infra/ansible/vars/global.yml
+   - "/srv/private/ansible/vars.yml"
+   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  roles:
+  - { role: fas_client, when: env != "staging" }
