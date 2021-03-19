@@ -1,22 +1,53 @@
 ---
-nm: 255.255.255.0
-gw: 10.3.163.254
-dns: 10.3.163.33
 
 ks_url: http://10.3.163.35/repo/rhel/ks/kvm-fedora
 ks_repo: http://10.3.163.35/pub/fedora/linux/releases/33/Server/x86_64/os/
 
-vmhost: vmhost-x86-06.iad2.fedoraproject.org
-volgroup: /dev/vg_guests
+freezes: true
 
-eth0_ip: 10.3.163.77
+datacenter: iad2
 
 # This is consumed by the roles/fedora-web/main role
 sponsor: redhat
 
+vmhost: vmhost-x86-06.iad2.fedoraproject.org
+volgroup: /dev/vg_guests
+
+dns1: 10.3.163.33
+dns2: 10.3.163.34
+ 
+dns_search1: "iad2.fedoraproject.org"
+dns_search2: "vpn.fedoraproject.org"
+dns_search3: "fedoraproject.org"
+
+has_ipv4: yes
+eth0_ipv4: 10.3.163.77
+eth0_ipv4_nm: 24
+eth0_ipv4_gw: 10.3.163.254
+
+mac0: 52:54:00:04:49:7a
+
+network_connections:
+  - name: eth0
+    mac: "{{ mac0 }}"
+    state: up
+    type: ethernet
+    autoconnect: yes
+    ip:
+      address: 
+      - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
+      gateway4: "{{ eth0_ipv4_gw }}"
+      dns: 
+      - "{{ dns1 }}"
+      - "{{ dns2 }}"
+      dns_search: 
+      - "{{ dns_search1 }}" 
+      - "{{ dns_search2 }}" 
+      - "{{ dns_search3 }}"  
+      dhcp4: no
+      auto6: no
+
 nrpe_procs_warn: 1200
 nrpe_procs_crit: 1400
-
-datacenter: iad2
 
 vpn: true
