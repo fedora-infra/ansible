@@ -1,14 +1,25 @@
 ---
+freezes: true
+
+datacenter: internetx
+
+# This is consumed by the roles/fedora-web/main role
+sponsor: internetx
+
+vmhost: internetx01.fedoraproject.org
+volgroup: /dev/vg_Server
+mem_size: 8192
+max_mem_size: 8192
+num_cpus: 6
 
 ks_url: http://38.145.60.16/repo/rhel/ks/kvm-fedora
 ks_repo: http://38.145.60.16/pub/fedora/linux/releases/33/Server/x86_64/os/
 
-vmhost: internetx01.fedoraproject.org
-volgroup: /dev/vg_Server
-
-dns: 8.8.8.8
 dns1: 8.8.8.8
 dns2: 8.8.4.4
+
+dns_search1: "vpn.fedoraproject.org"
+dns_search2: "fedoraproject.org"
 
 has_ipv4: yes
 eth0_ipv4: 85.236.55.6
@@ -44,16 +55,8 @@ network_connections:
       dhcp4: no
       auto6: no
 
-
-# This is consumed by the roles/fedora-web/main role
-sponsor: internetx
-datacenter: internetx
 postfix_group: vpn
 vpn: true
 
 nrpe_procs_warn: 1200
 nrpe_procs_crit: 1400
-
-mem_size: 8192
-max_mem_size: 8192
-num_cpus: 6
