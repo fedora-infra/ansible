@@ -4,10 +4,6 @@
 # To specify that you want to use the testing repo specify ``-e "testing=True"``
 # to your ansible command.
 
-# Original Author: pingou
-# Current Maintainer: smooge
-# Date of use: 2019-04-08
-
 # Main task to upgrade pagure
 - name: upgrade pagure
   hosts: pagure:pagure_stg
