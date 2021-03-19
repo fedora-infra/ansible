@@ -9,6 +9,7 @@ tcp_ports: [ 80, 443, 8443]
 fas_client_groups: sysadmin-releng,fi-apprentice,sysadmin-noc,sysadmin-veteran,sysadmin-osbs
 sudoers: "{{ private }}/files/sudo/osbs-sudoers"
 
+primary_auth_source: ipa
 ipa_host_group: osbs
 ipa_host_group_desc: OpenShift Build Service
 ipa_client_shell_groups:
