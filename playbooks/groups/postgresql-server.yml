@@ -23,8 +23,7 @@
   roles:
   - base
   - rkhunter
-  - { role: fas_client, when: env != "staging" }
-  - { role: ipa/client, when: env == "staging" }
+  - ipa/client
   - nagios_client
   - hosts
   - postgresql_server
@@ -33,8 +32,6 @@
   - sudo
 
   tasks:
-  - import_tasks: "{{ tasks_path }}/2fa_client.yml"
-    when: env != "staging"
   - import_tasks: "{{ tasks_path }}/motd.yml"
 
 # TODO: add iscsi task
