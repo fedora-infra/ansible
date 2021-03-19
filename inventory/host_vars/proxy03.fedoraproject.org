@@ -1,15 +1,25 @@
 ---
+freezes: true
 
+datacenter: rdu-cc
+
+# This is consumed by the roles/fedora-web/main role
+sponsor: redhat
+
+vmhost: virthost-cc-rdu02.fedoraproject.org
+volgroup: /dev/vg_guests
+mem_size: 16384
+max_mem_size: 32768
+num_cpus: 8
 
 ks_url: http://209.132.181.6/repo/rhel/ks/kvm-fedora
 ks_repo: http://209.132.181.6/pub/fedora/linux/releases/33/Server/x86_64/os/
 
-vmhost: virthost-cc-rdu02.fedoraproject.org
-volgroup: /dev/vg_guests
-
-dns: 8.8.8.8
 dns1: 8.8.8.8
 dns2: 8.8.4.4
+
+dns_search1: "vpn.fedoraproject.org"
+dns_search2: "fedoraproject.org"
 
 has_ipv4: yes
 eth0_ipv4: 8.43.85.73
@@ -45,16 +55,8 @@ network_connections:
       dhcp4: no
       auto6: no
 
-
-# This is consumed by the roles/fedora-web/main role
-sponsor: redhat
-datacenter: rdu-cc
 postfix_group: vpn
 vpn: true
 
 nrpe_procs_warn: 900
 nrpe_procs_crit: 1000
-
-mem_size: 16384
-max_mem_size: 32768
-num_cpus: 8
