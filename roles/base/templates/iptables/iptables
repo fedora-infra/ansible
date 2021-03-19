@@ -33,15 +33,16 @@
 -A INPUT -p tcp -m tcp --dport 5666 -s 10.3.163.10 -j ACCEPT
 -A INPUT -p tcp -m tcp --dport 5666 -s 10.3.166.10 -j ACCEPT
 
-{% if env != 'staging' and datacenter == 'phx2' and inventory_hostname not in groups['staging_friendly'] %}
+{% if env != 'staging' and datacenter == 'iad2' and inventory_hostname not in groups['staging_friendly'] %}
 #
-# In the phx2 datacenter, both production and staging hosts are in the same 
-# vlan, but different subnets. We want production hosts to reject connectons from staging group hosts
-# to prevent them from interfering with production. There are however a few hosts in 
-# production we have marked 'staging-friendly' that we do allow staging to talk to for 
-# mostly read-only data they need.
+# In the iad2 datacenter, both production and staging hosts are in different
+# vlans, and different subnets. However, just as a precaution, we want prod machines to
+# reject connections from any staging host just in case there's some globally enabled port.
+# There are however a few hosts in production we have marked 'staging-friendly'
+# that we do allow staging to talk to for mostly read-only data they need.
 #
-
+-A INPUT -s 10.3.166.0/24 -j REJECT --reject-with icmp-host-prohibited
+-A INPUT -s 10.3.167.0/24 -j REJECT --reject-with icmp-host-prohibited
 {% endif %}
 
 # if the host declares a fedmsg-enabled wsgi app, open ports for it
