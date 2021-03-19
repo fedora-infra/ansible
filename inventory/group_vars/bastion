@@ -18,11 +18,10 @@ custom_rules: [
     '-A INPUT -s 192.168.100/24 -j REJECT --reject-with icmp-host-prohibited',
     '-A INPUT -s 10.0.0.0/8 -p udp -m udp --dport 123 -j ACCEPT',
 ]
-#
+
+primary_auth_source: ipa
+
 # allow a bunch of sysadmin groups here so they can access internal stuff
-
-fas_client_groups: sysadmin-analysis,sysadmin-ask,sysadmin-atomic,sysadmin-web,sysadmin-main,sysadmin-cvs,sysadmin-noc,sysadmin-releng,sysadmin-dba,sysadmin-hosted,sysadmin-tools,sysadmin-spin,sysadmin-cloud,fi-apprentice,sysadmin-badges,sysadmin-troubleshoot,sysadmin-qa,sysadmin-centos,sysadmin-ppc,sysadmin-koschei,sysadmin-secondary,sysadmin-fedimg,sysadmin-veteran,sysadmin-mbs,pungi-devel,sysadmin-upstreamfirst,sysadmin-releasemonitoring,sysadmin-gnome,sysadmin-copr,sysadmin-coreos,sysadmin-osbs,sysadmin-odcs,sysadmin-kernel
-
 ipa_host_group: bastion
 ipa_host_group_desc: Bastion hosts
 
