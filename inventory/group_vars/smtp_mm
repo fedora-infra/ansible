@@ -9,7 +9,18 @@ num_cpus: 2
 
 tcp_ports: [ 25 ]
 
-fas_client_groups: sysadmin-noc,sysadmin-tools,fi-apprentice,sysadmin-veteran
+primary_auth_source: ipa
+ipa_host_group: smtp_mm
+ipa_host_group_desc: SMTP servers
+ipa_client_shell_access:
+- fi-apprentice
+- sysadmin-noc
+- sysadmin-tools
+- sysadmin-veteran
+ipa_client_sudo_access:
+- sysadmin-noc
+- sysadmin-tools
+- sysadmin-veteran
 
 postfix_transport_filename: transports.smtp-mm
 postfix_group: smtp-mm
