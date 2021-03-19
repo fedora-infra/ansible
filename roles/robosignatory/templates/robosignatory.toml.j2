@@ -323,6 +323,12 @@ handlers = ["console"]
             keyid = "{{ (env == 'production')|ternary('2f86d6a1', 'd300e724') }}"
 
             [[consumer_config.koji_instances.primary.tags]]
+            from = "epel8-next-signing-pending"
+            to = "epel8-next-testing-pending"
+            key = "{{ (env == 'production')|ternary('epel-8', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('2f86d6a1', 'd300e724') }}"
+
+            [[consumer_config.koji_instances.primary.tags]]
             from = "epel7-signing-pending"
             to = "epel7-testing-pending"
             key = "{{ (env == 'production')|ternary('epel-7', 'testkey') }}"
