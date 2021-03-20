@@ -926,8 +926,7 @@
     when: env == "production"
 
   - role: httpd/website
-    site_name: languages.fedoraproject.org
-    server_aliases: [languages.stg.fedoraproject.org]
+    site_name: "languages{{ env_suffix }}.fedoraproject.org"
     sslonly: true
     cert_name: "{{wildcard_cert_name}}"
     when: env == "staging"

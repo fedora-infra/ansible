@@ -784,10 +784,9 @@
 
   - role: httpd/reverseproxy
     website: "languages{{ env_suffix }}.fedoraproject.org"
-    destname: os
-    balancer_name: os
+    destname: app.os
+    balancer_name: app-os
     targettype: openshift
-    balancer_members: "{{ openshift_masters }}"
     keephost: true
     when: env == "staging"
     tags:
