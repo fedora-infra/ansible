@@ -24,6 +24,9 @@
   - name: Apply node labels for bodhi POC
     command: oc label --overwrite namespace bodhi monitoring-key=cpe
 
+  - name: Make other pods available to the application-monitoring project
+    command: oc adm pod-network make-projects-global application-monitoring
+
   - name: Copy files
     copy: src={{roles_path}}/openshift-apps/application-monitoring/files/ dest=/etc/openshift_apps/application-monitoring/
 
