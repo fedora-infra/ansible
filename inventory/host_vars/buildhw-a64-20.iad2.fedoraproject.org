@@ -1,5 +1,50 @@
 ---
-gw: 10.3.170.254
-eth0_ip: 10.3.170.140
-eth0_ipv4_gw: 10.3.170.254
 datacenter: iad2
+dns1: 10.3.163.33
+dns2: 10.3.163.34
+ 
+has_ipv4: yes
+eth0_ipv4: 10.3.170.140
+eth0_ipv4_nm: 24
+eth0_ipv4_gw: 10.3.170.254
+
+has_ipv6: no
+ 
+mac0: f4:e9:d4:cc:32:b2
+mac1: f4:e9:d4:cc:32:b3
+mac2: f4:e9:d4:f2:e9:6e
+mac3: f4:e9:d4:f2:e9:6f 
+
+network_connections:
+  - name: eth0
+    mac: "{{ mac0 }}"
+    state: down
+    type: ethernet
+    ip:
+      address: 
+      - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
+      gateway4: "{{ eth0_ipv4_gw }}"
+      dns: 
+      - "{{ dns1 }}"
+      - "{{ dns2 }}"
+      dns_search: 
+      - iad2.fedoraproject.org
+      - fedoraproject.org
+      dhcp4: no
+      auto6: no
+
+  - name: eth1
+    mac: "{{ mac1 }}"
+    state: down
+    type: ethernet
+    autoconnect: yes
+ 
+  - name: eth2
+    mac: "{{ mac2 }}"
+    state: down
+    type: ethernet
+    
+  - name: eth3
+    mac: "{{ mac3 }}"
+    state: down
+    type: ethernet
