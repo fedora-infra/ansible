@@ -28,14 +28,7 @@
     owner_user: apache
     owner_group: apache
     service: HTTP
-    host: "id.stg.fedoraproject.org"
-    when: env == "staging"
-  - role: keytab/service
-    owner_user: apache
-    owner_group: apache
-    service: HTTP
-    host: "id.fedoraproject.org"
-    when: env == "production"
+    host: "id{{ env_suffix }}.fedoraproject.org"
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
@@ -103,8 +96,7 @@
     ipahbacrule:
       name: ipsilon
       action: member
-      host: centos-ipa-client02.stg.iad2.fedoraproject.org
+      host: "{{ (env == 'production')|ternary('ipsilon.iad2.centos.org', 'centos-ipa-client02.stg.iad2.fedoraproject.org') }}"
       ipaadmin_password: "{{ ipa_admin_password }}"
     tags:
     - ipsilon
-    when: env == "staging"

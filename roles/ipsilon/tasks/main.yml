@@ -152,7 +152,7 @@
 
 - name: copy ipsilon configuration
   template:
-    src: "ipsilon.conf.{{ env }}"
+    src: "ipsilon.conf"
     dest: "/etc/ipsilon/root/ipsilon.conf"
     owner: ipsilon
     group: ipsilon
@@ -191,7 +191,7 @@
 
 - name: copy ipsilon httpd config
   template:
-    src: "httpd.conf.{{ env }}.j2"
+    src: "httpd.conf.j2"
     dest: /etc/ipsilon/root/idp.conf
   tags:
   - ipsilon
