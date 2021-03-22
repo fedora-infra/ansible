@@ -782,3 +782,13 @@
     when: env == "staging"
     tags:
     - languages
+
+  - role: httpd/reverseproxy
+    website: debuginfod.fedoraproject.org
+    destname: debuginfod
+    balancer_name: app-os
+    targettype: openshift
+    keephost: true
+    when: env == "staging"
+    tags: debuginfod
+

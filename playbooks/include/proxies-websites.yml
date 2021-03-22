@@ -971,6 +971,14 @@
     tags: mdapi
 
   - role: httpd/website
+    site_name: debuginfod.fedoraproject.org
+    sslonly: true
+    server_aliases: [debuginfod.stg.fedoraproject.org]
+    cert_name: "{{wildcard_cert_name}}"
+    tags: debuginfod
+    when: env == "staging"
+
+  - role: httpd/website
     site_name: calendar.fedoraproject.org
     sslonly: true
     server_aliases: [calendar.stg.fedoraproject.org]
