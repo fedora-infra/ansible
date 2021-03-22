@@ -99,7 +99,7 @@ config = {
     {% else -%}
     "fasjson": {
         "active": True,
-        "url": "https://fasjson.fedoraproject.org/v1/"
+        "url": "https://fasjson.fedoraproject.org/"
     }
     "fas_credentials": {
         "username": "{{fedoraDummyUser}}",
