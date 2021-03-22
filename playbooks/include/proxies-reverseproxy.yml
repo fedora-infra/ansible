@@ -367,13 +367,20 @@
 # end coreos
 #
   - role: httpd/reverseproxy
+    website: accounts.fedoraproject.org
+    destname: noggin
+    balancer_name: app-os
+    targettype: openshift
+    keephost: true
+    tags: noggin
+
+  - role: httpd/reverseproxy
     website: fasjson.fedoraproject.org
     destname: fasjson
     balancer_name: app-os
     targettype: openshift
     keephost: true
     tags: fasjson
-    when: env == "staging"
 
   - role: httpd/reverseproxy
     website: transtats.fedoraproject.org
