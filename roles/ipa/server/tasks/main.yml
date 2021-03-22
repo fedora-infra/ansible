@@ -489,7 +489,7 @@
   tags:
   - ipa/server
   - config
-  when: ipa_initial and env == 'staging'
+  when: ipa_initial
 
 
 - name: Setup the selfservice permission for addressbook attributes
@@ -521,7 +521,7 @@
   tags:
   - ipa/server
   - config
-  when: ipa_initial and env == 'staging'
+  when: ipa_initial
 
 
 - name: Destroy admin ticket

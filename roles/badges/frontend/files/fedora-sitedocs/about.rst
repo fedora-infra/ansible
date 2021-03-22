@@ -9,7 +9,7 @@ Fedora Badges
 How does Badges work?
 ---------------------
 
-It's really easy! Just `sign in to Badges <https://badges.fedoraproject.org/login>`_ with your `Fedora account <https://admin.fedoraproject.org/accounts/>`_, and you'll see you have at least one badge right away. Congratulations - you're a Badger! If you participate in Fedora in any way, you'll probably notice Badges popping up on your profile as you go about your business, though sadly we don't cover every area of Fedora yet - we're doing our best to make sure we reward as many forms of participation as we can!
+It's really easy! Just `sign in to Badges <https://badges.fedoraproject.org/login>`_ with your `Fedora account <https://accounts.fedoraproject.org/>`_, and you'll see you have at least one badge right away. Congratulations - you're a Badger! If you participate in Fedora in any way, you'll probably notice Badges popping up on your profile as you go about your business, though sadly we don't cover every area of Fedora yet - we're doing our best to make sure we reward as many forms of participation as we can!
 
 Want to see how your badge collection compares with others? Check the `Leaderboard <https://badges.fedoraproject.org/leaderboard>`_. Jonesing for more badges? You can check the `Badge index <https://badges.fedoraproject.org/explore/badges>`_ to see all the badges and get to work on your collection! Click on a badge to see how to get it - but
 we intentionally didn't spell it all out exactly. Part of the fun is figuring it out!
@@ -75,7 +75,7 @@ Why exactly can't badges for events be automatically awarded retrospectively?
 First, remember that the badge awarding daemon wakes up in response to new `fedmsg`_ events and that it checks the `history of fedmsg <https://apps.fedoraproject.org/datagrepper>`_ in order to make determinations
 about who gets what badge at that moment.
 
-To award that Proven Packager badge, the awarder waits for `a message <http://www.fedmsg.com/en/latest/topics/#fas-group-member-sponsor>`_ from the `Fedora Account System (FAS) <https://admin.fedoraproject.org/accounts>`_ indicating that a user has been added to that group. When we receive it, we wake up, verify it, and award the badge.
+To award that Proven Packager badge, the awarder waits for `a message <http://www.fedmsg.com/en/latest/topics/#fas-group-member-sponsor>`_ from the `Fedora Account System (FAS) <https://accounts.fedoraproject.org/>`_ indicating that a user has been added to that group. When we receive it, we wake up, verify it, and award the badge.
 
 Since you've been a member of that group for longer than the badge awarder has been running it has never had the occasion to check if you should be awarded the badge. At the time of the launch of Fedora Badges, we've been working
 around this by manually running a script every few days that doles out these group-based badges to newly-logged-in users. We really should put it in a cronjob to make our lives easier.

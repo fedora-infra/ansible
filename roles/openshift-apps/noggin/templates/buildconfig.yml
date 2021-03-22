@@ -31,11 +31,14 @@ spec:
   triggers:
   - type: ConfigChange
   - type: ImageChange
-  - type: GitHub
 {% if noggin_stg_github_secret is defined and env == 'staging' %}
+  - type: GitHub
     github:
       secret: "{{ noggin_stg_github_secret }}"
-{% elif noggin_github_secret is defined and env == 'production' %}
-    github:
-      secret: "{{ noggin_github_secret }}"
+{% endif %}
+{% if noggin_github_secret is defined and env == 'production' %}
+  # Do we really want auto rebuilds in prod?
+  # - type: GitHub
+  #   github:
+  #     secret: "{{ noggin_github_secret }}"
 {% endif %}

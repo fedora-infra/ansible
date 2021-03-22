@@ -46,5 +46,5 @@ SECRET_KEY = from_file('/etc/noggin-secrets/session').encode('utf-8')
 # Spam checking
 # BASSET_URL = None
 
-# Disable registration until the account import is complete
-REGISTRATION_OPEN = False
+# To disable registration:
+# REGISTRATION_OPEN = False

@@ -20,6 +20,9 @@
     appowners:
     - abompard
     - pingou
+    - nils
+    - ryanlerch
+    - scoady
     tags:
       - apply-appowners
     when: env == "production"
@@ -66,7 +69,6 @@
     template: configmap.yml
     objectname: configmap.yml
     noggin_theme: fas
-    subdir: "/accounts"
 
   - role: openshift/ipa-client
     app: noggin
@@ -79,8 +81,7 @@
   - role: openshift/route
     app: noggin
     routename: noggin
-    host: "admin{{ env_suffix }}.fedoraproject.org"
-    path: "/accounts"
+    host: "accounts{{ env_suffix }}.fedoraproject.org"
     serviceport: web
     servicename: noggin-web
     annotations:
@@ -100,7 +101,6 @@
     app: noggin
     template: deploymentconfig.yml
     objectname: deploymentconfig.yml
-    subdir: "/accounts"
 
   # - role: openshift/start-build
   #   app: noggin

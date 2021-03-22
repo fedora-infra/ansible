@@ -162,10 +162,8 @@
     - fas
 
   - role: httpd/reverseproxy
-    website: admin.fedoraproject.org
+    website: "accounts{{ env_suffix }}.fedoraproject.org"
     destname: noggin
-    remotepath: /accounts
-    localpath: /accounts
     balancer_name: app-os
     targettype: openshift
     keephost: true
@@ -176,7 +174,6 @@
     balancer_name: app-os
     targettype: openshift
     keephost: true
-    when: env == "staging"
 
   - role: httpd/reverseproxy
     website: "id{{ env_suffix }}.fedoraproject.org"

@@ -44,16 +44,16 @@ children:
                 files to share them with the community.
     -   name:   FAS
         data:
-            url:    https://admin.fedoraproject.org/accounts
-            user_url: https://admin.fedoraproject.org/accounts/user/view/{user}
-            source_url: https://github.com/fedora-infra/fas/
-            bugs_url:   https://github.com/fedora-infra/fas/issues/
-            docs_url:   https://github.com/fedora-infra/fas/blob/develop/README.rst
+            url:    https://accounts.fedoraproject.org/
+            user_url: https://accounts.fedoraproject.org/user/{user}
+            source_url: https://github.com/fedora-infra/noggin/
+            bugs_url:   https://github.com/fedora-infra/noggin/issues/
+            docs_url:   https://noggin-aaa.readthedocs.io/en/latest/
             sops:
-                - https://infrastructure.fedoraproject.org/infra/docs/fas-notes.rst
-                - https://infrastructure.fedoraproject.org/infra/docs/fas-openid.rst
-                - https://infrastructure.fedoraproject.org/infra/docs/accountdeletion.rst
-                - https://infrastructure.fedoraproject.org/infra/docs/nonhumanaccounts.rst
+                - https://fedora-infra-docs.readthedocs.io/en/latest/sysadmin-guide/sops/fas-notes.html
+                - https://fedora-infra-docs.readthedocs.io/en/latest/sysadmin-guide/sops/fas-openid.html
+                - https://fedora-infra-docs.readthedocs.io/en/latest/sysadmin-guide/sops/accountdeletion.html
+                - https://fedora-infra-docs.readthedocs.io/en/latest/sysadmin-guide/sops/nonhumanaccounts.html
             status_mappings: ['fas']
             description: >
                 The Fedora Account System.  Update your profile
