@@ -64,6 +64,8 @@ spec:
 {% else %}
           value: "1"
 {% endif %}
+        - name: MOTD_PASSWORD
+          value: "{{ oraculum_motd_pass }}"
         # WatchDog emails
         - name: SEND_ERROR_EMAILS
           value: "true"
@@ -161,6 +163,8 @@ spec:
 {% else %}
           value: "1"
 {% endif %}
+        - name: MOTD_PASSWORD
+          value: "{{ oraculum_motd_pass }}"
         # WatchDog emails
         - name: SEND_ERROR_EMAILS
           value: "true"
@@ -242,6 +246,8 @@ spec:
 {% else %}
           value: "1"
 {% endif %}
+        - name: MOTD_PASSWORD
+          value: "{{ oraculum_motd_pass }}"
         # WatchDog emails
         - name: SEND_ERROR_EMAILS
           value: "true"
@@ -325,6 +331,8 @@ spec:
 {% else %}
           value: "1"
 {% endif %}
+        - name: MOTD_PASSWORD
+          value: "{{ oraculum_motd_pass }}"
         # WatchDog emails
         - name: SEND_ERROR_EMAILS
           value: "true"
