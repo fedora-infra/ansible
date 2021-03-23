@@ -60,8 +60,11 @@ blocked_toddlers = ["debug"]
 mail_server = "bastion.fedoraproject.org"
 admin_email = "admin@fedoraproject.org"
 
-# Account to use to connect to FAS
-fas_url = "https://admin.fedoraproject.org/accounts"
+# Use fasjson instead of FAS
+fasjson = true
+
+# Account to use to connect to FAS/FASJSON
+fas_url = "https://fasjson.fedoraproject.org/"
 fas_username = "{{ fedoraDummyUser }}"
 fas_password = "{{ fedoraDummyUserPassword }}"
 
@@ -138,12 +141,6 @@ notify_admins = [
     "kevin@fedoraproject.org",
     "pingou@fedoraproject.org",
 ]
-# Use fasjson instead of FAS
-{% if env == "staging" %}
-fasjson = true
-{% else %}
-fasjson = false
-{% endif %}
 
 # PDC types mapping for distgit_bugzilla_sync toddler
 [consumer_config.distgit_bugzilla_sync.pdc_types]
