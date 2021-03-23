@@ -25,3 +25,5 @@ nrpe_procs_crit: 500
 ipa_initial: false
 ipa_dm_password: "{{ ipa_prod_dm_password }}"
 ipa_ldap_socket: ldapi://%2fvar%2frun%2fslapd-FEDORAPROJECT-ORG.socket
+
+host_backup_targets: ['/var/lib/ipa/backup']
