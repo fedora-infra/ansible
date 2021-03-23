@@ -663,6 +663,29 @@ config = dict(
             ),
         ),
 
+        # And #fedora-podcast
+        dict(
+            network='chat.freenode.net',
+            port=6667,
+            make_pretty=True,
+            make_terse=True,
+
+            {% if env == 'staging' %}
+            nickname='fm-stg-podcast',
+            {% else %}
+            nickname='fm-podcast',
+            {% endif %}
+            channel='fedora-podcast',
+            filters=dict(
+                topic=[
+                    '^((?!(pagure)).)*$',
+                ],
+                body=[
+                    body=['^((?!(fedora-podcast)).)*$'],
+                ],
+            ),
+        ),
+
     ],
 
     ### Possible colors are ###
