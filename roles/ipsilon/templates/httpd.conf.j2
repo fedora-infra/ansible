@@ -2,11 +2,9 @@ RewriteEngine on
 RewriteRule /.well-known/openid-configuration /openidc/.well-known/openid-configuration [PT]
 #Alias /ui /usr/share/ipsilon/ui
 Alias /ui /usr/share/ipsilon/themes/Fedora
-{% if env == "staging" %}
 Alias /.well-known /var/lib/ipsilon/root/public/well-known
 Alias /cache /var/cache/ipsilon
 Redirect /.well-known/webfinger /webfinger
-{% endif %}
 
 # This is for mapping $username.id.fp.o -> id.fp.o/id/$username
 RewriteEngine on
@@ -23,15 +21,10 @@ RewriteRule ^([a-z0-9_-]+)\.id\.fedoraproject\.org/.* /openid/id/$1/ [PT]
 
 
 WSGIScriptAlias / /usr/libexec/ipsilon
-{% if env == "staging" %}
 WSGIDaemonProcess ipsilon user=ipsilon group=ipsilon home=/var/lib/ipsilon/root display-name=ipsilon processes=2 threads=2 maximum-requests=1000
 WSGISocketPrefix run/wsgi
-{% else %}
-WSGIDaemonProcess ipsilon home=/var/lib/ipsilon processes=2 threads=2 maximum-requests=1000
-WSGISocketPrefix /httpdir/run/wsgi
-WSGIRestrictStdout Off
-WSGIRestrictSignal Off
-{% endif %}
+#WSGIRestrictStdout Off
+#WSGIRestrictSignal Off
 # This header is required to be passed for OIDC client_secret_basic
 WSGIPassAuthorization On
 # Without this, getting the private key in jwcrypto/jwk.py, line 430, fails
@@ -52,11 +45,7 @@ WSGIApplicationGroup %{GLOBAL}
     Require all granted
 </Directory>
 
-{% if env == "staging" %}
 <Directory /var/lib/ipsilon/root/public/well-known>
-{% else %}
-<Directory /etc/ipsilon/wellknown>
-{% endif %}
     Require all granted
 </Directory>
 
@@ -66,11 +55,7 @@ WSGIApplicationGroup %{GLOBAL}
 
 <Location /login/gssapi/negotiate>
     AuthName "GSSAPI Single Sign On Login"
-{% if env == "staging" %}
     GssapiCredStore keytab:/etc/httpd/conf/http.keytab
-{% else %}
-    GssapiCredStore keytab:/etc/keytabs/service.keytab
-{% endif %}
     AuthType GSSAPI
     # This is off because Apache (and thus mod_auth_gssapi) doesn't know this is proxied over TLS
     GssapiSSLonly Off
@@ -80,7 +65,6 @@ WSGIApplicationGroup %{GLOBAL}
     ErrorDocument 500 /login/gssapi/failed
 </Location>
 
-{% if env == "staging" %}
 LoadModule intercept_form_submit_module modules/mod_intercept_form_submit.so
 LoadModule authnz_pam_module modules/mod_authnz_pam.so
 
@@ -104,4 +88,3 @@ LoadModule authnz_pam_module modules/mod_authnz_pam.so
     Allow from All
   </IfModule>
 </Directory>
-{% endif %}
