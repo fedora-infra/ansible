@@ -19,21 +19,21 @@
     # assumes that directory name == user name
     shell:
       chdir: /home/fedora
+      # skip directories owned by root and verify that the directory actually is the home directory
+      # of the same-named user
       cmd: >-
         for dname in */; do
-          dname="${dname%%/}"
-          # skip directories owned by root
-          downer="$(stat --format %U "$dname")"
+          dname="${dname%%/}";
+          downer="$(stat --format %U "$dname")";
           if [ "$downer" = "root" ]; then
             continue
-          fi
-          # verify the directory actually is the home directory of the same-named user
-          IFS=":" read -r _ _ _ _ _ homedir _ < <(getent passwd "$dname")
+          fi;
+          IFS=":" read -r _ _ _ _ _ homedir _ < <(getent passwd "$dname");
           if [ "$homedir" != "/home/fedora/$dname" ]; then
             continue
-          fi
-          echo "fixing ownership: $dname"
-          chown -R "$dname:" "$dname"
+          fi;
+          echo "fixing ownership: $dname";
+          chown -R "$dname:" "$dname";
         done
     register: chown_res
     changed_when: "'fixing ownership:' in chown_res.stdout"
