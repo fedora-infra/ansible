@@ -353,6 +353,10 @@ wsgi_wants_apache: true
 # IPA settings
 additional_host_keytabs: []
 ipa_server: ipa01.iad2.fedoraproject.org
+ipa_server_nodes:
+  - ipa01.iad2.fedoraproject.org
+  - ipa02.iad2.fedoraproject.org
+  - ipa03.iad2.fedoraproject.org
 ipa_realm: FEDORAPROJECT.ORG
 ipa_admin_password: "{{ ipa_prod_admin_password }}"
 # Let this become "ipa" at some point

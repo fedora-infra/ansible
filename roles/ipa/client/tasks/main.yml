@@ -17,6 +17,9 @@
 - name: Enroll system as IPA client
   command:
     cmd: ipa-client-install
+         {% if (vpn | default(false)) %}{% for node in ipa_server_nodes | default([]) %}
+         --server={{ node }}
+         {% endfor %}{% endif %}
          --hostname={{ inventory_hostname }}
          --domain={{ ipa_realm | lower }}
          --realm={{ ipa_realm }}
