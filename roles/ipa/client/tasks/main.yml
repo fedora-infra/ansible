@@ -14,6 +14,12 @@
     - ipa/client
     - fas-client-cleanup
 
+- name: Enable VPN hosts to talk to IPA
+  import_tasks: vpn.yml
+  tags:
+    - ipa/client
+    - vpn-client-enablement
+
 - name: Enroll system as IPA client
   command:
     cmd: ipa-client-install

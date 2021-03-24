@@ -17,7 +17,7 @@
   - "{{ host_group }}-hosts"
   - "{{ ansible_domain }}-hosts"
   - "{{ datacenter }}-hosts"
-  - base
+  - "{{ hosts_base | default('base') }}"
   tags:
   - config
   - hosts
