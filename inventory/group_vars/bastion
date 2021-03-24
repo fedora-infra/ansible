@@ -35,6 +35,8 @@ bastion_ipa_client_shell_groups:
 - sysadmin-secondary
 - sysadmin-spin
 - sysadmin-troubleshoot
+- sysadmin-qa
+
 
 ipa_client_shell_groups: "{{ (bastion_ipa_client_shell_groups + batcave_ipa_client_shell_groups) | sort | unique }}"
 
