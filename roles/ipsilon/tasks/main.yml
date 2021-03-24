@@ -293,6 +293,23 @@
   tags:
   - ipsilon
 
+- name: copy saml2 metadata script
+  template:
+    src: prepare-saml2-metadata.py
+    dest: /usr/local/bin/prepare-saml2-metadata
+    owner: root
+    group: root
+    mode: 0755
+  tags:
+  - ipsilon
+
+- name: generate the saml2 metadata
+  command:
+    cmd: /usr/local/bin/prepare-saml2-metadata
+    creates: /etc/ipsilon/root/saml2/metadata.xml
+  tags:
+  - ipsilon
+
 - name: set sebooleans so ipsilon can talk to the db
   seboolean:
     name: httpd_can_network_connect_db
