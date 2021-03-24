@@ -15,26 +15,24 @@
       follow: yes
     register: home_fedora_res
 
+  - name: Copy the script to the host
+    copy:
+      src: scripts/fix-home-fedora-ownerships.sh
+      dest: /usr/local/sbin/fix-home-fedora-ownerships.sh
+      mode: 0755
+    when: home_fedora_res.stat.isdir
+
   - name: Fix ownership of home directories in /home/fedora
     # assumes that directory name == user name
     shell:
       chdir: /home/fedora
-      # skip directories owned by root and verify that the directory actually is the home directory
-      # of the same-named user
-      cmd: >-
-        for dname in */; do
-          dname="${dname%%/}";
-          downer="$(stat --format %U "$dname")";
-          if [ "$downer" = "root" ]; then
-            continue
-          fi;
-          IFS=":" read -r _ _ _ _ _ homedir _ < <(getent passwd "$dname");
-          if [ "$homedir" != "/home/fedora/$dname" ]; then
-            continue
-          fi;
-          echo "fixing ownership: $dname";
-          chown -R "$dname:" "$dname";
-        done
+      cmd: /usr/local/sbin/fix-home-fedora-ownerships.sh
     register: chown_res
     changed_when: "'fixing ownership:' in chown_res.stdout"
+    when: home_fedora_res.stat.isdir
+
+  - name: Delete the script from the host
+    file:
+      path: /usr/local/sbin/fix-home-fedora-ownerships.sh
+      state: absent
     when: home_fedora_res.stat.isdir
