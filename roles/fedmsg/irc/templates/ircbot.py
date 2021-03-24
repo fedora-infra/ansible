@@ -681,7 +681,6 @@ config = dict(
                     '^((?!(pagure)).)*$',
                 ],
                     body=['^((?!(fedora-podcast)).)*$'],
-                ],
             ),
         ),
 
