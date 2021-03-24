@@ -180,42 +180,10 @@
   - role: httpd/reverseproxy
     website: "id{{ env_suffix }}.fedoraproject.org"
     destname: id
-    balancer_name: app-os
-    targettype: openshift
-    keephost: true
-    tags:
-    - id.fedoraproject.org
-    when: env == "production"
-
-  - role: httpd/reverseproxy
-    website: "sso{{ env_suffix }}.fedoraproject.org"
-    destname: id
-    balancer_name: app-os
-    targettype: openshift
-    keephost: true
-    tags:
-    - sso.fedoraproject.org
-    when: env == "production"
-
-  - role: httpd/reverseproxy
-    website: "username.id{{ env_suffix }}.fedoraproject.org"
-    destname: usernameid
-    balancer_name: app-os
-    targettype: openshift
-    keephost: true
-    tags:
-    - id.fedoraproject.org
-    when: env == "production"
-
-  # Ipsilon is moving back to a VM in staging
-  - role: httpd/reverseproxy
-    website: "id{{ env_suffix }}.fedoraproject.org"
-    destname: id
     proxyurl: http://localhost:10020
     keephost: true
     tags:
     - id.fedoraproject.org
-    when: env == "staging"
 
   - role: httpd/reverseproxy
     website: "sso{{ env_suffix }}.fedoraproject.org"
@@ -224,7 +192,6 @@
     keephost: true
     tags:
     - sso.fedoraproject.org
-    when: env == "staging"
 
   - role: httpd/reverseproxy
     website: "username.id{{ env_suffix }}.fedoraproject.org"
@@ -233,7 +200,6 @@
     keephost: true
     tags:
     - id.fedoraproject.org
-    when: env == "staging"
 
   - role: httpd/reverseproxy
     website: "id{{ env_suffix }}.fedoraproject.org"
