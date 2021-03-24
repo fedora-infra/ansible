@@ -17,11 +17,11 @@
   - rkhunter
   - nagios_client
   - hosts
+  - { role: openvpn/client,
+      when: env != "staging" }
   - ipa/client
   - collectd/base
   - sudo
-  - { role: openvpn/client,
-      when: env != "staging" }
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"

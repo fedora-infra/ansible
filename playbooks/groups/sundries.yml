@@ -20,6 +20,8 @@
   - rkhunter
   - nagios_client
   - hosts
+  - { role: openvpn/client,
+      when: env != "staging" }
   - ipa/client
   - collectd/base
   - mod_wsgi
@@ -35,8 +37,6 @@
   - freemedia
   - sudo
   - pager_server
-  - { role: openvpn/client,
-      when: env != "staging" }
   - role: zanata
     when: master_sundries_node|bool
   - role: fedora-web/build

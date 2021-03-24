@@ -23,6 +23,8 @@
   - rkhunter
   - nagios_client
   - hosts
+  - { role: openvpn/client,
+      when: env != "staging" }
   - ipa/client
   - collectd/base
   - apache
@@ -34,8 +36,6 @@
   - { role: nfs/client, when: env != "staging", mnt_dir: '/mnt/web/attachments',  nfs_src_dir: 'fedora_app/app/attachments' }
   - mediawiki
   - sudo
-  - { role: openvpn/client,
-      when: env != "staging" }
 
   tasks:
   - import_tasks: "{{ tasks_path }}/motd.yml"

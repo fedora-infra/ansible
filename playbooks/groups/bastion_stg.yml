@@ -15,11 +15,11 @@
   - rkhunter
   - nagios_client
   - hosts
+  #- { role: openvpn/client, when: inventory_hostname.startswith('bastion13') }
   - ipa/client
   - sudo
   #- collectd/base
   #- { role: openvpn/server, when: not inventory_hostname.startswith('bastion-comm01') or inventory_hostname.startswith('bastion13') }
-  #- { role: openvpn/client, when: inventory_hostname.startswith('bastion13') }
   #- { role: packager_alias, when: not inventory_hostname.startswith('bastion-comm01') or inventory_hostname.startswith('bastion13') }
   #- opendkim
 

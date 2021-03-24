@@ -17,13 +17,13 @@
   - hosts
   - rkhunter
   - nagios_client
+  - { role: openvpn/client,
+      when: datacenter != "rdu" and datacenter != 'iad2' }
   - ipa/client
   - collectd/base
   - collectd/bind
   - rsyncd
   - sudo
-  - { role: openvpn/client,
-      when: datacenter != "rdu" and datacenter != 'iad2' }
   - dns
 
   pre_tasks:

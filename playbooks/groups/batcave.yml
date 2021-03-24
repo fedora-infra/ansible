@@ -15,6 +15,7 @@
   - rkhunter
   - nagios_client
   - hosts
+  - openvpn/client
   - ipa/client
   - ansible-server
   - sudo
@@ -32,7 +33,6 @@
   - role: httpd/certificate
     certname: "{{wildcard_cert_name}}"
     SSLCertificateChainFile: "{{wildcard_int_file}}"
-  - role: openvpn/client
   - role: rabbit/user
     username: "mirror_pagure_ansible{{ env_suffix }}"
   - role: rabbit/user

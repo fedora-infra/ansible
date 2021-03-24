@@ -24,11 +24,11 @@
   - rkhunter
   - nagios_client
   - hosts
+  - { role: openvpn/client, when: vpn|bool }
+  - virthost
   - ipa/client
   - collectd/base
   - sudo
-  - { role: openvpn/client, when: vpn|bool }
-  - virthost
 
   tasks:
   - import_tasks: "{{ tasks_path }}/motd.yml"

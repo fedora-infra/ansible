@@ -17,6 +17,8 @@
   - rkhunter
   - nagios_client
   - hosts
+  - { role: openvpn/client,
+      when: env != "staging" }
   - ipa/client
   - collectd/base
   - fedmsg/base
@@ -24,8 +26,6 @@
       username: "datagrepper{{ env_suffix }}"}
   - rsyncd
   - sudo
-  - { role: openvpn/client,
-      when: env != "staging" }
   - mod_wsgi
 
   pre_tasks:

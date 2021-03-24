@@ -59,13 +59,13 @@
   roles:
   - base
   - collectd/base
+  - { role: openvpn/client, when: env != "staging" }
   - ipa/client
   - hosts
   - nagios_client
   - rkhunter
   - rsyncd
   - sudo
-  - { role: openvpn/client, when: env != "staging" }
   - cgit/base
   - cgit/clean_lock_cron
   - cgit/make_pkgs_list

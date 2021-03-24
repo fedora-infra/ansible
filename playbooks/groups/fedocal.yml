@@ -15,11 +15,11 @@
   - rkhunter
   - nagios_client
   - hosts
+  - { role: openvpn/client,
+      when: env != "staging" }
   - ipa/client
   - rsyncd
   - sudo
-  - { role: openvpn/client,
-      when: env != "staging" }
   - mod_wsgi
   - collectd/base
 

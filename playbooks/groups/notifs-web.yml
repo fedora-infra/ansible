@@ -20,6 +20,8 @@
   - rkhunter
   - nagios_client
   - hosts
+  - { role: openvpn/client,
+      when: env != "staging" }
   - ipa/client
   - collectd/base
   - mod_wsgi
@@ -29,8 +31,6 @@
       username: "notifs-web{{ env_suffix }}"}
   - notifs/frontend
   - sudo
-  - { role: openvpn/client,
-      when: env != "staging" }
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"

@@ -15,10 +15,10 @@
   - rkhunter
   - nagios_client
   - hosts
+  - { role: openvpn/client, when: env != "staging" and inventory_hostname.startswith('mm-frontend')  }
   - ipa/client
   - sudo
   - collectd/base
-  - { role: openvpn/client, when: env != "staging" and inventory_hostname.startswith('mm-frontend')  }
   - { role: nfs/client, when: inventory_hostname.startswith('mm-backend01'), mnt_dir: '/srv/pub',  nfs_src_dir: 'fedora_ftp/fedora.redhat.com/pub' }
 
   pre_tasks:

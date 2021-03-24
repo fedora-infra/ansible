@@ -31,6 +31,7 @@
   - rkhunter
   - nagios_client
   - hosts
+  - { role: openvpn/client, when: vpn == True }
   - ipa/client
   - collectd/base
   - apache
@@ -40,7 +41,6 @@
   - { role: nfs/client, when: datacenter == "iad2", mnt_dir: '/mnt/koji',  nfs_src_dir: 'fedora_koji/koji/' } # needed for internal sync and odcs
   - { role: nfs/client, when: datacenter == "iad2", mnt_dir: '/srv/odcs',  nfs_src_dir: 'fedora_odcs' } # needed for internal sync
   - sudo
-  - { role: openvpn/client, when: vpn == True }
 
   pre_tasks:
   - include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README

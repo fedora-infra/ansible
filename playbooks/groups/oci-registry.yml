@@ -16,12 +16,12 @@
   - rkhunter
   - nagios_client
   - hosts
+  - { role: openvpn/client,
+      when: env != "staging" }
   - ipa/client
   - collectd/base
   - rsyncd
   - sudo
-  - { role: openvpn/client,
-      when: env != "staging" }
   - role: nfs/client
     mnt_dir: '/srv/registry'
     nfs_src_dir: "oci_registry"

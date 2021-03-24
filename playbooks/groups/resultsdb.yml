@@ -23,11 +23,11 @@
    - { role: rkhunter, tags: ['rkhunter'] }
    - { role: nagios_client, tags: ['nagios_client'] }
    - { role: hosts, tags: ['hosts']}
+   - { role: openvpn/client,
+       when: deployment_type == "prod" }
    - ipa/client
    - { role: collectd/base, tags: ['collectd_base'] }
    - { role: sudo, tags: ['sudo'] }
-   - { role: openvpn/client,
-       when: deployment_type == "prod" }
    - apache
    - fedmsg/base
    - { role: dnf-automatic, tags: ['dnfautomatic'] }

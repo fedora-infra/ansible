@@ -19,11 +19,11 @@
   - rkhunter
   - nagios_client
   - hosts
+  - { role: openvpn/client,
+      when: env != "staging" }
   - ipa/client
   - collectd/base
   - sudo
-  - { role: openvpn/client,
-      when: env != "staging" }
   - spamassassin
   - mod_wsgi
 

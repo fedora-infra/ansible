@@ -22,6 +22,10 @@
   - base
   - rkhunter
   - hosts
+  # The proxies don't actually need to talk to these hosts so we won't bother
+  # putting them on the vpn.
+  #- { role: openvpn/client,
+  #    when: env != "staging" }
   - ipa/client
   - nagios_client
   - collectd/base
@@ -30,10 +34,6 @@
   - { role: rabbit/user,
       username: "notifs-backend{{ env_suffix }}"}
   - sudo
-  # The proxies don't actually need to talk to these hosts so we won't bother
-  # putting them on the vpn.
-  #- { role: openvpn/client,
-  #    when: env != "staging" }
 
   tasks:
   - import_tasks: "{{ tasks_path }}/motd.yml"

@@ -16,12 +16,12 @@
   - rkhunter
   - nagios_client
   - hosts
+  - { role: openvpn/client,
+      when: env != "staging" }
   - ipa/client
   - collectd/base
   - sudo
   - rsyncd
-  - { role: openvpn/client,
-      when: env != "staging" }
   - mod_wsgi
   - blockerbugs
 

@@ -18,6 +18,8 @@
 
   roles:
   - base
+  - { role: openvpn/client,
+      when: env != "staging" }
   - ipa/client
   - rkhunter
   - nagios_client
@@ -28,8 +30,6 @@
   - rsyncd
   - { role: mirrormanager/mirrorlist_proxy,
       when: env == "staging" or "'mirrorlist_proxy' in group_names" }
-  - { role: openvpn/client,
-      when: env != "staging" }
   - apache
 
   tasks:

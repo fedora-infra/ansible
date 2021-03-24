@@ -20,14 +20,14 @@
   - rkhunter
   - nagios_client
   - hosts
+  - { role: openvpn/client,
+      when: env != "staging" }
   - ipa/client
   - collectd/base
   - badges/frontend
   - fedmsg/base
   - rsyncd
   - sudo
-  - { role: openvpn/client,
-      when: env != "staging" }
   - mod_wsgi
   - role: collectd/web-service
     site: frontpage

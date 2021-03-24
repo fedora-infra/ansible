@@ -16,11 +16,11 @@
   - nagios_client
   - collectd/base
   - hosts
+  - { role: openvpn/client,
+      when: env != "staging" }
   - ipa/client
   - rsyncd
   - sudo
-  - { role: openvpn/client,
-      when: env != "staging" }
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
