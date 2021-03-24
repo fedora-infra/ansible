@@ -92,7 +92,7 @@
   when: fas_client_groups is defined
   run_once: false
 
-- name: "Warn if IPA client variables are unset"
+- name: "Warn if essential IPA client variables are unset"
   fail:
     msg: "`{{ item }}` is not defined"
   ignore_errors: true
@@ -100,8 +100,6 @@
   loop:
     - ipa_host_group
     - ipa_host_group_desc
-    - ipa_client_shell_groups
-    - ipa_client_sudo_groups
 
 - name: Ensure shell access HBAC rule exists
   delegate_to: "{{ item[0] }}"
