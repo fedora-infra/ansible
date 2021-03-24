@@ -680,7 +680,6 @@ config = dict(
                 topic=[
                     '^((?!(pagure)).)*$',
                 ],
-                body=[
                     body=['^((?!(fedora-podcast)).)*$'],
                 ],
             ),
