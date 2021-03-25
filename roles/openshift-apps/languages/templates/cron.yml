@@ -2,86 +2,12 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: extract-33
-spec:
-  successfulJobsHistoryLimit: 3
-  failedJobsHistoryLimit: 2
-  concurrencyPolicy: Forbid
-  schedule: "0 4 * * *"
-  startingDeadlineSeconds: 500
-  jobTemplate:
-    spec:
-      backoffLimit: 0
-      template:
-        metadata:
-          labels:
-            parent: "cron_extract"
-        spec:
-          containers:
-          - name: extract
-            image: "docker-registry.default.svc:5000/languages/builder:f33"
-            imagePullPolicy: Always
-            command:
-            - ./build.py
-            - "--results"
-            - f33
-            volumeMounts:
-            - name: srpm-data
-              readOnly: false
-              mountPath: /src/results
-          volumes:
-          - name: srpm-data
-            persistentVolumeClaim:
-              claimName: "languages-storage{{ '-stg' if env == 'staging' else '' }}"
-          restartPolicy: Never
----
-{% endif %}
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: extract-34
-spec:
-  successfulJobsHistoryLimit: 3
-  failedJobsHistoryLimit: 2
-  concurrencyPolicy: Forbid
-  schedule: "0 4 * * *"
-  startingDeadlineSeconds: 500
-  jobTemplate:
-    spec:
-      backoffLimit: 0
-      template:
-        metadata:
-          labels:
-            parent: "cron_extract"
-        spec:
-          containers:
-          - name: extract
-            image: "docker-registry.default.svc:5000/languages/builder:latest"
-            imagePullPolicy: Always
-            command:
-            - ./build.py
-            - "--results"
-            - f34
-            volumeMounts:
-            - name: srpm-data
-              readOnly: false
-              mountPath: /src/results
-          volumes:
-          - name: srpm-data
-            persistentVolumeClaim:
-              claimName: "languages-storage{{ '-stg' if env == 'staging' else '' }}"
-          restartPolicy: Never
----
-{% if env == "production" %}
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
   name: stats-33
 spec:
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 2
   concurrencyPolicy: Forbid
-  schedule: "0 20 * * *"
+  schedule: "0 2 * * *"
   startingDeadlineSeconds: 500
   jobTemplate:
     spec:
@@ -96,6 +22,48 @@ spec:
             persistentVolumeClaim:
               claimName: "languages-storage{{ '-stg' if env == 'staging' else '' }}"
           restartPolicy: Never
+          initContainers:
+          - name: clean-tmp
+            image: "docker-registry.default.svc:5000/languages/builder:latest"
+            imagePullPolicy: Always
+            env:
+            - name: RELEASEVER
+              value: "33"
+            - name: TMPDIR
+              value: /src/results/f$(RELEASEVER)/tmp
+            command: ["/bin/sh", "-c"]
+            args:
+            - >
+              [ -d ${TMPDIR} ] && rm -Rf ${TMPDIR} ;
+              mkdir -p ${TMPDIR}
+            volumeMounts:
+            - name: srpm-data
+              readOnly: false
+              mountPath: /src/results
+          - name: extract
+            image: "docker-registry.default.svc:5000/languages/builder:latest"
+            imagePullPolicy: Always
+            command:
+            - ./build.py
+            - "--results"
+            - f$(RELEASEVER)
+            env:
+            - name: RELEASEVER
+              value: "33"
+            - name: DNF_CONF
+              value: "dnf{{ '_stg' if env == 'staging' else '' }}_$(RELEASEVER).conf"
+            - name: TMPDIR
+              value: /src/results/f$(RELEASEVER)/tmp
+            - name: THREAD_MAX_CONN
+              value: "3"
+            - name: THREAD_MAX_EXTR
+              value: "3"
+            - name: THREAD_MAX
+              value: "8"
+            volumeMounts:
+            - name: srpm-data
+              readOnly: false
+              mountPath: /src/results
           containers:
           - name: stats
             image: "docker-registry.default.svc:5000/languages/builder:latest"
@@ -103,10 +71,15 @@ spec:
             command: ["/bin/sh", "-c"]
             args:
             - >
-              ./build_language_list.py --results f33 --refresh &&
-              ./build_language_list.py --results f33 --analyzealllang &&
-              ./build_tm.py --results f33 --compress &&
-              ./build_stats.py --results f33
+              ./build_language_list.py --results f$(RELEASEVER) --refresh &&
+              ./build_language_list.py --results f$(RELEASEVER) --analyzealllang &&
+              ./build_tm.py --results f$(RELEASEVER) --compress &&
+              ./build_stats.py --results f$(RELEASEVER)
+            env:
+            - name: RELEASEVER
+              value: "33"
+            - name: TMPDIR
+              value: /src/results/f$(RELEASEVER)/tmp
             volumeMounts:
             - name: srpm-data
               readOnly: false
@@ -121,7 +94,7 @@ spec:
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 2
   concurrencyPolicy: Forbid
-  schedule: "0 10 * * *"
+  schedule: "0 4 * * *"
   startingDeadlineSeconds: 500
   jobTemplate:
     spec:
@@ -136,6 +109,48 @@ spec:
             persistentVolumeClaim:
               claimName: "languages-storage{{ '-stg' if env == 'staging' else '' }}"
           restartPolicy: Never
+          initContainers:
+          - name: clean-tmp
+            image: "docker-registry.default.svc:5000/languages/builder:latest"
+            imagePullPolicy: Always
+            env:
+            - name: RELEASEVER
+              value: "34"
+            - name: TMPDIR
+              value: /src/results/f$(RELEASEVER)/tmp
+            command: ["/bin/sh", "-c"]
+            args:
+            - >
+              [ -d ${TMPDIR} ] && rm -Rf ${TMPDIR} ;
+              mkdir -p ${TMPDIR}
+            volumeMounts:
+            - name: srpm-data
+              readOnly: false
+              mountPath: /src/results
+          - name: extract
+            image: "docker-registry.default.svc:5000/languages/builder:latest"
+            imagePullPolicy: Always
+            command:
+            - ./build.py
+            - "--results"
+            - f$(RELEASEVER)
+            env:
+            - name: RELEASEVER
+              value: "34"
+            - name: DNF_CONF
+              value: "dnf{{ '_stg' if env == 'staging' else '' }}_$(RELEASEVER).conf"
+            - name: TMPDIR
+              value: /src/results/f$(RELEASEVER)/tmp
+            - name: THREAD_MAX_CONN
+              value: "3"
+            - name: THREAD_MAX_EXTR
+              value: "3"
+            - name: THREAD_MAX
+              value: "8"
+            volumeMounts:
+            - name: srpm-data
+              readOnly: false
+              mountPath: /src/results
           containers:
           - name: stats
             image: "docker-registry.default.svc:5000/languages/builder:latest"
@@ -143,10 +158,15 @@ spec:
             command: ["/bin/sh", "-c"]
             args:
             - >
-              ./build_language_list.py --results f34 --refresh &&
-              ./build_language_list.py --results f34 --analyzealllang &&
-              ./build_tm.py --results f34 --compress &&
-              ./build_stats.py --results f34
+              ./build_language_list.py --results f$(RELEASEVER) --refresh &&
+              ./build_language_list.py --results f$(RELEASEVER) --analyzealllang &&
+              ./build_tm.py --results f$(RELEASEVER) --compress &&
+              ./build_stats.py --results f$(RELEASEVER)
+            env:
+            - name: RELEASEVER
+              value: "34"
+            - name: TMPDIR
+              value: /src/results/f$(RELEASEVER)/tmp
             volumeMounts:
             - name: srpm-data
               readOnly: false
@@ -168,7 +188,7 @@ spec:
       template:
         metadata:
           labels:
-            parent: "cron_stats"
+            parent: "cron_website"
         spec:
           volumes:
           - name: srpm-data
@@ -207,7 +227,7 @@ spec:
       template:
         metadata:
           labels:
-            parent: "cron_stats"
+            parent: "cron_website_stats"
         spec:
           restartPolicy: Never
           containers:

@@ -29,10 +29,6 @@
     app: languages
     buildname: build-latest
 
-  - role: openshift/start-build
-    app: languages
-    buildname: build-f33
-
   - role: openshift/object
     app: languages
     template: service.yml
