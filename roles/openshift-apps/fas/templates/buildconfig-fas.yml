@@ -14,7 +14,6 @@ spec:
 {% if env == "staging" %}
           curl -o /etc/yum.repos.d/infra-tags-stg.repo https://infrastructure.fedoraproject.org/infra/ansible/files/common/rhel-infra-tags-stg.repo && \
 {% endif %}
-          curl -o /etc/yum.repos.d/infra-tags.repo https://infrastructure.fedoraproject.org/infra/ansible/files/common/rhel-infra-tags.repo
 
       RUN yum install -y \
           fas \
