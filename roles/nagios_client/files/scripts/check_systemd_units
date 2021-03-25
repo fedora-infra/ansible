@@ -30,7 +30,6 @@ failed_array=()
 active_array=()
 
 # Check units's status
- echo -e "here the lenght of array : ${#active_array[@]}"
 for element in ${unit_list[@]}; do
   status=$(systemctl status ${element} |grep -E "Active:"  | awk '{ print $2 }')
   if [ $status == failed ]; then
