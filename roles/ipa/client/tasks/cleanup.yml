@@ -29,6 +29,16 @@
   register: pam_sudo_pam_url_so
   when: pam_sudo_stat.stat.exists and not pam_sudo_stat.stat.islnk
 
+- name: Remove the fas-client cron jobs so they do not mess with system
+  file:
+    path=/etc/cron.d/fas-client
+    state=absent
+
+- name: Remove the fas-client email cron jobs so they do not mess with system
+  file:
+    path=/etc/cron.d/fas-client-aliases
+    state=absent
+
 - name: Remove butchered sudo pam.d file
   file:
     name: /etc/pam.d/sudo
