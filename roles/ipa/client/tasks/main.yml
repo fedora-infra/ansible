@@ -32,6 +32,7 @@
          -p admin -w {{ ipa_admin_password }}
          -U -N --force-join
          --mkhomedir
+         --no-ssh
     creates: /etc/ipa/default.conf
   notify: clean sss caches
   tags:
