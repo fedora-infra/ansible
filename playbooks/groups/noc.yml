@@ -62,7 +62,6 @@
   - { role: dhcp_server, when: datacenter == 'iad2' }
   - { role: tftp_server, when: datacenter == 'iad2' }
   - { role: nagios_server }
-  - { role: fedmsg/base }
 
   tasks:
   - name: install some packages which arent in playbooks
