@@ -25,44 +25,7 @@ primary_auth_source: ipa
 ipa_host_group: bastion
 ipa_host_group_desc: Bastion hosts
 
-# this assumes the `batcave` group exists with at least one host in it
-#batcave_ipa_client_shell_groups: "{{ hostvars[groups['batcave'][0]]['ipa_client_shell_groups'] | default([]) }}"
-
-# Stopgap because the above doesn't work, needs to be in sync with what's actually set for the
-# batcave group.
-batcave_ipa_client_shell_groups:
-- fi-apprentice
-- sysadmin-ask
-- sysadmin-atomic
-- sysadmin-badges
-- sysadmin-bot
-- sysadmin-centos
-- sysadmin-cloud
-- sysadmin-copr
-- sysadmin-coreos
-- sysadmin-cvs
-- sysadmin-datanommer
-- sysadmin-debuginfod
-- sysadmin-fedimg
-- sysadmin-fpdc
-- sysadmin-gnome
-- sysadmin-hosted
-- sysadmin-koschei
-- sysadmin-libravatar
-- sysadmin-mbs
-- sysadmin-messaging
-- sysadmin-noc
-- sysadmin-odcs
-- sysadmin-osbs
-- sysadmin-qa
-- sysadmin-releasemonitoring
-- sysadmin-releng
-- sysadmin-tools
-- sysadmin-upstreamfirst
-- sysadmin-veteran
-- sysadmin-web
-
-bastion_ipa_client_shell_groups:
+ipa_client_shell_groups:
 - pungi-devel
 - sysadmin-analysis
 - sysadmin-dba
@@ -71,9 +34,8 @@ bastion_ipa_client_shell_groups:
 - sysadmin-spin
 - sysadmin-troubleshoot
 - sysadmin-qa
-
-
-ipa_client_shell_groups: "{{ (bastion_ipa_client_shell_groups + batcave_ipa_client_shell_groups) | sort | unique }}"
+ipa_client_shell_groups_inherit_from:
+- batcave
 
 #
 # This is a postfix gateway. This will pick up gateway postfix config in base

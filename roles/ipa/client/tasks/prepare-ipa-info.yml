@@ -9,6 +9,31 @@
 # Thanks to having two environments, staging and prod, this has to deal with the "responsible" IPA
 # server for individual hosts.
 
+# ipa_hosts_combined_shell_groups_dict ->
+#   {
+#     "ansible_host_1": ["shell_group_1", "shell_group_2", ...],
+#     "ansible_host_2": ["shell_group_3", "shell_group_4", ...],
+#     ...
+#   }
+- name: Combine own and inherited shell groups per host
+  set_fact:
+    ipa_hosts_combined_shell_groups_dict: >-
+      {{
+        ipa_hosts_combined_shell_groups_dict | default({}) | combine(
+          {
+            item:
+              (hostvars[item]['ipa_client_shell_groups_inherit_from'] | default([]))
+              | map('extract', groups, 0)
+              | map('extract', hostvars, 'ipa_client_shell_groups')
+              | flatten
+              | union(hostvars[item]['ipa_client_shell_groups'] | default([]))
+              | sort
+          },
+          recursive=True
+        )
+      }}
+  loop: "{{ ansible_play_hosts }}"
+
 # ipa_server_host_groups_dict ->
 #   {
 #     "ipa_server_1": {
@@ -56,7 +81,9 @@
             hostvars[item]['ipa_server']: {
               hostvars[item]['ipa_host_group']: {
                 'desc': hostvars[item]['ipa_host_group_desc'] | default(omit),
-                'shell_groups': hostvars[item]['ipa_client_shell_groups'] | default(omit),
+                'shell_groups':
+                  (ipa_hosts_combined_shell_groups_dict[item] | length > 0)
+                  | ternary(ipa_hosts_combined_shell_groups_dict[item], omit),
                 'sudo_groups': hostvars[item]['ipa_client_sudo_groups'] | default(omit),
                 'hosts': {item: true},
               }
@@ -70,7 +97,7 @@
         (ipa_server_all_groups_hosts_dict | default({})) | combine(
           {
             hostvars[item]['ipa_server']: {
-              'groups': hostvars[item]['ipa_client_shell_groups'] | default([]) | union(
+              'groups': ipa_hosts_combined_shell_groups_dict[item] | union(
                 hostvars[item]['ipa_client_sudo_groups'] | default([])
               ),
               'hosts': {item: True},
