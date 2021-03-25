@@ -113,6 +113,9 @@ def rename(filename, aliases_file):
 def main():
     args = sys.argv[1:]
 
+    # Use the system's keytab for authentication
+    os.environ["KRB5_CLIENT_KTNAME"] = "/etc/krb5.keytab"
+
     try:
         if not args:
             gen_all_aliases()
