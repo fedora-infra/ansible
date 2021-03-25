@@ -14,7 +14,7 @@
   - fasjson
 
 - name: fasjson-aliases script
-  copy: src=fasjson-aliases.j2 dest=/usr/local/bin/fasjson-aliases owner=root mode=0755
+  template: src=fasjson-aliases.j2 dest=/usr/local/bin/fasjson-aliases owner=root mode=0755
   tags:
   - config
   - fasjson
