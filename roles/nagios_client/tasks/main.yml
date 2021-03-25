@@ -55,7 +55,7 @@
   - nagios_client
 
 - name: install nrpe check for systemd unit
-  copy: src="script/{{ item }}" dest="{{ libdir }}/nagios/plugins/{{ item }}" mode=0775 owner=nagios group=nagios
+  copy: src="scripts/{{ item }}" dest="{{ libdir }}/nagios/plugins/{{ item }}" mode=0775 owner=nagios group=nagios
   with_items:
     - check_systemd_units
   when: inventory_hostname.startswith('pagure')
