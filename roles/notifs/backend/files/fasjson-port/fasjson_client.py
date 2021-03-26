@@ -1,4 +1,5 @@
 import logging
+import os
 
 import requests
 import requests.exceptions
@@ -19,6 +20,7 @@ class Client(object):
     def __init__(self, url, principal=None):
         self.url = url
         self.principal = principal
+        os.environ["KRB5_CLIENT_KTNAME"] = "/etc/krb5.keytab"
         try:
             creds = Credentials(usage="initiate")
         except exceptions.GSSError as e:
