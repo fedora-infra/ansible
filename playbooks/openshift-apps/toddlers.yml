@@ -52,6 +52,11 @@
       warning: 10
       critical: 100
 
+  - role: openshift/keytab
+    app: toddlers
+    key: service.keytab
+    secret_name: toddlers-keytab
+
   - role: openshift/ipa-client
     app: toddlers
 
