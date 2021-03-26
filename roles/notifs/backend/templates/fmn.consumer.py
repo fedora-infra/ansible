@@ -100,7 +100,7 @@ config = {
     "fasjson": {
         "active": True,
         "url": "https://fasjson.fedoraproject.org/"
-    }
+    },
     "fas_credentials": {
         "username": "{{fedoraDummyUser}}",
         "password": "{{fedoraDummyUserPassword}}",
