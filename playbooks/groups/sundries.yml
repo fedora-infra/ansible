@@ -68,9 +68,14 @@
     mount_stg: true
   - role: nfs/client
     mnt_dir: '/srv/web/registry-index'
-    nfs_src_dir: '/flatpak-indexer-storage-{{ env_short }}'
+    nfs_src_dir: 'flatpak-indexer-storage-stg'
     mount_stg: true
-
+    when: master_sundries_node|bool and env == "staging"
+  - role: nfs/client
+    mnt_dir: '/srv/web/registry-index'
+    nfs_src_dir: 'flatpak-indexer-storage-stg'
+    mount_stg: true
+    when: master_sundries_node|bool and env != "staging"
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
