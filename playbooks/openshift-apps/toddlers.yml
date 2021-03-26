@@ -52,6 +52,9 @@
       warning: 10
       critical: 100
 
+  - role: openshift/ipa-client
+    app: toddlers
+
   - role: openshift/object
     app: toddlers
     template: buildconfig.yml
