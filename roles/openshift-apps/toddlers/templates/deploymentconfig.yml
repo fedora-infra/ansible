@@ -26,6 +26,8 @@ spec:
         env:
           - name: PYTHONPATH
             value: "/code"
+          - name: KRB5_CONFIG
+            value: /etc/ipa/krb5.conf
         resources: {}
         volumeMounts:
         - name: toddlers-secret-volume
