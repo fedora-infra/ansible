@@ -19,7 +19,9 @@
   - ipsilon-tools-ipa
   - mod_auth_openidc
   - mod_auth_gssapi
-  - python-psycopg2
+  - python3-psycopg2
+  # For the openid api extension
+  - python3-freeipa
   # For the playbook itself
   - git
   - krb5-workstation
@@ -313,6 +315,14 @@
 - name: set sebooleans so ipsilon can talk to the db
   seboolean:
     name: httpd_can_network_connect_db
+    state: true
+    persistent: true
+  tags:
+  - ipsilon
+
+- name: set sebooleans so ipsilon can talk to IPA for the openid extension
+  seboolean:
+    name: httpd_can_network_connect
     state: true
     persistent: true
   tags:
