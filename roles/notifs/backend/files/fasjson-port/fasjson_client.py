@@ -18,7 +18,7 @@ class Client(object):
     python2.
     """
     def __init__(self, url, principal=None):
-        self.url = url
+        self.url = url.rstrip("/") + "/v1/"
         self.principal = principal
         os.environ["KRB5_CLIENT_KTNAME"] = "/etc/krb5.keytab"
         try:
