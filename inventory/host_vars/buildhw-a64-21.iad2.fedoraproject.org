@@ -16,28 +16,28 @@ mac1: 50:6b:4b:6a:b6:20
 mac2: 50:6b:4b:6a:b6:21
 
 network_connections:
-  - name: eth0
-    mac: "{{ mac0 }}"
-    type: ethernet
-    autoconnect: no
-  - name: eth1
-    state: up
-    type: ethernet
-    autoconnect: yes
-    mac: "{{ mac1 }}"
-    ip:
-      address: 
-      - "{{ eth1_ipv4 }}/{{ eth1_ipv4_nm }}"
-      gateway4: "{{ eth1_ipv4_gw }}"
-      dns: 
-      - "{{ dns1 }}"
-      - "{{ dns2 }}"
-      dns_search: 
-      - iad2.fedoraproject.org
-      - fedoraproject.org
-      dhcp4: no
-      auto6: no
-  - name: eth2
-    mac: "{{ mac2 }}"
-    type: ethernet
-    autoconnect: no
+- name: eth0
+  mac: "{{ mac0 }}"
+  type: ethernet
+  autoconnect: no
+- name: eth1
+  state: up
+  type: ethernet
+  autoconnect: yes
+  mac: "{{ mac1 }}"
+  ip:
+    address: 
+    - "{{ eth1_ipv4 }}/{{ eth1_ipv4_nm }}"
+    gateway4: "{{ eth1_ipv4_gw }}"
+    dns: 
+    - "{{ dns1 }}"
+    - "{{ dns2 }}"
+    dns_search: 
+    - iad2.fedoraproject.org
+    - fedoraproject.org
+    dhcp4: no
+    auto6: no
+- name: eth2
+  mac: "{{ mac2 }}"
+  type: ethernet
+  autoconnect: no

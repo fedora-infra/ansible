@@ -14,25 +14,24 @@ mac0: 14:9e:cf:61:9e:e3
 mac1: 14:9e:cf:61:9e:e6 
 
 network_connections:
-  - name: eth0
-    mac: "{{ mac0 }}"
-    state: up
-    type: ethernet
-    ip:
-      address: 
-      - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
-      gateway4: "{{ eth0_ipv4_gw }}"
-      dns: 
-      - "{{ dns1 }}"
-      - "{{ dns2 }}"
-      dns_search: 
-      - iad2.fedoraproject.org
-      - fedoraproject.org
-      dhcp4: no
-      auto6: no
-
-  - name: eth1
-    mac: "{{ mac1 }}"
-    state: down
-    type: ethernet
-    autoconnect: yes
+- name: eth0
+  mac: "{{ mac0 }}"
+  state: up
+  type: ethernet
+  ip:
+    address: 
+    - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
+    gateway4: "{{ eth0_ipv4_gw }}"
+    dns: 
+    - "{{ dns1 }}"
+    - "{{ dns2 }}"
+    dns_search: 
+    - iad2.fedoraproject.org
+    - fedoraproject.org
+    dhcp4: no
+    auto6: no
+- name: eth1
+  mac: "{{ mac1 }}"
+  state: down
+  type: ethernet
+  autoconnect: yes

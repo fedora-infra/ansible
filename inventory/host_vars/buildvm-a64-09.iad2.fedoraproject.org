@@ -14,19 +14,19 @@ has_ipv6: no
 mac0: 52:54:00:c8:74:89  
 
 network_connections:
-  - name: eth0
-    mac: "{{ mac0 }}"
-    state: up
-    type: ethernet
-    ip:
-      address: 
-      - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
-      gateway4: "{{ eth0_ipv4_gw }}"
-      dns: 
-      - "{{ dns1 }}"
-      - "{{ dns2 }}"
-      dns_search: 
-      - iad2.fedoraproject.org
-      - fedoraproject.org
-      dhcp4: no
-      auto6: no
+- name: eth0
+  mac: "{{ mac0 }}"
+  state: up
+  type: ethernet
+  ip:
+    address: 
+    - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
+    gateway4: "{{ eth0_ipv4_gw }}"
+    dns: 
+    - "{{ dns1 }}"
+    - "{{ dns2 }}"
+    dns_search: 
+    - iad2.fedoraproject.org
+    - fedoraproject.org
+    dhcp4: no
+    auto6: no
