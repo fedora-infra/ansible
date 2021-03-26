@@ -73,7 +73,7 @@
     when: master_sundries_node|bool and env == "staging"
   - role: nfs/client
     mnt_dir: '/srv/web/registry-index'
-    nfs_src_dir: 'flatpak-indexer-storage-stg'
+    nfs_src_dir: 'flatpak-indexer-storage'
     mount_stg: true
     when: master_sundries_node|bool and env != "staging"
 
