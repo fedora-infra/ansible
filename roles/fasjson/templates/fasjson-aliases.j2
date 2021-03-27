@@ -103,8 +103,6 @@ def rename(filename, aliases_file):
         os.rename(filename, aliases_file)
         if (os.path.exists(filename)):
             os.remove(filename)
-        else:
-            print("Aliases updated. Temporary files removed.")
     except IOError as e:
         print(f"Error updating aliases file {e}", file=sys.stderr)
         raise
