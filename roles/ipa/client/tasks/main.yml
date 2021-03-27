@@ -70,3 +70,12 @@
     - ipa/client
     - config
   run_once: yes
+
+- name: Ensure that nss knows to skip certain users
+  copy: src=fedora-nss-ignore.conf dest=/etc/sssd/conf.d/ mode=600 owner=root group=root
+  tags:
+  - ipa/client
+  - config
+  notify:
+    - restart sssd
+    - clean sss caches
