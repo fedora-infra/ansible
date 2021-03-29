@@ -14,7 +14,7 @@ spec:
     git:
       uri: https://pagure.io/fedocal.git
 {% if env == 'staging' %}
-      ref: "staging"
+      ref: "debug"
 {% else %}
       ref: "production"
 {% endif %}
