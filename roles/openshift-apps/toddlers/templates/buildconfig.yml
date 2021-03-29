@@ -14,7 +14,7 @@ spec:
     git:
       uri: https://pagure.io/fedora-infra/toddlers.git
 {% if env == 'staging' %}
-      ref: "debug"
+      ref: "staging"
 {% else %}
       ref: "production"
 {% endif %}
