@@ -207,7 +207,7 @@ spec:
           timeoutSeconds: 1
         resources: {}
         volumeMounts:
-        - mountPath: /var/lib/redis/data
+        - mountPath: /data
           name: redis-data-volume
       dnsPolicy: ClusterFirst
       restartPolicy: Always
