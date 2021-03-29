@@ -1,0 +1,68 @@
+volumes:
+- name: srpm-data
+  persistentVolumeClaim:
+    claimName: "languages-storage{{ '-stg' if env == 'staging' else '' }}"
+restartPolicy: Never
+initContainers:
+- name: clean-tmp
+  image: "docker-registry.default.svc:5000/languages/builder:latest"
+  imagePullPolicy: Always
+  env:
+  - name: RELEASEVER
+    value: "{{ release }}"
+  - name: TMPDIR
+    value: /src/results/f$(RELEASEVER)/tmp
+  command: ["/bin/sh", "-c"]
+  args:
+  - >
+    [ -d ${TMPDIR} ] && rm -Rf ${TMPDIR} ;
+    mkdir -p ${TMPDIR}
+  volumeMounts:
+  - name: srpm-data
+    readOnly: false
+    mountPath: /src/results
+- name: extract
+  image: "docker-registry.default.svc:5000/languages/builder:latest"
+  imagePullPolicy: Always
+  command:
+  - ./build.py
+  - "--results"
+  - f$(RELEASEVER)
+  env:
+  - name: RELEASEVER
+    value: "{{ release }}"
+  - name: DNF_CONF
+    value: "dnf{{ '_stg' if env == 'staging' else '' }}_$(RELEASEVER).conf"
+  - name: TMPDIR
+    value: /src/results/f$(RELEASEVER)/tmp
+  - name: THREAD_MAX_CONN
+    value: "3"
+  - name: THREAD_MAX_EXTR
+    value: "3"
+  - name: THREAD_MAX
+    value: "8"
+  volumeMounts:
+  - name: srpm-data
+    readOnly: false
+    mountPath: /src/results
+containers:
+- name: stats
+  image: "docker-registry.default.svc:5000/languages/builder:latest"
+  imagePullPolicy: Always
+  command: ["/bin/sh", "-c"]
+  args:
+  - >
+    ./build_language_list.py --results f$(RELEASEVER) --refresh &&
+    ./build_language_list.py --results f$(RELEASEVER) --analyzealllang &&
+    ./build_tm.py --results f$(RELEASEVER) --compress &&
+    ./build_stats.py --results f$(RELEASEVER)
+  env:
+  - name: RELEASEVER
+    value: "{{ release }}"
+  - name: TMPDIR
+    value: /src/results/f$(RELEASEVER)/tmp
+  volumeMounts:
+  - name: srpm-data
+    readOnly: false
+    mountPath: /src/results
+

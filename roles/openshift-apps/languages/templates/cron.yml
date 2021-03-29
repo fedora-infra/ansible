@@ -1,13 +1,14 @@
 {% if env == "production" %}
+{%   for release in ("10", "20", "30") %}
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: stats-33
+  name: "stats-{{ release }}"
 spec:
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 2
   concurrencyPolicy: Forbid
-  schedule: "0 2 * * *"
+  schedule: "0 2 */16 * *"
   startingDeadlineSeconds: 500
   jobTemplate:
     spec:
@@ -17,79 +18,17 @@ spec:
           labels:
             parent: "cron_stats"
         spec:
-          volumes:
-          - name: srpm-data
-            persistentVolumeClaim:
-              claimName: "languages-storage{{ '-stg' if env == 'staging' else '' }}"
-          restartPolicy: Never
-          initContainers:
-          - name: clean-tmp
-            image: "docker-registry.default.svc:5000/languages/builder:latest"
-            imagePullPolicy: Always
-            env:
-            - name: RELEASEVER
-              value: "33"
-            - name: TMPDIR
-              value: /src/results/f$(RELEASEVER)/tmp
-            command: ["/bin/sh", "-c"]
-            args:
-            - >
-              [ -d ${TMPDIR} ] && rm -Rf ${TMPDIR} ;
-              mkdir -p ${TMPDIR}
-            volumeMounts:
-            - name: srpm-data
-              readOnly: false
-              mountPath: /src/results
-          - name: extract
-            image: "docker-registry.default.svc:5000/languages/builder:latest"
-            imagePullPolicy: Always
-            command:
-            - ./build.py
-            - "--results"
-            - f$(RELEASEVER)
-            env:
-            - name: RELEASEVER
-              value: "33"
-            - name: DNF_CONF
-              value: "dnf{{ '_stg' if env == 'staging' else '' }}_$(RELEASEVER).conf"
-            - name: TMPDIR
-              value: /src/results/f$(RELEASEVER)/tmp
-            - name: THREAD_MAX_CONN
-              value: "3"
-            - name: THREAD_MAX_EXTR
-              value: "3"
-            - name: THREAD_MAX
-              value: "8"
-            volumeMounts:
-            - name: srpm-data
-              readOnly: false
-              mountPath: /src/results
-          containers:
-          - name: stats
-            image: "docker-registry.default.svc:5000/languages/builder:latest"
-            imagePullPolicy: Always
-            command: ["/bin/sh", "-c"]
-            args:
-            - >
-              ./build_language_list.py --results f$(RELEASEVER) --refresh &&
-              ./build_language_list.py --results f$(RELEASEVER) --analyzealllang &&
-              ./build_tm.py --results f$(RELEASEVER) --compress &&
-              ./build_stats.py --results f$(RELEASEVER)
-            env:
-            - name: RELEASEVER
-              value: "33"
-            - name: TMPDIR
-              value: /src/results/f$(RELEASEVER)/tmp
-            volumeMounts:
-            - name: srpm-data
-              readOnly: false
-              mountPath: /src/results
+{% filter indent(width=10, first=True) %}
+{%     include "cron_template.yml" %}
+{% endfilter %}
 ---
+{%   endfor %}
 {% endif %}
+{% set release="34" %}
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: stats-34
+  name: "stats-latest"
 spec:
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 2
@@ -104,73 +43,9 @@ spec:
           labels:
             parent: "cron_stats"
         spec:
-          volumes:
-          - name: srpm-data
-            persistentVolumeClaim:
-              claimName: "languages-storage{{ '-stg' if env == 'staging' else '' }}"
-          restartPolicy: Never
-          initContainers:
-          - name: clean-tmp
-            image: "docker-registry.default.svc:5000/languages/builder:latest"
-            imagePullPolicy: Always
-            env:
-            - name: RELEASEVER
-              value: "34"
-            - name: TMPDIR
-              value: /src/results/f$(RELEASEVER)/tmp
-            command: ["/bin/sh", "-c"]
-            args:
-            - >
-              [ -d ${TMPDIR} ] && rm -Rf ${TMPDIR} ;
-              mkdir -p ${TMPDIR}
-            volumeMounts:
-            - name: srpm-data
-              readOnly: false
-              mountPath: /src/results
-          - name: extract
-            image: "docker-registry.default.svc:5000/languages/builder:latest"
-            imagePullPolicy: Always
-            command:
-            - ./build.py
-            - "--results"
-            - f$(RELEASEVER)
-            env:
-            - name: RELEASEVER
-              value: "34"
-            - name: DNF_CONF
-              value: "dnf{{ '_stg' if env == 'staging' else '' }}_$(RELEASEVER).conf"
-            - name: TMPDIR
-              value: /src/results/f$(RELEASEVER)/tmp
-            - name: THREAD_MAX_CONN
-              value: "3"
-            - name: THREAD_MAX_EXTR
-              value: "3"
-            - name: THREAD_MAX
-              value: "8"
-            volumeMounts:
-            - name: srpm-data
-              readOnly: false
-              mountPath: /src/results
-          containers:
-          - name: stats
-            image: "docker-registry.default.svc:5000/languages/builder:latest"
-            imagePullPolicy: Always
-            command: ["/bin/sh", "-c"]
-            args:
-            - >
-              ./build_language_list.py --results f$(RELEASEVER) --refresh &&
-              ./build_language_list.py --results f$(RELEASEVER) --analyzealllang &&
-              ./build_tm.py --results f$(RELEASEVER) --compress &&
-              ./build_stats.py --results f$(RELEASEVER)
-            env:
-            - name: RELEASEVER
-              value: "34"
-            - name: TMPDIR
-              value: /src/results/f$(RELEASEVER)/tmp
-            volumeMounts:
-            - name: srpm-data
-              readOnly: false
-              mountPath: /src/results
+{% filter indent(width=10, first=True) %}
+{%     include "cron_template.yml" %}
+{% endfilter %}
 ---
 apiVersion: batch/v1beta1
 kind: CronJob
@@ -202,8 +77,9 @@ spec:
             command: ["/bin/sh", "-c"]
             args:
             - >
-              ./build_website.py -v --results f33 ;
-              ./build_website.py -v --results f34 ;
+              for rel in $(ls -1d results/f*); do 
+                ./build_website.py -v --results $(basename ${rel}) ;
+              done ;
               cd website && hugo -D --baseURL https://languages{{ env_suffix }}.fedoraproject.org &&
               cp -R public /src/results/
             volumeMounts:
