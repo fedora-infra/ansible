@@ -17,7 +17,7 @@ items:
           vendor="Fedora Infrastructure"
         WORKDIR /
         EXPOSE 8002
-        RUN dnf -y install bsdtar elfutils-debuginfod sqlite3 procps-ng rsync tar && \
+        RUN dnf -y install bsdtar elfutils-debuginfod sqlite procps-ng rsync tar && \
             dnf autoremove -y
       type: Dockerfile
     strategy:
