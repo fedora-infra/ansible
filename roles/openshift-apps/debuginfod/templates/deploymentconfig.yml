@@ -38,8 +38,8 @@ spec:
         - containerPort: 8002
         resources:
           requests:
-            memory: 24000Mi
-            cpu: 8000m
+            memory: 12000Mi
+            cpu: 1000m
         volumeMounts:
          - name: debuginfod-storage{{ '-stg' if env == 'staging' else '' }}
            mountPath: /var/cache/debuginfod
