@@ -43,7 +43,7 @@
     app: debuginfod
     routename: debuginfod
     host: "debuginfod{{ env_suffix }}.fedoraproject.org"
-    serviceport: 8002-tcp
+    serviceport: 8002
     servicename: debuginfod
 
   - role: openshift/start-build
