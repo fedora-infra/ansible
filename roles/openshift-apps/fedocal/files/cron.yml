@@ -3,7 +3,7 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: cron
+  name: fedocal-cron
 spec:
   concurrencyPolicy: Forbid
   schedule: "*/30 * * * *"
