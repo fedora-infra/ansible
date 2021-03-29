@@ -33,7 +33,7 @@ spec:
                   # exclude signed etc. variants, just want original RPMs
                   "-X", "/data/",
                   "-R", "/mnt/koji/packages",
-                  "-I", "\\.fc(30|31|32|33|34|35)\\..*\\.rpm$"]
+                  "-I", "\\.fc(32|33|34|35)\\..*\\.rpm$"]
         ports:
         - containerPort: 8002
         resources:
