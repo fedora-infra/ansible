@@ -1,0 +1,20 @@
+---
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: builder
+---
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: nginx
+spec:
+  tags:
+  - from:
+      kind: DockerImage
+      name: registry.access.redhat.com/ubi8/nginx-118
+    importPolicy:
+      scheduled: true
+    name: latest
+    referencePolicy:
+      type: Source

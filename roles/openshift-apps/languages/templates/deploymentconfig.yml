@@ -14,7 +14,7 @@ spec:
         app: "web"
     spec:
       containers:
-      - image: registry.redhat.io/rhel8/nginx-116
+      - image: registry.access.redhat.com/ubi8/nginx-118
         name: nginx
         imagePullPolicy: IfNotPresent
         args:
@@ -36,4 +36,13 @@ spec:
         persistentVolumeClaim:
           claimName: "languages-storage{{ '-stg' if env == 'staging' else '' }}"
       restartPolicy: Always
-
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+    imageChangeParams:
+      automatic: true
+      from:
+        kind: ImageStreamTag
+        name: nginx:latest
+      containerNames:
+      - "nginx"

@@ -16,9 +16,10 @@
     - darknao
     - jibecfed
 
-  - role: openshift/imagestream
+  - role: openshift/object
     app: languages
-    imagename: builder
+    objectname: imagestream.yml
+    template: imagestream.yml
 
   - role: openshift/object
     app: languages
