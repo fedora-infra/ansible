@@ -25,9 +25,9 @@ spec:
       - name: debuginfod
         image: debuginfod:latest
         command: ["/usr/bin/debuginfod",
-                  "-vvv",
+                  "-vv",
                   "-d", "/var/cache/debuginfod/db.sqlite",
-                  "-c", "8",
+                  "-c", "3",
                   "-t", "3600",
                   "-g", "604800",
                   # exclude signed etc. variants, just want original RPMs
