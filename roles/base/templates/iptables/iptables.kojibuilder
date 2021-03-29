@@ -80,6 +80,13 @@
 -A OUTPUT -p tcp -m tcp -d 10.3.163.77 --dport 443 -j ACCEPT
 
 # ipa client ports
+
+-A OUTPUT -p tcp -m tcp -d 10.3.163.54 --dport 80 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.3.163.55 --dport 80 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.3.163.104 --dport 80 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.3.163.54 --dport 443 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.3.163.55 --dport 443 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.3.163.104 --dport 443 -j ACCEPT
 -A OUTPUT -p tcp -m tcp -d 10.3.163.54 --dport 389 -j ACCEPT
 -A OUTPUT -p tcp -m tcp -d 10.3.163.55 --dport 389 -j ACCEPT
 -A OUTPUT -p tcp -m tcp -d 10.3.163.104 --dport 389 -j ACCEPT
@@ -98,6 +105,9 @@
 -A OUTPUT -p udp -m udp -d 10.3.163.54 --dport 464 -j ACCEPT
 -A OUTPUT -p udp -m udp -d 10.3.163.55 --dport 464 -j ACCEPT
 -A OUTPUT -p udp -m udp -d 10.3.163.104 --dport 464 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.3.163.54 --dport 53 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.3.163.55 --dport 53 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.3.163.104 --dport 53 -j ACCEPT
 
 #nfs to vtap-fedora-nfs01.storage.phx2.redhat.com - a little to wide-open - but 
 # kinda necessary
