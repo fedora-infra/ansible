@@ -61,9 +61,9 @@ spec:
             path: /metrics
             port: 8002
       volumes:
-      - name: debuginfod-volume
+      - name: debuginfod-storage{{ '-stg' if env == 'staging' else '' }}
         persistentVolumeClaim:
-          claimName: debuginfod-volume
+          claimName: debuginfod-storage{{ '-stg' if env == 'staging' else '' }}
       - name: fedora-koji
         persistentVolumeClaim:
           claimName: fedora-koji
