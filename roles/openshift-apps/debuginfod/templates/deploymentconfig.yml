@@ -64,9 +64,9 @@ spec:
       - name: debuginfod-volume
         persistentVolumeClaim:
           claimName: debuginfod-volume
-      - name: koji-volume
+      - name: fedora-koji
         persistentVolumeClaim:
-          claimName: koji-volume
+          claimName: fedora-koji
   triggers:
   - type: ConfigChange
   - type: ImageChange

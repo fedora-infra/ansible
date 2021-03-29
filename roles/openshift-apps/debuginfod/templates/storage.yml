@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: koji-volume
+  name: fedora-koji
 spec:
   storageClassName: ""
   accessModes:
@@ -10,7 +10,7 @@ spec:
   resources:
     requests:
       storage: 1Mi
-  volumeName: koji-volume
+  volumeName: fedora-koji
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
