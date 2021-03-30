@@ -25,7 +25,7 @@
     shell: |
       echo '<VirtualHost *:80>
         ServerName iddev.fedorainfracloud.org
-        ProxyPass "/.well-known/acme-challenge" "http://certgetter01/.well-known/acme-challenge"
+        ProxyPass "/.well-known/acme-challenge" "https://certgetter01/.well-known/acme-challenge"
         Redirect permanent / https://iddev.fedorainfracloud.org
       </VirtualHost>' > /etc/httpd/conf.d/proxy_letsencrypt.conf
   - name: reload apache
