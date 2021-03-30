@@ -53,7 +53,7 @@ AcceptEnv XMODIFIERS
 {% if sshd_keyhelper %}
 AuthorizedKeysCommandUser git
 AuthorizedKeysCommand /usr/libexec/pagure/keyhelper.py "%u" "%h" "%t" "%f"
-{% elif %}
+{% else %}
 AuthorizedKeysCommandUser nobody
 AuthorizedKeysCommand /usr/bin/sss_ssh_authorizedkeys
 {% endif %}
