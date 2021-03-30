@@ -21,6 +21,18 @@
   - import_tasks: "{{ tasks_path }}/cloud_setup_basic.yml"
   - name: set hostname (required by some services, at least postfix need it)
     hostname: name="{{inventory_hostname}}"
+  - name: Add an apache config to proxy letsencrypt
+    shell: echo | '
+      <VirtualHost *:80>
+        ServerName iddev.fedorainfracloud.org
+        ProxyPass "/.well-known/acme-challenge" "http://certgetter01/.well-known/acme-challenge"
+        Redirect permanent / https://iddev.fedorainfracloud.org
+     </VirtualHost>
+     ' > /etc/httpd/conf.d/proxy_letsencrypt.conf
+  - name: reload apache
+    ansible.builtin.service:
+      name: httpd
+      state: reloaded
   - name: Letsencrypt for iddev.fedorainfracloud.org
     include_role: name=letsencrypt
     vars:
