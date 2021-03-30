@@ -93,6 +93,13 @@ refuse options = checksum
 	{% if inventory_hostname in groups['download_tier1'] %}
        hosts allow = {% for host in vars['dl_tier1'] %}{{host}},{% endfor %}
         {% endif %}
+
+[ fedora-eln ]
+	comment = Fedora ELN composes
+	path = /srv/odcs
+	{% if inventory_hostname in groups['download_tier1'] %}
+       hosts allow = {% for host in vars['dl_tier1'] %}{{host}},{% endfor %}
+        {% endif %}
 ##
 ## The following are not seen and are limited by IP.
 ##
