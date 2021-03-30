@@ -22,8 +22,8 @@
   - name: set hostname (required by some services, at least postfix need it)
     hostname: name="{{inventory_hostname}}"
   - name: Add an apache config to proxy letsencrypt
-    shell: echo | '
-      <VirtualHost *:80>
+    shell: |
+      echo '<VirtualHost *:80>
         ServerName iddev.fedorainfracloud.org
         ProxyPass "/.well-known/acme-challenge" "http://certgetter01/.well-known/acme-challenge"
         Redirect permanent / https://iddev.fedorainfracloud.org
