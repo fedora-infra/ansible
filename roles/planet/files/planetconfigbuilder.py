@@ -150,14 +150,14 @@ def main(config_file='/etc/planetbuilder.conf'):
     if pb.conf.group:
         fn = '.planet.%s' % pb.conf.group
         
-    for (n, p, u, g, c, h, s) in pwd.getpwall():
-        if u < 500:
+    rootpath = "/home/fedora"
+    for folder in sorted(os.listdir(rootpath)):
+        if folder in pb.conf.ignore_users:
             continue
-        if n in pb.conf.ignore_users:
-            continue
-        
-        if os.path.exists(h + '/' + fn):
-            for entry in PlanetFile(h + '/' + fn, n):
+
+        filename = os.path.join(rootpath, folder, fn)
+        if os.path.exists(filename):
+            for entry in PlanetFile(filename, folder):
                 pb.add(entry)
 
     pb.compile()
