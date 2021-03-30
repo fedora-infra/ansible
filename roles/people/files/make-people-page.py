@@ -17,8 +17,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import subprocess, os, hashlib, stat, grp
+import grp
+import hashlib
+import os
+import stat
+import subprocess
+
 from jinja2 import Template
+
 
 page_jinja_template = """
 <!DOCTYPE html>
