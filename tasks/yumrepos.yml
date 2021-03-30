@@ -83,7 +83,7 @@
   - yumrepos
 
 - name: epel release on el systems (aws)
-  dnf:
+  package:
     name: 'epel-release'
     state: present
   when: ((ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS') and use_default_epel) and datacenter == "aws"
