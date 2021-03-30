@@ -27,7 +27,10 @@ spec:
         command: ["/usr/bin/debuginfod",
                   "-vv",
                   "-d", "/var/cache/debuginfod/db.sqlite",
-                  "-c", "3",
+                  # Set # of scanning threads - on a 4cpu host node, >4 can mask koji NFS latency,
+                  # but can't do much about storage NFS latency.  If too high, can strain memory
+                  # during analyzing large debuginfo binaries.
+                  "-c", "6",
                   "-t", "3600",
                   "-g", "604800",
                   # exclude signed etc. variants, just want original RPMs
