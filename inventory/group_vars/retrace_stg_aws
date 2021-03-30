@@ -7,6 +7,8 @@ ipa_client_sudo_groups:
 - retrace
 devel: true
 
+vpn: true
+
 tcp_ports: [22, 80, 443 ]
 
 sudoers: "{{ private }}/files/sudo/arm-retrace-sudoers"
