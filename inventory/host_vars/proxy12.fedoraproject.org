@@ -13,8 +13,11 @@ mem_size: 16384
 max_mem_size: 20000
 num_cpus: 8
 
-ks_url: http://209.132.181.6/repo/rhel/ks/kvm-fedora
-ks_repo: http://209.132.181.6/pub/fedora/linux/releases/33/Server/x86_64/os/
+ks_url: http://38.145.60.16/repo/rhel/ks/kvm-fedora
+ks_repo: http://38.145.60.16/pub/fedora/linux/releases/33/Server/x86_64/os/
+
+dns1: 8.8.8.8
+dns2: 8.8.4.4
 
 dns_search1: "vpn.fedoraproject.org"
 dns_search2: "fedoraproject.org"
@@ -32,23 +35,24 @@ dns1: 8.8.8.8
 dns2: 8.8.4.4
 
 mac0: "52:54:00:84:5d:9f"
+public_hostname: proxy12.fedoraproject.org
 
 network_connections:
   - name: eth0
     mac: "{{ mac0 }}"
-    state: up
     type: ethernet
     autoconnect: yes
     ip:
       address: 
       - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
-      - "{{ eth0_ipv6 }}/{{ eth0_ipv6_nm }}"      
+      - "{{ eth0_ipv6 }}/{{ eth0_ipv6_nm }}"
       gateway4: "{{ eth0_ipv4_gw }}"
       gateway6: "{{ eth0_ipv6_gw }}"
       dns: 
       - "{{ dns1 }}"
       - "{{ dns2 }}"
-      dns_search:
+      - 2001:4860:4860::8888
+      dns_search: 
       - "{{ dns_search1 }}" 
       - "{{ dns_search2 }}" 
       dhcp4: no

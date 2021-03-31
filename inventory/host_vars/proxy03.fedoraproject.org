@@ -8,12 +8,13 @@ sponsor: redhat
 
 vmhost: virthost-cc-rdu02.fedoraproject.org
 volgroup: /dev/vg_guests
+
 mem_size: 16384
 max_mem_size: 32768
 num_cpus: 8
 
-ks_url: http://209.132.181.6/repo/rhel/ks/kvm-fedora
-ks_repo: http://209.132.181.6/pub/fedora/linux/releases/33/Server/x86_64/os/
+ks_url: http://38.145.60.16/repo/rhel/ks/kvm-fedora
+ks_repo: http://38.145.60.16/pub/fedora/linux/releases/33/Server/x86_64/os/
 
 dns1: 8.8.8.8
 dns2: 8.8.4.4
@@ -50,13 +51,13 @@ network_connections:
       - "{{ dns2 }}"
       - 2001:4860:4860::8888
       dns_search: 
-      - vpn.fedoraproject.org
-      - fedoraproject.org
+      - "{{ dns_search1 }}" 
+      - "{{ dns_search2 }}" 
       dhcp4: no
       auto6: no
 
 postfix_group: vpn
 vpn: true
 
-nrpe_procs_warn: 900
-nrpe_procs_crit: 1000
+nrpe_procs_warn: 1200
+nrpe_procs_crit: 1400

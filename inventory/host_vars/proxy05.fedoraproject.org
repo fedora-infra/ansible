@@ -20,12 +20,12 @@ eth0_ipv4: 185.141.165.254
 eth0_ipv4_nm: 23
 eth0_ipv4_gw: 185.141.164.1
 
-mac0: 06:5b:86:00:06:60
+mac0: "06:5b:86:00:06:60"
+public_hostname: proxy05.fedoraproject.org
 
 network_connections:
   - name: eth0
     mac: "{{ mac0 }}"
-    state: up
     type: ethernet
     autoconnect: yes
     ip:

@@ -8,6 +8,7 @@ sponsor: internetx
 
 vmhost: internetx01.fedoraproject.org
 volgroup: /dev/vg_Server
+
 mem_size: 8192
 max_mem_size: 8192
 num_cpus: 6
@@ -50,8 +51,8 @@ network_connections:
       - "{{ dns2 }}"
       - 2001:4860:4860::8888
       dns_search: 
-      - vpn.fedoraproject.org
-      - fedoraproject.org
+      - "{{ dns_search1 }}" 
+      - "{{ dns_search2 }}" 
       dhcp4: no
       auto6: no
 
