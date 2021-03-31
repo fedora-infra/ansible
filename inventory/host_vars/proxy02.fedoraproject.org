@@ -25,8 +25,8 @@ public_hostname: proxy02.fedoraproject.org
 
 network_connections:
   - name: eth0
-    state: up
-    type: bridge
+    mac: "{{ mac0 }}"
+    type: ethernet
     autoconnect: yes
     ip:
       address: 
@@ -35,8 +35,8 @@ network_connections:
       gateway4: "{{ eth0_ipv4_gw }}"
       gateway6: "{{ eth0_ipv6_gw }}"
       dns: 
-      - {{ dns1 }}
-      - {{ dns2 }}
+      - "{{ dns1 }}"
+      - "{{ dns2 }}"
       - 2001:4860:4860::8888
       dns_search: 
       - fedoraproject.org
