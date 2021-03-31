@@ -1,32 +1,64 @@
 ---
-nm: 255.255.255.192
-gw: 140.211.169.193
-dns: 8.8.8.8
-dns1: 8.8.8.8
-dns2: 8.8.4.4
+freezes: true
 
-max_mem_size: 8192
+datacenter: osuosl
 
-ks_url: http://38.145.60.16/repo/rhel/ks/kvm-fedora
-ks_repo: http://38.145.60.16/pub/fedora/linux/releases/33/Server/x86_64/os/
+# This is consumed by the roles/fedora-web/main role
+sponsor: osuosl
 
 vmhost: osuosl02.fedoraproject.org
 volgroup: /dev/vg_guests
 
-eth0_ip: 140.211.169.206
-eth0_nm: 255.255.255.128
+mem_size: 16384
+max_mem_size: 20000
+num_cpus: 8
+
+ks_url: http://209.132.181.6/repo/rhel/ks/kvm-fedora
+ks_repo: http://209.132.181.6/pub/fedora/linux/releases/33/Server/x86_64/os/
+
+dns1: 8.8.8.8
+dns2: 8.8.4.4
+
+dns_search1: "vpn.fedoraproject.org"
+dns_search2: "fedoraproject.org"
+
+has_ipv4: yes
+eth0_ipv4: 140.211.169.206
+eth0_ipv4_nm: 26
+eth0_ipv4_gw: 140.211.169.193
+
 has_ipv6: yes
 eth0_ipv6: "2605:bc80:3010:600:dead:beef:cafe:feda"
+eth0_ipv6_nm: 64
 eth0_ipv6_gw: "2605:bc80:3010:600::1"
+dns1: 8.8.8.8
+dns2: 8.8.4.4
 
-# This is consumed by the roles/fedora-web/main role
-sponsor: osuosl
-datacenter: osuosl
+mac0: 52:54:00:67:b2:6f
+
+network_connections:
+  - name: eth0
+    mac: "{{ mac0 }}"
+    state: up
+    type: ethernet
+    autoconnect: yes
+    ip:
+      address: 
+      - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
+      - "{{ eth0_ipv6 }}/{{ eth0_ipv6_nm }}"      
+      gateway4: "{{ eth0_ipv4_gw }}"
+      gateway6: "{{ eth0_ipv6_gw }}"
+      dns: 
+      - "{{ dns1 }}"
+      - "{{ dns2 }}"
+      dns_search:
+      - "{{ dns_search1 }}" 
+      - "{{ dns_search2 }}" 
+      dhcp4: no
+      auto6: no
+
 postfix_group: vpn
 vpn: true
 
 nrpe_procs_warn: 1200
 nrpe_procs_crit: 1400
-
-mem_size: 16384
-num_cpus: 8
