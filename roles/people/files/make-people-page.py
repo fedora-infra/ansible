@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# Copyright (c) 2016 Chaoyi Zha <cydrobolt@fedoraproject.org>
+# Copyright © 2016 Chaoyi Zha <cydrobolt@fedoraproject.org>
+# Copyright © 2021 Red Hat, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -115,7 +116,7 @@ page_jinja_template = """
 
     <footer class='center text-muted'>
         <p class="copy">
-            &copy; 2016 Chaoyi Zha, Red Hat, Inc., and others.
+            &copy; 2016 - 2021 Chaoyi Zha, Red Hat, Inc., and others.
             Please send any comments or corrections to the <a href="mailto:admin@fedoraproject.org">infrastructure team</a>.
         </p>
         <p class="disclaimer">
