@@ -195,7 +195,7 @@ page_output = page_jinja_template_obj.render(users=sorted(users.items()))
 out_file = Path("/srv/people/site/index.html")
 
 # get gid for web group
-out_file_grp = grp.getgrnam("web").gr_gid;
+out_file_grp = grp.getgrnam("web").gr_gid
 
 with open(out_file, "w", encoding="utf-8") as handle:
     handle.write(page_output)
