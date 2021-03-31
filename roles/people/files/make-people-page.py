@@ -82,7 +82,6 @@ page_jinja_template = """
 
 
             {% for username, user in users %}
-                {% if (user['has_public_html'] or user['has_public_git']) %}
                 <tr>
                     <td>
                         <img class='user-avatar' src='/static/grey.jpg' alt='Avatar for {{username}}' data-src='https://seccdn.libravatar.org/avatar/{{user['openid_hash']}}?s=20&d=retro'>
@@ -107,7 +106,6 @@ page_jinja_template = """
                         </div>
                     </td>
                 </tr>
-                {% endif %}
             {% endfor %}
         </tbody>
     </table>
@@ -188,7 +186,8 @@ for hdir in homedirs:
         f"http://{user['name'].lower()}.id.fedoraproject.org/".encode("utf-8")
     ).hexdigest()
 
-    users[username] = user
+    if user["has_public_html"] or user["has_public_git"]:
+        users[username] = user
 
 page_jinja_template_obj = Template(page_jinja_template)
 page_output = page_jinja_template_obj.render(users=sorted(users.items()))
