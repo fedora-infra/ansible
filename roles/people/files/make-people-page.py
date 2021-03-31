@@ -20,8 +20,9 @@
 import grp
 import hashlib
 import os
+import pwd
 import stat
-import subprocess
+from pathlib import Path
 
 from jinja2 import Template
 
@@ -145,56 +146,45 @@ page_jinja_template = """
 </html>
 """
 
-# Fedora people users separated by newlines
-users_list = subprocess.check_output("getent passwd | sort | cut -d: -f1,6 | grep /home/fedora/", shell=True)
+topdir = Path("/home/fedora")
+homedirs = sorted(d for d in topdir.glob("*") if d.is_dir())
 
-# Fedora people users array with a subarray for each user containing [username, homedir]
-users_list_array = [a.split(':') for a in users_list.split('\n')][:-1]
+users = {}
 
-users = dict()
+for hdir in homedirs:
+    username = hdir.name
+    user = {}
 
-for user in users_list_array:
-    username = user[0]
-    user_homedir = user[1]
-    user_name = subprocess.check_output("getent passwd {} | cut -d: -f5".format(username), shell=True)
-    user_name = user_name.decode('utf-8')
+    pwentry = pwd.getpwnam(username)
 
-    prefix_length = len("{} : ".format(user[0]))
-    user_groups = subprocess.check_output(["groups", user[0]])[prefix_length:-1]
+    user["name"] = pwentry.pw_gecos
+    user["has_public_html"] = (hdir / "public_html").is_dir()
+    user["has_public_git"] = (hdir / "public_git").is_dir()
+    user["email_hash"] = hashlib.md5(
+        f"{user['name'].lower()}@fedoraproject.org".encode("utf-8")
+    ).hexdigest()
+    user["openid_hash"] = hashlib.md5(
+        f"http://{user['name'].lower()}.id.fedoraproject.org/".encode("utf-8")
+    ).hexdigest()
 
-    has_public_html = os.path.isdir("{}/public_html/".format(user_homedir))
-    has_public_git = os.path.isdir("{}/public_git/".format(user_homedir))
-
-    users[username] = dict()
-
-    users[username]['name'] = user_name
-
-    users[username]['homedir'] = user_homedir
-    users[username]['groups'] = user_groups
-    users[username]['has_public_html'] = has_public_html
-    users[username]['has_public_git'] = has_public_git
-
-    user_fedora_email = '{}@fedoraproject.org'.format(username).encode('utf-8')
-    user_fedora_openid = 'http://{}.id.fedoraproject.org/'.format(username).encode('utf-8')
-    users[username]['email_hash'] = hashlib.md5(user_fedora_email.strip().lower()).hexdigest()
-    users[username]['openid_hash'] = hashlib.sha256(user_fedora_openid.strip().lower()).hexdigest()
+    users[username] = user
 
 page_jinja_template_obj = Template(page_jinja_template)
 page_output = page_jinja_template_obj.render(users=sorted(users.items()))
 
-out_file = '/srv/people/site/index.html'
+out_file = Path("/srv/people/site/index.html")
 
 # get gid for web group
 out_file_grp = grp.getgrnam("web").gr_gid;
 
-with open(out_file, 'w') as handle:
-    handle.write(page_output.encode('utf-8'))
+with open(out_file, "w", encoding="utf-8") as handle:
+    handle.write(page_output)
 
 # keep current owner uid
-out_file_uid = os.stat(out_file).st_uid
+st = out_file.stat()
+out_file_uid = st.st_uid
 
 # give write permissions to group
-st = os.stat(out_file)
-os.chmod(out_file, st.st_mode | stat.S_IWGRP)
+out_file.chmod(st.st_mode | stat.S_IWGRP)
 # chown out file to group
 os.chown(out_file, out_file_uid, out_file_grp)
