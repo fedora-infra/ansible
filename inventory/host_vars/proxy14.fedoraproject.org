@@ -16,9 +16,6 @@ num_cpus: 8
 ks_url: http://209.132.181.6/repo/rhel/ks/kvm-fedora
 ks_repo: http://209.132.181.6/pub/fedora/linux/releases/33/Server/x86_64/os/
 
-dns1: 8.8.8.8
-dns2: 8.8.4.4
-
 dns_search1: "vpn.fedoraproject.org"
 dns_search2: "fedoraproject.org"
 
@@ -31,8 +28,10 @@ has_ipv6: yes
  eth0_ipv6: "2620:52:3:1:dead:beef:cafe:fed7"
  eth0_ipv6_nm: 64
  eth0_ipv6_gw: "2620:52:3:1:ffff:ffff:ffff:fffe"
+dns1: 8.8.8.8
+dns2: 8.8.4.4
 
-mac0: 52:54:00:19:67:0C
+mac0: "52:54:00:19:67:0C"
 
 network_connections:
   - name: eth0
