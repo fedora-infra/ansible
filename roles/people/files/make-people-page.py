@@ -19,6 +19,7 @@
 
 import grp
 import hashlib
+import logging
 import os
 import pwd
 import stat
@@ -26,6 +27,8 @@ from pathlib import Path
 
 from jinja2 import Template
 
+
+log = logging.getLogger(__name__)
 
 page_jinja_template = """
 <!DOCTYPE html>
@@ -152,10 +155,28 @@ homedirs = sorted(d for d in topdir.glob("*") if d.is_dir())
 users = {}
 
 for hdir in homedirs:
+    if hdir.stat().st_uid == 0:
+        log.info("'%s' is owned by root. Skipping.", hdir.name)
+        continue
+
+    try:
+        owner_name = hdir.owner()
+    except KeyError:
+        log.warning("'%s' is not owned by a named user. Skipping.", hdir.name)
+        continue
+
+    if owner_name != hdir.name:
+        log.warning("'%s' is owned by '%s'. Skipping.", hdir.name, owner_name)
+        continue
+
     username = hdir.name
     user = {}
 
-    pwentry = pwd.getpwnam(username)
+    try:
+        pwentry = pwd.getpwnam(username)
+    except KeyError:
+        log.warning("User not found: %s. Skipping.", username)
+        continue
 
     user["name"] = pwentry.pw_gecos
     user["has_public_html"] = (hdir / "public_html").is_dir()
