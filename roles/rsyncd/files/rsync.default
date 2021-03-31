@@ -8,7 +8,7 @@ service rsync
         wait            = no
         user            = root
         server          = /usr/bin/rsync
-        server_args     = --daemon --numeric-ids
+        server_args     = --daemon
         log_on_failure  += USERID
 }
 
