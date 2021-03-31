@@ -1,7 +1,4 @@
 ---
-nm: 255.255.255.240
-gw: 85.236.55.1
-dns: 8.8.8.8
 
 ks_url: http://38.145.60.16/repo/rhel/ks/kvm-fedora
 ks_repo: http://38.145.60.16/pub/fedora/linux/releases/33/Server/x86_64/os/
@@ -9,13 +6,44 @@ ks_repo: http://38.145.60.16/pub/fedora/linux/releases/33/Server/x86_64/os/
 vmhost: internetx01.fedoraproject.org
 volgroup: /dev/vg_Server
 
-eth0_ip: 85.236.55.6
-eth0_nm: 255.255.255.240
-has_ipv6: true
-eth0_ipv6: "2001:4178:2:1269::fed2"
-eth0_ipv6_gw: "2001:4178:2:1269::1"
+dns: 8.8.8.8
 dns1: 8.8.8.8
 dns2: 8.8.4.4
+
+has_ipv4: yes
+eth0_ipv4: 85.236.55.6
+eth0_ipv4_nm: 28
+eth0_ipv4_gw: 85.236.55.1
+
+has_ipv6: true
+eth0_ipv6: "2001:4178:2:1269::fed2"
+eth0_ipv6_nm: 64
+eth0_ipv6_gw: "2001:4178:2:1269::1"
+
+mac0: 52:54:00:8c:7c:1b
+public_hostname: proxy02.fedoraproject.org
+
+network_connections:
+  - name: eth0
+    state: up
+    type: bridge
+    autoconnect: yes
+    ip:
+      address: 
+      - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
+      - "{{ eth0_ipv6 }}/{{ eth0_ipv6_nm }}"
+      gateway4: "{{ eth0_ipv4_gw }}"
+      gateway6: "{{ eth0_ipv6_gw }}"
+      dns: 
+      - {{ dns1 }}
+      - {{ dns2 }}
+      - 2001:4860:4860::8888
+      dns_search: 
+      - fedoraproject.org
+      - vpn.fedoraproject.org
+      dhcp4: no
+      auto6: no
+
 
 # This is consumed by the roles/fedora-web/main role
 sponsor: internetx

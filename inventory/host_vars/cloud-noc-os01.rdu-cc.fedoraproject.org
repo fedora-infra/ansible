@@ -26,18 +26,6 @@ mac0: 52:54:00:46:ed:ba
 mac1: 52:54:00:24:8e:bc
 public_hostname: cloud-noc-os01.rdu-cc.fedoraproject.org
 
-virt_install_command: virt-install -n {{ inventory_hostname }}
-                 --memory={{ mem_size }},maxmemory={{ max_mem_size }} --memballoon virtio
-                 --disk bus=virtio,path={{ volgroup }}/{{ inventory_hostname }}
-                 --vcpus={{ num_cpus }},maxvcpus={{ max_cpu }} -l {{ ks_repo }} -x
-                 'net.ifnames=0 ksdevice=eth0 ks={{ ks_url }} console=tty0 console=ttyS0
-                  hostname={{ inventory_hostname }} nameserver={{ dns1 }}
-                  ip={{ eth0_ipv4 }}::{{ eth0_ipv4_gw }}:{{ eth0_ipv4_nm }}:{{ inventory_hostname }}:eth0:none
-                  ip={{ eth1_ipv4 }}:::{{ eth1_ipv4_nm }}:{{ inventory_hostname_short }}-nfs:eth1:none'
-                 --network bridge={{ main_bridge }},model=virtio,mac={{ mac0 }}
-                 --network=bridge={{ nfs_bridge }},model=virtio,mac={{ mac1 }}
-                 --autostart --noautoconsole --watchdog default --rng /dev/random
-
 network_connections:
   - name: eth0
     mac: "{{ mac0 }}"
@@ -65,6 +53,18 @@ network_connections:
       dhcp4: no
       auto6: no
 
+virt_install_command: virt-install -n {{ inventory_hostname }}
+                 --memory={{ mem_size }},maxmemory={{ max_mem_size }} --memballoon virtio
+                 --disk bus=virtio,path={{ volgroup }}/{{ inventory_hostname }}
+                 --vcpus={{ num_cpus }},maxvcpus={{ max_cpu }} -l {{ ks_repo }} -x
+                 'net.ifnames=0 ksdevice=eth0 ks={{ ks_url }} console=tty0 console=ttyS0
+                  hostname={{ inventory_hostname }} nameserver={{ dns1 }}
+                  ip={{ eth0_ipv4 }}::{{ eth0_ipv4_gw }}:{{ eth0_ipv4_nm }}:{{ inventory_hostname }}:eth0:none
+                  ip={{ eth1_ipv4 }}:::{{ eth1_ipv4_nm }}:{{ inventory_hostname_short }}-nfs:eth1:none'
+                 --network bridge={{ main_bridge }},model=virtio,mac={{ mac0 }}
+                 --network=bridge={{ nfs_bridge }},model=virtio,mac={{ mac1 }}
+                 --autostart --noautoconsole --watchdog default --rng /dev/random
+
 virt_install_command_two_nic: virt-install -n {{ inventory_hostname }}
                  --memory={{ mem_size }},maxmemory={{ max_mem_size }} --memballoon virtio
                  --disk bus=virtio,path={{ volgroup }}/{{ inventory_hostname }}
@@ -76,3 +76,4 @@ virt_install_command_two_nic: virt-install -n {{ inventory_hostname }}
                  --network bridge={{ main_bridge }},model=virtio,mac={{ mac0 }}
                  --network=bridge={{ nfs_bridge }},model=virtio,mac={{ mac1 }}
                  --autostart --noautoconsole --watchdog default --rng /dev/random
+
