@@ -36,6 +36,10 @@ page_jinja_template = """
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
+        .bg-fedora-blue {
+            background: #3c6eb4;
+        }
+
         .center {
             text-align: center;
         }
@@ -51,9 +55,9 @@ page_jinja_template = """
     </style>
 </head>
 <body>
-    <div class="jumbotron">
+    <div class="jumbotron bg-fedora-blue">
         <div class="container-fluid center">
-            <img class="fedoralogotext" class="img-responsive center-block" src="//getfedora.org/static/images/fedora-logotext.png" alt="Fedora Logotext">
+            <img class="fedoralogotext" class="img-responsive center-block" src="//getfedora.org/static/images/fedora-logotext-white.png" alt="Fedora Logotext">
         </div>
     </div>
     <div class="container pagebody">
