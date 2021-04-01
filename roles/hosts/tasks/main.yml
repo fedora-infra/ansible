@@ -10,14 +10,21 @@
 # Note that if it's not set it will just skip this play and do nothing.
 #
 - name: setup /etc/hosts for some clients
+  vars:
+    hosts_candidates_static:
+      - "{{ inventory_hostname }}-hosts"
+      - "{{ ansible_hostname }}-hosts"
+      - "{{ host_group }}-hosts"
+      - "{{ ansible_domain }}-hosts"
+      - "{{ datacenter }}-hosts"
   copy: src={{ item }} dest=/etc/hosts
-  with_first_found:
-  - "{{ inventory_hostname }}-hosts"
-  - "{{ ansible_hostname }}-hosts"
-  - "{{ host_group }}-hosts"
-  - "{{ ansible_domain }}-hosts"
-  - "{{ datacenter }}-hosts"
-  - "{{ hosts_base | default('base') }}"
+  with_first_found: >-
+    {{
+      (hosts_candidates_static + ["vpn"])
+      if (vpn | default(false)) and (datacenter | default('iad2')) != 'iad2'
+      else
+      (hosts_candidates_static + ["base"])
+    }}
   tags:
   - config
   - hosts

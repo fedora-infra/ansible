@@ -1,6 +1,5 @@
 ---
 - name: Install /etc/hosts for VPN clients
-  when: "(vpn | default(false)) and (datacenter | default('iad2')) != 'iad2'"
   include_role:
     name: hosts
     apply:
@@ -8,5 +7,3 @@
         - ipa/client
         - config
         - vpn-client-enablement
-      vars:
-        hosts_base: vpn
