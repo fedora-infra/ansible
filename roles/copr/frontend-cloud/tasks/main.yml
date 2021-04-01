@@ -157,3 +157,10 @@
   when:
   - ansible_facts.packages['copr-frontend'][0].version is version('1.156', '>=')
   - not services_disabled|bool
+
+- name: install bashrc file to ease some admin tasks
+  copy:
+    content: |
+      export PGUSER=copr-fe
+      export PGDATABASE=coprdb
+    dest: "{{ copr_fe_homedir }}/.bashrc"

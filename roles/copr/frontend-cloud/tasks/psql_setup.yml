@@ -108,3 +108,31 @@
   notify: restart postgresql
   tags:
   - config
+
+- name: install psqlrc file
+  copy:
+    content: |
+      \pset linestyle unicode
+      \pset border 2
+
+      -- Switch pagers with :x and :xx commands
+      \set x '\\setenv PAGER less'
+      \set xx '\\setenv PAGER \'pspg -bX --no-mouse\''
+      :xx
+    dest: "{{ copr_fe_homedir }}/.psqlrc"
+    owner: copr-fe
+    group: copr-fe
+    mode: 0600
+
+- name: install pgpass file
+  copy:
+    content: |
+      localhost:*:coprdb:copr-fe:{{ copr_database_password }}
+    dest: "{{ copr_fe_homedir }}/.pgpass"
+    owner: copr-fe
+    group: copr-fe
+    mode: 0400
+
+- name: install pghistory file
+  file: path="{{ copr_fe_homedir }}/.psql_history" state=file
+        owner=copr-fe group=ćopr-fe mode=0600
