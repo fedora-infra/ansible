@@ -31,6 +31,13 @@ spec:
         - name: nginx-data
           subPath: logs
           mountPath: /var/log/nginx
+        resources:
+          limits:
+            cpu: 20m
+            memory: 100Mi
+          requests:
+            cpu: '0'
+            memory: 10Mi
       volumes:
       - name: nginx-data
         persistentVolumeClaim:

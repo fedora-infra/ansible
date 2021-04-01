@@ -45,6 +45,13 @@ initContainers:
   - name: srpm-data
     readOnly: false
     mountPath: /src/results
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 5Gi
+    requests:
+      cpu: '0'
+      memory: 2Gi
 containers:
 - name: stats
   image: "docker-registry.default.svc:5000/languages/builder:latest"
@@ -65,4 +72,11 @@ containers:
   - name: srpm-data
     readOnly: false
     mountPath: /src/results
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 8Gi
+    requests:
+      cpu: '0'
+      memory: 4Gi
 
