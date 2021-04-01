@@ -20,8 +20,8 @@
   copy: src={{ item }} dest=/etc/hosts
   with_first_found: >-
     {{
-      if (vpn | default(false)) and (datacenter | default('iad2')) != 'iad2'
       (hosts_candidates_static + ["vpn"])
+      if (vpn | default(false)) and (datacenter | default('iad2')) != 'iad2'
       else
       (hosts_candidates_static + ["base"])
     }}
