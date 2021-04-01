@@ -133,6 +133,10 @@
     group: copr-fe
     mode: 0400
 
+- stat: path="{{ copr_fe_homedir }}/.psql_history"
+  register: history_file
+
 - name: install pghistory file
-  file: path="{{ copr_fe_homedir }}/.psql_history" state=file
+  file: path="{{ copr_fe_homedir }}/.psql_history" state=touch
         owner=copr-fe group=ćopr-fe mode=0600
+  when: not history_file.stat.exists
