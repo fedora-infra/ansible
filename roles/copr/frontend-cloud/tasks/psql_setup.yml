@@ -138,5 +138,5 @@
 
 - name: install pghistory file
   file: path="{{ copr_fe_homedir }}/.psql_history" state=touch
-        owner=copr-fe group=ćopr-fe mode=0600
+        owner=copr-fe group=copr-fe mode=0600
   when: not history_file.stat.exists
