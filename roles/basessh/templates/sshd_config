@@ -51,8 +51,13 @@ AcceptEnv LC_IDENTIFICATION LC_ALL LANGUAGE
 AcceptEnv XMODIFIERS
 
 {% if sshd_keyhelper %}
+{% if inventory_hostname.startswith('pkgs') %}
+AuthorizedKeysCommandUser nobody
+AuthorizedKeysCommand /usr/local/bin/ssh_wrapper "%u"
+{% else %}
 AuthorizedKeysCommandUser git
 AuthorizedKeysCommand /usr/libexec/pagure/keyhelper.py "%u" "%h" "%t" "%f"
+{% endif %}
 {% else %}
 AuthorizedKeysCommandUser nobody
 AuthorizedKeysCommand /usr/bin/sss_ssh_authorizedkeys
