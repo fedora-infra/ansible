@@ -24,3 +24,11 @@ openqa_scratch: ["64984055", "64981832", "64981668", "64981666"]
 
 deployment_type: stg
 freezes: false
+
+primary_auth_source: ipa
+ipa_host_group: openqa-lab-workers
+ipa_host_group_desc: OpenQA Lab worker hosts
+ipa_client_shell_groups:
+- sysadmin-qa
+ipa_client_sudo_groups:
+- sysadmin-qa
