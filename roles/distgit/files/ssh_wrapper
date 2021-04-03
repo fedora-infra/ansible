@@ -1,7 +1,0 @@
-#!/bin/sh
-
-/usr/bin/sss_ssh_authorizedkeys $1 | while read -r key
-do
-  echo "command=\"PAGURE_CONFIG=/etc/pagure/pagure_hook.cfg HOME=/srv/git/ /usr/libexec/pagure/aclchecker.py $1\", $key"
-done
-
