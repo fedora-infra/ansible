@@ -215,7 +215,7 @@ config = dict(
             channel='fedora-releng',
             filters=dict(
                 topic=[
-                    '^((?!(compose.rawhide|compose.branched|pungi.compose.status|pagure)).)*$',
+                    '^((?!(compose.rawhide|compose.34|compose.35|compose.36|pungi.compose.status|pagure)).)*$',
                 ],
                 body=[
                     '^((?!(pagure.io\/releng/failed-composes|pagure.io\/releng\/compose-tracker|pagure.io\/pungi|pagure.io\/fedora-comps|pagure.io\/fedora-kickstarts|compose\/updates|linux\/development|rpms\/fedora-repos|rpms\/fedora-release|rpms\/fedora-packager)).)*$',
