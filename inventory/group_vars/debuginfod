@@ -1,0 +1,28 @@
+---
+# Define resources for this group of hosts here. 
+lvm_size: 500000
+mem_size: 8192
+max_mem_size: 16384
+num_cpus: 4
+
+deployment_type: prod
+
+tcp_ports: [ 80 ]
+
+primary_auth_source: ipa
+ipa_host_group: debuginfod
+ipa_host_group_desc: debuginfod servers
+ipa_client_shell_groups:
+- fi-apprentice
+- sysadmin-noc
+- sysadmin-veteran
+- sysadmin-debuginfod
+ipa_client_sudo_groups:
+- sysadmin-debuginfod
+
+csi_security_category: Low
+csi_primary_contact: "#fedora-admin"
+csi_purpose:  Provides debuginfod services
+csi_relationship: |
+ - This server provides a debuginfod server to allow downloading debuginfod
+

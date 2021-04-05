@@ -975,7 +975,6 @@
     server_aliases: [debuginfod.stg.fedoraproject.org]
     cert_name: "{{wildcard_cert_name}}"
     tags: debuginfod
-    when: env == "staging"
 
   - role: httpd/website
     site_name: calendar.fedoraproject.org

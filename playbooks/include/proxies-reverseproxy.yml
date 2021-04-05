@@ -751,9 +751,8 @@
   - role: httpd/reverseproxy
     website: debuginfod.fedoraproject.org
     destname: debuginfod
-    balancer_name: app-os
-    targettype: openshift
-    keephost: true
-    when: env == "staging"
+    remotepath: /
+    localpath: /
+    proxyurl: http://debuginfod01
     tags: debuginfod
 
