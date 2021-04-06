@@ -32,6 +32,12 @@
   - name: install debuginfod
     package: name=elfutils-debuginfod state=present
 
+  - name: install sqlite for diagnostics
+    package: name=sqlite state=present
+
+  - name: install rsync for data backups
+    package: name=rsync state=present
+    
   - name: install debuginfod configuration
     copy: src="{{ files }}/debuginfod/sysconfig.debuginfod" dest=/etc/sysconfig/debuginfod owner=root group=root mode=644
 
