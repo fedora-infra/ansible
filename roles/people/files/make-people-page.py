@@ -178,8 +178,14 @@ for hdir in homedirs:
         continue
 
     user["name"] = pwentry.pw_gecos
-    user["has_public_html"] = (hdir / "public_html").is_dir()
-    user["has_public_git"] = (hdir / "public_git").is_dir()
+    try:
+        user["has_public_html"] = (hdir / "public_html").is_dir()
+    except PermissionError:
+        user["has_public_html"] = False
+    try:
+        user["has_public_git"] = (hdir / "public_git").is_dir()
+    except PermissionError:
+        user["has_public_git"] = False
     user["email_hash"] = hashlib.md5(
         f"{user['name'].lower()}@fedoraproject.org".encode("utf-8")
     ).hexdigest()
