@@ -207,11 +207,16 @@ out_file_grp = grp.getgrnam("web").gr_gid
 with open(out_file, "w", encoding="utf-8") as handle:
     handle.write(page_output)
 
-# keep current owner uid
-st = out_file.stat()
-out_file_uid = st.st_uid
+# The code below was present originally, however the cron job is ran under the
+# `apache` user so it is not clear what this was meant to do.
+# This is being kept here for convenience in case we need to re-activate this
+# code, down the line this should just be removed.
 
+# keep current owner uid
+#st = out_file.stat()
+#out_file_uid = st.st_uid
+#
 # give write permissions to group
-out_file.chmod(st.st_mode | stat.S_IWGRP)
+#out_file.chmod(st.st_mode | stat.S_IWGRP)
 # chown out file to group
-os.chown(out_file, out_file_uid, out_file_grp)
+#os.chown(out_file, out_file_uid, out_file_grp)
