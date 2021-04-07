@@ -61,9 +61,6 @@ syncHttpLogs proxy40.vpn.fedoraproject.org
 syncHttpLogs proxy101.iad2.fedoraproject.org
 syncHttpLogs proxy110.iad2.fedoraproject.org
 # syncHttpLogs proxy01.stg.iad2.fedoraproject.org
- syncHttpLogs fedocal01.iad2.fedoraproject.org
- syncHttpLogs fedocal02.iad2.fedoraproject.org
-# syncHttpLogs fedocal01.stg.iad2.fedoraproject.org
 syncHttpLogs datagrepper01.iad2.fedoraproject.org
 # syncHttpLogs datagrepper02.iad2.fedoraproject.org
 # syncHttpLogs datagrepper01.stg.iad2.fedoraproject.org
