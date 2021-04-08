@@ -975,6 +975,7 @@
     server_aliases: [debuginfod.stg.fedoraproject.org]
     x_forward: true
     cert_name: "{{wildcard_cert_name}}"
+    gzip: true
     tags: debuginfod
 
   - role: httpd/website
