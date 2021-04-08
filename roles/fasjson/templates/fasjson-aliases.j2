@@ -2,6 +2,7 @@
 import os
 import sys
 import tempfile
+import subprocess
 
 from fasjson_client import Client, errors
 
@@ -36,19 +37,16 @@ def gen_all_aliases():
                 for group in groups:
                     groupname = group['groupname']
 
-                    # even though there are no admins of groups anymore
-                    # we should probably leave this here and just
-                    # link to the sponsors list
-                    temp.write(
-                        f'{groupname}-administrators: {groupname}-sponsors \n'
-                    )
-
                     sponsor_list = ','.join(
                         sponsor['username']
                         for sponsor in client.list_group_sponsors(
                             groupname=groupname).result
                     )
-                    temp.write(f"{groupname}-sponsors: {sponsor_list} \n")
+                    if sponsor_list:
+                        temp.write(
+                            f'{groupname}-administrators: {groupname}-sponsors \n'
+                        )
+                        temp.write(f"{groupname}-sponsors: {sponsor_list} \n")
 
                     member_list = ','.join(
                         member['username']
@@ -56,7 +54,9 @@ def gen_all_aliases():
                             groupname=groupname).result
                     )
 
-                    temp.write(f"{groupname}-members: {member_list} \n")
+                    if member_list:
+                        temp.write(f"{groupname}-members: {member_list} \n")
+
             rename(temporary_file.name, aliases_file)
         except errors.APIError as e:
             print(f"Something went wrong querying the fasjson API. {e}", file=sys.stderr)
@@ -117,8 +117,12 @@ def main():
     try:
         if not args:
             gen_all_aliases()
+            # call newaliases script so postfix gets updated
+            subprocess.check_call(['/usr/bin/newaliases'])
         elif len(args) == 2 and args[0] == "update":
             update_user(args[1])
+            # call newaliases script so postfix gets updated
+            subprocess.check_call(['/usr/bin/newaliases'])
         else:
             print(f"Usage: {sys.argv[0]} [update <username>]", file=sys.stderr)
             raise RuntimeError()
