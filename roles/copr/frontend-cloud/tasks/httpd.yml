@@ -82,3 +82,10 @@
     regexp: '^LoadModule substitute_module modules/mod_substitute.so'
     line: '#LoadModule substitute_module modules/mod_substitute.so'
 
+- name: Keep httpd master running when child is OOM killed, rhbz#1947475
+  ini_file:
+    path: /usr/lib/systemd/system/httpd.service
+    section: Service
+    option: OOMPolicy
+    value: continue
+    backup: yes
