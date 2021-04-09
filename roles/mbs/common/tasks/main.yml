@@ -185,7 +185,7 @@
       - config
       - mbs
       - mbs/common
-  when: not mbs_frontend and env_suffix == ".stg"
+  when: not mbs_frontend
 
 - name: Configure the MBS workers and poller
   block:
@@ -237,7 +237,7 @@
       tags:
         - mbs
         - mbs/common
-  when: not mbs_frontend and env_suffix == ".stg"
+  when: not mbs_frontend
 
 - name: create /etc/module-build-service/default-modules directory
   file:
