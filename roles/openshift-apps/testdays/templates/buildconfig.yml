@@ -44,11 +44,7 @@ spec:
     type: Git
     git:
       uri: https://pagure.io/taskotron/resultsdb.git
-{% if env == 'staging' %}
-      ref: "openshift_WIP"
-{% else %}
-      ref: "openshift_WIP"
-{% endif %}
+      ref: "develop"
   strategy:
     type: Source
     sourceStrategy:
