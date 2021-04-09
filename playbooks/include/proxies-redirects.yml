@@ -112,6 +112,12 @@
     target: https://elections.fedoraproject.org/
 
   - role: httpd/redirectmatch
+    shortname: calendar
+    website: apps.fedoraproject.org
+    regex: /calendar
+    target: https://calendar.fedoraproject.org/
+
+  - role: httpd/redirectmatch
     shortname: mailman
     website: admin.fedoraproject.org
     regex: /mailman/(.*)$
