@@ -79,3 +79,14 @@
   notify:
     - restart sssd
     - clean sss caches
+  when: env == "production"
+
+- name: Ensure that nss knows to skip certain users
+  copy: src=fedora-nss-ignore.conf.staging dest=/etc/sssd/conf.d/fedora-nss-ignore.conf mode=600 owner=root group=root
+  tags:
+  - ipa/client
+  - config
+  notify:
+    - restart sssd
+    - clean sss caches
+  when: env == "staging"
