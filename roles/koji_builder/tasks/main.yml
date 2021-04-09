@@ -62,7 +62,7 @@
   tags:
   - koji_builder
 
-- name: add pkgs
+- name: add pkgs (production)
   package:
     state: present
     name:
@@ -93,9 +93,42 @@
     - imagefactory-plugins-RHEVM
     - pykickstart
     - nosync
+  when: env == "production"
   tags:
   - koji_builder
 
+- name: add pkgs (staging)
+  package:
+    state: present
+    name:
+    - koji-builder
+    - koji-builder-plugins
+    - python3-koji
+    - koji-containerbuild-builder
+    - strace
+    - mock
+    - kernel-firmware
+    - kernel-modules
+    - rsyslog
+    - audit
+    - pycdio
+    - python3-kickstart
+    - libvirt-client
+    - oz
+    - imagefactory
+    - imagefactory-plugins-TinMan
+    - imagefactory-plugins-Docker
+    - imagefactory-plugins-GCE
+    - imagefactory-plugins-vSphere
+    - imagefactory-plugins-ovfcommon
+    - imagefactory-plugins
+    - imagefactory-plugins-OVA
+    - imagefactory-plugins-RHEVM
+    - pykickstart
+    - nosync
+  when: env == "staging"
+  tags:
+  - koji_builder
 #
 # rpmautospec plugin
 #
