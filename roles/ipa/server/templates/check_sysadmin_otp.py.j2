@@ -1,0 +1,80 @@
+import argparse
+import json
+from python_freeipa import ClientMeta
+
+
+
+
+def login(args):
+    client = ClientMeta(host=args.server_address, verify_ssl=args.cert_path)
+    client.login(args.username, args.password)
+
+    return client
+
+def get_sysadmins(client):
+    groups = client.group_find('sysadmin-')
+
+    sysadmins = []
+
+    print('Gethering all members from sysadmin-* groups')
+
+    for group in groups['result']:
+        try:
+            sysadmins = sysadmins + list(set(group['member_user']) - set(sysadmins))
+        except KeyError:
+            print('No members of group: ' + group['cn'][0])
+
+    return sysadmins
+
+def checkotp_tokens(client):
+
+    sysadmins = get_sysadmins(client)
+    print("There is " + str(len(sysadmins)) + " sysadmins in the system")
+
+    tokenless = []
+
+    print('Checking which users have an otp token assigned')
+
+    for sysadmin in sysadmins:
+         is_token = client.otptoken_find(o_ipatokenowner=sysadmin)
+         if len(is_token['result']) == 0:
+             tokenless.append(sysadmin)
+
+    print("There are " + str(len(tokenless)) + " sysadmins without otptokens")
+
+    return tokenless
+
+def get_email(client, users):
+
+    print('Gathering emails of the users with no tokens')
+
+    user_details = []
+    for user in users:
+        email = client.user_show(user)['result']['mail'][0]
+        user_details.append({'user': user, 'email': email})
+
+    return user_details
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="Check for sysadmin users with no otp token set, admin credentials are required to run script")
+    parser.add_argument("-u", "--username", default="admin", help="ipa user to use")
+    parser.add_argument("-c", "--cert-path", default="/etc/ipa/ca.crt", help="location of ipa cert")
+    parser.add_argument("-s", "--server-address", default="ipa01{{ env_suffix }}.iad2.fedoraproject.org", help="server to run against")
+    parser.add_argument("-p", "--password", help="ipa user password", required=True)
+
+
+    args = parser.parse_args()
+    return args
+
+def do_it(client):
+
+    tokenless_sysadmins = checkotp_tokens(client)
+    user_details = get_email(client, tokenless_sysadmins)
+    print("Details are in the file tokenless_users.json")
+    with open('tokenless_users.json', 'w') as outfile:
+            json.dump(user_details, outfile)
+
+if __name__ == "__main__":
+    args = parse_args()
+    client = login(args)
+    do_it(client)
