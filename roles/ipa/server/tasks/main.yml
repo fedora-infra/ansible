@@ -629,3 +629,14 @@
   copy:
     src: data-only-backup
     dest: "/etc/cron.d/data-only-backup"
+
+- name: Ensure python dep is present
+  pip:
+    name: python-freeipa
+
+- name: Copy file for checking if sysadmins have otp set
+  template:
+    src: check_sysadmin_otp.py.j2
+    dest: /root
+    owner: root
+    group: root
