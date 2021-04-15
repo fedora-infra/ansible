@@ -633,6 +633,9 @@
 - name: Ensure python dep is present
   pip:
     name: python-freeipa
+  tags:
+  - ipa/server
+  - otp_script
 
 - name: Copy file for checking if sysadmins have otp set
   template:
@@ -640,3 +643,6 @@
     dest: /root
     owner: root
     group: root
+  tags:
+  - ipa/server
+  - otp_script
