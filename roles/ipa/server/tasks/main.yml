@@ -640,7 +640,7 @@
 - name: Copy file for checking if sysadmins have otp set
   template:
     src: check_sysadmin_otp.py.j2
-    dest: /root
+    dest: /root/check_sysadmin_otp.py
     owner: root
     group: root
   tags:
