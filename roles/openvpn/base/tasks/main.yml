@@ -9,30 +9,8 @@
   tags:
   - openvpn
   - packages
-  when: ansible_distribution_major_version|int < 8 and ansible_distribution == 'RedHat'
 
-- name: Install needed package (dnf)
-  package:
-    state: present
-    name:
-    - openvpn
-  tags:
-  - openvpn
-  - packages
-  when: ansible_distribution_major_version|int > 7 and ansible_cmdline.ostree is not defined
-
-- name: Install certificate and key (rhel6)
-  copy: src={{ private }}/files/vpn/pki/ca.crt
-        dest=/etc/openvpn/ca.crt
-        owner=root group=root mode=0600
-  tags:
-  - install
-  - openvpn
-  #notify:
-  #- restart openvpn (RHEL6)
-  when: ansible_distribution_major_version|int == 6 and ansible_distribution == 'RedHat'
-
-- name: Install certificate and key (rhel7+) for client
+- name: Install ca for client
   copy: src={{ private }}/files/vpn/pki/ca.crt
         dest=/etc/openvpn/client/ca.crt
         owner=root group=root mode=0600
@@ -41,20 +19,8 @@
   - openvpn
   #notify:
   #- restart openvpn (RHEL7+)
-  when: ( ansible_distribution_major_version|int >= 7 and ansible_distribution == 'RedHat' ) and ansible_cmdline.ostree is not defined
 
-- name: Install certificate and key (Fedora) for client
-  copy: src={{ private }}/files/vpn/pki/ca.crt
-        dest=/etc/openvpn/client/ca.crt
-        owner=root group=root mode=0600
-  tags:
-  - install
-  - openvpn
-  #notify:
-  #- restart openvpn (Fedora)
-  when: ( ansible_distribution_major_version|int >= 29 and ansible_distribution == 'Fedora' ) and ansible_cmdline.ostree is not defined
-
-- name: Install certificate and key (fedora) for server
+- name: Install ca for server
   copy: src={{ private }}/files/vpn/pki/ca.crt
         dest=/etc/openvpn/server/ca.crt
         owner=root group=root mode=0600
@@ -63,18 +29,6 @@
   - openvpn
   #notify:
   #- restart openvpn (Fedora)
-  when: ( ansible_distribution_major_version|int >= 29 and ansible_distribution == 'Fedora' ) and ansible_cmdline.ostree is not defined
-
-- name: Install certificate and key (rhel7+) for server
-  copy: src={{ private }}/files/vpn/pki/ca.crt
-        dest=/etc/openvpn/server/ca.crt
-        owner=root group=root mode=0600
-  tags:
-  - install
-  - openvpn
-  #notify:
-  #- restart openvpn (RHEL7+)
-  when: ( ansible_distribution_major_version|int >= 7 and ansible_distribution == 'RedHat' ) and ansible_cmdline.ostree is not defined
 
 - name: Install certificate and key (rhel7 or fedora) for server
   copy: src={{ private }}/files/vpn/pki/ca.crt
