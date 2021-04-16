@@ -5,3 +5,12 @@ sudoers_main: nopasswd
 host_group: cloud
 datacenter: aws
 ansible_ifcfg_blocklist: true 
+
+vpn: true
+primary_auth_source: ipa
+ipa_host_group: maintainer_test
+ipa_host_group_desc: Test hosts for package maintainers
+ipa_client_shell_groups:
+- packager
+ipa_client_sudo_groups:
+- packager
