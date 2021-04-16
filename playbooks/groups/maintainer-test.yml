@@ -1,58 +1,5 @@
-- import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml myhosts=aarch64_test:armv7_test"
-
-- name: Do some basic cloud setup on them
-  hosts: maintainer_test:aarch64_test:armv7_test
-  gather_facts: True
-  vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - /srv/private/ansible/vars.yml
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
-
-  pre_tasks:
-  - import_tasks: "{{ tasks_path }}/cloud_setup_basic.yml"
-  - name: set hostname (required by some services, at least postfix need it)
-    hostname: name="{{inventory_hostname}}"
-
-- name: setup second disk on aws maintainer-test instances
-  hosts: maintainer_test:\!ppc64le-test.fedorainfracloud.org
-  gather_facts: True
-  tags:
-   - maintainer-test
-
-  vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
-
-  tasks:
-
-  - name: make a partition on first disk
-    parted: device=/dev/nvme0n1 number=1 state=present
-    tags:
-     - maintainer-test
-    when: inventory_hostname.startswith(('f30-test'))
-
-  - name: format the partition if it's not already
-    filesystem: dev=/dev/nvme0n1p1 fstype=ext4
-    tags:
-     - maintainer-test
-    when: inventory_hostname.startswith(('f30-test'))
-    ignore_errors: true
-
-  - name: mount cache filesystem on /var/cache/mock
-    mount: path=/var/cache/mock state=mounted src=/dev/nvme0n1p1 fstype=ext4
-    tags:
-     - maintainer-test
-    when: inventory_hostname.startswith(('f30-test'))
-
-  - name: bind mount cache filesystem on /var/lib/mock
-    mount: path=/var/lib/mock state=mounted src=/var/cache/mock fstype=none opts=bind
-    tags:
-     - maintainer-test
-    when: inventory_hostname.startswith(('f30-test'))
-
 - name: Setup maintainer test hosts
-  hosts: maintainer_test:aarch64_test:armv7_test
+  hosts: maintainer_test
   gather_facts: True
   tags:
    - maintainer-test
@@ -72,7 +19,6 @@
   - hosts
   - openvpn/client
   - ipa/client
-  - sudo
 
   tasks:
   # this is how you include other task lists
@@ -82,7 +28,7 @@
     dnf: state=present pkg={{ item }}
     with_items:
     - fedora-packager
-    when: ansible_distribution_major_version|int >= 29 and ansible_distribution == 'Fedora'
+    when: ansible_distribution == 'Fedora'
     tags:
     - packages
 
