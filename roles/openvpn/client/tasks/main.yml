@@ -42,7 +42,6 @@
 
 - name: Make sure openvpn is running in rhel 7+
   service: name=openvpn-client@openvpn state=started enabled=true
-  when: ansible_distribution_major_version|int >= 7 and ansible_distribution == 'RedHat'
   tags:
   - service
   - openvpn
