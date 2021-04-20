@@ -40,6 +40,7 @@
 #       "host_group_1": {
 #         "shell_groups": [...],
 #         "sudo_groups": [...],
+#         "sudo_nopasswd_groups": [...],
 #         "hosts": {        # <-- This could be a list with Ansible >= 2.10
 #           "host_1": true,
 #           ...,
@@ -85,6 +86,8 @@
                   (ipa_hosts_combined_shell_groups_dict[item] | length > 0)
                   | ternary(ipa_hosts_combined_shell_groups_dict[item], omit),
                 'sudo_groups': hostvars[item]['ipa_client_sudo_groups'] | default(omit),
+                'sudo_nopasswd_groups':
+                    hostvars[item]['ipa_client_sudo_nopasswd_groups'] | default(omit),
                 'hosts': {item: true},
               }
             }
@@ -99,6 +102,8 @@
             hostvars[item]['ipa_server']: {
               'groups': ipa_hosts_combined_shell_groups_dict[item] | union(
                 hostvars[item]['ipa_client_sudo_groups'] | default([])
+              ) | union(
+                hostvars[item]['ipa_client_sudo_nopasswd_groups'] | default([])
               ),
               'hosts': {item: True},
             }
