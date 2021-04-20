@@ -298,7 +298,28 @@ def get_pagure_project_branches(namespace, package=None, verbose=False):
     return project_names_to_branches
 
 
-def set_koji_ownership(tag, packages, arches, verbose=False):
+def get_pagure_project_owner(namespace, package, verbose=False):
+    """
+    Gets Pagure projects owner in the desired namespace
+    :param namespace: string of the namespace to query for projects
+    :param project: string of the project name
+    :param verbose: prints out verbose information
+    :return: the owner name
+    """
+    pagure_owner_url = urljoin(PAGURE_URL, 'api/0/{0}/{1}'.format(namespace, package))
+    session = retry_session()
+    if verbose:
+        print('- Querying {0}'.format(pagure_owner_url))
+    response = session.get(pagure_owner_url, verify=VERIFY, timeout=120)
+    if not bool(response):
+        print("Failed to talk to %r." % (
+            pagure_owner_url), file=sys.stderr)
+        return 'releng' # default to releng as the onwer
+    owner = response.json()['access_users']['owner'][0]
+    return owner
+
+
+def set_koji_ownership(tag, namespace, packages, arches, verbose=False):
     koji_login_options = get_options()
 
     koji_options={
@@ -347,7 +368,7 @@ def set_koji_ownership(tag, packages, arches, verbose=False):
             koji_pkgs[p['package_name']] = p
 
         for pkg in packages:
-            owner = 'releng'  # always
+            owner = get_pagure_project_owner(namespace, pkg, verbose=verbose)
             if pkg not in koji_pkgs:
                 extra_arches = None
                 if pkg in EXTRA_ARCH_LIST:
@@ -363,7 +384,15 @@ def set_koji_ownership(tag, packages, arches, verbose=False):
                     print('- Setting the owner on package "{0}" for the tag '
                           '"{1}" on arch "{2}"'
                           .format(pkg, tag, arch))
-                session.packageListSetOwner(tag, pkg, owner, force=True)
+                try:
+                    session.packageListSetOwner(tag, pkg, owner, force=True)
+                except:
+                    # Onwer is not added to koji yet, setting releng as owner
+                    print('- Setting releng as owner on package "{0}" for the tag '
+                          '"{1}" on arch "{2}"'
+                          .format(pkg, tag, arch))
+                    session.packageListSetOwner(tag, pkg, 'releng', force=True)
+
 
 
 if __name__ == '__main__':
@@ -426,5 +455,5 @@ if __name__ == '__main__':
             print('Setting the Koji ownership and package list on packages in '
                   'the tag "{0}" and namespaces "{1}" and for arches "{2}"'
                   .format(tag, namespaces, ', '.join(info['arches'])))
-        set_koji_ownership(tag, pkgs, info['arches'], verbose=verbose)
+        set_koji_ownership(tag, namespace, pkgs, info['arches'], verbose=verbose)
 
