@@ -115,20 +115,18 @@ def main():
     # Use the system's keytab for authentication
     os.environ["KRB5_CLIENT_KTNAME"] = "/etc/krb5.keytab"
 
-    try:
-        if not args:
-            gen_all_aliases()
-            # call newaliases script so postfix gets updated
-            subprocess.check_call(['/usr/bin/newaliases'])
-        elif len(args) == 2 and args[0] == "update":
-            update_user(args[1])
-            # call newaliases script so postfix gets updated
-            subprocess.check_call(['/usr/bin/newaliases'])
-        else:
-            print(f"Usage: {sys.argv[0]} [update <username>]", file=sys.stderr)
-            raise RuntimeError()
-    except Exception:
-        sys.exit(1)
+    if not args:
+       gen_all_aliases()
+       # call newaliases script so postfix gets updated
+       subprocess.check_call(['/usr/bin/newaliases'])
+    elif len(args) == 2 and args[0] == "update":
+        update_user(args[1])
+        # call newaliases script so postfix gets updated
+        subprocess.check_call(['/usr/bin/newaliases'])
+    else:
+        print(f"Usage: {sys.argv[0]} [update <username>]", file=sys.stderr)
+        exit(1)
+
 
 if __name__ == "__main__":
     main()
