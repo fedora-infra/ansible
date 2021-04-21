@@ -238,17 +238,6 @@
   - config
 
 
-#
-# Script used to gather encrypted security questions from fas
-#
-
-- name: setup /usr/local/bin/retrieve-security-question.py
-  copy: src=retrieve-security-question.py dest=/usr/local/bin/retrieve-security-question.py mode=0755
-  tags:
-  - batcave
-  - config
-
-
 # The zodbot server must allow TCP on whatever port zodbot is listening on
 # for this to work (currently TCP port 5050).
 # Once that is done, you can symlink /usr/local/bin/zodbot-announce-commits.py

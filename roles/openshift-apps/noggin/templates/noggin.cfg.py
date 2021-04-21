@@ -25,7 +25,7 @@ SESSION_COOKIE_SECURE = True
 FREEIPA_ADMIN_USER = "noggin"
 
 # How many minutes before a password reset request expires
-PASSWORD_RESET_EXPIRATION = 10
+PASSWORD_RESET_EXPIRATION = 30
 
 # Email
 MAIL_FROM = "Fedora Account System <fas@fedoraproject.org>"

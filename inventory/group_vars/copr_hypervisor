@@ -1,6 +1,7 @@
 ---
 virthost: true
 
+vpn: true
 primary_auth_source: ipa
 ipa_host_group: vmhost-copr
 ipa_host_group_desc: VM hosts for COPR
@@ -9,15 +10,10 @@ ipa_client_shell_groups:
 ipa_client_sudo_groups:
 - sysadmin-copr
 
-
 nrpe_procs_warn: 1400
 nrpe_procs_crit: 1500
 
-# These variables are pushed into /etc/system_identification by the base role.
-# Groups and individual hosts should override them with specific info.
-# See http://infrastructure.fedoraproject.org/csi/security-policy/
-
-vpn: false
+vpn: true
 postfix_group: copr
 postfix_maincf: "postfix/main.cf/main.cf.copr"
 

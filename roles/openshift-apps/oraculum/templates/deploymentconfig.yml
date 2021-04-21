@@ -77,18 +77,20 @@ spec:
 {% else %}
           value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard.fedoraproject.org;"
 {% endif %}
+        - name: BZ_API_KEY
+          value: "{{ oraculum_bz_api_key }}"
         volumeMounts:
         - name: oraculum-secret-volume
           mountPath: /opt/app-root/secret/
           readOnly: true
         readinessProbe:
-          timeoutSeconds: 1
+          timeoutSeconds: 5
           initialDelaySeconds: 5
           httpGet:
             path: /
             port: 8080
         livenessProbe:
-          timeoutSeconds: 1
+          timeoutSeconds: 15
           initialDelaySeconds: 30
           httpGet:
             path: /
@@ -176,6 +178,8 @@ spec:
 {% else %}
           value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard.fedoraproject.org;"
 {% endif %}
+        - name: BZ_API_KEY
+          value: "{{ oraculum_bz_api_key }}"
         volumeMounts:
         - name: oraculum-secret-volume
           mountPath: /opt/app-root/secret/
@@ -259,6 +263,8 @@ spec:
 {% else %}
           value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard.fedoraproject.org;"
 {% endif %}
+        - name: BZ_API_KEY
+          value: "{{ oraculum_bz_api_key }}"
         volumeMounts:
         - name: oraculum-secret-volume
           mountPath: /opt/app-root/secret/
@@ -344,6 +350,8 @@ spec:
 {% else %}
           value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard.fedoraproject.org;"
 {% endif %}
+        - name: BZ_API_KEY
+          value: "{{ oraculum_bz_api_key }}"
         volumeMounts:
         - name: oraculum-secret-volume
           mountPath: /opt/app-root/secret/

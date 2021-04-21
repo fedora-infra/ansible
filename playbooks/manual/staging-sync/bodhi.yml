@@ -13,7 +13,7 @@
   - service: name=httpd state=stopped
 
 - name: bring staging services down (OpenShift web services)
-  hosts: os-master01.stg.phx2.fedoraproject.org
+  hosts: os-master01.stg.iad2.fedoraproject.org
   user: root
   vars_files:
    - /srv/web/infra/ansible/vars/global.yml
@@ -43,7 +43,7 @@
 
 # Here's the meaty part in the middle
 - name: drop and re-create the staging db entirely
-  hosts: pgbdr01.stg.phx2.fedoraproject.org
+  hosts: pgbdr01.stg.iad2.fedoraproject.org
   user: root
   become: yes
   become_user: postgres
@@ -68,7 +68,7 @@
   - file: path=/var/tmp/bodhi2.dump state=absent
 
 - name: bring staging services up (OpenShift web services)
-  hosts: os-master01.stg.phx2.fedoraproject.org
+  hosts: os-master01.stg.iad2.fedoraproject.org
   user: root
   vars_files:
    - /srv/web/infra/ansible/vars/global.yml

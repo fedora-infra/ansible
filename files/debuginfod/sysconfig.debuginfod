@@ -1,0 +1,16 @@
+#
+DEBUGINFOD_PORT="8002"
+DEBUGINFOD_VERBOSE="-vv"
+
+DEBUGINFOD_PATHS="--fdcache-fds=512 -t3600 -R /mnt/fedora_koji_prod/koji/packages -X /data/ -I \.(module_f|fc)(32|33|34|35)[.+].*\.rpm"
+
+# prefer reliability/durability over performance
+#DEBUGINFOD_PRAGMAS="-D 'pragma synchronous=full;'"
+
+# upstream debuginfods
+#DEBUGINFOD_URLS="http://secondhost:8002 http://thirdhost:8002"
+#DEBUGINFOD_TIMEOUT="5"
+#DEBUGINFOD_CACHE_DIR=""
+
+# Don't use tmpfs /tmp on scarce-RAM machine.
+TMPDIR=/var/tmp

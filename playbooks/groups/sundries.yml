@@ -39,6 +39,8 @@
     when: master_sundries_node|bool
   - role: fedora-web/build
     when: master_sundries_node|bool
+  - role: fedora-web/translation
+    when: master_sundries_node|bool
   - role: fedora-budget/build
     when: master_sundries_node|bool
   - role: fedora-docs/build

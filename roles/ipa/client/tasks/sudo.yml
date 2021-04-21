@@ -34,3 +34,20 @@
   notify: clean sss caches
   loop: "{{ ipa_server_host_groups }}"
   when: ipa_server_host_groups is defined and ipa_server_host_groups_dict[item[0]][item[1]]['sudo_groups'] is defined
+
+- name: Give certain groups passwordless sudo access to anything per host group
+  delegate_to: "{{ item[0] }}"
+  ipasudorule:
+    name: "hostgroup/{{ item[1] }}/nopasswd"
+    description: "Grant passwordless sudo access to anything on host group {{ item[1] }}"
+    ipaadmin_password: "{{ ipa_server_admin_passwords[item[0]] }}"
+    state: present
+    group: "{{ ipa_server_host_groups_dict[item[0]][item[1]]['sudo_nopasswd_groups'] }}"
+    hostgroup: "{{ item[1] }}"
+    cmdcategory: "all"
+    runasusercategory: "all"
+    runasgroupcategory: "all"
+    options: "!authenticate"
+  notify: clean sss caches
+  loop: "{{ ipa_server_host_groups }}"
+  when: ipa_server_host_groups is defined and ipa_server_host_groups_dict[item[0]][item[1]]['sudo_nopasswd_groups'] is defined

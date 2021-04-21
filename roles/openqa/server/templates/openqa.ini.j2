@@ -1,4 +1,5 @@
 [global]
+audit_enabled = 0
 branding = plain
 base_url = https://{{ external_hostname }}
 download_domains = fedoraproject.org
@@ -13,11 +14,25 @@ topic_prefix = {{ openqa_amqp_publisher_prefix }}
 url = {{ openqa_amqp_publisher_url }}
 exchange = {{ openqa_amqp_publisher_exchange }}
 
+[audit/storage_duration]
+startup = 7
+jobgroup = 7
+jobtemplate = 7
+table = 7
+iso = 7
+user = 7
+asset = 7
+needle = 7
+other = 7
+
 [auth]
 method=OpenID
 
 [logging]
 level=info
+
+[misc_limits]
+asset_cleanup_max_free_percentage = 20
 
 [openid]
 provider = https://id.fedoraproject.org/

@@ -20,6 +20,7 @@
   - sudo
   - collectd/base
   - { role: nfs/client, when: inventory_hostname.startswith('mm-backend01'), mnt_dir: '/srv/pub',  nfs_src_dir: 'fedora_ftp/fedora.redhat.com/pub' }
+  - { role: nfs/client, when: inventory_hostname.startswith('mm-backend01'), mnt_dir: '/srv/pub/archive',  nfs_src_dir: 'fedora_ftp_archive' }
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"

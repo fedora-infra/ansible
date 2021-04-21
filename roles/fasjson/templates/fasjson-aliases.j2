@@ -2,6 +2,7 @@
 import os
 import sys
 import tempfile
+import subprocess
 
 from fasjson_client import Client, errors
 
@@ -17,7 +18,7 @@ def gen_all_aliases():
         client = Client(url=fasjson_url)
 
         try:
-            users = client.list_users().result
+            users = client.list_group_members(groupname="fedora-contributor").result
             groups = client.list_groups().result
             temporary_file = tempfile.NamedTemporaryFile(
                 "w+", delete=False, dir=os.getcwd()
@@ -29,26 +30,24 @@ def gen_all_aliases():
                         temp.write(line)
                     for user in users:
                         username = user['username']
-                        email = user['emails'][0]
+                        userinfo = client.get_user(username=username).result
+                        email = userinfo['emails'][0]
 
                         temp.write(f'{username}: {email} \n')
 
                 for group in groups:
                     groupname = group['groupname']
 
-                    # even though there are no admins of groups anymore
-                    # we should probably leave this here and just
-                    # link to the sponsors list
-                    temp.write(
-                        f'{groupname}-administrators: {groupname}-sponsors \n'
-                    )
-
                     sponsor_list = ','.join(
                         sponsor['username']
                         for sponsor in client.list_group_sponsors(
                             groupname=groupname).result
                     )
-                    temp.write(f"{groupname}-sponsors: {sponsor_list} \n")
+                    if sponsor_list:
+                        temp.write(
+                            f'{groupname}-administrators: {groupname}-sponsors \n'
+                        )
+                        temp.write(f"{groupname}-sponsors: {sponsor_list} \n")
 
                     member_list = ','.join(
                         member['username']
@@ -56,7 +55,9 @@ def gen_all_aliases():
                             groupname=groupname).result
                     )
 
-                    temp.write(f"{groupname}-members: {member_list} \n")
+                    if member_list:
+                        temp.write(f"{groupname}-members: {member_list} \n")
+
             rename(temporary_file.name, aliases_file)
         except errors.APIError as e:
             print(f"Something went wrong querying the fasjson API. {e}", file=sys.stderr)
@@ -114,16 +115,18 @@ def main():
     # Use the system's keytab for authentication
     os.environ["KRB5_CLIENT_KTNAME"] = "/etc/krb5.keytab"
 
-    try:
-        if not args:
-            gen_all_aliases()
-        elif len(args) == 2 and args[0] == "update":
-            update_user(args[1])
-        else:
-            print(f"Usage: {sys.argv[0]} [update <username>]", file=sys.stderr)
-            raise RuntimeError()
-    except Exception:
-        sys.exit(1)
+    if not args:
+       gen_all_aliases()
+       # call newaliases script so postfix gets updated
+       subprocess.check_call(['/usr/bin/newaliases'])
+    elif len(args) == 2 and args[0] == "update":
+        update_user(args[1])
+        # call newaliases script so postfix gets updated
+        subprocess.check_call(['/usr/bin/newaliases'])
+    else:
+        print(f"Usage: {sys.argv[0]} [update <username>]", file=sys.stderr)
+        exit(1)
+
 
 if __name__ == "__main__":
     main()
