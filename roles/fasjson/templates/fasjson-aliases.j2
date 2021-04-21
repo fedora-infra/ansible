@@ -30,7 +30,7 @@ def gen_all_aliases():
                         temp.write(line)
                     for user in users:
                         username = user['username']
-                        userinfo = client.get_user(username=username)
+                        userinfo = client.get_user(username=username).result
                         email = userinfo['emails'][0]
 
                         temp.write(f'{username}: {email} \n')
