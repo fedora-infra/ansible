@@ -18,7 +18,7 @@ def gen_all_aliases():
         client = Client(url=fasjson_url)
 
         try:
-            users = client.list_users().result
+            users = client.list_group_members(groupname="fedora-contributor").result
             groups = client.list_groups().result
             temporary_file = tempfile.NamedTemporaryFile(
                 "w+", delete=False, dir=os.getcwd()
@@ -30,7 +30,8 @@ def gen_all_aliases():
                         temp.write(line)
                     for user in users:
                         username = user['username']
-                        email = user['emails'][0]
+                        userinfo = client.get_user(username=username)
+                        email = userinfo['emails'][0]
 
                         temp.write(f'{username}: {email} \n')
 
