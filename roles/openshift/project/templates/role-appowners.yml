@@ -146,3 +146,10 @@ rules:
   - get
   - list
   - watch
+- apiGroups:
+  - apps.openshift.io
+  attributeRestrictions: null
+  resources:
+  - deploymentconfigs/instantiate
+  verbs:
+  - create
