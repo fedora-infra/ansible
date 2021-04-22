@@ -82,8 +82,8 @@ kojipkgs_url = "https://kojipkgs.fedoraproject.org"
 
 # Account to use to connect to Pagure-as-dist-git
 dist_git_url = "https://src{{ env_suffix }}.fedoraproject.org"
-dist_git_token_seed = "private random string to change"
-dist_git_token = "private random string to change"
+dist_git_token_seed = "{{ toddlers_flag_ci_seed }}"
+dist_git_token = "{{ toddlers_dist_git_token }}"
 
 #  Configuration file storing all the email overrides in the form of:
 # "foo@bar.com" = "bar@foo.org"
@@ -106,11 +106,8 @@ token = "{{ pdc_updater_api_token_prod }}"
 [consumer_config.flag_ci_pr]
 # flag_ci_pr
 dist_git_token_seed = "{{ toddlers_flag_ci_seed }}"
-dist_git_token = "{{ toddlers_flag_ci_token }}"
 
 [consumer_config.flag_commit_build]
-# flag_commit_build
-dist_git_token = "{{ toddlers_flag_commit_build_token }}"
 
 [consumer_config.packager_bugzilla_sync]
 
