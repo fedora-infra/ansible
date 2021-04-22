@@ -1,0 +1,34 @@
+---
+- name: create the copr user
+  user: name=copr uid=11666
+
+- name: assure that copr-be can ssh there as copr@...
+  authorized_key: user=copr key="{{ item }}"
+  with_file:
+  - buildsys.pub
+
+# todo: generate it's own key
+- name: make sure hostA can ssh to hostB
+  copy:
+    src: "{{ private }}/files/copr/buildsys.priv"
+    dest: /home/copr/.ssh/id_rsa
+    owner: copr
+    group: copr
+    mode: 0600
+
+- name: install libvirt packages
+  package: name={{ item }} state=present
+  with_items:
+  - qemu-kvm
+  - libvirt
+  - virt-install
+
+- name: install libvirtd.conf
+  copy: src="{{ files }}/virthost/libvirtd.conf" dest=/etc/libvirt/libvirtd.conf
+  notify:
+  - restart libvirtd
+  tags:
+  - config
+
+- name: add copr user to some virthosts that will run copr builders
+  user: name=copr password_lock=true group=libvirt
