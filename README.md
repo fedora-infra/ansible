@@ -93,3 +93,12 @@ When a playbook or change is checked into ansible you should assume
 that it could be run at ***ANY TIME***. Always make sure the checked in state
 is the desired state. Always test changes when they land so they don't
 surprise you later.
+
+Contributing and Licensing
+--------------------------
+
+Contributions to this repository are subject to the Fedora Project
+Contributor Agreement. If no license is specified, the MIT license is used, otherwise
+the contribution is under the specified acceptable Fedora License.
+See https://fedoraproject.org/wiki/Legal:Fedora_Project_Contributor_Agreement
+for more information.
