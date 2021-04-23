@@ -1,4 +1,16 @@
 ---
+- name: enable swap in fstab
+  mount: name=none src=LABEL=swap
+         fstype=swap opts=sw passno=0 dump=0
+         state=present
+  register: fstab_swap_entry
+  tags: swap
+
+- name: mount the swap
+  shell: swapon -a
+  when: fstab_swap_entry.changed
+  tags: swap
+
 - name: create the copr user
   user: name=copr uid=11666
 
