@@ -53,6 +53,10 @@
 - name: restart libvirtd
   action: service name=libvirtd state=restarted
 
+- name: restart libvirtd.socket
+  action: service name=libvirtd.socket state=stopped
+  notify: restart libvirtd
+
 - name: restart mailman
   action: service name=mailman state=restarted
 

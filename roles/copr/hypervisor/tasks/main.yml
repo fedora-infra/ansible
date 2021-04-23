@@ -77,7 +77,7 @@
     backup: yes
   notify:
     - reload systemd
-    - restart libvirtd
+    - restart libvirtd.socket
   tags: libvirtd
 
 - name: create the copr user
