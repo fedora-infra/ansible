@@ -76,7 +76,7 @@
   tags: libvirtd
 
 - name: copy image pool config file to host
-  template: src=libvirt-image-pool.xml
+  template: src=libvirt-pool-images.xml
             dest=/root/.tmp-ansible-file.xml
   when: libvirt_pool_exists.changed
   tags: libvirtd
