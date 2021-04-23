@@ -11,19 +11,27 @@
   when: fstab_swap_entry.changed
   tags: swap
 
+- name: install libvirtd.conf
+  copy: src="{{ files }}/virthost/libvirtd.conf" dest=/etc/libvirt/libvirtd.conf
+  notify:
+  - restart libvirtd
+  tags:
+  - libvirtd
+  - config
+
 - set_fact: image_pool_dir=/libvirt-images
-  tags: libvirt
+  tags: libvirtd
 
 - name: create libvirt image directory
   file: path={{ image_pool_dir }}
         owner=qemu group=qemu mode=0700
         state=directory
-  tags: libvirt
+  tags: libvirtd
 
 - name: mount libvirt image partition
   mount: name={{ image_pool_dir }} src='LABEL=vmvolumes'
          fstype=ext4 state=mounted
-  tags: libvirt
+  tags: libvirtd
 
 - name: correct selinux
   sefcontext:
@@ -31,12 +39,31 @@
     setype: virt_image_t
     state: present
   register: semanage_run
-  tags: libvirt
+  tags: libvirtd
 
 - name: restorecon
   shell: restorecon -irv "{{ image_pool_dir }}"
   when: semanage_run.changed
-  tags: libvirt
+  tags: libvirtd
+
+- name: check host-bridge in libvirt
+  shell: virsh net-info host-bridge
+  register: libvirt_bridge_exists
+  failed_when: false
+  changed_when: libvirt_bridge_exists.rc != 0
+
+- name: copy host-bridge config file to host
+  copy: src=libvirt-net-bridge.xml
+        dest=/root/.tmp-ansible-file.xml
+  when: libvirt_bridge_exists.changed
+
+- name: define host-bridge in libvirt
+  shell: |
+    virsh net-define /root/.tmp-ansible-file.xml
+    virsh net-start host-bridge
+    virsh net-autostart host-bridge
+  when: libvirt_bridge_exists.changed
+  notify: restart libvirtd
 
 - name: create the copr user
   user: name=copr uid=11666
@@ -61,13 +88,6 @@
   - qemu-kvm
   - libvirt
   - virt-install
-
-- name: install libvirtd.conf
-  copy: src="{{ files }}/virthost/libvirtd.conf" dest=/etc/libvirt/libvirtd.conf
-  notify:
-  - restart libvirtd
-  tags:
-  - config
 
 - name: add copr user to some virthosts that will run copr builders
   user: name=copr password_lock=true group=libvirt
