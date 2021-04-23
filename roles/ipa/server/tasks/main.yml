@@ -4,14 +4,17 @@
 # TODO: remove staging tag afetr freeze
 - name: on rhel8 hosts enable the correct idm module
   copy:
-    dest: /etc/dnf/modules.d/idm.module
-    content: |
-      [idm]
-      name=idm
-      stream=DL1
-      profiles=
-      state=enabled
+    src: "{{item}}"
+    dest: /etc/dnf/modules.d/{{item}}
+  with_items:
+    - 389-ds.module
+    - idm.module
+    - pki-core.module
+    - pki-deps.module
   when: ansible_distribution_major_version|int >= 8 and ansible_distribution == 'RedHat' and env == 'staging'
+  tags:
+  - ipa/server
+  - config
 
 # TODO: consider switching to https://github.com/freeipa/ansible-freeipa
 - name: install needed packages
