@@ -11,6 +11,10 @@
   when: fstab_swap_entry.changed
   tags: swap
 
+- name: install the default profile script
+  copy: src=profile.sh dest=/etc/profile.d/copr-hypervisor.sh
+  tags: profile_scripts
+
 - name: install libvirtd.conf
   copy: src="{{ files }}/virthost/libvirtd.conf" dest=/etc/libvirt/libvirtd.conf
   notify:
