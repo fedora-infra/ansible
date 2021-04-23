@@ -19,7 +19,7 @@
   - libvirtd
   - config
 
-- set_fact: image_pool_dir=/libvirt-images
+- set_fact: image_pool_dir=/libvirt-images image_pool_name=images
   tags: libvirtd
 
 - name: create libvirt image directory
@@ -65,6 +65,28 @@
     virsh net-start host-bridge
     virsh net-autostart host-bridge
   when: libvirt_bridge_exists.changed
+  notify: restart libvirtd
+  tags: libvirtd
+
+- name: check if image pool exists
+  shell: virsh pool-info "{{ image_pool_name }}"
+  register: libvirt_pool_exists
+  failed_when: false
+  changed_when: libvirt_pool_exists.rc != 0
+  tags: libvirtd
+
+- name: copy image pool config file to host
+  template: src=libvirt-image-pool.xml
+            dest=/root/.tmp-ansible-file.xml
+  when: libvirt_pool_exists.changed
+  tags: libvirtd
+
+- name: define image pool in libvirt
+  shell: |
+    virsh pool-define /root/.tmp-ansible-file.xml
+    virsh pool-start "{{ image_pool_name }}"
+    virsh pool-autostart "{{ image_pool_name }}"
+  when: libvirt_pool_exists.changed
   notify: restart libvirtd
   tags: libvirtd
 
