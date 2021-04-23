@@ -1,0 +1,38 @@
+General VM requirements for builder VMs
+---------------------------------------
+
+- 2xvCPU
+- 16GB RAM
+- 16G for built results
+-  4G for root partition
+- SWAP+RAM
+  - 32GB for /var/lib/mock tmpfs
+  - 140GB tmpfs for mock root(s)
+
+
+AMD hypervisors
+===============
+
+vmhost-x86-copr0[1-4].rdu-cc.fedoraproject.org
+
+- 256G RAM
+- 64 threads (2x16 cores)
+- 2.6T+ storage
+- 300 G SWAP
+
+This brings us 32+ (few devel) overcommitted builders on each builder:
+
+ - 32*16G = up to 512 GRAM (256 RAM + 300 G SWAP)
+ - 4G+16G = 20G*32 = up to 640G for root+results
+ - 172G*32 = up to 5.5T SWAP for tmpfs (huge overcommit, though only limitted
+   amount of build tasks require that much tmpfs)
+
+Manually created swap:
+
+  1. lvcreate -L 300G vg_guests -n swap
+  2. mkswap -L swap /dev/mapper/vg_guests-swap
+
+Manually created space for volumes/images:
+
+  1. lvcreate -n images -l 100%FREE vg_guests
+  2. mkfs.ext4 /dev/mapper/vg_guests-images -L vmvolumes

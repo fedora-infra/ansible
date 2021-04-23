@@ -11,6 +11,33 @@
   when: fstab_swap_entry.changed
   tags: swap
 
+- set_fact: image_pool_dir=/libvirt-images
+  tags: libvirt
+
+- name: create libvirt image directory
+  file: path={{ image_pool_dir }}
+        owner=qemu group=qemu mode=0700
+        state=directory
+  tags: libvirt
+
+- name: mount libvirt image partition
+  mount: name={{ image_pool_dir }} src='LABEL=vmvolumes'
+         fstype=ext4 state=mounted
+  tags: libvirt
+
+- name: correct selinux
+  sefcontext:
+    target: "{{ image_pool_dir }}(/.*)?"
+    setype: virt_image_t
+    state: present
+  register: semanage_run
+  tags: libvirt
+
+- name: restorecon
+  shell: restorecon -irv "{{ image_pool_dir }}"
+  when: semanage_run.changed
+  tags: libvirt
+
 - name: create the copr user
   user: name=copr uid=11666
 
