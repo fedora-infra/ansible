@@ -51,11 +51,13 @@
   register: libvirt_bridge_exists
   failed_when: false
   changed_when: libvirt_bridge_exists.rc != 0
+  tags: libvirtd
 
 - name: copy host-bridge config file to host
   copy: src=libvirt-net-bridge.xml
         dest=/root/.tmp-ansible-file.xml
   when: libvirt_bridge_exists.changed
+  tags: libvirtd
 
 - name: define host-bridge in libvirt
   shell: |
@@ -64,6 +66,7 @@
     virsh net-autostart host-bridge
   when: libvirt_bridge_exists.changed
   notify: restart libvirtd
+  tags: libvirtd
 
 - name: create the copr user
   user: name=copr uid=11666
