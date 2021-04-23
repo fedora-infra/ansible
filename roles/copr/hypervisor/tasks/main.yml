@@ -68,6 +68,18 @@
   notify: restart libvirtd
   tags: libvirtd
 
+- name: allow copr user controlling libvirt
+  ini_file:
+    path: /usr/lib/systemd/system/libvirtd.socket
+    section: Socket
+    option: SocketGroup
+    value: libvirt
+    backup: yes
+  notify:
+    - reload systemd
+    - restart libvirtd
+  tags: libvirtd
+
 - name: create the copr user
   user: name=copr uid=11666
 
