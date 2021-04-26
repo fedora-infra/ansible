@@ -421,13 +421,13 @@ handlers = ["console"]
 
         [consumer_config.ostree_refs."fedora/stable/x86_64/iot"]
         directory = "/mnt/fedora_koji/koji/compose/iot/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-33', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-34', 'testkey') }}"
         [consumer_config.ostree_refs."fedora/stable/aarch64/iot"]
         directory = "/mnt/fedora_koji/koji/compose/iot/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-33', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-34', 'testkey') }}"
         [consumer_config.ostree_refs."fedora/stable/armhfp/iot"]
         directory = "/mnt/fedora_koji/koji/compose/iot/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-33', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-34', 'testkey') }}"
 
         [consumer_config.ostree_refs."fedora/32/x86_64/silverblue"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
