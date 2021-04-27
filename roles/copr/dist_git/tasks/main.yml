@@ -121,14 +121,8 @@
   tags:
   - selinux
 
-- name: dont regenerate cgit all the time for now
-  patch: src=patches/disable-cgit-refresh.patch
-         dest=/usr/share/copr/dist_git/bin/cgit_pkg_list
-  tags: patches
-
-- name: Create /var/cache/cgit/repo-list.rc if does not exists (it last 30 minutes to generate)
-  command: /etc/cron.hourly/copr-dist-git creates=/var/cache/cgit/repo-list.rc
-
+- name: Create CGIT config file if it does not exist (takes even 30 minutes)
+  command: /usr/bin/copr-dist-git-refresh-cgit creates=/var/cache/cgit/repo-configuration.rc
 
 - name: ensure that .config directory exists
   file: path=/home/copr-dist-git/.config state=directory
