@@ -200,3 +200,9 @@
   systemd:
     name: kojira
     state: restarted
+
+- name: restart haveged
+  service: name=haveged state=restarted
+
+- name: restart obs-signd
+  service: name=signd state=restarted
