@@ -166,14 +166,18 @@ class OpenIDConnect extends PluggableAuth {
 			wfDebugLog( 'OpenID Connect', 'Redirect URL: ' . $redirectURL );
 			if ( $oidc->authenticate() ) {
 
-				if(in_array($oidc->requestUserInfo('agreements'), "FPCA")) {
+				if(!in_array("signed_fpca", $oidc->requestUserInfo('groups'))) {
 					$errorMessage = 'You need to have signed the FPCA';
 					return false;
 				}
-				if(count($oidc->requestUserInfo('groups')) < 1) {
-					$errorMessage = 'You need to have signed the FPCA+1 group';
+				/*
+				 * Enable the following block to require the equivalent of CLA+1
+				 *
+				if(!in_array("fedora-contributor", $oidc->requestUserInfo('groups'))) {
+					$errorMessage = 'You need to be in at least one group';
 					return false;
 				}
+				*/
 
 				$realname = $oidc->requestUserInfo( 'name' );
 				$email = $oidc->requestUserInfo( 'email' );
