@@ -112,6 +112,7 @@
     dest: /opt/ipsilon-fedora
     version: "{{ env }}"
     force: yes
+  register: git_update
   tags:
   - ipsilon
 
@@ -119,7 +120,7 @@
   command:
     cmd: ./install.sh
     chdir: /opt/ipsilon-fedora
-    creates: /usr/lib/python3.8/site-packages/ipsilon/providers/openidc/plugins/account-scopes.py
+  when: git_update is changed
   tags:
   - ipsilon
 
