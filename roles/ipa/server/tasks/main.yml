@@ -642,8 +642,10 @@
 
 - name: Set cron for daily data only backups
   copy:
-    src: data-only-backup
-    dest: "/etc/cron.d/data-only-backup"
+    src: data-only-backup.sh
+    dest: "/etc/cron.daily/data-only-backup.sh"
+    mode: 0755
+
 
 - name: Ensure python dep is present
   pip:
