@@ -396,7 +396,7 @@ ALLOWDEVFILE=/dev/shm/sem.slapd*.stats
 {% if inventory_hostname in groups['proxies'] or inventory_hostname in groups['proxies_stg'] %}
 ALLOWDEVFILE=/dev/shm/libpod_rootless_lock_441
 {% endif %}
-{% if inventory_hostname in groups['dbserver'] inventory_hostname in groups['dbserver_stg'] or inventory_hostname in groups['pkgs'] or inventory_hostname in groups['pagure'] inventory_hostname in groups['pagure_stg'] or inventory_hostname in groups['zabbix_stg']  %}
+{% if inventory_hostname in groups['dbserver'] or inventory_hostname in groups['dbserver_stg'] or inventory_hostname in groups['pkgs'] or inventory_hostname in groups['pagure'] or inventory_hostname in groups['pagure_stg'] or inventory_hostname in groups['zabbix_stg']  %}
 ALLOWDEVFILE=/dev/shm/PostgreSQL*
 {% endif %}
 
