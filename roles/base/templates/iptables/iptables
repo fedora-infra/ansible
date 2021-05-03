@@ -45,6 +45,30 @@
 -A INPUT -s 10.3.167.0/24 -j REJECT --reject-with icmp-host-prohibited
 {% endif %}
 
+{% if vpn %}
+#
+# We want to have all vpn hosts reject most things from the 'less secure' vpn network
+#
+{% if inventory_hostname == 'log01.iad2.fedoraproject.org' %}
+# Allow all vpn hosts to talk to the log server for rsyslog
+-A INPUT -s 192.168.100.0/24 -m tcp -p tcp --dport 514 -j ACCEPT
+-A INPUT -s 192.168.100.0/24 -m udp -p udp --dport 25826 -j ACCEPT
+{% endif %}
+{% if inventory_hostname in groups['ipa'] %}
+# Allow all vpn hosts to talk to the ipa servers for auth
+-A INPUT -s 192.168.100.0/24 -m tcp -p tcp --dport 80 -j ACCEPT
+-A INPUT -s 192.168.100.0/24 -m tcp -p tcp --dport 88 -j ACCEPT
+-A INPUT -s 192.168.100.0/24 -m tcp -p tcp --dport 389 -j ACCEPT
+-A INPUT -s 192.168.100.0/24 -m tcp -p tcp --dport 443 -j ACCEPT
+-A INPUT -s 192.168.100.0/24 -m tcp -p tcp --dport 464 -j ACCEPT
+-A INPUT -s 192.168.100.0/24 -m tcp -p tcp --dport 636 -j ACCEPT
+
+-A INPUT -s 192.168.100.0/24 -m udp -p udp --dport 88 -j ACCEPT
+-A INPUT -s 192.168.100.0/24 -m udp -p udp --dport 464 -j ACCEPT
+{% endif %}
+# Reject all further connections from less secure vpn
+-A INPUT -s 192.168.100.0/24 -j REJECT --reject-with icmp-host-prohibited
+{% endif %}
 # if the host declares a fedmsg-enabled wsgi app, open ports for it
 {% if wsgi_fedmsg_service is defined %}
 {% for i in range(wsgi_procs * wsgi_threads) %}
