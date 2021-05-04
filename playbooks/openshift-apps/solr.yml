@@ -22,7 +22,7 @@
 
   - role: openshift/object
     app: solr
-    file: storage.yml
+    template: storage.yml
     objectname: storage.yml
 
   - role: openshift/object
@@ -37,7 +37,7 @@
 
   - role: openshift/object
     app: solr
-    file: deploymentconfig.yml
+    template: deploymentconfig.yml
     objectname: deploymentconfig.yml
 
 - name: Link solr and fedora-packages-static networks

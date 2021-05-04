@@ -61,10 +61,10 @@ spec:
       volumes:
       - name: data-volume
         persistentVolumeClaim:
-            claimName: fedora-packages-static-storage
+          claimName: fedora-packages-static-storage{{ '-stg' if env == 'staging' else '' }}
       - name: db-volume
         persistentVolumeClaim:
-          claimName: fedora-packages-static-db-storage
+          claimName: fedora-packages-static-db-storage{{ '-stg' if env == 'staging' else '' }}
 
   triggers:
   - type: ConfigChange

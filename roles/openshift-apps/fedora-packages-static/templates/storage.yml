@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: fedora-packages-static-storage
+  name: fedora-packages-static-storage{{ '-stg' if env == 'staging' else '' }}
 spec:
   accessModes:
     - ReadWriteOnce
@@ -14,7 +14,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: fedora-packages-static-db-storage
+  name: fedora-packages-static-db-storage{{ '-stg' if env == 'staging' else '' }}
 spec:
   accessModes:
     - ReadWriteOnce

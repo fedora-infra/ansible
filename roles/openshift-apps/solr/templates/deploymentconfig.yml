@@ -51,7 +51,7 @@ spec:
       volumes:
       - name: data-volume
         persistentVolumeClaim:
-            claimName: solr-storage
+            claimName: solr-storage{{ '-stg' if env == 'staging' else '' }}
       - name: config-volume
         configMap:
           name: solr-configmap

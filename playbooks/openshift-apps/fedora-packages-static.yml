@@ -27,7 +27,7 @@
 
   - role: openshift/object
     app: fedora-packages-static
-    file: storage.yml
+    template: storage.yml
     objectname: storage.yml
 
   - role: openshift/object
@@ -54,5 +54,5 @@
 
   - role: openshift/object
     app: fedora-packages-static
-    file: deploymentconfig.yml
+    template: deploymentconfig.yml
     objectname: deploymentconfig.yml
