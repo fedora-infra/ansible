@@ -107,7 +107,7 @@
   tags: libvirtd
 
 - name: create the copr user
-  user: name=copr uid=11666
+  user: name=copr uid=11666 group=libvirt groups=["qemu"] password_lock=true
 
 - name: assure that copr-be can ssh there as copr@...
   authorized_key: user=copr key="{{ item }}"
@@ -136,6 +136,3 @@
   - libguestfs-tools-c
   - libvirt
   - virt-install
-
-- name: add copr user to some virthosts that will run copr builders
-  user: name=copr password_lock=true group=libvirt
