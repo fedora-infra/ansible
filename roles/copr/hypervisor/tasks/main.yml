@@ -107,7 +107,7 @@
   tags: libvirtd
 
 - name: create the copr user
-  user: name=copr uid=11666 group=libvirt groups=["qemu"] password_lock=true
+  user: name=copr uid=11666 group=libvirt groups=qemu password_lock=true
 
 - name: assure that copr-be can ssh there as copr@...
   authorized_key: user=copr key="{{ item }}"
