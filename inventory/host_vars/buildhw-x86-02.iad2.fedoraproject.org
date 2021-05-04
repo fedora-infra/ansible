@@ -15,6 +15,7 @@ mac1: 14:9e:cf:61:9f:52
 
 network_connections:
 - name: eth0
+  persistent_state: present
   mac: "{{ mac0 }}"
   state: up
   type: ethernet
@@ -31,6 +32,7 @@ network_connections:
     dhcp4: no
     auto6: no
 - name: eth1
+  persistent_state: present
   mac: "{{ mac1 }}"
   state: down
   type: ethernet
