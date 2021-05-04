@@ -5,7 +5,7 @@ metadata:
   name: fedora-packages-static-storage{{ '-stg' if env == 'staging' else '' }}
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 20Gi
@@ -17,7 +17,7 @@ metadata:
   name: fedora-packages-static-db-storage{{ '-stg' if env == 'staging' else '' }}
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 10Gi
