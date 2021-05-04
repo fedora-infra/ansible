@@ -26,13 +26,13 @@ network_connections:
   autoconnect: yes
   mac: "{{ mac1 }}"
   ip:
-    address: 
+    address:
     - "{{ eth1_ipv4 }}/{{ eth1_ipv4_nm }}"
     gateway4: "{{ eth1_ipv4_gw }}"
-    dns: 
+    dns:
     - "{{ dns1 }}"
     - "{{ dns2 }}"
-    dns_search: 
+    dns_search:
     - iad2.fedoraproject.org
     - fedoraproject.org
     dhcp4: no

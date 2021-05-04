@@ -5,7 +5,7 @@ datacenter: ibiblio
 
 # This is consumed by the roles/fedora-web/main role
 sponsor: ibiblio
- 
+
 vmhost: ibiblio01.fedoraproject.org
 volgroup: /dev/vg_guests
 
@@ -41,18 +41,18 @@ network_connections:
     type: ethernet
     autoconnect: yes
     ip:
-      address: 
+      address:
       - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
       - "{{ eth0_ipv6 }}/{{ eth0_ipv6_nm }}"
       gateway4: "{{ eth0_ipv4_gw }}"
       gateway6: "{{ eth0_ipv6_gw }}"
-      dns: 
+      dns:
       - "{{ dns1 }}"
       - "{{ dns2 }}"
       - 2001:4860:4860::8888
-      dns_search: 
-      - "{{ dns_search1 }}" 
-      - "{{ dns_search2 }}" 
+      dns_search:
+      - "{{ dns_search1 }}"
+      - "{{ dns_search2 }}"
       dhcp4: no
       auto6: no
 

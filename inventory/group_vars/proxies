@@ -4,8 +4,8 @@ lvm_size: 50000
 mem_size: 8192
 num_cpus: 6
 
-# This is used in the httpd.conf to determine the value for serverlimit and 
-# maxrequestworkers. On 8gb proxies, 900 seems fine. But on 4gb proxies, this 
+# This is used in the httpd.conf to determine the value for serverlimit and
+# maxrequestworkers. On 8gb proxies, 900 seems fine. But on 4gb proxies, this
 # should be lowered in the host vars for that proxy.
 maxrequestworkers: 900
 
@@ -70,7 +70,7 @@ nat_rules: [
     '-A PREROUTING -s 209.132.183.252 -p tcp --dport 443 -j REDIRECT --to 44342'
  ]
 
-blocked_ips: [ 
+blocked_ips: [
  '14.102.69.78',
  '104.219.54.236',
  '103.38.177.2',

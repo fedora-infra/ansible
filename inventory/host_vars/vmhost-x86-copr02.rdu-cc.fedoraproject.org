@@ -30,16 +30,16 @@ network_connections:
     type: bridge
     autoconnect: yes
     ip:
-      address: 
+      address:
       - "{{ br0_ipv4 }}/{{ br0_ipv4_nm }}"
       - "{{ br0_ipv6 }}/{{ br0_ipv6_nm }}"
       gateway4: "{{ br0_ipv4_gw }}"
       gateway6: "{{ br0_ipv6_gw }}"
-      dns: 
+      dns:
       - 8.8.8.8
       - 8.8.4.4
       - 2001:4860:4860::8888
-      dns_search: 
+      dns_search:
       - fedoraproject.org
       - vpn.fedoraproject.org
       - rdu-cc.fedoraproject.org

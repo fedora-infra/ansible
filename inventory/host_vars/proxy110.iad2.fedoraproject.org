@@ -15,7 +15,7 @@ volgroup: /dev/vg_guests
 
 dns1: 10.3.163.33
 dns2: 10.3.163.34
- 
+
 dns_search1: "iad2.fedoraproject.org"
 dns_search2: "vpn.fedoraproject.org"
 dns_search3: "fedoraproject.org"
@@ -34,16 +34,16 @@ network_connections:
     type: ethernet
     autoconnect: yes
     ip:
-      address: 
+      address:
       - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
       gateway4: "{{ eth0_ipv4_gw }}"
-      dns: 
+      dns:
       - "{{ dns1 }}"
       - "{{ dns2 }}"
-      dns_search: 
-      - "{{ dns_search1 }}" 
-      - "{{ dns_search2 }}" 
-      - "{{ dns_search3 }}"  
+      dns_search:
+      - "{{ dns_search1 }}"
+      - "{{ dns_search2 }}"
+      - "{{ dns_search3 }}"
       dhcp4: no
       auto6: no
 

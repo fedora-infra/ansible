@@ -31,13 +31,13 @@ network_connections:
     type: ethernet
     autoconnect: yes
     ip:
-      address: 
+      address:
       - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
       gateway4: "{{ eth0_ipv4_gw }}"
-      dns: 
+      dns:
       - "{{ dns1 }}"
       - "{{ dns2 }}"
-      dns_search: 
+      dns_search:
       - rdu-cc.fedoraproject.org
       - fedoraproject.org
       dhcp4: no
@@ -47,7 +47,7 @@ network_connections:
     type: ethernet
     autoconnect: yes
     ip:
-      address: 
+      address:
       - "{{ eth1_ipv4 }}/{{ eth1_ipv4_nm }}"
       dhcp4: no
       auto6: no

@@ -2,14 +2,14 @@
 datacenter: iad2
 dns1: 10.3.163.33
 dns2: 10.3.163.34
- 
+
 has_ipv4: yes
 eth0_ipv4: 10.3.170.126
 eth0_ipv4_nm: 24
 eth0_ipv4_gw: 10.3.170.254
 
 has_ipv6: no
- 
+
 mac0: 2c:59:e5:36:9a:51
 mac1: ce:a6:3d:c6:22:51
 mac2: 66:19:15:4e:89:56
@@ -21,13 +21,13 @@ network_connections:
   state: up
   type: ethernet
   ip:
-    address: 
+    address:
     - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
     gateway4: "{{ eth0_ipv4_gw }}"
-    dns: 
+    dns:
     - "{{ dns1 }}"
     - "{{ dns2 }}"
-    dns_search: 
+    dns_search:
     - iad2.fedoraproject.org
     - fedoraproject.org
     dhcp4: no
@@ -42,7 +42,7 @@ network_connections:
   mac: "{{ mac2 }}"
   state: down
   type: ethernet
-  
+
 - name: eth3
   mac: "{{ mac3 }}"
   state: down

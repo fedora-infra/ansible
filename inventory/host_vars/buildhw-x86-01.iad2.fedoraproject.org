@@ -1,14 +1,14 @@
 ---
 datacenter: iad2
 dns1: 10.3.163.33
- 
+
 has_ipv4: yes
 eth0_ipv4: 10.3.169.31
 eth0_ipv4_nm: 24
 eth0_ipv4_gw: 10.3.169.254
- 
+
 has_ipv6: no
- 
+
 mac0: 14:9e:cf:61:9e:61
 mac1: 14:9e:cf:61:9e:64
 
@@ -19,10 +19,10 @@ network_connections:
   type: ethernet
   autoconnect: yes
   ip:
-    address: 
+    address:
     - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
     gateway4: "{{ eth0_ipv4_gw }}"
-    dns: 
+    dns:
     - "{{ dns1 }}"
     dhcp4: no
     auto6: no

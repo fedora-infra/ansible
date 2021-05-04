@@ -21,13 +21,13 @@ network_connections:
     type: bridge
     autoconnect: yes
     ip:
-      address: 
+      address:
       - "{{ br0_ip }}/24"
       gateway4: "{{ br0_gw }}"
-      dns: 
+      dns:
       - 10.3.163.33
       - 10.3.163.34
-      dns_search: 
+      dns_search:
       - stg.iad2.fedoraproject.org
       - iad2.fedoraproject.org
       - fedoraproject.org

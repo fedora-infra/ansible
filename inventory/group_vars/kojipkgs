@@ -32,7 +32,7 @@ csi_purpose: Cache packages from koji for builders and others
 csi_relationship: |
     There are a few things running here:
 
-    - apache web server and varnish caching proxy. 
+    - apache web server and varnish caching proxy.
 
     - This host relies on:
       - koji nfs storage
@@ -41,6 +41,6 @@ csi_relationship: |
     - Things that rely on this host:
       - all koji builders/buildsystem
       - koschei
-      - external users downloading packages from koji. 
+      - external users downloading packages from koji.
 
 virt_install_command: "{{ virt_install_command_two_nic }}"

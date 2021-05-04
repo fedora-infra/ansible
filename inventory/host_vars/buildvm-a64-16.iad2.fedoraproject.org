@@ -3,14 +3,14 @@ vmhost: bvmhost-a64-06.iad2.fedoraproject.org
 datacenter: iad2
 dns1: 10.3.163.33
 dns2: 10.3.163.34
- 
+
 has_ipv4: yes
 eth0_ipv4: 10.3.170.106
 eth0_ipv4_nm: 24
 eth0_ipv4_gw: 10.3.170.254
 
 has_ipv6: no
- 
+
 mac0: 52:54:00:92:3b:d3
 
 network_connections:
@@ -19,13 +19,13 @@ network_connections:
   state: up
   type: ethernet
   ip:
-    address: 
+    address:
     - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
     gateway4: "{{ eth0_ipv4_gw }}"
-    dns: 
+    dns:
     - "{{ dns1 }}"
     - "{{ dns2 }}"
-    dns_search: 
+    dns_search:
     - iad2.fedoraproject.org
     - fedoraproject.org
     dhcp4: no
