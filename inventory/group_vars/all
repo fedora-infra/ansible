@@ -359,8 +359,7 @@ ipa_server_nodes:
   #- ipa03.iad2.fedoraproject.org
 ipa_realm: FEDORAPROJECT.ORG
 ipa_admin_password: "{{ ipa_prod_admin_password }}"
-# Let this become "ipa" at some point
-primary_auth_source: fas
+primary_auth_source: ipa
 
 # Normal default sshd port is 22
 sshd_port: 22
