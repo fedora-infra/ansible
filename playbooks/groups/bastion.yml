@@ -13,6 +13,7 @@
   roles:
   - base
   - rkhunter
+  - { role: openvpn/client, when: inventory_hostname == 'bastion13.fedoraproject.org' }
   - openvpn/server
   - ipa/client
   - nagios_client
