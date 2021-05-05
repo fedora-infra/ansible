@@ -75,12 +75,6 @@
   #notify:
   #- fix openvpn routing
 
-- name: restart openvpn (RHEL6)
-  when: ansible_distribution == "RedHat" and ansible_distribution_major_version|int == 6
-  action: service name=openvpn state=restarted
-  #notify:
-  #- fix openvpn routing
-
 - name: restart openvpn (RHEL7+)
   when: ansible_distribution == "RedHat" and ansible_distribution_major_version|int >= 7
   action: service name=openvpn-client@openvpn state=restarted
