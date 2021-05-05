@@ -12,9 +12,9 @@
 - name: Create the /etc/openvpn/server/ccd/ directory
   file: >
     dest=/etc/openvpn/server/ccd/
-    mode=0755
+    mode=2755
     owner=root
-    group=root
+    group=sysadmin-main
     state=directory
   tags:
   - openvpn
