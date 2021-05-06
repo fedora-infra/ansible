@@ -538,9 +538,6 @@
   when: ipa_initial
 
 
-- import_tasks: scripts.yml
-
-
 - name: Destroy admin ticket
   command: kdestroy -A
   tags:
@@ -548,6 +545,9 @@
   - config
   - krb5
   when: ipa_initial
+
+
+- import_tasks: scripts.yml
 
 
 # User groups

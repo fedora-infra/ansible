@@ -13,16 +13,17 @@
 #
 # Cleanup stage users
 #
-- name: Create script user to cleanup stage users
-  ipauser:
-    name: sys-cleanup-stage-users
-    givenname: Cleanup stage users
-    sn: Script
-    userclass: system
-    ipaadmin_password: "{{ ipa_admin_password }}"
-  tags:
-  - ipa/server
-  - config
+- name: Create the service for stage users
+  include_role:
+    name: keytab/service
+    apply:
+      tags:
+      - ipa/server
+      - config
+      - keytab
+  vars:
+    host: {{ ipa_server }}
+    service: stage-users
 
 
 - name: Create the Stage User Administrator role
@@ -31,22 +32,13 @@
     description: "Role for users that need to perform admin tasks on stage users."
     privilege:
     - "Stage User Administrators"
-    user:
-    - sys-cleanup-stage-users
+    service:
+    - "stage-users/{{ ipa_server }}"
     ipa_host: "{{ inventory_hostname }}"
     ipa_user: admin
     ipa_pass: "{{ipa_admin_password}}"
     validate_certs: no
-  tags:
-  - ipa/server
-  - config
-
-
-- name: Get the keytab for the stage users cleanup script
-  include_role:
-    name: keytab/user
-  vars:
-    user: sys-cleanup-stage-users
+  run_once: yes
   tags:
   - ipa/server
   - config
