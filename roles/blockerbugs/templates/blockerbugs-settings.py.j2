@@ -7,6 +7,7 @@ FAS_PASSWORD = "{{ blockerbugs_fas_password }}"
 FAS_FLASK_COOKIE_REQUIRES_HTTPS = False
 FAS_CHECK_CERT = False
 PRODUCTION = False
+TESTING = True
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 {% endif %}
 BUGZILLA_URL = '{{ blockerbugs_bugzilla_url }}'
@@ -25,6 +26,9 @@ SESSION_COOKIE_SECURE = True
 
 # Tell flask that we're behind proxy
 BEHIND_PROXY = True
+
+# Always hide DB_URI
+SHOW_DB_URI = False
 
 # enable fedmenu
 FEDMENU_URL = 'https://apps.fedoraproject.org/fedmenu/'
