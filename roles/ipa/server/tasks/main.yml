@@ -643,6 +643,9 @@
     src: data-only-backup.sh
     dest: "/etc/cron.daily/data-only-backup.sh"
     mode: 0755
+  tags:
+  - ipa/server
+  - config
 
 
 - name: Ensure python dep is present
