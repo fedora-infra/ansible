@@ -1,0 +1,67 @@
+---
+- name: Determine whether we need to get keytab
+  stat: path={{kt_location}}
+  register: keytab_status
+  check_mode: no
+  changed_when: "1 != 1"
+  tags:
+  - keytab
+  - config
+  - krb5
+
+- name: Get admin ticket
+  delegate_to: "{{ ipa_server }}"
+  shell: echo "{{ipa_admin_password}}" | kinit admin
+  check_mode: no
+  changed_when: "1 != 1"
+  tags:
+  - keytab
+  - config
+  - krb5
+  when: not keytab_status.stat.exists
+
+- name: Retrieve keytab
+  delegate_to: "{{ ipa_server }}"
+  command: ipa-getkeytab --retrieve --server {{ipa_server}} --keytab {{kt_location}} --principal {{user}}
+  register: retrieve_result
+  check_mode: no
+  changed_when: "1 != 1"
+  failed_when: "not ('Keytab successfully retrieved' in retrieve_result.stderr or 'krbPrincipalKey not found' in retrieve_result.stderr)"
+  tags:
+  - keytab
+  - config
+  - krb5
+  when: not keytab_status.stat.exists
+
+- name: Create keytab if it did not exist
+  delegate_to: "{{ ipa_server }}"
+  command: ipa-getkeytab --server {{ipa_server}} --keytab {{kt_location}} --principal {{user}}
+  tags:
+  - keytab
+  - config
+  - krb5
+  when: not keytab_status.stat.exists and 'krbPrincipalKey not found' in retrieve_result.stderr
+
+- name: Destroy admin ticket
+  delegate_to: "{{ ipa_server }}"
+  command: kdestroy -A
+  tags:
+  - keytab
+  - config
+  - krb5
+  when: not keytab_status.stat.exists
+
+- name: Set keytab permissions
+  file: path={{kt_location}} owner={{owner_user}} group={{owner_group}} mode=0640 state=file
+  tags:
+  - keytab
+  - config
+  - krb5
+
+- name: Set keytab ACL
+  acl: name={{kt_location}} entity={{extra_acl_user}} etype=user permissions=r state=present
+  tags:
+  - keytab
+  - config
+  - krb5
+  when: extra_acl_user is defined

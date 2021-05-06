@@ -213,7 +213,6 @@
   shell: echo "{{ipa_admin_password}}" | kinit admin
   tags:
   - ipa/server
-  - keytab
   - config
   - krb5
   when: ipa_initial
@@ -292,6 +291,7 @@
     name: fas_sync
     givenname: FAS
     sn: Sync
+    userclass: system
     ipaadmin_password: "{{ ipa_admin_password }}"
   tags:
   - ipa/server
@@ -412,6 +412,7 @@
     # (if unset, IPA will assume the password is expired because it hasn't been set by the user themselves)
     passwordexpiration: "2050-05-13 00:00:00"
     update_password: on_create
+    userclass: system
     ipaadmin_password: "{{ ipa_admin_password }}"
   tags:
   - ipa/server
@@ -537,11 +538,13 @@
   when: ipa_initial
 
 
+- import_tasks: scripts.yml
+
+
 - name: Destroy admin ticket
   command: kdestroy -A
   tags:
   - ipa/server
-  - keytab
   - config
   - krb5
   when: ipa_initial
@@ -646,21 +649,3 @@
   tags:
   - ipa/server
   - config
-
-
-- name: Ensure python dep is present
-  pip:
-    name: python-freeipa
-  tags:
-  - ipa/server
-  - otp_script
-
-- name: Copy file for checking if sysadmins have otp set
-  template:
-    src: check_sysadmin_otp.py.j2
-    dest: /root/check_sysadmin_otp.py
-    owner: root
-    group: root
-  tags:
-  - ipa/server
-  - otp_script

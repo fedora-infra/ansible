@@ -1,0 +1,76 @@
+- name: install needed packages for scripts
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - python3-freeipa
+  - python3-requests-gssapi
+  tags:
+  - ipa/server
+  - packages
+
+
+#
+# Cleanup stage users
+#
+- name: Create script user to cleanup stage users
+  ipauser:
+    name: sys-cleanup-stage-users
+    givenname: Cleanup stage users
+    sn: Script
+    userclass: system
+    ipaadmin_password: "{{ ipa_admin_password }}"
+  tags:
+  - ipa/server
+  - config
+
+
+- name: Create the Stage User Administrator role
+  ipa_role:
+    name: "Stage User Administrator"
+    description: "Role for users that need to perform admin tasks on stage users."
+    privilege:
+    - "Stage User Administrators"
+    user:
+    - sys-cleanup-stage-users
+    ipa_host: "{{ inventory_hostname }}"
+    ipa_user: admin
+    ipa_pass: "{{ipa_admin_password}}"
+    validate_certs: no
+  tags:
+  - ipa/server
+  - config
+
+
+- name: Get the keytab for the stage users cleanup script
+  include_role:
+    name: keytab/user
+  vars:
+    user: sys-cleanup-stage-users
+  tags:
+  - ipa/server
+  - config
+
+
+- name: Deploy the stage users cleanup sript
+  copy:
+    src: cleanup-stage-users.py
+    dest: /etc/cron.daily/cleanup-stage-users
+    mode: 0755
+  tags:
+  - ipa/server
+  - config
+
+
+#
+# OTP check for sysadmins
+#
+- name: Copy file for checking if sysadmins have otp set
+  template:
+    src: check_sysadmin_otp.py.j2
+    dest: /root/check_sysadmin_otp.py
+    owner: root
+    group: root
+  tags:
+  - ipa/server
+  - otp_script
