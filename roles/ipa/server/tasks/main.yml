@@ -1,7 +1,5 @@
 ---
 # Configuration for IPA
-#
-# TODO: remove staging tag afetr freeze
 - name: on rhel8 hosts enable the correct idm module
   copy:
     src: "{{item}}"
@@ -11,7 +9,7 @@
     - idm.module
     - pki-core.module
     - pki-deps.module
-  when: ansible_distribution_major_version|int >= 8 and ansible_distribution == 'RedHat' and env == 'staging'
+  when: ansible_distribution_major_version|int >= 8 and ansible_distribution == 'RedHat'
   tags:
   - ipa/server
   - config
@@ -84,7 +82,7 @@
   when: not ipa_initial
 
 - name: create replica file
-  delegate_to: ipa01.iad2.fedoraproject.org
+  delegate_to: ipa01{{ env_suffix }}.iad2.fedoraproject.org
   command: ipa-replica-prepare
            --password={{ipa_dm_password}}
            {{inventory_hostname}}
@@ -95,7 +93,7 @@
   when: not ipa_initial and ansible_distribution_major_version|int < 8 and not replication_status.stat.exists
 
 - name: retrieve replica file
-  delegate_to: ipa01.iad2.fedoraproject.org
+  delegate_to: ipa01{{ env_suffix }}.iad2.fedoraproject.org
   fetch: src=/var/lib/ipa/replica-info-{{inventory_hostname}}.gpg
          dest=/tmp/ipa_replica_{{inventory_hostname}}.gpg
          flat=yes
@@ -159,7 +157,7 @@
            --force-join
            --log-file=/var/log/ipainstall.log
            --domain={{ipa_realm}}
-           --server=ipa01.iad2.fedoraproject.org
+           --server=ipa01{{ env_suffix }}.iad2.fedoraproject.org
            creates=/etc/ipa/default.conf
   tags:
   - ipa/server
