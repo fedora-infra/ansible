@@ -97,30 +97,6 @@
   - config
   - fingerprints
 
-- name: Set up RHOS repo for cloud client stuff
-  copy: src=rhel7-rhos.repo dest=/etc/yum.repos.d/rhel7-rhos.repo
-  tags:
-  - cloud
-  - batcave
-  - config
-  when: datacenter != 'iad2'
-
-- name: install cloud client packages
-  package: name={{ item }} state=present
-  with_items:
-  - python-novaclient
-  - python-neutronclient
-  - python-oslo-config
-  - python-six
-  - python-keystoneclient
-  - python-glanceclient
-  tags:
-  - cloud
-  - batcave
-  - config
-  when: datacenter != 'iad2'
-
-
 #
 # This is our ansible master, setup ansible
 #
