@@ -44,11 +44,13 @@
   - config
 
 
-- name: Deploy the stage users cleanup sript
+- name: Deploy the stage users cleanup script
   copy:
     src: cleanup-stage-users.py
     dest: /etc/cron.daily/cleanup-stage-users
     mode: 0755
+  # Only run the cron job on one server
+  run_once: yes
   tags:
   - ipa/server
   - config
