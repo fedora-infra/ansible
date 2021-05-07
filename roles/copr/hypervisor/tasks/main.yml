@@ -130,7 +130,7 @@
 
 - name: provide pub key, too, so we can install them to generated builder images
   copy: src=buildsys.pub dest=/home/copr/.ssh/id_rsa.pub
-        owner=copr group=ćopr mode=0600
+        owner=copr mode=0600
 
 - name: install libvirt packages
   package: name={{ item }} state=present
