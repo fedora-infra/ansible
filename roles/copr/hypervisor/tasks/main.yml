@@ -157,6 +157,6 @@
       EIMG_COPR_PLAYBOOK=local-image-update.yml
 
 - name: setup provision directory
-  include_tasks: setup_provisioning_environment.yml
+  include_tasks: "{{ roles_path }}/copr/backend/tasks/setup_provisioning_environment.yml"
   vars:
     provision_directory: /home/copr/provision
