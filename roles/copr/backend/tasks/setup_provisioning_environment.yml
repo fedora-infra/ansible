@@ -1,18 +1,22 @@
 ---
+# Warning: this file is included also from copr-hv playbook(s), so keep the
+# source file arguments absolute (not relative to this role)
 - name: sync copr provisioning files
-  synchronize: src="../files/provision/" dest="{{ provision_directory }}/"
+  synchronize: src="{{ roles_path }}/copr/backend/files/provision/"
+               dest="{{ provision_directory }}/"
   tags:
   - provision_config
 
 - name: "sync copr provisioning files [remove mock config leftovers]"
-  synchronize: src="../files/provision/files/mock/" dest="{{ provision_directory }}/files/mock/"
+  synchronize: src="{{ roles_path }}/copr/backend/files/provision/files/mock/"
+               dest="{{ provision_directory }}/files/mock/"
                delete=yes
   tags:
   - provision_config
 
 - name: resalloc, generate vars files
   template:
-    src: "../files/provision/{{ item }}"
+    src: "{{ roles_path }}/copr/backend/files/provision/{{ item }}"
     dest: "{{ provision_directory }}/{{ item }}"
   with_items:
   - vars.yml
@@ -23,14 +27,14 @@
 
 - name: resalloc, rpmbuild config
   template:
-    src: ../files/provision/copr-rpmbuild/main.ini.j2
+    src: "{{ roles_path }}/copr/backend/files/provision/copr-rpmbuild/main.ini.j2"
     dest: "{{ provision_directory }}/files/main.ini"
   tags:
   - provision_config
 
 - name: resalloc, rpkg config
   template:
-    src: ../files/provision/rpkg.conf.j2
+    src: "{{ roles_path }}/copr/backend/files/provision/rpkg.conf.j2"
     dest: "{{ provision_directory }}/files/rpkg.conf"
   tags:
   - provision_config
