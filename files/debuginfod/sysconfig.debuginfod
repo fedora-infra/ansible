@@ -1,8 +1,8 @@
 #
 DEBUGINFOD_PORT="8002"
-DEBUGINFOD_VERBOSE="-vv"
+#DEBUGINFOD_VERBOSE="-vv"
 
-DEBUGINFOD_PATHS="--fdcache-fds=512 -t3600 -R /mnt/fedora_koji_prod/koji/packages -X /data/ -I \.(module_f|fc)(32|33|34|35)[.+].*\.rpm"
+DEBUGINFOD_PATHS="--fdcache-fds=512 -t43200 -g604800 -c6 -vv -R /mnt/fedora_koji_prod/koji/packages -X /data/ -I \.(module_f|fc)(32|33|34|35)[.+].*\.rpm"
 
 # prefer reliability/durability over performance
 #DEBUGINFOD_PRAGMAS="-D 'pragma synchronous=full;'"
