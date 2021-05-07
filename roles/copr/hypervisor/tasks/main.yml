@@ -129,6 +129,10 @@
     group: copr
     mode: 0600
 
+- name: provide pub key, too, so we can install them to generated builder images
+  copy: src=buildsys.pub dest=/home/copr/.ssh/id_rsa.pub
+        owner=copr group=ćopr mode=0600
+
 - name: install libvirt packages
   package: name={{ item }} state=present
   with_items:
@@ -136,3 +140,24 @@
   - libguestfs-tools-c
   - libvirt
   - virt-install
+
+- name: Enable praiskup-helpers repo
+  community.general.copr:
+    state: enabled
+    name: praiskup/helpers
+    chroot: epel-8-x86_64
+
+- name: install latest packages
+  package: name=praiskup-helpers state=latest
+
+- name: install configuration for /bin/copr-image
+  copy:
+    dest: /etc/eimg/eimg.sh
+    content: |
+      EIMG_COPR_PLAYBOOK_DIR=/home/copr/vm-provisioning
+      EIMG_COPR_PLAYBOOK=local-image-update.yml
+
+- name: setup provision directory
+  include_tasks: setup_provisioning_environment.yml
+  vars:
+    provision_directory: /home/copr/provision

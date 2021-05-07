@@ -1,0 +1,19 @@
+---
+# This playbook is used on copr hypervisor for preparing qcow2 copr builder
+# images.
+
+- name: prepare local VM for creating copr builder image
+  hosts: all
+  remote_user: root
+  gather_facts: false
+
+  vars_files:
+    - vars.yml
+    - aws_cloud_vars.yml
+
+  vars:
+  - updatebuilder: true
+  - prepare_base_image: 1
+
+  tasks:
+  - include: "provision_builder_tasks.yml"
