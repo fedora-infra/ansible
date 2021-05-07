@@ -16,7 +16,7 @@
 
 - name: resalloc, generate vars files
   template:
-    src: "{{ roles_path }}/copr/backend/files/provision/{{ item }}"
+    src: "{{ roles_path }}/copr/backend/templates/provision/{{ item }}"
     dest: "{{ provision_directory }}/{{ item }}"
   with_items:
   - vars.yml
@@ -27,14 +27,14 @@
 
 - name: resalloc, rpmbuild config
   template:
-    src: "{{ roles_path }}/copr/backend/files/provision/copr-rpmbuild/main.ini.j2"
+    src: "{{ roles_path }}/copr/backend/templates/provision/copr-rpmbuild/main.ini.j2"
     dest: "{{ provision_directory }}/files/main.ini"
   tags:
   - provision_config
 
 - name: resalloc, rpkg config
   template:
-    src: "{{ roles_path }}/copr/backend/files/provision/rpkg.conf.j2"
+    src: "{{ roles_path }}/copr/backend/templates/provision/rpkg.conf.j2"
     dest: "{{ provision_directory }}/files/rpkg.conf"
   tags:
   - provision_config
