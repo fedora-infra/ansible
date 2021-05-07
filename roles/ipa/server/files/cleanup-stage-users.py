@@ -7,10 +7,10 @@ from datetime import datetime, timedelta
 from python_freeipa import ClientMeta
 
 KEEP_DAYS = 7
-KEYTAB = "/etc/krb5.stage-users_ipa01.stg.iad2.fedoraproject.org.keytab"
+KEYTAB = "/etc/krb5.stage-users_{hostname}.keytab"
 
-os.environ["KRB5_CLIENT_KTNAME"] = KEYTAB
 hostname = socket.gethostname()
+os.environ["KRB5_CLIENT_KTNAME"] = KEYTAB.format(hostname=hostname)
 client = ClientMeta(hostname)
 client.login_kerberos()
 threshold = datetime.utcnow() - timedelta(days=KEEP_DAYS)
