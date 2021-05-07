@@ -74,6 +74,8 @@
     mnt_dir: '/pub/archive'
     nfs_src_dir: 'fedora_ftp_archive'
 
+  - bodhi2/backend
+
   - role: keytab/service
     owner_user: apache
     owner_group: apache
@@ -87,8 +89,6 @@
     service: bodhi
     host: "bodhi.stg.fedoraproject.org"
     when: env == "staging"
-
-  - bodhi2/backend
 
   - role: zabbix/zabbix-agent
     when: env == "staging"
