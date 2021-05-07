@@ -7,8 +7,9 @@ from datetime import datetime, timedelta
 from python_freeipa import ClientMeta
 
 KEEP_DAYS = 7
+KEYTAB = "/etc/krb5.stage-users_ipa01.stg.iad2.fedoraproject.org.keytab"
 
-os.environ["KRB5_CLIENT_KTNAME"] = "/etc/krb5.sys-cleanup-stage-users.keytab"
+os.environ["KRB5_CLIENT_KTNAME"] = KEYTAB
 hostname = socket.gethostname()
 client = ClientMeta(hostname)
 client.login_kerberos()
