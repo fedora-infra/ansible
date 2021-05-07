@@ -160,3 +160,4 @@
   include_tasks: "{{ roles_path }}/copr/backend/tasks/setup_provisioning_environment.yml"
   vars:
     provision_directory: /home/copr/provision
+  tags: provision_config
