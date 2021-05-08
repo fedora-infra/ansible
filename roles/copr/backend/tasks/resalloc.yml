@@ -32,10 +32,14 @@
   become: yes
   become_user: postgres
 
+- set_fact: provision_directory=/var/lib/resallocserver/provision
+  tags:
+  - provision_config
+
 - name: setup provision directory
   include_tasks: setup_provisioning_environment.yml
-  vars:
-    provision_directory: /var/lib/resallocserver/provision
+  tags:
+  - provision_config
 
 - name: resalloc, generate cloud-oriented vars files
   template:
