@@ -1,2 +1,2 @@
 ---
-devel: {% if devel %}true{% else %}false{% endif %}
+devel: {% if devel is defined and devel %}true{% else %}false{% endif %}
