@@ -104,7 +104,7 @@
 
   - role: rabbit/queue
     username: "bodhi{{ env_suffix }}"
-    queue_name: "{{ bodhi_message_queue_name }}"
+    queue_name: "bodhi{{ env_suffix }}_composer"
     routing_keys: "{{ bodhi_message_routing_keys }}"
     thresholds:
       warning: 10
@@ -112,7 +112,7 @@
 
   - role: rabbit/queue
     username: "bodhi{{ env_suffix }}"
-    queue_name: "bodhi_koji_sync_listener{{ env_suffix }}"
+    queue_name: "bodhi{{ env_suffix }}_koji_sync_listener{{ env_suffix }}"
     routing_keys:
       - "io.pagure.*.pagure.issue.edit"
     thresholds:
