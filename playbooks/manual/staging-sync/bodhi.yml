@@ -76,9 +76,9 @@
    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
-  - command: oc -n bodhi scale dc/bodhi-web --replicas={{ bodhi2_openshift_pods }}
-  - command: oc -n bodhi scale dc/bodhi-consumer --replicas={{ bodhi2_openshift_pods }}
-  - command: oc -n bodhi scale dc/bodhi-celery --replicas={{ bodhi2_openshift_pods }}
+  - command: oc -n bodhi scale dc/bodhi-web --replicas=1
+  - command: oc -n bodhi scale dc/bodhi-consumer --replicas=1
+  - command: oc -n bodhi scale dc/bodhi-celery --replicas=1
 
 - name: bring staging services up (httpd)
   hosts: bodhi2_stg
