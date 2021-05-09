@@ -46,3 +46,9 @@
             dest="{{ provision_directory }}/files/rpkg.conf"
   tags:
   - provision_config
+
+- name: remove currently unused and broken os_nova filter
+  file: state=absent
+        path="{{ provision_directory }}/filter_plugins/os_nova.py"
+  tags:
+  - provision_config
