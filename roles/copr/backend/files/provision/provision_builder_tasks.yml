@@ -150,3 +150,5 @@
       - ansible_memory_mb.swap.free >= 1024 * 135
     fail_msg: "Swap is not available, the builder is unusable"
     success_msg: "Swap seems to be available for this builder"
+  when:
+  - prepare_base_image is not defined
