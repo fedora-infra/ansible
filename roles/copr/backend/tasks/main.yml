@@ -179,35 +179,11 @@
   tags:
   - provision_config
 
-- name: put provisioning files
-  synchronize: src="provision/" dest="/home/copr/provision/"
-  tags:
-  - provision_config
-
-- name: "put provisioning files [remove mock config leftovers]"
-  synchronize: src="provision/files/mock/" dest="/home/copr/provision/files/mock/"
-               delete=yes
-  tags:
-  - provision_config
-
-- name: put some files into the provision subdir
-  template:
-    src: "provision/{{ item }}"
-    dest: "/home/copr/provision/{{ item }}"
-  with_items:
-  - vars.yml
-  - nova_cloud_vars.yml
-  - aws_cloud_vars.yml
-  tags:
-  - provision_config
-
-- name: put copr-rpmbuild configuration file into the provision subdir
-  template: src="provision/copr-rpmbuild/main.ini.j2" dest="/home/copr/provision/files/main.ini" owner=copr group=copr
-  tags:
-  - provision_config
-
-- name: put rpkg configuration file into the provision subdir
-  template: src="provision/rpkg.conf.j2" dest="/home/copr/provision/files/rpkg.conf" owner=copr group=copr
+- name: setup provision directory
+  include_tasks: setup_provisioning_environment.yml
+  vars:
+    cloud_vars: true
+    provision_directory: /home/copr/provision
   tags:
   - provision_config
 

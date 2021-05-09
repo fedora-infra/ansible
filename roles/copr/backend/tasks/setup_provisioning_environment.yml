@@ -22,3 +22,27 @@
   - vars.yml
   tags:
   - provision_config
+
+- name: generate cloud-oriented vars files
+  template:
+    src: "{{ roles_path }}/copr/backend/templates/provision/{{ item }}"
+    dest: "{{ provision_directory }}/{{ item }}"
+  with_items:
+  - nova_cloud_vars.yml
+  - aws_cloud_vars.yml
+  tags:
+  - provision_config
+  when:
+  - cloud_vars is defined and cloud_vars
+
+- name: put copr-rpmbuild configuration file into the provision subdir
+  template: src="{{ roles_path }}/copr/backend/templates/provision/copr-rpmbuild/main.ini.j2"
+            dest="{{ provision_directory }}/files/main.ini"
+  tags:
+  - provision_config
+
+- name: put rpkg configuration file into the provision subdir
+  template: src="{{ roles_path }}/copr/backend/templates/provision/rpkg.conf.j2"
+            dest="{{ provision_directory }}/files/rpkg.conf"
+  tags:
+  - provision_config

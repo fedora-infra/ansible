@@ -40,30 +40,8 @@
   include_tasks: setup_provisioning_environment.yml
   tags:
   - provision_config
-
-- name: resalloc, generate cloud-oriented vars files
-  template:
-    src: "{{ roles_path }}/copr/backend/templates/provision/{{ item }}"
-    dest: "{{ provision_directory }}/{{ item }}"
-  with_items:
-  - nova_cloud_vars.yml
-  - aws_cloud_vars.yml
-  tags:
-  - provision_config
-
-- name: resalloc, rpmbuild config
-  template:
-    src: "{{ roles_path }}/copr/backend/templates/provision/copr-rpmbuild/main.ini.j2"
-    dest: "{{ provision_directory }}/files/main.ini"
-  tags:
-  - provision_config
-
-- name: resalloc, rpkg config
-  template:
-    src: "{{ roles_path }}/copr/backend/templates/provision/rpkg.conf.j2"
-    dest: "{{ provision_directory }}/files/rpkg.conf"
-  tags:
-  - provision_config
+  vars:
+    cloud_vars: true
 
 - name: install .ansible.cfg for {{ provision_user }} user
   copy: src=ansible.cfg dest=/var/lib/resallocserver/.ansible.cfg
