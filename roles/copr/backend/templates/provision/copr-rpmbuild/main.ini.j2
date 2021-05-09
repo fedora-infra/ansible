@@ -1,5 +1,5 @@
 [main]
-frontend_url = {{ frontend_base_url or "unset" }}
+frontend_url = {{ frontend_base_url if frontend_base_url is defined  }}
 distgit_lookaside_url = {scheme}://{netloc}/repo/pkgs/%(ns1)s/%(name)s/%(filename)s/%(hashtype)s/%(hash)s/%(filename)s
 distgit_clone_url = {scheme}://{netloc}/%(module)s
 rpm_vendor_copr_name = {{rpm_vendor_copr_name}}
