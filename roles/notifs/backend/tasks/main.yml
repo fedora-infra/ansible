@@ -11,6 +11,24 @@
   - python-requests-gssapi
   # Needed to produce nice long emails about koji builds
   - koji
+  when:
+    inventory_hostname.startswith('notifs-backend01')
+  tags:
+  - notifs
+  - notifs/backend
+
+- name: install needed packages
+  package: name={{ item }} state=present
+  with_items:
+  - python3-fmn
+  - python-psycopg2
+  - python3-libsemanage
+  - python3-gssapi
+  - python3-requests-gssapi
+  # Needed to produce nice long emails about koji builds
+  - koji
+  when:
+    inventory_hostname.startswith('notifs-backend02')
   tags:
   - notifs
   - notifs/backend
