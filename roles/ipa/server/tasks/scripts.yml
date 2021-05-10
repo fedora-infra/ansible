@@ -39,6 +39,7 @@
     ipa_pass: "{{ipa_admin_password}}"
     validate_certs: no
   run_once: yes
+  delegate_to: ipa[0]
   tags:
   - ipa/server
   - config
@@ -51,6 +52,7 @@
     mode: 0755
   # Only run the cron job on one server
   run_once: yes
+  delegate_to: ipa[0]
   tags:
   - ipa/server
   - config
