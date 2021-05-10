@@ -879,9 +879,13 @@
     website: debuginfod.fedoraproject.org
     regex: ^/$
     target: https://fedoraproject.org/wiki/Debuginfod
+    tags:
+    - debuginfod
 
   - role: httpd/redirect
     shortname: debuginfod
     website: debuginfod.fedoraproject.org
     regex: ^/index.html$
     target: https://fedoraproject.org/wiki/Debuginfod
+    tags:
+    - debuginfod
