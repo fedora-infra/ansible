@@ -54,6 +54,8 @@
   - fmn_fasshim.py
   - tasks.py
   - util.py
+  when:
+    inventory_hostname.startswith('notifs-backend01')
   tags:
   - notifs
   - notifs/backend
