@@ -24,11 +24,13 @@ spec:
   triggers:
   - type: ConfigChange
   - type: ImageChange
-  - type: GitHub
 {% if fasjson_stg_github_secret is defined and env == 'staging' %}
+  - type: GitHub
     github:
       secret: "{{ fasjson_stg_github_secret }}"
 {% elif fasjson_github_secret is defined and env == 'production' %}
-    github:
-      secret: "{{ fasjson_github_secret }}"
+  # Do we really want auto rebuilds in prod?
+  # - type: GitHub
+  #   github:
+  #     secret: "{{ fasjson_github_secret }}"
 {% endif %}
