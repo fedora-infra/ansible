@@ -23,6 +23,18 @@
   tags:
   - provision_config
 
+- name: templated provision scripts
+  template:
+    src: "{{ roles_path }}/copr/backend/templates/provision/{{ item }}"
+    dest: "{{ provision_directory }}/{{ item }}"
+    mode: 0755
+  with_items:
+  - upload-qcow2-images
+  tags:
+  - provision_config
+  when:
+  - cloud_vars is not defined
+
 - name: generate cloud-oriented vars files
   template:
     src: "{{ roles_path }}/copr/backend/templates/provision/{{ item }}"

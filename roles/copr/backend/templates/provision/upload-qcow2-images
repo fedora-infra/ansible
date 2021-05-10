@@ -1,0 +1,29 @@
+#! /bin/bash -x
+
+die() { echo >&2 "$*" ; exit 1 ; }
+
+image=$1
+
+connections='
+{% for host in groups["copr_hypervisor"] %}
+    qemu+ssh://copr@{{ hostvars[host]['inventory_hostname'] }}/system
+{% endfor %}
+'
+
+new_volume=$2
+if test -z "$new_volume"; then
+  image_prefix=copr-builder-
+  new_volume=$image_prefix$(date +"%Y%m%d_%H%M%S")
+fi
+
+export VIRSH_DEFAULT_CONNECT_URI=
+
+test -n "$image" || die "first argument (image) required"
+test -f "$image" || die "image $image not found"
+
+pool=images
+for connection in $connections; do
+    virsh --connect="$connection" vol-create-as --pool "$pool" "$new_volume" 1M
+    virsh --connect="$connection" vol-upload    --pool "$pool" "$new_volume" --sparse "$image"
+done
+echo "uploaded images $new_volume"
