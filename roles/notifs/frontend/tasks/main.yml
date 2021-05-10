@@ -1,6 +1,5 @@
 ---
 # Configuration for the Fedora Notifications webapp
-
 - name: install needed packages
   package: name={{ item }} state=present
   with_items:
@@ -8,7 +7,24 @@
   - python-psycopg2
   - libsemanage-python
   - python-memcached
+  - python-flask-openid
   - python-bunch
+  notify:
+  - restart apache
+  when:
+    inventory_hostname.startswith('notifs-backend01')
+  tags:
+  - notifs
+  - notifs/frontend
+
+- name: install needed packages
+  package: name={{ item }} state=present
+  with_items:
+  - python3-fmn
+  - python3-psycopg2
+  - python3-libsemanage
+  - python3-memcached
+  - python3-flask-openid
   notify:
   - restart apache
   tags:
@@ -20,16 +36,6 @@
   with_items:
   - python-fmn
   when: env == "staging"
-  notify:
-  - restart apache
-  tags:
-  - notifs
-  - notifs/frontend
-
-- name: install packages needed from epel testing
-  package: name={{ item }} state=present enablerepo=epel-testing
-  with_items:
-  - python-flask-openid
   notify:
   - restart apache
   tags:
