@@ -18,5 +18,6 @@ metadata:
   name: solr-start-configmap
   labels:
     app: solr
+data:
   solr-start.sh: |-
     {{ load_file('solr-start.sh') | indent }}
