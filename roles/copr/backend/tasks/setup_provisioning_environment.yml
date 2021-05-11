@@ -64,6 +64,8 @@
     src: "{{ roles_path }}/copr/backend/files/resalloc_provision/wait-for-ssh/wait-for-ssh"
     mode: 0755
     dest: "{{ provision_directory }}/wait-for-ssh"
+  tags:
+  - provision_config
 
 - name: put copr-rpmbuild configuration file into the provision subdir
   template: src="{{ roles_path }}/copr/backend/templates/provision/copr-rpmbuild/main.ini.j2"
