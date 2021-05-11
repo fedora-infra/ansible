@@ -64,3 +64,6 @@
         path="{{ provision_directory }}/filter_plugins/os_nova.py"
   tags:
   - provision_config
+
+- name: sometimes it is worth having the copr.py ansible plugin
+  package: name=ansible-collection-community-general state=latest
