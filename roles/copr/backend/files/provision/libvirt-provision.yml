@@ -1,10 +1,10 @@
 # This playbook is executed from resalloc's home directory, by vm-aarch64-new
 # script, it's just a thin wrapper around provision_builder_tasks.yml.
 # IOW: never execute this as 'copr' user..
-
+---
 - name: provision builder
   hosts: all
-  gather_facts: False
+  gather_facts: false
   remote_user: root
 
   vars_files:
@@ -14,4 +14,7 @@
     ansible_python_interpreter: /usr/bin/python3
 
   tasks:
-  - include: "provision_builder_tasks.yml"
+    - include: "create_swap_file.yml"
+      when:
+        - prepare_base_image is defined
+    - include: "provision_builder_tasks.yml"
