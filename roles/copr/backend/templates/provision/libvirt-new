@@ -1,0 +1,407 @@
+#! /usr/bin/python3
+
+"""
+Spawn a Copr Builder using libvirt
+"""
+
+# pylint: disable=invalid-name
+
+import os
+import sys
+import logging
+import subprocess
+import tempfile
+import shutil
+import time
+import pipes
+import argparse
+
+
+DEFAULT_POOL = 'images'
+VOLUMES = {
+    'x86_64': '{{ copr_builder_images.hypervisor.x86_64 }}',
+}
+
+
+def get_hv_id_from_pool_id(pool_id):
+    """ Get unique ID of the hypervisor """
+    pfx = "copr_hv_x86_64_"
+    if pool_id.startswith(pfx):
+        pool_id = pool_id.replace(pfx, "")
+        pool_id = pool_id.replace("_dev", "")
+        pool_id = pool_id.replace("_prod", "")
+        pool_id = pool_id.replace("_stg", "")
+        return pool_id
+    raise Exception("can't convert pool_id to hv ID")
+
+
+class LibvirtSpawner:
+    """
+    Context for all the logic (to avoid working with globals).
+    """
+    # pylint: disable=too-many-instance-attributes
+    workdir = None
+    connection = None
+    vm_name = None
+    root_disk_pool = "images"
+    root_vol_size = "6GB"
+    startup_script = ""
+    arch = None
+    swap_vol_size = None
+    cpu_count = 2
+    boot_options = []
+    ipv6 = None
+    playbook = "/home/copr/provision/_provision_aarch64.yml"
+
+    def __init__(self, resalloc_pool_id, log):
+        hv_id = get_hv_id_from_pool_id(resalloc_pool_id)
+        self.connection = (
+            f"qemu+ssh://copr@vmhost-x86-copr{hv_id}"
+            ".rdu-cc.fedoraproject.org/system")
+        self.arch = "x86_64"
+        self.workdir = tempfile.mkdtemp()
+        self.script_path = os.path.dirname(os.path.realpath(__file__))
+        self.log = log
+
+        self.cleanup_actions = {}
+
+    def call(self, cmd, *args, **kwargs):
+        """
+        Run CMD, and log info.
+        """
+        self.log.debug("cmd: %s", ' '.join([pipes.quote(str(x)) for x in cmd]))
+        start = time.time()
+        status = subprocess.call(cmd, *args, **kwargs)
+        self.log.debug(" -> exit_status=%s, time=%ss",
+                       status, round(time.time() - start, 3))
+        return status
+
+    def virsh_silent(self, args):
+        """
+        Call virsh without polluting stdout.
+        """
+        return self.call(['virsh', '-c', self.connection] + args, stdout=sys.stderr)
+
+    def wait_for_ssh(self, host):
+        """
+        Knowing the IP address of recently started VM, wait for the SSH server
+        responding on that IP.
+        """
+        script = "/usr/bin/wait-for-ssh"
+        if self.call([script, f"root@{host}"]):
+            raise Exception("waiting not successful")
+
+    def execute_spinup_playbook(self, host, playbook):
+        """ Run given playbook agains the given host """
+        cmd = ['timeout', '600', 'ansible-playbook', playbook, '-i', host + ","]
+        if self.call(cmd, stdout=sys.stderr):
+            raise Exception("can't spinup")
+
+    def cleanup(self, success):
+        """
+        Perform cleanups (e.g. upon failure)
+        """
+        self.log.debug("Cleaning up ...")
+        for action in sorted(self.cleanup_actions):
+            self.log.debug("cleanup {0}".format(action))
+            command = self.cleanup_actions[action]
+            counter = 0
+            while True:
+                counter += 1
+
+                always = command[0]
+                method = command[1]
+                args = command[2:]
+                if success and not always:
+                    self.log.info("Cleanup action %s skipped", action)
+                    break
+
+                status = method(args)
+                if status == 0:
+                    break
+                if counter >= 3:
+                    # give up :-(
+                    self.log.error("Giving up the cleanup action '%s'", action)
+                    break
+                sleeptime = 15
+                self.log.debug("sleeping %ss before retry", sleeptime)
+                time.sleep(sleeptime)
+        shutil.rmtree(self.workdir)
+
+
+    def cleanup_action(self, name, function, args, always=False):
+        """
+        Schedule a cleanup actin;  when always is False, and the script
+        succeeds, the action isn't executed.  When always is True, the cleanup
+        action is executed no matter the script result.
+        """
+        self.cleanup_actions[name] = [always, function] + args
+
+
+    def alloc_disk(self, name, size, pool=DEFAULT_POOL):
+        """
+        Allocated disk of SIZE size in POOL
+        """
+        if isinstance(size, int):
+            size = "{0}G".format(size)
+
+        if self.virsh_silent(['vol-create-as', pool, name, str(size)]) != 0:
+            raise Exception("can't create '{0}' disk".format(name))
+
+        self.cleanup_action(
+            '80_delete_disk_{0}'.format(name),
+            self.virsh_silent,
+            ['vol-delete', name, '--pool', pool],
+        )
+
+    def append_startup_script(self, content):
+        """ Add shell script contents to pre-network-script.sh """
+        self.startup_script += "\n" + content + "\n"
+
+    def unused1(self, ip):
+        """ setup static IPv6 address """
+        self.append_startup_script("\n".join([
+            "nmcli con add con-name '{con_name}' ifname {device} "
+            "type ethernet ip4 {ip}/23 gw4 38.145.49.254",
+            "nmcli con mod '{con_name}' ipv4.dns '8.8.8.8,1.1.1.1'",
+            "nmcli con up '{con_name}' iface {device}",
+        ]).format(
+            ip=ip,
+            con_name="copr-static",
+            device='eth0',
+        ))
+
+    def resizeroot(self, device, partition):
+        """ Resize root partition after start """
+        dev = "/dev/{}".format(device)
+        part = "/dev/{}{}".format(device, partition)
+        self.append_startup_script("\n".join([
+            f"growpart {dev} {partition}",
+            f"resize2fs {part}",
+            "mount -o remount /",
+        ]))
+
+    def generate_config_iso(self):
+        """
+        Generate the ISO file that is attached to the VM and used by cloud-init
+        to pre-configure the box.
+        """
+        if not self.startup_script:
+            return None
+
+        script = "#! /bin/bash\nset -e\n" + self.startup_script
+
+        config_dir = os.path.join(self.workdir, "config")
+        os.makedirs(config_dir)
+        pn_script = os.path.join(config_dir, "eimg-early-script.sh")
+        with open(pn_script, 'w') as file:
+            file.write(script)
+
+        image = os.path.join(self.workdir, 'config.iso')
+        # the 'eimg_config' label is important, we search for /dev/disk/by-label/...
+        if self.call(['mkisofs', '-o', image, '-V', 'eimg_config', '-r', '-J',
+                      '--quiet', config_dir]) != 0:
+            raise Exception("mkisofs failed")
+        return image
+
+    def create_volume_from_iso(self, name, prealloc_size, iso, pool=DEFAULT_POOL):
+        """ Create libvirt volume from ISO file """
+        self.alloc_disk(name, prealloc_size, pool)
+        if self.virsh_silent(['vol-upload', name, iso, '--pool', pool]):
+            raise Exception("can not vol-upload the config disk")
+
+    def create_volume_from_volume(self, name, volume, pool=DEFAULT_POOL, size=None):
+        """
+        Clone VOLUME as a NAME, and increase size to SIZE.
+        """
+        if self.virsh_silent(['vol-clone', volume, name, '--pool', pool]):
+            raise Exception("vol-clone failed")
+        self.cleanup_action(
+            '80_delete_disk_{0}'.format(name),
+            self.virsh_silent,
+            ['vol-delete', name, '--pool', pool],
+        )
+
+        if size:
+            if self.virsh_silent(['vol-resize', '--vol', name, '--capacity',
+                    str(size), '--pool', pool]):
+                raise Exception(['cant resize ' + name])
+
+    def boot_machine(self, volumes, vcpus):
+        """
+        Use virt-install to start the VM according to previously given
+        configuration.
+        """
+        cmd = [
+            'virt-install',
+            '--connect', self.connection,
+            '--ram', '4096',
+            '--os-type', 'generic',
+            '--vcpus', str(vcpus),
+            '--vnc',
+            '--features', 'acpi=off',
+            '--noautoconsole',
+            '--import',
+            '-n', self.vm_name,
+            '--channel', "unix,target_type=virtio,name='org.qemu.guest_agent.0'",
+            '--rng', '/dev/random',
+            # '--boot', 'kernel_args="ds=nocloud-net"'
+        ] + self.boot_options
+
+        for vol in volumes:
+            cmd += ['--disk', 'vol={0},device={1},bus={2}'.format(*vol)]
+
+        if self.call(cmd, stdout=sys.stderr):
+            raise Exception("can not boot the machine")
+
+        self.cleanup_action(
+            '50_shut_down_vm_destroy',
+            self.virsh_silent,
+            ['destroy', self.vm_name],
+        )
+        self.cleanup_action(
+            '51_shut_down_vm_undefine',
+            self.virsh_silent,
+            ['undefine', self.vm_name, '--nvram'],
+        )
+
+    def add_bridged_network(self, con_name, device, ipv6_addr, ipv6_gw):
+        """
+        Add bridged networking device, visible from the outside world.
+        """
+        self.boot_options += ['--network', 'bridge=br0,model=virtio']
+        self.append_startup_script("\n".join([
+            "echo ahoj >> /var/tmp/ahoj",
+            f"nmcli con add con-name '{con_name}' ifname {device} "
+            "type ethernet",
+            f"nmcli con modify '{con_name}' ipv6.address {ipv6_addr}",
+            f"nmcli con modify '{con_name}' ipv6.gateway {ipv6_gw}",
+            f"nmcli con modify '{con_name}' ipv4.method disabled",
+        ]))
+        self.ipv6 = ipv6_addr.split("/")[0]
+
+
+    def add_nat_network(self):
+        """ Start the VM with NATed network device """
+        self.boot_options += ["--network", "network=default,model=virtio"]
+
+    def spawn(self):
+        """
+        Spawn the machine, or raise a traceback, caller is responsible for
+        calling self.cleanup().
+        """
+        pool = "images"
+
+        config_iso = self.generate_config_iso()
+        config_vol_name = None
+        if config_iso:
+            self.log.info("using config image %s", config_iso)
+            config_vol_name = self.vm_name + "_config"
+            self.create_volume_from_iso(config_vol_name, '1M', config_iso,
+                                        pool=pool)
+
+        root_image_volume = VOLUMES[self.arch]
+        vol_root = self.vm_name + '_root'
+        self.create_volume_from_volume(
+            vol_root,
+            root_image_volume,
+            pool=pool,
+            size=self.root_vol_size)
+
+        # swap volume
+        swap_volume = None
+        if self.swap_vol_size:
+            swap_volume = self.vm_name + "_swap"
+            self.alloc_disk(swap_volume, self.swap_vol_size, pool=pool)
+
+        volumes = []
+        volumes += [("{}/{}".format(pool, vol_root), 'disk',  'virtio')]
+        if config_vol_name:
+            volume = "{}/{}".format(pool, config_vol_name)
+            volumes += [(volume, 'cdrom',  'scsi')]
+
+        if swap_volume:
+            volume = "{}/{}".format(pool, swap_volume)
+            volumes += [(volume, "disk", "virtio")]
+
+        self.boot_machine(volumes, self.cpu_count)
+
+        self.wait_for_ssh(self.ipv6)
+        self.execute_spinup_playbook(self.ipv6, self.playbook)
+
+
+def get_arg_parser():
+    """ Get the argparse object """
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--swap-vol-size', metavar='GB', type=int, default=20)
+    parser.add_argument('--root-vol-size', metavar='GB', type=int)
+    parser.add_argument('--cpu-count', default=2)
+    parser.add_argument('--ram-size', metavar='MB', default=4096)
+    parser.add_argument('--name')
+    parser.add_argument('--resalloc-pool-id')
+    parser.add_argument('--resalloc-id-in-pool')
+    return parser
+
+
+def get_fedora_ipv6_address(pool_id, id_in_pool, dev=False):
+    """
+    Statically assign IPv6 + Gateway based on id_in_pool.
+    """
+    gateway = "2620:52:3:1:ffff:ffff:ffff:fffe"
+    base = "2620:52:3:1:dead:beef:cafe:c1"
+
+    offset = 0
+    # 01 => 0, 02 => 1, ...
+    hv_id = int(get_hv_id_from_pool_id(pool_id)) - 1
+    # we have block of 256 ipv6 addresses for builder, and 4 hypervisors
+    block = int(256 / 4)
+    # give 48 IPs to each hv (32 prod, some dev), currently 4*48=192 ips
+    offset = hv_id * block
+    if not dev:
+        # give the dev only 8 addresses
+        offset += 8
+
+    addr_number = offset + int(id_in_pool)
+    addr_number = hex(addr_number).replace("0x", "")
+
+    return base + addr_number, gateway
+
+
+def _main():
+    logging.basicConfig(level=logging.DEBUG)
+    log = logging.getLogger()
+
+    args = get_arg_parser().parse_args()
+
+    def _arange_default(attr, env_var):
+        if getattr(args, attr) is None:
+            setattr(args, attr, os.environ.get(env_var))
+        if getattr(args, attr) is None:
+            log.error("Either use --%s or set %s",
+                      attr.replace("_", "-"), env_var)
+            sys.exit(1)
+
+    _arange_default("name", "RESALLOC_NAME")
+    _arange_default("resalloc_pool_id", "RESALLOC_POOL_ID")
+    _arange_default("resalloc_id_in_pool", "RESALLOC_ID_IN_POOL")
+
+    ip6_a, ip6_g = get_fedora_ipv6_address(args.resalloc_pool_id,
+                                           args.resalloc_id_in_pool)
+
+    spawner = LibvirtSpawner(args.resalloc_pool_id, log)
+    spawner.vm_name = args.name
+    spawner.add_nat_network()
+    spawner.add_bridged_network("Wired connection 2", "eth1", ip6_a, ip6_g)
+
+    success = False
+    try:
+        spawner.spawn()
+        sys.stdout.write("{0}\n".format(spawner.ipv6))
+        sys.stdout.flush()
+        success = True
+    finally:
+        spawner.cleanup(success)
+
+
+if __name__ == "__main__":
+    _main()
