@@ -11,3 +11,12 @@ data:
     {{ load_file('packages/solrconfig.xml') | indent }}
   schema.xml: |-
     {{ load_file('packages/schema.xml') | indent }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: solr-start-configmap
+  labels:
+    app: solr
+  solr-start.sh: |-
+    {{ load_file('solr-start.sh') | indent }}

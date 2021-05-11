@@ -23,9 +23,8 @@ spec:
       - name: solr
         image: solr:8
         command:
-        - solr-precreate
-        args:
-        - packages
+        - bash
+        - /opt/solr-start/solr-start.sh
         ports:
         - containerPort: 8983
         resources: {}
@@ -35,6 +34,8 @@ spec:
         - name: config-volume
           mountPath: /opt/solr/server/solr/configsets/packages
           readOnly: true
+        - name: script-volume
+          mountpath: /opt/solr-start
         readinessProbe:
           timeoutSeconds: 1
           initialDelaySeconds: 30
@@ -54,6 +55,9 @@ spec:
       - name: config-volume
         configMap:
           name: solr-configmap
+      - name: script-volume
+        configMap:
+          name: solr-start-configmap  
 
   triggers:
   - type: ConfigChange
