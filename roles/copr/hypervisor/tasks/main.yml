@@ -157,6 +157,8 @@
       EIMG_COPR_PLAYBOOK=local-image-update.yml
       EIMG_FINAL_SYSPREP_ARGS=(--ssh-inject "root:file:$HOME/.ssh/id_rsa.pub"
       --run-command "chcon -v -R -h system_u:object_r:ssh_home_t:s0 /root/.ssh" )
+  tags:
+    provision_config
 
 - name: setup provision directory
   include_tasks: "{{ roles_path }}/copr/backend/tasks/setup_provisioning_environment.yml"
