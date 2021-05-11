@@ -44,6 +44,37 @@ aws_aarch64_normal_{% if devel %}dev{% else %}prod{% endif %}:
     reuse_max_time: 1800
 {% endmacro %}
 
+# x86_64 hypervisors
+{% if devel %}
+{% for hv in ["02", "03", "04"] %}
+copr_hv_x86_64_{{ hv }}:
+    max: 3
+    max_starting: 2
+    max_prealloc: 2
+    tags:
+    - copr_builder
+    - arch_x86_64
+    - arch_x86_64_native
+    - arch_i386
+    - arch_i386_native
+    - arch_i586
+    - arch_i586_native
+    - arch_i686
+    - arch_i686_native
+    - arch_armhfp
+    - arch_armhfp_emulated
+    - arch_s390x
+    - arch_s390x_emulated
+    cmd_new: "/var/lib/resallocserver/provision/libvirt-new --swap-vol-size 168"
+    cmd_delete: "/var/lib/resallocserver/provision/libvirt-new --swap-vol-size 168"
+    cmd_delete: "/var/lib/resallocserver/provision/libvirt-delete"
+    cmd_livecheck: "echo TODO"
+    livecheck_period: 180
+    reuse_opportunity_time: 180
+    reuse_max_count: 8
+    reuse_max_time: 1800
+{% endfor %}
+{% endif %}
 
 {% macro hw_aarch64(id, inst, max, max_starting, max_prealloc) %}
 aarch64_{{ id }}_{{ inst }}:
