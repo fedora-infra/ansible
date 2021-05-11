@@ -8,6 +8,9 @@ if test -e /dev/xvda1 && test -e /dev/nvme0n1; then
     swap_device=/dev/nvme0n1
 elif test -e /dev/nvme1n1; then
     swap_device=/dev/nvme1n1
+elif test -e /dev/vdb; then
+    # libvirt machine
+    swap_device=/dev/vdb
 fi
 
 test -n "$swap_device"
