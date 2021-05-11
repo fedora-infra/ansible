@@ -35,7 +35,7 @@ spec:
           mountPath: /opt/solr/server/solr/configsets/packages
           readOnly: true
         - name: script-volume
-          mountpath: /opt/solr-start
+          mountPath: /opt/solr-start
         readinessProbe:
           timeoutSeconds: 1
           initialDelaySeconds: 30
