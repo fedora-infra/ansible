@@ -63,7 +63,7 @@ aarch64_{{ id }}_{{ inst }}:
 # -  8 GB root partition (it's sparse qcow2, so thin-provisioning)
     cmd_new: "/var/lib/resallocserver/resalloc_provision/vm-aarch64-new"
 {% endif %}
-    cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-aarch64-delete"
+    cmd_delete: "/var/lib/resallocserver/provision/libvirt-delete"
     tags:
     - copr_builder
     - arch_aarch64

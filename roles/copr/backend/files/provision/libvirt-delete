@@ -1,10 +1,17 @@
-#! /bin/sh -x
+#! /bin/bash -x
 
 die(){ echo >&2 "!! $*"; exit 1; }
 
 test -z "$RESALLOC_NAME" && die "no vm specified, empty \$RESALLOC_NAME variable"
 
 case "$RESALLOC_POOL_ID" in
+*copr_hv_x86_64_*)
+    pool_id=${RESALLOC_POOL_ID//copr_hv_x86_64_/}
+    pool_id=${pool_id//_dev/}
+    pool_id=${pool_id//_prod/}
+    pool_id=${pool_id//_stg/}
+    conn=qemu+ssh://copr@vmhost-x86-copr${pool_id}.rdu-cc.fedoraproject.org/system
+    ;;
 *aarch64_01*)
     conn=qemu+ssh://copr@virthost-aarch64-os01.fedorainfracloud.org/system
     ;;
