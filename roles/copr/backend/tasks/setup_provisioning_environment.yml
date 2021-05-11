@@ -59,6 +59,12 @@
   when:
   - cloud_vars is defined and cloud_vars
 
+- name: wait-for-ssh script
+  copy:
+    src: "{{ roles_path }}/copr/backend/files/resalloc_provision/wait-for-ssh/wait-for-ssh"
+    mode: 0755
+    dest: "{{ provision_directory }}/wait-for-ssh"
+
 - name: put copr-rpmbuild configuration file into the provision subdir
   template: src="{{ roles_path }}/copr/backend/templates/provision/copr-rpmbuild/main.ini.j2"
             dest="{{ provision_directory }}/files/main.ini"

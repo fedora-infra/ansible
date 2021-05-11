@@ -51,7 +51,7 @@ class LibvirtSpawner:
     cpu_count = 2
     boot_options = []
     ipv6 = None
-    playbook = "/home/copr/provision/_provision_aarch64.yml"
+    playbook = "{{ provision_directory }}/libvirt-provision.yml"
 
     def __init__(self, resalloc_pool_id, log):
         hv_id = get_hv_id_from_pool_id(resalloc_pool_id)
@@ -87,8 +87,8 @@ class LibvirtSpawner:
         Knowing the IP address of recently started VM, wait for the SSH server
         responding on that IP.
         """
-        script = "/usr/bin/wait-for-ssh"
-        if self.call([script, f"root@{host}"]):
+        script = "{{ provision_directory }}/wait-for-ssh"
+        if self.call([script, '--timeout', '180', host, '--log', 'debug']):
             raise Exception("waiting not successful")
 
     def execute_spinup_playbook(self, host, playbook):
