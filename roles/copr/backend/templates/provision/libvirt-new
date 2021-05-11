@@ -138,14 +138,19 @@ class LibvirtSpawner:
         self.cleanup_actions[name] = [always, function] + args
 
 
-    def alloc_disk(self, name, size, pool=DEFAULT_POOL):
+    def alloc_disk(self, name, size, pool=DEFAULT_POOL, allocation=None):
         """
         Allocated disk of SIZE size in POOL
         """
         if isinstance(size, int):
             size = "{0}G".format(size)
 
-        if self.virsh_silent(['vol-create-as', pool, name, str(size)]) != 0:
+        additional_opts = []
+        if allocation:
+            additional_opts += ["--allocation", str(allocation)]
+
+        if self.virsh_silent(['vol-create-as', pool, name, str(size)] \
+                             + additional_opts) != 0:
             raise Exception("can't create '{0}' disk".format(name))
 
         self.cleanup_action(
@@ -312,7 +317,8 @@ class LibvirtSpawner:
         swap_volume = None
         if self.swap_vol_size:
             swap_volume = self.vm_name + "_swap"
-            self.alloc_disk(swap_volume, self.swap_vol_size, pool=pool)
+            self.alloc_disk(swap_volume, self.swap_vol_size, pool=pool,
+                            allocation="2GB")
 
         volumes = []
         volumes += [("{}/{}".format(pool, vol_root), 'disk',  'virtio')]
@@ -390,6 +396,7 @@ def _main():
 
     spawner = LibvirtSpawner(args.resalloc_pool_id, log)
     spawner.vm_name = args.name
+    spawner.swap_vol_size = str(args.swap_vol_size) + "GB"
     spawner.add_nat_network()
     spawner.add_bridged_network("Wired connection 2", "eth1", ip6_a, ip6_g)
 
