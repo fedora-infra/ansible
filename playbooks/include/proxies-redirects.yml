@@ -873,7 +873,7 @@
     path: /
     target: https://fedoraproject.org/wiki/QA
 
-  # redirects for debuginfod main page
+  # redirects for debuginfod main page; subdirs are reverse-proxied
   - role: httpd/redirect
     shortname: debuginfod
     website: debuginfod.fedoraproject.org
@@ -881,11 +881,4 @@
     target: https://fedoraproject.org/wiki/Debuginfod
     tags:
     - debuginfod
-
-  - role: httpd/redirect
-    shortname: debuginfod
-    website: debuginfod.fedoraproject.org
-    regex: ^/index.html$
-    target: https://fedoraproject.org/wiki/Debuginfod
-    tags:
-    - debuginfod
+    

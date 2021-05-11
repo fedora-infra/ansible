@@ -751,18 +751,8 @@
   - role: httpd/reverseproxy
     website: debuginfod.fedoraproject.org
     destname: debuginfod
-    remotepath: /buildid/
-    localpath: /buildid/
+    # manage non-trivial reverse-proxy specs in template
     proxyurl: http://debuginfod01:8002
     proxyopts: "connectiontimeout=600 timeout=600 keepalive=on"
-    tags: debuginfod
-
-  - role: httpd/reverseproxy
-    website: debuginfod.fedoraproject.org
-    destname: debuginfod
-    remotepath: /metrics
-    localpath: /metrics
-    proxyurl: http://debuginfod01:8002
-    proxyopts: "connectiontimeout=600 timeout=600 keepalive=on"
-    tags: debuginfod
-
+    tags:
+    - debuginfod
