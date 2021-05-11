@@ -15,4 +15,5 @@
   - prepare_base_image: 1
 
   tasks:
+  - include: "create_swap_file.yml"
   - include: "provision_builder_tasks.yml"

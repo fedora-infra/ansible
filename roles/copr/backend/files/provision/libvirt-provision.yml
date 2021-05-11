@@ -14,7 +14,4 @@
     ansible_python_interpreter: /usr/bin/python3
 
   tasks:
-    - include: "create_swap_file.yml"
-      when:
-        - prepare_base_image is defined
     - include: "provision_builder_tasks.yml"
