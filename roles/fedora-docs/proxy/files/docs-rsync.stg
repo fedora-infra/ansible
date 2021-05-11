@@ -6,4 +6,4 @@
 # build the combined docs tree. 
 # See https://pagure.io/fedora-infrastructure/issue/7130
 
-rsync -aH --delete /srv/web/docs.fedoraproject.org/ /srv/web/docs-redirects/ /srv/web/docs-old.fedoraproject.org/public_html/ /srv/web/docs-combined/
+rsync --timeout 300 -aH --delete --delete-after --delete-excluded --exclude='.git*' /srv/web/docs.fedoraproject.org/ /srv/web/docs-redirects/ /srv/web/docs-old.fedoraproject.org/public_html/ /srv/web/docs-combined/
