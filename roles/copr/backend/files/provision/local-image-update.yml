@@ -13,6 +13,7 @@
   vars:
   - updatebuilder: true
   - prepare_base_image: 1
+    ansible_python_interpreter: /usr/bin/python3
 
   tasks:
   - include: "create_swap_file.yml"
