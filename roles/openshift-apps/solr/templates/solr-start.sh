@@ -25,7 +25,7 @@ if [[ "$VERBOSE" == "yes" ]]; then
 fi
 
 EXTRA_ARGS=()
-EXTRA_ARGS+=(-a '-p 8983')
+EXTRA_ARGS+=(-p 8983)
 
 # Start of https://github.com/docker-solr/docker-solr/blob/master/scripts/solr-fg
 if [[ -z "${OOM:-}" ]]; then
@@ -64,9 +64,9 @@ if [[ -z "${TINI:-}" ]]; then
   fi
 fi
 if [[ "$TINI" == yes ]]; then
-  exec /usr/bin/tini -- solr -f "$@" "${EXTRA_ARGS[@]}"
+  exec /usr/bin/tini -- solr -f "${EXTRA_ARGS[@]}"
 elif [[ "$TINI" == no ]]; then
-  exec solr -f "$@" "${EXTRA_ARGS[@]}"
+  exec solr -f "${EXTRA_ARGS[@]}"
 else
   echo "invalid value TINI=$TINI"
   exit 1
