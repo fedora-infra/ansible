@@ -85,5 +85,11 @@
   tags:
   - provision_config
 
+- name: f33 has outdated ansible community general plugins, use copr
+  community.general.copr:
+    state: enabled
+    name: praiskup/ansible-collection-community-genral-f33
+  when: ansible_distribution_major_version|int == 33 and ansible_distribution == 'Fedora'
+
 - name: sometimes it is worth having the copr.py ansible plugin
   package: name=ansible-collection-community-general state=latest
