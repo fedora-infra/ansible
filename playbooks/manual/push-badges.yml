@@ -103,3 +103,7 @@
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
+
+  - name: run  /usr/local/bin/update_checkout.sh
+    command:  /usr/local/bin/update_checkout.sh
+    delegate_to: badges-web01.iad2.fedoraproject.org
