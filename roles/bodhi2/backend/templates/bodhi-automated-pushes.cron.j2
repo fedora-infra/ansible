@@ -2,5 +2,6 @@ MAILTO=sysadmin-releng-members@fedoraproject.org
 {% if RelEngFrozen %}
 {{ '#' }}14 00 * * * apache /usr/local/bin/bodhi-automated-pushes.py
 {% else %}
-14 00 * * * apache /usr/local/bin/bodhi-automated-pushes.py
+# disabled by kevin until we sort out releng 10114
+#14 00 * * * apache /usr/local/bin/bodhi-automated-pushes.py
 {% endif %}
