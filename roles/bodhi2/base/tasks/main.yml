@@ -22,6 +22,8 @@
     shell: /sbin/nologin
     home: /usr/share/bodhi
     system: yes
+    append: yes 
+    state: present
 
 - name: Configure alembic
   template:
