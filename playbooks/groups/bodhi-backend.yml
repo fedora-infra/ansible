@@ -37,6 +37,8 @@
     mnt_dir: '/mnt/fedora_koji'
     nfs_src_dir: 'fedora_koji'
 
+  - bodhi2/backend
+
   - role: nfs/client
     mnt_dir: '/mnt/koji/ostree'
     nfs_src_dir: 'fedora_ostree_content/ostree'
@@ -70,8 +72,6 @@
   - role: nfs/client
     mnt_dir: '/pub/archive'
     nfs_src_dir: 'fedora_ftp_archive'
-
-  - bodhi2/backend
 
   - role: keytab/service
     owner_user: apache
