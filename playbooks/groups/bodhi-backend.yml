@@ -33,9 +33,6 @@
   - sudo
   - rkhunter
 
-  - role: fedmsg/base
-    when: env != 'staging'
-
   - role: nfs/client
     mnt_dir: '/mnt/fedora_koji'
     nfs_src_dir: 'fedora_koji'
