@@ -283,7 +283,7 @@ items:
         - name: bodhi-celery
           image: bodhi-base:latest
           command: ["/usr/bin/celery"]
-          args: ["worker", "-A", "bodhi.server.tasks.app", "-l", "info", "-Q", "celery"]
+          args: ["-A", "bodhi.server.tasks.app", "worker", "-l", "info", "-Q", "celery"]
           resources: {}
           volumeMounts:
           - name: config-volume
@@ -378,7 +378,7 @@ items:
           image: bodhi-base:latest
           workingDir: "/tmp"
           command: ["/usr/bin/celery"]
-          args: ["beat", "-A", "bodhi.server.tasks.app", "-l", "info"]
+          args: ["-A", "bodhi.server.tasks.app", "beat", "-l", "info"]
           resources: {}
           volumeMounts:
           - name: config-volume
