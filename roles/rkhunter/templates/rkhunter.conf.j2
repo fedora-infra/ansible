@@ -393,7 +393,7 @@ ALLOWDEVFILE=/dev/shm/spice.*
 {% if inventory_hostname in groups['ipa'] or inventory_hostname in groups['ipa_stg'] %}
 ALLOWDEVFILE=/dev/shm/sem.slapd*.stats
 {% endif %}
-{% if inventory_hostname in groups['retrace'] or inventory_hostname in groups['releng_compose'] %}
+{% if inventory_hostname in groups['retrace'] or inventory_hostname in groups['releng_compose'] or inventory_hostname in groups['releng_compose_stg]' %}
 ALLOWDEVFILE=/dev/shm/libpod_*
 {% endif %}
 {% if inventory_hostname in groups['dbserver'] or inventory_hostname in groups['dbserver_stg'] or inventory_hostname in groups['pkgs'] or inventory_hostname in groups['pagure'] or inventory_hostname in groups['pagure_stg'] or inventory_hostname in groups['zabbix_stg'] or inventory_hostname in groups['retrace'] %}
