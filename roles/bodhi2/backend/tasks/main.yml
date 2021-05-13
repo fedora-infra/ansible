@@ -86,7 +86,7 @@
 - name: put the koji sync listener script in place
   copy:
       src: koji_sync_listener.py
-      dest: /usr/lib/python3.8/site-packages/koji_sync_listener.py
+      dest: /usr/lib/python3.9/site-packages/koji_sync_listener.py
       mode: 0644
   when: env == "production"
   tags:
