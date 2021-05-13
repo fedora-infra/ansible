@@ -1,64 +1,15 @@
 FROM fedora:34
 LABEL \
-  name="bodhi-base" \
-  vendor="Fedora Infrastructure" \
-  license="MIT"
+    name="bodhi-base" \
+    vendor="Fedora Infrastructure" \
+    license="MIT"
+RUN curl -o /etc/yum.repos.d/infra-tags.repo https://infrastructure.fedoraproject.org/infra/ansible/files/common/fedora-infra-tags.repo
+# While dnf has a --nodocs, it doesen't have a --docs...
+RUN sed -i '/nodocs/d' /etc/dnf/dnf.conf
+RUN dnf install -y bodhi-server-{{bodhi_version}} bodhi-docs-{{bodhi_version}} python3-pyramid_sawing python3-gunicorn
 
-RUN curl -o /etc/yum.repos.d/infra-tags.repo https://pagure.io/fedora-infra/ansible/raw/main/f/files/common/fedora-infra-tags.repo
-
-RUN dnf install -y \
-    git                         \
-    python3-pip                 \
-    fedora-messaging            \
-    httpd                       \
-    intltool                    \
-    origin-clients              \
-    python3-alembic             \
-    python3-arrow               \
-    python3-backoff             \
-    python3-bleach              \
-    python3-celery              \
-    python3-click               \
-    python3-colander            \
-    python3-cornice             \
-    python3-dogpile-cache       \
-    python3-fedora-messaging    \
-    python3-feedgen             \
-    python3-jinja2              \
-    python3-markdown            \
-    python3-psycopg2            \
-    python3-prometheus_client   \
-    python3-py3dns              \
-    python3-pyasn1-modules      \
-    python3-pylibravatar        \
-    python3-pyramid             \
-    python3-pyramid-fas-openid  \
-    python3-pyramid-mako        \
-    python3-pyramid_sawing      \
-    python3-bugzilla            \
-    python3-fedora              \
-    python3-pyyaml              \
-    python3-simplemediawiki     \
-    python3-sqlalchemy          \
-    python3-waitress            \
-    python3-dnf                 \
-    python3-koji                \
-    python3-librepo             \
-    python3-mod_wsgi            \
-    python3-gunicorn            \
-    python3-whitenoise          \
-    && dnf --setopt='tsflags=' install -y bodhi-docs \
-    && pip install koji graphene graphene-sqlalchemy WebOb-GraphQL \
-    && dnf clean all
-
-RUN git clone -b {{bodhi_version}} https://github.com/fedora-infra/bodhi.git /srv/bodhi && \
-    cd /srv/bodhi && \
-    python3 -m pip install . --no-use-pep517 && \
-    mkdir -p /usr/share/bodhi && \
-    cp /srv/bodhi/apache/bodhi.wsgi /usr/share/bodhi/bodhi.wsgi
-
+# Set up krb5
 RUN rm -f /etc/krb5.conf && \
     ln -sf /etc/bodhi/krb5.conf /etc/krb5.conf && \
-    ln -sf /etc/keytabs/koji-keytab /etc/krb5.bodhi_bodhi.fedoraproject.org.keytab
-
+    ln -sf /etc/keytabs/koji-keytab /etc/krb5.bodhi_bodhi{{ env_suffix }}.fedoraproject.org.keytab
 ENV USER=openshift
