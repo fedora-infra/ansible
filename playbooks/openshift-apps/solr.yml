@@ -35,21 +35,23 @@
     file: service.yml
     objectname: service.yml
 
+  - role: openshift/route
+    app: solr
+    routename: solr
+    host: "solr{{ env_suffix }}.fedoraproject.org"
+    serviceport: 8983-tcp
+    servicename: solr
+    annotations:
+      haproxy.router.openshift.io/ip_whitelist: 10.0.0.0/8
+
   - role: openshift/object
     app: solr
     template: deploymentconfig.yml
     objectname: deploymentconfig.yml
 
-- name: Link solr and fedora-packages-static networks
-  hosts: os_masters_stg[0]
-  user: root
-  gather_facts: False
-
-  vars_files:
-    - /srv/web/infra/ansible/vars/global.yml
-    - "/srv/private/ansible/vars.yml"
-    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
-
-  tasks:
-  - name: Run oc adm command to link solr to other projects
-    command: "oc adm pod-network join-projects --to=solr fedora-packages-static"
+# to run: sudo rbac-playbook -l staging -t delete openshift-apps/solr.yml
+  - role: openshift/object-delete
+    app: solr
+    objecttype: project
+    objectname: solr
+    tags: [ never, delete ]

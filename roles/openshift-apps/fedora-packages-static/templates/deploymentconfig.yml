@@ -22,7 +22,7 @@ spec:
       initContainers:
       - name: init-solr
         image: busybox
-        command: ['sh', '-c', 'until nslookup solr.solr.svc.cluster.local; do echo waiting for solr; sleep 2; done;']
+        command: ['sh', '-c', 'until ping -c1 solr{{ env_suffix }}.fedoraproject.org >/dev/null 2>&1; do echo waiting for solr; sleep 2; done']
       containers:
       - name: fedora-packages-static
         image: fedora-packages-static:latest
@@ -30,12 +30,12 @@ spec:
         - name: SOLR_URL
           valueFrom:
             configMapKeyRef:
-              name: fedora-packages-static-configmap 
+              name: fedora-packages-static-configmap
               key: solr-url
         - name: SITEMAP_URL
           valueFrom:
             configMapKeyRef:
-              name: fedora-packages-static-configmap 
+              name: fedora-packages-static-configmap
               key: sitemap-url
         ports:
         - containerPort: 80
