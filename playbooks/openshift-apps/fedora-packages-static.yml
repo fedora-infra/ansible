@@ -56,3 +56,13 @@
     app: fedora-packages-static
     template: deploymentconfig.yml
     objectname: deploymentconfig.yml
+
+###############################################
+# actions to delete the project from OpenShift
+###############################################
+# to run: sudo rbac-playbook -l staging -t delete openshift-apps/fedora-packages-static.yml
+  - role: openshift/object-delete
+    app: fedora-packages-static
+    objecttype: project
+    objectname: fedora-packages-static
+    tags: [ never, delete ]
