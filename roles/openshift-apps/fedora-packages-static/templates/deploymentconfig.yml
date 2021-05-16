@@ -22,7 +22,7 @@ spec:
       initContainers:
       - name: init-solr
         image: busybox
-        command: ['sh', '-c', 'until ping -c1 solr{{ env_suffix }}.fedoraproject.org >/dev/null 2>&1; do echo waiting for solr; sleep 2; done']
+        command: ['sh', '-c', 'until nslookup solr.fedora-packages-static.svc.cluster.local; do echo waiting for solr; sleep 2; done;']
       containers:
       - name: fedora-packages-static
         image: fedora-packages-static:latest
@@ -76,3 +76,69 @@ spec:
       from:
         kind: ImageStreamTag
         name: fedora-packages-static:latest
+---
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: fedora-packages-static
+    service: solr
+  name: solr
+spec:
+  replicas: 1 # Only 1! Solr is not configured in cloud mode yet.
+  selector:
+    app: fedora-packages-static
+    deploymentconfig: fedora-packages-static
+  strategy:
+    type: Rolling
+  template:
+    metadata:
+      labels:
+        app: fedora-packages-static
+        deploymentconfig: fedora-packages-static
+    spec:
+      containers:
+      - name: solr
+        image: solr:8
+        command:
+        - bash
+        - /opt/solr-start/solr-start.sh
+        ports:
+        - containerPort: 8983
+        resources: {}
+        volumeMounts:
+        - name: data-volume
+          mountPath: /var/solr
+        - name: config-volume
+          mountPath: /opt/solr/server/solr/configsets/packages
+          readOnly: true
+        - name: script-volume
+          mountPath: /opt/solr-start
+        readinessProbe:
+          timeoutSeconds: 1
+          initialDelaySeconds: 30
+          httpGet:
+            path: /
+            port: 8983
+        livenessProbe:
+          timeoutSeconds: 1
+          initialDelaySeconds: 40
+          httpGet:
+            path: /
+            port: 8983
+      # Add solr's default gid to nfs group
+      securityContext:
+        supplementalGroups: [8983]
+      volumes:
+      - name: data-volume
+        persistentVolumeClaim:
+            claimName: solr-storage{{ '-stg' if env == 'staging' else '' }}
+      - name: config-volume
+        configMap:
+          name: fedora-packages-static-solr-configmap
+      - name: script-volume
+        configMap:
+          name: fedora-packages-static-solr-start-configmap
+
+  triggers:
+  - type: ConfigChange

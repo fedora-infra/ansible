@@ -22,3 +22,15 @@ spec:
     requests:
       storage: 10Gi
   storageClassName: ""
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: solr-storage{{ '-stg' if env == 'staging' else '' }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: ""

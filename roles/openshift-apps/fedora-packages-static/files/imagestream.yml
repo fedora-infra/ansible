@@ -8,3 +8,14 @@ spec:
     local: false
 status:
   dockerImageRepository: ""
+---
+apiVersion: v1
+kind: ImageStream
+metadata:
+   name: solr
+spec:
+  tags:
+  - name: 8
+    from:
+      kind: DockerImage
+      name: solr:8
