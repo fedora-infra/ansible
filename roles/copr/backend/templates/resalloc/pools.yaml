@@ -17,6 +17,7 @@ aws_x86_64_normal_{% if devel %}dev{% else %}prod{% endif %}:
     - arch_armhfp_emulated
     - arch_s390x
     - arch_s390x_emulated
+    - aws
     cmd_new: "/var/lib/resallocserver/resalloc_provision/vm-aws-new --arch=x86_64"
     cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-aws-delete"
     cmd_livecheck: "/var/lib/resallocserver/resalloc_provision/vm-aws-check"
@@ -35,6 +36,7 @@ aws_aarch64_normal_{% if devel %}dev{% else %}prod{% endif %}:
     - copr_builder
     - arch_aarch64
     - arch_aarch64_native
+    - aws
     cmd_new: "/var/lib/resallocserver/resalloc_provision/vm-aws-new --arch=aarch64"
     cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-aws-delete"
     cmd_livecheck: "/var/lib/resallocserver/resalloc_provision/vm-aws-check"
