@@ -27,6 +27,7 @@ separate_source_tags=f{{ FedoraRawhideNumber }}-build eln-build
 ; prevent repo cleanup from stalling repo regen
 ;prune_batch_size=1
 ;delete_batch_size=1
+max_delete_processes=20
 
 ; prevent kojira from flooding the build system with newRepo tasks
 max_repo_tasks=30
