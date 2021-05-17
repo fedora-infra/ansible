@@ -51,8 +51,8 @@ aws_aarch64_normal_{% if devel %}dev{% else %}prod{% endif %}:
 {% for hv in ["02", "03", "04"] %}
 copr_hv_x86_64_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     max: 3
-    max_starting: 2
-    max_prealloc: 2
+    max_starting: 1
+    max_prealloc: 1
     tags:
     - copr_builder
     - arch_x86_64
