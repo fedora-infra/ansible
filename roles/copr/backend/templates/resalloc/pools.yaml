@@ -47,12 +47,17 @@ aws_aarch64_normal_{% if devel %}dev{% else %}prod{% endif %}:
 {% endmacro %}
 
 # x86_64 hypervisors
-{% if devel %}
 {% for hv in ["02", "03", "04"] %}
 copr_hv_x86_64_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
+{% if devel %}
     max: 3
     max_starting: 1
     max_prealloc: 1
+{% else %}
+    max: 20
+    max_starting: 4
+    max_prealloc: 20
+{% endif %}
     tags:
     - copr_builder
     - arch_x86_64
@@ -78,7 +83,6 @@ copr_hv_x86_64_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     reuse_max_count: 8
     reuse_max_time: 1800
 {% endfor %}
-{% endif %}
 
 {% macro hw_aarch64(id, inst, max, max_starting, max_prealloc) %}
 aarch64_{{ id }}_{{ inst }}:
