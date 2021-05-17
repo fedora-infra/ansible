@@ -117,8 +117,6 @@
     nfs_src_dir: "{{ koji_hub_nfs }}"
     when: "'releng_compose_stg' in group_names"
 
-  - fedmsg/base
-
   - role: rabbit/user
     username: "pungi{{ env_suffix }}"
 
