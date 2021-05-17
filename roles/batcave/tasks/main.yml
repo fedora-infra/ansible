@@ -21,44 +21,6 @@
   - packages
   - yumrepos
 
-- name: install packages needed (rhel7)
-  package: name={{ item }} state=present
-  with_items:
-  - srm                       # secure rm to delete sensitive files.
-  - ansible                   # This is our ansible master, needs ansible installed.
-  - ansible-openstack-modules # Needed to manage cloud with ansible
-  - ansible-collection-community-general # various useful community modules for ansible
-  - yum-metadata-parser       # Needed for rhn sync
-  - yum-rhn-plugin            # Needed for rhn sync
-  - createrepo_c              # Needed for rhn sync
-  - ostree                    # Needed for rhn sync
-  - python-sqlalchemy         # Needed for repo2json
-  - pyliblzma                 # Needed for repo2json
-  - ansible_utils             # Needed for rbac-playbook
-  - python-GeoIP              # Needed for geoip scripts
-  - python-fedmsg-fasclient   # fasClient fedmsg job
-  - bind                      # named-checkzone for dns repo
-  - emacs-nox                 
-  - rpm-sign                  # for the sign-and-import playbook
-  - createrepo                # for the sign-and-import playbook
-  - unzip                     # general useful util
-  - fpaste                    # general useful util
-  - mtr                       # useful for network debugging
-  - lftp                      # needed to easily pull in builds from koji for internal repos
-  - git-email                 # needed to send patches for review to the mailing list
-  - python-dns                # needed to have ansible remove ip-based known_host entries
-  - libvirt-client            # needed to allow migrations to be run from here.
-  - ansible-lint              # needed to check ansible playbooks for issues.
-  - atomic-openshift-clients  # For convenient client access to os.fp.o
-  - easy-rsa                  # For easy copying into ansible-private for certs.
-  - dnf                       # To get dnf reposync
-  - dnf-plugins-core          # To get dnf reposync
-  - fedora-messaging          # To send/receive messages on the amqp bus
-  tags:
-  - batcave
-  - config
-  when: ansible_distribution_major_version|int == 7
-
 - name: install packages needed (rhel8)
   package: name={{ item }} state=present
   with_items:
@@ -88,7 +50,6 @@
   tags:
   - batcave
   - config
-  when: ansible_distribution_major_version|int == 8
 
 - name: setup ssh_known_hosts file
   copy: src=ssh_known_hosts dest=/etc/ssh/ssh_known_hosts mode=0644
@@ -456,16 +417,6 @@
   when: inventory_hostname.startswith('batcave01.phx2')
 
 #
-# fasClient fedmsg job
-#
-
-#- name: Install config for fedmsg tigger for fasClient runs
-#  copy: src=fedmsg-fasclient.py dest=/etc/fedmsg.d/fasclient.py mode=0644
-#  tags:
-#  - batcave
-#  - config
-
-#
 # set selinux context for /srv/web/infra
 #
 
@@ -623,6 +574,10 @@
   tags:
   - batcave
   - tmux
+
+#
+# install psql to allow for some ro queries against db-datanommer01
+#
 
 - name: enable the postgresql 12 module for psql on batcave
   copy:
