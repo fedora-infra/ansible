@@ -47,7 +47,7 @@ aws_aarch64_normal_{% if devel %}dev{% else %}prod{% endif %}:
 # x86_64 hypervisors
 {% if devel %}
 {% for hv in ["02", "03", "04"] %}
-copr_hv_x86_64_{{ hv }}:
+copr_hv_x86_64_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     max: 3
     max_starting: 2
     max_prealloc: 2
@@ -65,6 +65,8 @@ copr_hv_x86_64_{{ hv }}:
     - arch_armhfp_emulated
     - arch_s390x
     - arch_s390x_emulated
+    - hypervisor
+    - hypervisor_{{ hv }}
     cmd_new: "/var/lib/resallocserver/provision/libvirt-new --swap-vol-size 168"
     cmd_delete: "/var/lib/resallocserver/provision/libvirt-new --swap-vol-size 168"
     cmd_delete: "/var/lib/resallocserver/provision/libvirt-delete"
