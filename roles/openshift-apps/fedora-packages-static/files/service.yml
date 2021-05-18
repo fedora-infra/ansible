@@ -10,7 +10,7 @@ spec:
   - name: 80-tcp
     port: 80
     protocol: TCP
-    targetPort: 80
+    targetPort: 8080
   selector:
     app: fedora-packages-static
     deploymentconfig: fedora-packages-static
