@@ -13,7 +13,7 @@ fi
 
 . /opt/docker-solr/scripts/run-initdb
 
-/opt/docker-solr/scripts/precreate-core "packages"
+/opt/docker-solr/scripts/precreate-core "packages" /opt/solr/server/solr/configsets/packages
 
 #!/bin/bash
 #

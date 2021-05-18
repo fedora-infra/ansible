@@ -17,8 +17,8 @@ metadata:
   labels:
     app: fedora-packages-static
 data:
-  solrconfig.xml: |-
-    {{ load_file('packages/solrconfig.xml') | indent }}
+  conf/solrconfig.xml: |-
+    {{ load_file('packages/conf/solrconfig.xml') | indent }}
   schema.xml: |-
     {{ load_file('packages/schema.xml') | indent }}
 ---
