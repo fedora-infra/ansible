@@ -872,13 +872,3 @@
     website: qa.fedoraproject.org
     path: /
     target: https://fedoraproject.org/wiki/QA
-
-  # redirects for debuginfod main page; subdirs are reverse-proxied
-  - role: httpd/redirect
-    shortname: debuginfod
-    website: debuginfod.fedoraproject.org
-    regex: ^/$
-    target: https://fedoraproject.org/wiki/Debuginfod
-    tags:
-    - debuginfod
-    
