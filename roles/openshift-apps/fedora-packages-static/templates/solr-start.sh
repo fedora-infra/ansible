@@ -13,7 +13,15 @@ fi
 
 . /opt/docker-solr/scripts/run-initdb
 
-/opt/docker-solr/scripts/precreate-core "packages" /opt/solr/server/solr/configsets/packages
+# Manually arrange config files into directory structure solr needs because openshift just won't let this be simple
+mkdir -p /var/solr/openshift/packages
+cp /opt/solr/server/solr/configsets/packages/schema.xml /var/solr/openshift/packages
+
+mkdir -p /var/solr/openshift/packages/conf
+cp /opt/solr/server/solr/configsets/packages/solrconfig.xml /var/solr/openshift/packages/conf
+
+# Create the core
+/opt/docker-solr/scripts/precreate-core "packages" /var/solr/openshift/packages
 
 #!/bin/bash
 #
