@@ -20,7 +20,7 @@ aws_x86_64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else
     - aws
     cmd_new: "/var/lib/resallocserver/resalloc_provision/vm-aws-new --arch=x86_64 {% if spot %}--spot{% endif %}"
     cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-aws-delete"
-    cmd_livecheck: "/var/lib/resallocserver/resalloc_provision/vm-aws-check"
+    cmd_livecheck: "/var/lib/resallocserver/resalloc_provision/vm-check"
     livecheck_period: 180
     reuse_opportunity_time: 180
     reuse_max_count: 8
@@ -39,7 +39,7 @@ aws_aarch64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% els
     - aws
     cmd_new: "/var/lib/resallocserver/resalloc_provision/vm-aws-new --arch=aarch64 {% if spot %}--spot{% endif %}"
     cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-aws-delete"
-    cmd_livecheck: "/var/lib/resallocserver/resalloc_provision/vm-aws-check"
+    cmd_livecheck: "/var/lib/resallocserver/resalloc_provision/vm-check"
     livecheck_period: 180
     reuse_opportunity_time: 180
     reuse_max_count: 8
@@ -77,7 +77,7 @@ copr_hv_x86_64_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     cmd_new: "/var/lib/resallocserver/provision/libvirt-new --swap-vol-size 168"
     cmd_delete: "/var/lib/resallocserver/provision/libvirt-new --swap-vol-size 168"
     cmd_delete: "/var/lib/resallocserver/provision/libvirt-delete"
-    cmd_livecheck: "echo TODO"
+    cmd_livecheck: "/var/lib/resallocserver/resalloc_provision/vm-check"
     livecheck_period: 180
     reuse_opportunity_time: 180
     reuse_max_count: 8
