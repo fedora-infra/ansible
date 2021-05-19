@@ -29,8 +29,14 @@ nm_controlled_resolv: True
 builders:
     # max|max_spawn|max_prealloc
     aws:
-        x86_64: [10,1,1]
-        armhfp: [3,1,1]
+        x86_64: [4,1,1]
+        armhfp: [2,0,0]
+        s390x: [2,0,0]
+        aarch64: [2,1,1]
+    aws_spot:
+        x86_64: [5,2,3]
+        armhfp: [2,0,0]
+        s390x: [1,0,0]
         aarch64: [5,2,2]
 
 rpm_vendor_copr_name: Fedora Copr (devel)
