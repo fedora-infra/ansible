@@ -79,18 +79,18 @@ subject_type: koji_build
 rules:
   - !RemoteRule {}
 
-# For critical path updates, we require passes for all openQA update tests
+# For critical path updates in stable and Branched, we require passes
+# for all openQA update tests
 --- !Policy
 id: "bodhiupdate_bodhipush_openqa"
 product_versions:
-  # this should cover us for a while...
-  - fedora-3*
-  - fedora-4*
-  - fedora-5*
-  - fedora-6*
-  - fedora-7*
-  - fedora-8*
-  - fedora-9*
+  # FIXME: we would use some kind of matching here, but we don't want
+  # to include whatever version Rawhide is, as openQA tests don't run
+  # on Rawhide. So for now this list needs to be updated each time a
+  # release is branched (or goes EOL).
+  - fedora-32
+  - fedora-33
+  - fedora-34
 decision_contexts:
   - bodhi_update_push_testing_critpath
   - bodhi_update_push_stable_critpath
