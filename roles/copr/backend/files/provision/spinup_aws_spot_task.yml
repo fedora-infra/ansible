@@ -26,6 +26,7 @@
     aws_secret_key: "{{ aws_secret_key }}"
     volumes: "{% if instance_volumes is defined %}{{ instance_volumes }}{% else %}[]{% endif %}"
     spot_price: "{{ spot_price }}"
+    instance_initiated_shutdown_behavior: terminate
   register: ec2
 
 - name: Add new instance to host group
