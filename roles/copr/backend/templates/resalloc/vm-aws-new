@@ -15,6 +15,7 @@ Allocate AWS VM instance for Copr build system.
 Options:
   --arch                native architecture (required)
   -h, --help            show this help
+  --spot                start a spot instance
 
 Environment variables:
   \$RESALLOC_NAME       the name given to the allocated instance, will be
@@ -31,11 +32,12 @@ test $# -eq 0 && show_help 1
 
 test -n "$RESALLOC_NAME" || show_help 1
 
-ARGS=$(getopt -o "h" -l "arch:,help" -n "getopt" -- "$@") \
+ARGS=$(getopt -o "h" -l "arch:,spot,help" -n "getopt" -- "$@") \
     || show_help 1
 eval set -- "$ARGS"
 
 opt_arch=
+opt_spot=false
 
 while true; do
     # now the name is in $1 and argument in $2
@@ -46,6 +48,13 @@ while true; do
         opt=${opt//-/_}
         eval "opt_$opt=\$2"
         shift 2
+        ;;
+    --spot)
+        opt=${1##--}
+        opt=${opt##-}
+        opt=${opt//-/_}
+        eval "opt_$opt=:"
+        shift
         ;;
     -h|--help) show_help 0;;
     --) # end!
@@ -72,10 +81,15 @@ cleanup_actions()
 }
 trap cleanup_actions EXIT
 
+spot_pb_part=
+if $opt_spot; then
+    spot_pb_part=-spot
+fi
+
 # TODO: We should call aws-cli directly here, instead of parsing output of
 # ansible playbook.  But at the time of writing this script we had the playbook
 # available, so parsing the output is the easiest way to start.
-playbook=/var/lib/resallocserver/provision/builderpb-aws-"$opt_arch".yml
+playbook=/var/lib/resallocserver/provision/builderpb-aws"$spot_pb_part"-"$opt_arch".yml
 
 {
     vm_ip=$(ansible-playbook "$playbook" \
