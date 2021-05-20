@@ -7,6 +7,7 @@ import shutil
 import gi
 import gzip
 import librepo
+import lzma
 import hawkey
 import tempfile
 import os
@@ -104,7 +105,15 @@ def _parse_repository_modular(repo_info,package_sack):
     """
     cts = {}
     idx = mmd.ModuleIndex()
-    with gzip.GzipFile(filename=repo_info['modules'], mode='r') as gzf:
+    myfile = repo_info['modules']
+    if myfile.endswith(".gz"):
+        openfunc=gzip.GzipFile
+    elif myfile.endswith(".xz"):
+        openfunc=lzma.LZMAFile
+    else:
+        print("This file type is not fixed in this hack. Please fix code. (2021-05-20)");
+        sys.exit(1)
+    with openfunc(filename=myfile, mode='r') as gzf:
         mmdcts = gzf.read().decode('utf-8')
         res, failures = idx.update_from_string(mmdcts, True)
         if len(failures) != 0:
@@ -190,7 +199,15 @@ def get_default_modules(directory):
     if 'modules' not in repo_info:
         return contents
     idx = mmd.ModuleIndex()
-    with gzip.GzipFile(filename=repo_info['modules'], mode='r') as gzf:
+    myfile=repo_info['modules']
+    if myfile.endswith(".gz"):
+        openfunc=gzip.GzipFile
+    elif myfile.endswith(".xz"):
+        openfunc=lzma.LZMAFile
+    else:
+        print("This file type is not fixed in this hack. Please fix code. (2021-05-20)");
+        sys.exit(1)
+    with openfunc(filename=myfile, mode='r') as gzf:
         mmdcts = gzf.read().decode('utf-8')
         res, failures = idx.update_from_string(mmdcts, True)
         if len(failures) != 0:
