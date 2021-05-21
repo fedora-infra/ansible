@@ -72,31 +72,10 @@
   run_once: yes
 
 - name: Ensure that nss knows to skip certain users
-  copy: src=fedora-nss-ignore.conf dest=/etc/sssd/conf.d/ mode=600 owner=root group=root
+  template: src=fedora-nss-ignore.conf.j2 dest=/etc/sssd/conf.d/ mode=600 owner=root group=root
   tags:
   - ipa/client
   - config
   notify:
     - restart sssd
     - clean sss caches
-  when: env == "production" and inventory_hostname != 'people02.fedoraproject.org'
-
-- name: Ensure that nss knows to skip certain users (on people02)
-  copy: src=fedora-nss-ignore.conf.people dest=/etc/sssd/conf.d/ mode=600 owner=root group=root
-  tags:
-  - ipa/client
-  - config
-  notify:
-    - restart sssd
-    - clean sss caches
-  when: env == "production" and inventory_hostname == 'people02.fedoraproject.org'
-
-- name: Ensure that nss knows to skip certain users
-  copy: src=fedora-nss-ignore.conf.staging dest=/etc/sssd/conf.d/fedora-nss-ignore.conf mode=600 owner=root group=root
-  tags:
-  - ipa/client
-  - config
-  notify:
-    - restart sssd
-    - clean sss caches
-  when: env == "staging"
