@@ -757,3 +757,10 @@
     proxyopts: "connectiontimeout=600 timeout=600 keepalive=on"
     tags:
     - debuginfod
+
+  - role: httpd/reverseproxy
+    website: packages{{ env_suffix }}.fedoraproject.org
+    destname: fedora-packages-static
+    balancer_name: app-os
+    targettype: openshift
+    keephost: true
