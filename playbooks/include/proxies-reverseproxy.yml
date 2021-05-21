@@ -759,7 +759,7 @@
     - debuginfod
 
   - role: httpd/reverseproxy
-    website: packages{{ env_suffix }}.fedoraproject.org
+    website: packages.fedoraproject.org
     destname: fedora-packages-static
     balancer_name: app-os
     targettype: openshift
