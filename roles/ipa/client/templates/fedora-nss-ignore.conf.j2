@@ -1,8 +1,6 @@
-{% comment %}
 # There are a bunch of users we want to prefer the local version instead of the ipa/ldap version.
 # But in at least one case, there is a real user ('mock') that we want to exclude on most machines,
 # but not on people and ipsilon to allow them access to their people space and be able to login to things.
-{% endcomment %}
 {% if inventory_hostname in groups['people','ipsilon','ipsilon_stg'] %}
 ## This file contains users who are in ipa to stop people from
 ## creating restricted accounts but we want to make sure the id in
