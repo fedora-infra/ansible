@@ -49,17 +49,12 @@ aws_aarch64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% els
 {% endmacro %}
 
 # x86_64 hypervisors
-{% for hv in ["02", "03", "04"] %}
+{% for hv in ["01", "02", "03", "04"] %}
+{% if "x86_hypervisor_" + hv in builders %}
 copr_hv_x86_64_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
-{% if devel %}
-    max: 3
-    max_starting: 1
-    max_prealloc: 1
-{% else %}
-    max: 20
-    max_starting: 4
-    max_prealloc: 20
-{% endif %}
+    max: {{ builders["x86_hypervisor_" + hv]["x86_64"][0] }}
+    max_starting: {{ builders["x86_hypervisor_" + hv]["x86_64"][1] }}
+    max_prealloc: {{ builders["x86_hypervisor_" + hv]["x86_64"][2] }}
     tags:
     - copr_builder
     - arch_x86_64
@@ -85,6 +80,11 @@ copr_hv_x86_64_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     reuse_opportunity_time: 180
     reuse_max_count: 8
     reuse_max_time: 1800
+{% else %}
+#
+# x86_hypervisor_{{ hv }} not configured in group_vars
+#
+{% endif %}
 {% endfor %}
 
 {% macro hw_aarch64(id, inst, max, max_starting, max_prealloc) %}
