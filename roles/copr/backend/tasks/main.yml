@@ -167,14 +167,12 @@
   set_fact: "max_{{ item }}_workers={{ builders | community.general.json_query('*.'+item+'[0]') | sum() }}"
   with_items:
     - x86_64
-    - armhfp
-    - s390x
     - aarch64
   tags:
   - provision_config
 
 - name: calculate max number of workers
-  set_fact: "max_workers={{ max_x86_64_workers|int + max_armhfp_workers|int + max_s390x_workers|int + max_aarch64_workers|int }}"
+  set_fact: "max_workers={{ max_x86_64_workers|int + max_aarch64_workers|int }}"
   tags:
   - provision_config
 
@@ -182,8 +180,6 @@
   debug: "var=max_{{ item }}_workers"
   with_items:
     - x86_64
-    - armhfp
-    - s390x
     - aarch64
   tags:
   - provision_config

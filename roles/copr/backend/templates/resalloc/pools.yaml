@@ -112,24 +112,18 @@ aarch64_{{ id }}_{{ inst }}:
     - arch_aarch64_native
 {% endmacro %}
 
-{{ aws_x86_64(builders.aws.x86_64[0] + builders.aws.armhfp[0] + builders.aws.s390x[0],
-              builders.aws.x86_64[1] + builders.aws.armhfp[1] + builders.aws.s390x[1],
-              builders.aws.x86_64[2] + builders.aws.armhfp[2] + builders.aws.s390x[2])
+{{ aws_x86_64(builders.aws.x86_64[0], builders.aws.x86_64[1],
+              builders.aws.x86_64[2])
 }}
-{{ aws_aarch64(builders.aws.aarch64[0],
-               builders.aws.aarch64[1],
+{{ aws_aarch64(builders.aws.aarch64[0], builders.aws.aarch64[1],
                builders.aws.aarch64[2])
 }}
 
-{{ aws_x86_64(builders.aws_spot.x86_64[0] + builders.aws_spot.armhfp[0] + builders.aws_spot.s390x[0],
-              builders.aws_spot.x86_64[1] + builders.aws_spot.armhfp[1] + builders.aws_spot.s390x[1],
-              builders.aws_spot.x86_64[2] + builders.aws_spot.armhfp[2] + builders.aws_spot.s390x[2],
-              True)
+{{ aws_x86_64(builders.aws_spot.x86_64[0], builders.aws_spot.x86_64[1],
+              builders.aws_spot.x86_64[2], True)
 }}
-{{ aws_aarch64(builders.aws_spot.aarch64[0],
-               builders.aws_spot.aarch64[1],
-               builders.aws_spot.aarch64[2],
-               True)
+{{ aws_aarch64(builders.aws_spot.aarch64[0], builders.aws_spot.aarch64[1],
+               builders.aws_spot.aarch64[2], True)
 }}
 
 {% if env == "production" %}

@@ -40,12 +40,13 @@ sleeptime=20
 # be taken at the same time.
 builds_max_workers={{ max_workers }}
 
-# Maximum number of concurrently running tasks per architecture.
+# Maximum number of concurrently running tasks per architecture.  Since we
+# emulate s390x and armhfp on x86_64, we give it ~25% of the x86_64 quota.
 builds_max_workers_arch=
     x86_64={{ max_x86_64_workers }},
     aarch64={{ max_aarch64_workers }},
-    armhfp={{ max_armhfp_workers }},
-    s390x={{ max_s390x_workers }}
+    armhfp={{ (max_x86_64_workers|int / 4)|int }},
+    s390x={{ (max_x86_64_workers|int / 4)|int }},
 
 # Maximum number of concurrently running tasks per project owner.
 {% if env == 'production' %}
