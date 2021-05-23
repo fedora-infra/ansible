@@ -46,7 +46,7 @@ builds_max_workers_arch=
     x86_64={{ max_x86_64_workers }},
     aarch64={{ max_aarch64_workers }},
     armhfp={{ (max_x86_64_workers|int / 4)|int }},
-    s390x={{ (max_x86_64_workers|int / 4)|int }},
+    s390x={{ (max_x86_64_workers|int / 4)|int }}
 
 # Maximum number of concurrently running tasks per project owner.
 {% if env == 'production' %}
