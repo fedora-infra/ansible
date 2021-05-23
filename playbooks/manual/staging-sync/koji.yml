@@ -97,8 +97,8 @@
   - wipe-fs
 
   tasks:
-  - name: stop nfs
-    service: name=nfs state=stopped
+  - name: stop nfs-server
+    service: name=nfs-server state=stopped
   - name: unmount /mnt/fedora_koji/koji/ostree
     mount: name=/mnt/fedora_koji/koji/ostree state=unmounted
   - name: unmount /mnt/fedora_koji/koji/compose/ostree
