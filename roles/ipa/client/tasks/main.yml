@@ -72,7 +72,7 @@
   run_once: yes
 
 - name: Ensure that nss knows to skip certain users
-  template: src=fedora-nss-ignore.conf.j2 dest=/etc/sssd/conf.d/ mode=600 owner=root group=root
+  template: src=fedora-nss-ignore.conf.j2 dest=/etc/sssd/conf.d/fedora-nss-ignore.conf mode=600 owner=root group=root
   tags:
   - ipa/client
   - config
