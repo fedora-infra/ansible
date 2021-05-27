@@ -116,15 +116,15 @@ config = {
     "fmn.email.from_address": "notifications@" + domain,
 
     # IRC
-    "fmn.irc.network": "irc.freenode.net",
+    "fmn.irc.network": "irc.libera.chat",
     "fmn.irc.nickname": ircnick,
     "fmn.irc.timeout": 120,
     "fmn.irc.port": 6697,
     "fmn.irc.use_ssl": True,
     {% if env == 'staging' %}
-    "fmn.irc.nickserv_pass": "{{fedora_notifstg_freenode_pass}}",
+    "fmn.irc.nickserv_pass": "{{fedora_notifstg_libera_pass}}",
     {% else %}
-    "fmn.irc.nickserv_pass": "{{fedora_notif_freenode_pass}}",
+    "fmn.irc.nickserv_pass": "{{fedora_notif_libera_pass}}",
     {% endif %}
 
     # Colors:
