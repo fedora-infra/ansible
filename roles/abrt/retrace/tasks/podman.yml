@@ -1,5 +1,5 @@
 ---
-- name: Install podman package
+- name: Install Podman package
   package:
     name: podman
     state: present
@@ -59,7 +59,7 @@
 
   when: '"retrace" not in retrace_subgid.stdout'
 
-- name: Start httpd afterretrace user modification
+- name: Start httpd after retrace user modification
   service:
     name: httpd
     state: started
