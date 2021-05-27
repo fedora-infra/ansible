@@ -1,16 +1,23 @@
 ---
 # create uid - this is normaly done by retrace package
 # but the package is not installed yet at this momement
-- user: name="retrace" group=retrace uid=174 home=/srv/retrace/home
+- name: Create retrace user
+  user:
+    name: retrace
+    group: retrace
+    uid: 174
+    home: /srv/retrace/home
 
-- file:
+- name: Create directory for repositories
+  file:
     path: /srv/retrace/repos
     state: directory
     mode: 0755
     owner: retrace
     group: retrace
 
-- file:
+- name: Create directory for retrace tasks
+  file:
     path: /srv/retrace/tasks
     state: directory
     mode: 0755
