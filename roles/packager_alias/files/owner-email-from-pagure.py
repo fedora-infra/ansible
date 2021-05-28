@@ -3,7 +3,7 @@
 """
 This script is ran as a cronjob and bastion.
 
-Its goal is to generate all the <pkg>-owner email aliases we provide
+Its goal is to generate all the <pkg>-maintainers email aliases we provide
 """
 
 import time
@@ -122,7 +122,7 @@ for project in get_pagure_projects():
         users = users | set(group_members)
         group_data[group] = set(group_members)
 
-    project_alias = '{0}-owner'.format(project['name'])
+    project_alias = '{0}-maintainers'.format(project['name'])
     # If there is a namespace, prefix the email with it plus a dash
     if project['namespace'] and project['namespace'] != 'rpms':
         project_alias = '{0}-{1}'.format(project['namespace'], project_alias)
