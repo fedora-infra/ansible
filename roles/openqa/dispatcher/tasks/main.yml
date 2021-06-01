@@ -201,7 +201,7 @@
     dest: /root/fedora_openqa
   register: gittools
   # case of the 'n' seems inconstant, so intentionally omitted
-  when: "(toolsbranch.stderr.find('ot a git repository') != -1) or (toolsbranch.stdout.find('On branch master') != -1)"
+  when: "(toolsbranch.stderr.find('ot a git repository') != -1) or (toolsbranch.stdout.find('On branch main') != -1)"
 
 - name: Check if fedora_openqa is installed for current Python
   command: "pip show fedora_openqa"
