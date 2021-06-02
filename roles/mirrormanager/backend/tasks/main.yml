@@ -154,6 +154,13 @@
     owner: mirrormanager
     group: mirrormanager
     mode: 0600
+- name: install scan-primary-mirror configuration file
+  template:
+    src: scan-primary-mirror.toml
+    dest: /etc/mirrormanager/scan-primary-mirror.toml
+    owner: mirrormanager
+    group: mirrormanager
+    mode: 0600
 - name: create /srv/mirrorlist-server.git
   file: path=/srv/mirrorlist-server.git state=directory owner=mirrormanager group=mirrormanager mode=0755
 - name: create /srv/scan-primary-mirror.git
@@ -169,7 +176,7 @@
 - name: checkout scan-primary-mirror
   git:
     repo: https://github.com/adrianreber/scan-primary-mirror.git
-    version: 0.1.0
+    version: 0.1.1
     dest: /srv/scan-primary-mirror.git
   become: yes
   become_user: mirrormanager
@@ -197,7 +204,7 @@
     remote_src: yes
     owner: root
     group: root
-    mode: 755
+    mode: 0755
   when: "mirrorlist_server_built is changed"
 - name: install scan-primary-mirror
   copy:
@@ -206,5 +213,5 @@
     remote_src: yes
     owner: root
     group: root
-    mode: 755
+    mode: 0755
   when: "scan_primary_mirror_built is changed"
