@@ -73,12 +73,6 @@ blockerbugs01.iad2.fedoraproject.org
 [blockerbugs_stg]
 blockerbugs01.stg.iad2.fedoraproject.org
 
-[bugzilla2fedmsg]
-bugzilla2fedmsg01.iad2.fedoraproject.org
-
-[bugzilla2fedmsg_stg]
-bugzilla2fedmsg01.stg.iad2.fedoraproject.org
-
 [centos_ipa_client_stg]
 centos-ipa-client01.stg.iad2.fedoraproject.org
 centos-ipa-client02.stg.iad2.fedoraproject.org
@@ -623,7 +617,6 @@ autosign01.stg.iad2.fedoraproject.org
 # basset01.stg.iad2.fedoraproject.org
 blockerbugs01.stg.iad2.fedoraproject.org
 bodhi-backend01.stg.iad2.fedoraproject.org
-bugzilla2fedmsg01.stg.iad2.fedoraproject.org
 bvmhost-x86-01.stg.iad2.fedoraproject.org
 bvmhost-x86-02.stg.iad2.fedoraproject.org
 bvmhost-x86-03.stg.iad2.fedoraproject.org
@@ -846,12 +839,6 @@ proxies
 [fedmsg_gateways_stg:children]
 busgateway_stg
 proxies_stg
-
-[moksha_hubs:children]
-bugzilla2fedmsg
-
-[moksha_hubs_stg:children]
-bugzilla2fedmsg_stg
 
 [fedmsg_services:children]
 fedmsg_hubs
