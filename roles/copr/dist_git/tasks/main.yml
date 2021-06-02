@@ -28,6 +28,11 @@
       - dist-git-selinux
       - copr-dist-git
 
+- name: Patch GitPython to import Thunderbird (issue 1700)
+  patch: src=patches/prunerepo-dataloss.patch
+         dest=/usr/lib/python3.9/site-packages/git/index/fun.py
+  tags: patches
+
 - name: switch selinux to enforcing
   selinux: policy=targeted state=enforcing
 
