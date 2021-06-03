@@ -21,6 +21,21 @@
   debug:
     var: user_result.ssh_public_key
 
+- name: Create gitconfig for user
+  copy:
+    content: |
+      [user]
+        name = ♪ I'm a bot, bot, bot ♪
+        email = _update_web_trans@sundries
+      [push]
+        default = simple
+    dest: ~_update_web_trans/.gitconfig
+    owner: _update_web_trans
+    group: _update_web_trans
+    mode: 0644
+  tags:
+  - fedora-web-translation
+
 - copy:
     src: ssh_config
     dest: ~_update_web_trans/.ssh/config
