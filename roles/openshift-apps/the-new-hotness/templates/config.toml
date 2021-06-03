@@ -76,7 +76,7 @@ handlers = ["console"]
 # the-new-hotness consumer configuration
 [consumer_config]
 {% if env == "staging" %}
-mdapi_url = "https://mdapi.stg.fedoraproject.org/"
+mdapi_url = "https://mdapi.stg.fedoraproject.org"
 pdc_url = "https://pdc.stg.fedoraproject.org"
 dist_git_url = "https://src.stg.fedoraproject.org"
 {% else %}
