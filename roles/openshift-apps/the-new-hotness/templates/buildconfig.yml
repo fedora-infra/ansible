@@ -22,13 +22,22 @@ items:
                 rpmdevtools \
                 fedora-messaging \
                 python3-bugzilla \
+{% if not env == 'staging' %}
                 python3-dogpile-cache \
+{% endif %}
                 python3-fedora \
+{% if not env == 'staging' %}
                 python3-fedmsg \
+{% endif %}
                 python3-koji \
+{% if not env == 'staging' %}
                 python3-pycurl \
+{% endif %}
                 python3-requests \
+{% if not env == 'staging' %}
                 python3-six \
+{% endif %}
+                python3-requests \
                 python3-pip && \
             dnf autoremove -y && \
             dnf clean all -y
