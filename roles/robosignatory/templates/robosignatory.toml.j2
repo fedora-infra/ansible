@@ -341,12 +341,12 @@ handlers = ["console"]
             key = "{{ (env == 'production')|ternary('fedora-33', 'testkey') }}"
             keyid = "{{ (env == 'production')|ternary('9570ff31', 'd300e724') }}"
 
-            # f34-rebuild
+            # f35-python
             [[consumer_config.koji_instances.primary.tags]]
-            from = "f34-rebuild"
-            to = "f34-rebuild"
-            key = "{{ (env == 'production')|ternary('fedora-34', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('45719a39', 'd300e724') }}"
+            from = "f35-python"
+            to = "f35-python"
+            key = "{{ (env == 'production')|ternary('fedora-35', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('9867c58f', 'd300e724') }}"
 
     [consumer_config.ostree_refs]
         [consumer_config.ostree_refs."fedora/rawhide/x86_64/iot"]
