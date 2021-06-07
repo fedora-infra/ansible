@@ -9,6 +9,19 @@
   - supybot-fedmsg
   - packagedb-cli
   - python-simplejson
+  when: env == "production"
+  tags: supybot
+
+- name: install limnoria package
+  package: name={{ item }} state=present enablerepo=epel-testing
+  with_items:
+  - limnoria
+  - supybot-fedora
+  - supybot-koji
+  - supybot-notify
+  - supybot-meetbot
+  - python3-sgmllib3k
+  when: env == "staging"
   tags: supybot
 
 - set_fact: botname={{ botnames[env] }}
@@ -112,4 +125,3 @@
   - supybot
   - SAR
   - GDPR
-
