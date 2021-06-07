@@ -20,17 +20,20 @@
   - ipa/client
   - collectd/base
   - apache
-  - fedmsg/base
+  - { role: fedmsg/base,
+      when: inventory_hostname.startswith('value01') }
   # Set up for fedora-messaging
   - { role: rabbit/user,
       username: "value{{ env_suffix }}"}
-  - fedmsg/irc
+  - { role: fedmsg/irc
+      when: inventory_hostname.startswith('value01') }
   - supybot
   - sudo
   - rsyncd
   - role: collectd/fedmsg-service
     process: fedmsg-irc
-  - mote
+  - { role: mote
+      when: inventory_hostname.startswith('value01') }
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
