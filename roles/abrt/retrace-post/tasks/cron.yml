@@ -1,6 +1,5 @@
 ---
-
-- name: Create cron job for retrace-server
+- name: Create retrace-server reposync cron jobs for active Fedora versions
   cron:
     name: "rs reposync fedora {{ item[0] }} {{ item[1] }}"
     user: retrace
@@ -10,7 +9,7 @@
   loop: "{{ rs_internal_fedora_vers | product(rs_internal_arch_list) | list }}"
   when: not devel|bool
 
-- name: Remove obsolete cron job for retrace-server
+- name: Remove retrace-server reposync cron jobs of removed Fedora versions
   cron:
     name: "rs reposync fedora {{ item[0] }} {{ item[1] }}"
     user: retrace
@@ -20,7 +19,7 @@
   loop: "{{ rs_internal_fedora_vers_removed | product(rs_internal_arch_list) | list}}"
   when: not devel|bool
 
-- name: Create cron job for retrace-server
+- name: Create retrace-server reposync cron job for CentOS 7
   cron:
     name: "rs reposync centos 7 x86_64"
     user: retrace
@@ -29,7 +28,7 @@
     state: present
   when: not devel|bool
 
-- name: Create cron job for retrace-server
+- name: Create retrace-server cleanup cron job
   cron:
     name: "retrace-server-cleanup"
     user: retrace
