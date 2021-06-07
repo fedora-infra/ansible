@@ -25,14 +25,14 @@
   # Set up for fedora-messaging
   - { role: rabbit/user,
       username: "value{{ env_suffix }}"}
-  - { role: fedmsg/irc
+  - { role: fedmsg/irc,
       when: inventory_hostname.startswith('value01') }
   - supybot
   - sudo
   - rsyncd
   - role: collectd/fedmsg-service
     process: fedmsg-irc
-  - { role: mote
+  - { role: mote,
       when: inventory_hostname.startswith('value01') }
 
   pre_tasks:
