@@ -16,6 +16,15 @@
   tags: add_repo
   loop: "{{ faf_repos }}"
 
+- name: Ensure directory for FAF database backups exists
+  file:
+    path: "{{ faf_backup_dir }}"
+    state: directory
+    owner: faf
+    group: faf
+    mode: 0750
+  when: env != 'staging'
+
 - import_tasks: cron.yml
   tags: cron
 
