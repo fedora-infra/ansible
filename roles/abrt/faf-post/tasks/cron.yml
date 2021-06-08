@@ -44,10 +44,7 @@
           >> /var/log/faf/mark-probably-fixed-f{{ item }}.log 2>&1
       special_time: daily
       state: present
-    loop:
-      - "31"
-      - "32"
-      - "33"
+    loop: "{{ rs_internal_fedora_vers }}"
 
   - name: Remove job for probable fixes in removed Fedora releases
     cron:
@@ -56,14 +53,7 @@
       job: "faf mark-probably-fixed -o fedora --opsys-release {{ item }} >> /var/log/faf/mark-probably-fixed-f{{ item }}.log 2>&1"
       special_time: daily
       state: absent
-    loop:
-      - "24"
-      - "25"
-      - "26"
-      - "27"
-      - "28"
-      - "29"
-      - "30"
+    loop: "{{ rs_internal_fedora_vers_removed }}"
 
   - name: Update BZ bugs fedora
     cron:
