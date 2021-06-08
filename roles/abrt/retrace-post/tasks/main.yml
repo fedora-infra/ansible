@@ -3,6 +3,7 @@
 # Setup retrace-server
 - import_tasks: retrace_setup.yml
 
-# Set up cron jobs for retrace-server
+# Set up production cron jobs for retrace-server
 - import_tasks: cron.yml
   tags: cron
+  when: env != 'staging'

@@ -96,7 +96,7 @@
       job: "faf archive-reports -d >> /var/log/faf/archive-reports.log 2>&1"
       special_time: daily
       state: present
-  when: not devel|bool
+  when: env != 'staging'
 
 - name: Cron job for deleting old archives
   cron:

@@ -1,4 +1,6 @@
 ---
+env: production
+
 primary_auth_source: ipa
 ipa_host_group: retrace
 ipa_host_group_desc: Retrace servers
@@ -21,8 +23,6 @@ custom_rules:
 
 nrpe_procs_warn: 1800
 nrpe_procs_crit: 2000
-
-devel: false
 
 # Since retrace is on the qa network, it needs to actively connect to our
 # inbound relay.
