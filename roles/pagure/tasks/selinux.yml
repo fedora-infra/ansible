@@ -95,11 +95,11 @@
   - selinux
   - pagure
 
-- name: set sebooleans so allow nagios/nrpe to call sudo from NRPE utils Args:                # optional, list of String
+- name: set sebooleans so allow nagios/nrpe to call sudo from NRPE utils scripts
   seboolean: name=nagios_run_sudo
                     state=true
                     persistent=true
-   tags:
-     - config
-     - selinux
-     - pagure
+  tags:
+  - config
+  - selinux
+  - pagure
