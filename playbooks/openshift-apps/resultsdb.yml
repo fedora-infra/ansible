@@ -1,0 +1,107 @@
+- name: setup the database
+  hosts: db01.iad2.fedoraproject.org:db01.stg.iad2.fedoraproject.org
+  gather_facts: no
+  become: yes
+  become_user: postgres
+  vars_files:
+  - /srv/web/infra/ansible/vars/global.yml
+  - /srv/private/ansible/vars.yml
+  - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  tasks:
+  - name: waiverdb DB user - prod
+    postgresql_user:
+      name: "resultsdb"
+      password: "{{ prod_resultsdb_db_password }}"
+    when: env != 'staging'
+  - name: resultsdb DB user - staging
+    postgresql_user:
+      name: "resultsdb"
+      password: "{{ stg_resultsdb_db_password }}"
+    when: env == 'staging'
+  - name: resultsdb database creation
+    postgresql_db:
+      name: "resultsdb"
+      owner: "resultsdb"
+      encoding: UTF-8
+
+
+- name: make the app be real
+  hosts: os_masters[0]:os_masters_stg[0]
+  user: root
+  gather_facts: False
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  roles:
+    - role: rabbit/user
+      username: "resultsdb{{ env_suffix }}"
+
+    # The openshift/project role breaks if the project already exists:
+    # https://pagure.io/fedora-infrastructure/issue/6404
+    - role: openshift/project
+      app: resultsdb
+      description: resultsdb
+      appowners:
+        - ralph
+        - mjia
+        - dcallagh
+        - gnaponie
+        - cverna
+        - pingou
+        - lholecek
+        - vmaljulin
+      tags:
+        - apply-appowners
+
+    - role: openshift/object
+      app: resultsdb
+      template: secrets.yml
+      objectname: secrets.yml
+
+    - role: openshift/secret-file
+      app: resultsdb
+      secret_name: resultsdb-fedora-messaging-key
+      key: resultsdb.key
+      privatefile: "rabbitmq/{{env}}/pki/private/resultsdb{{env_suffix}}.key"
+
+    - role: openshift/secret-file
+      app: resultsdb
+      secret_name: resultsdb-fedora-messaging-crt
+      key: resultsdb.crt
+      privatefile: "rabbitmq/{{env}}/pki/issued/resultsdb{{env_suffix}}.crt"
+
+    - role: openshift/secret-file
+      app: resultsdb
+      secret_name: resultsdb-fedora-messaging-ca
+      key: resultsdb.ca
+      privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+
+    - role: openshift/object
+      app: resultsdb
+      template: configmaps.yml
+      objectname: configmaps.yml
+
+    - role: openshift/object
+      app: resultsdb
+      template: services.yml
+      objectname: services.yml
+
+    - role: openshift/route
+      app: resultsdb
+      routename: api-pretty
+      host: "resultsdb{{ env_suffix }}.fedoraproject.org"
+      serviceport: api
+      servicename: resultsdb-web
+
+    - role: openshift/object
+      app: resultsdb
+      template: deploymentconfigs.yml
+      objectname: deploymentconfigs.yml
+
+    - role: openshift/rollout
+      app: resultsdb
+      dcname: "resultsdb-test-{{ resultsdb_test_id }}-api"

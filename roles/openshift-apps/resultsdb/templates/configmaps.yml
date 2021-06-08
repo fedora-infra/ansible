@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "resultsdb-test-{{ resultsdb_test_id }}-httpd-config"
+  labels:
+    environment: "test-{{ resultsdb_test_id }}"
+    app: resultsdb
+data:
+  resultsdb.conf: |-
+    <IfModule !auth_basic_module>
+      LoadModule auth_basic_module '{{ resultsdb_mod_wsgi_dir }}/mod_auth_basic.so'
+    </IfModule>
+    <IfModule !authn_file_module>
+      LoadModule authn_file_module '{{ resultsdb_mod_wsgi_dir }}/mod_authn_file.so'
+    </IfModule>
+    <IfModule !authz_user_module>
+      LoadModule authz_user_module '{{ resultsdb_mod_wsgi_dir }}/mod_authz_user.so'
+    </IfModule>
+
+    <Location "/">
+      AuthType Basic
+      AuthName "Authentication Required"
+      AuthBasicProvider file
+      AuthUserFile "/etc/resultsdb/.htpasswd"
+      <LimitExcept GET>
+        Require valid-user
+      </LimitExcept>
+    </Location>
