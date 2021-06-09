@@ -20,6 +20,11 @@
   - httpd
   - blockerbugs
 
+- name: Ensure group `blockerbugs` exists
+  group:
+    name: blockerbugs
+    state: present
+
 - name: create the `blockerbugs` user
   user:
       name: blockerbugs
