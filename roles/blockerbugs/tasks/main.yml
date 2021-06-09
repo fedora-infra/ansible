@@ -20,6 +20,16 @@
   - httpd
   - blockerbugs
 
+- name: create the `blockerbugs` user
+  user:
+      name: blockerbugs
+      group: blockerbugs
+      shell: /bin/nologin
+      home: /usr/share/blockerbugs
+  tags:
+  - blockerbugs
+  - config
+
 - name: setup blockerbugs app settings file
   template: src=blockerbugs-settings.py.j2 dest=/etc/blockerbugs/settings.py mode=640
   notify:
