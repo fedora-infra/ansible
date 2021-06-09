@@ -24,6 +24,9 @@
   group:
     name: blockerbugs
     state: present
+  tags:
+  - blockerbugs
+  - config
 
 - name: create the `blockerbugs` user
   user:
