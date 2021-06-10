@@ -1,5 +1,6 @@
 - name: setup the database
-  hosts: db01.iad2.fedoraproject.org:db01.stg.iad2.fedoraproject.org
+  # hosts: db01.iad2.fedoraproject.org:db01.stg.iad2.fedoraproject.org
+  hosts: db01.stg.iad2.fedoraproject.org
   gather_facts: no
   become: yes
   become_user: postgres
@@ -27,7 +28,8 @@
 
 
 - name: make the app be real
-  hosts: os_masters[0]:os_masters_stg[0]
+  # hosts: os_masters[0]:os_masters_stg[0]
+  hosts: os_masters_stg[0]
   user: root
   gather_facts: False
 
