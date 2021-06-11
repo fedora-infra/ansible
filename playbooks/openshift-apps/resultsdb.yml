@@ -8,9 +8,11 @@
   - /srv/web/infra/ansible/vars/global.yml
   - /srv/private/ansible/vars.yml
   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+  # TODO: change to vars/{{ env }}.yml
+  - /srv/web/infra/ansible/roles/openshift-apps/resultsdb/vars/main.yml
 
   tasks:
-  - name: waiverdb DB user - prod
+  - name: resultsdb DB user - prod
     postgresql_user:
       name: "resultsdb"
       password: "{{ prod_resultsdb_db_password }}"
