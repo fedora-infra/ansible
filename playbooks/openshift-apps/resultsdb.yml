@@ -8,8 +8,6 @@
   - /srv/web/infra/ansible/vars/global.yml
   - /srv/private/ansible/vars.yml
   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
-  # TODO: change to vars/{{ env }}.yml
-  - /srv/web/infra/ansible/roles/openshift-apps/resultsdb/vars/main.yml
 
   tasks:
   - name: resultsdb DB user - prod
@@ -39,6 +37,8 @@
     - /srv/web/infra/ansible/vars/global.yml
     - "/srv/private/ansible/vars.yml"
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    # TODO: change to vars/{{ env }}.yml
+    - /srv/web/infra/ansible/roles/openshift-apps/resultsdb/vars/main.yml
 
   roles:
     - role: rabbit/user
