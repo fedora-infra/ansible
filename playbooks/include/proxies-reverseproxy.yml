@@ -235,14 +235,6 @@
 
   - role: httpd/reverseproxy
     website: apps.fedoraproject.org
-    destname: fedocal
-    remotepath: /calendar
-    localpath: /calendar
-    header_scheme: true
-    proxyurl: "{{ varnish_url }}"
-
-  - role: httpd/reverseproxy
-    website: apps.fedoraproject.org
     destname: kerneltest
     remotepath: /kerneltest
     localpath: /kerneltest
