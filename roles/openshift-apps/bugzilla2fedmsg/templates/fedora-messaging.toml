@@ -27,8 +27,7 @@ certfile = "/etc/pki/fedora-messaging/bugzilla2fedmsg-cert.pem"
     user = "{{ redhat_dmz_dev_broker_username }}"
     pass = "{{ redhat_dmz_dev_broker_password }}"
 {% else %}
-    #uri = "failover:(ssl://messaging-devops-broker01.dist.prod.ext.phx2.redhat.com:61612,ssl://messaging-devops-broker02.dist.prod.ext.phx2.redhat.com:61612)"
-    uri = "ssl://messaging-devops-broker01.dist.prod.ext.phx2.redhat.com:61612"
+    uri = "failover:(ssl://messaging-devops-broker01.dist.prod.ext.phx2.redhat.com:61612,ssl://messaging-devops-broker02.dist.prod.ext.phx2.redhat.com:61612)"
     user = "{{ redhat_dmz_prod_broker_username }}"
     pass = "{{ redhat_dmz_prod_broker_password }}"
 {% endif %}
