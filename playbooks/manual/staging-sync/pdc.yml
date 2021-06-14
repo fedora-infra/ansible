@@ -14,7 +14,7 @@
 
 # Here's the meaty part in the middle
 - name: drop and re-create the staging db entirely
-  hosts: db01.stg.phx2.fedoraproject.org
+  hosts: db01.stg.iad2.fedoraproject.org
   user: root
   become: yes
   become_user: postgres
