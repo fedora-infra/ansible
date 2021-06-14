@@ -132,20 +132,25 @@
 #
 
 - name: install koji builder rpmautospec plugin
-  package: name={{ item }} state=latest
+  package:
+    name: "{{ item }}"
+    state: present
   with_items:
   - koji-builder-plugin-rpmautospec
-  when: env == 'staging'
   tags:
   - packages
   - koji_builder
   - rpmautospec
 
-- name: install the configuration file for rpmautospec
-  template:
-    src: "{{ playbook_dir }}/../../roles/koji_hub/templates/rpmautospec.conf"
-    dest: /etc/kojid/plugins/rpmautospec.conf
-  when: env == 'staging'
+- name: remove obsolete configuration of rpmautospec
+  file:
+    path: "/etc/kojid/plugins/{{ item }}"
+    state: absent
+  loop:
+    - rpmautospec.conf
+    - rpmautospec.conf.rpmnew
+    - rpmautospec.conf.rpmsave
+    - rpmautospec.conf.rpmorig
   tags:
   - koji_builder
   - rpmautospec

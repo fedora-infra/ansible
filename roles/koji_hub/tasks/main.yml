@@ -186,21 +186,24 @@
 # rpmautospec plugin
 #
 
-- name: install koji hub rpmautospec plugin
-  package: name={{ item }} state=latest
+- name: uninstall koji hub rpmautospec plugin
+  package: name={{ item }} state=absent
   with_items:
   - koji-hub-plugin-rpmautospec
-  when: env == 'staging'
   tags:
   - packages
   - koji_hub
   - rpmautospec
 
-- name: install the configuration file for rpmautospec
-  template:
-    src: rpmautospec.conf
-    dest: /etc/koji-hub/plugins/rpmautospec.conf
-  when: env == 'staging'
+- name: remove obsolete configuration for rpmautospec
+  file:
+    path: "/etc/koji-hub/plugins/{{ item }}"
+    state: absent
+  loop:
+    - rpmautospec.conf
+    - rpmautospec.conf.rpmnew
+    - rpmautospec.conf.rpmsave
+    - rpmautospec.conf.rpmorig
   tags:
   - koji_hub
   - rpmautospec
