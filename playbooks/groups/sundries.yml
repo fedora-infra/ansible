@@ -51,6 +51,8 @@
     when: master_sundries_node|bool
   - role: developer/build
     when: master_sundries_node|bool
+  - role: fedoraloveskde/build
+    when: master_sundries_node|bool
   - { role: rabbit/user,
       username: "sundries{{ env_suffix }}",
       when: master_sundries_node|bool and deployment_type == "stg" }
