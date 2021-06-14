@@ -1,9 +1,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: "resultsdb-test-{{ resultsdb_test_id }}-httpd-config"
+  name: "resultsdb-httpd-config"
   labels:
-    environment: "test-{{ resultsdb_test_id }}"
     app: resultsdb
 data:
   resultsdb.conf: |-
@@ -27,6 +26,7 @@ data:
       </LimitExcept>
     </Location>
 ---
+{% if deployment_type not in ['local', 'dev']%}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -47,3 +47,4 @@ data:
     ca_cert = "/etc/pki/rabbitmq/ca/resultsdb.ca"
     keyfile = "/etc/pki/rabbitmq/key/resultsdb.key"
     certfile = "/etc/pki/rabbitmq/crt/resultsdb.crt"
+{% endif %}

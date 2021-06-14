@@ -1,16 +1,14 @@
 apiVersion: v1
 kind: DeploymentConfig
 metadata:
-  name: "resultsdb-test-{{ resultsdb_test_id }}-api"
+  name: "resultsdb-api"
   labels:
-    environment: "test-{{ resultsdb_test_id }}"
     service: api
     app: resultsdb
 spec:
   replicas: 2
   selector:
     app: resultsdb
-    environment: "test-{{ resultsdb_test_id }}"
     service: api
   strategy:
     type: Rolling
@@ -40,13 +38,16 @@ spec:
   template:
     metadata:
       labels:
-        environment: "test-{{ resultsdb_test_id }}"
         service: api
         app: resultsdb
     spec:
       containers:
         - name: api
-          image: "{{ resultsdb_image }}"
+{% if env == 'staging' %}
+          image: "{{ stg_resultsdb_image }}"
+{% else %}
+          image: "{{ prod_resultsdb_image }}"
+{% endif %}
           imagePullPolicy: Always
           ports:
             - containerPort: 5001
@@ -91,10 +92,10 @@ spec:
       volumes:
         - name: config-volume
           secret:
-            secretName: "resultsdb-test-{{ resultsdb_test_id }}-config"
+            secretName: "resultsdb-config"
         - name: httpd-config-volume
           configMap:
-            name: "resultsdb-test-{{ resultsdb_test_id }}-httpd-config"
+            name: "resultsdb-httpd-config"
         - name: fedora-messaging-config-volume
           configMap:
             name: fedora-messaging-configmap

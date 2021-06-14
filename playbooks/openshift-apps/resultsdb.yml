@@ -5,26 +5,26 @@
   become: yes
   become_user: postgres
   vars_files:
-  - /srv/web/infra/ansible/vars/global.yml
-  - /srv/private/ansible/vars.yml
-  - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - /srv/private/ansible/vars.yml
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
-  - name: resultsdb DB user - prod
-    postgresql_user:
-      name: "resultsdb"
-      password: "{{ prod_resultsdb_db_password }}"
-    when: env != 'staging'
-  - name: resultsdb DB user - staging
-    postgresql_user:
-      name: "resultsdb"
-      password: "{{ stg_resultsdb_db_password }}"
-    when: env == 'staging'
-  - name: resultsdb database creation
-    postgresql_db:
-      name: "resultsdb"
-      owner: "resultsdb"
-      encoding: UTF-8
+    - name: resultsdb DB user - prod
+      postgresql_user:
+        name: "resultsdb"
+        password: "{{ prod_resultsdb_db_password }}"
+      when: env != 'staging'
+    - name: resultsdb DB user - staging
+      postgresql_user:
+        name: "resultsdb"
+        password: "{{ stg_resultsdb_db_password }}"
+      when: env == 'staging'
+    - name: resultsdb database creation
+      postgresql_db:
+        name: "resultsdb"
+        owner: "resultsdb"
+        encoding: UTF-8
 
 
 - name: make the app be real
@@ -35,9 +35,8 @@
 
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml
-    - "/srv/private/ansible/vars.yml"
+    - /srv/private/ansible/vars.yml
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
-    # TODO: change to vars/{{ env }}.yml
     - /srv/web/infra/ansible/roles/openshift-apps/resultsdb/vars/main.yml
 
   roles:
@@ -58,6 +57,7 @@
         - pingou
         - lholecek
         - vmaljulin
+        - lrossett
       tags:
         - apply-appowners
 
@@ -91,6 +91,11 @@
 
     - role: openshift/object
       app: resultsdb
+      template: deploymentconfigs.yml
+      objectname: deploymentconfigs.yml
+
+    - role: openshift/object
+      app: resultsdb
       template: services.yml
       objectname: services.yml
 
@@ -101,11 +106,6 @@
       serviceport: api
       servicename: resultsdb-web
 
-    - role: openshift/object
-      app: resultsdb
-      template: deploymentconfigs.yml
-      objectname: deploymentconfigs.yml
-
     - role: openshift/rollout
       app: resultsdb
-      dcname: "resultsdb-test-{{ resultsdb_test_id }}-api"
+      dcname: "resultsdb-api"
