@@ -617,6 +617,14 @@
     cert_name: "{{wildcard_cert_name}}"
 
   - role: httpd/website
+    site_name: fedoraloveskde.org
+    server_aliases: [stg.fedoraloveskde.org]
+    sslonly: true
+    certbot: true
+    tags:
+    - fedoraloveskde
+
+  - role: httpd/website
     site_name: osbs.fedoraproject.org
     server_aliases: [osbs.stg.fedoraproject.org]
     sslonly: true
