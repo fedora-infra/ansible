@@ -5,8 +5,8 @@ faf_server_name: retrace.fedoraproject.org/faf
 rs_use_faf_packages: true
 
 # we do not have enough storage on stg
-rs_internal_fedora_vers: [32, 33, 34, rawhide]
-rs_internal_fedora_vers_removed: []
+rs_internal_fedora_vers: [33, 34, rawhide]
+rs_internal_fedora_vers_removed: [30, 31, 32]
 rs_internal_arch_list: [source, x86_64, i386]
 
 # consumed by roles/copr/certbot
@@ -35,7 +35,9 @@ faf_opsys_list:
 
 # Clean-up packages of following EOLed operating systems
 eol_opsys:
-#  - { opsys: "Fedora", release: "30"}
+  - { opsys: "Fedora", release: "30"}
+  - { opsys: "Fedora", release: "31"}
+  - { opsys: "Fedora", release: "32"}
 
 # GDPR SAR variables
 sar_script: '/usr/bin/faf sar'
@@ -43,110 +45,82 @@ sar_script_user: faf
 sar_output_file: faf.json
 
 faf_repos:
-  - { name: 'fedora-31-source',
-      url: ['http://dl01.fedoraproject.org/pub/fedora/linux/releases/31/Everything/source/tree/', 'http://dl01.fedoraproject.org/pub/fedora/linux/development/31/Everything/source/tree/'],
-      arch: 'src',
-      opsys: 'Fedora 31',
-    }
-  - { name: 'fedora-31-x86_64',
-      url: ['http://dl01.fedoraproject.org/pub/fedora/linux/releases/31/Everything/x86_64/os/', 'http://dl01.fedoraproject.org/pub/fedora/linux/development/31/Everything/x86_64/os/'],
-      arch: 'x86_64',
-      opsys: 'Fedora 31',
-    }
-  - { name: 'fedora-31-x86_64-debug',
-      url: ['http://dl01.fedoraproject.org/pub/fedora/linux/releases/31/Everything/x86_64/debug/tree/', 'http://dl01.fedoraproject.org/pub/fedora/linux/development/31/Everything/x86_64/debug/tree/'],
-      arch: 'x86_64',
-      opsys: 'Fedora 31',
-    }
-  - { name: 'fedora-31-x86_64-testing-debug',
-      url: ['http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/31/Everything/x86_64/debug/'],
-      arch: 'x86_64',
-      opsys: 'Fedora 31',
-    }
-  - { name: 'fedora-31-x86_64-testing',
-      url: ['http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/31/Everything/x86_64/'],
-      arch: 'x86_64',
-      opsys: 'Fedora 31',
-    }
-  - { name: 'fedora-31-x86_64-updates-debug',
-      url: ['http://dl01.fedoraproject.org/pub/fedora/linux/updates/31/Everything/x86_64/debug/'],
-      arch: 'x86_64',
-      opsys: 'Fedora 31',
-    }
-  - { name: 'fedora-31-x86_64-updates',
-      url: ['http://dl01.fedoraproject.org/pub/fedora/linux/updates/31/Everything/x86_64/'],
-      arch: 'x86_64',
-      opsys: 'Fedora 31',
-    }
-  - { name: 'fedora-32-source',
-      url: ['http://dl01.fedoraproject.org/pub/fedora/linux/releases/32/Everything/source/tree/', 'http://dl01.fedoraproject.org/pub/fedora/linux/development/32/Everything/source/tree/'],
-      arch: 'src',
-      opsys: 'Fedora 32',
-    }
-  - { name: 'fedora-32-x86_64',
-      url: ['http://dl01.fedoraproject.org/pub/fedora/linux/releases/32/Everything/x86_64/os/', 'http://dl01.fedoraproject.org/pub/fedora/linux/development/32/Everything/x86_64/os/'],
-      arch: 'x86_64',
-      opsys: 'Fedora 32',
-    }
-  - { name: 'fedora-32-x86_64-debug',
-      url: ['http://dl01.fedoraproject.org/pub/fedora/linux/releases/32/Everything/x86_64/debug/tree/', 'http://dl01.fedoraproject.org/pub/fedora/linux/development/32/Everything/x86_64/debug/tree/'],
-      arch: 'x86_64',
-      opsys: 'Fedora 32',
-    }
-  - { name: 'fedora-32-x86_64-testing-debug',
-      url: ['http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/32/Everything/x86_64/debug/'],
-      arch: 'x86_64',
-      opsys: 'Fedora 32',
-    }
-  - { name: 'fedora-32-x86_64-testing',
-      url: ['http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/32/Everything/x86_64/'],
-      arch: 'x86_64',
-      opsys: 'Fedora 32',
-    }
-  - { name: 'fedora-32-x86_64-updates-debug',
-      url: ['http://dl01.fedoraproject.org/pub/fedora/linux/updates/32/Everything/x86_64/debug/'],
-      arch: 'x86_64',
-      opsys: 'Fedora 32',
-    }
-  - { name: 'fedora-32-x86_64-updates',
-      url: ['http://dl01.fedoraproject.org/pub/fedora/linux/updates/32/Everything/x86_64/'],
-      arch: 'x86_64',
-      opsys: 'Fedora 32',
-    }
-###### Fedora 33
-  - { name: 'fedora-33-source',
-      url: ['http://dl01.fedoraproject.org/pub/fedora/linux/releases/33/Everything/source/tree/', 'http://dl01.fedoraproject.org/pub/fedora/linux/development/33/Everything/source/tree/'],
-      arch: 'src',
-      opsys: 'Fedora 33',
-    }
-  - { name: 'fedora-33-x86_64',
-      url: ['http://dl01.fedoraproject.org/pub/fedora/linux/releases/33/Everything/x86_64/os/', 'http://dl01.fedoraproject.org/pub/fedora/linux/development/33/Everything/x86_64/os/'],
-      arch: 'x86_64',
-      opsys: 'Fedora 33',
-    }
-  - { name: 'fedora-33-x86_64-debug',
-      url: ['http://dl01.fedoraproject.org/pub/fedora/linux/releases/33/Everything/x86_64/debug/tree/', 'http://dl01.fedoraproject.org/pub/fedora/linux/development/33/Everything/x86_64/debug/tree/'],
-      arch: 'x86_64',
-      opsys: 'Fedora 33',
-    }
-  - { name: 'fedora-33-x86_64-testing-debug',
-      url: ['http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/33/Everything/x86_64/debug/'],
-      arch: 'x86_64',
-      opsys: 'Fedora 33',
-    }
-  - { name: 'fedora-33-x86_64-testing',
-      url: ['http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/33/Everything/x86_64/'],
-      arch: 'x86_64',
-      opsys: 'Fedora 33',
-    }
-  - { name: 'fedora-33-x86_64-updates-debug',
-      url: ['http://dl01.fedoraproject.org/pub/fedora/linux/updates/33/Everything/x86_64/debug/'],
-      arch: 'x86_64',
-      opsys: 'Fedora 33',
-    }
-  - { name: 'fedora-33-x86_64-updates',
-      url: ['http://dl01.fedoraproject.org/pub/fedora/linux/updates/33/Everything/x86_64/'],
-      arch: 'x86_64',
-      opsys: 'Fedora 33',
-    }
-
+  # Fedora 33 repositories ------------------------------------------------
+  - name: 'fedora-33-source'
+    url:
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/releases/33/Everything/source/tree/'
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/development/33/Everything/source/tree/'
+    arch: 'src'
+    opsys: 'Fedora 33'
+  - name: 'fedora-33-x86_64'
+    url:
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/releases/33/Everything/x86_64/os/'
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/development/33/Everything/x86_64/os/'
+    arch: 'x86_64'
+    opsys: 'Fedora 33'
+  - name: 'fedora-33-x86_64-debug'
+    url:
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/releases/33/Everything/x86_64/debug/tree/'
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/development/33/Everything/x86_64/debug/tree/'
+    arch: 'x86_64'
+    opsys: 'Fedora 33'
+  - name: 'fedora-33-x86_64-testing-debug'
+    url:
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/33/Everything/x86_64/debug/'
+    arch: 'x86_64'
+    opsys: 'Fedora 33'
+  - name: 'fedora-33-x86_64-testing'
+    url:
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/33/Everything/x86_64/'
+    arch: 'x86_64'
+    opsys: 'Fedora 33'
+  - name: 'fedora-33-x86_64-updates-debug'
+    url:
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/33/Everything/x86_64/debug/'
+    arch: 'x86_64'
+    opsys: 'Fedora 33'
+  - name: 'fedora-33-x86_64-updates'
+    url:
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/33/Everything/x86_64/'
+    arch: 'x86_64'
+    opsys: 'Fedora 33'
+  # Fedora 34 repositories ------------------------------------------------
+  - name: 'fedora-34-source'
+    url:
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/releases/34/Everything/source/tree/'
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/development/34/Everything/source/tree/'
+    arch: 'src'
+    opsys: 'Fedora 34'
+  - name: 'fedora-34-x86_64'
+    url:
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/releases/34/Everything/x86_64/os/'
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/development/34/Everything/x86_64/os/'
+    arch: 'x86_64'
+    opsys: 'Fedora 34'
+  - name: 'fedora-34-x86_64-debug'
+    url:
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/releases/34/Everything/x86_64/debug/tree/'
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/development/34/Everything/x86_64/debug/tree/'
+    arch: 'x86_64'
+    opsys: 'Fedora 34'
+  - name: 'fedora-34-x86_64-testing-debug'
+    url:
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/34/Everything/x86_64/debug/'
+    arch: 'x86_64'
+    opsys: 'Fedora 34'
+  - name: 'fedora-34-x86_64-testing'
+    url:
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/34/Everything/x86_64/'
+    arch: 'x86_64'
+    opsys: 'Fedora 34'
+  - name: 'fedora-34-x86_64-updates-debug'
+    url:
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/34/Everything/x86_64/debug/'
+    arch: 'x86_64'
+    opsys: 'Fedora 34'
+  - name: 'fedora-34-x86_64-updates'
+    url:
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/34/Everything/x86_64/'
+    arch: 'x86_64'
+    opsys: 'Fedora 34'
+...

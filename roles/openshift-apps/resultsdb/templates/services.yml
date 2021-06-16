@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata: 
+  name: "resultsdb-test-{{ resultsdb_test_id }}-api"
+  labels:
+    environment: "test-{{ resultsdb_test_id }}"
+    app: resultsdb
+spec:
+  selector:
+    app: resultsdb
+    environment: "test-{{ resultsdb_test_id }}"
+    service: api
+  ports:
+    - name: api
+      port: 5001
+      targetPort: 5001

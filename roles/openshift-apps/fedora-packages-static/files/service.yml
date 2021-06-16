@@ -7,10 +7,26 @@ metadata:
   name: fedora-packages-static
 spec:
   ports:
-  - name: 80-tcp
-    port: 80
+  - name: 8080-tcp
+    port: 8080
     protocol: TCP
-    targetPort: 80
+    targetPort: 8080
   selector:
     app: fedora-packages-static
     deploymentconfig: fedora-packages-static
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: fedora-packages-static
+  name: solr
+spec:
+  ports:
+  - name: 8983-tcp
+    port: 8983
+    protocol: TCP
+    targetPort: 8983
+  selector:
+    app: fedora-packages-static
+    deploymentconfig: solr

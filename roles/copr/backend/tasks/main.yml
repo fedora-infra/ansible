@@ -162,6 +162,27 @@
 #  - library
 #  tags:
 #  - provision_config
+#
+- name: calculate the maximum resalloc workers per architecture
+  set_fact: "max_{{ item }}_workers={{ builders | community.general.json_query('*.'+item+'[0]') | sum() }}"
+  with_items:
+    - x86_64
+    - aarch64
+  tags:
+  - provision_config
+
+- name: calculate max number of workers
+  set_fact: "max_workers={{ max_x86_64_workers|int + max_aarch64_workers|int }}"
+  tags:
+  - provision_config
+
+- name: print max arch workers
+  debug: "var=max_{{ item }}_workers"
+  with_items:
+    - x86_64
+    - aarch64
+  tags:
+  - provision_config
 
 - name: resalloc
   import_tasks: resalloc.yml
@@ -207,6 +228,7 @@
   tags:
   - config
   - copr_infrastructure_password
+  - provision_config
 
 - name: create messaging config directory
   file: dest=/etc/copr/msgbuses state=directory owner=copr group=copr mode=0700

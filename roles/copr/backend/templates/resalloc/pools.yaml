@@ -1,5 +1,5 @@
-{% macro aws_x86_64(max, max_starting, max_prealloc) %}
-aws_x86_64_normal_{% if devel %}dev{% else %}prod{% endif %}:
+{% macro aws_x86_64(max, max_starting, max_prealloc, spot=False) %}
+aws_x86_64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else %}prod{% endif %}:
     max: {{ max }}
     max_starting: {{ max_starting }}
     max_prealloc: {{ max_prealloc }}
@@ -17,17 +17,19 @@ aws_x86_64_normal_{% if devel %}dev{% else %}prod{% endif %}:
     - arch_armhfp_emulated
     - arch_s390x
     - arch_s390x_emulated
-    cmd_new: "/var/lib/resallocserver/resalloc_provision/vm-aws-new --arch=x86_64"
+    - aws
+    cmd_new: "/var/lib/resallocserver/resalloc_provision/vm-aws-new --arch=x86_64 {% if spot %}--spot{% endif %}"
     cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-aws-delete"
-    cmd_livecheck: "/var/lib/resallocserver/resalloc_provision/vm-aws-check"
+    cmd_livecheck: "/var/lib/resallocserver/resalloc_provision/vm-check"
+    cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
     livecheck_period: 180
     reuse_opportunity_time: 180
     reuse_max_count: 8
     reuse_max_time: 1800
 {% endmacro %}
 
-{% macro aws_aarch64(max, max_starting, max_prealloc) %}
-aws_aarch64_normal_{% if devel %}dev{% else %}prod{% endif %}:
+{% macro aws_aarch64(max, max_starting, max_prealloc, spot=False) %}
+aws_aarch64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else %}prod{% endif %}:
     max: {{ max }}
     max_starting: {{ max_starting }}
     max_prealloc: {{ max_prealloc }}
@@ -35,9 +37,11 @@ aws_aarch64_normal_{% if devel %}dev{% else %}prod{% endif %}:
     - copr_builder
     - arch_aarch64
     - arch_aarch64_native
-    cmd_new: "/var/lib/resallocserver/resalloc_provision/vm-aws-new --arch=aarch64"
+    - aws
+    cmd_new: "/var/lib/resallocserver/resalloc_provision/vm-aws-new --arch=aarch64 {% if spot %}--spot{% endif %}"
     cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-aws-delete"
-    cmd_livecheck: "/var/lib/resallocserver/resalloc_provision/vm-aws-check"
+    cmd_livecheck: "/var/lib/resallocserver/resalloc_provision/vm-check"
+    cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
     livecheck_period: 180
     reuse_opportunity_time: 180
     reuse_max_count: 8
@@ -45,12 +49,12 @@ aws_aarch64_normal_{% if devel %}dev{% else %}prod{% endif %}:
 {% endmacro %}
 
 # x86_64 hypervisors
-{% if devel %}
-{% for hv in ["02", "03", "04"] %}
-copr_hv_x86_64_{{ hv }}:
-    max: 3
-    max_starting: 2
-    max_prealloc: 2
+{% for hv in ["01", "02", "03", "04"] %}
+{% if "x86_hypervisor_" + hv in builders %}
+copr_hv_x86_64_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
+    max: {{ builders["x86_hypervisor_" + hv]["x86_64"][0] }}
+    max_starting: {{ builders["x86_hypervisor_" + hv]["x86_64"][1] }}
+    max_prealloc: {{ builders["x86_hypervisor_" + hv]["x86_64"][2] }}
     tags:
     - copr_builder
     - arch_x86_64
@@ -65,16 +69,23 @@ copr_hv_x86_64_{{ hv }}:
     - arch_armhfp_emulated
     - arch_s390x
     - arch_s390x_emulated
+    - hypervisor
+    - hypervisor_{{ hv }}
     cmd_new: "/var/lib/resallocserver/provision/libvirt-new --swap-vol-size 168"
     cmd_delete: "/var/lib/resallocserver/provision/libvirt-new --swap-vol-size 168"
     cmd_delete: "/var/lib/resallocserver/provision/libvirt-delete"
-    cmd_livecheck: "echo TODO"
+    cmd_livecheck: "/var/lib/resallocserver/resalloc_provision/vm-check"
+    cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
     livecheck_period: 180
     reuse_opportunity_time: 180
     reuse_max_count: 8
     reuse_max_time: 1800
-{% endfor %}
+{% else %}
+#
+# x86_hypervisor_{{ hv }} not configured in group_vars
+#
 {% endif %}
+{% endfor %}
 
 {% macro hw_aarch64(id, inst, max, max_starting, max_prealloc) %}
 aarch64_{{ id }}_{{ inst }}:
@@ -101,13 +112,18 @@ aarch64_{{ id }}_{{ inst }}:
     - arch_aarch64_native
 {% endmacro %}
 
-{{ aws_x86_64(builders.aws.x86_64[0] + builders.aws.armhfp[0],
-              builders.aws.x86_64[1] + builders.aws.armhfp[1],
-              builders.aws.x86_64[2] + builders.aws.armhfp[2])
+{{ aws_x86_64(builders.aws.x86_64[0], builders.aws.x86_64[1],
+              builders.aws.x86_64[2])
 }}
-{{ aws_aarch64(builders.aws.aarch64[0],
-               builders.aws.aarch64[1],
+{{ aws_aarch64(builders.aws.aarch64[0], builders.aws.aarch64[1],
                builders.aws.aarch64[2])
+}}
+
+{{ aws_x86_64(builders.aws_spot.x86_64[0], builders.aws_spot.x86_64[1],
+              builders.aws_spot.x86_64[2], True)
+}}
+{{ aws_aarch64(builders.aws_spot.aarch64[0], builders.aws_spot.aarch64[1],
+               builders.aws_spot.aarch64[2], True)
 }}
 
 {% if env == "production" %}

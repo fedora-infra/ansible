@@ -1,0 +1,47 @@
+---
+- name: create an x86_64 spot instance in aws
+  hosts: 127.0.0.1
+  gather_facts: false
+
+  roles:
+    - spawner
+
+  vars_files:
+    - vars.yml
+    - aws_cloud_vars.yml
+
+  vars:
+    keypair: copr-builder
+    instance_type: i3.large
+    # We keep this around the on-demand price, as we don't want unnecessary
+    # interrupts.
+    spot_price: 0.156
+    security_group: ssh-only
+    max_spawn_time: 1100
+    spawning_vm_user: "fedora"
+    arch: x86_64
+    image_name: "{{ builder_images[arch] }}"
+
+  tasks:
+    - include: "spinup_aws_spot_task.yml"
+
+
+- name: provision builder
+  hosts: builder_temp_group
+  gather_facts: false
+  become: true
+  user: fedora
+
+  vars_files:
+    - vars.yml
+    - aws_cloud_vars.yml
+
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  tasks:
+    - include: "create_swap_file.yml"
+      when:
+        - prepare_base_image is defined
+
+    - include: "provision_builder_tasks.yml"

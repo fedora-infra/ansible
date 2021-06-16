@@ -1,0 +1,35 @@
+- name: Create directories
+  file: state=directory
+        path=/srv/web/{{item}}
+        owner=apache group=apache mode=0755
+        setype=httpd_sys_content_t seuser=system_u
+  with_items:
+  - fedoraloveskde.org
+  tags:
+  - fedoraloveskde
+
+- name: Copy syncfedoraloveskde script (stg)
+  when: env == "staging"
+  copy: >
+    src=syncfedoraloveskde.stg.sh dest=/usr/local/bin/syncfedoraloveskde owner=root group=root
+    mode=0755
+  tags:
+  - fedoraloveskde
+
+- name: Copy syncfedoraloveskde script (prod)
+  when: env == "production"
+  copy: >
+    src=syncfedoraloveskde.sh dest=/usr/local/bin/syncfedoraloveskde owner=root group=root
+    mode=0755
+  tags:
+  - fedoraloveskde
+
+- name: Install the syncfedoraloveskde cron job
+  copy: >
+    src={{item}}.cron dest=/etc/cron.d/{{item}}.cron
+    owner=root group=root mode=0644
+  with_items:
+  - syncfedoraloveskde
+  tags:
+  - fedoraloveskde
+  - cron

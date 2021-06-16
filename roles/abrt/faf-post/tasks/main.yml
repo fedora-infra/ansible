@@ -1,42 +1,50 @@
 ---
 # the magic with ! is that it return exit code 1 if 'already defined' is not present in output
-- name: add repositories
-  shell: ! faf repoadd --nogpgcheck "{{ item.name }}" dnf "{{ item.url | join('" "') }}" 2>&1 | grep 'already defined'
+- name: Add package repositories
+  shell: >
+    ! faf repoadd --nogpgcheck "{{ item.name }}" dnf "{{ item.url | join('" "') }}" 2>&1 | grep 'already defined'
   become: yes
   become_user: faf
   ignore_errors: yes
-  when: not devel|bool
   tags: add_repo
   loop: "{{ faf_repos }}"
 
-- name: repoassign repositories
-  command: faf repoassign "{{ item.name }}" "{{ item.opsys }}" "{{ item.arch }}"
+- name: Assign repositories to releases
+  command: "faf repoassign '{{ item.name }}' '{{ item.opsys }}' '{{ item.arch }}'"
   become: yes
   become_user: faf
-  when: not devel|bool
   tags: add_repo
   loop: "{{ faf_repos }}"
+
+- name: Ensure directory for FAF database backups exists
+  file:
+    path: "{{ faf_backup_dir }}"
+    state: directory
+    owner: faf
+    group: faf
+    mode: 0750
+  when: env != 'staging'
 
 - import_tasks: cron.yml
   tags: cron
 
-- name: get repolist of EOL releases
+- name: List repositories of EOL releases
   shell: "faf repolist | grep fedora-{{ item }} || true"
+  become: yes
+  become_user: faf
   register: eol_repolist
   loop: "{{ rs_internal_fedora_vers_removed }}"
   changed_when: eol_repolist.stdout
+
+- name: Remove repositories of EOL releases
+  command: "faf repodel '{{ item }}'"
   become: yes
   become_user: faf
-
-- name: remove repos of EOLed releases
-  command: faf repodel "{{ item }}"
+  ignore_errors: yes
   loop: "{{ eol_repolist.results | map(attribute='stdout_lines') | flatten }}"
-  become: faf
-  become_user: faf
 
-- name: cleanup packages from EOLed fedora release
-  command: "faf cleanup-packages Fedora '{{ item }}' "
+- name: Clean up packages from EOL Fedora releases
+  command: "faf cleanup-packages Fedora '{{ item }}'"
   become: yes
   become_user: faf
-  when: not devel|bool
   loop: "{{ rs_internal_fedora_vers_removed }}"

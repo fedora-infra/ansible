@@ -21,6 +21,9 @@ AllowInteractive = {{ rs_allow_interactive|int }}
 # Allow X-CoreFileDirectory header
 AllowExternalDir = {{ rs_allow_external_dir|int }}
 
+# Expose metrics for monitoring via Prometheus
+AllowMetrics = {{ rs_allow_metrics|int }}
+
 # Allow to create tasks owned by task manager (security risk)
 AllowTaskManager = {{ rs_allow_task_manager|int }}
 
@@ -135,8 +138,9 @@ UseFafPackages = {{ rs_use_faf_packages|int }}
 # Spool directory for FAF packages
 FafLinkDir = {{ faf_spool_dir }}
 
-# Run the retrace in a Mock chroot (default), or a Podman container
-# (mock|podman)
+# Run the retrace in a Mock chroot (default), a Podman container,
+# or on the native machine.
+# (mock|podman|native)
 RetraceEnvironment = {{ rs_retrace_environment }}
 
 # Whether to enable e-mail notifications
@@ -171,6 +175,9 @@ BugzillaRegExes = {{ rs_bugzilla_regexes }}
 
 # Timeout (in seconds) for communication with any process
 ProcessCommunicateTimeout = {{ rs_process_communicate_timeout|int }}
+
+# Path to the kernel (vmcore) debugger
+KernelDebuggerPath = {{ rs_kernel_debugger_path }}
 
 [archhosts]
 {% for a in rs_archhosts %}

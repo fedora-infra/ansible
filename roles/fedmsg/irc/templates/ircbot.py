@@ -1,7 +1,7 @@
 config = dict(
     irc=[
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -34,7 +34,7 @@ config = dict(
 
         # For fedora-admin
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -57,7 +57,7 @@ config = dict(
 
         # For fedora-apps
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -80,7 +80,7 @@ config = dict(
 
         # For that commops crew!
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -99,7 +99,7 @@ config = dict(
         ),
         # A second bot for that commops crew that watches for the term "commops"
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -120,7 +120,7 @@ config = dict(
         # The planet is currently no longer sending messages
         # # A third one to listen for new Community Blog posts
         # dict(
-            # network='chat.freenode.net',
+            # network='irc.libera.chat',
             # port=6667,
             # make_pretty=True,
             # make_terse=True,
@@ -139,7 +139,7 @@ config = dict(
             # ),
         # ),
         # dict(
-            # network='chat.freenode.net',
+            # network='irc.libera.chat',
             # port=6667,
             # make_pretty=True,
             # make_terse=True,
@@ -159,7 +159,7 @@ config = dict(
 
         # For that python3 porting fad.  AMAZING!
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -183,7 +183,7 @@ config = dict(
         # We no longer run askbot
         # # Just for the Ask Fedora crew in #fedora-ask
         # dict(
-            # network='chat.freenode.net',
+            # network='irc.libera.chat',
             # port=6667,
             # make_pretty=True,
             # make_terse=True,
@@ -202,7 +202,7 @@ config = dict(
 
         # Show only compose msgs to the releng crew.
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -226,7 +226,7 @@ config = dict(
         # We no longer run trac
         # # The proyectofedora crew wants trac messages.
         # dict(
-            # network='chat.freenode.net',
+            # network='irc.libera.chat',
             # port=6667,
             # make_pretty=True,
             # make_terse=True,
@@ -245,7 +245,7 @@ config = dict(
 
         # Similarly for #fedora-latam.
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -264,7 +264,7 @@ config = dict(
 
         # And for #fedora-g11n
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -287,7 +287,7 @@ config = dict(
         # And #ipsilon
         {% if env == "production" %}
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -306,7 +306,7 @@ config = dict(
 
         # For pagure
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -330,7 +330,7 @@ config = dict(
         # Hook up the design-team
         {% if env == "production" %}
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -350,7 +350,7 @@ config = dict(
 
         # And #fedora-docs wants in on the action
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -369,7 +369,7 @@ config = dict(
 
         # And #fedora-websites
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -391,7 +391,7 @@ config = dict(
 
         # And #fedora-mktg
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -413,7 +413,7 @@ config = dict(
 
         # And #fedora-modularity-bots
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -439,7 +439,7 @@ config = dict(
 
         # And #fedora-diversity
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -464,7 +464,7 @@ config = dict(
 
         # And #fedora-magazine
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -488,7 +488,7 @@ config = dict(
 
         # And #fedora-rust
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -511,7 +511,7 @@ config = dict(
 
         # And #rit-foss
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -534,7 +534,7 @@ config = dict(
 
         # For #fedora-workstation
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -557,7 +557,7 @@ config = dict(
 
         # For #koji
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -579,7 +579,7 @@ config = dict(
 
         # For #fedora-join
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -601,7 +601,7 @@ config = dict(
 
         # For #fedora-neuro
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -623,7 +623,7 @@ config = dict(
 
         # Hook up #fedora-badges with badges messages
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -644,7 +644,7 @@ config = dict(
 
         # channel #centos-ci with centos-infra messages
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,
@@ -665,7 +665,7 @@ config = dict(
 
         # And #fedora-podcast
         dict(
-            network='chat.freenode.net',
+            network='irc.libera.chat',
             port=6667,
             make_pretty=True,
             make_terse=True,

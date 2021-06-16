@@ -38,13 +38,20 @@ sleeptime=20
 # This option basically controls the amount of RAM allocated for
 # processing builds on copr backend, and how many resalloc tickets can
 # be taken at the same time.
-builds_max_workers={{ builders.aws.x86_64[0] + builders.aws.aarch64[0] + builders.aws.armhfp[0] }}
+builds_max_workers={{ max_workers }}
 
-# Maximum number of concurrently running tasks per architecture.
+# Maximum number of concurrently running tasks per architecture.  Since we
+# emulate s390x and armhfp on x86_64, we give it ~25% of the x86_64 quota.
+# The 32bit x86 variants (i386, i586 and i686) are in minority now, so let's
+# limit them as well.
 builds_max_workers_arch=
-    x86_64={{ builders.aws.x86_64[0] }},
-    aarch64={{ builders.aws.aarch64[0]}},
-    armhfp={{ builders.aws.armhfp[0] }}
+    x86_64={{ max_x86_64_workers }},
+    aarch64={{ max_aarch64_workers }},
+    armhfp={{ (max_x86_64_workers|int / 4)|int }},
+    s390x={{ (max_x86_64_workers|int / 4)|int }},
+    i386={{ (max_x86_64_workers|int / 4)|int }},
+    i586={{ (max_x86_64_workers|int / 4)|int }},
+    i686={{ (max_x86_64_workers|int / 4)|int }}
 
 # Maximum number of concurrently running tasks per project owner.
 {% if env == 'production' %}

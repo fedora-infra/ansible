@@ -1,16 +1,52 @@
 ---
-# create uid - this is normaly done by retrace package
-# but the package is not installed yet at this momement
-- user: name="retrace" group=retrace uid=174 home=/srv/retrace/home
+- name: Make sure retrace user exists
+  user:
+    name: retrace
+    group: retrace
+    system: yes
+    create_home: no
+  register: retrace_user_info
 
-- file:
+- name: Ensure retrace user has correct UID and home directory
+  when: >
+    retrace_user_info.changed or
+    retrace_user_info.uid != retrace_user_uid_gid or
+    retrace_user_info.home != retrace_user_home
+  block:
+  - name: Stop httpd service before modifying user
+    service:
+      name: httpd
+      state: stopped
+
+  # create uid - this is normaly done by retrace package
+  # but the package is not installed yet at this momement
+  - name: Ensure correct UID and home directory
+    user:
+      name: retrace
+      uid: "{{ retrace_user_uid_gid }}"
+      home: "{{ retrace_user_home }}"
+      create_home: yes
+
+  - name: Ensure correct GID
+    group:
+      name: retrace
+      gid: "{{ retrace_user_uid_gid }}"
+
+  - name: Restart httpd service after modifications are done
+    service:
+      name: httpd
+      state: started
+
+- name: Create directory for repositories
+  file:
     path: /srv/retrace/repos
     state: directory
     mode: 0755
     owner: retrace
     group: retrace
 
-- file:
+- name: Create directory for retrace tasks
+  file:
     path: /srv/retrace/tasks
     state: directory
     mode: 0755
@@ -19,13 +55,6 @@
 
 - file:
     path: /srv/retrace/hardlink-local
-    state: directory
-    mode: 0755
-    owner: retrace
-    group: retrace
-
-- file:
-    path: /srv/retrace/home
     state: directory
     mode: 0755
     owner: retrace

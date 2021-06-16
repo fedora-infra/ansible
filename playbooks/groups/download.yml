@@ -39,8 +39,8 @@
   - rsyncd
   - { role: nfs/client, when: datacenter == "iad2" or datacenter == "rdu", mnt_dir: '/srv/pub',  nfs_src_dir: 'fedora_ftp/fedora.redhat.com/pub' }
   - { role: nfs/client, when: datacenter == "iad2" or datacenter == "rdu", mnt_dir: '/srv/pub/archive',  nfs_src_dir: 'fedora_ftp_archive' }
-  - { role: nfs/client, when: datacenter == "iad2", mnt_dir: '/mnt/koji',  nfs_src_dir: 'fedora_koji/koji/' } # needed for internal sync and odcs
-  - { role: nfs/client, when: datacenter == "iad2", mnt_dir: '/srv/odcs',  nfs_src_dir: 'fedora_odcs' } # needed for internal sync
+  - { role: nfs/client, when: datacenter == "iad2", mnt_dir: '/mnt/fedora_koji',  nfs_src_dir: 'fedora_koji' } # needed for internal sync and odcs
+  - { role: nfs/client, when: datacenter == "iad2", mnt_dir: '/mnt/odcs',  nfs_src_dir: 'fedora_odcs' } # needed for internal sync
   - sudo
 
   pre_tasks:
@@ -72,6 +72,9 @@
   - name: put in cron job for syncing
     copy: src="{{ files }}/download/download-sync.cron.cc-rdu01"  dest=/etc/cron.d/download-sync owner=root group=root mode=644
     when: inventory_hostname == 'download-cc-rdu01.fedoraproject.org'
+
+  - name: make a mnt/koji link
+    file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"

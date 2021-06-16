@@ -369,6 +369,11 @@ def set_koji_ownership(tag, namespace, packages, arches, verbose=False):
 
         for pkg in packages:
             owner = get_pagure_project_owner(namespace, pkg, verbose=verbose)
+            # When the user is created in fedora infra, they wont be added to koji
+            # until they logged into koji for the first time
+            # Set the owner to 'releng' until they logged into koji
+            if not session.getUser(owner):
+                owner = 'releng'
             if pkg not in koji_pkgs:
                 extra_arches = None
                 if pkg in EXTRA_ARCH_LIST:

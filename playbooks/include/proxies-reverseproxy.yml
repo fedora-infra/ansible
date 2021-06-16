@@ -235,14 +235,6 @@
 
   - role: httpd/reverseproxy
     website: apps.fedoraproject.org
-    destname: fedocal
-    remotepath: /calendar
-    localpath: /calendar
-    header_scheme: true
-    proxyurl: "{{ varnish_url }}"
-
-  - role: httpd/reverseproxy
-    website: apps.fedoraproject.org
     destname: kerneltest
     remotepath: /kerneltest
     localpath: /kerneltest
@@ -757,3 +749,10 @@
     proxyopts: "connectiontimeout=600 timeout=600 keepalive=on"
     tags:
     - debuginfod
+
+  - role: httpd/reverseproxy
+    website: packages.fedoraproject.org
+    destname: fedora-packages-static
+    balancer_name: app-os
+    targettype: openshift
+    keephost: true

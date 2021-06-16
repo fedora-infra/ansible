@@ -445,6 +445,7 @@
   - koji-directory-cleanup
   - koji-gc
   - koji-prune-signed-copies
+  - koji-sidetag-cleanup
   tags:
   - files
   - koji_hub
@@ -455,6 +456,7 @@
   - koji-directory-cleanup
   - koji-gc
   - koji-prune-signed-copies
+  - koji-sidetag-cleanup
   tags:
   - files
   when: env != 'staging' and ansible_hostname.startswith('koji02')

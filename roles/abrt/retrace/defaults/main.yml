@@ -15,6 +15,9 @@ rs_allow_interactive: false
 # Allow X-CoreFileDirectory header
 rs_allow_external_dir: false
 
+# Expose metrics for monitoring via Prometheus
+rs_allow_metrics: true
+
 # Allow to create tasks owned by task manager (security risk)
 rs_allow_task_manager: false
 
@@ -93,6 +96,9 @@ rs_keep_rawhide_latest: 3
 # Repo used to install chroot for vmcores
 rs_kernel_chroot_repo: http://dl.fedoraproject.org/pub/fedora/linux/releases/16/Everything/$ARCH/os/
 
+# Path to the kernel (vmcore) debugger
+rs_kernel_debugger_path: /usr/bin/crash
+
 # Koji directory structure can be used to search for kernel debuginfo
 rs_koji_root: /mnt/koji
 
@@ -128,8 +134,9 @@ rs_use_faf_packages: false
 # Spool directory for FAF packages
 faf_spool_dir: /var/spool/faf
 
-# Run the retrace in a Mock chroot (default), or a Podman container
-# (mock|podman)
+# Run the retrace in a Mock chroot (default), a Podman container,
+# or on the native machine.
+# (mock|podman|native)
 rs_retrace_environment: podman
 
 # Whether to enable e-mail notifications
@@ -183,17 +190,10 @@ rs_force_reinstall: false
 # Check server health after installation
 rs_check_health: true
 
-# Path to the executable hook scripts
-# https://github.com/abrt/retrace-server/wiki/Hook-scripts
-rs_hooks_executable_path: /usr/libexec/retrace-server/hooks/
-
-# Global time limit for hook scripts (in seconds)
-rs_hooks_global_timeout: 300
-
 # Hostname
 hostname: example.org
 
-# Path to the executable hook scripts                                                                                    
+# Path to the executable hook scripts
 # see https://github.com/abrt/retrace-server/wiki/Hook-scripts
 rs_executable_hooks_path: "/usr/libexec/retrace-server/hooks/"
 

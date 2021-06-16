@@ -24,9 +24,17 @@ spec:
             - name: build-output
               mountPath: /antora/output
               readOnly: false
+{%          if env == 'staging' %}
+            - name: build-temp
+              mountPath: /tmp
+{%          endif %}
           restartPolicy: Never
           startingDeadlineSeconds: 600
           volumes:
           - name: build-output
             persistentVolumeClaim:
               claimName: docs-storage
+{%        if env == 'staging' %}
+          - name: build-temp
+            emptyDir: {}
+{%        endif %}

@@ -7,14 +7,14 @@
   become: yes
   become_user: retrace
   tags: [rs_reposync, rs_fedora]
-  when: not devel|bool
+  when: env != 'staging'
 
 - name: reposync for centos
   shell: nohup retrace-server-reposync centos 7 x86_64 </dev/null >$(mktemp /tmp/ansible.reposync_for_centosXXXXXX.log) &
   become: yes
   become_user: retrace
   tags: [rs_reposync, rs_fedora]
-  when: not devel|bool
+  when: env != 'staging'
 
 - file:
     path: /srv/retrace/repos

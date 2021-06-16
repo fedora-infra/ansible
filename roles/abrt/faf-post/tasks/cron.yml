@@ -1,24 +1,25 @@
 ---
-
-- name: backup database
-  cron:
-    name: "backup database"
-    user: faf
-    job: "( pg_dump -Fc faf > /srv/faf/db-backup/backup-$(date '+\\%F').dump ) >> /var/log/faf/db_backup.log 2>&1"
-    special_time: daily
-    state: present
-
-- name: delete old database backups
-  cron:
-    name: "delete database backups older than X days"
-    user: faf
-    job: "find /srv/faf/db-backup/ -mtime +14 -type f -delete"
-    special_time: daily
-    state: present
-
-- name: Run crons when not devel
+- name: Cron jobs for production machines
   block:
-  - name: pull associates
+  - name: Backup database daily
+    cron:
+      name: "backup database"
+      user: faf
+      job: >
+        ( pg_dump --format=custom --file={{ faf_backup_dir }}/backup-$(date '+\%F').dump faf )
+          >> /var/log/faf/db_backup.log 2>&1
+      special_time: daily
+      state: present
+
+  - name: Delete old database backups
+    cron:
+      name: "delete database backups older than {{ faf_old_backup_age }} days"
+      user: faf
+      job: "find {{ faf_backup_dir }} -mtime {{ faf_old_backup_age }} -type f -delete"
+      special_time: daily
+      state: present
+
+  - name: Pull associates
     cron:
       name: "cron for pull associates"
       user: faf
@@ -34,35 +35,27 @@
       special_time: daily
       state: present
 
-  - name: probable fixes
+  - name: Job for probable fixes in active Fedora releases
     cron:
       name: "cron for probable fixes for f{{ item }}"
       user: faf
-      job: "faf mark-probably-fixed -o fedora --opsys-release {{ item }} >> /var/log/faf/mark-probably-fixed-f{{ item }}.log 2>&1"
+      job: >
+        faf mark-probably-fixed -o fedora --opsys-release {{ item }}
+          >> /var/log/faf/mark-probably-fixed-f{{ item }}.log 2>&1
       special_time: daily
       state: present
-    loop:
-      - "31"
-      - "32"
-      - "33"
+    loop: "{{ rs_internal_fedora_vers }}"
 
-  - name: remove obsolete probable fixes
+  - name: Remove job for probable fixes in removed Fedora releases
     cron:
       name: "cron for probable fixes for f{{ item }}"
       user: faf
       job: "faf mark-probably-fixed -o fedora --opsys-release {{ item }} >> /var/log/faf/mark-probably-fixed-f{{ item }}.log 2>&1"
       special_time: daily
       state: absent
-    loop:
-      - "24"
-      - "25"
-      - "26"
-      - "27"
-      - "28"
-      - "29"
-      - "30"
+    loop: "{{ rs_internal_fedora_vers_removed }}"
 
-  - name: update BZ bugs fedora
+  - name: Update BZ bugs fedora
     cron:
       name: "cron for update BZ bugs fedora"
       user: faf
@@ -70,7 +63,7 @@
       special_time: daily
       state: present
 
-  - name: update BZ bugs centos
+  - name: Update BZ bugs centos
     cron:
       name: "cron for update BZ bugs centos"
       user: faf
@@ -78,7 +71,7 @@
       special_time: daily
       state: present
 
-  - name: attach BZ bugs centos
+  - name: Attach BZ bugs centos
     cron:
       name: "cron for attach BZ bugs centos"
       user: faf
@@ -86,16 +79,16 @@
       special_time: daily
       state: present
 
-  - name: archive reports and attachments
+  - name: Archive reports and attachments
     cron:
       name: "faf archive reports and attachments"
       user: faf
       job: "faf archive-reports -d >> /var/log/faf/archive-reports.log 2>&1"
       special_time: daily
       state: present
-  when: not devel|bool
+  when: env != 'staging'
 
-- name: install cron for deleting old archives
+- name: Cron job for deleting old archives
   cron:
     name: "rotate_faf_archives"
     special_time: "daily"

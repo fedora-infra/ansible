@@ -1,6 +1,5 @@
 ---
-
-- name: Create cron job for retrace-server
+- name: Create retrace-server reposync cron jobs for active Fedora versions
   cron:
     name: "rs reposync fedora {{ item[0] }} {{ item[1] }}"
     user: retrace
@@ -8,9 +7,8 @@
     special_time: daily
     state: present
   loop: "{{ rs_internal_fedora_vers | product(rs_internal_arch_list) | list }}"
-  when: not devel|bool
 
-- name: Remove obsolete cron job for retrace-server
+- name: Remove retrace-server reposync cron jobs of removed Fedora versions
   cron:
     name: "rs reposync fedora {{ item[0] }} {{ item[1] }}"
     user: retrace
@@ -18,25 +16,22 @@
     special_time: daily
     state: absent
   loop: "{{ rs_internal_fedora_vers_removed | product(rs_internal_arch_list) | list}}"
-  when: not devel|bool
 
-- name: Create cron job for retrace-server
+- name: Create retrace-server reposync cron job for CentOS 7
   cron:
     name: "rs reposync centos 7 x86_64"
     user: retrace
     job: "/usr/bin/retrace-server-reposync centos 7 x86_64 >> /var/log/retrace-server/reposync_error.log 2>&1"
     special_time: daily
     state: present
-  when: not devel|bool
 
-- name: Create cron job for retrace-server
+- name: Create retrace-server cleanup cron job
   cron:
     name: "retrace-server-cleanup"
     user: retrace
     job: "/usr/bin/retrace-server-cleanup >> /var/log/retrace-server/cleanup_error.log 2>&1"
     special_time: daily
     state: present
-  when: not devel|bool
 
 - name: Create cron job for retrace-server
   cron:
@@ -45,4 +40,3 @@
     job: "/usr/bin/podman system prune --all --force >> /var/log/retrace-server/podman_prune.log 2>&1"
     special_time: daily
     state: present
-  when: not devel|bool

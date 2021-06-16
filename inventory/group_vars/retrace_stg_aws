@@ -1,15 +1,9 @@
 ---
-ipa_host_group: retrace
-ipa_host_group_desc: Retrace servers
-ipa_client_shell_groups:
-- retrace
-ipa_client_sudo_groups:
-- retrace
-devel: true
+env: staging
 
 vpn: true
 
-tcp_ports: [22, 80, 443 ]
+tcp_ports: [ 22, 80, 443 ]
 
 sudoers: "{{ private }}/files/sudo/arm-retrace-sudoers"
 root_auth_users: msuchy mfabik mgrabovs mzidek

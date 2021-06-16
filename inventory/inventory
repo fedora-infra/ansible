@@ -73,12 +73,6 @@ blockerbugs01.iad2.fedoraproject.org
 [blockerbugs_stg]
 blockerbugs01.stg.iad2.fedoraproject.org
 
-[bugzilla2fedmsg]
-bugzilla2fedmsg01.iad2.fedoraproject.org
-
-[bugzilla2fedmsg_stg]
-bugzilla2fedmsg01.stg.iad2.fedoraproject.org
-
 [centos_ipa_client_stg]
 centos-ipa-client01.stg.iad2.fedoraproject.org
 centos-ipa-client02.stg.iad2.fedoraproject.org
@@ -623,7 +617,6 @@ autosign01.stg.iad2.fedoraproject.org
 # basset01.stg.iad2.fedoraproject.org
 blockerbugs01.stg.iad2.fedoraproject.org
 bodhi-backend01.stg.iad2.fedoraproject.org
-bugzilla2fedmsg01.stg.iad2.fedoraproject.org
 bvmhost-x86-01.stg.iad2.fedoraproject.org
 bvmhost-x86-02.stg.iad2.fedoraproject.org
 bvmhost-x86-03.stg.iad2.fedoraproject.org
@@ -708,6 +701,7 @@ sign-bridge01.stg.iad2.fedoraproject.org
 sign-vault01.stg.iad2.fedoraproject.org
 sundries01.stg.iad2.fedoraproject.org
 value01.stg.iad2.fedoraproject.org
+value02.stg.iad2.fedoraproject.org
 vmhost-x86-01.stg.iad2.fedoraproject.org
 vmhost-x86-02.stg.iad2.fedoraproject.org
 vmhost-x86-03.stg.iad2.fedoraproject.org
@@ -767,6 +761,7 @@ value01.iad2.fedoraproject.org
 
 [value_stg]
 value01.stg.iad2.fedoraproject.org
+value02.stg.iad2.fedoraproject.org
 
 [virthost]
 vmhost-x86-01.stg.iad2.fedoraproject.org
@@ -847,25 +842,17 @@ proxies
 busgateway_stg
 proxies_stg
 
-[moksha_hubs:children]
-bugzilla2fedmsg
-
-[moksha_hubs_stg:children]
-bugzilla2fedmsg_stg
-
 [fedmsg_services:children]
 fedmsg_hubs
 fedmsg_ircs
 fedmsg_relays
 fedmsg_gateways
-moksha_hubs
 
 [fedmsg_services_stg:children]
 fedmsg_hubs_stg
 fedmsg_ircs_stg
 fedmsg_relays_stg
 fedmsg_gateways_stg
-moksha_hubs_stg
 
 # These are groups that are using the python34 fedmsg stack.
 [python34_fedmsg:children]
@@ -996,10 +983,10 @@ copr_aws
 copr_dev_aws
 
 [copr_hypervisor]
-#vmhost-x86-copr01.rdu-cc.fedoraproject.org
+vmhost-x86-copr01.rdu-cc.fedoraproject.org
 vmhost-x86-copr02.rdu-cc.fedoraproject.org
 vmhost-x86-copr03.rdu-cc.fedoraproject.org
-vmhost-x86-copr04.rdu-cc.fedoraproject.org
+#vmhost-x86-copr04.rdu-cc.fedoraproject.org
 
 [copr_db_all:children]
 copr_db_stg

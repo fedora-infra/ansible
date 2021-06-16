@@ -154,16 +154,33 @@
     owner: mirrormanager
     group: mirrormanager
     mode: 0600
+- name: install scan-primary-mirror configuration file
+  template:
+    src: scan-primary-mirror.toml
+    dest: /etc/mirrormanager/scan-primary-mirror.toml
+    owner: mirrormanager
+    group: mirrormanager
+    mode: 0600
 - name: create /srv/mirrorlist-server.git
   file: path=/srv/mirrorlist-server.git state=directory owner=mirrormanager group=mirrormanager mode=0755
+- name: create /srv/scan-primary-mirror.git
+  file: path=/srv/scan-primary-mirror.git state=directory owner=mirrormanager group=mirrormanager mode=0755
 - name: checkout mirrorlist-server
   git:
     repo: https://github.com/adrianreber/mirrorlist-server.git
-    version: 3.0.2
+    version: 3.0.4
     dest: /srv/mirrorlist-server.git
   become: yes
   become_user: mirrormanager
   register: mirrorlist_server_downloaded
+- name: checkout scan-primary-mirror
+  git:
+    repo: https://github.com/adrianreber/scan-primary-mirror.git
+    version: 0.1.1
+    dest: /srv/scan-primary-mirror.git
+  become: yes
+  become_user: mirrormanager
+  register: scan_primary_mirror_downloaded
 - name: build generate-mirrorlist-cache
   command: "cargo build --release --bin generate-mirrorlist-cache"
   args:
@@ -172,6 +189,14 @@
   become_user: mirrormanager
   register: mirrorlist_server_built
   when: "mirrorlist_server_downloaded is changed"
+- name: build scan-primary-mirror
+  command: "cargo build --release"
+  args:
+    chdir: /srv/scan-primary-mirror.git
+  become: yes
+  become_user: mirrormanager
+  register: scan_primary_mirror_built
+  when: "scan_primary_mirror_downloaded is changed"
 - name: install generate-mirrorlist-cache
   copy:
     src: /srv/mirrorlist-server.git/target/release/generate-mirrorlist-cache
@@ -179,5 +204,14 @@
     remote_src: yes
     owner: root
     group: root
-    mode: 755
+    mode: 0755
   when: "mirrorlist_server_built is changed"
+- name: install scan-primary-mirror
+  copy:
+    src: /srv/scan-primary-mirror.git/target/release/scan-primary-mirror
+    dest: /usr/local/bin/scan-primary-mirror
+    remote_src: yes
+    owner: root
+    group: root
+    mode: 0755
+  when: "scan_primary_mirror_built is changed"

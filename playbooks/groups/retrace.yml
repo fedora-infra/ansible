@@ -66,6 +66,7 @@
     - import_role: name=hosts
     - import_role: name=openvpn/client
     - import_role: name=ipa/client
+      when: env != 'staging'
     - import_role: name=rkhunter
     - import_role: name=nagios_client
     - import_role: name=sudo

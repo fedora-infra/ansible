@@ -391,8 +391,14 @@ def _main():
     _arange_default("resalloc_pool_id", "RESALLOC_POOL_ID")
     _arange_default("resalloc_id_in_pool", "RESALLOC_ID_IN_POOL")
 
+    devel = True
+    if "prod" in args.name:
+        devel = False
+
+
     ip6_a, ip6_g = get_fedora_ipv6_address(args.resalloc_pool_id,
-                                           args.resalloc_id_in_pool)
+                                           args.resalloc_id_in_pool,
+                                           devel)
 
     spawner = LibvirtSpawner(args.resalloc_pool_id, log)
     spawner.vm_name = args.name

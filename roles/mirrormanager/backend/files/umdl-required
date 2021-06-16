@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# This script checks for changes on the primary mirror and
+# updates the database if changes are found. For most categories
+# the script first checks if a fullfiletimelist-<category>
+# exists and runs the actual primary mirror scan if that file
+# has changed.
+
 if [ $# -ne 2 ]; then
 	echo "Exactly two parameter needed. category and /path/to/logfile"
 	exit 1
@@ -9,12 +15,13 @@ exec >> $2
 exec 2>&1
 
 CURDATE=`date +%s`
-
+SCANNER="/usr/bin/mm2_update-master-directory-list"
 
 if [ "${1}" ==  "fedora" ]; then
 	CATEGORY="Linux"
 elif [ "${1}" ==  "epel" ]; then
 	CATEGORY="EPEL"
+	SCANNER="/usr/local/bin/scan-primary-mirror"
 elif [ "${1}" ==  "alt" ]; then
 	CATEGORY="Other"
 elif [ "${1}" ==  "fedora-secondary" ]; then
@@ -34,7 +41,7 @@ fi
 
 # FULLFILETIMELIST -> FFTL
 if [ "${1}" ==  "codecs" ]; then
-    /usr/local/bin/lock-wrapper umdl-${1} "/usr/bin/mm2_update-master-directory-list --category \"Fedora ${CATEGORY}\""
+    /usr/local/bin/lock-wrapper umdl-${1} "${SCANNER} --category \"Fedora ${CATEGORY}\""
     exit 0
 else
     FFTL="/srv/pub/${1}/fullfiletimelist-${1}"
@@ -55,7 +62,7 @@ fi
 echo -n "${FFTL} has changed since last run. Running umdl for Fedora ${CATEGORY} at "
 date
 
-/usr/local/bin/lock-wrapper umdl-${1} "/usr/bin/mm2_update-master-directory-list --category \"Fedora ${CATEGORY}\""
+/usr/local/bin/lock-wrapper umdl-${1} "${SCANNER} --category \"Fedora ${CATEGORY}\""
 
 if [ "$?" -eq "0" ]; then
 	# success! remember the date of this run

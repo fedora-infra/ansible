@@ -1,5 +1,5 @@
 ---
-- name: Install podman package
+- name: Install Podman package
   package:
     name: podman
     state: present
@@ -18,7 +18,7 @@
   - name: Get last subuid entry
     shell: |
       set -o pipefail
-      cut -d ':' -f2 /etc/subuid | sort | tail -1
+      sort -nrt: -k2 /etc/subuid | awk -F: 'NR == 1 { print $2 }'
     changed_when: false
     register: t_subuid
     args:
@@ -59,7 +59,7 @@
 
   when: '"retrace" not in retrace_subgid.stdout'
 
-- name: Start httpd afterretrace user modification
+- name: Start httpd after retrace user modification
   service:
     name: httpd
     state: started

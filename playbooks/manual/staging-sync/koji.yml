@@ -97,8 +97,8 @@
   - wipe-fs
 
   tasks:
-  - name: stop nfs
-    service: name=nfs state=stopped
+  - name: stop nfs-server
+    service: name=nfs-server state=stopped
   - name: unmount /mnt/fedora_koji/koji/ostree
     mount: name=/mnt/fedora_koji/koji/ostree state=unmounted
   - name: unmount /mnt/fedora_koji/koji/compose/ostree
@@ -124,8 +124,8 @@
 # TODO recreate directories under /mnt/koji/compose (which ones?) that composer expects to exist
   - name: symlink production volume
     file: src=/mnt/fedora_koji_prod/koji dest=/mnt/koji/vol/prod state=link
-  - name: restart nfs
-    service: name=nfs state=started
+  - name: restart nfs-server
+    service: name=nfs-server state=started
   - name: restart httpd
     service: name=httpd state=started
   - name: restart kojira

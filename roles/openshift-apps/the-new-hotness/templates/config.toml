@@ -13,7 +13,11 @@ topic_prefix = "org.fedoraproject.prod"
 {% endif %}
 passive_declares = true
 
+{% if env == "staging" %}
+callback = "hotness.hotness_consumer:HotnessConsumer"
+{% else %}
 callback = "hotness.consumers:BugzillaTicketFiler"
+{% endif %}
 
 # Note the double brackets below.
 # To add another binding, add another [[bindings]] section.
@@ -22,7 +26,9 @@ queue = "the-new-hotness{{ env_suffix }}"
 exchange = "amq.topic"
 routing_keys = [
   "org.release-monitoring.*.anitya.project.version.update",
+{% if not env == "staging" %}
   "org.release-monitoring.*.anitya.project.map.new",
+{% endif %}
   "org.fedoraproject.*.buildsys.task.state.change",
 ]
 
@@ -70,7 +76,7 @@ handlers = ["console"]
 # the-new-hotness consumer configuration
 [consumer_config]
 {% if env == "staging" %}
-mdapi_url = "https://mdapi.stg.fedoraproject.org/"
+mdapi_url = "https://mdapi.stg.fedoraproject.org"
 pdc_url = "https://pdc.stg.fedoraproject.org"
 dist_git_url = "https://src.stg.fedoraproject.org"
 {% else %}
@@ -87,8 +93,10 @@ read_timeout = 15
 # The number of times the-new-hotness should retry a network request that
 # that failed for any reason (e.g. read timeout, DNS error, etc)
 requests_retries = 3
+{% if not env == "staging" %}
 # If true, publish fedmsg messages instead of fedora-messaging messages
 legacy_messaging = false
+{% endif %}
 
 [consumer_config.bugzilla]
 enabled = true
@@ -147,6 +155,7 @@ opts = {scratch = true}
 priority = 30
 target_tag = "rawhide"
 
+{% if not env == "staging" %}
 [consumer_config.anitya]
 url = "https://release-monitoring.org"
 
@@ -154,3 +163,4 @@ url = "https://release-monitoring.org"
 backend = "dogpile.cache.dbm"
 expiration_time = 300
 arguments = {filename = "/var/tmp/the-new-hotness-cache.dbm"}
+{% endif %}
