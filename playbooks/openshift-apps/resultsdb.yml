@@ -30,6 +30,8 @@
 - name: make the app be real
   # hosts: os_masters[0]:os_masters_stg[0]
   hosts: os_masters_stg[0]
+  hosts: local
+  connection: local
   user: root
   gather_facts: False
 
@@ -104,7 +106,7 @@
       routename: api-pretty
       host: "resultsdb{{ env_suffix }}.fedoraproject.org"
       serviceport: api
-      servicename: resultsdb-web
+      servicename: resultsdb-api
 
     - role: openshift/rollout
       app: resultsdb
