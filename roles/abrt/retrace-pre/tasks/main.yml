@@ -18,8 +18,9 @@
       name: httpd
       state: stopped
 
-  # create uid - this is normaly done by retrace package
-  # but the package is not installed yet at this momement
+  # Create UID with our reserved UID. This is normaly done during the
+  # installation of the retrace-server package but it's not yet installed
+  # at this momement.
   - name: Ensure correct UID and home directory
     user:
       name: retrace
@@ -27,10 +28,15 @@
       home: "{{ retrace_user_home }}"
       create_home: yes
 
-  - name: Ensure correct GID
-    group:
-      name: retrace
-      gid: "{{ retrace_user_uid_gid }}"
+  # NOTE: We do not attempt to change the GID here if it's incorrect
+  # since groups are not managed locally (via /etc/group) on these servers.
+  # TODO: Find the correct way to do this and if it's even necessary.
+  # - name: Ensure correct GID
+  #   group:
+  #     name: retrace
+  #     gid: "{{ retrace_user_uid_gid }}"
+  #     system: yes
+  #     state: present
 
   - name: Restart httpd service after modifications are done
     service:
