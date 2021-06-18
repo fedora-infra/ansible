@@ -5,15 +5,15 @@
     cron:
       name: "backup database"
       user: faf
-      job: >
+      job: >-
         ( pg_dump --format=custom --file={{ faf_backup_dir }}/backup-$(date '+\%F').dump faf )
-          >> /var/log/faf/db_backup.log 2>&1
+        >> /var/log/faf/db_backup.log 2>&1
       special_time: daily
       state: present
 
   - name: Delete old database backups
     cron:
-      name: "delete database backups older than {{ faf_old_backup_age }} days"
+      name: "delete old database backups"
       user: faf
       job: "find {{ faf_backup_dir }} -mtime {{ faf_old_backup_age }} -type f -delete"
       special_time: daily
@@ -39,9 +39,9 @@
     cron:
       name: "cron for probable fixes for f{{ item }}"
       user: faf
-      job: >
+      job: >-
         faf mark-probably-fixed -o fedora --opsys-release {{ item }}
-          >> /var/log/faf/mark-probably-fixed-f{{ item }}.log 2>&1
+        >> /var/log/faf/mark-probably-fixed-f{{ item }}.log 2>&1
       special_time: daily
       state: present
     loop: "{{ rs_internal_fedora_vers }}"
@@ -91,6 +91,7 @@
 - name: Cron job for deleting old archives
   cron:
     name: "rotate_faf_archives"
-    special_time: "daily"
+    user: faf
     job: "find '/srv/faf/reports/archive/' -type f -name '*.tar.xz' -mtime '{{archive_age}}' -delete"
-    user: "faf"
+    special_time: daily
+    state: present
