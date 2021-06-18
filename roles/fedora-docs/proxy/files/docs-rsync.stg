@@ -1,7 +1,7 @@
 #!/bin/sh                                                                                  
 
-/usr/bin/rsync -aSHPv --delete --delete-excluded --exclude=.git/objects/ --exclude='copying-tmp/' sundries01::docs/ /srv/web/docs.fedoraproject.org/
-/usr/bin/rsync -aSHPv --delete --delete-excluded --exclude=.git/objects/ --exclude='copying-tmp/' sundries01::docs-redirects/ /srv/web/docs-redirects/
+/usr/bin/rsync --timeout 300 -aH --link-dest /srv/web/docs-redirects/ --link-dest /srv/web/docs-old.fedoraproject.org/public_html/ --link-dest /srv/web/docs-combined/  --delete --delete-excluded --delete-after --exclude=.git --exclude='copying.tmp/' sundries01::docs/ /srv/web/docs.fedoraproject.org/
+/usr/bin/rsync --timeout 300 -aH --link-dest /srv/web/docs.fedoraproject.org --link-dest /srv/web/docs-old.fedoraproject.org/public_html/ --link-dest /srv/web/docs-combined/  --delete --delete-excluded --delete-after --exclude=.git --exclude='copying.tmp/' sundries01::docs-redirects/ /srv/web/docs-redirects/
 
 # build the combined docs tree. 
 # See https://pagure.io/fedora-infrastructure/issue/7130
