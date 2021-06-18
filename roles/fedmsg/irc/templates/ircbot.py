@@ -573,7 +573,7 @@ config = dict(
                     '^((?!(pagure)).)*$',
                 ],
                 body=['^((?!(pagure.io\/koji)).)*$',
-                      "u'fullname': u'koji'"],
+                ],
             ),
         ),
 
