@@ -96,7 +96,14 @@
   tags:
   - packages
 
-- name: Install packages
+- name: Install packages used by tests
+  package:
+    name: ['perl-JSON', 'perl-REST-Client']
+    state: latest
+  tags:
+  - packages
+
+- name: Install packages used by ansible plays
   package:
     name: ['python3-libselinux', 'git']
     state: present
