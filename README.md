@@ -102,3 +102,45 @@ Contributor Agreement. If no license is specified, the MIT license is used, othe
 the contribution is under the specified acceptable Fedora License.
 See https://fedoraproject.org/wiki/Legal:Fedora_Project_Contributor_Agreement
 for more information.
+
+Contributing Pull Requests
+--------------------------
+
+If found a way to improve this repository or fix an issue found in our
+infrastructure tracker (see https://pagure.io/fedora-infrastructure/issues)
+open a pull-request.
+
+You either should have capability to run the playbooks after they have been reviewed,
+and merged or find the person responsible and work with them to make sure the changes
+will be aplied afterwards. 
+
+We are currently working on a simple to use list of Point Of Contanct people for the applications
+here, untill it is done, you can, look at people that recently edited the ansible files,
+or if you belong to sysadmin group, view the /etc/ansible_utils/rbac.yaml located on batcave01,
+where you can see the groups of people that have capabilities to run the relevant playbooks.
+
+For example, to upgrade Release Monitoring, you need to run playbook openshift-apps/release-monitoring.yaml.
+People in sysadmin-releasemonitoring have that capability, and you cand find the members in https://accounts.fedoraproject.org/group/sysadmin-releasemonitoring/
+
+If the application in question is not on the critical path it should be sufficient,
+if person responsible for the application reviews the PR.
+
+If the files in question are on the critical path, that are necessary for functioning packager workflow,
+at least two different people should review the PR.
+
+If there is any risk at all, that the application of the changes would induce downtime,
+work closely with other to ensure that the downtime is properly scheduled:
+
+- there is an issue in https://pagure.io/fedora-infrastructure/issues specifying the downtime
+- there is an email sent to the devel-list
+- https://status.fedoraproject.org is updated (see https://fedora-infra-docs.readthedocs.io/en/latest/sysadmin-guide/sops/status-fedora.html)
+
+Applications on critical path: pagure, mirrormanager, toddlers, bodhi, noggin, mdapi, rpmautospec, 
+pagure-dist-git, monitor-gating, mirror_from_pagure, fedora-messaging, dist-git, PDC/FPDC, FMN, sigul
+robosignatory, tag2distrepo, ci-resultsdb-listener, stylo, mirrorlist
+resultsdb, Nagios, koschei, wiki / mediawiki, wiki / moin, waiverdb, 
+greenwave, ODCS, Mailman3 / HK, mailman 2, OSBS, pungi, koji, MBS, 
+IPA, rabbitmq, geoip,ipsilon
+
+We are rewiewing PR's during the morning EU standup (https://board.net/p/fedora-infra-daily),
+so feel free to jump in and discuss.
