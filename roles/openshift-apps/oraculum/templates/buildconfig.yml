@@ -19,9 +19,14 @@ spec:
     type: Source
     sourceStrategy:
       from:
+{% if env == 'staging' %}
+        kind: DockerImage
+        name: registry.access.redhat.com/ubi8/python-39
+{% else %}
         kind: ImageStreamTag
         namespace: openshift
         name: python:3.6
+{% endif %}
   triggers:
   - type: ConfigChange
   - type: ImageChange
