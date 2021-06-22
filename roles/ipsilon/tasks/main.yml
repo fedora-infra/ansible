@@ -1,6 +1,3 @@
-# NOTE: this is not used anymore since Ipsilon has been moved to OpenShift.
-# See playbooks/openshift-apps/ipsilon.yml and roles/openshift-apps/ipsilon/
-
 ---
 # Configuration for the ipsilon webapp
 
@@ -10,7 +7,6 @@
   - ipsilon
   - ipsilon-openid
   - ipsilon-saml2
-  # - ipsilon-persona
   - ipsilon-openidc
   - ipsilon-authgssapi
   - ipsilon-authform
@@ -28,83 +24,6 @@
   tags:
   - ipsilon
   - packages
-
-#- name: Copy OpenID API extension
-#  copy: src=api.py
-#        dest=/usr/lib/python2.7/site-packages/ipsilon/providers/openid/extensions/api.py
-#        owner=root group=root mode=0644
-#  notify:
-#  - reload apache
-#  tags:
-#  - ipsilon
-
-#- name: Copy extended infofas
-#  copy: src=infofas.py
-#        dest=/usr/lib/python2.7/site-packages/ipsilon/info/infofas.py
-#        owner=root group=root mode=0644
-#  notify:
-#  - reload apache
-#  tags:
-#  - ipsilon
-
-#- name: Copy OpenID Connect scope registrations
-#  copy: src=oidc_scopes/{{item}}.py
-#        dest=/usr/lib/python2.7/site-packages/ipsilon/providers/openidc/plugins/{{item}}.py
-#        owner=root group=root mode=0644
-#  with_items:
-#  - account-scopes
-#  - mbs
-#  - beaker
-#  - waiverdb
-#  - odcs
-#  - wiki
-#  - src
-#  - fpdc
-#  notify:
-#  - reload apache
-#  tags:
-#  - ipsilon
-#  - ipsilon/oidc_scopes
-
-#- name: Copy OpenID Connect scope registrations (STAGING)
-#  copy: src=oidc_scopes/{{item}}.py
-#        dest=/usr/lib/python2.7/site-packages/ipsilon/providers/openidc/plugins/{{item}}.py
-#        owner=root group=root mode=0644
-#  when: env == "staging"
-#  with_items:
-#  - 
-#  notify:
-#  - reload apache
-#  tags:
-#  - ipsilon
-#  - ipsilon/oidc_scopes
-
-#- name: Apply hotfix for taiga to get POST results
-#  copy: src=openid_server.py
-#        dest=/usr/lib/python2.7/site-packages/openid/server/server.py
-#        owner=root group=root mode=0644
-#  notify:
-#  - reload apache
-#  tags:
-#  - ipsilon
-
-# - name: copy ipsilon templates
-#   copy: src=templates/
-#         dest=/usr/share/ipsilon/templates-fedora
-#         owner=ipsilon group=ipsilon mode=0666
-#   notify:
-#   - reload apache
-#   tags:
-#   - ipsilon
-# 
-# - name: copy ipsilon ui assets
-#   copy: src=ui-fedora/
-#         dest=/usr/share/ipsilon/ui/fedora
-#         owner=ipsilon group=ipsilon mode=0666
-#   notify:
-#   - reload apache
-#   tags:
-#   - ipsilon
 
 - name: Download Fedora-specific code
   git:
@@ -202,52 +121,6 @@
   notify:
   - restart apache
 
-# - name: Create Ipsilon config symlink
-#   file:
-#     dest: /var/lib/ipsilon/ipsilon.conf
-#     src: /etc/ipsilon/root/ipsilon.conf
-#     state: link
-#   tags:
-#   - ipsilon
-#   notify:
-#   - reload apache
-
-# - name: create wellknown directory
-#   file: path=/etc/ipsilon/root/wellknown state=directory
-#         owner=ipsilon group=ipsilon mode=0755
-#   tags:
-#   - ipsilon
-#   notify:
-#   - reload apache
-
-# - name: copy persona private key
-#   copy: src={{ private }}/files/ipsilon/persona.key dest=/etc/ipsilon/root/persona.key
-#         owner=ipsilon group=ipsilon mode=0600
-#   when: env != "staging"
-#   tags:
-#   - ipsilon
-# 
-# - name: copy persona public key
-#   copy: src=browserid dest=/etc/ipsilon/root/wellknown/browserid
-#         owner=ipsilon group=ipsilon mode=0644
-#   when: env != "staging"
-#   tags:
-#   - ipsilon
-# 
-# - name: copy persona STG private key
-#   copy: src={{ private }}/files/ipsilon/persona.stg.key dest=/etc/ipsilon/root/persona.stg.key
-#         owner=ipsilon group=ipsilon mode=0600
-#   when: env == "staging"
-#   tags:
-#   - ipsilon
-# 
-# - name: copy persona STG public key
-#   copy: src=browserid.stg dest=/etc/ipsilon/root/wellknown/browserid
-#         owner=ipsilon group=ipsilon mode=0644
-#   when: env == "staging"
-#   tags:
-#   - ipsilon
-
 - name: copy OIDC private key
   copy:
     src: "{{ private }}/files/ipsilon/openidc{{ env_suffix }}.key"
@@ -257,13 +130,6 @@
     mode: 0600
   tags:
   - ipsilon
-
-# - name: copy OIDC STG private key
-#   copy: src={{ private }}/files/ipsilon/openidc.stg.key dest=/etc/ipsilon/root/openidc.stg.key
-#         owner=ipsilon group=ipsilon mode=0600
-#   when: env == "staging"
-#   tags:
-#   - ipsilon
 
 - name: create SAML2 dir
   file:
