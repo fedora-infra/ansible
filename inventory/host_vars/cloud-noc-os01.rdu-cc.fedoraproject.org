@@ -14,6 +14,9 @@ dns2: 8.8.4.4
 ks_url: http://infrastructure.fedoraproject.org/repo/rhel/ks/kvm-rhel-8-ext
 ks_repo: http://infrastructure.fedoraproject.org/repo/rhel/RHEL8-x86_64/
 
+tcp_ports: ['67', '68']
+udp_ports: ['67','68','69']
+
 vpn: true
 has_ipv4: yes
 eth0_ipv4: 8.43.85.49
