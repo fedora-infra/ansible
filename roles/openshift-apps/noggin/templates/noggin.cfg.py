@@ -38,6 +38,13 @@ THEME = "{{ noggin_theme }}"
 # Auto-gen avatar type to show if no avatar set
 AVATAR_DEFAULT_TYPE = "retro"
 
+
+# Don't allow regsitration with these email domains
+MAIL_DOMAIN_BLOCKLIST = [
+    "fedoraproject.org",
+    "centosproject.org",
+]
+
 # Those file should be mounted from OpenShift secrets
 FREEIPA_ADMIN_PASSWORD = from_file('/etc/noggin-secrets/ipa-admin')
 FERNET_SECRET = from_file('/etc/noggin-secrets/fernet').encode('utf-8')
