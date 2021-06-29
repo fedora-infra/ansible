@@ -87,6 +87,34 @@ copr_hv_x86_64_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
 {% endif %}
 {% endfor %}
 
+# x86_64 hypervisors
+{% for hv in ["01"] %}
+{% if "ppc64le_hypervisor_" + hv in builders %}
+
+copr_hv_ppc64le_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
+    max: {{ builders["ppc64le_hypervisor_" + hv]["ppc64le"][0] }}
+    max_starting: {{ builders["ppc64le_hypervisor_" + hv]["ppc64le"][1] }}
+    max_prealloc: {{ builders["ppc64le_hypervisor_" + hv]["ppc64le"][2] }}
+    tags:
+    - copr_builder
+    - arch_ppc64le
+    - arch_ppc64le_native
+    - hypervisor
+    - hypervisor_ppc64le
+    - hypervisor_ppc64le_{{ hv }}
+    cmd_new: "/var/lib/resallocserver/provision/libvirt-new --swap-vol-size 168"
+    cmd_delete: "/var/lib/resallocserver/provision/libvirt-new --swap-vol-size 168"
+    cmd_delete: "/var/lib/resallocserver/provision/libvirt-delete"
+    cmd_livecheck: "/var/lib/resallocserver/resalloc_provision/vm-check"
+    cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
+    livecheck_period: 180
+    reuse_opportunity_time: 180
+    reuse_max_count: 8
+    reuse_max_time: 1800
+
+{% endif %}
+{% endfor %}
+
 {% macro hw_aarch64(id, inst, max, max_starting, max_prealloc) %}
 aarch64_{{ id }}_{{ inst }}:
     max: 0

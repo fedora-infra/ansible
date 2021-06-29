@@ -20,18 +20,47 @@ import argparse
 DEFAULT_POOL = 'images'
 VOLUMES = {
     'x86_64': '{{ copr_builder_images.hypervisor.x86_64 }}',
+    'ppc64le': '{{ copr_builder_images.hypervisor.ppc64le }}',
 }
 
 
-def get_hv_id_from_pool_id(pool_id):
+def get_hv_identification_from_pool_id(pool_id):
     """ Get unique ID of the hypervisor """
-    pfx = "copr_hv_x86_64_"
-    if pool_id.startswith(pfx):
-        pool_id = pool_id.replace(pfx, "")
-        pool_id = pool_id.replace("_dev", "")
-        pool_id = pool_id.replace("_prod", "")
-        pool_id = pool_id.replace("_stg", "")
-        return pool_id
+    if pool_id.startswith("copr_hv_x86_64_01"):
+        return (
+            0,
+            "qemu+ssh://copr@vmhost-x86-copr01"
+            ".rdu-cc.fedoraproject.org/system",
+            "x86_64",
+        )
+    if pool_id.startswith("copr_hv_x86_64_02"):
+        return (
+            1,
+            "qemu+ssh://copr@vmhost-x86-copr02"
+            ".rdu-cc.fedoraproject.org/system",
+            "x86_64",
+        )
+    if pool_id.startswith("copr_hv_x86_64_03"):
+        return (
+            2,
+            "qemu+ssh://copr@vmhost-x86-copr03"
+            ".rdu-cc.fedoraproject.org/system",
+            "x86_64",
+        )
+    if pool_id.startswith("copr_hv_x86_64_04"):
+        return (
+            3,
+            "qemu+ssh://copr@vmhost-x86-copr04"
+            ".rdu-cc.fedoraproject.org/system",
+            "x86_64",
+        )
+    if pool_id.startswith("copr_hv_ppc64le_01"):
+        return (
+            4,
+            "qemu+ssh://copr@vmhost-p08-copr01"
+            ".rdu-cc.fedoraproject.org/system",
+            "ppc64le",
+        )
     raise Exception("can't convert pool_id to hv ID")
 
 
@@ -54,11 +83,9 @@ class LibvirtSpawner:
     playbook = "{{ provision_directory }}/libvirt-provision.yml"
 
     def __init__(self, resalloc_pool_id, log):
-        hv_id = get_hv_id_from_pool_id(resalloc_pool_id)
-        self.connection = (
-            f"qemu+ssh://copr@vmhost-x86-copr{hv_id}"
-            ".rdu-cc.fedoraproject.org/system")
-        self.arch = "x86_64"
+        _, self.connection, self.arch = get_hv_identification_from_pool_id(
+            resalloc_pool_id)
+
         self.workdir = tempfile.mkdtemp()
         self.script_path = os.path.dirname(os.path.realpath(__file__))
         self.log = log
@@ -358,7 +385,7 @@ def get_fedora_ipv6_address(pool_id, id_in_pool, dev=False):
 
     offset = 0
     # 01 => 0, 02 => 1, ...
-    hv_id = int(get_hv_id_from_pool_id(pool_id)) - 1
+    hv_id, _, _ = get_hv_identification_from_pool_id(pool_id)
     # we have block of 256 ipv6 addresses for builder, and 4 hypervisors
     block = int(256 / 4)
     # give 48 IPs to each hv (32 prod, some dev), currently 4*48=192 ips
