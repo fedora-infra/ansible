@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  name: "resultsdb-ci-listener"
+  labels:
+    app: resultsdb-ci-listener
+spec:
+  replicas: 1
+  selector:
+    app: resultsdb-ci-listener
+  strategy:
+    type: Rolling
+  template:
+    metadata:
+      labels:
+        app: resultsdb-ci-listener
+    spec:
+      containers:
+        - name: listener
+{% if env == 'staging' %}
+          image: "{{ stg_resultsdb_ci_listener_image }}"
+{% else %}
+          image: "{{ prod_resultsdb_ci_listener_image }}"
+{% endif %}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5001
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/ci-resultsdb-listener
+              readOnly: true
+{% if deployment_type not in ['local', 'dev'] %}
+            - name: fedora-messaging-ca-volume
+              mountPath: /etc/pki/rabbitmq/ca
+              readOnly: true
+            - name: fedora-messaging-key-volume
+              mountPath: /etc/pki/rabbitmq/key
+              readOnly: true
+            - name: fedora-messaging-crt-volume
+              mountPath: /etc/pki/rabbitmq/crt
+              readOnly: true
+            - name: fedora-messaging-config-volume
+              mountPath: /etc/fedora-messaging
+              readOnly: true
+{% endif %}
+          livenessProbe:
+            timeoutSeconds: 1
+            initialDelaySeconds: 30
+            exec:
+              command:
+                - ps
+                - -C
+                - fedora-messaging
+          resources:
+            limits:
+              memory: 500Mi
+              cpu: 0.3
+      volumes:
+        - name: config-volume
+          configMap:
+            name: resultsdb-ci-listener-cfg
+{% if deployment_type not in ['local', 'dev']%}
+        - name: fedora-messaging-config-volume
+          configMap:
+            name: fedora-messaging-configmap
+        - name: fedora-messaging-ca-volume
+          secret:
+            secretName: resultsdb-ci-listener-fedora-messaging-key
+        - name: fedora-messaging-crt-volume
+          secret:
+            secretName: resultsdb-ci-listener-fedora-messaging-crt
+        - name: fedora-messaging-key-volume
+          secret:
+            secretName: resultsdb-ci-listener-fedora-messaging-key
+{% endif %}
+  triggers:
+    - type: ConfigChange
