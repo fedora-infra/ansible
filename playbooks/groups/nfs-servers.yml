@@ -21,6 +21,7 @@
   - nagios_client
   - collectd/base
   - sudo
+  - openvpn/client
 
   tasks:
   - import_tasks: "{{ tasks_path }}/motd.yml"
@@ -30,7 +31,7 @@
 
 ## This should be in a different playbook.
 - name: Deal with drive items on storinator01
-  hosts: storinator01.fedorainfracloud.org
+  hosts: storinator01.rdu-cc.fedoraproject.org
   user: root
   gather_facts: True
   vars_files:
@@ -119,128 +120,8 @@
         - drives
         - copr
 
-    - name: create 1 GB communishift logical volumes
-      lvol: vg=VG_nfs lv=openshift-01gb-{{item}} size=1g shrink=no
-      with_items: ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20"]
-      tags:
-      - drives
-
-    - name: Create FS for 1 GB communishift logical volules
-      filesystem: fstype=xfs dev=/dev/VG_nfs/openshift-01gb-{{item}}
-      with_items: ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20"]
-      tags:
-      - drives
-
-    - name: Create openshift 1GB tree directories
-      file: path=/srv/nfs/openshift-01gb-{{item}} state=directory owner=root group=root
-      with_items: ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20"]
-      tags:
-      - drives
-
-    - name: Mount openshift 1GB tree directories
-      mount: name=/srv/nfs/openshift-01gb-{{item}} src=/dev/mapper/VG_nfs-openshift--01gb--{{item}} fstype=xfs state=mounted
-      with_items: ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20"]
-      tags:
-      - drives
-
-    - name: create 5 GB communishift logical volumes
-      lvol: vg=VG_nfs lv=openshift-05gb-{{item}} size=5g shrink=no
-      with_items: ["00","01","02","03","04","05","06","07","08","09"]
-      tags:
-      - drives
-
-    - name: Create FS for 5 GB communishift logical volules
-      filesystem: fstype=xfs dev=/dev/VG_nfs/openshift-05gb-{{item}}
-      with_items: ["00","01","02","03","04","05","06","07","08","09"]
-      tags:
-      - drives
-
-    - name: Create openshift 5GB tree directories
-      file: path=/srv/nfs/openshift-05gb-{{item}} state=directory owner=root group=root
-      with_items: ["00","01","02","03","04","05","06","07","08","09"]
-      tags:
-      - drives
-
-    - name: Mount openshift 5GB tree directories
-      mount: name=/srv/nfs/openshift-05gb-{{item}} src=/dev/mapper/VG_nfs-openshift--05gb--{{item}} fstype=xfs state=mounted
-      with_items: ["00","01","02","03","04","05","06","07","08","09"]
-      tags:
-      - drives
-
-    - name: create 10 GB communishift logical volumes
-      lvol: vg=VG_nfs lv=openshift-10gb-{{item}} size=10g shrink=no
-      with_items: ["00","01","02","03","04","05","06","07","08","09"]
-      tags:
-      - drives
-
-    - name: Create FS for 10 GB communishift logical volules
-      filesystem: fstype=xfs dev=/dev/VG_nfs/openshift-10gb-{{item}}
-      with_items: ["00","01","02","03","04","05","06","07","08","09"]
-      tags:
-      - drives
-
-    - name: Create openshift 10GB tree directories
-      file: path=/srv/nfs/openshift-10gb-{{item}} state=directory owner=root group=root
-      with_items: ["00","01","02","03","04","05","06","07","08","09"]
-      tags:
-      - drives
-
-    - name: Mount openshift 10GB tree directories
-      mount: name=/srv/nfs/openshift-10gb-{{item}} src=/dev/mapper/VG_nfs-openshift--10gb--{{item}} fstype=xfs state=mounted
-      with_items: ["00","01","02","03","04","05","06","07","08","09"]
-      tags:
-      - drives
-
-    - name: create 25 GB communishift logical volumes
-      lvol: vg=VG_nfs lv=openshift-25gb-{{item}} size=25g shrink=no
-      with_items: ["00","01","02","03","04","05","06","07","08","09"]
-      tags:
-      - drives
-
-    - name: Create FS for 25 GB communishift logical volules
-      filesystem: fstype=xfs dev=/dev/VG_nfs/openshift-25gb-{{item}}
-      with_items: ["00","01","02","03","04","05","06","07","08","09"]
-      tags:
-      - drives
-
-    - name: Create openshift 25GB tree directories
-      file: path=/srv/nfs/openshift-25gb-{{item}} state=directory owner=root group=root
-      with_items: ["00","01","02","03","04","05","06","07","08","09"]
-      tags:
-      - drives
-
-    - name: Mount openshift 25GB tree directories
-      mount: name=/srv/nfs/openshift-25gb-{{item}} src=/dev/mapper/VG_nfs-openshift--25gb--{{item}} fstype=xfs state=mounted
-      with_items: ["00","01","02","03","04","05","06","07","08","09"]
-      tags:
-      - drives
-
-    - name: create 100 GB communishift logical volumes
-      lvol: vg=VG_nfs lv=openshift-100gb-{{item}} size=100g shrink=no
-      with_items: ["00","01"]
-      tags:
-      - drives
-
-    - name: Create FS for 100 GB communishift logical volules
-      filesystem: fstype=xfs dev=/dev/VG_nfs/openshift-100gb-{{item}}
-      with_items: ["00","01"]
-      tags:
-      - drives
-
-    - name: Create openshift 100GB tree directories
-      file: path=/srv/nfs/openshift-100gb-{{item}} state=directory owner=root group=root
-      with_items: ["00","01"]
-      tags:
-      - drives
-
-    - name: Mount openshift 100GB tree directories
-      mount: name=/srv/nfs/openshift-100gb-{{item}} src=/dev/mapper/VG_nfs-openshift--100gb--{{item}} fstype=xfs state=mounted
-      with_items: ["00","01"]
-      tags:
-      - drives
-
 - name: Deal with NFS
-  hosts: storinator01.fedorainfracloud.org
+  hosts: storinator01.rdu-cc.fedoraproject.org
   user: root
   gather_facts: True
   vars_files:
