@@ -7,13 +7,17 @@ FAS_PASSWORD = "{{ blockerbugs_fas_password }}"
 FAS_FLASK_COOKIE_REQUIRES_HTTPS = False
 FAS_CHECK_CERT = False
 PRODUCTION = False
-TESTING = True
+FAS_ENABLED = True
 SQLALCHEMY_TRACK_MODIFICATIONS = False
-{% endif %}
+BUGZILLA_URL = 'https://partner-bugzilla.redhat.com/'
+BODHI_URL = 'https://bodhi.stg.fedoraproject.org/'
+KOJI_URL = 'https://partner-bugzilla.redhat.com/'
+{% else %}
 BUGZILLA_URL = '{{ blockerbugs_bugzilla_url }}'
 BODHI_URL = '{{ blockerbugs_bodhi_url }}'
-BUGZILLA_XMLRPC = BUGZILLA_URL + 'xmlrpc.cgi'
 KOJI_URL = "{{ blockerbugs_bugzilla_url }}"
+{% endif %}
+BUGZILLA_XMLRPC = BUGZILLA_URL + 'xmlrpc.cgi'
 FILE_LOGGING = False
 SYSLOG_LOGGING = True
 STREAM_LOGGING = True
