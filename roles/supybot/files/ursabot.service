@@ -3,6 +3,7 @@ Description=ursabot irc bot
 After=network.target
 
 [Service]
+Environment=FEDORA_MESSAGING_CONF=/etc/fedora-messaging/fedora.stg.toml
 Type=simple
 User=daemon
 Group=daemon
