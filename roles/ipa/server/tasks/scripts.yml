@@ -70,3 +70,43 @@
   tags:
   - ipa/server
   - otp_script
+
+
+#
+# Collectd statistics plugin
+# Requires the stage-users service to have been defined (above) with the
+# corresponding permissions. That's why I'm keeping this block here and not as
+# a subrole of the collectd role.
+#
+- name: Install and setup collectd-ipa
+  block:
+  - name: install collectd-ipa
+    package:
+      state: present
+      name: python3-collectd-ipa
+    tags:
+    - packages
+    - collectd
+
+  - name: install collectd ipa config
+    template:
+      src: "ipa.collectd.conf.j2"
+      dest: "/etc/collectd.d/ipa.conf"
+      owner: root
+      group: root
+      mode: 0640
+    tags:
+    - collectd
+    - config
+    notify: restart collectd
+
+  - name: Let collectd talk to the RabbitMQ management interface
+    seboolean:
+      name: collectd_tcp_network_connect
+      state: yess
+      persistent: yes
+    tags:
+    - collectd
+  # Only collect stats on one server
+  run_once: yes
+  delegate_to: "ipa01{{ env_suffix }}.iad2.fedoraproject.org"
