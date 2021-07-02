@@ -1,11 +1,11 @@
 ---
-vmhost: cloudvmhost-aarch64-01.fedorainfracloud.org
-eth0_ip: 38.145.48.53
+vmhost: vmhost-a64-cc01.rdu-cc.fedoraproject.org
+eth0_ip: 8.43.85.53
 nm: 255.255.254.0
-gw: 38.145.49.254
+gw: 8.43.85.254
 dns: 8.8.8.8
-ks_url: http://209.132.181.6/repo/rhel/ks/kvm-fedora-31-ext-armv7
-ks_repo: http://209.132.181.6/pub/fedora/linux/releases/31/Server/armhfp/os/
+ks_url: http://38.145.60.16/repo/rhel/ks/kvm-fedora
+ks_repo: http://38.145.60.16/pub/fedora/linux/releases/34/Server/armhfp/os/
 
 virt_install_command: "{{ virt_install_command_armv7_one_nic_unsafe }}"
 
