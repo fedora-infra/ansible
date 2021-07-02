@@ -28,7 +28,7 @@ A special case of this problem affects Badges awarded for things you did before 
 Who made it?
 ------------
 
-Lots of people have contributed to the `frontend <https://github.com/fedora-infra/tahrir/graphs/contributors>`_ and the `backend <https://github.com/fedora-infra/fedbadges/graphs/contributors>`_. Various people have also `contributed Badge ideas, art and definitions <https://fedorahosted.org/fedora-badges/report/18>`_. We hang out in ``#fedora-apps`` on freenode, we have a `mailing list <https://lists.fedoraproject.org/mailman/listinfo/badges>`_, and a `wiki SIG page <https://fedoraproject.org/wiki/Open_Badges>`_.
+Lots of people have contributed to the `frontend <https://github.com/fedora-infra/tahrir/graphs/contributors>`_ and the `backend <https://github.com/fedora-infra/fedbadges/graphs/contributors>`_. Various people have also `contributed Badge ideas, art and definitions <https://fedorahosted.org/fedora-badges/report/18>`_. We hang out in ``#fedora-apps`` on `libera <https://libera.chat>`_, we have a `mailing list <https://lists.fedoraproject.org/mailman/listinfo/badges>`_, and a `wiki SIG page <https://fedoraproject.org/wiki/Open_Badges>`_.
 
 Can I submit new badge ideas and help build badges?
 ---------------------------------------------------
