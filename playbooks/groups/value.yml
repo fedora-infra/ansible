@@ -19,10 +19,7 @@
       when: env != "staging" }
   - ipa/client
   - { role: keytab/service, 
-      owner_user: root, 
-      owner_group: root, 
-      service: value02, 
-      host: "value02.stg.fedoraproject.org", 
+      service: ursabot, 
       when: inventory_hostname.startswith('value02.stg') }
   - collectd/base
   - apache
