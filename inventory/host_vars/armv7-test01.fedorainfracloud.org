@@ -7,6 +7,8 @@ dns: 8.8.8.8
 ks_url: http://38.145.60.16/repo/rhel/ks/kvm-fedora
 ks_repo: http://38.145.60.16/pub/fedora/linux/releases/34/Server/armhfp/os/
 
+libdir: /usr/lib
+
 virt_install_command: "{{ virt_install_command_armv7_one_nic_unsafe }}"
 
 volgroup: /dev/vg_guests
