@@ -26,14 +26,14 @@ def process_args():
     )
     parser.add_argument(
         '-n', '--nick', default=None, dest='nick',
-        help="NICK to use when connecting to freenode.",
+        help="NICK to use when connecting to irc.",
     )
     parser.add_argument(
         '-d', '--debug', default=False, action='store_true',
         help='Print out debug information.', dest='debug',
     )
     parser.add_argument(
-        '-H', '--host', default='irc.freenode.net',
+        '-H', '--host', default='irc.libera.chat',
         help='Host to connect to.', dest='host',
     )
     parser.add_argument(
