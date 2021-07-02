@@ -18,12 +18,12 @@
   - { role: openvpn/client,
       when: env != "staging" }
   - ipa/client
-  - role: keytab/service
-      owner_user: root
-      owner_group: root
-      service: value02
-      host: "value02.stg.fedoraproject.org"
-      when: inventory_hostname.startswith('value02.stg')
+  - { role: keytab/service, 
+      owner_user: root, 
+      owner_group: root, 
+      service: value02, 
+      host: "value02.stg.fedoraproject.org", 
+      when: inventory_hostname.startswith('value02.stg') }
   - collectd/base
   - apache
   - { role: fedmsg/base,
