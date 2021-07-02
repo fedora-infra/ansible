@@ -538,6 +538,59 @@
   when: ipa_initial
 
 
+# Let people in the sysadmin-main group manage registering users (Stage Users)
+# through Noggin:
+
+- name: Create the stage users managers privilege
+  command:
+    argv:
+      - ipa
+      - privilege-add
+      - Stage User Managers
+      - --desc=Manage registering users in Noggin
+  tags:
+  - ipa/server
+  - config
+  when: ipa_initial
+  register: output
+  changed_when: "'already exists' not in output.stderr"
+  failed_when: "'already exists' not in output.stderr and output.rc != 0"
+
+- name: Setup the stage users managers privilege
+  command:
+    argv:
+      - ipa
+      - privilege-add-permission
+      - Stage User Managers
+      - "--permissions=System: Read Stage Users"
+      - "--permissions=System: Modify Stage User"
+      - "--permissions=System: Remove Stage User"
+  tags:
+  - ipa/server
+  - config
+  when: ipa_initial
+  register: output
+  changed_when: "'Number of permissions added 0' not in output.stdout"
+  failed_when: "'Number of permissions added 0' not in output.stdout and output.rc != 0"
+
+- name: Create the stage users managers role
+  ipa_role:
+    name: "Stage User Managers"
+    description: "Manage registering users in Noggin"
+    privilege:
+    - "Stage User Managers"
+    group:
+    - sysadmin-main
+    ipa_host: "{{ inventory_hostname }}"
+    ipa_user: admin
+    ipa_pass: "{{ipa_admin_password}}"
+    validate_certs: no
+  tags:
+  - ipa/server
+  - config
+  when: ipa_initial
+
+
 - name: Destroy admin ticket
   command: kdestroy -A
   tags:
