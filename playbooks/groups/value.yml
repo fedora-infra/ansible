@@ -19,6 +19,8 @@
       when: env != "staging" }
   - ipa/client
   - { role: keytab/service, 
+      owner_user: daemon,
+      owner_group: daemon,
       service: ursabot, 
       when: inventory_hostname.startswith('value02.stg') }
   - collectd/base
