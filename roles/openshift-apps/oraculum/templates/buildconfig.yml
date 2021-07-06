@@ -44,6 +44,7 @@ spec:
       ref: 'master'
 {% else %}
       ref: 'prod'
+{% endif %}
   strategy:
     type: Docker
     dockerStrategy:
