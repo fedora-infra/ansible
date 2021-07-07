@@ -14,6 +14,7 @@ dns: 10.3.163.33
 nm: 255.255.255.0
 virt_install_command: "{{ virt_install_command_s390x_one_nic_unsafe }}"
 
+ansible_ifcfg_blocklist: True
 createrepo: False
 host_group: kojibuilder
 
