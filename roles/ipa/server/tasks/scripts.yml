@@ -103,7 +103,7 @@
   - name: Let collectd talk to the RabbitMQ management interface
     seboolean:
       name: collectd_tcp_network_connect
-      state: yess
+      state: yes
       persistent: yes
     tags:
     - collectd
