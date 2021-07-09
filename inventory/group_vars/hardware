@@ -1,0 +1,6 @@
+---
+#
+# Do not check swap on hardware machines. Recent rhel8 kernels favor filling swap up which causes a bunch of alerts.
+#
+nagios_Check_Services:
+  swap: false
