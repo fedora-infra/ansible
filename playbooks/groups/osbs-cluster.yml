@@ -136,9 +136,9 @@
         name:
           - tar
           - rsync
-          - dbus-python
+#          - dbus-python
           - NetworkManager
-          - libselinux-python
+#          - libselinux-python
           - python2-pyyaml
       when: env == "staging"
     - name: Install necessary packages that openshift-ansible needs
@@ -147,9 +147,9 @@
         name:
           - tar
           - rsync
-          - dbus-python
+#          - dbus-python
           - NetworkManager
-          - libselinux-python
+#          - libselinux-python
           - python3-PyYAML
       when: env == "production"
 
