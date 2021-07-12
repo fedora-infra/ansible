@@ -18,15 +18,15 @@
   shell: dnf -y upgrade
   when: prepare_base_image is defined
 
-- name: enable copr repo in staging
-  community.general.copr:
-    state: enabled
-    name: "{{ item }}"
-  with_items:
-    - "@copr/copr"
-  when:
-    - devel
-    - prepare_base_image is not defined
+ #- name: enable copr repo in staging
+ #  community.general.copr:
+ #    state: enabled
+ #    name: "{{ item }}"
+ #  with_items:
+ #    - "@copr/copr"
+ #  when:
+ #    - devel
+ #    - prepare_base_image is not defined
 
 - name: clean dnf cache
   shell: dnf clean all
