@@ -18,6 +18,14 @@ case "$RESALLOC_POOL_ID" in
 *aarch64_02*)
     conn=qemu+ssh://copr@virthost-aarch64-os02.fedorainfracloud.org/system
     ;;
+
+*copr_hv_ppc64le_*):
+    pool_id=${RESALLOC_POOL_ID//copr_hv_ppc64le_/}
+    pool_id=${pool_id//_dev/}
+    pool_id=${pool_id//_prod/}
+    pool_id=${pool_id//_stg/}
+    conn=qemu+ssh://copr@vmhost-p08-copr${pool_id}.rdu-cc.fedoraproject.org/system
+    ;;
 *) die "unknown RESALLOC_POOL_ID=$RESALLOC_POOL_ID" ;;
 esac
 
