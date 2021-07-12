@@ -39,8 +39,9 @@ mkfs.ext4 "${swap_device}${part_suffix}1"
 
 mount "$swap_device${part_suffix}1" /var/lib/copr-rpmbuild
 mkdir /var/lib/copr-rpmbuild/results
-rpm --setperms copr-rpmbuild
-rpm --setugids copr-rpmbuild
+mkdir /var/lib/copr-rpmbuild/workspace
+rpm --setperms copr-rpmbuild || :
+rpm --setugids copr-rpmbuild || :
 
 mkswap "${swap_device}${part_suffix}2"
 swapon "${swap_device}${part_suffix}2"
