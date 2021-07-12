@@ -12,7 +12,7 @@ spec:
     app: fedora-packages-static
     deploymentconfig: fedora-packages-static
   strategy:
-    type: Rolling
+    type: Recreate
   template:
     metadata:
       labels:
@@ -46,15 +46,14 @@ spec:
         - name: db-volume
           mountPath: /etc/packages
         readinessProbe:
-          timeoutSeconds: 1
-          # Needs time to do inital sync, which should take about five minutes
-          initialDelaySeconds: 600
+          timeoutSeconds: 5
+          initialDelaySeconds: 30
           httpGet:
             path: /
             port: 8080
         livenessProbe:
-          timeoutSeconds: 1
-          initialDelaySeconds: 630
+          timeoutSeconds: 5
+          initialDelaySeconds: 30
           httpGet:
             path: /
             port: 8080
@@ -90,7 +89,7 @@ spec:
     app: fedora-packages-static
     deploymentconfig: fedora-packages-static
   strategy:
-    type: Rolling
+    type: Recreate
   template:
     metadata:
       labels:
