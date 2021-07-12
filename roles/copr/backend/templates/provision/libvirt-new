@@ -89,7 +89,7 @@ class LibvirtSpawner:
         self.workdir = tempfile.mkdtemp()
         self.script_path = os.path.dirname(os.path.realpath(__file__))
         self.log = log
-
+        self.log.debug("Logging to %s", self.connection)
         self.cleanup_actions = {}
 
     def call(self, cmd, *args, **kwargs):
@@ -376,7 +376,7 @@ def get_arg_parser():
     return parser
 
 
-def get_fedora_ipv6_address(pool_id, id_in_pool, dev=False):
+def get_fedora_ipv6_address(pool_id, id_in_pool, dev, log):
     """
     Statically assign IPv6 + Gateway based on id_in_pool.
     """
@@ -392,6 +392,8 @@ def get_fedora_ipv6_address(pool_id, id_in_pool, dev=False):
 
     hv_id, _, _ = get_hv_identification_from_pool_id(pool_id)
 
+    log.info("Hypervisor ID: %s", hv_id)
+
     # give 48 IPs to each hv (32 prod, some dev), currently 4*48=192 ips
     offset = hv_id * block
     if not dev:
@@ -400,6 +402,7 @@ def get_fedora_ipv6_address(pool_id, id_in_pool, dev=False):
 
     addr_number = start + offset + int(id_in_pool)
     addr_number = "{0:#05x}".format(addr_number).replace("0x", "")
+    log.info("Using an IPv6 ending with ':c%s'", addr_number)
     return base + addr_number, gateway
 
 
@@ -428,7 +431,7 @@ def _main():
 
     ip6_a, ip6_g = get_fedora_ipv6_address(args.resalloc_pool_id,
                                            args.resalloc_id_in_pool,
-                                           devel)
+                                           devel, log)
 
     spawner = LibvirtSpawner(args.resalloc_pool_id, log)
     spawner.vm_name = args.name
