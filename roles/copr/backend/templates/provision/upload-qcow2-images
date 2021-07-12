@@ -16,7 +16,7 @@ connections='
 
 new_volume=$2
 if test -z "$new_volume"; then
-  image_prefix=copr-builder-
+  image_prefix=copr-builder-$(uname -m)-
   new_volume=$image_prefix$(date +"%Y%m%d_%H%M%S")
 fi
 
