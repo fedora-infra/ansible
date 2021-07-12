@@ -6,7 +6,11 @@ image=$1
 
 connections='
 {% for host in groups["copr_hypervisor"] %}
+{% for arch in ["p08", "x86"] %}
+{% if arch in inventory_hostname and arch in hostvars[host]['inventory_hostname'] %}
     qemu+ssh://copr@{{ hostvars[host]['inventory_hostname'] }}/system
+{% endif %}
+{% endfor %}
 {% endfor %}
 '
 
