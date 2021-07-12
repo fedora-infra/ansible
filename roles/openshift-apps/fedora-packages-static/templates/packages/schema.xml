@@ -5,7 +5,6 @@
   <field name="_nest_path_" type="_nest_path_" />
   <fieldType name="_nest_path_" class="solr.NestPathField" />
 
-  <!-- TODO: add facets for fedora version -->
   <!-- TODO: tokenize lib out of package names? -->
   <fieldType name="nameText" class="solr.TextField">
     <analyzer type="index">
@@ -16,42 +15,42 @@
     </analyzer>
     <analyzer type="query">
       <tokenizer class="solr.WhitespaceTokenizerFactory"/>
-      <filter class="solr.WordDelimiterGraphFilterFactory" />
+      <filter class="solr.WordDelimiterGraphFilterFactory" preserveOriginal="1" />
       <filter class="solr.LowerCaseFilterFactory"/>
     </analyzer>
   </fieldType>
-  <!-- Currently disabled. TODO: turn \n into space, stem filter not working -->
-  <!-- <fieldType name="descText" class="solr.SortableTextField" positionIncrementGap="100" uninvertible="false">
+  <fieldType name="descText" class="solr.SortableTextField" positionIncrementGap="100" uninvertible="false">
     <analyzer type="index">
       <tokenizer class="solr.StandardTokenizerFactory"/>
-      <filter class="solr.SynonymGraphFilterFactory" synonyms="index_synonyms.txt" ignoreCase="true" expand="false"/>
-      <filter class="solr.FlattenGraphFilterFactory"/>
-      <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_en.txt" />
+      <filter class="solr.PatternReplaceFilterFactory" pattern="\n" replacement=" "/>
+      <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords_en.txt" />
       <filter class="solr.LowerCaseFilterFactory"/>
       <filter class="solr.EnglishPossessiveFilterFactory"/>
-      <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
-      <filter class="solr.EnglishMinimalStemFilterFactory"/>
       <filter class="solr.PorterStemFilterFactory"/>
     </analyzer>
     <analyzer type="query">
       <tokenizer class="solr.StandardTokenizerFactory"/>
-      <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_en.txt" />
+      <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords_en.txt" />
       <filter class="solr.LowerCaseFilterFactory"/>
       <filter class="solr.EnglishPossessiveFilterFactory"/>
-      <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
-      <filter class="solr.EnglishMinimalStemFilterFactory"/>
       <filter class="solr.PorterStemFilterFactory"/>
     </analyzer>
-  </fieldType> -->
+  </fieldType>
 
   <fieldType name="plong" class="solr.LongPointField" docValues="true"/>
   <fieldType name="string" class="solr.StrField" sortMissingLast="true"/>
 
-  <field name="id" type="string" indexed="true" stored="true" multiValued="false" required="true"/>
-  <field name="name" type="nameText" indexed="true" stored="true" required="true" multiValued="false"/>
-
+  <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" />
   <uniqueKey>id</uniqueKey>
-  <copyField source="id" dest="name"/>
 
-  <field name="description" type="string" indexed="false" stored="true" />
+  <!-- Package name-->
+  <field name="name" type="nameText" indexed="true" stored="true" multiValued="false" required="true"/>
+  <!-- source package name-->
+  <field name="srcName" type="nameText" indexed="true" stored="true" multiValued="false" required="true"/>
+  <field name="srcName_string" type="string" indexed="false" stored="false" multiValued="false" docValues="true" required="true"/>
+  <copyField source="srcName" dest="srcName_string" />
+  <!-- Package summary -->
+  <field name="summary" type="descText" indexed="true" stored="true" multiValued="false" />
+  <!-- Releases package is in -->
+  <field name="releases" type="string" indexed="false" stored="true" multiValued="true" docValues="true" />
 </schema>

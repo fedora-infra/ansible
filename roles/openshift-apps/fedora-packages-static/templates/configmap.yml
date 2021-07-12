@@ -21,6 +21,8 @@ data:
     {{ load_file('packages/solrconfig.xml') | indent }}
   schema.xml: |-
     {{ load_file('packages/schema.xml') | indent }}
+  stopwords_en.txt: |-
+    {{ load_file('packages/stopwords_en.txt') | indent }}
 ---
 apiVersion: v1
 kind: ConfigMap
