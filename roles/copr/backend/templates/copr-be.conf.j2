@@ -52,7 +52,7 @@ builds_max_workers_arch=
     i386={{ (max_x86_64_workers|int / 4)|int }},
     i586={{ (max_x86_64_workers|int / 4)|int }},
     i686={{ (max_x86_64_workers|int / 4)|int }},
-    ppc64le={{ (max_ppc64le_workers }}
+    ppc64le={{ max_ppc64le_workers }}
 
 # Maximum number of concurrently running tasks per project owner.
 {% if env == 'production' %}
