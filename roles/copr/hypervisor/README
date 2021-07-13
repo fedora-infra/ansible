@@ -32,6 +32,9 @@ Manually created swap:
   1. lvcreate -L 300G vg_guests -n swap
   2. mkswap -L swap /dev/mapper/vg_guests-swap
 
+Note that this requires changing /etc/fstab, and then /etc/sysconfig/grub - and
+regenerating the /boot grub config.
+
 Manually created space for volumes/images:
 
   1. lvcreate -n images -l 100%FREE vg_guests
