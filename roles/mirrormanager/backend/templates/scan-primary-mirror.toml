@@ -82,3 +82,15 @@ to="testing-epel"
 [[repository_aliases]]
 from="testing-modular-epel-"
 to="testing-modular-epel"
+
+### Codecs ###
+
+[[category]]
+name="Fedora Codecs"
+type="directory"
+url="/srv/codecs.fedoraproject.org/"
+
+[[repository_mapping]]
+regex="codecs.fedoraproject.org/openh264/[\\.\\d]+/.*"
+prefix="fedora-cisco-openh264"
+
