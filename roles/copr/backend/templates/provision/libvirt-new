@@ -213,10 +213,20 @@ class LibvirtSpawner:
             "mount -o remount /",
         ]))
 
+    def ping_to_wake_up_ipv6(self):
+        """
+        For some reason, this makes makes the networking to converge much
+        faster.
+        """
+        self.append_startup_script("\n".join([
+            "ping6 fedoraproject.org -c 5 -d || :"
+        ]))
+
     def generate_config_iso(self):
         """
-        Generate the ISO file that is attached to the VM and used by cloud-init
-        to pre-configure the box.
+        Generate the ISO file that is attached to the VM and used by the early
+        script:
+        https://github.com/praiskup/helpers/blob/beb62e5cf5d8a4cd0e456536a7073dc5307668fd/bin/eimg-prep.in#L66-L76
         """
         if not self.startup_script:
             return None
@@ -230,7 +240,9 @@ class LibvirtSpawner:
             file.write(script)
 
         image = os.path.join(self.workdir, 'config.iso')
-        # the 'eimg_config' label is important, we search for /dev/disk/by-label/...
+
+        # The 'eimg_config' label is not important, we search for /dev/sr0
+        # anyway.
         if self.call(['mkisofs', '-o', image, '-V', 'eimg_config', '-r', '-J',
                       '--quiet', config_dir]) != 0:
             raise Exception("mkisofs failed")
@@ -438,6 +450,7 @@ def _main():
     spawner.swap_vol_size = str(args.swap_vol_size) + "GB"
     spawner.add_nat_network()
     spawner.add_bridged_network("Wired connection 2", "eth1", ip6_a, ip6_g)
+    spawner.ping_to_wake_up_ipv6()
 
     success = False
     try:
