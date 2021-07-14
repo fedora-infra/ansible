@@ -61,6 +61,13 @@ def get_hv_identification_from_pool_id(pool_id):
             ".rdu-cc.fedoraproject.org/system",
             "ppc64le",
         )
+    if pool_id.startswith("copr_hv_ppc64le_01"):
+        return (
+            5,
+            "qemu+ssh://copr@vmhost-p08-copr02"
+            ".rdu-cc.fedoraproject.org/system",
+            "ppc64le",
+        )
     raise Exception("can't convert pool_id to hv ID")
 
 
