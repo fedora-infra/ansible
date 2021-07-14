@@ -220,15 +220,6 @@ class LibvirtSpawner:
             "mount -o remount /",
         ]))
 
-    def ping_to_wake_up_ipv6(self):
-        """
-        For some reason, this makes makes the networking to converge much
-        faster.
-        """
-        self.append_startup_script("\n".join([
-            "ping6 fedoraproject.org -c 5 -d || :"
-        ]))
-
     def generate_config_iso(self):
         """
         Generate the ISO file that is attached to the VM and used by the early
@@ -327,9 +318,14 @@ class LibvirtSpawner:
             f"nmcli con modify '{con_name}' ipv6.address {ipv6_addr}",
             f"nmcli con modify '{con_name}' ipv6.gateway {ipv6_gw}",
             f"nmcli con modify '{con_name}' ipv4.method disabled",
+            # Sometimes 'con up' fails since device doesn't exist yet, for some
+            # reason ppc64 machines go directly to "connecting" state, while on
+            # x86_64 they are "disconnected"
+            f"while ! nmcli device | grep {device} | grep -e disconnected -e connecting; do sleep 0.1; done",
+            # manually enable the device
             f"nmcli con up '{con_name}'",
             # This makes the IPv6 networking to converge faster
-            'for _ in `seq 180`; do ping6 -c 1 fedoraproject.org && break ; sleep 1; done',
+            'for _ in `seq 20`; do ping6 -c 1 fedoraproject.org && break ; sleep 1; done',
 
         ]))
         self.ipv6 = ipv6_addr.split("/")[0]
@@ -460,7 +456,6 @@ def _main():
     spawner.swap_vol_size = str(args.swap_vol_size) + "GB"
     spawner.add_nat_network()
     spawner.add_bridged_network("Wired connection 2", "eth1", ip6_a, ip6_g)
-    spawner.ping_to_wake_up_ipv6()
 
     success = False
     try:
