@@ -296,7 +296,6 @@ class LibvirtSpawner:
             '-n', self.vm_name,
             '--channel', "unix,target_type=virtio,name='org.qemu.guest_agent.0'",
             '--rng', '/dev/random',
-            # '--boot', 'kernel_args="ds=nocloud-net"'
         ] + self.boot_options
 
         for vol in volumes:
