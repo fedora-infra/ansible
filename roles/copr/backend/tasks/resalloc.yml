@@ -58,7 +58,6 @@
   template: src="resalloc/{{ item }}" dest="/var/lib/resallocserver/resalloc_provision/"
             mode=755
   with_items:
-  - vm-aarch64-new
   - vm-aws-new
   - vm-aws-delete
   - vm-check

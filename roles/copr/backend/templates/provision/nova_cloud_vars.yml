@@ -14,5 +14,4 @@ key_name: "{{ copr_builder_key_name }}"
 security_groups: "{{ copr_builder_security_groups }}"
 
 builder_images:
-  x86_64: "{{ copr_builder_images.x86_64 }}"
-  ppc64le: "{{ copr_builder_images.ppc64le }}"
+  x86_64: "currently unset, use copr_builder_images.openstack.x86_64 config"

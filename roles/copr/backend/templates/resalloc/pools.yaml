@@ -116,31 +116,6 @@ copr_hv_ppc64le_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
 {% endif %}
 {% endfor %}
 
-{% macro hw_aarch64(id, inst, max, max_starting, max_prealloc) %}
-aarch64_{{ id }}_{{ inst }}:
-    max: 0
-    max_starting: {{ max_starting }}
-    max_prealloc: {{ max_prealloc }}
-{% if inst == 'prod' %}
-# - 10 VCPUs
-# - 80 GB SWAP
-# - 24 GB RAM
-# -  8 GB root partition (it's sparse qcow2, so thin-provisioning)
-    cmd_new: "/var/lib/resallocserver/resalloc_provision/vm-aarch64-new --swap-vol-size 80 --cpu-count 10 --ram-size 20480"
-{% else %}
-# -  2 VCPUs   (default)
-# - 20 GB SWAP (default)
-# -  4 GB RAM  (default)
-# -  8 GB root partition (it's sparse qcow2, so thin-provisioning)
-    cmd_new: "/var/lib/resallocserver/resalloc_provision/vm-aarch64-new"
-{% endif %}
-    cmd_delete: "/var/lib/resallocserver/provision/libvirt-delete"
-    tags:
-    - copr_builder
-    - arch_aarch64
-    - arch_aarch64_native
-{% endmacro %}
-
 {{ aws_x86_64(builders.aws.x86_64[0], builders.aws.x86_64[1],
               builders.aws.x86_64[2])
 }}
@@ -154,13 +129,3 @@ aarch64_{{ id }}_{{ inst }}:
 {{ aws_aarch64(builders.aws_spot.aarch64[0], builders.aws_spot.aarch64[1],
                builders.aws_spot.aarch64[2], True)
 }}
-
-{% if env == "production" %}
-{{ hw_aarch64("01", "prod", 4, 2, 4) }}
-{{ hw_aarch64("02", "prod", 4, 2, 4) }}
-{% elif devel %}
-{{ hw_aarch64("01", "dev", 2, 2, 2) }}
-{{ hw_aarch64("02", "dev", 2, 2, 2) }}
-{% else %}
-# No aarch64 hosts on staging for now.
-{% endif %}

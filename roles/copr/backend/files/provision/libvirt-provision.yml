@@ -1,4 +1,4 @@
-# This playbook is executed from resalloc's home directory, by vm-aarch64-new
+# This playbook is executed from resalloc's home directory, by "libvirt-new"
 # script, it's just a thin wrapper around provision_builder_tasks.yml.
 # IOW: never execute this as 'copr' user..
 ---
@@ -9,7 +9,6 @@
 
   vars_files:
     - vars.yml
-    - nova_cloud_vars.yml
   vars:
     ansible_python_interpreter: /usr/bin/python3
 
