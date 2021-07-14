@@ -4,7 +4,7 @@
 #
 
 - name: install necessary packages
-  package: 
+  package:
     state: present
     name:
     - rsync
@@ -25,7 +25,18 @@
   tags:
   - packages
   - rsyncd
-  when: (ansible_distribution_major_version|int >= 30 and ansible_distribution == 'Fedora') or (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int >= 8)
+  when: (ansible_distribution_major_version|int >= 30 and ansible_distribution == 'Fedora' and ansible_distribution_major_version|int < 34 and ansible_distribution == 'Fedora') or (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int >= 8)
+
+- name: install necessary packages for fedora >= 34
+  package:
+    state: present
+    name:
+      - rsync-daemon
+      - python3-libsemanage
+  tags:
+    - packages
+    - rsyncd
+  when: (ansible_distribution_major_version|int >= 34 and ansible_distribution == 'Fedora') or (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int >= 8)
 
 - name: rsyncd.conf file
   copy: src={{ item }} dest=/etc/rsyncd.conf mode=0644
@@ -38,6 +49,8 @@
   when: "'download' not in group_names"
   notify:
   - restart xinetd
+  - restart daemon
+  ignore_errors: true
   tags:
   - config
   - rsyncd
@@ -61,19 +74,38 @@
     - rsync.default
   notify:
   - restart xinetd
+  when: ansible_distribution_major_version|int < 34 and ansible_distribution == 'Fedora'
   tags:
   - config
   - rsyncd
 
+- name: systemd rsync file
+  copy: src=rsyncd.service dest=/usr/lib/systemd/system/rsyncd.service mode=0644
+  when: ansible_distribution_major_version|int >= 34 and ansible_distribution == 'Fedora'
+  notify:
+    - restart daemon
+  tags:
+    - config
+    - rsyncd
+
 - name: make sure xinetd is started
   service: name=xinetd state=started
+  when: ansible_distribution_major_version|int < 34 and ansible_distribution == 'Fedora'
   tags:
   - services
   - rsyncd
 
+- name: make sure rsync daemon is started
+  service: name=rsyncd enabled=true state=started
+  when: ansible_distribution_major_version|int >= 34 and ansible_distribution == 'Fedora'
+  tags:
+    - services
+    - rsyncd
+    
 - name: set sebooleans so rsync can read dirs
   seboolean: name=rsync_export_all_ro
                     state=true
                     persistent=true
   tags:
-  - rsyncd
+    - rsyncd
+  
