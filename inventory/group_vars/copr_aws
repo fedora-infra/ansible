@@ -53,4 +53,12 @@ builders:
     ppc64le_hypervisor_02:
         ppc64le: [13, 4, 13]
 
+copr_builder_images:
+  hypervisor:
+    x86_64: copr-builder-20210511_210127
+    ppc64le: copr-builder-ppc64le-20210713_122818
+  aws:
+    x86_64: ami-05766cb7551777d09 # copr-builder-x86_64-f34-20210516_142224
+    aarch64: ami-0b7d49fecf0c393a9 # copr-builder-aarch64-f34-20210516_143216
+
 rpm_vendor_copr_name: Fedora Copr
