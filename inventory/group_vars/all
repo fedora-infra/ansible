@@ -87,6 +87,22 @@ nfs_bridge: br1
 mac_address: RANDOM
 mac_address1: RANDOM
 
+
+virt_install_command_pxe_rhcos: virt-install \
+  --name {{ inventory_hostname }} \
+  --vcpus {{ num_cpus }},maxvcpus={{ max_cpu }} \
+  --cpu host \
+  --memory  {{ mem_size }} \
+  --disk bus=virtio,path={{ volgroup }}/{{ inventory_hostname }} \
+  --nographics \
+  --network bridge={{ main_bridge }},model=virtio,mac={{ mac_address }} \
+  --hvm --accelerate \
+  --autostart --wait=-1 \
+  --extra-args "ip={{ eth0_ip }}::{{ gw }}:{{ nm }}:{{ inventory_hostname }}:eth0:none nameserver={{ dns }} console=ttyS0 nomodeset rd.neednet=1 coreos.inst=yes coreos.inst.install_dev=vda coreos.live.rootfs_url={{ rhcos_install_rootfs_url }} coreos.inst.ignition_url={{ rhcos_ignition_file_url }} " \
+  --os-type linux --os-variant rhel7 \
+  --location  {{ rhcos_install_url }}
+
+
 virt_install_command_one_nic: virt-install -n {{ inventory_hostname }}
                  --memory={{ mem_size }},maxmemory={{ max_mem_size }} --memballoon virtio
                  --disk bus=virtio,path={{ volgroup }}/{{ inventory_hostname }}

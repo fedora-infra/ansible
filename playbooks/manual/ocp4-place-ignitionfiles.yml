@@ -1,0 +1,111 @@
+---
+# This playbook is an ad-hoc task used to deploy kvm nodes for OCP4
+# It used the following variables, declared through inventory (group/host vars):
+#  rhcos_version: 4.5.6 # upstream version to fetch from mirror.openshift.com in local httpd dir for deployment
+#  rhcos_install_img_url: # Where to grab rhcos install http://<host>/<path>/rhcos/rhcos-4.3.8-x86_64-metal.x86_64.raw.gz
+#  rhcos_ignition_file_url: # where to find ignition file http://<host>/config/rhcos/bootstrap.ign #to be modified based on group or host level, for bootstrap, master, etc
+#  rhcos_install_url: #where kernel/initrd.img and .treeinfo are to be found, internal
+#  kvm_guest_vcpus:
+#  kvm_guest_memory:
+#  kvm_guest_disk_size:  #in GiB, not to be added, so example: 120
+#  kvm_host_bridge: # which defined bridged to use for the guest vnic
+#  kvm_guest_vnic: ens3
+#  ip:
+#  nameservers:
+#    - 192.168.1.1
+#    - 192.168.2.2
+#  gateway  
+#  deploy_host: # http server serving ignition files
+- hosts: os-control01.stg.iad2.fedoraproject.org
+  user: root
+  gather_facts: false
+
+  tasks:
+    - block:
+        - name: == OCP KVM provisioning == Ensuring we have needed httpd dir
+          file: 
+            path: "/var/www/html/rhcos"
+            state: directory
+            mode: 0755
+        - name: == OCP KVM provisioning == Importing generated Ignition files
+          template: 
+            src: "/srv/web/infra/bigfiles/openshiftboot/{{ item }}"
+            dest: "/var/www/html/rhcos/{{ item }}"
+            mode: 0755
+          with_items:
+            - bootstrap.ign
+            - controlplane.ign
+            - worker.ign
+        - name: == OCP KVM provisioning == Downloading RHCOS deploy files
+          get_url:
+            dest: /var/www/html/rhcos/
+            mode: 0755
+            url: "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/{{ rhcos_version }}/{{ item }}"
+          run_once: True  
+          with_items:
+            - "rhcos-{{ rhcos_version }}-x86_64-live-initramfs.x86_64.img"
+            - "rhcos-{{ rhcos_version }}-x86_64-live-kernel-x86_64"
+            - "rhcos-{{ rhcos_version }}-x86_64-live-rootfs.x86_64.img"
+            - "rhcos-{{ rhcos_version }}-x86_64-metal.x86_64.raw.gz"
+
+        - name: == OCP KVM provisioning == Ensuring symlink for correct version {{ rhcos_version }}
+          file:
+            state: link
+            src: "/var/www/html/rhcos/rhcos-{{ rhcos_version }}-x86_64-metal.x86_64.raw.gz"
+            dest: "/var/www/html/rhcos/rhcos-metal.raw"
+        - name: == OCP KVM provisioning == Creating needed treeinfo for virt-install --location
+          template:
+            src: ocp-treeinfo.j2
+            dest: /var/www/html/rhcos/.treeinfo
+            mode: 0644
+      tags:
+        - ignition
+        - repo
+
+    - name: == OCP KVM provisioning == Checking OCP Virtual Guest exist[s]
+      virt: 
+        name: "{{ inventory_hostname }}" 
+        state: running
+      ignore_errors: yes
+      no_log: True
+      delegate_to: "{{ kvm_host }}"
+      register: vm_exists
+      tags:
+        - kvm_deploy
+
+    - name: == OCP KVM provisioning == Creating temporary virt-install command
+      template: 
+        src: ../templates/ansible-virt-install-ocp.j2 
+        dest: "/var/lib/libvirt/virt-install-{{ inventory_hostname }}" 
+        mode: 0750 
+        owner: root 
+        group: root
+      delegate_to: "{{ kvm_host }}"
+      tags:
+        - kvm_deploy
+
+    - name: == OCP KVM provisioning == Deploying the OCP Virtual Guest[s]
+      command: "/var/lib/libvirt/virt-install-{{ inventory_hostname }}"
+      when: vm_exists is failed
+      delegate_to: "{{ kvm_host }}"
+      tags:
+        - kvm_deploy
+
+    - name: == OCP KVM provisioning == Waiting for sshd to be available on the deployed node
+      wait_for: 
+        port: 22 
+        host: "{{ ip }}"
+        timeout: 1200 
+      delegate_to: "{{ deploy_host }}"
+      when: vm_exists is failed
+      tags:
+        - kvm_deploy
+
+    - name: == OCP KVM provisioning == Ensuring we remove the templatized virt-install script
+      file:
+        path: "/var/lib/libvirt/virt-install-{{ inventory_hostname }}"
+        state: absent
+      delegate_to: "{{ kvm_host }}"
+      tags:
+        - kvm_deploy
+
