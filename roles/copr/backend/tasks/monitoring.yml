@@ -1,5 +1,8 @@
 - name: install nrpe checks
-  template: src=copr_backend_nrpe.cfg dest=/etc/nrpe.d/copr_backend_nrpe.cfg
+  # template: src=copr_backend_nrpe.cfg dest=/etc/nrpe.d/copr_backend_nrpe.cfg
+  file:
+    path: /etc/nrpe.d/copr_backend_nrpe.cfg
+    state: absent
   notify:
   - restart nrpe
   tags:
