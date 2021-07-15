@@ -161,6 +161,18 @@
   - hotfix
   - patches
 
+# Add the Nest banner
+# See issue https://pagure.io/fedora-infrastructure/issue/10103
+- name: Replace the top.html template in hyperkitty to change banner
+  copy: src=top.html dest=/srv/webui/templates/hyperkitty/top.html
+  notify:
+  - restart mailman3
+  - reload apache
+  tags:
+  - mailman
+  - banner
+
+
 #
 # Initialize mailman (must be done after settings up the DBs)
 #
