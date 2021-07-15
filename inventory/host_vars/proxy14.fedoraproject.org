@@ -6,15 +6,15 @@ datacenter: rdu-cc
 # This is consumed by the roles/fedora-web/main role
 sponsor: redhat
 
-vmhost: virthost-cc-rdu01.fedoraproject.org
-volgroup: /dev/vg_guests
+vmhost: vmhost-x86-cc06.rdu-cc.fedoraproject.org
+volgroup: /dev/rhel
 
 mem_size: 16384
 max_mem_size: 32768
 num_cpus: 8
 
 ks_url: http://38.145.60.16/repo/rhel/ks/kvm-fedora
-ks_repo: http://38.145.60.16/pub/fedora/linux/releases/33/Server/x86_64/os/
+ks_repo: http://38.145.60.16/pub/fedora/linux/releases/34/Server/x86_64/os/
 
 dns1: 8.8.8.8
 dns2: 8.8.4.4
