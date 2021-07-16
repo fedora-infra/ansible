@@ -12,7 +12,6 @@ data:
 
     amqp_url = "amqps://resultsdb{{ env_suffix }}:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fpubsub"
 
-
 {% if env == "staging" %}
     topic_prefix = "org.fedoraproject.stg"
 {% else %}
@@ -125,7 +124,7 @@ data:
     [sender]
     sender_type = ResultsdbSender
 {% if env == "staging" %}
-    resultsdb_url = {{ stg_results_ci_listener_resultsdb_url }}
+    resultsdb_url = https://resultsdb.stg.fedoraproject.org
 {% else %}
-    resultsdb_url = {{ prod_results_ci_listener_resultsdb_url }}
+    resultsdb_url = https://resultsdb.fedoraproject.org
 {% endif %}

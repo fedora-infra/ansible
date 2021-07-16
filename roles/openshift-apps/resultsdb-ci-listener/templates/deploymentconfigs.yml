@@ -17,11 +17,7 @@ spec:
     spec:
       containers:
         - name: listener
-{% if env == 'staging' %}
-          image: "{{ stg_resultsdb_ci_listener_image }}"
-{% else %}
-          image: "{{ prod_resultsdb_ci_listener_image }}"
-{% endif %}
+          image: quay.io/fedora/resultsdb-listener:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 5001
