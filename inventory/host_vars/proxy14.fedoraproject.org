@@ -38,7 +38,7 @@ public_hostname: proxy14.fedoraproject.org
 
 network_connections:
   - name: eth0
-    mac: "{{ mac0 }}"
+    mac: "{{ ansible_default_ipv4.macaddress }}"
     type: ethernet
     autoconnect: yes
     ip:
