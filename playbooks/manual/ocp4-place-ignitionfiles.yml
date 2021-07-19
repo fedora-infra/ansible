@@ -38,11 +38,9 @@
             - worker.ign
         - name: == OCP KVM provisioning == Creating treeinfo for virt-install --location 
           template: 
-            src: "/srv/web/infra/bigfiles/openshiftboot/{{ item }}"
+            src: "/srv/web/infra/bigfiles/openshiftboot/ocp-treeinfo.j2"
             dest: "/var/www/html/rhcos/.treeinfo"
             mode: 0644
-          with_items:
-            - ocp-treeinfo.j2
         - name: == OCP KVM provisioning == Downloading RHCOS deploy files
           get_url:
             dest: /var/www/html/rhcos/
@@ -68,10 +66,22 @@
         - ignition
         - repo
       when: inventory_hostname in groups['os_control_stg']
-    
-    - name: == OCP KVM provisioning == Deploying the OCP Virtual Guest[s]
-      command: "{{ virt_install_command }}"
+
+    - name: == OCP KVM provisioning == Checking OCP Virtual Guest exist[s]
+      virt:
+        name: "{{ inventory_hostname }}"
+        state: running
+      ignore_errors: yes
+      no_log: True
       delegate_to: "{{ vmhost }}"
+      register: vm_exists
       tags:
         - kvm_deploy
-      when: inventory_hostname in groups['ocp_controlplane_stg']
+    - block:
+      - name: == OCP KVM provisioning == Deploying the OCP Virtual Guest[s]
+        command: "{{ virt_install_command }}"
+        delegate_to: "{{ vmhost }}"
+        tags:
+          - kvm_deploy
+        when: inventory_hostname in groups['ocp_controlplane_stg']
+      when: vm_exists is failed
