@@ -16,7 +16,7 @@
 #    - 192.168.2.2
 #  gateway  
 #  deploy_host: # http server serving ignition files
-- hosts: os-control01.stg.iad2.fedoraproject.org
+- hosts: os_control_stg:ocp_controlplane_stg
   user: root
   gather_facts: false
 
@@ -36,6 +36,13 @@
             - bootstrap.ign
             - controlplane.ign
             - worker.ign
+        - name: == OCP KVM provisioning == Creating treeinfo for virt-install --location 
+          template: 
+            src: "/srv/web/infra/bigfiles/openshiftboot/{{ item }}"
+            dest: "/var/www/html/rhcos/.treeinfo"
+            mode: 0644
+          with_items:
+            - ocp-treeinfo.j2
         - name: == OCP KVM provisioning == Downloading RHCOS deploy files
           get_url:
             dest: /var/www/html/rhcos/
@@ -47,7 +54,6 @@
             - "rhcos-{{ rhcos_version }}-x86_64-live-kernel-x86_64"
             - "rhcos-{{ rhcos_version }}-x86_64-live-rootfs.x86_64.img"
             - "rhcos-{{ rhcos_version }}-x86_64-metal.x86_64.raw.gz"
-
         - name: == OCP KVM provisioning == Ensuring symlink for correct version {{ rhcos_version }}
           file:
             state: link
@@ -61,51 +67,11 @@
       tags:
         - ignition
         - repo
-
-    - name: == OCP KVM provisioning == Checking OCP Virtual Guest exist[s]
-      virt: 
-        name: "{{ inventory_hostname }}" 
-        state: running
-      ignore_errors: yes
-      no_log: True
-      delegate_to: "{{ kvm_host }}"
-      register: vm_exists
-      tags:
-        - kvm_deploy
-
-    - name: == OCP KVM provisioning == Creating temporary virt-install command
-      template: 
-        src: ../templates/ansible-virt-install-ocp.j2 
-        dest: "/var/lib/libvirt/virt-install-{{ inventory_hostname }}" 
-        mode: 0750 
-        owner: root 
-        group: root
-      delegate_to: "{{ kvm_host }}"
-      tags:
-        - kvm_deploy
-
+      when: inventory_hostname in groups['os_control_stg']
+    
     - name: == OCP KVM provisioning == Deploying the OCP Virtual Guest[s]
-      command: "/var/lib/libvirt/virt-install-{{ inventory_hostname }}"
-      when: vm_exists is failed
-      delegate_to: "{{ kvm_host }}"
+      command: "{{ virt_install_command }}"
+      delegate_to: "{{ vmhost }}"
       tags:
         - kvm_deploy
-
-    - name: == OCP KVM provisioning == Waiting for sshd to be available on the deployed node
-      wait_for: 
-        port: 22 
-        host: "{{ ip }}"
-        timeout: 1200 
-      delegate_to: "{{ deploy_host }}"
-      when: vm_exists is failed
-      tags:
-        - kvm_deploy
-
-    - name: == OCP KVM provisioning == Ensuring we remove the templatized virt-install script
-      file:
-        path: "/var/lib/libvirt/virt-install-{{ inventory_hostname }}"
-        state: absent
-      delegate_to: "{{ kvm_host }}"
-      tags:
-        - kvm_deploy
-
+      when: inventory_hostname in groups['ocp_controlplane_stg']
