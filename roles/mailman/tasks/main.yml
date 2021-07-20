@@ -166,7 +166,6 @@
 - name: Replace the top.html template in hyperkitty to change banner
   copy: src=top.html dest=/srv/webui/templates/hyperkitty/top.html
   notify:
-  - restart mailman3
   - reload apache
   tags:
   - mailman
