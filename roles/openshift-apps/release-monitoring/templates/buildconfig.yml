@@ -10,7 +10,11 @@ items:
     runPolicy: Serial
     source:
       dockerfile: |-
+{% if env == 'staging' %}
+        FROM fedora:34
+{% else %}
         FROM fedora:32
+{% endif %}
         LABEL \
           name="release-monitoring-web" \
           vendor="Fedora Infrastructure" \
@@ -21,6 +25,9 @@ items:
                 graphviz \
                 fedora-messaging \
                 python3-alembic \
+{% if env == 'staging' %}
+                python3-beautifulsoup4 \
+{% endif %}
                 python3-arrow \
                 python3-dateutil \
                 python3-defusedxml \
@@ -32,15 +39,22 @@ items:
                 python3-ordered-set \
                 python3-pip \
                 python3-psycopg2 \
+{% if env == 'staging' %}
                 python3-pytoml \
                 python3-semver \
                 python3-social-auth-app-flask \
                 python3-social-auth-app-flask-sqlalchemy \
+{% else %}
+                python3-semver \
+{% endif %}
                 python3-sphinxcontrib-httpdomain \
                 python3-sqlalchemy \
                 python3-sqlalchemy_schemadisplay \
                 python3-sseclient \
                 python3-straight-plugin \
+{% if env == 'staging' %}
+                python3-toml \
+{% endif %}
                 python3-wtforms && \
             dnf autoremove -y && \
             dnf clean all -y
