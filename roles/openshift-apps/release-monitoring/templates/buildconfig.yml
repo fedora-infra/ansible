@@ -40,12 +40,12 @@ items:
                 python3-pip \
                 python3-psycopg2 \
 {% if env == 'staging' %}
+                python3-semver \
+{% else %}
                 python3-pytoml \
                 python3-semver \
                 python3-social-auth-app-flask \
                 python3-social-auth-app-flask-sqlalchemy \
-{% else %}
-                python3-semver \
 {% endif %}
                 python3-sphinxcontrib-httpdomain \
                 python3-sqlalchemy \
