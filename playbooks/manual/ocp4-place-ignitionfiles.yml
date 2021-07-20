@@ -57,11 +57,6 @@
             state: link
             src: "/var/www/html/rhcos/rhcos-{{ rhcos_version }}-x86_64-metal.x86_64.raw.gz"
             dest: "/var/www/html/rhcos/rhcos-metal.raw"
-        - name: == OCP KVM provisioning == Creating needed treeinfo for virt-install --location
-          template:
-            src: ocp-treeinfo.j2
-            dest: /var/www/html/rhcos/.treeinfo
-            mode: 0644
       tags:
         - ignition
         - repo
@@ -72,11 +67,11 @@
         name: "{{ inventory_hostname }}"
         state: running
       ignore_errors: yes
-      no_log: True
       delegate_to: "{{ vmhost }}"
       register: vm_exists
       tags:
         - kvm_deploy
+      when: inventory_hostname in groups['ocp_controlplane_stg']
     - block:
       - name: == OCP KVM provisioning == Deploying the OCP Virtual Guest[s]
         command: "{{ virt_install_command }}"
