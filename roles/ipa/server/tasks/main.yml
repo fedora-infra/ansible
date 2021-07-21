@@ -342,7 +342,7 @@
   tags:
   - ipa/server
   - config
-  when: "'already exists' in create_output.stderr"
+  when: "ipa_initial and 'already exists' in create_output.stderr"
 
 # Create a new ACL linking the new profile and ipausers group (that all users are members of)
 - name: Create the CA ACL for the new certificate profile
