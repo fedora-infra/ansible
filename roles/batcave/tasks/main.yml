@@ -576,7 +576,7 @@
   - tmux
 
 - name: Create dir for openshift pxe boot files
-  file: path=/srv/web/infra/bigfiles/"{{item}}" mode=2660 owner=root group=sysadmin-openshift state=directory
+  file: path=/srv/web/infra/bigfiles/{{item}} mode=2660 owner=root group=sysadmin-openshift state=directory
   with_items:
   - openshiftboot
   - tftpboot/rhcos
@@ -585,7 +585,7 @@
   - openshiftboot
 
 - name: Let the openshift dir be writeable by sysadmin-openshift
-  command: setfacl -R -m d:g:sysadmin-openshift:rwx -m g:sysadmin-openshift:rwx /srv/web/infra/bigfiles/"{{item}}"
+  command: setfacl -R -m d:g:sysadmin-openshift:rwx -m g:sysadmin-openshift:rwx /srv/web/infra/bigfiles/{{item}}
   with_items:
   - openshiftboot
   - tftpboot/rhcos
