@@ -82,7 +82,7 @@ items:
                 rm -rf anitya
         # Let's use staging auth server in staging
 {% if env == 'staging' %}
-        #        RUN sed -i 's/id.fedoraproject.org/id.stg.fedoraproject.org/g' /usr/local/lib/python3.9/site-packages/social_core/backends/fedora.py
+        RUN sed -i 's/id.fedoraproject.org/id.stg.fedoraproject.org/g' /usr/local/lib/python3.9/site-packages/social_auth_core-4.1.0-py3.9.egg/social_core
 {% endif %}
         RUN mkdir /httpdir
         RUN chmod 777 /httpdir
