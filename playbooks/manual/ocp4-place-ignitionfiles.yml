@@ -57,17 +57,26 @@
             state: link
             src: "/var/www/html/rhcos/rhcos-{{ rhcos_version }}-x86_64-metal.x86_64.raw.gz"
             dest: "/var/www/html/rhcos/rhcos-metal.raw"
-        - name: == Hardware provisioning == Generating the tftp configuration boot file
-          template:
-            src: ocp_pxeboot.j2
-            dest: /srv/web/infra/bigfiles/tftpboot/rhcos/{{ mac0 | lower | replace(":","-") }}
-            mode: 0755
-          delegate_to: 127.0.0.1
-          when: inventory_hostname in groups['ocp_workers_stg']
       tags:
         - ignition
         - repo
       when: inventory_hostname in groups['os_control_stg']
+
+    - name: == Hardware provisioning == Generating the tftp configuration boot file
+      template:
+        src: ocp_pxeboot.j2
+        dest: /srv/web/infra/bigfiles/tftpboot/rhcos/{{ mac0 | lower | replace(":","-") }}
+        mode: 0755
+      delegate_to: 127.0.0.1
+      when: inventory_hostname in groups['ocp_workers_stg']
+
+    - name: == Hardware provisioning == Generating the tftp configuration boot file
+      template:
+        src: ocp_pxeboot.j2
+        dest: /srv/web/infra/bigfiles/tftpboot/rhcos/{{ mac0 | lower | replace(":","-") }}
+        mode: 0755
+      delegate_to: 127.0.0.1
+      when: inventory_hostname in groups['ocp_workers_stg']
 
     - name: == OCP KVM provisioning == Checking OCP Virtual Guest exist[s]
       virt:
