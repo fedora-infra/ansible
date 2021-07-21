@@ -177,7 +177,6 @@
   tags:
   - ipa/server
   - config
-  when: ipa_initial
   register: output
   changed_when: "'Disabling plugin' in output.stdout"
   failed_when: "'Plugin is already disabled' not in output.stdout and output.rc != 0"
@@ -189,7 +188,6 @@
   tags:
   - ipa/server
   - config
-  when: ipa_initial
   register: output
   changed_when: "'Disabling plugin' in output.stdout"
   failed_when: "'Plugin is already disabled' not in output.stdout and output.rc != 0"
@@ -207,7 +205,6 @@
   tags:
   - ipa/server
   - config
-  when: ipa_initial
 
 - name: Get admin ticket
   shell: echo "{{ipa_admin_password}}" | kinit admin
@@ -215,7 +212,6 @@
   - ipa/server
   - config
   - krb5
-  when: ipa_initial
 
 # Reason for removing the next task: we don't store so much private information
 # now, and we can't disallow people from seeing other people's email address on
@@ -232,7 +228,6 @@
 #   tags:
 #   - ipa/server
 #   - config
-#   when: ipa_initial
 #   register: output
 #   changed_when: "'Modified permission' in output.stdout"
 #   failed_when: "'no modifications to be performed' not in output.stderr and output.rc != 0"
@@ -251,7 +246,6 @@
 #   tags:
 #   - ipa/server
 #   - config
-#   when: ipa_initial
 #   register: output
 #   changed_when: "'Added selfservice' in output.stdout"
 #   failed_when: "'already exists' not in output.stderr and output.rc != 0"
@@ -267,7 +261,6 @@
   tags:
   - ipa/server
   - config
-  when: ipa_initial
   register: output
   changed_when: "'Modified permission' in output.stdout"
   failed_when: "'no modifications to be performed' not in output.stderr and output.rc != 0"
@@ -284,7 +277,6 @@
   tags:
   - ipa/server
   - config
-  when: ipa_initial
 
 - name: Create fas_sync user
   ipauser:
@@ -296,7 +288,6 @@
   tags:
   - ipa/server
   - config
-  when: ipa_initial
 
 # Certificate generation
 - name: Make a directory to store certificate profiles
@@ -335,7 +326,6 @@
   tags:
   - ipa/server
   - config
-  when: ipa_initial
   register: create_output
   changed_when: "'already exists' not in create_output.stderr"
   failed_when: "'already exists' not in create_output.stderr and create_output.rc != 0"
@@ -352,7 +342,7 @@
   tags:
   - ipa/server
   - config
-  when: "ipa_initial and 'already exists' in create_output.stderr"
+  when: "'already exists' in create_output.stderr"
 
 # Create a new ACL linking the new profile and ipausers group (that all users are members of)
 - name: Create the CA ACL for the new certificate profile
@@ -360,7 +350,6 @@
   tags:
   - ipa/server
   - config
-  when: ipa_initial
   register: output
   changed_when: "'already exists' not in output.stderr"
   failed_when: "'already exists' not in output.stderr and output.rc != 0"
@@ -369,7 +358,6 @@
   tags:
   - ipa/server
   - config
-  when: ipa_initial
   register: output
   changed_when: "'is already a member' not in output.stdout"
   failed_when: "'is already a member' not in output.stdout and output.rc != 0"
@@ -378,7 +366,6 @@
   tags:
   - ipa/server
   - config
-  when: ipa_initial
   register: output
   changed_when: "'is already a member' not in output.stdout"
   failed_when: "'is already a member' not in output.stdout and output.rc != 0"
@@ -390,7 +377,6 @@
   tags:
   - ipa/server
   - config
-  when: ipa_initial
   register: output
 
 # Noggin user setup
@@ -417,7 +403,6 @@
   tags:
   - ipa/server
   - config
-  when: ipa_initial
 
 - name: Create the noggin privilege
   command:
@@ -429,7 +414,6 @@
   tags:
   - ipa/server
   - config
-  when: ipa_initial
   register: output
   changed_when: "'already exists' not in output.stderr"
   failed_when: "'already exists' not in output.stderr and output.rc != 0"
@@ -452,7 +436,6 @@
   tags:
   - ipa/server
   - config
-  when: ipa_initial
   register: output
   changed_when: "'Number of permissions added 0' not in output.stdout"
   failed_when: "'Number of permissions added 0' not in output.stdout and output.rc != 0"
@@ -472,7 +455,6 @@
   tags:
   - ipa/server
   - config
-  when: ipa_initial
 
 # User selfservice permissions
 
@@ -503,7 +485,6 @@
   tags:
   - ipa/server
   - config
-  when: ipa_initial
 
 
 - name: Setup the selfservice permission for addressbook attributes
@@ -535,7 +516,6 @@
   tags:
   - ipa/server
   - config
-  when: ipa_initial
 
 
 # Let people in the sysadmin-main group manage registering users (Stage Users)
@@ -551,7 +531,6 @@
   tags:
   - ipa/server
   - config
-  when: ipa_initial
   register: output
   changed_when: "'already exists' not in output.stderr"
   failed_when: "'already exists' not in output.stderr and output.rc != 0"
@@ -568,7 +547,6 @@
   tags:
   - ipa/server
   - config
-  when: ipa_initial
   register: output
   changed_when: "'Number of permissions added 0' not in output.stdout"
   failed_when: "'Number of permissions added 0' not in output.stdout and output.rc != 0"
@@ -588,7 +566,6 @@
   tags:
   - ipa/server
   - config
-  when: ipa_initial
 
 
 - name: Destroy admin ticket
@@ -597,7 +574,6 @@
   - ipa/server
   - config
   - krb5
-  when: ipa_initial
 
 
 - import_tasks: scripts.yml
@@ -619,7 +595,6 @@
   tags:
   - ipa/server
   - config
-  when: ipa_initial
 
 
 - name: Create the sysadmin-main group
@@ -630,7 +605,6 @@
   tags:
   - ipa/server
   - config
-  when: ipa_initial
 
 
 - name: Create LDIF directory
