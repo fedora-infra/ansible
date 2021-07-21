@@ -16,7 +16,7 @@
 #    - 192.168.2.2
 #  gateway  
 #  deploy_host: # http server serving ignition files
-- hosts: os_control_stg:ocp_controlplane_stg
+- hosts: os_control_stg:ocp_controlplane_stg:ocp_workers_stg
   user: root
   gather_facts: false
 
@@ -63,6 +63,7 @@
             dest: /srv/web/infra/bigfiles/tftpboot/rhcos/{{ mac0 | lower | replace(":","-") }}
             mode: 0755
           delegate_to: 127.0.0.1
+          when: inventory_hostname in groups['ocp_workers_stg']
       tags:
         - ignition
         - repo
