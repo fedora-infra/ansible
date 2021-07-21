@@ -1,6 +1,6 @@
 #!/bin/bash
 
-RSYNC_FLAGS='-avSHP --no-motd'
+RSYNC_FLAGS='-avSHP --no-motd --timeout=1200 --contimeout=1200'
 DEBUG=1
 
 function syncHttpLogs {
@@ -23,13 +23,15 @@ function syncHttpLogs {
 	RSYNC_OUTPUT=$(/usr/bin/rsync $RSYNC_FLAGS --list-only $HOST::log/httpd/*$YESTERDAY* | grep xz$ | awk '{ print $5 }' )
         for f in ${RSYNC_OUTPUT}; do
             DEST=$(echo $f | /bin/sed s/-$YESTERDAY//)
-	    if [[ ${DEBUG} -eq 1 ]]; then
-		echo "${HOST}: Getting ${RSYNC_OUTPUT} and saving to ${DEST}"
-	    fi
-            /usr/bin/rsync $RSYNC_FLAGS $HOST::log/httpd/$f ./$DEST &> /dev/null
-	    if [[ $? -ne 0 ]]; then
-		echo "rsync from $HOST for file $f failed"
-	    fi
+	        if [[ ${DEBUG} -eq 1 ]]; then
+		        echo "${HOST}: Getting ${RSYNC_OUTPUT} and saving to ${DEST}"
+	        fi
+            for i in 2 1 0; do
+                timeout 12h /usr/bin/rsync $RSYNC_FLAGS $HOST::log/httpd/$f ./$DEST &> /dev/null && break
+	            if [[ $? -ne 0 ]]; then
+		            echo "rsync from $HOST for file $f failed, will repeat $i times"
+	            fi
+            done
         done
     done
 }
