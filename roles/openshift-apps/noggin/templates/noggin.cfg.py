@@ -45,6 +45,10 @@ MAIL_DOMAIN_BLOCKLIST = [
     "centosproject.org",
 ]
 
+# Banners
+TEMPLATES_CUSTOM_DIRECTORIES = ["/etc/noggin-templates"]
+ACCEPT_IMAGES_FROM = ["pagure.io"]
+
 # Those file should be mounted from OpenShift secrets
 FREEIPA_ADMIN_PASSWORD = from_file('/etc/noggin-secrets/ipa-admin')
 FERNET_SECRET = from_file('/etc/noggin-secrets/fernet').encode('utf-8')

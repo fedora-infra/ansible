@@ -38,6 +38,9 @@ spec:
         - name: noggin-config-volume
           mountPath: "/etc/noggin"
           readOnly: true
+        - name: noggin-templates-volume
+          mountPath: "/etc/noggin-templates"
+          readOnly: true
         - name: noggin-secrets-volume
           mountPath: "/etc/noggin-secrets"
           readOnly: true
@@ -91,6 +94,9 @@ spec:
       - name: noggin-config-volume
         configMap:
           name: noggin-config
+      - name: noggin-templates-volume
+        configMap:
+          name: noggin-templates
       - name: noggin-secrets-volume
         secret:
           secretName: noggin-secrets
