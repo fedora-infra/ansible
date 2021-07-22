@@ -97,7 +97,7 @@ virt_install_command_pxe_rhcos: virt-install -n {{ inventory_hostname }}
   --network bridge={{ main_bridge }},model=virtio,mac={{ mac_address }}
   --hvm --accelerate
   --autostart --wait=-1
-  --extra-args "ip={{ eth0_ip }}::{{ gw }}:{{ nm }}:{{ inventory_hostname }}:ens2:none nameserver={{ dns }} console=ttyS0 nomodeset rd.neednet=1 coreos.inst=yes coreos.inst.install_dev=vda coreos.live.rootfs_url={{ rhcos_install_rootfs_url }} coreos.inst.ignition_url={{ rhcos_ignition_file_url }}"
+  --extra-args "ip={{ eth0_ip }}::{{ gw }}:{{ nm }}:{{ inventory_hostname }}:ens2:none hostname={{ inventory_hostname }} nameserver={{ dns }} console=ttyS0 nomodeset rd.neednet=1 coreos.inst=yes coreos.inst.install_dev=vda coreos.live.rootfs_url={{ rhcos_install_rootfs_url }} coreos.inst.ignition_url={{ rhcos_ignition_file_url }}"
   --os-variant rhel7
   --location  {{ rhcos_install_url }}
 
