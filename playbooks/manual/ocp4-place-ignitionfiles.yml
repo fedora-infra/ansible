@@ -87,6 +87,8 @@
       - name: ensure the lv for the guest is made
         lvol: lv={{ inventory_hostname }} vg={{ volgroup }} size={{ lvm_size }} state=present
         delegate_to: "{{ vmhost }}"
+        tags:
+          - kvm_deploy
         when: inventory_hostname in ((groups['ocp_controlplane_stg'] + groups['ocp_boostrap_stg']) | unique)
       - name: == OCP KVM provisioning == Deploying the OCP Virtual Guest[s]
         command: "{{ virt_install_command }}"
