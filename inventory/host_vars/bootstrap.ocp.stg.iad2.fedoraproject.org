@@ -35,7 +35,7 @@ rhcos_install_url: "http://10.3.166.50/rhcos/"
 virt_install_command: "{{ virt_install_command_pxe_rhcos }}"
  
 network_connections:
-  - name: eth0
+  - name: ens2
     mac: "{{ mac0 }}"
     state: up
     type: ethernet
