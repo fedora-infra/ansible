@@ -42,7 +42,7 @@ LoadPlugin vmem
 </Plugin>
 
 <Plugin "interface">
-  Interface "/^veth*"
+  Interface "/^veth.*"
   Interface "/^vnet.*"
   IgnoreSelected true
 </Plugin>
@@ -51,8 +51,7 @@ LoadPlugin vmem
   MountPoint "^/.*/.snapshot/"
   MountPoint "^/run/containers/storage/overlay-containers/.*"
   MountPoint "^/tmp/iso/mount/.*"
-  MountPoint "^/var/lib/containers/docker/.*"
-  MountPoint "^/var/lib/containers/storage/.*"
+  MountPoint "^/var/lib/containers/.*"
   MountPoint "^/var/lib/docker/.*"
   MountPoint "^/var/lib/origin.*"
   FSType "shm"
