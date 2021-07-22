@@ -1058,6 +1058,10 @@ ocp_controlplane_stg
 ocp_workers_stg
 ocp_boostrap_stg
 
+[ocp_vms_stg:children]
+ocp_boostrap_stg
+ocp_controlplane_stg
+
 [ocp_controlplane_stg]
 ocp01.ocp.stg.iad2.fedoraproject.org
 ocp02.ocp.stg.iad2.fedoraproject.org
