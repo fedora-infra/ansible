@@ -43,7 +43,7 @@ syncHttpLogs proxy04.vpn.fedoraproject.org
 syncHttpLogs proxy05.vpn.fedoraproject.org
 syncHttpLogs proxy06.vpn.fedoraproject.org
 # syncHttpLogs proxy08.vpn.fedoraproject.org
-# syncHttpLogs proxy09.vpn.fedoraproject.org # proxy09 is acting up
+syncHttpLogs proxy09.vpn.fedoraproject.org # proxy09 is acting up
 syncHttpLogs proxy10.iad2.fedoraproject.org
 syncHttpLogs proxy11.vpn.fedoraproject.org
 syncHttpLogs proxy12.vpn.fedoraproject.org
