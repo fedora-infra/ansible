@@ -16,7 +16,7 @@
 #    - 192.168.2.2
 #  gateway  
 #  deploy_host: # http server serving ignition files
-- hosts: os_control_stg:ocp_controlplane_stg:ocp_workers_stg
+- hosts: os_control_stg:ocp_controlplane_stg:ocp_workers_stg:ocp_bootstrap_stg
   user: root
   gather_facts: false
 
@@ -82,16 +82,16 @@
       register: vm_exists
       tags:
         - kvm_deploy
-      when: inventory_hostname in groups['ocp_controlplane_stg']
+      when: inventory_hostname in groups['ocp_controlplane_stg','ocp_boostrap_stg']
     - block:
       - name: ensure the lv for the guest is made
         lvol: lv={{ inventory_hostname }} vg={{ volgroup }} size={{ lvm_size }} state=present
         delegate_to: "{{ vmhost }}"
-        when: inventory_hostname in groups['ocp_controlplane_stg']
+        when: inventory_hostname in groups['ocp_controlplane_stg','ocp_boostrap_stg']
       - name: == OCP KVM provisioning == Deploying the OCP Virtual Guest[s]
         command: "{{ virt_install_command }}"
         delegate_to: "{{ vmhost }}"
         tags:
           - kvm_deploy
-        when: inventory_hostname in groups['ocp_controlplane_stg']
+        when: inventory_hostname in groups['ocp_controlplane_stg','ocp_boostrap_stg']
       when: vm_exists is failed
