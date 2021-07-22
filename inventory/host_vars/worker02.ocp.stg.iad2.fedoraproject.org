@@ -12,7 +12,7 @@ dns_search1: "stg.iad2.fedoraproject.org"
 dns_search3: "fedoraproject.org"
  
 has_ipv4: yes
-eth0_ipv4: 10.3.166.118
+eth0_ipv4: 10.3.166.119
 eth0_ipv4_nm: 24
 eth0_ipv4_gw: 10.3.166.254 
 eth0_ip: "{{eth0_ipv4}}"
@@ -22,7 +22,7 @@ dns: "{{ dns1 }}"
 
 pxe_bootdev: eno1 
 install_dev: sda
-mac0: "70:B5:E8:D0:E2:E0"
+mac0: "70:B5:E8:D0:D4:90"
 
 rhcos_ignition_file_url: "http://10.3.166.50/rhcos/worker.ign"
 rhcos_install_img_url: "http://10.3.166.50/rhcos/rhcos-{{ rhcos_version }}-x86_64-metal.x86_64.raw.gz"
