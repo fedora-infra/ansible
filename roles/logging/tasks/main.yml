@@ -1,0 +1,60 @@
+---
+- name: Create /etc/pki/fedora-messaging
+  file:
+    dest: /etc/pki/fedora-messaging
+    mode: 0775
+    owner: root
+    group: root
+    state: directory
+  tags:
+  - config
+  - logging
+  - fedora-messaging
+
+- name: Deploy the fedora-messaging CA
+  copy:
+    src: "{{ private }}/files/rabbitmq/{{ env }}/pki/ca.crt"
+    dest: /etc/pki/fedora-messaging/rabbitmq-ca.crt
+    mode: 0644
+    owner: root
+    group: root
+  tags:
+  - config
+  - logging
+  - fedora-messaging
+
+- name: Deploy the fedora-messaging cert
+  copy:
+    src: "{{ private }}/files/rabbitmq/{{ env }}/pki/issued/logging{{ env_suffix }}.crt"
+    dest: /etc/pki/fedora-messaging/logging.crt
+    mode: 0644
+    owner: root
+    group: root
+  tags:
+  - config
+  - logging
+  - fedora-messaging
+
+- name: Deploy the fedora-messaging key
+  copy:
+    src: "{{ private }}/files/rabbitmq/{{ env }}/pki/private/logging{{ env_suffix }}.key"
+    dest: /etc/pki/fedora-messaging/logging.key
+    mode: 0600
+    owner: root
+    group: root
+  tags:
+  - config
+  - logging
+  - fedora-messaging
+
+- name: Install fedora-messaging config
+  template:
+    src: fedora-messaging.toml.j2
+    dest: /etc/fedora-messaging/config.toml
+    owner: root
+    group: root
+    mode: 0600
+  tags:
+  - config
+  - logging
+  - fedora-messaging

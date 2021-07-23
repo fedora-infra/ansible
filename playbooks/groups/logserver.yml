@@ -32,6 +32,7 @@
   # Set up for fedora-messaging
   - role: rabbit/user
     username: "logging{{ env_suffix }}"
+  - logging
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
