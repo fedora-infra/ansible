@@ -29,6 +29,9 @@
     service: HTTP
     host: "admin.fedoraproject.org"
     when: env == "production"
+  # Set up for fedora-messaging
+  - role: rabbit/user
+    username: "logging{{ env_suffix }}"
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
