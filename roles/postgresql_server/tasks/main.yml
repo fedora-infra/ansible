@@ -39,7 +39,18 @@
       stream=12
       profiles=
       state=enabled
-  when: ansible_distribution_major_version|int >= 8 and ansible_distribution == 'RedHat'
+  when: ansible_distribution_major_version|int >= 8 and ansible_distribution == 'RedHat' and not inventory_hostname.startswith('db-fas01.stg')
+
+- name: on db-fas01.stg enable the postgresql 9.6 module.
+  copy:
+    dest: /etc/dnf/modules.d/postgresql.module
+    content: |
+      [postgresql]
+      name=postgresql
+      stream=9.6
+      profiles=
+      state=enabled
+  when: inventory_hostname.startswith('db-fas01.stg')
 
 - name: install postgresql server packages (dnf)
   package:
