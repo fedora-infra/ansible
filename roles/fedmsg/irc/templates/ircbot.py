@@ -56,27 +56,27 @@ config = dict(
         ),
 
         # For fedora-apps
-        dict(
-            network='irc.libera.chat',
-            port=6667,
-            make_pretty=True,
-            make_terse=True,
-
-            {% if env == 'staging' %}
-            nickname='fm-stg-apps',
-            {% else %}
-            nickname='fm-apps',
-            {% endif %}
-            channel='fedora-apps',
-            filters=dict(
-                topic=[
-                    '^((?!(github\.create|github\.issue\.|github\.pull_request|github\.commit_comment|github\.star|pagure)).)*$',
-                ],
-                body=[
-                    "^((?!fedora-infra).)*$",
-                ],
-            ),
-        ),
+#        dict(
+#            network='irc.libera.chat',
+#            port=6667,
+#            make_pretty=True,
+#            make_terse=True,
+#
+#            {% if env == 'staging' %}
+#            nickname='fm-stg-apps',
+#            {% else %}
+#            nickname='fm-apps',
+#            {% endif %}
+#            channel='fedora-apps',
+#            filters=dict(
+#                topic=[
+#                    '^((?!(github\.create|github\.issue\.|github\.pull_request|github\.commit_comment|github\.star|pagure)).)*$',
+#                ],
+#                body=[
+#                    "^((?!fedora-infra).)*$",
+#                ],
+#            ),
+#        ),
 
         # For that commops crew!
         dict(
