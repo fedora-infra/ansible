@@ -1,3 +1,4 @@
+---
 - debug: msg="vm_name={{ vm_name }}"
 
 - name: random subnet to overcome datacenter failures
@@ -24,6 +25,8 @@
     aws_access_key: "{{ aws_access_key }}"
     aws_secret_key: "{{ aws_secret_key }}"
     volumes: "{% if instance_volumes is defined %}{{ instance_volumes }}{% else %}[]{% endif %}"
+    spot_price: "{{ spot_price if spot_price is defined else '' }}"
+    instance_initiated_shutdown_behavior: terminate
   register: ec2
 
 - name: Add new instance to host group

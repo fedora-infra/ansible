@@ -23,7 +23,7 @@
     image_name: "{{ builder_images[arch] }}"
 
   tasks:
-    - include: "spinup_aws_spot_task.yml"
+    - include: "spinup_aws_task.yml"
 
 
 - name: provision builder
