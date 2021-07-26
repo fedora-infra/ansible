@@ -609,6 +609,28 @@
     - app.os.fedoraproject.org
 
   - role: httpd/reverseproxy
+    website: "ocp{{ env_suffix }}.fedoraproject.org"
+    destname: ocp
+    balancer_name: ocp
+    targettype: openshift
+    balancer_members: "{{ ocp_masters }}"
+    keephost: true
+    tags:
+    - ocp.fedoraproject.org
+    when: env == "staging"
+
+  - role: httpd/reverseproxy
+    website: "app.ocp{{ env_suffix }}.fedoraproject.org"
+    destname: app.ocp
+    balancer_name: app-ocp
+    targettype: openshift
+    balancer_members: "{{ ocp_nodes }}"
+    keephost: true
+    tags:
+    - app.ocp.fedoraproject.org
+    when: env == "staging"
+
+  - role: httpd/reverseproxy
     website: "provision{{ env_suffix }}.fedoraproject.org"
     destname: zezere
     balancer_name: app-os
