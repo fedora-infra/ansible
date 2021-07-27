@@ -620,14 +620,14 @@
     when: env == "staging"
 
   - role: httpd/reverseproxy
-    website: "app.ocp{{ env_suffix }}.fedoraproject.org"
-    destname: app.ocp
-    balancer_name: app-ocp
+    website: "apps.ocp{{ env_suffix }}.fedoraproject.org"
+    destname: apps.ocp
+    balancer_name: apps-ocp
     targettype: openshift
     balancer_members: "{{ ocp_nodes }}"
     keephost: true
     tags:
-    - app.ocp.fedoraproject.org
+    - apps.ocp.fedoraproject.org
     when: env == "staging"
 
   - role: httpd/reverseproxy

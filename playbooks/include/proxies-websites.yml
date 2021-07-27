@@ -694,8 +694,8 @@
     when: env == "staging"
 
   - role: httpd/website
-    site_name: app.ocp.stg.fedoraproject.org
-    server_aliases: ["*.app.ocp.stg.fedoraproject.org"]
+    site_name: apps.ocp.stg.fedoraproject.org
+    server_aliases: ["*.apps.ocp.stg.fedoraproject.org"]
     sslonly: true
     cert_name: "{{os_wildcard_cert_name}}"
     SSLCertificateChainFile: "{{os_wildcard_int_file}}"
@@ -703,7 +703,7 @@
     # So non-h2 is needed to fix websockets.
     use_h2: false
     tags:
-    - app.ocp.stg.fedoraproject.org
+    - apps.ocp.stg.fedoraproject.org
     when: env == "staging"
 
   - role: httpd/website
