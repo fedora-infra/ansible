@@ -41,6 +41,10 @@
             src: "/srv/web/infra/bigfiles/openshiftboot/ocp-treeinfo.j2"
             dest: "/var/www/html/rhcos/.treeinfo"
             mode: 0644
+        - name: == OCP KVM provisioning == Copy kubeadmin config files to bastion
+          copy:
+            src: "/srv/web/infra/bigfiles/openshiftboot/auth/"
+            dest: "/root/ocp4/"
         - name: == OCP KVM provisioning == Downloading RHCOS deploy files
           get_url:
             dest: /var/www/html/rhcos/
