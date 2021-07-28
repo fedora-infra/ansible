@@ -73,6 +73,7 @@ custom_rules: [
     '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.119 -j ACCEPT',
     '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.120 -j ACCEPT',
     '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.121 -j ACCEPT',
+    '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.50 -j ACCEPT',
     '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.115 -j ACCEPT',
     '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.116 -j ACCEPT',
     '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.117 -j ACCEPT',
