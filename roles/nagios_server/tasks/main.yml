@@ -222,6 +222,7 @@
 - name: Copy /etc/nagios/services (internal files)
   copy: src=nagios/services/{{ item }} dest=/etc/nagios/services/{{ item }}
   with_items:
+    - copr.cfg
     - dns.cfg
     - haproxy.cfg
     - mail_queue.cfg

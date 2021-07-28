@@ -301,6 +301,7 @@ command[check_disk_/srv/cache/lookaside]=/usr/lib64/nagios/plugins/check_disk -w
 command[check_disk_/srv/diskimages]=/usr/lib64/nagios/plugins/check_disk -w 20% -c 10% -p /srv/diskimages
 command[check_disk_/srv/registry]=/usr/lib64/nagios/plugins/check_disk -w 20% -c 10% -p /srv/registry
 command[check_disk_/u01]=/usr/lib64/nagios/plugins/check_disk -w 15% -c 10% -p /u01
+command[check_disk_/var/lib/copr/public_html]=/usr/lib64/nagios/plugins/check_disk -w 20% -c 10% -p /var/lib/copr/public_html
 command[check_disk_/var/lib64/mock]=/usr/lib64/nagios/plugins/check_disk -w 20% -c 10% -p /var/lib/mock
 command[check_disk_/var/log]=/usr/lib64/nagios/plugins/check_disk -w 15% -c 10% -p /var/log
 command[check_zombie_procs]=/usr/lib64/nagios/plugins/check_procs -w 15 -c 25 -s Z
