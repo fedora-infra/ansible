@@ -549,7 +549,7 @@ host centos01 {
 }
 
 # Staging network
-host worker01.ocp-stg {
+host worker01-ocp-stg {
      hardware ethernet 68:05:CA:CE:A2:AC;
      fixed-address 10.3.166.118;
      filename "rhcos/68-05-ca-ce-a2-ac";
@@ -557,7 +557,7 @@ host worker01.ocp-stg {
      option routers 10.3.166.254;
      option subnet-mask 255.255.255.0;
 }
-host worker02.ocp-stg {
+host worker02-ocp-stg {
      hardware ethernet 68:05:CA:CE:A3:24;
      fixed-address 10.3.166.119;
      filename "rhcos/68-05-ca-ce-a3-24";
@@ -565,7 +565,7 @@ host worker02.ocp-stg {
      option routers 10.3.166.254;
      option subnet-mask 255.255.255.0;
 }
-host worker03.ocp-stg {
+host worker03-ocp-stg {
      hardware ethernet 68:05:CA:CE:A5:10;
      fixed-address 10.3.166.120;
      filename "rhcos/68-05-ca-ce-a5-10";
