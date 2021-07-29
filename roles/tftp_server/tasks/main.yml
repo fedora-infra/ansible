@@ -38,9 +38,9 @@
   when: datacenter != 'iad2' 
 
 - name: Set permissions on the rhcos tftpboot folder
-  command: chmod 755 /var/lib/tftpboot/{{item}}
-  with_items:
-    - rhcos
+  file: 
+    path: /var/lib/tftpboot/rhcos
+    mode: '0755'
   tags:
   - tftp_server
   when: datacenter == 'iad2' 
