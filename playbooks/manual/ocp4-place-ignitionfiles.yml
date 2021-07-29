@@ -56,6 +56,8 @@
             - "rhcos-{{ rhcos_version }}-x86_64-live-rootfs.x86_64.img"
             - "rhcos-{{ rhcos_version }}-x86_64-metal.x86_64.raw.gz"
             - "rhcos-{{ rhcos_version }}-x86_64-live-kernel-x86_64"
+          tags:
+            - download
         - name: == OCP KVM provisioning == Ensuring symlink for correct version {{ rhcos_version }}
           file:
             state: link
@@ -76,8 +78,7 @@
         - "rhcos-{{ rhcos_version }}-x86_64-live-kernel-x86_64"
       delegate_to: 127.0.0.1
       tags:
-        - ignition
-        - repo
+        - download
 
     - name: == Hardware provisioning == Generating the tftp configuration boot file
       template:
