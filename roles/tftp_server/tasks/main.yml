@@ -37,6 +37,14 @@
   - tftp_server
   when: datacenter != 'iad2' 
 
+- name: Set permissions on the rhcos tftpboot folder
+  command: chmod 755 /var/lib/tftpboot/{{item}}
+  with_items:
+    - rhcos
+  tags:
+  - tftp_server
+  when: datacenter == 'iad2' 
+
 - name: fill up the tftpboot directory
   synchronize: src="{{ bigfiles }}/tftpboot2/" dest=/var/lib/tftpboot/
   tags:
