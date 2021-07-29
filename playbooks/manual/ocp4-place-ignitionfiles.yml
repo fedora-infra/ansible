@@ -67,7 +67,7 @@
 
     - name: == OCP KVM provisioning == Downloading RHCOS deploy files
       get_url:
-        dest: /srv/web/infra/bigfiles/tftpboot/rhcos/
+        dest: /srv/web/infra/bigfiles/tftpboot2/rhcos/
         mode: 0755
         url: "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/{{ rhcos_version }}/{{ item }}"
       run_once: True
@@ -81,7 +81,7 @@
     - name: == Hardware provisioning == Generating the tftp configuration boot file
       template:
         src: ocp_pxeboot.j2
-        dest: /srv/web/infra/bigfiles/tftpboot/rhcos/{{ mac0 | lower | replace(":","-") }}
+        dest: /srv/web/infra/bigfiles/tftpboot2/rhcos/{{ mac0 | lower | replace(":","-") }}
         mode: 0755
       delegate_to: 127.0.0.1
       tags:
