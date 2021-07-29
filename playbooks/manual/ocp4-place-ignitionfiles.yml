@@ -78,6 +78,9 @@
         - "rhcos-{{ rhcos_version }}-x86_64-live-initramfs.x86_64.img"
         - "rhcos-{{ rhcos_version }}-x86_64-live-kernel-x86_64"
       delegate_to: 127.0.0.1
+      tags:
+        - ignition
+        - repo
 
     - name: == Hardware provisioning == Generating the tftp configuration boot file
       template:
