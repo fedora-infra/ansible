@@ -12,4 +12,4 @@ LABEL local
 LABEL {{ inventory_hostname}}-deploy
         MENU LABEL RHCOS {{ rhcos_version }} {{ arch }}- Kickstart for {{ inventory_hostname }}
         KERNEL rhcos/rhcos-{{ rhcos_version }}-{{ arch }}-live-kernel-{{ arch }}
-        APPEND ip={{ eth0_ip }}::{{ gw }}:{{ nm }}:{{ inventory_hostname }}:{{ pxe_bootdev }}:none nameserver={{ dns }} rd.neednet=1 initrd=rhcos-{{ rhcos_version }}-{{ arch }}-installer-initramfs.{{ arch }}.img console={{ kernel_console | default('tty0')}} coreos.inst=yes rd.md=1 rd.auto coreos.inst.install_dev={{ install_dev }} coreos.inst.image_url={{ rhcos_install_img_url }} coreos.inst.ignition_url={{ rhcos_ignition_file_url }}
+        APPEND ip={{ eth0_ip }}::{{ gw }}:{{ nm }}:{{ inventory_hostname }}:{{ pxe_bootdev }}:none nameserver={{ dns }} rd.neednet=1 initrd=rhcos-{{ rhcos_version }}-{{ arch }}-live-initramfs.{{ arch }}.img console={{ kernel_console | default('tty0')}} coreos.inst=yes rd.md=1 rd.auto coreos.inst.install_dev={{ install_dev }} coreos.inst.image_url={{ rhcos_install_img_url }} coreos.inst.ignition_url={{ rhcos_ignition_file_url }}
