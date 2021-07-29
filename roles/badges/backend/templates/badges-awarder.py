@@ -33,7 +33,7 @@ config = {
     # to fas usernames so it can act appropriately on certain message types.
     "fas_credentials": {
     {% if env == 'staging' %}
-        "base_url": "https://admin.stg.fedoraproject.org/accounts/",
+        "base_url": "https://accounts.stg.fedoraproject.org/",
     {% endif %}
         "username": "{{fedoraDummyUser}}",
         "password": "{{fedoraDummyUserPassword}}",

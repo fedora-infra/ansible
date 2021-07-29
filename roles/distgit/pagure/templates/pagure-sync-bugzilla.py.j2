@@ -101,14 +101,14 @@ VERBOSE = False
 DRYRUN = False
 
 {% if env == 'staging' %}
-FASURL = 'https://admin.stg.fedoraproject.org/accounts'
+FASURL = 'https://accounts.stg.fedoraproject.org'
 FASINSECURE = True
 PAGUREURL = 'https://stg.pagure.io'
 PAGURE_DIST_GIT_URL = 'https://src.stg.fedoraproject.org'
 PDCURL = 'https://pdc.stg.fedoraproject.org/rest_api/v1/'
 MDAPIURL = 'https://apps.stg.fedoraproject.org/mdapi/'
 {% else %}
-FASURL = 'https://admin.fedoraproject.org/accounts'
+FASURL = 'https://accounts.fedoraproject.org'
 FASINSECURE = False
 PAGUREURL = 'https://pagure.io'
 PAGURE_DIST_GIT_URL = 'https://src.fedoraproject.org'
@@ -190,8 +190,8 @@ address.
 
 c) Change your Fedora Account System email to match your existing
 bugzilla.redhat.com account.
-https://admin.fedoraproject.org/accounts login, click on 'my account',
-then 'edit' and change your email address.
+https://accounts.fedoraproject.org login, click on 'Edit profile',
+then 'Emails' and change your email address.
 
 If you have questions or concerns, please let us know.
 

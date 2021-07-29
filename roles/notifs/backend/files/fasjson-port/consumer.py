@@ -8,7 +8,7 @@ what user notification preferences are, both of which require expensive API
 queries to `FAS`_, `pkgdb`_, or the database.
 
 .. _fedmsg consumer: http://www.fedmsg.com/en/latest/consuming/#the-hub-consumer-approach
-.. _FAS: https://admin.fedoraproject.org/accounts/
+.. _FAS: https://accounts.fedoraproject.org/
 .. _pkgdb: https://admin.fedoraproject.org/pkgdb/
 """
 

@@ -112,7 +112,7 @@ class AccountSystem(BaseClient):
     # URLs for remote avatar providers.
     _valid_avatar_services = ['libravatar', 'gravatar']
 
-    def __init__(self, base_url='https://admin.fedoraproject.org/accounts/',
+    def __init__(self, base_url='https://accounts.fedoraproject.org/',
                  *args, **kwargs):
         '''Create the AccountSystem client object.
 

@@ -22,7 +22,7 @@ _cache = make_region(
 
 log = logging.getLogger("moksha.hub")
 
-default_url = 'https://admin.fedoraproject.org/accounts/'
+default_url = 'https://accounts.fedoraproject.org/'
 creds = config.app_conf['fas_credentials']
 
 fasjson = config.app_conf['fasjson']

@@ -16,7 +16,7 @@ config = {
     "fas_credentials": {
         "username": "{{fedoraDummyUser}}",
         "password": "{{fedoraDummyUserPassword}}",
-        "base_url": "https://admin.stg.fedoraproject.org/accounts",
+        "base_url": "https://accounts.stg.fedoraproject.org",
     },
     {% else %}
     "fas_credentials": {

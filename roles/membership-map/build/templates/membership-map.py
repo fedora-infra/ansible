@@ -41,9 +41,9 @@ def calc_list():
     password = '{{ fedoraDummyUserPassword }}'
 
 {% if env == "staging" %}
-    base_url = 'https://admin.stg.fedoraproject.org/accounts/'
+    base_url = 'https://accounts.stg.fedoraproject.org/'
 {% else %}
-    base_url = 'https://admin.fedoraproject.org/accounts/'
+    base_url = 'https://accounts.fedoraproject.org/'
 {% endif %}
 
     fas = AccountSystem(base_url=base_url, username=username, password=password)
