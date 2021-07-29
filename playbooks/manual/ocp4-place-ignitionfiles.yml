@@ -55,6 +55,7 @@
             - "rhcos-{{ rhcos_version }}-x86_64-live-initramfs.x86_64.img"
             - "rhcos-{{ rhcos_version }}-x86_64-live-rootfs.x86_64.img"
             - "rhcos-{{ rhcos_version }}-x86_64-metal.x86_64.raw.gz"
+            - "rhcos-{{ rhcos_version }}-x86_64-live-kernel-x86_64"
         - name: == OCP KVM provisioning == Ensuring symlink for correct version {{ rhcos_version }}
           file:
             state: link
