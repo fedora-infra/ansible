@@ -579,7 +579,7 @@
   file: path=/srv/web/infra/bigfiles/{{item}} mode=2660 owner=root group=sysadmin-openshift state=directory
   with_items:
   - openshiftboot
-  - tftpboot/rhcos
+  - tftpboot2/rhcos
   tags:
   - batcave
   - openshiftboot
@@ -588,7 +588,7 @@
   command: setfacl -R -m d:g:sysadmin-openshift:rwx -m g:sysadmin-openshift:rwx /srv/web/infra/bigfiles/{{item}}
   with_items:
   - openshiftboot
-  - tftpboot/rhcos
+  - tftpboot2/rhcos
   tags:
   - batcave
   - openshiftboot
