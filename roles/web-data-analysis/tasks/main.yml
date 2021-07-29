@@ -151,9 +151,30 @@
     - web-data
     - cron
 
-- name: install a sync httpd logs cron script only on log01
-  copy: src=syncHttpLogs.sh dest=/etc/cron.daily/syncHttpLogs.sh mode=0755
+- name: remove old syncHttpLogs.sh cron script only on log01
+  file:
+    path: /etc/cron.daily/syncHttpLogs.sh
+    state: absent
+  when: inventory_hostname.startswith('log01')
+  tags:
+    - web-data
+    - cron
+
+- name: write configuration file for script to sync httpd logs
+  template:
+    src: sync-http-logs.yaml.j2
+    dest: /etc/sync-http-logs.yaml
   when: inventory_hostname.startswith('log01')
   tags:
     - web-data
     - config
+
+- name: install a script to sync httpd logs via cron only on log01
+  copy:
+    src: sync-http-logs.py
+    dest: /etc/cron.daily/sync-http-logs.py
+    mode: 0755
+  when: inventory_hostname.startswith('log01')
+  tags:
+    - web-data
+    - cron
