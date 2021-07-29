@@ -1,0 +1,19 @@
+#!/bin/sh
+
+SERVER=kojihub.stream.centos.org
+STREAM_TOPDIR=kojifiles/repos/c9s-build/latest/
+
+https://kojihub.stream.centos.org/kojifiles/repos/c9s-build/latest/
+
+## mirror CentOS-9 Stream
+
+DESTDIR=/mnt/fedora/app/fi-repo/centos/centos-9-stream
+
+mkdir -p ${DESTDIR}
+
+for i in `echo aarch64 i386 ppc64le s390x x86_64`
+do
+        mkdir -p ${DESTDIR}/${i}
+	cd ${DESTDIR}
+	reposync --download-metadata --repofrompath=$i,https://kojihub.stream.centos.org/kojifiles/repos/c9s-build/latest/$i --disablerepo=\* --enablerepo=$i
+done

@@ -317,6 +317,17 @@
   when: inventory_hostname.startswith('batcave01')
 
 #
+# Setup centos 9s sync script.
+#
+
+- name: setup centos 9s sync script
+  copy: src=centos-9s-sync dest=/mnt/fedora/app/fi-repo/centos/centos-9s-sync mode=0775
+  tags:
+  - batcave
+  - config
+  when: inventory_hostname.startswith('batcave01')
+
+#
 # Setup rhel8-split script.
 #
 
