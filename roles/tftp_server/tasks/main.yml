@@ -37,16 +37,16 @@
   - tftp_server
   when: datacenter != 'iad2' 
 
-- name: Set permissions on the rhcos tftpboot folder
-  file: 
-    path: /var/lib/tftpboot/rhcos
-    mode: '0755'
+- name: fill up the tftpboot directory
+  synchronize: src="{{ bigfiles }}/tftpboot2/" dest=/var/lib/tftpboot/
   tags:
   - tftp_server
   when: datacenter == 'iad2' 
 
-- name: fill up the tftpboot directory
-  synchronize: src="{{ bigfiles }}/tftpboot2/" dest=/var/lib/tftpboot/
+- name: Set permissions on the rhcos tftpboot folder
+  file: 
+    path: /var/lib/tftpboot/rhcos
+    mode: '0755'
   tags:
   - tftp_server
   when: datacenter == 'iad2' 
