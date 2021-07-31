@@ -42,7 +42,7 @@
   #- import_tasks: "{{ tasks_path }}/mod_wsgi.yml"
 
   - name: set ip_conntrack_max to a high value as the proxies deal with lots of connections
-    sysctl: name=net.nf_conntrack_max valuei=26214400 state=present sysctl_set=yes reload=yes
+    sysctl: name=net.nf_conntrack_max value=26214400 state=present sysctl_set=yes reload=yes
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
