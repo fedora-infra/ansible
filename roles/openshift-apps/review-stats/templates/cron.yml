@@ -16,10 +16,6 @@ spec:
           labels:
             parent: "cronjobbuild"
         spec:
-          hostAliases:
-          - hostnames:
-            - bugzilla.stage.redhat.com
-            ip: 209.132.183.72
           containers:
           - name: build
             image: docker-registry.default.svc:5000/review-stats/builder:latest
@@ -63,10 +59,6 @@ spec:
           labels:
             parent: "cronjobbuild"
         spec:
-          hostAliases:
-          - hostnames:
-            - bugzilla.stage.redhat.com
-            ip: 209.132.183.72
           containers:
           - name: build
             image: docker-registry.default.svc:5000/review-stats/builder:latest
