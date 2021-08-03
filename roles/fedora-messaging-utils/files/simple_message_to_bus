@@ -1,0 +1,30 @@
+#!/bin/sh
+MSGTOPIC_PREFIX="${MSGTOPIC_PREFIX:-logging.stats}"
+topic="${MSGTOPIC_PREFIX}.$1"
+shift
+sent_at="$(TZ=UTC date -Iseconds)"
+id="$(uuidgen -r)"
+body="{"
+sep=""
+
+for body_piece; do
+    key_type="${body_piece%%=*}"
+    key="${key_type%%:*}"
+    type="${key_type#${key}}"
+    type="${type#:}"
+    value="${body_piece#*=}"
+
+    if [ "$type" != "int" ]; then
+        # quote strings
+        value="${value//\\/\\\\}"
+        value="${value//\"/\\\"}"
+        value="\"${value}\""
+    fi
+    body="${body}${sep}\"${key}\": ${value}"
+    sep=", "
+done
+body="${body}}"
+
+fedora-messaging publish - << EOF >/dev/null
+{"body": ${body}, "headers": {"fedora_messaging_schema": "base.message", "fedora_messaging_severity": 20, "sent-at": "${sent_at}"}, "id": "${id}", "queue": "queue", "topic": "${topic}"}
+EOF

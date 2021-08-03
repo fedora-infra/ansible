@@ -1,5 +1,8 @@
 #!/bin/bash
 
+RUN_ID="$(uuidgen -r)"
+simple_message_to_bus countme-update.start run_id="$RUN_ID"
+
 # Where do we keep our local/internal data?
 LOCAL_DATA_DIR=/var/lib/countme
 RAW_DB=$LOCAL_DATA_DIR/raw.db
@@ -31,7 +34,15 @@ die() { echo "${0##*/}: error: $*" >&2; exit 2; }
 # _run [COMMAND...]: Run a command, honoring $VERBOSE and $DRYRUN
 _run() {
     if [ "$VERBOSE" -o "$DRYRUN" ]; then echo "$@"; fi
-    if [ "$DRYRUN" ]; then return 0; else "$@"; fi
+    if [ "$DRYRUN" ]; then 
+      return 0
+    else
+      simple_message_to_bus countme-update.command.start run_id="$RUN_ID" command="$@"
+      "$@"
+      RESULT=$?
+      simple_message_to_bus countme-update.command.finish run_id="$RUN_ID" command="$@" result="$?"
+      return $RESULT
+    fi
 }
 
 # CLI help text
@@ -108,3 +119,6 @@ _run $_GIT diff --quiet || _run $_GIT commit -a -m "$(date -u +%F) update"
 # Copy new data into place
 _run atomic_copy $TOTALS_DB $PUBLIC_TOTALS_DB
 _run atomic_copy $TOTALS_CSV $PUBLIC_TOTALS_CSV
+
+simple_message_to_bus countme-update.finish run_id="$RUN_ID"
+

@@ -19,6 +19,9 @@
 # along with Fedora Project Infrastructure Ansible Repository.  If
 # not, see <http://www.gnu.org/licenses/>.
 
+RUN_ID="$(uuidgen -r)"
+simple_message_to_bus combinehttplogs.start run_id="$RUN_ID"
+
 # Some constants / standard paths
 LOGDIR=/var/log/hosts
 NFSDIR=/mnt/fedora_stats/combined-http
@@ -79,7 +82,9 @@ FILES=$( ls -1 ${PROXYLOG}/*access.log.xz | awk '{x=split($0,a,"/"); print a[x]}
 
 for FILE in ${FILES}; do
     TEMP=$(echo ${FILE} | sed 's/\.xz$//')
+    simple_message_to_bus combinehttplogs.logmerge.proxy.start run_id="$RUN_ID" log="$PROXYLOG" file="$FILE" target="$TARGET" temp="$TEMP"
     perl ${LOGMERGE} ${PROXYLOG}/${FILE} > ${TARGET}/${TEMP}
+    simple_message_to_bus combinehttplogs.logmerge.proxy.finish run_id="$RUN_ID" log="$PROXYLOG" file="$FILE" target="$TARGET" temp="$TEMP" result="$?"
 done
 
 ##
@@ -88,7 +93,9 @@ FILES=$( ls -1 ${DL_LOG}/dl*access.log.xz | awk '{x=split($0,a,"/"); print a[x]}
 
 for FILE in ${FILES}; do
     TEMP=$(echo ${FILE} | sed 's/\.xz$//')
+    simple_message_to_bus combinehttplogs.logmerge.download.start run_id="$RUN_ID" proxylog="$DL_LOG" file="$FILE" target="$TARGET" temp="$TEMP"
     perl ${LOGMERGE} ${DL_LOG}/${FILE} > ${TARGET}/${TEMP}
+    simple_message_to_bus combinehttplogs.logmerge.download.finish run_id="$RUN_ID" proxylog="$DL_LOG" file="$FILE" target="$TARGET" temp="$TEMP"  result="$?"
 done
 
 ##
@@ -99,7 +106,9 @@ FILES=$( ls -1 ${PEOPLE}/fedora*access.log.xz | awk '{x=split($0,a,"/"); print a
 
 for FILE in ${FILES}; do
     TEMP=$(echo ${FILE} | sed 's/\.xz$//')
+    simple_message_to_bus combinehttplogs.logmerge.people.start run_id="$RUN_ID" proxylog="$PEOPLE" file="$FILE" target="$TARGET" temp="$TEMP"
     perl ${LOGMERGE} ${PEOPLE}/${FILE} > ${TARGET}/${TEMP}
+    simple_message_to_bus combinehttplogs.logmerge.people.finish run_id="$RUN_ID" proxylog="$PEOPLE" file="$FILE" target="$TARGET" temp="$TEMP" result="$?"
 done
 
 # Now we link up the files into latest directory
@@ -116,3 +125,4 @@ if [[ "$UPDATE_LATEST" && -d ${NFSDIR}/latest ]]; then
     done
     popd &> /dev/null
 fi
+simple_message_to_bus combinehttplogs.finish run_id="$RUN_ID"

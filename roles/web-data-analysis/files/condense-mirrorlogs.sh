@@ -25,6 +25,8 @@
 # we are 5 days behind.
 
 # We have dropped this down to 3 days on 2019-10-01
+RUN_ID="$(uuidgen -r)"
+simple_message_to_bus condense-mirrorlogs.start run_id="$RUN_ID"
 
 let NUMDAYS=3
 let OLDDAYS=$(( $NUMDAYS+1 ))
@@ -71,7 +73,9 @@ if [[ ! -f ${LOGFILE} ]]; then
 elif [[ -f ${WORKFILE} ]]; then 
     echo "The workfile for ${YEAR}/${MONTH}/${DAY} already existed."
 else
+    simple_message_to_bus condense-mirrorlogs.mirrorlist.start run_id="$RUN_ID" workfile="$WORKFILE" logfile="$LOGFILE"
     ${LBIN}/mirrorlist.py -o ${WORKFILE} ${LOGFILE}; 
+    simple_message_to_bus condense-mirrorlogs.mirrorlist.finish run_id="$RUN_ID" workfile="$WORKFILE" logfile="$LOGFILE" result="$?"
 fi
 
 # So the data isn't strictly across month boundries due to the end of
@@ -106,3 +110,4 @@ gnuplot ${LSHARE}/${PROJECT}-data.gp
 
 # cleanup the temp data
 rm -rf ${TEMPDIR}
+simple_message_to_bus condense-mirrorlogs.finish run_id="$RUN_ID"
