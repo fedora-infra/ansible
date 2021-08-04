@@ -348,10 +348,10 @@ handlers = ["console"]
             key = "{{ (env == 'production')|ternary('fedora-35', 'testkey') }}"
             keyid = "{{ (env == 'production')|ternary('9867c58f', 'd300e724') }}"
 
-            # f35-rebuild
+            # f35-boost
             [[consumer_config.koji_instances.primary.tags]]
-            from = "f35-rebuild"
-            to = "f35-rebuild"
+            from = "f35-boost"
+            to = "f35-boost"
             key = "{{ (env == 'production')|ternary('fedora-35', 'testkey') }}"
             keyid = "{{ (env == 'production')|ternary('9867c58f', 'd300e724') }}"
 
