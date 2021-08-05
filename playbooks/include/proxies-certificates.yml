@@ -40,7 +40,7 @@
     SSLCertificateChainFile: wildcard-2021.apps.ocp.stg.fedoraproject.org.intermediate.cert
     when: env == "staging"
     tags:
-    - apps.ocp.fedoraproject.org
+    - apps.ocp.stg.fedoraproject.org
 
   - role: httpd/certificate
     certname: wildcard-2021.app.os.fedoraproject.org
