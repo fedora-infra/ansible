@@ -12,10 +12,6 @@
   dnf: name=copr-cli state=latest
   tags: copr_ping
 
-- stat: path="{{ ping_script }}"
-  register: script_stat
-  tags: copr_ping
-
 - name: install a stub script
   copy:
     dest: "{{ ping_script }}"
@@ -24,7 +20,6 @@
     group: "{{ ping_user }}"
     mode: 0700
   tags: copr_ping
-  when: not script_stat.stat.exists
 
 - name: rebuild the copr-ping package periodically
   ansible.builtin.cron:
