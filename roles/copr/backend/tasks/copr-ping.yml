@@ -3,6 +3,7 @@
     ping_user: copr-ping
     ping_scriptdir: /home/copr-ping
     ping_log: /home/copr-ping/ping.log
+    ping_script: copr-ping-script.sh
   tags: copr_ping
 
 - name: create the user ping user
@@ -15,7 +16,7 @@
 
 - name: install a stub script
   template:
-    dest: "{{ ping_scriptdir }}/{{ ping_script }}"
+    dest: "{{ ping_scriptdir }}/{{ item }}"
     src: "{{ item }}.j2"
     owner: "{{ ping_user }}"
     group: "{{ ping_user }}"
@@ -31,5 +32,5 @@
     minute: "{% if devel %}0{% else %}0,30{% endif %}"
     hour: "{% if devel %}1{% else %}*{% endif %}"
     user: copr-ping
-    job: "{{ ping_script }}"
+    job: "{{ ping_scriptdir }}/{{ ping_script }}"
   tags: copr_ping
