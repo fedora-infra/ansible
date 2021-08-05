@@ -10,7 +10,7 @@
 
 - name: install copr-cli package
   dnf: name=copr-cli state=latest
-  user: name={{ ping_user }}
+  tags: copr_ping
 
 - stat: path="{{ ping_script }}"
   register: script_stat
