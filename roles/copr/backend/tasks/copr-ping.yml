@@ -1,7 +1,8 @@
 ---
 - set_fact:
     ping_user: copr-ping
-    ping_script: /home/copr-ping/ping-copr.sh
+    ping_scriptdir: /home/copr-ping
+    ping_log: /home/copr-ping/ping.log
   tags: copr_ping
 
 - name: create the user ping user
@@ -13,12 +14,15 @@
   tags: copr_ping
 
 - name: install a stub script
-  copy:
-    dest: "{{ ping_script }}"
-    src: ping-script.sh
+  template:
+    dest: "{{ ping_scriptdir }}/{{ ping_script }}"
+    src: "{{ item }}.j2"
     owner: "{{ ping_user }}"
     group: "{{ ping_user }}"
     mode: 0700
+  with_items:
+    - copr-ping-script.sh
+    - copr-ping-check.py
   tags: copr_ping
 
 - name: rebuild the copr-ping package periodically

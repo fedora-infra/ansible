@@ -1,0 +1,93 @@
+#! /usr/bin/python3
+
+"""
+Analyze "{{ ping_log }}"
+"""
+
+import sys
+import logging
+import queue
+
+FILE = "{{ ping_log }}"
+TAKE_LAST_N_ATTEMPTS = 10
+WARN_TIME = 6*60
+ERR_TIME = 20*60
+
+EXIT_OK = 0
+EXIT_WARN = 1
+EXIT_CRITICAL = 2
+EXIT_UNKNOWN = 3
+
+LOG = logging.getLogger()
+
+
+class Context:  # pylint: disable=too-few-public-methods
+    """ Just a context structure """
+    status = EXIT_OK
+
+
+def set_status(context, status):
+    """
+    Set a CTX.status to STATUS, if STATUS is worse than the actual
+    """
+    if context.status < status:
+        context.status = status
+
+
+def warning(context, msg, *args):
+    """ Throw a nagios warning """
+    LOG.warning(msg, *args)
+    set_status(context, EXIT_WARN)
+
+
+def error(context, msg, *args):
+    """ Throw a nagios error """
+    LOG.error(msg, *args)
+    set_status(context, EXIT_CRITICAL)
+
+
+def _main(ctx):
+    last_lines = queue.Queue()
+
+    with open(FILE) as file:
+        for line in file:
+            last_lines.put(line)
+
+            if len(last_lines.queue) > TAKE_LAST_N_ATTEMPTS:
+                last_lines.get()
+
+    while last_lines.queue:
+        line = last_lines.get()
+        values = {
+            "start": None,
+            "stop": None,
+            "exit_status": -1,
+        }
+
+        for value in line.split():
+            key, value = value.split('=')
+            values[key] = value
+
+        if values["start"] is None or values["stop"] is None or values["exit_status"] == -1:
+            LOG.error("some values not set in %s", FILE)
+            sys.exit(EXIT_CRITICAL)
+
+        start = int(values["start"])
+        stop = int(values["stop"])
+        took = stop - start
+        if took > ERR_TIME:
+            error(ctx, "Attempt to build took %ss (allowed %s)", took, WARN_TIME)
+        elif took > WARN_TIME:
+            warning(ctx, "Attempt to build took %ss (allowed %s)", took, WARN_TIME)
+
+        if int(values["exit_status"]) != 0:
+            error(ctx, "Exit status is non-zero: %s", values["exit_status"])
+
+if __name__ == "__main__":
+    ctx = Context()
+    try:
+        _main(ctx)
+        sys.exit(ctx.status)
+    except Exception:  # pylint: disable=broad-except
+        LOG.exception("UNKNOWN EXCEPTION")
+        sys.exit(EXIT_CRITICAL)
