@@ -21,7 +21,7 @@ gw: "{{ eth0_ipv4_gw }}"
 dns: "{{ dns1 }}"
 
 pxe_bootdev: eno1 
-install_dev: sda
+install_dev: /dev/sda
 mac0: "68:05:CA:CE:A2:AC"
 
 rhcos_ignition_file_url: "http://10.3.166.50/rhcos/worker.ign"
