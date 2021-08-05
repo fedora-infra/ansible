@@ -8,6 +8,10 @@
   user: name={{ ping_user }}
   tags: copr_ping
 
+- name: install copr-cli package
+  dnf: name=copr-cli state=latest
+  user: name={{ ping_user }}
+
 - stat: path="{{ ping_script }}"
   register: script_stat
   tags: copr_ping
@@ -15,12 +19,7 @@
 - name: install a stub script
   copy:
     dest: "{{ ping_script }}"
-    content: |
-      #! /bin/bash
-      # Rebuild the testing package to check that Copr stack is up&running
-      curl -X POST https://copr.fedorainfracloud.org/webhooks/custom/47259/<secret>/copr-ping/
-      # you also need to configure ~/.config/copr file for 'bot-copr-ping' user
-      # for the {{ env }} environment!
+    src: ping-script.sh
     owner: "{{ ping_user }}"
     group: "{{ ping_user }}"
     mode: 0700
