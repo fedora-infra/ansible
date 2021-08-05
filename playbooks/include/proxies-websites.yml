@@ -695,7 +695,7 @@
 
   - role: httpd/website
     site_name: apps.ocp.stg.fedoraproject.org
-    server_aliases: ["*.apps.ocp.stg.fedoraproject.org" api.apps.ocp.stg.fedoraproject.org]
+    server_aliases: ["*.apps.ocp.stg.fedoraproject.org", api.apps.ocp.stg.fedoraproject.org]
     sslonly: true
     cert_name: "{{ocp_wildcard_cert_name}}"
     SSLCertificateChainFile: "{{ocp_wildcard_int_file}}"
