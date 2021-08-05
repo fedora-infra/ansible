@@ -24,8 +24,8 @@
 - name: rebuild the copr-ping package periodically
   ansible.builtin.cron:
     name: build the ping package
-    minute: "0,30"
-    hour: "*"
+    minute: "{% if devel %}0{% else %}0,30{% endif %}"
+    hour: "{% if devel %}1{% else %}*{% endif %}"
     user: copr-ping
     job: "{{ ping_script }}"
   tags: copr_ping
