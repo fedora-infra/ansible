@@ -353,3 +353,7 @@
   tags:
   - config
   - aws_config
+
+- name: copr-ping-account
+  import_tasks: copr-ping.yml
+  tags: copr_ping
