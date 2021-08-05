@@ -91,7 +91,8 @@
     backup: yes
   notify: restart apache
 
-- include_role: keytab/service
+- include_role:
+  name: keytab/service
   vars:
     service: copr-frontend-http-api
     host: "coprfe-{{env_suffix}}.fedoraproject.org"
