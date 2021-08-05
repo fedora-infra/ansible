@@ -24,10 +24,12 @@ pxe_bootdev: eno1
 install_dev: /dev/sda
 mac0: "68:05:CA:CE:A5:10"
 
-rhcos_ignition_file_url: "http://10.3.166.50/rhcos/worker.ign"
 rhcos_install_img_url: "http://10.3.166.50/rhcos/rhcos-{{ rhcos_version }}-x86_64-metal.x86_64.raw.gz"
-rhcos_install_rootfs_url: "http://10.3.166.50/rhcos/rhcos-{{ rhcos_version }}-x86_64-live-rootfs.x86_64.img"
 rhcos_install_url: "http://10.3.166.50/rhcos/"
+rhcos_kernel_url: "http://10.3.166.50/rhcos/rhcos-{{ rhcos_version }}-x86_64-live-kernel.x86_64"
+rhcos_initrd_url: "http://10.3.166.50/rhcos/rhcos-{{ rhcos_version }}-x86_64-live-initramfs.x86_64.img"
+rhcos_install_rootfs_url: "http://10.3.166.50/rhcos/rhcos-{{ rhcos_version }}-x86_64-live-rootfs.x86_64.img"
+rhcos_ignition_file_url: "http://10.3.166.50/rhcos/worker.ign"
  
 network_connections:
   - name: eth0
