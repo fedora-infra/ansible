@@ -51,9 +51,9 @@
   template:
     src: fedora-messaging.toml.j2
     dest: /etc/fedora-messaging/config.toml
-    owner: root
-    group: root
-    mode: 0600
+    owner: countme
+    group: countme
+    mode: 0660
   tags:
   - config
   - logging
