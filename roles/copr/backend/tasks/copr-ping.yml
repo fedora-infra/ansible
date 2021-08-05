@@ -8,7 +8,7 @@
   user: name={{ ping_user }}
   tags: copr_ping
 
-- stat: "{{ ping_script }}"
+- stat: path="{{ ping_script }}"
   register: script_stat
   tags: copr_ping
 
