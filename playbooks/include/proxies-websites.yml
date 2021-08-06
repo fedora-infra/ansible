@@ -967,13 +967,6 @@
     tags: languages
 
   - role: httpd/website
-    site_name: fpdc.fedoraproject.org
-    sslonly: true
-    server_aliases: [fpdc.stg.fedoraproject.org]
-    cert_name: "{{wildcard_cert_name}}"
-    tags: fpdc
-
-  - role: httpd/website
     site_name: neuro.fedoraproject.org
     sslonly: true
     server_aliases: [neuro.stg.fedoraproject.org]
