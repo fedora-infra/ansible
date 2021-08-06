@@ -25,7 +25,7 @@ nm: 255.255.255.0
 gw: "{{ eth0_ipv4_gw }}"
 dns: "{{ dns1 }}"
  
-mac0: "52:54:00:CE:A5:10"
+mac0: "{{ ansible_default_ipv4.macaddress }}"
 
 rhcos_ignition_file_url: "http://10.3.166.50/rhcos/controlplane.ign"
 rhcos_install_img_url: "http://10.3.166.50/rhcos/rhcos-{{ rhcos_version }}-x86_64-metal.x86_64.raw.gz"

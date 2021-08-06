@@ -549,27 +549,6 @@ host centos01 {
 }
 
 # Staging network
-host ocp01-ocp-stg {
-     hardware ethernet 52:54:00:CE:A2:AC;
-     fixed-address 10.3.166.115;
-     next-server 10.3.163.10;
-     option routers 10.3.166.254;
-     option subnet-mask 255.255.255.0;
-}
-host ocp02-ocp-stg {
-     hardware ethernet 52:54:00:CE:A3:24;
-     fixed-address 10.3.166.116;
-     next-server 10.3.163.10;
-     option routers 10.3.166.254;
-     option subnet-mask 255.255.255.0;
-}
-host ocp03-ocp-stg {
-     hardware ethernet 52:54:00:CE:A5:10;
-     fixed-address 10.3.166.117;
-     next-server 10.3.163.10;
-     option routers 10.3.166.254;
-     option subnet-mask 255.255.255.0;
-}
 host worker01-ocp-stg {
      hardware ethernet 68:05:CA:CE:A2:AC;
      fixed-address 10.3.166.118;
