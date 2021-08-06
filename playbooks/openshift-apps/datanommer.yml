@@ -1,0 +1,68 @@
+- name: make the app be real
+  hosts: os_masters_stg[0]
+  user: root
+  gather_facts: False
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  roles:
+  - role: rabbit/user
+    username: "datanommer{{ env_suffix }}"
+
+  - role: openshift/project
+    app: datanommer
+    description: "Fedora messaging consumer"
+    appowners:
+    - abompard
+    - ryanlerch
+    - james02135
+    - lenkaseg
+    tags:
+      - apply-appowners
+    when: env == "production"
+
+  - role: openshift/project
+    app: datanommer
+    description: "Fedora messaging consumer"
+    appowners:
+    - abompard
+    - ryanlerch
+    - james02135
+    - lenkaseg
+    tags:
+      - apply-appowners
+    when: env == "staging"
+
+  - role: openshift/secret-file
+    app: datanommer
+    secret_name: fedora-messaging-ca
+    key: cacert.pem
+    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+  - role: openshift/secret-file
+    app: datanommer
+    secret_name: fedora-messaging-crt
+    key: datanommer-cert.pem
+    privatefile: "rabbitmq/{{env}}/pki/issued/datanommer{{env_suffix}}.crt"
+  - role: openshift/secret-file
+    app: datanommer
+    secret_name: fedora-messaging-key
+    key: datanommer-key.pem
+    privatefile: "rabbitmq/{{env}}/pki/private/datanommer{{env_suffix}}.key"
+
+  - role: openshift/object
+    app: datanommer
+    template: buildconfig.yml
+    objectname: buildconfig.yml
+
+  - role: openshift/object
+    app: datanommer
+    template: configmap.yml
+    objectname: configmap.yml
+
+  - role: openshift/object
+    app: datanommer
+    template: deploymentconfig.yml
+    objectname: deploymentconfig.yml

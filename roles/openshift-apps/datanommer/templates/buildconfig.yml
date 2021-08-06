@@ -1,0 +1,38 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: datanommer
+  labels:
+    app: Datanommer
+    build: datanommer
+spec:
+  runPolicy: Serial
+  source:
+    type: Git
+    git:
+      uri: https://github.com/fedora-infra/datanommer.git
+{% if env == "staging" %}
+      ref: staging
+{% else %}
+      ref: stable
+{% endif %}
+    contextDir: /
+  strategy:
+    type: Source
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: python:3.8
+        namespace: openshift
+  output:
+    to:
+      kind: ImageStreamTag
+      name: datanommer:latest
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+{% if datanommer_stg_github_secret is defined and env == 'staging' %}
+  - type: GitHub
+    github:
+      secret: "{{ datanommer_stg_github_secret }}"
+{% endif %}

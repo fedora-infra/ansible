@@ -1,0 +1,71 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: datanommer
+  labels:
+    app: Datanommer
+spec:
+  replicas: 1
+  selector:
+    app: Datanommer
+    deploymentconfig: datanommer
+  strategy:
+    type: Rolling
+    activeDeadlineSeconds: 21600
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: Datanommer
+        deploymentconfig: datanommer
+    spec:
+      containers:
+      - name: datanommer
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: fedora-messaging-config-volume
+          mountPath: "/etc/fedora-messaging"
+          readOnly: true
+        - name: fedora-messaging-ca-volume
+          mountPath: /etc/pki/fedora-messaging/cacert.pem
+          subPath: cacert.pem
+          readOnly: true
+        - name: fedora-messaging-crt-volume
+          mountPath: /etc/pki/fedora-messaging/datanommer-cert.pem
+          subPath: datanommer-cert.pem
+          readOnly: true
+        - name: fedora-messaging-key-volume
+          mountPath: /etc/pki/fedora-messaging/datanommer-key.pem
+          subPath: datanommer-key.pem
+          readOnly: true
+      volumes:
+      - name: fedora-messaging-config-volume
+        configMap:
+          name: fedora-messaging-config
+      - name: fedora-messaging-ca-volume
+        secret:
+          secretName: fedora-messaging-ca
+      - name: fedora-messaging-crt-volume
+        secret:
+          secretName: fedora-messaging-crt
+      - name: fedora-messaging-key-volume
+        secret:
+          secretName: fedora-messaging-key
+  triggers:
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - datanommer
+      from:
+        kind: ImageStreamTag
+        name: datanommer:latest
+    type: ImageChange
+  - type: ConfigChange
