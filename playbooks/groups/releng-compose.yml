@@ -171,18 +171,6 @@
     tags:
     - containerrebuild
 
-#  - name: install docker for container management
-#    package:
-#      name: docker
-#    tags:
-#    - containerrebuild
-#
-#  - name: enable and start docker service
-#    service:
-#      name: docker
-#      state: started
-#      enabled: yes
-#
   - name: install ansible for container automated rebuilds
     package:
       name:
