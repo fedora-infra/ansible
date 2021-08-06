@@ -18,6 +18,7 @@
 #  deploy_host: # http server serving ignition files
 - hosts: os_control_stg:ocp_controlplane_stg:ocp_workers_stg:ocp_boostrap_stg:ocp_vms_stg
   user: root
+  gather_facts: false
 
   tasks:
     - block:
