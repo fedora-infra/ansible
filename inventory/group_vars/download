@@ -3,6 +3,9 @@ primary_auth_source: ipa
 ipa_host_group: download
 ipa_host_group_desc: Download servers
 
+nagios_Check_Services:
+  swap: false
+
 dl_tier1:
   - 10.0.0.0/8			       # Red Hat Internal
   - 128.171.104.148                    # mirror.ancl.hawaii.edu.
