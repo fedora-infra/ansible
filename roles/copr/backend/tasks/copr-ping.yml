@@ -4,7 +4,6 @@
     ping_scriptdir: /home/copr-ping
     ping_log: /var/log/copr-ping.log
     ping_script: copr-ping-script.sh
-    ping_check: copr-ping-check.py
   tags: copr_ping
 
 - stat: path={{ ping_log }}
@@ -39,8 +38,8 @@
 
 - name: install the check script
   template:
-    dest: "/usr/bin/{{ ping_check }}"
-    src: "{{ ping_check }}.j2"
+    dest: "/usr/bin/{{ ping_check_script }}"
+    src: "{{ ping_check_script }}.j2"
     owner: "{{ ping_user }}"
     group: "{{ ping_user }}"
     mode: 0700

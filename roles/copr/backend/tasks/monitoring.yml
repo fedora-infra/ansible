@@ -1,12 +1,12 @@
+---
 - name: install nrpe checks
-  # template: src=copr_backend_nrpe.cfg dest=/etc/nrpe.d/copr_backend_nrpe.cfg
-  file:
-    path: /etc/nrpe.d/copr_backend_nrpe.cfg
-    state: absent
+  template: src=copr_backend_nrpe.cfg
+            dest=/etc/nrpe.d/copr_backend_nrpe.cfg
   notify:
   - restart nrpe
   tags:
   - nagios_client
+  - copr_ping
 
 - name: set acl for nrpe on /etc/copr
   acl: name=/etc/copr entity=nrpe etype=user permissions=rx state=present
