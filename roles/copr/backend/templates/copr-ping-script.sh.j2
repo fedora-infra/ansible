@@ -8,4 +8,4 @@ build_id=$(echo "$output" | grep 'Created builds:' | cut -d' ' -f3)
 took=$(( stop_time - start_time ))
 
 echo "build_id=$build_id start=$start_time stop=$stop_time took=$took exit_status=$exit_status" \
-    >> ~/ping.log
+    >> "{{ ping_log }}"
