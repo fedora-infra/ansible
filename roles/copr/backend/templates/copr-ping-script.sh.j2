@@ -1,7 +1,11 @@
 #! /bin/sh
 
 start_time=$(date +%s)
-copr build-package @copr/copr-ping --name copr-ping
+output=$(copr build-package @copr/copr-ping --name copr-ping)
 exit_status=$?
-echo "start=$start_time stop=$(date +%s) exit_status=$exit_status" \
+stop_time=$(date +%s)
+build_id=$(echo "$output" | grep 'Created builds:' | cut -d' ' -f3)
+took=$(( stop_time - start_time ))
+
+echo "build_id=$build_id start=$start_time stop=$stop_time took=$took exit_status=$exit_status" \
     >> ~/ping.log

@@ -2,8 +2,22 @@
 - set_fact:
     ping_user: copr-ping
     ping_scriptdir: /home/copr-ping
-    ping_log: /home/copr-ping/ping.log
+    ping_log: /var/log/copr-ping.log
     ping_script: copr-ping-script.sh
+    ping_check: copr-ping-check.py
+  tags: copr_ping
+
+- stat: path={{ ping_log }}
+  register: ping_log
+  tags: copr_ping
+
+- name: pre-create ping log file
+  file:
+    path: "{{ ping_log }}"
+    owner: "{{ ping_user }}"
+    group: nagios
+    mode: '0644'
+  when: not ping_log.stat.exists
   tags: copr_ping
 
 - name: create the user ping user
@@ -14,16 +28,22 @@
   dnf: name=copr-cli state=latest
   tags: copr_ping
 
-- name: install a stub script
+- name: install the ping script
   template:
-    dest: "{{ ping_scriptdir }}/{{ item }}"
-    src: "{{ item }}.j2"
+    dest: "{{ ping_scriptdir }}/{{ ping_script }}"
+    src: "{{ ping_script }}.j2"
     owner: "{{ ping_user }}"
     group: "{{ ping_user }}"
     mode: 0700
-  with_items:
-    - copr-ping-script.sh
-    - copr-ping-check.py
+  tags: copr_ping
+
+- name: install the check script
+  template:
+    dest: "/usr/bin/{{ ping_check }}"
+    src: "{{ ping_check }}.j2"
+    owner: "{{ ping_user }}"
+    group: "{{ ping_user }}"
+    mode: 0700
   tags: copr_ping
 
 - name: rebuild the copr-ping package periodically
