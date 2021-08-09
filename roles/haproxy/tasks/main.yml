@@ -40,6 +40,14 @@
   tags:
   - haproxy
 
+- name: install ocp api pem cert
+  copy: src={{ private }}/files/httpd/api-int.ocp{{ env_suffix }}.fedoraproject.org.pem
+        dest=/etc/haproxy/ocp4.pem
+        owner=root group=root mode=0600
+  tags:
+  - haproxy
+  when: env == "staging"
+
 - name: install libsemanage
   package:
     state: present
