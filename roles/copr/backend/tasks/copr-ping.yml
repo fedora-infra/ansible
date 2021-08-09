@@ -16,6 +16,7 @@
     owner: "{{ ping_user }}"
     group: nagios
     mode: '0644'
+    state: touch
   when: not ping_log_check.stat.exists
   tags: copr_ping
 
