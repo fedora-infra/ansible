@@ -93,9 +93,9 @@ def _main(context):
             error(context, "Exit status is %s (non-zero) for build ID %s",
                   values["exit_status"], values["build_id"])
 
-        if context.status == EXIT_OK:
-            LOG.info("Last %s attempts to build copr-ping succeeded!",
-                     builds_checked)
+    if context.status == EXIT_OK:
+        LOG.info("Last %s attempts to build copr-ping succeeded!",
+                 builds_checked)
 
 
 if __name__ == "__main__":
