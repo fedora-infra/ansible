@@ -46,7 +46,7 @@ def error(context, msg, *args):
     set_status(context, EXIT_CRITICAL)
 
 
-def _main(ctx):
+def _main(context):
     last_lines = queue.Queue()
 
     with open(FILE) as file:
@@ -56,12 +56,16 @@ def _main(ctx):
             if len(last_lines.queue) > TAKE_LAST_N_ATTEMPTS:
                 last_lines.get()
 
+    builds_checked = 0
     while last_lines.queue:
+        builds_checked += 0
+
         line = last_lines.get()
         values = {
             "start": None,
             "stop": None,
             "exit_status": -1,
+            "build_id": 0,
         }
 
         for value in line.split():
@@ -76,12 +80,18 @@ def _main(ctx):
         stop = int(values["stop"])
         took = stop - start
         if took > ERR_TIME:
-            error(ctx, "Attempt to build took %ss (allowed %s)", took, WARN_TIME)
+            error(context, "Attempt to build took %ss (allowed %s)", took, WARN_TIME)
         elif took > WARN_TIME:
-            warning(ctx, "Attempt to build took %ss (allowed %s)", took, WARN_TIME)
+            warning(context, "Attempt to build took %ss (allowed %s)", took, WARN_TIME)
 
         if int(values["exit_status"]) != 0:
-            error(ctx, "Exit status is non-zero: %s", values["exit_status"])
+            error(context, "Exit status is %s (non-zero) for build ID %s",
+                  values["exit_status"], values["build_id"])
+
+        if context.status == EXIT_OK:
+            LOG.info("Last %s attempts to build copr-ping succeeded!",
+                     builds_checked)
+
 
 if __name__ == "__main__":
     ctx = Context()
