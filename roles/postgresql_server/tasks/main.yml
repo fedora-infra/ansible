@@ -210,5 +210,5 @@
   - SAR
   - GBDR
 
-- include_tasks: datanommer.yml
+- import_tasks: datanommer.yml
   when: inventory_hostname.startswith('db-datanommer01') and env == "staging"
