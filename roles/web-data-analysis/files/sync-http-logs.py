@@ -67,8 +67,17 @@ def link_force_atomic(src, dst):
             # ignore if the file exists, just try another file name
             pass
         else:
-            # no exception: linking succeeded, rename & break out of the loop
+            # no exception: linking to temp file succeeded, rename it over dst
             os.rename(tmpdst, dst)
+
+            # if tmpdst and dst are the same hard link, unlink tmpdst here because os.rename() would
+            # have been a no-op
+            try:
+                os.unlink(tmpdst)
+            except FileNotFoundError:
+                # os.rename() above wasn't a no-op, i.e. tmpdst was renamed already
+                pass
+
             break
 
 
