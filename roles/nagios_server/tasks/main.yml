@@ -251,7 +251,6 @@
 - name: Copy /etc/nagios/services (External)
   copy: src=nagios/services/{{ item }} dest=/etc/nagios/services/{{ item }}
   with_items:
-    - copr_external.cfg
     - dns.cfg
     - smtp-mm.cfg
     - unbound.cfg
