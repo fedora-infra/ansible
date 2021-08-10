@@ -51,6 +51,12 @@
     target: "{{ ping_log }}"
     setype: nrpe_var_run_t
     state: present
+  register: semanage_run
+  tags: copr_ping
+
+- name: restorecon ping_log
+  shell: restorecon -irv "{{ ping_log }}"
+  when: semanage_run.changed
   tags: copr_ping
 
 - name: rebuild the copr-ping package periodically
