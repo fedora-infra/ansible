@@ -261,6 +261,17 @@
   when: env == "production" and nagios_location == "external"
   notify: restart nagios
 
+## Drop services we don't need
+- name: Nuke unneded services from /etc/nagios/services (External)
+  file: dest=/etc/nagios/services/{{ item }} state=absent
+  with_items:
+    - copr_external.cfg
+  tags:
+  - nagios_config
+  - nagios_server
+  when: env == "production" and nagios_location == "external"
+  notify: restart nagios
+
 ## Copy over the servicegroups
 - name: Copy /etc/nagios/servicegroups
   synchronize: src=nagios/servicegroups/ dest=/etc/nagios/servicegroups/
