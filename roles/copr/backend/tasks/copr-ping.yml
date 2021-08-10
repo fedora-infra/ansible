@@ -2,7 +2,7 @@
 - set_fact:
     ping_user: copr-ping
     ping_scriptdir: /home/copr-ping
-    ping_log: /var/log/copr-ping.log
+    ping_log: /var/tmp/copr-ping.log
     ping_script: copr-ping-script.sh
   tags: copr_ping
 
@@ -44,6 +44,13 @@
     owner: "{{ ping_user }}"
     group: "nagios"
     mode: 0750
+  tags: copr_ping
+
+- name: selinux - allow nrpe_t to read ping_log
+  sefcontext:
+    target: "{{ ping_log }}"
+    setype: nrpe_var_run_t
+    state: present
   tags: copr_ping
 
 - name: rebuild the copr-ping package periodically
