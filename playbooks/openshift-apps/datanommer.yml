@@ -54,6 +54,11 @@
 
   - role: openshift/object
     app: datanommer
+    file: imagestream.yml
+    objectname: imagestream.yml
+
+  - role: openshift/object
+    app: datanommer
     template: buildconfig.yml
     objectname: buildconfig.yml
 
