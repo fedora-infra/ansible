@@ -2,11 +2,44 @@
 nrpe_procs_warn: 900
 nrpe_procs_crit: 1000
 datacenter: rdu-cc
-br0_ip: 8.43.85.69
-br0_nm: 255.255.255.0
-gw: 8.43.85.254
-dns: 8.8.8.8
+
+dns1: 8.8.8.8
+
+dns_search1: "rdu-cc.fedoraproject.org"
+dns_search2: "fedoraproject.org"
+
+has_ipv4: yes
+br0_ipv4: 8.43.85.69
+br0_ipv4_nm: 24
+br0_ipv4_gw: 8.43.85.254
+
+mac1: 68:05:ca:8a:f2:05
+
+br0_port0_mac: "{{ mac1 }}"
 
 vpn: true
 postfix_group: cloud
 freezes: false
+
+network_connections:
+  - name: br0
+    state: up
+    type: bridge
+    autoconnect: yes
+    ip:
+      address:
+      - "{{ br0_ipv4 }}/{{ br0_ipv4_nm }}"
+      gateway4: "{{ br0_ipv4_gw }}"
+      dns:
+      - "{{ dns1 }}"
+      - "{{ dns2 }}"
+      dns_search:
+      - "{{ dns_search1 }}"
+      - "{{ dns_search2 }}"
+      dhcp4: no
+      auto6: no
+  - name: br0-port0
+    state: up
+    type: ethernet
+    master: br0
+    mac: "{{ br0_port0_mac }}"
