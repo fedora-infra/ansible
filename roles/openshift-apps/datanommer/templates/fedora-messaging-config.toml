@@ -20,7 +20,7 @@ certfile = "/etc/pki/fedora-messaging/datanommer-cert.pem"
 app = "datanommer"
 app_url = "https://github.com/fedora-infra/datanommer"
 
-[queues.datanommer{{ env_suffix }}]
+[queues."datanommer{{ env_suffix }}"]
 durable = true
 auto_delete = false
 exclusive = false

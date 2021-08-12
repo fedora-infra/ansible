@@ -27,7 +27,7 @@ certfile = "/etc/pki/rabbitmq/cert/toddlers.crt"
 app = "toddlers"
 app_url = "https://pagure.io/fedora-infra/toddlers"
 
-[queues.toddlers{{ env_suffix }}]
+[queues."toddlers{{ env_suffix }}"]
 durable = true
 auto_delete = false
 exclusive = false
