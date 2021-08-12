@@ -37,6 +37,7 @@
   with_items:
   - { file: "ipa.{{env}}-iad2.pem", dest: /etc/haproxy/ipa.pem }
   - { file: "os-master.{{env}}-iad2.pem", dest: /etc/haproxy/os-master.pem }
+  - { file: "ocp.{{env}}-iad2.pem", dest: "/etc/haproxy/ocp-{{env}}.pem" }
   tags:
   - haproxy
 

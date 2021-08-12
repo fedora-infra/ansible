@@ -627,6 +627,7 @@
     destname: ocp
     balancer_name: ocp
     targettype: openshift
+    ocp4: true
     balancer_members: "{{ ocp_masters }}"
     keephost: true
     tags:
@@ -638,6 +639,7 @@
     destname: apps.ocp
     balancer_name: apps-ocp
     targettype: openshift
+    ocp4: true
     balancer_members: "{{ ocp_nodes }}"
     keephost: true
     tags:
