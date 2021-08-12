@@ -1,0 +1,82 @@
+- name: make the app be real
+  hosts: os_masters_stg[0]
+  user: root
+  gather_facts: False
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  vars:
+
+  roles:
+
+  - role: openshift/project
+    app: datagrepper
+    description: "Query the message history"
+    appowners:
+    - abompard
+    - ryanlerch
+    tags:
+      - apply-appowners
+    when: env == "production"
+  - role: openshift/project
+    app: datagrepper
+    description: "Query the message history"
+    appowners:
+    - abompard
+    - ryanlerch
+    - james02135
+    - lenkaseg
+    - scoady
+    tags:
+      - apply-appowners
+    when: env == "staging"
+
+  - role: openshift/imagestream
+    app: datagrepper
+    imagename: datagrepper
+
+  - role: openshift/object
+    app: datagrepper
+    template: buildconfig.yml
+    objectname: buildconfig.yml
+
+  - role: openshift/object
+    app: datagrepper
+    template: configmap.yml
+    objectname: configmap.yml
+
+  - role: openshift/object
+    app: datagrepper
+    template: service.yml
+    objectname: service.yml
+
+  - role: openshift/route
+    app: datagrepper
+    routename: datagrepper
+    host: "apps{{ env_suffix }}.fedoraproject.org"
+    path: "/datagrepper"
+    serviceport: web
+    servicename: datagrepper-web
+    annotations:
+      haproxy.router.openshift.io/timeout: 5m
+
+  - role: openshift/object
+    app: datagrepper
+    template: secret-webhook.yml
+    objectname: secret-webhook.yml
+
+  - role: openshift/object
+    app: datagrepper
+    template: deploymentconfig.yml
+    objectname: deploymentconfig.yml
+
+  # - role: openshift/start-build
+  #   app: datagrepper
+  #   buildname: datagrepper
+
+  # - role: openshift/rollout
+  #   app: datagrepper
+  #   dcname: datagrepper

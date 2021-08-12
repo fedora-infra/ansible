@@ -5,7 +5,7 @@ kind: ConfigMap
 metadata:
   name: fedora-messaging-config
   labels:
-    app: datanommer
+    app: Datanommer
 data:
   config.toml: |-
     {{ load_file('fedora-messaging-config.toml') | indent(6) }}

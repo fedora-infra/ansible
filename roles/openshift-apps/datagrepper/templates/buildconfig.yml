@@ -1,0 +1,37 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: datagrepper
+  labels:
+    app: Datagrepper
+    build: datagrepper
+spec:
+  runPolicy: Serial
+  source:
+    type: Git
+    git:
+      uri: https://github.com/fedora-infra/datagrepper.git
+{% if env == "staging" %}
+      ref: staging
+{% else %}
+      ref: stable
+{% endif %}
+    contextDir: /
+  strategy:
+    type: Source
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: ubi8-python-39:latest
+  output:
+    to:
+      kind: ImageStreamTag
+      name: datagrepper:latest
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+{% if datagrepper_stg_github_secret is defined and env == 'staging' %}
+  - type: GitHub
+    github:
+      secret: "{{ datagrepper_stg_github_secret }}"
+{% endif %}
