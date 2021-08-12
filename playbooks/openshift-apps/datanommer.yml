@@ -11,6 +11,14 @@
   roles:
   - role: rabbit/user
     username: "datanommer{{ env_suffix }}"
+  - role: rabbit/queue
+    username: "datanommer{{ env_suffix }}"
+    queue_name: "datanommer{{ env_suffix }}"
+    routing_keys:
+      - "#"
+    thresholds:
+      warning: 50
+      critical: 500
 
   - role: openshift/project
     app: datanommer

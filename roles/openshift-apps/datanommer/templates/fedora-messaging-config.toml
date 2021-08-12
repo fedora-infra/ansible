@@ -17,7 +17,19 @@ keyfile = "/etc/pki/fedora-messaging/datanommer-key.pem"
 certfile = "/etc/pki/fedora-messaging/datanommer-cert.pem"
 
 [client_properties]
-app = "Datanommer"
+app = "datanommer"
+app_url = "https://github.com/fedora-infra/datanommer"
+
+[queues.datanommer{{ env_suffix }}]
+durable = true
+auto_delete = false
+exclusive = false
+arguments = {}
+
+[[bindings]]
+queue = "datanommer{{ env_suffix }}"
+exchange = "amq.topic"
+routing_keys = ["#"]
 
 [consumer_config]
 datanommer_sqlalchemy_url = 'postgresql://{{ datanommerDBUser }}:{{ datanommerDBPassword }}@db-datanommer01{{ env_suffix }}.iad2.fedoraproject.org/datanommer2'
