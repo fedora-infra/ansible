@@ -34,9 +34,10 @@
       - apply-appowners
     when: env == "staging"
 
-  - role: openshift/imagestream
-    app: datagrepper
-    imagename: datagrepper
+  - role: openshift/object
+    app: datanommer
+    file: imagestream.yml
+    objectname: imagestream.yml
 
   - role: openshift/object
     app: datagrepper
