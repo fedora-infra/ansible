@@ -63,6 +63,9 @@ def _main(context):
 
     builds_checked = 0
     while last_lines.queue:
+        # re-set the state, only the last matters
+        context.status = EXIT_OK
+
         builds_checked += 1
 
         line = last_lines.get()
@@ -81,21 +84,23 @@ def _main(context):
             LOG.error("some values not set in %s", FILE)
             sys.exit(EXIT_CRITICAL)
 
+        build_id = values["build_id"]
         start = int(values["start"])
         stop = int(values["stop"])
         took = stop - start
         if took > ERR_TIME:
-            error(context, "Attempt to build took %ss (allowed %s)", took, WARN_TIME)
+            error(context, "Build %s took %ss (allowed %s)", build_id, took,
+                  WARN_TIME)
         elif took > WARN_TIME:
-            warning(context, "Attempt to build took %ss (allowed %s)", took, WARN_TIME)
+            warning(context, "Build %s took %ss (allowed %s)", build_id, took,
+                    WARN_TIME)
 
         if int(values["exit_status"]) != 0:
             error(context, "Exit status is %s (non-zero) for build ID %s",
                   values["exit_status"], values["build_id"])
 
     if context.status == EXIT_OK:
-        LOG.info("Last %s attempts to build copr-ping succeeded!",
-                 builds_checked)
+        LOG.info("The last build %s for copr-ping succeeded", build_id)
 
 
 if __name__ == "__main__":
