@@ -140,8 +140,8 @@
   tags:
     - web-data
 
-- name: install messaging script for our improvized tracing
-  copy: src=simple_message_to_bus dest=/usr/local/bin/ mode=0755
+- name: ensure messaging script is installed
+  import_role: name=fedora-messaging-utils
   tags:
     - web-data
     - cron

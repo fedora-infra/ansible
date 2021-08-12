@@ -10,6 +10,11 @@
   tags:
     - awstats
 
+- name: ensure messaging script is installed
+  import_role: name=fedora-messaging-utils
+  tags:
+    - awstats
+
 - name:  awstats proxy merge script (log01)
   copy: src=combineHttpLogs.sh dest=/usr/local/bin/ mode=0755
   tags:
