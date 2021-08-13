@@ -35,9 +35,9 @@
         dest={{ item.dest }}
         owner=root group=root mode=0600
   with_items:
-  - { file: "ipa.{{env}}-iad2.pem", dest: /etc/haproxy/ipa.pem }
-  - { file: "os-master.{{env}}-iad2.pem", dest: /etc/haproxy/os-master.pem }
-  - { file: "ocp.{{env}}-iad2.pem", dest: "/etc/haproxy/ocp-{{env}}.pem" }
+  - { file: "ipa{{ env_suffix }}-iad2.pem", dest: /etc/haproxy/ipa.pem }
+  - { file: "os-master{{ env_suffix }}-iad2.pem", dest: /etc/haproxy/os-master.pem }
+  - { file: "ocp{{ env_suffix }}-iad2.pem", dest: "/etc/haproxy/ocp{{ env_suffix }}.pem" }
   tags:
   - haproxy
 
