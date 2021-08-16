@@ -628,7 +628,7 @@
     balancer_name: ocp
     targettype: openshift
     ocp4: true
-    balancer_members: "{{ ocp_masters }}"
+    balancer_members: "{{ ocp_nodes }}"
     keephost: true
     tags:
     - ocp.fedoraproject.org
