@@ -65,6 +65,14 @@
   - mote
   - selinux
 
+- name: set sebooleans so apache can use nfs
+  seboolean: name=httpd_use_nfs
+                    state=true
+                    persistent=true
+  tags:
+  - mote
+  - selinux
+
 - name: apply selinux type to the wsgi file
   file: >
     dest=/usr/share/mote/mote.wsgi
