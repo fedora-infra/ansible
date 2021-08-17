@@ -18,11 +18,16 @@
   - { role: openvpn/client,
       when: env != "staging" and inventory_hostname.startswith('value01') }
   - ipa/client
-  - { role: keytab/service, 
+  - { role: keytab/service,
       owner_user: daemon,
       owner_group: daemon,
-      service: ursabot, 
+      service: ursabot,
       when: inventory_hostname.startswith('value02.stg') }
+  - { role: keytab/service,
+      owner_user: daemon,
+      owner_group: daemon,
+      service: zodbot,
+      when: inventory_hostname.startswith('value02.iad2') }
   - collectd/base
   - apache
   - { role: fedmsg/base,
