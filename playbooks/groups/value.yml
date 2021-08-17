@@ -39,6 +39,7 @@
     process: fedmsg-irc
   - { role: mote,
       when: inventory_hostname.startswith('value01') }
+  - { role: nfs/client, when: env != "staging", mnt_dir: '/srv/',  nfs_src_dir: 'fedora_value_prod' }
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
