@@ -29,7 +29,7 @@
             mode: 0755
         - name: == OCP KVM provisioning == Importing generated Ignition files
           template: 
-            src: "/srv/web/infra/bigfiles/openshiftboot/{{ item }}"
+            src: "/srv/web/infra/bigfiles/openshiftboot/{{ env }}/{{ item }}"
             dest: "/var/www/html/rhcos/{{ item }}"
             mode: 0755
           with_items:
@@ -43,8 +43,8 @@
             mode: 0644
         - name: == OCP KVM provisioning == Copy kubeadmin config files to bastion
           copy:
-            src: "/srv/web/infra/bigfiles/openshiftboot/auth/"
-            dest: "/root/ocp4/"
+            src: "/srv/web/infra/bigfiles/openshiftboot/{{ env }}/auth/"
+            dest: "/root/ocp4/ocp-{{env}}/"
         - name: == OCP KVM provisioning == Downloading RHCOS deploy files
           get_url:
             dest: /var/www/html/rhcos/
