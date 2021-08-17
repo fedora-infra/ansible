@@ -9,7 +9,7 @@
   - supybot-fedmsg
   - packagedb-cli
   - python-simplejson
-  when: env == "production"
+  when: inventory_hostname.startswith('value01')
   tags: supybot
 
 - name: install limnoria package
@@ -21,7 +21,7 @@
   - supybot-notify
   - supybot-meetbot
   - python3-sgmllib3k
-  when: env == "staging"
+  when: inventory_hostname.startswith('value02')
   tags: supybot
 
 - set_fact: botname={{ botnames[env] }}
