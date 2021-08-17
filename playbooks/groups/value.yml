@@ -16,7 +16,7 @@
   - nagios_client
   - hosts
   - { role: openvpn/client,
-      when: env != "staging" }
+      when: env != "staging" and inventory_hostname.startswith('value01') }
   - ipa/client
   - { role: keytab/service, 
       owner_user: daemon,
