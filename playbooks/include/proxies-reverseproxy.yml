@@ -776,7 +776,7 @@
     destname: debuginfod
     # manage non-trivial reverse-proxy specs in template
     proxyurl: http://debuginfod01:8002
-    proxyopts: "connectiontimeout=600 timeout=600 keepalive=on"
+    proxyopts: "connectiontimeout=600 timeout=600 keepalive=on nocanon"
     tags:
     - debuginfod
 
