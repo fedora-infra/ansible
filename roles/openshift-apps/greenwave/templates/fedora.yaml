@@ -113,6 +113,9 @@ rules:
   - !PassingTestCaseRule {test_case_name: update.desktop_printing, scenario: "fedora.updates-kde.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.desktop_terminal, scenario: "fedora.updates-kde.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.desktop_update_graphical, scenario: "fedora.updates-kde.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.install_default_update_live, scenario: "fedora.updates-kde-live-iso.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.install_default_update_live, scenario: "fedora.updates-kde-live-iso.x86_64.uefi"}
+  - !PassingTestCaseRule {test_case_name: update.live_build, scenario: "fedora.updates-kde-live-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.advisory_boot, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.base_reboot_unmount, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.base_selinux, scenario: "fedora.updates-server.x86_64.64bit"}
