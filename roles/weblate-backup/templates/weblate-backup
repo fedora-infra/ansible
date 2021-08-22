@@ -1,0 +1,35 @@
+#!/bin/bash
+
+pass_file=~/.borgpass
+backup_prefix=weblate_backup
+dest_backup={{ weblate_backup_topdir }}
+
+dest_backup_file=${dest_backup}/${backup_prefix}_$(date +%Y%m%d%H%M%S).tar.gz
+export BORG_RSH="ssh -o StrictHostKeyChecking=no"
+export BORG_REPO="ssh://u164666-sub8@u164666-sub8.your-storagebox.de:23/./backups"
+
+#############################
+
+if [ ! -f "$pass_file" ]; then
+  echo "Passphrase file not found!"
+  exit 1
+fi
+export BORG_PASSCOMMAND="cat $pass_file"
+
+echo "* listing backup ..."
+last_backup=$(borg list --last 1 | awk '{print $1}')
+if [ -z "$last_backup" ]; then
+  echo "* no backup found"
+  exit 1
+fi
+echo "* last backup is $last_backup"
+
+
+echo "* extracting backup to $dest_backup ..."
+borg export-tar ::$last_backup $dest_backup_file
+echo "* extraction complete"
+
+echo "* purging old backups ..."
+# 56 days = 8 weeks
+find ${dest_backup} -name ${backup_prefix}\*.gz -ctime +56 -exec rm -v {} \;
+echo "* purge complete"
