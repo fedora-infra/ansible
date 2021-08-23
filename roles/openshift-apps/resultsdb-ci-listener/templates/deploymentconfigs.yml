@@ -39,18 +39,6 @@ spec:
               mountPath: /etc/fedora-messaging
               readOnly: true
 {% endif %}
-          livenessProbe:
-            timeoutSeconds: 1
-            initialDelaySeconds: 30
-            exec:
-              command:
-                - ps
-                - -C
-                - fedora-messaging
-          resources:
-            limits:
-              memory: 500Mi
-              cpu: 0.3
       volumes:
         - name: config-volume
           configMap:
