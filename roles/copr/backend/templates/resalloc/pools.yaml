@@ -17,6 +17,7 @@ aws_x86_64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else
     - arch_armhfp_emulated
     - arch_s390x
     - arch_s390x_emulated
+    - arch_noarch
     - aws
     cmd_new: "/var/lib/resallocserver/resalloc_provision/vm-aws-new --arch=x86_64 {% if spot %}--spot{% endif %}"
     cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-aws-delete"
@@ -67,6 +68,7 @@ copr_hv_x86_64_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     - arch_i686_native
     - arch_armhfp
     - arch_armhfp_emulated
+    - arch_noarch
     - arch_s390x
     - arch_s390x_emulated
     - hypervisor
