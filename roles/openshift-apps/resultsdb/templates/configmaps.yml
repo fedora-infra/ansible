@@ -25,7 +25,7 @@ data:
         Require valid-user
       </LimitExcept>
     </Location>
-{% if deployment_type not in ['local', 'dev'] %}
+{% if deployment_type is defined and deployment_type not in ['local', 'dev'] %}
 ---
 apiVersion: v1
 kind: ConfigMap

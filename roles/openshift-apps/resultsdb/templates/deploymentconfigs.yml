@@ -58,7 +58,7 @@ spec:
             - name: httpd-config-volume
               mountPath: /etc/httpd/conf.d
               readOnly: true
-{% if deployment_type not in ['local', 'dev']%}
+{% if deployment_type is defined and deployment_type not in ['local', 'dev']%}
             - name: fedora-messaging-ca-volume
               mountPath: /etc/pki/rabbitmq/ca
               readOnly: true
@@ -98,7 +98,7 @@ spec:
         - name: httpd-config-volume
           configMap:
             name: "resultsdb-httpd-config"
-{% if deployment_type not in ['local', 'dev']%}
+{% if deployment_type is defined and deployment_type not in ['local', 'dev']%}
         - name: fedora-messaging-config-volume
           configMap:
             name: fedora-messaging-configmap
