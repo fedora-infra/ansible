@@ -13,8 +13,11 @@ config = {
     "badges_global": {
 
         # This is a sqlalchemy URI that points to the tahrir DB.
+        {% if env == 'staging' %}
+        "database_uri": "postgresql://{{tahrirDBUser}}:{{tahrirDBPassword}}@db01.stg.iad2.fedoraproject.org/tahrir",
+        {% else %}
         "database_uri": "postgresql://{{tahrirDBUser}}:{{tahrirDBPassword}}@db-tahrir/tahrir",
-
+        {% endif %}
         # This is a set of data that tells our consumer what Open Badges Issuer
         # should be kept as the issuer of all the badges we create.
         "badge_issuer": dict(
