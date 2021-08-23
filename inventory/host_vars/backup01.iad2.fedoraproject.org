@@ -7,3 +7,37 @@ datacenter: iad2
 ansible_ifcfg_blocklist: true
 
 grokmirror_topdir: /fedora_backups/grokmirror
+
+dns1: 10.3.163.33
+dns2: 10.3.163.34
+
+dns_search1: "iad2.fedoraproject.org"
+dns_search2: "fedoraproject.org"
+
+has_ipv4: yes
+eno1_ipv4: 10.3.163.40
+eno1_ipv4_nm: 24
+eno1_ipv4: gw: 10.3.163.254
+
+mac0: ec:f4:bb:d2:76:a0
+
+eno1_mac: "{{ mac0 }}"
+
+network_connections:
+- name: eno1
+  mac: "{{ eno1_mac }}"
+  state: up
+  type: ethernet
+  autoconnect: yes
+  ip:
+    address:
+    - "{{ eno1_ipv4 }}/{{ eno1_ipv4_nm }}"
+    gateway4: "{{ eno1_ipv4_gw }}"
+    dns:
+    - "{{ dns1 }}"
+    - "{{ dns2 }}"
+    dns_search:
+    - "{{ dns_search1 }}"
+    - "{{ dns_search2 }}"
+    dhcp4: no
+    auto6: no
