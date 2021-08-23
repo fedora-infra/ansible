@@ -86,6 +86,60 @@
   - meetbot
   - supybot
 
+- name: Deploy the fedora-messaging CA (stg)
+  copy:
+    src: "{{ private }}/files/rabbitmq/{{env}}/pki/ca.crt"
+    dest: /etc/pki/fedora-messaging/rabbitmq-ca.crt
+    mode: 0644
+    owner: daemon
+    group: daemon
+  when:
+  - env == "staging"
+  - inventory_hostname.startswith('value02')
+  tags:
+  - config
+
+- name: Deploy the fedora-messaging cert (stg)
+  copy:
+    src: "{{ private }}/files/rabbitmq/{{env}}/pki/issued/{{ botname }}.crt"
+    dest:  /etc/pki/fedora-messaging/{{ botname }}.crt
+    mode: 0644
+    owner: daemon
+    group: daemon
+  when:
+  - env == "staging"
+  - inventory_hostname.startswith('value02')
+  tags:
+  - config
+
+- name: Deploy the fedora-messaging key (stg)
+  copy:
+    src: "{{ private }}/files/rabbitmq/{{env}}/pki/private/{{ botname }}.key"
+    dest: /etc/pki/fedora-messaging/{{ botname }}.key
+    mode: 0600
+    owner: daemon
+    group: daemon
+  when:
+  - env == "staging"
+  - inventory_hostname.startswith('value02')
+  tags:
+  - config
+
+- name: Install fedora-messaging config (stg)
+  template:
+    src: fedora-messaging.toml.j2
+    dest: /etc/fedora-messaging/{{ botname }}.toml
+    owner: daemon
+    group: daemon
+    mode: 0600
+  when:
+  - env == "staging"
+  - inventory_hostname.startswith('value02')
+  tags:
+  - config
+
+
+
 - name: setup zodbot systemd service file (prod)
   copy: src=zodbot.service dest=/etc/systemd/system/zodbot.service
   when: env == "production"
