@@ -86,6 +86,17 @@
   - meetbot
   - supybot
 
+- name: Create /etc/pki/fedora-messaging (stg)
+  file:
+    dest: /etc/pki/fedora-messaging
+    mode: 0775
+    state: directory
+  when:
+  - env == "staging"
+  - inventory_hostname.startswith('value02')
+  tags:
+  - config
+
 - name: Deploy the fedora-messaging CA (stg)
   copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/ca.crt"
