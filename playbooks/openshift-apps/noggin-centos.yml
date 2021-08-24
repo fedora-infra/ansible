@@ -109,10 +109,16 @@
     template: deploymentconfig.yml
     objectname: deploymentconfig.yml
 
-  # - role: openshift/start-build
-  #   app: noggin-centos
-  #   buildname: noggin
+  - role: openshift/start-build
+    app: noggin-centos
+    buildname: noggin
+    tags:
+    - never
+    - build
 
-  # - role: openshift/rollout
-  #   app: noggin-centos
-  #   dcname: noggin
+  - role: openshift/rollout
+    app: noggin-centos
+    dcname: noggin
+    tags:
+    - never
+    - rollout
