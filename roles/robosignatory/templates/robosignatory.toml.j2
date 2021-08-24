@@ -226,8 +226,8 @@ handlers = ["console"]
             type = "modular"
 
             [[consumer_config.koji_instances.primary.tags]]
-            from = "f35-modular-updates-candidate"
-            to = "f35-modular"
+            from = "f35-modular-signing-pending"
+            to = "f35-modular-updates-testing-pending"
             key = "{{ (env == 'production')|ternary('fedora-35', 'testkey') }}"
             keyid = "{{ (env == 'production')|ternary('9867c58f', 'd300e724') }}"
             type = "modular"
