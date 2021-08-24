@@ -49,7 +49,7 @@ network_connections:
     - "{{ dns_search3 }}"
     dhcp4: no
     auto6: no
-- name eth1
+- name: eth1
   state: down
   type: ethernet
   ip:
@@ -64,4 +64,3 @@ network_connections:
     - "{{ dns_search3 }}"
     dhcp4: no
     auto6: no
-v
