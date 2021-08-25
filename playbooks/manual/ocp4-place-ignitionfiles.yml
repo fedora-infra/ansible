@@ -14,7 +14,7 @@
 #  nameservers:
 #    - 192.168.1.1
 #    - 192.168.2.2
-#  gateway  
+#  gateway
 #  deploy_host: # http server serving ignition files
 - hosts: os_control_stg:ocp_controlplane_stg:ocp_workers_stg:ocp_boostrap_stg:ocp_vms_stg
   user: root
@@ -23,12 +23,12 @@
   tasks:
     - block:
         - name: == OCP KVM provisioning == Ensuring we have needed httpd dir
-          file: 
+          file:
             path: "/var/www/html/rhcos"
             state: directory
             mode: 0755
         - name: == OCP KVM provisioning == Importing generated Ignition files
-          template: 
+          template:
             src: "/srv/web/infra/bigfiles/openshiftboot/{{ env }}/{{ item }}"
             dest: "/var/www/html/rhcos/{{ item }}"
             mode: 0755
@@ -36,8 +36,8 @@
             - bootstrap.ign
             - controlplane.ign
             - worker.ign
-        - name: == OCP KVM provisioning == Creating treeinfo for virt-install --location 
-          template: 
+        - name: == OCP KVM provisioning == Creating treeinfo for virt-install --location
+          template:
             src: "/srv/web/infra/bigfiles/openshiftboot/ocp-treeinfo.j2"
             dest: "/var/www/html/rhcos/.treeinfo"
             mode: 0644
@@ -81,17 +81,6 @@
       tags:
         - ignition
         - repo
-
-    - name: == Hardware provisioning == Generating the tftp configuration boot file
-      template:
-        src: ocp_pxeboot.j2
-        dest: /srv/web/infra/bigfiles/tftpboot2/rhcos/{{ mac0 | lower | replace(":","-") }}
-        mode: 0755
-      delegate_to: 127.0.0.1
-      tags:
-        - ignition
-        - repo
-      when: inventory_hostname in groups['ocp_workers_stg']
 
     - name: == OCP KVM provisioning == Checking OCP Virtual Guest exist[s]
       virt:
