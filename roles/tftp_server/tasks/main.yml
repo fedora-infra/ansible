@@ -51,6 +51,15 @@
   - tftp_server
   when: datacenter == 'iad2' 
 
+- name: Copy rhcos files to images folder
+  copy:
+    src: "/var/lib/tftpboot/rhcos/"
+    dest: "/var/lib/tftpboot/images/RHCOS/4.8/x86_64/"
+    remote_src: yes
+  tags:
+  - tftp_server
+  when: datacenter == 'iad2'
+
 # - name: generate custom configs
 #   template: src=grubhost.cfg.j2 dest="/var/lib/tftpboot/uefi/{{ hostvars[item].install_mac }}"
 #   with_items: "{{ groups['all'] }}"
