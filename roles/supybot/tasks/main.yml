@@ -162,7 +162,7 @@
 
 - name: enable zodbot service (prod)
   service: name=zodbot state=started enabled=true
-  when: env == "production"
+  when: env == "production" and inventory_hostname.startswith('value02')
   tags:
   - config
   - supybot
