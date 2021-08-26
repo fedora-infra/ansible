@@ -27,14 +27,14 @@ services_disabled: false
 nm_controlled_resolv: True
 
 builders:
-    # max|max_spawn|max_prealloc
+    # max|spawn_concurrently|prealloc
     aws:
         x86_64: [4, 1, 1]
         aarch64: [2, 1, 1]
 
     aws_spot:
-        x86_64: [5, 2, 3]
-        aarch64: [5, 2, 2]
+        x86_64: [5, 2, 2]
+        aarch64: [5, 2, 1]
 
     x86_hypervisor_01:
         x86_64: [2,1,1]
