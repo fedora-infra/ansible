@@ -184,3 +184,26 @@
   tags:
     - web-data
     - cron
+
+- name: install awstats package
+  package: state=present name=awstats
+  tags:
+    - packages
+    - web-data
+
+- name: make the awstats directory
+  file: path=/var/www/html/awstats-reports state=directory
+  tags:
+    - web-data
+
+- name: proxy log merge script (log01)
+  copy: src=combineHttpLogs.sh dest=/usr/local/bin/ mode=0755
+  tags:
+    - config
+    - web-data
+
+- name: daily cron job to merge old logs
+  copy: src=combineHttp.cron dest=/etc/cron.d/ mode=0644
+  tags:
+    - cron
+    - web-data
