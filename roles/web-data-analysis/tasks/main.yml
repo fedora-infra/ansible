@@ -178,8 +178,17 @@
 - name: install a script to sync httpd logs via cron only on log01
   copy:
     src: sync-http-logs.py
-    dest: /etc/cron.daily/sync-http-logs.py
+    dest: /usr/local/bin/sync-http-logs.py
     mode: 0755
+  when: inventory_hostname.startswith('log01')
+  tags:
+    - web-data
+    - cron
+
+- name: remove sync-http-logs.py from cron.daily directory
+  file:
+    path: /etc/cron.daily/sync-http-logs.py
+    state: absent
   when: inventory_hostname.startswith('log01')
   tags:
     - web-data
@@ -202,8 +211,19 @@
     - config
     - web-data
 
-- name: daily cron job to merge old logs
-  copy: src=combineHttp.cron dest=/etc/cron.d/ mode=0644
+- name: remove separate daily cron job to merge old logs
+  file:
+    path: /etc/cron.d/combineHttp.cron
+    state: absent
   tags:
-    - cron
     - web-data
+    - cron
+
+- name: install daily cron job to sync and merge log files
+  copy:
+    src: sync-http-logs-and-merge.sh
+    dest: /etc/cron.d
+    mode: 0755
+  tags:
+    - web-data
+    - cron
