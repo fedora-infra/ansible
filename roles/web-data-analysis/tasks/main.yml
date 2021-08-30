@@ -5,7 +5,7 @@
     - packages
     - web-data
 
-- name: make sure the /usr/local/share/web-data-analysis exists
+- name: make sure the /usr/local/share/web-data-analysis directory exists
   file: path=/usr/local/share/web-data-analysis state=directory
   tags:
     - web-data
