@@ -1092,3 +1092,11 @@
     server_aliases: [packages.stg.fedoraproject.org]
     sslonly: true
     cert_name: "{{wildcard_cert_name}}"
+
+  - role: httpd/website
+    site_name: fedora.im
+    server_aliases: [stg.fedora.im]
+    sslonly: true
+    certbot: true
+    tags:
+    - fedora.im

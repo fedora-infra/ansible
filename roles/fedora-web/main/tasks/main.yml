@@ -25,6 +25,7 @@
   - expires.conf
   - deflate.conf
   - mattdm-google-validate.conf
+  - matrix.conf
   notify:
   - reload proxyhttpd
   tags:
@@ -105,3 +106,23 @@
   tags:
   - fedora-web
   - fedora-web/main
+
+# setup some well-known files for matrix
+
+- name: Create a file for matrix clients
+  copy: dest=/srv/web/.well-known-matrix-client-fedoraproject-org src=.well-known-matrix-client-fedoraproject-org
+        owner=root group=root mode=0644
+        setype=httpd_sys_content_t
+  tags:
+  - fedora-web
+  - fedora-web/main
+  - fedora-web/matrix
+
+- name: Create a file for matrix servers
+  copy: dest=/srv/web/.well-known-matrix-server-fedoraproject-org src=.well-known-matrix-server-fedoraproject-org
+        owner=root group=root mode=0644
+        setype=httpd_sys_content_t
+  tags:
+  - fedora-web
+  - fedora-web/main
+  - fedora-web/matrix

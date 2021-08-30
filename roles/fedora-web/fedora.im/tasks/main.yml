@@ -1,0 +1,23 @@
+- name: Copy some config files for {{website}}
+  copy: >
+    src={{item}} dest=/etc/httpd/conf.d/{{website}}/{{item}}
+    owner=root group=root mode=0644
+  with_items:
+  - matrix.conf
+  notify:
+  - reload proxyhttpd
+  tags:
+  - fedora-web
+  - fedora-web/fedora.im
+
+- name: copy in some matrix files
+  copy: >
+    src={{item}} dest=/srv/web/fedora.im/{{item}}
+    owner=root group=root mode=0644
+  with_items:
+  - .well-known-matrix-client-fedora-im
+  - .well-known-matrix-server-fedora-im
+  tags:
+  - fedora-web
+  - fedora-web/fedora.im
+
