@@ -548,6 +548,31 @@ host centos01 {
      option subnet-mask 255.255.255.0;
 }
 
+# Production network
+host worker01-ocp {
+     hardware ethernet 68:05:CA:CE:A3:C9;
+     fixed-address 10.3.163.123;
+     filename "uefi/grubx64.efi";
+     next-server 10.3.163.10;
+     option routers 10.3.163.254;
+     option subnet-mask 255.255.255.0;
+}
+host worker02-ocp {
+     hardware ethernet 68:05:CA:CE:A2:90;
+     fixed-address 10.3.163.124;
+     filename "uefi/grubx64.efi";
+     next-server 10.3.163.10;
+     option routers 10.3.163.254;
+     option subnet-mask 255.255.255.0;
+}
+host worker03-ocp {
+     hardware ethernet 68:05:CA:CE:A7:4C;
+     fixed-address 10.3.163.125;
+     filename "uefi/grubx64.efi";
+     next-server 10.3.163.10;
+     option routers 10.3.163.254;
+     option subnet-mask 255.255.255.0;
+}
 # Staging network
 host worker01-ocp-stg {
      hardware ethernet 68:05:CA:CE:A2:AC;

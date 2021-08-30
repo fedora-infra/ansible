@@ -49,6 +49,12 @@
     - app.os.fedoraproject.org
 
   - role: httpd/certificate
+    certname: wildcard-2021.apps.ocp.fedoraproject.org
+    SSLCertificateChainFile: wildcard-2021.apps.fedoraproject.org.intermediate.cert
+    tags:
+    - apps.ocp.fedoraproject.org
+
+  - role: httpd/certificate
     certname: getfedora.org
     SSLCertificateChainFile: getfedora.org.intermediate.cert
 

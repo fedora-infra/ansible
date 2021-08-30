@@ -275,6 +275,12 @@ os_wildcard_crt_file: wildcard-2021.app.os.fedoraproject.org.cert
 os_wildcard_key_file: wildcard-2021.app.os.fedoraproject.org.key
 os_wildcard_int_file: wildcard-2021.app.os.fedoraproject.org.intermediate.cert
 
+# This is the openshift wildcard cert for ocp
+ocp_wildcard_cert_name: wildcard-2021.apps.ocp.fedoraproject.org
+ocp_wildcard_cert_file: wildcard-2021.apps.ocp.fedoraproject.org.cert
+ocp_wildcard_key_file: wildcard-2021.apps.ocp.fedoraproject.org.key
+ocp_wildcard_int_file: wildcard-2021.apps.ocp.fedoraproject.org.intermediate.cert
+
 # Everywhere, always, we should sign messages and validate signatures.
 # However, we allow individual hosts and groups to override this.  Use this very
 # carefully.. and never in production (good for testing stuff in staging).

@@ -713,6 +713,30 @@
     when: env == "staging"
 
   - role: httpd/website
+    site_name: ocp.fedoraproject.org
+    sslonly: true
+    cert_name: "{{wildcard_cert_name}}"
+    # The Connection and Upgrade headers don't work for h2
+    # So non-h2 is needed to fix websockets.
+    use_h2: false
+    tags:
+    - ocp.fedoraproject.org
+    when: env == "prod"
+
+  - role: httpd/website
+    site_name: apps.ocp.fedoraproject.org
+    server_aliases: ["*.apps.ocp.fedoraproject.org", api.apps.ocp.fedoraproject.org]
+    sslonly: true
+    cert_name: "{{ocp_wildcard_cert_name}}"
+    SSLCertificateChainFile: "{{ocp_wildcard_int_file}}"
+    # The Connection and Upgrade headers don't work for h2
+    # So non-h2 is needed to fix websockets.
+    use_h2: false
+    tags:
+    - apps.ocp.fedoraproject.org
+    when: env == "prod"
+
+  - role: httpd/website
     site_name: registry.fedoraproject.org
     server_aliases: [registry.stg.fedoraproject.org registry-no-cdn.fedoraproject.org]
     sslonly: true

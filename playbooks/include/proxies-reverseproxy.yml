@@ -628,7 +628,7 @@
     balancer_name: ocp
     targettype: openshift
     ocp4: true
-    balancer_members: "{{ ocp_nodes }}"
+    balancer_members: "{{ ocp_nodes_stg }}"
     keephost: true
     tags:
     - ocp.fedoraproject.org
@@ -640,11 +640,35 @@
     balancer_name: apps-ocp
     targettype: openshift
     ocp4: true
-    balancer_members: "{{ ocp_nodes }}"
+    balancer_members: "{{ ocp_nodes_stg }}"
     keephost: true
     tags:
     - apps.ocp.fedoraproject.org
     when: env == "staging"
+
+  - role: httpd/reverseproxy
+    website: "ocp{{ env_suffix }}.fedoraproject.org"
+    destname: ocp
+    balancer_name: ocp
+    targettype: openshift
+    ocp4: true
+    balancer_members: "{{ ocp_nodes }}"
+    keephost: true
+    tags:
+    - ocp.fedoraproject.org
+    when: env == "production"
+
+  - role: httpd/reverseproxy
+    website: "apps.ocp{{ env_suffix }}.fedoraproject.org"
+    destname: apps.ocp
+    balancer_name: apps-ocp
+    targettype: openshift
+    ocp4: true
+    balancer_members: "{{ ocp_nodes }}"
+    keephost: true
+    tags:
+    - apps.ocp.fedoraproject.org
+    when: env == "production"
 
   - role: httpd/reverseproxy
     website: "provision{{ env_suffix }}.fedoraproject.org"
