@@ -4,3 +4,10 @@ baseiptables: False
 no_http2: True
 nm_controlled_resolv: True
 #openshift_ansible_upgrading: False
+ipa_host_group: openshift
+ipa_host_group_desc: OpenShift cluster
+
+ipa_client_shell_groups:
+- sysadmin-openshift
+ipa_client_sudo_groups:
+- sysadmin-openshift
