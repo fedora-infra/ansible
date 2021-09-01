@@ -110,23 +110,32 @@
   tags:
     - web-data
 
-- name: install countme user gitconfig
-  copy: src=countme.gitconfig dest=/srv/countme/.gitconfig mode=0664 owner=countme group=countme
+- name: install the python3-mirrors-countme RPM package
+  package:
+    name: python3-mirrors-countme
+    state: present
   tags:
     - web-data
+    - packages
 
-- name: checkout mirrors-countme from git
-  git:
-    repo: https://pagure.io/mirrors-countme
-    dest: /srv/countme/mirrors-countme
-    version: prod
-  register: gitcountme
-  tags:
-    - web-data
 
-- name: install mirrors-countme from git checkout
-  command: "pip3 install --no-index --no-deps /srv/countme/mirrors-countme"
-  when: "gitcountme is changed"
+- name: remove local mirrors-countme git repo, scripts and Python package
+  # Using `shell` here because `file` doesn't know wild cards
+  shell: >-
+    shopt -s nullglob;
+    rm -rfv \
+        /srv/countme/mirrors-countme \
+        /usr/local/bin/countme-csv2sqlite.sh \
+        /usr/local/bin/countme-sqlite2csv.sh \
+        /usr/local/bin/countme-totals.py \
+        /usr/local/bin/countme-update-rawdb.sh \
+        /usr/local/bin/countme-update-totals.sh \
+        /usr/local/bin/parse-access-log.py \
+        /usr/local/lib/python3.*/site-packages/countme \
+        /usr/local/lib/python3.*/site-packages/mirrors_countme-*-py3.*.egg*
+  register: wda_rm_local_pypkg
+  changed_when: wda_rm_local_pypkg.stdout != ""
+  failed_when: wda_rm_local_pypkg.rc != 0
   tags:
     - web-data
 
