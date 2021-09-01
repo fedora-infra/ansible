@@ -231,6 +231,32 @@
 
 # CENTOS ODCS END
 
+# CENTOS robosignatory BEGIN
+
+- name: CentOS Stream robosignatory user
+  run_once: true
+  include_role:
+    name: rabbit/user
+  vars:
+    username: centos-stream-robosignatory
+
+- name: CentOS Stream robosignatory queue
+  run_once: true
+  include_role:
+    name: rabbit/queue
+  vars:
+    username: centos-stream-robosignatory
+    queue_name: centos-stream-robosignatory
+    # TTL: 10 days (in miliseconds)
+    message_ttl: 864000000
+    routing_keys:
+      - "org.centos.*.pungi.compose.ostree"
+      - "org.centos.*.coreos.build.request.artifacts-sign"
+      - "org.centos.*.coreos.build.request.ostree-sign"
+      - "org.centos.*.buildsys.tag"
+
+# CENTOS STREAM robosignatory END
+
 # MBS BEGIN
 #
 - name: Configure the mbs-private-queue virtual host
