@@ -16,7 +16,7 @@
 #    - 192.168.2.2
 #  gateway
 #  deploy_host: # http server serving ignition files
-- hosts: os_control_stg:ocp_controlplane_stg:ocp_workers_stg:ocp_boostrap_stg:ocp_vms_stg
+- hosts: os_control_stg:os_control:ocp_controlplane_stg:ocp_controlplane:ocp_bootstrap:ocp_boostrap_stg:ocp_vms_stg:ocp_vms
   user: root
   gather_facts: false
 
@@ -65,7 +65,7 @@
       tags:
         - ignition
         - repo
-      when: inventory_hostname in groups['os_control_stg']
+      when: inventory_hostname in groups['os_control_stg','os_control']
 
     - name: == OCP KVM provisioning == Downloading RHCOS deploy files
       get_url:
@@ -91,18 +91,18 @@
       register: vm_exists
       tags:
         - kvm_deploy
-      when: inventory_hostname in groups['ocp_vms_stg']
+      when: inventory_hostname in groups['ocp_vms_stg','ocp_vms']
     - block:
       - name: ensure the lv for the guest is made
         lvol: lv={{ inventory_hostname }} vg={{ volgroup }} size={{ lvm_size }} state=present
         delegate_to: "{{ vmhost }}"
         tags:
           - kvm_deploy
-        when: inventory_hostname in groups['ocp_vms_stg']
+        when: inventory_hostname in groups['ocp_vms_stg','ocp_vms']
       - name: == OCP KVM provisioning == Deploying the OCP Virtual Guest[s]
         command: "{{ virt_install_command }}"
         delegate_to: "{{ vmhost }}"
         tags:
           - kvm_deploy
-        when: inventory_hostname in groups['ocp_vms_stg']
+        when: inventory_hostname in groups['ocp_vms_stg','ocp_vms']
       when: vm_exists is failed
