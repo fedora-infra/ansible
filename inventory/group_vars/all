@@ -281,6 +281,11 @@ ocp_wildcard_cert_file: wildcard-2021.apps.ocp.fedoraproject.org.cert
 ocp_wildcard_key_file: wildcard-2021.apps.ocp.fedoraproject.org.key
 ocp_wildcard_int_file: wildcard-2021.apps.ocp.fedoraproject.org.intermediate.cert
 
+# This is the mirrors.centos.org certs
+mirrors_centos_org_cert_name: mirrors.centos.org
+mirrors_centos_org_cert_file: mirrors.centos.org.cert
+mirrors_centos_org_key_file: mirrors.centos.org.key
+
 # Everywhere, always, we should sign messages and validate signatures.
 # However, we allow individual hosts and groups to override this.  Use this very
 # carefully.. and never in production (good for testing stuff in staging).
