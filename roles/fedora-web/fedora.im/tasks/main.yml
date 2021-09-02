@@ -33,3 +33,12 @@
   - fedora-web
   - fedora-web/fedora.im
 
+- name: grab some images from design
+  get_url: >
+    url={{item.src_url}} dest=/srv/web/fedora.im/{{item.dest}}
+    owner=root group=root mode=0644
+  with_items:
+    - src_url: "https://pagure.io/design/issue/raw/files/067f51a8a711c49c6f67d635ca6cbdf78b599758d8074b0ac5b2e8b32610a9c1-fedora_logo.png"
+      dest: fedora_logo.png
+    - src_url: "https://pagure.io/design/issue/raw/files/2ed898c38cd64db8e9604f17c3f1bc15473f3d6d7f1575c102487d76d6f2777f-fedora-temp.png"
+      dest: fedora_welcome.png
