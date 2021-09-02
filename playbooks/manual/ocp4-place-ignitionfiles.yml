@@ -65,7 +65,7 @@
       tags:
         - ignition
         - repo
-      when: ['os_control_stg', 'os_control'] | intersect(group_names) | count > 0
+      when: "{%['os_control_stg', 'os_control'] | intersect(group_names) | count > 0%}"
 
     - name: == OCP KVM provisioning == Downloading RHCOS deploy files
       get_url:
@@ -91,18 +91,18 @@
       register: vm_exists
       tags:
         - kvm_deploy
-      when: ['ocp_vms_stg', 'ocp_vms'] | intersect(group_names) | count > 0
+      when: "{%['ocp_vms_stg', 'ocp_vms'] | intersect(group_names) | count > 0%}"
     - block:
       - name: ensure the lv for the guest is made
         lvol: lv={{ inventory_hostname }} vg={{ volgroup }} size={{ lvm_size }} state=present
         delegate_to: "{{ vmhost }}"
         tags:
           - kvm_deploy
-        when: ['ocp_vms_stg', 'ocp_vms'] | intersect(group_names) | count > 0
+        when: "{%['ocp_vms_stg', 'ocp_vms'] | intersect(group_names) | count > 0%}"
       - name: == OCP KVM provisioning == Deploying the OCP Virtual Guest[s]
         command: "{{ virt_install_command }}"
         delegate_to: "{{ vmhost }}"
         tags:
           - kvm_deploy
-        when: ['ocp_vms_stg', 'ocp_vms'] | intersect(group_names) | count > 0
+        when: "{%['ocp_vms_stg', 'ocp_vms'] | intersect(group_names) | count > 0%}"
       when: vm_exists is failed
