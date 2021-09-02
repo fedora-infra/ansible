@@ -154,6 +154,13 @@
     cert_name: "{{wildcard_cert_name}}"
 
   - role: httpd/website
+    site_name: mirrors.centos.org
+    server_aliases:
+    - mirrors.stg.centos.org
+    cert_name: "{{mirrors_centos_org_cert_name}}"
+    when: env == "staging"
+
+  - role: httpd/website
     site_name: src.fedoraproject.org
     server_aliases: [src.stg.fedoraproject.org]
     cert_name: "{{wildcard_cert_name}}"

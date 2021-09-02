@@ -363,6 +363,12 @@
     proxyurl: http://localhost:10002
 
   - role: httpd/reverseproxy
+    website: mirrors.centos.org
+    destname: mirrormanager-mirrorlist
+    proxyurl: http://localhost:10002
+    when: env == "staging"
+
+  - role: httpd/reverseproxy
     website: download.fedoraproject.org
     destname: mirrormanager-redirector
     proxyurl: http://localhost:10002
