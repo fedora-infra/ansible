@@ -50,7 +50,7 @@
             dest: /var/www/html/rhcos/
             mode: 0755
             url: "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/{{ rhcos_version }}/{{ item }}"
-          run_once: True
+#          run_once: True
           ignore_errors: True
           with_items:
             - "rhcos-{{ rhcos_version }}-x86_64-live-initramfs.x86_64.img"
