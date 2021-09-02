@@ -67,6 +67,14 @@
     certname: qa.fedoraproject.org
     SSLCertificateChainFile: qa.fedoraproject.org.intermediate.cert
 
+  - role: httpd/certificate
+    certname: mirrors.centos.org
+    when: env != "staging"
+
+  - role: httpd/certificate
+    certname: mirrors.stg.centos.org
+    when: env == "staging"
+
   # - role: httpd/certificate
   #   certname: secondary.koji.fedoraproject.org.letsencrypt
   #   SSLCertificateChainFile: secondary.koji.fedoraproject.org.letsencrypt.intermediate.crt
