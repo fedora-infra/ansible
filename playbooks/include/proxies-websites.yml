@@ -728,7 +728,7 @@
     use_h2: false
     tags:
     - ocp.fedoraproject.org
-    when: env == "prod"
+    when: env == "production"
 
   - role: httpd/website
     site_name: apps.ocp.fedoraproject.org
@@ -741,7 +741,7 @@
     use_h2: false
     tags:
     - apps.ocp.fedoraproject.org
-    when: env == "prod"
+    when: env == "production"
 
   - role: httpd/website
     site_name: registry.fedoraproject.org
