@@ -14,6 +14,9 @@
   ipaservice:
     ipaadmin_password: "{{ ipa_admin_password }}"
     name: "{{ service }}/{{ host }}"
+{% if principal_alias is defined %}
+    principal: "{{ principal_alias }}"
+{% endif %}
     force: yes
   tags:
   - config
