@@ -30,6 +30,19 @@ elif [ "${1}" ==  "archive" ]; then
 	CATEGORY="Archive"
 elif [ "${1}" ==  "codecs" ]; then
 	CATEGORY="Codecs"
+	/usr/local/bin/lock-wrapper umdl-${1} "${SCANNER} --category \"Fedora ${CATEGORY}\""
+	exit 0
+elif [ "${1}" ==  "centos" ]; then
+	CATEGORY="CentOS"
+	SCANNER="/usr/local/bin/scan-primary-mirror -c /etc/mirrormanager/scan-primary-mirror-centos.toml"
+	/usr/local/bin/lock-wrapper umdl-${1} "${SCANNER} --category \"${CATEGORY}\""
+	if [ "$?" -eq "0" ]; then
+		echo -n "Finished umdl for ${CATEGORY} successfully at "
+	else
+		echo -n "${SCANNER} for ${CATEGORY} returned non-zero. Something failed. Please check umdl.log. "
+	fi
+	date
+	exit 0
 fi
 
 if [ -e /var/run/mirrormanager/umdl-${1} ]; then
@@ -39,13 +52,7 @@ else
 	let LASTRUN=CURDATE-86400
 fi
 
-# FULLFILETIMELIST -> FFTL
-if [ "${1}" ==  "codecs" ]; then
-    /usr/local/bin/lock-wrapper umdl-${1} "${SCANNER} --category \"Fedora ${CATEGORY}\""
-    exit 0
-else
-    FFTL="/srv/pub/${1}/fullfiletimelist-${1}"
-fi
+FFTL="/srv/pub/${1}/fullfiletimelist-${1}"
 FILEDATE=`stat -c %Z ${FFTL} 2> /dev/null`
 
 if [ "$?" -eq "1" ]; then

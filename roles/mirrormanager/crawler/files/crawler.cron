@@ -33,3 +33,6 @@
 
 # Category: 'Fedora Other'; once a day, 10 threads
 0 14 * * * mirrormanager [ "`hostname -s`" == "mm-crawler02" ] && sleep 6h; pkill -14 -f "^/usr/bin/python2 -s /usr/bin/mm2_crawler --category=Fedora Other"; sleep 5m; pkill -9 -f "^/usr/bin/python2 -s /usr/bin/mm2_crawler --category=Fedora Other"; /usr/bin/mm2_crawler --category="Fedora Other" --threads 9 --timeout-minutes 240 `/usr/local/bin/run_crawler.sh 2` > /dev/null 2>&1
+
+# Category: 'CentOS'; twice a day, 20 threads
+0 5,11 * * * mirrormanager [ "`hostname -s`" == "mm-crawler02" ] && sleep 6h; pkill -14 -f "^/usr/bin/python2 -s /usr/bin/mm2_crawler --category=CentOS"; sleep 5m; pkill -9 -f "^/usr/bin/python2 -s /usr/bin/mm2_crawler --category=CentOS"; /usr/bin/mm2_crawler --category="CentOS" --threads 19 --timeout-minutes 240 `/usr/local/bin/run_crawler.sh 2` > /dev/null 2>&1

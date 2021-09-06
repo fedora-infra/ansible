@@ -161,6 +161,13 @@
     owner: mirrormanager
     group: mirrormanager
     mode: 0600
+- name: install scan-primary-mirror centos configuration file
+  template:
+    src: scan-primary-mirror-centos.toml
+    dest: /etc/mirrormanager/scan-primary-mirror-centos.toml
+    owner: mirrormanager
+    group: mirrormanager
+    mode: 0600
 - name: create /srv/mirrorlist-server.git
   file: path=/srv/mirrorlist-server.git state=directory owner=mirrormanager group=mirrormanager mode=0755
 - name: create /srv/scan-primary-mirror.git
@@ -168,7 +175,7 @@
 - name: checkout mirrorlist-server
   git:
     repo: https://github.com/adrianreber/mirrorlist-server.git
-    version: 3.0.4
+    version: 3.0.5
     dest: /srv/mirrorlist-server.git
   become: yes
   become_user: mirrormanager
@@ -176,7 +183,7 @@
 - name: checkout scan-primary-mirror
   git:
     repo: https://github.com/adrianreber/scan-primary-mirror.git
-    version: 0.1.1
+    version: 0.2.0
     dest: /srv/scan-primary-mirror.git
   become: yes
   become_user: mirrormanager

@@ -18,6 +18,9 @@ MAILTO=root
 15 */2 * * * mirrormanager /usr/local/bin/umdl-required archive /var/log/mirrormanager/umdl-required.log
 45 */2  * * * mirrormanager /usr/local/bin/umdl-required alt /var/log/mirrormanager/umdl-required.log
 
+# check if category CentOS needs updating once a day
+15 20 * * * mirrormanager /usr/local/bin/umdl-required centos /var/log/mirrormanager/umdl-required.log
+
 # Sync netblocks list once a day
 30 0 * * * mirrormanager cd /usr/share/mirrormanager2 && /usr/bin/mm2_get_global_netblocks /var/lib/mirrormanager/global_netblocks.txt
 # Run the script for Internet2 netblocks very late to

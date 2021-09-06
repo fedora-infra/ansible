@@ -1,0 +1,41 @@
+common_rsync_options="--no-motd --timeout 14400"
+max_propagation_days = 2
+max_stale_days = 3
+skip_repository_paths = ["SIGs"]
+
+[database]
+url="postgresql://{{ mirrormanager_db_user }}:{{ mirrormanager_db_pass }}@{{ mirrormanager_db_host }}/{{ mirrormanager_db_name }}"
+
+[[category]]
+name="CentOS"
+type="rsync"
+url="rsync://mirror.stream.centos.org/CentOS-Stream-All"
+checksum_base="http://mirror.stream.centos.org/"
+
+[[repository_mapping]]
+regex="^\\d+(?:-stream)?/AppStream/"
+prefix="centos-appstream"
+
+[[repository_mapping]]
+regex="^\\d+(?:-stream)?/BaseOS/"
+prefix="centos-baseos"
+
+[[repository_mapping]]
+regex="^\\d+(?:-stream)?/CRB/"
+prefix="centos-crb"
+
+[[repository_mapping]]
+regex="^\\d+(?:-stream)?/HighAvailability/"
+prefix="centos-highavailability"
+
+[[repository_mapping]]
+regex="^\\d+(?:-stream)?/NFV/"
+prefix="centos-nfv"
+
+[[repository_mapping]]
+regex="^\\d+(?:-stream)?/RT/"
+prefix="centos-rt"
+
+[[repository_mapping]]
+regex="^\\d+(?:-stream)?/ResilientStorage/"
+prefix="centos-resilientstorage"
