@@ -158,6 +158,7 @@
     server_aliases:
     - mirrors.stg.centos.org
     cert_name: "{{mirrors_centos_org_cert_name}}"
+    SSLCertificateChainFile: mirrors.stg.centos.org.intermediate.cert
     when: env == "staging"
 
   - role: httpd/website
