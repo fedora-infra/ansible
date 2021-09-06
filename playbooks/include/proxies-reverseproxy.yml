@@ -637,7 +637,7 @@
     balancer_members: "{{ ocp_nodes_stg }}"
     keephost: true
     tags:
-    - ocp.fedoraproject.org
+    - ocp.stg.fedoraproject.org
     when: env == "staging"
 
   - role: httpd/reverseproxy
@@ -649,7 +649,7 @@
     balancer_members: "{{ ocp_nodes_stg }}"
     keephost: true
     tags:
-    - apps.ocp.fedoraproject.org
+    - apps.ocp.stg.fedoraproject.org
     when: env == "staging"
 
   - role: httpd/reverseproxy
