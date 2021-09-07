@@ -11,7 +11,9 @@ id="$(uuidgen -r)"
 body="{"
 sep=""
 
-for body_piece; do
+# To preset items in the message body, do `export MSGBODY_PRESET="key1=value1 key2=value2"` before
+# calling simple_message_to_bus. This doesn't work with spaces in the keys or values, sorry.
+for body_piece in $MSGBODY_PRESET "$@"; do
     key_type="${body_piece%%=*}"
     key="${key_type%%:*}"
     type="${key_type#${key}}"

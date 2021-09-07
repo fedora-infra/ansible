@@ -1,8 +1,8 @@
 #!/bin/bash
 
 export MSGTOPIC_PREFIX=logging.stats
-RUN_ID="$(uuidgen -r)"
-simple_message_to_bus countme-update.start run_id="$RUN_ID"
+export MSGBODY_PRESET="loghost=$(hostname) run_id=$(uuidgen -r)"
+simple_message_to_bus countme-update.start
 
 # Where do we keep our local/internal data?
 LOCAL_DATA_DIR=/var/lib/countme
@@ -38,10 +38,10 @@ _run() {
     if [ "$DRYRUN" ]; then 
       return 0
     else
-      simple_message_to_bus countme-update.command.start run_id="$RUN_ID" command="$@"
+      simple_message_to_bus countme-update.command.start command="$@"
       "$@"
       RESULT=$?
-      simple_message_to_bus countme-update.command.finish run_id="$RUN_ID" command="$@" result="$?"
+      simple_message_to_bus countme-update.command.finish command="$@" result="$?"
       return $RESULT
     fi
 }
@@ -121,5 +121,5 @@ _run $_GIT diff --quiet || _run $_GIT commit -a -m "$(date -u +%F) update"
 _run atomic_copy $TOTALS_DB $PUBLIC_TOTALS_DB
 _run atomic_copy $TOTALS_CSV $PUBLIC_TOTALS_CSV
 
-simple_message_to_bus countme-update.finish run_id="$RUN_ID"
+simple_message_to_bus countme-update.finish
 
