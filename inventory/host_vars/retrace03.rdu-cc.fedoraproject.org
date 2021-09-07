@@ -7,6 +7,7 @@ rs_use_faf_packages: true
 # we do not have enough storage on stg
 rs_internal_fedora_vers: [33, 34, 35, rawhide]
 rs_internal_fedora_vers_removed: [30, 31, 32]
+rs_internal_centos_vers: [7, 8]
 rs_internal_arch_list: [source, x86_64]
 
 # consumed by roles/copr/certbot
@@ -47,19 +48,16 @@ faf_repos:
   - name: 'fedora-33-source'
     url:
       - 'http://dl01.fedoraproject.org/pub/fedora/linux/releases/33/Everything/source/tree/'
-      - 'http://dl01.fedoraproject.org/pub/fedora/linux/development/33/Everything/source/tree/'
     arch: 'src'
     opsys: 'Fedora 33'
   - name: 'fedora-33-x86_64'
     url:
       - 'http://dl01.fedoraproject.org/pub/fedora/linux/releases/33/Everything/x86_64/os/'
-      - 'http://dl01.fedoraproject.org/pub/fedora/linux/development/33/Everything/x86_64/os/'
     arch: 'x86_64'
     opsys: 'Fedora 33'
   - name: 'fedora-33-x86_64-debug'
     url:
       - 'http://dl01.fedoraproject.org/pub/fedora/linux/releases/33/Everything/x86_64/debug/tree/'
-      - 'http://dl01.fedoraproject.org/pub/fedora/linux/development/33/Everything/x86_64/debug/tree/'
     arch: 'x86_64'
     opsys: 'Fedora 33'
   - name: 'fedora-33-x86_64-testing-debug'
@@ -86,29 +84,21 @@ faf_repos:
   - name: 'fedora-34-source'
     url:
       - 'http://dl01.fedoraproject.org/pub/fedora/linux/releases/34/Everything/source/tree/'
-      - 'http://dl01.fedoraproject.org/pub/fedora/linux/development/34/Everything/source/tree/'
     arch: 'src'
     opsys: 'Fedora 34'
   - name: 'fedora-34-x86_64'
     url:
       - 'http://dl01.fedoraproject.org/pub/fedora/linux/releases/34/Everything/x86_64/os/'
-      - 'http://dl01.fedoraproject.org/pub/fedora/linux/development/34/Everything/x86_64/os/'
     arch: 'x86_64'
     opsys: 'Fedora 34'
   - name: 'fedora-34-x86_64-debug'
     url:
       - 'http://dl01.fedoraproject.org/pub/fedora/linux/releases/34/Everything/x86_64/debug/tree/'
-      - 'http://dl01.fedoraproject.org/pub/fedora/linux/development/34/Everything/x86_64/debug/tree/'
     arch: 'x86_64'
     opsys: 'Fedora 34'
-  - name: 'fedora-34-x86_64-testing-debug'
+  - name: 'fedora-34-x86_64-updates'
     url:
-      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/34/Everything/x86_64/debug/'
-    arch: 'x86_64'
-    opsys: 'Fedora 34'
-  - name: 'fedora-34-x86_64-testing'
-    url:
-      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/34/Everything/x86_64/'
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/34/Everything/x86_64/'
     arch: 'x86_64'
     opsys: 'Fedora 34'
   - name: 'fedora-34-x86_64-updates-debug'
@@ -116,9 +106,14 @@ faf_repos:
       - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/34/Everything/x86_64/debug/'
     arch: 'x86_64'
     opsys: 'Fedora 34'
-  - name: 'fedora-34-x86_64-updates'
+  - name: 'fedora-34-x86_64-testing'
     url:
-      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/34/Everything/x86_64/'
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/34/Everything/x86_64/'
+    arch: 'x86_64'
+    opsys: 'Fedora 34'
+  - name: 'fedora-34-x86_64-testing-debug'
+    url:
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/34/Everything/x86_64/debug/'
     arch: 'x86_64'
     opsys: 'Fedora 34'
   # Fedora 35 repositories ------------------------------------------------
@@ -160,4 +155,19 @@ faf_repos:
       - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/35/Everything/x86_64/'
     arch: 'x86_64'
     opsys: 'Fedora 35'
+  # Fedora Rawhide repositories -------------------------------------------
+  - name: 'fedora-rawhide-source'
+    url:
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/development/rawhide/Everything/source/tree/'
+    arch: 'src'
+    opsys: 'Fedora Rawhide'
+  - name: 'fedora-rawhide-x86_64'
+    url:
+    arch: 'x86_64'
+    opsys: 'Fedora Rawhide'
+  - name: 'fedora-rawhide-x86_64-debug'
+    url:
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/development/rawhide/Everything/x86_64/debug/tree/'
+    arch: 'x86_64'
+    opsys: 'Fedora Rawhide'
 ...

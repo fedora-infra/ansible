@@ -12,9 +12,10 @@ public_hostname: retrace-stg.aws.fedoraproject.org
 faf_server_name: retrace-stg.aws.fedoraproject.org/faf
 rs_use_faf_packages: true
 
-# we do not have enough storage on stg
-rs_internal_fedora_vers: [34, rawhide]
-rs_internal_fedora_vers_removed: [31, 32, 33]
+# Staging only has a little storage, so we only support one release at a time.
+rs_internal_fedora_vers: [34]
+rs_internal_fedora_vers_removed: [31, 32, 33, rawhide]
+rs_internal_centos_vers: []
 rs_internal_arch_list: [source, x86_64]
 
 # List of supported operating systems
@@ -56,29 +57,21 @@ faf_repos:
   - name: 'fedora-34-source'
     url:
       - 'http://dl01.fedoraproject.org/pub/fedora/linux/releases/34/Everything/source/tree/'
-      - 'http://dl01.fedoraproject.org/pub/fedora/linux/development/34/Everything/source/tree/'
     arch: 'src'
     opsys: 'Fedora 34'
   - name: 'fedora-34-x86_64'
     url:
       - 'http://dl01.fedoraproject.org/pub/fedora/linux/releases/34/Everything/x86_64/os/'
-      - 'http://dl01.fedoraproject.org/pub/fedora/linux/development/34/Everything/x86_64/os/'
     arch: 'x86_64'
     opsys: 'Fedora 34'
   - name: 'fedora-34-x86_64-debug'
     url:
       - 'http://dl01.fedoraproject.org/pub/fedora/linux/releases/34/Everything/x86_64/debug/tree/'
-      - 'http://dl01.fedoraproject.org/pub/fedora/linux/development/34/Everything/x86_64/debug/tree/'
     arch: 'x86_64'
     opsys: 'Fedora 34'
-  - name: 'fedora-34-x86_64-testing-debug'
+  - name: 'fedora-34-x86_64-updates'
     url:
-      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/34/Everything/x86_64/debug/'
-    arch: 'x86_64'
-    opsys: 'Fedora 34'
-  - name: 'fedora-34-x86_64-testing'
-    url:
-      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/34/Everything/x86_64/'
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/34/Everything/x86_64/'
     arch: 'x86_64'
     opsys: 'Fedora 34'
   - name: 'fedora-34-x86_64-updates-debug'
@@ -86,9 +79,14 @@ faf_repos:
       - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/34/Everything/x86_64/debug/'
     arch: 'x86_64'
     opsys: 'Fedora 34'
-  - name: 'fedora-34-x86_64-updates'
+  - name: 'fedora-34-x86_64-testing'
     url:
-      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/34/Everything/x86_64/'
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/34/Everything/x86_64/'
+    arch: 'x86_64'
+    opsys: 'Fedora 34'
+  - name: 'fedora-34-x86_64-testing-debug'
+    url:
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/34/Everything/x86_64/debug/'
     arch: 'x86_64'
     opsys: 'Fedora 34'
 ...
