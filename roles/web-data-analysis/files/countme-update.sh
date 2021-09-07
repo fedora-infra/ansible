@@ -1,5 +1,6 @@
 #!/bin/bash
 
+export MSGTOPIC_PREFIX=logging.stats
 RUN_ID="$(uuidgen -r)"
 simple_message_to_bus countme-update.start run_id="$RUN_ID"
 

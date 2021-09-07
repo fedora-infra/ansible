@@ -19,6 +19,7 @@
 # along with Fedora Project Infrastructure Ansible Repository.  If
 # not, see <http://www.gnu.org/licenses/>.
 
+export MSGTOPIC_PREFIX=logging.stats
 RUN_ID="$(uuidgen -r)"
 simple_message_to_bus combinehttplogs.start run_id="$RUN_ID"
 

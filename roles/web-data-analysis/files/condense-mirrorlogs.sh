@@ -25,6 +25,8 @@
 # we are 5 days behind.
 
 # We have dropped this down to 3 days on 2019-10-01
+
+export MSGTOPIC_PREFIX=logging.stats
 RUN_ID="$(uuidgen -r)"
 simple_message_to_bus condense-mirrorlogs.start run_id="$RUN_ID"
 
