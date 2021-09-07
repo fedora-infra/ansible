@@ -1,0 +1,41 @@
+#####################################################
+# Ensure PATH in /etc/crontab contains /usr/local/bin
+#####################################################
+
+- name: check if PATH is set in crontab
+  lineinfile:
+    path: /etc/crontab
+    state: absent
+    regexp: '^PATH\s*='
+  check_mode: yes
+  changed_when: false
+  register: path_set_in_crontab
+
+- name: add PATH if not set in crontab
+  lineinfile:
+    path: /etc/crontab
+    state: present
+    insertbefore: BOF
+    line: 'PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin'
+    validate: crontab -T %s
+  when: not path_set_in_crontab.found
+
+- name: check if PATH in crontab contains /usr/local/bin
+  lineinfile:
+    path: /etc/crontab
+    state: absent
+    regexp: '^PATH\s*=\s*(.*:)?/usr/local/bin(:.*)?\s*'
+  check_mode: yes
+  changed_when: false
+  register: local_in_path_in_crontab
+  when: path_set_in_crontab.found
+
+- name: append /usr/local/bin to PATH in crontab if missing
+  lineinfile:
+    path: /etc/crontab
+    state: present
+    backrefs: yes
+    regexp: '^(PATH\s*=\s*(?:.*\S)?)\s*$'
+    line: '\1:/usr/local/bin'
+    validate: crontab -T %s
+  when: path_set_in_crontab.found and not local_in_path_in_crontab.found
