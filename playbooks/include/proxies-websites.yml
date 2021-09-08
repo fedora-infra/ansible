@@ -158,8 +158,7 @@
     server_aliases:
     - mirrors.stg.centos.org
     cert_name: "{{mirrors_centos_org_cert_name}}"
-    SSLCertificateChainFile: mirrors.stg.centos.org.intermediate.cert
-    when: env == "staging"
+    SSLCertificateChainFile: "mirrors{{env_suffix}}.centos.org.intermediate.cert"
 
   - role: httpd/website
     site_name: src.fedoraproject.org
