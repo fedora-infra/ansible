@@ -3,21 +3,26 @@ SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://{{ blockerbugs_db_user }}:{{ bl
 FAS_ADMIN_GROUP = "qa-admin"
 FAS_USER = "{{ blockerbugs_fas_user }}@fedoraproject.org"
 FAS_PASSWORD = "{{ blockerbugs_fas_password }}"
+BUGZILLA_URL = '{{ blockerbugs_bugzilla_url }}'
+BUGZILLA_XMLRPC = BUGZILLA_URL + 'xmlrpc.cgi'
+BODHI_URL = '{{ blockerbugs_bodhi_url }}'
+BLOCKERBUGS_URL = '{{ blockerbugs_url }}'
+BLOCKERBUGS_API = "{}api/v0/".format(BLOCKERBUGS_URL)
+PAGURE_URL = '{{ blockerbugs_pagure_url }}'
+PAGURE_API = PAGURE_URL + '/api/0/'
+PAGURE_REPO_TOKEN = "{{ blockerbugs_pagure_repo_token_secret }}"
+PAGURE_REPO_WEBHOOK_KEY = "{{ blockerbugs_pagure_repo_webhook_key_secret }}"
+PAGURE_REPO = "fedora-qa/blocker-review"
+PAGURE_BOT_USERNAME = 'blockerbot'
+
 {% if env == "staging" %}
 FAS_FLASK_COOKIE_REQUIRES_HTTPS = False
 FAS_CHECK_CERT = False
 PRODUCTION = False
 FAS_ENABLED = True
 SQLALCHEMY_TRACK_MODIFICATIONS = False
-BUGZILLA_URL = 'https://bugzilla.stage.redhat.com/'
-BODHI_URL = 'https://bodhi.stg.fedoraproject.org/'
-KOJI_URL = 'https://bugzilla.stage.redhat.com/'
-{% else %}
-BUGZILLA_URL = '{{ blockerbugs_bugzilla_url }}'
-BODHI_URL = '{{ blockerbugs_bodhi_url }}'
-KOJI_URL = "{{ blockerbugs_bugzilla_url }}"
 {% endif %}
-BUGZILLA_XMLRPC = BUGZILLA_URL + 'xmlrpc.cgi'
+
 FILE_LOGGING = False
 SYSLOG_LOGGING = True
 STREAM_LOGGING = True
@@ -37,17 +42,3 @@ SHOW_DB_URI = False
 # enable fedmenu
 FEDMENU_URL = 'https://apps.fedoraproject.org/fedmenu/'
 FEDMENU_DATA_URL = 'https://apps.fedoraproject.org/js/data.js'
-
-{% if env == "staging" %}
-PAGURE_URL = "https://stg.pagure.io/"
-PAGURE_API = "https://stg.pagure.io/api/0/"
-PAGURE_REPO_TOKEN = "{{ blockerbugs_stg_pagure_repo_token }}"
-PAGURE_REPO_WEBHOOK_KEY = "{{ blockerbugs_stg_pagure_repo_webhook_key }}"
-{% else %}
-PAGURE_URL = "https://pagure.io/"
-PAGURE_API = "https://pagure.io/api/0/"
-PAGURE_REPO_TOKEN = "{{ blockerbugs_pagure_repo_token }}"
-PAGURE_REPO_WEBHOOK_KEY = "{{ blockerbugs_pagure_repo_webhook_key }}"
-{% endif %}
-PAGURE_REPO = "fedora-qa/blocker-review"
-PAGURE_BOT_USERNAME = 'blockerbot'
