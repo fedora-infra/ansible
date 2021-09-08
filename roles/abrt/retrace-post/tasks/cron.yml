@@ -15,15 +15,16 @@
     job: "/usr/bin/retrace-server-reposync fedora {{ item[0] }} {{ item[1] }} >> /var/log/retrace-server/reposync_error.log 2>&1"
     special_time: daily
     state: absent
-  loop: "{{ rs_internal_fedora_vers_removed | product(rs_internal_arch_list) | list}}"
+  loop: "{{ rs_internal_fedora_vers_removed | product(rs_internal_arch_list) | list }}"
 
-- name: Create retrace-server reposync cron job for CentOS 7
+- name: Create retrace-server reposync cron jobs for CentOS
   cron:
-    name: "rs reposync centos 7 x86_64"
+    name: "rs reposync centos {{ item }} x86_64"
     user: retrace
-    job: "/usr/bin/retrace-server-reposync centos 7 x86_64 >> /var/log/retrace-server/reposync_error.log 2>&1"
+    job: "/usr/bin/retrace-server-reposync centos {{ item }} x86_64 >> /var/log/retrace-server/reposync_error.log 2>&1"
     special_time: daily
     state: present
+  loop: "{{ rs_internal_centos_vers }}"
 
 - name: Create retrace-server cleanup cron job
   cron:
