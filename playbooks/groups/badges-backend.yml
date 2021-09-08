@@ -23,6 +23,11 @@
   - { role: openvpn/client,
        when: env != "staging" }
   - ipa/client
+  - { role: keytab/service,
+      owner_user: fedmsg,
+      owner_group: fedmsg,
+      service: badges-backend,
+      when: env == 'staging' }
   - collectd/base
   - fedmsg/base
   - sudo
