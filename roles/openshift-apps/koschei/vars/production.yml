@@ -61,10 +61,9 @@ koschei_cron_jobs:
   - name: track-scitech
     schedule: "21 0-23/3 * * *"
     command: "koschei-track-group scitech_sig"
-# neuro-sig tracking is temporairly disabled, see #9664
-#  - name: track-neuro
-#    schedule: "23 0-23/3 * * *"
-#    command: "koschei-track-group neuro-sig"
+  - name: track-neuro
+    schedule: "23 0-23/3 * * *"
+    command: "koschei-track-group neuro-sig"
   - name: refresh-python
     schedule: "25 0-23/3 * * *"
     command: "koschei-refresh-distgit-group koschei/auto-group-python-sig python-sig"
