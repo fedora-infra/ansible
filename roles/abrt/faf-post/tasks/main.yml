@@ -1,20 +1,5 @@
 ---
-# the magic with ! is that it return exit code 1 if 'already defined' is not present in output
-- name: Add package repositories
-  shell: >
-    ! faf repoadd --nogpgcheck "{{ item.name }}" dnf "{{ item.url | join('" "') }}" 2>&1 | grep 'already defined'
-  become: yes
-  become_user: faf
-  ignore_errors: yes
-  tags: add_repo
-  loop: "{{ faf_repos }}"
-
-- name: Assign repositories to releases
-  command: "faf repoassign '{{ item.name }}' '{{ item.opsys }}' '{{ item.arch }}'"
-  become: yes
-  become_user: faf
-  tags: add_repo
-  loop: "{{ faf_repos }}"
+- import_tasks: repositories.yml
 
 - name: Ensure directory for FAF database backups exists
   file:
@@ -27,25 +12,4 @@
 
 - import_tasks: cron.yml
   tags: cron
-
-- name: List repositories of EOL releases
-  shell: "faf repolist | grep fedora-{{ item }} || true"
-  become: yes
-  become_user: faf
-  register: eol_repolist
-  loop: "{{ rs_internal_fedora_vers_removed }}"
-  changed_when: eol_repolist.stdout
-
-- name: Remove repositories of EOL releases
-  command: "faf repodel '{{ item }}'"
-  become: yes
-  become_user: faf
-  ignore_errors: yes
-  loop: "{{ eol_repolist.results | map(attribute='stdout_lines') | flatten }}"
-
-- name: Clean up packages from EOL Fedora releases
-  command: "faf cleanup-packages Fedora '{{ item }}'"
-  become: yes
-  become_user: faf
-  ignore_errors: yes
-  loop: "{{ rs_internal_fedora_vers_removed }}"
+...
