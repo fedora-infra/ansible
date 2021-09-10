@@ -11,6 +11,9 @@
   - git
   - python-dogpile-cache
   - postgresql
+  - python-gssapi
+  - python-requests-gssapi
+  - python-requests
   tags:
   - packages
   - badges
@@ -216,3 +219,13 @@
   - badges
   - badges/backend
   - sar
+
+# https://raw.githubusercontent.com/fedora-infra/datanommer/python2/datanommer.models/datanommer/models/__init__.py
+- name: hotfix datanommer.models with version from python2 branch
+  copy:
+    src: datanommer.models__init__.py
+    dest: /usr/lib/python2.7/site-packages/datanommer/models/__init__.py
+  when: env == "staging"
+  tags:
+  - badges
+  - badges/backend

@@ -42,6 +42,12 @@ config = {
         "password": "{{fedoraDummyUserPassword}}",
     },
 
+    {% if env == 'staging' %}
+    "fasjson_base_url": "https://fasjson.stg.fedoraproject.org/v1/"
+    "keytab": "/etc/krb5.badges-backend_badges-backend01.stg.iad2.fedoraproject.org.keytab"
+    {% endif %}
+
+
     # Stuff used for caching packagedb relations.
     "fedbadges.rules.utils.use_pkgdb2": False,
     "fedbadges.rules.cache": {
