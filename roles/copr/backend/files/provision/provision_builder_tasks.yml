@@ -162,3 +162,10 @@
     success_msg: "Swap seems to be available for this builder"
   when:
   - prepare_base_image is not defined
+
+# Make sure we have the latest version of the gem2rpm pacakge otherwise it may
+# have problems fetching from rubygems.org and fail. This is a temporary
+# workaround until we properly define the dependency on latest version in
+# copr-rpmbuild package.
+- name: Update gem2rpm package to the latest version
+  dnf: state=latest pkg=rubygem-gem2rpm
