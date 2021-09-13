@@ -15,3 +15,14 @@ for i in *fedoraproject.org; do
     ( cd $i ; make pushpot )
 done
 
+cd $OLD
+git clone https://pagure.io/fedora-web/websites.git
+cd websites
+
+for i in getfedora.org; do
+  pushd sites/$i/scripts
+  ./translations-source.sh
+  [ -f $i.pot ] && ./push-pot.sh
+  popd
+done
+
