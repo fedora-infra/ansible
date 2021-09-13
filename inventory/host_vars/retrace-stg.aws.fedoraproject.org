@@ -24,8 +24,9 @@ faf_opsys_list:
   - centos
 
 # Clean-up packages of following EOLed operating systems
-eol_opsys:
-#  - { opsys: "Fedora", release: "30"}
+eol_opsys: []
+# When not empty, the array should have the following form:
+#   - { opsys: "Fedora", release: "36" }
 
 # GDPR SAR variables
 sar_script: '/usr/bin/faf sar'
