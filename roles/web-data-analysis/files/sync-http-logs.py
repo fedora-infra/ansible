@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
+import argparse
 import datetime as dt
 import logging
+import logging.handlers
 import os
 import re
 import signal
@@ -19,7 +21,6 @@ from fedora_messaging import api, message
 RSYNC_PROG = "/usr/bin/rsync"
 RSYNC_FLAGS = "-avSHP --no-motd --timeout=1200 --contimeout=1200"
 RSYNC_CMD = [RSYNC_PROG] + RSYNC_FLAGS.split()
-DEBUG = True
 
 RUN_ID = str(uuid.uuid4())
 LOGHOST = socket.getfqdn()
@@ -32,10 +33,6 @@ RETRY_ATTEMPTS = 3
 PARALLEL_WORKERS = 5
 
 log = logging.getLogger(__name__)
-log.setLevel(logging.DEBUG if DEBUG else logging.INFO)
-console_handler = logging.StreamHandler()
-console_handler.setLevel(logging.DEBUG)
-log.addHandler(console_handler)
 
 
 def send_bus_msg(topic, **kwargs):
@@ -82,7 +79,7 @@ def link_force_atomic(src, dst):
 
 
 def seed_dated_logfiles(date, srcdir, dstdir):
-    date_tag = date.strftime('%Y%m%d')
+    date_tag = date.strftime("%Y%m%d")
     untagged_re = re.compile(r"^(?P<name>.*)log\.(?P<ext>[^\.]+)$")
 
     for srcfile in srcdir.glob("*log.*"):
@@ -97,7 +94,7 @@ def seed_dated_logfiles(date, srcdir, dstdir):
 
 
 def link_back_undated_logfiles(date, srcdir, dstdir):
-    date_tag = date.strftime('%Y%m%d')
+    date_tag = date.strftime("%Y%m%d")
     tagged_re = re.compile(rf"^(?P<name>.*)log-{date_tag}\.(?P<ext>[^\.]+)$")
 
     for srcfile in srcdir.glob("*log-*.*"):
@@ -170,9 +167,7 @@ def sync_http_logs(synced_host):
                         synced_host,
                         log_date,
                     )
-                send_sync_msg(
-                    topic, synced_host=synced_host, log_date=log_date, reason=reason
-                )
+                send_sync_msg(topic, synced_host=synced_host, log_date=log_date, reason=reason)
 
         log.info(
             "... host %s, log date %s, linking back undated logfiles from dated",
@@ -187,26 +182,78 @@ def sync_http_logs(synced_host):
     send_sync_msg("sync.host.finish", synced_host=synced_host)
 
 
+def parse_commandline_args():
+    parser = argparse.ArgumentParser(description="sync http log files from various hosts")
+
+    verbosity_group = parser.add_mutually_exclusive_group()
+    verbosity_group.add_argument(
+        "--verbosity", action="store", type=int, default=1, help="Set verbosity level"
+    )
+    verbosity_group.add_argument(
+        "-v", "--verbose", action="count", dest="verbosity", help="Increase verbosity level"
+    )
+    verbosity_group.add_argument(
+        "-s", "--silent", action="store_const", dest="verbosity", const=0, help="Silence output"
+    )
+
+    parser.add_argument("--syslog", action="store_true", default=False, help="Log to syslog")
+    parser.add_argument("--syslog-verbosity", type=int)
+
+    args = parser.parse_args()
+    return args
+
+
 def init_worker():
     signal.signal(signal.SIGINT, signal.SIG_IGN)
 
 
 # main
 
-with open(CONFIG_FILE) as config_file:
-    config = yaml.load(config_file)
+# process command line arguments
+args = parse_commandline_args()
 
-worker_pool = Pool(PARALLEL_WORKERS, initializer=init_worker)
+VERBOSITY_TO_LOG_LEVEL = [logging.ERROR, logging.WARNING, logging.INFO, logging.DEBUG]
+MAX_VERBOSITY = len(VERBOSITY_TO_LOG_LEVEL) - 1
 
-send_sync_msg("sync.start")
-log.info("=== START OF RUN ===")
+verbosity = min(max(0, args.verbosity), MAX_VERBOSITY)
+commandline_log_level = VERBOSITY_TO_LOG_LEVEL[verbosity]
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.DEBUG)
+log.addHandler(console_handler)
 
-log.debug("Mapping synced hosts to pool workers.")
+if not args.syslog:
+    log.setLevel(commandline_log_level)
+else:
+    syslog_verbosity = args.syslog_verbosity
+    if syslog_verbosity is None:
+        syslog_verbosity = commandline_log_level
+    syslog_verbosity = min(max(0, syslog_verbosity), MAX_VERBOSITY)
+    syslog_log_level = VERBOSITY_TO_LOG_LEVEL[syslog_verbosity]
+    log.setLevel(min(commandline_log_level, syslog_log_level))
+    syslog_handler = logging.handlers.SysLogHandler("/dev/log")
+    syslog_handler.setLevel(syslog_log_level)
+    syslog_formatter = logging.Formatter("%(module)s[%(levelname)s]: %(message)s")
+    syslog_handler.setFormatter(syslog_formatter)
+    log.addHandler(syslog_handler)
+
 try:
-    worker_pool.map(sync_http_logs, config["synced_hosts"])
-except KeyboardInterrupt:
-    log.warn("Interrupted!")
-    worker_pool.terminate()
+    with open(CONFIG_FILE) as config_file:
+        config = yaml.load(config_file)
 
-send_sync_msg("sync.finish")
-log.info("=== FINISH OF RUN ===")
+    worker_pool = Pool(PARALLEL_WORKERS, initializer=init_worker)
+
+    send_sync_msg("sync.start")
+    log.info("=== START OF RUN ===")
+
+    log.debug("Mapping synced hosts to pool workers.")
+    try:
+        worker_pool.map(sync_http_logs, config["synced_hosts"])
+    except KeyboardInterrupt:
+        log.warn("Interrupted!")
+        worker_pool.terminate()
+
+    send_sync_msg("sync.finish")
+    log.info("=== FINISH OF RUN ===")
+except Exception as e:
+    if not isinstance(e, KeyboardInterrupt):
+        log.exception("Something went wrong, caught an exception:")
