@@ -80,7 +80,7 @@
 
 # this is a "short-term" patch that won't be needed for future versions of blockerbugs
 - name: patch bz_interface to work with rhbz changes
-  copy: src=20210914-patched-bz_interface.py dest=/usr/lib/python3.9/site-packages/blockerbugs/utils/bz_interface.py
+  copy: src=20210914-patched-bz_interface.py dest=/usr/lib/python3.9/site-packages/blockerbugs/util/bz_interface.py
   when: master_blockerbugs_node
   tags:
   - blockerbugs
