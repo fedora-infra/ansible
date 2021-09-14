@@ -229,3 +229,13 @@
   tags:
   - badges
   - badges/backend
+
+# https://raw.githubusercontent.com/fedora-infra/fedbadges/fasjson/fedbadges/utils.py
+- name: hotfix fedbadges with version from fasjson branch
+  copy:
+    src: fedbadges_utils.py
+    dest: /usr/lib/python2.7/site-packages/fedbadges/utils.py
+  when: env == "staging"
+  tags:
+  - badges
+  - badges/backend
