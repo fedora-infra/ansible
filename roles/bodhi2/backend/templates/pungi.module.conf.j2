@@ -105,4 +105,13 @@ createiso_skip = [
             'src': True
         }),
 ]
+
+filter_modules = [
+    ('(Everything)$', {
+        '*': [
+        'perl*bootstrap:*',
+        ]
+    }),
+]
+
 koji_profile = 'bodhi_koji'
