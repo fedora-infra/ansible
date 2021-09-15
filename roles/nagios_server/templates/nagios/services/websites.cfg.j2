@@ -62,7 +62,7 @@ define service {
 define service {
   hostgroup_name        proxies
   service_description   http-accounts
-  check_command         check_website_ssl!admin.fedoraproject.org!/accounts/help/get_help/user_telephone!emergency
+  check_command         check_website_ssl!accounts.fedoraproject.org!/healthz/ready!OK
   use                   websitetemplate
 #  servicegroups		fas
 }
