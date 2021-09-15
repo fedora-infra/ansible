@@ -9,3 +9,5 @@ metadata:
 data:
   config.toml: |-
     {{ load_file('fedora-messaging-config.toml') | indent(6) }}
+  alembic.ini: |-
+    {{ load_file('alembic.ini') | indent(6) }}
