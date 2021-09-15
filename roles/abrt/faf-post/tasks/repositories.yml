@@ -9,8 +9,8 @@
   tags: add_repo
 
 - name: Assign repositories to Fedora releases
-  loop: "{{ rs_internal_fedora_vers | product(rs_internal_arch_list) | list }}"
-  command: "faf repoassign 'Fedora' '{{ item[0] }}' '{{ item[1] }}'"
+  loop: "{{ faf_repos }}"
+  command: "faf repoassign '{{ item.name }}' '{{ item.opsys }}' '{{ item.arch }}'"
   become: yes
   become_user: faf
   tags: add_repo
