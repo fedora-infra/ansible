@@ -80,7 +80,6 @@ copr_hv_x86_64_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     - hypervisor_x86_64
     - hypervisor_x86_64_{{ hv }}
     cmd_new: "/var/lib/resallocserver/provision/libvirt-new --swap-vol-size 168"
-    cmd_delete: "/var/lib/resallocserver/provision/libvirt-new --swap-vol-size 168"
     cmd_delete: "/var/lib/resallocserver/provision/libvirt-delete"
     cmd_livecheck: "/var/lib/resallocserver/resalloc_provision/vm-check"
     cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
@@ -113,7 +112,6 @@ copr_hv_ppc64le_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     - hypervisor_ppc64le
     - hypervisor_ppc64le_{{ hv }}
     cmd_new: "/var/lib/resallocserver/provision/libvirt-new --swap-vol-size 168"
-    cmd_delete: "/var/lib/resallocserver/provision/libvirt-new --swap-vol-size 168"
     cmd_delete: "/var/lib/resallocserver/provision/libvirt-delete"
     cmd_livecheck: "/var/lib/resallocserver/resalloc_provision/vm-check"
     cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
