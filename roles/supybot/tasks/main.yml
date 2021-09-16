@@ -90,6 +90,7 @@
 - name: Create the RabbitMQ user
   import_role:
     name: rabbit/user
+  vars:
     username: "{{ botname }}"
   when:
   - env == "staging"
