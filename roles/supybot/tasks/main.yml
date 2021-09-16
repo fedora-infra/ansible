@@ -88,10 +88,10 @@
 
   # Set up for fedora-messaging
 - name: Create the RabbitMQ user
-  include_role:
+  import_role:
     name: rabbit/user
   vars:
-    username: "{{ botname }}"
+    username: "{{ botnames[env] }}"
   when:
   - env == "staging"
   - inventory_hostname.startswith('value02')
