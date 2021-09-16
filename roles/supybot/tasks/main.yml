@@ -88,7 +88,7 @@
 
   # Set up for fedora-messaging
 - name: Create the RabbitMQ user
-  import_role:
+  include_role:
     name: rabbit/user
   vars:
     username: "{{ botname }}"
