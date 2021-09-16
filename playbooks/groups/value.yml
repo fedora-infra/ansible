@@ -32,9 +32,6 @@
   - apache
   - { role: fedmsg/base,
       when: inventory_hostname.startswith('value01') }
-  # Set up for fedora-messaging
-  - { role: rabbit/user,
-      username: "value{{ env_suffix }}"}
   - { role: fedmsg/irc,
       when: inventory_hostname.startswith('value01') }
   - supybot
