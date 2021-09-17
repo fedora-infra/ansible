@@ -4,6 +4,6 @@ config = {
 {% if env == "production" %}
     'datanommer.sqlalchemy.url': 'postgresql://{{ datanommerDBUser }}:{{ datanommerDBPassword }}@db-datanommer01.iad2.fedoraproject.org/datanommer',
 {% else %}
-    'datanommer.sqlalchemy.url': 'postgresql://{{ datanommerDBUser }}:{{ datanommerDBPassword }}@db-datanommer01.stg.iad2.fedoraproject.org/datanommer',
+    'datanommer.sqlalchemy.url': 'postgresql://{{ datanommerDBUser }}:{{ datanommer_stg_db_password }}@db-datanommer01.stg.iad2.fedoraproject.org/datanommer',
 {% endif %}
 }

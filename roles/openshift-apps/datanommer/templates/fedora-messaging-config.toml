@@ -32,7 +32,7 @@ exchange = "amq.topic"
 routing_keys = ["#"]
 
 [consumer_config]
-datanommer_sqlalchemy_url = 'postgresql://{{ datanommerDBUser }}:{{ datanommerDBPassword }}@db-datanommer01{{ env_suffix }}.iad2.fedoraproject.org/datanommer2'
+datanommer_sqlalchemy_url = 'postgresql://{{ datanommerDBUser }}:{{ (env == 'production')|ternary(datanommerDBPassword, datanommer_stg_db_password) }}@db-datanommer01{{ env_suffix }}.iad2.fedoraproject.org/datanommer2'
 
 [log_config]
 version = 1
