@@ -12,6 +12,7 @@
       repo_gpgcheck=0
       enabled = 1
   tags:
+  - datanommer
   - postgresql
   - timescaledb
   when: ansible_distribution_major_version|int >= 8 and ansible_distribution == 'RedHat'
@@ -26,6 +27,7 @@
       profiles=
       state=enabled
   tags:
+  - datanommer
   - postgresql
   - timescaledb
   when: ansible_distribution_major_version|int >= 8 and ansible_distribution == 'RedHat'
@@ -36,6 +38,7 @@
       - timescaledb
     state: present
   tags:
+  - datanommer
   - postgresql
   - timescaledb
 
@@ -47,5 +50,43 @@
   notify:
   - restart postgresql
   tags:
+  - datanommer
   - postgresql
   - timescaledb
+
+
+# Database users
+#
+- name: create the main DB user
+  become_user: postgres
+  become: true
+  postgresql_user:
+     name: "{{ datanommerDBUser }}"
+     password: "{{ (env == 'production')|ternary(datanommerDBPassword, datanommer_stg_db_password) }}"
+  tags:
+  - datanommer
+  - postgresql
+
+- name: create the RO DB user
+  become_user: postgres
+  become: true
+  postgresql_user:
+     name: datanommer_ro
+     password: "{{ datanommer_ro_password }}"
+  tags:
+  - datanommer
+  - postgresql
+
+
+# Databases
+#
+- name: create the datanommer database
+  become_user: postgres
+  become: true
+  postgresql_db:
+     name: datanommer2
+     owner: "{{ datanommerDBUser }}"
+     encoding: UTF-8
+  tags:
+  - datanommer
+  - postgresql
