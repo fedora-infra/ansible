@@ -586,12 +586,12 @@ def parselog(our_file, out_file):
 
     our_list = list(yumclients_set)
     our_list.sort()
-    
+
     try:
         output = open(output_file,"a")
-        sys.stderr.write("Outputting data: %s\n" % our_file)
+        sys.stdout.write("Outputting data: %s\n" % our_file)
     except:
-        sys.stderr.write("Unable to open outputfile\n")
+        sys.stderr.write("Unable to open outputfile: %s\n" % our_file)
         sys.exit(-1)
 
     for line in our_list:
