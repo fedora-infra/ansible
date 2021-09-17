@@ -93,21 +93,19 @@
   vars:
     username: "{{ botnames[env] }}"
   when:
-  - env == "staging"
   - inventory_hostname.startswith('value02')
 
-- name: Create /etc/pki/fedora-messaging (stg)
+- name: Create /etc/pki/fedora-messaging
   file:
     dest: /etc/pki/fedora-messaging
     mode: 0775
     state: directory
   when:
-  - env == "staging"
   - inventory_hostname.startswith('value02')
   tags:
   - config
 
-- name: Deploy the fedora-messaging CA (stg)
+- name: Deploy the fedora-messaging CA
   copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/ca.crt"
     dest: /etc/pki/fedora-messaging/rabbitmq-ca.crt
@@ -115,12 +113,11 @@
     owner: daemon
     group: daemon
   when:
-  - env == "staging"
   - inventory_hostname.startswith('value02')
   tags:
   - config
 
-- name: Deploy the fedora-messaging cert (stg)
+- name: Deploy the fedora-messaging cert
   copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/issued/{{ botname }}.crt"
     dest:  /etc/pki/fedora-messaging/{{ botname }}.crt
@@ -128,12 +125,11 @@
     owner: daemon
     group: daemon
   when:
-  - env == "staging"
   - inventory_hostname.startswith('value02')
   tags:
   - config
 
-- name: Deploy the fedora-messaging key (stg)
+- name: Deploy the fedora-messaging key
   copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/private/{{ botname }}.key"
     dest: /etc/pki/fedora-messaging/{{ botname }}.key
@@ -141,12 +137,11 @@
     owner: daemon
     group: daemon
   when:
-  - env == "staging"
   - inventory_hostname.startswith('value02')
   tags:
   - config
 
-- name: Install fedora-messaging config (stg)
+- name: Install fedora-messaging config
   template:
     src: fedora-messaging.toml.j2
     dest: /etc/fedora-messaging/{{ botname }}.toml
@@ -154,7 +149,6 @@
     group: daemon
     mode: 0600
   when:
-  - env == "staging"
   - inventory_hostname.startswith('value02')
   tags:
   - config
