@@ -55,38 +55,33 @@
   - timescaledb
 
 
-# Database users
-#
-- name: create the main DB user
-  become_user: postgres
+- block:
   become: true
-  postgresql_user:
-     name: "{{ datanommerDBUser }}"
-     password: "{{ (env == 'production')|ternary(datanommerDBPassword, datanommer_stg_db_password) }}"
+  become_user: postgres
   tags:
   - datanommer
   - postgresql
 
-- name: create the RO DB user
-  become_user: postgres
-  become: true
-  postgresql_user:
-     name: datanommer_ro
-     password: "{{ datanommer_ro_password }}"
-  tags:
-  - datanommer
-  - postgresql
+    # Users
+    - name: create the main DB user
+      postgresql_user:
+        name: "{{ datanommerDBUser }}"
+        password: "{{ (env == 'production')|ternary(datanommerDBPassword, datanommer_stg_db_password) }}"
 
+    - name: create the RO DB user
+      postgresql_user:
+        name: datanommer_ro
+        password: "{{ datanommer_ro_password }}"
 
-# Databases
-#
-- name: create the datanommer database
-  become_user: postgres
-  become: true
-  postgresql_db:
-     name: datanommer2
-     owner: "{{ datanommerDBUser }}"
-     encoding: UTF-8
-  tags:
-  - datanommer
-  - postgresql
+    # Databases
+    - name: create the datanommer database
+      postgresql_db:
+        name: datanommer2
+        owner: "{{ datanommerDBUser }}"
+        encoding: UTF-8
+
+    # Enable timescaledb
+    - name: enable timescaledb
+      postgresql_ext:
+        name: timescaledb
+        db: datanommer2
