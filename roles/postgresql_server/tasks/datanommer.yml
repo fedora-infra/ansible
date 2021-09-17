@@ -56,11 +56,6 @@
 
 
 - block:
-  become: true
-  become_user: postgres
-  tags:
-  - datanommer
-  - postgresql
 
     # Users
     - name: create the main DB user
@@ -85,3 +80,9 @@
       postgresql_ext:
         name: timescaledb
         db: datanommer2
+
+  become: true
+  become_user: postgres
+  tags:
+  - datanommer
+  - postgresql
