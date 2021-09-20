@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-upgrade
+spec:
+  activeDeadlineSeconds: 86400
+  backoffLimit: 1
+  completion: 1
+  template:
+    metadata:
+      name: db-upgrade
+    spec:
+      containers:
+      - name: db-upgrade
+        image: docker-registry.default.svc:5000/datanommer/datanommer:latest
+        command: ["/opt/app-root/src/.s2i/datanommer-upgrade-db.sh"]
+        volumeMounts:
+        - name: fedora-messaging-config-volume
+          mountPath: "/etc/fedora-messaging"
+          readOnly: true
+      volumes:
+      - name: fedora-messaging-config-volume
+        configMap:
+          name: fedora-messaging-config
+      restartPolicy: Never
