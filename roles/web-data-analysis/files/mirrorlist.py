@@ -404,7 +404,7 @@ def breakoutdate(givendate):
         [day, month, year] = givendate.split(":")[0].split('/')
     except:
         # string out of index because date corrupted?
-        [day, month, year ] = ['01', '01', '1970'] # epoch
+        [day, month, year ] = ['01', 'Jan', '1970'] # epoch
     ret_str = "%s-%s-%s" % (year, Apache_Months[month], day)
     return ret_str
 
