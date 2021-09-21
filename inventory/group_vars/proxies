@@ -7,7 +7,7 @@ num_cpus: 6
 # This is used in the httpd.conf to determine the value for serverlimit and
 # maxrequestworkers. On 8gb proxies, 900 seems fine. But on 4gb proxies, this
 # should be lowered in the host vars for that proxy.
-maxrequestworkers: 900
+maxrequestworkers: 1500
 
 tcp_ports: [
     # For apache, generally.

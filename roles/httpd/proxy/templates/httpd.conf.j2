@@ -773,3 +773,5 @@ EnableSendfile on
 
 # Configure a location for OCSP stapling
 SSLStaplingCache shmcb:/tmp/stapling_cache(128000)
+SSLSessionCache         shmcb:/run/httpd/sslcache(10240000)
+SSLSessionCacheTimeout  600
