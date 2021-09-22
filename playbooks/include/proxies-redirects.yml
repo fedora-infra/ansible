@@ -40,6 +40,12 @@
     target: https://apps.fedoraproject.org/packages
 
   - role: httpd/redirect
+    shortname: packages
+    website: apps.fedoraproject.org
+    path: /packages
+    target: https://packages.fedoraproject.org/
+
+  - role: httpd/redirect
     shortname: koschei
     website: apps.fedoraproject.org
     path: /koschei

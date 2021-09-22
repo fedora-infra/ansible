@@ -128,13 +128,6 @@
     proxyurl: http://localhost:10036
 
   - role: httpd/reverseproxy
-    website: apps.fedoraproject.org
-    destname: packages
-    localpath: /packages
-    remotepath: /packages
-    proxyurl: http://localhost:10016
-
-  - role: httpd/reverseproxy
     website: ask.fedoraproject.org
     destname: askbot
     proxyurl: "{{ varnish_url }}"
