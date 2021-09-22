@@ -44,7 +44,7 @@
   - "{{ private }}/files/sudo/{{ ansible_hostname }}-sudoers"
   - "{{ private }}/files/sudo/{{ ansible_domain }}-sudoers"
   - "{{ private }}/files/sudo/default"
-  when: "(primary_auth_source | default('fas')) == 'fas'"
+  when: inventory_hostname.startswith('batcave')
   tags:
   - config
   - sudo
