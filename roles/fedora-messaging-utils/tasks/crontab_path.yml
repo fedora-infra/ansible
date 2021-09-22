@@ -17,7 +17,6 @@
     state: present
     insertbefore: BOF
     line: 'PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin'
-    validate: crontab -T %s
   when: not path_set_in_crontab.found
 
 - name: check if PATH in crontab contains /usr/local/bin
@@ -37,5 +36,4 @@
     backrefs: yes
     regexp: '^(PATH\s*=\s*(?:.*\S)?)\s*$'
     line: '\1:/usr/local/bin'
-    validate: crontab -T %s
   when: path_set_in_crontab.found and not local_in_path_in_crontab.found
