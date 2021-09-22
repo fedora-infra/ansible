@@ -314,6 +314,18 @@ handlers = ["console"]
             # Gated bodhi updates
 
             [[consumer_config.koji_instances.primary.tags]]
+            from = "epel9-signing-pending"
+            to = "epel9-testing-pending"
+            key = "{{ (env == 'production')|ternary('epel-9', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('3228467c', 'd300e724') }}"
+
+            [[consumer_config.koji_instances.primary.tags]]
+            from = "epel9-next-signing-pending"
+            to = "epel9-next-testing-pending"
+            key = "{{ (env == 'production')|ternary('epel-9', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('3228467c', 'd300e724') }}"
+
+            [[consumer_config.koji_instances.primary.tags]]
             from = "epel8-signing-pending"
             to = "epel8-testing-pending"
             key = "{{ (env == 'production')|ternary('epel-8', 'testkey') }}"
