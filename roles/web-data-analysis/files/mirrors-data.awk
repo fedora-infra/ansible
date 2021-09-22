@@ -201,6 +201,7 @@ BEGIN{
     epel6=0;
     epel7=0;
     epel8=0;
+    epel9=0;
     f03=0;
     f04=0;
     f05=0;
@@ -232,6 +233,12 @@ BEGIN{
     f31=0;
     f32=0;
     f33=0;
+    f34=0;
+    f35=0;
+    f36=0;
+    f37=0;
+    f38=0;
+    f39=0;
     rawhide=0;
     rawhide_modular=0;
     modular_f27=0;
@@ -241,6 +248,12 @@ BEGIN{
     modular_f31=0;
     modular_f32=0;
     modular_f33=0;
+    modular_f34=0;
+    modular_f35=0;
+    modular_f36=0;
+    modular_f37=0;
+    modular_f38=0;
+    modular_f39=0;
     modular=0;
     unknown_release = 0;
     # arch
