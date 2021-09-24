@@ -158,6 +158,20 @@ RELEASES = {'f35': {'topic': 'fedora',
                                 'dest': os.path.join(FEDORAALTDEST, 'testing', '33', 'Modular')}
                               ]}}
                    },
+            'epel9n': {'topic': 'epel',
+                      'version': '9',
+                      'modules': ['epel'],
+                      'repos': {'epel-testing': {
+                          'from': 'epel9-next-testing',
+                          'to': [{'arches': ['x86_64', 'aarch64', 'ppc64le', 's390x', 'source'],
+                                  'dest': os.path.join(EPELDEST, 'testing', 'next', '9', 'Everything')}
+                                ]},
+                                'epel': {
+                          'from': 'epel9-next',
+                          'to': [{'arches': ['x86_64', 'aarch64', 'ppc64le', 's390x', 'source'],
+                                  'dest': os.path.join(EPELDEST, 'next', '9', 'Everything')}
+                                ]}}
+                     },
             'epel8': {'topic': 'epel',
                       'version': '8',
                       'modules': ['epel'],
