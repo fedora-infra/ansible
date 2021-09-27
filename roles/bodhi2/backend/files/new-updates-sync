@@ -460,8 +460,8 @@ def update_epel_release_latest(releases):
             for path in Path(RELEASES[release]['repos']['epel']['to'][0]['dest']).rglob('epel-release*noarch*'):
                 if 'Packages' in str(path) and 'x86_64' in str(path):
                     dest = '/pub/epel/epel-release-latest-' + release[4]+ '.noarch.rpm'
-                    if os.path.exists(dest):
-                        if not os.path.exists(os.path.join(EPELDEST,os.readlink(dest))):
+                    if os.path.lexists(dest):
+                        if not os.path.islink(dest) or not os.path.exists(os.path.join(EPELDEST,os.readlink(dest))):
                             os.remove(dest)
                             os.symlink(os.path.relpath(path, os.path.dirname(dest)), dest)
                             break
