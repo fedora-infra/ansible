@@ -54,14 +54,14 @@ spec:
           initialDelaySeconds: 5
           periodSeconds: 60
           httpGet:
-            path: "/datagrepper/healthz/ready"
+            path: "/datagrepper2/healthz/ready"
             port: 8080
         livenessProbe:
           timeoutSeconds: 10
           initialDelaySeconds: 3
           periodSeconds: 60
           httpGet:
-            path: "/datagrepper/healthz/live"
+            path: "/datagrepper2/healthz/live"
             port: 8080
       volumes:
       - name: datagrepper-config-volume
