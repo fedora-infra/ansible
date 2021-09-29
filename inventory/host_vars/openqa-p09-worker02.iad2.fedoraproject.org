@@ -3,27 +3,65 @@ freezes: false
 # eth0 is default network
 # eth1 is disabled/nothing
 # eth2 is disabled/nothing
-ansible_ifcfg_infra_net_devices: ['eth0']
-gw: 10.3.174.254
-dns: 10.3.163.33
-eth0_ip: 10.3.174.43
-eth0_nm: 255.255.255.0
+
 datacenter: iad2
+
+mac1: FI:XM:EF:IX:ME:FI
+mac2: FI:XM:EF:IX:ME:FI
+mac3: FI:XM:EF:IX:ME:FI
+
+dns1: 10.3.163.33
+dns2: 10.3.163.34
+
+dns_search1: "iad2.fedoraproject.org"
+dns_search2: "fedoraproject.org"
+
+has_ipv4: yes
+
+eth0_ipv4: 10.3.174.43
+eth0_ipv4_nm: 24
+eth0_ipv4_gw: 10.3.174.254
+eth0_mac: "{{ mac1 }}"
+
+eth1_mac: "{{ mac2 }}"
+
+eth2_mac: "{{ mac3 }}"
+
+network_connections:
+- name: eth0
+  mac: "{{ eth0_mac }}"
+  state: up
+  type: ethernet
+  autoconnect: yes
+  ip:
+    address:
+    - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
+    gateway4: "{{ eth0_ipv4_gw }}"
+    dns:
+    - "{{ dns1 }}"
+    - "{{ dns2 }}"
+    dns_search:
+    - "{{ dns_search1 }}"
+    - "{{ dns_search2 }}"
+    dhcp4: no
+    auto6: no
+- name: eth1
+  mac: "{{ eth1_mac }}"
+  state: down
+  type: ethernet
+  autoconnect: no
+- name: eth2
+  mac: "{{ eth2_mac }}"
+  state: down
+  type: ethernet
+  autoconnect: no
+
 nrpe_procs_warn: 250
 nrpe_procs_crit: 300
 
 sudoers: "{{ private }}/files/sudo/qavirt-sudoers"
 
-# openQA tap worker hosts (like this one) do stuff with ifcfg that base
-# doesn't understand. terrible, terrible stuff. seriously - it doesn't
-# handle the openvswitch config well. so let's tell it to just configure
-# the regular interfaces (which on this system is eth0-eth2) for us,
-# disabling all but the one we want to use (eth0), and leave everything
-# else alone. We use a variable definition here so the firewall config
-# (in the openqa_tap_workers group_vars) can reuse it.
 openqa_tap_iface: eth0
-ansible_ifcfg_allowlist: ['{{ openqa_tap_iface }}', 'eth1', 'eth2', 'eth3', 'eth4', 'eth5', 'eth6', 'eth7', 'eth8', 'eth9']
-ansible_ifcfg_disabled: ['eth1', 'eth2', 'eth3', 'eth4', 'eth5', 'eth6', 'eth7', 'eth8', 'eth9']
 
 # this is a powerful machine, can handle more openQA workers
 openqa_workers: 15
@@ -35,4 +73,4 @@ openqa_workers: 15
 tcp_ports: ['20013', '20023', '20033', '20043', '20053', '20063', '20073', '20083', '20093', '20103', '20113', '20123', '20133', '20143', '20153']
 
 # has an HW RNG, so let's have rngd
-openqa_rngd: True
+openqa_rngd: true

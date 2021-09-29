@@ -3,27 +3,65 @@ freezes: false
 # eth0 is disabled/nothing
 # eth1 is active network
 # eth2 is disabled/nothing
-ansible_ifcfg_infra_net_devices: ['eth1']
-gw: 10.3.174.254
-dns: 10.3.163.33
-eth1_ip: 10.3.174.63
-eth1_nm: 255.255.255.0
+
 datacenter: iad2
+
+mac1: 00:1b:21:e0:6e:5b
+mac2: 50:6b:4b:7f:98:30
+mac3: 50:6b:4b:7f:98:31
+
+dns1: 10.3.163.33
+dns2: 10.3.163.34
+
+dns_search1: "iad2.fedoraproject.org"
+dns_search2: "fedoraproject.org"
+
+has_ipv4: yes
+
+eth0_mac: "{{ mac1 }}"
+
+eth1_ipv4: 10.3.174.63
+eth1_ipv4_nm: 24
+eth1_ipv4_gw: 10.3.174.254
+eth1_mac: "{{ mac2 }}"
+
+eth2_mac: "{{ mac3 }}"
+
+network_connections:
+- name: eth0
+  mac: "{{ eth0_mac }}"
+  state: down
+  type: ethernet
+  autoconnect: no
+- name: eth1
+  mac: "{{ eth1_mac }}"
+  state: up
+  type: ethernet
+  autoconnect: yes
+  ip:
+    address:
+    - "{{ eth1_ipv4 }}/{{ eth1_ipv4_nm }}"
+    gateway4: "{{ eth1_ipv4_gw }}"
+    dns:
+    - "{{ dns1 }}"
+    - "{{ dns2 }}"
+    dns_search:
+    - "{{ dns_search1 }}"
+    - "{{ dns_search2 }}"
+    dhcp4: no
+    auto6: no
+- name: eth2
+  mac: "{{ eth2_mac }}"
+  state: down
+  type: ethernet
+  autoconnect: no
+
 nrpe_procs_warn: 250
 nrpe_procs_crit: 300
 
 sudoers: "{{ private }}/files/sudo/qavirt-sudoers"
 
-# openQA tap worker hosts (like this one) do stuff with ifcfg that base
-# doesn't understand. terrible, terrible stuff. seriously - it doesn't
-# handle the openvswitch config well. so let's tell it to just configure
-# the regular interfaces (which on this system is eth0-eth2) for us,
-# disabling all but the one we want to use (eth0), and leave everything
-# else alone. We use a variable definition here so the firewall config
-# (in the openqa_tap_workers group_vars) can reuse it.
 openqa_tap_iface: eth1
-ansible_ifcfg_allowlist: ['eth0', '{{ openqa_tap_iface }}', 'eth2']
-ansible_ifcfg_disabled: ['eth0', 'eth2']
 
 # this is a powerful machine, can handle more openQA workers
 openqa_workers: 15
@@ -35,4 +73,4 @@ openqa_workers: 15
 tcp_ports: ['20013', '20023', '20033', '20043', '20053', '20063', '20073', '20083', '20093', '20103', '20113', '20123', '20133', '20143', '20153']
 
 # has an HW RNG, so let's have rngd
-openqa_rngd: True
+openqa_rngd: true
