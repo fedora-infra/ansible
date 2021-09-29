@@ -42,7 +42,7 @@ network_connections:
   autoconnect: yes
   ip:
     address:
-    - "{{ eth1_ipv4 }}/{{ eth1_ipv4_nm }}""
+    - "{{ eth1_ipv4 }}/{{ eth1_ipv4_nm }}"
     auto_gateway: yes
     gateway4: "{{ eth1_ipv4_gw }}"
     dns:
@@ -76,4 +76,4 @@ openqa_workers: 15
 tcp_ports: ['20013', '20023', '20033', '20043', '20053', '20063', '20073', '20083', '20093', '20103', '20113', '20123', '20133', '20143', '20153']
 
 # has an HW RNG, so let's have rngd
-openqa_rngd: True
+openqa_rngd: true
