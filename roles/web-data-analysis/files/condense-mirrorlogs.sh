@@ -85,9 +85,10 @@ fi
 # stuck and you end up with days or weeks of data in a single
 # file. Doing a continual sort clears up that.
 
-
 sort -o ${WORKFILE} -u ${WORKFILE} -S4G
 simple_message_to_bus condense-mirrorlogs.mirrorlist.sort workfile="$WORKFILE" logfile="$LOGFILE" result="$?"
+RES=$( sort -c ${WORKFILE} )
+simple_message_to_bus condense-mirrorlogs.mirrorlist.finish workfile="$WORKFILE" logfile="$LOGFILE" result="${RES}"
 sort -o ${WORKDIR}/${YEAR}/out-${YEAR}-${MONTH} -S 8G -T /tmp -u ${WORKDIR}/${YEAR}/out-${YEAR}-${MONTH} ${WORKFILE}
 sort -o ${WORKDIR}/out-${YEAR} -S 8G -T /tmp -u ${WORKDIR}/out-${YEAR} ${WORKFILE}
 
