@@ -43,7 +43,6 @@ network_connections:
   ip:
     address:
     - "{{ eth1_ipv4 }}/{{ eth1_ipv4_nm }}"
-    auto_gateway: yes
     gateway4: "{{ eth1_ipv4_gw }}"
     dns:
     - "{{ dns1 }}"
