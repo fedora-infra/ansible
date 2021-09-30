@@ -3,7 +3,11 @@ LABEL \
     name="bodhi-base" \
     vendor="Fedora Infrastructure" \
     license="MIT"
+{% if env == "staging" %}
+RUN curl -o /etc/yum.repos.d/infra-tags-stg.repo https://infrastructure.fedoraproject.org/infra/ansible/files/common/fedora-infra-tags-stg.repo
+{% else %}
 RUN curl -o /etc/yum.repos.d/infra-tags.repo https://infrastructure.fedoraproject.org/infra/ansible/files/common/fedora-infra-tags.repo
+{% endif %}
 # While dnf has a --nodocs, it doesen't have a --docs...
 RUN sed -i '/nodocs/d' /etc/dnf/dnf.conf
 {% if env == "staging" %}
