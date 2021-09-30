@@ -75,7 +75,8 @@
 
   - name: make a mnt/koji link
     file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji
-
+    when: datacenter == "iad2"
+    
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
