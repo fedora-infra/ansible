@@ -155,6 +155,17 @@
     - fas
 
   - role: httpd/reverseproxy
+    website: admin.fedoraproject.org
+    destname: oldfas
+    remotepath: /accounts
+    localpath: /accounts
+    balancer_name: app-os
+    targettype: openshift
+    keephost: true
+    tags:
+    - fas
+
+  - role: httpd/reverseproxy
     website: "accounts{{ env_suffix }}.fedoraproject.org"
     destname: noggin
     balancer_name: app-os
