@@ -6,7 +6,7 @@
 ##
 
 RSYNC='/usr/bin/rsync'
-RS_OPT="-avSHP  --numeric-ids "
+RS_OPT="-avSHP  --numeric-ids"
 RS_DEADLY="--delete --delete-excluded --delete-delay --delay-updates"
 ALT_EXCLUDES=""
 EPL_EXCLUDES=""
@@ -61,6 +61,24 @@ sync_stuff ${DATE_FED} rsync_fedora fedora-enchilada0 /srv/pub/fedora/ "-f"
 sync_stuff ${DATE_ARCHIVE} rsync_archive fedora-archive0 /srv/pub/archive/ "-f"
 sync_stuff ${DATE_ALT} rsync_alt fedora-alt0 /srv/pub/alt/ "-f"
 sync_stuff ${DATE_SECOND} rsync_second fedora-secondary0 /srv/pub/fedora-secondary/ "-f"
+
+# CentOS
+${RSYNC} ${RS_OPT} ${RS_DEADLY} master-1.centos.org::CentOS-community-cage/centos/ /srv/pub/centos/ | tail -n2 | logger -p local0.notice -t rsync_centos
+if [[ $? -ne 0 ]]; then
+    echo "Unable to finish sync to CentOS"
+fi
+# CentOS-altarch
+${RSYNC} ${RS_OPT} ${RS_DEADLY} master-1.centos.org::CentOS-community-cage/altarch/ /srv/pub/centos-altarch/ | tail -n2 | logger -p local0.notice -t rsync_centos_alt
+if [[ $? -ne 0 ]]; then
+    echo "Unable to finish sync to CentOS-altarch"
+fi
+
+${RSYNC} ${RS_OPT} ${RS_DEADLY} rsync.stream.centos.org::CentOS-Stream-All/ /srv/pub/centos-stream/ | tail -n2 | logger -p local0.notice -t rsync_centos_stream
+if [[ $? -ne 0 ]]; then
+    echo "Unable to finish sync to CentOS-stream"
+fi
+
+
 
 # Let MM know I'm all up to date
 #/usr/bin/report_mirror

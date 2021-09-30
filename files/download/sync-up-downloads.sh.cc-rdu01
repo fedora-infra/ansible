@@ -8,27 +8,44 @@
 RSYNC='/usr/bin/rsync'
 RS_OPT="-avSHP  --numeric-ids --log-file=/var/log/rsync-update.log"
 RS_DEADLY="--delete --delete-excluded --delete-delay --delay-updates"
+ALT_EXCLUDES=""
 EPL_EXCLUDES=""
 FED_EXCLUDES=""
 
 SERVER=download-ib01.fedoraproject.org
 
-# http://dl.fedoraproject.org/pub/epel/
-${RSYNC} ${RS_OPT} ${RS_DEADLY} ${EPL_EXCLUDES} ${SERVER}::fedora-epel/ /srv/pub/epel/ | tail -n2 | logger -p local0.notice -t rsync_updates_epel
-if [[ $? -ne 0 ]]; then
-    echo "Unable to finish sync to epel"
-fi
+function sync_stuff() {
+    if [[ $# -ne 5 ]]; then 
+	echo "Illegal number of arguments to sync_stuff: " $#
+	exit 1
+    fi
+    DATE_FILE=$1
+    LOGGER_NAME=$2
+    RSYNC_FROM=$3
+    RSYNC_TO=$4
+    FLAG="$5"
 
-# http://dl.fedoraproject.org/pub/fedora/
-${RSYNC} ${RS_OPT} ${RS_DEADLY} ${FED_EXCLUDES} ${SERVER}::fedora-enchilada0/ /srv/pub/fedora/ | tail -n2 | logger -p local0.notice -t rsync_updates_fedora
-if [[ $? -ne 0 ]]; then
-    echo "Unable to finish sync to fedora"
-fi
-# http://dl.fedoraproject.org/pub/fedora-secondary/
-${RSYNC} ${RS_OPT} ${RS_DEADLY} ${FED_EXCLUDES} ${SERVER}::fedora-secondary0/ /srv/pub/fedora-secondary/ | tail -n2 | logger -p local0.notice -t rsync_updates_fedora_2nd
-if [[ $? -ne 0 ]]; then
-    echo "Unable to finish sync to fedora-secondary"
-fi
+    CURDATE=$( date +%s )
+    if [[ -s ${DATE_FILE} ]]; then
+	LASTRUN=$( cat ${DATE_FILE} | awk '{print int($NF)}' )
+    else
+	LASTRUN=$( date +%s --date="Jan 1 00:00:00 UTC 2007" )
+    fi
+    DELTA=`echo ${CURDATE}-${LASTRUN} | bc`
+
+    ${LAST_SYNC} -d ${DELTA} -q ${FLAG}
+    
+    if [ "$?" -eq "0" ]; then
+	${RSYNC} ${RS_OPT} ${RS_DEADLY} ${ALT_EXCLUDES} ${SERVER}::${RSYNC_FROM}  ${RSYNC_TO}  | tail -n2 | logger -p local0.notice -t ${LOGGER_NAME}
+	echo ${CURDATE} > ${DATE_FILE}
+    else
+	logger -p local0.notice -t ${LOGGER_NAME} "No change found. Not syncing"
+    fi
+}
+
+sync_stuff ${DATE_EPEL} rsync_epel fedora-epel0 /srv/pub/epel/ "-e"
+sync_stuff ${DATE_FED} rsync_fedora fedora-enchilada0 /srv/pub/fedora/ "-f"
+sync_stuff ${DATE_SECOND} rsync_second fedora-secondary0 /srv/pub/fedora-secondary/ "-f"
 
 # CentOS
 ${RSYNC} ${RS_OPT} ${RS_DEADLY} master-1.centos.org::CentOS-community-cage/centos/ /srv/pub/centos/ | tail -n2 | logger -p local0.notice -t rsync_centos

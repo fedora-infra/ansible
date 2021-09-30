@@ -69,9 +69,12 @@
   - name: put in script for syncing on download-cc-rdu01
     copy: src="{{ files }}/download/sync-up-downloads.sh.cc-rdu01" dest=/usr/local/bin/sync-up-downloads owner=root group=root mode=755
     when: inventory_hostname == 'download-cc-rdu01.fedoraproject.org'
-  - name: put in cron job for syncing
+  - name: put in cron job for syncing on download-cc-rdu01
     copy: src="{{ files }}/download/download-sync.cron.cc-rdu01"  dest=/etc/cron.d/download-sync owner=root group=root mode=644
     when: inventory_hostname == 'download-cc-rdu01.fedoraproject.org'
+  - name: put in last sync scrypt for download-cc-rdu01
+    copy: src="{{ files}}/download/last-sync" dest=/usr/local/bin/last-sync mode=0755
+    when: inventory_hostname == 'download-ib01.fedoraproject.org'
 
   - name: make a mnt/koji link
     file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji
