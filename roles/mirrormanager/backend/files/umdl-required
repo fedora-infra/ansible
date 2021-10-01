@@ -30,6 +30,7 @@ elif [ "${1}" ==  "archive" ]; then
 	CATEGORY="Archive"
 elif [ "${1}" ==  "codecs" ]; then
 	CATEGORY="Codecs"
+	SCANNER="/usr/local/bin/scan-primary-mirror"
 	/usr/local/bin/lock-wrapper umdl-${1} "${SCANNER} --category \"Fedora ${CATEGORY}\""
 	exit 0
 elif [ "${1}" ==  "centos" ]; then
