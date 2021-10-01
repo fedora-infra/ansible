@@ -12,6 +12,18 @@ ALT_EXCLUDES=""
 EPL_EXCLUDES=""
 FED_EXCLUDES=""
 
+DATE_EPEL='/root/last-epel-sync'
+DATE_FED='/root/last-fed-sync'
+DATE_ARCHIVE='/root/last-archive-sync'
+DATE_ALT='/root/last-alt-sync'
+DATE_SECOND='/root/last-second-sync'
+
+for i in ${DATE_EPEL} ${DATE_FED} ${DATE_ARCHIVE} ${DATE_ALT} ${DATE_SECOND}; do
+  touch ${i}
+done
+
+LAST_SYNC='/usr/local/bin/last-sync'
+
 SERVER=download-ib01.fedoraproject.org
 
 function sync_stuff() {
