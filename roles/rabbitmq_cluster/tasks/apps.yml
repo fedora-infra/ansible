@@ -352,3 +352,46 @@
   - mbs-private-queue
 
 # MBS END
+#
+# ELN BEGIN
+
+- name: eln build user
+  run_once: true
+  include_role:
+    name: rabbit/user
+  vars:
+    username: distrobuildsync-eln
+
+- name: eln queue
+  run_once: true
+  include_role:
+    name: rabbit/queue
+  vars:
+    username: distrobuildsync-eln
+    queue_name: distrobuildsync-eln
+    # TTL: 10 days (in miliseconds)
+    message_ttl: 864000000
+    routing_keys:
+      - "#.buildsys.repo.done"
+      - "#.buildsys.tag"
+
+# ELN END
+
+# ELN next BEGIN
+
+# we use the already existing user above for this queue too
+
+- name: eln queue
+  run_once: true
+  include_role:
+    name: rabbit/queue
+  vars:
+    username: distrobuildsync-eln
+    queue_name: distrobuildsync-eln-next
+    # TTL: 10 days (in miliseconds)
+    message_ttl: 864000000
+    routing_keys:
+      - "#.buildsys.repo.done"
+      - "#.buildsys.tag"
+
+# ELN END
