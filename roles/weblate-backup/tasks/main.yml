@@ -12,6 +12,16 @@
   tags:
   - weblate_backup
 
+- name: create a .ssh dir for that user
+  file:
+    dest: "/home/_backup_weblate/.ssh"
+    mode: 0700
+    state: directory
+    owner: _backup_weblate
+    group: _backup_weblate
+  tags:
+  - weblate_backup
+
 - name: Copy private key
   copy:
     src: "{{ private }}/files/weblate/id_rsa"
