@@ -200,29 +200,29 @@ config = dict(
 #            # ),
 #        # ),
 #
-#        # Show only compose msgs to the releng crew.
-#        dict(
-#            network='irc.libera.chat',
-#            port=6667,
-#            make_pretty=True,
-#            make_terse=True,
-#
-#            {% if env == 'staging' %}
-#            nickname='fm-stg-releng',
-#            {% else %}
-#            nickname='fm-releng',
-#            {% endif %}
-#            channel='fedora-releng',
-#            filters=dict(
-#                topic=[
-#                    '^((?!(compose.rawhide|compose.34|compose.35|compose.36|pungi.compose.status|pagure)).)*$',
-#                ],
-#                body=[
-#                    '^((?!(pagure.io\/releng/failed-composes|pagure.io\/releng\/compose-tracker|pagure.io\/pungi|pagure.io\/fedora-comps|pagure.io\/fedora-kickstarts|compose\/updates|linux\/development|rpms\/fedora-repos|rpms\/fedora-release|rpms\/fedora-packager)).)*$',
-#                ],
-#            ),
-#        ),
-#
+        # Show only compose msgs to the releng crew.
+        dict(
+            network='irc.libera.chat',
+            port=6667,
+            make_pretty=True,
+            make_terse=True,
+
+            {% if env == 'staging' %}
+            nickname='fm-stg-releng',
+            {% else %}
+            nickname='fm-releng',
+            {% endif %}
+            channel='fedora-releng',
+            filters=dict(
+                topic=[
+                    '^((?!(compose.rawhide|compose.34|compose.35|compose.36|pungi.compose.status|pagure)).)*$',
+                ],
+                body=[
+                    '^((?!(pagure.io\/releng/failed-composes|pagure.io\/releng\/compose-tracker|pagure.io\/pungi|pagure.io\/fedora-comps|pagure.io\/fedora-kickstarts|compose\/updates|linux\/development|rpms\/fedora-repos|rpms\/fedora-release|rpms\/fedora-packager)).)*$',
+                ],
+            ),
+        ),
+
 #        # We no longer run trac
 #        # # The proyectofedora crew wants trac messages.
 #        # dict(
