@@ -30,21 +30,6 @@ if [[ $? -ne 0 ]]; then
     echo "Unable to finish sync to fedora-secondary"
 fi
 
-# CentOS
-${RSYNC} ${RS_OPT} ${RS_DEADLY} master-1.centos.org::CentOS-community-cage/centos/ /srv/pub/centos/ | tail -n2 | logger -p local0.notice -t rsync_centos
-if [[ $? -ne 0 ]]; then
-    echo "Unable to finish sync to CentOS"
-fi
-# CentOS-altarch
-${RSYNC} ${RS_OPT} ${RS_DEADLY} master-1.centos.org::CentOS-community-cage/altarch/ /srv/pub/centos-altarch/ | tail -n2 | logger -p local0.notice -t rsync_centos_alt
-if [[ $? -ne 0 ]]; then
-    echo "Unable to finish sync to CentOS-altarch"
-fi
-
-${RSYNC} ${RS_OPT} ${RS_DEADLY} rsync.stream.centos.org::CentOS-Stream-All/ /srv/pub/centos-stream/ | tail -n2 | logger -p local0.notice -t rsync_centos_stream
-if [[ $? -ne 0 ]]; then
-    echo "Unable to finish sync to CentOS-stream"
-fi
 
 # Let MM know I'm all up to date
 #/usr/bin/report_mirror
