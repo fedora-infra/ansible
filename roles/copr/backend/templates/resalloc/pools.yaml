@@ -24,7 +24,7 @@ aws_x86_64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else
     - arch_s390x_emulated
     - arch_noarch
     - aws
-  {% if devel %}
+{% if devel %}
     cmd_new: >
       /usr/bin/resalloc-aws-new {% if spot %}--spot{% endif %}
       --aws-profile default
@@ -32,17 +32,17 @@ aws_x86_64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else
       --ssh-key-name copr-builder
       --security-group-id sg-0c3efdb681ced5d4f
       --debug
-    {% for subnet in aws_arch_subnets["x86_64"] %}
+{% for subnet in aws_arch_subnets["x86_64"] %}
       --possible-subnet subnet
-    {% endfor %}
+{% endfor %}
       --instance-type i3.large
       --tag FedoraGroup=copr
       --tag CoprPurpose=builder
       --tag CoprInstance={% if devel %}devel{% else %}production{% endif %}
       --tag arch=x86_64
-  {% else %}
+{% else %}
     cmd_new: "/var/lib/resallocserver/resalloc_provision/vm-aws-new --arch=x86_64 {% if spot %}--spot{% endif %}"
-  {% endif %}
+{% endif %}
     cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-aws-delete"
     cmd_livecheck: "/var/lib/resallocserver/resalloc_provision/vm-check"
     cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
