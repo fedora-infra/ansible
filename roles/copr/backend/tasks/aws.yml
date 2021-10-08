@@ -1,32 +1,33 @@
+---
 - name: install aws client
   dnf: state=present name=awscli
 
 - name: create aws HOME config directory
   file: state=directory
-        path="/home/{{ item.user }}/.aws"
+        path="{{ item.homedir }}/.aws"
         owner={{ item.user }}
         group={{ item.user }}
         mode=0700
   with_items:
-  - { user: copr }
-  - { user: resalloc }
+  - {user: copr, homedir: /home/copr}
+  - {user: resalloc, homedir: /etc/resallocserver}
 
 - name: install aws credentials file
   template: src=aws-credentials
-            dest="/home/{{ item.user }}/.aws/credentials"
+            dest="{{ item.homedir }}/.aws/credentials"
             owner={{ item.user }}
             group={{ item.user }}
             mode=0600
   with_items:
-  - { user: copr }
-  - { user: resalloc }
+  - {user: copr, homedir: /home/copr}
+  - {user: resalloc, homedir: /etc/resallocserver}
 
 - name: install aws config file
   template: src=aws-config
-            dest="/home/{{ item.user }}/.aws/config"
+            dest="{{ item.homedir }}/.aws/config"
             owner={{ item.user }}
             group={{ item.user }}
             mode=0600
   with_items:
-  - { user: copr }
-  - { user: resalloc }
+  - {user: copr, homedir: /home/copr}
+  - {user: resalloc, homedir: /etc/resallocserver}
