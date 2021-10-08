@@ -81,7 +81,7 @@ aws_aarch64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% els
 {% for subnet in aws_arch_subnets["aarch64"] %}
       --possible-subnet {{ subnet }}
 {% endfor %}
-      --instance-type i3.large
+      --instance-type a1.xlarge
       --tag FedoraGroup=copr
       --tag CoprPurpose=builder
       --tag CoprInstance={% if devel %}devel{% else %}production{% endif %}
