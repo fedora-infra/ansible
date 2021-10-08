@@ -39,7 +39,7 @@
 - name: setup provision directory
   include_tasks: setup_provisioning_environment.yml
   tags:
-  - provision_config
+  - always
   vars:
     cloud_vars: true
 

@@ -207,7 +207,7 @@
     cloud_vars: true
     provision_directory: /home/copr/provision
   tags:
-  - provision_config
+  - always
 
 - name: copy image preparation scripts
   copy: src="{{ item }}" dest=/usr/local/bin/
