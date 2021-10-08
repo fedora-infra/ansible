@@ -10,7 +10,7 @@
         mode=0700
   with_items:
   - {user: copr, homedir: /home/copr}
-  - {user: resalloc, homedir: /etc/resallocserver}
+  - {user: resalloc, homedir: /var/lib/resallocserver}
 
 - name: install aws credentials file
   template: src=aws-credentials
@@ -20,7 +20,7 @@
             mode=0600
   with_items:
   - {user: copr, homedir: /home/copr}
-  - {user: resalloc, homedir: /etc/resallocserver}
+  - {user: resalloc, homedir: /var/lib/resallocserver}
 
 - name: install aws config file
   template: src=aws-config
@@ -30,4 +30,4 @@
             mode=0600
   with_items:
   - {user: copr, homedir: /home/copr}
-  - {user: resalloc, homedir: /etc/resallocserver}
+  - {user: resalloc, homedir: /var/lib/resallocserver}
