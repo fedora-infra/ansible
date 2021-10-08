@@ -87,7 +87,6 @@ aws_aarch64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% els
       --tag CoprInstance={% if devel %}devel{% else %}production{% endif %}
       --tag arch=aarch64
       --playbook /var/lib/resallocserver/provision/builderpb-aws.yml
-      --additional-volume-size 160
     cmd_delete: /usr/bin/resalloc-aws-delete --aws-profile default
 {% else %}
     cmd_new: "/var/lib/resallocserver/resalloc_provision/vm-aws-new --arch=aarch64 {% if spot %}--spot{% endif %}"
