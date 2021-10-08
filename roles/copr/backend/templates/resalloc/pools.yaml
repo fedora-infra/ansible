@@ -36,7 +36,7 @@ aws_x86_64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else
       --security-group-id sg-0c3efdb681ced5d4f
       --debug
 {% for subnet in aws_arch_subnets["x86_64"] %}
-      --possible-subnet subnet
+      --possible-subnet {{ subnet }}
 {% endfor %}
       --instance-type i3.large
       --tag FedoraGroup=copr
