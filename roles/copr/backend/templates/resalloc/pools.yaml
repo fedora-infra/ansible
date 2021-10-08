@@ -26,7 +26,10 @@ aws_x86_64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else
     - aws
 {% if devel %}
     cmd_new: >
-      /usr/bin/resalloc-aws-new {% if spot %}--spot{% endif %}
+      /usr/bin/resalloc-aws-new
+{% if spot %}
+      --spot-price 0.156
+{% endif %}
       --aws-profile default
       --ami {{ copr_builder_images.aws["x86_64"] }}
       --ssh-key-name copr-builder
