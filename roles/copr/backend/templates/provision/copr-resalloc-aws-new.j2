@@ -10,7 +10,7 @@ cmd=(
 {% for subnet in aws_arch_subnets[item] %}
       --possible-subnet {{ subnet }}
 {% endfor %}
-{% if item = 'x86_64' %}
+{% if item == 'x86_64' %}
       --instance-type i3.large
 {% else %}
       --instance-type a1.xlarge
