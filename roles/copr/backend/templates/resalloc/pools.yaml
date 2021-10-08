@@ -43,6 +43,7 @@ aws_x86_64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else
       --tag CoprPurpose=builder
       --tag CoprInstance={% if devel %}devel{% else %}production{% endif %}
       --tag arch=x86_64
+      --playbook /var/lib/resallocserver/provision/builderpb-aws.yml
 {% else %}
     cmd_new: "/var/lib/resallocserver/resalloc_provision/vm-aws-new --arch=x86_64 {% if spot %}--spot{% endif %}"
 {% endif %}
