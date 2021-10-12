@@ -58,7 +58,6 @@
   template: src="resalloc/{{ item }}" dest="/var/lib/resallocserver/resalloc_provision/"
             mode=755
   with_items:
-  - vm-check
   - vm-release
   tags:
   - provision_config

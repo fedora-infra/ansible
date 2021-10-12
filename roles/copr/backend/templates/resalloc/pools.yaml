@@ -44,7 +44,7 @@ aws_x86_64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else
       --tag arch=x86_64
       --playbook /var/lib/resallocserver/provision/builderpb-aws.yml
     cmd_delete: /usr/bin/resalloc-aws-delete --aws-profile default
-    cmd_livecheck: "/var/lib/resallocserver/resalloc_provision/vm-check"
+    cmd_livecheck: "resalloc-check-vm-ip"
     cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
     livecheck_period: 180
     reuse_opportunity_time: 180
@@ -82,7 +82,7 @@ aws_aarch64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% els
       --tag arch=aarch64
       --playbook /var/lib/resallocserver/provision/builderpb-aws.yml
     cmd_delete: /usr/bin/resalloc-aws-delete --aws-profile default
-    cmd_livecheck: "/var/lib/resallocserver/resalloc_provision/vm-check"
+    cmd_livecheck: "resalloc-check-vm-ip"
     cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
     livecheck_period: 180
     reuse_opportunity_time: 180
@@ -117,7 +117,7 @@ copr_hv_x86_64_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     - hypervisor_x86_64_{{ hv }}
     cmd_new: "/var/lib/resallocserver/provision/libvirt-new --swap-vol-size 168"
     cmd_delete: "/var/lib/resallocserver/provision/libvirt-delete"
-    cmd_livecheck: "/var/lib/resallocserver/resalloc_provision/vm-check"
+    cmd_livecheck: "resalloc-check-vm-ip"
     cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
     livecheck_period: 180
     reuse_opportunity_time: 180
@@ -149,7 +149,7 @@ copr_hv_ppc64le_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     - hypervisor_ppc64le_{{ hv }}
     cmd_new: "/var/lib/resallocserver/provision/libvirt-new --swap-vol-size 168"
     cmd_delete: "/var/lib/resallocserver/provision/libvirt-delete"
-    cmd_livecheck: "/var/lib/resallocserver/resalloc_provision/vm-check"
+    cmd_livecheck: "resalloc-check-vm-ip"
     cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
     livecheck_period: 180
     reuse_opportunity_time: 180
