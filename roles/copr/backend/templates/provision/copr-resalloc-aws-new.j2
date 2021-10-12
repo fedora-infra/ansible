@@ -1,5 +1,8 @@
 #! /bin/sh
 
+echo >&2 "running: $0 $*"
+echo >&2 '$'"RESALLOC_NAME: $RESALLOC_NAME"
+
 cmd=(
     /usr/bin/resalloc-aws-new
       --aws-profile default
