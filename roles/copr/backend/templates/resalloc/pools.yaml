@@ -24,7 +24,11 @@ aws_x86_64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else
     - arch_s390x_emulated
     - arch_noarch
     - aws
-    cmd_new: copr-resalloc-aws-new-x86_64{{ " --spot-price 0.156" if spot }}
+{% if spot %}
+    cmd_new: copr-resalloc-aws-new-x86_64 --spot-price 0.156
+{% else %}
+    cmd_new: copr-resalloc-aws-new-x86_64
+{% endif %}
     cmd_delete: /usr/bin/resalloc-aws-delete --aws-profile default
     cmd_livecheck: "resalloc-check-vm-ip"
     cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
@@ -44,7 +48,11 @@ aws_aarch64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% els
     - arch_aarch64
     - arch_aarch64_native
     - aws
-    cmd_new: copr-resalloc-aws-new-aarch64{{ " --spot-price 0.102" if spot }}
+{% if spot %}
+    cmd_new: copr-resalloc-aws-new-aarch64 --spot-price 0.102
+{% else %}
+    cmd_new: copr-resalloc-aws-new-aarch64
+{% endif %}
     cmd_delete: /usr/bin/resalloc-aws-delete --aws-profile default
     cmd_livecheck: "resalloc-check-vm-ip"
     cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
