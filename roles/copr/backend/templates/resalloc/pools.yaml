@@ -24,7 +24,6 @@ aws_x86_64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else
     - arch_s390x_emulated
     - arch_noarch
     - aws
-{% if devel %}
     cmd_new: >
       /usr/bin/resalloc-aws-new
 {% if spot %}
@@ -45,10 +44,6 @@ aws_x86_64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else
       --tag arch=x86_64
       --playbook /var/lib/resallocserver/provision/builderpb-aws.yml
     cmd_delete: /usr/bin/resalloc-aws-delete --aws-profile default
-{% else %}
-    cmd_new: "/var/lib/resallocserver/resalloc_provision/vm-aws-new --arch=x86_64 {% if spot %}--spot{% endif %}"
-    cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-aws-delete"
-{% endif %}
     cmd_livecheck: "/var/lib/resallocserver/resalloc_provision/vm-check"
     cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
     livecheck_period: 180
@@ -67,7 +62,6 @@ aws_aarch64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% els
     - arch_aarch64
     - arch_aarch64_native
     - aws
-{% if devel %}
     cmd_new: >
       /usr/bin/resalloc-aws-new
 {% if spot %}
@@ -88,10 +82,6 @@ aws_aarch64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% els
       --tag arch=aarch64
       --playbook /var/lib/resallocserver/provision/builderpb-aws.yml
     cmd_delete: /usr/bin/resalloc-aws-delete --aws-profile default
-{% else %}
-    cmd_new: "/var/lib/resallocserver/resalloc_provision/vm-aws-new --arch=aarch64 {% if spot %}--spot{% endif %}"
-    cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-aws-delete"
-{% endif %}
     cmd_livecheck: "/var/lib/resallocserver/resalloc_provision/vm-check"
     cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
     livecheck_period: 180
