@@ -180,3 +180,7 @@
 # copr-rpmbuild package.
 - name: Update gem2rpm package to the latest version
   dnf: state=latest pkg=rubygem-gem2rpm
+
+# See https://pagure.io/copr/copr/pull-request/1950
+- name: copy temporary rpkg.conf.j2 until builders run F35
+  copy: src=files/copr-rpmbuild/rpkg.conf.j2 dest=/etc/copr-rpmbuild/rpkg.conf.j2
