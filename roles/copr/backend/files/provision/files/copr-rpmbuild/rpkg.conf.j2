@@ -1,0 +1,13 @@
+[rpkg]
+preprocess_spec = True
+
+[git]
+anon_clone_url = {{ clone_url }}
+
+# After migrating to rpkg 3.0+ (F35), we can drop the following two options
+# See https://pagure.io/copr/copr/pull-request/1874
+lookaside = {{ lookaside_url }}
+anongiturl = {{ clone_url }}
+
+[lookaside]
+download_url = {{ lookaside_url }}
