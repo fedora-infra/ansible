@@ -1,0 +1,53 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: updatepot
+spec:
+  concurrencyPolicy: Forbid
+  schedule: "0 20 * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  activeDeadlineSeconds: 900
+  startingDeadlineSeconds: 300
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          labels:
+            parent: "updatepotcron"
+        spec:
+          containers:
+          - name: pushpot
+            image: docker-registry.default.svc:5000/websites/builder:latest
+            command: ["/bin/bash", "-c"]
+            args: 
+            - |
+              cd /tmp
+              git clone https://pagure.io/fedora-web/websites.git
+              cd websites
+              
+              for i in getfedora.org; do
+                pushd sites/$i/scripts
+                ./translations-source.sh
+                [ -f $i.pot ] && ./push-pot.sh
+                popd
+              done
+            env: []
+            volumeMounts: 
+            - mountPath: /.gitconfig
+              name: gitconfig
+              readOnly: true
+              subPath: .gitconfig
+            - name: sshconfig
+              mountPath: /.ssh
+              readOnly: true
+          restartPolicy: Never
+          startingDeadlineSeconds: 600
+          volumes: 
+          - name: sshconfig
+            secret:
+              secretName: sshconfig
+          - name: gitconfig
+            configMap:
+              name: gitconfig

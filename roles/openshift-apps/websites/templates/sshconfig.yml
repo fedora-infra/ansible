@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sshconfig
+  labels:
+    app: websites
+stringData:
+  id_rsa_web_trans: |-
+    {{ lookup('file', ssh_key_path) | indent(4) }}
+  config: |-
+    Host pagure.io
+      User git
+      IdentityFile /.ssh/id_rsa_web_trans
+      StrictHostKeyChecking no

@@ -2,7 +2,8 @@
   hosts: os_masters_stg[0]:os_masters[0]
   user: root
   gather_facts: False
-
+  vars:
+    ssh_key_path: "{{ private }}/files/websites/id_rsa_web_trans_{{ env_short }}"
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml
     - "/srv/private/ansible/vars.yml"
@@ -42,5 +43,20 @@
 
   - role: openshift/object
     app: websites
+    template: gitconfig.yml
+    objectname: gitconfig.yml
+
+  - role: openshift/object
+    app: websites
+    template: sshconfig.yml
+    objectname: sshconfig.yml
+
+  - role: openshift/object
+    app: websites
     template: cron.yml
     objectname: cron.yml
+
+  - role: openshift/object
+    app: websites
+    template: cron-updatepot.yml
+    objectname: cron-updatepot.yml
