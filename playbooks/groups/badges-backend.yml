@@ -26,8 +26,7 @@
   - { role: keytab/service,
       owner_user: fedmsg,
       owner_group: fedmsg,
-      service: badges-backend,
-      when: env == 'staging' }
+      service: badges-backend }
   - collectd/base
   - fedmsg/base
   - sudo
