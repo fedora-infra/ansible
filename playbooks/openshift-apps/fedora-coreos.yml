@@ -1,0 +1,13 @@
+---
+- hosts: os-control01.stg # :os-control01
+  user: root
+  gather_facts: false
+
+  roles:
+  - role: openshift-apps/fcos-pipeline
+    project_name: fcos-pipeline
+    project_description: Jenkins pipeline configuration for Fedora CoreOS.
+    appowners:
+    - dustymabe
+    - jlebon
+    - cverna
