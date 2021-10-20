@@ -425,7 +425,7 @@
   - service
   - koji_hub
 
-- name: Make sure kojira is set to run on boot 
+- name: Make sure kojira is set to run on boot
   service: name=kojira enabled=yes
   tags:
   - service
