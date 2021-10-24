@@ -1,4 +1,4 @@
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: build
@@ -14,7 +14,7 @@ spec:
         spec:
           containers:
           - name: build
-            image: docker-registry.default.svc:5000/websites/builder:latest
+            image: image-registry.openshift-image-registry.svc:5000/websites/builder:latest
             env:
             - name: BUILD_ENV
               value: "{{ env_short }}"

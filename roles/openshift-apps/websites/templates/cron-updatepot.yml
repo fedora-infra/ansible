@@ -1,4 +1,4 @@
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: updatepot
@@ -19,7 +19,7 @@ spec:
         spec:
           containers:
           - name: pushpot
-            image: docker-registry.default.svc:5000/websites/builder:latest
+            image: image-registry.openshift-image-registry.svc:5000/websites/builder:latest
             command: 
             - /bin/bash
             - /scripts/updatepot.sh
