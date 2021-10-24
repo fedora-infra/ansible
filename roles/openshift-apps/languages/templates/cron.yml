@@ -1,6 +1,6 @@
 {% if env == "production" %}
 {%   for release in ("10", "20", "30") %}
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: "stats-{{ release }}"
@@ -25,7 +25,7 @@ spec:
 {%   endfor %}
 {% endif %}
 {% set release="36" %}
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: "stats-latest"
@@ -47,7 +47,7 @@ spec:
 {%     include "cron_template.yml" %}
 {% endfilter %}
 ---
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: build-website
@@ -72,7 +72,7 @@ spec:
           restartPolicy: Never
           containers:
           - name: stats
-            image: "docker-registry.default.svc:5000/languages/builder:latest"
+            image: "image-registry.openshift-image-registry.svc:5000/languages/builder:latest"
             imagePullPolicy: Always
             command: ["/bin/sh", "-c"]
             args:
@@ -93,7 +93,7 @@ spec:
                 cpu: '0'
                 memory: 4Gi
 ---
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: stats-website

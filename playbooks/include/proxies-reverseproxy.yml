@@ -994,11 +994,11 @@
 
   - role: httpd/reverseproxy
     website: "languages{{ env_suffix }}.fedoraproject.org"
-    destname: app.os
+    destname: languages
     balancer_name: app-os
-    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
     targettype: openshift
-    ocp4: false
+    ocp4: true
     keephost: true
     tags:
     - languages

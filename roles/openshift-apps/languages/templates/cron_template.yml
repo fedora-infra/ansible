@@ -5,7 +5,7 @@ volumes:
 restartPolicy: Never
 initContainers:
 - name: clean-tmp
-  image: "docker-registry.default.svc:5000/languages/builder:latest"
+  image: "image-registry.openshift-image-registry.svc:5000/languages/builder:latest"
   imagePullPolicy: Always
   env:
   - name: RELEASEVER
@@ -22,7 +22,7 @@ initContainers:
     readOnly: false
     mountPath: /src/results
 - name: extract
-  image: "docker-registry.default.svc:5000/languages/builder:latest"
+  image: "image-registry.openshift-image-registry.svc:5000/languages/builder:latest"
   imagePullPolicy: Always
   command:
   - ./build.py
@@ -54,7 +54,7 @@ initContainers:
       memory: 2Gi
 containers:
 - name: stats
-  image: "docker-registry.default.svc:5000/languages/builder:latest"
+  image: "image-registry.openshift-image-registry.svc:5000/languages/builder:latest"
   imagePullPolicy: Always
   command: ["/bin/sh", "-c"]
   args:
