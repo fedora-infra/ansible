@@ -66,3 +66,22 @@
     app: websites
     template: cron-updatepot.yml
     objectname: cron-updatepot.yml
+
+  - role: openshift/imagestream
+    app: websites
+    imagename: fedora-websites
+
+  - role: openshift/object
+    app: websites
+    template: fedora-websites-bc.yml
+    objectname: fedora-websites-bc.yml
+
+  - role: openshift/start-build
+    app: websites
+    buildname: fedora-websites
+    objectname: fedora-websites
+
+  - role: openshift/object
+    app: websites
+    template: fedora-websites-cron.yml
+    objectname: fedora-websites-cron.yml

@@ -1,0 +1,46 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: fedora-websites-build
+spec:
+  concurrencyPolicy: Forbid
+  schedule: "10 * * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  activeDeadlineSeconds: 900
+  startingDeadlineSeconds: 300
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          labels:
+            parent: "cronjobbuild"
+        spec:
+          containers:
+          - name: build
+            image: image-registry.openshift-image-registry.svc:5000/websites/fedora-websites:latest
+            command: ["/bin/bash", "-c"]
+            args:
+            - |
+              cd /tmp
+              git clone --depth 1 --single-branch https://pagure.io/fedora-websites.git
+              cd fedora-websites
+
+              # build all sites in $OUTPUT
+              ./tools/build_all.sh
+            env:
+            - name: BUILD_ENV
+              value: "{{ env_short }}"
+            - name: OUTPUT
+              value: /output
+            volumeMounts:
+            - name: build-output
+              mountPath: /output
+              readOnly: false
+          restartPolicy: Never
+          startingDeadlineSeconds: 600
+          volumes:
+          - name: build-output
+            persistentVolumeClaim:
+              claimName: websites-storage

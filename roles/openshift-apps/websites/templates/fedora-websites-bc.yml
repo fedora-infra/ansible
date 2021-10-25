@@ -1,0 +1,24 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: fedora-websites
+spec:
+  successfulBuildsHistoryLimit: 1
+  failedBuildsHistoryLimit: 1
+  runPolicy: Serial
+  source:
+    git:
+      uri: "https://pagure.io/fedora-websites.git"
+{% if env == 'staging' %}
+      ref: staging
+{% else %}
+      ref: master
+{% endif %}
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: Dockerfile
+  output:
+    to:
+      kind: ImageStreamTag
+      name: fedora-websites:latest
