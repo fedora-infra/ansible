@@ -10,7 +10,7 @@ url="postgresql://{{ mirrormanager_db_user }}:{{ mirrormanager_db_pass }}@{{ mir
 name="CentOS"
 type="rsync"
 url="rsync://10.3.163.235/CentOS-Stream-Ref"
-checksum_base="http://mirror.stream.centos.org/"
+checksum_base="http://10.3.163.235/"
 
 [[repository_mapping]]
 regex="^\\d+(?:-stream)?/AppStream/"
