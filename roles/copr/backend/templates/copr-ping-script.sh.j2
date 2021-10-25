@@ -1,7 +1,7 @@
 #! /bin/sh
 
 start_time=$(date +%s)
-output=$(copr build-package @copr/copr-ping --name copr-ping)
+output=$(copr build @copr/copr-ping https://pagure.io/copr/copr-test-sources/raw/master/f/buildtag-0-0.src.rpm)
 exit_status=$?
 stop_time=$(date +%s)
 build_id=$(echo "$output" | grep 'Created builds:' | cut -d' ' -f3)
