@@ -1,11 +1,32 @@
 #! /bin/sh
 
-start_time=$(date +%s)
-output=$(copr build @copr/copr-ping https://pagure.io/copr/copr-test-sources/raw/master/f/buildtag-0-0.src.rpm)
-exit_status=$?
-stop_time=$(date +%s)
-build_id=$(echo "$output" | grep 'Created builds:' | cut -d' ' -f3)
-took=$(( stop_time - start_time ))
+source_rpm_url=https://pagure.io/copr/copr-test-sources/raw/master/f/buildtag-0-0.src.rpm
 
-echo "build_id=$build_id start=$start_time stop=$stop_time took=$took exit_status=$exit_status" \
-    >> "{{ ping_log }}"
+log()
+{
+    stop_time=$(date +%s)
+    took=$(( stop_time - start_time ))
+    echo "build_id=$build_id start=$start_time stop=$stop_time took=$took exit_status=$exit_status" \
+        >> "{{ ping_log }}"
+}
+
+start_time=$(date +%s)
+output=$(copr build --nowait @copr/copr-ping "$source_rpm_url")
+build_id=$(echo "$output" | grep 'Created builds:' | cut -d' ' -f3)
+exit_status=$?
+if ! expr "$build_id" : '\([0-9]*\)$'; then
+    # we don't even have the build_id
+    build_id=unknown
+fi
+
+if test $exit_status -ne 0; then
+    log
+fi
+
+copr watch-build "$build_id"
+exit_status=$?
+log
+
+
+
+
