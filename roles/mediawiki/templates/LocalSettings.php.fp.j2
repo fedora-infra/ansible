@@ -478,6 +478,16 @@ $wgNamespacePermissionLockdown['*']['move'] = array('user');
 $wgNamespacePermissionLockdown[NS_LEGAL]['move'] = array('Legal');
 $wgNamespacePermissionLockdown[NS_LICENSING]['move'] = array('Legal');
 $wgNamespacePermissionLockdown[NS_PACKAGING]['move'] = array('Packaging');
+
+# disallow anyone from editing talk pages, we don't want to use them
+$wgNamespaceProtection[NS_TALK] = ['noone'];
+$wgNamespaceProtection[NS_USER_TALK] = ['noone'];
+$wgNamespaceProtection[NS_PROJECT_TALK] = ['noone'];
+$wgNamespaceProtection[NS_FILE_TALK] = ['noone'];
+$wgNamespaceProtection[NS_MEDIAWIKI_TALK] = ['noone'];
+$wgNamespaceProtection[NS_TEMPLATE_TALK] = ['noone'];
+$wgNamespaceProtection[NS_HELP_TALK] = ['noone'];
+$wgNamespaceProtection[NS_CATEGORY_TALK] = ['noone'];
 ### END LOCKDOWN PERMISSIONS ###
 
 # Experimentation - Added by nigelj 30/Dec/2008
