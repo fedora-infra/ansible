@@ -101,4 +101,4 @@
     owner_user: apache
   # Fails to process when the service already exists:
   # https://pagure.io/fedora-infrastructure/issue/10065
-  when: false
+  when: new-copr-dev-keytab is defined
