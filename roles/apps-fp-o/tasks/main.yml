@@ -46,13 +46,15 @@
   tags:
   - apps-fp-o
 
-#- name: Copy in our app data yaml
-#  copy: >
-#    src=apps.yaml dest=/usr/share/apps-fp-o/apps.yaml
-#    owner=root group=root mode=0644
-#  notify:
-#  - rebuild apps-fp-o html
-#  - rebuild apps-fp-o json
-#  tags:
-#  - apps-fp-o
-
+# this was commented out, and might not be working. just turned back on
+# for staging to test it out.
+- name: Copy in our app data yaml
+  copy: >
+    src=apps.yaml dest=/usr/share/apps-fp-o/apps.yaml
+    owner=root group=root mode=0644
+  when: env == 'staging
+  notify:
+  - rebuild apps-fp-o html
+  - rebuild apps-fp-o json
+  tags:
+  - apps-fp-o
