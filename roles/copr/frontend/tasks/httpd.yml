@@ -99,6 +99,3 @@
     kt_location: /etc/httpd/conf.d/copr-frontend-http-api.keytab
     owner_group: apache
     owner_user: apache
-  # Fails to process when the service already exists:
-  # https://pagure.io/fedora-infrastructure/issue/10065
-  when: newcoprdevkeytab is defined
