@@ -52,7 +52,7 @@
   copy: >
     src=apps.yaml dest=/usr/share/apps-fp-o/apps.yaml
     owner=root group=root mode=0644
-  when: env == 'staging
+  when: env == 'staging'
   notify:
   - rebuild apps-fp-o html
   - rebuild apps-fp-o json
