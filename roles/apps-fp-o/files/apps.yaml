@@ -1,6 +1,6 @@
 %YAML 1.2
 # This file is managed in two places, please keep them synchronised:
-# - https://infrastructure.fedoraproject.org/cgit/ansible.git/tree/roles/apps-fp-o/files/apps.yaml
+# - https://pagure.io/fedora-infra/ansible/blob/main/f/roles/apps-fp-o/files/apps.yaml
 # - https://github.com/fedora-infra/apps.fp.o/blob/develop/data/apps.yaml
 ---
 name:   Fedora Apps
@@ -153,7 +153,7 @@ children:
             # TODO - add the docs_url.  I asked pete travis for info on this
             #docs_url:   put the url here
             # TODO - add a sop.
-            # https://fedorahosted.org/fedora-infrastructure/ticket/5150
+            # https://pagure.io/fedora-infrastructure/issue/5150
             #sops:
             #    - add the sop url here.
             description: >
@@ -681,9 +681,8 @@ children:
                 much to write home about, but the API is where it's at.
     -   name:   Ipsilon
         data:
-            icon: https://seccdn.libravatar.org/avatar/549cb16661a6fc449ef70adcfb67c71e30a0e4ed6410e1a7558991f19acb6c83?s=64&amp;d=retro
-            url: https://infrastructure.fedoraproject.org/infra/docs/ipsilon.rst
-            Description:
+            url: https://pagure.io/ipsilon
+            description:
                  Ipsilon is our central authentication agent that is used to
                  authenticate users agains FAS. It is seperate from FAS. The
                  only service that is not using this currently is the wiki.
