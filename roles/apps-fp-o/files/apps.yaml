@@ -122,11 +122,24 @@ children:
             description: >
                 Maintain your own user profile page, contribute to
                 documents about features, process, and governance.
+    -   name:   Fedora Magazine
+        data:
+            icon:   magazine.png
+            url:    https://fedoramagazine.org
+            docs_url:   https://codex.wordpress.org/
+            # We don't have a SOP for the magazine yet.
+            # https://pagure.io/fedora-infrastructure/issue/5149
+            #sops:
+            #    - put the url here
+            description: >
+                Fedora Magazine is a WordPress-based site which delivers all
+                the news of the Fedora Community. (It replaces the previous
+                Fedora Weekly News.)
     -   name:   The Planet
         data:
             icon:   planet_logo.png
             url:    http://fedoraplanet.org
-            docs_url:   http://www.intertwingly.net/code/venus/
+            docs_url:   https://www.intertwingly.net/code/venus/
             sops:
                 - https://infrastructure.fedoraproject.org/infra/docs/planetsubgroup.rst
             description: >
@@ -177,7 +190,7 @@ children:
             bugs_url:   https://github.com/abrt/retrace-server/issues
             docs_url:   https://abrt.readthedocs.org/en/latest/howitworks.html#faf
             # TODO - write SOPs for this
-            # https://fedorahosted.org/fedora-infrastructure/ticket/5151
+            # https://pagure.io/fedora-infrastructure/issue/5151
             #sops:
             #    - url goes here
             #    - and another one goes here
@@ -214,7 +227,7 @@ children:
             url:    https://fedoraproject.org/PackageReviewStatus/
             package_url: https://bugzilla.redhat.com/buglist.cgi?component=Package%20Review&query_format=advanced&short_desc_type=allwordssubstr&short_desc={package}
             # TODO - write the SOP for this
-            # https://fedorahosted.org/fedora-infrastructure/ticket/5152
+            # https://pagure.io/fedora-infrastructure/issue/5152
             #sops:
             #    - url goes here
             description: >
@@ -263,18 +276,18 @@ children:
     children:
     -   name:   Asknot
         data:
-            url:    http://whatcanidoforfedora.org
+            url:    https://whatcanidoforfedora.org
             source_url: https://github.com/fedora-infra/asknot-ng
             bugs_url:   https://github.com/fedora-infra/asknot-ng/issues
             docs_url:   https://github.com/fedora-infra/asknot-ng/blob/develop/README.md
             # TODO - write SOP for asknot-ng
-            # https://fedorahosted.org/fedora-infrastructure/ticket/5154
+            # https://pagure.io/fedora-infrastructure/issue/5154
             #sops:
             #    - url goes here
             status_mappings: []
             description: >
                 Ask not what Fedora can do for you, but <a
-                href="http://whatcanidoforfedora.org">what you can do for
+                href="https://whatcanidoforfedora.org">what you can do for
                 Fedora?</a>  This site is a starting place for brand new
                 contributors to help them figure out where they can
                 hop on board!
@@ -283,7 +296,7 @@ children:
             url:    https://elections.fedoraproject.org/
             source_url: https://github.com/fedora-infra/elections
             bugs_url:   https://github.com/fedora-infra/elections/issues
-            docs_url:   https://github.com/fedora-infra/elections/blob/develop/README.rst
+            docs_url:   https://github.com/fedora-infra/elections/blob/develop/README.md
             sops:
                 - https://infrastructure.fedoraproject.org/infra/docs/voting.rst
             status_mappings: ['elections']
@@ -431,16 +444,14 @@ children:
                     (repository: updates-testing) then a stable update
                     (repository: updates).  Behold -- the <em>Magic
                     Cabbage.</em>
-        -   name:   SCM
+        -   name:   Package Sources
             data:
-                icon:   git-logo.png
-                url:    https://src.fedoraproject.org/cgit
-                package_url: https://src.fedoraproject.org/cgit/{package}.git
-                source_url: https://github.com/sitaramc/gitolite
-                bugs_url:   http://gitolite.com/gitolite/#contact
-                docs_url:   https://github.com/sitaramc/gitolite#readme
-                sops:
-                    - https://infrastructure.fedoraproject.org/infra/docs/scmadmin.rst
+                icon:   package-sources.png
+                url:    https://src.fedoraproject.org/
+                package_url: https://src.fedoraproject.org/rpms/{package}
+                source_url: https://pagure.io/pagure
+                bugs_url:   https://pagure.io/pagure/issues
+                docs_url:   https://pagure.io/docs/pagure/
                 status_mappings: ['pkgs']
                 description: >
                     Ever wonder <em>exactly</em> what is in the new release
@@ -470,7 +481,7 @@ children:
             bugs_url:   https://github.com/fedora-infra/anitya/issues
             docs_url:   https://fedoraproject.org/wiki/Upstream_release_monitoring
             # TODO - write sops for anitya and the-new-hotness
-            # https://fedorahosted.org/fedora-infrastructure/ticket/5157
+            # https://pagure.io/fedora-infrastructure/issue/5157
             #sops:
             #    - https://infrastructure.fedoraproject.org/infra/docs/anitya.rst
             #    - https://infrastructure.fedoraproject.org/infra/docs/hotness.rst
@@ -528,7 +539,7 @@ children:
             bugs_url:   https://github.com/fedora-infra/geoip-city-wsgi/issues
             docs_url:   https://github.com/fedora-infra/geoip-city-wsgi/blob/master/geoip-city.wsgi
             # TODO - write a sop for this thing
-            # https://fedorahosted.org/fedora-infrastructure/ticket/5159
+            # https://pagure.io/fedora-infrastructure/issue/5159
             #sops:
             #    - https://infrastructure.fedoraproject.org/infra/docs/geoip.rst
             description: >
@@ -611,7 +622,7 @@ children:
             icon:   nagios-logo.png
             url:    https://admin.fedoraproject.org/nagios
             source_url: https://github.com/NagiosEnterprises/nagioscore
-            bugs_url:   https://fedorahosted.org/fedora-infrastructure/newticket
+            bugs_url:   https://pagure.io/fedora-infrastructure/issues
             docs_url:   https://www.nagios.org/documentation/
             sops:
                 - https://infrastructure.fedoraproject.org/infra/docs/nagios.rst
@@ -670,7 +681,7 @@ children:
                 much to write home about, but the API is where it's at.
     -   name:   Ipsilon
         data:
-            icon:
+            icon: https://seccdn.libravatar.org/avatar/549cb16661a6fc449ef70adcfb67c71e30a0e4ed6410e1a7558991f19acb6c83?s=64&amp;d=retro
             url: https://infrastructure.fedoraproject.org/infra/docs/ipsilon.rst
             Description:
                  Ipsilon is our central authentication agent that is used to
