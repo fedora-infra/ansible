@@ -11,6 +11,16 @@ log()
 }
 
 start_time=$(date +%s)
+
+#{% if devel %}
+
+build_id=1
+exit_status=0
+log
+exit 0
+
+#{% endif %}
+
 output=$(copr build --nowait @copr/copr-ping "$source_rpm_url")
 build_id=$(echo "$output" | grep 'Created builds:' | cut -d' ' -f3)
 exit_status=$?
