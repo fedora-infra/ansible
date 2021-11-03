@@ -32,29 +32,22 @@
     path: /status
 
   - role: httpd/domainrewrite
-    destname: 00-admin
-    website: admin.fedoraproject.org
+    destname: 00-apps
+    website: apps.fedoraproject.org
     path: ^/favicon.ico$
     status: 301
-    target: https://fedoraproject.org/static/images/favicon.ico
+    target: https://getfedora.org/static/images/favicon.ico
 
   - role: httpd/domainrewrite
     destname: 00-docs
     website: docs.fedoraproject.org
     path: ^/favicon.ico$
     status: 301
-    target: https://fedoraproject.org/static/images/favicon.ico
-
-  - role: httpd/domainrewrite
-    destname: 00-start
-    website: start.fedoraproject.org
-    path: ^/favicon.ico$
-    status: 301
-    target: https://fedoraproject.org/static/images/favicon.ico
+    target: https://getfedora.org/static/images/favicon.ico
 
   - role: httpd/domainrewrite
     destname: 00-registry-icon
     website: registry.fedoraproject.org
     path: ^/favicon.ico$
     status: 301
-    target: https://fedoraproject.org/static/images/favicon.ico
+    target: https://getfedora.org/static/images/favicon.ico
