@@ -9,8 +9,8 @@ url="postgresql://{{ mirrormanager_db_user }}:{{ mirrormanager_db_pass }}@{{ mir
 [[category]]
 name="CentOS"
 type="rsync"
-url="rsync://10.3.163.235/CentOS-Stream-Ref"
-checksum_base="http://10.3.163.235/"
+url="rsync://centos-master01.iad2.fedoraproject.org/CentOS-Stream-Ref"
+checksum_base="http://centos-master01.iad2.fedoraproject.org/"
 
 [[repository_mapping]]
 regex="^\\d+(?:-stream)?/AppStream/"
