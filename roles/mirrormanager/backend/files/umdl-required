@@ -35,7 +35,7 @@ elif [ "${1}" ==  "codecs" ]; then
 	exit 0
 elif [ "${1}" ==  "centos" ]; then
 	CATEGORY="CentOS"
-	SCANNER="/usr/local/bin/scan-primary-mirror -c /etc/mirrormanager/scan-primary-mirror-centos.toml"
+	SCANNER="/usr/local/bin/scan-primary-mirror -c /etc/mirrormanager/scan-primary-mirror-centos.toml -d"
 	/usr/local/bin/lock-wrapper umdl-${1} "${SCANNER} --category \"${CATEGORY}\""
 	if [ "$?" -eq "0" ]; then
 		echo -n "Finished umdl for ${CATEGORY} successfully at "
