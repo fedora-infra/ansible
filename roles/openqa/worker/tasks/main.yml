@@ -88,7 +88,7 @@
 
 - name: Install required packages
   package:
-    name: ['openqa-worker', 'os-autoinst']
+    name: ['openqa-worker', 'os-autoinst', 'qemu-common']
     state: latest
     enablerepo: "{{ openqa_repo }}"
   notify:
