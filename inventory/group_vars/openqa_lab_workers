@@ -19,6 +19,10 @@ openqa_repo: updates-testing
 # we are all NFS workers for now at least
 openqa_nfs_worker: true
 
+# qemu build with fix for snapshots on qxl; not a scratch build,
+# just getting it deployed ahead of the updates-testing push
+openqa_scratch: ["78533572"]
+
 deployment_type: stg
 freezes: false
 
