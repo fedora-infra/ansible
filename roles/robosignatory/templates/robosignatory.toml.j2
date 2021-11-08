@@ -418,6 +418,8 @@ handlers = ["console"]
             key = "{{ (env == 'production')|ternary('fedora-33', 'testkey') }}"
             keyid = "{{ (env == 'production')|ternary('9570ff31', 'd300e724') }}"
 
+            # Side tags created by releng
+
             # f35-python
             [[consumer_config.koji_instances.primary.tags]]
             from = "f35-python"
@@ -429,6 +431,13 @@ handlers = ["console"]
             [[consumer_config.koji_instances.primary.tags]]
             from = "f35-boost"
             to = "f35-boost"
+            key = "{{ (env == 'production')|ternary('fedora-35', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('9867c58f', 'd300e724') }}"
+
+            # f35-kde
+            [[consumer_config.koji_instances.primary.tags]]
+            from = "f35-kde"
+            to = "f35-kde"
             key = "{{ (env == 'production')|ternary('fedora-35', 'testkey') }}"
             keyid = "{{ (env == 'production')|ternary('9867c58f', 'd300e724') }}"
 
