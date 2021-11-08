@@ -64,6 +64,7 @@ custom_rules: [
     '-A INPUT -p tcp -m tcp --dport 44342 -s 209.132.183.252 -j ACCEPT',
 
     # Allow ocp control plane hosts
+    '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.35 -j ACCEPT', # batcave01
     '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.120 -j ACCEPT',
     '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.121 -j ACCEPT',
     '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.122 -j ACCEPT',
