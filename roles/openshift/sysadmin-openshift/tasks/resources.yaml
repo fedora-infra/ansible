@@ -1,0 +1,28 @@
+- name: Create the directories to hold the templates
+  file:
+    path: "/root/ocp4/openshift-apps/"
+    state: directory
+    owner: root
+    group: root
+    mode: 0770
+    recurse: yes
+  tags:
+    - create-resources
+
+# generate the templates for project to be created
+- name: create the templates
+  template:
+    src: "{{ item }}"
+    dest: "/root/ocp4/openshift-apps/{{ item }}"
+    mode: 0770
+  with_items: "{{ project_templates }}"
+  tags:
+    - create-resources
+
+# apply created openshift resources
+- name: oc apply resources
+  command: "/root/bin/oc apply -f /root/ocp4/openshift-apps/{{ item }}"
+  with_items: "{{ project_templates }}"
+  tags:
+    - create-resources
+

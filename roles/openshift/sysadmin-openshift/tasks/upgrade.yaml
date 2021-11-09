@@ -1,0 +1,7 @@
+- name: Install oc-client.prm package.
+  yum:
+     name: /srv/web/infra/bigfiles/openshiftboot/oc-client/oc-client.rpm
+     state: present
+  delegate_to: 127.0.0.1
+  tags:
+    - upgrade-rpm

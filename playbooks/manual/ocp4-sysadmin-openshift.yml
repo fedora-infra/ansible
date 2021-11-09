@@ -1,0 +1,16 @@
+---
+- hosts: os_control_stg:os_control
+  gather_facts: false
+
+  roles:
+  - role: openshift/sysadmin-openshift
+    appowners:
+    - mobrien
+    - siddharthvipul1
+    - kevin
+    - dkirwan
+    - jrichardson
+    - scoady
+    - lenkaseg
+    - asaleh
+    - t0xic0der
