@@ -20,7 +20,7 @@ items:
   metadata:
     name: wsgi-script
     labels:
-      app: {{ app }}
+      app: Datagrepper
   data:
     wsgi.py: |-
       {{ load_file('wsgi.py') | indent(6) }}

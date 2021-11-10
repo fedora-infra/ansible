@@ -1,5 +1,5 @@
 - name: make the app be real
-  hosts: os_masters_stg[0]
+  hosts: os_masters[0]:os_masters_stg[0]
   user: root
   gather_facts: False
 
@@ -9,19 +9,48 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
+  - role: rabbit/user
+    username: "discourse2fedmsg{{ env_suffix }}"
+
   - role: openshift/project
     app: discourse2fedmsg
-    description: discourse2fedmsg
+    description: "Relay Discourse webhooks to Fedora Messaging"
     appowners:
     - puiterwijk
+    - ryanlerch
+    - abompard
+    tags:
+      - apply-appowners
+  
+  - role: openshift/secret-file
+    app: discourse2fedmsg
+    secret_name: fedora-messaging-ca
+    key: cacert.pem
+    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+  - role: openshift/secret-file
+    app: discourse2fedmsg
+    secret_name: fedora-messaging-crt
+    key: discourse2fedmsg-cert.pem
+    privatefile: "rabbitmq/{{env}}/pki/issued/discourse2fedmsg{{env_suffix}}.crt"
+  - role: openshift/secret-file
+    app: discourse2fedmsg
+    secret_name: fedora-messaging-key
+    key: discourse2fedmsg-key.pem
+    privatefile: "rabbitmq/{{env}}/pki/private/discourse2fedmsg{{env_suffix}}.key"
+
+  - role: openshift/imagestream
+    app: discourse2fedmsg
+    imagename: discourse2fedmsg
+
   - role: openshift/object
     app: discourse2fedmsg
-    file: imagestream.yml
-    objectname: imagestream.yml
-  - role: openshift/object
-    app: discourse2fedmsg
-    file: buildconfig.yml
+    template: buildconfig.yml
     objectname: buildconfig.yml
+  
+  - role: openshift/object
+    app: discourse2fedmsg
+    template: configmap.yml
+    objectname: configmap.yml
 
   - role: openshift/start-build
     app: discourse2fedmsg
@@ -35,14 +64,22 @@
   - role: openshift/route
     app: discourse2fedmsg
     routename: discourse2fedmsg
-    serviceport: 8080-tcp
-    servicename: discourse2fedmsg
+    host: "discourse2fedmsg{{ env_suffix }}.fedoraproject.org"
+    serviceport: web
+    servicename: discourse2fedmsg-web
 
   - role: openshift/object
     app: discourse2fedmsg
     template: deploymentconfig.yml
     objectname: deploymentconfig.yml
 
-  - role: openshift/rollout
-    app: discourse2fedmsg
-    dcname: discourse2fedmsg
+  # - role: openshift/start-build
+  #   app: discourse2fedmsg
+  #   buildname: discourse2fedmsg
+  #   tags:
+  #   - never
+  #   - build
+
+  # - role: openshift/rollout
+  #   app: discourse2fedmsg
+  #   dcname: discourse2fedmsg

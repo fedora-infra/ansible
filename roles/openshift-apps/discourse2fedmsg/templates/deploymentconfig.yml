@@ -7,7 +7,7 @@ metadata:
     service: discourse2fedmsg
   name: discourse2fedmsg
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     app: discourse2fedmsg
     deploymentconfig: discourse2fedmsg
@@ -24,24 +24,67 @@ spec:
         name: discourse2fedmsg
         env:
         - name: APP_MODULE
-          value: "discourse2fedmsg:app"
-        - name: DISCOURSE2FEDMSG_SECRET
-          value: "{{ discourse2fedmsg_secret }}"
+          value: "deploy.wsgi"
+        - name: FLASK_CONFIG
+          value: "/etc/discourse2fedmsg/discourse2fedmsg.cfg"
         ports:
         - containerPort: 8080
           protocol: TCP
+        volumeMounts:
+        - name: discourse2fedmsg-config-volume
+          mountPath: "/etc/discourse2fedmsg"
+          readOnly: true
+        - name: wsgi-script-volume
+          mountPath: "/opt/app-root/src/deploy"
+          readOnly: true
+        - name: fedora-messaging-config-volume
+          mountPath: "/etc/fedora-messaging"
+          readOnly: true
+        - name: fedora-messaging-ca-volume
+          mountPath: /etc/pki/fedora-messaging/cacert.pem
+          subPath: cacert.pem
+          readOnly: true
+        - name: fedora-messaging-crt-volume
+          mountPath: /etc/pki/fedora-messaging/noggin-cert.pem
+          subPath: noggin-cert.pem
+          readOnly: true
+        - name: fedora-messaging-key-volume
+          mountPath: /etc/pki/fedora-messaging/noggin-key.pem
+          subPath: noggin-key.pem
+          readOnly: true
         readinessProbe:
-          timeoutSeconds: 1
+          timeoutSeconds: 10
           initialDelaySeconds: 5
+          periodSeconds: 60
           httpGet:
-            path: /
+            path: "/healthz/ready"
             port: 8080
         livenessProbe:
-          timeoutSeconds: 1
-          initialDelaySeconds: 30
+          timeoutSeconds: 10
+          initialDelaySeconds: 3
+          periodSeconds: 60
           httpGet:
-            path: /
+            path: "/healthz/live"
             port: 8080
+      volumes:
+      - name: discourse2fedmsg-config-volume
+        configMap:
+          name: discourse2fedmsg-config
+      - name: wsgi-script-volume
+        configMap:
+          name: wsgi-script
+      - name: fedora-messaging-config-volume
+        configMap:
+          name: fedora-messaging-config
+      - name: fedora-messaging-ca-volume
+        secret:
+          secretName: fedora-messaging-ca
+      - name: fedora-messaging-crt-volume
+        secret:
+          secretName: fedora-messaging-crt
+      - name: fedora-messaging-key-volume
+        secret:
+          secretName: fedora-messaging-key
 
   triggers:
   - type: ConfigChange

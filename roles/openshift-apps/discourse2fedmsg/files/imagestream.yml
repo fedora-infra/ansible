@@ -8,21 +8,3 @@ spec:
     local: false
 status:
   dockerImageRepository: ""
----
-apiVersion: v1
-kind: ImageStream
-metadata:
-  name: python-27-rhel7
-spec:
-  lookupPolicy:
-    local: false
-  tags:
-  - from:
-      kind: DockerImage
-      name: registry.access.redhat.com/rhscl/python-27-rhel7
-    importPolicy: {}
-    name: latest
-    referencePolicy:
-      type: Source
-status:
-  dockerImageRepository: ""

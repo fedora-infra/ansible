@@ -1,4 +1,4 @@
-amqp_url = "amqps://noggin:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fpubsub"
+amqp_url = "amqps://discourse2fedmsg:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fpubsub"
 
 # Just check if the queue exist, don't try to create it (the server does not allow it).
 passive_declares = true
@@ -13,11 +13,11 @@ topic_prefix = "org.fedoraproject.prod"
 
 [tls]
 ca_cert = "/etc/pki/fedora-messaging/cacert.pem"
-keyfile = "/etc/pki/fedora-messaging/noggin-key.pem"
-certfile = "/etc/pki/fedora-messaging/noggin-cert.pem"
+keyfile = "/etc/pki/fedora-messaging/discourse2fedmsg-key.pem"
+certfile = "/etc/pki/fedora-messaging/discourse2fedmsg-cert.pem"
 
 [client_properties]
-app = "Noggin"
+app = "Discourse2Fedmsg"
 
 [log_config]
 version = 1
