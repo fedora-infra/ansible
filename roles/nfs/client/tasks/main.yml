@@ -67,7 +67,7 @@
         passno=0
         dump=0
         state=mounted
-  when: datacenter == 'iad2' and (env != 'staging' or mount_stg is defined)
+  when: ( datacenter == 'iad2' or datacenter == 'staging' ) and (env != 'staging' or mount_stg is defined)
   tags:
   - nfs/client
 
