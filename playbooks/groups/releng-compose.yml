@@ -75,12 +75,12 @@
     mount_stg: true
     when: "'releng_compose_stg' in group_names"
   - role: nfs/client
-    mnt_dir: '/mnt/fedora_koji_prod/ostree'
+    mnt_dir: '/mnt/fedora_koji_prod/koji/ostree'
     nfs_src_dir: 'fedora_ostree_content/ostree'
     mount_stg: true
     when: "'releng_compose_stg' in group_names"
   - role: nfs/client
-    mnt_dir: '/mnt/fedora_koji_prod/compose/ostree'
+    mnt_dir: '/mnt/fedora_koji_prod/koji/compose/ostree'
     nfs_src_dir: 'fedora_ostree_content/compose/ostree'
     mount_stg: true
     when: "'releng_compose_stg' in group_names"
