@@ -18,32 +18,22 @@ CURDATE=`date +%s`
 SCANNER="/usr/bin/mm2_update-master-directory-list"
 
 if [ "${1}" ==  "fedora" ]; then
-	CATEGORY="Linux"
+	CATEGORY="Fedora Linux"
 elif [ "${1}" ==  "epel" ]; then
-	CATEGORY="EPEL"
+	CATEGORY="Fedora EPEL"
 	SCANNER="/usr/local/bin/scan-primary-mirror"
 elif [ "${1}" ==  "alt" ]; then
-	CATEGORY="Other"
+	CATEGORY="Fedora Other"
 elif [ "${1}" ==  "fedora-secondary" ]; then
-	CATEGORY="Secondary Arches"
+	CATEGORY="Fedora Secondary Arches"
 elif [ "${1}" ==  "archive" ]; then
-	CATEGORY="Archive"
+	CATEGORY="Fedora Archive"
 elif [ "${1}" ==  "codecs" ]; then
-	CATEGORY="Codecs"
+	CATEGORY="Fedora Codecs"
 	SCANNER="/usr/local/bin/scan-primary-mirror"
-	/usr/local/bin/lock-wrapper umdl-${1} "${SCANNER} --category \"Fedora ${CATEGORY}\""
-	exit 0
 elif [ "${1}" ==  "centos" ]; then
 	CATEGORY="CentOS"
 	SCANNER="/usr/local/bin/scan-primary-mirror -c /etc/mirrormanager/scan-primary-mirror-centos.toml -d"
-	/usr/local/bin/lock-wrapper umdl-${1} "${SCANNER} --category \"${CATEGORY}\""
-	if [ "$?" -eq "0" ]; then
-		echo -n "Finished umdl for ${CATEGORY} successfully at "
-	else
-		echo -n "${SCANNER} for ${CATEGORY} returned non-zero. Something failed. Please check umdl.log. "
-	fi
-	date
-	exit 0
 fi
 
 if [ -e /var/run/mirrormanager/umdl-${1} ]; then
@@ -53,12 +43,21 @@ else
 	let LASTRUN=CURDATE-86400
 fi
 
-FFTL="/srv/pub/${1}/fullfiletimelist-${1}"
-FILEDATE=`stat -c %Z ${FFTL} 2> /dev/null`
+if [ "${1}" ==  "centos" ]; then
+	FFTL="http://mirror.stream.centos.org/9-stream/COMPOSE_ID"
+	FILEDATE=`date +%s -d"$( curl -s --head ${FFTL} | awk 'BEGIN {FS=": "}/^Last-Modified/{print $2}' )"`
 
-if [ "$?" -eq "1" ]; then
-	echo "Error stat() of ${FFTL} failed. This should not happen."
-	exit 1
+elif [ "${1}" ==  "codecs" ]; then
+	FFTL="${CATEGORY}"
+	FILEDATE=${CURDATE}
+else
+	FFTL="/srv/pub/${1}/fullfiletimelist-${1}"
+	FILEDATE=`stat -c %Z ${FFTL} 2> /dev/null`
+
+	if [ "$?" -eq "1" ]; then
+		echo "Error stat() of ${FFTL} failed. This should not happen."
+		exit 1
+	fi
 fi
 
 if [ "$LASTRUN" -gt "$FILEDATE" ]; then
@@ -67,18 +66,18 @@ if [ "$LASTRUN" -gt "$FILEDATE" ]; then
 	exit 0
 fi
 
-echo -n "${FFTL} has changed since last run. Running umdl for Fedora ${CATEGORY} at "
+echo -n "${FFTL} has changed since last run. Running umdl for ${CATEGORY} at "
 date
 
-/usr/local/bin/lock-wrapper umdl-${1} "${SCANNER} --category \"Fedora ${CATEGORY}\""
+/usr/local/bin/lock-wrapper umdl-${1} "${SCANNER} --category \"${CATEGORY}\""
 
 if [ "$?" -eq "0" ]; then
 	# success! remember the date of this run
 	echo "LASTRUN=${CURDATE}" > /var/run/mirrormanager/umdl-${1}
-	echo -n "Finished umdl for Fedora ${CATEGORY} successfully at "
+	echo -n "Finished umdl for ${CATEGORY} successfully at "
 	date
 	exit 0
 fi
 
-echo -n "umdl for Fedora ${CATEGORY} returned non-zero. Something failed. Please check umdl.log. "
+echo -n "umdl for ${CATEGORY} returned non-zero. Something failed. Please check umdl.log. "
 date
