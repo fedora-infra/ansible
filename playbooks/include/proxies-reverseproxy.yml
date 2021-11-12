@@ -819,3 +819,11 @@
     balancer_name: app-os
     targettype: openshift
     keephost: true
+
+  - role: httpd/reverseproxy
+    website: "discourse2fedmsg{{ env_suffix }}.fedoraproject.org"
+    destname: discourse2fedmsg
+    balancer_name: app-os
+    targettype: openshift
+    keephost: true
+    tags: discourse2fedmsg
