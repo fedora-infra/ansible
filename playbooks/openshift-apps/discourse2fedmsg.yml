@@ -52,10 +52,6 @@
     template: configmap.yml
     objectname: configmap.yml
 
-  - role: openshift/start-build
-    app: discourse2fedmsg
-    buildname: discourse2fedmsg-build
-
   - role: openshift/object
     app: discourse2fedmsg
     file: service.yml
