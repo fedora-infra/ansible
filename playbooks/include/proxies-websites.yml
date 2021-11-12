@@ -1133,6 +1133,12 @@
     cert_name: "{{wildcard_cert_name}}"
 
   - role: httpd/website
+    site_name: "discourse2fedmsg{{ env_suffix }}.fedoraproject.org"
+    sslonly: true
+    cert_name: "{{wildcard_cert_name}}"
+    tags: discourse2fedmsg
+
+  - role: httpd/website
     site_name: fedora.im
     server_aliases: [stg.fedora.im]
     sslonly: true
