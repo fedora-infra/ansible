@@ -51,6 +51,7 @@ class BaseConfiguration(object):
     PDC_INSECURE = True
     PDC_DEVELOP = True
     SCMURLS = ["git+https://src.fedoraproject.org/modules/"]
+    RAWHIDE_BRANCH = 'rawhide'
 
     # How often should we resort to polling, in seconds
     # Set to zero to disable polling
