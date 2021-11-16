@@ -60,7 +60,7 @@
   - role: openshift/route
     app: discourse2fedmsg
     routename: discourse2fedmsg
-    host: "discourse2fedmsg{{ env_suffix }}.fedoraproject.org"
+    host: "discourse2fedmsg.app.os{{ env_suffix }}.fedoraproject.org"
     serviceport: web
     servicename: discourse2fedmsg-web
 
