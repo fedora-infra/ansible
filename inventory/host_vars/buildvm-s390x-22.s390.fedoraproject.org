@@ -10,13 +10,11 @@ eth0_ipv4: 10.16.0.33
 eth0_ipv4_nm: 24
 eth0_ipv4_gw: 10.16.0.254
 
-mac0: 52:54:00:49:63:3c
-
 eth0_mac: "{{ mac0 }}"
 
 network_connections:
 - name: eth0
-  mac: "{{ eth0_mac }}"
+  mac: "{{ ansible_default_ipv4.macaddress }}"
   state: up
   type: ethernet
   autoconnect: yes
