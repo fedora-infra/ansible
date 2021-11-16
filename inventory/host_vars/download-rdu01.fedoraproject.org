@@ -1,66 +1,57 @@
 ---
 datacenter: rdu
-
-nrpe_procs_warn: 900
-nrpe_procs_crit: 1000
-postfix_group: vpn
-vpn: true
-
-public_ip: 209.132.190.4
-
+dns1: 172.31.2.24
+dns_search1: "vpn.fedoraproject.org"
+dns_search2: "rdu2.fedoraproject.org"
+dns_search3: "fedoraproject.org"
+eth0_ipv4: 172.31.2.31
+eth0_ipv4_gw: 172.31.2.254
+eth0_ipv4_nm: 24
+eth1_ipv4: 172.31.1.1
+eth1_ipv4_gw: 172.31.1.254
+eth1_ipv4_nm: 24
+has_ipv4: yes
+mac0: e4:1f:13:6a:e3:a0
 nagios_Check_Services:
   mail: false
   nrpe: false
   ping: true
-
-public_hostname: download-rdu01.fedoraproject.org
-
-dns1: 172.31.2.24
-
-dns_search1: "vpn.fedoraproject.org"
-dns_search2: "rdu2.fedoraproject.org"
-dns_search3: "fedoraproject.org"
-
-has_ipv4: yes
-eth0_ipv4: 172.31.2.31
-eth0_ipv4_nm: 24
-eth0_ipv4_gw: 172.31.2.254
-eth1_ipv4: 172.31.1.1
-eth1_ipv4_nm: 24
-eth1_ipv4_gw: 172.31.1.254
-
-mac0: e4:1f:13:6a:e3:a0
-
 network_connections:
-- name: eth0
-  mac: "{{ eth0_mac }}"
-  state: up
-  type: ethernet
-  autoconnect: yes
-  ip:
-    address:
-    - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
-    gateway4: "{{ eth0_ipv4_gw }}"
-    dns:
-    - "{{ dns1 }}"
-    dns_search:
-    - "{{ dns_search1 }}"
-    - "{{ dns_search2 }}"
-    - "{{ dns_search3 }}"
-    dhcp4: no
-    auto6: no
-- name: eth1
-  state: down
-  type: ethernet
-  ip:
-    address:
-    - "{{ eth1_ipv4 }}/{{ eth1_ipv4_nm }}"
-    gateway4: "{{ eth1_ipv4_gw }}"
-    dns:
-    - "{{ dns1 }}"
-    dns_search:
-    - "{{ dns_search1 }}"
-    - "{{ dns_search2 }}"
-    - "{{ dns_search3 }}"
-    dhcp4: no
-    auto6: no
+  - autoconnect: yes
+    ip:
+      address:
+        - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
+      auto6: no
+      dhcp4: no
+      dns:
+        - "{{ dns1 }}"
+      dns_search:
+        - "{{ dns_search1 }}"
+        - "{{ dns_search2 }}"
+        - "{{ dns_search3 }}"
+      gateway4: "{{ eth0_ipv4_gw }}"
+    mac: "{{ eth0_mac }}"
+    name: eth0
+    state: up
+    type: ethernet
+  - ip:
+      address:
+        - "{{ eth1_ipv4 }}/{{ eth1_ipv4_nm }}"
+      auto6: no
+      dhcp4: no
+      dns:
+        - "{{ dns1 }}"
+      dns_search:
+        - "{{ dns_search1 }}"
+        - "{{ dns_search2 }}"
+        - "{{ dns_search3 }}"
+      gateway4: "{{ eth1_ipv4_gw }}"
+    name: eth1
+    state: down
+    type: ethernet
+nrpe_procs_crit: 1000
+nrpe_procs_warn: 900
+postfix_group: vpn
+public_hostname: download-rdu01.fedoraproject.org
+public_ip: 209.132.190.4
+vpn: true

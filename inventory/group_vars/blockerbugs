@@ -1,48 +1,39 @@
 ---
-lvm_size: 30000
-mem_size: 4096
-num_cpus: 2
-
-# for systems that do not match the above - specify the same parameter in
-# the host_vars/$hostname file
-
-tcp_ports: [ 80, 443, 8888 ]
-
-# Neeed for rsync from log01 for logs.
-custom_rules: [ '-A INPUT -p tcp -m tcp -s 10.3.163.39 --dport 873 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT' ]
-
-primary_auth_source: ipa
-ipa_host_group: blockerbugs
-ipa_host_group_desc: Blocker bug tracking service
-ipa_client_shell_groups:
-- fi-apprentice
-- sysadmin-noc
-- sysadmin-qa
-- sysadmin-veteran
-ipa_client_sudo_groups:
-- sysadmin-qa
-
-# This gets overridden by whichever node we want to run special cronjobs.
-master_blockerbugs_node: False
-
-host_group: blockerbugs
-
-blockerbugs_secret_key: "{{ stg_blockerbugs_secret_key }}"
-blockerbugs_url: 'https://qa.fedoraproject.org/blockerbugs/'
-blockerbugs_bugzilla_url: 'https://bugzilla.redhat.com/'
 blockerbugs_bodhi_url: 'https://bodhi.fedoraproject.org/'
-blockerbugs_pagure_url: 'https://pagure.io/'
-blockerbugs_pagure_repo_token_secret: "{{ blockerbugs_pagure_repo_token }}"
-blockerbugs_pagure_repo_webhook_key_secret: "{{ blockerbugs_pagure_repo_webhook_key }}"
-
+blockerbugs_bugzilla_url: 'https://bugzilla.redhat.com/'
+blockerbugs_db_host: "{{ blockerbugs_db_host_machine }}"
 ############################################################
 # blockerbugs db details
 ############################################################
-
 blockerbugs_db_host_machine: db01.iad2.fedoraproject.org
-blockerbugs_db_host: "{{ blockerbugs_db_host_machine }}"
-blockerbugs_db_port: 5432
 blockerbugs_db_name: blockerbugs
+blockerbugs_db_password: "{{ prod_blockerbugs_db_password }}"
+blockerbugs_db_port: 5432
 # these aren't right but they're just placeholders for now
 blockerbugs_db_user: "{{ prod_blockerbugs_db_user }}"
-blockerbugs_db_password: "{{ prod_blockerbugs_db_password }}"
+blockerbugs_pagure_repo_token_secret: "{{ blockerbugs_pagure_repo_token }}"
+blockerbugs_pagure_repo_webhook_key_secret: "{{ blockerbugs_pagure_repo_webhook_key }}"
+blockerbugs_pagure_url: 'https://pagure.io/'
+blockerbugs_secret_key: "{{ stg_blockerbugs_secret_key }}"
+blockerbugs_url: 'https://qa.fedoraproject.org/blockerbugs/'
+# Neeed for rsync from log01 for logs.
+custom_rules: ['-A INPUT -p tcp -m tcp -s 10.3.163.39 --dport 873 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT']
+host_group: blockerbugs
+ipa_client_shell_groups:
+  - fi-apprentice
+  - sysadmin-noc
+  - sysadmin-qa
+  - sysadmin-veteran
+ipa_client_sudo_groups:
+  - sysadmin-qa
+ipa_host_group: blockerbugs
+ipa_host_group_desc: Blocker bug tracking service
+lvm_size: 30000
+# This gets overridden by whichever node we want to run special cronjobs.
+master_blockerbugs_node: False
+mem_size: 4096
+num_cpus: 2
+primary_auth_source: ipa
+# for systems that do not match the above - specify the same parameter in
+# the host_vars/$hostname file
+tcp_ports: [80, 443, 8888]

@@ -1,34 +1,27 @@
 ---
 # Define resources for this group of hosts here.
-lvm_size: 50000
-mem_size: 2048
-num_cpus: 2
-
-# for systems that do not match the above - specify the same parameter in
-# the host_vars/$hostname file
-
-tcp_ports: [ 80, 873 ]
-
-# This gets overridden by whichever node we want to run special cronjobs.
-master_sundries_node: False
-
 deployment_type: prod
-
-# A host group for rsync config
-rsync_group: sundries
-
-nrpe_procs_warn: 300
-nrpe_procs_crit: 500
-
-primary_auth_source: ipa
+ipa_client_shell_groups:
+  - fi-apprentice
+  - sysadmin-noc
+  - sysadmin-releng
+  - sysadmin-veteran
+  - sysadmin-web
+ipa_client_sudo_groups:
+  - sysadmin-releng
+  - sysadmin-web
 ipa_host_group: sundries
 ipa_host_group_desc: Odds and ends
-ipa_client_shell_groups:
-- fi-apprentice
-- sysadmin-noc
-- sysadmin-releng
-- sysadmin-veteran
-- sysadmin-web
-ipa_client_sudo_groups:
-- sysadmin-releng
-- sysadmin-web
+lvm_size: 50000
+# This gets overridden by whichever node we want to run special cronjobs.
+master_sundries_node: False
+mem_size: 2048
+nrpe_procs_crit: 500
+nrpe_procs_warn: 300
+num_cpus: 2
+primary_auth_source: ipa
+# A host group for rsync config
+rsync_group: sundries
+# for systems that do not match the above - specify the same parameter in
+# the host_vars/$hostname file
+tcp_ports: [80, 873]

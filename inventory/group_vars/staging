@@ -1,44 +1,38 @@
 ---
-freezes: false
+deployment_type: stg
 env: staging
 env_prefix: stg.
-env_suffix: .stg
 env_short: stg
-host_group: staging
-
-# This is the wildcard certname for our stg proxies.
-wildcard_cert_name: wildcard-2020.stg.fedoraproject.org
-wildcard_cert_file: wildcard-2020.stg.fedoraproject.org.cert
-wildcard_key_file: wildcard-2020.stg.fedoraproject.org.key
-wildcard_int_file: wildcard-2020.stg.fedoraproject.org.intermediate.cert
-
-# This is the openshift wildcard cert for stg
-os_wildcard_cert_name: wildcard-2021.app.os.stg.fedoraproject.org
-os_wildcard_cert_file: wildcard-2021.app.os.stg.fedoraproject.org.cert
-os_wildcard_key_file: wildcard-2021.app.os.stg.fedoraproject.org.key
-os_wildcard_int_file: wildcard-2021.app.os.stg.fedoraproject.org.intermediate.cert
-
-# This is the openshift wildcard cert for ocp stg
-ocp_wildcard_cert_name: wildcard-2021.apps.ocp.stg.fedoraproject.org
-ocp_wildcard_cert_file: wildcard-2021.apps.ocp.stg.fedoraproject.org.cert
-ocp_wildcard_key_file: wildcard-2021.apps.ocp.stg.fedoraproject.org.key
-ocp_wildcard_int_file: wildcard-2021.apps.ocp.stg.fedoraproject.org.intermediate.cert
-
-# This is the mirrors.stg.centos.org certs
-mirrors_centos_org_cert_name: mirrors.stg.centos.org
-mirrors_centos_org_cert_file: mirrors.stg.centos.org.cert
-mirrors_centos_org_key_file: mirrors.stg.centos.org.key
-
-fedmsg_prefix: org.fedoraproject
+env_suffix: .stg
 fedmsg_env: stg
-deployment_type: stg
-
+fedmsg_prefix: org.fedoraproject
+freezes: false
+host_group: staging
+ipa_admin_password: "{{ ipa_stg_admin_password }}"
+ipa_realm: STG.FEDORAPROJECT.ORG
 # IPA details
 ipa_server: ipa01.stg.iad2.fedoraproject.org
-ipa_realm: STG.FEDORAPROJECT.ORG
-ipa_admin_password: "{{ ipa_stg_admin_password }}"
-# RIP, FAS
-primary_auth_source: ipa
 ipa_server_nodes:
   - ipa01.stg.iad2.fedoraproject.org
   - ipa02.stg.iad2.fedoraproject.org
+mirrors_centos_org_cert_file: mirrors.stg.centos.org.cert
+# This is the mirrors.stg.centos.org certs
+mirrors_centos_org_cert_name: mirrors.stg.centos.org
+mirrors_centos_org_key_file: mirrors.stg.centos.org.key
+ocp_wildcard_cert_file: wildcard-2021.apps.ocp.stg.fedoraproject.org.cert
+# This is the openshift wildcard cert for ocp stg
+ocp_wildcard_cert_name: wildcard-2021.apps.ocp.stg.fedoraproject.org
+ocp_wildcard_int_file: wildcard-2021.apps.ocp.stg.fedoraproject.org.intermediate.cert
+ocp_wildcard_key_file: wildcard-2021.apps.ocp.stg.fedoraproject.org.key
+os_wildcard_cert_file: wildcard-2021.app.os.stg.fedoraproject.org.cert
+# This is the openshift wildcard cert for stg
+os_wildcard_cert_name: wildcard-2021.app.os.stg.fedoraproject.org
+os_wildcard_int_file: wildcard-2021.app.os.stg.fedoraproject.org.intermediate.cert
+os_wildcard_key_file: wildcard-2021.app.os.stg.fedoraproject.org.key
+# RIP, FAS
+primary_auth_source: ipa
+wildcard_cert_file: wildcard-2020.stg.fedoraproject.org.cert
+# This is the wildcard certname for our stg proxies.
+wildcard_cert_name: wildcard-2020.stg.fedoraproject.org
+wildcard_int_file: wildcard-2020.stg.fedoraproject.org.intermediate.cert
+wildcard_key_file: wildcard-2020.stg.fedoraproject.org.key

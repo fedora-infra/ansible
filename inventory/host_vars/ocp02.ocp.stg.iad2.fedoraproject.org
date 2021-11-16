@@ -1,60 +1,49 @@
 ---
-freezes: false
- 
 datacenter: iad2
- 
-vmhost: vmhost-x86-06.stg.iad2.fedoraproject.org
-volgroup: /dev/vg_guests
-lvm_size: 120g
-mem_size: 16384
-max_mem_size: 16384
-num_cpus: 4
- 
+dns: "{{ dns1 }}"
 dns1: 10.3.163.33
 dns2: 10.3.163.34
- 
 dns_search1: "stg.iad2.fedoraproject.org"
 dns_search3: "fedoraproject.org"
- 
-has_ipv4: yes
-eth0_ipv4: 10.3.166.116
-eth0_ipv4_nm: 24
-eth0_ipv4_gw: 10.3.166.254 
 eth0_ip: "{{eth0_ipv4}}"
-nm: 255.255.255.0
+eth0_ipv4: 10.3.166.116
+eth0_ipv4_gw: 10.3.166.254
+eth0_ipv4_nm: 24
+freezes: false
 gw: "{{ eth0_ipv4_gw }}"
-dns: "{{ dns1 }}"
- 
+has_ipv4: yes
+lvm_size: 120g
 mac0: "{{ ansible_default_ipv4.macaddress }}"
-
+max_mem_size: 16384
+mem_size: 16384
+network_connections:
+  - autoconnect: yes
+    ip:
+      address:
+        - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
+      auto6: no
+      dhcp4: no
+      dns:
+        - "{{ dns1 }}"
+        - "{{ dns2 }}"
+      dns_search:
+        - "{{ dns_search1 }}"
+        - "{{ dns_search2 }}"
+        - "{{ dns_search3 }}"
+      gateway4: "{{ eth0_ipv4_gw }}"
+    mac: "{{ mac0 }}"
+    name: eth0
+    state: up
+    type: ethernet
+nm: 255.255.255.0
+nrpe_procs_crit: 1400
+nrpe_procs_warn: 1200
+num_cpus: 4
 rhcos_ignition_file_url: "http://10.3.166.50/rhcos/controlplane.ign"
 rhcos_install_img_url: "http://10.3.166.50/rhcos/rhcos-{{ rhcos_version }}-x86_64-metal.x86_64.raw.gz"
 rhcos_install_rootfs_url: "http://10.3.166.50/rhcos/rhcos-{{ rhcos_version }}-x86_64-live-rootfs.x86_64.img"
 rhcos_install_url: "http://10.3.166.50/rhcos/"
-
 virt_install_command: "{{ virt_install_command_pxe_rhcos }}"
- 
-network_connections:
-  - name: eth0
-    mac: "{{ mac0 }}"
-    state: up
-    type: ethernet
-    autoconnect: yes
-    ip:
-      address:
-      - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
-      gateway4: "{{ eth0_ipv4_gw }}"
-      dns:
-      - "{{ dns1 }}"
-      - "{{ dns2 }}"
-      dns_search:
-      - "{{ dns_search1 }}"
-      - "{{ dns_search2 }}"
-      - "{{ dns_search3 }}"
-      dhcp4: no
-      auto6: no
- 
+vmhost: vmhost-x86-06.stg.iad2.fedoraproject.org
+volgroup: /dev/vg_guests
 vpn: true
- 
-nrpe_procs_warn: 1200
-nrpe_procs_crit: 1400

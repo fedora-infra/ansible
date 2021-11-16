@@ -1,30 +1,23 @@
 ---
 # Define resources for this group of hosts here.
-lvm_size: 30000
-mem_size: 2048
-num_cpus: 2
-
-# for systems that do not match the above - specify the same parameter in
-# the host_vars/$hostname file
-
-udp_ports: [ 53 ]
-tcp_ports: [ 53 ]
-
-primary_auth_source: ipa
-ipa_host_group: dns
-ipa_host_group_desc: DNS servers
-ipa_client_shell_groups:
-- sysadmin-dns
-ipa_client_sudo_groups:
-- sysadmin-dns
-
-nrpe_procs_warn: 300
-nrpe_procs_crit: 500
-
-sudoers: "{{ private }}/files/sudo/sysadmin-dns"
-
-csi_security_category: High
 csi_primary_contact: Fedora Admins - admin@fedoraproject.org
 csi_purpose: Domain Name Service
-
+csi_security_category: High
+ipa_client_shell_groups:
+  - sysadmin-dns
+ipa_client_sudo_groups:
+  - sysadmin-dns
+ipa_host_group: dns
+ipa_host_group_desc: DNS servers
+lvm_size: 30000
+mem_size: 2048
 nagios_has_named: true
+nrpe_procs_crit: 500
+nrpe_procs_warn: 300
+num_cpus: 2
+primary_auth_source: ipa
+sudoers: "{{ private }}/files/sudo/sysadmin-dns"
+tcp_ports: [53]
+# for systems that do not match the above - specify the same parameter in
+# the host_vars/$hostname file
+udp_ports: [53]

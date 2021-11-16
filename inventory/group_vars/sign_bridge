@@ -1,17 +1,14 @@
 ---
 freezes: true
-postfix_group: sign
-
+ipa_client_shell_groups:
+  - sysadmin-releng
+ipa_client_sudo_groups:
+  - sysadmin-releng
+ipa_host_group: sign-bridge
 # Define resources for this group of hosts here.
 lvm_size: 50000
 mem_size: 4096
 num_cpus: 4
-
-tcp_ports: [ 44333, 44334 ]
-
+postfix_group: sign
 primary_auth_source: ipa
-ipa_host_group: sign-bridge
-ipa_client_shell_groups:
-- sysadmin-releng
-ipa_client_sudo_groups:
-- sysadmin-releng
+tcp_ports: [44333, 44334]

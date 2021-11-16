@@ -1,15 +1,8 @@
 ---
-resolvconf: "resolv.conf/cloud"
-
 copr_hostbase: copr-keygen-stg
-tcp_ports: []
-
 # http + signd dest ports
-custom_rules: ['-A INPUT -p tcp -m tcp -s 172.25.33.49 --dport 80 -j ACCEPT',
-               '-A INPUT -p tcp -m tcp -s 209.132.184.44 --dport 80 -j ACCEPT',
-               '-A INPUT -p tcp -m tcp -s 172.25.33.49 --dport 5167 -j ACCEPT',
-               '-A INPUT -p tcp -m tcp -s 209.132.184.44 --dport 5167 -j ACCEPT']
-
+custom_rules: ['-A INPUT -p tcp -m tcp -s 172.25.33.49 --dport 80 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 209.132.184.44 --dport 80 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 172.25.33.49 --dport 5167 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 209.132.184.44 --dport 5167 -j ACCEPT']
 datacenter: cloud
-
 freezes: false
+resolvconf: "resolv.conf/cloud"
+tcp_ports: []

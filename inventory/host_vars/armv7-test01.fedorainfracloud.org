@@ -1,32 +1,27 @@
 ---
-vmhost: vmhost-a64-cc01.rdu-cc.fedoraproject.org
-eth0_ip: 8.43.85.52
-nm: 255.255.255.0
-gw: 8.43.85.254
-dns: 8.8.8.8
-ks_url: http://38.145.60.16/repo/rhel/ks/kvm-fedora
-ks_repo: http://38.145.60.16/pub/fedora/linux/releases/34/Server/armhfp/os/
-
-libdir: /usr/lib
-vpn: true
-
 datacenter: rdu-cc
-
-virt_install_command: "{{ virt_install_command_armv7_one_nic_unsafe }}"
-
-volgroup: /dev/vg_guests
+dns: 8.8.8.8
+eth0_ip: 8.43.85.52
+gw: 8.43.85.254
+ks_repo: http://38.145.60.16/pub/fedora/linux/releases/34/Server/armhfp/os/
+ks_url: http://38.145.60.16/repo/rhel/ks/kvm-fedora
+libdir: /usr/lib
 lvm_size: 140000
-mem_size: 40960
 max_mem_size: "{{ mem_size }}"
-num_cpus: 5
-
+mem_size: 40960
 nagios_Check_Services:
-  mail: false
-  nrpe: false
-  sshd: false
-  named: false
   dhcpd: false
   httpd: false
-  swap: false
+  mail: false
+  named: false
+  nrpe: false
   ping: false
   raid: false
+  sshd: false
+  swap: false
+nm: 255.255.255.0
+num_cpus: 5
+virt_install_command: "{{ virt_install_command_armv7_one_nic_unsafe }}"
+vmhost: vmhost-a64-cc01.rdu-cc.fedoraproject.org
+volgroup: /dev/vg_guests
+vpn: true

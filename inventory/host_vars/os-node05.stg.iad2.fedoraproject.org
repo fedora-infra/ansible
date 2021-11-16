@@ -1,20 +1,17 @@
 ---
-nm: 255.255.255.0
-gw: 10.3.166.254
-dns: 10.3.163.33
-ks_url: http://10.3.163.35/repo/rhel/ks/kvm-rhel-7-osbs-iad2
-ks_repo: http://10.3.163.35/repo/rhel/RHEL7-x86_64/
-volgroup: /dev/vg_guests
-eth0_ip: 10.3.166.58
-vmhost: vmhost-x86-08.stg.iad2.fedoraproject.org
 datacenter: iad2
-
-nrpe_procs_warn: 900
-nrpe_procs_crit: 1000
-
-lvm_size: 120g
-mem_size: 49152
-max_mem_size: 73728
-num_cpus: 16
-
+dns: 10.3.163.33
+eth0_ip: 10.3.166.58
+gw: 10.3.166.254
 host_group: os-stg
+ks_repo: http://10.3.163.35/repo/rhel/RHEL7-x86_64/
+ks_url: http://10.3.163.35/repo/rhel/ks/kvm-rhel-7-osbs-iad2
+lvm_size: 120g
+max_mem_size: 73728
+mem_size: 49152
+nm: 255.255.255.0
+nrpe_procs_crit: 1000
+nrpe_procs_warn: 900
+num_cpus: 16
+vmhost: vmhost-x86-08.stg.iad2.fedoraproject.org
+volgroup: /dev/vg_guests

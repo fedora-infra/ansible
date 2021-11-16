@@ -1,32 +1,23 @@
 ---
-nm: 255.255.255.0
+datacenter: rdu-cc
 dns: 8.8.8.8
-
-ks_url: http://209.132.181.6/repo/rhel/ks/kvm-rhel-8-ext
-ks_repo: http://209.132.181.6/repo/rhel/RHEL8-x86_64/
-
-volgroup: /dev/vg_server
-
-eth0_nm: 255.255.255.0
+effective_cache_size: "6GB"
 eth0_ip: 8.43.85.77
-gw: 8.43.85.254
-
-has_ipv6: yes
 eth0_ipv6: "2620:52:3:1:dead:beef:cafe:fed3"
 eth0_ipv6_gw: "2620:52:3:1:ffff:ffff:ffff:fffe"
-
-vmhost: virthost-cc-rdu02.fedoraproject.org
-datacenter: rdu-cc
-
+eth0_nm: 255.255.255.0
+gw: 8.43.85.254
+has_ipv6: yes
+ks_repo: http://209.132.181.6/repo/rhel/RHEL8-x86_64/
+ks_url: http://209.132.181.6/repo/rhel/ks/kvm-rhel-8-ext
+nm: 255.255.255.0
+# DB host:
+pagure_db_host: 127.0.0.1
 #
 # PostgreSQL configuration
 #
-
 shared_buffers: "2GB"
-effective_cache_size: "6GB"
-
 ssh_hostnames:
-- stg.pagure.io
-
-# DB host:
-pagure_db_host: 127.0.0.1
+  - stg.pagure.io
+vmhost: virthost-cc-rdu02.fedoraproject.org
+volgroup: /dev/vg_server

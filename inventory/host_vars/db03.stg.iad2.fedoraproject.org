@@ -1,32 +1,26 @@
 ---
-nm: 255.255.255.0
-gw: 10.3.166.254
-dns: 10.3.163.33
-ks_url: http://10.3.163.35/repo/rhel/ks/kvm-rhel-8-iad2
-ks_repo: http://10.3.163.35/repo/rhel/RHEL8-x86_64/
-volgroup: /dev/vg_guests
-eth0_ip: 10.3.166.35
-vmhost: vmhost-x86-06.stg.iad2.fedoraproject.org
-datacenter: iad2
-
 # This is a generic list, monitored by collectd
 databases:
-- postgres
-
-# This is a more strict list, to be made publicly available
-#dbs_to_backup:
-
-mariadb_root_password: "{{ db03_stg_mysql_root_password }}"
-
-# These are normally group variables, but in this case db servers are often different
-lvm_size: 300000
-mem_size: 8192
-num_cpus: 2
-tcp_ports: [ 5432, 443, 3306 ]
-
+  - postgres
+datacenter: iad2
+db_backup_dir: ['/backups']
+dns: 10.3.163.33
+eth0_ip: 10.3.166.35
+extra_enablerepos: ''
+gw: 10.3.166.254
 # kernel SHMMAX value
 kernel_shmmax: 68719476736
-
-db_backup_dir: ['/backups']
+ks_repo: http://10.3.163.35/repo/rhel/RHEL8-x86_64/
+ks_url: http://10.3.163.35/repo/rhel/ks/kvm-rhel-8-iad2
+# These are normally group variables, but in this case db servers are often different
+lvm_size: 300000
+# This is a more strict list, to be made publicly available
+#dbs_to_backup:
+mariadb_root_password: "{{ db03_stg_mysql_root_password }}"
+mem_size: 8192
+nm: 255.255.255.0
+num_cpus: 2
 shared_buffers: "4GB"
-extra_enablerepos: ''
+tcp_ports: [5432, 443, 3306]
+vmhost: vmhost-x86-06.stg.iad2.fedoraproject.org
+volgroup: /dev/vg_guests

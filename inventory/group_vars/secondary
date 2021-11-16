@@ -1,29 +1,26 @@
 ---
 datacenter: iad2
-tcp_ports: [80, 443, 873]
-rsyncd_conf: "rsyncd.conf.download-{{ datacenter }}"
-nrpe_procs_warn: 900
-nrpe_procs_crit: 1000
-sshd_sftp: true
-
-# nfs mount options, overrides the all/default
-nfs_mount_opts: "ro,hard,bg,intr,noatime,nodev,nosuid,actimeo=600,nfsvers=3"
-
 host_group: secondary
-
-primary_auth_source: ipa
+ipa_client_shell_groups:
+  - alt-k12linux
+  - alt-sugar
+  - altvideos
+  - fi-apprentice
+  - hosted-content
+  - mips-content
+  - qa-deltaisos
+  - s390_content
+  - sysadmin-noc
+  - sysadmin-veteran
+ipa_client_sudo_groups:
+  - sysadmin-noc
 ipa_host_group: secondary
 ipa_host_group_desc: Serve secondary arch and archived releases
-ipa_client_shell_groups:
-- alt-k12linux
-- alt-sugar
-- altvideos
-- fi-apprentice
-- hosted-content
-- mips-content
-- qa-deltaisos
-- s390_content
-- sysadmin-noc
-- sysadmin-veteran
-ipa_client_sudo_groups:
-- sysadmin-noc
+# nfs mount options, overrides the all/default
+nfs_mount_opts: "ro,hard,bg,intr,noatime,nodev,nosuid,actimeo=600,nfsvers=3"
+nrpe_procs_crit: 1000
+nrpe_procs_warn: 900
+primary_auth_source: ipa
+rsyncd_conf: "rsyncd.conf.download-{{ datacenter }}"
+sshd_sftp: true
+tcp_ports: [80, 443, 873]

@@ -1,59 +1,50 @@
 ---
-env: production
-
-primary_auth_source: ipa
-ipa_host_group: retrace
-ipa_host_group_desc: Retrace servers
-ipa_client_shell_groups:
-- retrace
-ipa_client_sudo_groups:
-- retrace
-
-vpn: true
-
-freezes: false
 ansible_ifcfg_blocklist: true
-
-tcp_ports: [ 80, 443 ]
-
 custom_rules:
-- '-A INPUT -p tcp -m tcp -s 10.5.78.11 --dport 2049 -j ACCEPT'
-- '-A INPUT -p tcp -m tcp -s 10.5.78.11 --dport 5432 -j ACCEPT'
-
-
-nrpe_procs_warn: 1800
-nrpe_procs_crit: 2000
-
+  - '-A INPUT -p tcp -m tcp -s 10.5.78.11 --dport 2049 -j ACCEPT'
+  - '-A INPUT -p tcp -m tcp -s 10.5.78.11 --dport 5432 -j ACCEPT'
+env: production
 # Since retrace is on the qa network, it needs to actively connect to our
 # inbound relay.
 fedmsg_active: True
 fedmsg_cert_prefix: faf
-
 # Declare fedmsg certs that should be put in /etc/pki/fedmsg/
 # These are consumed by a task in roles/fedmsg/base/main.yml
 fedmsg_certs:
-- service: shell
-  owner: root
-  group: retrace
-  can_send:
-  - logger.log
-- service: faf
-  owner: root
-  group: faf
-  can_send:
-  - faf.report.threshold1
-  - faf.report.threshold10
-  - faf.report.threshold100
-  - faf.report.threshold1000
-  - faf.report.threshold1000
-  - faf.report.threshold10000
-  - faf.report.threshold100000
-  - faf.report.threshold1000000
-  - faf.problem.threshold1
-  - faf.problem.threshold10
-  - faf.problem.threshold100
-  - faf.problem.threshold1000
-  - faf.problem.threshold1000
-  - faf.problem.threshold10000
-  - faf.problem.threshold100000
-  - faf.problem.threshold1000000
+  - can_send:
+      - logger.log
+    group: retrace
+    owner: root
+    service: shell
+  - can_send:
+      - faf.report.threshold1
+      - faf.report.threshold10
+      - faf.report.threshold100
+      - faf.report.threshold1000
+      - faf.report.threshold1000
+      - faf.report.threshold10000
+      - faf.report.threshold100000
+      - faf.report.threshold1000000
+      - faf.problem.threshold1
+      - faf.problem.threshold10
+      - faf.problem.threshold100
+      - faf.problem.threshold1000
+      - faf.problem.threshold1000
+      - faf.problem.threshold10000
+      - faf.problem.threshold100000
+      - faf.problem.threshold1000000
+    group: faf
+    owner: root
+    service: faf
+freezes: false
+ipa_client_shell_groups:
+  - retrace
+ipa_client_sudo_groups:
+  - retrace
+ipa_host_group: retrace
+ipa_host_group_desc: Retrace servers
+nrpe_procs_crit: 2000
+nrpe_procs_warn: 1800
+primary_auth_source: ipa
+tcp_ports: [80, 443]
+vpn: true

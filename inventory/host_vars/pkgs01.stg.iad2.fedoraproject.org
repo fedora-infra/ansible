@@ -1,19 +1,16 @@
 ---
-eth0_ip: 10.3.167.74
-nm: 255.255.255.0
-gw: 10.3.167.254
-dns: 10.3.163.33
-ks_url: http://10.3.163.35/repo/rhel/ks/kvm-rhel-8-iad2
-ks_repo: http://10.3.163.35/repo/rhel/RHEL8-x86_64/
-volgroup: /dev/vg_guests
-vmhost: bvmhost-x86-03.stg.iad2.fedoraproject.org
-datacenter: iad2
-
-ssh_hostnames:
-- pkgs.stg.fedoraproject.org
-
 # temp fix to get htis box working
 baseiptables: False
-
+datacenter: iad2
+dns: 10.3.163.33
+eth0_ip: 10.3.167.74
+gw: 10.3.167.254
+ks_repo: http://10.3.163.35/repo/rhel/RHEL8-x86_64/
+ks_url: http://10.3.163.35/repo/rhel/ks/kvm-rhel-8-iad2
+nm: 255.255.255.0
 # DB used by pagure
 pagure_db_host: db01.stg.iad2.fedoraproject.org
+ssh_hostnames:
+  - pkgs.stg.fedoraproject.org
+vmhost: bvmhost-x86-03.stg.iad2.fedoraproject.org
+volgroup: /dev/vg_guests

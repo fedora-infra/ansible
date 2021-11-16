@@ -2,92 +2,84 @@
 #ansible_ssh_user: ec2-user
 #ansible_become_user: root
 #ansible_become: yes
-nm_controlled_resolv: True
 ansible_ifcfg_blocklist: True
-public_ip: 3.228.218.234
 datacenter: aws
-vpn: True
-
-public_hostname: retrace-stg.aws.fedoraproject.org
-faf_server_name: retrace-stg.aws.fedoraproject.org/faf
-rs_use_faf_packages: true
-
-# Staging only has a little storage, so we only support one release at a time.
-rs_internal_fedora_vers: [34]
-rs_internal_fedora_vers_removed: [31, 32, 33, rawhide]
-rs_internal_centos_vers: []
-rs_internal_arch_list: [source, x86_64]
-
-# List of supported operating systems
-faf_opsys_list:
-  - fedora
-  - centos
-
 # Clean-up packages of following EOLed operating systems
 eol_opsys: []
 # When not empty, the array should have the following form:
 #   - { opsys: "Fedora", release: "36" }
 
+# List of supported operating systems
+faf_opsys_list:
+  - fedora
+  - centos
+faf_repos:
+  - arch: 'src'
+    name: 'fedora-34-source'
+    opsys: 'Fedora 34'
+    url:
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/releases/34/Everything/source/tree/'
+  - arch: 'x86_64'
+    name: 'fedora-34-x86_64'
+    opsys: 'Fedora 34'
+    url:
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/releases/34/Everything/x86_64/os/'
+  - arch: 'x86_64'
+    name: 'fedora-34-x86_64-debug'
+    opsys: 'Fedora 34'
+    url:
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/releases/34/Everything/x86_64/debug/tree/'
+  - arch: 'x86_64'
+    name: 'fedora-34-x86_64-updates'
+    opsys: 'Fedora 34'
+    url:
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/34/Everything/x86_64/'
+  - arch: 'x86_64'
+    name: 'fedora-34-x86_64-updates-debug'
+    opsys: 'Fedora 34'
+    url:
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/34/Everything/x86_64/debug/'
+  - arch: 'x86_64'
+    name: 'fedora-34-x86_64-testing'
+    opsys: 'Fedora 34'
+    url:
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/34/Everything/x86_64/'
+  - arch: 'x86_64'
+    name: 'fedora-34-x86_64-testing-debug'
+    opsys: 'Fedora 34'
+    url:
+      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/34/Everything/x86_64/debug/'
+faf_server_name: retrace-stg.aws.fedoraproject.org/faf
+# consumed by roles/copr/certbot
+letsencrypt:
+  certificates:
+    retrace-stg.aws.fedoraproject.org:
+      challenge_dir: /var/www/html
+      domains:
+        - retrace-stg.aws.fedoraproject.org
+      mail: mfabik@redhat.com
+  predefined_deploy_script: httpd
+nagios_Check_Services:
+  dhcpd: false
+  httpd: false
+  mail: false
+  named: false
+  nrpe: false
+  ping: false
+  raid: false
+  sshd: false
+  swap: false
+nm_controlled_resolv: True
+public_hostname: retrace-stg.aws.fedoraproject.org
+public_ip: 3.228.218.234
+rs_internal_arch_list: [source, x86_64]
+rs_internal_centos_vers: []
+# Staging only has a little storage, so we only support one release at a time.
+rs_internal_fedora_vers: [34]
+rs_internal_fedora_vers_removed: [31, 32, 33, rawhide]
+rs_use_faf_packages: true
+sar_output_file: faf.json
 # GDPR SAR variables
 sar_script: '/usr/bin/faf sar'
 sar_script_user: faf
-sar_output_file: faf.json
-
-# consumed by roles/copr/certbot
-letsencrypt:
-  predefined_deploy_script: httpd
-  certificates:
-    retrace-stg.aws.fedoraproject.org:
-      domains:
-      - retrace-stg.aws.fedoraproject.org
-      challenge_dir: /var/www/html
-      mail: mfabik@redhat.com
-
-nagios_Check_Services:
-  mail: false
-  nrpe: false
-  sshd: false
-  named: false
-  dhcpd: false
-  httpd: false
-  swap: false
-  ping: false
-  raid: false
-
-faf_repos:
-  - name: 'fedora-34-source'
-    url:
-      - 'http://dl01.fedoraproject.org/pub/fedora/linux/releases/34/Everything/source/tree/'
-    arch: 'src'
-    opsys: 'Fedora 34'
-  - name: 'fedora-34-x86_64'
-    url:
-      - 'http://dl01.fedoraproject.org/pub/fedora/linux/releases/34/Everything/x86_64/os/'
-    arch: 'x86_64'
-    opsys: 'Fedora 34'
-  - name: 'fedora-34-x86_64-debug'
-    url:
-      - 'http://dl01.fedoraproject.org/pub/fedora/linux/releases/34/Everything/x86_64/debug/tree/'
-    arch: 'x86_64'
-    opsys: 'Fedora 34'
-  - name: 'fedora-34-x86_64-updates'
-    url:
-      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/34/Everything/x86_64/'
-    arch: 'x86_64'
-    opsys: 'Fedora 34'
-  - name: 'fedora-34-x86_64-updates-debug'
-    url:
-      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/34/Everything/x86_64/debug/'
-    arch: 'x86_64'
-    opsys: 'Fedora 34'
-  - name: 'fedora-34-x86_64-testing'
-    url:
-      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/34/Everything/x86_64/'
-    arch: 'x86_64'
-    opsys: 'Fedora 34'
-  - name: 'fedora-34-x86_64-testing-debug'
-    url:
-      - 'http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/34/Everything/x86_64/debug/'
-    arch: 'x86_64'
-    opsys: 'Fedora 34'
-...
+vpn: True

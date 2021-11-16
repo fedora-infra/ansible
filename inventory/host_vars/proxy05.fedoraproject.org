@@ -1,56 +1,46 @@
 ---
-freezes: true
-
 datacenter: host1plus
-
+dns1: 8.8.8.8
+dns2: 8.8.4.4
+dns_search1: "vpn.fedoraproject.org"
+dns_search2: "fedoraproject.org"
+eth0_ipv4: 185.141.165.254
+eth0_ipv4_gw: 185.141.164.1
+eth0_ipv4_nm: 23
+freezes: true
+has_ipv4: yes
+mac0: "06:5b:86:00:06:60"
+nagios_Check_Services:
+  dhcpd: false
+  httpd: true
+  named: false
+  nrpe: true
+  sshd: true
+  swap: false
+network_connections:
+  - autoconnect: yes
+    ip:
+      address:
+        - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
+      auto6: no
+      dhcp4: no
+      dns:
+        - "{{ dns1 }}"
+        - "{{ dns2 }}"
+      dns_search:
+        - "{{ dns_search1 }}"
+        - "{{ dns_search2 }}"
+      gateway4: "{{ eth0_ipv4_gw }}"
+    mac: "{{ mac0 }}"
+    name: eth0
+    type: ethernet
+nrpe_procs_crit: 1400
+nrpe_procs_warn: 1200
+postfix_group: vpn
+public_hostname: proxy05.fedoraproject.org
 # This is now a cloud instance provided by host1plus
 # vmhost: none
 
 # This is consumed by the roles/fedora-web/main role
 sponsor: host1plus
-
-dns1: 8.8.8.8
-dns2: 8.8.4.4
-
-dns_search1: "vpn.fedoraproject.org"
-dns_search2: "fedoraproject.org"
-
-has_ipv4: yes
-eth0_ipv4: 185.141.165.254
-eth0_ipv4_nm: 23
-eth0_ipv4_gw: 185.141.164.1
-
-mac0: "06:5b:86:00:06:60"
-public_hostname: proxy05.fedoraproject.org
-
-network_connections:
-  - name: eth0
-    mac: "{{ mac0 }}"
-    type: ethernet
-    autoconnect: yes
-    ip:
-      address:
-      - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
-      gateway4: "{{ eth0_ipv4_gw }}"
-      dns:
-      - "{{ dns1 }}"
-      - "{{ dns2 }}"
-      dns_search:
-      - "{{ dns_search1 }}"
-      - "{{ dns_search2 }}"
-      dhcp4: no
-      auto6: no
-
-postfix_group: vpn
 vpn: true
-
-nrpe_procs_warn: 1200
-nrpe_procs_crit: 1400
-
-nagios_Check_Services:
-  nrpe: true
-  sshd: true
-  named: false
-  dhcpd: false
-  httpd: true
-  swap: false

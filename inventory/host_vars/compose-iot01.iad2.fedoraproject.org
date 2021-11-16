@@ -1,40 +1,32 @@
 ---
-volgroup: /dev/vg_guests
-ks_url: http://10.3.163.35/repo/rhel/ks/kvm-fedora
-ks_repo: http://10.3.163.35/pub/fedora/linux/releases/34/Everything/x86_64/os/
-mem_size: 32768
-
-vmhost: bvmhost-x86-03.iad2.fedoraproject.org
-eth0_ip: 10.3.169.122
-gw: 10.3.169.254
-main_bridge: br0
-
 datacenter: iad2
-
-
-koji_hub_nfs: "fedora_koji"
-
-sudoers: "{{ private }}/files/sudo/sysadmin-secondary-sudoers"
-
-virt_install_command: "{{ virt_install_command_one_nic }}"
-
+eth0_ip: 10.3.169.122
+fedmsg_certs:
+  - can_send:
+      # new school pungi-koji stuff (ask dgilmore)
+      - pungi.compose.phase.start
+      - pungi.compose.phase.stop
+      - pungi.compose.status.change
+      - pungi.compose.createiso.targets
+      - pungi.compose.createiso.imagefail
+      - pungi.compose.createiso.imagedone
+      - pungi.compose.ostree
+      - compose.29.complete
+      - compose.29.start
+      - compose.29.rsync.start
+      - compose.29.rsync.complete
+    group: sysadmin-releng
+    owner: root
+    service: releng
 # This VM is the compose host for IoT Edition which isn't blocking, so it doesn't freeze
 freezes: false
-
-fedmsg_certs:
-- service: releng
-  owner: root
-  group: sysadmin-releng
-  can_send:
-  # new school pungi-koji stuff (ask dgilmore)
-  - pungi.compose.phase.start
-  - pungi.compose.phase.stop
-  - pungi.compose.status.change
-  - pungi.compose.createiso.targets
-  - pungi.compose.createiso.imagefail
-  - pungi.compose.createiso.imagedone
-  - pungi.compose.ostree
-  - compose.29.complete
-  - compose.29.start
-  - compose.29.rsync.start
-  - compose.29.rsync.complete
+gw: 10.3.169.254
+koji_hub_nfs: "fedora_koji"
+ks_repo: http://10.3.163.35/pub/fedora/linux/releases/34/Everything/x86_64/os/
+ks_url: http://10.3.163.35/repo/rhel/ks/kvm-fedora
+main_bridge: br0
+mem_size: 32768
+sudoers: "{{ private }}/files/sudo/sysadmin-secondary-sudoers"
+virt_install_command: "{{ virt_install_command_one_nic }}"
+vmhost: bvmhost-x86-03.iad2.fedoraproject.org
+volgroup: /dev/vg_guests

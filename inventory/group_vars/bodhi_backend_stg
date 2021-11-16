@@ -1,59 +1,52 @@
 ---
 # common items for the releng-* boxes
-lvm_size: 100000
-mem_size: 4096
-num_cpus: 2
-nm: 255.255.255.0
-gw: 10.5.126.254
-dns: 10.5.126.21
-
-# Use the infra-testing repo
-testing: True
-
-# Make connections from signing bridges stateless, they break sigul connections
-# https://bugzilla.redhat.com/show_bug.cgi?id=1283364
-# this is sign-bridge01.iad2 ip 10.3.169.120
-custom_rules: ['-A INPUT --proto tcp --sport 44334 --source 10.3.169.120 -j ACCEPT']
-
-# With 16 cpus, theres a bunch more kernel threads
-nrpe_procs_warn: 900
-nrpe_procs_crit: 1000
-
-host_group: bodhi2
-
 bodhi_message_queue_name: "bodhi{{ env_suffix }}_composer"
 # Define the topics that our fedora-messaging queue should be subscribed to.
 bodhi_message_routing_keys:
   - "org.fedoraproject.*.bodhi.composer.start"
-
-ipa_host_group: bodhi
-ipa_host_group_desc: Bodhi update service
-ipa_client_shell_groups:
-- sysadmin-bodhi
-- sysadmin-releng
-ipa_client_sudo_groups:
-- sysadmin-bodhi
-- sysadmin-releng
-
-# For the MOTD
-csi_security_category: Moderate
 csi_primary_contact: Releng Admins sysadmin-releng-members@fedoraproject.org
 csi_purpose: Run the Bodhi masher.
 csi_relationship: |
-    The mashing of repos here happens as part of the 'fedmsg-hub' daemon.  Check
-    logs with 'journalctl -u fedmsg-hub'.  Check the bodhi masher docs/code for
-    more detail on what it does:
-    https://github.com/fedora-infra/bodhi/blob/develop/bodhi/consumers/masher.py
+  The mashing of repos here happens as part of the 'fedmsg-hub' daemon.  Check
+  logs with 'journalctl -u fedmsg-hub'.  Check the bodhi masher docs/code for
+  more detail on what it does:
+  https://github.com/fedora-infra/bodhi/blob/develop/bodhi/consumers/masher.py
 
-    * This host relies on:
-      * db01 for its database, which is shares with the bodhi2 frontend nodes.
-      * An NFS mount of koji data in /mnt/koji/
-      * The fedmsg bus for triggering mashes.
-      * XMLRPC calls to koji for tagging and untagging updates.
-      * bugzilla for posting comments about status changes
-      * the wiki for getting information about QA "Test Cases"
-      * taksotron (resultsdb) for getting status-check results (gating updates).
+  * This host relies on:
+    * db01 for its database, which is shares with the bodhi2 frontend nodes.
+    * An NFS mount of koji data in /mnt/koji/
+    * The fedmsg bus for triggering mashes.
+    * XMLRPC calls to koji for tagging and untagging updates.
+    * bugzilla for posting comments about status changes
+    * the wiki for getting information about QA "Test Cases"
+    * taksotron (resultsdb) for getting status-check results (gating updates).
 
-    * No other systems rely directly on this host.  Everything depends on it
-      indirectly for the creation of new updates repos (which get synced out to
-      the master mirror for distribution.
+  * No other systems rely directly on this host.  Everything depends on it
+    indirectly for the creation of new updates repos (which get synced out to
+    the master mirror for distribution.
+# For the MOTD
+csi_security_category: Moderate
+# Make connections from signing bridges stateless, they break sigul connections
+# https://bugzilla.redhat.com/show_bug.cgi?id=1283364
+# this is sign-bridge01.iad2 ip 10.3.169.120
+custom_rules: ['-A INPUT --proto tcp --sport 44334 --source 10.3.169.120 -j ACCEPT']
+dns: 10.5.126.21
+gw: 10.5.126.254
+host_group: bodhi2
+ipa_client_shell_groups:
+  - sysadmin-bodhi
+  - sysadmin-releng
+ipa_client_sudo_groups:
+  - sysadmin-bodhi
+  - sysadmin-releng
+ipa_host_group: bodhi
+ipa_host_group_desc: Bodhi update service
+lvm_size: 100000
+mem_size: 4096
+nm: 255.255.255.0
+nrpe_procs_crit: 1000
+# With 16 cpus, theres a bunch more kernel threads
+nrpe_procs_warn: 900
+num_cpus: 2
+# Use the infra-testing repo
+testing: True

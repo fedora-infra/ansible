@@ -1,54 +1,40 @@
 ---
-nm: 255.255.255.0
-gw: 10.3.169.254
-dns: 10.3.163.33
-volgroup: /dev/vg_guests
-eth0_ip: 10.3.169.103
-vmhost: bvmhost-x86-01.iad2.fedoraproject.org
-datacenter: iad2
-
-ks_url: http://10.3.163.35/repo/rhel/ks/kvm-rhel-8-iad2
-ks_repo: http://10.3.163.35/repo/rhel/RHEL8-x86_64/
-
-# This is a generic list, monitored by collectd
-databases:
-- koji
-
-# This is a more strict list, to be made publicly available
-dbs_to_backup:
-- koji
-
-# These are normally group variables, but in this case db servers are often different
-lvm_size: 1500000
-mem_size: 131070
-num_cpus: 72
-max_cpu: 96
-
-# kernel SHMMAX value
-kernel_shmmax: 68719476736
-
 #
 # Only allow postgresql access from the frontend node.
 #
-custom_rules: [
-'-A INPUT -p tcp -m tcp -s 10.3.169.104 --dport 5432 -j ACCEPT',
-'-A INPUT -p tcp -m tcp -s 10.3.169.105 --dport 5432 -j ACCEPT',
-'-A INPUT -p tcp -m tcp -s 10.3.169.10 --dport 5432 -j ACCEPT',
-'-A INPUT -p tcp -m tcp -s 10.3.163.10 --dport 5432 -j ACCEPT',
-]
-
+custom_rules: ['-A INPUT -p tcp -m tcp -s 10.3.169.104 --dport 5432 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 10.3.169.105 --dport 5432 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 10.3.169.10 --dport 5432 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 10.3.163.10 --dport 5432 -j ACCEPT']
+# This is a generic list, monitored by collectd
+databases:
+  - koji
+datacenter: iad2
+db_backup_dir: ['/backups']
+# This is a more strict list, to be made publicly available
+dbs_to_backup:
+  - koji
+dns: 10.3.163.33
+effective_cache_size: "100GB"
+eth0_ip: 10.3.169.103
+gw: 10.3.169.254
+# kernel SHMMAX value
+kernel_shmmax: 68719476736
+ks_repo: http://10.3.163.35/repo/rhel/RHEL8-x86_64/
+ks_url: http://10.3.163.35/repo/rhel/ks/kvm-rhel-8-iad2
+# These are normally group variables, but in this case db servers are often different
+lvm_size: 1500000
+max_cpu: 96
+max_parallel_maintenance_workers: 8
+max_parallel_workers: 64
+max_parallel_workers_per_gather: 32
+max_stack_depth: "6MB"
+max_worker_processes: 64
+mem_size: 131070
+nm: 255.255.255.0
+nrpe_procs_crit: 700
 #
 # Large updates pushes cause lots of db threads doing the tag moves, so up this from default.
 #
 nrpe_procs_warn: 600
-nrpe_procs_crit: 700
-
-db_backup_dir: ['/backups']
+num_cpus: 72
 shared_buffers: "32GB"
-effective_cache_size: "100GB"
-max_stack_depth: "6MB"
-
-max_worker_processes: 64
-max_parallel_workers_per_gather: 32
-max_parallel_maintenance_workers: 8
-max_parallel_workers: 64
+vmhost: bvmhost-x86-01.iad2.fedoraproject.org
+volgroup: /dev/vg_guests

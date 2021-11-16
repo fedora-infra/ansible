@@ -1,36 +1,34 @@
 ---
-instance_type: ms1.medium.bigswap
-image: "{{ fedora30_x86_64 }}"
-keypair: fedora-admin-20130801
-security_group: web-80-anywhere-persistent,web-443-anywhere-persistent,ssh-anywhere-persistent,default,all-icmp-persistent
-zone: nova
-hostbase: copr-dist-git
-public_ip: 209.132.184.163
-root_auth_users: msuchy frostyx praiskup schlupov
-description: dist-git for copr service - prod instance
-tcp_ports: [22, 80, 443]
-# volumes:  copr-dist-git, copr-dist-git-log
-volumes: [ {volume_id: '0ee0735e-0ce5-4e4e-8f52-bc62bf4a0968', device: '/dev/vdc'}, {volume_id: 'e712828f-998f-49aa-85a6-aeb42a7d1843', device: '/dev/vdd'} ]
-inventory_tenant: persistent
-# name of machine in OpenStack
-inventory_instance_name: copr-dist-git
 cloud_networks:
   # persistent-net
   - net-id: "67b77354-39a4-43de-b007-bb813ac5c35f"
-
 # Copr vars
 copr_hostbase: copr-dist-git
-
+description: dist-git for copr service - prod instance
 host_backup_targets: ['/var/lib/dist-git/git', '/var/lib/dist-git/cache']
-
+hostbase: copr-dist-git
+image: "{{ fedora30_x86_64 }}"
+instance_type: ms1.medium.bigswap
+# name of machine in OpenStack
+inventory_instance_name: copr-dist-git
+inventory_tenant: persistent
+keypair: fedora-admin-20130801
 nagios_Check_Services:
-  mail: false
-  nrpe: false
-  sshd: false
-  named: false
   dhcpd: false
   httpd: false
-  swap: false
+  mail: false
+  named: false
+  nrpe: false
   ping: false
   raid: false
+  sshd: false
+  swap: false
 # There is no python2 on F30
+
+public_ip: 209.132.184.163
+root_auth_users: msuchy frostyx praiskup schlupov
+security_group: web-80-anywhere-persistent,web-443-anywhere-persistent,ssh-anywhere-persistent,default,all-icmp-persistent
+tcp_ports: [22, 80, 443]
+# volumes:  copr-dist-git, copr-dist-git-log
+volumes: [{device: '/dev/vdc', volume_id: '0ee0735e-0ce5-4e4e-8f52-bc62bf4a0968'}, {device: '/dev/vdd', volume_id: 'e712828f-998f-49aa-85a6-aeb42a7d1843'}]
+zone: nova

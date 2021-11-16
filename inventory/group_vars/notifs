@@ -1,10 +1,10 @@
 ---
-primary_auth_source: ipa
+ipa_client_shell_groups:
+  - sysadmin-datanommer
+  - sysadmin-noc
+  - sysadmin-veteran
+ipa_client_sudo_groups:
+  - sysadmin-datanommer
 ipa_host_group: notifs
 ipa_host_group_desc: Fedora Notifications
-ipa_client_shell_groups:
-- sysadmin-datanommer
-- sysadmin-noc
-- sysadmin-veteran
-ipa_client_sudo_groups:
-- sysadmin-datanommer
+primary_auth_source: ipa

@@ -1,53 +1,47 @@
-vmhost: bvmhost-x86-03.iad2.fedoraproject.org
-gw: 10.3.169.254
+datacenter: iad2
 dns: 10.3.163.33
 eth0_ip: 10.3.169.123
-volgroup: /dev/vg_guests
-ks_url: http://10.3.163.35/repo/rhel/ks/kvm-fedora
-ks_repo: http://10.3.163.35/pub/fedora/linux/releases/35/Server/x86_64/os/
-
-datacenter: iad2
-
-koji_hub_nfs: "fedora_koji"
-
-kojipkgs_url: kojipkgs.fedoraproject.org
-kojihub_url: koji.fedoraproject.org/kojihub
-kojihub_scheme: https
-
+fedmsg_certs:
+  - can_send:
+      - pungi.compose.phase.start
+      - pungi.compose.phase.stop
+      - pungi.compose.status.change
+      - pungi.compose.createiso.targets
+      - pungi.compose.createiso.imagefail
+      - pungi.compose.createiso.imagedone
+      - pungi.compose.ostree
+      - compose.rawhide.complete
+      - compose.rawhide.mash.complete
+      - compose.rawhide.mash.start
+      - compose.rawhide.image.complete
+      - compose.rawhide.image.start
+      - compose.rawhide.pungify.complete
+      - compose.rawhide.pungify.start
+      - compose.rawhide.rsync.complete
+      - compose.rawhide.rsync.start
+      - compose.rawhide.start
+      - compose.bikeshed.complete
+      - compose.bikeshed.mash.complete
+      - compose.bikeshed.mash.start
+      - compose.bikeshed.image.complete
+      - compose.bikeshed.image.start
+      - compose.bikeshed.pungify.complete
+      - compose.bikeshed.pungify.start
+      - compose.bikeshed.rsync.complete
+      - compose.bikeshed.rsync.start
+      - compose.bikeshed.start
+    group: sysadmin-releng
+    owner: root
+    service: releng
 # rawhide is never frozen, the compose box should not be so we can make needed changes
 freezes: false
-
+gw: 10.3.169.254
+koji_hub_nfs: "fedora_koji"
+kojihub_scheme: https
+kojihub_url: koji.fedoraproject.org/kojihub
+kojipkgs_url: kojipkgs.fedoraproject.org
+ks_repo: http://10.3.163.35/pub/fedora/linux/releases/35/Server/x86_64/os/
+ks_url: http://10.3.163.35/repo/rhel/ks/kvm-fedora
 virt_install_command: "{{ virt_install_command_one_nic }}"
-
-fedmsg_certs:
-- service: releng
-  owner: root
-  group: sysadmin-releng
-  can_send:
-  - pungi.compose.phase.start
-  - pungi.compose.phase.stop
-  - pungi.compose.status.change
-  - pungi.compose.createiso.targets
-  - pungi.compose.createiso.imagefail
-  - pungi.compose.createiso.imagedone
-  - pungi.compose.ostree
-  - compose.rawhide.complete
-  - compose.rawhide.mash.complete
-  - compose.rawhide.mash.start
-  - compose.rawhide.image.complete
-  - compose.rawhide.image.start
-  - compose.rawhide.pungify.complete
-  - compose.rawhide.pungify.start
-  - compose.rawhide.rsync.complete
-  - compose.rawhide.rsync.start
-  - compose.rawhide.start
-  - compose.bikeshed.complete
-  - compose.bikeshed.mash.complete
-  - compose.bikeshed.mash.start
-  - compose.bikeshed.image.complete
-  - compose.bikeshed.image.start
-  - compose.bikeshed.pungify.complete
-  - compose.bikeshed.pungify.start
-  - compose.bikeshed.rsync.complete
-  - compose.bikeshed.rsync.start
-  - compose.bikeshed.start
+vmhost: bvmhost-x86-03.iad2.fedoraproject.org
+volgroup: /dev/vg_guests

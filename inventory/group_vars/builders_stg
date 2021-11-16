@@ -2,15 +2,14 @@
 # nagios items
 # We don't use nrpe to check any of the builders
 # Nor do we check swap there.
-nagios_Check_Services:
-  nrpe: false
-  swap: false
-  mail: false
-
-primary_auth_source: ipa
+ipa_client_shell_groups:
+  - sysadmin-releng
+ipa_client_sudo_groups:
+  - sysadmin-releng
 ipa_host_group: kojibuilder
 ipa_host_group_desc: Koji Build hosts
-ipa_client_shell_groups:
-- sysadmin-releng
-ipa_client_sudo_groups:
-- sysadmin-releng
+nagios_Check_Services:
+  mail: false
+  nrpe: false
+  swap: false
+primary_auth_source: ipa

@@ -1,16 +1,15 @@
 ---
-nrpe_procs_warn: 900
-nrpe_procs_crit: 1000
-datacenter: ibiblio
-nm: 255.255.255.128
-gw: 152.19.134.129
-dns: 152.2.21.1
 br0_ip: 152.19.134.137
-br0_nm: 255.255.255.128
-has_ipv6: yes
 br0_ipv6: "2600:2701:4000:5211:dead:beef:00fe:fe05/104"
-br0_ipv6_nm: 104
 br0_ipv6_gw: "2600:2701:4000:5211::1"
-
+br0_ipv6_nm: 104
+br0_nm: 255.255.255.128
+datacenter: ibiblio
+dns: 152.2.21.1
+gw: 152.19.134.129
+has_ipv6: yes
+nm: 255.255.255.128
+nrpe_procs_crit: 1000
+nrpe_procs_warn: 900
 postfix_group: vpn
 vpn: true

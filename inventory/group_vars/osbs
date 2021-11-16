@@ -1,47 +1,36 @@
 ---
 # Define resources for this group of hosts here.
-lvm_size: 60000
-mem_size: 8192
-num_cpus: 2
-
-tcp_ports: [ 80, 443, 8443]
-
-sudoers: "{{ private }}/files/sudo/osbs-sudoers"
-
-primary_auth_source: ipa
-ipa_host_group: osbs
-ipa_host_group_desc: OpenShift Build Service
-ipa_client_shell_groups:
-- fi-apprentice
-- sysadmin-noc
-- sysadmin-osbs
-- sysadmin-releng
-- sysadmin-veteran
-ipa_client_sudo_groups:
-- sysadmin-osbs
-- sysadmin-releng
-
+baseiptables: False
 docker_cert_dir: "/etc/docker/certs.d/candidate-registry.fedoraproject.org"
 docker_registry: "candidate-registry.fedoraproject.org"
-source_registry: "registry.fedoraproject.org"
-
-osbs_url: "osbs.fedoraproject.org"
-osbs_koji_username: "kojibuilder"
-
+# fedora container images required by buildroot
+fedora_required_images:
+  - "fedora:latest"
+ipa_client_shell_groups:
+  - fi-apprentice
+  - sysadmin-noc
+  - sysadmin-osbs
+  - sysadmin-releng
+  - sysadmin-veteran
+ipa_client_sudo_groups:
+  - sysadmin-osbs
+  - sysadmin-releng
+ipa_host_group: osbs
+ipa_host_group_desc: OpenShift Build Service
 koji_url: "koji.fedoraproject.org"
-
-osbs_client_conf_path: /etc/osbs.conf
-
-baseiptables: False
-
+lvm_size: 60000
+mem_size: 8192
+nm_controlled_resolv: True
+num_cpus: 2
 #openshift_ansible_upgrading: True
 
 # docker images required by OpenShift Origin
 openshift_required_images:
   - "openshift/origin-pod"
-
-# fedora container images required by buildroot
-fedora_required_images:
-  - "fedora:latest"
-
-nm_controlled_resolv: True
+osbs_client_conf_path: /etc/osbs.conf
+osbs_koji_username: "kojibuilder"
+osbs_url: "osbs.fedoraproject.org"
+primary_auth_source: ipa
+source_registry: "registry.fedoraproject.org"
+sudoers: "{{ private }}/files/sudo/osbs-sudoers"
+tcp_ports: [80, 443, 8443]

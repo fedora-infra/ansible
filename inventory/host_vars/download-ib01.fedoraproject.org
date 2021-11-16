@@ -1,58 +1,48 @@
 ---
-ks_url: http://209.132.181.6/repo/rhel/ks/kvm-rhel-7-ext
-ks_repo: http://209.132.181.6/repo/rhel/RHEL7-x86_64/
-
-vmhost: ibiblio01.fedoraproject.org
-volgroup: /dev/vg_guests
-
-eth0_ipv4: 152.19.134.145
-eth0_ipv4_nm: 25
-eth0_ipv4_gw: 152.19.134.129
-has_ipv6: yes
-eth0_ipv6: "2600:2701:4000:5211:dead:beef:00fe:fed6"
-eth0_ipv6_nm: 104
-eth0_ipv6_gw: "2600:2701:4000:5211::1"
-
 datacenter: ibiblio
-postfix_group: vpn
-vpn: true
-
-tcp_ports: [80, 443, 873]
-rsyncd_conf: "rsyncd.conf.download-{{ datacenter }}"
-
-nrpe_procs_warn: 1200
-nrpe_procs_crit: 1400
-
-mem_size: 4096
-max_mem_size: 20480
-lvm_size: 20000
-num_cpus: 8
-
-public_hostname: download-ib01.fedoraproject.org
-
 dns1: 152.2.21.1
 dns2: 152.2.253.100
-
 dns_search1: vpn.fedoraproject.org
 dns_search2: fedoraproject.org
-
+eth0_ipv4: 152.19.134.145
+eth0_ipv4_gw: 152.19.134.129
+eth0_ipv4_nm: 25
+eth0_ipv6: "2600:2701:4000:5211:dead:beef:00fe:fed6"
+eth0_ipv6_gw: "2600:2701:4000:5211::1"
+eth0_ipv6_nm: 104
+has_ipv6: yes
+ks_repo: http://209.132.181.6/repo/rhel/RHEL7-x86_64/
+ks_url: http://209.132.181.6/repo/rhel/ks/kvm-rhel-7-ext
+lvm_size: 20000
+max_mem_size: 20480
+mem_size: 4096
 network_connections:
-  - name: eth0
-    mac: "{{ ansible_default_ipv4.macaddress }}"
-    type: ethernet
-    autoconnect: yes
+  - autoconnect: yes
     ip:
       address:
-      - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
-      - "{{ eth0_ipv6 }}/{{ eth0_ipv6_nm }}"
+        - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
+        - "{{ eth0_ipv6 }}/{{ eth0_ipv6_nm }}"
+      auto6: no
+      dhcp4: no
+      dns:
+        - "{{ dns1 }}"
+        - "{{ dns2 }}"
+        - 2001:4860:4860::8888
+      dns_search:
+        - "{{ dns_search1 }}"
+        - "{{ dns_search2 }}"
       gateway4: "{{ eth0_ipv4_gw }}"
       gateway6: "{{ eth0_ipv6_gw }}"
-      dns:
-      - "{{ dns1 }}"
-      - "{{ dns2 }}"
-      - 2001:4860:4860::8888
-      dns_search:
-      - "{{ dns_search1 }}"
-      - "{{ dns_search2 }}"
-      dhcp4: no
-      auto6: no
+    mac: "{{ ansible_default_ipv4.macaddress }}"
+    name: eth0
+    type: ethernet
+nrpe_procs_crit: 1400
+nrpe_procs_warn: 1200
+num_cpus: 8
+postfix_group: vpn
+public_hostname: download-ib01.fedoraproject.org
+rsyncd_conf: "rsyncd.conf.download-{{ datacenter }}"
+tcp_ports: [80, 443, 873]
+vmhost: ibiblio01.fedoraproject.org
+volgroup: /dev/vg_guests
+vpn: true

@@ -1,57 +1,46 @@
 ---
+blocked_ips: []
 clamscan_mailto: admin@fedoraproject.org
 clamscan_paths:
-- /srv/
+  - /srv/
+csi_primary_contact: Fedora admins - admin@fedoraproject.org
+csi_purpose: Provide hosting space for Fedora contributors and Fedora Planet
+csi_relationship: |
+  - shell accounts and web space for fedora contributors
+  - web space for personal yum repos
+  - shared space for small group/personal git repos
 
+   Please be aware that this is a shared server, and you should not upload
+   Private/Secret SSH or GPG keys onto this system. Any such keys found
+   will be deleted.
+# For the MOTD
+csi_security_category: Low
 # Neeed for rsync from log01 for logs.
-custom_rules: [ '-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT' ]
-
+custom_rules: ['-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT']
+fedmsg_certs:
+  - can_send:
+      - logger.log
+    group: sysadmin
+    owner: root
+    service: shell
+  - can_send:
+      - planet.post.new
+    group: planet-user
+    owner: root
+    service: planet
+git_basepath: /
+git_daemon_user: nobody
 git_port: 9418
 git_server: /usr/libexec/git-core/git-daemon
 git_server_args: --export-all --syslog --inetd --verbose
-git_basepath: /
-git_daemon_user: nobody
-
-primary_auth_source: ipa
-ipa_host_group: people
-ipa_host_group_desc: A place for people to host things
 # fedora-contributors is an umbrella group containing all others
 ipa_client_shell_groups:
-- fedora-contributor
+  - fedora-contributor
 ipa_client_sudo_groups:
-- sysadmin-tools
-
-fedmsg_certs:
-- service: shell
-  owner: root
-  group: sysadmin
-  can_send:
-  - logger.log
-- service: planet
-  owner: root
-  group: planet-user
-  can_send:
-  - planet.post.new
-
+  - sysadmin-tools
+ipa_host_group: people
+ipa_host_group_desc: A place for people to host things
+primary_auth_source: ipa
 # enable sftp for cotributors.
 sshd_sftp: true
-
 vpn: true
-
-# For the MOTD
-csi_security_category: Low
-csi_primary_contact: Fedora admins - admin@fedoraproject.org
-csi_purpose: Provide hosting space for Fedora contributors and Fedora Planet
-
-csi_relationship: |
- - shell accounts and web space for fedora contributors
- - web space for personal yum repos
- - shared space for small group/personal git repos
-
-  Please be aware that this is a shared server, and you should not upload
-  Private/Secret SSH or GPG keys onto this system. Any such keys found
-  will be deleted.
-
-blocked_ips: [
-]
-

@@ -1,50 +1,40 @@
 ---
-nm: 255.255.255.0
-gw: 172.31.2.254
+ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q root@bastion13.fedoraproject.org"'
+datacenter: rdu
 dns: 172.31.2.24
 dns1: 172.31.2.24
 #dns2: 8.8.4.4
 
-ks_url: http://38.145.60.16/repo/rhel/ks/kvm-rhel-8-ext
-ks_repo: http://38.145.60.16/repo/rhel/RHEL8-x86_64/
-
-vmhost: virthost-rdu01.fedoraproject.org
-volgroup: /dev/vg_guests
-virt_install_command: "{{ virt_install_command_two_nic }}"
-
 eth0_ip: 172.31.2.25
 eth0_nm: 255.255.255.0
-
 eth1_ip: 172.31.1.3
 eth1_nm: 255.255.255.0
-
+gw: 172.31.2.254
+ks_repo: http://38.145.60.16/repo/rhel/RHEL8-x86_64/
+ks_url: http://38.145.60.16/repo/rhel/ks/kvm-rhel-8-ext
+max_mem_size: 32768
+mem_size: 16384
+nagios_Can_Connect: false
+nagios_Check_Services:
+  mail: false
+  nrpe: false
+  ping: false
+  sshd: false
+  swap: false
+nm: 255.255.255.0
+nrpe_procs_crit: 1400
+nrpe_procs_warn: 1200
+num_cpus: 8
+postfix_group: vpn
 #public_ip: 209.132.190.2
 
 # This is consumed by the roles/fedora-web/main role
 sponsor: redhat
-datacenter: rdu
-postfix_group: vpn
-vpn: true
-
-nagios_Can_Connect: false
-
-nagios_Check_Services:
-  mail: false
-  nrpe: false
-  sshd: false
-  swap: false
-  ping: false
-
-nrpe_procs_warn: 1200
-nrpe_procs_crit: 1400
-
-mem_size: 16384
-max_mem_size: 32768
-num_cpus: 8
-
-ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q root@bastion13.fedoraproject.org"'
-
 # Add VPN host name as alt namefor SSH cert.  Useful when you need to
 # SSH into batcave through VPN, like from bastion in a different DC.
 ssh_hostnames:
-- batcave13.vpn.fedoraproject.org
+  - batcave13.vpn.fedoraproject.org
+virt_install_command: "{{ virt_install_command_two_nic }}"
+vmhost: virthost-rdu01.fedoraproject.org
+volgroup: /dev/vg_guests
+vpn: true

@@ -1,17 +1,10 @@
-openqa_tap: true
-
+# firewall rules to allow openQA openvswitch guests to communicate
+# uses interface definition from host vars
+custom_rules: ['-A FORWARD -i br0 -j ACCEPT', '-A FORWARD -m state -i {{ openqa_tap_iface }} -o br0 --state RELATED,ESTABLISHED -j ACCEPT', '-A INPUT -i br0 -j ACCEPT']
 # for iptables rules...maybe other stuff in future? both staging
 # and prod workers are in this group
 host_group: openqa-tap-workers
-
-# firewall rules to allow openQA openvswitch guests to communicate
-# uses interface definition from host vars
-custom_rules: [
-    '-A FORWARD -i br0 -j ACCEPT',
-    '-A FORWARD -m state -i {{ openqa_tap_iface }} -o br0 --state RELATED,ESTABLISHED -j ACCEPT',
-    '-A INPUT -i br0 -j ACCEPT'
-]
 nat_rules: [
-    # masquerade for openQA openvswitch workers to reach the outside
-    '-A POSTROUTING -o {{ openqa_tap_iface }} -j MASQUERADE'
- ]
+  # masquerade for openQA openvswitch workers to reach the outside
+  '-A POSTROUTING -o {{ openqa_tap_iface }} -j MASQUERADE']
+openqa_tap: true

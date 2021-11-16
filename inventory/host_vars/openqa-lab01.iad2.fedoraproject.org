@@ -2,32 +2,25 @@
 ############################################################
 # networking
 ############################################################
-
-nm: 255.255.255.0
-gw: 10.3.174.254
+datacenter: iad2
 dns: 10.3.163.33
 eth0_ip: 10.3.174.57
-
+gw: 10.3.174.254
+ks_repo: http://10.3.163.35/pub/fedora/linux/releases/32/Server/x86_64/os/
 ############################################################
 # install
 ############################################################
-
 ks_url: http://10.3.163.35/repo/rhel/ks/kvm-fedora-32-iad2
-ks_repo: http://10.3.163.35/pub/fedora/linux/releases/32/Server/x86_64/os/
-volgroup: /dev/vg_guests
-vmhost: qvmhost-x86-01.iad2.fedoraproject.org
-datacenter: iad2
-
 ############################################################
 # virtual machine
 ############################################################
-
-
 lvm_size: 1750000
-mem_size: 262144
-max_mem_size: 383216
-num_cpus: 60
 max_cpu: 60
-
-nrpe_procs_warn: 1000
+max_mem_size: 383216
+mem_size: 262144
+nm: 255.255.255.0
 nrpe_procs_crit: 1200
+nrpe_procs_warn: 1000
+num_cpus: 60
+vmhost: qvmhost-x86-01.iad2.fedoraproject.org
+volgroup: /dev/vg_guests

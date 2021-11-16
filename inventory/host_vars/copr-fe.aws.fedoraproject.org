@@ -1,43 +1,34 @@
 ---
-datacenter: aws
-inventory_hostname: "copr-fe.aws.fedoraproject.org"
-inventory_instance_name: copr-fe
-
-nm_controlled_resolv: True
 ansible_ifcfg_blocklist: True
-
-swap_file_size_mb: 8192
-swap_file_path: /swap
-
-hostbase: copr-fe-
-public_ip: 3.225.109.36
-root_auth_users: msuchy frostyx praiskup schlupov ttomecek
-description: copr frontend server - prod instance
-
-# Copr vars
-copr_hostbase: copr-fe
-
-# dbs to be backed up on this host
-dbs_to_backup:
-- coprdb
-
-db_backup_dir: ['/backups']
-
-nagios_Check_Services:
-  mail: false
-  nrpe: true
-  sshd: false
-  named: false
-  dhcpd: false
-  httpd: false
-  swap: false
-  ping: false
-  raid: false
-
 # this overrides vars/Fedora.yml
 base_pkgs_erase: ['PackageKit*', 'sendmail', 'at']
-
+# Copr vars
+copr_hostbase: copr-fe
+datacenter: aws
+db_backup_dir: ['/backups']
+# dbs to be backed up on this host
+dbs_to_backup:
+  - coprdb
+description: copr frontend server - prod instance
+hostbase: copr-fe-
+inventory_hostname: "copr-fe.aws.fedoraproject.org"
+inventory_instance_name: copr-fe
+nagios_Check_Services:
+  dhcpd: false
+  httpd: false
+  mail: false
+  named: false
+  nrpe: true
+  ping: false
+  raid: false
+  sshd: false
+  swap: false
+nm_controlled_resolv: True
+public_ip: 3.225.109.36
+root_auth_users: msuchy frostyx praiskup schlupov ttomecek
+sar_output_file: copr.json
 # GDPR SAR variables
 sar_script: /usr/share/copr/coprs_frontend/run/copr-gdpr-sar.sh
 sar_script_user: copr-fe
-sar_output_file: copr.json
+swap_file_path: /swap
+swap_file_size_mb: 8192

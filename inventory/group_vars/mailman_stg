@@ -1,68 +1,60 @@
 ---
 # common items for the releng-* boxes
+deployment_type: prod
+# These are consumed by a task in roles/fedmsg/base/main.yml
+fedmsg_certs:
+  - can_send:
+      - logger.log
+    group: sysadmin
+    owner: root
+    service: shell
+  - can_send:
+      - mailman.receive
+    group: mailman
+    owner: mailman
+    service: mailman
+ipa_client_shell_groups:
+  - sysadmin-tools
+ipa_client_sudo_groups:
+  - sysadmin-tools
+ipa_host_group: mailman
+ipa_host_group_desc: Mailing list services
 lvm_size: 250000
+# Used by the mailman role
+mailman_db_server: db01.stg.iad2.fedoraproject.org
+mailman_domains:
+  - lists.stg.fedoraproject.org
+  - lists.stg.fedorahosted.org
+  - lists.stg.pagure.io
+mailman_login:
+  facebook:
+    display_name: Facebook
+    provider: facebook
+  github:
+    display_name: GitHub
+    provider: github
+  gitlab:
+    display_name: GitLab
+    provider: gitlab
+  google:
+    display_name: Google
+    provider: google
+  stackexchange:
+    display_name: StackExchange
+    provider: stackexchange
+  twitter:
+    display_name: Twitter
+    provider: twitter
 mem_size: 4096
+nrpe_check_postfix_queue_crit: 50
+# by default, the number of emails in queue before we whine
+nrpe_check_postfix_queue_warn: 20
 num_cpus: 2
 # for systems that do not match the above - specify the same parameter in
 # the host_vars/$hostname file
 
-tcp_ports: [
-    25, 80, 443,
-    # For outbound fedmsg
-    3000, 3001, 3002, 3003,
-]
-
-ipa_host_group: mailman
-ipa_host_group_desc: Mailing list services
-ipa_client_shell_groups:
-- sysadmin-tools
-ipa_client_sudo_groups:
-- sysadmin-tools
-
-deployment_type: prod
-
-# These are consumed by a task in roles/fedmsg/base/main.yml
-fedmsg_certs:
-- service: shell
-  owner: root
-  group: sysadmin
-  can_send:
-  - logger.log
-- service: mailman
-  owner: mailman
-  group: mailman
-  can_send:
-  - mailman.receive
-
 # Postfix main.cf
 postfix_group: mailman-stg
-
-# Used by the mailman role
-mailman_db_server: db01.stg.iad2.fedoraproject.org
-mailman_domains:
-- lists.stg.fedoraproject.org
-- lists.stg.fedorahosted.org
-- lists.stg.pagure.io
-mailman_login:
-  gitlab:
-    display_name: GitLab
-    provider: gitlab
-  github:
-    display_name: GitHub
-    provider: github
-  twitter:
-    display_name: Twitter
-    provider: twitter
-  google:
-    display_name: Google
-    provider: google
-  facebook:
-    display_name: Facebook
-    provider: facebook
-  stackexchange:
-    display_name: StackExchange
-    provider: stackexchange
-
-# by default, the number of emails in queue before we whine
-nrpe_check_postfix_queue_warn: 20
-nrpe_check_postfix_queue_crit: 50
+tcp_ports: [25, 80, 443,
+  # For outbound fedmsg
+  3000, 3001, 3002, 3003]

@@ -1,39 +1,32 @@
 ---
-instance_type: ms1.small
-image: "{{ fedora30_x86_64 }}"
-keypair: fedora-admin-20130801
-zone: nova
-hostbase: copr-keygen-
-public_ip: 209.132.184.49
-root_auth_users: msuchy frostyx praiskup schlupov
-description: copr key gen instance
-volumes: [ {volume_id: '761175dc-daaf-48c0-be09-5799990f97a7', device: '/dev/vdc'} ]
-# security_group: default
-security_group: web-80-anywhere-persistent,ssh-anywhere-persistent,default,allow-nagios-persistent,keygen-persistent
-
-inventory_tenant: persistent
-# name of machine in OpenStack
-inventory_instance_name: copr-keygen
 cloud_networks:
   # persistent-net
   - net-id: "67b77354-39a4-43de-b007-bb813ac5c35f"
-
-
-host_backup_targets: ['/backup/']
-datacenter: cloud
-
 # Copr vars
 copr_hostbase: copr-keygen
-
+datacenter: cloud
+description: copr key gen instance
+host_backup_targets: ['/backup/']
+hostbase: copr-keygen-
+image: "{{ fedora30_x86_64 }}"
+instance_type: ms1.small
+# name of machine in OpenStack
+inventory_instance_name: copr-keygen
+inventory_tenant: persistent
+keypair: fedora-admin-20130801
 nagios_Check_Services:
-  mail: false
-  nrpe: false
-  sshd: true
-  named: false
   dhcpd: false
   httpd: false
-  swap: false
+  mail: false
+  named: false
+  nrpe: false
   ping: false
   raid: false
-
-# There is no python2 on F30
+  sshd: true
+  swap: false
+public_ip: 209.132.184.49
+root_auth_users: msuchy frostyx praiskup schlupov
+# security_group: default
+security_group: web-80-anywhere-persistent,ssh-anywhere-persistent,default,allow-nagios-persistent,keygen-persistent
+volumes: [{device: '/dev/vdc', volume_id: '761175dc-daaf-48c0-be09-5799990f97a7'}]
+zone: nova

@@ -1,98 +1,96 @@
 ---
-primary_auth_source: ipa
+dl_tier1:
+  - 10.0.0.0/8 # Red Hat Internal
+  - 128.171.104.148 # mirror.ancl.hawaii.edu.
+  - 129.101.198.59 # University of Idaho
+  - 129.21.171.98 # kirby.main.ad.rit.edu.
+  - 129.7.128.189 # pubmirror1.math.uh.edu.
+  - 129.7.128.190 # pubmirror2.math.uh.edu.
+  - 129.7.128.191 # pubmirror3.math.uh.edu.
+  - 130.225.254.116 # dotsrc.org
+  - 130.239.17.3 # its-ehm.its.umu.se.
+  - 137.138.120.188 # cern
+  - 137.138.148.168 # cern
+  - 137.138.44.122 # cern
+  - 140.247.173.57 # pool-computing-servers.seas.harvard.edu.
+  - 147.75.101.1 # ams.edge.kernel.org
+  - 147.75.197.195 # ewr.edge.kernel.org
+  - 147.75.69.165 # sjc.edge.kernel.org
+  - 147.75.95.133 # kernel.org apac
+  - 149.11.118.8/29 # Red Hat CZ
+  - 152.19.134.145 # vm6.fedora.ibiblio.org.
+  - 152.19.134.195 # vm15.fedora.ibiblio.org.
+  - 154.45.192.0/29 # Red Hat CZ New
+  - 166.78.229.128 # rackspace new infra
+  - 182.255.111.7 # dksn-k4.cdn.aarnet.edu.au.
+  - 188.184.104.133 # cern
+  - 188.184.116.38 # cern
+  - 195.220.108.108 # mandril.creatis.insa-lyon.fr.
+  - 198.129.224.34 # linux-src.es.net.
+  - 199.6.1.170 # isc.org
+  - 200.17.202.1/28 # ufpr.br
+  - 202.158.214.12 # bne-a-vms1.retain.aarnet.edu.au.
+  - 204.152.191.36 # isc.org
+  - 208.96.144.68 # University of Southern Indiana
+  - 208.96.144.90 # University of Southern Indiana
+  - 208.89.87.36 # Mirror.dst.ca
+  - 213.175.37.8/29 # ??
+  - 66.187.233.206 # Red Hat BOS
+  - 71.19.151.18 # prgmr.com / nb.zone
+  - 72.4.120.222 # rackspace old infra
+  - 91.209.10.253 # Red Hat CZ New Newer
+  - 125.16.200.50 # Red Hat PNQ
+  - 2001:388:1:4066:225:90ff:fec7:777e # ??
+  - 2001:4DE8:C0FD::/48 # ??
+  - 2001:878:346::116 # dotsrc.org
+  - 2001:978:2:81::1:0/112 # ??
+  - 2604:1380:3000:1500::1 # kernel.org apac
+  - 2620:52:3:1:dead:beef:cafe:fed1 # download-cc-rdu01's ipv6 address
+  - archive.linux.duke.edu # 152.3.102.53
+  - 152.3.68.159 # new archive.linux.duke.edu
+  - auslistsdr01.us.dell.com # 143.166.224.62
+  - auslistsprd01.us.dell.com # 143.166.82.43
+  - download-ib01.fedoraproject.org # 152.19.134.145
+  - download-cc-rdu01.fedoraproject.org # 8.43.85.72
+  - fedora.c3sl.ufpr.br # 200.236.31.8
+  - frisal.switch.ch # 130.59.113.36
+  - ftp.heanet.ie # 193.1.193.64
+  - ftp.linux.cz # 147.251.48.205
+  - 2001:718:801:230::cd # ftp.linux.cz ipv6 address
+  - ftp.nrc.ca # 132.246.2.21
+  - jobbot1.ibiblio.org # 152.19.134.30
+  - elba.hrz.tu-chemnitz.de # 134.109.228.48 / 2001:638:911:b0e:134:109:228:48
+  - waterloo.hrz.tu-chemnitz.de # 134.109.228.1 / 2001:638:911:b0e:134:109:228:1
+  - lists.us.dell.com # 143.166.82.43
+  - mirror.gtlib.gatech.edu # 128.61.111.11
+  - mirror.hiwaay.net # 216.180.99.217
+  - mirror.liquidtelecom.com # 197.155.77.1
+  - mirror.prgmr.com # 71.19.148.193
+  - mirror.speedpartner.de # 91.184.32.5
+  - mirrors.mit.edu # 18.7.29.125
+  - mirrors.pdx.kernel.org # 198.145.21.9 / 2001:19d0:306:6:0:1994:3:14
+  - mirrors.rit.edu # 129.21.171.72
+  - mirrors.sfo.kernel.org # 149.20.37.36 / 2001:4f8:4:6f:0:1994:3:14
+  - mirrors.xmission.com # 198.60.22.13
+  - nrt.edge.kernel.org # 147.75.95.133 / 2604:1380:3000:1500::1
+  - odysseus.fi.muni.cz # 147.251.48.205
+  - odysseus.linux.cz # 147.251.48.205
+  - rhlx01.hs-esslingen.de # 129.143.116.10
+  - rsyncer.ftp.heanet.ie # 193.1.219.88
+  - sagres.c3sl.ufpr.br # 200.236.31.1
+  - scrye.com # 75.148.32.185
+  - sfo-korg-mirror.kernel.org # 149.20.37.36 / 2001:4f8:4:6f:0:1994:3:14
+  - sinclair.wpi.edu # 130.215.32.86
+  - mirr-web-p-u01.wpi.edu # 130.215.32.92 / 2607:f5c0:8040:a081::80
+  - solar-one.mit.edu # 18.7.29.123
+  - speculum.rbc.ru # 80.68.250.217
+  - torrent01.fedoraproject.org # 152.19.134.141
+  - torrent02.fedoraproject.org # 152.19.134.148
+  - ultra.linux.cz # 195.113.15.27
+  - wpi.edu # 130.215.36.26
+  - zaphod.gtlib.gatech.edu # 128.61.111.12
 ipa_host_group: download
 ipa_host_group_desc: Download servers
-
 nagios_Check_Services:
   swap: false
-
-dl_tier1:
-  - 10.0.0.0/8			       # Red Hat Internal
-  - 128.171.104.148                    # mirror.ancl.hawaii.edu.
-  - 129.101.198.59                     # University of Idaho
-  - 129.21.171.98                      # kirby.main.ad.rit.edu.
-  - 129.7.128.189                      # pubmirror1.math.uh.edu.
-  - 129.7.128.190                      # pubmirror2.math.uh.edu.
-  - 129.7.128.191                      # pubmirror3.math.uh.edu.
-  - 130.225.254.116                    # dotsrc.org
-  - 130.239.17.3                       # its-ehm.its.umu.se.
-  - 137.138.120.188                    # cern
-  - 137.138.148.168                    # cern
-  - 137.138.44.122                     # cern
-  - 140.247.173.57                     # pool-computing-servers.seas.harvard.edu.
-  - 147.75.101.1                       # ams.edge.kernel.org
-  - 147.75.197.195                     # ewr.edge.kernel.org
-  - 147.75.69.165                      # sjc.edge.kernel.org
-  - 147.75.95.133                      # kernel.org apac
-  - 149.11.118.8/29                    # Red Hat CZ
-  - 152.19.134.145                     # vm6.fedora.ibiblio.org.
-  - 152.19.134.195                     # vm15.fedora.ibiblio.org.
-  - 154.45.192.0/29                    # Red Hat CZ New
-  - 166.78.229.128                     # rackspace new infra
-  - 182.255.111.7                      # dksn-k4.cdn.aarnet.edu.au.
-  - 188.184.104.133                    # cern
-  - 188.184.116.38                     # cern
-  - 195.220.108.108                    # mandril.creatis.insa-lyon.fr.
-  - 198.129.224.34                     # linux-src.es.net.
-  - 199.6.1.170                        # isc.org
-  - 200.17.202.1/28                    # ufpr.br
-  - 202.158.214.12                     # bne-a-vms1.retain.aarnet.edu.au.
-  - 204.152.191.36                     # isc.org
-  - 208.96.144.68                      # University of Southern Indiana
-  - 208.96.144.90                      # University of Southern Indiana
-  - 208.89.87.36		       # Mirror.dst.ca
-  - 213.175.37.8/29                    # ??
-  - 66.187.233.206                     # Red Hat BOS
-  - 71.19.151.18                       # prgmr.com / nb.zone
-  - 72.4.120.222                       # rackspace old infra
-  - 91.209.10.253                      # Red Hat CZ New Newer
-  - 125.16.200.50		       # Red Hat PNQ
-  - 2001:388:1:4066:225:90ff:fec7:777e # ??
-  - 2001:4DE8:C0FD::/48                # ??
-  - 2001:878:346::116                  # dotsrc.org
-  - 2001:978:2:81::1:0/112             # ??
-  - 2604:1380:3000:1500::1             # kernel.org apac
-  - 2620:52:3:1:dead:beef:cafe:fed1    # download-cc-rdu01's ipv6 address
-  - archive.linux.duke.edu             # 152.3.102.53
-  - 152.3.68.159                       # new archive.linux.duke.edu
-  - auslistsdr01.us.dell.com           # 143.166.224.62
-  - auslistsprd01.us.dell.com          # 143.166.82.43
-  - download-ib01.fedoraproject.org    # 152.19.134.145
-  - download-cc-rdu01.fedoraproject.org    # 8.43.85.72
-  - fedora.c3sl.ufpr.br                # 200.236.31.8
-  - frisal.switch.ch                   # 130.59.113.36
-  - ftp.heanet.ie                      # 193.1.193.64
-  - ftp.linux.cz                       # 147.251.48.205
-  - 2001:718:801:230::cd               # ftp.linux.cz ipv6 address
-  - ftp.nrc.ca                         # 132.246.2.21
-  - jobbot1.ibiblio.org                # 152.19.134.30
-  - elba.hrz.tu-chemnitz.de            # 134.109.228.48 / 2001:638:911:b0e:134:109:228:48
-  - waterloo.hrz.tu-chemnitz.de        # 134.109.228.1 / 2001:638:911:b0e:134:109:228:1
-  - lists.us.dell.com                  # 143.166.82.43
-  - mirror.gtlib.gatech.edu            # 128.61.111.11
-  - mirror.hiwaay.net                  # 216.180.99.217
-  - mirror.liquidtelecom.com           # 197.155.77.1
-  - mirror.prgmr.com                   # 71.19.148.193
-  - mirror.speedpartner.de             # 91.184.32.5
-  - mirrors.mit.edu                    # 18.7.29.125
-  - mirrors.pdx.kernel.org             # 198.145.21.9 / 2001:19d0:306:6:0:1994:3:14
-  - mirrors.rit.edu                    # 129.21.171.72
-  - mirrors.sfo.kernel.org             # 149.20.37.36 / 2001:4f8:4:6f:0:1994:3:14
-  - mirrors.xmission.com               # 198.60.22.13
-  - nrt.edge.kernel.org                # 147.75.95.133 / 2604:1380:3000:1500::1
-  - odysseus.fi.muni.cz                # 147.251.48.205
-  - odysseus.linux.cz                  # 147.251.48.205
-  - rhlx01.hs-esslingen.de             # 129.143.116.10
-  - rsyncer.ftp.heanet.ie              # 193.1.219.88
-  - sagres.c3sl.ufpr.br                # 200.236.31.1
-  - scrye.com                          # 75.148.32.185
-  - sfo-korg-mirror.kernel.org         # 149.20.37.36 / 2001:4f8:4:6f:0:1994:3:14
-  - sinclair.wpi.edu                   # 130.215.32.86
-  - mirr-web-p-u01.wpi.edu             # 130.215.32.92 / 2607:f5c0:8040:a081::80
-  - solar-one.mit.edu                  # 18.7.29.123
-  - speculum.rbc.ru                    # 80.68.250.217
-  - torrent01.fedoraproject.org        # 152.19.134.141
-  - torrent02.fedoraproject.org        # 152.19.134.148
-  - ultra.linux.cz                     # 195.113.15.27
-  - wpi.edu                            # 130.215.36.26
-  - zaphod.gtlib.gatech.edu            # 128.61.111.12
+primary_auth_source: ipa

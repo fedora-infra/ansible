@@ -1,19 +1,17 @@
 ---
-tcp_ports: [22]
-
+ansible_become: true
+ansible_become_method: sudo
+ansible_become_user: root
+ansible_ssh_user: centos
 datacenter: aws
 nagios_Check_Services:
-  mail: false
-  nrpe: false
-  sshd: false
-  named: false
   dhcpd: false
   httpd: false
-  swap: false
+  mail: false
+  named: false
+  nrpe: false
   ping: false
   raid: false
-
-ansible_ssh_user: centos
-ansible_become: true
-ansible_become_user: root
-ansible_become_method: sudo
+  sshd: false
+  swap: false
+tcp_ports: [22]

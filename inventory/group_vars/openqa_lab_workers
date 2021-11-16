@@ -1,31 +1,26 @@
+deployment_type: stg
+freezes: false
 gw: 10.3.174.254
-openqa_workers: 4
-openqa_hostname: openqa-lab01.iad2.fedoraproject.org
-openqa_key: "{{ stg_openqa_apikey }}"
-openqa_secret: "{{ stg_openqa_apisecret }}"
-
+ipa_client_shell_groups:
+  - sysadmin-qa
+ipa_client_sudo_groups:
+  - sysadmin-qa
+ipa_host_group: openqa-lab-workers
+ipa_host_group_desc: OpenQA Lab worker hosts
+openqa_env: staging
+openqa_env_prefix: stg-
 # this is because openqa staging isn't really a staging host
 # we don't want to set env_suffix to stg on it because that may
 # break some other plays, but we do need the env suffix for the
 # fedora-messaging bits, so let's make our own
 openqa_env_suffix: .stg
-openqa_env_prefix: stg-
-openqa_env: staging
-
+openqa_hostname: openqa-lab01.iad2.fedoraproject.org
+openqa_key: "{{ stg_openqa_apikey }}"
+# we are all NFS workers for now at least
+openqa_nfs_worker: true
 # install openQA and os-autoinst from updates-testing - this is
 # staging, we live ON THE EDGE (radical guitar riff)
 openqa_repo: updates-testing
-
-# we are all NFS workers for now at least
-openqa_nfs_worker: true
-
-deployment_type: stg
-freezes: false
-
+openqa_secret: "{{ stg_openqa_apisecret }}"
+openqa_workers: 4
 primary_auth_source: ipa
-ipa_host_group: openqa-lab-workers
-ipa_host_group_desc: OpenQA Lab worker hosts
-ipa_client_shell_groups:
-- sysadmin-qa
-ipa_client_sudo_groups:
-- sysadmin-qa

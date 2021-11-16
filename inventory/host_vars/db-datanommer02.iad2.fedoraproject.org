@@ -1,43 +1,36 @@
 ---
-nm: 255.255.255.0
-gw: 10.3.163.254
-dns: 10.3.163.33
-ks_url: http://10.3.163.35/repo/rhel/ks/kvm-rhel-8-iad2
-ks_repo: http://10.3.163.35/repo/rhel/RHEL8-x86_64/
-volgroup: /dev/vg_guests
-eth0_ip: 10.3.163.111
-vmhost: vmhost-x86-07.iad2.fedoraproject.org
-datacenter: iad2
-eth0_ipv4: "{{eth0_ip}}"
-eth0_ipv4_nm: "{{nm}}"
-eth0_ipv4_gw: "{{gw}}"
-
 # This is a generic list, monitored by collectd
 databases:
-- datanommer
-
+  - datanommer
+datacenter: iad2
+db_backup_dir: ['/backups']
 # This is a more strict list, to be made publicly available
 dbs_to_backup:
-- datanommer
-
+  - datanommer
+dns: 10.3.163.33
+effective_cache_size: "12GB"
+eth0_ip: 10.3.163.111
+eth0_ipv4: "{{eth0_ip}}"
+eth0_ipv4_gw: "{{gw}}"
+eth0_ipv4_nm: "{{nm}}"
+gw: 10.3.163.254
+# kernel SHMMAX value
+kernel_shmmax: 68719476736
+ks_repo: http://10.3.163.35/repo/rhel/RHEL8-x86_64/
+ks_url: http://10.3.163.35/repo/rhel/ks/kvm-rhel-8-iad2
 # These are normally group variables, but in this case db servers are often different
 lvm_size: 1500g
 mem_size: 65536
+nagios_Check_Services:
+  swap: false
+nm: 255.255.255.0
 num_cpus: 8
-tcp_ports: [ 5432, 443 ]
-
-# kernel SHMMAX value
-kernel_shmmax: 68719476736
-
-db_backup_dir: ['/backups']
-shared_buffers: "4GB"
-effective_cache_size: "12GB"
-
+sar_huge: true
+sar_output_file: datagrepper.csv
 # GDPR SAR variables - datanommer/datagrepper
 sar_script: /usr/local/bin/datagrepper_sar.py
 sar_script_user: root
-sar_output_file: datagrepper.csv
-sar_huge: true
-
-nagios_Check_Services:
-  swap: false
+shared_buffers: "4GB"
+tcp_ports: [5432, 443]
+vmhost: vmhost-x86-07.iad2.fedoraproject.org
+volgroup: /dev/vg_guests

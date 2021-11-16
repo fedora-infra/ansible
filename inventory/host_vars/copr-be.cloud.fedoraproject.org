@@ -1,48 +1,43 @@
 ---
-
-instance_type: ms1.xlarge
-image: "{{ fedora30_x86_64 }}"
-keypair: fedora-admin-20130801
-security_group: web-80-anywhere-persistent,web-443-anywhere-persistent,ssh-anywhere-persistent,default,allow-nagios-persistent
-zone: nova
-hostbase: copr-be-
-public_ip: 209.132.184.48
-root_auth_users: msuchy frostyx praiskup schlupov
-description: copr dispatcher and repo server
-volumes: [ {volume_id: '63c3a40c-e228-417a-97a2-e2c34730bf3b', device: '/dev/vdc'} ]
-inventory_tenant: persistent
-inventory_instance_name: copr-be
+_copr_be_conf: copr-be.conf
 cloud_networks:
   # persistent-net
   - net-id: "67b77354-39a4-43de-b007-bb813ac5c35f"
   # copr-net
   - net-id: "24699649-0e05-4fd3-98a3-86a75ec49f6e"
-
-tcp_ports: [ 22, 80, 443,
-# These 8 ports are used by fedmsg.  One for each wsgi thread.
-         3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007]
-
+# Copr vars
+copr_hostbase: copr-be
+description: copr dispatcher and repo server
+host_backup_targets: ['/var/lib/copr/public_html/results']
+hostbase: copr-be-
+image: "{{ fedora30_x86_64 }}"
+instance_type: ms1.xlarge
+inventory_instance_name: copr-be
+inventory_tenant: persistent
+keypair: fedora-admin-20130801
 # consumed by roles/messaging/base
 messaging:
   certificates:
-  - key: copr
-    username: copr
-    app_name: Copr build system
-
-# Copr vars
-copr_hostbase: copr-be
-
-host_backup_targets: ['/var/lib/copr/public_html/results']
-_copr_be_conf: copr-be.conf
-
+    - app_name: Copr build system
+      key: copr
+      username: copr
 nagios_Check_Services:
-  mail: false
-  nrpe: false
-  sshd: false
-  named: false
   dhcpd: false
   httpd: false
-  swap: false
+  mail: false
+  named: false
+  nrpe: false
   ping: false
   raid: false
+  sshd: false
+  swap: false
 # There is no python2 on F30
+
+public_ip: 209.132.184.48
+root_auth_users: msuchy frostyx praiskup schlupov
+security_group: web-80-anywhere-persistent,web-443-anywhere-persistent,ssh-anywhere-persistent,default,allow-nagios-persistent
+tcp_ports: [22, 80, 443,
+  # These 8 ports are used by fedmsg.  One for each wsgi thread.
+  3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007]
+volumes: [{device: '/dev/vdc', volume_id: '63c3a40c-e228-417a-97a2-e2c34730bf3b'}]
+zone: nova

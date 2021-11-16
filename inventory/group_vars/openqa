@@ -1,33 +1,25 @@
 # this is to enable nested virt, which we need for disk image creation
-virt_install_command: "{{ virt_install_command_one_nic }} --cpu=host-passthrough,+vmx"
-
+deployment_type: prod
 external_hostname: openqa.fedoraproject.org
-
+freezes: false
+openqa_compose_arches: x86_64,aarch64
 openqa_dbname: openqa
-openqa_dbuser: openqa
 openqa_dbpassword: "{{ prod_openqa_dbpassword }}"
-
-openqa_key: "{{ prod_openqa_apikey }}"
-openqa_secret: "{{ prod_openqa_apisecret }}"
-
-openqa_webapi_plugins: FedoraMessaging FedoraUpdateRestart
-
+openqa_dbuser: openqa
+openqa_env: production
+openqa_env_prefix:
 # this is because openqa staging isn't really a staging host
 # we don't want to set env_suffix to stg on it because that may
 # break some other plays, but we do need the env suffix for the
 # fedora-messaging bits, so let's make our own
 openqa_env_suffix:
-openqa_env_prefix:
-openqa_env: production
-
-wikitcms_token: "{{ private }}/files/openidc/production/wikitcms.json"
-openqa_wikitcms_hostname: fedoraproject.org
-openqa_resultsdb_url: http://resultsdb01.iad2.fedoraproject.org/resultsdb_api/api/v2.0/
-openqa_compose_arches: x86_64,aarch64
-openqa_update_arches: ['x86_64']
-
+openqa_key: "{{ prod_openqa_apikey }}"
 # all our workers need NFS access
 openqa_nfs_workers: "{{ groups['openqa_workers'] }}"
-
-deployment_type: prod
-freezes: false
+openqa_resultsdb_url: http://resultsdb01.iad2.fedoraproject.org/resultsdb_api/api/v2.0/
+openqa_secret: "{{ prod_openqa_apisecret }}"
+openqa_update_arches: ['x86_64']
+openqa_webapi_plugins: FedoraMessaging FedoraUpdateRestart
+openqa_wikitcms_hostname: fedoraproject.org
+virt_install_command: "{{ virt_install_command_one_nic }} --cpu=host-passthrough,+vmx"
+wikitcms_token: "{{ private }}/files/openidc/production/wikitcms.json"

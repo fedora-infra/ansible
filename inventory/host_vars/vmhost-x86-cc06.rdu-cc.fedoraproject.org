@@ -1,90 +1,82 @@
 ---
-datacenter: rdu-cc
-
-nrpe_procs_warn: 900
-nrpe_procs_crit: 1000
-
-vpn: true
-postfix_group: cloud
-freezes: false
-
-gw: 8.43.85.254
-dns: 8.8.8.8
-
-has_ipv4: yes
 br0_ipv4: 8.43.85.85
-br0_ipv4_nm: 24
 br0_ipv4_gw: "{{ gw }}"
+br0_ipv4_nm: 24
+br0_ipv6: "2620:52:3:1:dead:beef:cafe:f006"
+br0_ipv6_gw: "2620:52:3:1:ffff:ffff:ffff:fffe"
+br0_ipv6_nm: 64
+br0_port0_mac: "{{ mac0 }}"
 br1_ipv4: 172.23.1.2
 br1_ipv4_nm: 24
+br1_port0_mac: "{{ mac1 }}"
 br2_ipv4: 172.23.5.2
 br2_ipv4_nm: 24
-
+br2_port0_mac: "{{ mac2 }}"
+datacenter: rdu-cc
+dns: 8.8.8.8
+freezes: false
+gw: 8.43.85.254
+has_ipv4: yes
 has_ipv6: yes
-br0_ipv6: "2620:52:3:1:dead:beef:cafe:f006"
-br0_ipv6_nm: 64
-br0_ipv6_gw: "2620:52:3:1:ffff:ffff:ffff:fffe"
-
 mac0: "ec:f4:bb:cd:aa:a4"
 mac1: "ec:f4:bb:cd:aa:a5"
 mac2: "ec:f4:bb:cd:aa:a0"
 mac3: "ec:f4:bb:cd:aa:a2"
-
-br0_port0_mac: "{{ mac0 }}"
-br1_port0_mac: "{{ mac1 }}"
-br2_port0_mac: "{{ mac2 }}"
-
 network_connections:
-  - name: br0
-    state: up
-    type: bridge
-    autoconnect: yes
+  - autoconnect: yes
     ip:
       address:
-      - "{{ br0_ipv4 }}/{{ br0_ipv4_nm }}"
-      - "{{ br0_ipv6 }}/{{ br0_ipv6_nm }}"
+        - "{{ br0_ipv4 }}/{{ br0_ipv4_nm }}"
+        - "{{ br0_ipv6 }}/{{ br0_ipv6_nm }}"
+      auto6: no
+      dhcp4: no
+      dns:
+        - 8.8.8.8
+        - 8.8.4.4
+        - 2001:4860:4860::8888
+      dns_search:
+        - fedoraproject.org
+        - vpn.fedoraproject.org
+        - rdu-cc.fedoraproject.org
       gateway4: "{{ br0_ipv4_gw }}"
       gateway6: "{{ br0_ipv6_gw }}"
-      dns:
-      - 8.8.8.8
-      - 8.8.4.4
-      - 2001:4860:4860::8888
-      dns_search:
-      - fedoraproject.org
-      - vpn.fedoraproject.org
-      - rdu-cc.fedoraproject.org
-      dhcp4: no
-      auto6: no
-  - name: br0-port0
+    name: br0
     state: up
-    type: ethernet
+    type: bridge
+  - mac: "{{ br0_port0_mac }}"
     master: br0
-    mac: "{{ br0_port0_mac }}"
-  - name: br1
-    state: up
-    type: bridge
-    autoconnect: yes
-    ip:
-      address:
-      - "{{ br1_ipv4 }}/{{ br1_ipv4_nm }}"
-      dhcp4: no
-      auto6: no
-  - name: br1-port0
+    name: br0-port0
     state: up
     type: ethernet
+  - autoconnect: yes
+    ip:
+      address:
+        - "{{ br1_ipv4 }}/{{ br1_ipv4_nm }}"
+      auto6: no
+      dhcp4: no
+    name: br1
+    state: up
+    type: bridge
+  - mac: "{{ br1_port0_mac }}"
     master: br1
-    mac: "{{ br1_port0_mac }}"
-  - name: br2
-    state: up
-    type: bridge
-    autoconnect: yes
-    ip:
-      address:
-      - "{{ br2_ipv4 }}/{{ br2_ipv4_nm }}"
-      dhcp4: no
-      auto6: no
-  - name: br2-port0
+    name: br1-port0
     state: up
     type: ethernet
+  - autoconnect: yes
+    ip:
+      address:
+        - "{{ br2_ipv4 }}/{{ br2_ipv4_nm }}"
+      auto6: no
+      dhcp4: no
+    name: br2
+    state: up
+    type: bridge
+  - mac: "{{ br2_port0_mac }}"
     master: br2
-    mac: "{{ br2_port0_mac }}"
+    name: br2-port0
+    state: up
+    type: ethernet
+nrpe_procs_crit: 1000
+nrpe_procs_warn: 900
+postfix_group: cloud
+vpn: true

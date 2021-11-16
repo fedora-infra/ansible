@@ -1,30 +1,23 @@
 ---
-nm: 255.255.254.0
-gw: 38.145.49.254
 dns: 8.8.8.8
-num_cpus: 4
-
-ks_url: http://209.132.181.6/repo/rhel/ks/kvm-fedora-29-ext
-ks_repo: http://209.132.181.6/pub/fedora/linux/releases/29/Server/x86_64/os/
-
-vmhost: virthost-os01.fedorainfracloud.org
-volgroup: /dev/vg_guests
-
 eth0_ip: 38.145.48.42
-
-nrpe_procs_warn: 1200
-nrpe_procs_crit: 1400
-
-vpn: false
-
-# Keepalived variables for os
-keepalived_interface: eth0
-keepalived_priority: 100
-keepalived_ipaddress: 38.145.48.40
-keepalived_routerid: 20
-
+gw: 38.145.49.254
 # Keepalived variables for app.os
 keepalived2_interface: eth0
-keepalived2_priority: 50
 keepalived2_ipaddress: 38.145.48.41
+keepalived2_priority: 50
 keepalived2_routerid: 25
+# Keepalived variables for os
+keepalived_interface: eth0
+keepalived_ipaddress: 38.145.48.40
+keepalived_priority: 100
+keepalived_routerid: 20
+ks_repo: http://209.132.181.6/pub/fedora/linux/releases/29/Server/x86_64/os/
+ks_url: http://209.132.181.6/repo/rhel/ks/kvm-fedora-29-ext
+nm: 255.255.254.0
+nrpe_procs_crit: 1400
+nrpe_procs_warn: 1200
+num_cpus: 4
+vmhost: virthost-os01.fedorainfracloud.org
+volgroup: /dev/vg_guests
+vpn: false

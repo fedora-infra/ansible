@@ -1,33 +1,30 @@
 ---
-instance_type: ms1.small
-image: "{{ fedora28_x86_64 }}"
-keypair: fedora-admin-20130801
-# todo: remove some security groups ?
-security_group: web-80-anywhere-persistent,web-443-anywhere-persistent,ssh-anywhere-persistent,default,all-icmp-persistent
-zone: nova
-hostbase: copr-keygen-stg-
-public_ip: 209.132.184.56
-root_auth_users: msuchy frostyx praiskup schlupov
-volumes: [ {volume_id: '5424ff3c-b1c6-4291-a0ed-2d30924f4f88', device: '/dev/vdc'} ]
-description: copr keygen and sign host - stg instance
-
-inventory_tenant: persistent
-# name of machine in OpenStack
-inventory_instance_name: copr-keygen-stg
 cloud_networks:
   # persistent-net
   - net-id: "67b77354-39a4-43de-b007-bb813ac5c35f"
-
 # Copr vars
 copr_hostbase: copr-keygen-stg
-
+description: copr keygen and sign host - stg instance
+hostbase: copr-keygen-stg-
+image: "{{ fedora28_x86_64 }}"
+instance_type: ms1.small
+# name of machine in OpenStack
+inventory_instance_name: copr-keygen-stg
+inventory_tenant: persistent
+keypair: fedora-admin-20130801
 nagios_Check_Services:
-  mail: false
-  nrpe: false
-  sshd: false
-  named: false
   dhcpd: false
   httpd: false
-  swap: false
+  mail: false
+  named: false
+  nrpe: false
   ping: false
   raid: false
+  sshd: false
+  swap: false
+public_ip: 209.132.184.56
+root_auth_users: msuchy frostyx praiskup schlupov
+# todo: remove some security groups ?
+security_group: web-80-anywhere-persistent,web-443-anywhere-persistent,ssh-anywhere-persistent,default,all-icmp-persistent
+volumes: [{device: '/dev/vdc', volume_id: '5424ff3c-b1c6-4291-a0ed-2d30924f4f88'}]
+zone: nova

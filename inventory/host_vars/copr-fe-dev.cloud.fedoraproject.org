@@ -1,35 +1,32 @@
 ---
-instance_type: m1.medium
-image: "{{ fedora30_x86_64 }}"
-keypair: fedora-admin-20130801
-security_group: web-80-anywhere-persistent,web-443-anywhere-persistent,ssh-anywhere-persistent,default,all-icmp-persistent
-zone: nova
-hostbase: copr-fe-dev-
-public_ip: 209.132.184.55
-root_auth_users:  ryanlerch pingou msuchy frostyx praiskup schlupov
-description: copr frontend server - dev instance
-tcp_ports: [22, 80, 443]
-# volumes: copr-fe-dev-db
-volumes: [ {volume_id: 'c0f338f4-b59e-4b58-8f86-47011eaa0fab', device: '/dev/vdc'} ]
-inventory_tenant: persistent
-# name of machine in OpenStack
-inventory_instance_name: copr-fe-dev
 cloud_networks:
   # persistent-net
   - net-id: "67b77354-39a4-43de-b007-bb813ac5c35f"
-
 # Copr vars
 copr_hostbase: copr-fe-dev
-
+description: copr frontend server - dev instance
+hostbase: copr-fe-dev-
+image: "{{ fedora30_x86_64 }}"
+instance_type: m1.medium
+# name of machine in OpenStack
+inventory_instance_name: copr-fe-dev
+inventory_tenant: persistent
+keypair: fedora-admin-20130801
 # There is no python2 on F30
-
 nagios_Check_Services:
-  mail: false
-  nrpe: false
-  sshd: false
-  named: false
   dhcpd: false
   httpd: false
-  swap: false
+  mail: false
+  named: false
+  nrpe: false
   ping: false
   raid: false
+  sshd: false
+  swap: false
+public_ip: 209.132.184.55
+root_auth_users: ryanlerch pingou msuchy frostyx praiskup schlupov
+security_group: web-80-anywhere-persistent,web-443-anywhere-persistent,ssh-anywhere-persistent,default,all-icmp-persistent
+tcp_ports: [22, 80, 443]
+# volumes: copr-fe-dev-db
+volumes: [{device: '/dev/vdc', volume_id: 'c0f338f4-b59e-4b58-8f86-47011eaa0fab'}]
+zone: nova

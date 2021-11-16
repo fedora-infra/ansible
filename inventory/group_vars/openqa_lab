@@ -10,48 +10,37 @@
 # be stg.fedoraproject.org
 
 # this is to enable nested virt, which we need for disk image creation
-virt_install_command: "{{ virt_install_command_one_nic }} --cpu=host-passthrough,+vmx"
-
+deployment_type: stg
 external_hostname: openqa.stg.fedoraproject.org
-
-openqa_dbname: openqa-stg
-openqa_dbuser: openqastg
-openqa_dbpassword: "{{ stg_openqa_dbpassword }}"
+# makes sure it sends stg not prod fedmsgs
+fedmsg_env: stg
+freezes: false
+# FIXME: disable consumers that write to wiki until auth key
+# is working again:
+# https://pagure.io/fedora-infrastructure/issue/8381
+openqa_amqp_wiki_reporter_queue:
 openqa_assetsize_ppc: 300
-
-openqa_key: "{{ stg_openqa_apikey }}"
-openqa_secret: "{{ stg_openqa_apisecret }}"
-
-openqa_webapi_plugins: FedoraMessaging FedoraUpdateRestart
-
+openqa_compose_arches: x86_64,aarch64,ppc64le
+openqa_dbname: openqa-stg
+openqa_dbpassword: "{{ stg_openqa_dbpassword }}"
+openqa_dbuser: openqastg
+openqa_env: staging
+openqa_env_prefix: stg-
 # this is because openqa staging isn't really a staging host
 # we don't want to set env_suffix to stg on it because that may
 # break some other plays, but we do need the env suffix for the
 # fedora-messaging bits, so let's make our own
 openqa_env_suffix: .stg
-openqa_env_prefix: stg-
-openqa_env: staging
-
+openqa_key: "{{ stg_openqa_apikey }}"
+# all our workers need NFS access
+openqa_nfs_workers: "{{ groups['openqa_lab_workers'] }}"
 # install openQA from updates-testing - this is staging, we live
 # ON THE EDGE (radical guitar riff)
 openqa_repo: updates-testing
-
-wikitcms_token: "{{ private }}/files/openidc/staging/wikitcms.json"
-openqa_wikitcms_hostname: stg.fedoraproject.org
 openqa_resultsdb_url: http://resultsdb01.stg.iad2.fedoraproject.org/resultsdb_api/api/v2.0/
-openqa_compose_arches: x86_64,aarch64,ppc64le
+openqa_secret: "{{ stg_openqa_apisecret }}"
 openqa_update_arches: ['x86_64', 'ppc64le']
-
-# all our workers need NFS access
-openqa_nfs_workers: "{{ groups['openqa_lab_workers'] }}"
-
-# FIXME: disable consumers that write to wiki until auth key
-# is working again:
-# https://pagure.io/fedora-infrastructure/issue/8381
-openqa_amqp_wiki_reporter_queue:
-
-deployment_type: stg
-freezes: false
-
-# makes sure it sends stg not prod fedmsgs
-fedmsg_env: stg
+openqa_webapi_plugins: FedoraMessaging FedoraUpdateRestart
+openqa_wikitcms_hostname: stg.fedoraproject.org
+virt_install_command: "{{ virt_install_command_one_nic }} --cpu=host-passthrough,+vmx"
+wikitcms_token: "{{ private }}/files/openidc/staging/wikitcms.json"

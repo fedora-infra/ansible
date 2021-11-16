@@ -1,47 +1,39 @@
 ---
 # Define resources for this group of hosts here.
-lvm_size: 50000
-mem_size: 98304
-max_mem_size: 98304
-num_cpus: 16
-
-custom_rules: [
-    # Need for rsync from log01 for logs.
-    '-A INPUT -p tcp -m tcp -s 10.3.163.39 --dport 873 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT',
- ]
-
-tcp_ports: [80, 8080]
-
-primary_auth_source: ipa
-ipa_host_group: kojipkgs
-ipa_host_group_desc: Koji Packages hosts
-ipa_client_shell_groups:
-- sysadmin-noc
-- sysadmin-releng
-- sysadmin-veteran
-ipa_client_sudo_groups:
-- sysadmin-releng
-
-varnish_group: kojipkgs
-
-# For the MOTD
-csi_security_category: Moderate
 csi_primary_contact: Fedora admins - admin@fedoraproject.org
 csi_purpose: Cache packages from koji for builders and others
 csi_relationship: |
-    There are a few things running here:
+  There are a few things running here:
 
-    - apache web server and varnish caching proxy.
+  - apache web server and varnish caching proxy.
 
-    - This host relies on:
-      - koji nfs storage
-      - proxy01/10 to proxy requests to it.
+  - This host relies on:
+    - koji nfs storage
+    - proxy01/10 to proxy requests to it.
 
-    - Things that rely on this host:
-      - all koji builders/buildsystem
-      - koschei
-      - external users downloading packages from koji.
-
+  - Things that rely on this host:
+    - all koji builders/buildsystem
+    - koschei
+    - external users downloading packages from koji.
+# For the MOTD
+csi_security_category: Moderate
+custom_rules: [
+  # Need for rsync from log01 for logs.
+  '-A INPUT -p tcp -m tcp -s 10.3.163.39 --dport 873 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT']
+ipa_client_shell_groups:
+  - sysadmin-noc
+  - sysadmin-releng
+  - sysadmin-veteran
+ipa_client_sudo_groups:
+  - sysadmin-releng
+ipa_host_group: kojipkgs
+ipa_host_group_desc: Koji Packages hosts
+lvm_size: 50000
+max_mem_size: 98304
+mem_size: 98304
 nagios_Check_Services:
   swap: false
+num_cpus: 16
+primary_auth_source: ipa
+tcp_ports: [80, 8080]
+varnish_group: kojipkgs

@@ -1,6 +1,6 @@
 ---
+ansible_ifcfg_blocklist: true
 freezes: false
+host_group: cloud
 sudoers: "{{ private }}/files/sudo/arm-packager-sudoers"
 sudoers_main: nopasswd
-host_group: cloud
-ansible_ifcfg_blocklist: true

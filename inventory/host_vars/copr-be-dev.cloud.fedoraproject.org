@@ -1,46 +1,41 @@
 ---
-instance_type: ms1.xlarge
-image: "{{ fedora30_x86_64 }}"
-keypair: fedora-admin-20130801
-security_group: web-80-anywhere-persistent,web-443-anywhere-persistent,ssh-anywhere-persistent,default,allow-nagios-persistent,fedmsg-relay-persistent
-zone: nova
-hostbase: copr-be-dev-
-public_ip: 209.132.184.53
-root_auth_users: msuchy pingou frostyx praiskup schlupov
-description: copr dispatcher and repo server - dev instance
-tcp_ports: ['22', '80', '443', '2003', '4001']
-# volumes: copr-be-dev-data
-volumes: [ {volume_id: '09c74876-d691-487e-a54b-070b08e87719', device: '/dev/vdc'} ]
-
-inventory_tenant: persistent
-# name of machine in OpenStack
-inventory_instance_name: copr-be-dev
+_copr_be_conf: copr-be.conf-dev
 cloud_networks:
   # persistent-net
   - net-id: "67b77354-39a4-43de-b007-bb813ac5c35f"
   # coprdev-net
   - net-id: "a440568f-b90a-46af-8ca6-d8fa743a7e7a"
-
+# Copr vars
+copr_hostbase: copr-be-dev
+description: copr dispatcher and repo server - dev instance
+hostbase: copr-be-dev-
+image: "{{ fedora30_x86_64 }}"
+instance_type: ms1.xlarge
+# name of machine in OpenStack
+inventory_instance_name: copr-be-dev
+inventory_tenant: persistent
+keypair: fedora-admin-20130801
 # consumed by roles/messaging/base
 messaging:
   certificates:
-  - key: copr
-    username: copr
-    app_name: Copr build system
-
-# Copr vars
-copr_hostbase: copr-be-dev
-_copr_be_conf: copr-be.conf-dev
-
+    - app_name: Copr build system
+      key: copr
+      username: copr
 # There is no python2 on F30
-
 nagios_Check_Services:
-  mail: false
-  nrpe: false
-  sshd: false
-  named: false
   dhcpd: false
   httpd: false
-  swap: false
+  mail: false
+  named: false
+  nrpe: false
   ping: false
   raid: false
+  sshd: false
+  swap: false
+public_ip: 209.132.184.53
+root_auth_users: msuchy pingou frostyx praiskup schlupov
+security_group: web-80-anywhere-persistent,web-443-anywhere-persistent,ssh-anywhere-persistent,default,allow-nagios-persistent,fedmsg-relay-persistent
+tcp_ports: ['22', '80', '443', '2003', '4001']
+# volumes: copr-be-dev-data
+volumes: [{device: '/dev/vdc', volume_id: '09c74876-d691-487e-a54b-070b08e87719'}]
+zone: nova

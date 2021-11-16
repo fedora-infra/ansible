@@ -1,26 +1,21 @@
-nm: 255.255.255.0
-gw: 10.3.167.254
-dns: 10.3.163.33
-
-ks_url: http://10.3.163.35/repo/rhel/ks/kvm-fedora-34-iad2
-ks_repo: http://10.3.163.35/pub/fedora/linux/releases/34/Server/x86_64/os/
-
-volgroup: /dev/vg_guests
-eth0_ip: 10.3.167.33
-vmhost: bvmhost-x86-03.stg.iad2.fedoraproject.org
 datacenter: staging
-
-koji_hub_nfs: "fedora_koji"
-
-kojipkgs_url: kojipkgs.fedoraproject.org
-kojihub_url: koji.stg.fedoraproject.org/kojihub
-kojihub_scheme: http
-
+dns: 10.3.163.33
+eth0_ip: 10.3.167.33
 # These are consumed by a task in roles/fedmsg/base/main.yml
 fedmsg_certs:
-- service: shell
-  owner: root
-  group: root
-- service: bodhi
-  owner: root
-  group: root
+  - group: root
+    owner: root
+    service: shell
+  - group: root
+    owner: root
+    service: bodhi
+gw: 10.3.167.254
+koji_hub_nfs: "fedora_koji"
+kojihub_scheme: http
+kojihub_url: koji.stg.fedoraproject.org/kojihub
+kojipkgs_url: kojipkgs.fedoraproject.org
+ks_repo: http://10.3.163.35/pub/fedora/linux/releases/34/Server/x86_64/os/
+ks_url: http://10.3.163.35/repo/rhel/ks/kvm-fedora-34-iad2
+nm: 255.255.255.0
+vmhost: bvmhost-x86-03.stg.iad2.fedoraproject.org
+volgroup: /dev/vg_guests

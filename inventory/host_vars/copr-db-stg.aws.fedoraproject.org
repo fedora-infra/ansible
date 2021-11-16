@@ -1,49 +1,40 @@
 ---
-ansible_user: ec2-user
-ansible_become_user: root
 ansible_become: yes
-
-datacenter: aws
-inventory_hostname: "copr-db-stg.aws.fedoraproject.org"
-inventory_instance_name: copr-db-stg
-
-nm_controlled_resolv: True
+ansible_become_user: root
 ansible_ifcfg_blocklist: True
-
-swap_file_size_mb: 4096
-swap_file_path: /swap
-
-hostbase: copr-db-stg-
-public_ip: 52.200.82.86
-root_auth_users: msuchy frostyx praiskup schlupov
-description: copr database - staging instance
-
+ansible_user: ec2-user
 # Copr vars
 copr_hostbase: copr-db-stg
-
-nagios_Check_Services:
-  mail: false
-  nrpe: false
-  sshd: false
-  named: false
-  dhcpd: false
-  httpd: false
-  swap: false
-  ping: false
-  raid: false
-
 # This is a generic list, monitored by collectd
 databases:
-- coprdb
-
-# This is a more strict list of databases to backup every day
-dbs_to_backup:
-- coprdb
-
-
+  - coprdb
+datacenter: aws
 db_backup_dir: ['/backups']
 # Should be 0.25 of memory
 #shared_buffers: "16GB"
 # Should be 0.80 of memory
 #effective_cache_size: "50GB"
 #max_stack_depth: "6MB"
+
+# This is a more strict list of databases to backup every day
+dbs_to_backup:
+  - coprdb
+description: copr database - staging instance
+hostbase: copr-db-stg-
+inventory_hostname: "copr-db-stg.aws.fedoraproject.org"
+inventory_instance_name: copr-db-stg
+nagios_Check_Services:
+  dhcpd: false
+  httpd: false
+  mail: false
+  named: false
+  nrpe: false
+  ping: false
+  raid: false
+  sshd: false
+  swap: false
+nm_controlled_resolv: True
+public_ip: 52.200.82.86
+root_auth_users: msuchy frostyx praiskup schlupov
+swap_file_path: /swap
+swap_file_size_mb: 4096

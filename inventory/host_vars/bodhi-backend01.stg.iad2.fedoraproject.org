@@ -1,28 +1,27 @@
 ---
-nm: 255.255.255.0
-gw: 10.3.167.254
 dns: 10.3.163.33
-ks_url: http://10.3.163.35/repo/rhel/ks/kvm-fedora
-ks_repo: http://10.3.163.35/pub/fedora/linux/releases/34/Server/x86_64/os/
-volgroup: /dev/vg_guests
-mac_address: 52:54:00:1c:40:15
 eth0_ip: 10.3.167.32
-vmhost: bvmhost-x86-03.stg.iad2.fedoraproject.org
-
 # These are consumed by a task in roles/fedmsg/base/main.yml
 fedmsg_certs:
-# This first cert is used by the push-tool.   releng members run it and it fires
-# off a simple fedmsg message that the masher (running as fedmsg-hub) is
-# listening for.  It then does all the worker.
-# These are certs for pungi
-- service: releng
-  owner: apache
-  group: sysadmin-releng
-  can_send:
-  # new school pungi-koji stuff (ask dgilmore)
-  - pungi.compose.phase.start
-  - pungi.compose.phase.stop
-  - pungi.compose.status.change
-  - pungi.compose.createiso.targets
-  - releng.atomic.twoweek.begin
-  - releng.atomic.twoweek.complete
+  # This first cert is used by the push-tool.   releng members run it and it fires
+  # off a simple fedmsg message that the masher (running as fedmsg-hub) is
+  # listening for.  It then does all the worker.
+  # These are certs for pungi
+  - can_send:
+      # new school pungi-koji stuff (ask dgilmore)
+      - pungi.compose.phase.start
+      - pungi.compose.phase.stop
+      - pungi.compose.status.change
+      - pungi.compose.createiso.targets
+      - releng.atomic.twoweek.begin
+      - releng.atomic.twoweek.complete
+    group: sysadmin-releng
+    owner: apache
+    service: releng
+gw: 10.3.167.254
+ks_repo: http://10.3.163.35/pub/fedora/linux/releases/34/Server/x86_64/os/
+ks_url: http://10.3.163.35/repo/rhel/ks/kvm-fedora
+mac_address: 52:54:00:1c:40:15
+nm: 255.255.255.0
+vmhost: bvmhost-x86-03.stg.iad2.fedoraproject.org
+volgroup: /dev/vg_guests

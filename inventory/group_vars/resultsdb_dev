@@ -2,16 +2,23 @@
 ############################################################
 # general information
 ############################################################
+allowed_hosts:
+  - 10.5.124
 deployment_type: dev
+execdb_db_host: "{{ execdb_db_host_machine }}"
+############################################################
+# execdb details
+############################################################
+execdb_db_host_machine: db-qa01.qa.fedoraproject.org
+execdb_db_name: execdb_dev
+execdb_db_password: "{{ dev_execdb_db_password }}"
+execdb_db_port: 5432
+execdb_db_user: "{{ dev_execdb_db_user }}"
+execdb_endpoint: 'execdb'
+execdb_secret_key: "{{ dev_execdb_secret_key }}"
 external_hostname: taskotron-dev.fedoraproject.org
-tcp_ports: [ 80, 443, "{{ resultsdb_db_port }}", "{{ execdb_db_port }}" ]
-
 freezes: false
-
-
-
-
-
+resultsdb_db_host: "{{ resultsdb_db_host_machine }}"
 ############################################################
 # resultsdb details
 ############################################################
@@ -20,47 +27,28 @@ freezes: false
 # that db is localhost relative to resultsdb
 #
 resultsdb_db_host_machine: db-qa01.qa.fedoraproject.org
-resultsdb_db_host: "{{ resultsdb_db_host_machine }}"
-resultsdb_db_port: 5432
-resultsdb_endpoint: 'resultsdb_api'
 resultsdb_db_name: resultsdb_dev
-resultsdb_db_user: "{{ dev_resultsdb_db_user }}"
 resultsdb_db_password: "{{ dev_resultsdb_db_password }}"
-resultsdb_secret_key: "{{ dev_resultsdb_secret_key }}"
-
-allowed_hosts:
-    - 10.5.124
-
+resultsdb_db_port: 5432
+resultsdb_db_user: "{{ dev_resultsdb_db_user }}"
+resultsdb_endpoint: 'resultsdb_api'
 ############################################################
 # resultsdb-frontend details
 ############################################################
 resultsdb_fe_endpoint: "resultsdb"
 resultsdb_frontend_secret_key: "{{ dev_resultsdb_frontend_secret_key }}"
-
-
-############################################################
-# execdb details
-############################################################
-execdb_db_host_machine: db-qa01.qa.fedoraproject.org
-execdb_db_host: "{{ execdb_db_host_machine }}"
-execdb_db_port: 5432
-execdb_endpoint: 'execdb'
-execdb_db_name: execdb_dev
-execdb_db_user: "{{ dev_execdb_db_user }}"
-execdb_db_password: "{{ dev_execdb_db_password }}"
-execdb_secret_key: "{{ dev_execdb_secret_key }}"
-
-
+resultsdb_secret_key: "{{ dev_resultsdb_secret_key }}"
+tcp_ports: [80, 443, "{{ resultsdb_db_port }}", "{{ execdb_db_port }}"]
+vault_db_host: "{{ vault_db_host_machine }}"
+vault_db_host_machine: db-qa01.qa.fedoraproject.org
+vault_db_name: vault_dev
+vault_db_password: "{{ dev_vault_db_password }}"
+vault_db_port: 5432
+vault_db_user: "{{ dev_vault_db_user }}"
+vault_endpoint: 'vault'
+vault_masterkey: "{{dev_vault_masterkey}}"
 ############################################################
 # vault details
 ############################################################
 vault_public_url: "https://taskotron-dev.fedoraproject.org/vault"
-vault_db_host_machine: db-qa01.qa.fedoraproject.org
-vault_db_host: "{{ vault_db_host_machine }}"
-vault_db_port: 5432
-vault_endpoint: 'vault'
-vault_db_name: vault_dev
-vault_db_user: "{{ dev_vault_db_user }}"
-vault_db_password: "{{ dev_vault_db_password }}"
 vault_secret_key: "{{ dev_vault_secret_key }}"
-vault_masterkey: "{{dev_vault_masterkey}}"

@@ -1,29 +1,27 @@
 ---
-ansible_ssh_user: fedora
-ansible_become_user: root
 ansible_become: yes
-datacenter: aws
-inventory_hostname: "copr-keygen-dev.aws.fedoraproject.org"
-inventory_instance_name: copr-keygen-dev
-nm_controlled_resolv: True
+ansible_become_user: root
 ansible_ifcfg_blocklist: True
-
+ansible_ssh_user: fedora
+datacenter: aws
+#volumes: [ {volume_id: '9e2b4c55-9ec3-4508-af46-a40f3a5bd982', device: '/dev/vdc'} ]
+description: copr key gen and sign host - dev instance
 #instance_type: t3a.small
 #image: "{{ fedora31_x86_64 }}"
 #keypair: fedora-admin-20130801
 hostbase: copr-keygen-dev-
-public_ip: 54.225.23.248
-root_auth_users: msuchy frostyx praiskup schlupov
-#volumes: [ {volume_id: '9e2b4c55-9ec3-4508-af46-a40f3a5bd982', device: '/dev/vdc'} ]
-description: copr key gen and sign host - dev instance
-
+inventory_hostname: "copr-keygen-dev.aws.fedoraproject.org"
+inventory_instance_name: copr-keygen-dev
 nagios_Check_Services:
-  mail: false
-  nrpe: true
-  sshd: false
-  named: false
   dhcpd: false
   httpd: false
-  swap: false
+  mail: false
+  named: false
+  nrpe: true
   ping: false
   raid: false
+  sshd: false
+  swap: false
+nm_controlled_resolv: True
+public_ip: 54.225.23.248
+root_auth_users: msuchy frostyx praiskup schlupov

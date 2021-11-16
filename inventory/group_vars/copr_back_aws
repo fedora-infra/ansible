@@ -1,55 +1,41 @@
 ---
-description: copr dispatcher and repo server
+_copr_be_conf: copr-be.conf
+# There is no python2 on F30
 
+# what is the main backend service name
+copr_backend_target: copr-backend.target
+# copr_builder_image_name: "Fedora-Cloud-Base-20141203-21"
+copr_builder_flavor_name: "ms2.builder"
+copr_builder_key_name: "buildsys"
+copr_builder_network_name: "copr-net"
+copr_builder_security_groups: "ssh-anywhere-copr,default,ssh-from-persistent-copr"
+# Copr vars
+copr_hostbase: copr-be
 copr_nova_auth_url: "https://fedorainfracloud.org:5000/v2.0"
 copr_nova_tenant_id: "5d99f099b7fe4b0387f0352f6301ba6a"
 copr_nova_tenant_name: "copr"
 copr_nova_username: "copr"
-
-# copr_builder_image_name: "Fedora-Cloud-Base-20141203-21"
-copr_builder_flavor_name: "ms2.builder"
-copr_builder_network_name: "copr-net"
-copr_builder_key_name: "buildsys"
-copr_builder_security_groups: "ssh-anywhere-copr,default,ssh-from-persistent-copr"
-
-nrpe_procs_warn: 2200
-nrpe_procs_crit: 2500
-
-do_sign: "true"
-
-spawn_in_advance: "true"
-frontend_base_url: "https://copr.fedorainfracloud.org"
-
-
-# These variables are pushed into /etc/system_identification by the base role.
-# Groups and individual hosts should override them with specific info.
-# See http://infrastructure.fedoraproject.org/csi/security-policy/
-
-csi_security_category: High
 csi_primary_contact: "msuchy (mirek), frostyx, praiskup IRC #fedora-admin, #fedora-buildsys"
 csi_purpose: Provide the backend for copr (3rd party packages)
 csi_relationship: |
   - Backend: Management of copr cloud infrastructure (OpenStack).
   - Small frontend with copr's public stats
-
-root_auth_users: msuchy pingou frostyx praiskup schlupov
-
-tcp_ports: [ 22, 80, 443 ]
-
+# These variables are pushed into /etc/system_identification by the base role.
+# Groups and individual hosts should override them with specific info.
+# See http://infrastructure.fedoraproject.org/csi/security-policy/
+csi_security_category: High
+description: copr dispatcher and repo server
+do_sign: "true"
+frontend_base_url: "https://copr.fedorainfracloud.org"
+host_backup_targets: ['/var/lib/copr/public_html/results']
 # consumed by roles/messaging/base
 messaging:
   certificates:
-  - key: copr
-    username: copr
-    app_name: Copr build system
-
-# Copr vars
-copr_hostbase: copr-be
-
-host_backup_targets: ['/var/lib/copr/public_html/results']
-_copr_be_conf: copr-be.conf
-
-# There is no python2 on F30
-
-# what is the main backend service name
-copr_backend_target: copr-backend.target
+    - app_name: Copr build system
+      key: copr
+      username: copr
+nrpe_procs_crit: 2500
+nrpe_procs_warn: 2200
+root_auth_users: msuchy pingou frostyx praiskup schlupov
+spawn_in_advance: "true"
+tcp_ports: [22, 80, 443]

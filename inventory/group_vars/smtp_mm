@@ -1,31 +1,26 @@
 ---
 # Define resources for this group of hosts here.
-lvm_size: 20000
-mem_size: 2048
-num_cpus: 2
-
-# for systems that do not match the above - specify the same parameter in
-# the host_vars/$hostname file
-
-tcp_ports: [ 25 ]
-
-primary_auth_source: ipa
+ipa_client_shell_access:
+  - fi-apprentice
+  - sysadmin-noc
+  - sysadmin-tools
+  - sysadmin-veteran
+ipa_client_sudo_access:
+  - sysadmin-noc
+  - sysadmin-tools
+  - sysadmin-veteran
 ipa_host_group: smtp_mm
 ipa_host_group_desc: SMTP servers
-ipa_client_shell_access:
-- fi-apprentice
-- sysadmin-noc
-- sysadmin-tools
-- sysadmin-veteran
-ipa_client_sudo_access:
-- sysadmin-noc
-- sysadmin-tools
-- sysadmin-veteran
-
-postfix_transport_filename: transports.smtp-mm
-postfix_group: smtp-mm
-vpn: true
-
+lvm_size: 20000
+mem_size: 2048
 nagios_Check_Services:
-  nrpe: true
   mail: false
+  nrpe: true
+num_cpus: 2
+postfix_group: smtp-mm
+postfix_transport_filename: transports.smtp-mm
+primary_auth_source: ipa
+# for systems that do not match the above - specify the same parameter in
+# the host_vars/$hostname file
+tcp_ports: [25]
+vpn: true

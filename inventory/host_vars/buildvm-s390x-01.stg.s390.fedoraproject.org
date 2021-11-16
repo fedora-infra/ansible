@@ -1,14 +1,14 @@
 ---
-varnish_group: s390kojipkgs
-vmhost: buildvmhost-s390x-01.s390.fedoraproject.org
+dns: 10.5.126.21
 eth0_ipv4: 10.16.0.25
 gw: 10.16.0.254
-mem_size: 8192
-max_mem_size: "{{ mem_size }}"
-num_cpus: 2
 lvm_size: 102400
 main_bridge: vmbr
-volgroup: /dev/fedora_linux_lpar_1
-dns: 10.5.126.21
+max_mem_size: "{{ mem_size }}"
+mem_size: 8192
 nm: 255.255.255.0
+num_cpus: 2
+varnish_group: s390kojipkgs
 virt_install_command: "{{ virt_install_command_s390x_one_nic_unsafe }}"
+vmhost: buildvmhost-s390x-01.s390.fedoraproject.org
+volgroup: /dev/fedora_linux_lpar_1

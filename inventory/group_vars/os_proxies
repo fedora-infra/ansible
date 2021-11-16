@@ -1,24 +1,18 @@
 ---
+custom_rules: [
+  # Needed for keepalived
+  '-A INPUT -d 224.0.0.0/8 -j ACCEPT', '-A INPUT -p vrrp -j ACCEPT',
+  # machinectl api
+  '-A INPUT -p tcp --dport 22623 --src 38.145.48.0/27 -j ACCEPT']
 datacenter: cloud
 host_group: cloud
 lvm_size: 20000
 mem_size: 8192
 num_cpus: 4
-
 tcp_ports: [
-    # For os routers
-    80,
-    443,
-    # For ks8 api
-    6443,
-    # For haproxy status
-    8080,
-]
-
-custom_rules: [
-    # Needed for keepalived
-    '-A INPUT -d 224.0.0.0/8 -j ACCEPT',
-    '-A INPUT -p vrrp -j ACCEPT',
-    # machinectl api
-    '-A INPUT -p tcp --dport 22623 --src 38.145.48.0/27 -j ACCEPT',
-]
+  # For os routers
+  80, 443,
+  # For ks8 api
+  6443,
+  # For haproxy status
+  8080]

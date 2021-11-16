@@ -1,16 +1,15 @@
 ---
-freezes: false
-sudoers: "{{ private }}/files/sudo/arm-packager-sudoers"
-sudoers_main: nopasswd
-datacenter: aws
 ansible_ifcfg_blocklist: true
-
-vpn: true
-primary_auth_source: ipa
+datacenter: aws
+freezes: false
+ipa_client_shell_groups:
+  - packager
+ipa_client_sudo_nopasswd_groups:
+  - sysadmin-main
+  - packager
 ipa_host_group: maintainer_test
 ipa_host_group_desc: Test hosts for package maintainers
-ipa_client_shell_groups:
-- packager
-ipa_client_sudo_nopasswd_groups:
-- sysadmin-main
-- packager
+primary_auth_source: ipa
+sudoers: "{{ private }}/files/sudo/arm-packager-sudoers"
+sudoers_main: nopasswd
+vpn: true

@@ -1,12 +1,10 @@
 ---
+custom_rules: ['-A INPUT -p tcp -m tcp -s 192.168.122.0/24 --dport 2049 -j ACCEPT']
 freezes: false
-resolvconf: "{{ files }}/resolv.conf/iad2"
-
+ipa_client_shell_groups:
+  - sysadmin-kernel
+ipa_client_sudo_groups:
+  - sysadmin-kernel
 ipa_host_group: kernel_qa
 ipa_host_group_desc: kernel test machines
-ipa_client_shell_groups:
-- sysadmin-kernel
-ipa_client_sudo_groups:
-- sysadmin-kernel
-
-custom_rules: [ '-A INPUT -p tcp -m tcp -s 192.168.122.0/24 --dport 2049 -j ACCEPT' ]
+resolvconf: "{{ files }}/resolv.conf/iad2"

@@ -1,31 +1,23 @@
 ---
-devel: true
 #_forward-src: "{{ files }}/copr/forward-dev"
 _forward_src: "forward_dev"
-
+ansible_ifcfg_blocklist: true
+backend_base_url: "https://download.copr-dev.fedorainfracloud.org"
+builders:
+  # max|max_spawn|max_prealloc
+  aws:
+    aarch64: [5, 2, 2]
+    armhfp: [3, 1, 1]
+    x86_64: [20, 5, 5]
+copr_aws_region: us-east-1
 # don't forget to update ip in ./copr-keygen-stg, due to custom firewall rules
 
 # eth0, eth1
 copr_backend_ips: ["172.25.33.80", "172.25.144.254"]
-keygen_host: "172.25.33.73"
-
-resolvconf: "resolv.conf/cloud"
-
-backend_base_url: "https://download.copr-dev.fedorainfracloud.org"
-postfix_maincf: "postfix/main.cf/main.cf.copr"
-
-frontend_base_url: "https://copr-fe-dev.cloud.fedoraproject.org"
+devel: true
 dist_git_base_url: "copr-dist-git-dev.fedorainfracloud.org"
-
-ansible_ifcfg_blocklist: true
-
-copr_aws_region: us-east-1
-
+frontend_base_url: "https://copr-fe-dev.cloud.fedoraproject.org"
+keygen_host: "172.25.33.73"
+postfix_maincf: "postfix/main.cf/main.cf.copr"
+resolvconf: "resolv.conf/cloud"
 services_disabled: true
-
-builders:
-    # max|max_spawn|max_prealloc
-    aws:
-        x86_64: [20,5,5]
-        armhfp: [3,1,1]
-        aarch64: [5,2,2]

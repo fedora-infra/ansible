@@ -1,98 +1,87 @@
 ---
 # Define resources for this group of hosts here.
-lvm_size: 750000
-mem_size: 49152
-max_mem_size: 131072
-num_cpus: 16
-
-# for systems that do not match the above - specify the same parameter in
-# the host_vars/$hostname file
-
-tcp_ports: [ 22, 25, 80, 443,
-    8442, 8443, 8444, 8445,
-    # Used for the eventsource
-    8088,
-    # This is for the pagure public fedmsg relay
-    9940]
-
-stunnel_service: "eventsource"
-stunnel_source_port: 8088
-stunnel_destination_port: 8080
-
-sshd_config: ssh/sshd_config.pagure
-sshd_keyhelper: true
-
-# These are consumed by a task in roles/fedmsg/base/main.yml
-fedmsg_certs:
-- service: shell
-  owner: root
-  group: sysadmin
-  can_send:
-  - logger.log
-- service: pagure
-  owner: git
-  group: apache
-  can_send:
-  - pagure.git.receive
-  - pagure.issue.assigned.added
-  - pagure.issue.assigned.reset
-  - pagure.issue.comment.added
-  - pagure.issue.comment.edited
-  - pagure.issue.dependency.added
-  - pagure.issue.dependency.removed
-  - pagure.issue.drop
-  - pagure.issue.edit
-  - pagure.issue.new
-  - pagure.issue.tag.added
-  - pagure.issue.tag.removed
-  - pagure.project.deleted
-  - pagure.project.edit
-  - pagure.project.forked
-  - pagure.project.group.added
-  - pagure.project.new
-  - pagure.project.tag.edited
-  - pagure.project.tag.removed
-  - pagure.project.user.access.updated
-  - pagure.project.user.added
-  - pagure.pull-request.closed
-  - pagure.pull-request.comment.added
-  - pagure.pull-request.flag.added
-  - pagure.pull-request.flag.updated
-  - pagure.pull-request.new
-  - pagure.request.assigned.added
-
-fedmsg_prefix: io.pagure
-fedmsg_env: prod
-
-primary_auth_source: ipa
-ipa_host_group: pagure
-ipa_host_group_desc: Pagure GIT Forge
-ipa_client_shell_groups:
-- sysadmin-noc
-- sysadmin-web
-- sysadmin-veteran
-ipa_client_sudo_groups:
-- sysadmin-web
-
-freezes: true
-postfix_group: vpn.pagure
-vpn: true
-
-host_backup_targets: ['/srv/git', '/var/www/releases']
-db_backup_dir: ['/backups']
-dbs_to_backup: ['pagure']
-
-# For the MOTD
-csi_security_category: Low
 csi_primary_contact: Fedora admins - admin@fedoraproject.org
 csi_purpose: Run the pagure instances for fedora
 csi_relationship: |
-    There are a few things running here:
+  There are a few things running here:
 
-    - The apache/mod_wsgi app for pagure
+  - The apache/mod_wsgi app for pagure
 
-    - This host relies on:
-      - A postgres db server running locally
+  - This host relies on:
+    - A postgres db server running locally
 
-    - Things that rely on this host:
-      - nothing currently
+  - Things that rely on this host:
+    - nothing currently
+# For the MOTD
+csi_security_category: Low
+db_backup_dir: ['/backups']
+dbs_to_backup: ['pagure']
+# These are consumed by a task in roles/fedmsg/base/main.yml
+fedmsg_certs:
+  - can_send:
+      - logger.log
+    group: sysadmin
+    owner: root
+    service: shell
+  - can_send:
+      - pagure.git.receive
+      - pagure.issue.assigned.added
+      - pagure.issue.assigned.reset
+      - pagure.issue.comment.added
+      - pagure.issue.comment.edited
+      - pagure.issue.dependency.added
+      - pagure.issue.dependency.removed
+      - pagure.issue.drop
+      - pagure.issue.edit
+      - pagure.issue.new
+      - pagure.issue.tag.added
+      - pagure.issue.tag.removed
+      - pagure.project.deleted
+      - pagure.project.edit
+      - pagure.project.forked
+      - pagure.project.group.added
+      - pagure.project.new
+      - pagure.project.tag.edited
+      - pagure.project.tag.removed
+      - pagure.project.user.access.updated
+      - pagure.project.user.added
+      - pagure.pull-request.closed
+      - pagure.pull-request.comment.added
+      - pagure.pull-request.flag.added
+      - pagure.pull-request.flag.updated
+      - pagure.pull-request.new
+      - pagure.request.assigned.added
+    group: apache
+    owner: git
+    service: pagure
+fedmsg_env: prod
+fedmsg_prefix: io.pagure
+freezes: true
+host_backup_targets: ['/srv/git', '/var/www/releases']
+ipa_client_shell_groups:
+  - sysadmin-noc
+  - sysadmin-web
+  - sysadmin-veteran
+ipa_client_sudo_groups:
+  - sysadmin-web
+ipa_host_group: pagure
+ipa_host_group_desc: Pagure GIT Forge
+lvm_size: 750000
+max_mem_size: 131072
+mem_size: 49152
+num_cpus: 16
+postfix_group: vpn.pagure
+primary_auth_source: ipa
+sshd_config: ssh/sshd_config.pagure
+sshd_keyhelper: true
+stunnel_destination_port: 8080
+stunnel_service: "eventsource"
+stunnel_source_port: 8088
+# for systems that do not match the above - specify the same parameter in
+# the host_vars/$hostname file
+tcp_ports: [22, 25, 80, 443, 8442, 8443, 8444, 8445,
+  # Used for the eventsource
+  8088,
+  # This is for the pagure public fedmsg relay
+  9940]
+vpn: true

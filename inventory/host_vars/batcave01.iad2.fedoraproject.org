@@ -1,24 +1,20 @@
 ---
-nm: 255.255.255.0
-gw: 10.3.163.254
-dns: 10.3.163.33
-
-ks_url: http://209.132.181.6/repo/rhel/ks/kvm-rhel-8-ext
-ks_repo: http://209.132.181.6/repo/rhel/RHEL8-x86_64/
-
-volgroup: /dev/vg_guests
-eth0_ip: 10.3.163.35
-vmhost: vmhost-x86-01.iad2.fedoraproject.org
 datacenter: iad2
-
+dns: 10.3.163.33
+eth0_ip: 10.3.163.35
+gw: 10.3.163.254
+ks_repo: http://209.132.181.6/repo/rhel/RHEL8-x86_64/
+ks_url: http://209.132.181.6/repo/rhel/ks/kvm-rhel-8-ext
+nm: 255.255.255.0
+sar_output_file: koji.json
 #host_backup_targets: ['/git', '/mnt/fedora/app/attachments']
 
 # GDPR SAR variables - koji
 sar_script: /usr/local/bin/koji_sar.py
 sar_script_user: root
-sar_output_file: koji.json
-
 # Add VPN host name as alt name for SSH cert.  Useful when you need to
 # SSH into batcave through VPN, like from bastion in a different DC.
 ssh_hostnames:
-- batcave01.vpn.fedoraproject.org
+  - batcave01.vpn.fedoraproject.org
+vmhost: vmhost-x86-01.iad2.fedoraproject.org
+volgroup: /dev/vg_guests

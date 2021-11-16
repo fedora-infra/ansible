@@ -1,136 +1,93 @@
 ---
 # Define resources for this group of hosts here.
+collectd_apache: true
+csi_primary_contact: Fedora Admins - admin@fedoraproject.org
+csi_purpose: Provides frontend (reverse) proxy for most web applications
+csi_relationship: |
+  Using Apache -> haproxy, these hosts contact app servers and
+      other various hosts to provide web applications at sites like
+      fedoraproject.org and admin.fedoraproject.org.  The proxy servers are
+      balanced via dns and geoIP and are spread all over the place.
+# For the MOTD
+csi_security_category: Moderate
+custom_rules: [
+  # Need for rsync from log01 for logs.
+  '-A INPUT -p tcp -m tcp -s 10.5.126.13 --dport 873 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT',
+  # allow varnish from localhost
+  '-A INPUT -p tcp -m tcp -s 127.0.0.1 --dport 6081 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 127.0.0.1 --dport 6082 -j ACCEPT',
+  # also allow varnish from internal for purge requests
+  '-A INPUT -p tcp -m tcp -s 192.168.1.0/24 --dport 6081 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 10.5.126.0/24 --dport 6081 -j ACCEPT',
+  # Allow stg.fedoramagazine.org running at vultr.com to talk inbound fedmsg
+  # Contact cydrobolt about the status of this.  It hasn't hit prod status
+  # yet as of 2015-04-27 (threebean).
+  '-A INPUT -p tcp -m tcp --dport 9941 -s 104.207.133.220 -j ACCEPT',
+  # Allow resultsdb talk to the inbound fedmsg relay.
+  '-A INPUT -p tcp -m tcp --dport 9941 -s 10.5.124.147 -j ACCEPT',
+  # Allow openqa to talk to the inbound fedmsg relay.
+  '-A INPUT -p tcp -m tcp --dport 9941 -s 10.5.131.72 -j ACCEPT',
+  # Allow happinesspackets-stg.fedorainfracloud.org to talk to the inbound fedmsg relay
+  '-A INPUT -p tcp -m tcp --dport 9941 -s 209.132.184.123 -j ACCEPT',
+  # Allow ocp control plane hosts
+  '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.35 -j ACCEPT', # batcave01
+  '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.115 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.116 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.117 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.118 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.119 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.120 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.121 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.122 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.123 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.50 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.115 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.116 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.117 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.118 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.119 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.120 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.121 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.122 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.123 -j ACCEPT']
+ipa_client_shell_groups:
+  - fi-apprentice
+  - sysadmin-noc
+  - sysadmin-veteran
+  - sysadmin-web
+ipa_client_sudo_groups:
+  - sysadmin-web
+ipa_host_group: proxies
+ipa_host_group_desc: Proxies between internal hosts and the Internet
 lvm_size: 50000
-mem_size: 8192
-num_cpus: 2
-
 # This is used in the httpd.conf to determine the value for serverlimit and
 # maxrequestworkers. On 8gb proxies, 900 seems fine. But on 4gb proxies, this
 # should be lowered in the host vars for that proxy.
 maxrequestworkers: 900
-
-tcp_ports: [
-    # For apache, generally.
-    80,
-    443,
-
-    # This is for TCP krb5
-    1088,
-
-    # This is for RabbitMQ public access
-    5671,
-    # This is for RabbitMQ internal-public access
-    15671,
-
-    # This is for the haproxy HTML stats page
-    # TODO -- there's no need for this to be wide open to the world.  With this
-    # in place, you can visit https://apps.fedoraproject.org:8080 and get the
-    # haproxy stats page.  We should close this and just have admins go through
-    # the apache reverseproxy at https://admin.fedoraproject.org/haproxy/proxy1
-    8080,
-
-    # This is for TOTP
-    8443,
-
-    # For fedmsg websocket server over stunnel
-    9939,
-    # For fedmsg raw zeromq socket (outbound)
-    9940,
-    # 9941 is closed generally, is for the inbound fedmsg and is covered in
-    # custom_rules
- ]
-custom_rules: [
-    # Need for rsync from log01 for logs.
-    '-A INPUT -p tcp -m tcp -s 10.5.126.13 --dport 873 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT',
-
-    # allow varnish from localhost
-    '-A INPUT -p tcp -m tcp -s 127.0.0.1 --dport 6081 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp -s 127.0.0.1 --dport 6082 -j ACCEPT',
-
-    # also allow varnish from internal for purge requests
-    '-A INPUT -p tcp -m tcp -s 192.168.1.0/24 --dport 6081 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp -s 10.5.126.0/24 --dport 6081 -j ACCEPT',
-
-    # Allow stg.fedoramagazine.org running at vultr.com to talk inbound fedmsg
-    # Contact cydrobolt about the status of this.  It hasn't hit prod status
-    # yet as of 2015-04-27 (threebean).
-    '-A INPUT -p tcp -m tcp --dport 9941 -s 104.207.133.220 -j ACCEPT',
-
-    # Allow resultsdb talk to the inbound fedmsg relay.
-    '-A INPUT -p tcp -m tcp --dport 9941 -s 10.5.124.147 -j ACCEPT',
-
-    # Allow openqa to talk to the inbound fedmsg relay.
-    '-A INPUT -p tcp -m tcp --dport 9941 -s 10.5.131.72 -j ACCEPT',
-
-    # Allow happinesspackets-stg.fedorainfracloud.org to talk to the inbound fedmsg relay
-    '-A INPUT -p tcp -m tcp --dport 9941 -s 209.132.184.123 -j ACCEPT',
-    # Allow ocp control plane hosts
-    '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.35 -j ACCEPT', # batcave01
-    '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.115 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.116 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.117 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.118 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.119 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.120 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.121 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.122 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.123 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.50 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.115 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.116 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.117 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.118 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.119 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.120 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.121 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.122 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.123 -j ACCEPT',
- ]
-
-ipa_host_group: proxies
-ipa_host_group_desc: Proxies between internal hosts and the Internet
-ipa_client_shell_groups:
-- fi-apprentice
-- sysadmin-noc
-- sysadmin-veteran
-- sysadmin-web
-ipa_client_sudo_groups:
-- sysadmin-web
-
-collectd_apache: true
-varnish_group: proxies
-
-# For the MOTD
-csi_security_category: Moderate
-csi_primary_contact: Fedora Admins - admin@fedoraproject.org
-csi_purpose: Provides frontend (reverse) proxy for most web applications
-csi_relationship: |
-    Using Apache -> haproxy, these hosts contact app servers and
-        other various hosts to provide web applications at sites like
-        fedoraproject.org and admin.fedoraproject.org.  The proxy servers are
-        balanced via dns and geoIP and are spread all over the place.
-
-openshift_masters:
-- os-master01.stg.iad2.fedoraproject.org
-- os-master02.stg.iad2.fedoraproject.org
-- os-master03.stg.iad2.fedoraproject.org
-
-openshift_nodes:
-- os-node01.stg.iad2.fedoraproject.org
-- os-node02.stg.iad2.fedoraproject.org
-- os-node03.stg.iad2.fedoraproject.org
-- os-node04.stg.iad2.fedoraproject.org
-
+mem_size: 8192
+num_cpus: 2
 ocp_masters_stg:
-# - bootstrap.ocp.stg.iad2.fedoraproject.org
-- ocp01.ocp.stg.iad2.fedoraproject.org
-- ocp02.ocp.stg.iad2.fedoraproject.org
-- ocp03.ocp.stg.iad2.fedoraproject.org
-
+  # - bootstrap.ocp.stg.iad2.fedoraproject.org
+  - ocp01.ocp.stg.iad2.fedoraproject.org
+  - ocp02.ocp.stg.iad2.fedoraproject.org
+  - ocp03.ocp.stg.iad2.fedoraproject.org
 ocp_nodes_stg:
-- worker01.ocp.stg.iad2.fedoraproject.org
-- worker02.ocp.stg.iad2.fedoraproject.org
-- worker03.ocp.stg.iad2.fedoraproject.org
-- worker04.ocp.stg.iad2.fedoraproject.org
-- worker05.ocp.stg.iad2.fedoraproject.org
+  - worker01.ocp.stg.iad2.fedoraproject.org
+  - worker02.ocp.stg.iad2.fedoraproject.org
+  - worker03.ocp.stg.iad2.fedoraproject.org
+  - worker04.ocp.stg.iad2.fedoraproject.org
+  - worker05.ocp.stg.iad2.fedoraproject.org
+openshift_masters:
+  - os-master01.stg.iad2.fedoraproject.org
+  - os-master02.stg.iad2.fedoraproject.org
+  - os-master03.stg.iad2.fedoraproject.org
+openshift_nodes:
+  - os-node01.stg.iad2.fedoraproject.org
+  - os-node02.stg.iad2.fedoraproject.org
+  - os-node03.stg.iad2.fedoraproject.org
+  - os-node04.stg.iad2.fedoraproject.org
+tcp_ports: [
+  # For apache, generally.
+  80, 443,
+  # This is for TCP krb5
+  1088,
+  # This is for RabbitMQ public access
+  5671,
+  # This is for RabbitMQ internal-public access
+  15671,
+  # This is for the haproxy HTML stats page
+  # TODO -- there's no need for this to be wide open to the world.  With this
+  # in place, you can visit https://apps.fedoraproject.org:8080 and get the
+  # haproxy stats page.  We should close this and just have admins go through
+  # the apache reverseproxy at https://admin.fedoraproject.org/haproxy/proxy1
+  8080,
+  # This is for TOTP
+  8443,
+  # For fedmsg websocket server over stunnel
+  9939,
+  # For fedmsg raw zeromq socket (outbound)
+  9940,
+  # 9941 is closed generally, is for the inbound fedmsg and is covered in
+  # custom_rules
+]
+varnish_group: proxies

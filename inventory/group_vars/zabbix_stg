@@ -1,33 +1,27 @@
 ---
 # Define resources for this group of hosts here.
-lvm_size: 100000
-mem_size: 8192
-num_cpus: 2
-
-deployment_type: stg
-
-# for systems that do not match the above - specify the same parameter in
-# the host_vars/$hostname file
-
-tcp_ports: [ 80, 443]
-
-ipa_host_group: zabbix
-ipa_host_group_desc: Zabbix Network Monitoring
-ipa_client_shell_groups:
-- fi-apprentice
-- sysadmin-noc
-- sysadmin-veteran
-- sysadmin-jenkins
-ipa_client_sudo_groups:
-- sysadmin-jenkins
-
-# For the MOTD
-csi_security_category: []
 csi_primary_contact: []
 csi_purpose: []
 csi_relationship: |
-       Test instance for zabbix server
-
+  Test instance for zabbix server
+# For the MOTD
+csi_security_category: []
+deployment_type: stg
+ipa_client_shell_groups:
+  - fi-apprentice
+  - sysadmin-noc
+  - sysadmin-veteran
+  - sysadmin-jenkins
+ipa_client_sudo_groups:
+  - sysadmin-jenkins
+ipa_host_group: zabbix
+ipa_host_group_desc: Zabbix Network Monitoring
+lvm_size: 100000
+mem_size: 8192
 nagios_Can_Connect: false
 nagios_Check_Services:
   ping: false
+num_cpus: 2
+# for systems that do not match the above - specify the same parameter in
+# the host_vars/$hostname file
+tcp_ports: [80, 443]

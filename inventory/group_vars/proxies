@@ -1,156 +1,97 @@
 ---
 # Define resources for this group of hosts here.
+blocked_ip_v6: []
+blocked_ips: ['14.102.69.78', '104.219.54.236', '103.38.177.2', '110.172.140.98', '183.80.131.253', '113.190.178.137', '115.76.39.108', '116.109.31.204', '209.64.155.56']
+collectd_apache: true
+csi_primary_contact: Fedora Admins - admin@fedoraproject.org
+csi_purpose: Provides frontend (reverse) proxy for most web applications
+csi_relationship: |
+  Using Apache -> haproxy, these hosts contact app servers and
+      other various hosts to provide web applications at sites like
+      fedoraproject.org and admin.fedoraproject.org.  The proxy servers are
+      balanced via dns and geoIP and are spread all over the place.
+# For the MOTD
+csi_security_category: Moderate
+custom_rules: [
+  # Need for rsync from log01 for logs.
+  '-A INPUT -p tcp -m tcp -s 10.3.163.39 --dport 873 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 209.132.181.102 --dport 873 -j ACCEPT',
+  # allow varnish from localhost
+  '-A INPUT -p tcp -m tcp -s 127.0.0.1 --dport 6081 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 127.0.0.1 --dport 6082 -j ACCEPT',
+  # also allow varnish from internal for purge requests
+  '-A INPUT -p tcp -m tcp -s 192.168.1.0/24 --dport 6081 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 10.3.163.0/24 --dport 6081 -j ACCEPT',
+  # Allow happinesspackets.fedorainfracloud.org to talk to inbound fedmsg relay.
+  '-A INPUT -p tcp -m tcp --dport 9941 -s 209.132.184.58 -j ACCEPT',
+  # Allow openqa01 to talk to the inbound fedmsg relay.
+  '-A INPUT -p tcp -m tcp --dport 9941 -s 10.3.174.0/24 -j ACCEPT',
+  # For Zanata
+  # See files/httpd/website_id_fp_o_zanata.conf for info
+  '-A INPUT -p tcp -m tcp --dport 44342 -s 209.132.183.252 -j ACCEPT',
+  # Allow ocp control plane hosts
+  '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.35 -j ACCEPT', # batcave01
+  '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.120 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.121 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.122 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.123 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.124 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.125 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.126 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.65 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.120 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.121 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.122 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.123 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.124 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.125 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.126 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.65 -j ACCEPT']
+ipa_client_shell_groups:
+  - fi-apprentice
+  - sysadmin-noc
+  - sysadmin-veteran
+  - sysadmin-web
+ipa_client_sudo_groups:
+  - sysadmin-web
+ipa_host_group: proxies
+ipa_host_group_desc: Proxies between internal hosts and the Internet
 lvm_size: 50000
-mem_size: 8192
-num_cpus: 6
-
 # This is used in the httpd.conf to determine the value for serverlimit and
 # maxrequestworkers. On 8gb proxies, 900 seems fine. But on 4gb proxies, this
 # should be lowered in the host vars for that proxy.
 maxrequestworkers: 1500
-
-tcp_ports: [
-    # For apache, generally.
-    80,
-    443,
-
-    # This is for TCP krb5
-    1088,
-
-    # This is for RabbitMQ public access
-    5671,
-    # This is for RabbitMQ internal-public access
-    15671,
-
-    # This is for the haproxy HTML stats page
-    # TODO -- there's no need for this to be wide open to the world.  With this
-    # in place, you can visit https://apps.fedoraproject.org:8080 and get the
-    # haproxy stats page.  We should close this and just have admins go through
-    # the apache reverseproxy at https://admin.fedoraproject.org/haproxy/proxy1
-    8080,
-
-    # This is for TOTP
-    8443,
-
-    # For fedmsg websocket server over stunnel
-    9939,
-    # For fedmsg raw zeromq socket (outbound)
-    9940,
-    # 9941 is closed generally, is for the inbound fedmsg and is covered in
-    # custom_rules
- ]
-custom_rules: [
-    # Need for rsync from log01 for logs.
-    '-A INPUT -p tcp -m tcp -s 10.3.163.39 --dport 873 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp -s 209.132.181.102 --dport 873 -j ACCEPT',
-
-    # allow varnish from localhost
-    '-A INPUT -p tcp -m tcp -s 127.0.0.1 --dport 6081 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp -s 127.0.0.1 --dport 6082 -j ACCEPT',
-
-    # also allow varnish from internal for purge requests
-    '-A INPUT -p tcp -m tcp -s 192.168.1.0/24 --dport 6081 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp -s 10.3.163.0/24 --dport 6081 -j ACCEPT',
-
-    # Allow happinesspackets.fedorainfracloud.org to talk to inbound fedmsg relay.
-    '-A INPUT -p tcp -m tcp --dport 9941 -s 209.132.184.58 -j ACCEPT',
-
-     # Allow openqa01 to talk to the inbound fedmsg relay.
-    '-A INPUT -p tcp -m tcp --dport 9941 -s 10.3.174.0/24 -j ACCEPT',
-
-    # For Zanata
-    # See files/httpd/website_id_fp_o_zanata.conf for info
-    '-A INPUT -p tcp -m tcp --dport 44342 -s 209.132.183.252 -j ACCEPT',
-
-    # Allow ocp control plane hosts
-    '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.35 -j ACCEPT', # batcave01
-    '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.120 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.121 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.122 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.123 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.124 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.125 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.126 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.65 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.120 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.121 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.122 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.123 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.124 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.125 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.126 -j ACCEPT',
-    '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.65 -j ACCEPT',
-]
-
+mem_size: 8192
 nat_rules: [
-    # For Zanata, redirect 443/tcp -> 43342/tcp for TLS reasons
-    # See files/httpd/website_id_fp_o_zanata.conf for info
-    '-A PREROUTING -s 209.132.183.252 -p tcp --dport 443 -j REDIRECT --to 44342'
- ]
-
-blocked_ips: [
- '14.102.69.78',
- '104.219.54.236',
- '103.38.177.2',
- '110.172.140.98',
- '183.80.131.253',
- '113.190.178.137',
- '115.76.39.108',
- '116.109.31.204',
- '209.64.155.56',
-]
-
-
-blocked_ip_v6: [
-]
-
-primary_auth_source: ipa
-ipa_host_group: proxies
-ipa_host_group_desc: Proxies between internal hosts and the Internet
-ipa_client_shell_groups:
-- fi-apprentice
-- sysadmin-noc
-- sysadmin-veteran
-- sysadmin-web
-ipa_client_sudo_groups:
-- sysadmin-web
-
-collectd_apache: true
-
-varnish_group: proxies
-
-postvpnservices:
-- haproxy
-- varnish
-
-# For the MOTD
-csi_security_category: Moderate
-csi_primary_contact: Fedora Admins - admin@fedoraproject.org
-csi_purpose: Provides frontend (reverse) proxy for most web applications
-csi_relationship: |
-    Using Apache -> haproxy, these hosts contact app servers and
-        other various hosts to provide web applications at sites like
-        fedoraproject.org and admin.fedoraproject.org.  The proxy servers are
-        balanced via dns and geoIP and are spread all over the place.
-
-openshift_masters:
-- os-master01.vpn.fedoraproject.org
-- os-master02.vpn.fedoraproject.org
-- os-master03.vpn.fedoraproject.org
-
-openshift_nodes:
-- os-node01.vpn.fedoraproject.org
-- os-node02.vpn.fedoraproject.org
-- os-node03.vpn.fedoraproject.org
-
+  # For Zanata, redirect 443/tcp -> 43342/tcp for TLS reasons
+  # See files/httpd/website_id_fp_o_zanata.conf for info
+  '-A PREROUTING -s 209.132.183.252 -p tcp --dport 443 -j REDIRECT --to 44342']
+num_cpus: 6
 ocp_masters:
-- bootstrap.ocp.iad2.fedoraproject.org
-- ocp01.ocp.iad2.fedoraproject.org
-- ocp02.ocp.iad2.fedoraproject.org
-- ocp03.ocp.iad2.fedoraproject.org
-
+  - bootstrap.ocp.iad2.fedoraproject.org
+  - ocp01.ocp.iad2.fedoraproject.org
+  - ocp02.ocp.iad2.fedoraproject.org
+  - ocp03.ocp.iad2.fedoraproject.org
 ocp_nodes:
-- worker01.ocp.iad2.fedoraproject.org
-- worker02.ocp.iad2.fedoraproject.org
-- worker03.ocp.iad2.fedoraproject.org
+  - worker01.ocp.iad2.fedoraproject.org
+  - worker02.ocp.iad2.fedoraproject.org
+  - worker03.ocp.iad2.fedoraproject.org
+openshift_masters:
+  - os-master01.vpn.fedoraproject.org
+  - os-master02.vpn.fedoraproject.org
+  - os-master03.vpn.fedoraproject.org
+openshift_nodes:
+  - os-node01.vpn.fedoraproject.org
+  - os-node02.vpn.fedoraproject.org
+  - os-node03.vpn.fedoraproject.org
+postvpnservices:
+  - haproxy
+  - varnish
+primary_auth_source: ipa
+tcp_ports: [
+  # For apache, generally.
+  80, 443,
+  # This is for TCP krb5
+  1088,
+  # This is for RabbitMQ public access
+  5671,
+  # This is for RabbitMQ internal-public access
+  15671,
+  # This is for the haproxy HTML stats page
+  # TODO -- there's no need for this to be wide open to the world.  With this
+  # in place, you can visit https://apps.fedoraproject.org:8080 and get the
+  # haproxy stats page.  We should close this and just have admins go through
+  # the apache reverseproxy at https://admin.fedoraproject.org/haproxy/proxy1
+  8080,
+  # This is for TOTP
+  8443,
+  # For fedmsg websocket server over stunnel
+  9939,
+  # For fedmsg raw zeromq socket (outbound)
+  9940,
+  # 9941 is closed generally, is for the inbound fedmsg and is covered in
+  # custom_rules
+]
+varnish_group: proxies

@@ -1,14 +1,13 @@
 ---
-host_group: os
 baseiptables: False
-no_http2: False
-nm_controlled_resolv: True
+host_group: os
+ipa_client_shell_groups:
+  - sysadmin-openshift
+ipa_client_sudo_groups:
+  - sysadmin-openshift
 # Only define this when upgrading, otherwise comment it
 # openshift_ansible_upgrading: True
 ipa_host_group: openshift
 ipa_host_group_desc: OpenShift cluster
-
-ipa_client_shell_groups:
-- sysadmin-openshift
-ipa_client_sudo_groups:
-- sysadmin-openshift
+nm_controlled_resolv: True
+no_http2: False

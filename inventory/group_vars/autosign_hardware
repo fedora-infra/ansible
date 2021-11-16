@@ -2,5 +2,4 @@
 # Make connections from signing bridges stateless, they break sigul connections
 # https://bugzilla.redhat.com/show_bug.cgi?id=1283364
 custom_rules: ['-A INPUT --proto tcp --sport 44334 --source 10.3.169.120 -j ACCEPT']
-
 host_group: autosign

@@ -1,29 +1,21 @@
 ---
 # Define resources for this group of hosts here.
-lvm_size: 30000
-mem_size: 8192
-num_cpus: 4
-
-tcp_ports: [ 80, 88, 389, 443, 464, 636 ]
-udp_ports: [ 88, 464 ]
-
-custom_rules: [
-    '-A INPUT -p udp -m udp -s 10.3.0.0/16 --dport 53 -j ACCEPT'
-]
-
-primary_auth_source: ipa
+custom_rules: ['-A INPUT -p udp -m udp -s 10.3.0.0/16 --dport 53 -j ACCEPT']
+host_backup_targets: ['/var/lib/ipa/backup', '/var/log/dirsrv/slapd-FEDORAPROJECT-ORG']
+ipa_client_shell_groups:
+  - sysadmin-accounts
+ipa_client_sudo_groups:
+  - sysadmin-accounts
+ipa_dm_password: "{{ ipa_prod_dm_password }}"
 ipa_host_group: ipa
 ipa_host_group_desc: IPA service
-ipa_client_shell_groups:
-- sysadmin-accounts
-ipa_client_sudo_groups:
-- sysadmin-accounts
-
-nrpe_procs_warn: 300
-nrpe_procs_crit: 500
-
 ipa_initial: false
-ipa_dm_password: "{{ ipa_prod_dm_password }}"
 ipa_ldap_socket: ldapi://%2fvar%2frun%2fslapd-FEDORAPROJECT-ORG.socket
-
-host_backup_targets: ['/var/lib/ipa/backup', '/var/log/dirsrv/slapd-FEDORAPROJECT-ORG']
+lvm_size: 30000
+mem_size: 8192
+nrpe_procs_crit: 500
+nrpe_procs_warn: 300
+num_cpus: 4
+primary_auth_source: ipa
+tcp_ports: [80, 88, 389, 443, 464, 636]
+udp_ports: [88, 464]

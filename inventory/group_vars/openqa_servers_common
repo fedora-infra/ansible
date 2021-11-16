@@ -2,71 +2,57 @@
 # openQA servers. these are mostly things that are set as variables
 # in the plays so we can change them over time and also so the plays
 # can be used for non-infra deployments.
-
-openqa_hostname: localhost
-openqa_email: adamwill@fedoraproject.org
-openqa_nickname: adamwill
-openqa_fullname: Adam Williamson
-openqa_userid: http://adamwill.id.fedoraproject.org/
-
-openqa_assetsize: 500
-openqa_assetsize_aarch64: 300
-openqa_assetsize_updates: 200
-
-# stg and prod use the same database server
-openqa_dbhost: db-openqa01.iad2.fedoraproject.org
-
+ipa_client_shell_groups:
+  - fi-apprentice
+  - sysadmin-noc
+  - sysadmin-qa
+  - sysadmin-veteran
+ipa_client_sudo_groups:
+  - sysadmin-qa
+ipa_host_group: openqa-servers
+ipa_host_group_desc: OpenQA servers
+# fedora-messaging email error reporting settings
+openqa_amqp_mailto: ["adamwill@fedoraproject.org", "lruzicka@fedoraproject.org"]
 # we need this for all our fedora-messaging consumers as they are not
 # allowed to create queues on the infra AMQP broker, by broker config
 openqa_amqp_passive: true
-
-# fedora-messaging publisher settings
-openqa_amqp_publisher_prefix: org.fedoraproject.{{ fedmsg_env }}
-openqa_amqp_publisher_url: "amqps://openqa{{ openqa_env_suffix }}:@rabbitmq{{ openqa_env_suffix }}.fedoraproject.org/%2Fpubsub"
 # openQA isn't very ssl-aware here, so we're abusing its URL construction
 # to stuff the cert and key values in here
 openqa_amqp_publisher_exchange: "amq.topic&cacertfile=/etc/fedora-messaging/{{ openqa_env_prefix }}cacert.pem&certfile=/etc/pki/fedora-messaging/openqa{{ openqa_env_suffix }}-cert.pem&keyfile=/etc/pki/fedora-messaging/openqa{{ openqa_env_suffix }}-key.pem"
-
+# fedora-messaging publisher settings
+openqa_amqp_publisher_prefix: org.fedoraproject.{{ fedmsg_env }}
+openqa_amqp_publisher_url: "amqps://openqa{{ openqa_env_suffix }}:@rabbitmq{{ openqa_env_suffix }}.fedoraproject.org/%2Fpubsub"
+openqa_amqp_reporter_cacert: /etc/fedora-messaging/{{ openqa_env_prefix }}cacert.pem
+openqa_amqp_reporter_cert: /etc/pki/fedora-messaging/openqa{{ openqa_env_suffix }}-cert.pem
+openqa_amqp_reporter_key: /etc/pki/fedora-messaging/openqa{{ openqa_env_suffix }}-key.pem
+# fedora-messaging reporter settings
+openqa_amqp_reporter_url: "amqps://openqa{{ openqa_env_suffix }}:@rabbitmq{{ openqa_env_suffix }}.fedoraproject.org/%2Fpubsub"
+# fedora-messaging resultsdb reporter settings
+openqa_amqp_resultsdb_reporter_queue: "openqa{{ openqa_env_suffix }}_resultsdb_reporter"
+openqa_amqp_resultsdb_reporter_routing_keys: ["org.fedoraproject.{{ deployment_type }}.openqa.job.done"]
+openqa_amqp_scheduler_cacert: /etc/fedora-messaging/cacert.pem
+openqa_amqp_scheduler_cert: /etc/pki/fedora-messaging/openqa-cert.pem
+openqa_amqp_scheduler_key: /etc/pki/fedora-messaging/openqa-key.pem
+openqa_amqp_scheduler_queue: "openqa{{ openqa_env_suffix }}_scheduler"
+openqa_amqp_scheduler_routing_keys: ["org.fedoraproject.prod.pungi.compose.status.change", "org.fedoraproject.prod.bodhi.update.request.testing", "org.fedoraproject.prod.bodhi.update.edit"]
 # fedora-messaging job scheduler settings: most of these are the same
 # for prod and stg as they both must listen for prod messages. Only
 # the queue names differs
 openqa_amqp_scheduler_url: "amqps://openqa:@rabbitmq.fedoraproject.org/%2Fpubsub"
-openqa_amqp_scheduler_cacert: /etc/fedora-messaging/cacert.pem
-openqa_amqp_scheduler_key: /etc/pki/fedora-messaging/openqa-key.pem
-openqa_amqp_scheduler_cert: /etc/pki/fedora-messaging/openqa-cert.pem
-openqa_amqp_scheduler_queue: "openqa{{ openqa_env_suffix }}_scheduler"
-openqa_amqp_scheduler_routing_keys: ["org.fedoraproject.prod.pungi.compose.status.change",
-                                     "org.fedoraproject.prod.bodhi.update.request.testing",
-                                     "org.fedoraproject.prod.bodhi.update.edit"]
-
-# fedora-messaging reporter settings
-openqa_amqp_reporter_url: "amqps://openqa{{ openqa_env_suffix }}:@rabbitmq{{ openqa_env_suffix }}.fedoraproject.org/%2Fpubsub"
-openqa_amqp_reporter_cacert: /etc/fedora-messaging/{{ openqa_env_prefix }}cacert.pem
-openqa_amqp_reporter_key: /etc/pki/fedora-messaging/openqa{{ openqa_env_suffix }}-key.pem
-openqa_amqp_reporter_cert: /etc/pki/fedora-messaging/openqa{{ openqa_env_suffix }}-cert.pem
-
-# fedora-messaging resultsdb reporter settings
-openqa_amqp_resultsdb_reporter_queue: "openqa{{ openqa_env_suffix }}_resultsdb_reporter"
-openqa_amqp_resultsdb_reporter_routing_keys: ["org.fedoraproject.{{ deployment_type }}.openqa.job.done"]
-
+openqa_amqp_smtp: bastion
 # fedora-messaging wiki reporter settings
 openqa_amqp_wiki_reporter_queue: "openqa{{ openqa_env_suffix }}_wiki_reporter"
 openqa_amqp_wiki_reporter_routing_keys: ["org.fedoraproject.{{ deployment_type }}.openqa.job.done"]
-
-# fedora-messaging email error reporting settings
-openqa_amqp_mailto: ["adamwill@fedoraproject.org", "lruzicka@fedoraproject.org"]
-openqa_amqp_smtp: bastion
-
+openqa_assetsize: 500
+openqa_assetsize_aarch64: 300
+openqa_assetsize_updates: 200
+# stg and prod use the same database server
+openqa_dbhost: db-openqa01.iad2.fedoraproject.org
+openqa_email: adamwill@fedoraproject.org
+openqa_fullname: Adam Williamson
+openqa_hostname: localhost
+openqa_nickname: adamwill
+openqa_userid: http://adamwill.id.fedoraproject.org/
+primary_auth_source: ipa
 # http and NFS
 tcp_ports: [80, 2049]
-
-primary_auth_source: ipa
-ipa_host_group: openqa-servers
-ipa_host_group_desc: OpenQA servers
-ipa_client_shell_groups:
-- fi-apprentice
-- sysadmin-noc
-- sysadmin-qa
-- sysadmin-veteran
-ipa_client_sudo_groups:
-- sysadmin-qa

@@ -1,27 +1,23 @@
+deployment_type: prod
+freezes: false
 gw: 10.5.124.254
-openqa_workers: 4
-openqa_hostname: openqa01.iad2.fedoraproject.org
-openqa_key: "{{ prod_openqa_apikey }}"
-openqa_secret: "{{ prod_openqa_apisecret }}"
-
+ipa_client_shell_groups:
+  - sysadmin-qa
+ipa_client_sudo_groups:
+  - sysadmin-qa
+ipa_host_group: openqa-workers
+ipa_host_group_desc: OpenQA worker hosts
+openqa_env: production
+openqa_env_prefix:
 # this is because openqa staging isn't really a staging host
 # we don't want to set env_suffix to stg on it because that may
 # break some other plays, but we do need the env suffix for the
 # fedora-messaging bits, so let's make our own
 openqa_env_suffix:
-openqa_env_prefix:
-openqa_env: production
-
+openqa_hostname: openqa01.iad2.fedoraproject.org
+openqa_key: "{{ prod_openqa_apikey }}"
 # we are all NFS workers for now at least
 openqa_nfs_worker: true
-
-deployment_type: prod
-freezes: false
-
+openqa_secret: "{{ prod_openqa_apisecret }}"
+openqa_workers: 4
 primary_auth_source: ipa
-ipa_host_group: openqa-workers
-ipa_host_group_desc: OpenQA worker hosts
-ipa_client_shell_groups:
-- sysadmin-qa
-ipa_client_sudo_groups:
-- sysadmin-qa

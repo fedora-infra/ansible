@@ -1,42 +1,55 @@
 ---
-deployment_type: prod
-
-lvm_size: 20000
-mem_size: 2048
-num_cpus: 2
-
-# for systems that do not match the above - specify the same parameter in
-# the host_vars/$hostname file
-
-tcp_ports: [ 80, 443 ]
-
-# These are consumed by a task in roles/fedmsg/base/main.yml
-fedmsg_certs:
-- service: shell
-  owner: root
-  group: sysadmin
-  can_send:
-  - logger.log
-- service: nagios
-  owner: root
-  group: nagios
-  can_send:
-  - nagios.host.state.change
-  - nagios.service.state.change
-
-primary_auth_source: ipa
-ipa_host_group: nagios
-ipa_host_group_desc: Nagios Monitoring
-ipa_client_shell_groups:
-- sysadmin-noc
-- sysadmin-veteran
-ipa_client_sudo_groups:
-- sysadmin-noc
-
-csi_security_category: High
 csi_primary_contact: Fedora Admins - admin@fedoraproject.org
 csi_purpose: Monitoring system
-
+csi_security_category: High
+deployment_type: prod
+dns_external:
+  - ns-iad01.fedoraproject.org
+  - ns-iad02.fedoraproject.org
+  - ns02.fedoraproject.org
+  - ns05.fedoraproject.org
+# When you have a group which comes up with empty members in all.cfg, it
+# is because it contains all hosts which aren't pinganble. You may want
+# to add that group to this list. Other items on this list are ones
+# where it is an enormous group not needed.
+# Exclude these ansible host groups in hostgroups/all.cfg
+exclude_iad2_hostgroups:
+  - centos_ipa_client_stg
+  - zabbix_stg
+# These are consumed by a task in roles/fedmsg/base/main.yml
+fedmsg_certs:
+  - can_send:
+      - logger.log
+    group: sysadmin
+    owner: root
+    service: shell
+  - can_send:
+      - nagios.host.state.change
+      - nagios.service.state.change
+    group: nagios
+    owner: root
+    service: nagios
+#iad2_management_slowping:
+#  - ppc8-01-fsp.mgmt.fedoraproject.org
+#  - ppc8-02-fsp.mgmt.fedoraproject.org
+#  - ppc8-03-fsp.mgmt.fedoraproject.org
+iad2_external:
+  - bastion01.fedoraproject.org
+  - bastion02.fedoraproject.org
+  - dl-iad01.fedoraproject.org
+  - dl-iad02.fedoraproject.org
+  - dl-iad03.fedoraproject.org
+  - dl-iad04.fedoraproject.org
+  - dl-iad05.fedoraproject.org
+  - infrastructure.fedoraproject.org
+  - koji.fedoraproject.org
+  - kojipkgs.fedoraproject.org
+  - ns-iad01.fedoraproject.org
+  - ns-iad02.fedoraproject.org
+  - pkgs.fedoraproject.org
+  - proxy01.fedoraproject.org
+  - proxy10.fedoraproject.org
+  - secondary01.fedoraproject.org
 #
 # This is a list of hosts which are in the IAD2 160 mgmt network
 # we do not have them in ansible because it tries to connect
@@ -81,7 +94,6 @@ iad2_management_hosts:
   - vmhost-x86-05.mgmt.iad2.fedoraproject.org
   - vmhost-x86-06.mgmt.iad2.fedoraproject.org
   - vmhost-x86-07.mgmt.iad2.fedoraproject.org
-
 #
 # These are management interfaces we only want
 # to test ping against. No http/https
@@ -89,42 +101,17 @@ iad2_management_hosts:
 iad2_management_limited:
   - opengear01.mgmt.iad2.fedoraproject.org
   - sign-vault01.mgmt.iad2.fedoraproject.org
-
-#iad2_management_slowping:
-#  - ppc8-01-fsp.mgmt.fedoraproject.org
-#  - ppc8-02-fsp.mgmt.fedoraproject.org
-#  - ppc8-03-fsp.mgmt.fedoraproject.org
-
-iad2_external:
-  - bastion01.fedoraproject.org
-  - bastion02.fedoraproject.org
-  - dl-iad01.fedoraproject.org
-  - dl-iad02.fedoraproject.org
-  - dl-iad03.fedoraproject.org
-  - dl-iad04.fedoraproject.org
-  - dl-iad05.fedoraproject.org
-  - infrastructure.fedoraproject.org
-  - koji.fedoraproject.org
-  - kojipkgs.fedoraproject.org
-  - ns-iad01.fedoraproject.org
-  - ns-iad02.fedoraproject.org
-  - pkgs.fedoraproject.org
-  - proxy01.fedoraproject.org
-  - proxy10.fedoraproject.org
-  - secondary01.fedoraproject.org
-
-dns_external:
-  - ns-iad01.fedoraproject.org
-  - ns-iad02.fedoraproject.org
-  - ns02.fedoraproject.org
-  - ns05.fedoraproject.org
-
-
-# When you have a group which comes up with empty members in all.cfg, it
-# is because it contains all hosts which aren't pinganble. You may want
-# to add that group to this list. Other items on this list are ones
-# where it is an enormous group not needed.
-# Exclude these ansible host groups in hostgroups/all.cfg
-exclude_iad2_hostgroups:
-  - centos_ipa_client_stg
-  - zabbix_stg
+ipa_client_shell_groups:
+  - sysadmin-noc
+  - sysadmin-veteran
+ipa_client_sudo_groups:
+  - sysadmin-noc
+ipa_host_group: nagios
+ipa_host_group_desc: Nagios Monitoring
+lvm_size: 20000
+mem_size: 2048
+num_cpus: 2
+primary_auth_source: ipa
+# for systems that do not match the above - specify the same parameter in
+# the host_vars/$hostname file
+tcp_ports: [80, 443]

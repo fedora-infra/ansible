@@ -1,17 +1,15 @@
 ---
-nm: 255.255.255.0
-gw: 174.141.234.1
+datacenter: bodhost
 dns: 8.8.8.8
-
-eth0_ip: 174.141.234.172
-eth0_nm: 255.255.255.0
 dns1: 8.8.8.8
 dns2: 8.8.4.4
+eth0_ip: 174.141.234.172
+eth0_nm: 255.255.255.0
+gw: 174.141.234.1
+nm: 255.255.255.0
+nrpe_procs_crit: 1400
+nrpe_procs_warn: 1200
+postfix_group: vpn
 # This is consumed by the roles/fedora-web/main role
 sponsor: bodhost
-datacenter: bodhost
-postfix_group: vpn
-
-nrpe_procs_warn: 1200
-nrpe_procs_crit: 1400
 vpn: true

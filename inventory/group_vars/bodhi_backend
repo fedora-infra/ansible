@@ -1,50 +1,36 @@
 ---
 # common items for the releng-* boxes
-lvm_size: 100000
-mem_size: 16384
-num_cpus: 16
-nm: 255.255.255.0
-gw: 10.5.125.254
-dns: 10.5.126.21
-
-ks_url: http://10.5.126.23/repo/rhel/ks/kvm-rhel-7
-ks_repo: http://10.5.126.23/repo/rhel/RHEL7-x86_64/
-
-virt_install_command: "{{ virt_install_command_two_nic }}"
-
-# Do not use testing repositories on production
-testing: False
-
-# Make connections from signing bridges stateless, they break sigul connections
-# https://bugzilla.redhat.com/show_bug.cgi?id=1283364
-custom_rules: ['-A INPUT --proto tcp --sport 44334 --source 10.5.125.71 -j ACCEPT']
-
-# With 16 cpus, theres a bunch more kernel threads
-nrpe_procs_warn: 900
-nrpe_procs_crit: 1000
-
-host_group: bodhi2
-
 bodhi_message_queue_name: "bodhi{{ env_suffix }}_composer"
 # Define the topics that our fedora-messaging queue should be subscribed to.
 bodhi_message_routing_keys:
   - "org.fedoraproject.*.bodhi.composer.start"
-
-## XXX -- note that the fedmsg_certs declaration does not happen here, but
-# happens instead at the inventory/host_vars/ level s
-
-nfs_mount_opts: "rw,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3"
-
-sudoers: "{{ private }}/files/sudo/00releng-sudoers"
-
+# Make connections from signing bridges stateless, they break sigul connections
+# https://bugzilla.redhat.com/show_bug.cgi?id=1283364
+custom_rules: ['-A INPUT --proto tcp --sport 44334 --source 10.5.125.71 -j ACCEPT']
+dns: 10.5.126.21
+gw: 10.5.125.254
+host_group: bodhi2
+ipa_client_shell_groups:
+  - sysadmin-bodhi
+  - sysadmin-releng
+ipa_client_sudo_groups:
+  - sysadmin-bodhi
+  - sysadmin-releng
 ipa_host_group: bodhi
 ipa_host_group_desc: Bodhi update service
-ipa_client_shell_groups:
-- sysadmin-bodhi
-- sysadmin-releng
-ipa_client_sudo_groups:
-- sysadmin-bodhi
-- sysadmin-releng
-
-## XXX - note that the csi_ stuff is kept at the host_vars/ level.
-
+ks_repo: http://10.5.126.23/repo/rhel/RHEL7-x86_64/
+ks_url: http://10.5.126.23/repo/rhel/ks/kvm-rhel-7
+lvm_size: 100000
+mem_size: 16384
+## XXX -- note that the fedmsg_certs declaration does not happen here, but
+# happens instead at the inventory/host_vars/ level s
+nfs_mount_opts: "rw,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3"
+nm: 255.255.255.0
+nrpe_procs_crit: 1000
+# With 16 cpus, theres a bunch more kernel threads
+nrpe_procs_warn: 900
+num_cpus: 16
+sudoers: "{{ private }}/files/sudo/00releng-sudoers"
+# Do not use testing repositories on production
+testing: False
+virt_install_command: "{{ virt_install_command_two_nic }}"

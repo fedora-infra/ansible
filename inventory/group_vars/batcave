@@ -1,83 +1,76 @@
 ---
-lvm_size: 500000
-mem_size: 24576
-num_cpus: 10
-
-tcp_ports: [ 80, 443, 8442, 8443 ]
-
-# Neeed for rsync from log01 for logs.
-custom_rules: [ '-A INPUT -p tcp -m tcp -s 10.3.163.39 --dport 873 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT' ]
-
-primary_auth_source: ipa
-ipa_host_group: batcave
-ipa_host_group_desc: The Bat Cave
-ipa_client_shell_groups:
-- fi-apprentice
-- sysadmin-ask
-- sysadmin-badges
-- sysadmin-bot
-- sysadmin-centos
-- sysadmin-cloud
-- sysadmin-copr
-- sysadmin-coreos
-- sysadmin-cvs
-- sysadmin-datanommer
-- sysadmin-debuginfod
-- sysadmin-fedimg
-- sysadmin-koschei
-- sysadmin-libravatar
-- sysadmin-mbs
-- sysadmin-messaging
-- sysadmin-noc
-- sysadmin-odcs
-- sysadmin-osbs
-- sysadmin-qa
-- sysadmin-retrace
-- sysadmin-releasemonitoring
-- sysadmin-releng
-- sysadmin-tools
-- sysadmin-upstreamfirst
-- sysadmin-veteran
-- sysadmin-web
-
 ansible_base: /srv/web/infra
-freezes: true
-nfs_mount_opts: "rw,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3"
-
-fedmsg_certs:
-- service: shell
-  owner: root
-  group: sysadmin
-  can_send:
-  - ansible.playbook.complete
-  - ansible.playbook.start
-  - logger.log
-- service: scm
-  owner: root
-  group: sysadmin
-  can_send:
-  - infragit.receive
-
-# For the MOTD
-csi_security_category: High
 csi_primary_contact: admin@fedoraproject.org / sysadmin-main-members
 csi_purpose: Central management host for ansible
 csi_relationship: |
-    From the batcave batman ventures out to fight crime and protect gotham city!
+  From the batcave batman ventures out to fight crime and protect gotham city!
 
-    batcave is the central management host for ansible.
-    It also is the infrastructure.fedoraproject.org website with various content.
-    It houses a number of infrastructure git repos.
+  batcave is the central management host for ansible.
+  It also is the infrastructure.fedoraproject.org website with various content.
+  It houses a number of infrastructure git repos.
 
-    * This host relies on:
-    The virthost it's hosted on (virthost22)
+  * This host relies on:
+  The virthost it's hosted on (virthost22)
 
-    * Things that rely on this host:
-    Things that access rhel/fedora/infra rpm repos, including builders and infra hosts.
-    If this host is down, ansible runs cannot be made to update other hosts.
-    If this host is down, crime may go up in gotham city.
-
-nrpe_procs_warn: 900
+  * Things that rely on this host:
+  Things that access rhel/fedora/infra rpm repos, including builders and infra hosts.
+  If this host is down, ansible runs cannot be made to update other hosts.
+  If this host is down, crime may go up in gotham city.
+# For the MOTD
+csi_security_category: High
+# Neeed for rsync from log01 for logs.
+custom_rules: ['-A INPUT -p tcp -m tcp -s 10.3.163.39 --dport 873 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT']
+fedmsg_certs:
+  - can_send:
+      - ansible.playbook.complete
+      - ansible.playbook.start
+      - logger.log
+    group: sysadmin
+    owner: root
+    service: shell
+  - can_send:
+      - infragit.receive
+    group: sysadmin
+    owner: root
+    service: scm
+freezes: true
+ipa_client_shell_groups:
+  - fi-apprentice
+  - sysadmin-ask
+  - sysadmin-badges
+  - sysadmin-bot
+  - sysadmin-centos
+  - sysadmin-cloud
+  - sysadmin-copr
+  - sysadmin-coreos
+  - sysadmin-cvs
+  - sysadmin-datanommer
+  - sysadmin-debuginfod
+  - sysadmin-fedimg
+  - sysadmin-koschei
+  - sysadmin-libravatar
+  - sysadmin-mbs
+  - sysadmin-messaging
+  - sysadmin-noc
+  - sysadmin-odcs
+  - sysadmin-osbs
+  - sysadmin-qa
+  - sysadmin-retrace
+  - sysadmin-releasemonitoring
+  - sysadmin-releng
+  - sysadmin-tools
+  - sysadmin-upstreamfirst
+  - sysadmin-veteran
+  - sysadmin-web
+ipa_host_group: batcave
+ipa_host_group_desc: The Bat Cave
+lvm_size: 500000
+mem_size: 24576
+nfs_mount_opts: "rw,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3"
 nrpe_procs_crit: 1000
-vpn: true
+nrpe_procs_warn: 900
+num_cpus: 10
+primary_auth_source: ipa
 sshd_sftp: true
+tcp_ports: [80, 443, 8442, 8443]
+vpn: true

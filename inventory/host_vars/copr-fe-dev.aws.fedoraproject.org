@@ -1,30 +1,25 @@
 ---
-datacenter: aws
-inventory_hostname: "copr-fe-dev.aws.fedoraproject.org"
-inventory_instance_name: copr-fe-dev
-principal_alias: "HTTP/copr-fe-dev.cloud.fedoraproject.org@STG.FEDORAPROJECT.ORG"
-
-nm_controlled_resolv: True
 ansible_ifcfg_blocklist: True
-
-swap_file_size_mb: 4096
-swap_file_path: /swap
-
-hostbase: copr-fe-dev-
-public_ip: 18.208.24.211
-root_auth_users: msuchy frostyx praiskup schlupov ttomecek
-description: copr frontend - dev instance
-
 # Copr vars
 copr_hostbase: copr-fe-dev
-
+datacenter: aws
+description: copr frontend - dev instance
+hostbase: copr-fe-dev-
+inventory_hostname: "copr-fe-dev.aws.fedoraproject.org"
+inventory_instance_name: copr-fe-dev
 nagios_Check_Services:
-  mail: false
-  nrpe: true
-  sshd: false
-  named: false
   dhcpd: false
   httpd: false
-  swap: false
+  mail: false
+  named: false
+  nrpe: true
   ping: false
   raid: false
+  sshd: false
+  swap: false
+nm_controlled_resolv: True
+principal_alias: "HTTP/copr-fe-dev.cloud.fedoraproject.org@STG.FEDORAPROJECT.ORG"
+public_ip: 18.208.24.211
+root_auth_users: msuchy frostyx praiskup schlupov ttomecek
+swap_file_path: /swap
+swap_file_size_mb: 4096

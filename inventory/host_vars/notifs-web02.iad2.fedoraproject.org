@@ -1,20 +1,18 @@
 ---
+datacenter: iad2
+dns: 10.3.163.33
+eth0_ip: 10.3.163.108
+gw: 10.3.163.254
+ks_repo: http://10.3.163.35/pub/fedora/linux/releases/34/Server/x86_64/os/
+ks_url: http://10.3.163.35/repo/rhel/ks/kvm-fedora
 lvm_size: 20000
 mem_size: 8192
-num_cpus: 2
 nm: 255.255.255.0
-gw: 10.3.163.254
-dns: 10.3.163.33
-ks_url: http://10.3.163.35/repo/rhel/ks/kvm-fedora
-ks_repo: http://10.3.163.35/pub/fedora/linux/releases/34/Server/x86_64/os/
-volgroup: /dev/vg_guests
-eth0_ip: 10.3.163.108
-vmhost: vmhost-x86-04.iad2.fedoraproject.org
-datacenter: iad2
-
-tcp_ports: [ 80, 443 ]
-
+num_cpus: 2
+sar_output_file: fmn.json
 # GDPR SAR variables
 sar_script: /usr/local/bin/fmn-sar.py
 sar_script_user: apache
-sar_output_file: fmn.json
+tcp_ports: [80, 443]
+vmhost: vmhost-x86-04.iad2.fedoraproject.org
+volgroup: /dev/vg_guests

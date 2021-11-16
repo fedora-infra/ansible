@@ -2,11 +2,9 @@
 # XXX - this is not really a group of real hosts.
 # Instead, it represents an application in openshift.
 # See playbooks/openshift-apps/waiverdb.yml
-
-fedmsg_env: stg
-
 fedmsg_certs:
-- service: waiverdb
-  can_send:
-  - logger.log
-  - waiverdb.waiver.new
+  - can_send:
+      - logger.log
+      - waiverdb.waiver.new
+    service: waiverdb
+fedmsg_env: stg

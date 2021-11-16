@@ -1,76 +1,7 @@
 ---
-devel: false
-datacenter: aws
-
-copr_messaging: true
-
 _forward_src: "forward"
-
-# don't forget to update ip in ./copr-keygen, due to custom firewall rules
-
-# eth0, eth1
-copr_backend_ips: ["52.44.175.77", "172.30.2.203"]
-keygen_host: "54.83.48.73"
-
-backend_base_url: "https://download.copr.fedorainfracloud.org"
-postfix_group: copr
-
-frontend_base_url: "https://copr.fedorainfracloud.org"
-dist_git_base_url: "copr-dist-git.fedorainfracloud.org"
-
 ansible_ifcfg_blocklist: true
-
-copr_aws_region: us-east-1
-
-services_disabled: false
-nm_controlled_resolv: True
-
-builders:
-    # max|spawn_concurrently|prealloc
-    aws:
-        x86_64: [20, 4, 4]
-        aarch64: [8, 2, 2]
-
-    aws_spot:
-        x86_64: [40, 8, 8]
-        aarch64: [30, 4, 6]
-
-    x86_hypervisor_01:
-        x86_64: [20, 4, 20]
-
-    x86_hypervisor_02:
-        x86_64: [20, 4, 20]
-
-    x86_hypervisor_03:
-        x86_64: [20, 4, 20]
-
-    x86_hypervisor_04:
-        x86_64: [20, 4, 20]
-
-    ppc64le_hypervisor_01:
-        ppc64le: [15, 4, 15]
-
-    # There's the ppc64le-test machine, so keep 2 builders less.
-    ppc64le_hypervisor_02:
-        ppc64le: [13, 4, 13]
-
-copr_builder_images:
-  hypervisor:
-    x86_64: copr-builder-x86_64-20211012_115536
-    ppc64le: copr-builder-ppc64le-20211012_120530
-  aws:
-    x86_64: ami-0baeeebc194e64780
-    aarch64: ami-068c2760406b9e3c9
-
 aws_arch_subnets:
-  x86_64:
-    - subnet-0995f6a466849f4c3
-    - subnet-08cadf5a14b530ac4
-    - subnet-07b0b3168a353e3ee
-    - subnet-09c74a3e6420a206b
-    - subnet-01d4e967ab5e78005
-    - subnet-05437ac82d63b6ef5
-
   # Your requested instance type (a1.xlarge) is not supported in your requested Availability Zone (us-east-1a).
   # Your requested instance type (a1.xlarge) is not supported in your requested Availability Zone (us-east-1d).
   # Your requested instance type (a1.xlarge) is not supported in your requested Availability Zone (us-east-1f).
@@ -78,5 +9,54 @@ aws_arch_subnets:
     - subnet-0995f6a466849f4c3
     - subnet-08cadf5a14b530ac4
     - subnet-07b0b3168a353e3ee
+  x86_64:
+    - subnet-0995f6a466849f4c3
+    - subnet-08cadf5a14b530ac4
+    - subnet-07b0b3168a353e3ee
+    - subnet-09c74a3e6420a206b
+    - subnet-01d4e967ab5e78005
+    - subnet-05437ac82d63b6ef5
+backend_base_url: "https://download.copr.fedorainfracloud.org"
+builders:
+  # max|spawn_concurrently|prealloc
+  aws:
+    aarch64: [8, 2, 2]
+    x86_64: [20, 4, 4]
+  aws_spot:
+    aarch64: [30, 4, 6]
+    x86_64: [40, 8, 8]
+  ppc64le_hypervisor_01:
+    ppc64le: [15, 4, 15]
+  # There's the ppc64le-test machine, so keep 2 builders less.
+  ppc64le_hypervisor_02:
+    ppc64le: [13, 4, 13]
+  x86_hypervisor_01:
+    x86_64: [20, 4, 20]
+  x86_hypervisor_02:
+    x86_64: [20, 4, 20]
+  x86_hypervisor_03:
+    x86_64: [20, 4, 20]
+  x86_hypervisor_04:
+    x86_64: [20, 4, 20]
+copr_aws_region: us-east-1
+# don't forget to update ip in ./copr-keygen, due to custom firewall rules
 
+# eth0, eth1
+copr_backend_ips: ["52.44.175.77", "172.30.2.203"]
+copr_builder_images:
+  aws:
+    aarch64: ami-068c2760406b9e3c9
+    x86_64: ami-0baeeebc194e64780
+  hypervisor:
+    ppc64le: copr-builder-ppc64le-20211012_120530
+    x86_64: copr-builder-x86_64-20211012_115536
+copr_messaging: true
+datacenter: aws
+devel: false
+dist_git_base_url: "copr-dist-git.fedorainfracloud.org"
+frontend_base_url: "https://copr.fedorainfracloud.org"
+keygen_host: "54.83.48.73"
+nm_controlled_resolv: True
+postfix_group: copr
 rpm_vendor_copr_name: Fedora Copr
+services_disabled: false

@@ -1,28 +1,21 @@
 ---
-nm: 255.255.255.0
-gw: 10.3.163.254
+datacenter: iad2
 dns: 10.3.163.34
 eth0_ip: 10.3.163.50
-datacenter: iad2
-
-
+gw: 10.3.163.254
+ks_repo: http://209.132.181.6/repo/rhel/RHEL8-x86_64/
+ks_url: http://209.132.181.6/repo/rhel/ks/kvm-rhel-8-ext
+lvm_size: 20000
+main_bridge: br0
+max_mem_size: 20480
+mem_size: 16384
+nm: 255.255.255.0
+nrpe_procs_crit: 1400
+nrpe_procs_warn: 1200
+num_cpus: 8
+public_hostname: dl-iad01.fedoraproject.org
+tcp_ports: [80, 443, 873]
+virt_install_command: "{{ virt_install_command_one_nic }}"
 vmhost: vmhost-x86-04.iad2.fedoraproject.org
 volgroup: /dev/vg_guests
-virt_install_command: "{{ virt_install_command_one_nic }}"
-ks_url: http://209.132.181.6/repo/rhel/ks/kvm-rhel-8-ext
-ks_repo: http://209.132.181.6/repo/rhel/RHEL8-x86_64/
-main_bridge: br0
-
-tcp_ports: [80, 443, 873]
-
-nrpe_procs_warn: 1200
-nrpe_procs_crit: 1400
-
-mem_size: 16384
-max_mem_size: 20480
-lvm_size: 20000
-num_cpus: 8
-
 vpn: false
-
-public_hostname: dl-iad01.fedoraproject.org
