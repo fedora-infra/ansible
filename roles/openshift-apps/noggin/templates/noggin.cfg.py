@@ -13,7 +13,7 @@ APPLICATION_ROOT = '{{ subdir }}/'
 {% endif %}
 
 # IPA settings
-FREEIPA_SERVERS = ['{{ ipa_server_nodes }}']
+FREEIPA_SERVERS = {{ ipa_server_nodes }}
 FREEIPA_CACERT = '/etc/ipa/ca.crt'
 
 # Cookies
