@@ -29,8 +29,8 @@ spec:
   triggers:
   - type: ConfigChange
   - type: ImageChange
-  {% if discourse2fedmsg_stg_github_secret is defined and env == 'staging' %}
+  {% if discourse2fedmsg_stg_webhook_secret is defined and env == 'staging' %}
   - type: GitHub
     github:
-      secret: "{{ discourse2fedmsg_stg_github_secret }}"
+      secret: "{{ discourse2fedmsg_stg_webhook_secret }}"
   {% endif %}
