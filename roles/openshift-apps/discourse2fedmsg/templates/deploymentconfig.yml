@@ -45,12 +45,12 @@ spec:
           subPath: cacert.pem
           readOnly: true
         - name: fedora-messaging-crt-volume
-          mountPath: /etc/pki/fedora-messaging/noggin-cert.pem
-          subPath: noggin-cert.pem
+          mountPath: /etc/pki/fedora-messaging/discourse2fedmsg-cert.pem
+          subPath: discourse2fedmsg-cert.pem
           readOnly: true
         - name: fedora-messaging-key-volume
-          mountPath: /etc/pki/fedora-messaging/noggin-key.pem
-          subPath: noggin-key.pem
+          mountPath: /etc/pki/fedora-messaging/discourse2fedmsg-key.pem
+          subPath: discourse2fedmsg-key.pem
           readOnly: true
         readinessProbe:
           timeoutSeconds: 10
