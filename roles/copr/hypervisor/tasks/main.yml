@@ -115,10 +115,13 @@
   - buildsys.pub
 
 - name: add root keys for sysadmin-main and other allowed users
-  action: authorized_key user=copr key={{ item }}
+  authorized_key: user=copr key="{{ item }}"
   with_lines:
   - "{{ auth_keys_from_fas}} @sysadmin-copr"
-  tags: copr_admins
+  tags:
+  - copr_admins
+  - config
+  - sshkeys
 
 # todo: generate it's own key
 - name: make sure hostA can ssh to hostB
