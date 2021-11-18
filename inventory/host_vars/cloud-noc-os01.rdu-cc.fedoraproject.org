@@ -23,7 +23,6 @@ network_connections:
     ip:
       address:
         - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
-      auto6: no
       dhcp4: no
       dns:
         - "{{ dns1 }}"
@@ -39,7 +38,6 @@ network_connections:
     ip:
       address:
         - "{{ eth1_ipv4 }}/{{ eth1_ipv4_nm }}"
-      auto6: no
       dhcp4: no
     mac: "{{ mac1 }}"
     name: eth1
@@ -48,7 +46,6 @@ network_connections:
     ip:
       address:
         - "{{ eth2_ipv4 }}/{{ eth2_ipv4_nm }}"
-      auto6: no
       dhcp4: no
     mac: "{{ mac2 }}"
     name: eth2

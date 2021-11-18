@@ -24,7 +24,6 @@ network_connections:
       address:
         - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
         - "{{ eth0_ipv6 }}/{{ eth0_ipv6_nm }}"
-      auto6: no
       dhcp4: no
       dns:
         - "{{ dns1 }}"

@@ -15,7 +15,6 @@ network_connections:
     ip:
       address:
         - "{{ br0_ipv4 }}/{{ br0_ipv4_nm }}"
-      auto6: no
       dhcp4: no
       dns:
         - "{{ dns1 }}"

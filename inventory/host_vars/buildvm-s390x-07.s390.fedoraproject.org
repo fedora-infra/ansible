@@ -16,7 +16,6 @@ network_connections:
     ip:
       address:
         - "{{ enc900_ipv4 }}/{{ enc900_ipv4_nm }}"
-      auto6: no
       dhcp4: no
       dns:
         - "{{ dns1 }}"

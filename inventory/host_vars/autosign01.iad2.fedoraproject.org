@@ -18,7 +18,6 @@ network_connections:
     ip:
       address:
         - "{{ eno1_ipv4 }}/{{ eno1_ipv4_nm }}"
-      auto6: no
       dhcp4: no
       dns:
         - "{{ dns1 }}"
