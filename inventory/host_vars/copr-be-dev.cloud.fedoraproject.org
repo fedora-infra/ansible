@@ -34,8 +34,10 @@ nagios_Check_Services:
   swap: false
 public_ip: 209.132.184.53
 root_auth_users: msuchy pingou frostyx praiskup schlupov
-security_group: web-80-anywhere-persistent,web-443-anywhere-persistent,ssh-anywhere-persistent,default,allow-nagios-persistent,fedmsg-relay-persistent
-tcp_ports: ['22', '80', '443', '2003', '4001']
+security_group: web-80-anywhere-persistent,web-443-anywhere-persistent,ssh-anywhere-persistent,default,allow-nagios-persistent,fedmsg-relay-persistent,node-exporter-persistent
+tcp_ports: ['22', '80', '443', '2003', '4001',
+  # this port is used by node_exporter whose metrics are used by prometheus
+  '9100']
 # volumes: copr-be-dev-data
 volumes: [{device: '/dev/vdc', volume_id: '09c74876-d691-487e-a54b-070b08e87719'}]
 zone: nova

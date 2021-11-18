@@ -35,9 +35,11 @@ nagios_Check_Services:
 
 public_ip: 209.132.184.48
 root_auth_users: msuchy frostyx praiskup schlupov
-security_group: web-80-anywhere-persistent,web-443-anywhere-persistent,ssh-anywhere-persistent,default,allow-nagios-persistent
+security_group: web-80-anywhere-persistent,web-443-anywhere-persistent,ssh-anywhere-persistent,default,allow-nagios-persistent,node-exporter-persistent
 tcp_ports: [22, 80, 443,
   # These 8 ports are used by fedmsg.  One for each wsgi thread.
-  3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007]
+  3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007,
+  # this port is used by node_exporter whose metrics are used by prometheus
+  '9100']
 volumes: [{device: '/dev/vdc', volume_id: '63c3a40c-e228-417a-97a2-e2c34730bf3b'}]
 zone: nova
