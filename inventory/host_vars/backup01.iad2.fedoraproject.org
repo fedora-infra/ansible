@@ -17,7 +17,6 @@ network_connections:
     ip:
       address:
         - "{{ eno1_ipv4 }}/{{ eno1_ipv4_nm }}"
-      auto6: no
       dhcp4: no
       dns:
         - "{{ dns1 }}"
@@ -26,7 +25,6 @@ network_connections:
         - "{{ dns_search1 }}"
         - "{{ dns_search2 }}"
       gateway4: "{{ eno1_ipv4_gw }}"
-      ipv6_disabled: yes
     mac: "{{ eno1_mac }}"
     name: eno1
     state: up
