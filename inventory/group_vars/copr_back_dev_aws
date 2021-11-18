@@ -41,4 +41,8 @@ messaging:
       username: copr
 root_auth_users: msuchy pingou frostyx praiskup schlupov
 spawn_in_advance: "false"
-tcp_ports: [22, 80, 443]
+tcp_ports: [
+    22, 80, 443,
+    # node_exporter/prometheus
+    9100,
+]
