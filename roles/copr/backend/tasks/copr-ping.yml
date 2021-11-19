@@ -10,6 +10,10 @@
   register: ping_log_check
   tags: copr_ping
 
+- name: create the user ping user
+  user: name={{ ping_user }}
+  tags: copr_ping
+
 - name: pre-create ping log file
   file:
     path: "{{ ping_log }}"
@@ -19,10 +23,6 @@
     state: touch
   register: ping_log_created
   when: not ping_log_check.stat.exists
-  tags: copr_ping
-
-- name: create the user ping user
-  user: name={{ ping_user }}
   tags: copr_ping
 
 - name: install copr-cli package
