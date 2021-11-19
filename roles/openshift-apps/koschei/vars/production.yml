@@ -39,9 +39,6 @@ koschei_cron_jobs:
   - name: refresh-go
     schedule: "7 0-23/3 * * *"
     command: "koschei-refresh-distgit-group go-sig go-sig --append"
-  - name: refresh-ss
-    schedule: "9 0-23/3 * * *"
-    command: "koschei-refresh-distgit-group stewardship-sig stewardship-sig"
   - name: refresh-scitech
     schedule: "11 0-23/3 * * *"
     command: "koschei-refresh-distgit-group scitech_sig scitech_sig"
@@ -54,9 +51,6 @@ koschei_cron_jobs:
   - name: track-go
     schedule: "17 0-23/3 * * *"
     command: "koschei-track-group go-sig"
-  - name: track-ss
-    schedule: "19 0-23/3 * * *"
-    command: "koschei-track-group stewardship-sig"
   - name: track-scitech
     schedule: "21 0-23/3 * * *"
     command: "koschei-track-group scitech_sig"
