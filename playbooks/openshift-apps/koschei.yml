@@ -59,14 +59,14 @@
       loop_control:
         label: "{{ item.name }}"
 
-    # - name: Apply CronJob
-    #   include_role: name=openshift/object
-    #   vars:
-    #     template: cronjob.yml
-    #     objectname: "{{ item.name }}-cronjob.yml"
-    #     name: "{{ item.name }}"
-    #     schedule: "{{ item.schedule }}"
-    #     command: "{{ item.command }}"
-    #   with_items: "{{ koschei_cron_jobs }}"
-    #   loop_control:
-    #     label: "{{ item.name }}"
+    - name: Apply CronJob
+      include_role: name=openshift/object
+      vars:
+        template: cronjob.yml
+        objectname: "{{ item.name }}-cronjob.yml"
+        name: "{{ item.name }}"
+        schedule: "{{ item.schedule }}"
+        command: "{{ item.command }}"
+      with_items: "{{ koschei_cron_jobs }}"
+      loop_control:
+        label: "{{ item.name }}"
