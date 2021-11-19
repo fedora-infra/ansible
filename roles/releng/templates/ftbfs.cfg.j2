@@ -1,11 +1,11 @@
 [bugzilla]
 {% if env == "production" %}
 bugzilla=https://bugzilla.redhat.com/
-tracking=1927309
+tracking=1992484
 {% elif env == 'staging' %}
 bugzilla=https://bugzilla.stage.redhat.com/
 tracking=1732434
 {% endif %}
 username={{ ftbfs_bugzilla_account }}
 password={{ ftbfs_bugzilla_password }}
-fedora=f35
+fedora=f36
