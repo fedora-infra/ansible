@@ -1,7 +1,7 @@
 ---
 copr_hostbase: copr-keygen-dev
 # http + signd dest ports
-custom_rules: ['-A INPUT -p tcp -m tcp -s 18.208.10.131   --dport   80 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 18.208.10.131   --dport 5167 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 172.30.2.207    --dport   80 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 172.30.2.207    --dport 5167 -j ACCEPT']
+custom_rules: ['-A INPUT -p tcp -m tcp -s 18.208.10.131   --dport   80 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 18.208.10.131   --dport 5167 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 172.30.2.12     --dport   80 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 172.30.2.12     --dport 5167 -j ACCEPT']
 datacenter: aws
 freezes: false
 tcp_ports: [22]
