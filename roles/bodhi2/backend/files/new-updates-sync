@@ -475,19 +475,74 @@ def sync_single_release(release):
     return needssync
 
 def update_epel_release_latest(releases):
+    """
+    This function, creates or updates a symbolic links for epel-release packages.
+
+    Creates or updates a symbolic link pointing to the latest release of the epel-release package and another pointing to the next release of the epel-release package.
+    The symbolic link will be created or updated if:
+    - There isn't a symbolic link for the latest package;
+    - Current symbolic link is pointing to an outdated package;
+    - Current symbolic link is broken;
+    - There is a file that isn't a link with the same name of the symbolic link.
+
+    If the symbolic link is pointing to the latest release already, this function will do nothing.
+
+    Parameters:
+    releases (dict): contains similar information of global variable RELEASES
+    """
+    # get releases, next and latest pkgs paths into separated lists
+    aux = {
+        "release": set(),
+        "next": list(),
+        "latest": list(),
+    }
+    
     for release in releases:
         if 'epel' in release:
-            for path in Path(RELEASES[release]['repos']['epel']['to'][0]['dest']).rglob('epel-release*noarch*'):
+            for path in Path(RELEASES[release]['repos']['epel']['to'][0]['dest']).rglob('epel-*release*noarch*'):
                 if 'Packages' in str(path) and 'x86_64' in str(path):
-                    dest = '/pub/epel/epel-release-latest-' + release[4]+ '.noarch.rpm'
-                    if os.path.lexists(dest):
-                        if not os.path.islink(dest) or not os.path.exists(os.path.join(EPELDEST,os.readlink(dest))):
-                            os.remove(dest)
-                            os.symlink(os.path.relpath(path, os.path.dirname(dest)), dest)
-                            break
-                    else:
-                        os.symlink(os.path.relpath(path, os.path.dirname(dest)), dest)
-                        break
+                    aux['release'].add(release[4])
+                    if "next" in str(path):
+                        aux["next"].append(str(path))
+                    elif str(path)[-19].isdigit():
+                        aux["latest"].append(str(path))
+
+    # get most recent package from next and latest lists of each release
+    paths = dict()
+
+    for release in aux['release']:
+        paths[release] = {
+            'next': '',
+            'latest': ''
+        }
+
+        for pkg_name in list(paths[release].keys()):
+            for path in aux[pkg_name]:
+                if release in path[:10] and path > paths[release][pkg_name]:
+                    paths[release][pkg_name] = path
+
+    paths[release] = {k: v for k,v in paths[release].items() if v != ''}
+
+    # create/update symbolic links
+    for release in list(paths.keys()):
+        for pkg_name in list(paths[release].keys()):
+            pkg_relpath = os.path.relpath(paths[release][pkg_name],EPELDEST)
+
+            if 'next' in paths[release][pkg_name]:
+                dest = 'pub/epel/epel-next-release-latest-' + release + '.noarch.rpm'
+            else:
+                dest = 'pub/epel/epel-release-latest-' + release + '.noarch.rpm'
+
+            if os.path.lexists(dest) and os.path.islink(dest):
+                origin_dest = os.path.join(EPELDEST,os.readlink(dest))
+                if origin_dest < paths[release][pkg_name]:
+                    os.remove(dest)
+                    os.symlink(pkg_relpath, dest)
+            elif os.path.lexists(dest) and not os.path.islink(dest):
+                os.remove(dest)
+                os.symlink(pkg_relpath, dest)
+            else:
+                os.symlink(pkg_relpath, dest)
 
 def main():
     parser = argparse.ArgumentParser()
