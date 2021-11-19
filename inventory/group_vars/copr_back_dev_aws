@@ -32,11 +32,6 @@ letsencrypt:
       domains:
         - copr-be-dev.cloud.fedoraproject.org
       mail: copr-devel@lists.fedorahosted.org
-    copr-be-dev-temp.aws.fedoraproject.org:
-      challenge_dir: /var/lib/copr/public_html
-      domains:
-        - copr-be-dev-temp.aws.fedoraproject.org
-      mail: copr-devel@lists.fedorahosted.org
   predefined_deploy_script: lighttpd
 # consumed by roles/messaging/base
 messaging:
