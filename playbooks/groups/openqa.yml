@@ -44,10 +44,7 @@
   - role: rabbit/queue
     username: "openqa"
     queue_name: "openqa{{ openqa_env_suffix }}_scheduler"
-    routing_keys:
-        - "org.fedoraproject.prod.pungi.compose.status.change"
-        - "org.fedoraproject.prod.bodhi.update.request.testing"
-        - "org.fedoraproject.prod.bodhi.update.edit"
+    routing_keys: "{{ openqa_amqp_scheduler_routing_keys }}"
     write_queues:
         - "ci"
         - "openqa"
@@ -60,8 +57,7 @@
   - role: rabbit/queue
     username: "openqa{{ openqa_env_suffix }}"
     queue_name: "openqa{{ openqa_env_suffix }}_resultsdb_reporter"
-    routing_keys:
-        - "org.fedoraproject.{{ deployment_type }}.openqa.job.done"
+    routing_keys: "{{ openqa_amqp_resultsdb_reporter_routing_keys }}"
     write_queues:
         - "ci"
         - "openqa"
@@ -74,8 +70,7 @@
   - role: rabbit/queue
     username: "openqa{{ openqa_env_suffix }}"
     queue_name: "openqa{{ openqa_env_suffix }}_wiki_reporter"
-    routing_keys:
-        - "org.fedoraproject.{{ deployment_type }}.openqa.job.done"
+    routing_keys: "{{ openqa_amqp_wiki_reporter_routing_keys }}"
     write_queues:
         - "ci"
         - "openqa"
@@ -90,8 +85,7 @@
   - role: rabbit/queue
     username: "openqa"
     queue_name: "openqa_relvalconsumer{{ relvalconsumer_env_suffix }}"
-    routing_keys:
-        - "org.fedoraproject.prod.pungi.compose.status.change"
+    routing_keys: "{{ relvalconsumer_amqp_routing_keys }}"
     write_queues:
         - "ci"
         - "openqa"
@@ -107,8 +101,7 @@
   - role: rabbit/queue
     username: "openqa"
     queue_name: "openqa_relvalamiconsumer{{ relvalconsumer_env_suffix }}"
-    routing_keys:
-        - "org.fedoraproject.prod.fedimg.image.publish"
+    routing_keys: "{{ relvalamiconsumer_amqp_routing_keys }}"
     write_queues:
         - "ci"
         - "openqa"
@@ -125,8 +118,7 @@
   - role: rabbit/queue
     username: "openqa{{ checkcompose_env_suffix }}"
     queue_name: "openqa{{ checkcompose_env_suffix }}_checkcomp"
-    routing_keys:
-        - "org.fedoraproject.{{ deployment_type }}.openqa.job.done"
+    routing_keys: "{{ checkcompose_amqp_routing_keys }}"
     write_queues:
         - "ci"
         - "openqa"
@@ -143,9 +135,7 @@
   - role: rabbit/queue
     username: "openqa"
     queue_name: "openqa_fedora_nightlies"
-    routing_keys:
-        - "org.fedoraproject.prod.openqa.job.done"
-        - "org.fedoraproject.prod.pungi.compose.status.change"
+    routing_keys: "{{ fedora_nightlies_amqp_routing_keys }}"
     write_queues:
         - "ci"
         - "openqa"
