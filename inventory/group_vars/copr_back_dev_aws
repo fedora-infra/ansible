@@ -24,15 +24,15 @@ datacenter: aws
 description: copr dispatcher and repo server - dev instance
 do_sign: "true"
 frontend_base_url: "https://copr-fe-dev.cloud.fedoraproject.org"
-# consumed by roles/copr/certbot
-letsencrypt:
-  certificates:
-    copr-be-dev.cloud.fedoraproject.org:
-      challenge_dir: /var/lib/copr/public_html
-      domains:
-        - copr-be-dev.cloud.fedoraproject.org
-      mail: copr-devel@lists.fedorahosted.org
-  predefined_deploy_script: lighttpd
+# # consumed by roles/copr/certbot
+# letsencrypt:
+#   certificates:
+#     copr-be-dev.cloud.fedoraproject.org:
+#       challenge_dir: /var/lib/copr/public_html
+#       domains:
+#         - copr-be-dev.cloud.fedoraproject.org
+#       mail: copr-devel@lists.fedorahosted.org
+#   predefined_deploy_script: lighttpd
 # consumed by roles/messaging/base
 messaging:
   certificates:
