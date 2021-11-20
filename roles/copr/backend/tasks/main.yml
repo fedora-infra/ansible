@@ -124,7 +124,11 @@
 
 - name: letsencrypt cert
   include_role: name=copr/certbot
-  when: devel|bool
+  when:
+  - devel|bool
+  # When we have birthday for backend, we use a temporary copr-be-dev-temp
+  # hostname for it and we don't want to generate a certificate for that.
+  - birthday is not defined
   tags:
   - config
 
