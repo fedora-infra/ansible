@@ -62,10 +62,10 @@ koschei_cron_jobs:
     command: "koschei-refresh-distgit-group koschei/auto-group-python-sig python-sig"
   - name: track-python
     schedule: "27 0-23/3 * * *"
-    command: "koschei-admin psql <<<'UPDATE package SET tracked = TRUE WHERE NOT tracked AND id IN (SELECT p.id FROM package p JOIN package_group_relation pgr ON p.base_id = pgr.base_id WHERE pgr.group_id = 76)'"
+    command: "koschei-admin psql <<<'UPDATE package SET tracked = TRUE WHERE id IN (SELECT p.id FROM package p JOIN package_group_relation pgr ON p.base_id = pgr.base_id WHERE NOT p.tracked AND pgr.group_id = 76)'"
   - name: refresh-churchyard
     schedule: "29 0-23/3 * * *"
     command: "koschei-refresh-user-group koschei/auto-group-churchyard churchyard"
   - name: track-churchyard
     schedule: "31 0-23/3 * * *"
-    command: "koschei-admin psql <<<'UPDATE package SET tracked = TRUE WHERE NOT tracked AND id IN (SELECT p.id FROM package p JOIN package_group_relation pgr ON p.base_id = pgr.base_id WHERE pgr.group_id = 79)'"
+    command: "koschei-admin psql <<<'UPDATE package SET tracked = TRUE WHERE id IN (SELECT p.id FROM package p JOIN package_group_relation pgr ON p.base_id = pgr.base_id WHERE NOT p.tracked AND pgr.group_id = 79)'"
