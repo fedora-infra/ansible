@@ -1,7 +1,7 @@
 common_rsync_options="--no-motd --timeout 14400"
 max_propagation_days = 2
 max_stale_days = 3
-skip_repository_paths = ["SIGs"]
+excludes=[".*\\.snapshot", ".*/\\.~tmp~"]
 
 [database]
 url="postgresql://{{ mirrormanager_db_user }}:{{ mirrormanager_db_pass }}@{{ mirrormanager_db_host }}/{{ mirrormanager_db_name }}"
@@ -39,3 +39,7 @@ prefix="centos-rt"
 [[repository_mapping]]
 regex="^\\d+(?:-stream)?/ResilientStorage/"
 prefix="centos-resilientstorage"
+
+[[repository_mapping]]
+regex="^SIGs/\\d+(?:-stream)?/(?P<signame>\\S+?)/(?P<arch>\\S+?)/(?P<sigrepo>[^\\s/]+)(/?.*)"
+prefix="centos-${signame}-sig-${sigrepo}"
