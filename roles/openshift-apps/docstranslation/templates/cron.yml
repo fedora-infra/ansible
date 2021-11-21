@@ -22,7 +22,6 @@ spec:
 {%          if env == 'staging' %}
             - "--nopush"
 {%          endif %}
-            - "--clone-po4a"
             env: []
             volumeMounts: 
             - name: ssh-config-volume
