@@ -28,11 +28,6 @@
       - dist-git-selinux
       - copr-dist-git
 
-- name: Patch GitPython to import Thunderbird (issue 1700)
-  patch: src=patches/git-python-pr-1254.patch
-         dest=/usr/lib/python3.9/site-packages/git/index/fun.py
-  tags: patches
-
 - name: switch selinux to enforcing
   selinux: policy=targeted state=enforcing
 
