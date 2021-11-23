@@ -8,7 +8,6 @@ eth0_ipv4_gw: 10.16.0.254
 eth0_ipv4_nm: 24
 eth0_mac: "{{ mac0 }}"
 has_ipv4: yes
-mac0: 52:54:00:c4:f2:4e
 network_connections:
   - autoconnect: yes
     ip:
@@ -22,7 +21,7 @@ network_connections:
         - "{{ dns_search1 }}"
         - "{{ dns_search2 }}"
       gateway4: "{{ eth0_ipv4_gw }}"
-    mac: "{{ eth0_mac }}"
+    mac: "{{ ansible_default_ipv4.macaddress }}"
     name: eth0
     state: up
     type: ethernet
