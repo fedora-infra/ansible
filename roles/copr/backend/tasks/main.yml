@@ -31,6 +31,7 @@
       - php-cli
       - cronolog
       - nfs-utils
+      - golang-github-prometheus-node-exporter
 
 #- name: patch for prunerepo, issue 1090
 #  patch: src=patches/prunerepo-dataloss.patch
@@ -157,6 +158,9 @@
 
 - name: start webserver
   service: state=started enabled=yes name=lighttpd
+
+- name: start node exporter
+  service: state=started enabled=yes name=node_exporter
 
 # setup dirs for the ansible execution off of provisioning
 #- name: dirs from provision
