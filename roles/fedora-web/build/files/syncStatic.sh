@@ -45,22 +45,17 @@ cd /srv/web/fedora-websites
 
 /usr/bin/git clean -q -fdx || exit 1
 /usr/bin/git reset -q --hard || exit 1
-/usr/bin/git checkout -q master || exit 1
+/usr/bin/git checkout -q main || exit 1
 
 /usr/bin/git pull -q --ff-only || exit 1
 build labs.fedoraproject.org
 build arm.fedoraproject.org
-#build getfedora.org
 build alt.fedoraproject.org
 
-pushd mirrors.fedoraproject.org > /dev/null
-rsync -qa --delete-after --delay-updates . /srv/web/mirrors.fedoraproject.org/
-popd > /dev/null
-
-# Make sure everything else builds from master.
+# Make sure everything else builds from main.
 /usr/bin/git clean -q -fdx || exit 1
 /usr/bin/git reset -q --hard || exit 1
-/usr/bin/git checkout -q master || exit 1
+/usr/bin/git checkout -q main || exit 1
 
 /usr/bin/git pull -q --ff-only || exit 1
 
@@ -68,4 +63,3 @@ build flocktofedora.org
 build spins.fedoraproject.org
 build fedoracommunity.org
 build start.fedoraproject.org
-#build fedoraproject.org
