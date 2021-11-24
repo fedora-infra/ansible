@@ -30,11 +30,10 @@ openqa_amqp_reporter_url: "amqps://openqa{{ openqa_env_suffix }}:@rabbitmq{{ ope
 # fedora-messaging resultsdb reporter settings
 openqa_amqp_resultsdb_reporter_queue: "openqa{{ openqa_env_suffix }}_resultsdb_reporter"
 openqa_amqp_resultsdb_reporter_routing_keys: ["org.fedoraproject.{{ deployment_type }}.openqa.job.done"]
-openqa_amqp_scheduler_cacert: /etc/fedora-messaging/cacert.pem
+# fedora-messaging scheduler settings (that differ from defaults)
 openqa_amqp_scheduler_cert: /etc/pki/fedora-messaging/openqa-cert.pem
 openqa_amqp_scheduler_key: /etc/pki/fedora-messaging/openqa-key.pem
 openqa_amqp_scheduler_queue: "openqa{{ openqa_env_suffix }}_scheduler"
-openqa_amqp_scheduler_routing_keys: ["org.fedoraproject.prod.pungi.compose.status.change", "org.fedoraproject.prod.bodhi.update.request.testing", "org.fedoraproject.prod.bodhi.update.edit", "org.fedoraproject.prod.bodhi.update.status.testing.koji-build-group.build.complete"]
 # fedora-messaging job scheduler settings: most of these are the same
 # for prod and stg as they both must listen for prod messages. Only
 # the queue names differs
