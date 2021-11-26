@@ -182,7 +182,7 @@
 # teardown swtpm services, since os-autoinst does this for us since
 # 7ae93f9f137b8cf7de22f0494a11ead5b7832e46
 - include_tasks: swtpm-teardown.yml
-  when: "openqa_tap|bool and (deployment_type is defined and deployment_type == 'stg')"
+  when: "openqa_tap|bool and (deployment_type is defined and deployment_type == 'foo')"
 
 - name: openQA client config
   template: src=client.conf.j2 dest=/etc/openqa/client.conf owner=_openqa-worker group=root mode=0600
