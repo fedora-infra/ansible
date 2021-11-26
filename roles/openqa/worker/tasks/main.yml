@@ -177,7 +177,12 @@
 # for now it's fine to just assume the tap host(s) is/are also the
 # swtpm host(s)
 - include_tasks: swtpm-setup.yml
-  when: openqa_tap|bool
+  when: "openqa_tap|bool and (deployment_type is not defined or deployment_type != 'stg')"
+
+# teardown swtpm services, since os-autoinst does this for us since
+# 7ae93f9f137b8cf7de22f0494a11ead5b7832e46
+- include_tasks: swtpm-teardown.yml
+  when: "openqa_tap|bool and (deployment_type is defined and deployment_type == 'stg')"
 
 - name: openQA client config
   template: src=client.conf.j2 dest=/etc/openqa/client.conf owner=_openqa-worker group=root mode=0600

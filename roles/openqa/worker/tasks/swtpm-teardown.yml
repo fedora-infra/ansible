@@ -1,0 +1,6 @@
+- name: Stop and disable swtpm services
+  service: name=openqa-swtpm@{{ item }} enabled=no state=stopped
+  loop: "{{ range(1, openqa_workers + 1)|list }}"
+
+- name: Remove openqa-swtpm service file
+  file: path=/etc/systemd/system/openqa-swtpm@.service state=absent
