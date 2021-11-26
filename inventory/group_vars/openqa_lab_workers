@@ -21,8 +21,8 @@ openqa_nfs_worker: true
 # install openQA and os-autoinst from updates-testing - this is
 # staging, we live ON THE EDGE (radical guitar riff)
 openqa_repo: updates-testing
-# 2021-11 scratch builds for testing
-openqa_scratch: ["79296470"]
+# 2021-11 scratch builds for testing (plus the updated Mojolicious needed)
+openqa_scratch: ["79296470", "79299304", "79272379"]
 openqa_secret: "{{ stg_openqa_apisecret }}"
 openqa_workers: 4
 primary_auth_source: ipa
