@@ -59,3 +59,9 @@
   when: selinux_module is changed
 
 - selinux: policy=targeted state=enforcing
+
+# See https://github.com/openSUSE/obs-sign/issues/32
+# Sorry for writting this as `shell`. We will drop this task once it
+# is in stable repos.
+- name: Install gnupg2 with required bugfixes
+  shell: "sudo dnf upgrade --enablerepo=updates-testing --advisory=FEDORA-2021-45c44b31a2"
