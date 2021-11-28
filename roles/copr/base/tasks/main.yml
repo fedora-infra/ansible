@@ -49,14 +49,6 @@
   tags:
   - packages
 
-- name: install common copr packages
-  dnf:
-    state: present
-    pkg:
-      - "nrpe"
-  tags:
-  - packages
-
 - name: install dev helper packages
   dnf:
     state: present
