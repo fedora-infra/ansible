@@ -1,4 +1,7 @@
 ---
+- name: install nrpe
+  dnf: name=nrpe state=present
+
 - name: install nrpe checks
   template: src=copr_backend_nrpe.cfg
             dest=/etc/nrpe.d/copr_backend_nrpe.cfg
