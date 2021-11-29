@@ -137,3 +137,8 @@
   copy: src="copr-dist-git.daily" dest="/etc/cron.daily/copr-dist-git" mode=755
   tags:
   - config
+
+- name: install copr-dist-git.monthly cron file
+  copy: src="copr-dist-git.monthly" dest="/etc/cron.monthly/copr-dist-git" mode=755
+  tags:
+  - config
