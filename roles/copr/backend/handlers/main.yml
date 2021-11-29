@@ -10,3 +10,6 @@
 
 - name: restart lighttpd
   action: service name=lighttpd state=restarted
+
+- name: restart node_exporter
+  action: service name=node_exporter state=restarted

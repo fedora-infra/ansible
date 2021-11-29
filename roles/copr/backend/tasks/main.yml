@@ -167,6 +167,7 @@
     path: /etc/sysconfig/node_exporter
     regexp: '^OPTIONS='
     line: 'OPTIONS=--collector.textfile.directory /var/lib/node_exporter/textfile_collector --collector.systemd'
+    backrefs: yes
   notify: restart node_exporter
 
 # setup dirs for the ansible execution off of provisioning
