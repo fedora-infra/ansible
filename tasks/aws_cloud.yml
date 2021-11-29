@@ -14,16 +14,12 @@
   local_action: known_hosts path={{item}}
                 host={{ inventory_hostname }}
                 state=absent
-  # HACK!  We repeat this task 3 times.  We assume that "known_hosts" module is
-  # broken, and it removes only the first host key available (not all of them).
   with_items:
-  - /root/.ssh/known_hosts
-  - /root/.ssh/known_hosts
   - /root/.ssh/known_hosts
   when: birthday is defined
 
 - name: gather the temporary ssh host key from the new instance
-  local_action: command ssh-keyscan -t rsa {{ inventory_hostname }}
+  local_action: command ssh-keyscan -t ed25519 {{ inventory_hostname }}
   register: hostkey
   when: birthday is defined
 
