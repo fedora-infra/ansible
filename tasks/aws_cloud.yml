@@ -19,7 +19,7 @@
   when: birthday is defined
 
 - name: gather the temporary ssh host key from the new instance
-  local_action: command ssh-keyscan -t rsa {{ inventory_hostname }}
+  local_action: command ssh-keyscan -t ssh-ed25519 {{ inventory_hostname }}
   register: hostkey
   when: birthday is defined
 
