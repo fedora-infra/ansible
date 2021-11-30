@@ -38,5 +38,5 @@ RUN dnf install -y /tmp/RPMS/noarch/* python3-pyramid_sawing python3-gunicorn
 # Set up krb5
 RUN rm -f /etc/krb5.conf && \
     ln -sf /etc/bodhi/krb5.conf /etc/krb5.conf && \
-    ln -sf /etc/keytabs/koji-keytab /etc/krb5.bodhi_bodhi.stg.fedoraproject.org.keytab
-ENV USER=openshift
+    ln -sf /etc/keytabs/koji-keytab /etc/krb5.bodhi_bodhi{{ env_suffix }}.fedoraproject.org.keytab
+ENV USER=openshift 
