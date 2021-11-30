@@ -1,0 +1,72 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: sync
+spec:
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  activeDeadlineSeconds: 900
+  startingDeadlineSeconds: 180
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            parent: "cronjobbuild"
+        spec:
+          containers:
+          - name: blockerbugs-sync
+            image: blockerbugs:latest
+            command: ["python", "/opt/app-root/src/blockerbugs/cli.py", "sync"]
+        env:
+        - name: POSTGRESQL_USER
+          value: "blockerbugs"
+        - name: POSTGRESQL_DATABASE
+          value: "blockerbugs"
+        - name: POSTGRESQL_SERVICE_HOST
+          value: "db01{{ env_suffix }}.iad2.fedoraproject.org"
+        - name: POSTGRESQL_SERVICE_PORT
+          value: "5432"
+        - name: POSTGRESQL_PASSWORD
+          value: "{{ blockerbugs_db_password }}"
+        - name: FAS_PASSWORD
+          value: "{{ blockerbugs_fas_password }}"
+        - name: FAS_USER
+          value: "{{ blockerbugs_fas_user }}@fedoraproject.org"
+        - name: FAS_ADMIN_GROUP
+          value: "qa-admin"
+        - name: PAGURE_BOT_USERNAME
+          value: "blockerbot"
+        - name: PAGURE_BOT_ENABLED
+          value: "True"
+        - name: PAGURE_REPO
+          value: "fedora-qa/blocker-review"
+        - name: PAGURE_REPO_TOKEN
+          value: "{{ blockerbugs_pagure_repo_token_secret }}"
+        - name: PAGURE_REPO_WEBHOOK_KEY
+          value: "{{ blockerbugs_pagure_repo_webhook_key_secret }}"
+        - name: PAGURE_URL
+          value: "https://{{ env_suffix }}pagure.io/"
+        - name: PAGURE_API
+          value: "https://{{ env_suffix }}pagure.io/api/0/"
+        - name: BUGZILLA_URL
+          value: "{{ blockerbugs_bugzilla_url }}"
+        - name: BODHI_URL
+          value: "https://bodhi{{ env_suffix }}.fedoraproject.org/"
+        - name: OPENSHIFT_PROD
+{% if env == 'staging' %}
+          value: "0"
+{% else %}
+          value: "1"
+{% endif %}
+        - name: blockerbugs-secret-volume
+          mountPath: /opt/app-root/secret/
+          readOnly: true
+          restartPolicy: Never
+          startingDeadlineSeconds: 600
+          volumes:
+          - name: blockerbugs-secret-volume
+            secret:
+              secretName: blockerbugs-secret

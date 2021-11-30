@@ -1,0 +1,27 @@
+---
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  name: blockerbugs-build
+  labels:
+    environment: "blockerbugs"
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: blockerbugs:latest
+  source:
+    type: Git
+    git:
+      uri: https://pagure.io/fedora-qa/blockerbugs
+      # Change to develop/master once we iron things out!
+      ref: "develop"
+  strategy:
+    type: Source
+    sourceStrategy:
+      from:
+        kind: DockerImage
+        name: registry.access.redhat.com/ubi8/python-39
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
