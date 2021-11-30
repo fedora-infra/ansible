@@ -13,6 +13,11 @@ parallel_cancel_whole_cluster = 0
 topic_prefix = {{ openqa_amqp_publisher_prefix }}
 url = {{ openqa_amqp_publisher_url }}
 exchange = {{ openqa_amqp_publisher_exchange }}
+{% if openqa_amqp_publisher_cacertfile is defined %}
+cacertfile = {{ openqa_amqp_publisher_cacertfile }}
+certfile = {{ openqa_amqp_publisher_certfile }}
+keyfile = {{ openqa_amqp_publisher_keyfile }}
+{% endif %}
 
 [audit/storage_duration]
 startup = 7
