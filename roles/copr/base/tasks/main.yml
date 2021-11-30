@@ -104,7 +104,7 @@
     dest: /etc/sysconfig/network-scripts/ifcfg-eth0
     backup: yes
     state: present
-    line: "{{ aws_ipv6_addr }}"
+    line: "IPV6ADDR={{ aws_ipv6_addr }}"
     regex: ^IPV6ADDR=
   when: aws_ipv6_addr is defined
   tags: ipv6_config
