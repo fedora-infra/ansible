@@ -86,5 +86,28 @@
   - config
   when: datacenter != "aws"
 
+- name: setup ipv6 networking general
+  lineinfile:
+    dest: /etc/sysconfig/network-scripts/ifcfg-eth0
+    backup: yes
+    state: present
+    line: "{{ item }}"
+  with_items:
+    - IPV6INIT=yes
+    - IPV6_DEFROUTE=yes
+    - IPV6_AUTOCONF=yes
+  when: aws_ipv6_addr is defined
+  tags: ipv6_config
+
+- name: setup ipv6 address
+  lineinfile:
+    dest: /etc/sysconfig/network-scripts/ifcfg-eth0
+    backup: yes
+    state: present
+    line: "{{ aws_ipv6_addr }}"
+    regex: ^IPV6ADDR=
+  when: aws_ipv6_addr is defined
+  tags: ipv6_config
+
 # - name: enable and run logrotate service
 #   service: name="logrotate" state=started
