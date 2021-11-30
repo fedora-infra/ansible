@@ -173,6 +173,8 @@
   - ipsilon
 
 - name: generate the saml2 metadata
+  become_user: ipsilon
+  become: yes
   command:
     cmd: /usr/local/bin/prepare-saml2-metadata
     creates: /etc/ipsilon/root/saml2/metadata.xml
