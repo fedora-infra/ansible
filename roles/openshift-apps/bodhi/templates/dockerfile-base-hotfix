@@ -2,7 +2,7 @@ FROM fedora:34
 MAINTAINER asaleh@redhat.com
 ENV VERSION=5.7.2
 ENV COMMIT=b758a4caeeeff639edb51e4e6ee8b634c4dce930
-ENV SPECURL=https://gist.githubusercontent.com/AdamSaleh/1919b8ec41075e415613e033086a6054/raw/dafdc31d243530a3ee4ede0a15dfb394176600bc/bodhi.spec
+ENV SPECURL=https://gist.githubusercontent.com/AdamSaleh/1919b8ec41075e415613e033086a6054/raw/4795a74b9cff10e401119a4e74b1085498ad7d91/bodhi.spec
 RUN  dnf -y install fedora-packager wget curl
 RUN yum -y install rpm-build redhat-rpm-config make gcc git vi tar unzip rpmlint && yum clean all
 RUN curl $SPECURL -o /tmp/bodhi.spec
