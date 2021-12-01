@@ -453,9 +453,9 @@ def update_epel_release_latest(releases):
             for path in Path(RELEASES[release]['repos']['epel']['to'][0]['dest']).rglob('epel-*release*noarch*'):
                 if 'Packages' in str(path) and 'x86_64' in str(path):
                     if "next" in str(path):
-                        dest = 'pub/epel/epel-next-release-latest-' + release[4] + '.noarch.rpm'
+                        dest = '/pub/epel/epel-next-release-latest-' + release[4] + '.noarch.rpm'
                     else:
-                        dest = 'pub/epel/epel-release-latest-' + release[4] + '.noarch.rpm'
+                        dest = '/pub/epel/epel-release-latest-' + release[4] + '.noarch.rpm'
 
                     pkg_relpath = os.path.relpath(path,EPELDEST)
 
