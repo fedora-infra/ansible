@@ -33,7 +33,7 @@ for A in ${ARCHES}; do
 
     # Setup the repos you are going to sync out of the config file in
     # this pattern. This makes it easier for koji configs later
-    REPOS="rhel-8-for-${A}-appstream-rpms rhel-8-for-${A}-baseos-rpms codeready-builder-for-rhel-8-${A}-rpms"
+    REPOS="rhel-8-for-${A}-appstream-rpms rhel-8-for-${A}-baseos-rpms codeready-builder-for-rhel-8-${A}-rpms rhel-8-advanced-virt"
 
     # We do a 2 level reposync because batcave is RHEL-7 and reposync
     # is what is default. However reposync does not pull in certain

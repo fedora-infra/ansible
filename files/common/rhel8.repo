@@ -32,3 +32,10 @@ baseurl=https://infrastructure.fedoraproject.org/repo/rhel/rhel8/$basearch/coder
 gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-beta,file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
 enabled=1
 gpgcheck=1
+
+[rhel8-advanced-virt]
+name = rhel8 AdvancedVirt $basearch
+baseurl=https://infrastructure.fedoraproject.org/repo/rhel/rhel8/$basearch/rhel-8-advanced-virt/
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-beta,file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+enabled=1
+gpgcheck=1
