@@ -4,6 +4,20 @@
 - name: set selinux to enforcing
   selinux: policy=targeted state=enforcing
 
+# enable the advanced virt module
+- name: enable the advanced virt module
+  copy:
+    dest: /etc/dnf/modules.d/virt.module
+    content: |
+      [virt]
+      name=virt
+      stream=8.3
+      profiles=
+      state=enabled
+  tags:
+  - virthost
+  when: ansible_distribution == 'RedHat' and ansible_distribution_major_version|int == 8
+
 - name: install openstack 7 repo file
   copy: src=rhel7-os.repo dest=/etc/yum.repos.d/rhel7-os.repo
   tags:
