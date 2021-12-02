@@ -10,14 +10,6 @@
   - opentracker-ipv6
   - mktorrent
   - python-simplejson
-  - bittorrent
-  tags:
-  - packages
-
-- name: install systemd unit for btseed
-  copy: src=btseed.service dest=/etc/systemd/system/btseed.service
-  notify:
-  - reload systemd
   tags:
   - packages
 
@@ -53,11 +45,6 @@
   # Directory
   - { file: torrent-generator, dest: /srv/torrent/, mode: 755 }
   - { file: spins-generator, dest: /srv/torrent/, mode: 755 }
-  tags:
-  - config
-
-- name: set btseed to start
-  service: name=btseed state=started enabled=yes
   tags:
   - config
 
