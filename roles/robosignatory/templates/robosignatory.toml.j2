@@ -281,6 +281,12 @@ handlers = ["console"]
             key = "{{ (env == 'production')|ternary('epel-9', 'testkey') }}"
             keyid = "{{ (env == 'production')|ternary('3228467c', 'd300e724') }}"
 
+            [consumer_config.koji_instances.primary.tags.sidetags]
+            pattern = 'epel9-build-side-<seq_id>'
+            from = '<sidetag>-signing-pending'
+            to = '<sidetag>-testing-pending'
+            trusted_taggers = ['bodhi']
+
             [[consumer_config.koji_instances.primary.tags]]
             from = "epel8-signing-pending"
             to = "epel8-testing-pending"
