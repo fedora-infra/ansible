@@ -1,18 +1,42 @@
 ---
 # this box is not currently mission critical
 datacenter: rdu-cc
-dns: 8.8.8.8
-eth0_ip: 8.43.85.62
-eth0_nm: 255.255.255.0
-eth2_ip: 172.23.5.25
-eth2_nm: 255.255.255.0
+dns1: 8.8.8.8
+dns_search1: fedoraproject.org
+eth0_ipv4: 8.43.85.62
+eth0_ipv4_gw: 8.43.85.254
+eth0_ipv4_nm: 23
+eth2_ipv4: 172.23.5.25
+eth2_ipv4_nm: 24
 freezes: false
-gw: 8.43.85.254
+has_ipv4: true
+has_ipv6: false
+mac0: ac:1f:6b:b0:6a:12
+mac1: ac:1f:6b:ac:67:ec
+network_connections:
+  - autoconnect: true
+    ip:
+      address:
+      - '{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}'
+      auto6: false
+      dhcp4: false
+      dns:
+      - '{{ dns1 }}'
+      dns_search:
+      - '{{ dns_search1 }}'
+      gateway4: '{{ eth0_ipv4_gw }}'
+    mac: '{{ mac0 }}'
+    name: eth0
+    state: up
+    type: ethernet
+  - autoconnect: false
+    mac: '{{ mac1 }}'
+    name: eth2
+    type: ethernet
 # this box mounts a large share from the netapp to store combined http
 # logs from the proxies.
-nfs_mount_opts: "rw,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3"
+nfs_mount_opts: rw,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3
 nrpe_procs_crit: 1000
-# general configs
 nrpe_procs_warn: 900
 tcp_ports_eth2: [111, 2049]
 udp_ports_eth2: [111, 2049]
