@@ -9,9 +9,9 @@ csi_relationship: |
   * Produces automated builds of packages for the architecture listed. Builders can be scaled by adding new
 csi_security_category: High
 datacenter: staging
-dns: 10.3.163.33
+dns1: 10.3.163.33
 docker_registry: "candidate-registry.stg.fedoraproject.org"
-gw: 10.3.167.254
+eth0_ipv4_gw: 10.3.167.254
 # for systems that do not match the above - specify the same parameter in
 # the host_vars/$hostname file
 host_group: kojibuilder
