@@ -1,9 +1,15 @@
-/var/log/lighttpd/access.log {
+# We don't want to reload lighttpd twice (for each log file), so we use
+# the sharedscripts option.  This means that hitcounter is run only once too
+# (which is good).  In (likely impossible) situations when access.log is empty
+# and error.log not, we would call hitcounter too on an empty file.
+
+/var/log/lighttpd/*.log {
     rotate 5
     daily
     missingok
     notifempty
     compress
+    sharedscripts
     prerotate
 {% if devel %}
         /usr/bin/copr_log_hitcounter.py /var/log/lighttpd/access.log --ignore-subnets 172.25.144.0/20 209.132.184.33/24 &>>/var/log/copr-backend/hitcounter-logrotate.log || :
@@ -13,15 +19,5 @@
     endscript
     postrotate
         /usr/bin/killall -HUP lighttpd &>/dev/null || :
-    endscript
-}
-
-/var/log/lighttpd/error.log {
-    rotate 5
-    missingok
-    notifempty
-    compress
-    postrotate
-        systemctl restart lighttpd.service &>/dev/null || :
     endscript
 }
