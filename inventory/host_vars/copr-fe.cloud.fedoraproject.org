@@ -36,6 +36,8 @@ sar_output_file: copr.json
 sar_script: /usr/share/copr/coprs_frontend/run/copr-gdpr-sar.sh
 sar_script_user: copr-fe
 security_group: web-80-anywhere-persistent,web-443-anywhere-persistent,ssh-anywhere-persistent,default,allow-nagios-persistent
-tcp_ports: [22, 80, 443]
+tcp_ports: [22, 80, 443,
+  # this port is used by node_exporter whose metrics are used by prometheus
+  '9100']
 volumes: [{device: '/dev/vdc', volume_id: '8f790db7-8294-4d2b-8bae-7af5961ce0f8'}]
 zone: nova

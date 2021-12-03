@@ -8,3 +8,6 @@
   service: name="fm-consumer@copr_messaging"
            state=restarted
   when: not services_disabled|bool
+
+- name: restart node_exporter
+  action: service name=node_exporter state=restarted

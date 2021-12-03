@@ -40,6 +40,7 @@
       - pxz
       - python3-alembic
       - mod_auth_gssapi
+      - golang-github-prometheus-node-exporter
   tags:
   - packages
 
@@ -160,3 +161,14 @@
       export PGUSER=copr-fe
       export PGDATABASE=coprdb
     dest: "{{ copr_fe_homedir }}/.bash_profile"
+
+- name: start node exporter
+  service: state=started enabled=yes name=node_exporter
+
+- name: configure options in node exporter
+  lineinfile:
+    path: /etc/sysconfig/node_exporter
+    regexp: '^OPTIONS='
+    line: 'OPTIONS=--collector.textfile.directory /var/lib/node_exporter/textfile_collector --collector.systemd'
+    backrefs: yes
+  notify: restart node_exporter
