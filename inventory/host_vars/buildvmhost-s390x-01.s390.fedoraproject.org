@@ -8,7 +8,6 @@ network_connections:
     ip:
       address:
       - '{{ vmbr_ipv4 }}/{{ vmbr_ipv4_nm }}'
-      auto6: false
       dhcp4: false
       dns:
       - '{{ dns1 }}'

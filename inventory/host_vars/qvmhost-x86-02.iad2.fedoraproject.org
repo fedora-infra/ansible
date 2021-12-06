@@ -18,7 +18,6 @@ network_connections:
     ip:
       address:
         - '{{ br0_ip }}/24'
-      auto6: false
       dhcp4: false
       dns:
         - '{{ dns1 }}'

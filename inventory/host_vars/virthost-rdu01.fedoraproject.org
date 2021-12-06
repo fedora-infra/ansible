@@ -21,7 +21,6 @@ network_connections:
     ip:
       address:
       - '{{ br0_ipv4 }}/{{ br0_ipv4_nm }}'
-      auto6: false
       dhcp4: false
       dns:
       - '{{ dns1 }}'
@@ -40,7 +39,6 @@ network_connections:
     ip:
       address:
       - '{{ br1_ipv4 }}/{{ br1_ipv4_nm }}'
-      auto6: false
       dhcp4: false
       dns:
       - '{{ dns1 }}'
