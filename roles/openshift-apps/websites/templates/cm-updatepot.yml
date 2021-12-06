@@ -1,0 +1,9 @@
+{% macro load_file(filename) %}{% include filename %}{%- endmacro -%}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: updatepot-scripts
+data:
+  updatepot.sh: |-
+    {{ load_file('updatepot.sh') | indent() }}

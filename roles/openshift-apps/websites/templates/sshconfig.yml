@@ -6,7 +6,7 @@ metadata:
   labels:
     app: websites
 stringData:
-  id_rsa_web_trans: |-
+  id_rsa_web_trans: |
     {{ lookup('file', ssh_key_path) | indent(4) }}
   config: |-
     Host pagure.io

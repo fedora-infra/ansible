@@ -20,20 +20,9 @@ spec:
           containers:
           - name: pushpot
             image: docker-registry.default.svc:5000/websites/builder:latest
-            command: ["/bin/bash", "-c"]
-            args: 
-            - |
-              cd /tmp
-              git clone https://pagure.io/fedora-web/websites.git
-              cd websites
-              
-              for i in getfedora.org; do
-                pushd sites/$i/scripts
-                ./translations-source.sh
-                [ -f $i.pot ] && ./push-pot.sh
-                popd
-              done
-            env: []
+            command: 
+            - /bin/bash
+            - /scripts/updatepot.sh
             volumeMounts: 
             - mountPath: /.gitconfig
               name: gitconfig
@@ -42,6 +31,8 @@ spec:
             - name: sshconfig
               mountPath: /.ssh
               readOnly: true
+            - name: scripts
+              mountPath: /scripts
           restartPolicy: Never
           startingDeadlineSeconds: 600
           volumes: 
@@ -51,3 +42,6 @@ spec:
           - name: gitconfig
             configMap:
               name: gitconfig
+          - name: scripts
+            configMap:
+              name: updatepot-scripts
