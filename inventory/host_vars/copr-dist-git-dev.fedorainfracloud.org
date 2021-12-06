@@ -26,7 +26,10 @@ nagios_Check_Services:
 public_ip: 209.132.184.179
 root_auth_users: ryanlerch pingou msuchy frostyx praiskup schlupov
 security_group: web-80-anywhere-persistent,web-443-anywhere-persistent,ssh-anywhere-persistent,default,all-icmp-persistent
-tcp_ports: [22, 80, 443]
+tcp_ports: [22, 80, 443,
+    # node_exporter/prometheus
+    9100,
+]
 # volumes:  copr-dist-git-dev
 volumes: [{device: '/dev/vdc', volume_id: '64f21445-d758-4b19-8401-e497cd0ae012'}]
 zone: nova

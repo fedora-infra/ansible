@@ -11,7 +11,10 @@ letsencrypt:
         - copr-dist-git-dev.fedorainfracloud.org
       mail: copr-devel@lists.fedorahosted.org
   predefined_deploy_script: httpd
-tcp_ports: [22, 80, 443]
+tcp_ports: [22, 80, 443,
+    # node_exporter/prometheus
+    9100,
+]
 services_disabled: false
 
 aws_ipv6_addr: "2600:1f18:8ee:ae00:691b:4103:dbcd:a64a/128"

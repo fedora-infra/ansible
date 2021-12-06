@@ -19,6 +19,7 @@
       - rdiff-backup
       - scl-utils-build
       - tmpwatch
+      - golang-github-prometheus-node-exporter
 
 - name: install latest dist-git and copr-dist-git
   dnf:
@@ -104,6 +105,7 @@
   - "httpd"
   - "dist-git.socket"
   - "copr-dist-git"
+  - "node_exporter"
   when: not services_disabled|bool
 
 - name: create place for our custom SELinux policy
