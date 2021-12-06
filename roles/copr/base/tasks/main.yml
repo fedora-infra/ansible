@@ -49,6 +49,11 @@
   tags:
   - packages
 
+- name: install node_exporter
+  dnf: state=latest pkg=golang-github-prometheus-node-exporter
+  tags:
+  - packages
+
 - name: install dev helper packages
   dnf:
     state: present
@@ -108,6 +113,9 @@
     regex: ^IPV6ADDR=
   when: aws_ipv6_addr is defined
   tags: ipv6_config
+
+- name: start node exporter
+  service: state=started enabled=yes name=node_exporter
 
 # - name: enable and run logrotate service
 #   service: name="logrotate" state=started
