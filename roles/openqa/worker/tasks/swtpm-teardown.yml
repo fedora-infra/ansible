@@ -7,7 +7,7 @@
   file: path=/etc/systemd/system/openqa-swtpm@.service state=absent
 
 - name: Unload custom SELinux policy
-  command: semodule -l systemd-swtpm
+  command: semodule -r systemd-swtpm
 
 - name: Remove custom SELinux policy file
   file: path=/usr/local/share/selinux/systemd-swtpm.pp state=absent
