@@ -30,6 +30,7 @@ openshift_required_images:
 osbs_client_conf_path: /etc/osbs.conf
 osbs_koji_username: "kojibuilder"
 osbs_url: "osbs.fedoraproject.org"
+package_excludes: "docker*"
 primary_auth_source: ipa
 source_registry: "registry.fedoraproject.org"
 sudoers: "{{ private }}/files/sudo/osbs-sudoers"
