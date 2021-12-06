@@ -4,25 +4,24 @@
 # would call hitcounter too on an empty file.
 #
 # Note that lighttpd server runs with max-workers, and thus we pipe the access
-# logs through cronolog to the access.log.  It doesn't make sense to -HUP
-# Lighty, because then it doesn't restart cronolog.  We need to -HUP the
-# cronolog directly (which is fortunately re-started by Lighty/mod_accesslog).
+# logs through cronolog to the access.log.  So we send -HUP to Lighty (leads to
+# file-descriptor refresh on error.log, but doesn't restart cronolog process),
+# and we also send -HUP to cronolog process (which is fortunately re-started by
+# Lighty/mod_accesslog).
 
-## /var/log/lighttpd/*.log {
-##     rotate 5
-##     daily
-##     missingok
-##     notifempty
-##     compress
-##     sharedscripts
-##     prerotate
-## {% if devel %}
-##         /usr/bin/copr_log_hitcounter.py /var/log/lighttpd/access.log --ignore-subnets 172.25.144.0/20 209.132.184.33/24 &>>/var/log/copr-backend/hitcounter-logrotate.log || :
-## {% else %}
-##         /usr/bin/copr_log_hitcounter.py /var/log/lighttpd/access.log --ignore-subnets 172.25.80.0/20 209.132.184.33/24 &>>/var/log/copr-backend/hitcounter-logrotate.log || :
-## {% endif %}
-##     endscript
-##     postrotate
-##         /usr/bin/killall -HUP cronolog &>>/var/log/copr-backend/cronolog-restart.log || :
-##     endscript
-## }
+/var/log/lighttpd/*log {
+    rotate 5
+    daily
+    missingok
+    notifempty
+    compress
+    delaycompress
+    sharedscripts
+    prerotate
+        /usr/bin/copr_log_hitcounter.py /var/log/lighttpd/access.log --ignore-subnets 172.25.144.0/20 209.132.184.33/24 &>>/var/log/copr-backend/hitcounter-logrotate.log || :
+    endscript
+    postrotate
+        /usr/bin/killall -HUP lighttpd &>/dev/null || :
+        /usr/bin/killall -HUP cronolog &>/dev/null || :
+    endscript
+}
