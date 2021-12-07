@@ -69,6 +69,7 @@
 - name: allow lighttpd to step into certbots directories
   acl:
     path: "{{ item }}"
+    entity: lighttpd
     etype: user
     permissions: --x
     state: present
