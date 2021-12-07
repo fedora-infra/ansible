@@ -15,6 +15,7 @@
   - restart lighttpd
   tags:
   - config
+  - config_httpd_certificates
 
 # When we do 'systemctl restart', lighttpd is initially started as "root"
 # process (when the config is loaded) and later it does setuid(lighttpd).
@@ -29,10 +30,11 @@
     path: "{{ item }}"
     entity: lighttpd
     etype: user
-    permissions: r--
+    permissions: r
     state: present
   with_items:
     - "/etc/lighttpd/copr-be.cloud.fedoraproject.org.pem"
     - "/etc/lighttpd/copr-be.cloud.fedoraproject.org.intermediate.cert"
   tags:
   - config
+  - config_httpd_certificates
