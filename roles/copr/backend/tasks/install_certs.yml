@@ -1,5 +1,7 @@
+---
 - name: copy httpd ssl certificates
-  copy: src="{{ private }}/files/httpd/{{ item }}" dest="/etc/lighttpd/{{ item }}" owner=root group=root mode=0600
+  copy: src="{{ private }}/files/httpd/{{ item }}"
+        dest="/etc/lighttpd/{{ item }}" owner=root group=root mode=0600
   with_items:
   - copr-be.cloud.fedoraproject.org.key
   - copr-be.cloud.fedoraproject.org.cert
@@ -11,5 +13,25 @@
   - copr.fedorainfracloud.org.intermediate.crt
   notify:
   - restart lighttpd
+  tags:
+  - config
+
+# When we do 'systemctl restart', lighttpd is initially started as "root"
+# process (when the config is loaded) and later it does setuid(lighttpd).
+# So "restart" is just fine.   Though we also do 'killall -HUP lighttpd' in
+# several occasions and then 'lighttpd' user needs to have the access.  See the
+# following issues:
+#   https://pagure.io/copr/copr/issue/2001 Resolves:
+#   https://pagure.io/fedora-infrastructure/issue/10391
+- name: allow lighttpd to read the certificates
+  acl:
+    path: "{{ item }}"
+    entity: lighttpd
+    etype: user
+    permissions: r--
+    state: present
+  with_items:
+    - /etc/lighttpd/copr.fedorainfracloud.org.pem
+    - /etc/lighttpd/copr.fedorainfracloud.org.intermediate.crt
   tags:
   - config
