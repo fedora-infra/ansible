@@ -1,16 +1,23 @@
 ---
+
+# Some files need to be made readable by lighttpd using the ACLs, so we need to
+# set the mode 0640 (the group mode means mask).
+
 - name: copy httpd ssl certificates
-  copy: src="{{ private }}/files/httpd/{{ item }}"
-        dest="/etc/lighttpd/{{ item }}" owner=root group=root mode=0600
+  copy: src="{{ private }}/files/httpd/{{ item.file }}"
+        dest="/etc/lighttpd/{{ item.file }}" owner=root group=root
+        mode={{ item.mode | default('0600') }}
   with_items:
-  - copr-be.cloud.fedoraproject.org.key
-  - copr-be.cloud.fedoraproject.org.cert
-  - copr-be.cloud.fedoraproject.org.pem
-  - copr-be.cloud.fedoraproject.org.intermediate.cert
-  - copr.fedorainfracloud.org.key
-  - copr.fedorainfracloud.org.crt
-  - copr.fedorainfracloud.org.pem
-  - copr.fedorainfracloud.org.intermediate.crt
+  - file: copr-be.cloud.fedoraproject.org.key
+  - file: copr-be.cloud.fedoraproject.org.cert
+  - file: copr-be.cloud.fedoraproject.org.pem
+    mode: "0640"
+  - file: copr-be.cloud.fedoraproject.org.intermediate.cert
+    mode: "0640"
+  - file: copr.fedorainfracloud.org.key
+  - file: copr.fedorainfracloud.org.crt
+  - file: copr.fedorainfracloud.org.pem
+  - file: copr.fedorainfracloud.org.intermediate.crt
   notify:
   - restart lighttpd
   tags:
@@ -27,14 +34,26 @@
 # Note that the items here must match the configuration in lighttpd.conf!
 - name: allow lighttpd to read the certificates
   acl:
-    path: "{{ item }}"
-    entity: lighttpd
-    etype: user
-    permissions: r
+    path: "{{ item.0 }}"
+    etype: "{{ item.1.etype }}"
+    entity: "{{ item.1.entity }}"
+    permissions: "{{ item.1.permissions }}"
     state: present
-  with_items:
-    - "/etc/lighttpd/copr-be.cloud.fedoraproject.org.pem"
-    - "/etc/lighttpd/copr-be.cloud.fedoraproject.org.intermediate.cert"
+  loop: "{{ files|product(perms)|list }}"
+  vars:
+    files:
+      - "/etc/lighttpd/copr-be.cloud.fedoraproject.org.pem"
+      - "/etc/lighttpd/copr-be.cloud.fedoraproject.org.intermediate.cert"
+    perms:
+      # make sure the default 'root' group has '---' perms
+      - etype: group
+        permissions: "---"
+        entity: null
+      # and grant lighty the read access
+      - etype: user
+        entity: lighttpd
+        permissions: "r--"
+
   tags:
   - config
   - config_httpd_certificates
