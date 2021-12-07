@@ -23,6 +23,7 @@
 # following issues:
 #   https://pagure.io/copr/copr/issue/2001 Resolves:
 #   https://pagure.io/fedora-infrastructure/issue/10391
+# Note that the items here must match the configuration in lighttpd.conf!
 - name: allow lighttpd to read the certificates
   acl:
     path: "{{ item }}"
@@ -31,7 +32,7 @@
     permissions: r--
     state: present
   with_items:
-    - /etc/lighttpd/copr.fedorainfracloud.org.pem
-    - /etc/lighttpd/copr.fedorainfracloud.org.intermediate.crt
+    - "/etc/lighttpd/copr-be.cloud.fedoraproject.org.pem"
+    - "/etc/lighttpd/copr-be.cloud.fedoraproject.org.intermediate.cert"
   tags:
   - config
