@@ -21,7 +21,7 @@
         /usr/bin/copr_log_hitcounter.py /var/log/lighttpd/access.log --ignore-subnets 172.25.144.0/20 209.132.184.33/24 &>>/var/log/copr-backend/hitcounter-logrotate.log || :
     endscript
     postrotate
-        /usr/bin/killall -HUP lighttpd &>/dev/null || :
+        /usr/bin/kill -HUP $(systemctl show --property MainPID --value lighttpd) || :
         /usr/bin/killall -HUP cronolog &>/dev/null || :
     endscript
 }
