@@ -4,7 +4,10 @@ copr_hostbase: copr-keygen-dev
 custom_rules: ['-A INPUT -p tcp -m tcp -s 18.208.10.131   --dport   80 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 18.208.10.131   --dport 5167 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 54.81.201.101   --dport   80 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 54.81.201.101   --dport 5167 -j ACCEPT']
 datacenter: aws
 freezes: false
-tcp_ports: [22]
+tcp_ports: [22,
+    # node_exporter/prometheus
+    9100,
+]
 services_disabled: false
 
 aws_ipv6_addr: "2600:1f18:8ee:ae00:3cbb:7920:d83:e607/128"

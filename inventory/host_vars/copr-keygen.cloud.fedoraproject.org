@@ -28,5 +28,8 @@ public_ip: 209.132.184.49
 root_auth_users: msuchy frostyx praiskup schlupov
 # security_group: default
 security_group: web-80-anywhere-persistent,ssh-anywhere-persistent,default,allow-nagios-persistent,keygen-persistent
+tcp_ports: [
+  # this port is used by node_exporter whose metrics are used by prometheus
+  '9100']
 volumes: [{device: '/dev/vdc', volume_id: '761175dc-daaf-48c0-be09-5799990f97a7'}]
 zone: nova
