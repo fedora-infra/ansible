@@ -59,6 +59,13 @@
     state: started
     enabled: yes
 
+# When we do 'systemctl restart', lighttpd is initially started as "root"
+# process (when the config is loaded) and later it does setuid(lighttpd).
+# So "restart" is just fine.   Though we also do 'killall -HUP lighttpd' in
+# several occasions and then 'lighttpd' user needs to have the access.  See the
+# following issues:
+#   https://pagure.io/copr/copr/issue/2001 Resolves:
+#   https://pagure.io/fedora-infrastructure/issue/10391
 - name: allow lighttpd to step into certbots directories
   acl:
     path: "{{ item }}"
