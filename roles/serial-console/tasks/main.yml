@@ -2,7 +2,7 @@
 # This role sets up serial console on ttyS1
 #
 - name: check for grub serial setup
-  command: cat /etc/grub2-efi.cfg
+  command: grub2-editenv list
   register: serial
   check_mode: no
   changed_when: '1 != 1'
@@ -11,23 +11,24 @@
   - serial-console
 
 - name: set grub to use serial console
-  command: /sbin/grubby --update-kernel=ALL --args="console=tty0 console=ttyS1,115200"
-  when: serial is defined and serial.stdout.find("console=tty0 console=ttyS1,115200") == -1
+  command: /sbin/grubby --update-kernel=ALL --args="console=tty0 console=ttyS0,115200 console=ttyS1,115200"
+  when: serial is defined and serial.stdout.find("console=tty0 console=ttyS0,115200 console=ttyS1,115200") == -1
   failed_when: '1 != 1'
   tags:
   - serial-console
 
-- name: setup systemd links for getty (S0)
-  copy: src=serial-getty@.service dest=/etc/systemd/system/serial-getty@ttyS1.service
+- name: enable and start getty on both serial ports
+  systemd:
+    name: serial-getty@ttyS0
+    state: started
+    enabled: true
   tags:
   - serial-console
 
-- name: link template in
-  file: dest=/etc/systemd/system/getty.target.wants/serial-getty@ttyS1 src=/etc/systemd/system/serial-getty@ttyS1.service state=link
-  tags:
-  - serial-console
-
-- name: start and enable
-  service: name=serial-getty@ttyS1 enabled=yes state=started
+- name: enable and start getty on both serial ports
+  systemd:
+    name: serial-getty@ttyS1
+    state: started
+    enabled: true
   tags:
   - serial-console
