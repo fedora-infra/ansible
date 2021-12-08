@@ -166,7 +166,7 @@
   template:
         src: fedmsg-koji-plugin.py
         dest: /usr/lib/koji-hub-plugins/fedmsg-koji-plugin.py
-        mode: 644
+        mode: 0644
   notify:
   - reload httpd
   tags:
