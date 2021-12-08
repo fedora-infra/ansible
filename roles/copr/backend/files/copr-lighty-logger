@@ -1,0 +1,33 @@
+#! /bin/bash
+
+# Something like 'cat' fucntionality, but automatically re-open the output file
+# upon the SIGHUP signal.  We used to use cronolog instead in Copr, but (a) we
+# haven't used it for rotating at all, and (b) that tool doesn't react on
+# SIGHUP.  Long story in: https://pagure.io/copr/copr/issue/2001
+#
+# One may object this is slow, I tested this locally with throughput about
+# 12k lines per second:
+#
+#   $ for i in `seq 1000000`; do printf "%79d\n" "0" >> /tmp/test-file; done
+#   $ time cat /tmp/test-file | /tmp/logger /tmp/output-measured
+#   real    1m24.354s
+#   user    0m39.895s
+#   sys     1m6.402s
+#
+# But we would get much higher throughput if implemented in C.
+
+logfile=$1
+cmd="$0 $*"
+
+handler()
+{
+  exec 1>> "$logfile"
+  echo "=== start: $cmd ==="
+}
+
+trap handler SIGHUP
+handler
+
+while IFS= read -r line; do
+    echo "$line"
+done

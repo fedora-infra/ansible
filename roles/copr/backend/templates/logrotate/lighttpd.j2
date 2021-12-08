@@ -3,20 +3,24 @@
 # (likely impossible) situations when access.log is empty and error.log not, we
 # would call hitcounter too on an empty file.
 #
-# Note that lighttpd server runs with max-workers, and thus we pipe the logs
-# through cronolog.  So the only reason we actually need logrotate is that
-# (a) it implements compression and (b) it allows us to trigger the hitcounter
-# script below.
+# Note that lighttpd server runs with max-workers, and thus we should pipe the
+# logs through cronolog to have consistent logs (see mod_accesslog docs).  On
+# the other hand, we still use logrotate.  That's needed because it supports
+# compressison, and because it can trigger the hitcounter script below.
 #
-# Note there are certain problems with SIGHUP and SIGUSR1 signals sent to
-# lighttpd main process directly (to re-open log descriptors), at least when
-# cronolog and logrotate are both enabled (see the headaches in
-# https://pagure.io/copr/copr/issue/2001).
-#
-# So we send -HUP to all cronolog processes (we have two only on the
-# copr-backend instance), which leads to gently termination.  This is
-# fortunately detected by Lighty and the cronolog processses are automatically
-# restarted.
+# Running both "log rotation" programs turned out to be very complicated:
+# - sending -HUP to lighty doesn't restart the piped cronolog, so it never
+#   reopens the file after rotation
+# - cronolog doesn't handle -HUP correctly, it just terminates
+# - when cronolog terminates, lighttpd restarts all the child processes (not
+#   just cronolog processes), leading to whole bunch of problems (but there's at
+#   least short downtime)
+# There's no reasonable way-around this than logrotate's copytruncate option
+# (which is racy by definition).  Lighty is innocent here (doesn't ever expect
+# the log pipe to terminate, and if it happens it's good reason to restart
+# everything).  Cronolog is innocent here, it doesn't actaully do any rotation.
+# Lograte is innocent as well.
+# See https://pagure.io/copr/copr/issue/2001 for more info.
 
 /var/log/lighttpd/*log {
     rotate 5
@@ -30,6 +34,6 @@
         /usr/bin/copr_log_hitcounter.py /var/log/lighttpd/access.log --ignore-subnets 172.25.144.0/20 209.132.184.33/24 &>>/var/log/copr-backend/hitcounter-logrotate.log || :
     endscript
     postrotate
-        /usr/bin/killall -HUP cronolog &>/dev/null || :
+        /usr/local/bin/copr-lighty-reopen-logs || :
     endscript
 }

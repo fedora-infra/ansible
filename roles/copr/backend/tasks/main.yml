@@ -29,7 +29,6 @@
       - python3-keystoneclient
       - python3-dateutil
       - php-cli
-      - cronolog
       - nfs-utils
       - golang-github-prometheus-node-exporter
 
@@ -146,8 +145,27 @@
 - name: install custom lighttpd template for directory listings
   template: src="lighttpd/dir-generator.php.j2" dest="/var/lib/copr/public_html/dir-generator.php" owner=copr group=copr mode=0755
 
+- name: install the helper scripts for lighttpd log rotation
+  copy:
+    src: "{{ item }}"
+    dest: /usr/local/bin/{{ item }}
+    mode: 0755
+    owner: root
+    group: root
+  with_items:
+    - copr-lighty-logger
+    - copr-lighty-reopen-logs
+  register: logrotate_scripts
+  tags: logrotate
+
+- name: fix selinux context on helper scripts
+  command: restorecon -irv /usr/local/bin/copr-lighty*
+  when: logrotate_scripts.changed
+  tags: logrotate
+
 - name: install custom logrotate config for lighttpd
   template: src="logrotate/lighttpd.j2" dest=/etc/logrotate.d/lighttpd owner=root group=root mode=644
+  tags: logrotate
 
 - name: start webserver
   service: state=started enabled=yes name=lighttpd

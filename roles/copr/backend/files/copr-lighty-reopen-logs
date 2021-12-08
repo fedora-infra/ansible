@@ -1,0 +1,15 @@
+#! /bin/bash
+
+main_pid=$(systemctl show --property MainPID --value lighttpd)
+for child in $(cat /proc/$main_pid/task/$main_pid/children); do
+    cmd_to_kill=$(readlink -f "/proc/$child/exe")
+    case $cmd_to_kill in
+        *bash)
+            echo "sending SIGHUP to PID $child as that's bash"
+            kill -HUP "$child"
+            ;;
+        *)
+            echo "Not sending to $cmd_to_kill"
+            ;;
+    esac
+done
