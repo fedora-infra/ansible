@@ -3,11 +3,20 @@
 # (likely impossible) situations when access.log is empty and error.log not, we
 # would call hitcounter too on an empty file.
 #
-# Note that lighttpd server runs with max-workers, and thus we pipe the access
-# logs through cronolog to the access.log.  So we send -HUP to Lighty (leads to
-# file-descriptor refresh on error.log, but doesn't restart cronolog process),
-# and we also send -HUP to cronolog process (which is fortunately re-started by
-# Lighty/mod_accesslog).
+# Note that lighttpd server runs with max-workers, and thus we pipe the logs
+# through cronolog.  So the only reason we actually need logrotate is that
+# (a) it implements compression and (b) it allows us to trigger the hitcounter
+# script below.
+#
+# Note there are certain problems with SIGHUP and SIGUSR1 signals sent to
+# lighttpd main process directly (to re-open log descriptors), at least when
+# cronolog and logrotate are both enabled (see the headaches in
+# https://pagure.io/copr/copr/issue/2001).
+#
+# So we send -HUP to all cronolog processes (we have two only on the
+# copr-backend instance), which leads to gently termination.  This is
+# fortunately detected by Lighty and the cronolog processses are automatically
+# restarted.
 
 /var/log/lighttpd/*log {
     rotate 5
@@ -21,7 +30,6 @@
         /usr/bin/copr_log_hitcounter.py /var/log/lighttpd/access.log --ignore-subnets 172.25.144.0/20 209.132.184.33/24 &>>/var/log/copr-backend/hitcounter-logrotate.log || :
     endscript
     postrotate
-        /usr/bin/kill -HUP $(systemctl show --property MainPID --value lighttpd) || :
         /usr/bin/killall -HUP cronolog &>/dev/null || :
     endscript
 }
