@@ -444,6 +444,20 @@ def sync_single_release(release):
 
     return needssync
 
+def get_epel_release_rel_path(release, epel_next=False):
+    """
+    Get the relative path of the epel-{next-}release build
+    """
+    if epel_next:
+        for path in Path(RELEASES[release]['repos']['epel']['to'][0]['dest']).rglob('epel-next-release*noarch*'):
+            if 'Packages' in str(path) and 'x86_64' in str(path):
+                pkg_relpath = os.path.relpath(path,EPELDEST)
+    else:
+        for path in Path(RELEASES[release]['repos']['epel']['to'][0]['dest']).rglob('epel-release*noarch*'):
+            if 'Packages' in str(path) and 'x86_64' in str(path):
+                pkg_relpath = os.path.relpath(path,EPELDEST)
+    return path, pkg_relpath
+
 def update_epel_release_latest(releases):
     """
     This function, creates or updates a symbolic links for epel-release, latest and next, packages.
@@ -461,7 +475,7 @@ def update_epel_release_latest(releases):
 
     Parameters:
     releases (dict): contains similar information of global variable RELEASES
-    """    
+    """
     for release in releases:
         if 'epel' in release:
             if 'next' in RELEASES[release]['repos']['epel']['to'][0]['dest']:
@@ -469,23 +483,22 @@ def update_epel_release_latest(releases):
                 # For next's epel release, use the subpackage rpm from epel repo instead of
                 # epel next repo
                 release = release[:-1]
+                path, pkg_relpath = get_epel_release_rel_path(release, True)
             else:
                 dest = '/pub/epel/epel-release-latest-' + release[4] + '.noarch.rpm'
-            for path in Path(RELEASES[release]['repos']['epel']['to'][0]['dest']).rglob('epel-*release*noarch*'):
-                if 'Packages' in str(path) and 'x86_64' in str(path):
+                path, pkg_relpath = get_epel_release_rel_path(release)
 
-                    pkg_relpath = os.path.relpath(path,EPELDEST)
+            if os.path.lexists(dest) and os.path.islink(dest):
+                origin_dest = os.path.join(EPELDEST,os.readlink(dest))
+                if origin_dest != str(path):
+                    os.remove(dest)
+                    os.symlink(pkg_relpath, dest)
+            elif os.path.lexists(dest) and not os.path.islink(dest):
+                os.remove(dest)
+                os.symlink(pkg_relpath, dest)
+            else:
+                os.symlink(pkg_relpath, dest)
 
-                    if os.path.lexists(dest) and os.path.islink(dest):
-                        origin_dest = os.path.join(EPELDEST,os.readlink(dest))
-                        if origin_dest != str(path):
-                            os.remove(dest)
-                            os.symlink(pkg_relpath, dest)
-                    elif os.path.lexists(dest) and not os.path.islink(dest):
-                        os.remove(dest)
-                        os.symlink(pkg_relpath, dest)
-                    else:
-                        os.symlink(pkg_relpath, dest)
 
 def main():
     parser = argparse.ArgumentParser()
