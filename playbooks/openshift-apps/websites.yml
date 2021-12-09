@@ -44,6 +44,11 @@
 
   - role: openshift/object
     app: websites
+    template: cm-updatepot.yml
+    objectname: cm-updatepot.yml
+
+  - role: openshift/object
+    app: websites
     template: gitconfig.yml
     objectname: gitconfig.yml
 
