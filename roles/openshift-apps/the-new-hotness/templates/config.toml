@@ -26,9 +26,6 @@ queue = "the-new-hotness{{ env_suffix }}"
 exchange = "amq.topic"
 routing_keys = [
   "org.release-monitoring.*.anitya.project.version.update",
-{% if not env == "staging" %}
-  "org.release-monitoring.*.anitya.project.map.new",
-{% endif %}
   "org.fedoraproject.*.buildsys.task.state.change",
 ]
 
@@ -93,10 +90,6 @@ read_timeout = 15
 # The number of times the-new-hotness should retry a network request that
 # that failed for any reason (e.g. read timeout, DNS error, etc)
 requests_retries = 3
-{% if not env == "staging" %}
-# If true, publish fedmsg messages instead of fedora-messaging messages
-legacy_messaging = false
-{% endif %}
 
 [consumer_config.bugzilla]
 enabled = true
@@ -129,7 +122,11 @@ More information about the service that created this bug can be found at: %(expl
 
 Please keep in mind that with any upstream change, there may also be packaging changes that need to be made. Specifically, please remember that it is your responsibility to review the new version to ensure that the licensing is still correct and that no non-free or legally problematic items have been added upstream.\n
 
-Based on the information from anitya: https://release-monitoring.org/project/%(projectid)s/\n
+{% if env == "staging" %}
+Based on the information from Anitya: https://stg.release-monitoring.org/project/%(projectid)s/\n
+{% else %}
+Based on the information from Anitya: https://release-monitoring.org/project/%(projectid)s/\n
+{% endif %}
 """
 
 [consumer_config.koji]
@@ -154,13 +151,3 @@ user_email = [
 opts = {scratch = true}
 priority = 30
 target_tag = "rawhide"
-
-{% if not env == "staging" %}
-[consumer_config.anitya]
-url = "https://release-monitoring.org"
-
-[consumer_config.cache]
-backend = "dogpile.cache.dbm"
-expiration_time = 300
-arguments = {filename = "/var/tmp/the-new-hotness-cache.dbm"}
-{% endif %}
