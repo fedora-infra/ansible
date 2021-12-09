@@ -24,6 +24,9 @@ SESSION_COOKIE_SECURE = True
 # FreeIPA
 FREEIPA_ADMIN_USER = "noggin"
 
+# How many minutes before the new account activation link expires
+ACTIVATION_TOKEN_EXPIRATION = 60
+
 # How many minutes before a password reset request expires
 PASSWORD_RESET_EXPIRATION = 30
 
