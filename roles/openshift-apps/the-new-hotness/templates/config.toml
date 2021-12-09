@@ -13,11 +13,7 @@ topic_prefix = "org.fedoraproject.prod"
 {% endif %}
 passive_declares = true
 
-{% if env == "staging" %}
 callback = "hotness.hotness_consumer:HotnessConsumer"
-{% else %}
-callback = "hotness.consumers:BugzillaTicketFiler"
-{% endif %}
 
 # Note the double brackets below.
 # To add another binding, add another [[bindings]] section.
