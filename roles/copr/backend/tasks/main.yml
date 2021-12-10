@@ -95,7 +95,7 @@
   copy: src="boto" dest=/home/copr/.boto owner=copr group=copr
 
 # setup webserver
-- name: add config for copr-repo path
+- name: install lighttpd.conf
   template: src="lighttpd/lighttpd.conf" dest=/etc/lighttpd/lighttpd.conf owner=root group=root mode=0644
   notify:
   - restart lighttpd
