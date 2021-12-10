@@ -42,13 +42,6 @@ $VERSION = "0.3";
 $show_hidden_files = true;
 $calculate_folder_size = false;
 
-// Various file type associations
-$movie_types = array('mpg','mpeg','avi','asf','mp3','wav','mp4','wma','aif','aiff','ram', 'midi','mid','asf','au','flac');
-$image_types = array('jpg','jpeg','gif','png','tif','tiff','bmp','ico');
-$archive_types = array('zip','cab','7z','gz','tar.bz2','tar.gz','tar','rar',);
-$document_types = array('txt','text','doc','docx','abw','odt','pdf','rtf','tex','texinfo',);
-$font_types = array('ttf','otf','abf','afm','bdf','bmf','fnt','fon','mgf','pcf','ttc','tfm','snf','sfd');
-
 
 // Get the path (cut out the query string from the request_uri)
 list($path) = explode('?', $_SERVER['REQUEST_URI']);
@@ -114,7 +107,12 @@ function format_bytes($size, $precision=0) {
 // This function returns the mime type of $file.
 //
 function get_file_type($file) {
-	global $image_types, $movie_types;
+	// Various file type associations
+	$movie_types = array('mpg','mpeg','avi','asf','mp3','wav','mp4','wma','aif','aiff','ram', 'midi','mid','asf','au','flac');
+	$image_types = array('jpg','jpeg','gif','png','tif','tiff','bmp','ico');
+	$archive_types = array('zip','cab','7z','gz','tar.bz2','tar.gz','tar','rar',);
+	$document_types = array('txt','text','doc','docx','abw','odt','pdf','rtf','tex','texinfo',);
+	$font_types = array('ttf','otf','abf','afm','bdf','bmf','fnt','fon','mgf','pcf','ttc','tfm','snf','sfd');
 
 	$pos = strrpos($file, ".");
 	if ($pos === false) {
@@ -208,7 +206,7 @@ if($handle = @opendir($path)) {
 			);
 		}
 	}
-	fclose($handle);
+	closedir($handle);
 }
 
 // Show sort methods
@@ -221,7 +219,7 @@ $header['size'] = "Size";
 $header['file_type'] = "Type";
 
 foreach($header as $key=>$item) {
-	if($_GET['sort'] == $key) {
+	if(@$_GET['sort'] == $key) {
 		print "<th class='n'>".$item."</th>";
 	} else {
 		print "<th class='n'>".$item."</th>";
@@ -285,7 +283,6 @@ print "</tbody>
 	</div>
 	<div class='script_title'>Lighttpd Enhanced Directory Listing Script</div>
 	<div class='script_title' style='float:left; font-size:10pt'><a href=".$frontend_url.">".$frontend_url_text."</a></div>
-	<div class='foot'>". $_ENV['SERVER_SOFTWARE'] . "</div>
 	<script type='text/javascript'>
 	// <!--
 
