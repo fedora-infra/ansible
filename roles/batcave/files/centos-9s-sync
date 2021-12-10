@@ -1,17 +1,20 @@
 #!/bin/sh
 
-SERVER=kojihub.stream.centos.org
-STREAM_TOPDIR=kojifiles/repos/c9s-build/latest/
+## Set up variables we use
+RSYNC='/usr/bin/rsync'
+RS_OPT="-avSHP  --numeric-ids"
+#RS_DEADLY="--delete --delete-excluded --delete-delay --delay-updates"
+RS_DEADLY="--delete --delete-delay --delay-updates"
+CENT_EXCLUDES="--exclude=isos --exclude=kickstart --exclude=images"
 
-## mirror CentOS-9 Stream
+SERVER=centos-master01.iad2.fedoraproject.org
 
-DESTDIR=/mnt/fedora/app/fi-repo/centos/centos-9-stream
+## Mirror CentOS-9-Stream
 
-mkdir -p ${DESTDIR}
+RSYNC_DESTDIR=/mnt/fedora/app/fi-repo/centos/centos-9-stream/
+RSYNC_MOD="CentOS-Stream-Ref/9-stream/"
 
-for i in `echo aarch64 i386 ppc64le s390x x86_64`
-do
-        mkdir -p ${DESTDIR}/${i}
-	cd ${DESTDIR}
-	reposync --download-metadata --disablerepo=* --repofrompath=$i,https://$SERVER/$STREAM_TOPDIR/$i --enablerepo=$i
-done
+mkdir -p ${RSYNC_DESTDIR}
+
+
+${RSYNC} ${RS_OPT} ${RS_DEADLY} ${CENT_EXCLUDES} ${SERVER}::${RSYNC_MOD} ${RSYNC_DESTDIR}
