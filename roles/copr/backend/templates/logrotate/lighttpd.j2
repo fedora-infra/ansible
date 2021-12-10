@@ -31,7 +31,7 @@
     delaycompress
     sharedscripts
     prerotate
-        /usr/bin/copr_log_hitcounter.py /var/log/lighttpd/access.log --ignore-subnets 172.25.144.0/20 209.132.184.33/24 &>>/var/log/copr-backend/hitcounter-logrotate.log || :
+        /usr/bin/copr_log_hitcounter.py /var/log/lighttpd/access.log &>>/var/log/copr-backend/hitcounter-logrotate.log || :
     endscript
     postrotate
         /usr/local/bin/copr-lighty-reopen-logs || :
