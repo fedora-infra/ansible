@@ -57,6 +57,8 @@
   - role: httpd/certificate
     certname: getfedora.org
     SSLCertificateChainFile: getfedora.org.intermediate.cert
+    tags:
+    - getfedora.org
 
   - role: httpd/certificate
     certname: qa.stg.fedoraproject.org
