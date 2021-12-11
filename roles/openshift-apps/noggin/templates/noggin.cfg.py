@@ -46,6 +46,7 @@ AVATAR_DEFAULT_TYPE = "retro"
 MAIL_DOMAIN_BLOCKLIST = [
     "fedoraproject.org",
     "centosproject.org",
+    "0ooos3.cn",
 ]
 
 # Banners
