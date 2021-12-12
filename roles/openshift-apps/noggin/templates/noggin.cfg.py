@@ -33,7 +33,7 @@ PASSWORD_RESET_EXPIRATION = 30
 # Email
 MAIL_FROM = "Fedora Account System <fas@fedoraproject.org>"
 MAIL_DEFAULT_SENDER = "Fedora Account System <fas@fedoraproject.org>"
-MAIL_SERVER = "bastion.fedoraproject.org"
+MAIL_SERVER = "bastion02.fedoraproject.org"
 
 # Theme
 THEME = "{{ noggin_theme }}"
