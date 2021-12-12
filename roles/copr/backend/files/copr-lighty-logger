@@ -1,33 +1,46 @@
 #! /bin/bash
 
-# Something like 'cat' fucntionality, but automatically re-open the output file
-# upon the SIGHUP signal.  We used to use cronolog instead in Copr, but (a) we
-# haven't used it for rotating at all, and (b) that tool doesn't react on
-# SIGHUP.  Long story in: https://pagure.io/copr/copr/issue/2001
+# logrotate-friendly-log-pipe <output-log-file>
+# https://gist.github.com/praiskup/18f290b549a990c966b64e500797e714
 #
-# One may object this is slow, I tested this locally with throughput about
-# 12k lines per second:
+# Pipe logs to the <output-log-file>.  Reopen the file upon the SIGHUP signal.
 #
-#   $ for i in `seq 1000000`; do printf "%79d\n" "0" >> /tmp/test-file; done
-#   $ time cat /tmp/test-file | /tmp/logger /tmp/output-measured
-#   real    1m24.354s
-#   user    0m39.895s
-#   sys     1m6.402s
+# This is especially useful when a multi-process Lighttpd server is used (with
+# the 'server.max-workers = N' option), and use of Cronolog is not desirable:
+# https://redmine.lighttpd.net/projects/1/wiki/Server_max-workerDetails
 #
-# But we would get much higher throughput if implemented in C.
+# Background story: https://pagure.io/copr/copr/issue/2001
 
 logfile=$1
-cmd="$0 $*"
 
-handler()
+if test -z "$logfile"; then
+    echo "usage: $0 <logfile>"
+    exit 1
+fi
+
+cmd="$0 $*"
+shell_pid=$$
+
+quit()
 {
-  exec 1>> "$logfile"
-  echo "=== start: $cmd ==="
+  set -x ; kill "$cat_pid" ; wait ; exit 0
 }
 
-trap handler SIGHUP
-handler
+trap ':' HUP
+trap 'quit' INT
+trap 'quit' TERM
+trap 'quit' USR1
 
-while IFS= read -r line; do
-    echo "$line"
+# Wait for 'cat' to quit.  SIGHUP interrupt keeps cycling.
+while :; do
+    exec >> "$logfile"
+    echo "=== start: $cmd ==="
+    cat < /proc/$shell_pid/fd/0 &
+    cat_pid=$!
+    wait
+    status=$?
+    # ksh gives us 257 here
+    test $status -ne 129 && test $status -ne 257 && break
+    kill "$cat_pid"
+    wait
 done
