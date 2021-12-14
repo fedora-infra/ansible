@@ -117,8 +117,12 @@
 - name: put copr-rpmbuild configuration file in the right place
   copy: src=files/main.ini dest=/etc/copr-rpmbuild/main.ini
 
+# This taks is to be dropped once we migrate to F35.  On F35, we want to keep
+# the default /etc/rpkg.conf untouched!
 - name: put rpkg configuration file to the right place
   copy: src=files/rpkg.conf dest=/etc/rpkg.conf
+  when:
+  - prepare_base_image is not defined
 
 - name: mockbuilder user
   user: name=mockbuilder groups=mock
@@ -181,6 +185,9 @@
 - name: Update gem2rpm package to the latest version
   dnf: state=latest pkg=rubygem-gem2rpm
 
+# We want to drop this change with F35, too.
 # See https://pagure.io/copr/copr/pull-request/1950
 - name: copy temporary rpkg.conf.j2 until builders run F35
   copy: src=files/copr-rpmbuild/rpkg.conf.j2 dest=/etc/copr-rpmbuild/rpkg.conf.j2
+  when:
+  - prepare_base_image is not defined
