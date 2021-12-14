@@ -161,14 +161,14 @@
 - name: Install various other required packages
   package:
     name:
-      - python3-libselinux # for custom SELinux policy
+      - python3-libselinux # for using seboolean module
       - git # for checking out tests/tools
       - jq # for checking if tests changed after template load
-      - libselinux-utils # custom SELinux policy
-      - python3-libsemanage # custom SELinux policy
+      - python3-libsemanage # for using seboolean module
       - nfs-utils # for configuring/running NFS server
       - perl(Class::DBI::Pg) # for using postgresql DB
       - genisoimage # for building cloud-init ISO
+      - policycoreutils # for loading SELinux policy module
     state: present
   tags:
   - packages
@@ -288,9 +288,17 @@
   - openqa-websockets
   - openqa-gru
 
-# This is using a big hammer until #1277312 is resolved
-- name: Allow Apache to connect to openQA
-  seboolean: name=httpd_can_network_connect state=yes persistent=yes
+# we used to set this as a bigger hammer to let httpd connect to openQA
+- name: Unset httpd_can_network_connect SELinux boolean
+  seboolean: name=httpd_can_network_connect state=no persistent=yes
+
+- name: Copy over custom SELinux module allowing httpd to connect to openQA
+  copy: src=httpd-openqa.pp dest=/usr/local/share/selinux/httpd-openqa.pp owner=root group=root mode=0644
+  register: selinux_module
+
+- name: Load our custom SELinux module
+  command: semodule -i /usr/local/share/selinux/httpd-openqa.pp
+  when: selinux_module is changed
 
 - name: Allow Apache to read from NFS (as we store test data files there now)
   seboolean: name=httpd_use_nfs state=yes persistent=yes

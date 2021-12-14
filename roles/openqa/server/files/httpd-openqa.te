@@ -1,0 +1,17 @@
+
+module httpd-openqa 1.0;
+
+require {
+	type openqa_port_t;
+	type httpd_t;
+	type openqa_websockets_port_t;
+	class tcp_socket name_connect;
+}
+
+#============= httpd_t ==============
+
+#!!!! This avc can be allowed using the boolean 'httpd_can_network_connect'
+allow httpd_t openqa_port_t:tcp_socket name_connect;
+
+#!!!! This avc can be allowed using the boolean 'httpd_can_network_connect'
+allow httpd_t openqa_websockets_port_t:tcp_socket name_connect;
