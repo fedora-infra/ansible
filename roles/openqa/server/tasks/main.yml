@@ -288,9 +288,11 @@
   - openqa-websockets
   - openqa-gru
 
-# we used to set this as a bigger hammer to let httpd connect to openQA
-- name: Unset httpd_can_network_connect SELinux boolean
-  seboolean: name=httpd_can_network_connect state=no persistent=yes
+- name: Create somewhere to stick our custom SELinux module
+  file:
+    path: /usr/local/share/selinux
+    state: directory
+    mode: '0755'
 
 - name: Copy over custom SELinux module allowing httpd to connect to openQA
   copy: src=httpd-openqa.pp dest=/usr/local/share/selinux/httpd-openqa.pp owner=root group=root mode=0644
@@ -299,6 +301,10 @@
 - name: Load our custom SELinux module
   command: semodule -i /usr/local/share/selinux/httpd-openqa.pp
   when: selinux_module is changed
+
+# we used to set this as a bigger hammer to let httpd connect to openQA
+- name: Unset httpd_can_network_connect SELinux boolean
+  seboolean: name=httpd_can_network_connect state=no persistent=yes
 
 - name: Allow Apache to read from NFS (as we store test data files there now)
   seboolean: name=httpd_use_nfs state=yes persistent=yes
