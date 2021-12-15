@@ -302,9 +302,10 @@
   command: semodule -i /usr/local/share/selinux/httpd-openqa.pp
   when: selinux_module is changed
 
-# we used to set this as a bigger hammer to let httpd connect to openQA
-- name: Unset httpd_can_network_connect SELinux boolean
-  seboolean: name=httpd_can_network_connect state=no persistent=yes
+# Unfortunately still need this until port 9528 is tagged:
+# https://bugzilla.redhat.com/show_bug.cgi?id=1277312
+- name: Set httpd_can_network_connect SELinux boolean
+  seboolean: name=httpd_can_network_connect state=yes persistent=yes
 
 - name: Allow Apache to read from NFS (as we store test data files there now)
   seboolean: name=httpd_use_nfs state=yes persistent=yes
