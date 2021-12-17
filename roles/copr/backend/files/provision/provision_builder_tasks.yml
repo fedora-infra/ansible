@@ -191,3 +191,11 @@
   copy: src=files/copr-rpmbuild/rpkg.conf.j2 dest=/etc/copr-rpmbuild/rpkg.conf.j2
   when:
   - prepare_base_image is not defined
+
+- name: install the CentOS DistGit config file
+  copy:
+    src: files/copr-distgit-client/centos-stream.ini
+    dest: /etc/copr-distgit-client/centos-stream.ini
+    mode: 0644
+  when:
+  - prepare_base_image is not defined
