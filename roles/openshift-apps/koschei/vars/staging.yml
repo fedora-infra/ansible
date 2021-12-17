@@ -33,4 +33,4 @@ koschei_backend_services:
 koschei_cron_jobs:
   - name: db-cleanup
     schedule: "0 3 * * *"
-    command: "koschei-admin cleanup --older-than 6"
+    command: "koschei-admin cleanup --older-than 2"
