@@ -86,7 +86,7 @@
   package:
     name: 'epel-release'
     state: present
-  when: ((ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS') and use_default_epel) and datacenter == "aws"
+  when: (((ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS') and ansible_distribution_major_version|int != 9) and use_default_epel) and datacenter == "aws"
   tags:
   - config
   - packages
