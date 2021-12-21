@@ -16,8 +16,8 @@
   - selinux
   when: ansible_distribution_major_version|int < 8 and ansible_distribution == 'RedHat'
 
-# 
-# On fedora and rhel larger than 7, all we need is policycoreutils-python-utils, 
+#
+# On fedora and rhel larger than 7, all we need is policycoreutils-python-utils,
 # which in turn pulls in python3-policycoreutils
 #
 - name: ensure packages required for semanage are installed (fedora/rhel8)
@@ -97,7 +97,7 @@
 #  - restart NetworkManager
   - reload NetworkManager-connections
   - apply interface-changes
-  when: 
+  when:
   - virthost is not defined
   - item.startswith(('eth','br','enc','em','eno'))
   - hostvars[inventory_hostname]['ansible_' + item.replace('-','_')]['type'] == 'ether'
@@ -228,6 +228,12 @@
   - config
   - base
   when: ansible_distribution_major_version|int > 31 and ansible_distribution == 'Fedora' or ansible_distribution == 'RedHat'
+
+- name: Ensure iptables is installed
+  dnf: state=present name=iptables
+  tags:
+  - packages
+  - base
 
 - name: iptables
   template: src={{ item }} dest=/etc/sysconfig/iptables mode=0600 validate="/sbin/iptables-restore --test %s"
@@ -551,8 +557,8 @@
   - config
   - krb5
 
-# rhel8 hosts do not have /usr/bin/python, but there are a few things we call 
-# with that because they also run the same on python2 hosts. 
+# rhel8 hosts do not have /usr/bin/python, but there are a few things we call
+# with that because they also run the same on python2 hosts.
 # So, we set python3 to /usr/bin/python on those hosts:
 - name : ensure that platform-python is installed on EL8 boxes
   package: name={{ item }} state=present
