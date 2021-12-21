@@ -1,7 +1,7 @@
 ---
 - set_fact:
     ping_user: copr-ping
-    ping_scriptdir: /home/copr-ping
+    ping_homedir: /home/copr-ping
     ping_log: /var/log/copr-ping.log
     ping_script: copr-ping-script.sh
   tags: copr_ping
@@ -31,7 +31,7 @@
 
 - name: install the ping script
   template:
-    dest: "{{ ping_scriptdir }}/{{ ping_script }}"
+    dest: "{{ ping_homedir }}/{{ ping_script }}"
     src: "{{ ping_script }}.j2"
     owner: "{{ ping_user }}"
     group: "{{ ping_user }}"
@@ -60,11 +60,30 @@
   when: semanage_run.changed or ping_log_created.changed
   tags: copr_ping
 
+- name: create home/.config dir
+  file:
+    path: "{{ ping_homedir }}/.config"
+    owner: "{{ ping_user }}"
+    group: "{{ ping_user }}"
+    mode: 0755
+    state: directory
+  tags: copr_ping
+
+- name: install the Copr API token
+  copy:
+    content: |
+      [copr-cli]
+      login = {{ copr_ping_bot_login }}
+      username = bot-copr-ping
+      token = {{ copr_ping_bot_token }}
+      copr_url = https://copr.fedorainfracloud.org
+  when: not devel
+
 - name: rebuild the copr-ping package periodically
   ansible.builtin.cron:
     name: build the ping package
     minute: "{% if devel %}0{% else %}0,30{% endif %}"
     hour: "{% if devel %}1{% else %}*{% endif %}"
     user: copr-ping
-    job: "{{ ping_scriptdir }}/{{ ping_script }}"
+    job: "{{ ping_homedir }}/{{ ping_script }}"
   tags: copr_ping
