@@ -77,6 +77,10 @@
       username = bot-copr-ping
       token = {{ copr_ping_bot_token }}
       copr_url = https://copr.fedorainfracloud.org
+    path: "{{ ping_homedir }}/.config/copr"
+    mode: 0600
+    owner: "{{ ping_user }}"
+    group: "{{ ping_user }}"
   tags: copr_ping
   when: not devel
 
