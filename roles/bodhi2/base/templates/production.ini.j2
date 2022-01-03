@@ -522,6 +522,9 @@ bz_products = Fedora,Fedora EPEL,Fedora Modules
 # Comma separated list of Release.name values
 bz_exclude_rels = ELN
 
+# Relax default regex used to catch bug ids in RPM changelogs
+bz_regex = (?:fedora|epel|rh(?:bz)?)#(\d{5,})
+
 # A template to use for links to Bugzilla tickets. %%s will be filled in with the bug number.
 # buglink = https://bugzilla.redhat.com/show_bug.cgi?id=%%s
 {% if env == 'production' %}
