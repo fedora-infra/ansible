@@ -72,8 +72,6 @@
   vars:
     packages:
     - copr-builder
-    - libcurl # temporarily, for rhbz#1690971
-    - tito    # temporarily, to fix https://pagure.io/copr/copr/issue/1386
 
 - name: stat /etc/copr-rpmbuild/mock.cfg.j2.rpmnew
   stat: path=/etc/copr-rpmbuild/mock.cfg.j2.rpmnew
@@ -82,11 +80,6 @@
 - name: restore mock.cfg.j2 from package contents
   shell: mv -f /etc/copr-rpmbuild/mock.cfg.j2.rpmnew /etc/copr-rpmbuild/mock.cfg.j2
   when: mock_cfg_new.stat.exists
-
-# temporary thing, till we have merged:
-# https://pagure.io/copr/copr/pull-request/1109
-- name: install qemu-user-static
-  dnf: state=present pkg=qemu-user-static
 
 - name: put updated mock configs into /etc/mock
   copy: src=files/mock/ dest=/etc/copr-rpmbuild/mock-config-overrides
