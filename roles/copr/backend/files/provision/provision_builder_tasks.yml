@@ -67,6 +67,9 @@
 
 - package_facts: manager=auto
 
+- name: install subscription-manager
+  package: name=subscription-manager state=present
+
 - name: install copr-builder and other latest packages
   dnf: state=latest pkg={{ packages }}
   vars:
