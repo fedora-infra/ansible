@@ -320,6 +320,7 @@ command[check_lock_file_age]=/usr/lib64/nagios/plugins/check_lock_file_age -w 1 
 command[check_nagios]=/usr/lib64/nagios/plugins/check_nagios -e 5 -F /var/spool/nagios/status.dat -C /usr/sbin/nagios
 command[check_auditd]=/usr/lib64/nagios/plugins/check_procs -c 1:1 -C 'auditd' -u root
 command[check_copr_ping]=/usr/bin/copr-ping-check.py
+command[check_copr_cdn]=/usr/bin/copr-cdn-check.py
 command[check_cron]=/usr/lib64/nagios/plugins/check_procs -c 1:10 -C 'crond' -u root
 command[check_varnish_proc]=/usr/lib64/nagios/plugins/check_procs -c 1:2 -C 'varnishd' -u varnish
 command[check_rsyslogd_proc]=/usr/lib64/nagios/plugins/check_procs -c 1:2 -C 'rsyslogd'

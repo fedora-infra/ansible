@@ -172,3 +172,25 @@
     line: 'OPTIONS=--collector.textfile.directory /var/lib/node_exporter/textfile_collector --collector.systemd'
     backrefs: yes
   notify: restart node_exporter
+
+- name: install nrpe
+  dnf: name=nrpe state=present
+
+- name: install nrpe checks
+  template: src=copr_frontend_nrpe.cfg
+            dest=/etc/nrpe.d/copr_frontend_nrpe.cfg
+  notify:
+  - restart nrpe
+  tags:
+  - nagios_client
+  - copr_cdn
+
+- name: install the check script
+  template:
+    dest: "/usr/bin/copr-cdn-check.py"
+    src: "copr-cdn-check.py.j2"
+    group: "nagios"
+    mode: 0750
+  vars:
+    api_key: "{{ copr_cdn_api_key }}"
+  tags: copr_cdn

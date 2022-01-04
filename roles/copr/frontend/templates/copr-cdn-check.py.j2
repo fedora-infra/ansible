@@ -1,0 +1,92 @@
+import sys
+import requests
+import logging
+
+# NAGIOS exit codes
+NAG_UNKNOWN = 3
+NAG_CRITICAL = 2
+NAG_WARNING = 1
+NAG_OK = 0
+
+# UptimeRobot statuses
+STATUS = (
+    'PAUSED',  # 0
+    'NOT_CHECKED_YET',  # 1
+    'UP',  # 2
+    'NOT_USED',  # 3
+    'NOT_USED',  # 4
+    'NOT_USED',  # 5
+    'NOT_USED',  # 6
+    'NOT_USED',  # 7
+    'SEEMS_DOWN',  # 8
+    'DOWN'  # 9
+)
+
+# Read only API key
+API_KEY = "{{ api_key }}"
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(message)s',
+    handlers=[logging.StreamHandler(sys.stdout)],
+)
+LOG = logging.getLogger()
+
+
+class UptimeRobot:
+
+    def __init__(self, api_key):
+        self.api_key = api_key
+
+    def post(self, method='getMonitors'):
+        """Send the post request to UptimeRobot api"""
+        url = "https://api.uptimerobot.com/v2/{method}".format(method=method)
+        payload = "api_key={api_key}&format=json".format(api_key=self.api_key)
+        headers = {
+            'content-type': "application/x-www-form-urlencoded",
+            'cache-control': "no-cache"
+        }
+        response = requests.request("POST", url, data=payload, headers=headers)
+        return response.json()
+
+    def get_monitor(self, name):
+        """Return specific monitor"""
+        monitors = self.post('getMonitors')
+        if 'monitors' not in monitors:
+            return None
+
+        for monitor in monitors['monitors']:
+            if monitor['friendly_name'] == name:
+                return {'name': name,
+                        'print_status': STATUS[monitor['status']],
+                        'status': monitor['status'],
+                        'url': monitor['url']
+                        }
+        return None
+
+
+def main():
+    monitor_name = "Copr's CDN"
+    uptime_robot = UptimeRobot(API_KEY)
+
+    monitor = uptime_robot.get_monitor(monitor_name)
+    if monitor:
+        result = "{name} ({url}) is {status}".format(name=monitor['name'], url=monitor['url'],
+                                                     status=monitor['print_status'])
+        if monitor['status'] in (0, 1):
+            LOG.warning(result)
+            sys.exit(NAG_WARNING)
+        elif monitor['status'] in (8, 9):
+            LOG.critical(result)
+            sys.exit(NAG_CRITICAL)
+        elif monitor['status'] == 2:
+            LOG.info(result)
+            sys.exit(NAG_OK)
+        else:
+            LOG.critical(result)
+            sys.exit(NAG_UNKNOWN)
+
+
+if __name__ == "__main__":
+    main()
+    sys.exit(NAG_UNKNOWN)
