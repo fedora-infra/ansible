@@ -65,10 +65,6 @@ def _detect_instance():
 
 
 def _main():
-
-    # resalloc account have nonstandard HOME variable
-    os.environ["HOME"] = "/home/resalloc"
-
     tracked = _get_tracked_instances()
     copr_instance = _detect_instance()
 
