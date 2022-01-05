@@ -17,7 +17,7 @@
 
   roles:
   - base
-  - rkhunter
+  - {role: rkhunter, when: not inventory_hostname.startswith('el9')}
   - hosts
   - nagios_client
   - openvpn/client
