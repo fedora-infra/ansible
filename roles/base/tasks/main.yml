@@ -230,7 +230,7 @@
   when: ansible_distribution_major_version|int > 31 and ansible_distribution == 'Fedora' or ansible_distribution == 'RedHat'
 
 - name: Ensure iptables is installed
-  dnf: state=present name=iptables
+  package: state=present name=iptables
   tags:
   - packages
   - base
