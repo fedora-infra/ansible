@@ -192,5 +192,5 @@
     group: "nagios"
     mode: 0750
   vars:
-    api_key: "{{ copr_uptimerobot_api_key_ro }}"
+    api_key: "{{ copr_uptimerobot_api_key_ro | default("not-configured") }}"
   tags: copr_cdn

@@ -68,6 +68,9 @@ class UptimeRobot:
 def main():
     monitor_name = "Copr's CDN"
     uptime_robot = UptimeRobot(API_KEY)
+    if API_KEY == "not-configured":
+        LOG.info(API_KEY)
+        sys.exit(NAG_OK)
 
     monitor = uptime_robot.get_monitor(monitor_name)
     if monitor:
