@@ -4,7 +4,17 @@ die(){ echo >&2 "!! $*"; exit 1; }
 
 test -z "$RESALLOC_NAME" && die "no vm specified, empty \$RESALLOC_NAME variable"
 
+# Try to, best effort, remove the entitlement.
+set -- $(echo "$RESALLOC_RESOURCE_DATA" | base64 --decode)
+ssh root@"$1" "subscription-manager unregister" || :
+
 case "$RESALLOC_POOL_ID" in
+*aws*)
+    # Delegate the rest of the task to an AWS specific script.
+    exec /usr/bin/resalloc-aws-delete --aws-profile default
+    exit 1
+    ;;
+
 *copr_hv_x86_64_*)
     pool_id=${RESALLOC_POOL_ID//copr_hv_x86_64_/}
     pool_id=${pool_id//_dev/}
@@ -12,9 +22,11 @@ case "$RESALLOC_POOL_ID" in
     pool_id=${pool_id//_stg/}
     conn=qemu+ssh://copr@vmhost-x86-copr${pool_id}.rdu-cc.fedoraproject.org/system
     ;;
+
 *aarch64_01*)
     conn=qemu+ssh://copr@virthost-aarch64-os01.fedorainfracloud.org/system
     ;;
+
 *aarch64_02*)
     conn=qemu+ssh://copr@virthost-aarch64-os02.fedorainfracloud.org/system
     ;;
@@ -28,6 +40,8 @@ case "$RESALLOC_POOL_ID" in
     ;;
 *) die "unknown RESALLOC_POOL_ID=$RESALLOC_POOL_ID" ;;
 esac
+
+# The rest of this script is LibVirt only!
 
 repeat()
 {
