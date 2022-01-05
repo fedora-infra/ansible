@@ -1,6 +1,6 @@
 ---
 - name: setup the hostname so we can easily identify the box
-  hostname: "{{ lookup('env', 'RESALLOC_NAME') | default('unknown-builder') }}"
+  hostname: name="{{ lookup('env', 'RESALLOC_NAME') | default('unknown-builder') }}"
   when: prepare_base_image is not defined
 
 - name: put infra repos into yum.repos.d
