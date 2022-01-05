@@ -324,18 +324,21 @@
         job="/usr/bin/cleanup_vm_nova.py"
         minute="*/20"
         user=copr
+        state=absent
 
 - name: setup crontab for VMs
   cron: name="cleanup AWS VMs periodically"
         job="/usr/local/bin/cleanup-vms-aws"
         minute="0"
         user=copr
+        state=absent
 
 - name: setup crontab for cleaning up redis
   cron: name="prune redis VM db periodically"
         job="/usr/local/bin/cleanup-unused-vms-from-redis &>> /var/log/copr-backend/cleanup-redis-vms.log"
         minute="50"
         user=copr
+        state=absent
 
 - name: crontab for cleaning resalloc VMs
   cron: name="cleanup nova VMs periodically"
