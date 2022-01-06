@@ -334,7 +334,7 @@
     src: "{{ item }}"
     dest: /usr/local/bin/{{ item }}
     mode: 755
-  items:
+  loop:
     - cleanup-unused-vms-from-redis
     - cleanup-unused-redhat-subscriptions
   tags:
