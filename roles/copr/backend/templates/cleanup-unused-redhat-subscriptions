@@ -1,0 +1,134 @@
+#! /usr/bin/python3
+
+"""
+Periodically remove unused (staled, forgotten, orphaned, ...) entitlements from
+the 'copr-team' RHN account.
+"""
+
+import logging
+import os
+import subprocess
+import sys
+
+import requests
+
+
+URL_TOKEN = "https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token"
+URL_SYSTEMS = "https://api.access.redhat.com/management/v1/systems?limit=1000"
+URL_DELETE = "https://api.access.redhat.com/management/v1/systems/{UUID}"
+
+OFFLINE_TOKEN_FILE = "{{ rhn_offline_token_file }}"
+
+KEEP_UUIDS = {}
+
+LOG = logging.getLogger(__name__)
+logging.basicConfig(level=logging.DEBUG)
+
+
+def _copr_instance():
+    return "{% if devel is defined %}devel{% else %}production{% endif %}"
+
+
+def _get_tracked_instances():
+    raw = run_cmd(["resalloc-maint", "resource-list"])
+    return_tracked = []
+    for resource in raw.strip().split("\n"):
+        return_tracked.append(resource.split(' ')[2])
+    return return_tracked
+
+
+def run_cmd(cmd):
+    """ check_output() and decode from utf8 """
+    return subprocess.check_output(cmd).decode("utf-8")
+
+
+def _auth_headers(opts):
+    return {"Authorization": "Bearer " + opts["access_token"]}
+
+
+def get_auth(url, opts):
+    """ Get, with auth header """
+    return requests.get(url, headers=_auth_headers(opts))
+
+def delete_auth(url, opts):
+    """ Get, with auth header """
+    return requests.delete(url, headers=_auth_headers(opts))
+
+
+def get_access_token(opts):
+    """
+    Using "offline_token" get the "access_token"
+    """
+    assert opts["offline_token"]
+    data = {
+        "grant_type": "refresh_token",
+        "client_id": "rhsm-api",
+        "refresh_token": opts["offline_token"],
+    }
+    resp = requests.post(URL_TOKEN, data)
+    resp_data = resp.json()
+    opts["access_token"] = resp_data["access_token"]
+
+
+def get_systems(opts):
+    """
+    Get the list of tracked systems in RHSM (list of dicts)
+    """
+    return get_auth(URL_SYSTEMS, opts).json()["body"]
+
+
+def filter_out_systems(systems):
+    """
+    Return SYSTEMS, but without those that are:
+    - still tracked by resalloc server
+    - are not assigned to concrete (dev/prod) instance
+    - are marked as persistent (should never be removed)
+    """
+    output = []
+    tracked = _get_tracked_instances()
+    copr_instance = _copr_instance()
+    for system in systems:
+        system_instance = "unknown"
+        if "_prod_" in system["name"]:
+            system_instance = "production"
+        elif "_dev_" in system["name"]:
+            system_instance = "devel"
+
+        if system_instance != copr_instance:
+            LOG.debug("We handle only '%s' instances, system %s is '%s'",
+                      copr_instance, system["name"], system_instance)
+            continue
+        if system["uuid"] in KEEP_UUIDS:
+            LOG.debug("System %s is marked as persistent", system["name"])
+            continue
+        if system["name"] in tracked:
+            LOG.debug("System %s is still tracked", system["name"])
+            continue
+
+        output.append(system)
+    return output
+
+
+def drop_system(system, opts):
+    """
+    Using the dict from get_systems(), delete the system from RHSM
+    """
+    LOG.info("Removing %s (%s)", system["name"], system["uuid"])
+    delete_url = URL_DELETE.format(UUID=system["uuid"])
+    delete_auth(delete_url, opts)
+
+
+def _main():
+    opts = {}
+    opts["offline_token"] = None
+    with open(os.path.expanduser(OFFLINE_TOKEN_FILE), "r") as file:
+        opts["offline_token"] = file.read().strip()
+    get_access_token(opts)
+    systems = get_systems(opts)
+    remove_candidates = filter_out_systems(systems)
+    for system in remove_candidates:
+        drop_system(system, opts)
+
+
+if __name__ == "__main__":
+    sys.exit(_main())

@@ -314,10 +314,31 @@
 - name: install aws cleaning script for resalloc
   copy: src="cleanup-vms-aws-resalloc" dest=/usr/local/bin/ mode=755
 
-- name: install cleanup-unused-vms script
-  template: src="cleanup-unused-vms-from-redis" dest=/usr/local/bin/cleanup-unused-vms-from-redis mode=755
+- name: access.redhat.com offline token file
+  set_fact: "rhn_offline_token_file=/var/lib/resallocserver/.access.redhat.com-copr-team"
   tags:
-  - cleanup_scripts
+    - clean_rh_subscriptions
+
+- name: install offline token for copr-team in RHSM
+  copy:
+    contents: "{{ copr_red_hat_subscription_offline_token }}"
+    dest: "{{ rhn_offline_token_file }}"
+    mode: 0600
+    owner: resalloc
+    group: resalloc
+  tags:
+    - clean_rh_subscriptions
+
+- name: install cleanup-unused-vms script
+  template:
+    src: "{{ item }}"
+    dest: /usr/local/bin/{{ item }}
+    mode: 755
+  items:
+    - cleanup-unused-vms-from-redis
+    - cleanup-unused-redhat-subscriptions
+  tags:
+    - clean_rh_subscriptions
 
 - name: setup crontab for VMs
   cron: name="cleanup nova VMs periodically"
@@ -345,6 +366,14 @@
         job="/usr/local/bin/cleanup-vms-aws-resalloc"
         minute="*/10"
         user=resalloc
+
+- name: crontab for cleaning-up unused subscriptions
+  cron: name="cleanup unused Red hat subscriptions"
+        job="/usr/local/bin/cleanup-unused-redhat-subscriptions &>> /var/log/copr-backend/cleanup-subscriptions.log"
+        minute="*/10"
+        user=resalloc
+  tags:
+    - clean_rh_subscriptions
 
 - name: setup monitoring
   import_tasks: "monitoring.yml"

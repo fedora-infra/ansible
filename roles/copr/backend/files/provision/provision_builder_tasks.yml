@@ -207,6 +207,7 @@
     username: copr-team
     force_register: true
     password: "{{ copr_red_hat_subscription_password }}"
+    consumer_name: "{{ lookup('env', 'RESALLOC_NAME') | default('unknown-builder') }}"
     pool_ids:
       - 8a85f9a17c71102f017ce611251c770f
   when:
