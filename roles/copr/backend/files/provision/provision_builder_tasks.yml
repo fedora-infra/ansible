@@ -96,6 +96,20 @@
   when:
   - prepare_base_image is not defined
 
+- name: "Link Mock EPEL 8 configs to rhel+epel-8"
+  file:
+    src: "/etc/mock/rhel+epel-8-{{ item }}.cfg"
+    force: true
+    path: "/etc/mock/epel-8-{{ item }}.cfg"
+    state: link
+  loop:
+    - x86_64
+    - aarch64
+    - ppc64le
+  tags:
+  - provision_config
+  when: devel|bool
+
 - name: don't remove rpmnew files, but always use them
   lineinfile: state=absent regexp='^find /etc/mock.*-delete'
               path=/usr/bin/copr-update-builder
