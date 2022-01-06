@@ -321,7 +321,7 @@
 
 - name: install offline token for copr-team in RHSM
   copy:
-    contents: "{{ copr_red_hat_subscription_offline_token }}"
+    content: "{{ copr_red_hat_subscription_offline_token }}"
     dest: "{{ rhn_offline_token_file }}"
     mode: 0600
     owner: resalloc
