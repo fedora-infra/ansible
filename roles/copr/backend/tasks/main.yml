@@ -363,14 +363,14 @@
 
 - name: crontab for cleaning resalloc VMs
   cron: name="cleanup nova VMs periodically"
-        job="/usr/local/bin/cleanup-vms-aws-resalloc"
+        job="/usr/local/bin/cleanup-vms-aws-resalloc &>> /var/log/resallocserver/cron-cleanup-vms-aws.log"
         minute="*/10"
         user=resalloc
 
 - name: crontab for cleaning-up unused subscriptions
-  cron: name="cleanup unused Red hat subscriptions"
-        job="/usr/local/bin/cleanup-unused-redhat-subscriptions &>> /var/log/copr-backend/cleanup-subscriptions.log"
-        minute="*/10"
+  cron: name="cleanup unused Red Hat subscribed systems"
+        job="/usr/local/bin/cleanup-unused-redhat-subscriptions &>> /var/log/resallocserver/cron-cleanup-rh-subscriptions.log"
+        minute="*/30"
         user=resalloc
   tags:
     - clean_rh_subscriptions
