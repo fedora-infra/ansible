@@ -333,7 +333,7 @@
   template:
     src: "{{ item }}"
     dest: /usr/local/bin/{{ item }}
-    mode: 755
+    mode: 0755
   loop:
     - cleanup-unused-vms-from-redis
     - cleanup-unused-redhat-subscriptions
