@@ -147,7 +147,7 @@
 
 - name: install IBM Cloud token file
   copy:
-    content: "IBMCLOUD_API_KEY={{ copr_cloud_ibm_token | default('unset') }}"
+    content: "IBMCLOUD_API_KEY={{ copr_cloud_ibm_password | default('unset') }}"
     dest: /var/lib/resallocserver/.ibm-cloud-token
     owner: resalloc
     group: resalloc
