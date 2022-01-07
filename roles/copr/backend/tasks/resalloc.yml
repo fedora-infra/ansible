@@ -55,7 +55,7 @@
   - provision_config
 
 - name: resalloc, scripts
-  template: src="resalloc/{{ item }}.j2" dest="/var/lib/resallocserver/resalloc_provision/"
+  template: src="resalloc/{{ item }}.j2" dest="/var/lib/resallocserver/resalloc_provision/{{ item }}"
             mode=755
   with_items:
   - vm-release
