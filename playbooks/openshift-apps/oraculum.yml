@@ -85,7 +85,7 @@
     routename: oraculum-api
     host: "packager-dashboard{{ env_suffix }}.fedoraproject.org"
     path: "/api"
-    serviceport: 8000-tcp
+    serviceport: 8080-tcp
     servicename: oraculum-api-endpoint
 
   - role: openshift/route
@@ -93,7 +93,7 @@
     routename: oraculum-oidc-callback
     host: "packager-dashboard{{ env_suffix }}.fedoraproject.org"
     path: "/oidc_callback"
-    serviceport: 8000-tcp
+    serviceport: 8080-tcp
     servicename: oraculum-api-endpoint
 
   - role: openshift/route

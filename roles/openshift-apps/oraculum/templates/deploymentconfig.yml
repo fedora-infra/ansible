@@ -34,7 +34,7 @@ spec:
       - name: oraculum-api-endpoint
         image: packager-dashboard:latest
         ports:
-        - containerPort: 8000
+        - containerPort: 8080
         resources: {}
         env:
         # Database
@@ -88,13 +88,13 @@ spec:
           initialDelaySeconds: 45
           httpGet:
             path: /
-            port: 8000
+            port: 8080
         livenessProbe:
           timeoutSeconds: 30
           initialDelaySeconds: 45
           httpGet:
             path: /
-            port: 8000
+            port: 8080
       volumes:
       - name: oraculum-secret-volume
         secret:
