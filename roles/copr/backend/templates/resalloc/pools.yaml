@@ -20,8 +20,12 @@ aws_x86_64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else
     - arch_i686_native
     - arch_armhfp
     - arch_armhfp_emulated
+{% if devel %}
+    - drop_this_warning_warning
+{% else %}
     - arch_s390x
     - arch_s390x_emulated
+{% endif %}
     - arch_noarch
     - aws
 {% if spot %}
@@ -130,6 +134,31 @@ copr_hv_ppc64le_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
 
 {% endif %}
 {% endfor %}
+
+# Z Cloud instances
+{% if devel %}
+copr_ibm_cloud_s390x_tokyo_{% if devel %}dev{% else %}prod{% endif %}:
+  max: 4
+  max_prealloc: 2
+  max_starting: 2
+  tags:
+    - copr_builder
+    - name: arch_noarch
+      priority: -30
+    - arch_s390x
+    - arch_s390x_native
+    - ibm_cloud
+    - tokyo
+  cmd_new: '/var/lib/resallocserver/provision/ibm-cloud-vm create --log debug "$RESALLOC_NAME"'
+  cmd_delete: '/var/lib/resallocserver/provision/ibm-cloud-vm delete --log debug "$RESALLOC_NAME"'
+  cmd_livecheck: "resalloc-check-vm-ip"
+  cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
+  livecheck_period: 180
+  reuse_opportunity_time: 180
+  reuse_max_count: 8
+  reuse_max_time: 1800
+{% endif %}
+
 
 {{ aws_x86_64(builders.aws.x86_64[0], builders.aws.x86_64[1],
               builders.aws.x86_64[2])
