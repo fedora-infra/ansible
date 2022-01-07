@@ -55,10 +55,11 @@
   - provision_config
 
 - name: resalloc, scripts
-  template: src="resalloc/{{ item }}" dest="/var/lib/resallocserver/resalloc_provision/"
+  template: src="resalloc/{{ item }}.j2" dest="/var/lib/resallocserver/resalloc_provision/"
             mode=755
   with_items:
   - vm-release
+  - ibm-cloud-vm
   tags:
   - provision_config
 
@@ -143,3 +144,13 @@
 
 - name: sometimes it is worth having the copr.py ansible plugin
   package: name=ansible-collection-community-general state=latest
+
+- name: install IBM Cloud token file
+  copy:
+    content: "IBMCLOUD_API_KEY={{ copr_cloud_ibm_token | default('unset') }}"
+    dest: /var/lib/resallocserver/.ibm-cloud-token
+    owner: resalloc
+    group: resalloc
+    mode: 0600
+  tags:
+  - provision_config
