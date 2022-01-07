@@ -84,14 +84,14 @@ spec:
           mountPath: /opt/app-root/secret/
           readOnly: true
         readinessProbe:
-          timeoutSeconds: 5
-          initialDelaySeconds: 5
+          timeoutSeconds: 30
+          initialDelaySeconds: 45
           httpGet:
             path: /
             port: 8080
         livenessProbe:
-          timeoutSeconds: 15
-          initialDelaySeconds: 30
+          timeoutSeconds: 30
+          initialDelaySeconds: 45
           httpGet:
             path: /
             port: 8080
