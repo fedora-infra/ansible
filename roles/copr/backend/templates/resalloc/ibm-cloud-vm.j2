@@ -18,9 +18,9 @@ from ibm_cloud_sdk_core import ApiException
 
 DEFAULT_PLAYBOOK = "{{ provision_directory }}/libvirt-provision.yml"
 DEFAULT_TOKEN_FILE = "/var/lib/resallocserver/.ibm-cloud-token"
+DEFAULT_IMAGE = "{{ copr_builder_images.ibmcloud.s390X }}")
 
 subnet_id = "02f7-98674f68-aae1-4ea1-a889-5a0b7a07f4b8"
-image_id = "r022-ce9f9b97-1d1c-46d0-9699-6a1c7e6b2e45"
 vpc_id = "r022-8438169e-d881-4bda-b603-d31fdf0f8b3a"
 security_group_id = "r022-bf49b90e-c00f-4c68-8707-2936b47b286b"
 my_key_id = "r022-3918e368-8e00-4e23-9119-5e3ce1eb33bd"
@@ -164,6 +164,7 @@ def _get_arg_parser():
         "create", help="Create an instance in IBM Cloud")
     parser_create.add_argument("name")
     parser_create.add_argument("--playbook", default=DEFAULT_PLAYBOOK)
+    parser_create.add_argument("--image-uuid", default=DEFAULT_IMAGE)
     parser_delete = subparsers.add_parser(
         "delete", help="Delete instance by it's name from IBM Cloud")
     parser_delete.add_argument("name")
