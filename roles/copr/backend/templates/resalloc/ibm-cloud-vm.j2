@@ -98,7 +98,7 @@ def create_instance(service, instance_name, opts, log):
             },
             "delete_volume_on_instance_delete": True,
         },
-        "image": {"id": image_id},
+        "image": {"id": opts.image_uuid},
         "primary_network_interface": {
             'name': 'primary-network-interface',
             'subnet': {
