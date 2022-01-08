@@ -210,8 +210,8 @@ def detect_floating_ip_name(opts):
     if opts.instance == "devel":
         id_in_pool += 100
 
-    opts.floating_ip_name = "copr-builder-{}".format(id_in_pool.zfill(3))
-    opts.log.info("Using Floating IP copr-builder-%s", opts.floating_ip_id)
+    opts.floating_ip_name = "copr-builder-{}".format(str(id_in_pool).zfill(3))
+    opts.log.info("Using Floating IP copr-builder-%s", opts.floating_ip_name)
 
 
 def _main():
