@@ -223,7 +223,7 @@ def _main():
 
     cmd = "source {} ; echo $IBMCLOUD_API_KEY".format(
         pipes.quote(opts.token_file))
-    output = subprocess.check_output(cmd, shell=True, stdout=sys.stderr)
+    output = subprocess.check_output(cmd, shell=True)
     token = output.decode("utf-8").strip().rsplit("\n", maxsplit=1)[-1]
     authenticator = IAMAuthenticator(token)
 
