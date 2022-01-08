@@ -202,7 +202,7 @@ def detect_floating_ip_name(opts):
     if opts.floating_ip_name:
         return
 
-    id_in_pool = os.environ.get("RESALLOC_ID_IN_POOL", -1)
+    id_in_pool = int(os.environ.get("RESALLOC_ID_IN_POOL", -1))
     if id_in_pool == -1:
         opts.log.error("Please specify --floating-ip-name, or RESALLOC_ID_IN_POOL")
         sys.exit(1)
