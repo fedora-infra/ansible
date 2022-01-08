@@ -77,7 +77,7 @@ def run_playbook(host, opts):
     Run ansible-playbook against the given hostname
     """
     cmd = ["ansible-playbook", opts.playbook, "--inventory", "{},".format(host)]
-    subprocess.check_call(cmd)
+    subprocess.check_call(cmd, stdout=sys.stderr)
 
 
 def create_instance(service, instance_name, opts, log):
@@ -179,7 +179,7 @@ def _wait_for_ssh(floating_ip):
            "--log", "debug",
            "--timeout", "240",
            floating_ip]
-    subprocess.check_call(cmd)
+    subprocess.check_call(cmd, stdout=sys.stderr)
 
 
 def detect_floating_ip_name(opts):
@@ -223,7 +223,7 @@ def _main():
 
     cmd = "source {} ; echo $IBMCLOUD_API_KEY".format(
         pipes.quote(opts.token_file))
-    output = subprocess.check_output(cmd, shell=True)
+    output = subprocess.check_output(cmd, shell=True, stdout=sys.stderr)
     token = output.decode("utf-8").strip().rsplit("\n", maxsplit=1)[-1]
     authenticator = IAMAuthenticator(token)
 
