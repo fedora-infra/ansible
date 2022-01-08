@@ -36,22 +36,25 @@ def resalloc_to_ibmcloud_name(name):
     return name.replace("_", "-")
 
 
-def bind_floating_ip(service, instance_id, log):
+def bind_floating_ip(service, instance_id, opts, log):
     """
     Assign an existing Floating IP to given instance.
     """
 
     log.info("Bind floating IP")
     response_list = service.list_floating_ips().get_result()['floating_ips']
-    floating_ip_id = None
+    floating_ip_uuid = None
     for item in response_list:
-        log.info("%s\t%s\t%s", item['id'], item['name'], item['status'])
-        if item["status"] == "available":
-            floating_ip_id = item['id']
-            floating_ip_address =  item['address']
-            break
-    if floating_ip_id is None:
-        log.error("No available floating IP")
+        if item["name"] != opts.floating_ip_name:
+            continue
+        if item["status"] != "available":
+            log.error("Floating IP %s is already used", opts.floating_ip_name)
+            sys.exit(1)
+        floating_ip_uuid = item['id']
+        floating_ip_address =  item['address']
+
+    if floating_ip_uuid is None:
+        log.error("UUID for Floating IP %s not found", opts.floating_ip_name)
         sys.exit(1)
 
     response_list = service.list_instance_network_interfaces(instance_id)
@@ -64,7 +67,7 @@ def bind_floating_ip(service, instance_id, log):
     service.add_instance_network_interface_floating_ip(
         instance_id,
         network_interface_id,
-        floating_ip_id,
+        floating_ip_uuid,
     )
     log.info("Floating IP: %s", floating_ip_address)
     return floating_ip_address
@@ -129,7 +132,7 @@ def create_instance(service, instance_name, opts, log):
         log.debug("Instance response[get_result]: %s", response.get_result())
         instance_id = response.get_result()['id']
         log.info("Instance ID: %s", instance_id)
-        ip_address = bind_floating_ip(service, instance_id, log)
+        ip_address = bind_floating_ip(service, instance_id, opts, log)
         _wait_for_ssh(ip_address)
         run_playbook(ip_address, opts)
         # Tell the Resalloc clients how to connect to this instance.
@@ -165,6 +168,7 @@ def _get_arg_parser():
     parser_create.add_argument("name")
     parser_create.add_argument("--playbook", default=DEFAULT_PLAYBOOK)
     parser_create.add_argument("--image-uuid", default=DEFAULT_IMAGE)
+    parser_create.add_argument("--floating-ip-name", default=None)
     parser_delete = subparsers.add_parser(
         "delete", help="Delete instance by it's name from IBM Cloud")
     parser_delete.add_argument("name")
@@ -179,11 +183,44 @@ def _wait_for_ssh(floating_ip):
     subprocess.check_call(cmd)
 
 
+def detect_floating_ip_name(opts):
+    """
+    We allocate Floating IPS in intervals for each instance.
+    Production:
+        - 000-099
+        - currently we allocate at most 8-16 instances
+    Devel
+        - 100-199
+        - currently we allocate 1 to 2 instances
+    Manual starting (not via resalloc) (use --floating-ip-name copr-builder-NNN)
+        - 200-201
+    Since we only allocate at most 16+2+2, we have 20 IPs pre-allocated
+    "forever" in the IBM Cloud API.  If you increase the numbers, go to the web
+    UI and reserve more.
+    """
+
+    # set by command line option?
+    if opts.floating_ip_name:
+        return
+
+    id_in_pool = os.environ.get("RESALLOC_ID_IN_POOL", -1)
+    if id_in_pool == -1:
+        opts.log.error("Please specify --floating-ip-name, or RESALLOC_ID_IN_POOL")
+        sys.exit(1)
+
+    if opts.instance == "devel":
+        id_in_pool += 100
+
+    opts.floating_ip_name = "copr-builder-{}".format(id_in_pool.zfill(3))
+    opts.log.info("Using Floating IP copr-builder-%s", opts.floating_ip_id)
+
+
 def _main():
     opts = _get_arg_parser().parse_args()
     log_level = getattr(logging, opts.log_level.upper())
     logging.basicConfig(format='%(levelname)s: %(message)s', level=log_level)
     log = logging.getLogger()
+    opts.log = log
 
     cmd = "source {} ; echo $IBMCLOUD_API_KEY".format(
         pipes.quote(opts.token_file))
@@ -198,6 +235,10 @@ def _main():
     service.set_service_url("https://jp-tok.iaas.cloud.ibm.com/v1")
 
     name = resalloc_to_ibmcloud_name(opts.name)
+
+    opts.instance = "production" if "-prod-" in name else "devel"
+
+    detect_floating_ip_name(opts)
 
     if opts.subparser == "create":
         create_instance(service, name, opts, log)
