@@ -28,6 +28,14 @@ profile = "cz2-2x4"
 zone_name = "jp-tok-2"
 
 
+def resalloc_to_ibmcloud_name(name):
+    """
+    IBM CLoud doesn't like underscores, and non-alphabetical characters at the
+    beginning of resource names.
+    """
+    return name.replace("_", "-")
+
+
 def bind_floating_ip(service, instance_id, log):
     """
     Assign an existing Floating IP to given instance.
@@ -188,8 +196,10 @@ def _main():
     # We work with Tokyo only for now.
     service.set_service_url("https://jp-tok.iaas.cloud.ibm.com/v1")
 
+    name = resalloc_to_ibmcloud_name(opts.name)
+
     if opts.subparser == "create":
-        create_instance(service, opts.name, opts, log)
+        create_instance(service, name, opts, log)
     elif opts.subparser == "delete":
         delete_instance(service, opts.name, log)
 
