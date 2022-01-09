@@ -89,9 +89,9 @@ def filter_out_systems(systems):
     copr_instance = _copr_instance()
     for system in systems:
         system_instance = "unknown"
-        if "-prod-" in system["name"]:
+        if "prod" in system["name"]:
             system_instance = "production"
-        elif "-dev-" in system["name"]:
+        elif "dev" in system["name"]:
             system_instance = "devel"
 
         if system_instance != copr_instance:
