@@ -14,7 +14,11 @@ case "$RESALLOC_POOL_ID" in
     exec /usr/bin/resalloc-aws-delete --aws-profile default
     exit 1
     ;;
-
+*s390x*)
+    # Delegate the rest of the task to the IBM Cloud specific script.
+    exec /var/lib/resallocserver/resalloc_provision/ibm-cloud-vm --log-level debug delete "$RESALLOC_NAME"
+    exit 1
+    ;;
 *copr_hv_x86_64_*)
     pool_id=${RESALLOC_POOL_ID//copr_hv_x86_64_/}
     pool_id=${pool_id//_dev/}
