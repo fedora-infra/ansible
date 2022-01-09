@@ -1,7 +1,7 @@
 ---
 - name: remove the hackish package breaking s390x subscriptions
   shell:
-    cmd: rpm -evh `rpm -qa | grep katello-`
+    cmd: rpm -evh `rpm -qa | grep katello-` ; subscription-manager clean
   when:
     - prepare_base_image is not defined
     - "'s390x' in lookup('env', 'RESALLOC_NAME')"
@@ -81,6 +81,27 @@
 
 - name: install subscription-manager
   package: name=subscription-manager state=present
+  # TODO: we should use 'when: prepare_base_image is defined' instead, but a new
+  # set of builder images needs to be generated first so the image contains the
+  # subscription-manager by default.
+  when: "'subscription-manager' not in ansible_facts.packages"
+
+- name: Activate Red Hat Subscription
+  community.general.redhat_subscription:
+    state: present
+    username: copr-team
+    force_register: true
+    password: "{{ copr_red_hat_subscription_password }}"
+    consumer_name: "{{ lookup('env', 'RESALLOC_NAME') | default('unknown-builder') }}"
+    server_hostname: subscription.rhsm.redhat.com
+    pool_ids:
+      - "8a85f9a17c71102f017ce611251c770f"
+  when:
+    - prepare_base_image is not defined
+    - copr_red_hat_subscription_password is defined
+    - devel
+  tags:
+    - red_hat_subscription
 
 - name: install copr-builder and other latest packages
   dnf: state=latest pkg={{ packages }}
@@ -228,17 +249,3 @@
     mode: 0644
   when:
   - prepare_base_image is not defined
-
-- name: Activate Red Hat Subscription
-  community.general.redhat_subscription:
-    state: present
-    username: copr-team
-    force_register: true
-    password: "{{ copr_red_hat_subscription_password }}"
-    consumer_name: "{{ lookup('env', 'RESALLOC_NAME') | default('unknown-builder') }}"
-    pool_ids:
-      - "{% if 's390x' in lookup('env', 'RESALLOC_NAME') %}2c96015276f1cf9d0176f248febd1241{% else %}8a85f9a17c71102f017ce611251c770f{% endif %}"
-  when:
-    - prepare_base_image is not defined
-    - copr_red_hat_subscription_password is defined
-    - devel
