@@ -17,7 +17,7 @@ else
     # LibVirt (on-premise) machine, or the IBM Cloud machine.  Find the "large"
     # volume, that one will be used (IBM Cloud assigns the swap volume name
     # randomly).
-    for vol in /dev/vdb /dev/vdc /dev/vdd; do
+    for vol in /dev/vdb /dev/vdc /dev/vdd /dev/vda; do
        mount | grep $vol && continue
        size=$(blockdev --getsize64 "$vol")
        test "$size" -le 150000000000 && continue
