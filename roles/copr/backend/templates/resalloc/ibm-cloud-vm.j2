@@ -237,9 +237,8 @@ def _main():
 
     opts.instance = "production" if "-prod-" in name else "devel"
 
-    detect_floating_ip_name(opts)
-
     if opts.subparser == "create":
+        detect_floating_ip_name(opts)
         create_instance(service, name, opts, log)
     elif opts.subparser == "delete":
         delete_instance(service, opts.name, log)
