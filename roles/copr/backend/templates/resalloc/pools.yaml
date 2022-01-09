@@ -86,8 +86,12 @@ copr_hv_x86_64_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     - arch_i686_native
     - arch_armhfp
     - arch_armhfp_emulated
+{% if devel %}
+    - drop_this_warning_warning
+{% else %}
     - arch_s390x
     - arch_s390x_emulated
+{% endif %}
     - hypervisor
     - hypervisor_x86_64
     - hypervisor_x86_64_{{ hv }}
