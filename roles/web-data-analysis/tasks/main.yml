@@ -17,7 +17,7 @@
 
 - name: make the data subdirs
   file: path=/mnt/fedora_stats/data/{{item}} state=directory mode=0755
-  with_items: [hotspot, mirrors]
+  with_items: [mirrors]
   tags:
     - web-data
 
@@ -45,7 +45,7 @@
 
 - name: make the web subdirs
   file: path=/var/www/html/csv-reports/{{item}} state=directory mode=0755
-  with_items: [images, hotspot, mirrors]
+  with_items: [images, mirrors]
   tags:
     - web-data
 
@@ -56,7 +56,7 @@
 
 - name: scripts to condense data down for further processing
   copy: src={{item}} dest=/usr/local/bin/ mode=0755
-  with_items: [condense-mirrorlogs.sh, condense-hotspot.sh ]
+  with_items: [condense-mirrorlogs.sh ]
   tags:
     - web-data
 
@@ -68,19 +68,19 @@
 
 - name: awk files for csv creation
   copy: src={{item}} dest=/usr/local/share/web-data-analysis mode=0644
-  with_items: [mirrors-data.awk, hotspot-data.awk, hotspot.awk ]
+  with_items: [mirrors-data.awk, ]
   tags:
     - web-data
 
 - name: gnuplot file for image creation
   copy: src={{item}} dest=/usr/local/share/web-data-analysis mode=0644
-  with_items: [ mirrors-data.gp, hotspot.gp ]
+  with_items: [ mirrors-data.gp]
   tags:
     - web-data
 
 - name: daily cron file to run the log files
   copy: src={{item}} dest=/etc/cron.d/ mode=0644
-  with_items: [condense-mirrorlogs.cron, condense-hotspot.cron]
+  with_items: [condense-mirrorlogs.cron]
   tags:
     - web-data
     - cron
