@@ -66,11 +66,7 @@ else
 fi
 
 # Rerun scan after 24 hours
-if [ "$FILEDATE" -lt $(expr $CURDATE - 86400) ]; then
-	LASTRUN=0
-fi
-
-if [ "$LASTRUN" -gt "$FILEDATE" ]; then
+if [ "$LASTRUN" -gt "$FILEDATE" ] && [ "$LASTRUN" -gt $(expr $CURDATE - 86400) ]; then
 	# no changes on the master mirror
 	# abort
 	exit 0
