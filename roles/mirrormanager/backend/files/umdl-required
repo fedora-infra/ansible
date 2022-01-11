@@ -44,9 +44,14 @@ else
 fi
 
 if [ "${1}" ==  "centos" ]; then
-	FFTL="http://mirror.stream.centos.org/9-stream/COMPOSE_ID"
+	FFTL="http://centos-master01.iad2.fedoraproject.org/9-stream/COMPOSE_ID"
 	FILEDATE=`date +%s -d"$( curl -s --head ${FFTL} | awk 'BEGIN {FS=": "}/^Last-Modified/{print $2}' )"`
-
+	FFTL_SIGS="http://centos-master01.iad2.fedoraproject.org/SIGs/9-stream/COMPOSE_ID"
+	FILEDATE_SIGS=`date +%s -d"$( curl -s --head ${FFTL_SIGS} | awk 'BEGIN {FS=": "}/^Last-Modified/{print $2}' )"`
+	if [ "$FILEDATE_SIGS" -gt "$FILEDATE" ]; then
+		FILEDATE=$FILEDATE_SIGS
+		FFTL=$FFTL_SIGS
+	fi
 elif [ "${1}" ==  "codecs" ]; then
 	FFTL="${CATEGORY}"
 	FILEDATE=${CURDATE}
@@ -58,6 +63,11 @@ else
 		echo "Error stat() of ${FFTL} failed. This should not happen."
 		exit 1
 	fi
+fi
+
+# Rerun scan after 24 hours
+if [ "$FILEDATE" -lt $(expr $CURDATE - 86400) ]; then
+	LASTRUN=0
 fi
 
 if [ "$LASTRUN" -gt "$FILEDATE" ]; then
