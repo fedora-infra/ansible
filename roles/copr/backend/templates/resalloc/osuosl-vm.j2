@@ -18,6 +18,5 @@ resalloc-openstack-new \
     --name "$RESALLOC_NAME" \
     --post-command "set -x ; {{ provision_directory }}/wait-for-ssh \"\$RESALLOC_OS_IP\" >&2 && ansible-playbook $playbook -i \"\$RESALLOC_OS_IP,\" >&2 " \
     --key-pair-id copr-builder \
-    --alloc-volume 32 \
     --nic  net-id="$network" \
     --print-ip
