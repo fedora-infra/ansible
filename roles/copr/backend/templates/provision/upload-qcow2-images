@@ -4,7 +4,7 @@ die() { echo >&2 "$*" ; exit 1 ; }
 
 image=$1
 
-connections='
+libvirt_connections='
 {% for host in groups["copr_hypervisor"] %}
 {% for arch in ["p08", "x86"] %}
 {% if arch in inventory_hostname and arch in hostvars[host]['inventory_hostname'] %}
@@ -26,8 +26,18 @@ test -n "$image" || die "first argument (image) required"
 test -f "$image" || die "image $image not found"
 
 pool=images
-for connection in $connections; do
+for connection in $libvirt_connections; do
     virsh --connect="$connection" vol-create-as --pool "$pool" "$new_volume" 1M
     virsh --connect="$connection" vol-upload    --pool "$pool" "$new_volume" --sparse "$image"
 done
+
+case $(uname -m) in
+ppc64le)
+    # We are going to upload the same image to OpenStack
+    . "{{ provision_directory }}/.rc-osuosl.sh"
+    glance image-create --name "$new_volume" --disk-format qcow2 --container-format bare --file "$image" --progress
+    ;;
+esac
+
+
 echo "uploaded images $new_volume"
