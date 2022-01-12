@@ -5,7 +5,17 @@ set -e
 
 part_suffix=p
 swap_device=
-if test -e /dev/xvda1 && test -e /dev/nvme0n1; then
+if grep POWER9 /proc/cpuinfo; then
+    # OpenStack Power9 only for now.  We have only one large volume there.
+    # Partitioning using cloud-init isn't trival, especially considering we
+    # share the Power8 and Power9 builder images so we create a swap file
+    # on / filesystem.
+    file=/sub-mounts-file
+    swap_device_base=loop5
+    swap_device=/dev/$swap_device_base
+    truncate -s 164G "$file"
+    losetup "$swap_device_base" "$file"
+elif test -e /dev/xvda1 && test -e /dev/nvme0n1; then
     # AWS aarch64 machine.  We use separate volume allocation as the default
     # root disk in our instance type is too small.
     swap_device=/dev/nvme0n1
@@ -46,6 +56,12 @@ p
 
 w
 " | fdisk "$swap_device"
+
+case $swap_device in
+*loop*)
+    partx "$swap_device"  -a
+    ;;
+esac
 
 mkfs.ext4 "${swap_device}${part_suffix}1"
 
