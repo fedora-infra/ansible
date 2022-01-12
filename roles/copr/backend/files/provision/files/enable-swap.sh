@@ -42,8 +42,7 @@ test -n "$swap_device"
 systemctl unmask tmp.mount
 systemctl start tmp.mount
 
-
-echo "\
+if ! echo "\
 n
 p
 
@@ -56,12 +55,19 @@ p
 
 w
 " | fdisk "$swap_device"
+then
+  # fdisk is known to fail on loop devices (TODO: report this)
+  case $swap_device in
+  *loop*)
+      partx "$swap_device"  -a
+      ;;
+  *)
+      # non-loop device, fdisk shouldn't fail ...
+      false
+      ;;
+  esac
+fi
 
-case $swap_device in
-*loop*)
-    partx "$swap_device"  -a
-    ;;
-esac
 
 mkfs.ext4 "${swap_device}${part_suffix}1"
 
