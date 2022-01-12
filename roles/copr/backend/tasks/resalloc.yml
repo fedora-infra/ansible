@@ -33,7 +33,9 @@
   become: yes
   become_user: postgres
 
-- set_fact: provision_directory=/var/lib/resallocserver/provision
+- set_fact:
+    provision_directory: /var/lib/resallocserver/provision
+    ibmcloud_token_file: /var/lib/resallocserver/.ibm-cloud-token
   tags:
   - provision_config
 
@@ -149,7 +151,7 @@
 - name: install IBM Cloud token file
   copy:
     content: "IBMCLOUD_API_KEY={{ copr_cloud_ibm_token | default('unset') }}"
-    dest: /var/lib/resallocserver/.ibm-cloud-token
+    dest: "{{ ibmcloud_token_file }}"
     owner: resalloc
     group: resalloc
     mode: 0600

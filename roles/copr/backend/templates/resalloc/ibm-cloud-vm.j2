@@ -16,7 +16,7 @@ from ibm_vpc import VpcV1
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 
 DEFAULT_PLAYBOOK = "{{ provision_directory }}/libvirt-provision.yml"
-DEFAULT_TOKEN_FILE = "/var/lib/resallocserver/.ibm-cloud-token"
+DEFAULT_TOKEN_FILE = "{{ ibmcloud_token_file }}"
 DEFAULT_IMAGE = "{{ copr_builder_images.ibm_cloud.s390x }}"
 
 SUBNET_ID = "02f7-98674f68-aae1-4ea1-a889-5a0b7a07f4b8"
