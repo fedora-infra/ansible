@@ -1,4 +1,19 @@
 ---
+- name: OpenStack package repository for RHEL8, noarch only
+  copy:
+    content: |
+      [openstack-for-rhel8]
+      name = RHEL OpenStack RPMs
+      baseurl = https://infrastructure.fedoraproject.org/repo/rhel/rhel8/other/rhel-8-x86_64-openstack-16-rpms/
+      gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-beta,file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+      enabled=1
+      gpgcheck=1
+      exclude=*x86_64*
+    dest: /etc/yum.repos.d/openstack.repo
+  tags:
+    - config
+    - openstack
+
 - name: enable swap in fstab
   mount: name=none src=LABEL=swap
          fstype=swap opts=sw passno=0 dump=0
@@ -142,6 +157,9 @@
   - libguestfs-tools-c
   - libvirt
   - virt-install
+  - python3-glanceclient
+  tags:
+    - openstack
 
 #- name: Enable praiskup-helpers repo
 #  community.general.copr:
