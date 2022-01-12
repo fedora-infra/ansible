@@ -1,0 +1,23 @@
+#! /bin/sh
+
+export ANSIBLE_HOST_KEY_CHECKING=False
+
+. "{{ provision_directory }}/.rc-osuosl.sh"
+
+set -e
+set -x
+test -n "$RESALLOC_NAME"
+
+flavor=db5a95e1-5bf6-4bb4-9489-70362d936cd1 # name: 'fedora.copr'
+network=a5bd5b53-1dc4-423c-a854-aa1cc9ee5456 # name: 'public'
+playbook="{{ provision_directory }}/libvirt-provision.yml"
+
+resalloc-openstack-new \
+    --image "{{ copr_builder_images.osuosl.ppc64le  }}" \
+    --flavor "$flavor" \
+    --name "$RESALLOC_NAME" \
+    --post-command "set -x ; ansible-playbook $playbook -i \"\$RESALLOC_OS_IP,\" >&2 " \
+    --key-pair-id copr-builder \
+    --alloc-volume 32 \
+    --nic  net-id="$network" \
+    --print-ip

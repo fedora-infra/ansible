@@ -10,6 +10,7 @@
     - python3-ibm-vpc
     - resalloc
     - resalloc-server
+    - resalloc-openstack
     - virt-install
 
 - name: See if postgreSQL is initialized
@@ -45,6 +46,7 @@
   - always
   vars:
     cloud_vars: true
+    provision_user: resalloc
 
 - name: install .ansible.cfg for {{ provision_user }} user
   copy: src=ansible.cfg dest=/var/lib/resallocserver/.ansible.cfg
@@ -61,8 +63,10 @@
   template: src="resalloc/{{ item }}.j2" dest="/var/lib/resallocserver/resalloc_provision/{{ item }}"
             mode=755
   with_items:
+  - vm-delete
   - vm-release
   - ibm-cloud-vm
+  - osuosl-vm
   tags:
   - provision_config
 

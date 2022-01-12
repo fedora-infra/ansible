@@ -33,6 +33,7 @@
   tags:
   - provision_config
   when:
+  # for the hypervisor use-case
   - cloud_vars is not defined
 
 - name: templated provision scripts
@@ -82,5 +83,15 @@
 - name: remove currently unused and broken os_nova filter
   file: state=absent
         path="{{ provision_directory }}/filter_plugins/os_nova.py"
+  tags:
+  - provision_config
+
+- name: install the Oregon State University OpenStack token file on BE/HV
+  template:
+    src: "{{ roles_path }}/copr/backend/templates/provision/rc-osuosl.sh.j2"
+    dest: "{{ provision_directory }}/.rc-osuosl.sh"
+    owner: "{{ provision_user }}"
+    group: "{{ provision_user }}"
+    mode: 0600
   tags:
   - provision_config

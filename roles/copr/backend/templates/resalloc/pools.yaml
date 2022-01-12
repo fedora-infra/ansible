@@ -33,7 +33,7 @@ aws_x86_64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else
 {% else %}
     cmd_new: copr-resalloc-aws-new-x86_64
 {% endif %}
-    cmd_delete: "/var/lib/resallocserver/provision/vm-delete"
+    cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
     cmd_livecheck: "resalloc-check-vm-ip"
     cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
     livecheck_period: 180
@@ -57,7 +57,7 @@ aws_aarch64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% els
 {% else %}
     cmd_new: copr-resalloc-aws-new-aarch64
 {% endif %}
-    cmd_delete: "/var/lib/resallocserver/provision/vm-delete"
+    cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
     cmd_livecheck: "resalloc-check-vm-ip"
     cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
     livecheck_period: 180
@@ -96,7 +96,7 @@ copr_hv_x86_64_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     - hypervisor_x86_64
     - hypervisor_x86_64_{{ hv }}
     cmd_new: "/var/lib/resallocserver/provision/libvirt-new --swap-vol-size 168"
-    cmd_delete: "/var/lib/resallocserver/provision/vm-delete"
+    cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
     cmd_livecheck: "resalloc-check-vm-ip"
     cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
     livecheck_period: 180
@@ -128,7 +128,7 @@ copr_hv_ppc64le_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     - hypervisor_ppc64le
     - hypervisor_ppc64le_{{ hv }}
     cmd_new: "/var/lib/resallocserver/provision/libvirt-new --swap-vol-size 168"
-    cmd_delete: "/var/lib/resallocserver/provision/vm-delete"
+    cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
     cmd_livecheck: "resalloc-check-vm-ip"
     cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
     livecheck_period: 180
@@ -154,13 +154,32 @@ copr_ibm_cloud_s390x_tokyo_{% if devel %}dev{% else %}prod{% endif %}:
     - ibm_cloud
     - tokyo
   cmd_new: '/var/lib/resallocserver/resalloc_provision/ibm-cloud-vm --log-level debug create "$RESALLOC_NAME"'
-  cmd_delete: "/var/lib/resallocserver/provision/vm-delete"
+  cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
   cmd_livecheck: "resalloc-check-vm-ip"
   cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
   livecheck_period: 180
   reuse_opportunity_time: 180
   reuse_max_count: 8
   reuse_max_time: 1800
+{% endif %}
+
+{% if devel %}
+# Power9 VMs in openpower-controller.osuosl.org
+copr_osuosl_p09_{% if devel %}dev{% else %}prod{% endif %}:
+  max: 3
+  max_prealloc: 1
+  max_starting: 1
+  tags:
+    - none_currently_just_experimenting
+  cmd_new: '/var/lib/resallocserver/resalloc_provision/osuosl-vm'
+  cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
+  cmd_livecheck: "resalloc-check-vm-ip"
+  cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
+  livecheck_period: 180
+  reuse_opportunity_time: 180
+  reuse_max_count: 8
+  reuse_max_time: 1800
+
 {% endif %}
 
 
