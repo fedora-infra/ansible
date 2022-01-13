@@ -28,6 +28,7 @@ elif [ "${1}" ==  "fedora-secondary" ]; then
 	CATEGORY="Fedora Secondary Arches"
 elif [ "${1}" ==  "archive" ]; then
 	CATEGORY="Fedora Archive"
+	SCANNER="/usr/local/bin/scan-primary-mirror"
 elif [ "${1}" ==  "codecs" ]; then
 	CATEGORY="Fedora Codecs"
 	SCANNER="/usr/local/bin/scan-primary-mirror"

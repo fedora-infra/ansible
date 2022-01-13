@@ -1,7 +1,7 @@
 max_propagation_days = 2
 max_stale_days = 3
 excludes=[".*\\.snapshot", ".*/\\.~tmp~"]
-skip_paths_for_version=["pub/alt"]
+skip_paths_for_version=["pub/alt", "pub/archive"]
 test_paths=["/test/", "/stage/"]
 skip_repository_paths = ["Cloud", "Workstation", "Server", "drpms" ]
 do_not_display_paths = ["_Beta"]
@@ -94,3 +94,38 @@ url="/srv/codecs.fedoraproject.org/"
 regex="codecs.fedoraproject.org/openh264/[\\.\\d]+/.*"
 prefix="fedora-cisco-openh264"
 
+### Fedora Archive ###
+
+[[category]]
+name="Fedora Archive"
+type="directory"
+url="/srv/pub/archive/"
+
+[[repository_mapping]]
+regex="^pub/archive/fedora(-secondary)?(/linux)?/(core|releases|development)/(rawhide|[\\.\\d]+)/.*"
+prefix="fedora"
+
+[[repository_mapping]]
+regex="^pub/archive/fedora(-secondary)?(/linux)?/updates/[\\.\\d]+/Everything/.*"
+prefix="updates-released"
+
+[[repository_mapping]]
+regex="^pub/archive/fedora(-secondary)?(/linux)?/updates/[\\.\\d]+/Modular/.*"
+prefix="updates-released-modular"
+
+[[repository_mapping]]
+regex="^pub/archive/fedora(-secondary)?(/linux)?/updates/testing/[\\.\\d]+/Everything/.*"
+prefix="updates-testing"
+
+[[repository_mapping]]
+regex="^pub/archive/fedora(-secondary)?(/linux)?/updates/testing/[\\.\\d]+/Modular/.*"
+prefix="updates-testing-modular"
+
+# pre modular structure
+[[repository_mapping]]
+regex="^pub/archive/fedora(-secondary)?(/linux)?/updates/testing/([\\.\\d]+)/[^ME].*"
+prefix="updates-testing"
+
+[[repository_mapping]]
+regex="^pub/archive/fedora(-secondary)?(/linux)?/updates/([\\.\\d]+)/[^ME].*"
+prefix="updates-released"
