@@ -123,6 +123,15 @@
      username: centos-koji
 # CENTOS KOJI END
 
+# CENTOS RESULSDB BEGIN
+- name: CentOS ResultsDB User
+  run_once: true
+  include_role:
+    name: rabbit/user
+  vars:
+     username: resultsdb-centos{{ env_suffix }}
+# CENTOS RESULTSDB END
+
 # CENTOS ODCS BEGIN
 - name: Configure the centos-odcs virtual host
   run_once: true
