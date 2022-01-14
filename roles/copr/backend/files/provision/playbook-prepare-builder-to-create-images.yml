@@ -1,0 +1,128 @@
+---
+# This playbook is not yet automatically used.  It is mean to be used like:
+# 1. start normal copr builder in IBM Cloud - s390x
+# 2. execute this playbook:  ansible-playbook <this-playbook> -i "<IP-of-the-server>,"
+# 3. ssh to <IP-of-the-server>
+# 4. run, as root, copr-image https://mirror.yandex.ru/fedora-secondary/releases/35/Cloud/s390x/images/Fedora-Cloud-Base-35-1.2.s390x.qcow2
+# Unfortunately, we don't have s390x hypervisor to run this on.  Therefore we
+# run this on VM, where fortunately nested virtualization works.
+
+- name: configure composer machine
+  hosts: all
+  user: root
+
+  tasks:
+    - name: install guestfish & friends
+      package:
+        name: "{{ packages }}"
+      vars:
+        packages:
+          - ebtables
+          - libguestfs
+          - python3-libvirt
+          - qemu-kvm
+          - virt-install
+          - ansible-collection-community-general
+
+    - name: enable libvirt
+      service:
+        name: libvirtd
+        state: started
+
+    - name: praiskup helpers repo
+      copy:
+        content: |
+          [copr:copr.fedorainfracloud.org:praiskup:helpers]
+          name=Copr repo for helpers owned by praiskup
+          baseurl=https://download.copr.fedorainfracloud.org/results/praiskup/helpers/fedora-$releasever-x86_64/
+          type=rpm-md
+          skip_if_unavailable=True
+          gpgcheck=1
+          gpgkey=https://download.copr.fedorainfracloud.org/results/praiskup/helpers/pubkey.gpg
+          repo_gpgcheck=0
+          enabled=1
+          enabled_metadata=1
+        dest: /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:praiskup:helpers.repo
+        mode: 0644
+
+    - name: install helpers
+      package: name=praiskup-helpers state=present
+      register: helpers_installed
+
+    - name: remount with larger TMP
+      shell: mount -o remount,size=20G /tmp
+      when: helpers_installed.changed
+
+    - name: set direct backend for guestfish
+      copy:
+        content: "export LIBGUESTFS_BACKEND=direct"
+        dest: /etc/profile.d/guestfish-copr.sh
+
+
+    - set_fact:
+        eimg_configdir: /home/mockbuilder/provision
+        private_key_file: /root/.ssh/id_rsa
+      tags: always
+
+    - file:
+        state: directory
+        path: "{{ item }}"
+      loop:
+        - "{{ eimg_configdir }}"
+        - "{{ eimg_configdir }}/files"
+        - "{{ eimg_configdir }}/files/dnf"
+        - "{{ eimg_configdir }}/files/copr-rpmbuild"
+        - "{{ eimg_configdir }}/files/copr-distgit-client"
+
+    - copy:
+        src: "{{ item }}"
+        dest: "{{ eimg_configdir }}/{{ item }}"
+      loop:
+        - local-image-update.yml
+        - create_swap_file.yml
+        - provision_builder_tasks.yml
+        - vars.yml
+        - files/buildsys.pub
+        - files/enable-swap.service
+        - files/enable-swap.sh
+        - files/main.ini
+        - files/dnf/infra-tags.repo
+        - files/copr-rpmbuild/rpkg.conf.j2
+        - files/copr-distgit-client/centos-stream.ini
+
+    - name: eimg.sh config
+      copy:
+        content: |
+          EIMG_COPR_PLAYBOOK_DIR={{ eimg_configdir }}
+          EIMG_COPR_PLAYBOOK=local-image-update.yml
+          EIMG_FINAL_SYSPREP_ARGS=(--ssh-inject "root:file:$HOME/.ssh/id_rsa.pub"
+          --run-command "chcon -v -R -h system_u:object_r:ssh_home_t:s0 /root/.ssh" )
+        dest: /etc/eimg/eimg.sh
+        mode: 0644
+
+    - stat: path={{ private_key_file }}
+      register: key_stat
+
+    - shell: 'ssh-keygen -b 4096 -t rsa -q -N "" -f {{ private_key_file }}'
+      when: not key_stat.stat.exists
+
+#    - name: install composer packages
+#      package: name={{ packages }}
+#      vars:
+#        - packages:
+#            - osbuild-composer
+#            - composer-cli
+#
+#    - name: start osbuild services
+#      service:
+#        name: "{{ item }}"
+#        state: started
+#      loop:
+#        - osbuild-composer.socket
+#        - osbuild-local-worker.socket
+#        - osbuild-composer
+#
+#    - name: composer user
+#      user:
+#        name: composer
+#        groups: weldr
