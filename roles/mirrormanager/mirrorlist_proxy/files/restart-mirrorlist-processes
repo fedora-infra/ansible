@@ -12,13 +12,34 @@ TIME_DRAIN=30
 TIME_RESTART=5
 TIME_DISABLE=5
 
-##
-
-# Initial expected state is mirrorlist1 running, mirrorlist2 running and new protbuf cache
+check_and_restart() {
+	systemctl start $1
+	if [[ ${?} -ne 0 ]]; then
+		systemctl start $1
+		if [[ ${?} -ne 0 ]]; then
+			echo "Unable to start $1"
+			exit 1
+		fi
+	fi
+}
 
 if [ ! -f /srv/mirrorlist/data/mirrorlist2/global_netblocks.txt ];
 then
 	cp /srv/mirrorlist/data/mirrorlist1/* /srv/mirrorlist/data/mirrorlist2/
+fi
+
+## check mirrorlist1 running
+if [ `systemctl show mirrorlist1 -p ActiveState` != 'ActiveState=active' ]; then
+	# mirrorlist1 not running, there is a problem
+	echo "Error: mirrorlist1 is not running as expected. Trying to restart"
+	check_and_restart mirrorlist1
+fi
+
+## check mirrorlist2 running
+if [ `systemctl show mirrorlist2 -p ActiveState` != 'ActiveState=active' ]; then
+	# mirrorlist2 not running, maybe a new install
+	systemctl start mirrorlist2
+	touch /srv/mirrorlist/data/mirrorlist1/mirrorlist_cache.proto
 fi
 
 ## Check that protbuf cache is newer than old protobuf cache
@@ -28,12 +49,6 @@ if [ /srv/mirrorlist/data/mirrorlist1/mirrorlist_cache.proto -nt /srv/mirrorlist
 else
 	# No new proto
         exit 0
-fi
-## check mirrorlist1 running
-if [ `systemctl show mirrorlist1 -p ActiveState` != 'ActiveState=active' ]; then
-	# mirrorlist1 not running, there is a problem
-	echo "Error: mirrorlist1 is not running as expected"
-	exit 1
 fi
 
 # check mirrorlist2 (old protbuf cache and see that it's processing ok)
@@ -53,14 +68,7 @@ sleep ${TIME_DISABLE}
 # restart mirrorlist1 (new protbuf cache and make sure it's processing ok)
 systemctl stop mirrorlist1
 sleep 1
-systemctl start mirrorlist1
-if [[ ${?} -ne 0 ]]; then
-    systemctl start mirrorlist1
-    if [[ ${?} -ne 0 ]]; then
-        echo "Unable to start mirrorlist1"
-        exit 1
-    fi
-fi
+check_and_restart mirrorlist1
 
 
 sleep ${TIME_RESTART}
@@ -86,11 +94,7 @@ sleep ${TIME_DISABLE}
 # restart mirrorlist2
 systemctl stop mirrorlist2
 sleep 1
-systemctl start mirrorlist2
-if [[ ${?} -ne 0 ]]; then
-    echo "Unable to start mirrorlist2"
-    exit 1
-fi
+check_and_restart mirrorlist2
 
 sleep ${TIME_RESTART}
 curl -q -H mirrors.fedoraproject.org ${mirrorlist2} -o/dev/null -s -f --retry 50 --retry-delay 10 --retry-connrefused --retry-max-time 180
