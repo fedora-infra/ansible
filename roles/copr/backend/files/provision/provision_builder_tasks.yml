@@ -95,10 +95,10 @@
 - name: Activate Red Hat Subscription
   shell:
     cmd: >
-      /usr/local/bin/copr-rh-subscribe.sh \
-      --pool-id 8a85f9a17c71102f017ce611251c770f \
-      --user copr-team \
-      --pass "{{ copr_red_hat_subscription_password }}" \
+      /usr/local/bin/copr-rh-subscribe.sh
+      --pool-id 8a85f9a17c71102f017ce611251c770f
+      --user copr-team
+      --pass "{{ copr_red_hat_subscription_password }}"
       --system "{{ lookup('env', 'RESALLOC_NAME') | default('unknown-builder') }}"
   no_log: true
   when: prepare_base_image is not defined
