@@ -35,7 +35,7 @@
     when: env == "staging"
 
   - role: openshift/object
-    app: datanommer
+    app: datagrepper
     file: imagestream.yml
     objectname: imagestream.yml
 
