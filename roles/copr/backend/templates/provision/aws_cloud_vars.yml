@@ -7,8 +7,6 @@ builder_images:
   x86_64: "{{ copr_builder_images.aws.x86_64 }}"
   aarch64: "{{ copr_builder_images.aws.aarch64 }}"
 
-mock_var_cache_tmpfs: true
-
 aws_arch_subnets:
   x86_64:
     - subnet-0995f6a466849f4c3
