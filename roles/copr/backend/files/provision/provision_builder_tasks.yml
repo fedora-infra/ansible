@@ -86,30 +86,20 @@
   # subscription-manager by default.
   when: "'subscription-manager' not in ansible_facts.packages"
 
+- name: install the subscription-manager script
+  copy:
+    src: copr-rh-subscribe.sh
+    dest: /usr/local/bin/copr-rh-subscribe.sh
+
 - name: Activate Red Hat Subscription
-  community.general.redhat_subscription:
-    state: present
-    username: copr-team
-    force_register: true
-    password: "{{ copr_red_hat_subscription_password }}"
-    consumer_name: "{{ lookup('env', 'RESALLOC_NAME') | default('unknown-builder') }}"
-    server_hostname: subscription.rhsm.redhat.com
-    pool_ids:
-      - "8a85f9a17c71102f017ce611251c770f"
-  when:
-    - prepare_base_image is not defined
-    - copr_red_hat_subscription_password is defined
-  tags:
-    - red_hat_subscription
-  ignore_errors: true
-  register: subscription
-
-- name: Cleanup subscription before failure
-  shell: subscription-manager unregister
-  when: subscription.failed
-
-- fail: msg="Could not subscribe"
-  when: subscription.failed
+  shell:
+    cmd: >
+      /usr/local/bin/copr-rh-subscribe.sh \
+      --pool-id 8a85f9a17c71102f017ce611251c770f \
+      --user copr-team \
+      --pass "{{ copr_red_hat_subscription_password }}" \
+      --system "{{ lookup('env', 'RESALLOC_NAME') | default('unknown-builder') }}"
+  no_log: true
 
 - name: install copr-builder and other latest packages
   dnf: state=latest pkg={{ packages }}
