@@ -99,7 +99,7 @@ def get_systems(opts):
         if not found:
             break
 
-        LOG.debug("Found %s systems (%s in total)", found, len(found))
+        LOG.debug("Found %s systems (%s in total)", found, len(all_systems))
 
     # randomize the order, so we can parallelize this
     random.shuffle(all_systems)
