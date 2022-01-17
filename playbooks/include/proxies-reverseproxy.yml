@@ -249,16 +249,6 @@
     destname: datagrepper
     remotepath: /datagrepper
     localpath: /datagrepper
-    rewrite: true
-    proxyurl: http://localhost:10028
-    tags:
-    - datagrepper
-
-  - role: httpd/reverseproxy
-    website: apps.fedoraproject.org
-    destname: datagrepper2
-    remotepath: /datagrepper2
-    localpath: /datagrepper2
     balancer_name: app-os
     targettype: openshift
     keephost: true

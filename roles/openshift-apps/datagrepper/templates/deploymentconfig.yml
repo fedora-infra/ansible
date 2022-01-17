@@ -48,20 +48,20 @@ spec:
         - name: APP_CONFIG
           value: "/etc/datagrepper/gunicorn.conf.py"
         - name: SCRIPT_NAME
-          value: "/datagrepper2"
+          value: "/datagrepper"
         readinessProbe:
           timeoutSeconds: 10
           initialDelaySeconds: 5
           periodSeconds: 60
           httpGet:
-            path: "/datagrepper2/healthz/ready"
+            path: "/datagrepper/healthz/ready"
             port: 8080
         livenessProbe:
           timeoutSeconds: 10
           initialDelaySeconds: 3
           periodSeconds: 60
           httpGet:
-            path: "/datagrepper2/healthz/live"
+            path: "/datagrepper/healthz/live"
             port: 8080
       volumes:
       - name: datagrepper-config-volume
