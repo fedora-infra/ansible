@@ -101,6 +101,16 @@
     - copr_red_hat_subscription_password is defined
   tags:
     - red_hat_subscription
+  ignore_errors: true
+  register: subscription
+
+- name: Cleanup subscription before failure
+  community.general.redhat_subscription:
+    state: absent
+  when: subscription.failed
+
+- fail: msg="Could not subscribe"
+  when: subscription.failed
 
 - name: install copr-builder and other latest packages
   dnf: state=latest pkg={{ packages }}
