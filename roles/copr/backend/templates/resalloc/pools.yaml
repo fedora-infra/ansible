@@ -20,12 +20,6 @@ aws_x86_64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else
     - arch_i686_native
     - arch_armhfp
     - arch_armhfp_emulated
-{% if devel %}
-    - drop_this_warning_warning
-{% else %}
-    - arch_s390x
-    - arch_s390x_emulated
-{% endif %}
     - arch_noarch
     - aws
 {% if spot %}
@@ -86,12 +80,6 @@ copr_hv_x86_64_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     - arch_i686_native
     - arch_armhfp
     - arch_armhfp_emulated
-{% if devel %}
-    - drop_this_warning_warning
-{% else %}
-    - arch_s390x
-    - arch_s390x_emulated
-{% endif %}
     - hypervisor
     - hypervisor_x86_64
     - hypervisor_x86_64_{{ hv }}
@@ -140,11 +128,16 @@ copr_hv_ppc64le_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
 {% endfor %}
 
 # Z Cloud instances
-{% if devel %}
 copr_ibm_cloud_s390x_tokyo_{% if devel %}dev{% else %}prod{% endif %}:
-  max: 4
-  max_prealloc: 2
-  max_starting: 2
+{% if devel %}
+  max: {{ builders["ibm_cloud_tokyo"][0] }}
+  max_prealloc: {{ builders["ibm_cloud_tokyo"][1] }}
+  max_starting: {{ builders["ibm_cloud_tokyo"][2] }}
+{% else %}
+  max: 2
+  max_prealloc: 1
+  max_starting: 1
+{% endif %}
   tags:
     - copr_builder
     - name: arch_noarch
@@ -161,7 +154,6 @@ copr_ibm_cloud_s390x_tokyo_{% if devel %}dev{% else %}prod{% endif %}:
   reuse_opportunity_time: 180
   reuse_max_count: 8
   reuse_max_time: 1800
-{% endif %}
 
 {% if devel %}
 # Power9 VMs in openpower-controller.osuosl.org

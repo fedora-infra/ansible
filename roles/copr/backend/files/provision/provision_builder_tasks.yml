@@ -99,7 +99,6 @@
   when:
     - prepare_base_image is not defined
     - copr_red_hat_subscription_password is defined
-    - devel
   tags:
     - red_hat_subscription
 
@@ -156,7 +155,6 @@
     - s390x
   tags:
   - provision_config
-  when: devel|bool
 
 - name: put copr-rpmbuild configuration file in the right place
   copy: src=files/main.ini dest=/etc/copr-rpmbuild/main.ini
