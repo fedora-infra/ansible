@@ -105,8 +105,7 @@
   register: subscription
 
 - name: Cleanup subscription before failure
-  community.general.redhat_subscription:
-    state: absent
+  shell: subscription-manager unregister
   when: subscription.failed
 
 - fail: msg="Could not subscribe"
