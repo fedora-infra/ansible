@@ -90,6 +90,7 @@
   copy:
     src: copr-rh-subscribe.sh
     dest: /usr/local/bin/copr-rh-subscribe.sh
+    mode: 0755
 
 - name: Activate Red Hat Subscription
   shell:
@@ -100,6 +101,7 @@
       --pass "{{ copr_red_hat_subscription_password }}" \
       --system "{{ lookup('env', 'RESALLOC_NAME') | default('unknown-builder') }}"
   no_log: true
+  when: prepare_base_image is not defined
 
 - name: install copr-builder and other latest packages
   dnf: state=latest pkg={{ packages }}
