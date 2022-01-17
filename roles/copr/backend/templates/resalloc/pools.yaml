@@ -129,15 +129,9 @@ copr_hv_ppc64le_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
 
 # Z Cloud instances
 copr_ibm_cloud_s390x_tokyo_{% if devel %}dev{% else %}prod{% endif %}:
-{% if devel %}
   max: {{ builders["ibm_cloud_tokyo"][0] }}
   max_prealloc: {{ builders["ibm_cloud_tokyo"][1] }}
   max_starting: {{ builders["ibm_cloud_tokyo"][2] }}
-{% else %}
-  max: 2
-  max_prealloc: 1
-  max_starting: 1
-{% endif %}
   tags:
     - copr_builder
     - name: arch_noarch
