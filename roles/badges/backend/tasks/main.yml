@@ -225,7 +225,6 @@
   copy:
     src: datanommer.models__init__.py
     dest: /usr/lib/python2.7/site-packages/datanommer/models/__init__.py
-  when: env == "staging"
   tags:
   - badges
   - badges/backend

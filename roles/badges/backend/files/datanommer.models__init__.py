@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# This is a Python2-compatible file for the badges app, that is still running on Python2.
+# This is a Python2-compatible file for the apps that are still running on Python2.
 # Compatibility fixes done by pasteurize: http://python-future.org/pasteurize.html
 
 from __future__ import absolute_import, division, print_function, unicode_literals
@@ -130,6 +130,26 @@ def add(message):
     else:
         sent_at = datetime.datetime.utcnow()
 
+    # Workaround schemas misbehaving
+    try:
+        usernames = message.usernames
+    except Exception:
+        log.exception(
+            "Could not get the list of users from a message on %s with id %s",
+            message.topic,
+            message.id,
+        )
+        usernames = []
+    try:
+        packages = message.packages
+    except Exception:
+        log.exception(
+            "Could not get the list of packages from a message on %s with id %s",
+            message.topic,
+            message.id,
+        )
+        packages = []
+
     Message.create(
         i=0,
         msg_id=message.id,
@@ -137,8 +157,8 @@ def add(message):
         timestamp=sent_at,
         msg=message.body,
         headers=headers,
-        users=message.usernames,
-        packages=message.packages,
+        users=usernames,
+        packages=packages,
     )
 
     session.commit()
@@ -283,7 +303,7 @@ class Message(DeclarativeBase):
             return
         assoc_col_name = assoc_table.c[0].name
         insert_values = []
-        for name in values:
+        for name in set(values):
             attr_obj = rel_class.get_or_create(name)
             # This would normally be a simple "obj.[users|packages].append(name)" kind
             # of statement, but here we drop down out of sqlalchemy's ORM and into the
@@ -316,8 +336,8 @@ class Message(DeclarativeBase):
             headers=self.headers,
             source_name=self.source_name,
             source_version=self.source_version,
-            users=self.users,
-            packages=self.packages,
+            users=list(sorted(u.name for u in self.users)),
+            packages=list(sorted(p.name for p in self.packages)),
         )
 
     def as_fedora_message_dict(self):
@@ -442,7 +462,9 @@ class Message(DeclarativeBase):
 
         if contains:
             query = query.filter(
-                or_(*(Message.msg.like("%{}%".format(contain)) for contain in contains))
+                or_(
+                    *(Message._msg.like("%{}%".format(contain) for contain in contains))
+                )
             )
 
         # And then the four negative filters as necessary
