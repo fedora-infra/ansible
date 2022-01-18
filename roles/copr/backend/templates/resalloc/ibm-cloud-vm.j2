@@ -9,8 +9,11 @@ import datetime
 import logging
 import pipes
 import os
+import random
 import subprocess
 import sys
+
+import requests
 
 from ibm_vpc import VpcV1
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
@@ -19,12 +22,23 @@ DEFAULT_PLAYBOOK = "{{ provision_directory }}/libvirt-provision.yml"
 DEFAULT_TOKEN_FILE = "{{ ibmcloud_token_file }}"
 DEFAULT_IMAGE = "{{ copr_builder_images.ibm_cloud.s390x }}"
 
-SUBNET_ID = "02f7-98674f68-aae1-4ea1-a889-5a0b7a07f4b8"
 VPC_ID = "r022-8438169e-d881-4bda-b603-d31fdf0f8b3a"
 SECURITY_GROUP_ID = "r022-bf49b90e-c00f-4c68-8707-2936b47b286b"
 SSH_KEY_ID = "r022-3918e368-8e00-4e23-9119-5e3ce1eb33bd"
 INSTANCE_TYPE = "cz2-2x4"
-ZONE_NAME = "jp-tok-2"
+SERVICE_URL = "https://jp-tok.iaas.cloud.ibm.com/v1"
+
+ZONES = {
+    "jp-tok-1": {
+        "subnet_id": "02e7-84755ffa-97bb-4067-b618-24c788c901cb",
+    },
+    "jp-tok-2": {
+        "subnet_id": "02f7-98674f68-aae1-4ea1-a889-5a0b7a07f4b8",
+    },
+    "jp-tok-3": {
+        "subnet_id": "02g7-6d92562d-b868-411f-a962-99271d609ba6",
+    },
+}
 
 
 def resalloc_to_ibmcloud_name(name):
@@ -35,11 +49,12 @@ def resalloc_to_ibmcloud_name(name):
     return name.replace("_", "-")
 
 
-def bind_floating_ip(service, instance_id, opts, log):
+def bind_floating_ip(service, instance_id, opts):
     """
     Assign an existing Floating IP to given instance.
     """
 
+    log = opts.log
     log.info("Bind floating IP")
     response_list = service.list_floating_ips().get_result()['floating_ips']
     floating_ip_uuid = None
@@ -56,13 +71,8 @@ def bind_floating_ip(service, instance_id, opts, log):
         log.error("UUID for Floating IP %s not found", opts.floating_ip_name)
         sys.exit(1)
 
-    response_list = service.list_instance_network_interfaces(instance_id)
-    response_list = response_list.get_result()['network_interfaces']
-    log.info(response_list)
-    for item in response_list:
-        log.info("{}\t{}".format(item['id'], item['name']))
-    network_interface_id = response_list[0]['id']
-    log.info("Network interface ID: {}".format(network_interface_id))
+    network_interface_id = opts.instance_created["primary_network_interface"]["id"]
+    log.info("Network interface ID: %s", network_interface_id)
     service.add_instance_network_interface_floating_ip(
         instance_id,
         network_interface_id,
@@ -70,6 +80,46 @@ def bind_floating_ip(service, instance_id, opts, log):
     )
     log.info("Floating IP: %s", floating_ip_address)
     return floating_ip_address
+
+
+def allocate_and_assign_ip(service, opts):
+    """
+    curl -X POST "$vpc_api_endpoint/v1/floating_ips?version=$api_version&generation=2" \
+        -H "$iam_token" \
+'
+    """
+    url = SERVICE_URL + "/floating_ips"
+    headers = {
+        "Accept": "application/json",
+        "Authorization": "Bearer " + service.authenticator.token_manager.get_token(),
+    }
+    params = {
+        'version': "2022-01-18",
+        'generation': "2",
+    }
+
+    data = {
+        "name": "copr-floating-ip-" + opts.instance_name,
+        "target": {
+            "id": opts.instance_created["primary_network_interface"]["id"],
+        },
+    }
+
+    response = requests.post(url, headers=headers, json=data, params=params)
+    assert response.status_code == 201
+    opts.allocated_floating_ip_id = response.json()["id"]
+    return response.json()["address"]
+
+
+def assign_floating_ip(service, instance_id, opts):
+    """
+    Assign a Floating IP address (and create it, if needed).
+    """
+
+    if opts.floating_ip_name:
+        return bind_floating_ip(service, instance_id, opts)
+
+    return allocate_and_assign_ip(service, opts)
 
 
 def run_playbook(host, opts):
@@ -80,10 +130,13 @@ def run_playbook(host, opts):
     subprocess.check_call(cmd, stdout=sys.stderr)
 
 
-def create_instance(service, instance_name, opts, log):
+def create_instance(service, instance_name, opts):
     """
     Start the VM, name it "instance_name"
     """
+
+    log = opts.log
+
     instance_prototype_model = {
         "keys": [{"id": SSH_KEY_ID}],
         "name": instance_name,
@@ -104,14 +157,14 @@ def create_instance(service, instance_name, opts, log):
         "primary_network_interface": {
             'name': 'primary-network-interface',
             'subnet': {
-                "id": SUBNET_ID,
+                "id": ZONES[opts.zone]["subnet_id"],
             },
             "security_groups": [
                 {"id": SECURITY_GROUP_ID},
             ],
         },
         "zone": {
-            "name": ZONE_NAME,
+            "name": opts.zone,
         },
         "volume_attachments": [{
             "volume": {
@@ -123,38 +176,72 @@ def create_instance(service, instance_name, opts, log):
         }],
     }
 
+    ip_address = None
     instance_created = None
+    opts.allocated_floating_ip_id = None
     try:
         response = service.create_instance(instance_prototype_model)
         instance_created = instance_name
+        opts.instance_created = response.get_result()
         log.debug("Instance response: %s", response)
-        log.debug("Instance response[get_result]: %s", response.get_result())
-        instance_id = response.get_result()['id']
+        log.debug("Instance response[result]: %s", opts.instance_created)
+        instance_id = opts.instance_created["id"]
         log.info("Instance ID: %s", instance_id)
-        ip_address = bind_floating_ip(service, instance_id, opts, log)
+        ip_address = assign_floating_ip(service, instance_id, opts)
         _wait_for_ssh(ip_address)
         run_playbook(ip_address, opts)
         # Tell the Resalloc clients how to connect to this instance.
         print(ip_address)
     except:
         if instance_created:
-            delete_instance(service, instance_name, log)
+            log.info("Removing the failed machine")
+            try:
+                delete_instance(service, instance_name, opts)
+            except Exception as err:
+                log.error(err)
+        if opts.allocated_floating_ip_id:
+            log.info("Removing the allocated Floating IP")
+            service.delete_floating_ip(opts.allocated_floating_ip_id)
         raise
 
 
-def delete_instance(service, instance_name, log):
+def delete_all_ips(service, opts):
+    """
+    Go through all reserved IPs, and remove all which are not assigned
+    to any VM
+    """
+    response_list = service.list_floating_ips().get_result()['floating_ips']
+    for fip in response_list:
+        if fip["status"] != "available":
+            continue
+        service.delete_floating_ip(fip["id"])
+
+
+def delete_instance(service, instance_name, opts):
     """ Delete instance by it's name """
+    log = opts.log
     log.info("Deleting instance %s", instance_name)
-    response_list = service.list_instances().get_result()['instances']
+
     delete_instance_id = None
+    response_list = service.list_instances().get_result()['instances']
     for item in response_list:
         log.debug("Available: %s %s %s", item['id'], item['name'], item['status'])
         if instance_name == item['name']:
             delete_instance_id = item['id']
-    if delete_instance_id is None:
-        log.error("Could not find instance {}".format(instance_name))
-        sys.exit(1)
-    service.delete_instance(delete_instance_id)
+
+    floating_ip_id = None
+    response_list = service.list_floating_ips().get_result()['floating_ips']
+    for floating_ip in response_list:
+        if floating_ip["name"].startswith(instance_name):
+            floating_ip_id = floating_ip["id"]
+
+    if delete_instance_id:
+        service.delete_instance(delete_instance_id)
+    if floating_ip_id:
+        service.delete_floating_ip(floating_ip_id)
+
+    # enforce re-try
+    assert delete_instance_id and floating_ip_id
 
 
 def _get_arg_parser():
@@ -162,15 +249,23 @@ def _get_arg_parser():
     parser.add_argument("--token-file", default=DEFAULT_TOKEN_FILE)
     parser.add_argument("--log-level", default="info")
     subparsers = parser.add_subparsers(dest='subparser')
+    subparsers.required = True
     parser_create = subparsers.add_parser(
         "create", help="Create an instance in IBM Cloud")
     parser_create.add_argument("name")
     parser_create.add_argument("--playbook", default=DEFAULT_PLAYBOOK)
     parser_create.add_argument("--image-uuid", default=DEFAULT_IMAGE)
     parser_create.add_argument("--floating-ip-name", default=None)
+    parser_create.add_argument("--zones", help=(
+        "A comma separate list of zone names.  Default='{default}'. "
+        "The script starts the VM randomly randomly in one of the "
+        "specified zones.".format(default=",".join(ZONES.keys()))),
+        default=ZONES.keys())
     parser_delete = subparsers.add_parser(
         "delete", help="Delete instance by it's name from IBM Cloud")
     parser_delete.add_argument("name")
+    ips = subparsers.add_parser("delete-free-floating-ips",
+                                help="Clean all IPs without an assigned VM")
     return parser
 
 
@@ -184,6 +279,8 @@ def _wait_for_ssh(floating_ip):
 
 def detect_floating_ip_name(opts):
     """
+    CURRENTLY UNUSED, the IPs are deallocated
+
     We allocate Floating IPS in intervals for each instance.
     Production:
         - 000-099
@@ -231,18 +328,26 @@ def _main():
     service = VpcV1(now.strftime('%Y-%m-%d'), authenticator=authenticator)
 
     # We work with Tokyo only for now.
-    service.set_service_url("https://jp-tok.iaas.cloud.ibm.com/v1")
+    service.set_service_url(SERVICE_URL)
 
-    name = resalloc_to_ibmcloud_name(opts.name)
-
-    opts.instance = "production" if "-prod-" in name else "devel"
+    if hasattr(opts, "name"):
+        name = resalloc_to_ibmcloud_name(opts.name)
+        opts.instance_name = name
+        opts.instance = "production" if "-prod-" in name else "devel"
 
     if opts.subparser == "create":
-        detect_floating_ip_name(opts)
-        create_instance(service, name, opts, log)
+        opts.zone = random.choice(list(opts.zones))
+        # detect_floating_ip_name(opts)
+        create_instance(service, name, opts)
     elif opts.subparser == "delete":
-        delete_instance(service, name, log)
-
+        for _ in range(3):
+            try:
+                delete_instance(service, name, opts)
+                break
+            except:
+                continue
+    elif opts.subparser == "delete-free-floating-ips":
+        delete_all_ips(service, opts)
 
 if __name__ == "__main__":
     _main()
