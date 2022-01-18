@@ -21,12 +21,6 @@ aws_x86_64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else
     - arch_armhfp
     - arch_armhfp_emulated
     - arch_noarch
-{% if devel %}
-    - TODO_drop_this
-{% else %}
-    - arch_s390x
-    - arch_s390x_emulated
-{% endif %}
     - aws
 {% if spot %}
     cmd_new: copr-resalloc-aws-new-x86_64 --spot-price 0.156
@@ -86,12 +80,6 @@ copr_hv_x86_64_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     - arch_i686_native
     - arch_armhfp
     - arch_armhfp_emulated
-{% if devel %}
-    - TODO_drop_this
-{% else %}
-    - arch_s390x
-    - arch_s390x_emulated
-{% endif %}
     - hypervisor
     - hypervisor_x86_64
     - hypervisor_x86_64_{{ hv }}
@@ -140,7 +128,6 @@ copr_hv_ppc64le_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
 {% endfor %}
 
 # Z Cloud instances
-{% if devel %}
 copr_ibm_cloud_s390x_tokyo_{% if devel %}dev{% else %}prod{% endif %}:
   max: {{ builders.ibm_cloud_tokyo.s390x[0] }}
   max_prealloc: {{ builders.ibm_cloud_tokyo.s390x[1] }}
@@ -161,7 +148,6 @@ copr_ibm_cloud_s390x_tokyo_{% if devel %}dev{% else %}prod{% endif %}:
   reuse_opportunity_time: 180
   reuse_max_count: 8
   reuse_max_time: 1800
-{% endif %}
 
 {% if devel %}
 # Power9 VMs in openpower-controller.osuosl.org
