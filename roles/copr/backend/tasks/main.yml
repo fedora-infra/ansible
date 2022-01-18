@@ -201,7 +201,7 @@
   - provision_config
 
 - name: calculate max number of workers
-  set_fact: "max_workers={{ max_x86_64_workers|int + max_aarch64_workers|int }}"
+  set_fact: "max_workers={{ max_x86_64_workers|int + max_aarch64_workers|int + max_ppc64le_workers|int + max_s390x_workers|int }}"
   tags:
   - provision_config
 
