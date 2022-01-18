@@ -263,11 +263,12 @@ def _get_arg_parser():
     parser_create.add_argument("--playbook", default=DEFAULT_PLAYBOOK)
     parser_create.add_argument("--image-uuid", default=DEFAULT_IMAGE)
     parser_create.add_argument("--floating-ip-name", default=None)
+    zones_default=",".join(ZONES.keys())
     parser_create.add_argument("--zones", help=(
         "A comma separate list of zone names.  Default='{default}'. "
         "The script starts the VM randomly randomly in one of the "
-        "specified zones.".format(default=",".join(ZONES.keys()))),
-        default=ZONES.keys())
+        "specified zones.".format(default=zones_default)),
+        default=zones_default)
     parser_delete = subparsers.add_parser(
         "delete", help="Delete instance by it's name from IBM Cloud")
     parser_delete.add_argument("name")
@@ -343,7 +344,8 @@ def _main():
         opts.instance = "production" if "-prod-" in name else "devel"
 
     if opts.subparser == "create":
-        opts.zone = random.choice(list(opts.zones))
+        allowed_zones = [x.strip() for x in opts.zones.split(",")]
+        opts.zone = random.choice(allowed_zones)
         # detect_floating_ip_name(opts)
         create_instance(service, name, opts)
     elif opts.subparser == "delete":
