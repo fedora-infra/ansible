@@ -99,7 +99,7 @@ def allocate_and_assign_ip(service, opts):
     }
 
     data = {
-        "name": "copr-floating-ip-" + opts.instance_name,
+        "name": opts.instance_name,
         "target": {
             "id": opts.instance_created["primary_network_interface"]["id"],
         },
@@ -195,13 +195,7 @@ def create_instance(service, instance_name, opts):
     except:
         if instance_created:
             log.info("Removing the failed machine")
-            try:
-                delete_instance(service, instance_name, opts)
-            except Exception as err:
-                log.error(err)
-        if opts.allocated_floating_ip_id:
-            log.info("Removing the allocated Floating IP")
-            service.delete_floating_ip(opts.allocated_floating_ip_id)
+            delete_instance(service, instance_name, opts)
         raise
 
 
@@ -218,7 +212,20 @@ def delete_all_ips(service, opts):
 
 
 def delete_instance(service, instance_name, opts):
-    """ Delete instance by it's name """
+    """
+    Repeatedly try to remove the instance, to minimize the chances for
+    leftovers.
+    """
+    for _ in range(5):
+        try:
+            delete_instance_attempt(service, instance_name, opts)
+            break
+        except:
+            pass
+
+
+def delete_instance_attempt(service, instance_name, opts):
+    """ one attempt to delete instance by it's name """
     log = opts.log
     log.info("Deleting instance %s", instance_name)
 
@@ -340,12 +347,7 @@ def _main():
         # detect_floating_ip_name(opts)
         create_instance(service, name, opts)
     elif opts.subparser == "delete":
-        for _ in range(3):
-            try:
-                delete_instance(service, name, opts)
-                break
-            except:
-                continue
+        delete_instance(service, name, opts)
     elif opts.subparser == "delete-free-floating-ips":
         delete_all_ips(service, opts)
 
