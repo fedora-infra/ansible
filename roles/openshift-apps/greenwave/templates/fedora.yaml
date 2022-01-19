@@ -97,6 +97,8 @@ decision_contexts:
 subject_type: bodhi_update
 rules:
 # This list needs to stay synced with openQA if tests are added or renamed.
+  - !PassingTestCaseRule {test_case_name: update.podman, scenario: "fedora.updates-container.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.podman_client, scenario: "fedora.updates-container.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.install_default_update_netinst, scenario: "fedora.updates-everything-boot-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.install_default_update_netinst, scenario: "fedora.updates-everything-boot-iso.x86_64.uefi"}
   - !PassingTestCaseRule {test_case_name: update.installer_build, scenario: "fedora.updates-everything-boot-iso.x86_64.64bit"}
@@ -135,6 +137,8 @@ rules:
   - !PassingTestCaseRule {test_case_name: update.server_remote_logging_server, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.server_role_deploy_database_server, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.server_role_deploy_domain_controller, scenario: "fedora.updates-server.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.upgrade_realmd_client, scenario: "fedora.updates-server-upgrade.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.upgrade_server_domain_controller, scenario: "fedora.updates-server-upgrade.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.base_reboot_unmount, scenario: "fedora.updates-workstation.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.base_selinux, scenario: "fedora.updates-workstation.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.base_service_manipulation, scenario: "fedora.updates-workstation.x86_64.64bit"}
@@ -149,6 +153,7 @@ rules:
   - !PassingTestCaseRule {test_case_name: update.install_default_update_live, scenario: "fedora.updates-workstation-live-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.install_default_update_live, scenario: "fedora.updates-workstation-live-iso.x86_64.uefi"}
   - !PassingTestCaseRule {test_case_name: update.live_build, scenario: "fedora.updates-workstation-live-iso.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.upgrade_desktop_encrypted_64bit, scenario: "fedora.updates-workstation-upgrade.x86_64.64bit"}
 
 # This policy lists tests that are expected to pass for a Rawhide compose to
 # meet the basic release criteria.
