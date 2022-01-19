@@ -1,8 +1,10 @@
 ---
 datacenter: rdu-cc
-dns: 8.8.8.8
-eth0_ip: 8.43.85.53
-gw: 8.43.85.254
+dns1: 8.8.8.8
+dns2: 8.8.4.4
+eth0_ipv4_gw: 8.43.85.254
+eth0_ipv4_ip: 8.43.85.53
+eth0_ipv4_nm: 24
 ks_repo: http://38.145.60.16/pub/fedora/linux/releases/34/Server/armhfp/os/
 ks_url: http://38.145.60.16/repo/rhel/ks/kvm-fedora
 libdir: /usr/lib
@@ -19,7 +21,6 @@ nagios_Check_Services:
   raid: false
   sshd: false
   swap: false
-nm: 255.255.255.0
 num_cpus: 5
 virt_install_command: "{{ virt_install_command_armv7_one_nic_unsafe }}"
 vmhost: vmhost-a64-cc01.rdu-cc.fedoraproject.org

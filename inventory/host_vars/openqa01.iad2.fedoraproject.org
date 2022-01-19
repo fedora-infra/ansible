@@ -3,9 +3,9 @@
 # networking
 ############################################################
 datacenter: iad2
-dns: 10.3.163.33
-eth0_ip: 10.3.174.52
-gw: 10.3.174.254
+eth0_ipv4_gw: 10.3.174.254
+eth0_ipv4_ip: 10.3.174.52
+eth0_ipv4_nm: 24
 ks_repo: http://10.3.163.35/pub/fedora/linux/releases/32/Server/x86_64/os/
 ############################################################
 # install
@@ -16,7 +16,6 @@ ks_url: http://10.3.163.35/repo/rhel/ks/kvm-fedora-32-iad2
 ############################################################
 lvm_size: 800000
 mem_size: 16384
-nm: 255.255.255.0
 nrpe_procs_crit: 300
 nrpe_procs_warn: 250
 num_cpus: 8

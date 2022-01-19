@@ -1,12 +1,13 @@
 ---
 datacenter: rdu-cc
-dns: 1.1.1.1
-eth0_ip: 8.43.85.70
+dns1: 1.1.1.1
+dns2: 1.0.0.1
+eth0_ipv4_gw: 8.43.85.254
+eth0_ipv4_ip: 8.43.85.70
+eth0_ipv4_nm: 24
 eth0_nm: 255.255.255.0
-gw: 8.43.85.254
 ks_repo: http://infrastructure.fedoraproject.org/repo/rhel/RHEL7-x86_64/
 ks_url: http://infrastructure.fedoraproject.org/repo/rhel/ks/kvm-rhel-7-ext
-nm: 255.255.255.0
 vmhost: virthost-cc-rdu01.fedoraproject.org
 volgroup: /dev/vg_guests
 vpn: true

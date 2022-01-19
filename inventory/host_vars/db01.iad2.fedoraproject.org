@@ -51,11 +51,11 @@ dbs_to_backup:
   - transtats
   - resultsdb
   - zezere
-dns: 10.3.163.33
 # Should be 0.80 of memory
 effective_cache_size: "50GB"
-eth0_ip: 10.3.163.41
-gw: 10.3.163.254
+eth0_ipv4_gw: 10.3.163.254
+eth0_ipv4_ip: 10.3.163.41
+eth0_ipv4_nm: 24
 ks_repo: http://209.132.181.6/repo/rhel/RHEL8-x86_64/
 ks_url: http://209.132.181.6/repo/rhel/ks/kvm-rhel-8-ext
 # These are normally group variables, but in this case db servers are often different
@@ -64,7 +64,6 @@ max_stack_depth: "6MB"
 mem_size: 65536
 nagios_Check_Services:
   swap: false
-nm: 255.255.255.0
 nrpe_procs_crit: 900
 #
 # db01 handles lots of apps, could have many procs if they are busy.

@@ -1,6 +1,7 @@
 datacenter: iad2
-dns: 10.3.163.33
-eth0_ip: 10.3.169.124
+eth0_ipv4_gw: 10.3.169.254
+eth0_ipv4_ip: 10.3.169.124
+eth0_ipv4_nm: 24
 fedmsg_certs:
   - can_send:
       # two-week-atomic stuff (ask maxamillion)
@@ -41,7 +42,6 @@ fedmsg_certs:
     group: sysadmin-releng
     owner: root
     service: releng
-gw: 10.3.169.254
 koji_hub_nfs: "fedora_koji"
 kojihub_scheme: https
 kojihub_url: koji.fedoraproject.org/kojihub
@@ -53,7 +53,6 @@ ks_url: http://10.3.163.35/repo/rhel/ks/kvm-fedora
 #
 libdir: /usr/lib64
 lvm_size: 30000
-nm: 255.255.255.0
 virt_install_command: "{{ virt_install_command_one_nic }}"
 vmhost: bvmhost-x86-04.iad2.fedoraproject.org
 volgroup: /dev/vg_guests

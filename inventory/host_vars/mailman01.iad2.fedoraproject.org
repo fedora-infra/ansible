@@ -1,12 +1,11 @@
 ---
 datacenter: iad2
-dns: 10.3.163.33
-eth0_ip: 10.3.163.57
-gw: 10.3.163.254
+eth0_ipv4_gw: 10.3.163.254
+eth0_ipv4_ip: 10.3.163.57
+eth0_ipv4_nm: 24
 ks_repo: http://10.3.163.35/repo/rhel/RHEL7-x86_64/
 ks_url: http://10.3.163.35/repo/rhel/ks/kvm-rhel-7-iad2
 lvm_size: 750000
-nm: 255.255.255.0
 sar_output_file: mailinglists.json
 # GDPR SAR variables
 sar_script: /srv/webui/bin/mailman-sar.py

@@ -1,11 +1,13 @@
 ---
 datacenter: rdu-cc
-dns: 8.8.8.8
-eth0_ip: 8.43.85.72
-eth0_ipv6: "2620:52:3:1:dead:beef:cafe:fed1"
+dns1: 8.8.8.8
+eth0_ipv4_gw: 8.43.85.254
+eth0_ipv4_ip: 8.43.85.72
+eth0_ipv4_nm: 24
 eth0_ipv6_gw: "2620:52:3:1:ffff:ffff:ffff:fffe"
+eth0_ipv6_ip: "2620:52:3:1:dead:beef:cafe:fed1"
+eth0_ipv6_nm: 64
 eth0_nm: 255.255.255.0
-gw: 8.43.85.254
 has_ipv6: yes
 ks_repo: http://209.132.181.6/repo/rhel/RHEL7-x86_64/
 ks_url: http://209.132.181.6/repo/rhel/ks/kvm-rhel-7-ext
@@ -13,7 +15,24 @@ lvm_size: 20000
 mac_address: "52:54:00:30:a6:43"
 max_mem_size: 20480
 mem_size: 16384
-nm: 255.255.255.0
+network_connections:
+  - autoconnect: yes
+    ip:
+      address:
+        - "{{ eth0_ipv4_ip }}/{{ eth0_ipv4_nm }}"
+        - "{{ eth0_ipv6_ip }}/{{ eth0_ipv6_nm }}"
+      dhcp4: no
+      dns:
+        - "{{ dns1 }}"
+        - "{{ dns2 }}"
+      dns_search:
+        - "{{ dns_search1 }}"
+        - "{{ dns_search2 }}"
+      gateway4: "{{ eth0_ipv4_gw }}"
+      gateway6: "{{ eth0_ipv4_gw }}"
+    mac: "{{ mac_address }}"
+    name: eth0
+    type: ethernet
 nrpe_procs_crit: 1400
 nrpe_procs_warn: 1200
 num_cpus: 8

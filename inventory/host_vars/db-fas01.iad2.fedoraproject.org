@@ -17,17 +17,16 @@ db_backup_dir: ['/backups']
 # This is a more strict list, to be made publicly available
 dbs_to_backup:
   - fas2
-dns: 10.3.163.33
 effective_cache_size: "6GB"
-eth0_ip: 10.3.163.42
-gw: 10.3.163.254
+eth0_ipv4_gw: 10.3.163.254
+eth0_ipv4_ip: 10.3.163.42
+eth0_ipv4_nm: 24
 ks_repo: http://209.132.181.6/repo/rhel/RHEL7-x86_64/
 ks_url: http://209.132.181.6/repo/rhel/ks/kvm-rhel-7-ext
 # These are normally group variables, but in this case db servers are often different
 lvm_size: 100000
 max_stack_depth: "4MB"
 mem_size: 16384
-nm: 255.255.255.0
 nrpe_procs_crit: 800
 #
 # Large updates pushes cause lots of db threads doing the tag moves, so up this from default.

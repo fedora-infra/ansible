@@ -1,6 +1,6 @@
 datacenter: iad2
-dns: 10.3.163.33
-eth0_ip: 10.3.169.121
+eth0_ipv4_gw: 10.3.169.254
+eth0_ipv4_ip: 10.3.169.121
 fedmsg_certs:
   - can_send:
       - pungi.compose.phase.start
@@ -34,7 +34,6 @@ fedmsg_certs:
     owner: root
     service: releng
 freezes: true
-gw: 10.3.169.254
 koji_hub_nfs: "fedora_koji"
 kojihub_scheme: https
 kojihub_url: koji.fedoraproject.org/kojihub

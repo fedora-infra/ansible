@@ -7,10 +7,10 @@ db_backup_dir: ['/backups']
 # This is a more strict list, to be made publicly available
 dbs_to_backup:
   - datanommer
-dns: 10.3.163.33
 effective_cache_size: "12GB"
-eth0_ip: 10.3.166.59
-gw: 10.3.166.254
+eth0_ipv4_gw: 10.3.166.254
+eth0_ipv4_ip: 10.3.166.59
+eth0_ipv4_nm: 24
 # kernel SHMMAX value
 kernel_shmmax: 68719476736
 ks_repo: http://10.3.163.35/repo/rhel/RHEL8-x86_64/
@@ -19,7 +19,6 @@ ks_url: http://10.3.163.35/repo/rhel/ks/kvm-rhel-8-iad2
 lvm_size: 1000000
 max_mem_size: 98304
 mem_size: 65536
-nm: 255.255.255.0
 num_cpus: 8
 sar_huge: true
 sar_output_file: datagrepper.csv

@@ -1,15 +1,16 @@
 ---
 datacenter: osuosl
-dns: 8.8.8.8
-eth0_ip: 140.211.169.205
+dns1: 8.8.8.8
+dns2: 8.8.4.4
+eth0_ipv4_gw: 140.211.169.193
+eth0_ipv4_ip: 140.211.169.205
+eth0_ipv4_nm: 26
 eth0_ipv6: "2605:bc80:3010:600:dead:beef:cafe:fedb"
 eth0_ipv6_gw: "2605:bc80:3010:600::1"
 eth0_nm: 255.255.255.128
-gw: 140.211.169.193
 has_ipv6: yes
 ks_repo: http://209.132.181.6/repo/rhel/RHEL7-x86_64/
 ks_url: http://209.132.181.6/repo/rhel/ks/kvm-rhel-7-ext
-nm: 255.255.255.192
 vmhost: osuosl02.fedoraproject.org
 volgroup: /dev/vg_guests
 vpn: true

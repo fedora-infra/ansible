@@ -2,12 +2,11 @@
 # temp fix to get htis box working
 baseiptables: False
 datacenter: iad2
-dns: 10.3.163.33
-eth0_ip: 10.3.167.74
-gw: 10.3.167.254
+eth0_ipv4_gw: 10.3.167.254
+eth0_ipv4_ip: 10.3.167.74
+eth0_ipv4_nm: 24
 ks_repo: http://10.3.163.35/repo/rhel/RHEL8-x86_64/
 ks_url: http://10.3.163.35/repo/rhel/ks/kvm-rhel-8-iad2
-nm: 255.255.255.0
 # DB used by pagure
 pagure_db_host: db01.stg.iad2.fedoraproject.org
 ssh_hostnames:

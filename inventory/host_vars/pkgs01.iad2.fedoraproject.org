@@ -2,15 +2,14 @@
 additional_host_keytabs:
   - pkgs.fedoraproject.org
 datacenter: iad2
-dns: 10.3.163.33
-eth0_ip: 10.3.169.116
-gw: 10.3.169.254
+eth0_ipv4_gw: 10.3.169.254
+eth0_ipv4_ip: 10.3.169.116
+eth0_ipv4_nm: 24
 host_backup_targets: ['/srv/cache/lookaside']
 ks_repo: http://10.3.163.35/repo/rhel/RHEL8-x86_64/
 ks_url: http://10.3.163.35/repo/rhel/ks/kvm-rhel-8-iad2
 mem_size: 16384
 nfs_mount_opts: "rw,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3"
-nm: 255.255.255.0
 nrpe_procs_crit: 600
 nrpe_procs_warn: 500
 num_cpus: 16

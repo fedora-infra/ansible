@@ -67,6 +67,8 @@ datacenter: iad2
 dbs_to_backup: []
 dns1: "10.3.163.33"
 dns2: "10.3.163.34"
+dns_search1: "iad2.fedoraproject.org"
+dns_search2: "fedoraproject.org"
 # env is staging or production, we default it to production here.
 env: production
 env_prefix: ""
@@ -74,7 +76,7 @@ env_short: prod
 env_suffix: ""
 # Default netmask. All of our iad2 nets are /24's. Almost all of our
 # non-iad2 sites are less than a /24.
-eth0_nm: 255.255.255.0
+eth0_ipv4_nm: 24
 eth1_ip: 10.0.0.10
 eth1_nm: 255.255.255.0
 # By default, fedmsg hosts are in passive mode.  External hosts are typically
@@ -148,6 +150,22 @@ nagios_Check_Services:
 nat_rules: []
 # usually we do not want to enable nested virt, only on some virthosts
 nested: false
+network_connections:
+  - autoconnect: yes
+    ip:
+      address:
+        - "{{ eth0_ipv4_ip }}/{{ eth0_ipv4_nm }}"
+      dhcp4: no
+      dns:
+        - "{{ dns1 }}"
+        - "{{ dns2 }}"
+      dns_search:
+        - "{{ dns_search1 }}"
+        - "{{ dns_search2 }}"
+      gateway4: "{{ eth0_ipv4_gw }}"
+    mac: "{{ ansible_default_ipv4.macaddress }}"
+    name: eth0
+    type: ethernet
 nfs_bridge: br1
 # nfs mount options, override at the group/host level
 nfs_mount_opts: "ro,hard,bg,intr,noatime,nodev,nosuid,nfsvers=3"

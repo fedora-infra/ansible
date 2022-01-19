@@ -12,10 +12,10 @@ dbs_to_backup:
   # make sure to keep in sync
   - openqa
   - openqa-stg
-dns: 10.3.163.33
 effective_cache_size: "6GB"
-eth0_ip: 10.3.174.51
-gw: 10.3.174.254
+eth0_ipv4_gw: 10.3.174.254
+eth0_ipv4_ip: 10.3.174.51
+eth0_ipv4_nm: 24
 host_backup_targets: ['/backups']
 # kernel SHMMAX value
 kernel_shmmax: 68719476736
@@ -24,7 +24,6 @@ ks_url: http://10.3.163.35/repo/rhel/ks/kvm-rhel-8-iad2
 # These are normally group variables, but in this case db servers are often different
 lvm_size: 300000
 mem_size: 16384
-nm: 255.255.255.0
 num_cpus: 10
 shared_buffers: "2GB"
 sudoers: "{{ private }}/files/sudo/qavirt-sudoers"

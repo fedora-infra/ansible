@@ -1,8 +1,9 @@
 ---
-dns: 8.8.8.8
-eth0_ip: 38.145.48.42
-gw: 38.145.49.254
 # Keepalived variables for app.os
+dns1: 8.8.8.8
+eth0_ipv4_gw: 38.145.49.254
+eth0_ipv4_ip: 38.145.48.42
+eth0_ipv4_nm: 23
 keepalived2_interface: eth0
 keepalived2_ipaddress: 38.145.48.41
 keepalived2_priority: 50
@@ -14,7 +15,6 @@ keepalived_priority: 100
 keepalived_routerid: 20
 ks_repo: http://209.132.181.6/pub/fedora/linux/releases/29/Server/x86_64/os/
 ks_url: http://209.132.181.6/repo/rhel/ks/kvm-fedora-29-ext
-nm: 255.255.254.0
 nrpe_procs_crit: 1400
 nrpe_procs_warn: 1200
 num_cpus: 4

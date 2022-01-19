@@ -1,6 +1,7 @@
 ---
 datacenter: iad2
-eth0_ip: 10.3.169.122
+eth0_ipv4_gw: 10.3.169.254
+eth0_ipv4_ip: 10.3.169.122
 fedmsg_certs:
   - can_send:
       # new school pungi-koji stuff (ask dgilmore)
@@ -20,7 +21,6 @@ fedmsg_certs:
     service: releng
 # This VM is the compose host for IoT Edition which isn't blocking, so it doesn't freeze
 freezes: false
-gw: 10.3.169.254
 koji_hub_nfs: "fedora_koji"
 ks_repo: http://10.3.163.35/pub/fedora/linux/releases/34/Everything/x86_64/os/
 ks_url: http://10.3.163.35/repo/rhel/ks/kvm-fedora

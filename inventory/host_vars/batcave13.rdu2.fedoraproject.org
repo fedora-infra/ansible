@@ -5,11 +5,12 @@ dns: 172.31.2.24
 dns1: 172.31.2.24
 #dns2: 8.8.4.4
 
-eth0_ip: 172.31.2.25
+eth0_ipv4_gw: 172.31.2.254
+eth0_ipv4_ip: 172.31.2.25
+eth0_ipv4_nm: 24
 eth0_nm: 255.255.255.0
 eth1_ip: 172.31.1.3
 eth1_nm: 255.255.255.0
-gw: 172.31.2.254
 ks_repo: http://38.145.60.16/repo/rhel/RHEL8-x86_64/
 ks_url: http://38.145.60.16/repo/rhel/ks/kvm-rhel-8-ext
 max_mem_size: 32768
@@ -21,7 +22,6 @@ nagios_Check_Services:
   ping: false
   sshd: false
   swap: false
-nm: 255.255.255.0
 nrpe_procs_crit: 1400
 nrpe_procs_warn: 1200
 num_cpus: 8
