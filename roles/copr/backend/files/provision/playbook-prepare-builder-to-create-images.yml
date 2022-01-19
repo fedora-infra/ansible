@@ -71,8 +71,9 @@
         - "{{ eimg_configdir }}"
         - "{{ eimg_configdir }}/files"
         - "{{ eimg_configdir }}/files/dnf"
-        - "{{ eimg_configdir }}/files/copr-rpmbuild"
         - "{{ eimg_configdir }}/files/copr-distgit-client"
+        - "{{ eimg_configdir }}/files/copr-rh-subscribe.sh"
+        - "{{ eimg_configdir }}/files/copr-rpmbuild"
 
     - copy:
         src: "{{ item }}"
