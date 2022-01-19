@@ -1,0 +1,33 @@
+#! /bin/sh -x
+
+# This script is used for building s390x qcow2 images in IBM Cloud,
+# for IBM Cloud.  For more info see:
+# https://docs.pagure.org/copr.copr/how_to_upgrade_builders.html
+
+# if failure — then at least ASAP
+set -e
+
+# request the s390x machine
+ticket=$(resalloc ticket --tag arch_s390x)
+
+# wait till the machine is avialable
+IP=$(resalloc ticket-wait "$ticket")
+
+ansible-playbook -i "$IP," /var/lib/resallocserver/provision/playbook-prepare-builder-to-create-images.yml
+
+set +x
+cat <<EOF
+DONE.
+
+Now you can start the work on the machine:
+
+    $ ssh root@$IP
+
+
+!WARNING! !WARNING! !WARNING
+
+Don't forget to drop the machine once you are done:
+$ resalloc ticket-close $ticket
+
+!WARNING! !WARNING! !WARNING
+EOF

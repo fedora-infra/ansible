@@ -143,6 +143,14 @@
   - provision_config
   - provision_config_resalloc_aws
 
+- name: shortcut for creating s390x images in cloud
+  copy:
+    src: copr-prepare-s390x-image-builder
+    dest: /usr/local/bin/copr-prepare-s390x-image-builder
+    mode: 755
+  tags:
+    - images_s390x
+
 - name: f33 has outdated ansible community general plugins, use copr
   community.general.copr:
     state: enabled
