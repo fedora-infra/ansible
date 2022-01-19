@@ -11,6 +11,7 @@ import os
 import random
 import subprocess
 import sys
+import time
 
 import requests
 
@@ -25,6 +26,21 @@ KEEP_UUIDS = {}
 
 LOG = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG)
+
+
+def repeat_request(method, *args, **kwargs):
+    """
+    Till there's some requests' Connection error, re-try.
+    """
+    last_err = None
+    for _ in range(10):
+        try:
+            return method(*args, **kwargs)
+        except requests.exceptions.ConnectionError as err:
+            last_err = err
+            LOG.error("requests error: %s", str(err))
+        time.sleep(10)
+    raise last_err
 
 
 def _copr_instance():
@@ -56,7 +72,8 @@ def get_auth(url, opts):
 
     response = None
     for _ in range(2):
-        response = requests.get(url, headers=_auth_headers(opts))
+        response = repeat_request(requests.get, url,
+                                  headers=_auth_headers(opts))
         if response.status_code == 401:
             get_access_token(opts)
             continue
@@ -65,7 +82,7 @@ def get_auth(url, opts):
 
 def delete_auth(url, opts):
     """ Get, with auth header """
-    return requests.delete(url, headers=_auth_headers(opts))
+    return repeat_request(requests.delete, url, headers=_auth_headers(opts))
 
 
 def get_access_token(opts):
@@ -78,7 +95,7 @@ def get_access_token(opts):
         "client_id": "rhsm-api",
         "refresh_token": opts["offline_token"],
     }
-    resp = requests.post(URL_TOKEN, data)
+    resp = repeat_request(requests.post, URL_TOKEN, data)
     resp_data = resp.json()
     opts["access_token"] = resp_data["access_token"]
 
