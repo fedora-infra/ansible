@@ -402,7 +402,7 @@ handlers = ["console"]
             from = "f36-rebuild"            
             to = "f36-rebuild"            
             key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"            
-            keyid = "{{ (env == 'production')|ternary('999f7cbf', 'd300e724') }}
+            keyid = "{{ (env == 'production')|ternary('999f7cbf', 'd300e724') }}"
 
     [consumer_config.ostree_refs]
         [consumer_config.ostree_refs."fedora/rawhide/x86_64/iot"]
