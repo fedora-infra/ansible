@@ -100,6 +100,7 @@ prefix="fedora-cisco-openh264"
 name="Fedora Archive"
 type="directory"
 url="/srv/pub/archive/"
+version_prefix="f"
 
 [[repository_mapping]]
 regex="^pub/archive/fedora(-secondary)?(/linux)?/(core|releases|development)/([\\.\\d]+)/[^ME].*"
@@ -136,6 +137,7 @@ prefix="updates-released"
 name="Fedora Secondary Arches"
 type="directory"
 url="/srv/pub/fedora-secondary/"
+version_prefix="f"
 
 [[repository_mapping]]
 regex="^pub/(archive/)?fedora(-secondary)?(/linux)?/(releases|development)/([\\.\\d]+)/Everything/.*"
