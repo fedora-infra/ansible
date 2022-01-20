@@ -3,7 +3,7 @@ max_stale_days = 3
 excludes=[".*\\.snapshot", ".*/\\.~tmp~"]
 skip_paths_for_version=["pub/alt", "pub/archive"]
 test_paths=["/test/", "/stage/"]
-skip_repository_paths = ["Cloud", "Workstation", "Server", "drpms" ]
+skip_repository_paths = ["Cloud", "Workstation", "Server", "drpms", "releases/test" ]
 do_not_display_paths = ["_Beta"]
 
 [database]
@@ -102,23 +102,23 @@ type="directory"
 url="/srv/pub/archive/"
 
 [[repository_mapping]]
-regex="^pub/archive/fedora(-secondary)?(/linux)?/(core|releases|development)/(rawhide|[\\.\\d]+)/.*"
+regex="^pub/archive/fedora(-secondary)?(/linux)?/(core|releases|development)/([\\.\\d]+)/[^ME].*"
 prefix="fedora"
 
 [[repository_mapping]]
-regex="^pub/archive/fedora(-secondary)?(/linux)?/updates/[\\.\\d]+/Everything/.*"
+regex="^pub/(archive/)?fedora(-secondary)?(/linux)?/updates/[\\.\\d]+/Everything/.*"
 prefix="updates-released"
 
 [[repository_mapping]]
-regex="^pub/archive/fedora(-secondary)?(/linux)?/updates/[\\.\\d]+/Modular/.*"
+regex="^pub/(archive/)?fedora(-secondary)?(/linux)?/updates/[\\.\\d]+/Modular/.*"
 prefix="updates-released-modular"
 
 [[repository_mapping]]
-regex="^pub/archive/fedora(-secondary)?(/linux)?/updates/testing/[\\.\\d]+/Everything/.*"
+regex="^pub/(archive/)?fedora(-secondary)?(/linux)?/updates/testing/[\\.\\d]+/Everything/.*"
 prefix="updates-testing"
 
 [[repository_mapping]]
-regex="^pub/archive/fedora(-secondary)?(/linux)?/updates/testing/[\\.\\d]+/Modular/.*"
+regex="^pub/(archive/)?fedora(-secondary)?(/linux)?/updates/testing/[\\.\\d]+/Modular/.*"
 prefix="updates-testing-modular"
 
 # pre modular structure
@@ -129,3 +129,26 @@ prefix="updates-testing"
 [[repository_mapping]]
 regex="^pub/archive/fedora(-secondary)?(/linux)?/updates/([\\.\\d]+)/[^ME].*"
 prefix="updates-released"
+
+### Fedora Secondary Arches ###
+
+[[category]]
+name="Fedora Secondary Arches"
+type="directory"
+url="/srv/pub/fedora-secondary/"
+
+[[repository_mapping]]
+regex="^pub/(archive/)?fedora(-secondary)?(/linux)?/(releases|development)/([\\.\\d]+)/Everything/.*"
+prefix="fedora"
+
+[[repository_mapping]]
+regex="^pub/(archive/)?fedora(-secondary)?(/linux)?/(releases|development)/([\\.\\d]+)/Modular/.*"
+prefix="fedora-modular"
+
+[[repository_mapping]]
+regex="^pub/(archive/)?fedora(-secondary)?(/linux)?/development/rawhide/Everything/.*"
+prefix="rawhide"
+
+[[repository_mapping]]
+regex="^pub/(archive/)?fedora(-secondary)?(/linux)?/development/rawhide/Modular/.*"
+prefix="rawhide-modular"
