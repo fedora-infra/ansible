@@ -394,6 +394,16 @@
   - nagios_config
   notify: restart nagios
 
+- name: Template over services
+  template: src=nagios/services/{{item}}.j2 dest=/etc/nagios/services/{{item}} mode=0644 owner=root group=root
+  with_items:
+    - copr.cfg
+  when: env == "production"
+  tags:
+  - nagios_server
+  - nagios_config
+  notify: restart nagios
+
 - name: Template over services (both)
   template: src=nagios/services/{{item}}.j2 dest=/etc/nagios/services/{{item}} mode=0644 owner=root group=root
   with_items:
