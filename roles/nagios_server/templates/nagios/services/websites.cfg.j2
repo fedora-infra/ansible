@@ -336,10 +336,10 @@ define service {
 
 {% endif %}
 
-define service {
-  hostgroup_name        proxies
-  service_description   http-download.copr.fedorainfracloud.org
-  check_command         check_website_follow_ssl!download.copr.fedorainfracloud.org!Index of /
-  max_check_attempts    8
-  use                   websitetemplate
-}
+#define service {
+#  hostgroup_name        proxies
+#  service_description   http-download.copr.fedorainfracloud.org
+#  check_command         check_website_follow_ssl!download.copr.fedorainfracloud.org!Index of /
+#  max_check_attempts    8
+#  use                   websitetemplate
+#}
