@@ -10,15 +10,14 @@
 # be stg.fedoraproject.org
 
 # this is to enable nested virt, which we need for disk image creation
+virt_install_command: "{{ virt_install_command_one_nic }} --cpu=host-passthrough,+vmx"
+
 deployment_type: stg
 external_hostname: openqa.stg.fedoraproject.org
 # makes sure it sends stg not prod fedmsgs
 fedmsg_env: stg
 freezes: false
-# FIXME: disable consumers that write to wiki until auth key
-# is working again:
-# https://pagure.io/fedora-infrastructure/issue/8381
-openqa_amqp_wiki_reporter_queue:
+
 openqa_assetsize_ppc: 300
 openqa_compose_arches: x86_64,aarch64,ppc64le
 openqa_dbname: openqa-stg
@@ -42,5 +41,4 @@ openqa_secret: "{{ stg_openqa_apisecret }}"
 openqa_update_arches: ['x86_64', 'ppc64le']
 openqa_webapi_plugins: FedoraMessaging FedoraUpdateRestart
 openqa_wikitcms_hostname: stg.fedoraproject.org
-virt_install_command: "{{ virt_install_command_one_nic }} --cpu=host-passthrough,+vmx"
 wikitcms_token: "{{ private }}/files/openidc/staging/wikitcms.json"
