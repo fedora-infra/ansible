@@ -3,7 +3,7 @@
 #
 
 APP_PATH = "https://apps{{ env_suffix }}.fedoraproject.org/datagrepper"
-DEFAULT_QUERY_DELTA = 3600
+DEFAULT_QUERY_DELTA = 86400
 DATANOMMER_SQLALCHEMY_URL = "postgresql://{{ datanommerDBUser }}:{{ (env == 'production')|ternary(datanommerDBPassword, datanommer_stg_db_password) }}@db-datanommer{{ (env == 'production')|ternary('02', '01') }}{{ env_suffix }}.iad2.fedoraproject.org/datanommer2"
 
 # Only allow ajax/websockets connections back to our domains.
