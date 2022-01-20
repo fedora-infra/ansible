@@ -32,6 +32,8 @@
       - nfs-utils
       - golang-github-prometheus-node-exporter
       - nagios-plugins-http
+  tags:
+    - packages
 
 #- name: patch for prunerepo, issue 1090
 #  patch: src=patches/prunerepo-dataloss.patch
