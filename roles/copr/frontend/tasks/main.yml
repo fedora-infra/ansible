@@ -177,15 +177,6 @@
 - name: install nrpe
   dnf: name=nrpe state=present
 
-- name: install nrpe checks
-  template: src=copr_frontend_nrpe.cfg
-            dest=/etc/nrpe.d/copr_frontend_nrpe.cfg
-  notify:
-  - restart nrpe
-  tags:
-  - nagios_client
-  - copr_cdn
-
 - name: install the check script
   template:
     dest: "/usr/bin/copr-cdn-check.py"

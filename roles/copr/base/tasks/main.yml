@@ -117,5 +117,15 @@
 - name: start node exporter
   service: state=started enabled=yes name=node_exporter
 
+- name: install nrpe checks
+  template: src=copr_nrpe.cfg
+            dest=/etc/nrpe.d/copr_nrpe.cfg
+  notify:
+  - restart nrpe
+  tags:
+  - nagios_client
+  - copr_cdn
+  - copr_ping
+
 # - name: enable and run logrotate service
 #   service: name="logrotate" state=started
