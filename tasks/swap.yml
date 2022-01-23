@@ -2,6 +2,15 @@
 #   swap_file_size_mb
 #   swap_file_path
 
+- name: Touch an empty file that we will use for swap
+  file:
+    path: "{{ swap_file_path }}"
+    state: touch
+
+- name: On BTRFS we need NoCOW
+  file: path="{{ swap_file_path }}"
+  attr: +C
+
 - name: Create swap file
   command:
     cmd: "dd if=/dev/zero of={{ swap_file_path }} bs=1024 count={{ swap_file_size_mb }}k"
