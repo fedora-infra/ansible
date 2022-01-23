@@ -91,6 +91,18 @@
     backup: yes
   notify: restart apache
 
+- name: When httpd is OOM killed or otherwise failed, start it again
+  ini_file:
+    path: /usr/lib/systemd/system/httpd.service
+    section: Service
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    backup: yes
+  with_items:
+    - { option: "Restart", value: "on-failure" }
+    - { option: "RestartSec", value: "5s" }
+  notify: restart apache
+
 - include_role:
     name: keytab/service
   vars:
