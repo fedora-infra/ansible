@@ -200,3 +200,6 @@
 
 - name: restart obs-signd
   service: name=signd state=restarted
+
+- name: restart swap.swap
+  service: name="swap.swap" state=restarted
