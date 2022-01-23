@@ -69,3 +69,6 @@
     - swap.file.swapon
     - swap
   notify: restart swap.swap
+
+- name: Start swap.swap service
+  service: state=started enabled=yes name="swap.swap"
