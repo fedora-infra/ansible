@@ -6,20 +6,21 @@
   file:
     path: "{{ swap_file_path }}"
     state: touch
+  register: swap_touch
 
 - name: On BTRFS we need NoCOW
   file:
     path: "{{ swap_file_path }}"
     attr: +C
+  when: swap_touch.changed
 
 - name: Create swap file
   command:
     cmd: "dd if=/dev/zero of={{ swap_file_path }} bs=1024 count={{ swap_file_size_mb }}k"
-    creates: "{{ swap_file_path }}"
+  when: swap_touch.changed
   tags:
     - swap.file.create
     - swap
-
 
 - name: Change swap file permissions
   file: path="{{ swap_file_path }}"
