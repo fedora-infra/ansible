@@ -82,27 +82,6 @@
     regexp: '^LoadModule substitute_module modules/mod_substitute.so'
     line: '#LoadModule substitute_module modules/mod_substitute.so'
 
-- name: Keep httpd master running when child is OOM killed, rhbz#1947475
-  ini_file:
-    path: /usr/lib/systemd/system/httpd.service
-    section: Service
-    option: OOMPolicy
-    value: continue
-    backup: yes
-  notify: restart apache
-
-- name: When httpd is OOM killed or otherwise failed, start it again
-  ini_file:
-    path: /usr/lib/systemd/system/httpd.service
-    section: Service
-    option: "{{ item.option }}"
-    value: "{{ item.value }}"
-    backup: yes
-  with_items:
-    - { option: "Restart", value: "on-failure" }
-    - { option: "RestartSec", value: "5s" }
-  notify: restart apache
-
 - include_role:
     name: keytab/service
   vars:

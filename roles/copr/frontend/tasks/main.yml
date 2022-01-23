@@ -141,6 +141,8 @@
 
 - name: install custom systemd service files
   copy: src=systemd dest=/etc
+  notify:
+  - reload httpd
 
 - name: compress rotated httpd logs
   copy: src="httpd.logrotate" dest="/etc/logrotate.d/httpd"
