@@ -5,7 +5,6 @@
 - name: Touch an empty file that we will use for swap
   file:
     path: "{{ swap_file_path }}"
-    state: touch
   register: swap_touch
 
 - name: On BTRFS we need NoCOW
