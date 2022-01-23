@@ -3,8 +3,10 @@
 #   swap_file_path
 
 - name: Touch an empty file that we will use for swap
-  file:
-    path: "{{ swap_file_path }}"
+  copy:
+    content: ""
+    dest: "{{ swap_file_path }}"
+    force: no
   register: swap_touch
 
 - name: On BTRFS we need NoCOW
