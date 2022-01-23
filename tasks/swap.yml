@@ -8,8 +8,9 @@
     state: touch
 
 - name: On BTRFS we need NoCOW
-  file: path="{{ swap_file_path }}"
-  attr: +C
+  file:
+    path: "{{ swap_file_path }}"
+    attr: +C
 
 - name: Create swap file
   command:
