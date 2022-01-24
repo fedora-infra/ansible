@@ -17,3 +17,13 @@
     - kevin
     - lucab
     - misc
+
+  ###############################################
+  # actions to delete the project from OpenShift
+  ###############################################
+  # to run: sudo rbac-playbook -l os_control_stg -t delete openshift-apps/fedora-coreos-pipeline.yml
+  - role: openshift/object-delete
+    app: fedora-coreos-pipeline
+    objecttype: project
+    objectname: fedora-coreos-pipeline
+    tags: [ never, delete ]
