@@ -179,13 +179,15 @@
 - name: root authorized_keys
   authorized_key: user=root key='{{ lookup('file', 'files/buildsys.pub') }}'
 
-- name: increase soft limit for opened file descriptors
-  lineinfile: dest=/etc/security/limits.conf line="* soft nofile 10240" insertafter=EOF
-  when:
-    - prepare_base_image is defined
-
-- name: increase hard limit for opened file descriptors
-  lineinfile: dest=/etc/security/limits.conf line="* hard nofile 10240" insertafter=EOF
+- name: setup 10x more fds in limits.conf
+  copy:
+    content: |
+      * soft nofile 10240
+      * hard nofile 10240
+    dest: /etc/security/limits.d/50-copr-fds.conf
+    owner: root
+    group: root
+    mode: 0644
   when:
     - prepare_base_image is defined
 
