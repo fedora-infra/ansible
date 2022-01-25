@@ -1,6 +1,6 @@
 ---
 dependencies:
-    - { role: linux-system-roles.network, when: 'aws' not in group_names, tags: ['linux-system-roles.network'] }
+    - { role: linux-system-roles.network, when: "'aws' not in group_names", tags: ['linux-system-roles.network'] }
     - { role: basessh }
     - { role: chrony }
     - { role: dnf-automatic }
