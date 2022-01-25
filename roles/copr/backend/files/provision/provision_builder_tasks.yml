@@ -78,19 +78,13 @@
   when: prepare_base_image is defined
 
 # TODO: Drop this entirely once we are on F35+
-- package_facts: manager=auto
-  when:
-    - copr_builder_fedora_version == 34
-
-# TODO: Drop this entirely once we are on F35+
 - name: install subscription-manager
   package: name=subscription-manager state=present
   # TODO: we should use 'when: prepare_base_image is defined' instead, but a new
   # set of builder images needs to be generated first so the image contains the
   # subscription-manager by default.
   when:
-    - copr_builder_fedora_version == 34
-    - "'subscription-manager' not in ansible_facts.packages"
+    - copr_builder_fedora_version == 34 or prepare_base_image is defined
 
 # TODO: Fix this once we are on F35+.  This should be prepare_base_image only.
 - name: install the subscription-manager script
