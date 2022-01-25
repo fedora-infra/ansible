@@ -11,7 +11,6 @@ csi_security_category: High
 dns: 10.3.163.33
 docker_registry: "candidate-registry.fedoraproject.org"
 eth0_ipv4_gw: 10.3.169.254
-eth0_ipv4_nm: 255.255.255.0
 # for systems that do not match the above - specify the same parameter in
 # the host_vars/$hostname file
 host_group: kojibuilder
@@ -26,7 +25,6 @@ ks_url: http://10.3.163.35/repo/rhel/ks/kvm-fedora
 lvm_size: 262144
 max_mem_size: "{{ mem_size }}"
 mem_size: 15360
-nm: 255.255.255.0
 num_cpus: 6
 # These variables are for koji-containerbuild/osbs
 osbs_url: "osbs.fedoraproject.org"

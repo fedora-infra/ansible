@@ -12,7 +12,6 @@ datacenter: staging
 dns1: 10.3.163.33
 docker_registry: "candidate-registry.stg.fedoraproject.org"
 eth0_ipv4_gw: 10.3.167.254
-eth0_ipv4_nm: 255.255.255.0
 # for systems that do not match the above - specify the same parameter in
 # the host_vars/$hostname file
 host_group: kojibuilder
@@ -33,7 +32,6 @@ lvm_size: 150000
 max_mem_size: "{{ mem_size }}"
 mem_size: 10240
 nfs_mount_opts: "rw,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=4"
-nm: 255.255.255.0
 num_cpus: 4
 # These variables are for koji-containerbuild/osbs
 osbs_url: "osbs.stg.fedoraproject.org"
