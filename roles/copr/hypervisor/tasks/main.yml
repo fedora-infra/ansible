@@ -179,11 +179,15 @@
       gpgcheck=1
       gpgkey=https://download.copr.fedorainfracloud.org/results/praiskup/helpers/pubkey.gpg
       repo_gpgcheck=0
+      metadata_expire=60
       enabled=1
       enabled_metadata=1
+  tags:
+    - update_helpers
+    - packages
 
 - name: install the latest helper package
-  dnf: name=praiskup-helpers state=latest
+  package: name=praiskup-helpers state=latest
   tags:
     - update_helpers
     - packages
