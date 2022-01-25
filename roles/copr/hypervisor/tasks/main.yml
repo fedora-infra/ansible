@@ -182,8 +182,8 @@
       enabled=1
       enabled_metadata=1
 
-- name: install latest packages
-  package: name=praiskup-helpers state=latest
+- name: install the latest helper package
+  dnf: name=praiskup-helpers state=latest
 
 - name: install configuration for /bin/copr-image
   copy:
