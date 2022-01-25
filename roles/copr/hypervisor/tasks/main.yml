@@ -184,6 +184,9 @@
 
 - name: install the latest helper package
   dnf: name=praiskup-helpers state=latest
+  tags:
+    - update_helpers
+    - packages
 
 - name: install configuration for /bin/copr-image
   copy:
