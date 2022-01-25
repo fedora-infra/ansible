@@ -157,13 +157,9 @@
 
 - name: mockbuilder authorized_keys
   authorized_key: user=mockbuilder key='{{ lookup('file', 'files/buildsys.pub') }}'
-  when:
-    - prepare_base_image is defined
 
 - name: root authorized_keys
   authorized_key: user=root key='{{ lookup('file', 'files/buildsys.pub') }}'
-  when:
-    - prepare_base_image is defined
 
 - name: setup 10x more fds in limits.conf
   copy:
