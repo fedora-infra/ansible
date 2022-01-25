@@ -1,10 +1,12 @@
 ---
+# TODO: Drop this entirely once we are on F35+
 - name: remove the hackish package breaking s390x subscriptions
   shell:
     cmd: rpm -evh `rpm -qa | grep katello-` ; subscription-manager clean
   when:
     - prepare_base_image is not defined
     - "'s390x' in lookup('env', 'RESALLOC_NAME')"
+    - copr_builder_fedora_version == 34
 
 - name: setup the hostname so we can easily identify the box
   hostname: name="{{ lookup('env', 'RESALLOC_NAME') | default('unknown-builder') | replace('_', '-') }}"
@@ -19,7 +21,7 @@
   copy: src=files/dnf/infra-tags-stg.repo dest=/etc/yum.repos.d
   when:
     - devel
-    - not prepare_base_image is defined
+    - prepare_base_image is not defined
 
 - name: disable updates-testing
   file:
@@ -30,8 +32,6 @@
   dnf:
     state: latest
     name: "*"
-    exclude:
-      - kernel-core  # https://bugzilla.redhat.com/show_bug.cgi?id=2013183
   when: prepare_base_image is defined
   register: system_updated
 
@@ -51,7 +51,7 @@
  #    - devel
  #    - prepare_base_image is not defined
 
-- name: clean dnf cache
+- name: clean dnf cache before checking for updated packages
   shell: dnf clean all
   when:
     - prepare_base_image is defined
@@ -77,20 +77,29 @@
   failed_when: false
   when: prepare_base_image is defined
 
+# TODO: Drop this entirely once we are on F35+
 - package_facts: manager=auto
+  when:
+    - copr_builder_fedora_version == 34
 
+# TODO: Drop this entirely once we are on F35+
 - name: install subscription-manager
   package: name=subscription-manager state=present
   # TODO: we should use 'when: prepare_base_image is defined' instead, but a new
   # set of builder images needs to be generated first so the image contains the
   # subscription-manager by default.
-  when: "'subscription-manager' not in ansible_facts.packages"
+  when:
+    - copr_builder_fedora_version == 34
+    - "'subscription-manager' not in ansible_facts.packages"
 
+# TODO: Fix this once we are on F35+.  This should be prepare_base_image only.
 - name: install the subscription-manager script
   copy:
     src: copr-rh-subscribe.sh
     dest: /usr/local/bin/copr-rh-subscribe.sh
     mode: 0755
+  when:
+    - copr_builder_fedora_version == 34 or prepare_base_image is defined
 
 - name: Activate Red Hat Subscription
   shell:
@@ -107,15 +116,7 @@
   dnf: state=latest pkg={{ packages }}
   vars:
     packages:
-    - copr-builder
-
-- name: stat /etc/copr-rpmbuild/mock.cfg.j2.rpmnew
-  stat: path=/etc/copr-rpmbuild/mock.cfg.j2.rpmnew
-  register: mock_cfg_new
-
-- name: restore mock.cfg.j2 from package contents
-  shell: mv -f /etc/copr-rpmbuild/mock.cfg.j2.rpmnew /etc/copr-rpmbuild/mock.cfg.j2
-  when: mock_cfg_new.stat.exists
+      - copr-builder
 
 - name: put updated mock configs into /etc/mock
   copy: src=files/mock/ dest=/etc/copr-rpmbuild/mock-config-overrides
@@ -123,10 +124,6 @@
   # to bake broken mock configuration into the image.
   when:
   - prepare_base_image is not defined
-
-- name: don't remove rpmnew files, but always use them
-  lineinfile: state=absent regexp='^find /etc/mock.*-delete'
-              path=/usr/bin/copr-update-builder
 
 - name: run /bin/copr-update-builder from copr-builder package
   shell: /usr/bin/copr-update-builder
@@ -143,20 +140,6 @@
 #   shell: /usr/bin/copr-update-builder
 #   when: mock_updated.changed
 
-- name: "Link Mock EPEL 8 configs to rhel+epel-8"
-  file:
-    src: "/etc/mock/rhel+epel-8-{{ item }}.cfg"
-    force: true
-    path: "/etc/mock/epel-8-{{ item }}.cfg"
-    state: link
-  loop:
-    - x86_64
-    - aarch64
-    - ppc64le
-    - s390x
-  tags:
-  - provision_config
-
 - name: put copr-rpmbuild configuration file in the right place
   copy: src=files/main.ini dest=/etc/copr-rpmbuild/main.ini
 
@@ -166,18 +149,27 @@
   copy: src=files/rpkg.conf dest=/etc/rpkg.conf
   when:
   - prepare_base_image is not defined
+  - copr_builder_fedora_version == 34
 
 - name: mockbuilder user
   user: name=mockbuilder groups=mock
+  when:
+    - prepare_base_image is defined
 
 - name: mockbuilder .ssh
   file: state=directory path=/home/mockbuilder/.ssh mode=0700 owner=mockbuilder group=mockbuilder
+  when:
+    - prepare_base_image is defined
 
 - name: mockbuilder authorized_keys
   authorized_key: user=mockbuilder key='{{ lookup('file', 'files/buildsys.pub') }}'
+  when:
+    - prepare_base_image is defined
 
 - name: root authorized_keys
   authorized_key: user=root key='{{ lookup('file', 'files/buildsys.pub') }}'
+  when:
+    - prepare_base_image is defined
 
 - name: setup 10x more fds in limits.conf
   copy:
@@ -193,24 +185,32 @@
 
 - name: disable core dumps
   ini_file: dest=/etc/systemd/coredump.conf section=Coredump option=Storage value=none
+  when:
+    - prepare_base_image is defined
 
 - name: 'Remove %_install_langs from /etc/rpm/macros.image-language-conf'
   lineinfile:
     dest: '/etc/rpm/macros.image-language-conf'
     regexp: '^%_install_lang.*'
     state: 'absent'
+  when:
+    - prepare_base_image is defined
 
 - name: Disable DNF makecache timer
   systemd:
     name: dnf-makecache.timer
     state: stopped
     enabled: no
+  when:
+    - prepare_base_image is defined
 
 - name: Disable DNF makecache service
   systemd:
     name: dnf-makecache.service
     state: stopped
     enabled: no
+  when:
+    - prepare_base_image is defined
 
 - name: mount cache filesystem on /var/cache/mock
   mount: path=/var/cache/mock state=mounted src=mock_cache_tmpfs fstype=tmpfs opts="size=32G"
@@ -235,14 +235,18 @@
 # copr-rpmbuild package.
 - name: Update gem2rpm package to the latest version
   dnf: state=latest pkg=rubygem-gem2rpm
+  when:
+    - copr_builder_fedora_version == 34
 
 # We want to drop this change with F35, too.
 # See https://pagure.io/copr/copr/pull-request/1950
 - name: copy temporary rpkg.conf.j2 until builders run F35
   copy: src=files/copr-rpmbuild/rpkg.conf.j2 dest=/etc/copr-rpmbuild/rpkg.conf.j2
   when:
-  - prepare_base_image is not defined
+    - prepare_base_image is not defined
+    - copr_builder_fedora_version == 34
 
+# Should be dropped once we resolve: https://pagure.io/copr/copr/issue/2015
 - name: install the CentOS DistGit config file
   copy:
     src: files/copr-distgit-client/centos-stream.ini

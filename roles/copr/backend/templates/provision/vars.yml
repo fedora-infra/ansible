@@ -1,6 +1,8 @@
 ---
 devel: {% if devel is defined and devel %}true{% else %}false{% endif %}
 
+copr_builder_fedora_version: {{ copr_builder_fedora_version }}
+
 {% if copr_red_hat_subscription_password is defined %}
 copr_red_hat_subscription_password: "{{ copr_red_hat_subscription_password }}"
 {% endif %}
