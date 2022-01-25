@@ -5,7 +5,6 @@ custom_rules: [
   # Inter-node traffic
   '-A INPUT -p tcp -m tcp -s 10.3.166.78 --dport 25672 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 10.3.166.79 --dport 25672 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 10.3.166.80 --dport 25672 -j ACCEPT']
 datacenter: iad2
-eth0_ipv4_gw: 10.3.166.254
 ipa_host_group: rabbitmq
 ipa_host_group_desc: RabbitMQ service
 ipa_shell_groups:
