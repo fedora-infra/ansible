@@ -8,6 +8,7 @@ dns1: 10.3.163.33
 dns2: 10.3.163.34
 dns_search1: "stg.iad2.fedoraproject.org"
 dns_search2: "iad2.fedoraproject.org"
+dns_search3: "fedoraproject.org"
 has_ipv4: yes
 mac1: 50:6b:4b:6a:ef:20
 network_connections:
@@ -22,6 +23,7 @@ network_connections:
       dns_search:
         - "{{ dns_search1 }}"
         - "{{ dns_search2 }}"
+        - "{{ dns_search3 }}"
       gateway4: "{{ br0_ipv4_gw }}"
     name: br0
     state: up
