@@ -38,7 +38,7 @@ network_connections:
         - "{{ dns_search1 }}"
         - "{{ dns_search2 }}"
       gateway4: "{{ eth0_ipv4_gw }}"
-      gateway6: "{{ eth0_ipv4_gw }}"
+      gateway6: "{{ eth0_ipv6_gw }}"
     mac: "{{ ansible_default_ipv4.macaddress }}"
     name: eth0
     type: ethernet
