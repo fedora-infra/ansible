@@ -38,7 +38,7 @@
     provision_directory: /var/lib/resallocserver/provision
     ibmcloud_token_file: /var/lib/resallocserver/.ibm-cloud-token
   tags:
-  - provision_config
+  - always
 
 - name: setup provision directory
   include_tasks: setup_provisioning_environment.yml
