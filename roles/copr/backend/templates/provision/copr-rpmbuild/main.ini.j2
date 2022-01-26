@@ -4,6 +4,7 @@ distgit_lookaside_url = {scheme}://{netloc}/repo/pkgs/%(ns1)s/%(name)s/%(filenam
 distgit_clone_url = {scheme}://{netloc}/%(module)s
 rpm_vendor_copr_name = {{ rpm_vendor_copr_name }}
 
+{% if copr_builder_fedora_version == 34 %}
 [distgit0]
 distgit_hostname_pattern = src.fedoraproject.org
 distgit_lookaside_url = https://src.fedoraproject.org/repo/pkgs/%(ns1)s/%(name)s/%(filename)s/%(hashtype)s/%(hash)s/%(filename)s
@@ -23,3 +24,12 @@ distgit_clone_url = git://pkgs.fedoraproject.org/%(module)s
 distgit_hostname_pattern = src.stg.fedoraproject.org
 distgit_lookaside_url = https://src.stg.fedoraproject.org/repo/pkgs/%(ns1)s/%(name)s/%(filename)s/%(hashtype)s/%(hash)s/%(filename)s
 distgit_clone_url = https://src.stg.fedoraproject.org/%(module)s
+
+{% else %}
+# rpkg-util v3+
+
+[distgit0]
+distgit_hostname_pattern = src.fedoraproject.org
+distgit_lookaside_url = https://src.fedoraproject.org/repo/pkgs/%(repo_path)s/%(filename)s/%(hashtype)s/%(hash)s/%(filename)s
+distgit_clone_url = https://src.fedoraproject.org/%(repo_path)s
+{% endif %}
