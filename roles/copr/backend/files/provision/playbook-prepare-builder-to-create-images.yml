@@ -79,6 +79,7 @@
         dest: "{{ eimg_configdir }}/{{ item }}"
       loop:
         - local-image-update.yml
+        - copr-rh-subscribe.sh
         - create_swap_file.yml
         - provision_builder_tasks.yml
         - vars.yml
@@ -87,7 +88,6 @@
         - files/enable-swap.sh
         - files/main.ini
         - files/dnf/infra-tags.repo
-        - files/copr-rh-subscribe.sh
         - files/copr-rpmbuild/rpkg.conf.j2
         - files/copr-distgit-client/centos-stream.ini
 
