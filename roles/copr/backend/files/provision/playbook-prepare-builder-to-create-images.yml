@@ -72,7 +72,6 @@
         - "{{ eimg_configdir }}/files"
         - "{{ eimg_configdir }}/files/dnf"
         - "{{ eimg_configdir }}/files/copr-distgit-client"
-        - "{{ eimg_configdir }}/files/copr-rh-subscribe.sh"
         - "{{ eimg_configdir }}/files/copr-rpmbuild"
 
     - copy:
@@ -88,6 +87,7 @@
         - files/enable-swap.sh
         - files/main.ini
         - files/dnf/infra-tags.repo
+        - files/copr-rh-subscribe.sh
         - files/copr-rpmbuild/rpkg.conf.j2
         - files/copr-distgit-client/centos-stream.ini
 
