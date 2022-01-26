@@ -1,6 +1,5 @@
 ---
 _forward_src: "forward"
-ansible_ifcfg_blocklist: true
 aws_arch_subnets:
   # Your requested instance type (a1.xlarge) is not supported in your requested Availability Zone (us-east-1a).
   # Your requested instance type (a1.xlarge) is not supported in your requested Availability Zone (us-east-1d).
@@ -65,7 +64,6 @@ devel: false
 dist_git_base_url: "copr-dist-git.fedorainfracloud.org"
 frontend_base_url: "https://copr.fedorainfracloud.org"
 keygen_host: "54.83.48.73"
-nm_controlled_resolv: True
 postfix_group: copr
 rpm_vendor_copr_name: Fedora Copr
 services_disabled: false

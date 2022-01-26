@@ -1,7 +1,6 @@
 ---
 ansible_become: yes
 ansible_become_user: root
-ansible_ifcfg_blocklist: True
 ansible_ssh_user: fedora
 # Copr vars
 copr_hostbase: copr-dist-git
@@ -26,6 +25,5 @@ nagios_Check_Services:
   raid: false
   sshd: false
   swap: false
-nm_controlled_resolv: True
 public_ip: 3.89.184.181
 root_auth_users: msuchy frostyx praiskup schlupov

@@ -26,92 +26,6 @@
   tags:
   - selinux
 
-# XXX fixme # a datacenter 'fact' from setup
-- name: /etc/resolv.conf
-  copy: src={{ item }} dest=/etc/resolv.conf
-  when: not nm_controlled_resolv or not network_connections is defined
-  with_first_found:
-  - "{{ resolvconf }}"
-  - resolv.conf/{{ inventory_hostname }}
-  - resolv.conf/{{ host_group }}
-  - resolv.conf/{{ datacenter }}
-  - resolv.conf/resolv.conf
-  tags:
-  - config
-  - resolvconf
-  - base
-  - ifcfg
-
-- name: check for NetworkManager/nmcli
-  command: /usr/bin/test -f /usr/bin/nmcli
-  register: nmclitest
-  ignore_errors: true
-  changed_when: false
-  failed_when: "1 != 1"
-  check_mode: no
-  tags:
-   - config
-   - resolvconf
-   - base
-   - ifcfg
-
-- name: disable resolv.conf control from NM
-  ini_file: dest=/etc/NetworkManager/NetworkManager.conf section=main option=dns value=none
-  notify:
-  - restart NetworkManager
-  when: ansible_distribution_major_version|int >=7 and ansible_distribution == 'RedHat' and nmclitest is success and ( not ansible_ifcfg_blocklist) and ( not nm_controlled_resolv ) and ( not network_connections is defined )
-  tags:
-   - config
-   - resolvconf
-   - base
-   - ifcfg
-
-- name: disable resolv.conf control from NM
-  ini_file: dest=/etc/NetworkManager/NetworkManager.conf section=main option=dns value=none
-  notify:
-  - restart NetworkManager
-  when: ansible_distribution_major_version|int >=29 and ansible_distribution == 'Fedora' and nmclitest is success and ( not ansible_ifcfg_blocklist) and ( not nm_controlled_resolv ) and ( not network_connections is defined )
-  tags:
-   - config
-   - resolvconf
-   - base
-   - ifcfg
-
-- name: get interface uuid
-  shell: nmcli -f "DEVICE,UUID" c show --active | grep -E '^eth|^br|^em|^eno|^enP|^enc900'
-  register: if_uuid
-  changed_when: false
-  failed_when: 'if_uuid.stdout == ""'
-  check_mode: no
-  when: ansible_distribution_major_version|int >=7 and nmclitest is success and ( not ansible_ifcfg_blocklist )
-  tags:
-   - config
-   - ifcfg
-   - base
-
-- name: copy ifcfg files - non virthost
-  template: src=ifcfg.j2 dest=/etc/sysconfig/network-scripts/ifcfg-{{item}} mode=0644
-  with_items:
-  - "{{ ansible_interfaces }}"
-  notify:
-#  - restart NetworkManager
-  - reload NetworkManager-connections
-  - apply interface-changes
-  when:
-  - virthost is not defined
-  - item.startswith(('eth','br','enc','em','eno'))
-  - hostvars[inventory_hostname]['ansible_' + item.replace('-','_')]['type'] == 'ether'
-  - hostvars[inventory_hostname]['ansible_' + item.replace('-','_')]['active']
-  - ansible_distribution_major_version|int >=7
-  - nmclitest is success
-  - not ansible_ifcfg_blocklist
-  - ansible_ifcfg_allowlist is not defined or item in ansible_ifcfg_allowlist
-  - not network_connections is defined
-  tags:
-   - config
-   - ifcfg
-   - base
-
 - name: global default packages to install (yum)
   package: state=present name={{ item }}
   with_items:
@@ -153,13 +67,6 @@
   authorized_key: user=root key="{{ item }}"
   with_file:
   - ansible-pub-key
-  tags:
-  - config
-  - base
-
-- name: make sure our resolv.conf is the one being used - set RESOLV_MODS=no in /etc/sysconfig/network
-  lineinfile: dest=/etc/sysconfig/network create=yes backup=yes state=present line='RESOLV_MODS=no' regexp=^RESOLV_MODS=
-  when: not nm_controlled_resolv
   tags:
   - config
   - base
@@ -455,24 +362,6 @@
   tags:
   - config
   - base
-
-#
-# Disable the cdc_ether module as we don't want it loading mgmt usb0 and spewing to logs.
-#
-- name: Disable cdc_ether module
-  copy: src=disable-cdc_ether.conf dest=/etc/modprobe.d/disable-cdc_ether.conf
-  when: ansible_virtualization_role is defined and ansible_virtualization_role == 'host'
-  tags:
-  - config
-  - base
-  - cdc_ether
-
-# Remove old filename for above: remove this when we're pretty sure the file's
-# gone from all hosts
-- name: Remove old cdc_ether config file
-  file:
-    path: /etc/modprobe.d/blacklist-cdc_ether.conf
-    state: absent
 
 #
 # Watchdog stuff

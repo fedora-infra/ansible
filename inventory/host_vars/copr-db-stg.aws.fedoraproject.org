@@ -1,7 +1,6 @@
 ---
 ansible_become: yes
 ansible_become_user: root
-ansible_ifcfg_blocklist: True
 ansible_user: ec2-user
 # Copr vars
 copr_hostbase: copr-db-stg
@@ -33,7 +32,6 @@ nagios_Check_Services:
   raid: false
   sshd: false
   swap: false
-nm_controlled_resolv: True
 public_ip: 52.200.82.86
 root_auth_users: msuchy frostyx praiskup schlupov
 swap_file_path: /swap

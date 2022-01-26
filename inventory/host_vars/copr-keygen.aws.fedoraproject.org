@@ -1,7 +1,6 @@
 ---
 ansible_become: yes
 ansible_become_user: root
-ansible_ifcfg_blocklist: True
 ansible_ssh_user: fedora
 datacenter: aws
 db_backup_dir: ['/backup']
@@ -22,6 +21,5 @@ nagios_Check_Services:
   raid: false
   sshd: true
   swap: false
-nm_controlled_resolv: True
 public_ip: 54.83.48.73
 root_auth_users: msuchy frostyx praiskup schlupov

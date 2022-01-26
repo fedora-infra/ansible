@@ -5,7 +5,6 @@
 #ansible_become_method: sudo
 
 # Disable ethX ifcfg, let amazon handle these via DHCP.
-ansible_ifcfg_blocklist: true
 datacenter: aws
 nagios_Check_Services:
   dhcpd: false

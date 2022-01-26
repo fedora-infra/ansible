@@ -1,5 +1,4 @@
 ---
-ansible_ifcfg_blocklist: True
 # Copr vars
 copr_hostbase: copr-fe-dev
 datacenter: aws
@@ -17,7 +16,6 @@ nagios_Check_Services:
   raid: false
   sshd: false
   swap: false
-nm_controlled_resolv: True
 principal_alias: "HTTP/copr-fe-dev.cloud.fedoraproject.org@STG.FEDORAPROJECT.ORG"
 public_ip: 18.208.24.211
 root_auth_users: msuchy frostyx praiskup schlupov ttomecek

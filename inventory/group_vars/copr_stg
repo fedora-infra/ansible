@@ -1,7 +1,6 @@
 ---
 #_forward-src: "{{ files }}/copr/forward-dev"
 _forward_src: "forward_dev"
-ansible_ifcfg_blocklist: true
 backend_base_url: "https://copr-be-stg.fedorainfracloud.org"
 # don't forget to update ip in ./copr-keygen-stg, due to custom firewall rules
 copr_backend_ips: ["172.25.33.49", "209.132.184.44"]

@@ -10,7 +10,6 @@ additional_host_keytabs: []
 ansible_base: /srv/web/infra
 # Default to managing the network, we want to not do this on select
 # hosts (like cloud nodes)
-ansible_ifcfg_blocklist: false
 # List of interfaces to explicitly disable
 ansible_ifcfg_disabled: []
 # on MOST infra systems, the interface connected to the infra network
@@ -172,7 +171,6 @@ nfs_mount_opts: "ro,hard,bg,intr,noatime,nodev,nosuid,nfsvers=3"
 nm: 255.255.255.0
 # Most of our machines have manual resolv.conf files
 # These settings are for machines where NM is supposed to control resolv.conf.
-nm_controlled_resolv: False
 nrpe_check_postfix_queue_crit: 5
 # by default, the number of emails in queue before we whine
 nrpe_check_postfix_queue_warn: 2

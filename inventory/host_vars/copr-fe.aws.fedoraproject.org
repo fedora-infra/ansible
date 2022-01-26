@@ -1,5 +1,4 @@
 ---
-ansible_ifcfg_blocklist: True
 # this overrides vars/Fedora.yml
 base_pkgs_erase: ['PackageKit*', 'sendmail', 'at']
 # Copr vars
@@ -23,7 +22,6 @@ nagios_Check_Services:
   raid: false
   sshd: false
   swap: false
-nm_controlled_resolv: True
 public_ip: 3.225.109.36
 root_auth_users: msuchy frostyx praiskup schlupov ttomecek
 sar_output_file: copr.json
