@@ -1221,3 +1221,13 @@ storinator01.rdu-cc.fedoraproject.org
 # [os_proxies]
 # os-proxy01.fedorainfracloud.org
 # os-proxy02.fedorainfracloud.org
+
+#
+# These are hosts and groups that do not use linux-system-roles/network for configuring network
+# The cloud_aws hosts have network all setup by cloud-init and/or provider. 
+# The ibiblio hosts are using port bonding. Someday we need to configure it via linux-sys-roles.
+#
+[no_linux_system_roles:children]
+cloud_aws
+ibiblio01.fedoraproject.org
+ibiblio05.fedoraproject.org
