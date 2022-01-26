@@ -32,7 +32,7 @@ distgit_clone_url = https://src.stg.fedoraproject.org/%(module)s
 
 [main]
 frontend_url = {{ frontend_base_url }}
-distgit_lookaside_url = https://${git_props:remote_netloc}/repo/pkgs/%(repo_path)s/%(filename)s/%(hashtype)s/%(hash)s/%(filename)s
+distgit_lookaside_url = https://${% raw %}{{git_props:remote_netloc}}{% endraw %}/repo/pkgs/%(repo_path)s/%(filename)s/%(hashtype)s/%(hash)s/%(filename)s
 distgit_clone_url = {scheme}://{netloc}/%(repo_path)s
 rpm_vendor_copr_name = {{ rpm_vendor_copr_name }}
 
