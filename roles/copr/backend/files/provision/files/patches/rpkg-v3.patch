@@ -1,0 +1,21 @@
+diff --git a/rpkglib/lookaside_cache.py b/rpkglib/lookaside_cache.py
+index 0a38152..a6e3ec2 100644
+--- a/rpkglib/lookaside_cache.py
++++ b/rpkglib/lookaside_cache.py
+@@ -48,10 +48,15 @@ class LookasideCache(object):
+             'hash': hash,
+         }
+         subs.update(kwargs)
++
++        parts = subs["repo_path"].split("/")
++        subs["module"] = parts[-1]
++        subs["ns1"] = parts[-2]
++
+         try:
+             result_url = self.download_url % subs
+         except Exception as e:
+-            raise DownloadError(
++            raise RpkgError(
+                 'Could not get download url from %s template. '
+                 'Original error: %s.' % (self.download_url, str(e)))
+ 

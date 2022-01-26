@@ -244,3 +244,9 @@
     mode: 0644
   when:
   - prepare_base_image is not defined
+
+- name: patch from https://pagure.io/rpkg-util/pull-request/38
+  patch: src=patches/rpkg-v3.patch
+         dest=/usr/lib/python3.10/site-packages/rpkglib/lookaside_cache.py
+  when:
+    - prepare_base_image is not defined
