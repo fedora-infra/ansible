@@ -250,3 +250,4 @@
          dest=/usr/lib/python3.10/site-packages/rpkglib/lookaside_cache.py
   when:
     - prepare_base_image is not defined
+    - copr_builder_fedora_version == 35
