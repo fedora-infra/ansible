@@ -4,11 +4,15 @@
 
 KeepAlive On
 
+WSGIDaemonProcess koji lang=en_US.UTF-8
+WSGIProcessGroup koji
+
 Alias /kojihub /usr/share/koji-hub/kojixmlrpc.py
 
 <Directory "/usr/share/koji-hub">
     Options ExecCGI
     SetHandler wsgi-script
+    WSGIApplicationGroup %{GLOBAL}
     Require all granted
 </Directory>
 

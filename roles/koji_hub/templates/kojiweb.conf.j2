@@ -7,6 +7,8 @@ MaxRequestWorkers 800
 MaxConnectionsPerChild 1000
 
 #We use wsgi by default
+WSGIDaemonProcess koji-web lang=en_US.UTF-8
+WSGIProcessGroup koji-web
 Alias /koji "/usr/share/koji-web/scripts/wsgi_publisher.py"
 #(configuration goes in /etc/kojiweb/web.conf)
 
