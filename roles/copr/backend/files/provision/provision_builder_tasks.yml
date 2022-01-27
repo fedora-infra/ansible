@@ -119,6 +119,19 @@
   when:
   - prepare_base_image is not defined
 
+- name: drop broken files from /etc/mock
+  file:
+    path: /etc/mock/{{ item }}.cfg
+    state: absent
+  loop:
+    - epel-8-x86_64
+    - epel-8-ppc64le
+    - epel-8-aarch64
+    - epel-8-s390x
+  when:
+    - copr_builder_fedora_version == 34
+    - prepare_base_image is not defined
+
 - name: run /bin/copr-update-builder from copr-builder package
   shell: /usr/bin/copr-update-builder
 
