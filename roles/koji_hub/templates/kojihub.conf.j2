@@ -4,7 +4,7 @@
 
 KeepAlive On
 
-WSGIDaemonProcess koji lang=en_US.UTF-8
+WSGIDaemonProcess koji lang=en_US.UTF-8 processes=10 threads=5
 WSGIProcessGroup koji
 
 Alias /kojihub /usr/share/koji-hub/kojixmlrpc.py
