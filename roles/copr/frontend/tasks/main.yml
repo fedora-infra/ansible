@@ -34,7 +34,7 @@
     name: "generating prometheus metrics"
     user: root
     minute: 0
-    job: /usr/bin/python3 /usr/bin/monitoring.py
+    job: "/usr/bin/python3 /usr/bin/monitoring.py && mv /var/lib/node_exporter/textfile_collector/copr_cdn_status.prom.new /var/lib/node_exporter/textfile_collector/copr_cdn_status.prom && mv /var/lib/node_exporter/textfile_collector/copr_ping_status.prom.new /var/lib/node_exporter/textfile_collector/copr_ping_status.prom"
   tags:
   - cron_tasks
 
@@ -47,30 +47,6 @@
     group: root
   tags:
   - cron_tasks
-
-- name: Check that file copr_cdn_status.prom.new exists
-  stat: path=/var/lib/node_exporter/textfile_collector/copr_cdn_status.prom.new
-  register: copr_cdn_status_stat
-  tags:
-    - cron_tasks
-
-- name: Rename copr_cdn_status.prom.new to copr_cdn_status.prom
-  command: mv /var/lib/node_exporter/textfile_collector/copr_cdn_status.prom.new /var/lib/node_exporter/textfile_collector/copr_cdn_status.prom
-  when: copr_cdn_status_stat.stat.exists
-  tags:
-    - cron_tasks
-
-- name: Check that file copr_ping_status.prom.new exists
-  stat: path=/var/lib/node_exporter/textfile_collector/copr_ping_status.prom.new
-  register: copr_ping_status_stat
-  tags:
-    - cron_tasks
-
-- name: Rename copr_ping_status.prom.new to copr_ping_status.prom
-  command: mv /var/lib/node_exporter/textfile_collector/copr_ping_status.prom.new /var/lib/node_exporter/textfile_collector/copr_ping_status.prom
-  when: copr_ping_status_stat.stat.exists
-  tags:
-    - cron_tasks
 
   # we install python-alembic because https://bugzilla.redhat.com/show_bug.cgi?id=1536058
 - name: install additional pkgs for copr-frontend
