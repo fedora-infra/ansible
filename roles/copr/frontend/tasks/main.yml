@@ -34,7 +34,7 @@
     name: "generating prometheus metrics"
     user: root
     minute: 0
-    job: "/usr/bin/python3 /usr/bin/monitoring.py && mv /var/lib/node_exporter/textfile_collector/copr_cdn_status.prom.new /var/lib/node_exporter/textfile_collector/copr_cdn_status.prom && mv /var/lib/node_exporter/textfile_collector/copr_ping_status.prom.new /var/lib/node_exporter/textfile_collector/copr_ping_status.prom"
+    job: "/usr/bin/python3 /usr/bin/monitoring.py && mv -f /var/lib/node_exporter/textfile_collector/copr_cdn_status.prom.new /var/lib/node_exporter/textfile_collector/copr_cdn_status.prom && mv -f /var/lib/node_exporter/textfile_collector/copr_ping_status.prom.new /var/lib/node_exporter/textfile_collector/copr_ping_status.prom"
   tags:
   - cron_tasks
 
