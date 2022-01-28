@@ -34,7 +34,7 @@
     name: "generating prometheus metrics"
     user: root
     minute: 0
-    job: /usr/bin/python3 monitoring.py
+    job: /usr/bin/python3 /usr/bin/monitoring.py
   tags:
   - cron_tasks
 
