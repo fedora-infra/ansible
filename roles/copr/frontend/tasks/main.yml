@@ -30,7 +30,7 @@
   - packages
 
 - name: Configure cron job for generating prometheus metrics hourly
-  when: production|bool
+  when: not devel
   cron:
     name: "generating prometheus metrics"
     user: root
@@ -40,7 +40,7 @@
   - cron_tasks
 
 - name: Deploy the prometheus monitoring script
-  when: production|bool
+  when: not devel
   copy:
     src: monitoring.py
     dest: /usr/bin/monitoring.py
@@ -51,7 +51,7 @@
   - cron_tasks
 
 - name: Check that file copr_cdn_status.prom.new exists
-  when: production|bool
+  when: not devel
   stat: path=/var/lib/node_exporter/textfile_collector/copr_cdn_status.prom.new
   register: copr_cdn_status_stat
   tags:
@@ -59,12 +59,12 @@
 
 - name: Rename copr_cdn_status.prom.new to copr_cdn_status.prom
   command: mv /var/lib/node_exporter/textfile_collector/copr_cdn_status.prom.new /var/lib/node_exporter/textfile_collector/copr_cdn_status.prom
-  when: copr_cdn_status_stat.stat.exists and production|bool
+  when: copr_cdn_status_stat.stat.exists and not devel
   tags:
     - cron_tasks
 
 - name: Check that file copr_ping_status.prom.new exists
-  when: production|bool
+  when: not devel
   stat: path=/var/lib/node_exporter/textfile_collector/copr_ping_status.prom.new
   register: copr_ping_status_stat
   tags:
@@ -72,7 +72,7 @@
 
 - name: Rename copr_ping_status.prom.new to copr_ping_status.prom
   command: mv /var/lib/node_exporter/textfile_collector/copr_ping_status.prom.new /var/lib/node_exporter/textfile_collector/copr_ping_status.prom
-  when: copr_ping_status_stat.stat.exists and production|bool
+  when: copr_ping_status_stat.stat.exists and not devel
   tags:
     - cron_tasks
 
