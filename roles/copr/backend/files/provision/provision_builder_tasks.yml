@@ -1,4 +1,12 @@
 ---
+- name: default copr_builder_fedora_version
+  set_fact:
+    copr_builder_fedora_version: 0
+  when:
+    - copr_builder_fedora_version is not defined
+  tags:
+    - always
+
 # TODO: Drop this entirely once we are on F35+
 - name: remove the hackish package breaking s390x subscriptions
   shell:
