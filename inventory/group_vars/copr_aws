@@ -45,19 +45,20 @@ copr_aws_region: us-east-1
 # eth0, eth1
 copr_backend_ips: ["52.44.175.77", "172.30.2.203"]
 
-copr_builder_fedora_version: 34
+copr_builder_fedora_version: 35
 
 copr_builder_images:
   aws:
-    aarch64: ami-068c2760406b9e3c9
-    x86_64: ami-0baeeebc194e64780
+    aarch64: ami-04d4eac8f0465ca74
+    x86_64: ami-07d7f4f012b9383c5
   hypervisor:
-    ppc64le: copr-builder-ppc64le-20211012_120530
-    x86_64: copr-builder-x86_64-20211012_115536
+    ppc64le: copr-builder-ppc64le-20220128_112330
+    x86_64: copr-builder-x86_64-20220128_111926
   ibm_cloud:
-    s390x: r022-f2fa7740-6d08-47e6-9201-823f986395de
+    s390x: r022-35a52110-fa0a-4df6-be88-7f9480180073
   osuosl:
-    ppc64le: copr-builder-ppc64le-20220112_131945
+    ppc64le: copr-builder-ppc64le-20220128_112330
+
 copr_messaging: true
 datacenter: aws
 devel: false
