@@ -35,7 +35,20 @@ case $(uname -m) in
 ppc64le)
     # We are going to upload the same image to OpenStack
     . "{{ provision_directory }}/.rc-osuosl.sh"
-    glance image-create --name "$new_volume" --disk-format qcow2 --container-format bare --file "$image" --progress
+
+    # Per osuosl stack admin suggestion, ad long BUILD state:
+    #   If you want it faster, I recommend you upload it as raw otherwise the
+    #   hypervisor has to import the image into Ceph every time you build a new
+    #   VM.
+    # (this decreases the BUILD time from 3 minutes to < 20s)
+    file=/tmp/raw-image
+    rm -rf "$file"
+    qemu-img convert "$image" "$file"
+    glance image-create \
+        --name "$new_volume" \
+        --disk-format raw \
+        --container-format bare \
+        --file "$file" --progress
     ;;
 esac
 
