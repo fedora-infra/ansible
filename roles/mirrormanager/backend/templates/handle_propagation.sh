@@ -27,6 +27,12 @@ done
 
 ${PROPAGATION} --outdir ${OUTPUT} --logfiles "${LOGBASE}/development*"
 
+# EPEL
+for version in 7 8 9; do
+        ${PROPAGATION} --outdir ${OUTPUT} --logfiles "${LOGBASE}/epel${version}*" --prefix epel${version}
+done
+
 for f in ${FRONTENDS}; do
         rsync -aq   ${OUTPUT}/*[st]-repomd-propagation.svg  ${f}:/var/www/mirrormanager-statistics/data/propagation
+        rsync -aq   ${OUTPUT}/epel[789]-repomd-propagation.svg  ${f}:/var/www/mirrormanager-statistics/data/propagation
 done
