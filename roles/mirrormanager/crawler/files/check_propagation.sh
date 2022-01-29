@@ -37,5 +37,8 @@ for version in 7 8 9; do
 	fi
 done
 
+# check propagation for CentOS
+${CRAWLER} --category "CentOS" --propagation --proppath 9-stream/BaseOS/x86_64/os/repodata --threads 50 --timeout 1 2>&1 | grep SHA256 > ${LOGBASE}/centos9-propagation.log.$( date +%s )
+
 # clean up log files older than 14 days
 /usr/sbin/tmpwatch --mtime 14d ${LOGBASE}
