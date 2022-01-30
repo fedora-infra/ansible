@@ -140,3 +140,7 @@
     mode: pull
   delegate_to: "{{ letsencrypt.backup_to }}"
   with_dict: "{{ letsencrypt.certificates }}"
+  when:
+    - letsencrypt.backup_to is defined
+  tags:
+    - certbot
