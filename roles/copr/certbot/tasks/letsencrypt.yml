@@ -112,7 +112,7 @@
 
 - name: restore the cert symlinks
   file:
-    state: symlink
+    state: link
     src: "../archive/restored{{ item.item.1 }}"
     dest: "{{ le_source_path }}/{{ item.item.0.item.key }}/{{ item.item.1 }}"
     owner: root
