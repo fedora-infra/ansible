@@ -126,6 +126,7 @@
   - birthday is not defined
   tags:
   - config
+  - certbot
 
 - name: allow lighttpd set fds limit
   seboolean: name=httpd_setrlimit state=yes persistent=yes
