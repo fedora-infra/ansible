@@ -98,7 +98,7 @@
 - name: restore the backed up certificates
   copy:
     content: "{{ item.content | b64decode }}"
-    dest: "{{ le_source_path }}/../archive/{{ item.item.0.item.key }}/restored{{ item.item.1 }}"
+    dest: "{{ le_source_path }}/../archive/{{ item.item.0.item.key }}/{{ item.item.1 }}"
     owner: root
     group: root
     mode: 0644
@@ -113,7 +113,7 @@
 - name: restore the cert symlinks
   file:
     state: link
-    src: "../../archive/{{ item.item.0.item.key }}/restored{{ item.item.1 }}"
+    src: "../../archive/{{ item.item.0.item.key }}/{{ item.item.1 }}"
     dest: "{{ le_source_path }}/{{ item.item.0.item.key }}/{{ item.item.1 }}"
     owner: root
     group: root
