@@ -1,3 +1,14 @@
+---
+- set_fact:
+    le_backup_certbot_files:
+      - cert.pem
+      - chain.pem
+      - combined.pem
+      - fullchain.pem
+      - privkey.pem
+    le_source_path: /etc/letsencrypt/live
+    le_backup_path: /root/letsencrypt-cert-backup
+
 - name: install certbot package
   package: name=certbot state=present
 
@@ -79,3 +90,48 @@
   when:
     - letsencrypt.predefined_deploy_script is defined
     - letsencrypt.predefined_deploy_script == 'lighttpd'
+
+- name: load certificate files into variables
+  slurp:
+    src: "{{ le_source_path }}/{{ item.0.0 }}/{{ item.1 }}"
+  register: certbot_backup_files
+  ignore_errors: true
+  loop: "{{letsencrypt.certificates|dictsort|product(le_backup_certbot_files)|list}}"
+  when:
+    - letsencrypt.backup_to is defined
+
+- name: create the restore directory
+  delegate_to: "{{ letsencrypt.backup_to }}"
+  file:
+    path: "{{ le_backup_path }}"
+    owner: root
+    group: root
+    mode: 0700
+    state: directory
+  when:
+    - letsencrypt.backup_to is defined
+
+- name: create the host restore directories
+  delegate_to: "{{ letsencrypt.backup_to }}"
+  file:
+    owner: root
+    group: root
+    mode: 0700
+    path: "{{ le_backup_path }}/{{ item.0 }}"
+    state: directory
+  loop: "{{ letsencrypt.certificates|dictsort }}"
+  when:
+    - letsencrypt.backup_to is defined
+
+- name: store files
+  delegate_to: "{{ letsencrypt.backup_to }}"
+  copy:
+    dest: "{{ le_backup_path }}/{{ item.item.0.0 }}/{{ item.item.1 }}"
+    owner: root
+    group: root
+    mode: 0600
+    content: "{{ item.content | b64decode }}"
+  when:
+    - item.content is defined
+  loop: "{{ certbot_backup_files.results }}"
+  no_log: true
