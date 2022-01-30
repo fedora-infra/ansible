@@ -65,13 +65,58 @@
     - letsencrypt.backup_to is defined
     - item.content is defined
 
+- name: create the archive directory
+  file:
+    state: directory
+    path: "{{ le_source_path }}/../archive"
+    owner: root
+    group: root
+    # this is readable by anyone, per certbot defaults
+    mode: 0755
+  loop: "{{ backed_up_certificates.results }}"
+  tags:
+    - certbot
+  when:
+    - letsencrypt.backup_to is defined
+    - item.content is defined
+
+- name: create the archive host directorY
+  file:
+    state: directory
+    path: "{{ le_source_path }}/../archive/{{ item.item.0.item.key }}"
+    owner: root
+    group: root
+    # this is readable by anyone, per certbot defaults
+    mode: 0755
+  loop: "{{ backed_up_certificates.results }}"
+  tags:
+    - certbot
+  when:
+    - letsencrypt.backup_to is defined
+    - item.content is defined
+
 - name: restore the backed up certificates
   copy:
     content: "{{ item.content | b64decode }}"
-    dest: "{{ le_source_path }}/{{ item.item.0.item.key }}/{{ item.item.1 }}"
+    dest: "{{ le_source_path }}/../archive/{{ item.item.0.item.key }}/restored{{ item.item.1 }}"
     owner: root
     group: root
     mode: 0644
+  loop: "{{ backed_up_certificates.results }}"
+  tags:
+    - certbot
+  when:
+    - letsencrypt.backup_to is defined
+    - item.content is defined
+  register: some_cert_restored
+
+- name: restore the cert symlinks
+  file:
+    state: symlink
+    src: "../archive/restored{{ item.item.1 }}"
+    dest: "{{ le_source_path }}/{{ item.item.0.item.key }}/{{ item.item.1 }}"
+    owner: root
+    group: root
   loop: "{{ backed_up_certificates.results }}"
   tags:
     - certbot
