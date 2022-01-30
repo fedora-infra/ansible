@@ -1,12 +1,6 @@
 ---
 - set_fact:
-    le_backup_certbot_files:
-      - cert.pem
-      - chain.pem
-      - combined.pem
-      - fullchain.pem
-      - privkey.pem
-    le_source_path: /etc/letsencrypt/live
+    le_source_path: /etc/letsencrypt
     le_backup_path: /root/letsencrypt-cert-backup
   tags:
     - certbot
@@ -37,92 +31,16 @@
   tags:
     - certbot
 
-- name: load the backed up certificates
+- name: restore certificates from the backup server
+  synchronize:
+    src: "{{ le_backup_path }}/{{ {{ letsencrypt.certificates|dictsort[0][0] }}"
+    dest: "{{ le_source_path }}"
   delegate_to: "{{ letsencrypt.backup_to }}"
-  slurp:
-    src: "{{ le_backup_path }}/{{ item.0.item.key }}/{{ item.1 }}"
-  register: backed_up_certificates
-  loop: "{{ le_stat_checks.results|product(le_backup_certbot_files)|list }}"
-  ignore_errors: true
   tags:
     - certbot
   when:
     - letsencrypt.backup_to is defined
-    - not item.0.stat.exists
-
-- name: create the host directory
-  file:
-    state: directory
-    path: "{{ le_source_path }}/{{ item.item.0.item.key }}"
-    owner: root
-    group: root
-    # this is readable by anyone, per certbot defaults
-    mode: 0755
-  loop: "{{ backed_up_certificates.results }}"
-  tags:
-    - certbot
-  when:
-    - letsencrypt.backup_to is defined
-    - item.content is defined
-
-- name: create the archive directory
-  file:
-    state: directory
-    path: "{{ le_source_path }}/../archive"
-    owner: root
-    group: root
-    # this is readable by anyone, per certbot defaults
-    mode: 0755
-  loop: "{{ backed_up_certificates.results }}"
-  tags:
-    - certbot
-  when:
-    - letsencrypt.backup_to is defined
-    - item.content is defined
-
-- name: create the archive host directorY
-  file:
-    state: directory
-    path: "{{ le_source_path }}/../archive/{{ item.item.0.item.key }}"
-    owner: root
-    group: root
-    # this is readable by anyone, per certbot defaults
-    mode: 0755
-  loop: "{{ backed_up_certificates.results }}"
-  tags:
-    - certbot
-  when:
-    - letsencrypt.backup_to is defined
-    - item.content is defined
-
-- name: restore the backed up certificates
-  copy:
-    content: "{{ item.content | b64decode }}"
-    dest: "{{ le_source_path }}/../archive/{{ item.item.0.item.key }}/{{ item.item.1 }}"
-    owner: root
-    group: root
-    mode: 0644
-  loop: "{{ backed_up_certificates.results }}"
-  tags:
-    - certbot
-  when:
-    - letsencrypt.backup_to is defined
-    - item.content is defined
-  register: some_cert_restored
-
-- name: restore the cert symlinks
-  file:
-    state: link
-    src: "../../archive/{{ item.item.0.item.key }}/{{ item.item.1 }}"
-    dest: "{{ le_source_path }}/{{ item.item.0.item.key }}/{{ item.item.1 }}"
-    owner: root
-    group: root
-  loop: "{{ backed_up_certificates.results }}"
-  tags:
-    - certbot
-  when:
-    - letsencrypt.backup_to is defined
-    - item.content is defined
+    - not le_stat_checks.results[0].stat.exists
   register: some_cert_restored
 
 - name: initialize certbot configuration
@@ -166,7 +84,6 @@
   when:
     - letsencrypt.predefined_deploy_script is defined
     - not item.stat.exists
-    - not some_cert_restored.changed
   with_items: "{{ le_stat_checks.results }}"
   with_items: "{{ le_stat_checks.results }}"
   tags:
@@ -203,18 +120,7 @@
   tags:
     - certbot
 
-- name: load certificate files into variables
-  slurp:
-    src: "{{ le_source_path }}/{{ item.0.0 }}/{{ item.1 }}"
-  register: certbot_backup_files
-  ignore_errors: true
-  loop: "{{letsencrypt.certificates|dictsort|product(le_backup_certbot_files)|list}}"
-  when:
-    - letsencrypt.backup_to is defined
-  tags:
-    - certbot
-
-- name: create the restore directory
+- name: create the backup directory
   delegate_to: "{{ letsencrypt.backup_to }}"
   file:
     path: "{{ le_backup_path }}"
@@ -227,31 +133,10 @@
   tags:
     - certbot
 
-- name: create the host restore directories
+- name: backup the letsencrypt data files to backup host
+  synchronize:
+    src: "{{ le_source_path }}"
+    dest: "{{ le_backup_path }}/{{ item.key }}"
+    mode: pull
   delegate_to: "{{ letsencrypt.backup_to }}"
-  file:
-    owner: root
-    group: root
-    mode: 0700
-    path: "{{ le_backup_path }}/{{ item.0 }}"
-    state: directory
-  loop: "{{ letsencrypt.certificates|dictsort }}"
-  when:
-    - letsencrypt.backup_to is defined
-  tags:
-    - certbot
-
-- name: store files
-  delegate_to: "{{ letsencrypt.backup_to }}"
-  copy:
-    dest: "{{ le_backup_path }}/{{ item.item.0.0 }}/{{ item.item.1 }}"
-    owner: root
-    group: root
-    mode: 0600
-    content: "{{ item.content | b64decode }}"
-  when:
-    - item.content is defined
-  loop: "{{ certbot_backup_files.results }}"
-  no_log: true
-  tags:
-    - certbot
+  with_dict: "{{ letsencrypt.certificates }}"
