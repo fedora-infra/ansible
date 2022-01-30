@@ -17,12 +17,8 @@ if [ $? -ne 0 ]; then
 fi
 
 # check propagation for the active branches
-for version in `jq -r ".results[$i].version" < ${ACTIVE} | grep -v Rawhide`; do
-	if [[ ${version} -lt 28 ]]; then
-		${CRAWLER} --category "Fedora Linux" --propagation --proppath updates/${version}/x86_64/repodata --threads 50 2>&1 | grep SHA256 > ${LOGBASE}/f${version}_updates-propagation.log.$( date +%s )
-	else
-		${CRAWLER} --category "Fedora Linux" --propagation --proppath updates/${version}/Everything/x86_64/repodata --threads 50 2>&1 | grep SHA256 > ${LOGBASE}/f${version}_updates-propagation.log.$( date +%s )
-	fi
+for version in `jq -r '.results[] | select ( .release_type == "updates" ) | .version' < ${ACTIVE}`; do
+	${CRAWLER} --category "Fedora Linux" --propagation --proppath updates/${version}/Everything/x86_64/repodata --threads 50 2>&1 | grep SHA256 > ${LOGBASE}/f${version}_updates-propagation.log.$( date +%s )
 done
 
 # check propagation for the development branch
