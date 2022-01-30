@@ -37,6 +37,64 @@
   tags:
     - certbot
 
+- name: load the backed up certificates
+  delegate_to: "{{ letsencrypt.backup_to }}"
+  slurp:
+    src: "{{ le_backup_path }}/{{ item.0.item.key }}/{{ item.1 }}"
+  register: backed_up_certificates
+  loop: "{{ le_stat_checks.results|product(le_backup_certbot_files)|list }}"
+  ignore_errors: true
+  tags:
+    - certbot
+  when:
+    - letsencrypt.backup_to is defined
+    - not item.0.stat.exists
+
+- name: create the host directory
+  file:
+    state: directory
+    path: "{{ le_source_path }}/{{ item.item.0.item.key }}"
+    owner: root
+    group: root
+    # this is readable by anyone, per certbot defaults
+    mode: 0755
+  loop: "{{ backed_up_certificates.results }}"
+  tags:
+    - certbot
+  when:
+    - letsencrypt.backup_to is defined
+    - item.content is defined
+
+- name: create the host live directory
+  file:
+    state: directory
+    path: "{{ le_source_path }}/{{ item.item.0.item.key }}/live"
+    owner: root
+    group: root
+    # this is readable by anyone, per certbot defaults
+    mode: 0755
+  loop: "{{ backed_up_certificates.results }}"
+  tags:
+    - certbot
+  when:
+    - letsencrypt.backup_to is defined
+    - item.content is defined
+
+- name: restore the backed up certificates
+  copy:
+    content: "{{ item.content | b64decode }}"
+    dest: "{{ le_source_path }}/{{ item.item.0.item.key }}/live/{{ item.item.1 }}"
+    owner: root
+    group: root
+    mode: 0644
+  loop: "{{ backed_up_certificates.results }}"
+  tags:
+    - certbot
+  when:
+    - letsencrypt.backup_to is defined
+    - item.content is defined
+  register: some_cert_restored
+
 - name: initialize certbot configuration
   shell: |
       certbot certonly --standalone \
@@ -47,7 +105,8 @@
             --agree-tos \
             -n >> /tmp/call
   when:
-  - not item.stat.exists
+    - not item.stat.exists
+    - not some_cert_restored.changed
   with_items: "{{ le_stat_checks.results }}"
   tags:
     - certbot
