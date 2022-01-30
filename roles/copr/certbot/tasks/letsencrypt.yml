@@ -8,24 +8,34 @@
       - privkey.pem
     le_source_path: /etc/letsencrypt/live
     le_backup_path: /root/letsencrypt-cert-backup
+  tags:
+    - certbot
 
 - name: install certbot package
   package: name=certbot state=present
+  tags:
+    - certbot
 
 - name: install certbot config
   template: src=certbot.j2 dest=/etc/sysconfig/certbot
             mode=0644
+  tags:
+    - certbot
 
 - name: install certbot deploy script
   template: src={{ letsencrypt.predefined_deploy_script }}
             dest=/usr/libexec/auto-certbot-deploy
             mode=0755
   when: letsencrypt.predefined_deploy_script is defined
+  tags:
+    - certbot
 
 - name: check whether we need to initialize letsencrypt first
   stat: path="/etc/letsencrypt/live/{{ item.key }}"
   register: le_stat_checks
   with_dict: "{{ letsencrypt.certificates }}"
+  tags:
+    - certbot
 
 - name: initialize certbot configuration
   shell: |
@@ -39,7 +49,8 @@
   when:
   - not item.stat.exists
   with_items: "{{ le_stat_checks.results }}"
-
+  tags:
+    - certbot
 
 - name: configure certbot to use webroot next time
   ini_file: dest="/etc/letsencrypt/renewal/{{ item.item.key }}.conf"
@@ -47,6 +58,8 @@
             option=authenticator
             value=webroot
   with_items: "{{ le_stat_checks.results }}"
+  tags:
+    - certbot
 
 - name: configure certbot to use webroot next time
   ini_file: dest="/etc/letsencrypt/renewal/{{ item.item.key }}.conf"
@@ -54,6 +67,8 @@
             option=webroot_path
             value="{{ item.item.value.challenge_dir }}"
   with_items: "{{ le_stat_checks.results }}"
+  tags:
+    - certbot
 
 - name: post init script
   shell: |
@@ -63,12 +78,16 @@
   - letsencrypt.predefined_deploy_script is defined
   - not item.stat.exists
   with_items: "{{ le_stat_checks.results }}"
+  tags:
+    - certbot
 
 - name: Automatize cert renewal
   service:
     name: certbot-renew.timer
     state: started
     enabled: yes
+  tags:
+    - certbot
 
 # When we do 'systemctl restart', lighttpd is initially started as "root"
 # process (when the config is loaded) and later it does setuid(lighttpd).
@@ -90,6 +109,8 @@
   when:
     - letsencrypt.predefined_deploy_script is defined
     - letsencrypt.predefined_deploy_script == 'lighttpd'
+  tags:
+    - certbot
 
 - name: load certificate files into variables
   slurp:
@@ -99,6 +120,8 @@
   loop: "{{letsencrypt.certificates|dictsort|product(le_backup_certbot_files)|list}}"
   when:
     - letsencrypt.backup_to is defined
+  tags:
+    - certbot
 
 - name: create the restore directory
   delegate_to: "{{ letsencrypt.backup_to }}"
@@ -110,6 +133,8 @@
     state: directory
   when:
     - letsencrypt.backup_to is defined
+  tags:
+    - certbot
 
 - name: create the host restore directories
   delegate_to: "{{ letsencrypt.backup_to }}"
@@ -122,6 +147,8 @@
   loop: "{{ letsencrypt.certificates|dictsort }}"
   when:
     - letsencrypt.backup_to is defined
+  tags:
+    - certbot
 
 - name: store files
   delegate_to: "{{ letsencrypt.backup_to }}"
@@ -135,3 +162,5 @@
     - item.content is defined
   loop: "{{ certbot_backup_files.results }}"
   no_log: true
+  tags:
+    - certbot
