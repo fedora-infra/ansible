@@ -66,7 +66,6 @@
     - letsencrypt.predefined_deploy_script is defined
     - not item.stat.exists
   with_items: "{{ le_stat_checks.results }}"
-  with_items: "{{ le_stat_checks.results }}"
   tags:
     - certbot
 
