@@ -4,6 +4,7 @@ set -e
 
 pem_fixup()
 {
+    rm -f /etc/letsencrypt/live/$1/combined.pem
     cat "/etc/letsencrypt/live/$1/cert.pem" \
         "/etc/letsencrypt/live/$1/privkey.pem" \
     > "/etc/letsencrypt/live/$1/combined.pem"
