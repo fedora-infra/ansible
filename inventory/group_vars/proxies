@@ -44,6 +44,8 @@ lvm_size: 50000
 # should be lowered in the host vars for that proxy.
 maxrequestworkers: 1500
 mem_size: 8192
+nagios_Check_Services:
+  swap: false
 nat_rules: [
   # For Zanata, redirect 443/tcp -> 43342/tcp for TLS reasons
   # See files/httpd/website_id_fp_o_zanata.conf for info

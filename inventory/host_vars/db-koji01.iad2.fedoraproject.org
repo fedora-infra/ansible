@@ -27,6 +27,8 @@ max_parallel_workers_per_gather: 32
 max_stack_depth: "6MB"
 max_worker_processes: 64
 mem_size: 131070
+nagios_Check_Services:
+  swap: false
 nrpe_procs_crit: 700
 #
 # Large updates pushes cause lots of db threads doing the tag moves, so up this from default.
