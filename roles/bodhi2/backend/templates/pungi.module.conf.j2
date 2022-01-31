@@ -56,6 +56,26 @@ module_defaults_dir = {
     'dir': '.'
 }
 
+module_obsoletes_dir = {
+    'scm': 'git',
+    {% if env == "staging" %}
+        'repo': 'https://pagure.io/modularity/fedora-stg-module-defaults.git',
+        [% if release.version_int == 8 %]
+            'branch': 'el[[ release.version_int ]]',
+        [% else %]
+            'branch': 'f[[ release.version_int ]]',
+        [% endif %]
+    {% else %}
+        'repo': 'https://pagure.io/releng/fedora-module-defaults.git',
+        [% if release.version_int == 8 %]
+            'branch': 'el[[ release.version_int ]]',
+        [% else %]
+            'branch': 'f[[ release.version_int ]]',
+        [% endif %]
+    {% endif %}
+    'dir': 'obsoletes'
+}
+
 hashed_directories = True
 
 # RUNROOT settings
