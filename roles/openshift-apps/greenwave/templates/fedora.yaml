@@ -81,7 +81,9 @@ rules:
   - !RemoteRule {}
 
 # For critical path updates in stable and Branched, we require passes
-# for all openQA update tests
+# for all openQA update tests. This policy contains the tests we run
+# on all releases; there's an additional policy which contains tests
+# not run on the oldest stable release (see below).
 --- !Policy
 id: "bodhiupdate_bodhipush_openqa"
 product_versions:
@@ -137,8 +139,6 @@ rules:
   - !PassingTestCaseRule {test_case_name: update.server_remote_logging_server, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.server_role_deploy_database_server, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.server_role_deploy_domain_controller, scenario: "fedora.updates-server.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: update.upgrade_realmd_client, scenario: "fedora.updates-server-upgrade.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: update.upgrade_server_domain_controller, scenario: "fedora.updates-server-upgrade.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.base_reboot_unmount, scenario: "fedora.updates-workstation.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.base_selinux, scenario: "fedora.updates-workstation.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.base_service_manipulation, scenario: "fedora.updates-workstation.x86_64.64bit"}
@@ -153,6 +153,27 @@ rules:
   - !PassingTestCaseRule {test_case_name: update.install_default_update_live, scenario: "fedora.updates-workstation-live-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.install_default_update_live, scenario: "fedora.updates-workstation-live-iso.x86_64.uefi"}
   - !PassingTestCaseRule {test_case_name: update.live_build, scenario: "fedora.updates-workstation-live-iso.x86_64.64bit"}
+
+# For critical path updates in stable and Branched, we require passes
+# for all openQA update tests. This policy contains upgrade tests that
+# are not run on the oldest stable release (because the tests would
+# need to start from an EOL release and we don't want to maintain that)
+--- !Policy
+id: "bodhiupdate_bodhipush_openqa_upgrade"
+product_versions:
+  # FIXME: we would use some kind of matching here, but we don't want
+  # to include whatever version Rawhide is, as openQA tests don't run
+  # on Rawhide. So for now this list needs to be updated each time a
+  # release is branched (or goes EOL).
+  - fedora-35
+decision_contexts:
+  - bodhi_update_push_testing_critpath
+  - bodhi_update_push_stable_critpath
+subject_type: bodhi_update
+rules:
+# This list needs to stay synced with openQA if tests are added or renamed.
+  - !PassingTestCaseRule {test_case_name: update.upgrade_realmd_client, scenario: "fedora.updates-server-upgrade.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.upgrade_server_domain_controller, scenario: "fedora.updates-server-upgrade.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.upgrade_desktop_encrypted_64bit, scenario: "fedora.updates-workstation-upgrade.x86_64.64bit"}
 
 # This policy lists tests that are expected to pass for a Rawhide compose to
