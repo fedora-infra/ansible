@@ -566,6 +566,14 @@ host worker03-ocp {
      option routers 10.3.163.254;
      option subnet-mask 255.255.255.0;
 }
+host worker04-ocp {
+     hardware ethernet 24:6E:96:B0:E0:78;
+     fixed-address 10.3.163.127;
+     filename "uefi/grubx64.efi";
+     next-server 10.3.163.10;
+     option routers 10.3.163.254;
+     option subnet-mask 255.255.255.0;
+}
 # Staging network
 host worker01-ocp-stg {
      hardware ethernet 68:05:CA:CE:A2:AC;
