@@ -7,7 +7,6 @@ dns_search3: "fedoraproject.org"
 eth0_ipv4: 172.31.2.31
 eth0_ipv4_gw: 172.31.2.254
 eth1_ipv4: 172.31.1.1
-eth1_ipv4_gw: 172.31.1.254
 eth1_ipv4_nm: 24
 has_ipv4: yes
 eth0_mac: e4:1f:13:6a:e3:a0
@@ -42,9 +41,8 @@ network_connections:
         - "{{ dns_search1 }}"
         - "{{ dns_search2 }}"
         - "{{ dns_search3 }}"
-      gateway4: "{{ eth1_ipv4_gw }}"
     name: eth1
-    state: down
+    state: up
     type: ethernet
 nrpe_procs_crit: 1000
 nrpe_procs_warn: 900
