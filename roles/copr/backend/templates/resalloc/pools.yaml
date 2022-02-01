@@ -115,6 +115,7 @@ copr_hv_ppc64le_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     - hypervisor
     - hypervisor_ppc64le
     - hypervisor_ppc64le_{{ hv }}
+    - arch_power8
     cmd_new: "/var/lib/resallocserver/provision/libvirt-new --swap-vol-size 168"
     cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
     cmd_livecheck: "resalloc-check-vm-ip"
@@ -149,14 +150,25 @@ copr_ibm_cloud_s390x_tokyo_{% if devel %}dev{% else %}prod{% endif %}:
   reuse_max_count: 8
   reuse_max_time: 1800
 
-{% if devel %}
 # Power9 VMs in openpower-controller.osuosl.org
 copr_osuosl_p09_{% if devel %}dev{% else %}prod{% endif %}:
+{% if devel %}
   max: 3
   max_prealloc: 1
   max_starting: 1
+{% else %}
+  max: 15
+  max_prealloc: 8
+  max_starting: 4
+{% endif %}
   tags:
-    - none_currently_just_experimenting
+    - copr_builder
+    - name: arch_noarch
+      priority: -10
+    - arch_ppc64le
+    - arch_ppc64le_native
+    - in_osuosl
+    - arch_power9
   cmd_new: '/var/lib/resallocserver/resalloc_provision/osuosl-vm'
   cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
   cmd_livecheck: "resalloc-check-vm-ip"
@@ -165,9 +177,6 @@ copr_osuosl_p09_{% if devel %}dev{% else %}prod{% endif %}:
   reuse_opportunity_time: 180
   reuse_max_count: 8
   reuse_max_time: 1800
-
-{% endif %}
-
 
 {{ aws_x86_64(builders.aws.x86_64[0], builders.aws.x86_64[1],
               builders.aws.x86_64[2])
