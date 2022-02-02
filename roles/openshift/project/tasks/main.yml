@@ -12,7 +12,10 @@
   command: oc get project {{app}}
   register: project_exists
   failed_when: false
-  changed_when: "'not found' in project_exists.stderr"
+  #changed_when: "'not found' in project_exists.stderr"
+
+- debug:
+  msg: "{{project_exists}}"
 
 - name: Copy project template
   template:
@@ -21,7 +24,7 @@
 
 - name: Create project
   shell: oc apply -f /etc/openshift_apps/{{app}}/project.yml
-  when: "'not found' in project_exists.stderr" 
+  when: "'not found' in project_exists.stderr"
 
 - name: deployer.yml
   include_role:
