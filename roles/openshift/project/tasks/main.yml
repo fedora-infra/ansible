@@ -15,7 +15,7 @@
   #changed_when: "'not found' in project_exists.stderr"
 
 - debug:
-  msg: "{{project_exists}}"
+    msg: "{{project_exists}}"
 
 - name: Copy project template
   template:
