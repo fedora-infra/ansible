@@ -35,14 +35,14 @@
 - name: check if we already have the backup
   delegate_to: localhost
   stat:
-    path: "{{ le_backup_path }}/{{ letsencrypt.certificates|dictsort[0][0] }}"
+    path: "{{ le_backup_path }}/{{ (letsencrypt.certificates|dictsort)[0][0] }}"
   register: le_stat_backup_dir
   tags:
     - certbot
 
 - name: restore the certificates from backup (backed up on batcave)
   synchronize:
-    src: "{{ le_backup_path }}/{{ letsencrypt.certificates|dictsort[0][0] }}"
+    src: "{{ le_backup_path }}/{{ (letsencrypt.certificates|dictsort)[0][0] }}"
     dest: "{{ le_source_path }}"
     mode: push
   tags:
