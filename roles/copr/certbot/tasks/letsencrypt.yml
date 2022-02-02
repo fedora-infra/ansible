@@ -42,7 +42,7 @@
 
 - name: restore the certificates from backup (backed up on batcave)
   synchronize:
-    src: "{{ le_backup_path }}/{{ (letsencrypt.certificates|dictsort)[0][0] }}"
+    src: "{{ le_backup_path }}/{{ (letsencrypt.certificates|dictsort)[0][0] }}/"
     dest: "{{ le_source_path }}"
     mode: push
   tags:
@@ -142,7 +142,7 @@
 
 - name: backup the letsencrypt certs to batcave directory
   synchronize:
-    src: "{{ le_source_path }}"
+    src: "{{ le_source_path }}/"
     dest: "{{ le_backup_path }}/{{ item.key }}"
     mode: pull
   with_dict: "{{ letsencrypt.certificates }}"
