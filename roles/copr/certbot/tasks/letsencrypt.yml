@@ -146,7 +146,5 @@
     dest: "{{ le_backup_path }}/{{ item.key }}"
     mode: pull
   with_dict: "{{ letsencrypt.certificates }}"
-  when:
-    - letsencrypt.backup_to is defined
   tags:
     - certbot
