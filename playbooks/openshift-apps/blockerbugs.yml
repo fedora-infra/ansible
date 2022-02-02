@@ -20,13 +20,12 @@
   - /srv/web/infra/ansible/vars/global.yml
   - "/srv/private/ansible/vars.yml"
   - "/srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml"
-{% if env == 'staging' %}
-  - /srv/web/infra/ansible/inventory/group_vars/blockerbugs_stg
-{% else %}
-  - /srv/web/infra/ansible/inventory/group_vars/blockerbugs
-{% endif %}
 
   tasks:
+  - include_vars: /srv/web/infra/ansible/inventory/group_vars/blockerbugs_stg
+    when: env == 'staging'
+  - include_vars: /srv/web/infra/ansible/inventory/group_vars/blockerbugs
+    when: env != 'staging'
   - name: Create the database user
     postgresql_user:
       name: "{{ blockerbugs_db_user }}"
