@@ -21,7 +21,7 @@
 
 - name: Create project
   shell: oc apply -f /etc/openshift_apps/{{app}}/project.yml
-  when: "'not found' in project_exists.stderr"
+  when: "project_exists.rc != 0"
 
 - name: deployer.yml
   include_role:
