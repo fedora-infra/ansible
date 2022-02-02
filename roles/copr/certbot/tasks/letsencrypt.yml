@@ -1,4 +1,11 @@
 ---
+- set_fact:
+    le_source_path: /etc/letsencrypt
+    # https://pagure.io/fedora-infrastructure/issue/10524
+    le_backup_path: /srv/certbot-certs
+  tags:
+    - certbot
+
 - name: install certbot package
   package: name=certbot state=present
   tags:
@@ -25,6 +32,26 @@
   tags:
     - certbot
 
+- name: check if we already have the backup
+  delegate_to: localhost
+  stat:
+    path: "{{ le_backup_path }}/{{ letsencrypt.certificates|dictsort[0][0] }}"
+  register: le_stat_backup_dir
+  tags:
+    - certbot
+
+- name: restore the certificates from backup (backed up on batcave)
+  synchronize:
+    src: "{{ le_backup_path }}/{{ letsencrypt.certificates|dictsort[0][0] }}"
+    dest: "{{ le_source_path }}"
+    mode: push
+  tags:
+    - certbot
+  when:
+    - not le_stat_checks.results[0].stat.exists
+    - le_stat_backup_dir.stat.exists
+  register: some_cert_restored
+
 - name: initialize certbot configuration
   shell: |
       certbot certonly --standalone \
@@ -36,6 +63,7 @@
             -n >> /tmp/call
   when:
     - not item.stat.exists
+    - not some_cert_restored.changed
   with_items: "{{ le_stat_checks.results }}"
   tags:
     - certbot
@@ -97,5 +125,29 @@
   when:
     - letsencrypt.predefined_deploy_script is defined
     - letsencrypt.predefined_deploy_script == 'lighttpd'
+  tags:
+    - certbot
+
+- name: prepare the certbot backup directory on batcave
+  delegate_to: localhost
+  file:
+    path: "{{ le_backup_path }}"
+    # nobody, except for root, can step into this directory (on batcave)
+    mode: 0700
+    owner: root
+    group: root
+    state: directory
+  tags:
+    certbot
+
+- name: backup the letsencrypt data files to backup host
+  synchronize:
+    src: "{{ le_source_path }}"
+    dest: "{{ le_backup_path }}/{{ item.key }}"
+    mode: pull
+  delegate_to: "{{ letsencrypt.backup_to }}"
+  with_dict: "{{ letsencrypt.certificates }}"
+  when:
+    - letsencrypt.backup_to is defined
   tags:
     - certbot
