@@ -29,7 +29,7 @@
   - name: Create the database user
     postgresql_user:
       name: "{{ blockerbugs_db_user }}"
-      password: "{{ blockerbugs_db_pass }}"
+      password: "{{ blockerbugs_db_password }}"
   - name: Create the database itself
     postgresql_db:
       name: "{{ blockerbugs_db_name  }}"
