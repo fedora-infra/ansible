@@ -158,14 +158,15 @@ copr_osuosl_p09_{% if devel %}dev{% else %}prod{% endif %}:
   max_starting: 1
 {% else %}
   max: 15
-  max_prealloc: 8
+  max_prealloc: 6
   max_starting: 4
 {% endif %}
   tags:
     - copr_builder
     - name: arch_noarch
+      priority: -25
+    - name: arch_ppc64le
       priority: -10
-    - arch_ppc64le
     - arch_ppc64le_native
     - in_osuosl
     - arch_power9
