@@ -12,10 +12,7 @@
   command: oc get project {{app}}
   register: project_exists
   failed_when: false
-  #changed_when: "'not found' in project_exists.stderr"
-
-- debug:
-    msg: "{{project_exists}}"
+  changed_when: "project_exists.rc != 0"
 
 - name: Copy project template
   template:
