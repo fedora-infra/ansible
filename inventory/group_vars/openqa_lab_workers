@@ -21,8 +21,8 @@ openqa_nfs_worker: true
 # install openQA and os-autoinst from updates-testing - this is
 # staging, we live ON THE EDGE (radical guitar riff)
 openqa_repo: updates-testing
-# 2022-01-19 test build of os-autoinst
-openqa_scratch: ["81625194"]
+# 2022-02 test builds of os-autoinst and openQA
+openqa_scratch: ["82317536", "82347334"]
 openqa_secret: "{{ stg_openqa_apisecret }}"
 openqa_workers: 4
 primary_auth_source: ipa
