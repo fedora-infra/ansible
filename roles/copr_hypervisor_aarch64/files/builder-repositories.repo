@@ -4,7 +4,6 @@ baseurl=https://kojipkgs.fedoraproject.org/repos-dist/f$releasever-infra/latest/
 enabled=1
 gpgcheck=1
 gpgkey=https://infrastructure.fedoraproject.org/repo/infra/RPM-GPG-KEY-INFRA-TAGS
-exclude=mock
 
 [infrastructure-tags-stg]
 name=Fedora Infrastructure staging tag $releasever - $basearch
@@ -12,7 +11,6 @@ baseurl=https://kojipkgs.fedoraproject.org/repos-dist/f$releasever-infra-stg/lat
 enabled=0
 gpgcheck=1
 gpgkey=https://infrastructure.fedoraproject.org/repo/infra/RPM-GPG-KEY-INFRA-TAGS
-exclude=mock
 
 # [group_copr-copr]
 # name=Copr repo for copr owned by @copr
