@@ -8,14 +8,14 @@ spec:
   concurrencyPolicy: Forbid
   activeDeadlineSeconds: 900
   startingDeadlineSeconds: 180
-  schedule: "30 * * * *"
+  schedule: "3 * * * *"
   jobTemplate:
     spec:
       template:
         spec:
           containers:
           - name: blockerbugs-sync
-            image: blockerbugs:latest
+            image: image-registry.openshift-image-registry.svc:5000/blockerbugs/blockerbugs:latest
             command: ["python", "/opt/app-root/src/blockerbugs/cli.py", "sync"]
           restartPolicy: Never
           startingDeadlineSeconds: 600
