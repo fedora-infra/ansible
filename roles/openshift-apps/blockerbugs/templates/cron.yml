@@ -18,7 +18,6 @@ spec:
           containers:
           - name: blockerbugs-sync
             image: image-registry.openshift-image-registry.svc:5000/blockerbugs/blockerbugs:latest
-            command: ["python", "/opt/app-root/src/blockerbugs/cli.py", "sync"]
             env:
             - name: POSTGRESQL_USER
               value: "blockerbugs"
@@ -67,6 +66,7 @@ spec:
             - name: blockerbugs-secret-volume
               mountPath: /opt/app-root/secret/
               readOnly: true
+            command: ["python", "/opt/app-root/src/blockerbugs/cli.py", "sync"]
           volumes:
           - name: blockerbugs-secret-volume
             secret:
