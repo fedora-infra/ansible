@@ -8,6 +8,15 @@
     - "'s390x' in lookup('env', 'RESALLOC_NAME')"
     - copr_builder_fedora_version == 34
 
+- name: drop extremely slow libvirt resolver
+  lineinfile:
+    dest: /etc/resolv.conf
+    regexp: 'nameserver 192.168.122.1'
+    state: 'absent'
+  when:
+    - prepare_base_image is not defined
+    - "'osuosl' in lookup('env', 'RESALLOC_NAME')"
+
 - name: setup the hostname so we can easily identify the box
   hostname: name="{{ lookup('env', 'RESALLOC_NAME') | default('unknown-builder') | replace('_', '-') }}"
   when: prepare_base_image is not defined
