@@ -295,6 +295,16 @@
     remotepath: /blockerbugs
     localpath: /blockerbugs
     proxyurl: "{{ varnish_url }}"
+    when: env != "staging"
+
+  - role: httpd/reverseproxy
+    website: qa.fedoraproject.org
+    destname: blockerbugs
+    balancer_name: apps-ocp
+    targettype: openshift
+    keephost: true
+    tags: blockerbugs
+    when: env == "staging"
 
   - role: httpd/reverseproxy
     website: fedoraproject.org
