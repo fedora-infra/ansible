@@ -30,15 +30,15 @@ frontend_base_url: "https://copr.fedorainfracloud.org"
 host_backup_targets: ['/var/lib/copr/public_html/results']
 
 # consumed by roles/copr/certbot
-letsencrypt:
-  certificates:
-    copr-be.cloud.fedoraproject.org:
-      challenge_dir: /var/lib/copr/public_html
-      domains:
-        - copr-be-dev.cloud.fedoraproject.org
-      mail: coprteam@fedoraproject.org
-
-  predefined_deploy_script: lighttpd
+#letsencrypt:
+#  certificates:
+#    copr-be.cloud.fedoraproject.org:
+#      challenge_dir: /var/lib/copr/public_html
+#      domains:
+#        - copr-be-dev.cloud.fedoraproject.org
+#      mail: coprteam@fedoraproject.org
+#
+#  predefined_deploy_script: lighttpd
 
 # consumed by roles/messaging/base
 messaging:
