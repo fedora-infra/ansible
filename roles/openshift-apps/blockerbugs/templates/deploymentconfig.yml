@@ -88,13 +88,13 @@ spec:
           timeoutSeconds: 5
           initialDelaySeconds: 5
           httpGet:
-            path: /
+            path: /blockerbugs/
             port: 8080
         livenessProbe:
           timeoutSeconds: 15
           initialDelaySeconds: 30
           httpGet:
-            path: /
+            path: /blockerbugs/
             port: 8080
       volumes:
       - name: blockerbugs-secret-volume
