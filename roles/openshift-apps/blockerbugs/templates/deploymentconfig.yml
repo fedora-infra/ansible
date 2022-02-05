@@ -73,6 +73,8 @@ spec:
           value: "https://{{ env_short }}.pagure.io/api/0/"
         - name: BUGZILLA_URL
           value: "{{ blockerbugs_bugzilla_url }}"
+        - name: BUGZILLA_XMLRPC
+          value: "{{ blockerbugs_bugzilla_url }}xmlrpc.cgi"
         - name: BODHI_URL
           value: "https://bodhi{{ env_suffix }}.fedoraproject.org/"
         - name: OPENSHIFT_PROD
