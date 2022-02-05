@@ -35,6 +35,8 @@ spec:
               value: "https://qa{{ env_suffix }}.fedoraproject.org/blockerbugs/"
             - name: BLOCKERBUGS_API
               value: "https://qa{{ env_suffix }}.fedoraproject.org/blockerbugs/api/v0/"
+            - name: FAS_BASE_URL
+              value: "https://admin{{ env_suffix }}.fedoraproject.org/accounts/"
             - name: FAS_PASSWORD
               value: "{{ blockerbugs_fas_password }}"
             - name: FAS_USER
