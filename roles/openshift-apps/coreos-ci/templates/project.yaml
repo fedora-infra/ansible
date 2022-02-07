@@ -1,0 +1,8 @@
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: "{{project_name}}"
+  annotations:
+    openshift.io/description: "{{ project_description }}"
+    openshift.io/display-name: "{{ project_name }}"

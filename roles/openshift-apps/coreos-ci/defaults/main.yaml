@@ -1,0 +1,10 @@
+project_name: coreos-ci
+project_description: CoreOS CI Infrastructure
+project_service_account: coreos-ci-sa
+appowners: []
+ocp_service_account: root
+project_templates:
+  - project.yaml
+  - group.yaml
+  - rolebinding.yaml
+  - securitycontextconstraints.yaml

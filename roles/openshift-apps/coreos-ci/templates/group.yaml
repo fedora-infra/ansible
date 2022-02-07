@@ -1,0 +1,8 @@
+kind: Group
+apiVersion: user.openshift.io/v1
+metadata:
+  name: "{{project_name}}-appowners"
+users:
+{% for item in appowners %}
+- "{{ item }}"
+{% endfor %}

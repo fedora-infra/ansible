@@ -1,0 +1,26 @@
+---
+- hosts: os_control:os_control_stg
+  user: root
+  gather_facts: false
+
+  roles:
+  - role: openshift-apps/coreos-ci
+    project_name: coreos-ci
+    project_description: CoreOS CI Infrastructure
+    appowners:
+    - bgilbert
+    - dustymabe
+    - jlebon
+    - kevin
+    - miabbott
+    - walters
+
+  ###############################################
+  # actions to delete the project from OpenShift
+  ###############################################
+  # to run: sudo rbac-playbook -l os_control_stg -t delete openshift-apps/coreos-ci.yml
+  - role: openshift/object-delete
+    app: coreos-ci
+    objecttype: project
+    objectname: coreos-ci
+    tags: [ never, delete ]
