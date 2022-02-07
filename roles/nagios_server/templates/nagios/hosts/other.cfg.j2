@@ -11,6 +11,18 @@ define host {
 }
 
 define host {
+  host_name                    copr-be
+  alias                        download.copr.fedorainfracloud.org
+  use                          mincheck
+  address                      d1nld9ovj32u75.cloudfront.net
+{% if vars['nagios_location'] == 'iad2_internal' %}
+  parents                      iad2-gw
+{% else %}
+  parents                      ibiblio-gw
+{% endif %}
+}
+
+define host {
   host_name                    registry-cdn
   alias                        cdn.registry.fedoraproject.org
   use                          mincheck
