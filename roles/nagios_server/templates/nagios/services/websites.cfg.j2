@@ -337,7 +337,7 @@ define service {
 {% endif %}
 
 define service {
-  host_name             download.copr.fedorainfracloud.org
+  host_name             copr-be
   service_description   http-download.copr.fedorainfracloud.org
   check_command         check_website_ssl!download.copr.fedorainfracloud.org!/!Index of /
   max_check_attempts    8
