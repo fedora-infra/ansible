@@ -514,14 +514,6 @@ host oshift4-x86-be-03 {
      option routers 10.3.163.254;
      option subnet-mask 255.255.255.0;
 }
-host oshift4-x86-be-05 {
-     hardware ethernet 24:6E:96:B1:4C:70;
-     fixed-address 10.3.163.27;
-     filename "uefi/grubx64.efi";
-     next-server 10.3.163.10;
-     option routers 10.3.163.254;
-     option subnet-mask 255.255.255.0;
-}
 
 
 host centos01 {
@@ -561,6 +553,14 @@ host worker03-ocp {
 host worker04-ocp {
      hardware ethernet 24:6E:96:B0:E0:78;
      fixed-address 10.3.163.127;
+     filename "uefi/grubx64.efi";
+     next-server 10.3.163.10;
+     option routers 10.3.163.254;
+     option subnet-mask 255.255.255.0;
+}
+host worker05-ocp {
+     hardware ethernet 24:6E:96:B1:4C:70;
+     fixed-address 10.3.163.128;
      filename "uefi/grubx64.efi";
      next-server 10.3.163.10;
      option routers 10.3.163.254;
