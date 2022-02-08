@@ -30,7 +30,7 @@ export MSGTOPIC_PREFIX=logging.stats
 export MSGBODY_PRESET="loghost=$(hostname) run_id=$(uuidgen -r)"
 simple_message_to_bus condense-mirrorlogs.start
 
-let NUMDAYS=3
+let NUMDAYS=2
 let OLDDAYS=$(( $NUMDAYS+1 ))
 
 PROJECT=mirrors
