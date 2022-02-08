@@ -41,7 +41,7 @@ spec:
     git:
       uri: 'https://pagure.io/fedora-qa/packager_dashboard.git'
 {% if env == 'staging' %}
-      ref: 'prod'
+      ref: 'master'
 {% else %}
       ref: 'prod'
 {% endif %}
