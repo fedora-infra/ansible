@@ -298,12 +298,23 @@
     ocp4: true
     remotepath: /blockerbugs
     localpath: /blockerbugs
-    balancer_members:
-      - "{{ item }}"
+    balancer_members: "{{ ocp_nodes_stg }}"
     tags: blockerbugs
-    with_items:
-      - "{{ ocp_nodes_stg }}"
-      - "{{ ocp_nodes }}"
+    when: env == "staging"
+
+  - role: httpd/reverseproxy
+    website: qa.fedoraproject.org
+    destname: blockerbugs
+    balancer_name: apps-ocp
+    targettype: openshift
+    keephost: true
+    ocp4: true
+    remotepath: /blockerbugs
+    localpath: /blockerbugs
+    balancer_members: "{{ ocp_nodes }}"
+    tags: blockerbugs
+    when: env != "staging"
+
 
   - role: httpd/reverseproxy
     website: fedoraproject.org
