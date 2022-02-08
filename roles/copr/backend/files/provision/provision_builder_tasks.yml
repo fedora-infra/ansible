@@ -120,6 +120,12 @@
   no_log: true
   when: prepare_base_image is not defined
 
+- name: stop and disable systemd-oomd
+  service:
+    name: systemd-oomd
+    state: stopped
+    enabled: no
+
 - name: install copr-builder and other latest packages
   dnf: state=latest pkg={{ packages }}
   vars:
