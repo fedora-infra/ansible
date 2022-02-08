@@ -1,6 +1,5 @@
 - name: prepare setting up the database
-  #hosts: db01.stg.iad2.fedoraproject.org:db01.iad2.fedoraproject.org
-  hosts: db01.stg.iad2.fedoraproject.org
+  hosts: db01.stg.iad2.fedoraproject.org:db01.iad2.fedoraproject.org
   gather_facts: no
   user: root
 
@@ -11,8 +10,7 @@
     - packages
 
 - name: setup the database
-  #hosts: db01.stg.iad2.fedoraproject.org:db01.iad2.fedoraproject.org
-  hosts: db01.stg.iad2.fedoraproject.org
+  hosts: db01.stg.iad2.fedoraproject.org:db01.iad2.fedoraproject.org
   gather_facts: no
   become: yes
   become_user: postgres
@@ -38,8 +36,7 @@
       encoding: UTF-8
 
 - name: make the app be real
-  #hosts: os_control_stg[0]:os_control[0]
-  hosts: os_control_stg[0]
+  hosts: os_control_stg[0]:os_control[0]
   user: root
   gather_facts: False
 
@@ -54,7 +51,7 @@
     description: Blockerbugs
     appowners:
     - frantisekz
-    - pingou
+    - adamwill
     tags:
       - appowners
 
