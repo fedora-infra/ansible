@@ -125,6 +125,12 @@ handlers = ["console"]
             key = "{{ (env == 'production')|ternary('fedora-infra', 'testkey') }}"
             keyid = "{{ (env == 'production')|ternary('47dd8ef9', 'd300e724') }}"
 
+            [[consumer_config.koji_instances.primary.tags]]
+            from = "f37-infra-candidate"
+            to = "f37-infra-stg"
+            key = "{{ (env == 'production')|ternary('fedora-infra', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('47dd8ef9', 'd300e724') }}"
+
             # Gated coreos-pool tag
 
             [[consumer_config.koji_instances.primary.tags]]
@@ -145,8 +151,49 @@ handlers = ["console"]
             key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
             keyid = "{{ (env == 'production')|ternary('38ab71f4', 'd300e724') }}"
 
+            [[consumer_config.koji_instances.primary.tags]]
+            from = "f37-coreos-signing-pending"
+            to = "coreos-pool"
+            key = "{{ (env == 'production')|ternary('fedora-37', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('5323552a', 'd300e724') }}"
 
             # Gated rawhide and branched
+
+            [[consumer_config.koji_instances.primary.tags]]
+            from = "f37-signing-pending"
+            to = "f37-updates-testing-pending"
+            key = "{{ (env == 'production')|ternary('fedora-37', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('5323552a', 'd300e724') }}"
+            {% if env == "production" %}
+            # ima file signing - disable for now per fesco
+            # file_signing_key = "fedora-files-2021"
+            {% endif %}
+
+            [consumer_config.koji_instances.primary.tags.sidetags]
+            pattern = 'f37-build-side-<seq_id>'
+            from = '<sidetag>-signing-pending'
+            to = '<sidetag>-testing-pending'
+            trusted_taggers = ['bodhi']
+
+            [[consumer_config.koji_instances.primary.tags]]
+            from = "f37-pending"
+            to = "f37"
+            key = "{{ (env == 'production')|ternary('fedora-37', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('5323552a', 'd300e724') }}"
+
+            [[consumer_config.koji_instances.primary.tags]]
+            from = "f37-modular-pending"
+            to = "f37-modular"
+            key = "{{ (env == 'production')|ternary('fedora-37', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('5323552a', 'd300e724') }}"
+            type = "modular"
+
+            [[consumer_config.koji_instances.primary.tags]]
+            from = "f37-modular-updates-candidate"
+            to = "f37-modular"
+            key = "{{ (env == 'production')|ternary('fedora-37', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('5323552a', 'd300e724') }}"
+            type = "modular"
 
             [[consumer_config.koji_instances.primary.tags]]
             from = "f36-signing-pending"
@@ -394,11 +441,21 @@ handlers = ["console"]
     [consumer_config.ostree_refs]
         [consumer_config.ostree_refs."fedora/rawhide/x86_64/iot"]
         directory = "/mnt/fedora_koji/koji/compose/iot/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-37', 'testkey') }}"
         [consumer_config.ostree_refs."fedora/rawhide/aarch64/iot"]
         directory = "/mnt/fedora_koji/koji/compose/iot/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-37', 'testkey') }}"
         [consumer_config.ostree_refs."fedora/rawhide/armhfp/iot"]
+        directory = "/mnt/fedora_koji/koji/compose/iot/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-37', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/devel/x86_64/iot"]
+        directory = "/mnt/fedora_koji/koji/compose/iot/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/devel/aarch64/iot"]
+        directory = "/mnt/fedora_koji/koji/compose/iot/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/devel/armhfp/iot"]
         directory = "/mnt/fedora_koji/koji/compose/iot/repo/"
         key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
 
@@ -506,15 +563,43 @@ handlers = ["console"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
         key = "{{ (env == 'production')|ternary('fedora-35', 'testkey') }}"
 
+        [consumer_config.ostree_refs."fedora/36/x86_64/silverblue"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/36/aarch64/silverblue"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/36/ppc64le/silverblue"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/36/x86_64/updates/silverblue"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/36/x86_64/testing/silverblue"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/36/aarch64/updates/silverblue"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/36/aarch64/testing/silverblue"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/36/ppc64le/updates/silverblue"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/36/ppc64le/testing/silverblue"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+
         [consumer_config.ostree_refs."fedora/rawhide/aarch64/silverblue"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-37', 'testkey') }}"
         [consumer_config.ostree_refs."fedora/rawhide/ppc64le/silverblue"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-37', 'testkey') }}"
         [consumer_config.ostree_refs."fedora/rawhide/x86_64/silverblue"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-37', 'testkey') }}"
 
         [consumer_config.ostree_refs."fedora/35/x86_64/kinoite"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
@@ -544,15 +629,44 @@ handlers = ["console"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
         key = "{{ (env == 'production')|ternary('fedora-35', 'testkey') }}"
 
+        [consumer_config.ostree_refs."fedora/36/x86_64/kinoite"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/36/aarch64/kinoite"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/36/ppc64le/kinoite"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/36/x86_64/updates/kinoite"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/36/x86_64/testing/kinoite"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/36/aarch64/updates/kinoite"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/36/aarch64/testing/kinoite"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/36/ppc64le/updates/kinoite"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/36/ppc64le/testing/kinoite"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+
+
         [consumer_config.ostree_refs."fedora/rawhide/aarch64/kinoite"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-37', 'testkey') }}"
         [consumer_config.ostree_refs."fedora/rawhide/ppc64le/kinoite"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-37', 'testkey') }}"
         [consumer_config.ostree_refs."fedora/rawhide/x86_64/kinoite"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-37', 'testkey') }}"
 
     [consumer_config.coreos]
     bucket = "fcos-builds"
