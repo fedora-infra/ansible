@@ -292,23 +292,16 @@
   - role: httpd/reverseproxy
     website: qa.fedoraproject.org
     destname: blockerbugs
-    remotepath: /blockerbugs
-    localpath: /blockerbugs
-    proxyurl: "{{ varnish_url }}"
-    when: env != "staging"
-
-  - role: httpd/reverseproxy
-    website: qa.fedoraproject.org
-    destname: blockerbugs
     balancer_name: apps-ocp
     targettype: openshift
     keephost: true
     ocp4: true
     remotepath: /blockerbugs
     localpath: /blockerbugs
-    balancer_members: "{{ ocp_nodes_stg }}"
+    balancer_members:
+      - "{{ ocp_nodes_stg }}"
+      - "{{ ocp_nodes }}"
     tags: blockerbugs
-    when: env == "staging"
 
   - role: httpd/reverseproxy
     website: fedoraproject.org
