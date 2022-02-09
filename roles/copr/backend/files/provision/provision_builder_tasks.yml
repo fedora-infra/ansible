@@ -128,8 +128,8 @@
 
 - name: disable kernel oom-killer, too, rhbz 2051154
   sysctl:
-    name: vm.oom-kill
-    value: 0
+    name: vm.overcommit_memory
+    value: 2
     state: present
 
 - name: install copr-builder and other latest packages
