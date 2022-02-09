@@ -23,8 +23,6 @@
   - ipa/client
   - rkhunter
   - nagios_client
-  - { role: ec2_proxy,
-      when: "inventory_hostname in groups['cloud_aws']" }
   - collectd/base
   - sudo
   - rsyncd
