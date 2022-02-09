@@ -126,7 +126,7 @@
     state: stopped
     enabled: no
 
-- name: disable kernel oom-killer, too, rhbz 2051154
+- name: allow allocating large memory chunks on builders, rhbz 2051154
   sysctl:
     name: vm.overcommit_memory
     value: 2
