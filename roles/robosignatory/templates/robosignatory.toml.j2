@@ -195,21 +195,21 @@ handlers = ["console"]
             keyid = "{{ (env == 'production')|ternary('5323552a', 'd300e724') }}"
             type = "modular"
 
-#            [[consumer_config.koji_instances.primary.tags]]
-#            from = "f36-signing-pending"
-#            to = "f36-updates-testing-pending"
-#            key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
-#            keyid = "{{ (env == 'production')|ternary('38ab71f4', 'd300e724') }}"
-#            {% if env == "production" %}
-#            # ima file signing - disable for now per fesco
-#            # file_signing_key = "fedora-files-2021"
-#            {% endif %}
+            [[consumer_config.koji_instances.primary.tags]]
+            from = "f36-signing-pending"
+            to = "f36-updates-testing-pending"
+            key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('38ab71f4', 'd300e724') }}"
+            {% if env == "production" %}
+            # ima file signing - disable for now per fesco
+            # file_signing_key = "fedora-files-2021"
+            {% endif %}
 
-#            [consumer_config.koji_instances.primary.tags.sidetags]
-#            pattern = 'f36-build-side-<seq_id>'
-#            from = '<sidetag>-signing-pending'
-#            to = '<sidetag>-testing-pending'
-#            trusted_taggers = ['bodhi']
+            [consumer_config.koji_instances.primary.tags.sidetags]
+            pattern = 'f36-build-side-<seq_id>'
+            from = '<sidetag>-signing-pending'
+            to = '<sidetag>-testing-pending'
+            trusted_taggers = ['bodhi']
 
             [[consumer_config.koji_instances.primary.tags]]
             from = "f36-pending"
