@@ -130,7 +130,7 @@
   sysctl:
     name: vm.oom-kill
     value: 0
-    state=present
+    state: present
 
 - name: install copr-builder and other latest packages
   dnf: state=latest pkg={{ packages }}
