@@ -79,6 +79,10 @@ spec:
           value: "{{ blockerbugs_bugzilla_url }}"
         - name: BUGZILLA_XMLRPC
           value: "{{ blockerbugs_bugzilla_url }}xmlrpc.cgi"
+{% if env == 'staging' %}
+        - name: BUGZILLA_API_KEY
+          value: "{{ stg_blockerbugs_bz_api_key }}"
+{% endif %}
         - name: BODHI_URL
           value: "https://bodhi{{ env_suffix }}.fedoraproject.org/"
         - name: OPENSHIFT_PROD
