@@ -72,9 +72,9 @@ spec:
         - name: PAGURE_REPO_WEBHOOK_KEY
           value: "{{ blockerbugs_pagure_repo_webhook_key_secret }}"
         - name: PAGURE_URL
-          value: "https://{{ env_short }}.pagure.io/"
+          value: "{{ blockerbugs_pagure_url }}"
         - name: PAGURE_API
-          value: "https://{{ env_short }}.pagure.io/api/0/"
+          value: "{{ blockerbugs_pagure_url }}api/0/"
         - name: BUGZILLA_URL
           value: "{{ blockerbugs_bugzilla_url }}"
         - name: BUGZILLA_XMLRPC

@@ -14,8 +14,11 @@ spec:
     type: Git
     git:
       uri: https://pagure.io/fedora-qa/blockerbugs
-      # Change to develop/master once we iron things out!
+{% if env == 'staging' %}
       ref: "develop"
+{% else %}
+      ref: "prod"
+{% endif %}
   strategy:
     type: Source
     sourceStrategy:
