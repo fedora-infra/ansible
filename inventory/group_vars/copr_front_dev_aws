@@ -24,6 +24,7 @@ letsencrypt:
       challenge_dir: /var/www/html
       domains:
         - copr.stg.fedoraproject.org
+        - copr-fe-dev.cloud.fedoraproject.org
       mail: copr-devel@lists.fedorahosted.org
   predefined_deploy_script: httpd
 tcp_ports: [22, 80, 443,
