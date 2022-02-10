@@ -380,13 +380,6 @@
     ssl: false
 
   - role: httpd/website
-    site_name: copr.fedoraproject.org
-    sslonly: true
-    server_aliases: [copr.stg.fedoraproject.org]
-    cert_name: "{{wildcard_cert_name}}"
-    tags: copr
-
-  - role: httpd/website
     site_name: bugz.fedoraproject.org
     server_aliases: [bugz.stg.fedoraproject.org]
     sslonly: true
