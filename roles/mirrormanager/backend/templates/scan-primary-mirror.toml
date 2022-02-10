@@ -100,7 +100,6 @@ prefix="fedora-cisco-openh264"
 name="Fedora Archive"
 type="directory"
 url="/srv/pub/archive/"
-version_prefix="f"
 
 [[repository_mapping]]
 regex="^pub/archive/fedora(-secondary)?(/linux)?/(core|releases|development)/([\\.\\d]+)/[^ME].*"
@@ -109,27 +108,33 @@ prefix="fedora"
 [[repository_mapping]]
 regex="^pub/(archive/)?fedora(-secondary)?(/linux)?/updates/[\\.\\d]+/Everything/.*"
 prefix="updates-released"
+version_prefix="f"
 
 [[repository_mapping]]
 regex="^pub/(archive/)?fedora(-secondary)?(/linux)?/updates/[\\.\\d]+/Modular/.*"
 prefix="updates-released-modular"
+version_prefix="f"
 
 [[repository_mapping]]
 regex="^pub/(archive/)?fedora(-secondary)?(/linux)?/updates/testing/[\\.\\d]+/Everything/.*"
 prefix="updates-testing"
+version_prefix="f"
 
 [[repository_mapping]]
 regex="^pub/(archive/)?fedora(-secondary)?(/linux)?/updates/testing/[\\.\\d]+/Modular/.*"
 prefix="updates-testing-modular"
+version_prefix="f"
 
 # pre modular structure
 [[repository_mapping]]
 regex="^pub/archive/fedora(-secondary)?(/linux)?/updates/testing/([\\.\\d]+)/[^ME].*"
 prefix="updates-testing"
+version_prefix="f"
 
 [[repository_mapping]]
 regex="^pub/archive/fedora(-secondary)?(/linux)?/updates/([\\.\\d]+)/[^ME].*"
 prefix="updates-released"
+version_prefix="f"
 
 ### Fedora Secondary Arches ###
 
@@ -137,7 +142,6 @@ prefix="updates-released"
 name="Fedora Secondary Arches"
 type="directory"
 url="/srv/pub/fedora-secondary/"
-version_prefix="f"
 
 [[repository_mapping]]
 regex="^pub/(archive/)?fedora(-secondary)?(/linux)?/(releases|development)/([\\.\\d]+)/Everything/.*"
