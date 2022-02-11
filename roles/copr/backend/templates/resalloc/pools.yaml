@@ -141,7 +141,7 @@ copr_ibm_cloud_s390x_tokyo_{% if devel %}dev{% else %}prod{% endif %}:
     - arch_s390x_native
     - ibm_cloud
     - tokyo
-  cmd_new: '/var/lib/resallocserver/resalloc_provision/ibm-cloud-vm --log-level debug create "$RESALLOC_NAME" --zones jp-tok-1,jp-tok-3'
+  cmd_new: '/var/lib/resallocserver/resalloc_provision/ibm-cloud-vm --log-level debug create "$RESALLOC_NAME"'
   cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
   cmd_livecheck: "resalloc-check-vm-ip"
   cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
