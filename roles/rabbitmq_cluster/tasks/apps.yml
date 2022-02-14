@@ -121,6 +121,13 @@
     name: rabbit/user
   vars:
      username: centos-koji
+
+- name: CBS Koji User
+  run_once: true
+  include_role:
+    name: rabbit/user
+  vars:
+     username: cbs
 # CENTOS KOJI END
 
 # CENTOS RESULSDB BEGIN
