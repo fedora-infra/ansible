@@ -43,7 +43,7 @@ class BaseConfiguration(object):
     MESSAGING_TOPIC_PREFIX = ['org.fedoraproject.prod']
     KOJI_CONFIG = '/etc/module-build-service/koji.conf'
     KOJI_PROFILE = 'koji'
-    ARCHES = ['i686', 'armv7hl', 'x86_64']
+    ARCHES = ['i686', 'x86_64']
     KOJI_PROXYUSER = True
     KOJI_REPOSITORY_URL = 'https://kojipkgs.stg.fedoraproject.org/repos'
     COPR_CONFIG = '/etc/module-build-service/copr.conf'
@@ -169,9 +169,9 @@ class ProdConfiguration(BaseConfiguration):
     BASE_MODULE_ARCHES = {
         # Fedora >= 37 removes armv7hl, Fedora < 37 still have it
         # https://fedoraproject.org/wiki/Changes/RetireARMv7
-        'platform:f34': ['aarch64', 'armv7hl', 'ppc64le', 'x86_64', 's390x'],
-        'platform:f35': ['aarch64', 'armv7hl', 'ppc64le', 'x86_64', 's390x'],
-        'platform:f36': ['aarch64', 'armv7hl', 'ppc64le', 'x86_64', 's390x'],
+        'platform:f34': ['aarch64', 'armv7hl', 'i686', 'ppc64le', 'x86_64', 's390x'],
+        'platform:f35': ['aarch64', 'armv7hl', 'i686', 'ppc64le', 'x86_64', 's390x'],
+        'platform:f36': ['aarch64', 'armv7hl', 'i686', 'ppc64le', 'x86_64', 's390x'],
         'platform:el8' : ['aarch64', 'ppc64le', 'x86_64', 's390x']
     }
     KOJI_REPOSITORY_URL = 'https://kojipkgs.fedoraproject.org/repos'
