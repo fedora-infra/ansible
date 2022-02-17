@@ -1,0 +1,61 @@
+- name: make the app be real
+  # hosts: os_masters[0]:os_masters_stg[0]
+  hosts: local
+  # user: root
+  gather_facts: False
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - /srv/private/ansible/vars.yml
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/roles/openshift-apps/resultsdb/vars/main.yml
+
+  roles:
+    # The openshift/project role breaks if the project already exists:
+    # https://pagure.io/fedora-infrastructure/issue/6404
+    - role: openshift/project
+      app: resultsdb-frontend
+      description: resultsdb
+      appowners:
+        - ralph
+        - mjia
+        - dcallagh
+        - gnaponie
+        - cverna
+        - pingou
+        - lholecek
+        - vmaljulin
+        - lrossett
+      tags:
+        - apply-appowners
+
+    - role: openshift/object
+      app: resultsdb-frontend
+      template: secrets.yml
+      objectname: secrets.yml
+
+    - role: openshift/object
+      app: resultsdb-frontend
+      template: configmaps.yml
+      objectname: configmaps.yml
+
+    - role: openshift/object
+      app: resultsdb-frontend
+      template: deploymentconfigs.yml
+      objectname: deploymentconfigs.yml
+
+    - role: openshift/object
+      app: resultsdb-frontend
+      template: services.yml
+      objectname: services.yml
+
+    - role: openshift/route
+      app: resultsdb-frontend
+      routename: web
+      host: "resultsdb{{ env_suffix }}.fedoraproject.org"
+      serviceport: web
+      servicename: resultsdb-frontend
+
+    - role: openshift/rollout
+      app: resultsdb-frontend
+      dcname: "resultsdb-frontend"

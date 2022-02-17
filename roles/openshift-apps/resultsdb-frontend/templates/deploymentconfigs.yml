@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  name: "resultsdb-frontend"
+  labels:
+    app: resultsdb
+    service: web
+spec:
+  replicas: 2
+  selector:
+    app: resultsdb
+    service: web
+  strategy:
+    type: Rolling
+  template:
+    metadata:
+      labels:
+        app: resultsdb
+        service: web
+    spec:
+      containers:
+        - name: webapp
+{% if env == 'staging' %}
+          image: "{{ stg_resultsdb_frontend_image }}"
+{% else %}
+          image: "{{ prod_resultsdb_frontend_image }}"
+{% endif %}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5001
+          envFrom:
+            - secretRef:
+                name: resultsdb-frontend-key
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/resultsdb
+              readOnly: true
+            - name: httpd-config-volume
+              mountPath: /etc/httpd/conf.d
+              readOnly: true
+          readinessProbe:
+            timeoutSeconds: 1
+            initialDelaySeconds: 5
+            httpGet:
+              path: /
+              port: 5001
+          livenessProbe:
+            timeoutSeconds: 1
+            initialDelaySeconds: 30
+            httpGet:
+              path: /
+              port: 5001
+          # Limit to 384MB memory. This is probably *not* enough but it is
+          # necessary in the current environment to allow for 2 replicas and
+          # rolling updates, without hitting the (very aggressive) memory quota.
+          resources:
+            limits:
+              memory: 384Mi
+              cpu: 0.3
+      volumes:
+        - name: config-volume
+          configMap:
+            name: "resultsdb-frontend-app-config"
+        - name: httpd-config-volume
+          configMap:
+            name: "resultsdb-frontend-httpd-config"
+  triggers:
+    - type: ConfigChange
