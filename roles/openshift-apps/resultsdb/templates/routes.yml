@@ -5,6 +5,7 @@ apiVersion: v1
     labels:
       app: resultsdb
   spec:
+    path: /api
     port:
       targetPort: api
     to:
