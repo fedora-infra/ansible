@@ -377,9 +377,10 @@ LOGGING = {
         'django.request': {
             'handlers': [
                 'file',
-                {% if env == 'production' %}
-                'mail_admins',
-                {% endif %}
+                # Don't send an email on server errors, there's just too many
+                #{% if env == 'production' %}
+                #'mail_admins',
+                #{% endif %}
             ],
             'level': 'DEBUG',
         },
