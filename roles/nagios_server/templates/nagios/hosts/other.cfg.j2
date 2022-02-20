@@ -45,3 +45,11 @@ define host {
   parents                      ibiblio-gw
 {% endif %}
 }
+
+define host {
+  host_name                    retrace.fedoraproject.org
+  alias                        retrace.fedoraproject.org
+  use                          mincheck
+  address                      retrace.fedoraproject.org
+  parents                      iad2-gw
+}

@@ -343,3 +343,11 @@ define service {
   max_check_attempts    8
   use                   websitetemplate
 }
+
+define service {
+  host_name             retrace.fedoraproject.org
+  service_description   http-cert-retrace.fedoraproject.org
+  check_command         check_website_ssl!retrace.fedoraproject.org!/ABRT/
+  max_check_attempts    8
+  use                   websitetemplate
+}
