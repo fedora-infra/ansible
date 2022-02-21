@@ -55,10 +55,6 @@ spec:
           value: "https://qa{{ env_suffix }}.fedoraproject.org/blockerbugs/api/v0/"
         - name: FAS_BASE_URL
           value: "https://admin{{ env_suffix }}.fedoraproject.org/accounts/"
-        - name: FAS_PASSWORD
-          value: "{{ blockerbugs_fas_password }}"
-        - name: FAS_USER
-          value: "{{ blockerbugs_fas_user }}@fedoraproject.org"
         - name: FAS_ADMIN_GROUP
           value: "qa-admin"
         - name: PAGURE_BOT_USERNAME
@@ -77,12 +73,8 @@ spec:
           value: "{{ blockerbugs_pagure_url }}api/0/"
         - name: BUGZILLA_URL
           value: "{{ blockerbugs_bugzilla_url }}"
-        - name: BUGZILLA_XMLRPC
-          value: "{{ blockerbugs_bugzilla_url }}xmlrpc.cgi"
-{% if env == 'staging' %}
         - name: BUGZILLA_API_KEY
-          value: "{{ stg_blockerbugs_bz_api_key }}"
-{% endif %}
+          value: "{{ blockerbugs_bz_api_key }}"
         - name: BODHI_URL
           value: "https://bodhi{{ env_suffix }}.fedoraproject.org/"
         - name: OPENSHIFT_PROD
