@@ -12,6 +12,8 @@
     state: link
     src: /var/lib/dist-git/per-task-logs
     dest: /var/lib/copr-dist-git/per-task-logs
+    owner: copr-dist-git
+    group: copr-dist-git
   when: devel
 
 - name: Write swap entry in fstab
