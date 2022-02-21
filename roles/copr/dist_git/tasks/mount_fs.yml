@@ -7,9 +7,12 @@
 - name: prepare mount point
   file: state=directory path=/var/lib/copr-dist-git
 
-- name: mount up disk of copr repo
-  mount: name=/var/lib/copr-dist-git src='LABEL=cdg-log' fstype=ext4 state=mounted
-  when: not devel
+- name: create symlink for per-task-logs
+  file:
+    state: link
+    src: /var/lib/dist-git/per-task-logs
+    dest: /var/lib/copr-dist-git/per-task-logs
+  when: devel
 
 - name: Write swap entry in fstab
   mount:
