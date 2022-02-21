@@ -12,6 +12,11 @@
     state: link
     src: /var/lib/dist-git/per-task-logs
     path: /var/lib/copr-dist-git/per-task-logs
+  when: devel
+
+- name: set correct ownership for per-task-logs
+  file:
+    path: /var/lib/copr-dist-git/per-task-logs
     owner: copr-dist-git
     group: copr-dist-git
   when: devel
