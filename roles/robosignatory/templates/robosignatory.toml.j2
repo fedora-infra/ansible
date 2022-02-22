@@ -431,11 +431,18 @@ handlers = ["console"]
             key = "{{ (env == 'production')|ternary('fedora-35', 'testkey') }}"
             keyid = "{{ (env == 'production')|ternary('9867c58f', 'd300e724') }}"
 
-            # f36-rebuild            
-            [[consumer_config.koji_instances.primary.tags]]            
-            from = "f36-rebuild"            
-            to = "f36-rebuild"            
-            key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"            
+            # f36-rebuild
+            [[consumer_config.koji_instances.primary.tags]]
+            from = "f36-rebuild"
+            to = "f36-rebuild"
+            key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('38ab71f4', 'd300e724') }}"
+
+            # f36-gnome
+            [[consumer_config.koji_instances.primary.tags]]
+            from = "f36-gnome"
+            to = "f36-gnome"
+            key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
             keyid = "{{ (env == 'production')|ternary('38ab71f4', 'd300e724') }}"
 
     [consumer_config.ostree_refs]
