@@ -1,21 +1,23 @@
 ---
 - name: Create retrace-server reposync cron jobs for active Fedora versions
+  loop: "{{ rs_internal_fedora_vers | product(rs_internal_arch_list) | list }}"
+  when: "{{ item[1] != 'source' }}"
   cron:
     name: "rs reposync fedora {{ item[0] }} {{ item[1] }}"
     user: retrace
     job: "/usr/bin/retrace-server-reposync fedora {{ item[0] }} {{ item[1] }} >> /var/log/retrace-server/reposync_error.log 2>&1"
     special_time: daily
     state: present
-  loop: "{{ rs_internal_fedora_vers | product(rs_internal_arch_list) | list }}"
 
 - name: Remove retrace-server reposync cron jobs of removed Fedora versions
+  loop: "{{ rs_internal_fedora_vers_removed | product(rs_internal_arch_list) | list }}"
+  when: "{{ item[1] != 'source' }}"
   cron:
     name: "rs reposync fedora {{ item[0] }} {{ item[1] }}"
     user: retrace
     job: "/usr/bin/retrace-server-reposync fedora {{ item[0] }} {{ item[1] }} >> /var/log/retrace-server/reposync_error.log 2>&1"
     special_time: daily
     state: absent
-  loop: "{{ rs_internal_fedora_vers_removed | product(rs_internal_arch_list) | list }}"
 
 - name: Create retrace-server reposync cron jobs for CentOS
   cron:
