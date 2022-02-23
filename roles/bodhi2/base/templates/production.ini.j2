@@ -323,12 +323,8 @@ bodhi_email = updates@fedoraproject.org
 # ignored.
 {% if env == "production" %}
 bugzilla_api_key = {{ bodhi_bugzilla_api_key }}
-{% endif %}
-
-# This is the password used to access Bodhi's bugzilla account. Ignored if bugzilla_api_key is set.
-# bodhi_password =
-{% if env == "staging" %}
-bodhi_password = {{ bodhiBugzillaPassword }}
+{% else %}
+bugzilla_api_key = {{ bodhi_bugzilla_api_key_stg }}
 {% endif %}
 
 # The address that gets the requests
