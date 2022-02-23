@@ -90,9 +90,7 @@ requests_retries = 3
 [consumer_config.bugzilla]
 enabled = true
 {% if env == "staging" %}
-user = "{{ upstream_release_bugzilla_user }}"
-password = "{{ upstream_release_bugzilla_password }}"
-api_key = ""
+api_key = "{{ upstream_release_bugzilla_api_token_stg }}"
 url = "https://bugzilla.stage.redhat.com"
 explanation_url = "https://stg.fedoraproject.org/wiki/Upstream_release_monitoring"
 {% else %}
