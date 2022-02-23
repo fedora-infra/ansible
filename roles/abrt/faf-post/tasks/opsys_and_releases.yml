@@ -1,0 +1,19 @@
+---
+- name: Add CentOS opsys releases
+  loop: "{{ rs_internal_centos_vers }}"
+  shell: >
+    faf releaseadd -o centos --opsys-release {{ item }} -s ACTIVE
+  become: yes
+  become_user: faf
+  register: result
+  failed_when: result.rc != 0 and 'already defined' not in result.stderr
+
+- name: Add Fedora opsys releases
+  loop: "{{ rs_internal_fedora_vers }}"
+  shell: >
+    faf releaseadd -o fedora --opsys-release {{ item }} -s ACTIVE
+  become: yes
+  become_user: faf
+  register: result
+  failed_when: result.rc != 0 and 'already defined' not in result.stderr
+...
