@@ -28,7 +28,7 @@
   # Needed to produce nice long emails about koji builds
   - koji
   when:
-    inventory_hostname.startswith('notifs-backend02') or env = 'staging'
+    inventory_hostname.startswith('notifs-backend02') or env == 'staging'
   tags:
   - notifs
   - notifs/backend
