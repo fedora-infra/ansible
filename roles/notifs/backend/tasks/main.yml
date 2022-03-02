@@ -12,7 +12,7 @@
   # Needed to produce nice long emails about koji builds
   - koji
   when:
-    inventory_hostname.startswith('notifs-backend01')
+    inventory_hostname.startswith('notifs-backend01.iad2')
   tags:
   - notifs
   - notifs/backend
@@ -28,7 +28,7 @@
   # Needed to produce nice long emails about koji builds
   - koji
   when:
-    inventory_hostname.startswith('notifs-backend02')
+    inventory_hostname.startswith('notifs-backend02') or env = 'staging'
   tags:
   - notifs
   - notifs/backend
@@ -55,7 +55,7 @@
   - tasks.py
   - util.py
   when:
-    inventory_hostname.startswith('notifs-backend01')
+    inventory_hostname.startswith('notifs-backend01.iad')
   tags:
   - notifs
   - notifs/backend

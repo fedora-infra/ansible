@@ -12,7 +12,7 @@
   notify:
   - restart apache
   when:
-    inventory_hostname.startswith('notifs-backend01')
+    inventory_hostname.startswith('notifs-backend0.iad2')
   tags:
   - notifs
   - notifs/frontend
@@ -27,20 +27,22 @@
   - python3-flask-openid
   notify:
   - restart apache
+  when:
+    inventory_hostname.startswith('notifs-backend02') or env = 'staging'
   tags:
   - notifs
   - notifs/frontend
 
-- name: Install epel-testing fmn on stage
-  package: name={{ item }} state=present enablerepo=epel-testing
-  with_items:
-  - python-fmn
-  when: env == "staging"
-  notify:
-  - restart apache
-  tags:
-  - notifs
-  - notifs/frontend
+#- name: Install epel-testing fmn on stage
+#  package: name={{ item }} state=present enablerepo=epel-testing
+#  with_items:
+#  - python-fmn
+#  when: env == "staging"
+#  notify:
+#  - restart apache
+#  tags:
+#  - notifs
+#  - notifs/frontend
 
 - name: copy fmn app configuration
   template: >
@@ -99,31 +101,31 @@
   - notifs
   - notifs/frontend
 
-- name: create live docs directory
-  file: >
-    dest=/usr/lib/python2.6/site-packages/fmn/web/docs/
-    state=directory
-  tags:
-  - notifs
-  - notifs/frontend
+#- name: create live docs directory
+#  file: >
+#    dest=/usr/lib/python2.6/site-packages/fmn/web/docs/
+#    state=directory
+#  tags:
+#  - notifs
+#  - notifs/frontend
 
-- name: copy live docs
-  copy: src={{ item }} dest=/usr/lib/python2.6/site-packages/fmn/web/docs
-  with_fileglob: fedora-sitedocs/*.rst
-  tags:
-  - notifs
-  - notifs/frontend
+#- name: copy live docs
+#  copy: src={{ item }} dest=/usr/lib/python2.6/site-packages/fmn/web/docs
+#  with_fileglob: fedora-sitedocs/*.rst
+#  tags:
+#  - notifs
+#  - notifs/frontend
 
-- name: apply selinux type to static files
-  file: >
-    dest=/usr/share/fmn/static
-    setype=httpd_sys_content_t
-    state=directory
-    recurse=yes
-  tags:
-  - notifs
-  - notifs/frontend
-  - selinux
+#- name: apply selinux type to static files
+#  file: >
+#    dest=/usr/share/fmn/static
+#    setype=httpd_sys_content_t
+#    state=directory
+#    recurse=yes
+#  tags:
+#  - notifs
+#  - notifs/frontend
+#  - selinux
 
 - name: ensure selinux lets httpd talk to postgres, memcached, and mail
   seboolean: name={{item}} state=yes persistent=yes
