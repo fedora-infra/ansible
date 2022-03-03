@@ -72,11 +72,7 @@ spec:
         - name: ADMIN_EMAILS
           value: "fzatlouk@redhat.com"
         - name: SMTP_CONFIG
-{% if env == 'staging' %}
-          value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard.stg.fedoraproject.org;"
-{% else %}
-          value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard.fedoraproject.org;"
-{% endif %}
+          value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard{{ env_suffix }}.fedoraproject.org;"
         - name: BZ_API_KEY
           value: "{{ oraculum_bz_api_key }}"
         volumeMounts:
@@ -173,11 +169,7 @@ spec:
         - name: ADMIN_EMAILS
           value: "fzatlouk@redhat.com"
         - name: SMTP_CONFIG
-{% if env == 'staging' %}
-          value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard.stg.fedoraproject.org;"
-{% else %}
-          value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard.fedoraproject.org;"
-{% endif %}
+          value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard{{ env_suffix }}.fedoraproject.org;"
         - name: BZ_API_KEY
           value: "{{ oraculum_bz_api_key }}"
         volumeMounts:
@@ -258,11 +250,7 @@ spec:
         - name: ADMIN_EMAILS
           value: "fzatlouk@redhat.com"
         - name: SMTP_CONFIG
-{% if env == 'staging' %}
-          value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard.stg.fedoraproject.org;"
-{% else %}
-          value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard.fedoraproject.org;"
-{% endif %}
+          value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard{{ env_suffix }}.fedoraproject.org;"
         - name: BZ_API_KEY
           value: "{{ oraculum_bz_api_key }}"
         volumeMounts:
@@ -345,11 +333,7 @@ spec:
         - name: ADMIN_EMAILS
           value: "fzatlouk@redhat.com"
         - name: SMTP_CONFIG
-{% if env == 'staging' %}
-          value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard.stg.fedoraproject.org;"
-{% else %}
-          value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard.fedoraproject.org;"
-{% endif %}
+          value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard{{ env_suffix }}.fedoraproject.org;"
         - name: BZ_API_KEY
           value: "{{ oraculum_bz_api_key }}"
         volumeMounts:
@@ -433,11 +417,9 @@ spec:
         - name: SUBDIR
           value: "/"
         - name: API
-{% if env == 'staging' %}
-          value: "https://packager-dashboard.stg.fedoraproject.org/api/v1/"
-{% else %}
-          value: "https://packager-dashboard.fedoraproject.org/api/v1/"
-{% endif %}
+          value: "https://packager-dashboard{{ env_suffix }}.fedoraproject.org/api/v1/"
+        - name: "APIv2"
+          value: "https://packager-dashboard{{ env_suffix }}.fedoraproject.org/api/v2/"
   triggers:
   - type: ConfigChange
   - type: ImageChange

@@ -53,11 +53,9 @@ spec:
       - name: "SUBDIR"
         value: "/"
       - name: "API"
-{% if env == 'staging' %}
-        value: "https://packager-dashboard.stg.fedoraproject.org/api/v1/"
-{% else %}
-        value: "https://packager-dashboard.fedoraproject.org/api/v1/"
-{% endif %}
+        value: "https://packager-dashboard{{ env_suffix }}.fedoraproject.org/api/v1/"
+      - name: "APIv2"
+        value: "https://packager-dashboard{{ env_suffix }}.fedoraproject.org/api/v2/"
   triggers:
   - type: ConfigChange
   - type: ImageChange
