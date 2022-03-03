@@ -26,9 +26,7 @@ custom_rules: [
   # For Zanata
   # See files/httpd/website_id_fp_o_zanata.conf for info
   '-A INPUT -p tcp -m tcp --dport 44342 -s 209.132.183.252 -j ACCEPT',
-  # Allow ocp control plane hosts
-  '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.35 -j ACCEPT', # batcave01
-  '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.120 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.121 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.122 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.123 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.124 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.125 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.126 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.127 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.128 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.129 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.65 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.120 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.121 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.122 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.123 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.124 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.125 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.126 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.65 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.127 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.128 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.129 -j ACCEPT']
+  '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.120 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.121 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.122 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.123 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.124 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.125 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.126 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.65 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.127 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.128 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.129 -j ACCEPT']
 ipa_client_shell_groups:
   - fi-apprentice
   - sysadmin-noc
@@ -82,6 +80,8 @@ tcp_ports: [
   1088,
   # This is for RabbitMQ public access
   5671,
+  # openshift 4 api
+  6443,
   # This is for RabbitMQ internal-public access
   15671,
   # This is for the haproxy HTML stats page

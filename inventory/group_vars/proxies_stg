@@ -27,9 +27,7 @@ custom_rules: [
   '-A INPUT -p tcp -m tcp --dport 9941 -s 10.5.131.72 -j ACCEPT',
   # Allow happinesspackets-stg.fedorainfracloud.org to talk to the inbound fedmsg relay
   '-A INPUT -p tcp -m tcp --dport 9941 -s 209.132.184.123 -j ACCEPT',
-  # Allow ocp control plane hosts
-  '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.163.35 -j ACCEPT', # batcave01
-  '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.115 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.116 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.117 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.118 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.119 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.120 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.121 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.122 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.123 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 6443 -s 10.3.166.50 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.115 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.116 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.117 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.118 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.119 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.120 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.121 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.122 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.123 -j ACCEPT']
+  '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.115 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.116 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.117 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.118 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.119 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.120 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.121 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.122 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.123 -j ACCEPT']
 ipa_client_shell_groups:
   - fi-apprentice
   - sysadmin-noc
@@ -73,6 +71,8 @@ tcp_ports: [
   1088,
   # This is for RabbitMQ public access
   5671,
+  # openshift 4 api
+  6443,
   # This is for RabbitMQ internal-public access
   15671,
   # This is for the haproxy HTML stats page
