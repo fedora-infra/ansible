@@ -25,7 +25,3 @@
   command: "/root/bin/oc create sa {{ project_service_account }} -n {{ project_name }}"
   register: sa_resource_create
   failed_when: sa_resource_create.stderr != '' and 'already exists' not in sa_resource_create.stderr
-
-# apply the anyuid-setfcap SCC to the service account
-- name: create service account
-  command: "/root/bin/oc adm policy add-scc-to-user anyuid-setfcap -z {{ project_service_account }}"

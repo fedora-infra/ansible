@@ -13,6 +13,8 @@ fsGroup:
   type: RunAsAny
 groups:
 - system:cluster-admins
+users:
+- system:serviceaccount:coreos-ci:coreos-ci-sa
 kind: SecurityContextConstraints
 metadata:
   annotations:
