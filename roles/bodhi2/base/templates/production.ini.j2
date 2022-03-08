@@ -666,6 +666,14 @@ openid.url = https://id{{env_suffix}}.fedoraproject.org/
 openid_template = {username}.id{{env_suffix}}.fedoraproject.org
 openid.sreg_required = email nickname
 
+{% if env == 'staging' %}
+# OIDC (OpenID Connect)
+oidc.fedora.client_id = bodhi
+oidc.fedora.client_secret = {{ bodhi2_oidc_client_secret }}
+oidc.fedora.server_metadata_url = http://id.stg.fedoraproject.org/openidc/.well-known/openid-configuration
+{% endif %}
+
+
 # CORS allowed origins for cornice services
 # This can be wide-open.  read-only, we don't care as much about.
 cors_origins_ro = *
