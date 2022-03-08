@@ -17,7 +17,7 @@ ks_repo: http://38.145.60.16/pub/fedora/linux/releases/35/Server/x86_64/os/
 ks_url: http://38.145.60.16/repo/rhel/ks/kvm-fedora
 mac0: "52:54:00:96:fb:f7"
 max_mem_size: 32768
-mem_size: 16384
+mem_size: 32768
 network_connections:
   - autoconnect: yes
     ip:
@@ -39,7 +39,7 @@ network_connections:
     type: ethernet
 nrpe_procs_crit: 1400
 nrpe_procs_warn: 1200
-num_cpus: 10
+num_cpus: 16
 postfix_group: vpn
 public_hostname: proxy11.fedoraproject.org
 # This is consumed by the roles/fedora-web/main role
