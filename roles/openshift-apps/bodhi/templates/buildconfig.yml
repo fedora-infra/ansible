@@ -20,7 +20,11 @@ items:
     strategy:
       type: Docker
       dockerStrategy:
+{% if env == "staging" %}
+        noCache: True
+{% else %}
         noCache: False
+{% endif %}
     output:
       to:
         kind: ImageStreamTag
