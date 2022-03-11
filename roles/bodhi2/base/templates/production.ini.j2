@@ -669,7 +669,7 @@ openid.sreg_required = email nickname
 {% if env == 'staging' %}
 # OIDC (OpenID Connect)
 oidc.fedora.client_id = bodhi
-oidc.fedora.client_secret = {{ bodhi2_oidc_client_secret }}
+oidc.fedora.client_secret = {{ bodhi2_oidc_client_secret_staging }}
 oidc.fedora.server_metadata_url = http://id.stg.fedoraproject.org/openidc/.well-known/openid-configuration
 {% endif %}
 
