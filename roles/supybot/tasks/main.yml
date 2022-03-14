@@ -50,16 +50,27 @@
   tags: supybot
 
 - name: teams cron job
-  cron: name=meetings-by-team hour="23" minute="0" user=apache job="/usr/local/bin/meetings_by_team.sh"
+  cron:
+    name: meetings-by-team
+    hour: "23"
+    minute: "0"
+    user: apache
+    job: "/usr/local/bin/meetings_by_team.sh"
+    state: "{{ 'present' if inventory_hostname.startswith('value01') else 'absent' }}"
   tags: supybot
-  when: inventory_hostname.startswith('value01')
 
 - name: setup archive script
   copy: src=archive.sh dest=/usr/local/bin/archive.sh mode=755
   tags: supybot
 
 - name: teams cron job
-  cron: name=archive hour="23" minute="30" user=apache job="/usr/local/bin/archive.sh >& /dev/null"
+  cron: 
+    name: archive
+    hour: "23"
+    minute: "30"
+    user: apache
+    job: "/usr/local/bin/archive.sh >& /dev/null"
+    state: "{{ 'present' if inventory_hostname.startswith('value01') else 'absent' }}"
   tags: supybot
   when: inventory_hostname.startswith('value01')
 
