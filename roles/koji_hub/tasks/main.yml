@@ -20,6 +20,21 @@
   - packages
   - koji_hub
 
+#
+# Setup koji hub osbuild plugin.
+#
+- name: install koji hub server packages
+  package: name={{ item }} state=present
+  when: env == "staging"
+  with_items:
+  - koji-osbuild
+  notify:
+  - restart kojira
+  tags:
+  - packages
+  - koji_hub
+  - koji_hub_osbuild
+
 - name: install rhel7 koji hub server packages
   package: name={{ item }} state=present
   with_items:

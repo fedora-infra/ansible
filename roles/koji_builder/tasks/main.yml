@@ -124,6 +124,7 @@
     - imagefactory-plugins-RHEVM
     - pykickstart
     - nosync
+    - koji-osbuild-builder
   when: env == "staging"
   tags:
   - koji_builder
@@ -173,6 +174,15 @@
   tags:
   - koji_builder
   - rpmautospec
+
+- name: build /etc/koji-osbuild/builder.conf
+  template: src=builder.conf.staging dest=/etc/koji-osbuild/builder.conf
+  notify:
+  - restart kojid
+  when: env == "staging"
+  tags:
+  - koji_builder
+  - koji_builder_osbuild
 
 - name: build /etc/koji/koji.conf from group vars
   template: src=koji.conf dest=/etc/koji.conf
@@ -299,7 +309,7 @@
   - removehttpd
 
 - name: Add the Apache group
-  group: name=apache 
+  group: name=apache
          gid=48
          system=yes
          state=present
@@ -309,7 +319,7 @@
 
 - name: Create the apache user
   user: name=apache
-        uid=48 
+        uid=48
         createhome=no
         group=apache
         home=/usr/share/httpd
