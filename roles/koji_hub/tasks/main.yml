@@ -27,7 +27,7 @@
   package: name={{ item }} state=present
   when: env == "staging"
   with_items:
-  - koji-osbuild
+  - koji-osbuild-hub
   notify:
   - restart kojira
   tags:
