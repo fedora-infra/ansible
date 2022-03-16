@@ -176,6 +176,13 @@
   - koji_builder
   - rpmautospec
 
+- name: Create osbuild builder config directory
+  file: path=/etc/koji-osbuild state=directory mode=0755
+  when: env == "staging"
+  tags:
+  - koji_builder
+  - koji_builder_osbuild
+
 - name: build /etc/koji-osbuild/builder.conf
   template: src=builder.conf.staging dest=/etc/koji-osbuild/builder.conf
   notify:
