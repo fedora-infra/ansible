@@ -84,7 +84,7 @@ MissingPolicyOk = False
 
 #Plugins = koji-disable-builds-plugin
 #Plugins = darkserver-plugin
-{% if env="production" %}
+{% if env == "production" %}
 Plugins = fedmsg-koji-plugin runroot_hub hub_containerbuild tag2distrepo sidetag_hub save_failed_tree
 {% else %}
 Plugins = osbuild fedmsg-koji-plugin runroot_hub hub_containerbuild tag2distrepo sidetag_hub save_failed_tree
