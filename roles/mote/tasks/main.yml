@@ -5,8 +5,48 @@
   package: name={{ item }} state=present
   with_items:
   - mote
+  - memcached
   tags:
   - packages
+  - mote
+
+- name: set the memcached sysconfig file
+  copy:
+    src: memcached.sysconfig
+    dest: /etc/sysconfig/memcached
+  tags:
+  - mote
+  notify:
+  - restart memcached
+
+- name: make systemd override dir
+  file:
+    state: directory
+    path: /etc/systemd/system/memcached.service.d
+    mode: 0755
+    owner: root
+    group: root
+  tags:
+  - mote
+
+- name: make systemd override config
+  copy:
+    src: memcached.override
+    dest: /etc/systemd/system/memcached.service.d/override.conf
+  tags:
+  - mote
+  notify:
+  - reload systemd
+  - restart memcached
+
+- meta: flush_handlers
+
+- name: start memcached
+  service:
+    state: started
+    enabled: yes
+    name: memcached
+  tags:
   - mote
 
 - name: replace the mote configuration file by the one with the normal user

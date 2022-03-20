@@ -46,8 +46,8 @@ General Configuration
 admin_groups = ["sysadmin-mote"]
 
 # memcached must be installed for this feature
-memcached_ip = "memcached01:11211"
-use_memcached = False # Use a memcached store for greater performance
+memcached_ip = "unix:/var/run/memcached/memcached.sock"
+use_memcached = True # Use a memcached store for greater performance
 
 # JSON cache store location
 json_cache_location = "/var/cache/httpd/mote/cache.json"
