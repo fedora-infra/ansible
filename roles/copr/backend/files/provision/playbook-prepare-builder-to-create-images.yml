@@ -29,7 +29,7 @@
       service:
         name: "{{ item }}"
         state: started
-        stage: enabled
+        enabled: true
       with_items:
         - libvirtd
         - virtstoraged.socket
