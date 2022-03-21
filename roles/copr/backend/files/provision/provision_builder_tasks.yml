@@ -87,23 +87,18 @@
   failed_when: false
   when: prepare_base_image is defined
 
-# TODO: Drop this entirely once we are on F35+
 - name: install subscription-manager
   package: name=subscription-manager state=present
-  # TODO: we should use 'when: prepare_base_image is defined' instead, but a new
-  # set of builder images needs to be generated first so the image contains the
-  # subscription-manager by default.
   when:
-    - copr_builder_fedora_version == 34 or prepare_base_image is defined
+    - prepare_base_image is defined
 
-# TODO: Fix this once we are on F35+.  This should be prepare_base_image only.
 - name: install the subscription-manager script
   copy:
     src: copr-rh-subscribe.sh
     dest: /usr/local/bin/copr-rh-subscribe.sh
     mode: 0755
   when:
-    - copr_builder_fedora_version == 34 or prepare_base_image is defined
+    - prepare_base_image is defined
 
 - name: Activate Red Hat Subscription
   shell:
@@ -141,19 +136,6 @@
   when:
   - prepare_base_image is not defined
 
-- name: drop broken files from /etc/mock
-  file:
-    path: /etc/mock/{{ item }}.cfg
-    state: absent
-  loop:
-    - epel-8-x86_64
-    - epel-8-ppc64le
-    - epel-8-aarch64
-    - epel-8-s390x
-  when:
-    - copr_builder_fedora_version == 34
-    - prepare_base_image is not defined
-
 - name: run /bin/copr-update-builder from copr-builder package
   shell: /usr/bin/copr-update-builder
 
@@ -171,14 +153,6 @@
 
 - name: put copr-rpmbuild configuration file in the right place
   copy: src=files/main.ini dest=/etc/copr-rpmbuild/main.ini
-
-# This taks is to be dropped once we migrate to F35.  On F35, we want to keep
-# the default /etc/rpkg.conf untouched!
-- name: put rpkg configuration file to the right place
-  copy: src=files/rpkg.conf dest=/etc/rpkg.conf
-  when:
-  - prepare_base_image is not defined
-  - copr_builder_fedora_version == 34
 
 - name: mockbuilder user
   user: name=mockbuilder groups=mock
@@ -253,20 +227,3 @@
     success_msg: "Swap seems to be available for this builder"
   when:
   - prepare_base_image is not defined
-
-# Make sure we have the latest version of the gem2rpm pacakge otherwise it may
-# have problems fetching from rubygems.org and fail. This is a temporary
-# workaround until we properly define the dependency on latest version in
-# copr-rpmbuild package.
-- name: Update gem2rpm package to the latest version
-  dnf: state=latest pkg=rubygem-gem2rpm
-  when:
-    - copr_builder_fedora_version == 34
-
-# We want to drop this change with F35, too.
-# See https://pagure.io/copr/copr/pull-request/1950
-- name: copy temporary rpkg.conf.j2 until builders run F35
-  copy: src=files/copr-rpmbuild/rpkg.conf.j2 dest=/etc/copr-rpmbuild/rpkg.conf.j2
-  when:
-    - prepare_base_image is not defined
-    - copr_builder_fedora_version == 34
