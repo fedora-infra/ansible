@@ -19,15 +19,21 @@
         packages:
           - ebtables
           - libguestfs
+          - libvirt-daemon-driver-storage
           - python3-libvirt
           - qemu-kvm
           - virt-install
           - ansible-collection-community-general
 
-    - name: enable libvirt
+    - name: enable libvirt services
       service:
-        name: libvirtd
+        name: "{{ item }}"
         state: started
+        stage: enabled
+      with_items:
+        - libvirt
+        - virtstoraged.socket
+        - virtstoraged-ro.socket
 
     - name: praiskup helpers repo
       copy:
