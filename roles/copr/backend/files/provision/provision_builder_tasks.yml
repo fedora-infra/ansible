@@ -270,16 +270,3 @@
   when:
     - prepare_base_image is not defined
     - copr_builder_fedora_version == 34
-
-- name: patch from https://pagure.io/rpkg-util/pull-request/38
-  patch: src=patches/rpkg-v3.patch
-         dest=/usr/lib/python3.10/site-packages/rpkglib/lookaside_cache.py
-  when:
-    - prepare_base_image is not defined
-    - copr_builder_fedora_version == 35
-
-- name: disable zram0 swap, workaround for issue 2077
-  shell:
-    cmd: "dnf -y remove zram-generator-defaults ; swapoff /dev/zram0 ; true"
-  when:
-    - prepare_base_image is not defined
