@@ -61,6 +61,7 @@
 - name: teams cron job
   cron: name=archive hour="23" minute="30" user=apache job="/usr/local/bin/archive.sh >& /dev/null"
   tags: supybot
+  when: inventory_hostname.startswith('value01')
 
 - name: setup meetbot.conf apache config
   copy: src=meetbot.conf dest=/etc/httpd/conf.d/meetbot.conf mode=644
