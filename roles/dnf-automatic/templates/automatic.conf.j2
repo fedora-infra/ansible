@@ -49,8 +49,8 @@ email_host = localhost
 
 # Use this to filter DNF core messages
 debuglevel = 1
-{% if ansible_architecture == 'armv7l' %}
-# On arm builders, do not uppdate dnf or rpm.
-# https://bugzilla.redhat.com/show_bug.cgi?id=1691430
-exclude = dnf*,python3-dnf*,python3-libdnf,python3-hawkey,libdnf,libsolv,librepo
+{% if inventory_hostname.startswith('proxy') %}
+# exclude httpd for now as it's causing lockups in httpd-2.4.52+
+# https://bz.apache.org/bugzilla/show_bug.cgi?id=65769
+exclude = httpd*
 {% endif %}
