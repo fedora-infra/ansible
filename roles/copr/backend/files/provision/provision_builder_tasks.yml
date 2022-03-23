@@ -117,11 +117,14 @@
     state: stopped
     enabled: no
 
+# TODO: remove entirely once this isn't baked into images
 - name: allow allocating large memory chunks on builders, rhbz 2051154
   sysctl:
     name: vm.overcommit_memory
     value: 2
-    state: present
+    state: absent
+  when:
+    - prepare_base_image is not defined
 
 - name: install copr-builder and other latest packages
   dnf: state=latest pkg={{ packages }}
