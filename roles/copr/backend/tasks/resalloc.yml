@@ -11,6 +11,7 @@
     - resalloc
     - resalloc-server
     - resalloc-openstack
+    - resalloc-aws
     - virt-install
 
 - name: See if postgreSQL is initialized
@@ -114,23 +115,6 @@
     state: started
     enabled: yes
   when: not services_disabled|bool
-
-- name: install resalloc-aws scripts
-  get_url:
-    url: "{{ item.url }}"
-    dest: "{{ item.dest }}"
-    mode: 0755
-    force: true
-  with_items:
-  - dest: /usr/bin/resalloc-aws-wait-for-ssh
-    url: https://raw.githubusercontent.com/praiskup/wait-for-ssh/main/wait-for-ssh
-  - dest: /usr/bin/resalloc-aws-new
-    url: https://raw.githubusercontent.com/praiskup/resalloc-aws/main/bin/resalloc-aws-new
-  - dest: /usr/bin/resalloc-aws-delete
-    url: https://raw.githubusercontent.com/praiskup/resalloc-aws/main/bin/resalloc-aws-delete
-  tags:
-  - provision_config
-  - provision_config_resalloc_aws
 
 - name: shortcuts around resalloc-aws-start
   template: src="{{ roles_path }}/copr/backend/templates/provision/copr-resalloc-aws-new.j2"
