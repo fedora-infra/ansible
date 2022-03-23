@@ -121,8 +121,8 @@
 - name: allow allocating large memory chunks on builders, rhbz 2051154
   sysctl:
     name: vm.overcommit_memory
-    value: 2
-    state: absent
+    value: 0
+    state: present
   when:
     - prepare_base_image is not defined
 
