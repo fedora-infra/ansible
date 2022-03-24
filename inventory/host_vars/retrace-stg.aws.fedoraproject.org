@@ -1,7 +1,9 @@
 ---
-ansible_ssh_user: ec2-user
-ansible_become_user: root
-ansible_become: yes
+# Uncomment the following three lines to bootstrap after freshly deploying an
+# instance.
+#ansible_ssh_user: ec2-user
+#ansible_become_user: root
+#ansible_become: yes
 datacenter: aws
 # Clean-up packages of following EOLed operating systems
 eol_opsys: []
