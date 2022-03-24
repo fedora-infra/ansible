@@ -2,8 +2,8 @@
 server = https://api.stage.openshift.com/
 
 [composer:oauth]
-client_id = "{{koji_builder_client_id_stg}}"
-client_secret = "{{koji_builder_client_secret_stg}}"
+client_id = {{koji_builder_client_id_stg}}
+client_secret = {{koji_builder_client_secret_stg}}
 token_url = https://identity.api.openshift.com/auth/realms/rhoas/protocol/openid-connect/token
 
 [koji]
