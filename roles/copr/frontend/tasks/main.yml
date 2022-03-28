@@ -176,7 +176,6 @@
 - name: start fm-consumer service
   service: state=started enabled=yes name="fm-consumer@copr_messaging"
   when:
-  - ansible_facts.packages['copr-frontend'][0].version is version('1.156', '>=')
   - not services_disabled|bool
 
 - name: install bash_profile file to ease some admin tasks
