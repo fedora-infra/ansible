@@ -62,7 +62,12 @@
   - name: delegate to on-control01 for ocp4 cluster
     set_fact:
       os_delegate_via: os-control01
-    when: inventory_hostname in groups['ocp']+groups['ocp_stg']
+    when: inventory_hostname in groups['ocp']
+
+  - name: delegate to on-control01 for ocp4 cluster (stg)
+    set_fact:
+      os_delegate_via: os-control01.stg
+    when: inventory_hostname in groups['ocp_stg']
 
   - name: drain OS node if necessary
     command: oc adm drain {{inventory_hostname }} --ignore-daemonsets --delete-local-data
@@ -149,7 +154,12 @@
   - name: delegate to on-control01 for ocp4 cluster
     set_fact:
       os_delegate_via: os-control01
-    when: inventory_hostname in groups['ocp']+groups['ocp_stg']
+    when: inventory_hostname in groups['ocp']
+
+  - name: delegate to on-control01 for ocp4 cluster (stg)
+    set_fact:
+      os_delegate_via: os-control01.stg
+    when: inventory_hostname in groups['ocp_stg']
 
   - name: Add back to openshift
     command: oc adm uncordon {{inventory_hostname}}
