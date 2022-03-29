@@ -9,9 +9,9 @@ data:
   settings.py: |-
     import os    
 {% if env == 'staging' %}
-    RDB_URL = '{{ stg_resultsdb_frontent_api_url }}'
+    RDB_URL = '{{ stg_resultsdb_frontend_api_url }}'
 {% else %}
-    RDB_URL = '{{ prod_resultsdb_frontent_api_url }}'
+    RDB_URL = '{{ prod_resultsdb_frontend_api_url }}'
 {% endif %}
     SECRET_KEY = os.environ['RESULTSDB_FRONTEND_SECRET_KEY']
 
