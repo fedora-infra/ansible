@@ -5,7 +5,7 @@
 - name: install needed packages
   package: name={{ item }} state=present
   with_items:
-  - ansible-core
+  - ansible
   - git
   tags:
   - packages
@@ -21,7 +21,14 @@
   tags:
   - ansible-server
 
-- name: install required collections
-  command: ansible-galaxy install -r files/requirements.yml
-  tags:
-  - ansible-server
+# https://github.com/ansible/ansible-modules-core/pull/4070
+#- name: Fix the nova_compute module
+#  patch: src=4070.patch
+#         dest=/usr/lib/python2.7/site-packages/ansible/modules/cloud/openstack/_nova_compute.py
+#
+#
+# TODO:
+#  cgit?
+#  rbac-playbook?
+#  zodbot notifications?
+#
