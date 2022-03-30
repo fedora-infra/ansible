@@ -1,0 +1,29 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: mote
+  name: mote
+spec:
+  failedBuildsHistoryLimit: 5
+  output:
+    to:
+      kind: ImageStreamTag
+      name: mote:latest
+  runPolicy: Serial
+  source:
+    git:
+      ref: cal_theme
+      uri: https://github.com/darknao/mote.git
+    type: Git
+  strategy:
+    type: Docker
+  successfulBuildsHistoryLimit: 5
+  triggers:
+{% if mote_stg_github_secret is defined and env == 'staging' %}
+  - type: GitHub
+    github:
+      secret: "{{ mote_stg_github_secret }}"
+{% endif %}
+  - type: ConfigChange
+  - type: ImageChange

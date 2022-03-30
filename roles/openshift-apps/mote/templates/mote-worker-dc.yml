@@ -1,0 +1,62 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: mote-worker
+  labels:
+    app: mote-worker
+spec:
+  replicas: 1
+  selector:
+    app: mote-worker
+  template:
+    metadata:
+      labels:
+        app: mote-worker
+    spec:
+      containers:
+      - image: image-registry.openshift-image-registry.svc:5000/mote/mote
+        command:
+        - python
+        - -m
+        - mote.worker
+        env:
+        - name: REDIS_URL
+          value: "redis://redis.{{ app }}.svc.cluster.local"
+        - name: LOGLEVEL
+          value: "20"
+
+        name: mote-worker
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - mountPath: /srv/web/meetbot
+          name: meetbot
+        - mountPath: /opt/app/mote/config.py
+          name: mote-config
+          readOnly: true
+          subPath: config.py
+        resources:
+          limits:
+            cpu: 100m
+            memory: 1Gi
+          requests:
+            cpu: '0'
+            memory: 500Mi
+      volumes:
+      - name: meetbot
+        persistentVolumeClaim:
+          claimName: meetbot-storage
+      - configMap:
+          defaultMode: 420
+          name: mote
+        name: mote-config
+      restartPolicy: Always
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+    imageChangeParams:
+      automatic: true
+      from:
+        kind: ImageStreamTag
+        name: mote:latest
+      containerNames:
+      - "mote-worker"

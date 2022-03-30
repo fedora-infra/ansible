@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mote
+  name: mote
+spec:
+  ports:
+  - name: mote-tcp
+    port: 9696
+    protocol: TCP
+    targetPort: 9696
+  selector:
+    app: mote
+  type: ClusterIP
+

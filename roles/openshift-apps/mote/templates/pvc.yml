@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: meetbot-storage
+spec:
+{% if env == 'staging' %}
+  # For stg, we use a simple ceph volume
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ocs-storagecluster-ceph-rbd
+{% else %}
+  # On prod, we use a nfs volume shared with meetbot on value02
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: ""
+  volumeName: meetbot-storage
+{% endif %}
