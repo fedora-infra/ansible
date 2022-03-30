@@ -94,8 +94,6 @@ api_key = "{{ upstream_release_bugzilla_api_token_stg }}"
 url = "https://bugzilla.stage.redhat.com"
 explanation_url = "https://stg.fedoraproject.org/wiki/Upstream_release_monitoring"
 {% else %}
-user = ""
-password = ""
 api_key = "{{ upstream_release_bugzilla_api_token }}"
 url = "https://bugzilla.redhat.com"
 explanation_url = "https://fedoraproject.org/wiki/Upstream_release_monitoring"
@@ -137,7 +135,11 @@ krb_keytab = "/etc/krb5.hotness_hotness{{env_suffix}}.fedoraproject.org.keytab"
 krb_ccache = ""
 krb_proxyuser = ""
 krb_sessionopts = {timeout = 3600, krb_rdns = false}
+{% if env == "staging" %}
+git_url = "https://src.stg.fedoraproject.org/rpms/{package}.git"
+{% else %}
 git_url = "https://src.fedoraproject.org/rpms/{package}.git"
+{% endif %}
 user_email = [
   "Fedora Release Monitoring",
   "<release-monitoring@fedoraproject.org>",
