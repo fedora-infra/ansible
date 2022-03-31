@@ -28,8 +28,8 @@
     SSLCertificateChainFile: wildcard-2022.id.fedoraproject.org.intermediate.cert
 
   - role: httpd/certificate
-    certname: wildcard-2020.stg.fedoraproject.org
-    SSLCertificateChainFile: wildcard-2020.stg.fedoraproject.org.intermediate.cert
+    certname: wildcard-2022.stg.fedoraproject.org
+    SSLCertificateChainFile: wildcard-2022.stg.fedoraproject.org.intermediate.cert
     when: env == "staging"
 
   - role: httpd/certificate
