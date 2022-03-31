@@ -591,6 +591,14 @@ host worker04-ocp-stg {
      option routers 10.3.166.254;
      option subnet-mask 255.255.255.0;
 }
+host worker05-ocp-stg {
+     hardware ethernet ec:f4:bb:e1:c2:d8;
+     fixed-address 10.3.166.123;
+     filename "uefi/grubx64.efi";
+     next-server 10.3.163.10;
+     option routers 10.3.166.254;
+     option subnet-mask 255.255.255.0;
+}
 host vmhost-x86-01-stg {
      hardware ethernet ec:f4:bb:d2:85:e8;
      fixed-address 10.3.166.11;
@@ -1653,7 +1661,7 @@ host openqa-x86-worker06 {
 
 host bvmhost-p09-01-stg-mgmt {
      hardware ethernet 08:94:ef:81:30:86;
-     fixed-address 10.3.167.18;
+     fixed-address 10.3.160.62;
      option host-name "bvmhost-p09-01-stg-mgmt";
 }
 
