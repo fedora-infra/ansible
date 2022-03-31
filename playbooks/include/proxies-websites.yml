@@ -796,7 +796,7 @@
     site_name: taskotron.stg.fedoraproject.org
     server_aliases: [taskotron.stg.fedoraproject.org]
     # Set this explicitly to stg here.. as per the original puppet config.
-    SSLCertificateChainFile: wildcard-2020.stg.fedoraproject.org.intermediate.cert
+    SSLCertificateChainFile: wildcard-2022.stg.fedoraproject.org.intermediate.cert
     sslonly: true
     cert_name: "{{wildcard_cert_name}}"
     when: env == "staging"
@@ -851,7 +851,7 @@
     # via plain http for openid identity support
     sslonly: false
     cert_name: "{{wildcard_cert_name}}"
-    SSLCertificateChainFile: wildcard-2020.stg.fedoraproject.org.intermediate.cert
+    SSLCertificateChainFile: wildcard-2022.stg.fedoraproject.org.intermediate.cert
     tags:
     - id.fedoraproject.org
     when: env == "staging"
