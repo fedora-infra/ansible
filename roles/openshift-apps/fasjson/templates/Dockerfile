@@ -28,7 +28,7 @@ RUN git clone https://github.com/fedora-infra/fasjson.git && \
     git checkout {{ (env == 'production')|ternary('stable', 'staging') }} && \
     /opt/venv/bin/poetry config virtualenvs.create false && \
     /opt/venv/bin/poetry install --no-dev && \
-    popd && \
+    popd
 RUN rm -f /etc/krb5.conf && ln -sf /etc/krb5/krb5.conf /etc/krb5.conf && \
     rm -f /etc/openldap/ldap.conf && ln -sf /etc/ipa/ldap.conf /etc/openldap/ldap.conf
 EXPOSE 8080
