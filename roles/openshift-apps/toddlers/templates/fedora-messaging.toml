@@ -64,27 +64,40 @@ admin_email = "admin@fedoraproject.org"
 fasjson = true
 
 # Account to use to connect to FAS/FASJSON
-fas_url = "https://fasjson.fedoraproject.org/"
+fas_url = "https://fasjson{{ env_suffix }}.fedoraproject.org/"
+{% if env == "staging" %}
 fas_username = "{{ fedoraDummyUser }}"
 fas_password = "{{ fedoraDummyUserPassword }}"
+{% else %}
+fas_username = "{{ fedoraStagingDummyUser }}"
+fas_password = "{{ fedoraStagingDummyUserPassword }}"
+{% endif %}
 
 # Account to use to connect to bugzilla
+{% if env == "staging" %}
 bugzilla_url = "https://bugzilla.redhat.com"
-bugzilla_username = "{{ bugzilla_user }}"
 bugzilla_api_key = "{{ toddlers_bz_api_key }}"
-bugzilla_password = "{{ bugzilla_password }}"
+{% else %}
+bugzilla_url = "https://bugzilla.stage.redhat.com"
+bugzilla_api_key = "{{ toddlers_stg_bz_api_key }}"
+{% endif %}
 bugzilla_group = "fedora_contrib"
 
 # Base URL for the Koji build system
 koji_url = "https://koji{{ env_suffix }}.fedoraproject.org"
 
 # Base URL for the Koji package db
-kojipkgs_url = "https://kojipkgs.fedoraproject.org"
+kojipkgs_url = "https://kojipkgs{{ env_suffix }}.fedoraproject.org"
 
 # Account to use to connect to Pagure-as-dist-git
 dist_git_url = "https://src{{ env_suffix }}.fedoraproject.org"
+{% if env == "staging" %}
+dist_git_token_seed = "{{ toddlers_stg_flag_ci_seed }}"
+dist_git_token = "{{ toddlers_stg_dist_git_token }}"
+{% else %}
 dist_git_token_seed = "{{ toddlers_flag_ci_seed }}"
 dist_git_token = "{{ toddlers_dist_git_token }}"
+{% endif %}
 
 #  Configuration file storing all the email overrides in the form of:
 # "foo@bar.com" = "bar@foo.org"
@@ -100,9 +113,13 @@ temp_folder = "/var/tmp"
 
 [consumer_config.default.pdc_config]
 # Configuration to talk to PDC, as understood by pdc-client.
-server = "https://pdc.fedoraproject.org/rest_api/v1/"
+server = "https://pdc{{ env_suffix }}.fedoraproject.org/rest_api/v1/"
 ssl_verify = false  # Enable if using a self-signed cert
+{% if env == "staging" %}
+token = "{{ pdc_updater_api_token_stg }}"
+{% else %}
 token = "{{ pdc_updater_api_token_prod }}"
+{% endif %}
 
 [consumer_config.flag_ci_pr]
 
@@ -111,19 +128,23 @@ token = "{{ pdc_updater_api_token_prod }}"
 [consumer_config.packager_bugzilla_sync]
 
 [consumer_config.pdc_retired_packages]
-file_check_url = "https://src.fedoraproject.org/%(namespace)s/%(repo)s/blob/%(branch)s/f/%(file)s"
+file_check_url = "https://src{{ env_suffix }}.fedoraproject.org/%(namespace)s/%(repo)s/blob/%(branch)s/f/%(file)s"
 
 [consumer_config.pdc_import_compose]
-old_composes_url = "https://kojipkgs.fedoraproject.org/compose/"
+old_composes_url = "https://kojipkgs{{ env_suffix }}.fedoraproject.org/compose/"
 
 [consumer_config.pdc_modules]
-mbs_url = "https://mbs.fedoraproject.org/module-build-service/2/module-builds/"
+mbs_url = "https://mbs.{{ env_suffix }}fedoraproject.org/module-build-service/2/module-builds/"
 
 [consumer_config.check_email_overrides]
+{% if env == "staging" %}
+email_overrides_url = "https://stg.pagure.io/fedora-infra/ansible/raw/main/f/roles/openshift-apps/toddlers/templates/email_overrides.toml"
+{% else %}
 email_overrides_url = "https://pagure.io/fedora-infra/ansible/raw/main/f/roles/openshift-apps/toddlers/templates/email_overrides.toml"
+{% endif %}
 
 [consumer_config.clean_retired_packages]
-pdc_active_branches = "https://pdc.fedoraproject.org/extras/active_branches.json"
+pdc_active_branches = "https://pdc{{ env_suffix }}.fedoraproject.org/extras/active_branches.json"
 
 [consumer_config.packagers_without_bugzilla]
 ignorable_namespaces = ["tests"]
@@ -133,10 +154,15 @@ ignorable_namespaces = ["tests"]
 # FAS username of default QA contact for bugzilla tickets
 # default_qa_contact = "extras-qa@fedoraproject.org"
 # Admin addresses to notify
+{% if env == "staging" %}
+# Don't notify anyone on staging
+notify_admins = []
+{% else %}
 notify_admins = [
     "kevin@fedoraproject.org",
     "pingou@fedoraproject.org",
 ]
+{% endif %}
 
 # PDC types mapping for distgit_bugzilla_sync toddler
 [consumer_config.distgit_bugzilla_sync.pdc_types]
@@ -165,6 +191,77 @@ branch_regex = '^e(pe)?l\d+$'
 versions = ["epel8", "epel7", "el6"]
 
 
+# Configuration section for scm_request_processor
+[consumer_config.scm_request_processor]
+# FAS username of the user that will comment on behalf of toddler
+{% if env == "staging" %}
+pagure_user = "username"
+pagure_url = "https://stg.pagure.io"
+pagure_api_key = "{{ toddlers_stg_pagure_scm_request_processor_token }}"
+{% else %}
+pagure_user = "username"
+pagure_url = "https://pagure.io"
+pagure_api_key = "{{ toddlers_pagure_scm_request_processor_token }}"
+{% endif %}
+# Monitoring choices for release-monitoring.org
+monitor_choices = ['no-monitoring', 'monitoring', 'monitoring-with-scratch']
+# What we should look for in validation comment
+validation_comment = "valid"
+# Text for the ping if the ticket needs to be manually verified
+ping_comment = "This request wants to skip bugzilla validation! {maintainers} could you check if this is correct? If yes, please respond to this ticket with 'valid' comment"
+
+# Pagure mapping to bugzilla
+[consumer_config.scm_request_processor.pagure_namespace_to_component]
+rpms = 'Package Review'
+container = 'Container Review'
+modules = 'Module Review'
+test-modules = 'Module Review'
+
+[consumer_config.scm_request_processor.pagure_namespace_to_product]
+rpms = ['Fedora', 'Fedora EPEL']
+container = ['Fedora Container Images']
+modules = ['Fedora Modules']
+test-modules = ['Fedora']
+
+# SLAS configuration for scm_request_processor
+[consumer_config.scm_request_processor.branch_slas]
+
+[consumer_config.scm_request_processor.branch_slas.rawhide]
+rawhide = '2222-01-01'
+
+[consumer_config.scm_request_processor.branch_slas.stable]
+rawhide = '2222-01-01'
+
+[consumer_config.scm_request_processor.branch_slas.main]
+rawhide = '2222-01-01'
+
+[consumer_config.scm_request_processor.branch_slas.epel8]
+stable_api = '2029-05-31'
+security_fixes = '2029-05-31'
+bug_fixes = '2029-05-31'
+
+[consumer_config.scm_request_processor.branch_slas.epel8-playground]
+stable_api = '2029-05-31'
+security_fixes = '2029-05-31'
+bug_fixes = '2029-05-31'
+
+[consumer_config.scm_request_processor.branch_slas.epel8-next]
+stable_api = '2024-05-31'
+security_fixes = '2024-05-31'
+bug_fixes = '2024-05-31'
+
+[consumer_config.scm_request_processor.branch_slas.epel7]
+stable_api = '2024-06-30'
+security_fixes = '2024-06-30'
+bug_fixes = '2024-06-30'
+
+[consumer_config.scm_request_processor.branch_slas.f35]
+security_fixes = '2022-11-26'
+bug_fixes = '2022-11-26'
+
+[consumer_config.scm_request_processor.branch_slas.f34]
+security_fixes = '2022-03-08'
+bug_fixes = '2022-03-08'
 
 [qos]
 prefetch_size = 0
