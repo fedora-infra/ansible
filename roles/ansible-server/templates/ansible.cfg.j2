@@ -358,7 +358,7 @@ vars_plugins={{ ansible_base }}/ansible/vars_plugins:~/.ansible/plugins/vars:/us
 
 # (list) List of extensions to ignore when looking for modules to load
 # This is for rejecting script and binary module fallback extensions
-;module_ignore_exts=(REJECT_EXTS + ('.yaml', '.yml', '.ini'))
+;module_ignore_exts=dropped, regen file to see default value
 
 # (list) TODO: write it
 ;network_group_modules=eos, nxos, ios, iosxr, junos, enos, ce, vyos, sros, dellos9, dellos10, dellos6, asa, aruba, aireos, bigip, ironware, onyx, netconf, exos, voss, slxos
@@ -727,7 +727,7 @@ enable_plugins=ini, constructed
 ;export=False
 
 # (list) List of extensions to ignore when using a directory as an inventory source
-;ignore_extensions={{(REJECT_EXTS + ('.orig', '.ini', '.cfg', '.retry'))}}
+;ignore_extensions=dropped, see regenerated version for default value
 
 # (list) List of patterns to ignore when using a directory as an inventory source
 ;ignore_patterns=
