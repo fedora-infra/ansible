@@ -126,8 +126,8 @@
   - role: httpd/redirectmatch
     shortname: calendar
     website: apps.fedoraproject.org
-    regex: /calendar
-    target: https://calendar.fedoraproject.org/
+    regex: /calendar$1
+    target: https://calendar.fedoraproject.org/$1
 
   - role: httpd/redirectmatch
     shortname: mailman
