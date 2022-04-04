@@ -18,7 +18,6 @@
     - hosts
     - { role: openvpn/client, when: env != "staging" }
     - ipa/client
-    - collectd/base
     - rsyncd
     - sudo
 
