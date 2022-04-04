@@ -153,6 +153,7 @@ hash_behaviour=merge
 
 # (pathlist) Comma separated list of Ansible inventory sources
 ;inventory=/etc/ansible/hosts
+inventory={{ ansible_base }}/ansible/inventory
 
 # (pathspec) Colon separated paths in which Ansible will search for HttpApi Plugins.
 ;httpapi_plugins=~/.ansible/plugins/httpapi:/usr/share/ansible/plugins/httpapi
@@ -681,7 +682,6 @@ pipelining=True
 
 
 [inventory]
-inventory={{ ansible_base }}/ansible/inventory
 # (string) This setting changes the behaviour of mismatched host patterns, it allows you to force a fatal error, a warning or just ignore it
 ;host_pattern_mismatch=warning
 
