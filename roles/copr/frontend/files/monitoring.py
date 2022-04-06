@@ -35,11 +35,11 @@ def collect(url, name, documentation, css_selector, filename):
 
 
 if __name__ == '__main__':
-    copr_cdn_url = "?t1=1641301793&t2=1641388193&show_log_entries=&full_log_entries=&" \
+    copr_cdn_url = "?show_log_entries=&full_log_entries=&" \
                    "host=copr-fe.aws.fedoraproject.org&service=The+copr+cdn+status&assumeinitialstates=yes&" \
                    "assumestateretention=yes&assumestatesduringnotrunning=yes&includesoftstates=no&" \
                    "initialassumedhoststate=0&initialassumedservicestate=0&timeperiod=last31days&backtrack=4"
-    copr_ping_url = "?t1=1628506451&t2=1629111251&show_log_entries=&host=copr-be.aws.fedoraproject.org&" \
+    copr_ping_url = "?show_log_entries=&host=copr-be.aws.fedoraproject.org&" \
                     "service=The+copr-ping+package+builds&assumeinitialstates=yes&assumestateretention=yes&" \
                     "assumestatesduringnotrunning=yes&includesoftstates=no&initialassumedhoststate=0&" \
                     "initialassumedservicestate=0&timeperiod=last31days&backtrack=4"
