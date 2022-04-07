@@ -55,7 +55,7 @@
   - tasks.py
   - util.py
   when:
-    inventory_hostname.startswith('notifs-backend01.iad')
+    inventory_hostname.startswith('notifs-backend01.iad') or env != 'staging'
   tags:
   - notifs
   - notifs/backend

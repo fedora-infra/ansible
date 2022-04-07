@@ -91,21 +91,20 @@ config = {
     # The notification backend uses this to build a fas cache of ircnicks
     # to fas usernames so it can act appropriately on certain message types.
     {% if env == 'staging' -%}
-    "fas_credentials": {
-        "username": "{{fedoraDummyUser}}",
-        "password": "{{fedoraDummyUserPassword}}",
-        "base_url": "https://accounts.stg.fedoraproject.org",
+    "fasjson": {
+        "active": True,
+        "url": "https://fasjson.stg.fedoraproject.org/"
     },
     {% else -%}
     "fasjson": {
         "active": True,
         "url": "https://fasjson.fedoraproject.org/"
     },
+    {% endif %}
     "fas_credentials": {
         "username": "{{fedoraDummyUser}}",
         "password": "{{fedoraDummyUserPassword}}",
     },
-    {% endif %}
 
 
     ## Backend stuff ##
