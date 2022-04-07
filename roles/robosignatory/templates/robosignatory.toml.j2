@@ -389,6 +389,13 @@ handlers = ["console"]
             trusted_taggers = ['bodhi']
 
             # openh264 signing
+            
+            [[consumer_config.koji_instances.primary.tags]]
+            from = "f37-openh264"
+            to = "f37-openh264"
+            key = "{{ (env == 'production')|ternary('fedora-37', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('5323552a', 'd300e724') }}"
+            
 
             [[consumer_config.koji_instances.primary.tags]]
             from = "f36-openh264"
