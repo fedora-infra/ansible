@@ -38,11 +38,11 @@ if __name__ == '__main__':
     copr_cdn_url = "?show_log_entries=&full_log_entries=&" \
                    "host=copr-fe.aws.fedoraproject.org&service=The+copr+cdn+status&assumeinitialstates=yes&" \
                    "assumestateretention=yes&assumestatesduringnotrunning=yes&includesoftstates=no&" \
-                   "initialassumedhoststate=0&initialassumedservicestate=0&timeperiod=last31days&backtrack=4"
+                   "initialassumedhoststate=0&initialassumedservicestate=0&timeperiod=last7days&backtrack=4"
     copr_ping_url = "?show_log_entries=&host=copr-be.aws.fedoraproject.org&" \
                     "service=The+copr-ping+package+builds&assumeinitialstates=yes&assumestateretention=yes&" \
                     "assumestatesduringnotrunning=yes&includesoftstates=no&initialassumedhoststate=0&" \
-                    "initialassumedservicestate=0&timeperiod=last31days&backtrack=4"
+                    "initialassumedservicestate=0&timeperiod=last7days&backtrack=4"
     collect(copr_cdn_url, "copr_cdn_status", "Copr's CDN status", "td.serviceOK:nth-child(4)",
             "/var/lib/node_exporter/textfile_collector/copr_cdn_status.prom.new")
     collect(copr_ping_url, "copr_ping_status", "Status of build of copr-ping package", "td.serviceOK:nth-child(4)",
