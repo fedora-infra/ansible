@@ -95,16 +95,20 @@ config = {
         "active": True,
         "url": "https://fasjson.stg.fedoraproject.org/"
     },
+    "fas_credentials": {
+        "username": "{{fedoraStagingDummyUser}}",
+        "password": "{{fedoraStagingDummyUserPassword}}",
+    },
     {% else -%}
     "fasjson": {
         "active": True,
         "url": "https://fasjson.fedoraproject.org/"
     },
-    {% endif %}
     "fas_credentials": {
         "username": "{{fedoraDummyUser}}",
         "password": "{{fedoraDummyUserPassword}}",
     },
+    {% endif %}
 
 
     ## Backend stuff ##
