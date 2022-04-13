@@ -68,3 +68,6 @@ WSGIRestrictStdout Off
 WSGIRestrictSignal Off
 WSGIPythonOptimize 1
 WSGIScriptAlias / /usr/share/bodhi/bodhi.wsgi
+{% if env == "staging" %}
+WSGIPassAuthorization On
+{% endif %}
