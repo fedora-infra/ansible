@@ -326,10 +326,21 @@
   - role: httpd/reverseproxy
     website: bodhi.fedoraproject.org
     destname: bodhi
+    balancer_name: apps-ocp
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    targettype: openshift
+    keephost: true
+    ocp4: true
+    tags: bodhi
+    when: env == "staging"
+  - role: httpd/reverseproxy
+    website: bodhi.fedoraproject.org
+    destname: bodhi
     balancer_name: app-os
     targettype: openshift
     keephost: true
     tags: bodhi
+    when: env != "staging"
 
 #
 # fedora core os routes
