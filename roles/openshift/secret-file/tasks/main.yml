@@ -23,4 +23,9 @@
 - name: Call `oc secrets new` on the copied file
   shell: oc -n {{os_app}} secrets new {{secret_name}} {{key}}=/etc/openshift_apps/{{os_app}}/{{key}}
   register: create_out
-  when: secret_template.changed or secret_file.changed or secret_privatefile.changed
+  when: not ocp4 and (secret_template.changed or secret_file.changed or secret_privatefile.changed)
+
+- name: Call `oc create secret generic` on the copied file
+  shell: oc -n {{os_app}} create secret generic {{secret_name}} --from-file={{key}}=/etc/openshift_apps/{{os_app}}/{{key}}
+  register: create_out
+  when: ocp4 and (secret_template.changed or secret_file.changed or secret_privatefile.changed)
