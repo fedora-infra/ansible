@@ -7,4 +7,11 @@
 - name: Call `oc secrets new` on the copied file
   shell: oc -n {{app}} secrets new {{secret_name}} {{key}}=/etc/openshift_apps/{{app}}/{{key}}.kt
   register: create_out
+  when: not ocp4
+  failed_when: "create_out.rc != 0 and 'AlreadyExists' not in create_out.stderr"
+
+- name: Call `oc create secret generic` on the copied file
+  shell: oc -n {{app}} create secret generic {{secret_name}} --from-file={{key}}=/etc/openshift_apps/{{app}}/{{key}}.kt
+  register: create_out
+  when: ocp4
   failed_when: "create_out.rc != 0 and 'AlreadyExists' not in create_out.stderr"
