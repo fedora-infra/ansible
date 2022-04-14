@@ -13,5 +13,5 @@
 - name: Call `oc create secret generic` on the copied file
   shell: oc -n {{app}} create secret generic {{secret_name}} --from-file={{key}}=/etc/openshift_apps/{{app}}/{{key}}.kt
   register: create_out
-  when: ocp4
+  when: ocp4 and not keytab_status.stat.exists
   failed_when: "create_out.rc != 0 and 'AlreadyExists' not in create_out.stderr"
