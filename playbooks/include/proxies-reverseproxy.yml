@@ -814,10 +814,21 @@
   - role: httpd/reverseproxy
     website: whatcanidoforfedora.org
     destname: whatcanidoforfedora
+    balancer_name: app-ocp
+    balancer_members: "{{ ocp_nodes_stg }}"
+    targettype: openshift
+    keephost: true
+    tags: whatcanidoforfedora.org
+    when: env == "staging"
+
+  - role: httpd/reverseproxy
+    website: whatcanidoforfedora.org
+    destname: whatcanidoforfedora
     balancer_name: app-os
     targettype: openshift
     keephost: true
     tags: whatcanidoforfedora.org
+    when: env != "staging"
 
   - role: httpd/reverseproxy
     website: testdays.fedoraproject.org
