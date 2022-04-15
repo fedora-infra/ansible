@@ -807,7 +807,6 @@
     destname: stg.release-monitoring
     balancer_name: app-os
     targettype: openshift
-    ocp4: true
     keephost: true
     tags: release-montoring.org
     when: env == "staging"
@@ -818,6 +817,7 @@
     balancer_name: app-ocp
     balancer_members: "{{ ocp_nodes_stg }}"
     targettype: openshift
+    ocp4: true
     keephost: true
     tags: whatcanidoforfedora.org
     when: env == "staging"
