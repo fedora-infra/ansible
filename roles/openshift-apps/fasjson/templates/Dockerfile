@@ -26,7 +26,6 @@ RUN /opt/venv/bin/pip install poetry
 RUN git clone https://github.com/fedora-infra/fasjson.git && \
     pushd fasjson && \
     git checkout {{ (env == 'production')|ternary('stable', 'staging') }} && \
-    sed -i '/requests-kerberos = "^0.14.0"/a requests-gssapi = "^1.2.3"' pyproject.toml && \
     /opt/venv/bin/poetry config virtualenvs.create false && \
     /opt/venv/bin/poetry install --no-dev && \
     popd
