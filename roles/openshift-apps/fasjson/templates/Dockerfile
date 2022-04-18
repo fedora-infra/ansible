@@ -18,6 +18,7 @@ RUN dnf install -y \
         mod_session \
         policycoreutils-python-utils \
         python3-mod_wsgi \
+        python3-requests-gssapi \
         python3-pip && \
     dnf autoremove -y && \
     dnf clean all -y
