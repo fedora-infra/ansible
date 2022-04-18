@@ -66,7 +66,7 @@
   group: name=masher gid=751 system=yes state=present
 
 - name: add masher user as 751 - and group
-  user: name=masher uid=751 group=masher home=/home/masher groups=mock,ftpsync,fedmsg
+  user: name=masher uid=751 group=masher home=/home/masher groups=mock,ftpsync
 # masher ssh keys and config
 - name: add masher ssh dir
   file: state=directory path=/home/masher/.ssh mode=700 owner=masher group=masher
