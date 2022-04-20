@@ -1,34 +1,6 @@
 ---
-- job:
-    name: fi-ansible--zuul-jobs-verify-namespace
-    run: ci/zuul-jobs-verify-namespace.yaml
-    files:
-      - ^\.zuul\.yaml$
-
-- job:
-    name: fi-ansible--ansible-review-base
-    pre-run: ci/ansible-review-base.yaml
-
-- job:
-    name: fi-ansible--ansible-review-everything
-    parent: fi-ansible--ansible-review-base
-    run: ci/ansible-review-everything.yaml
-
-- job:
-    name: fi-ansible--ansible-review-diff
-    parent: fi-ansible--ansible-review-base
-    run: ci/ansible-review-diff.yaml
-
-- job:
-    name: fi-ansible--yamllint-diff
-    run: ci/yamllint-diff.yaml
-    files:
-      - \.yml$
-      - \.yaml$
-
 - project:
     check:
       jobs:
-        - fi-ansible--zuul-jobs-verify-namespace
-        - fi-ansible--ansible-review-diff
-        - fi-ansible--yamllint-diff
+        - fi-ansible-review-diff
+        - fi-yamllint-diff
