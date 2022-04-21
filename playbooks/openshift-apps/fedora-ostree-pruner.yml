@@ -1,5 +1,5 @@
 - name: make the app be real
-  hosts: os_masters[0]:os_masters_stg[0]
+  hosts: os_control:os_control_stg
   user: root
   gather_facts: False
 
@@ -45,7 +45,7 @@
 ###############################################
 # actions to delete the project from OpenShift
 ###############################################
-# to run: sudo rbac-playbook -l os_masters_stg[0] -t delete openshift-apps/fedora-ostree-pruner.yml
+# to run: sudo rbac-playbook -l os_control_stg -t delete openshift-apps/fedora-ostree-pruner.yml
   - role: openshift/object-delete
     app: fedora-ostree-pruner
     objecttype: project
