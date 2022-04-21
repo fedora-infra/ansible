@@ -92,10 +92,6 @@
     template: pvc.yml
     objectname: pvc.yml
 
-  - role: openshift/rollout
-    app: coreos-ostree-importer
-    dcname: coreos-ostree-importer
-
 ###############################################
 # actions to delete the project from OpenShift
 ###############################################

@@ -42,10 +42,6 @@
     template: pvc.yml
     objectname: pvc.yml
 
-  - role: openshift/rollout
-    app: fedora-ostree-pruner
-    dcname: fedora-ostree-pruner
-
 ###############################################
 # actions to delete the project from OpenShift
 ###############################################

@@ -54,10 +54,6 @@
     template: deploymentconfig.yml
     objectname: deploymentconfig.yml
 
-  - role: openshift/rollout
-    app: coreos-koji-tagger
-    dcname: coreos-koji-tagger
-
 ###############################################
 # actions to delete the project from OpenShift
 ###############################################
