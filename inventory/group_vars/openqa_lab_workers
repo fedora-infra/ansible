@@ -23,4 +23,7 @@ openqa_nfs_worker: true
 openqa_repo: updates-testing
 openqa_secret: "{{ stg_openqa_apisecret }}"
 openqa_workers: 4
+# We want stg workers to use this createhdds branch to test rawhide
+# updates
+openqa_createhdds_branch: rawhide-updates
 primary_auth_source: ipa
