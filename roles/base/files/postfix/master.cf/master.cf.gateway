@@ -6,7 +6,8 @@
 # service type  private unpriv  chroot  wakeup  maxproc command + args
 #               (yes)   (yes)   (yes)   (never) (100)
 # ==========================================================================
-smtp      inet  n       -       n       -       -       smtpd
+smtp       inet  n       -       n       -       40      smtpd
+tlsproxy   unix  -       -       n       -       -       tlsproxy
 #submission inet n       -       n       -       -       smtpd
 #  -o smtpd_enforce_tls=yes
 #  -o smtpd_sasl_auth_enable=yes
@@ -38,6 +39,7 @@ virtual   unix  -       n       n       -       -       virtual
 lmtp      unix  -       -       n       -       -       lmtp
 anvil     unix  -       -       n       -       1       anvil
 scache	  unix	-	-	n	-	1	scache
+postlog   unix-dgram n  -       n       -       1       postlogd
 #
 # ====================================================================
 # Interfaces to non-Postfix software. Be sure to examine the manual
