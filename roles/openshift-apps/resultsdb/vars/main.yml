@@ -1,6 +1,16 @@
+# backend vars
+prod_resultsdb_image: quay.io/fedora-kube-sig/resultsdb-backend:latest-f35
+stg_resultsdb_image: quay.io/fedora-kube-sig/resultsdb-backend:latest-f35
+
 resultsdb_publish: true
 resultsdb_mod_wsgi_dir: '${MOD_WSGI_MODULES_DIRECTORY}'
 
 # For CRASHED see: https://pagure.io/task-abicheck/issue/19
 # For QUEUED and RUNNING see: https://pagure.io/fedora-infrastructure/issue/8989
 resultsdb_additional_result_outcomes: ['CRASHED', 'QUEUED', 'RUNNING']
+
+# frontend vars
+stg_resultsdb_frontend_image: 'quay.io/fedora-kube-sig/resultsdb-frontend:latest-f35'
+prod_resultsdb_frontend_image: 'quay.io/fedora-kube-sig/resultsdb-frontend:latest-f35'
+prod_resultsdb_frontend_api_url: 'http://resultsdb-api.resultsdb.svc.cluster.local:5001/api/v2.0'
+stg_resultsdb_frontend_api_url: 'http://resultsdb-api.resultsdb.svc.cluster.local:5001/api/v2.0'

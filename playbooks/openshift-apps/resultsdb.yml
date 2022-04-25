@@ -1,3 +1,4 @@
+---
 - name: setup the database
   hosts: db01.iad2.fedoraproject.org:db01.stg.iad2.fedoraproject.org
   gather_facts: no
@@ -27,10 +28,10 @@
 
 
 - name: make the app be real
-  hosts: os_masters[0]:os_masters_stg[0]
+  # hosts: os_masters[0]:os_masters_stg[0]
+  hosts: os_masters_stg[0]
   user: root
-  gather_facts: False
-
+  gather_facts: no
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml
     - /srv/private/ansible/vars.yml
@@ -59,11 +60,6 @@
       tags:
         - apply-appowners
 
-    - role: openshift/object
-      app: resultsdb
-      template: secrets.yml
-      objectname: secrets.yml
-
     - role: openshift/secret-file
       app: resultsdb
       secret_name: resultsdb-fedora-messaging-key
@@ -82,28 +78,70 @@
       key: resultsdb.ca
       privatefile: "rabbitmq/{{env}}/pki/ca.crt"
 
+    # backend objects
     - role: openshift/object
       app: resultsdb
-      template: configmaps.yml
-      objectname: configmaps.yml
+      template: backend/secrets.yml
+      objectname: backend-secrets.yml
 
     - role: openshift/object
       app: resultsdb
-      template: deploymentconfigs.yml
-      objectname: deploymentconfigs.yml
+      template: backend/configmaps.yml
+      objectname: backend-configmaps.yml
 
     - role: openshift/object
       app: resultsdb
-      template: services.yml
-      objectname: services.yml
+      template: backend/deploymentconfigs.yml
+      objectname: backend-deploymentconfigs.yml
+
+    - role: openshift/object
+      app: resultsdb
+      template: backend/services.yml
+      objectname: backend-services.yml
 
     - role: openshift/route
       app: resultsdb
-      routename: api-pretty
+      routename: resultsdb-api
       host: "resultsdb{{ env_suffix }}.fedoraproject.org"
       serviceport: api
       servicename: resultsdb-api
+      path: /api
 
+    # frontend objects
+    - role: openshift/object
+      app: resultsdb
+      template: frontend/secrets.yml
+      objectname: frontend-secrets.yml
+
+    - role: openshift/object
+      app: resultsdb
+      template: frontend/configmaps.yml
+      objectname: frontend-configmaps.yml
+
+    - role: openshift/object
+      app: resultsdb
+      template: frontend/deploymentconfigs.yml
+      objectname: frontend-deploymentconfigs.yml
+
+    - role: openshift/object
+      app: resultsdb
+      template: frontend/services.yml
+      objectname: frontend-services.yml
+
+    - role: openshift/route
+      app: resultsdb
+      host: "resultsdb{{ env_suffix }}.fedoraproject.org"
+      serviceport: web
+      servicename: resultsdb-frontend
+      path: /web
+
+    # rollouts
     - role: openshift/rollout
       app: resultsdb
       dcname: "resultsdb-api"
+      failed_when: false
+
+    - role: openshift/rollout
+      app: resultsdb
+      dcname: "resultsdb-frontend"
+      failed_when: false

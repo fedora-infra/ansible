@@ -49,6 +49,17 @@ spec:
           image: "{{ prod_resultsdb_image }}"
 {% endif %}
           imagePullPolicy: Always
+          env:
+            - name: RESULTSDB_WSGI_SCRIPT_PATH
+              value: "/usr/share/resultsdb/resultsdb.wsgi"
+            - name: RESULTSDB_THREADS
+              value: "5"
+            - name: RESULTSDB_CONF_PATH
+              value: "/etc/httpd/conf.d/resultsdb.conf"
+            - name: RESULTSDB_LOG_LEVEL
+              value: "info"
+            - name: RESULTSDB_MESSAGING
+              value: "Y"
           ports:
             - containerPort: 5001
           volumeMounts:
@@ -113,4 +124,4 @@ spec:
             secretName: resultsdb-fedora-messaging-key
 {% endif %}
   triggers:
-    - type: ConfigChange}
+    - type: ConfigChange

@@ -27,13 +27,19 @@ spec:
 {% endif %}
           imagePullPolicy: Always
           ports:
-            - containerPort: 5001
-          envFrom:
-            - secretRef:
-                name: resultsdb-frontend-key
+            - containerPort: 5002
+          env:
+            - name: RESULTSDB_WSGI_SCRIPT_PATH
+              value: "/usr/share/resultsdb_frontend/resultsdb_frontend.wsgi"
+            - name: RESULTSDB_THREADS
+              value: "5"
+            - name: RESULTSDB_CONF_PATH
+              value: "/etc/httpd/conf.d/resultsdb_frontend.conf"
+            - name: RESULTSDB_LOG_LEVEL
+              value: "info"
           volumeMounts:
             - name: config-volume
-              mountPath: /etc/resultsdb
+              mountPath: /etc/resultsdb_frontend
               readOnly: true
             - name: httpd-config-volume
               mountPath: /etc/httpd/conf.d
@@ -43,13 +49,13 @@ spec:
             initialDelaySeconds: 5
             httpGet:
               path: /
-              port: 5001
+              port: 5002
           livenessProbe:
             timeoutSeconds: 1
             initialDelaySeconds: 30
             httpGet:
               path: /
-              port: 5001
+              port: 5002
           # Limit to 384MB memory. This is probably *not* enough but it is
           # necessary in the current environment to allow for 2 replicas and
           # rolling updates, without hitting the (very aggressive) memory quota.
@@ -59,8 +65,8 @@ spec:
               cpu: 0.3
       volumes:
         - name: config-volume
-          configMap:
-            name: "resultsdb-frontend-app-config"
+          secret:
+            secretName: "resultsdb-frontend-app-config"
         - name: httpd-config-volume
           configMap:
             name: "resultsdb-frontend-httpd-config"
