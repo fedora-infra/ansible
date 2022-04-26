@@ -28,8 +28,7 @@
 
 
 - name: make the app be real
-  # hosts: os_masters[0]:os_masters_stg[0]
-  hosts: os_masters_stg[0]
+  hosts: os_control_stg[0]
   user: root
   gather_facts: no
   vars_files:
