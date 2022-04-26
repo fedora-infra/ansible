@@ -129,6 +129,7 @@
 
     - role: openshift/route
       app: resultsdb
+      routename: resultsdb-web
       host: "resultsdb{{ env_suffix }}.fedoraproject.org"
       serviceport: web
       servicename: resultsdb-frontend
