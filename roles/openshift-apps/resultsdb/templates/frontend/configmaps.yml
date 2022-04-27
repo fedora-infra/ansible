@@ -30,7 +30,7 @@ metadata:
 data:
   resultsdb_frontend.conf: |-
     WSGIDaemonProcess resultsdb_frontend user=apache group=apache threads=5
-    WSGIScriptAlias /web /usr/share/resultsdb_frontend/resultsdb_frontend.wsgi
+    WSGIScriptAlias / /usr/share/resultsdb_frontend/resultsdb_frontend.wsgi
     WSGISocketPrefix /tmp/wsgi
     
     <Directory /usr/share/resultsdb_frontend>
