@@ -171,14 +171,6 @@
 - name: start node exporter
   service: state=started enabled=yes name=node_exporter
 
-- name: configure options in node exporter
-  lineinfile:
-    path: /etc/sysconfig/node_exporter
-    regexp: '^OPTIONS='
-    line: 'OPTIONS=--collector.textfile.directory /var/lib/node_exporter/textfile_collector --collector.systemd'
-    backrefs: yes
-  notify: restart node_exporter
-
 # setup dirs for the ansible execution off of provisioning
 #- name: dirs from provision
 #  file: state=directory path="/home/copr/provision/{{ item }}" owner=copr group=copr

@@ -44,6 +44,6 @@ if __name__ == '__main__':
                     "assumestatesduringnotrunning=yes&includesoftstates=no&initialassumedhoststate=0&" \
                     "initialassumedservicestate=0&timeperiod=last7days&backtrack=4"
     collect(copr_cdn_url, "copr_cdn_status", "Copr's CDN status", "td.serviceOK:nth-child(4)",
-            "/var/lib/node_exporter/textfile_collector/copr_cdn_status.prom.new")
+            "/var/lib/prometheus/node-exporter/copr_cdn_status.prom.new")
     collect(copr_ping_url, "copr_ping_status", "Status of build of copr-ping package", "td.serviceOK:nth-child(4)",
-            "/var/lib/node_exporter/textfile_collector/copr_ping_status.prom.new")
+            "/var/lib/prometheus/node-exporter/copr_ping_status.prom.new")

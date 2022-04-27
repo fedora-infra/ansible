@@ -34,7 +34,7 @@
     name: "generating prometheus metrics"
     user: root
     minute: 0
-    job: "/usr/bin/python3 /usr/bin/monitoring.py && mv -f /var/lib/node_exporter/textfile_collector/copr_cdn_status.prom.new /var/lib/node_exporter/textfile_collector/copr_cdn_status.prom && mv -f /var/lib/node_exporter/textfile_collector/copr_ping_status.prom.new /var/lib/node_exporter/textfile_collector/copr_ping_status.prom"
+    job: "/usr/bin/python3 /usr/bin/monitoring.py && mv -f /var/lib/prometheus/node-exporter/copr_cdn_status.prom.new /var/lib/prometheus/node-exporter/copr_cdn_status.prom && mv -f /var/lib/prometheus/node-exporter/copr_ping_status.prom.new /var/lib/prometheus/node-exporter/copr_ping_status.prom"
   tags:
   - cron_tasks
 
@@ -190,9 +190,9 @@
 
 - name: configure options in node exporter
   lineinfile:
-    path: /etc/sysconfig/node_exporter
-    regexp: '^OPTIONS='
-    line: 'OPTIONS=--collector.textfile.directory /var/lib/node_exporter/textfile_collector --collector.systemd'
+    path: /etc/default/prometheus-node-exporter
+    regexp: '^ARGS='
+    line: 'ARGS=--collector.textfile.directory="/var/lib/prometheus/node-exporter" --collector.systemd'
     backrefs: yes
   notify: restart node_exporter
 
