@@ -572,18 +572,6 @@
     keephost: true
     when: env == "staging"
 
-  - role: httpd/reverseproxy
-    website: resultsdb.stg.fedoraproject.org
-    destname: resultsdb-resultsdbapi
-    localpath: /api
-    remotepath: /api
-    balancer_name: resultsdb-stg-api
-    targettype: openshift
-    ocp4: true
-    balancer_members: "{{ ocp_nodes_stg }}"
-    keephost: true
-    when: env == "staging"
-
   # This one gets its own role (instead of httpd/reverseproxy) so that it can
   # copy in some silly static resources (globe.png, index.html)
   - role: geoip-city-wsgi/proxy
