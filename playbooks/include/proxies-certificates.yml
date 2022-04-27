@@ -38,8 +38,8 @@
     when: env == "staging"
 
   - role: httpd/certificate
-    certname: wildcard-2021.app.os.stg.fedoraproject.org
-    SSLCertificateChainFile: wildcard-2021.app.os.stg.fedoraproject.org.intermediate.cert
+    certname: wildcard-2022.app.os.stg.fedoraproject.org
+    SSLCertificateChainFile: wildcard-2022.app.os.stg.fedoraproject.org.intermediate.cert
     when: env == "staging"
     tags:
     - app.os.stg.fedoraproject.org
@@ -52,8 +52,8 @@
     - apps.ocp.stg.fedoraproject.org
 
   - role: httpd/certificate
-    certname: wildcard-2021.app.os.fedoraproject.org
-    SSLCertificateChainFile: wildcard-2021.app.os.fedoraproject.org.intermediate.cert
+    certname: wildcard-2022.app.os.fedoraproject.org
+    SSLCertificateChainFile: wildcard-2022.app.os.fedoraproject.org.intermediate.cert
     tags:
     - app.os.fedoraproject.org
 
