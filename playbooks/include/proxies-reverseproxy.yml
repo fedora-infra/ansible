@@ -564,7 +564,7 @@
     website: resultsdb.stg.fedoraproject.org
     destname: zz-resultsdb-resultsdb
     localpath: /
-    remotepath: /web/
+    remotepath: /web
     balancer_name: resultsdb-stg
     targettype: openshift
     ocp4: true
@@ -575,8 +575,8 @@
   - role: httpd/reverseproxy
     website: resultsdb.stg.fedoraproject.org
     destname: resultsdb-resultsdbapi
-    localpath: /api/
-    remotepath: /api/
+    localpath: /api
+    remotepath: /api
     balancer_name: resultsdb-stg-api
     targettype: openshift
     ocp4: true
