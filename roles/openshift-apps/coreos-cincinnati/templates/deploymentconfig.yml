@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: "fcos-graph-builder"
-          image: "docker-registry.default.svc:5000/coreos-cincinnati/fedora-coreos-cincinnati:dumnati-{{fcos_cincinnati_deploy_git_sha}}"
+          image: "{{fcos_cincinnati_registry}}:5000/coreos-cincinnati/fedora-coreos-cincinnati:dumnati-{{fcos_cincinnati_deploy_git_sha}}"
           args: [
             "/usr/local/bin/fcos-graph-builder",
             "-v",
@@ -39,7 +39,7 @@ spec:
               mountPath: "/etc/cincinnati/"
               readOnly: true
         - name: "fcos-policy-engine"
-          image: "docker-registry.default.svc:5000/coreos-cincinnati/fedora-coreos-cincinnati:dumnati-{{fcos_cincinnati_deploy_git_sha}}"
+          image: "{{fcos_cincinnati_registry}}:5000/coreos-cincinnati/fedora-coreos-cincinnati:dumnati-{{fcos_cincinnati_deploy_git_sha}}"
           args: [
             "/usr/local/bin/fcos-policy-engine",
             "-v",
