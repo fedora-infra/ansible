@@ -343,3 +343,11 @@ define service {
   max_check_attempts    8
   use                   websitetemplate
 }
+
+define service {
+  host_name             pagure02.fedoraproject.org
+  service_description   https://pagure.io/fedora-infrastructure/issues
+  check_command         check_website_follow!pagure02.fedoraproject.org!https://pagure.io/fedora-infrastructure/issues!Isues
+  max_check_attempts    8
+  use                   websitetemplate
+}
