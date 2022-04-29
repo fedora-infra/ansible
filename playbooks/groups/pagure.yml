@@ -41,6 +41,33 @@
    - "{{ vars_path }}/{{ ansible_distribution }}.yml"
 
   roles:
+
+  #
+  # use letsencrypt to get ssl certs
+  #
+  - role: letsencrypt
+    site_name: "stg.pagure.io"
+    server_aliases:
+    - stg.pagure.io
+    - docs.stg.pagure.org
+    - releases.stg.pagure.org
+    - stg.pagure.org
+    tags:
+    - pagure.io
+    when: env == "staging"
+
+  - role: letsencrypt
+    site_name: "pagure.io"
+    server_aliases:
+    - docs.pagure.org
+    - lists.pagure.io
+    - pagure.org
+    - releases.pagure.org
+    - www.pagure.io
+    tags:
+    - pagure.io
+    when: env != "staging"
+
   - pagure
 
   handlers:
