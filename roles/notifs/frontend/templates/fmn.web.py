@@ -1,6 +1,10 @@
 config = {
     # This is for *our* database
+    {% if env == 'staging' %}
+    "fmn.sqlalchemy.uri": "postgresql://{{notifs_db_user}}:{{notifs_db_password}}@db01.stg.iad2.fedoraproject.org/notifications",
+    {% else %}
     "fmn.sqlalchemy.uri": "postgresql://{{notifs_db_user}}:{{notifs_db_password}}@db01.iad2.fedoraproject.org/notifications",
+    {% endif %}
     # And this is for the datanommer database
     "datanommer.sqlalchemy.url": "postgresql://{{datanommerDBUser}}:{{ (env == 'production')|ternary(datanommerDBPassword, datanommer_stg_db_password) }}@db-datanommer01.iad2.fedoraproject.org/datanommer",
 
