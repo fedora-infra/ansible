@@ -2,7 +2,11 @@
 apiVersion: v1
 kind: DeploymentConfig
 metadata:
+{% if ocp4  %}
+  name: coreos-cincinnati
+{% else %}
   name: coreos-cincinnati-stub
+{% endif %}
   labels:
     app: coreos-cincinnati
 spec:
@@ -29,7 +33,7 @@ spec:
       containers:
         - name: "fcos-graph-builder"
 {% if ocp4  %}
-          image: "image-registry.openshift-image-registry.svc:5000/coreos-cincinnati/fedora-coreos-cincinnati:dumnati-{{fcos_cincinnati_deploy_git_sha}}"
+          image: "image-registry.openshift-image-registry.svc:5000/coreos-cincinnati/fedora-coreos-cincinnati:gitref-{{fcos_cincinnati_deploy_git_sha}}"
 {% else %}
           image: "{{fcos_cincinnati_registry}}:5000/coreos-cincinnati/fedora-coreos-cincinnati:dumnati-{{fcos_cincinnati_deploy_git_sha}}"
 {% endif %}
@@ -44,7 +48,7 @@ spec:
               readOnly: true
         - name: "fcos-policy-engine"
 {% if ocp4  %}
-          image: "image-registry.openshift-image-registry.svc:5000/coreos-cincinnati/fedora-coreos-cincinnati:dumnati-{{fcos_cincinnati_deploy_git_sha}}"
+          image: "image-registry.openshift-image-registry.svc:5000/coreos-cincinnati/fedora-coreos-cincinnati:gitref-{{fcos_cincinnati_deploy_git_sha}}"
 {% else %}
           image: "{{fcos_cincinnati_registry}}:5000/coreos-cincinnati/fedora-coreos-cincinnati:dumnati-{{fcos_cincinnati_deploy_git_sha}}"
 {% endif %}
