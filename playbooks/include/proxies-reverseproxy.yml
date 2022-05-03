@@ -200,6 +200,18 @@
     targettype: openshift
     keephost: true
     tags: fasjson
+    when: env != "staging"
+
+  - role: httpd/reverseproxy
+    website: "fasjson{{ env_suffix }}.fedoraproject.org"
+    destname: fasjson
+    balancer_name: apps-ocp
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    targettype: openshift
+    keephost: true
+    ocp4: true
+    tags: fasjson
+    when: env == "staging"
 
   - role: httpd/reverseproxy
     website: "id{{ env_suffix }}.fedoraproject.org"
