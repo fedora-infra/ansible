@@ -114,8 +114,8 @@
   when: aws_ipv6_addr is defined
   tags: ipv6_config
 
-- name: start node exporter
-  service: state=started enabled=yes name=node_exporter
+- name: restart node exporter
+  service: state=restarted enabled=yes name=node_exporter
 
 - name: install nrpe checks
   template: src=copr_nrpe.cfg

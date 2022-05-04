@@ -168,8 +168,8 @@
 - name: start webserver
   service: state=started enabled=yes name=lighttpd
 
-- name: start node exporter
-  service: state=started enabled=yes name=node_exporter
+- name: restart node exporter
+  service: state=restarted enabled=yes name=node_exporter
 
 # setup dirs for the ansible execution off of provisioning
 #- name: dirs from provision
