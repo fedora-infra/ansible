@@ -1,0 +1,59 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: flask-oidc-dev
+  labels:
+    app: flask-oidc-dev
+spec:
+  replicas: 1
+  selector:
+    app: flask-oidc-dev
+    deploymentconfig: flask-oidc-dev
+  strategy:
+    type: Rolling
+    activeDeadlineSeconds: 21600
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: flask-oidc-dev
+        deploymentconfig: flask-oidc-dev
+    spec:
+      containers:
+        - name: flask-oidc-dev
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              #protocol: TCP
+          #resources: {}
+          #terminationMessagePath: /dev/termination-log
+          #terminationMessagePolicy: File
+          volumeMounts:
+            - name: flask-oidc-dev-config-volume
+              mountPath: "/etc/flask-oidc-dev"
+              readOnly: true
+          env:
+            - name: TESTAUTH_SETTINGS
+              value: "/etc/flask-oidc-dev/flask-oidc-dev.cfg"
+            # - name: SCRIPT_NAME
+            #   value: "/flask-oidc-dev"
+      volumes:
+        - name: flask-oidc-dev-config-volume
+          configMap:
+            name: flask-oidc-dev-config
+  triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - flask-oidc-dev
+        from:
+          kind: ImageStreamTag
+          name: flask-oidc-dev:latest
+      type: ImageChange
+    - type: ConfigChange
