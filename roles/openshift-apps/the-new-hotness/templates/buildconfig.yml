@@ -33,9 +33,9 @@ items:
                 git checkout staging && \
 {% else %}
                 git checkout production && \
-{% endif %}
                 pip-3 install . && \
                 pushd hotness_schema && \
+{% endif %}
                 pip-3 install . && \
                 rm -rf the-new-hotness
         RUN rm -f /etc/krb5.conf && \
