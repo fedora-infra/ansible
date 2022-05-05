@@ -1,0 +1,72 @@
+- name: make the app be real
+  hosts: os_control_stg:os_control
+  user: root
+  gather_facts: False
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  vars:
+
+  roles:
+    - role: openshift/project
+      app: flask-oidc-dev
+      description: "Authentication testing"
+      appowners:
+        - abompard
+        - dkirwan
+        - jamricha
+        - sidharthvipul
+      tags:
+        - apply-appowners
+
+    - role: openshift/imagestream
+      app: flask-oidc-dev
+      imagename: flask-oidc-dev
+
+    - role: openshift/object
+      app: flask-oidc-dev
+      template: buildconfig.yml
+      objectname: buildconfig.yml
+
+    - role: openshift/object
+      app: flask-oidc-dev
+      template: configmap.yml
+      objectname: configmap.yml
+
+    - role: openshift/object
+      app: flask-oidc-dev
+      file: service.yml
+      objectname: service.yml
+
+    # - role: openshift/route
+    #   app: test-auth
+    #   routename: test-auth
+    #   host: "admin{{ env_suffix }}.fedoraproject.org"
+    #   path: "/test-auth"
+    #   serviceport: web
+    #   servicename: test-auth
+    #   annotations:
+    #     haproxy.router.openshift.io/timeout: 5m
+
+    - role: openshift/route
+      app: flask-oidc-dev
+      routename: flask-oidc-dev
+      host: "app-flask-oidc-dev.apps.ocp{{ env_suffix }}.fedoraproject.org"
+      serviceport: web
+      servicename: flask-oidc-dev
+      annotations:
+        haproxy.router.openshift.io/timeout: 5m
+      when: ocp4
+
+    - role: openshift/object
+      app: flask-oidc-dev
+      template: secret-webhook.yml
+      objectname: secret-webhook.yml
+
+    - role: openshift/object
+      app: flask-oidc-dev
+      template: deploymentconfig.yml
+      objectname: deploymentconfig.yml
