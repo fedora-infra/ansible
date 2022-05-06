@@ -51,7 +51,7 @@
     proxyurl: http://noc01.{{ datacenter }}.fedoraproject.org
 
   - role: httpd/reverseproxy
-    website: zabbix.fedoraproject.org
+    website: zabbix.stg.fedoraproject.org
     destname: zabbix
     remotepath: /
     proxyurl: http://localhost:10068
