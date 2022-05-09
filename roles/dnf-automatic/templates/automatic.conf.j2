@@ -54,3 +54,9 @@ debuglevel = 1
 # https://bz.apache.org/bugzilla/show_bug.cgi?id=65769
 exclude = httpd*
 {% endif %}
+{% if inventory_hostname.startswith('build') %}
+# exclude git for now as it's breaking koji
+# https://pagure.io/fedora-infrastructure/issue/10677
+# https://pagure.io/koji/issue/3351
+exclude = git*
+{% endif %}
