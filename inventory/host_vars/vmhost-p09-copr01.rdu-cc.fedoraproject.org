@@ -8,7 +8,7 @@ br0_ipv6_nm: 64
 br0_port0_mac: "{{ mac2 }}"
 br1_ipv4: 172.23.5.185
 br1_ipv4_nm: 24
-br1_port0_mac: "{{ mac6 }}"
+br1_port0_mac: "{{ mac0 }}"
 datacenter: rdu-cc
 dns: 8.8.8.8
 gw: 8.43.85.254
@@ -20,8 +20,6 @@ mac2: "b8:ce:f6:c6:00:c6"
 mac3: "b8:ce:f6:c6:00:c7"
 mac4: "b8:ce:f6:c6:00:d0"
 mac5: "b8:ce:f6:c6:00:d1"
-mac6: "08:94:ef:81:d0:a8"
-mac7: "08:94:ef:81:d0:a9"
 network_connections:
   - autoconnect: yes
     ip:
