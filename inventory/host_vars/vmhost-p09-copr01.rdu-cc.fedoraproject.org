@@ -1,0 +1,62 @@
+---
+br0_ipv4: 8.43.85.78
+br0_ipv4_gw: "{{ gw }}"
+br0_ipv4_nm: 24
+br0_ipv6: "2620:52:3:1:dead:beef:cafe:c009"
+br0_ipv6_gw: "2620:52:3:1:ffff:ffff:ffff:fffe"
+br0_ipv6_nm: 64
+br0_port0_mac: "{{ mac2 }}"
+br1_ipv4: 172.23.5.185
+br1_ipv4_nm: 24
+br1_port0_mac: "{{ mac6 }}"
+datacenter: rdu-cc
+dns: 8.8.8.8
+gw: 8.43.85.254
+has_ipv4: yes
+has_ipv6: yes
+mac0: "08:94:ef:81:d0:aa"
+mac1: "08:94:ef:81:d0:ab"
+mac2: "b8:ce:f6:c6:00:c6"
+mac3: "b8:ce:f6:c6:00:c7"
+mac4: "b8:ce:f6:c6:00:d0"
+mac5: "b8:ce:f6:c6:00:d1"
+mac6: "08:94:ef:81:d0:a8"
+mac7: "08:94:ef:81:d0:a9"
+network_connections:
+  - autoconnect: yes
+    ip:
+      address:
+        - "{{ br0_ipv4 }}/{{ br0_ipv4_nm }}"
+        - "{{ br0_ipv6 }}/{{ br0_ipv6_nm }}"
+      dhcp4: no
+      dns:
+        - 8.8.8.8
+        - 8.8.4.4
+        - 2001:4860:4860::8888
+      dns_search:
+        - fedoraproject.org
+        - vpn.fedoraproject.org
+        - rdu-cc.fedoraproject.org
+      gateway4: "{{ br0_ipv4_gw }}"
+      gateway6: "{{ br0_ipv6_gw }}"
+    name: br0
+    state: up
+    type: bridge
+  - mac: "{{ br0_port0_mac }}"
+    master: br0
+    name: br0-port0
+    state: up
+    type: ethernet
+  - autoconnect: yes
+    ip:
+      address:
+        - "{{ br1_ipv4 }}/{{ br1_ipv4_nm }}"
+      dhcp4: no
+    name: br1
+    state: up
+    type: bridge
+  - mac: "{{ br1_port0_mac }}"
+    master: br1
+    name: br1-port0
+    state: up
+    type: ethernet
