@@ -34,6 +34,12 @@
 ##               also set openqa_amqp_resultsdb_reporter_queue if this
 ##               is set. You should probably NOT set this unless you
 ##               are maintaining the Fedora infrastructure deployment.
+# - openqa_resultsdb_user
+##      string - username for ResultsDB API authentication. If not
+##               set, no authentication will be attempted.
+# - openqa_resultsdb_password
+##      string - password for ResultsDB API authentication. If not
+##               set, no authentication will be attempted.
 # - deployment_type
 ##      string - Fedora Infrastructure thing; for this role, the
 ##               fedora_openqa config file and fedora-messaging config
@@ -231,7 +237,7 @@
   file: path=/etc/fedora-openqa state=directory owner=root group=root mode=0755
 
 - name: Write schedule.conf
-  template: src=schedule.conf.j2 dest=/etc/fedora-openqa/schedule.conf owner=root group=root mode=0644
+  template: src=schedule.conf.j2 dest=/etc/fedora-openqa/schedule.conf owner=root group=root mode=0600
   notify:
   - restart openqa consumers
   tags:

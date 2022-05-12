@@ -1,5 +1,11 @@
 [report]
 resultsdb_url: {{ openqa_resultsdb_url }}
+{% if openqa_resultsdb_user is defined %}
+resultsdb_user: {{ openqa_resultsdb_user }}
+{% endif %}
+{% if openqa_resultsdb_password is defined %}
+resultsdb_password: {{ openqa_resultsdb_password }}
+{% endif %}
 wiki_hostname: {{ openqa_wikitcms_hostname }}
 
 [schedule]
