@@ -380,6 +380,7 @@
     keephost: true
     tags:
     - updates.coreos.fedoraproject.org
+    when: env != "staging"
 
   - role: httpd/reverseproxy
     website: "status.updates.coreos{{ env_suffix }}.fedoraproject.org"
@@ -391,6 +392,7 @@
     keephost: true
     tags:
     - updates.coreos.fedoraproject.org
+    when: env != "staging"
 
   - role: httpd/reverseproxy
     website: "raw-updates.coreos{{ env_suffix }}.fedoraproject.org"
@@ -402,6 +404,7 @@
     keephost: true
     tags:
     - updates.coreos.fedoraproject.org
+    when: env != "staging"
 
   - role: httpd/reverseproxy
     website: "status.raw-updates.coreos{{ env_suffix }}.fedoraproject.org"
@@ -413,6 +416,7 @@
     keephost: true
     tags:
     - updates.coreos.fedoraproject.org
+    when: env != "staging"
 
   - role: httpd/reverseproxy
     website: "updates.coreos{{ env_suffix }}.fedoraproject.org"
