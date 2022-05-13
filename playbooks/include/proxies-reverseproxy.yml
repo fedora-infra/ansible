@@ -382,7 +382,9 @@
   - role: httpd/reverseproxy
     website: "status.updates.coreos{{ env_suffix }}.fedoraproject.org"
     destname: cincinnati
-    balancer_name: app-os
+    balancer_name: apps-ocp
+    ocp4: true
+    balancer_members: "{{ ocp_nodes }}"
     targettype: openshift
     keephost: true
     tags:
@@ -400,7 +402,9 @@
   - role: httpd/reverseproxy
     website: "status.raw-updates.coreos{{ env_suffix }}.fedoraproject.org"
     destname: cincinnati
-    balancer_name: app-os
+    balancer_name: apps-ocp
+    ocp4: true
+    balancer_members: "{{ ocp_nodes }}"
     targettype: openshift
     keephost: true
     tags:
