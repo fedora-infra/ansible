@@ -14,14 +14,6 @@
    - "/srv/private/ansible/vars.yml"
    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
-  vars:
-    nbde_client_bindings:
-      - device: /dev/md2
-        encryption_password: "{{ nbde_password }}"
-        servers:
-          - http://tang01.iad2.fedoraproject.org
-          - http://tang02.iad2.fedoraproject.org
-
   pre_tasks:
   - include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
@@ -38,8 +30,7 @@
   - { role: iscsi_client, when: "inventory_hostname.startswith(('bvmhost-x86-06', 'bvmhost-x86-07')) and datacenter == 'iad2'" }
   - sudo
   - virthost
-  - { role: clevis, when: datacenter == 'iad2' and not inventory_hostname.startswith('bvmhost-x86-04.stg') }
-  - { role: linux-system-roles.nbde_client, when: inventory_hostname.startswith('bvmhost-x86-04.stg') }
+  - { role: linux-system-roles.nbde_client, when: datacenter = 'iad2' }
   - { role: serial-console, when: datacenter == 'iad2' and not inventory_hostname.startswith('buildvmhost-s390x') }
 
   tasks:
