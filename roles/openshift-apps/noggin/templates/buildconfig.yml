@@ -22,8 +22,9 @@ spec:
     sourceStrategy:
       from:
 {% if env == "staging" %}
-        kind: DockerImage
-        name: registry.access.redhat.com/ubi8/python-39
+        kind: ImageStreamTag
+        name: python:3.9-ubi8
+        namespace: openshift
 {% else %}
         kind: ImageStreamTag
         name: python:3.6
