@@ -386,7 +386,7 @@
     destname: cincinnati
     balancer_name: apps-ocp
     ocp4: true
-    balancer_members: "{{ ocp_nodes }}"
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
     targettype: openshift
     keephost: true
     tags:
