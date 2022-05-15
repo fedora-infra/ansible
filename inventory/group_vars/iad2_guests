@@ -1,0 +1,18 @@
+---
+network_connections:
+  - autoconnect: yes
+    ip:
+      address:
+        - "{{ eth0_ipv4_ip }}/{{ eth0_ipv4_nm }}"
+      dhcp4: no
+      dns:
+        - "{{ dns1 }}"
+        - "{{ dns2 }}"
+      dns_search:
+        - "{{ dns_search1 }}"
+        - "{{ dns_search2 }}"
+      gateway4: "{{ eth0_ipv4_gw }}"
+    mac: "{{ ansible_default_ipv4.macaddress }}"
+    name: eth0
+    type: ethernet
+    mtu: 9000

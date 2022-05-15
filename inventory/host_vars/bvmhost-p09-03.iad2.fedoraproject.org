@@ -26,8 +26,10 @@ network_connections:
     name: br0
     state: up
     type: bridge
+    mtu: 9000
   - mac: "{{ br0_port0_mac }}"
     master: br0
     name: br0-port0
     state: up
     type: ethernet
+    mtu: 9000
