@@ -149,6 +149,7 @@ nagios_Check_Services:
   swap: true
 nat_rules: []
 # default network block device encryption settings for linux-system-roles/nbde_client
+nbde: true
 nbde_client_bindings:
   - device: /dev/md2
     encryption_password: "{{ nbde_password }}"

@@ -13,6 +13,14 @@ mac1: e4:43:4b:24:19:96
 mac2: e4:43:4b:24:19:76
 mac3: e4:43:4b:24:19:97
 mac4: e4:43:4b:24:19:78
+nbde_client_bindings:
+  - device: /dev/md127
+    encryption_password: "{{ nbde_password }}"
+    password_temporary: no
+    threshold: 1
+    servers:
+      - http://tang01.iad2.fedoraproject.org
+      - http://tang02.iad2.fedoraproject.org
 network_connections:
   - autoconnect: yes
     ip:
