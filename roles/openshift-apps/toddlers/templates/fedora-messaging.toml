@@ -92,7 +92,6 @@ kojipkgs_url = "https://kojipkgs{{ env_suffix }}.fedoraproject.org"
 # Account to use to connect to Pagure-as-dist-git
 dist_git_url = "https://src{{ env_suffix }}.fedoraproject.org"
 {% if env == "staging" %}
-dist_git_token_seed = "{{ toddlers_stg_flag_ci_seed }}"
 dist_git_token = "{{ toddlers_stg_dist_git_token }}"
 {% else %}
 dist_git_token_seed = "{{ toddlers_flag_ci_seed }}"
