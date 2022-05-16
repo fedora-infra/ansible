@@ -60,7 +60,7 @@ define service {
 }
 
 define service {
-  hostgroup_name        proxies
+  hostgroup_name        ocp_proxies
   service_description   http-accounts
   check_command         check_website_ssl!accounts.fedoraproject.org!/healthz/ready!OK
   use                   websitetemplate
@@ -174,7 +174,7 @@ define service {
 
 {% if vars['nagios_location'] == 'iad2_internal' %}
 ##
-## Other Frontend Websites 
+## Other Frontend Websites
 
 define service {
   hostgroup_name        badges_web
@@ -284,7 +284,7 @@ define service {
 }
 
 
-## Internal services 
+## Internal services
 
 define service {
   hostgroup_name        value
