@@ -1,4 +1,5 @@
-FROM fedora:34
+# Switch to F36 when this PR is shipped: https://github.com/python-ldap/python-ldap/pull/458
+FROM fedora:35
 LABEL \
   name="fasjson" \
   vendor="Fedora Infrastructure" \
@@ -10,6 +11,7 @@ RUN dnf install -y \
         git \
         ipa-client \
         gcc \
+        redhat-rpm-config \
         python-devel \
         krb5-devel \
         openldap-devel \

@@ -193,16 +193,8 @@
     targettype: openshift
     keephost: true
     ocp4: true
-    tags: noggin
-
-  - role: httpd/reverseproxy
-    website: "fasjson{{ env_suffix }}.fedoraproject.org"
-    destname: fasjson
-    balancer_name: app-os
-    targettype: openshift
-    keephost: true
-    tags: fasjson
-    when: env != "staging"
+    tags:
+    - noggin
 
   - role: httpd/reverseproxy
     website: "fasjson{{ env_suffix }}.fedoraproject.org"
@@ -212,8 +204,8 @@
     targettype: openshift
     keephost: true
     ocp4: true
-    tags: fasjson
-    when: env == "staging"
+    tags:
+    - fasjson
 
   - role: httpd/reverseproxy
     website: "id{{ env_suffix }}.fedoraproject.org"

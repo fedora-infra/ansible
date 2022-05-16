@@ -292,6 +292,8 @@
     site_name: "accounts{{ env_suffix }}.fedoraproject.org"
     sslonly: true
     cert_name: "{{wildcard_cert_name}}"
+    tags:
+      - noggin
 
   - role: httpd/website
     site_name: "fasjson{{ env_suffix }}.fedoraproject.org"
