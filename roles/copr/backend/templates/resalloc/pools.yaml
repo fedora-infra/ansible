@@ -200,7 +200,7 @@ copr_osuosl_p09_{% if devel %}dev{% else %}prod{% endif %}:
       priority: -10
     - arch_ppc64le_native
     - in_osuosl
-    - arch_power9
+    - name: arch_power9
       priority: -10
   cmd_new: '/var/lib/resallocserver/resalloc_provision/osuosl-vm'
   cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
