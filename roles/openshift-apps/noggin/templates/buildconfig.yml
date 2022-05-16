@@ -21,15 +21,9 @@ spec:
     type: Source
     sourceStrategy:
       from:
-{% if env == "staging" %}
         kind: ImageStreamTag
         name: python:3.9-ubi8
         namespace: openshift
-{% else %}
-        kind: ImageStreamTag
-        name: python:3.6
-        namespace: openshift
-{% endif %}
   output:
     to:
       kind: ImageStreamTag
