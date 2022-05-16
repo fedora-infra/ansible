@@ -33,7 +33,7 @@ Manually created swap:
   2. mkswap -L swap /dev/mapper/vg_guests-swap
 
 Note that this requires changing /etc/fstab, and then /etc/sysconfig/grub - and
-regenerating the /boot grub config.
+regenerating the /boot grub config (grub2-mkconfig -o /boot/grub2/grub.cfg).
 
 Manually created space for volumes/images:
 
