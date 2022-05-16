@@ -98,8 +98,8 @@ copr_hv_x86_64_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
 {% endif %}
 {% endfor %}
 
-# Power hypervisors
-{% for hv in ["01", "02"] %}
+# Power8 hypervisors
+{% for hv in ["01", "02", "03"] %}
 {% if "ppc64le_hypervisor_" + hv in builders %}
 
 copr_hv_ppc64le_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
@@ -116,6 +116,37 @@ copr_hv_ppc64le_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     - hypervisor_ppc64le
     - hypervisor_ppc64le_{{ hv }}
     - arch_power8
+    cmd_new: "/var/lib/resallocserver/provision/libvirt-new --swap-vol-size 168"
+    cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
+    cmd_livecheck: "resalloc-check-vm-ip"
+    cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
+    livecheck_period: 180
+    reuse_opportunity_time: 180
+    reuse_max_count: 8
+    reuse_max_time: 1800
+
+{% endif %}
+{% endfor %}
+
+
+# Power9 hypervisors
+{% for hv in ["01", "02", "03"] %}
+{% if "p09_hypervisor_" + hv in builders %}
+
+copr_p09_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
+    max: {{ builders["ppc64le_hypervisor_" + hv]["ppc64le"][0] }}
+    max_starting: {{ builders["p09_hypervisor_" + hv]["ppc64le"][1] }}
+    max_prealloc: {{ builders["p09_hypervisor_" + hv]["ppc64le"][2] }}
+    tags:
+    - copr_builder
+    - name: arch_noarch
+      priority: -8
+    - arch_ppc64le
+    - arch_ppc64le_native
+    - hypervisor
+    - hypervisor_ppc64le
+    - hypervisor_ppc64le_{{ hv }}
+    - arch_power9
     cmd_new: "/var/lib/resallocserver/provision/libvirt-new --swap-vol-size 168"
     cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
     cmd_livecheck: "resalloc-check-vm-ip"
@@ -170,6 +201,7 @@ copr_osuosl_p09_{% if devel %}dev{% else %}prod{% endif %}:
     - arch_ppc64le_native
     - in_osuosl
     - arch_power9
+      priority: -10
   cmd_new: '/var/lib/resallocserver/resalloc_provision/osuosl-vm'
   cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
   cmd_livecheck: "resalloc-check-vm-ip"
