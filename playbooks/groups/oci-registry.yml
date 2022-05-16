@@ -15,8 +15,8 @@
   - base
   - rkhunter
   - nagios_client
-  - zabbix/zabbix-agent
-    when: env == "staging"
+  - { role: zabbix/zabbix-agent
+      when: env == "staging" }
   - hosts
   - { role: openvpn/client,
       when: env != "staging" }
