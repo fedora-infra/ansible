@@ -82,11 +82,13 @@
     certname: mirrors.centos.org
     SSLCertificateChainFile: mirrors.centos.org.intermediate.cert
     when: env != "staging"
+    tags: mirrors.centos.org
 
   - role: httpd/certificate
     certname: mirrors.stg.centos.org
     SSLCertificateChainFile: mirrors.stg.centos.org.intermediate.cert
     when: env == "staging"
+    tags: mirrors.stg.centos.org
 
   # - role: httpd/certificate
   #   certname: secondary.koji.fedoraproject.org.letsencrypt

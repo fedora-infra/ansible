@@ -159,6 +159,7 @@
     - mirrors.stg.centos.org
     cert_name: "{{mirrors_centos_org_cert_name}}"
     SSLCertificateChainFile: "mirrors{{env_suffix}}.centos.org.intermediate.cert"
+    tags: mirrors.centos.org
 
   - role: httpd/website
     site_name: src.fedoraproject.org
