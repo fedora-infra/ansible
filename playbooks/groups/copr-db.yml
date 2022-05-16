@@ -35,7 +35,6 @@
   - sudo
 
   tasks:
-    when: env != "staging"
   - import_tasks: "{{ tasks_path }}/motd.yml"
 
   handlers:
