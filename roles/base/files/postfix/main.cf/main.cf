@@ -715,3 +715,4 @@ message_size_limit = 20971520
 # This has to be set in newer postfix 3.3.0 or later or it will refuse to 
 # send any email. ;( 
 smtpd_recipient_restrictions = permit_mynetworks, reject_unauth_destination
+smtpd_relay_restrictions = permit_mynetworks, reject_unauth_destination
