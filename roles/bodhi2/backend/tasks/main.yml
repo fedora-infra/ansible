@@ -292,6 +292,12 @@
   - config
   - bodhi
 
+- name: Let the ftpsync user also read the fedora-messaging key
+  command: /usr/bin/setfacl -m user:ftpsync:rx /etc/pki/fedora-messaging/bodhi-key.pem
+  tags:
+  - config
+  - bodhi
+
 - name: make a mnt/koji link
   file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji force=yes
   tags:
