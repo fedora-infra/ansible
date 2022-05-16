@@ -30,6 +30,21 @@
   copy: src=profile.sh dest=/etc/profile.d/copr-hypervisor.sh
   tags: profile_scripts
 
+- name: install libvirt packages
+  package: name={{ item }} state=present
+  with_items:
+  - qemu-kvm
+  - libguestfs-tools-c
+  - libvirt
+  - libvirt-daemon
+  - podman
+  - virt-install
+  - python3-glanceclient
+  tags:
+    - openstack
+    - packages
+    - libvirtd
+
 - name: install libvirtd.conf
   copy: src="{{ files }}/virthost/libvirtd.conf" dest=/etc/libvirt/libvirtd.conf
   notify:
@@ -149,19 +164,6 @@
 - name: provide pub key, too, so we can install them to generated builder images
   copy: src=buildsys.pub dest=/home/copr/.ssh/id_rsa.pub
         owner=copr mode=0600
-
-- name: install libvirt packages
-  package: name={{ item }} state=present
-  with_items:
-  - qemu-kvm
-  - libguestfs-tools-c
-  - libvirt
-  - podman
-  - virt-install
-  - python3-glanceclient
-  tags:
-    - openstack
-    - packages
 
 #- name: Enable praiskup-helpers repo
 #  community.general.copr:
