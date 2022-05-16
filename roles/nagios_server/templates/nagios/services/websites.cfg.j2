@@ -60,7 +60,7 @@ define service {
 }
 
 define service {
-  hostgroup_name        ocp_proxies
+  hostgroup_name        proxies_ocp4
   service_description   http-accounts
   check_command         check_website_ssl!accounts.fedoraproject.org!/healthz/ready!OK
   use                   websitetemplate

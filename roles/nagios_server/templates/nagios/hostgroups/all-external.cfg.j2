@@ -20,7 +20,7 @@ define hostgroup {
 }
 
 define hostgroup {
-        hostgroup_name ocp_proxies
+        hostgroup_name proxies_ocp4
         alias          OCP Web Servers
         members         {% for host in groups["proxies_ocp4"]|sort %} {{ hostvars[host]["inventory_hostname_short"] }}.fedoraproject.org {% if not loop.last %}, {% endif %} {% endfor %}
 
