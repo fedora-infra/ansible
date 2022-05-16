@@ -98,8 +98,13 @@ class LibvirtSpawner:
     playbook = "{{ provision_directory }}/libvirt-provision.yml"
 
     def __init__(self, resalloc_pool_id, log):
-        _, self.connection, self.arch = get_hv_identification_from_pool_id(
+        host_id, self.connection, self.arch = get_hv_identification_from_pool_id(
             resalloc_pool_id)
+
+        # The Power9 machine has not enough storage to host 2CPU/VM.  Let's
+        # double the quote on CPU (at least for now).
+        if host_id in [6]:
+            cpu_count = 4
 
         self.workdir = tempfile.mkdtemp()
         self.script_path = os.path.dirname(os.path.realpath(__file__))
