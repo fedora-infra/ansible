@@ -51,7 +51,7 @@ copr_osuosl_p09_*)
     pool_id=${pool_id//_dev/}
     pool_id=${pool_id//_prod/}
     pool_id=${pool_id//_stg/}
-    conn=qemu+ssh://copr@vmhost-p09-copr${pool_id}.rdu-cc.fedoraproject.org/system
+    conn=qemu+ssh://copr@vmhost-p08-copr${pool_id}.rdu-cc.fedoraproject.org/system
     ;;
 
 copr_p09_01*)
@@ -59,6 +59,7 @@ copr_p09_01*)
     pool_id=${pool_id//_dev/}
     pool_id=${pool_id//_prod/}
     pool_id=${pool_id//_stg/}
+    conn=qemu+ssh://copr@vmhost-p09-copr${pool_id}.rdu-cc.fedoraproject.org/system
     ;;
 
 *) die "unknown RESALLOC_POOL_ID=$RESALLOC_POOL_ID" ;;
