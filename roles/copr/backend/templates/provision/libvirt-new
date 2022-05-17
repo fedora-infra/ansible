@@ -6,6 +6,7 @@ Spawn a Copr Builder using libvirt
 
 # pylint: disable=invalid-name
 
+import copy
 import os
 import sys
 import logging
@@ -79,6 +80,12 @@ def get_hv_identification_from_pool_id(pool_id):
     raise Exception("can't convert pool_id to hv ID")
 
 
+class ConfigFile:
+    def __init__(self, name, contents):
+        self.name = name
+        self.contents = contents
+
+
 class LibvirtSpawner:
     """
     Context for all the logic (to avoid working with globals).
@@ -90,6 +97,7 @@ class LibvirtSpawner:
     root_disk_pool = "images"
     root_vol_size = "6GB"
     startup_script = ""
+    config_files = []
     arch = None
     swap_vol_size = None
     cpu_count = 2
@@ -100,6 +108,11 @@ class LibvirtSpawner:
     def __init__(self, resalloc_pool_id, log):
         host_id, self.connection, self.arch = get_hv_identification_from_pool_id(
             resalloc_pool_id)
+
+        self.config_files.append(ConfigFile(
+            "resalloc-vars.sh",
+            f"POOL_ID={resalloc_pool_id}\n",
+        ))
 
         # The Power9 machine has not enough storage to host 2CPU/VM.  Let's
         # double the quote on CPU (at least for now).
@@ -233,22 +246,33 @@ class LibvirtSpawner:
             "mount -o remount /",
         ]))
 
+    def get_startup_script(self):
+        if not self.startup_script:
+            return None
+        return ConfigFile("eimg-early-script.sh",
+                          "#! /bin/bash\nset -e\n" + self.startup_script)
+
     def generate_config_iso(self):
         """
         Generate the ISO file that is attached to the VM and used by the early
         script:
         https://github.com/praiskup/helpers/blob/beb62e5cf5d8a4cd0e456536a7073dc5307668fd/bin/eimg-prep.in#L66-L76
         """
-        if not self.startup_script:
-            return None
 
-        script = "#! /bin/bash\nset -e\n" + self.startup_script
-
+        todo_files = copy.copy(self.config_files)
+        startup_script = self.get_startup_script()
+        if startup_script:
+            todo_files.append(startup_script)
         config_dir = os.path.join(self.workdir, "config")
         os.makedirs(config_dir)
-        pn_script = os.path.join(config_dir, "eimg-early-script.sh")
-        with open(pn_script, 'w') as file:
-            file.write(script)
+
+        if not todo_files:
+            return None
+
+        for cf in todo_files:
+            file_local_path = os.path.join(config_dir, cf.name)
+            with open(file_local_path, 'w', encoding='utf-8') as file:
+                file.write(cf.contents)
 
         image = os.path.join(self.workdir, 'config.iso')
 
