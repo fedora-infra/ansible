@@ -2,11 +2,7 @@
 apiVersion: v1
 kind: BuildConfig
 metadata:
-{% if ocp4  %}
   name: "coreos-cincinnati"
-{% else %}
-  name: "coreos-cincinnati-stub"
-{% endif %}
   labels:
     app: "coreos-cincinnati"
 spec:
@@ -31,8 +27,4 @@ spec:
   output:
     to:
       kind: "ImageStreamTag"
-{% if ocp4  %}
       name: "fedora-coreos-cincinnati:gitref-{{fcos_cincinnati_build_git_sha}}"
-{% else %}
-      name: "fedora-coreos-cincinnati:dumnati-{{fcos_cincinnati_build_git_sha}}"
-{% endif %}
