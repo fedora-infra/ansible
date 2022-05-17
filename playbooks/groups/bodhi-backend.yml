@@ -87,7 +87,7 @@
     host: "bodhi.stg.fedoraproject.org"
     when: env == "staging"
 
-  - role: zabbix/zabbix-agent
+  - role: zabbix/zabbix_agent
     when: env == "staging"
 
   - role: push-container-registry
