@@ -284,6 +284,16 @@
   - batcave
   - config
   when: inventory_hostname.startswith('batcave01')
+#
+# Setup rhel9 sync script.
+#
+
+- name: setup rhel9 sync copy script
+  copy: src=rhel9-sync dest=/mnt/fedora/app/fi-repo/rhel/rhel9/rhel9-sync mode=0775
+  tags:
+  - batcave
+  - config
+  when: inventory_hostname.startswith('batcave01')
 
 #
 # sync-rhn cron job
