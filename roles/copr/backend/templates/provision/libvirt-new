@@ -306,6 +306,21 @@ class LibvirtSpawner:
                     str(size), '--pool', pool]):
                 raise Exception(['cant resize ' + name])
 
+    def retry_cmd(self, cmd, exception_message=None, attempts=5,
+                  sleep_seconds=5):
+        """
+        Retry command till it succeeds
+        """
+        for _ in range(attempts):
+            if not self.call(cmd, stdout=sys.stderr):
+                return
+            time.sleep(sleep_seconds)
+        if not exception_message:
+            exception_message = "Command failed"
+        exception_message += f" ({str(cmd)}, attempts={attempts})"
+        raise Exception(exception_message)
+
+
     def boot_machine(self, volumes, vcpus):
         """
         Use virt-install to start the VM according to previously given
@@ -329,8 +344,7 @@ class LibvirtSpawner:
         for vol in volumes:
             cmd += ['--disk', 'vol={0},device={1},bus={2}'.format(*vol)]
 
-        if self.call(cmd, stdout=sys.stderr):
-            raise Exception("can not boot the machine")
+        self.retry_cmd(cmd, exception_message="Can't boot the machine")
 
         self.cleanup_action(
             '50_shut_down_vm_destroy',
