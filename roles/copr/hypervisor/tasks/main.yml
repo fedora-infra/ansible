@@ -169,6 +169,9 @@
   community.general.copr:
     state: enabled
     name: praiskup/helpers
+    # TODO: fix error in the Copr Ansible module:
+    # Chroot rhel-8.5-ppc64le does not exist in praiskup/helpers
+    chroot: "{{ 'epel-8-x86_64' if ansible_distribution != 'Fedora' else 'fedora-36-x86_64' }}"
   tags:
     - update_helpers
     - packages
