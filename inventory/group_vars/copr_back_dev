@@ -1,13 +1,6 @@
 ---
 copr_builder_flavor_name: "ms2.builder"
 copr_builder_image_name: "builder-f24"
-copr_builder_images:
-  aarch64: copr-builder-20200120_133457
-  aws:
-    aarch64: ami-0acfbfbed95798259 # copr-builder-aarch64-f31-20200421_133814
-    x86_64: ami-09a4c035460759858 # copr-builder-x86_64-f31-20200421_131242
-  ppc64le: copr-builder-ppc64le-f31-20200117_132023
-  x86_64: copr-builder-x86_64-f31-20200117_120726
 copr_builder_key_name: "buildsys"
 copr_builder_network_name: "coprdev-net"
 copr_builder_security_groups: "ssh-anywhere-coprdev,default,ssh-from-persistent-coprdev"
