@@ -117,7 +117,7 @@ class LibvirtSpawner:
         # The Power9 machine has not enough storage to host 2CPU/VM.  Let's
         # double the quote on CPU (at least for now).
         if host_id in [6]:
-            cpu_count = 4
+            self.cpu_count = 4
 
         self.workdir = tempfile.mkdtemp()
         self.script_path = os.path.dirname(os.path.realpath(__file__))
