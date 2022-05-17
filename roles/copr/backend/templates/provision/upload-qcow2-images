@@ -6,9 +6,14 @@ image=$1
 
 libvirt_connections='
 {% for host in groups["copr_hypervisor"] %}
-{% for arch in ["p08", "x86"] %}
-{% if arch in inventory_hostname and arch in hostvars[host]['inventory_hostname'] %}
+{% for arch in ["p08", "p09", "x86"] %}
+{% if arch in inventory_hostname %}
+{% set acceptable = ["p08", "p09"] if arch in ["p08", "p09"] else [arch] %}
+{% for check in acceptable %}
+{% if check in hostvars[host]['inventory_hostname'] %}
     qemu+ssh://copr@{{ hostvars[host]['inventory_hostname'] }}/system
+{% endif %}
+{% endfor %}
 {% endif %}
 {% endfor %}
 {% endfor %}
