@@ -311,12 +311,14 @@ class LibvirtSpawner:
         """
         Retry command till it succeeds
         """
+        if not exception_message:
+            exception_message = "Command failed"
         for _ in range(attempts):
             if not self.call(cmd, stdout=sys.stderr):
                 return
+            self.log.warning("%s, retry after %s", exception_message,
+                             sleep_seconds)
             time.sleep(sleep_seconds)
-        if not exception_message:
-            exception_message = "Command failed"
         exception_message += f" ({str(cmd)}, attempts={attempts})"
         raise Exception(exception_message)
 
