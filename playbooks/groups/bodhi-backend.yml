@@ -116,7 +116,7 @@
       warning: 10
       critical: 100
 
-  - role: zabbix/zabbix-agent
+  - role: zabbix/zabbix_agent
     zabbix_server: apache
     zabbix_server_ip: apache
     when: env == "staging"
