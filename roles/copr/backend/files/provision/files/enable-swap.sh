@@ -5,7 +5,27 @@ set -e
 
 part_suffix=p
 swap_device=
-if grep POWER9 /proc/cpuinfo; then
+
+generic_mount()
+{
+    # Find a "very large" volume — that one will be used (IBM Cloud assigns the
+    # swap volume name randomly, hypervisors have /var/vdb).
+    for vol in /dev/vdb /dev/vdc /dev/vdd /dev/vda; do
+       mount | grep $vol && continue
+       size=$(blockdev --getsize64 "$vol")
+       test "$size" -le 150000000000 && continue
+       swap_device=$vol
+       part_suffix=
+       break
+    done
+}
+
+
+if test -f /config/resalloc-vars.sh; then
+    # VMs on our hypervisors have this file created, providing some basic info
+    # about the "pool ID" (== particular hypervisor).
+    generic_mount
+elif grep POWER9 /proc/cpuinfo; then
     # OpenStack Power9 only for now.  We have only one large volume there.
     # Partitioning using cloud-init isn't trival, especially considering we
     # share the Power8 and Power9 builder images so we create a swap file
@@ -24,17 +44,8 @@ elif test -e /dev/nvme1n1; then
     # instance type.
     swap_device=/dev/nvme1n1
 else
-    # LibVirt (on-premise) machine, or the IBM Cloud machine.  Find the "large"
-    # volume, that one will be used (IBM Cloud assigns the swap volume name
-    # randomly).
-    for vol in /dev/vdb /dev/vdc /dev/vdd /dev/vda; do
-       mount | grep $vol && continue
-       size=$(blockdev --getsize64 "$vol")
-       test "$size" -le 150000000000 && continue
-       swap_device=$vol
-       part_suffix=
-       break
-    done
+    # This should be a machine in IBM Cloud
+    generic_mount
 fi
 
 test -n "$swap_device"
