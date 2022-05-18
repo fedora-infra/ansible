@@ -406,7 +406,7 @@ class LibvirtSpawner:
         # swap volume
         swap_volume = None
         if self.args.swap_vol_size:
-            size = str(self.args.swap_vol_size) + "MB"
+            size = str(self.args.swap_vol_size) + "GB"
             swap_volume = self.vm_name + "_swap"
             self.alloc_disk(swap_volume, size, pool=pool, allocation="2GB")
 
