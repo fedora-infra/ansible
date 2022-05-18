@@ -1,14 +1,50 @@
+HOW TO SETUP A NEW HYPERVISOR
+=============================
+
+First make sure you understand how resalloc foniguration works (pools.yaml), and
+that the referenced scripts (like 'libvirt-new' and 'vm-delete') can can
+correctly identify the pool/hypervisor (those scripts likely need an update!) —
+and thus assign (and later remove) appropriate IPv6 addresses, swap volumes,
+etc.
+
+Before the groups/copr-hypervisor.yml is run against the new host, manually
+prepare the swap volume:
+
+  1. disable the small zram swap (Fedora hypervisors)
+        a) swapoff /dev/zram0
+        b) dnf remove zram-generator-defaults
+  2. remove old (small) swap, adjust this appropriately!
+        a) swapoff /dev/mapper/vg_guests-LogVol01
+        b) lvremove /dev/vg_guests/LogVol01
+  3. create a larger SWAP volume
+        a) lvcreate -L 300G vg_guests -n swap
+        b) mkswap -L swap /dev/mapper/vg_guests-swap
+        c) Note that this requires changing /etc/fstab, and then
+           /etc/sysconfig/grub, and
+        d) regenerating the /boot grub config
+           $ grub2-mkconfig -o /boot/grub2/grub.cfg
+
+Manually create space for volumes/images:
+
+  1. assign the rest of the volume group to images
+        a) lvcreate -n images -l 100%FREE vg_guests
+        b) mkfs.ext4 /dev/mapper/vg_guests-images -L vmvolumes
+
+Manually create the br0 interface:
+
+  TODO: Not done by @praiskup but the infra team, TODO: add HOWTO
+
+
 General VM requirements for builder VMs
 ---------------------------------------
 
-- 2xvCPU
-- 16GB RAM
-- 16G for built results
--  4G for root partition
+- 2xvCPU+
+- 4GB+ RAM
+- 16G for built results => /var/lib/copr-rpmbuild
+-  4G for the root / partition
 - SWAP+RAM
-  - 32GB for /var/lib/mock tmpfs
-  - 140GB tmpfs for mock root(s)
-
+  - 32GB tmpfs mountpoint for /var/cache/mock
+  - 140GB+ SWAP for tmpfs for mock root(s) => /var/lib/mock
 
 AMD hypervisors
 ===============
@@ -16,7 +52,7 @@ AMD hypervisors
 vmhost-x86-copr0[1-4].rdu-cc.fedoraproject.org
 
 - 256G RAM
-- 64 threads (2x16 cores)
+- 64 threads (2x16 cores, AMD EPYC 7302 16-Core Processor)
 - 2.6T+ storage
 - 300 G SWAP
 
@@ -27,19 +63,34 @@ This brings us 32+ (few devel) overcommitted builders on each builder:
  - 172G*32 = up to 5.5T SWAP for tmpfs (huge overcommit, though only limitted
    amount of build tasks require that much tmpfs)
 
-Manually created swap:
 
-  1. lvcreate -L 300G vg_guests -n swap
-  2. mkswap -L swap /dev/mapper/vg_guests-swap
+Power8 hypervisors
+==================
 
-Note that this requires changing /etc/fstab, and then /etc/sysconfig/grub - and
-regenerating the /boot grub config (grub2-mkconfig -o /boot/grub2/grub.cfg).
+- 128G RAM
 
-Manually created space for volumes/images:
 
-  1. lvcreate -n images -l 100%FREE vg_guests
-  2. mkfs.ext4 /dev/mapper/vg_guests-images -L vmvolumes
+Power9 hypervisor
+=================
 
-Manually created br0 interface.
+vmhost-p09-copr01.rdu-cc.fedoraproject.org
 
-  Not done by me, TODO: add steps.
+- storage:
+    ├─vg_guests-LogVol00 253:0    0     32G  0 lvm   /
+    ├─vg_guests-swap     253:1    0    300G  0 lvm   [SWAP]
+    └─vg_guests-images   253:2    0 1002.6G  0 lvm   /libvirt-images
+
+- 256G RAM
+
+- 160 threads
+    - Thread(s) per core:  4
+      Core(s) per socket:  20
+      Socket(s):           2
+
+- Let's take the risk, and overload by 32 + 1 stage.  So each of them has only
+  about 32G storage.
+
+Overall allocation:
+    33*16G RAM => up to 528G used (256RAM + 300G SWAP can hold this)
+    33*140G disk => 4TB+ ... about 400% overcommit in the worst case
+    33*5 CPU = 165CPU used in the worst case
