@@ -58,7 +58,7 @@
 
   - role: openshift/object
     app: coreos-cincinnati
-    file: servicemonitor.yml
+    template: servicemonitor.yml
     objectname: servicemonitor.yml
 
   - role: openshift/route
