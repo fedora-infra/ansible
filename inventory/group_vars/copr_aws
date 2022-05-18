@@ -29,6 +29,8 @@ builders:
   # There's the ppc64le-test machine, so keep 2 builders less.
   ppc64le_hypervisor_02:
     ppc64le: [13, 4, 13]
+  p09_hypervisor_01:
+    ppc64le: [31, 5, 31]
   x86_hypervisor_01:
     x86_64: [20, 4, 20]
   x86_hypervisor_02:
@@ -49,15 +51,15 @@ copr_builder_fedora_version: 35
 
 copr_builder_images:
   aws:
-    aarch64: ami-025bf39e573e362ac
-    x86_64: ami-0899b814c800d7189
+    aarch64: ami-06e268b5ccb064919
+    x86_64: ami-09386b18d94a16eb0
   hypervisor:
-    ppc64le: copr-builder-ppc64le-20220321_170607
-    x86_64: copr-builder-x86_64-20220321_170653
+    ppc64le: copr-builder-ppc64le-20220518_132258
+    x86_64: copr-builder-x86_64-20220517_090449
   ibm_cloud:
-    s390x: r022-e19e28b1-4d01-468c-ba9f-f0ef67016c80
+    s390x: r022-509ad3cb-274a-4008-90a8-a8dfd235abb8
   osuosl:
-    ppc64le: copr-builder-ppc64le-20220321_170607
+    ppc64le: copr-builder-ppc64le-20220518_132258
 
 copr_messaging: true
 datacenter: aws
