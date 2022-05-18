@@ -134,7 +134,7 @@ copr_hv_ppc64le_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
 {% if "p09_hypervisor_" + hv in builders %}
 
 copr_p09_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
-    max: {{ builders["ppc64le_hypervisor_" + hv]["ppc64le"][0] }}
+    max: {{ builders["p09_hypervisor_" + hv]["ppc64le"][0] }}
     max_starting: {{ builders["p09_hypervisor_" + hv]["ppc64le"][1] }}
     max_prealloc: {{ builders["p09_hypervisor_" + hv]["ppc64le"][2] }}
     tags:
