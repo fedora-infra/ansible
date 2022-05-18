@@ -1,0 +1,13 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    monitoring-key: 'cpe'
+  name: coreos-cincinnati
+spec:
+  endpoints:
+    - path: /metrics
+      port: coreos-cincinnati-raw-updates-status
+  selector:
+    matchLabels:
+      app: coreos-cincinnati
