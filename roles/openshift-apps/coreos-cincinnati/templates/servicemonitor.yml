@@ -1,3 +1,4 @@
+---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
@@ -6,8 +7,10 @@ metadata:
   name: coreos-cincinnati
 spec:
   endpoints:
-    - path: /metrics
-      port: coreos-cincinnati-raw-updates-status
+    - port: coreos-cincinnati-raw-updates-status
+      path: /metrics
+    - port: coreos-cincinnati-updates-status
+      path: /metrics
   selector:
     matchLabels:
       app: coreos-cincinnati
