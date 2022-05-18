@@ -14,6 +14,22 @@
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
   - import_tasks: "{{ tasks_path }}/osbs_certs.yml"
 
+  - name: override nbde_client-network-flush to work around bug
+    copy:
+      src: "{{ files }}/common/nbde_client-network-flush"
+      dest: /usr/bin/nbde_client-network-flush
+      owner: root
+      group: root
+      mode: 755
+
+  - name: tell NetworkManager we don't want any auto connections
+    copy:
+      src: "{{ files }}/common/noautodefault.conf"
+      dest: /etc/NetworkManager/conf.d/noautodefault.conf
+      owner: root
+      group: root
+      mode: 644
+
   roles:
   - base
   - { role: nfs/client, mnt_dir: '/mnt/fedora_koji',  nfs_src_dir: "{{ koji_hub_nfs }}", when: koji_hub_nfs is defined }
