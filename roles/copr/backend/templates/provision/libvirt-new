@@ -93,32 +93,24 @@ class LibvirtSpawner:
     # pylint: disable=too-many-instance-attributes
     workdir = None
     connection = None
-    vm_name = None
     root_disk_pool = "images"
     root_vol_size = "6GB"
     startup_script = ""
     config_files = []
     arch = None
-    swap_vol_size = None
-    cpu_count = 2
     boot_options = []
     ipv6 = None
     playbook = "{{ provision_directory }}/libvirt-provision.yml"
 
-    def __init__(self, resalloc_pool_id, log):
+    def __init__(self, resalloc_pool_id, log, args):
+        self.args = args
+        self.vm_name = args.name
         host_id, self.connection, self.arch = get_hv_identification_from_pool_id(
             resalloc_pool_id)
-
         self.config_files.append(ConfigFile(
             "resalloc-vars.sh",
             f"POOL_ID={resalloc_pool_id}\n",
         ))
-
-        # The Power9 machine has not enough storage to host 2CPU/VM.  Let's
-        # double the quote on CPU (at least for now).
-        if host_id in [6]:
-            self.cpu_count = 4
-
         self.workdir = tempfile.mkdtemp()
         self.script_path = os.path.dirname(os.path.realpath(__file__))
         self.log = log
@@ -323,7 +315,7 @@ class LibvirtSpawner:
         raise Exception(exception_message)
 
 
-    def boot_machine(self, volumes, vcpus):
+    def boot_machine(self, volumes):
         """
         Use virt-install to start the VM according to previously given
         configuration.
@@ -331,9 +323,9 @@ class LibvirtSpawner:
         cmd = [
             'virt-install',
             '--connect', self.connection,
-            '--ram', '4096',
+            '--ram', str(self.args.ram_size),
             '--os-type', 'generic',
-            '--vcpus', str(vcpus),
+            '--vcpus', str(self.args.cpu_count),
             '--vnc',
             '--features', 'acpi=off',
             '--noautoconsole',
@@ -413,10 +405,10 @@ class LibvirtSpawner:
 
         # swap volume
         swap_volume = None
-        if self.swap_vol_size:
+        if self.args.swap_vol_size:
+            size = str(self.args.swap_vol_size) + "MB"
             swap_volume = self.vm_name + "_swap"
-            self.alloc_disk(swap_volume, self.swap_vol_size, pool=pool,
-                            allocation="2GB")
+            self.alloc_disk(swap_volume, size, pool=pool, allocation="2GB")
 
         volumes = []
         volumes += [("{}/{}".format(pool, vol_root), 'disk',  'virtio')]
@@ -428,7 +420,7 @@ class LibvirtSpawner:
             volume = "{}/{}".format(pool, swap_volume)
             volumes += [(volume, "disk", "virtio")]
 
-        self.boot_machine(volumes, self.cpu_count)
+        self.boot_machine(volumes)
 
         self.wait_for_ssh(self.ipv6)
         self.execute_spinup_playbook(self.ipv6, self.playbook)
@@ -437,7 +429,7 @@ class LibvirtSpawner:
 def get_arg_parser():
     """ Get the argparse object """
     parser = argparse.ArgumentParser()
-    parser.add_argument('--swap-vol-size', metavar='GB', type=int, default=20)
+    parser.add_argument('--swap-vol-size', metavar='GB', type=int)
     parser.add_argument('--root-vol-size', metavar='GB', type=int)
     parser.add_argument('--cpu-count', default=2)
     parser.add_argument('--ram-size', metavar='MB', default=4096)
@@ -504,9 +496,7 @@ def _main():
                                            args.resalloc_id_in_pool,
                                            devel, log)
 
-    spawner = LibvirtSpawner(args.resalloc_pool_id, log)
-    spawner.vm_name = args.name
-    spawner.swap_vol_size = str(args.swap_vol_size) + "GB"
+    spawner = LibvirtSpawner(args.resalloc_pool_id, log, args)
     spawner.add_nat_network()
     spawner.add_bridged_network("Wired connection 2", "eth1", ip6_a, ip6_g)
 
