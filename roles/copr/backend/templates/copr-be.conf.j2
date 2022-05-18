@@ -92,6 +92,9 @@ aws_cloudfront_distribution={{ aws_cloudfront_distribution }}
 # log_level=info
 # log_format=[%(asctime)s][%(levelname)6s][PID:%(process)d][%(name)10s][%(filename)s:%(funcName)s:%(lineno)d] %(message)s
 
+# Use sha256 hash for all active chroots except for EPEL7
+gently_gpg_sha256 = False
+
 [builder]
 # default is 1800, this probably has no effect!
 timeout=108000
