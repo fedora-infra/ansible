@@ -147,7 +147,9 @@ copr_p09_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     - hypervisor_ppc64le
     - hypervisor_ppc64le_{{ hv }}
     - arch_power9
-    cmd_new: "/var/lib/resallocserver/provision/libvirt-new --ram-size 16384 --swap-vol-size 168"
+    # The Power9 machine has 160 threads.  The bottleneck is certainly small
+    # disk, so try to waste the CPUs appropriately.
+    cmd_new: "/var/lib/resallocserver/provision/libvirt-new --cpu-count 5 --ram-size 16384 --swap-vol-size 168"
     cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
     cmd_livecheck: "resalloc-check-vm-ip"
     cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
