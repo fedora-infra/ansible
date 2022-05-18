@@ -113,6 +113,13 @@
     serviceport: 8080-tcp
     servicename: oraculum-frontend
 
+  - role: openshift/route
+    app: oraculum
+    routename: qa-landing
+    host: "qa{{ env_suffix }}.fedoraproject.org"
+    serviceport: 8080-tcp
+    servicename: qa-landing
+
   - role: openshift/start-build
     app: oraculum
     buildname: packager-dashboard-build
