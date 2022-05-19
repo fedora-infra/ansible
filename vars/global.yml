@@ -65,10 +65,10 @@ httpd_maxrequestworkers: 256
 
 # Set a default hostname base to transient. Override in host vars or command line.
 hostbase: transient
-global_pkgs_inst: ['bind-utils', 'mailx', 'nc', 'openssh-clients',
+global_pkgs_inst: ['bind-utils', 'nc', 'openssh-clients',
                    'patch', 'postfix', 'rsync', 'strace',
                    'tmpwatch', 'traceroute', 'vim-enhanced', 'xz', 'zsh',
-                   'bash-completion', 'telnet',
+                   'bash-completion',
                    'atop', 'htop', 'rsyslog' ]
 # Set up variables for various files to make sure we don't forget to use.
 repoSpanner_rpms_http: 8445
