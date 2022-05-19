@@ -41,6 +41,9 @@
   loop: "{{ ipa_servers }}"
   when: ipa_servers is defined
 
+- name: print ipa_servers
+  debug: "var=ipa_servers"
+
 - name: "Let everybody run sudo"
   delegate_to: "{{ item }}"
   ipahbacrule:
