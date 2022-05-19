@@ -66,14 +66,4 @@ copr_p09_01*)
 esac
 
 # The rest of this script is LibVirt only!
-
-repeat()
-{
-    for _ in a b c; do
-        "$@" && break
-        sleep 15
-    done
-}
-
-repeat virsh -c "$conn" destroy  "$RESALLOC_NAME"
-repeat virsh -c "$conn" undefine "$RESALLOC_NAME" --remove-all-storage --nvram
+{{ provision_directory }}/libvirt-delete --connection "$conn" "$RESALLOC_NAME"

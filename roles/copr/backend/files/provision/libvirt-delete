@@ -1,0 +1,73 @@
+#! /usr/bin/python3
+
+"""
+Delete the given Resalloc-related LibVirt domain (and the related resources)
+"""
+
+# pylint: disable=broad-except
+
+import argparse
+import logging
+import time
+
+import libvirt
+
+def repeat(call, args):
+    """ Repeat the given function call, with args """
+    attempts = 3
+    for attempt in range(1, attempts+1):
+        try:
+            return call(*args)
+        except Exception:
+            seconds = 10
+            if attempt < attempts:
+                logging.exception("Failed repeatable call, sleep %ss",
+                                  seconds)
+                time.sleep(seconds)
+                continue
+            raise
+
+def _get_parser():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--connection", required=True)
+    parser.add_argument("domainname")
+    return parser
+
+def _delete_domain(domain):
+    try:
+        domain.destroy()
+        logging.info("Domain %s destroyed", domain.name())
+    except Exception:
+        logging.exception("can't destroy %s", domain.name())
+
+    domain.undefine()
+    logging.info("Domain %s undefined", domain.name())
+
+def _delete_volume(pool, volume_name):
+    volume = pool.storageVolLookupByName(volume_name)
+    volume.delete()
+
+
+def _main():
+    logging.basicConfig(level=logging.INFO)
+    args = _get_parser().parse_args()
+    conn = repeat(libvirt.open, (args.connection,))
+    try:
+        domain = repeat(conn.lookupByName, (args.domainname,))
+        repeat(_delete_domain, (domain,))
+        logging.info("domain %s removed", args.domainname)
+    except Exception:
+        logging.exception("domain can't be removed")
+
+    pool = repeat(conn.storagePoolLookupByName, ("images",))
+    for volume_name in repeat(pool.listVolumes, ()):
+        if not volume_name.startswith(args.domainname):
+            continue
+        try:
+            repeat(_delete_volume, (pool, volume_name,))
+            logging.info("volume %s removed", volume_name)
+        except Exception:
+            logging.exception("volume %s can not be removed", volume_name)
+
+if __name__ == "__main__":
+    _main()

@@ -1,0 +1,52 @@
+#! /usr/bin/python3
+
+"""
+List all the Resalloc Pool-related LibVirt domains that are either (a) still
+defined/running, or (b) have some resource (e.g. storage) still available in the
+LibVirt hypervisor.
+"""
+
+import argparse
+import sys
+
+import libvirt
+
+def _get_parser():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--connection", required=True)
+    parser.add_argument("--pool", required=True)
+    return parser
+
+def _main():
+    args = _get_parser().parse_args()
+
+    try:
+        conn = libvirt.openReadOnly(args.connection)
+    except libvirt.libvirtError:
+        print('Failed to open connection to the hypervisor')
+        sys.exit(1)
+
+    # Gather the list of all domains here
+    vm_names = set()
+
+    # List all the volumes in the 'images' pool that seem to be related to given
+    # Pool name
+    pool = conn.storagePoolLookupByName("images")
+    for volume in pool.listVolumes():
+        if volume.startswith(args.pool):
+            vm_names.add(volume.rsplit("_", 1)[0])
+
+    # List all domains that are related to given Pool (just to be 100% sure, but
+    # this shouldn't add any new items to the vm_names set actually).
+    for domain in conn.listAllDomains():
+        name = domain.name()
+        if name.startswith(args.pool):
+            vm_names.add(name)
+
+    # Print them out, so upper level tooling can work with the list.  See:
+    # roles/copr/backend/files/provision/libvirt-list
+    for name in vm_names:
+        print(name)
+
+if __name__ == "__main__":
+    _main()
