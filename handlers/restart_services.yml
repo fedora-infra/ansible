@@ -86,6 +86,7 @@
 
 - name: restart xinetd
   action: service name=xinetd state=restarted
+  when: not inventory_hostname.startswith('proxy')
 
 - name: restart netapproute
   action: command /etc/sysconfig/network-scripts/ifup-routes eth1
