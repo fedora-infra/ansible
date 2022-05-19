@@ -3,10 +3,16 @@
 # Setup ansible-server instance
 #
 - name: install needed packages
-  package: name={{ item }} state=present
-  with_items:
-  - ansible-core
-  - git
+  package:
+    name:
+      - ansible-core
+      - git
+      - ansible-collection-community-posix
+      - ansible-collection-community-general
+      - ansible-collection-community-mysql
+      - ansible-collection-community-docker
+      - ansible-collection-community-libvirt
+      - ansible-collection-community-rabbitmq
   tags:
   - packages
   - ansible-server
