@@ -10,7 +10,7 @@
   package: name=python3-geoip2 state=present
   tags:
   - packages
-  when: (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int >= 8) 
+  when: (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int >= 8)
 
 - name: make sure the /usr/share/GeoIP/ directory exists
   file:
