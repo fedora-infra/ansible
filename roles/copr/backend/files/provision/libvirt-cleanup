@@ -1,0 +1,57 @@
+#! /bin/bash
+
+# This should be handled by https://github.com/praiskup/resalloc/issues/88 in
+# the future.  For now this is called manually.
+
+separator=' '
+pools_observed=
+
+current_machines()
+{
+    connection=$1
+    pool=$2
+    content=$(/var/lib/resallocserver/provision/libvirt-list --connection "$connection" --pool "$pool")
+    eval "$pool=' $(echo $content) '"
+    eval "${pool}_connection=\$connection"
+    pools_observed=$pools_observed$separator$pool
+}
+
+case $(hostname) in
+  copr-be-dev.aws.fedoraproject.org) suffix=_dev ;;
+  copr-be.aws.fedoraproject.org) suffix=_prod ;;
+  *) echo bad hostname ; exit 1 ;;
+esac
+
+for i in 1 2 3 4; do
+  current_machines qemu+ssh://copr@vmhost-x86-copr0$i.rdu-cc.fedoraproject.org/system copr_hv_x86_64_0$i$suffix
+done
+
+for i in 1 2; do
+  current_machines qemu+ssh://copr@vmhost-p08-copr0$i.rdu-cc.fedoraproject.org/system copr_hv_ppc64le_0$i$suffix
+done
+
+for i in 1; do
+  current_machines qemu+ssh://copr@vmhost-p09-copr0$i.rdu-cc.fedoraproject.org/system copr_p09_0$i$suffix
+done
+
+running_machines=$(resalloc-maint resource-list |cut  -d' ' -f3)
+set -- $running_machines
+running_machines=" $* "
+
+for pool in $pools_observed; do
+  eval "leftovers=\$$pool"
+  eval "connection=\$${pool}_connection"
+  for leftover in $leftovers; do
+    case $running_machines in
+      *" $leftover "*) continue ;; # this machine is still tracked
+    esac
+
+    cmd=(
+        /var/lib/resallocserver/provision/libvirt-delete
+        --connection "$connection"
+        "$leftover"
+     )
+     echo "running: ${cmd[*]}"
+     "${cmd[@]}"
+  done
+done
