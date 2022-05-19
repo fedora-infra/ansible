@@ -1194,16 +1194,6 @@ host bvmhost-p09-04 {
      option subnet-mask 255.255.255.0;
 }
 
-
-host bvmhost-p08-01 {
-     hardware ethernet 98:be:94:68:a7:e0;
-     fixed-address 10.3.171.11;
-     next-server 10.3.163.10;
-     option routers 10.3.171.254;
-     option subnet-mask 255.255.255.0;
-}
-
-
 #
 # All MGMT hosts go below here
 #
@@ -1466,11 +1456,6 @@ host kernel03-mgmt {
      fixed-address 10.3.160.65;
      option host-name "kernel-03";
 }
-host openqa-p08-01-mgmt {
-     hardware ethernet A0:42:3F:31:C2:7E;
-     fixed-address 10.3.160.66;
-     option host-name "openqa-ppc-01-mgmt";
-}
 host vmhost-qa-01-mgmt {
      hardware ethernet 58:8A:5A:F3:9C:02;
      fixed-address 10.3.160.68;
@@ -1551,31 +1536,6 @@ host bvmhost-a64-osbs01-mgmt {
      hardware ethernet E8:6A:64:39:18:B3;
      fixed-address 10.3.160.120;
      option host-name "bvmhost-a64-osbs01-01";
-}
-host bvmhost-p08-01-mgmt {
-     hardware ethernet a0:42:3f:32:b2:fb;
-     fixed-address 10.3.160.121;
-     option host-name "bvmhost-p08-01";
-}
-host bvmhost-p08-02-mgmt {
-     hardware ethernet 98:BE:94:4B:9C:D2;
-     fixed-address 10.3.160.122;
-     option host-name "bvmhost-p08-02";
-}
-host bvmhost-p08-03-mgmt {
-     hardware ethernet 40:F2:E9:A5:47:60;
-     fixed-address 10.3.160.123;
-     option host-name "bvmhost-p08-03";
-}
-host bvmhost-p08-01-stg-mgmt {
-     hardware ethernet 98:BE:94:4B:96:10;
-     fixed-address 10.3.160.124;
-     option host-name "bvmhost-p08-01-stg";
-}
-host bvmhost-p08-05-mgmt {
-     hardware ethernet 98:BE:94:4B:94:C4;
-     fixed-address 10.3.160.125;
-     option host-name "bvmhost-p08-05";
 }
 host bvmhost-p09-03-mgmt {
      hardware ethernet ac:1f:6b:5c:03:9d;
