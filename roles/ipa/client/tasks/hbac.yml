@@ -56,7 +56,7 @@
     hbacsvcgroup:
       - Sudo
   notify: clean sss caches
-  no_log: true
+  no_log: false
   loop: "{{ ipa_servers }}"
   when: ipa_servers is defined
 
