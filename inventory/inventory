@@ -67,6 +67,10 @@ bastion13.fedoraproject.org
 [bastion_stg]
 # bastion01.stg.iad2.fedoraproject.org
 
+[bastion_iad2]
+bastion01.iad2.fedoraproject.org
+bastion02.iad2.fedoraproject.org
+
 [centos_ipa_client_stg]
 centos-ipa-client01.stg.iad2.fedoraproject.org
 centos-ipa-client02.stg.iad2.fedoraproject.org
@@ -271,6 +275,9 @@ log01.iad2.fedoraproject.org
 batcave01.iad2.fedoraproject.org
 batcave13.rdu2.fedoraproject.org
 
+[batcave_iad2]
+batcave01.iad2.fedoraproject.org
+
 [ipa]
 ipa01.iad2.fedoraproject.org
 ipa02.iad2.fedoraproject.org
@@ -290,6 +297,9 @@ ipsilon02.iad2.fedoraproject.org
 [nagios]
 noc01.iad2.fedoraproject.org
 noc02.fedoraproject.org
+
+[nagios_iad2]
+noc01.iad2.fedoraproject.org
 
 [notifs:children]
 notifs_backend
@@ -408,6 +418,10 @@ ns02.iad2.fedoraproject.org
 ns02.fedoraproject.org
 ns05.fedoraproject.org
 ns13.rdu2.fedoraproject.org
+
+[dns_iad2]
+ns01.iad2.fedoraproject.org
+ns02.iad2.fedoraproject.org
 
 [odcs_frontend]
 odcs-frontend01.iad2.fedoraproject.org
@@ -537,7 +551,11 @@ proxy110.iad2.fedoraproject.org
 proxy01.iad2.fedoraproject.org
 proxy10.iad2.fedoraproject.org
 
-
+[proxies_iad2]
+proxy01.iad2.fedoraproject.org
+proxy10.iad2.fedoraproject.org
+proxy101.iad2.fedoraproject.org
+proxy110.iad2.fedoraproject.org
 
 [proxies:children]
 proxies_external
@@ -1235,9 +1253,8 @@ iad2_staging
 [iad2_production:children]
 backup
 badges
-bastion01.iad2.fedoraproject.org
-bastion02.iad2.fedoraproject.org
-batcave01.iad2.fedoraproject.org
+bastion_iad2
+batcave_iad2
 bodhi_backend
 buildhw
 buildvm
@@ -1250,9 +1267,7 @@ bvirthost
 certgetter
 dbserver
 debuginfod
-ns01.iad2.fedoraproject.org
-ns02.iad2.fedoraproject.org
-ns13.rdu2.fedoraproject.org
+dns_iad2
 download_iad2
 fedimg
 github2fedmsg
@@ -1266,7 +1281,7 @@ mailman
 mbs
 memcached
 mm
-noc01.iad2.fedoraproject.org
+nagios_iad2
 notifs
 nuancier
 oci_registry
@@ -1277,10 +1292,7 @@ openqa_lab_workers
 openqa_workers
 pdc_web
 pkgs
-proxy01.iad2.fedoraproject.org
-proxy10.iad2.fedoraproject.org
-proxy101.iad2.fedoraproject.org
-proxy110.iad2.fedoraproject.org
+proxies_iad2
 qahardware
 rabbitmq
 releng_compose
