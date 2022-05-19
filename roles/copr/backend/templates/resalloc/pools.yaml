@@ -144,8 +144,8 @@ copr_p09_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     - arch_ppc64le
     - arch_ppc64le_native
     - hypervisor
-    - hypervisor_ppc64le
-    - hypervisor_ppc64le_{{ hv }}
+    - hypervisor_p09
+    - hypervisor_p09_{{ hv }}
     - arch_power9
     # The Power9 machine has 160 threads.  The bottleneck is certainly small
     # disk, so try to waste the CPUs appropriately.
