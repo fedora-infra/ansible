@@ -29,13 +29,13 @@
   lineinfile:
     path: /var/lib/pgsql/data/pg_ident.conf
     line: "{{ item }}"
-    with_items:
-      - "all postgres postgres"
-      - "all resalloc resalloc"
-      - "all lighttpd resalloc"
     owner: postgres
     group: postgres
     mode: 0600
+  with_items:
+    - "all postgres postgres"
+    - "all resalloc resalloc"
+    - "all lighttpd resalloc"
 
 - name: configure access to the resalloc database
   postgresql_pg_hba:
