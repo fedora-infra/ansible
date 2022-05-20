@@ -25,20 +25,14 @@
 - name: enable PostgreSQL service
   service: state=started enabled=yes name=postgresql
 
-- name: Create PG user
-  postgresql_user: name="resalloc"
-  become: yes
-  become_user: postgres
-
-- name: Create db
-  postgresql_db: name="resalloc" encoding='UTF-8' owner=resalloc
-  become: yes
-  become_user: postgres
-
-- name: allow lighttpd user to conenct into the database as resalloc
+- name: allow system users to conenct into the database
   lineinfile:
     path: /var/lib/pgsql/data/pg_ident.conf
-    line: "resalloc lighttpd resalloc"
+    line: "{{ item }}"
+    with_items:
+      - "all postgres postgres"
+      - "all resalloc resalloc"
+      - "all lighttpd resalloc"
     owner: postgres
     group: postgres
     mode: 0600
@@ -50,7 +44,17 @@
     databases: all
     users: all
     method: peer
-    options: map=resalloc
+    options: map=all
+
+- name: Create PG user
+  postgresql_user: name="resalloc"
+  become: yes
+  become_user: postgres
+
+- name: Create db
+  postgresql_db: name="resalloc" encoding='UTF-8' owner=resalloc
+  become: yes
+  become_user: postgres
 
 - set_fact:
     provision_directory: /var/lib/resallocserver/provision
