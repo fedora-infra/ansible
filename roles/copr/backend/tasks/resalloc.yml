@@ -120,7 +120,7 @@
   template:
     src: "resalloc/{{ item }}"
     dest: "/etc/resallocserver/{{ item }}"
-    mode: 0600
+    mode: 0640
     owner: resalloc
     group: resalloc
   with_items:
