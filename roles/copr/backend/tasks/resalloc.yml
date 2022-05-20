@@ -35,6 +35,23 @@
   become: yes
   become_user: postgres
 
+- name: allow lighttpd user to conenct into the database as resalloc
+  lineinfile:
+    path: /var/lib/pgsql/data/pg_ident.conf
+    line: "resalloc lighttpd resalloc"
+    owner: postgres
+    group: postgres
+    mode: 0600
+
+- name: configure access to the resalloc database
+  postgresql_pg_hba:
+    dest: /var/lib/pgsql/data/pg_hba.conf
+    contype: local
+    databases: all
+    users: all
+    method: peer
+    options: map=resalloc
+
 - set_fact:
     provision_directory: /var/lib/resallocserver/provision
     ibmcloud_token_file: /var/lib/resallocserver/.ibm-cloud-token
