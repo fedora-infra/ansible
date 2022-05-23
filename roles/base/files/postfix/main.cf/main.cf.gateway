@@ -781,6 +781,7 @@ smtp_tls_cert_file = /etc/pki/tls/certs/gateway.crt
 smtp_tls_key_file = /etc/pki/tls/private/gateway.key
 smtp_tls_CAfile  = /etc/pki/tls/certs/ca-bundle.crt
 smtp_tls_connection_reuse = yes
+smtp_connection_cache_destinations = mx2.redhat.com,gmail.com,google.com,scrye.com
 ## End smtp_tls
 ## General TLS
 tls_random_source                       = dev:/dev/urandom
