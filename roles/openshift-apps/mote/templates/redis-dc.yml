@@ -14,13 +14,11 @@ spec:
         app: redis
     spec:
       containers:
-      - image: docker.io/redis:latest
-        args:
-        - redis-server
+      - image: registry.redhat.io/rhel9/redis-6
         name: redis
         imagePullPolicy: IfNotPresent
         volumeMounts:
-        - mountPath: /data
+        - mountPath: /var/lib/redis/data
           name: redis-data
         resources:
           limits:
