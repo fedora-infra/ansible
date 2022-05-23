@@ -77,15 +77,7 @@
     owner_user: apache
     owner_group: apache
     service: bodhi
-    host: "bodhi.fedoraproject.org"
-    when: env == "production"
-
-  - role: keytab/service
-    owner_user: apache
-    owner_group: apache
-    service: bodhi
-    host: "bodhi.stg.fedoraproject.org"
-    when: env == "staging"
+    host: "bodhi{{ env_suffix }}.fedoraproject.org"
 
   - role: zabbix/zabbix_agent
     when: env == "staging"

@@ -1,4 +1,8 @@
+{% if env == "staging" %}
+FROM fedora:35
+{% else %}
 FROM fedora:34
+{% endif %}
 LABEL \
     name="bodhi-base" \
     vendor="Fedora Infrastructure" \

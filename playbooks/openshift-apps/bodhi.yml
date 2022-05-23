@@ -23,11 +23,6 @@
   - set_fact:
     args:
       bodhi_version: "{{ bodhi_version }}"
-    when: env == "staging"
-  - set_fact:
-    args:
-      bodhi_version: "{{ bodhi_version }}"
-    when: env == "production"
 
   roles:
   - role: rabbit/user

@@ -8,11 +8,7 @@ items:
       service: web
     name: bodhi-web
   spec:
-{% if env == "staging" %}
     replicas: {{ bodhi_openshift_pods }}
-{% else %}
-    replicas: {{ bodhi_openshift_pods }}
-{% endif %}
     selector:
       deploymentconfig: bodhi-web
     strategy:
@@ -142,11 +138,7 @@ items:
       service: consumer
     name: bodhi-consumer
   spec:
-{% if env == "staging" %}
     replicas: {{ bodhi_openshift_pods }}
-{% else %}
-    replicas: {{ bodhi_openshift_pods }}
-{% endif %}
     selector:
       deploymentconfig: bodhi-consumer
     strategy:
@@ -239,11 +231,7 @@ items:
       service: celery
     name: bodhi-celery
   spec:
-{% if env == "staging" %}
     replicas: {{ bodhi_openshift_pods }}
-{% else %}
-    replicas: {{ bodhi_openshift_pods }}
-{% endif %}
     selector:
       deploymentconfig: bodhi-celery
     strategy:

@@ -419,11 +419,7 @@ fmn_url = https://apps{{env_suffix}}.fedoraproject.org/notifications/
 # krb_principal =
 # krb_keytab =
 # krb_ccache=
-{% if env == 'staging' %}
 krb_ccache = /tmp/krb5cc_%%{uid}
-{% else %}
-krb_ccache = /tmp/krb5cc_%%{uid}
-{% endif %}
 krb_principal = bodhi/bodhi{{ env_suffix }}.fedoraproject.org@{{ ipa_realm }}
 krb_keytab = /etc/krb5.bodhi_bodhi{{ env_suffix }}.fedoraproject.org.keytab
 
@@ -669,8 +665,8 @@ openid.sreg_required = email nickname
 {% if env == 'staging' %}
 # OIDC (OpenID Connect)
 oidc.fedora.client_id = bodhi
-oidc.fedora.client_secret = {{ bodhi2_oidc_client_secret_staging }}
-oidc.fedora.server_metadata_url = http://id.stg.fedoraproject.org/openidc/.well-known/openid-configuration
+oidc.fedora.client_secret = {{ (env == 'staging')|ternary(bodhi2_oidc_client_secret_staging, bodhi2_oidc_client_secret) }}
+oidc.fedora.server_metadata_url = http://id{{ env_suffix }}.fedoraproject.org/openidc/.well-known/openid-configuration
 {% endif %}
 
 

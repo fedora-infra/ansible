@@ -11,11 +11,7 @@ items:
     runPolicy: Serial
     source:
       dockerfile: |-
-{% if env == "staging" %}
-        {{ load_file('dockerfile-base.stg') | indent(8) }}
-{% else %}
         {{ load_file('dockerfile-base') | indent(8) }}
-{% endif %}
       type: Dockerfile
     strategy:
       type: Docker
