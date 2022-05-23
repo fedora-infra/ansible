@@ -6,7 +6,11 @@ domain = "fedoraproject.org"
 ircnick = "fedora-notif"
 {% endif %}
 
+{% if env == 'staging' %}
+base = "https://apps.stg.%s/notifications/" % domain
+{% else %}
 base = "https://apps.%s/notifications/" % domain
+{% endif %}
 
 
 config = {

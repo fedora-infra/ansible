@@ -68,6 +68,7 @@
   - notifs/backend
   - role: collectd/fedmsg-service
     process: fedmsg-hub
+    when: inventory_hostname.startswith('notifs-backend01.iad2')
 
   vars_files:
    - /srv/web/infra/ansible/vars/global.yml
