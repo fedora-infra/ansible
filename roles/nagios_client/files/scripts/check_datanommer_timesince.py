@@ -1,74 +1,85 @@
-#!/usr/bin/python
-""" NRPE check for datanommer/fedmsg health.
+#!/usr/bin/python3
+""" NRPE check for datanommer/fedora-messaging health.
 Given a category like 'bodhi', 'buildsys', or 'git', return an error if
 datanommer hasn't seen a message of that type in such and such time.
 You can alternatively provide a 'topic' which might look like
 org.fedoraproject.prod.bodhi.update.comment.
- 
-Requires:  python-dateutil
- 
+
+Requires:  python-requests
+
 Usage:
- 
+
     $ check_datanommer_timesince CATEGORY WARNING_THRESH CRITICAL_THRESH
- 
-:Author: Ralph Bean <rbean@redhat.com>
- 
+
+:Author: Aurelien Bompard <abompard@fedoraproject.org>
+
 """
-from __future__ import print_function
- 
-from builtins import str
-import dateutil.relativedelta
-import subprocess
+
 import sys
-import json
- 
- 
-def query_timesince(identifier):
+from datetime import datetime, timezone
+
+import requests
+
+
+DATAGREPPER_URL = "https://apps.fedoraproject.org/datagrepper"
+
+
+def query_messages(identifier, delta):
+    params = {"delta": delta, "rows_per_page": 1, "page": 1}
     # If it has a '.', then assume it is a topic.
-    if '.' in identifier:
-        cmd = 'datanommer-latest --topic %s --timesince' % identifier
+    if "." in identifier:
+        params["topic"] = identifier
     else:
-        cmd = 'datanommer-latest --category %s --timesince' % identifier
-    sys.stderr.write("Running %r\n" % cmd)
-    process = subprocess.Popen(cmd.split(), shell=False,
-                               stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    stdout, stderr = process.communicate()
-    prefix, stdout = stdout.split("INFO] ", 1)
-    data = json.loads(stdout)
-    return float(data[0])
- 
- 
+        params["category"] = identifier
+    response = requests.get(f"{DATAGREPPER_URL}/v2/search", params=params)
+    if not response.ok:
+        print(f"UNKNOWN: Could not query {DATAGREPPER_URL}: error {response.status_code}")
+        sys.exit(3)
+    result = response.json()
+    return result
+
+
+def parse_args():
+    def _usage():
+        print(f"Usage: {sys.argv[0]} CATEGORY WARNING_THRESHOLD CRITICAL_THRESHOLD")
+        sys.exit(3)
+
+    if len(sys.argv) != 4:
+        _usage()
+    try:
+        int(sys.argv[2])
+        int(sys.argv[3])
+    except ValueError:
+        _usage()
+    if int(sys.argv[2]) > int(sys.argv[3]):
+        _usage()
+    return sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
+
+
 def main():
-    identifier, warning_threshold, critical_threshold = sys.argv[-3:]
-    timesince = query_timesince(identifier)
-    warning_threshold = int(warning_threshold)
-    critical_threshold = int(critical_threshold)
- 
-    time_strings = []
-    rd = dateutil.relativedelta.relativedelta(seconds=timesince)
-    for denomination in ['years', 'months', 'days', 'hours', 'minutes', 'seconds']:
-        value = getattr(rd, denomination, 0)
-        if value:
-            time_strings.append("%d %s" % (value, denomination))
- 
-    string = ", ".join(time_strings)
-    reason = "datanommer has not seen a %r message in %s" % (identifier, string)
- 
-    if timesince > critical_threshold:
-        print("CRIT: ", reason)
+    identifier, warning_threshold, critical_threshold = parse_args()
+    result = query_messages(identifier, critical_threshold)
+
+    if result["total"] == 0:
+        print(f"CRIT: no {identifier} messages in {critical_threshold} seconds")
         sys.exit(2)
- 
-    if timesince > warning_threshold:
-        print("WARN: ", reason)
+
+    last_timestamp = result["raw_messages"][0]["headers"]["sent-at"]
+    last_timestamp = datetime.fromisoformat(last_timestamp)
+    seconds_since = int((datetime.now(timezone.utc) - last_timestamp).total_seconds())
+    reason = f"last {identifier} message was {seconds_since} seconds ago"
+
+    if seconds_since > warning_threshold:
+        print(f"WARN: {reason}")
         sys.exit(1)
- 
-    print("OK: ", reason)
+
+    print(f"OK: {reason}")
     sys.exit(0)
- 
- 
-if __name__ == '__main__':
+
+
+if __name__ == "__main__":
     try:
         main()
     except Exception as e:
-        print("UNKNOWN: ", str(e))
+        print(f"UNKNOWN: {e}")
         sys.exit(3)
