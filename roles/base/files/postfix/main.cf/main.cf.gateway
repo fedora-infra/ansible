@@ -747,11 +747,6 @@ smtp_tls_CApath = /etc/pki/tls/certs
 #
 smtp_tls_CAfile = /etc/pki/tls/certs/ca-bundle.crt
 
-# Use TLS if this is supported by the remote SMTP server, otherwise use
-# plaintext (opportunistic TLS outbound).
-#
-smtp_tls_security_level = may
-
 ## TLS
 # enable opportunistic TLS support in the SMTP server
 smtpd_use_tls = yes
@@ -772,7 +767,6 @@ smtpd_tls_eecdh_grade = ultra
 smtp_tls_fingerprint_digest=sha1
 smtp_tls_note_starttls_offer = yes
 smtp_tls_policy_maps = hash:/etc/postfix/tls_policy
-smtp_tls_security_level = may
 smtp_tls_mandatory_protocols = !SSLv2,!SSLv3
 smtp_tls_mandatory_ciphers = high
 smtp_tls_mandatory_exclude_ciphers= aNULL, MD5, RC4
@@ -780,10 +774,11 @@ smtp_tls_loglevel = 1
 smtp_tls_cert_file = /etc/pki/tls/certs/gateway.crt
 smtp_tls_key_file = /etc/pki/tls/private/gateway.key
 smtp_tls_CAfile  = /etc/pki/tls/certs/ca-bundle.crt
-smtp_tls_connection_reuse = yes
-smtp_connection_cache_destinations = mx2.redhat.com,gmail.com,google.com,scrye.com
+smtp_tls_connection_reuse = no
+smtp_connection_cache_destinations = mx2.redhat.com,gmail.com,google.com,scrye.com,redhat.com
 smtp_tls_session_cache_database = btree:/var/lib/postfix/smtp_scache
 smtp_tls_session_cache_timeout = 3600s
+smtp_tls_policy_maps = hash:/etc/postfix/tls_policy                                                 
 ## End smtp_tls
 ## General TLS
 tls_random_source                       = dev:/dev/urandom

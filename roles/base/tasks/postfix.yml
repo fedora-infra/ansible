@@ -30,6 +30,21 @@
   - config
   - base
 
+- name: install /etc/postfix/tls_policy file
+  copy: src={{ item }} dest=/etc/postfix/tls_policy mode=0644
+  with_first_found:
+    - "postfix/master.cf/master.cf.{{ inventory_hostname }}"
+    - "postfix/master.cf/master.cf.{{ host_group }}"
+    - "postfix/master.cf/master.cf.{{ postfix_group }}"
+    - "postfix/master.cf/master.cf"
+  when: inventory_hostname.startswith(('bastion'))
+  notify:
+  - restart postfix
+  tags:
+  - postfix
+  - config
+  - base
+
 - name: Deploy sender_access file
   copy: src="{{private}}/files/smtpd/sender_access.{{postfix_group}}" dest="/etc/postfix/sender_access"
   when: postfix_group == "smtp-mm" or postfix_group == "mailman" or postfix_group == "gateway"
