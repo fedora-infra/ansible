@@ -782,6 +782,8 @@ smtp_tls_key_file = /etc/pki/tls/private/gateway.key
 smtp_tls_CAfile  = /etc/pki/tls/certs/ca-bundle.crt
 smtp_tls_connection_reuse = yes
 smtp_connection_cache_destinations = mx2.redhat.com,gmail.com,google.com,scrye.com
+smtp_tls_session_cache_database = btree:/var/lib/postfix/smtp_scache
+smtp_tls_session_cache_timeout = 3600s
 ## End smtp_tls
 ## General TLS
 tls_random_source                       = dev:/dev/urandom
