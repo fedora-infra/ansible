@@ -6,6 +6,7 @@ You can alternatively provide a 'topic' which might look like
 org.fedoraproject.prod.bodhi.update.comment.
 
 Requires:  python-requests
+Requires:  python-dateutil
 
 Usage:
 
@@ -19,6 +20,7 @@ import sys
 from datetime import datetime, timezone
 
 import requests
+import dateutil.parser
 
 
 DATAGREPPER_URL = "https://apps.fedoraproject.org/datagrepper"
@@ -33,7 +35,9 @@ def query_messages(identifier, delta):
         params["category"] = identifier
     response = requests.get(f"{DATAGREPPER_URL}/v2/search", params=params)
     if not response.ok:
-        print(f"UNKNOWN: Could not query {DATAGREPPER_URL}: error {response.status_code}")
+        print(
+            f"UNKNOWN: Could not query {DATAGREPPER_URL}: error {response.status_code}"
+        )
         sys.exit(3)
     result = response.json()
     return result
@@ -65,7 +69,7 @@ def main():
         sys.exit(2)
 
     last_timestamp = result["raw_messages"][0]["headers"]["sent-at"]
-    last_timestamp = datetime.fromisoformat(last_timestamp)
+    last_timestamp = dateutil.parser.parse(last_timestamp)
     seconds_since = int((datetime.now(timezone.utc) - last_timestamp).total_seconds())
     reason = f"last {identifier} message was {seconds_since} seconds ago"
 
