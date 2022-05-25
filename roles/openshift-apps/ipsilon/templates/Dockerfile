@@ -11,7 +11,6 @@ RUN dnf install -y \
     ipsilon \
     ipsilon-openid \
     ipsilon-saml2 \
-    ipsilon-persona \
     ipsilon-authgssapi \
     ipsilon-authldap \
     ipsilon-openidc \
