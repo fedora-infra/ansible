@@ -1,0 +1,49 @@
+- name: make the app be real
+  hosts: os_control_stg[0]:os_control[0]
+  user: root
+  gather_facts: False
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  vars:
+
+  roles:
+    - role: openshift/project
+      app: ipsilon-website
+      description: "ipsilon-project.org"
+      appowners:
+        - abompard
+        - puiterwijk
+      tags:
+        - apply-appowners
+
+    - role: openshift/imagestream
+      app: ipsilon-website
+      imagename: ipsilon-website
+
+    - role: openshift/object
+      app: ipsilon-website
+      template: buildconfig.yml
+      objectname: buildconfig.yml
+
+    - role: openshift/object
+      app: ipsilon-website
+      file: service.yml
+      objectname: service.yml
+
+    - role: openshift/route
+      app: ipsilon-website
+      routename: web
+      host: "ipsilon-website.apps.ocp{{ env_suffix }}.fedoraproject.org"
+      serviceport: web
+      servicename: web
+      annotations:
+        haproxy.router.openshift.io/timeout: 5m
+
+    - role: openshift/object
+      app: ipsilon-website
+      template: deploymentconfig.yml
+      objectname: deploymentconfig.yml
