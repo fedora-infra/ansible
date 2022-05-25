@@ -199,6 +199,14 @@
   tags:
   - ipsilon
 
+- name: set sebooleans so ipsilon can use python-pam
+  seboolean:
+    name: httpd_tmp_exec
+    state: true
+    persistent: true
+  tags:
+  - ipsilon
+
 - name: apply selinux type to the wsgi file
   file:
     dest: /usr/libexec/ipsilon
