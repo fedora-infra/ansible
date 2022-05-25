@@ -1431,15 +1431,15 @@ host backup-mgmt {
      fixed-address 10.3.160.59;
      option host-name "backup01";
 }
-host openqa-p09-02-mgmt {
+host openqa-p09-01-mgmt {
      hardware ethernet ac:1f:6b:5c:03:f9;
      fixed-address 10.3.160.60;
-     option host-name "ppc9-03";
+     option host-name "openqa-p09-worker01-mgmt";
 }
-host openqa-p09-01-mgmt {
+host openqa-p09-02-mgmt {
      hardware ethernet ac:1f:6b:5c:03:69;
      fixed-address 10.3.160.61;
-     option host-name "openqa-p09-01";
+     option host-name "openqa-p09-worker02-mgmt";
 }
 host svault06-mgmt {
      hardware ethernet D0:94:66:45:A1:66;
