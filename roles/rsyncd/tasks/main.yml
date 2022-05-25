@@ -48,7 +48,6 @@
     - rsyncd.conf.default
   when: "'download' not in group_names"
   notify:
-  - restart xinetd
   - restart daemon
   ignore_errors: true
   tags:
