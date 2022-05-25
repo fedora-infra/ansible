@@ -21,6 +21,14 @@ mkdir -p ${DATEDIR}
 fi
 
 ##
+## Remove the old latest
+rm -rf ${HOMEDIR}/koji/latest_old/
+if [ $? -ne 0 ]; then
+    echo "removal of old latest failed"
+    exit
+fi
+
+##
 ## Go through each architecture and 
 ## 
 for ARCH in ${ARCHES}; do
@@ -90,13 +98,26 @@ else
     echo "No staged link found"
 fi
 
+####
+#### The following is overly complicated and makes thinking and
+#### debugging hard. This needs to be fixed.
+
+## The goal here is to take the staged code, and make a new repo with
+## just the latest amount of rpms in it. We also want to try and cut
+## the race condition down where koji sees one 'RHEL-8-001' with X.Y.Z
+## rpms and then sees it with A.B.C or some mix.
+
+# FIXME: Do we really need to make this linked staged?
 echo "Linking ${DATE} to staged"
 ln -s ${DATE} staged
 
-
+NEW_LATEST=latest-${DATE}
+mkdir -p ${NEW_LATEST}
+# Go through each architecture
 for ARCH in ${ARCHES}; do
-    pushd latest/
-    mkdir -p ${ARCH}
+    # The following is overly complicated and needs to be cleaner.
+    pushd ${NEW_LATEST}
+    mkdir -p ${NEW_LATEST}/${ARCH}
     dnf --disablerepo=\* --enablerepo=RHEL-8-001 --repofrompath=RHEL-8-001,https://infrastructure.fedoraproject.org/repo/rhel/rhel8/koji/staged/${ARCH}/RHEL-8-001/ reposync -a ${ARCH} -a noarch -p ${ARCH} --newest --delete  &> /dev/null
     if [[ $? -eq 0 ]]; then
 	cd ${ARCH}/RHEL-8-001
@@ -106,3 +127,11 @@ for ARCH in ${ARCHES}; do
     fi
     popd
 done
+
+## RACE CONDITION TIME!!!!
+mv latest latest_old
+mv ${NEW_LATEST} latest
+
+## Wish there was a clean way to tell koji to figure out the new repos
+## from batcave.
+
