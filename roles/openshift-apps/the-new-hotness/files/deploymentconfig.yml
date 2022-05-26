@@ -82,5 +82,40 @@ items:
           namespace: the-new-hotness
       type: ImageChange
     - type: ConfigChange
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    labels:
+      app: the-new-hotness
+      service: the-new-hotness-redis
+    name: the-new-hotness-redis
+  spec:
+    replicas: 1 # Never change this to more or less than ONE!
+    selector:
+      app: the-new-hotness
+      deploymentconfig: the-new-hotness-redis
+    template:
+      metadata:
+        labels:
+          app: the-new-hotness
+          deploymentconfig: the-new-hotness-redis
+      spec:
+        containers:
+        - name: the-new-hotness-redis
+          image: the-new-hotness-redis:latest
+          resources: {}
+          env:
+          - name: REDIS_PASSWORD
+            value: "{{ hotness_redis_pass }}"
+    triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+        - the-new-hotness-redis
+        from:
+          kind: ImageStreamTag
+          name: the-new-hotness-redis:latest
 kind: List
 metadata: {}

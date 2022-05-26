@@ -88,6 +88,15 @@ read_timeout = 15
 # that failed for any reason (e.g. read timeout, DNS error, etc)
 requests_retries = 3
 
+# Redis configuration for the-new-hotness
+[consumer_config.redis]
+# Hostname of the redis server
+hostname = "the-new-hotness-redis.the-new-hotness.svc.cluster.local"
+# Port of the redis server
+port = 6379
+# Password for redis server
+password = "{{ hotness_redis_pass }}"
+
 [consumer_config.bugzilla]
 enabled = true
 {% if env == "staging" %}

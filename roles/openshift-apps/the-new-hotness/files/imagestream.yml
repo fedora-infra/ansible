@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 items:
   - apiVersion: v1
@@ -6,5 +7,15 @@ items:
       name: the-new-hotness
       labels:
         build: the-new-hotness
+  - apiVersion: v1
+    kind: ImageStream
+    metadata:
+      name: the-new-hotness-redis
+    spec:
+      tags:
+      - name: latest
+        from:
+          kind: DockerImage
+          name: gcr.io/bitnami-containers/redis:latest
 kind: List
 metadata: {}
