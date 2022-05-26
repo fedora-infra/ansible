@@ -20,11 +20,7 @@ RewriteRule ^([a-z0-9_\.-]+)\.id\.fedoraproject\.org/.* /openid/id/$1/ [PT]
 {% endif %}
 
 
-{% if env == "staging" %}
-WSGIScriptAlias / /usr/libexec/ipsilon
-{% else %}
 WSGIScriptAlias / /usr/libexec/ipsilon/ipsilon.py
-{% endif %}
 WSGIDaemonProcess ipsilon user=ipsilon group=ipsilon home=/var/lib/ipsilon/root display-name=ipsilon processes=6 threads=2 maximum-requests=1000
 WSGISocketPrefix run/wsgi
 #WSGIRestrictStdout Off
@@ -40,15 +36,9 @@ WSGIApplicationGroup %{GLOBAL}
     WSGIProcessGroup ipsilon
 </Location>
 
-{% if env == "staging" %}
-<Directory /usr/libexec>
-    Require all granted
-</Directory>
-{% else %}
 <Directory /usr/libexec/ipsilon>
     Require all granted
 </Directory>
-{% endif %}
 
 <Directory /usr/share/ipsilon>
     Options +SymLinksIfOwnerMatch
