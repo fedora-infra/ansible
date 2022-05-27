@@ -41,22 +41,22 @@ for ARCH in ${ARCHES}; do
     fi
 
     # Begin splitting the various packages into their subtrees
-    ${BINDIR}/splitter.py --action hardlink --target CS-8-001 ${HOMEDIR}/BaseOS/${ARCH}/os/ --only-defaults &> /dev/null
+    ${BINDIR}/splitter.py --action copy --target CS-8-001 ${HOMEDIR}/BaseOS/${ARCH}/os/ --only-defaults &> /dev/null
     if [ $? -ne 0 ]; then
 	echo "splitter ${ARCH} baseos failed"
 	exit
     fi
-    ${BINDIR}/splitter.py --action hardlink --target CS-8-002 ${HOMEDIR}/AppStream/${ARCH}/os/ --only-defaults &> /dev/null
+    ${BINDIR}/splitter.py --action copy --target CS-8-002 ${HOMEDIR}/AppStream/${ARCH}/os/ --only-defaults &> /dev/null
     if [ $? -ne 0 ]; then
 	echo "splitter ${ARCH} appstream failed"
 	exit
     fi
-    ${BINDIR}/splitter.py --action hardlink --target CS-8-003 ${HOMEDIR}/PowerTools/${ARCH}/os/ &> /dev/null
+    ${BINDIR}/splitter.py --action copy --target CS-8-003 ${HOMEDIR}/PowerTools/${ARCH}/os/ &> /dev/null
     if [ $? -ne 0 ]; then
 	echo "splitter ${ARCH} codeready failed"
 	exit
     fi
-    ${BINDIR}/splitter.py --action hardlink --target CS-8-004 ${HOMEDIR}/Devel/${ARCH}/os/ &> /dev/null
+    ${BINDIR}/splitter.py --action copy --target CS-8-004 ${HOMEDIR}/Devel/${ARCH}/os/ &> /dev/null
     if [ $? -ne 0 ]; then
 	echo "splitter ${ARCH} devel failed"
 	exit
@@ -71,6 +71,8 @@ for ARCH in ${ARCHES}; do
     # Go into the main tree
     pushd CS-8-001
 
+    touch timestamp
+    find . -type f -print | xargs touch -r timestamp
     # Mergerepo didn't work so lets just createrepo in the top directory.
     createrepo_c .  &> /dev/null
     popd
@@ -82,35 +84,26 @@ done
 
 ## Set up the builds so they are pointing to the last working version
 cd ${KOJIDIR}
-if [[ -e staged ]]; then
-    if [[ -h staged ]]; then
-	rm -f staged
+if [[ -e latest ]]; then
+    if [[ -h latest ]]; then
+	rm -f latest
     else
-	echo "Unable to remove staged. it is not a symbolic link"
-	exit
+	echo "Unable to remove staged. it is not a symbolic link. Trying to move to latest_${DATE}."
+	if [[ -d latest_${DATE} ]]; then
+	    echo "latest_${DATE} exists. Exiting"
+	    exit
+	else
+	    mv latest latest_${DATE}
+	fi
     fi
 else
-    echo "No staged link found"
+    echo "No latest link found"
 fi
 
-echo "Linking ${DATE} to staged"
-ln -s ${DATE} staged
+echo "Linking ${DATE} to latest"
+ln -s ${DATE} latest
 
 
-for ARCH in ${ARCHES}; do
-    if [[ -d latest/ ]]; then
-	pushd latest/
-    else
-	mkdir latest/
-	pushd latest/
-    fi
-    mkdir -p ${ARCH}
-    dnf --disablerepo=\* --enablerepo=CS-8-001 --repofrompath=CS-8-001,https://infrastructure.fedoraproject.org/repo/centos/stream8-kojitarget/staged/${ARCH}/CS-8-001/ reposync -a ${ARCH} -a noarch -p ${ARCH} --newest --delete  &> /dev/null
-    if [[ $? -eq 0 ]]; then
-	cd ${ARCH}/CS-8-001
-	createrepo_c .  &> /dev/null
-    else
-	echo "Unable to run createrepo on latest/${ARCH}"
-    fi
-    popd
-done
+## Wish there was a clean way to tell koji to figure out the new repos
+## from batcave.
+

@@ -21,15 +21,7 @@ mkdir -p ${DATEDIR}
 fi
 
 ##
-## Remove the old latest
-rm -rf ${HOMEDIR}/koji/latest_old/
-if [ $? -ne 0 ]; then
-    echo "removal of old latest failed"
-    exit
-fi
-
-##
-## Go through each architecture and 
+## Go through each architecture and split out the trees.
 ## 
 for ARCH in ${ARCHES}; do
     # The archdir is where we daily download updates for rhel8
@@ -52,17 +44,17 @@ for ARCH in ${ARCHES}; do
     fi
 
     # Begin splitting the various packages into their subtrees
-    ${BINDIR}/splitter.py --action hardlink --target RHEL-8-001 ${ARCHDIR}/rhel-8-for-${ARCH}-baseos-rpms/ --only-defaults &> /dev/null
+    ${BINDIR}/splitter.py --action copy --target RHEL-8-001 ${ARCHDIR}/rhel-8-for-${ARCH}-baseos-rpms/ --only-defaults &> /dev/null
     if [ $? -ne 0 ]; then
 	echo "splitter ${ARCH} baseos failed"
 	exit
     fi
-    ${BINDIR}/splitter.py --action hardlink --target RHEL-8-002 ${ARCHDIR}/rhel-8-for-${ARCH}-appstream-rpms/ --only-defaults &> /dev/null
+    ${BINDIR}/splitter.py --action copy --target RHEL-8-002 ${ARCHDIR}/rhel-8-for-${ARCH}-appstream-rpms/ --only-defaults &> /dev/null
     if [ $? -ne 0 ]; then
 	echo "splitter ${ARCH} appstream failed"
 	exit
     fi
-    ${BINDIR}/splitter.py --action hardlink --target RHEL-8-003 ${ARCHDIR}/codeready-builder-for-rhel-8-${ARCH}-rpms/ &> /dev/null
+    ${BINDIR}/splitter.py --action copy --target RHEL-8-003 ${ARCHDIR}/codeready-builder-for-rhel-8-${ARCH}-rpms/ &> /dev/null
     if [ $? -ne 0 ]; then
 	echo "splitter ${ARCH} codeready failed"
 	exit
@@ -76,6 +68,8 @@ for ARCH in ${ARCHES}; do
     # Go into the main tree
     pushd RHEL-8-001
 
+    touch timestamp
+    find . -type f -print | xargs touch -r timestamp
     # Mergerepo didn't work so lets just createrepo in the top directory.
     createrepo_c .  &> /dev/null
     popd
@@ -87,50 +81,25 @@ done
 
 ## Set up the builds so they are pointing to the last working version
 cd ${HOMEDIR}/koji/
-if [[ -e staged ]]; then
-    if [[ -h staged ]]; then
-	rm -f staged
+if [[ -e latest ]]; then
+    if [[ -h latest ]]; then
+	rm -f latest
     else
-	echo "Unable to remove staged. it is not a symbolic link"
-	exit
+	echo "Unable to remove staged. it is not a symbolic link. Trying to move to latest_${DATE}."
+	if [[ -d latest_${DATE} ]]; then
+	    echo "latest_${DATE} exists. Exiting"
+	    exit
+	else
+	    mv latest latest_${DATE}
+	fi
     fi
 else
-    echo "No staged link found"
+    echo "No latest link found"
 fi
 
-####
-#### The following is overly complicated and makes thinking and
-#### debugging hard. This needs to be fixed.
+echo "Linking ${DATE} to latest"
+ln -s ${DATE} latest
 
-## The goal here is to take the staged code, and make a new repo with
-## just the latest amount of rpms in it. We also want to try and cut
-## the race condition down where koji sees one 'RHEL-8-001' with X.Y.Z
-## rpms and then sees it with A.B.C or some mix.
-
-# FIXME: Do we really need to make this linked staged?
-echo "Linking ${DATE} to staged"
-ln -s ${DATE} staged
-
-NEW_LATEST=latest-${DATE}
-mkdir -p ${NEW_LATEST}
-# Go through each architecture
-for ARCH in ${ARCHES}; do
-    # The following is overly complicated and needs to be cleaner.
-    pushd ${NEW_LATEST}
-    mkdir -p ${NEW_LATEST}/${ARCH}
-    dnf --disablerepo=\* --enablerepo=RHEL-8-001 --repofrompath=RHEL-8-001,https://infrastructure.fedoraproject.org/repo/rhel/rhel8/koji/staged/${ARCH}/RHEL-8-001/ reposync -a ${ARCH} -a noarch -p ${ARCH} --newest --delete  &> /dev/null
-    if [[ $? -eq 0 ]]; then
-	cd ${ARCH}/RHEL-8-001
-	createrepo_c .  &> /dev/null
-    else
-	echo "Unable to run createrepo on latest/${ARCH}"
-    fi
-    popd
-done
-
-## RACE CONDITION TIME!!!!
-mv latest latest_old
-mv ${NEW_LATEST} latest
 
 ## Wish there was a clean way to tell koji to figure out the new repos
 ## from batcave.
