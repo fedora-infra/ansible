@@ -171,10 +171,7 @@
   when: openqa_tap|bool
 
 - name: Tell git it's OK for _openqa-worker to run 'git' on the test dir
-  command: git config --global --add safe.directory /var/lib/openqa/share/tests/fedora
-  become: yes
-  become_user: _openqa-worker
-  when: openqa_nfs_worker|bool
+  copy: src=gitconfig dest=/etc/gitconfig owner=root group=root mode=0644
 
 # this is kinda lazy - we could have a separate openqa_swtpm var so we
 # we could potentially separate tap worker hosts from swtpm ones - but
