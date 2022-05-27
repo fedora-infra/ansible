@@ -9,6 +9,8 @@ DATE=$(date -Ih | sed 's/+.*//')
 
 KOJIDIR=/mnt/fedora/app/fi-repo/centos/stream8-kojitarget
 DATEDIR=${KOJIDIR}/${DATE}
+TIME_FILE=${DATEDIR}/timestamp
+touch ${TIME_FILE}
 
 ##
 ## Make a directory for where the new tree will live. Use a new date
@@ -71,8 +73,7 @@ for ARCH in ${ARCHES}; do
     # Go into the main tree
     pushd CS-8-001
 
-    touch timestamp
-    find . -type f -print | xargs touch -r timestamp
+    find . -type f -print | xargs touch -r ${TIME_FILE}
     # Mergerepo didn't work so lets just createrepo in the top directory.
     createrepo_c .  &> /dev/null
     popd

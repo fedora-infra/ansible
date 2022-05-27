@@ -8,6 +8,8 @@ ARCHES="aarch64 ppc64le s390x x86_64"
 DATE=$(date -Ih | sed 's/+.*//')
 
 DATEDIR=${HOMEDIR}/koji/${DATE}
+TIME_FILE=${DATEDIR}/timestamp
+touch ${TIME_FILE}
 
 ##
 ## Make a directory for where the new tree will live. Use a new date
@@ -68,8 +70,7 @@ for ARCH in ${ARCHES}; do
     # Go into the main tree
     pushd RHEL-8-001
 
-    touch timestamp
-    find . -type f -print | xargs touch -r timestamp
+    find . -type f -print | xargs touch -r ${TIME_FILE}
     # Mergerepo didn't work so lets just createrepo in the top directory.
     createrepo_c .  &> /dev/null
     popd
