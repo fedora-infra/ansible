@@ -22,3 +22,11 @@ spec:
   triggers:
   - type: ConfigChange
   - type: ImageChange
+  - type: "Generic"
+    generic:
+      secretReference:
+{% if env == "staging" %}
+        name: "{{ ipsilon_website_stg_webhook_secret }}"
+{% else %}
+        name: "{{ ipsilon_website_webhook_secret }}"
+{% endif %}
