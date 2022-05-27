@@ -1161,3 +1161,14 @@
     certbot: true
     tags:
     - fedora.im
+
+  - role: httpd/website
+    site_name: ipsilon-project.org
+    server_aliases:
+    - ipsilon-project.org
+    - www.ipsilon-project.org
+    ssl: true
+    sslonly: true
+    certbot: true
+    tags:
+    - ipsilon-website
