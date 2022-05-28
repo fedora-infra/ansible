@@ -83,9 +83,17 @@ def _get_modulemd(directory=None, repo_info=None):
 
     _idx = mmd.ModuleIndex.new()
 
-    with gzip.GzipFile(filename=repo_info['modules'], mode='r') as gzf:
-        mmdcts = gzf.read().decode('utf-8')
-        res, failures = _idx.update_from_string(mmdcts, True)
+    myfile=repo_info['modules']
+    if myfile.endswith(".gz"):
+        openfunc=gzip.Gzipfile
+    elif myfile.endswith(".xz"):
+        openfunc=lzma.LZMAFile
+    else:
+        print("This file type is not fixed in this hack. Please fix code. (2021-05-20)");
+        sys.exit(1)
+    with openfunc(filename=myfile, mode='r') as zipf:
+        mmdcts = zipf.read().decode('utf-8')
+        res, failures = idx.update_from_string(mmdcts, True)
         if len(failures) != 0:
             raise Exception("YAML FAILURE: FAILURES: %s" % failures)
         if not res:
