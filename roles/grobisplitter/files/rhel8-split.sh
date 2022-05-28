@@ -46,17 +46,17 @@ for ARCH in ${ARCHES}; do
     fi
 
     # Begin splitting the various packages into their subtrees
-    ${BINDIR}/splitter.py --action copy --target RHEL-8-001 ${ARCHDIR}/rhel-8-for-${ARCH}-baseos-rpms/ --only-defaults &> /dev/null
+    ${BINDIR}/splitter.py --action hardlink --target RHEL-8-001 ${ARCHDIR}/rhel-8-for-${ARCH}-baseos-rpms/ --only-defaults &> /dev/null
     if [ $? -ne 0 ]; then
 	echo "splitter ${ARCH} baseos failed"
 	exit
     fi
-    ${BINDIR}/splitter.py --action copy --target RHEL-8-002 ${ARCHDIR}/rhel-8-for-${ARCH}-appstream-rpms/ --only-defaults &> /dev/null
+    ${BINDIR}/splitter.py --action hardlink --target RHEL-8-002 ${ARCHDIR}/rhel-8-for-${ARCH}-appstream-rpms/ --only-defaults &> /dev/null
     if [ $? -ne 0 ]; then
 	echo "splitter ${ARCH} appstream failed"
 	exit
     fi
-    ${BINDIR}/splitter.py --action copy --target RHEL-8-003 ${ARCHDIR}/codeready-builder-for-rhel-8-${ARCH}-rpms/ &> /dev/null
+    ${BINDIR}/splitter.py --action hardlink --target RHEL-8-003 ${ARCHDIR}/codeready-builder-for-rhel-8-${ARCH}-rpms/ &> /dev/null
     if [ $? -ne 0 ]; then
 	echo "splitter ${ARCH} codeready failed"
 	exit

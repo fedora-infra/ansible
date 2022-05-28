@@ -43,22 +43,22 @@ for ARCH in ${ARCHES}; do
     fi
 
     # Begin splitting the various packages into their subtrees
-    ${BINDIR}/splitter.py --action copy --target CS-8-001 ${HOMEDIR}/BaseOS/${ARCH}/os/ --only-defaults &> /dev/null
+    ${BINDIR}/splitter.py --action hardlink --target CS-8-001 ${HOMEDIR}/BaseOS/${ARCH}/os/ --only-defaults &> /dev/null
     if [ $? -ne 0 ]; then
 	echo "splitter ${ARCH} baseos failed"
 	exit
     fi
-    ${BINDIR}/splitter.py --action copy --target CS-8-002 ${HOMEDIR}/AppStream/${ARCH}/os/ --only-defaults &> /dev/null
+    ${BINDIR}/splitter.py --action hardlink --target CS-8-002 ${HOMEDIR}/AppStream/${ARCH}/os/ --only-defaults &> /dev/null
     if [ $? -ne 0 ]; then
 	echo "splitter ${ARCH} appstream failed"
 	exit
     fi
-    ${BINDIR}/splitter.py --action copy --target CS-8-003 ${HOMEDIR}/PowerTools/${ARCH}/os/ &> /dev/null
+    ${BINDIR}/splitter.py --action hardlink --target CS-8-003 ${HOMEDIR}/PowerTools/${ARCH}/os/ &> /dev/null
     if [ $? -ne 0 ]; then
 	echo "splitter ${ARCH} codeready failed"
 	exit
     fi
-    ${BINDIR}/splitter.py --action copy --target CS-8-004 ${HOMEDIR}/Devel/${ARCH}/os/ &> /dev/null
+    ${BINDIR}/splitter.py --action hardlink --target CS-8-004 ${HOMEDIR}/Devel/${ARCH}/os/ &> /dev/null
     if [ $? -ne 0 ]; then
 	echo "splitter ${ARCH} devel failed"
 	exit
