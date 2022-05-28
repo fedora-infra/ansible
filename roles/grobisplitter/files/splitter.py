@@ -93,7 +93,7 @@ def _get_modulemd(directory=None, repo_info=None):
         sys.exit(1)
     with openfunc(filename=myfile, mode='r') as zipf:
         mmdcts = zipf.read().decode('utf-8')
-        res, failures = idx.update_from_string(mmdcts, True)
+        res, failures = _idx.update_from_string(mmdcts, True)
         if len(failures) != 0:
             raise Exception("YAML FAILURE: FAILURES: %s" % failures)
         if not res:
