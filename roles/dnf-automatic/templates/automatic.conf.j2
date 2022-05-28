@@ -60,3 +60,8 @@ exclude = httpd*
 # https://pagure.io/koji/issue/3351
 exclude = git*
 {% endif %}
+{% if inventory_hostname.startswith('pkgs') %}
+# exclude mod_auth_openidc-2.3.7-11.module+el8.6.0+14082+b6f23e95
+# as it's causing segfaults in https pushes
+exclude = mod_auth_openidc-2.3.7-11.module+el8.6.0+14082+b6f23e95
+{% endif %}
