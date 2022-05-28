@@ -6,6 +6,7 @@ defined/running, or (b) have some resource (e.g. storage) still available in the
 LibVirt hypervisor.
 """
 
+import os
 import argparse
 import sys
 import libvirt
@@ -15,14 +16,19 @@ from helpers import get_hv_identification_from_pool_id
 def _get_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("--connection", required=False)
-    parser.add_argument("--pool", required=True)
+    parser.add_argument("--pool", required=False)
     return parser
 
 def _main():
     args = _get_parser().parse_args()
 
+    pool_id = args.pool or os.getenv("RESALLOC_POOL_ID")
+    if not pool_id:
+        print("Specify pool ID by --pool or $RESALLOC_POOL_ID")
+        sys.exit(1)
+
     connection = args.connection if args.connection else \
-        get_hv_identification_from_pool_id(args.pool)[1]
+        get_hv_identification_from_pool_id(pool_id)[1]
 
     try:
         conn = libvirt.openReadOnly(connection)
@@ -37,14 +43,14 @@ def _main():
     # Pool name
     pool = conn.storagePoolLookupByName("images")
     for volume in pool.listVolumes():
-        if volume.startswith(args.pool):
+        if volume.startswith(pool_id):
             vm_names.add(volume.rsplit("_", 1)[0])
 
     # List all domains that are related to given Pool (just to be 100% sure, but
     # this shouldn't add any new items to the vm_names set actually).
     for domain in conn.listAllDomains():
         name = domain.name()
-        if name.startswith(args.pool):
+        if name.startswith(pool_id):
             vm_names.add(name)
 
     # Print them out, so upper level tooling can work with the list.  See:
