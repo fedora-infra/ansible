@@ -10,7 +10,6 @@ DATE=$(date -Ih | sed 's/+.*//')
 KOJIDIR=/mnt/fedora/app/fi-repo/centos/stream8-kojitarget
 DATEDIR=${KOJIDIR}/${DATE}
 TIME_FILE=${DATEDIR}/timestamp
-touch ${TIME_FILE}
 
 ##
 ## Make a directory for where the new tree will live. Use a new date
@@ -20,7 +19,8 @@ if [ -d ${DATEDIR} ]; then
     echo "Directory already exists. Please remove or fix"
     exit
 else
-mkdir -p ${DATEDIR}
+    mkdir -p ${DATEDIR}
+    touch ${TIME_FILE}
 fi
 
 ##
