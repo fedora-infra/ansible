@@ -109,6 +109,15 @@
   tags:
   - config
 
+- name: set max_connections for PostgreSQL
+  lineinfile:
+    path: /var/lib/pgsql/data/postgresql.conf
+    regexp: '^max_connections ='
+    line: 'max_connections = 200'
+  notify: restart postgresql
+  tags:
+  - config
+
 - name: install psqlrc file
   copy:
     content: |
