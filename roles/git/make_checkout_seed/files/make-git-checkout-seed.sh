@@ -25,22 +25,21 @@ mkdir -p $SEED_DIR
 mkdir -p $SPEC_DIR
 
 # Give people an indication of when this checkout was last synced
-TIMESTAMP=`date --rfc-3339=seconds`
-DATE=`date +'%Y%m%d'`
-echo "$TIMESTAMP" > $SEED_DIR/TIMESTAMP
+TIMESTAMP=$(date --rfc-3339=seconds)
+DATE=$(date +'%Y%m%d')
+echo "$TIMESTAMP" >$SEED_DIR/TIMESTAMP
 
-
-for repo in $ORIGIN_DIR/*.git ; do
+for repo in $ORIGIN_DIR/*.git; do
   bname=$(basename $repo .git)
   working_tree=$SEED_DIR/$bname
-# uncomment to skip processing dead.package repos
-#  if [ -e $working_tree/dead.package ]; then
-#  continue
-#  fi
-  if [ -d $working_tree ] ; then
-    pushd $working_tree &> /dev/null
+  # uncomment to skip processing dead.package repos
+  #  if [ -e $working_tree/dead.package ]; then
+  #  continue
+  #  fi
+  if [ -d $working_tree ]; then
+    pushd $working_tree &>/dev/null
     sed -i "s@url = .*@url = $repo@" $working_tree/.git/config
-    git pull --all &> /dev/null
+    git pull --all &>/dev/null
     sed -i "s@url = .*@url = https://src.fedoraproject.org/rpms/$bname@" $working_tree/.git/config
     popd &>/dev/null
     if [ -e $working_tree/dead.package ]; then
@@ -51,7 +50,7 @@ for repo in $ORIGIN_DIR/*.git ; do
     fi
   else
     pushd $SEED_DIR &>/dev/null
-    git clone $repo &> /dev/null
+    git clone $repo &>/dev/null
     popd &>/dev/null
     sed -i "s@url = .*@url = https://src.fedoraproject.org/rpms/$bname@" $working_tree/.git/config
     if [ -e $working_tree/dead.package ]; then
@@ -63,8 +62,29 @@ for repo in $ORIGIN_DIR/*.git ; do
   fi
 done
 
-tar -cf - -C$WORK_DIR $(basename $SEED_DIR)|xz -2 > $OUTPUT_DIR/.git-seed-$DATE.tar.xz
-tar -cf - -C$WORK_DIR $(basename $SPEC_DIR)|xz -2 > $OUTPUT_DIR/.rpm-specs-$DATE.tar.xz
+# Search and create tar balls for existing Epel branches
+archive_epel_branches() {
+  search_epel=${1:-'*epel*'}
+  branches="$(git branch -r --list "$search_epel")"
+  for result in $branches; do
+    if [[ "(echo $result | grep -Eo '[0-9]+')" -gt "6" ]]; then
+      git checkout "$result"
+      tar -cf - -C$WORK_DIR $(basename $SEED_DIR) | xz -2 >$OUTPUT_DIR/.git-seed-$DATE.tar.xz
+      tar -cf - -C$WORK_DIR $(basename $SPEC_DIR) | xz -2 >$OUTPUT_DIR/.rpm-specs-$DATE.tar.xz
+      rm $OUTPUT_DIR/git-seed*tar.xz
+      rm $OUTPUT_DIR/rpm-specs*tar.xz
+      mv $OUTPUT_DIR/.git-seed-$DATE.tar.xz $OUTPUT_DIR/git-seed-$DATE.tar.xz
+      mv $OUTPUT_DIR/.rpm-specs-$DATE.tar.xz $OUTPUT_DIR/rpm-specs-$DATE.tar.xz
+      ln -s git-seed-$DATE.tar.xz $OUTPUT_DIR/git-seed-latest.tar.xz
+      ln -s rpm-specs-$DATE.tar.xz $OUTPUT_DIR/rpm-specs-latest.tar.xz
+    else
+      echo "Epel versions below '7' not supported"
+    fi
+  done
+}
+
+tar -cf - -C$WORK_DIR $(basename $SEED_DIR) | xz -2 >$OUTPUT_DIR/.git-seed-$DATE.tar.xz
+tar -cf - -C$WORK_DIR $(basename $SPEC_DIR) | xz -2 >$OUTPUT_DIR/.rpm-specs-$DATE.tar.xz
 rm $OUTPUT_DIR/git-seed*tar.xz
 rm $OUTPUT_DIR/rpm-specs*tar.xz
 mv $OUTPUT_DIR/.git-seed-$DATE.tar.xz $OUTPUT_DIR/git-seed-$DATE.tar.xz
@@ -72,5 +92,7 @@ mv $OUTPUT_DIR/.rpm-specs-$DATE.tar.xz $OUTPUT_DIR/rpm-specs-$DATE.tar.xz
 ln -s git-seed-$DATE.tar.xz $OUTPUT_DIR/git-seed-latest.tar.xz
 ln -s rpm-specs-$DATE.tar.xz $OUTPUT_DIR/rpm-specs-latest.tar.xz
 
-python2 /usr/local/bin/alternative_arch_report.py /srv/git_seed/rpm-specs/ | \
-    mail -s "[Report] Packages Restricting Arches" arch-excludes@lists.fedoraproject.org
+archive_epel_branches
+
+python2 /usr/local/bin/alternative_arch_report.py /srv/git_seed/rpm-specs/ |
+  mail -s "[Report] Packages Restricting Arches" arch-excludes@lists.fedoraproject.org
