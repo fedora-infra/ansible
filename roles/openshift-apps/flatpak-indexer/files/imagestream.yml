@@ -51,7 +51,7 @@ metadata:
 apiVersion: v1
 kind: ImageStream
 metadata:
-  name: ubi8-python-38
+  name: ubi8-python-39
   spec:
     lookupPolicy:
       local: false
@@ -59,7 +59,7 @@ metadata:
     - name: latest
       from:
         kind: DockerImage
-        name: registry.access.redhat.com/ubi8/python-38:latest
+        name: registry.access.redhat.com/ubi8/python-39:latest
       importPolicy:
         scheduled: true
       referencePolicy:
