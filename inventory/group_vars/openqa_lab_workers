@@ -21,6 +21,7 @@ openqa_nfs_worker: true
 # install openQA and os-autoinst from updates-testing - this is
 # staging, we live ON THE EDGE (radical guitar riff)
 openqa_repo: updates-testing
+openqa_scratch: ["87702678", "87748214"]
 openqa_secret: "{{ stg_openqa_apisecret }}"
 openqa_workers: 4
 # We want stg workers to use this createhdds branch to test rawhide
