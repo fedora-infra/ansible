@@ -69,14 +69,14 @@ archive_epel_branches() {
   for result in $branches; do
     if [[ "(echo $result | grep -Eo '[0-9]+')" -gt "6" ]]; then
       git checkout "$result"
-      tar -cf - -C$WORK_DIR $(basename $SEED_DIR) | xz -2 >$OUTPUT_DIR/.git-seed-$DATE.tar.xz
-      tar -cf - -C$WORK_DIR $(basename $SPEC_DIR) | xz -2 >$OUTPUT_DIR/.rpm-specs-$DATE.tar.xz
+      tar -cf - -C$WORK_DIR $(basename $SEED_DIR) | xz -2 >$OUTPUT_DIR/.git-seed-$DATE-$result.tar.gzxz
+      tar -cf - -C$WORK_DIR $(basename $SPEC_DIR) | xz -2 >$OUTPUT_DIR/.rpm-specs-$DATE-$result.tar.xz
       rm $OUTPUT_DIR/git-seed*tar.xz
       rm $OUTPUT_DIR/rpm-specs*tar.xz
-      mv $OUTPUT_DIR/.git-seed-$DATE.tar.xz $OUTPUT_DIR/git-seed-$DATE.tar.xz
-      mv $OUTPUT_DIR/.rpm-specs-$DATE.tar.xz $OUTPUT_DIR/rpm-specs-$DATE.tar.xz
-      ln -s git-seed-$DATE.tar.xz $OUTPUT_DIR/git-seed-latest.tar.xz
-      ln -s rpm-specs-$DATE.tar.xz $OUTPUT_DIR/rpm-specs-latest.tar.xz
+      mv $OUTPUT_DIR/.git-seed-$DATE.tar.xz $OUTPUT_DIR/git-seed-$DATE-$result.tar.xz
+      mv $OUTPUT_DIR/.rpm-specs-$DATE.tar.xz $OUTPUT_DIR/rpm-specs-$DATE-$result.tar.xz
+      ln -s git-seed-$DATE-$result.tar.xz $OUTPUT_DIR/git-seed-latest.tar.xz
+      ln -s rpm-specs-$DATE-$result.tar.xz $OUTPUT_DIR/rpm-specs-latest.tar.xz
     else
       echo "Epel versions below '7' not supported"
     fi
