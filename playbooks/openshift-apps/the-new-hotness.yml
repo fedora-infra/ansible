@@ -68,6 +68,11 @@
 
   - role: openshift/object
     app: the-new-hotness
+    file: service.yml
+    objectname: service.yml
+
+  - role: openshift/object
+    app: the-new-hotness
     template: buildconfig.yml
     objectname: buildconfig.yml
 
@@ -83,7 +88,7 @@
 
   - role: openshift/object
     app: the-new-hotness
-    file: deploymentconfig.yml
+    template: deploymentconfig.yml
     objectname: deploymentconfig.yml
 
   - role: openshift/rollout
