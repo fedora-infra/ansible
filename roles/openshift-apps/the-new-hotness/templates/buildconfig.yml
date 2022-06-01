@@ -10,11 +10,7 @@ items:
     runPolicy: Serial
     source:
       dockerfile: |-
-{% if env == 'staging' %}
         FROM fedora:36
-{% else %}
-        FROM fedora:34
-{% endif %}
         LABEL \
           name="the-new-hotness" \
           vendor="Fedora Infrastructure" \
@@ -37,8 +33,6 @@ items:
                 git checkout staging && \
 {% else %}
                 git checkout production && \
-                pip-3 install . && \
-                pushd hotness_schema && \
 {% endif %}
                 pip-3 install . && \
                 rm -rf the-new-hotness

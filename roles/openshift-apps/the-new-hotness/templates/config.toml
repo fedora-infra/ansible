@@ -114,12 +114,8 @@ keywords = "FutureFeature,Triaged"
 bug_status = "NEW"
 short_desc_template = "%(name)s-%(latest_upstream)s is available"
 description_template = """
-{% if env == "staging" %}
 Releases retrieved: %(retrieved_versions)s
 Upstream release that is considered latest: %(latest_upstream)s
-{% else %}
-Latest upstream release: %(latest_upstream)s
-{% endif %}
 Current version/release in %(repo_name)s: %(repo_version)s-%(repo_release)s
 URL: %(url)s
 
@@ -131,12 +127,12 @@ Please keep in mind that with any upstream change, there may also be packaging c
 
 {% if env == "staging" %}
 Based on the information from Anitya: https://stg.release-monitoring.org/project/%(projectid)s/\n
-
-To change the monitoring settings for the project, please visit:
-%(dist_git_url)s
 {% else %}
 Based on the information from Anitya: https://release-monitoring.org/project/%(projectid)s/\n
 {% endif %}
+
+To change the monitoring settings for the project, please visit:
+%(dist_git_url)s
 """
 
 [consumer_config.koji]
