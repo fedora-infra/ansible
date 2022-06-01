@@ -61,7 +61,8 @@ exclude = httpd*
 exclude = git*
 {% endif %}
 {% if inventory_hostname.startswith('pkgs') %}
-# exclude mod_auth_openidc-2.3.7-11.module+el8.6.0+14082+b6f23e95
+# exclude jq-1.6-3.el8
 # as it's causing segfaults in https pushes
-exclude = mod_auth_openidc-2.3.7-11.module+el8.6.0+14082+b6f23e95
+# by running out of memory
+exclude = jq-1.6-3.el8
 {% endif %}
