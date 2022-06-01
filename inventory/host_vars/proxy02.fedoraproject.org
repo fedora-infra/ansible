@@ -15,7 +15,6 @@ has_ipv4: yes
 has_ipv6: true
 ks_repo: http://38.145.60.16/pub/fedora/linux/releases/36/Server/x86_64/os/
 ks_url: http://38.145.60.16/repo/rhel/ks/kvm-fedora
-mac0: 52:54:00:8c:7c:1b
 max_mem_size: 65536
 mem_size: 24576
 network_connections:
@@ -34,7 +33,7 @@ network_connections:
         - "{{ dns_search2 }}"
       gateway4: "{{ eth0_ipv4_gw }}"
       gateway6: "{{ eth0_ipv6_gw }}"
-    mac: "{{ mac0 }}"
+    mac: "{{ ansible_default_ipv4.macaddress }}"
     name: eth0
     type: ethernet
 nrpe_procs_crit: 1400
