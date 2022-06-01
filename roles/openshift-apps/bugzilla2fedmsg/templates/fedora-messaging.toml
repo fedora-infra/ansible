@@ -23,7 +23,7 @@ certfile = "/etc/pki/fedora-messaging/bugzilla2fedmsg-cert.pem"
     # http://nikipore.github.io/stompest/protocol.html#stompest.protocol.failover.StompFailoverUri
     # Example: failover:(tcp://remote1:61615,tcp://localhost:61616)?randomize=false,startupMaxReconnectAttempts=3,initialReconnectDelay=7,maxReconnectDelay=8,maxReconnectAttempts=0
 {% if env == 'staging' %}
-    uri = "failover:(ssl://umb-broker01.stage.api.redhat.com:61612,ssl://umb-broker02.stage.api.redhat.com:61612)"
+    uri = "failover:(ssl://umb.stage.api.redhat.com:61612,ssl://umb.stage.api.redhat.com:61612)"
     user = "{{ redhat_dmz_dev_broker_username }}"
     pass = "{{ redhat_dmz_dev_broker_password }}"
 {% else %}
