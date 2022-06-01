@@ -37,7 +37,7 @@
   roles:
   - base
   - { role: rkhunter, when: ansible_distribution_version|int < 9.0 }
-  - { role: nagios_client, when: ansible_distribution_version|int < 9.0 }
+  - { role: nagios_client }
   - hosts
   - { role: openvpn/client, when: vpn|bool }
   - ipa/client

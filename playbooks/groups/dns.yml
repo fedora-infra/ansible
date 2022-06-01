@@ -20,8 +20,8 @@
   - { role: openvpn/client,
       when: datacenter != 'iad2' }
   - ipa/client
-  - collectd/base
-  - collectd/bind
+  - { role: collectd/base, when: ansible_distribution_version|int < 9.0 }
+  - { role: collectd/bind, when: ansible_distribution_version|int < 9.0 }
   - rsyncd
   - sudo
   - dns
