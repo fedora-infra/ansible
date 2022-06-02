@@ -154,7 +154,6 @@
   notify:
   - restart iptables
   - reload libvirtd
-  - restart docker
   tags:
   - iptables
   - config
