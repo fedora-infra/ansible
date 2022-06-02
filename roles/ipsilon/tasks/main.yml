@@ -74,6 +74,17 @@
   tags:
   - ipsilon
 
+- name: make sure /etc/ipsilon/root is owned correctly
+  file:
+    path: "/etc/ipsilon/root"
+    owner: ipsilon
+    group: ipsilon
+    state: directory
+    mode: 0700
+  tags:
+  - ipsilon
+  - config
+
 - name: copy ipsilon configuration
   template:
     src: "ipsilon.conf"
