@@ -21,13 +21,8 @@
   tags:
   - grokmirror-mirror
 
-- name: install grokmirror repos config file from template
-  template: src=repos.conf dest={{grokmirror_topdir}}/repos.conf owner=root group=root mode=644
-  tags:
-  - grokmirror-mirror
-
-- name: install grokmirror fsck config file from template
-  template: src=fsck.conf dest={{grokmirror_topdir}}/fsck.conf owner=root group=root mode=644
+- name: install grokmirror config file from template
+  template: src=grokmirror.conf dest={{grokmirror_topdir}}/grokmirror.conf owner=root group=root mode=644
   tags:
   - grokmirror-mirror
 
