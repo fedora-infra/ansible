@@ -23,9 +23,8 @@
 #
 # Setup koji hub osbuild plugin.
 #
-- name: install koji hub server packages
+- name: install image builder server packages
   package: name={{ item }} state=present
-  when: env == "staging"
   with_items:
   - koji-osbuild-hub
   notify:
