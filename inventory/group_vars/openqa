@@ -16,6 +16,9 @@ openqa_env_suffix:
 openqa_key: "{{ prod_openqa_apikey }}"
 # all our workers need NFS access
 openqa_nfs_workers: "{{ groups['openqa_workers'] }}"
+# install openQA from updates-testing, as of 2022-06 we want
+# the builds that have been tested on stg on prod too
+openqa_repo: updates-testing
 openqa_resultsdb_url: http://resultsdb01.iad2.fedoraproject.org/resultsdb_api/api/v2.0/
 openqa_secret: "{{ prod_openqa_apisecret }}"
 openqa_update_arches: ['x86_64']
