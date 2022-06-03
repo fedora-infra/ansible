@@ -210,11 +210,22 @@
   tags:
   - ipsilon
 
-- name: set sebooleans so ipsilon can use python-pam
+- name: set sebooleans so ipsilon can talk to sssd
   seboolean:
-    name: httpd_tmp_exec
+    name: httpd_dbus_sssd
     state: true
     persistent: true
+  tags:
+  - ipsilon
+
+- name: set sebooleans so ipsilon can use python-pam
+  seboolean:
+    name: "{{ item }}"
+    state: true
+    persistent: true
+  loop:
+  - httpd_tmp_exec
+  - httpd_mod_auth_pam
   tags:
   - ipsilon
 
