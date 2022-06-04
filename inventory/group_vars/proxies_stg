@@ -64,6 +64,7 @@ openshift_nodes:
   - os-node02.stg.iad2.fedoraproject.org
   - os-node03.stg.iad2.fedoraproject.org
   - os-node04.stg.iad2.fedoraproject.org
+openshift_nodes_stg: "{{ openshift_nodes }}"
 tcp_ports: [
   # For apache, generally.
   80, 443,
