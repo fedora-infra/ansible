@@ -158,6 +158,7 @@
     remotepath: /accounts
     localpath: /accounts-old
     balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: false
     keephost: true
