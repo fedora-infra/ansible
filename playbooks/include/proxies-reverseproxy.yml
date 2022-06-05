@@ -641,6 +641,7 @@
     localpath: /
     remotepath: /
     balancer_name: resultsdb-stg
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
     targettype: openshift
     ocp4: true
     keephost: true
