@@ -154,18 +154,6 @@
 
   - role: httpd/reverseproxy
     website: admin.fedoraproject.org
-    destname: totpcgiprovision
-    localpath: /totpcgiprovision
-    remotepath: /totpcgiprovision
-    balancer_name: app-os
-    targettype: openshift
-    ocp4: false
-    keephost: true
-    tags:
-    - fas
-
-  - role: httpd/reverseproxy
-    website: admin.fedoraproject.org
     destname: fas
     remotepath: /accounts
     localpath: /accounts-old
