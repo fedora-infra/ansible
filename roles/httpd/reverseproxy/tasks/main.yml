@@ -7,42 +7,6 @@
 # - keephost
 # - proxyopts
 
-- name: Set OpenShift information if not preconfigured (prod)
-  set_fact:
-    balancer_members: "{{ openshift_nodes }}"
-  when: 'targettype == "openshift" and balancer_members is not defined and env != "staging" '
-  tags:
-  - httpd
-  - httpd/reverseproxy
-  - httpd/reversepassproxy
-
-- name: Set OpenShift4 information if not preconfigured (prod)
-  set_fact:
-    balancer_members: "{{ ocp_nodes }}"
-  when: 'targettype == "openshift" and ocp4|bool and balancer_members is not defined and env != "staging" '
-  tags:
-  - httpd
-  - httpd/reverseproxy
-  - httpd/reversepassproxy
-
-- name: Set OpenShift information if not preconfigured (stg)
-  set_fact:
-    balancer_members: "{{ openshift_nodes_stg }}"
-  when: 'targettype == "openshift" and balancer_members is not defined and env == "staging" '
-  tags:
-  - httpd
-  - httpd/reverseproxy
-  - httpd/reversepassproxy
-
-- name: Set OpenShift4 information if not preconfigured (stg)
-  set_fact:
-    balancer_members: "{{ ocp_nodes_stg }}"
-  when: 'targettype == "openshift" and ocp4|bool and balancer_members is not defined and env == "staging" '
-  tags:
-  - httpd
-  - httpd/reverseproxy
-  - httpd/reversepassproxy
-
 - name: Copy in ProxyPassReverse for {{destname}} ({{website}}{{remotepath}})
   template: >
     src={{item}}
@@ -59,7 +23,3 @@
   - httpd
   - httpd/reverseproxy
   - httpd/reversepassproxy
-
-- name: clear balancer_members
-  set_fact:
-    balancer_members: !!null
