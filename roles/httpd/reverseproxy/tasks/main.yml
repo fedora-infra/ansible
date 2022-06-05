@@ -34,9 +34,9 @@
   - httpd/reverseproxy
   - httpd/reversepassproxy
 
-- name: Set OpenShift4 information if not preconfigured (prod)
+- name: Set OpenShift4 information if not preconfigured (stg)
   set_fact:
-    balancer_members: "{{ ocp_nodes }}"
+    balancer_members: "{{ ocp_nodes_stg }}"
   when: 'targettype == "openshift" and ocp4|bool and not balancer_members is defined and env == "staging" '
   tags:
   - httpd
@@ -59,3 +59,7 @@
   - httpd
   - httpd/reverseproxy
   - httpd/reversepassproxy
+
+- name: clear balancer_members
+  set_fact:
+    balancer_members: !!null
