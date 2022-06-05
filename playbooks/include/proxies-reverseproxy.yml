@@ -171,6 +171,7 @@
     remotepath: /accounts
     localpath: /accounts
     balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: false
     keephost: true
@@ -182,7 +183,6 @@
     destname: noggin
     balancer_name: apps-ocp
     targettype: openshift
-    ocp4: false
     keephost: true
     ocp4: true
     tags:
@@ -247,6 +247,7 @@
     remotepath: /datagrepper
     localpath: /datagrepper
     balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: false
     keephost: true
@@ -274,6 +275,7 @@
     localpath: /kerneltest
     balancer_name: app-os
     targettype: openshift
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     ocp4: false
     keephost: true
     when: env == "staging"
@@ -283,6 +285,7 @@
     destname: kerneltest
     balancer_name: app-os
     targettype: openshift
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     ocp4: false
     keephost: true
     tags: kerneltest
@@ -335,6 +338,7 @@
     destname: bodhi
     balancer_name: app-os
     targettype: openshift
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     ocp4: false
     keephost: true
     tags: bodhi
@@ -441,6 +445,7 @@
     website: transtats.fedoraproject.org
     destname: transtats
     balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: false
     keephost: true
@@ -473,6 +478,7 @@
     website: koschei.fedoraproject.org
     destname: koschei
     balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: false
     keephost: true
@@ -482,6 +488,7 @@
     website: message-tagging-service.fedoraproject.org
     destname: message-tagging-service
     balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: false
     keephost: true
@@ -734,6 +741,7 @@
     website: "app.os{{ env_suffix }}.fedoraproject.org"
     destname: app.os
     balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: false
     keephost: true
@@ -788,6 +796,7 @@
     website: "provision{{ env_suffix }}.fedoraproject.org"
     destname: zezere
     balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: false
     keephost: true
@@ -805,6 +814,7 @@
     website: greenwave.fedoraproject.org
     destname: greenwave
     balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: false
     keephost: true
@@ -814,6 +824,7 @@
     website: waiverdb.fedoraproject.org
     destname: waiverdb
     balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: false
     keephost: true
@@ -823,6 +834,7 @@
     website: elections.fedoraproject.org
     destname: elections
     balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: false
     keephost: true
@@ -833,6 +845,7 @@
     website: calendar.fedoraproject.org
     destname: calendar
     balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: false
     keephost: true
@@ -843,6 +856,7 @@
     website: mdapi.fedoraproject.org
     destname: mdapi
     balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: false
     keephost: true
@@ -852,6 +866,7 @@
     website: wallpapers.fedoraproject.org
     destname: wallpapers
     balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: false
     keephost: true
@@ -861,6 +876,7 @@
     website: silverblue.fedoraproject.org
     destname: silverblue
     balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: false
     keephost: true
@@ -870,6 +886,7 @@
     website: release-monitoring.org
     destname: release-monitoring
     balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: false
     keephost: true
@@ -880,6 +897,7 @@
     website: stg.release-monitoring.org
     destname: stg.release-monitoring
     balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: false
     keephost: true
@@ -890,6 +908,7 @@
     website: whatcanidoforfedora.org
     destname: whatcanidoforfedora
     balancer_name: app-ocp
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: true
     keephost: true
@@ -900,6 +919,7 @@
     website: whatcanidoforfedora.org
     destname: whatcanidoforfedora
     balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: false
     keephost: true
@@ -910,6 +930,7 @@
     website: testdays.fedoraproject.org
     destname: testdays
     balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: false
     keephost: true
@@ -919,6 +940,7 @@
     website: packager-dashboard.fedoraproject.org
     destname: packager-dashboard
     balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: false
     keephost: true
@@ -928,6 +950,7 @@
     website: "languages{{ env_suffix }}.fedoraproject.org"
     destname: app.os
     balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: false
     keephost: true
@@ -947,6 +970,7 @@
     website: packages.fedoraproject.org
     destname: fedora-packages-static
     balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: false
     keephost: true
@@ -955,6 +979,7 @@
     website: "discourse2fedmsg{{ env_suffix }}.fedoraproject.org"
     destname: discourse2fedmsg
     balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: false
     keephost: true
@@ -964,6 +989,7 @@
     website: ipsilon-project.org
     destname: ipsilon-website
     balancer_name: apps-ocp
+    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: true
     keephost: true
