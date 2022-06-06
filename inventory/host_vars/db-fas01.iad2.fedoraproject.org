@@ -12,11 +12,13 @@ custom_rules: [
 # This is a generic list, monitored by collectd
 databases:
   - fas2
+  - ipsilon
 datacenter: iad2
 db_backup_dir: ['/backups']
 # This is a more strict list, to be made publicly available
 dbs_to_backup:
   - fas2
+  - ipsilon
 effective_cache_size: "6GB"
 eth0_ipv4_gw: 10.3.163.254
 eth0_ipv4_ip: 10.3.163.42
