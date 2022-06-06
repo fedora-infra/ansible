@@ -18,9 +18,9 @@
   - crypto-policies
   - base/crypto-policies
 
-- name: Set crypto-policy on fedora 33 and higher hosts to allow 2fa to work
-  command: "update-crypto-policies --set DEFAULT:FEDORA32"
-  when: "ansible_distribution_major_version|int >= 33 and (currentcryptopolicy.stdout.find('DEFAULT:FEDORA32') == -1 or cryptopolicyapplied.rc != 0)"
+- name: Set crypto-policy on fedora 33 and higher hosts back to default
+  command: "update-crypto-policies --set DEFAULT"
+  when: "ansible_distribution_major_version|int >= 33 and (currentcryptopolicy.stdout.find('DEFAULT') == -1 or cryptopolicyapplied.rc != 0)"
   check_mode: no
   tags:
   - crypto-policies
