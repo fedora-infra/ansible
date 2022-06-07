@@ -29,6 +29,7 @@ openqa_dbname: openqa-onebox
 openqa_dbpassword: "{{ stg_openqa_dbpassword }}"
 openqa_dbuser: openqastg
 openqa_dbhost: localhost
+openqa_dbhost_delegate: "{{ inventory_hostname }}"
 openqa_env: staging
 openqa_env_prefix: stg-
 # this is because openqa staging isn't really a staging host
