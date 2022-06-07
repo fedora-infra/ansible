@@ -2,34 +2,6 @@
 #
 # Setup postgresql server.
 #
-- name: install postgresql server packages (yum)
-  package:
-    state: present
-    name:
-    - postgresql-server
-    - postgresql-contrib
-    - postgresql-plpython
-    - python-psycopg2
-    - pxz
-  when: ansible_distribution_major_version|int < 8 and ansible_distribution == 'RedHat'
-  tags:
-  - packages
-  - postgresql
-
-- name: install postgresql server packages (dnf)
-  package:
-    state: present
-    name:
-    - postgresql-server
-    - postgresql-contrib
-    - postgresql-plpython
-    - python-psycopg2
-    - pxz
-  when: ansible_distribution_major_version|int >= 29 and ansible_distribution == 'Fedora' and ansible_cmdline.ostree is not defined
-  tags:
-  - packages
-  - postgresql
-
 - name: on rhel8 hosts enable the postgresql 12 module.
   copy:
     dest: /etc/dnf/modules.d/postgresql.module
@@ -52,7 +24,35 @@
       state=enabled
   when: inventory_hostname.startswith('db-fas01.stg')
 
-- name: install postgresql server packages (dnf)
+- name: install postgresql server packages (EL < 8)
+  package:
+    state: present
+    name:
+    - postgresql-server
+    - postgresql-contrib
+    - postgresql-plpython
+    - python-psycopg2
+    - pxz
+  when: ansible_distribution_major_version|int < 8 and ansible_distribution == 'RedHat'
+  tags:
+  - packages
+  - postgresql
+
+- name: install postgresql server packages (Fedora)
+  package:
+    state: present
+    name:
+    - postgresql-server
+    - postgresql-contrib
+    - postgresql-plpython3
+    - python3-psycopg2
+    - pxz
+  when: ansible_distribution_major_version|int >= 29 and ansible_distribution == 'Fedora' and ansible_cmdline.ostree is not defined
+  tags:
+  - packages
+  - postgresql
+
+- name: install postgresql server packages (EL >= 8)
   package:
     state: present
     name:
@@ -106,16 +106,16 @@
 
 - name: postgresql config template (el7 / postgresql 9.2)
   template: dest=/var/lib/pgsql/data/postgresql.conf src=postgresql.conf
-  when: (ansible_distribution_major_version|int < 8 and ansible_distribution == 'RedHat') or ansible_distribution != 'RedHat'
+  when: ansible_distribution_major_version|int < 8 and ansible_distribution == 'RedHat'
   notify:
   - restart postgresql
   tags:
   - config
   - postgresql
 
-- name: postgresql config template (el8 / postgresql 12)
+- name: postgresql config template (Fedora / el8 / postgresql 12)
   template: dest=/var/lib/pgsql/data/postgresql.conf src=postgresql.conf-12
-  when: ansible_distribution_major_version|int > 7 and ansible_distribution == 'RedHat'
+  when: (ansible_distribution_major_version|int > 7 and ansible_distribution == 'RedHat') or ansible_distribution != 'RedHat'
   notify:
   - restart postgresql
   tags:
