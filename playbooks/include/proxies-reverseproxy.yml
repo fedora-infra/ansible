@@ -914,10 +914,10 @@
   - role: httpd/reverseproxy
     website: stg.release-monitoring.org
     destname: stg.release-monitoring
-    balancer_name: app-os
-    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
+    balancer_name: apps-ocp
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
     targettype: openshift
-    ocp4: false
+    ocp4: true
     keephost: true
     tags: release-montoring.org
     when: env == "staging"
