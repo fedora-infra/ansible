@@ -169,6 +169,9 @@
 #  tags:
 #  - packages
 
+# fedora_openqa requires most of these, including the resultsdb and
+# wikitcms bits even when reporting is disabled; the consumer module
+# always imports the report module which imports those
 - name: Install required packages
   package:
     name: ['fedora-messaging', 'python3-fedfind', 'python3-wikitcms', 'python3-openqa_client',
