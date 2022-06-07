@@ -108,12 +108,6 @@ handlers = ["console"]
             keyid = "{{ (env == 'production')|ternary('47dd8ef9', 'd300e724') }}"
 
             [[consumer_config.koji_instances.primary.tags]]
-            from = "f34-infra-candidate"
-            to = "f34-infra-stg"
-            key = "{{ (env == 'production')|ternary('fedora-infra', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('47dd8ef9', 'd300e724') }}"
-
-            [[consumer_config.koji_instances.primary.tags]]
             from = "f35-infra-candidate"
             to = "f35-infra-stg"
             key = "{{ (env == 'production')|ternary('fedora-infra', 'testkey') }}"
@@ -132,12 +126,6 @@ handlers = ["console"]
             keyid = "{{ (env == 'production')|ternary('47dd8ef9', 'd300e724') }}"
 
             # Gated coreos-pool tag
-
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f34-coreos-signing-pending"
-            to = "coreos-pool"
-            key = "{{ (env == 'production')|ternary('fedora-34', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('45719a39', 'd300e724') }}"
 
             [[consumer_config.koji_instances.primary.tags]]
             from = "f35-coreos-signing-pending"
@@ -267,38 +255,6 @@ handlers = ["console"]
             keyid = "{{ (env == 'production')|ternary('9867c58f', 'd300e724') }}"
             type = "modular"
 
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f34-signing-pending"
-            to = "f34-updates-testing-pending"
-            key = "{{ (env == 'production')|ternary('fedora-34', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('45719a39', 'd300e724') }}"
-
-            [consumer_config.koji_instances.primary.tags.sidetags]
-            pattern = 'f34-build-side-<seq_id>'
-            from = '<sidetag>-signing-pending'
-            to = '<sidetag>-testing-pending'
-            trusted_taggers = ['bodhi']
-
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f34-pending"
-            to = "f34"
-            key = "{{ (env == 'production')|ternary('fedora-34', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('45719a39', 'd300e724') }}"
-
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f34-modular-pending"
-            to = "f34-modular"
-            key = "{{ (env == 'production')|ternary('fedora-34', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('45719a39', 'd300e724') }}"
-            type = "modular"
-
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f34-modular-signing-pending"
-            to = "f34-modular-updates-testing-pending"
-            key = "{{ (env == 'production')|ternary('fedora-34', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('45719a39', 'd300e724') }}"
-            type = "modular"
-
             #epel8 modular tags
             [[consumer_config.koji_instances.primary.tags]]
             from = "epel8-modular-signing-pending"
@@ -408,12 +364,6 @@ handlers = ["console"]
             to = "f35-openh264"
             key = "{{ (env == 'production')|ternary('fedora-35', 'testkey') }}"
             keyid = "{{ (env == 'production')|ternary('9867c58f', 'd300e724') }}"
-
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f34-openh264"
-            to = "f34-openh264"
-            key = "{{ (env == 'production')|ternary('fedora-34', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('45719a39', 'd300e724') }}"
 
             # Side tags created by releng
 
