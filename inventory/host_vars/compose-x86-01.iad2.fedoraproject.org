@@ -52,6 +52,6 @@ ks_url: http://10.3.163.35/repo/rhel/ks/kvm-fedora
 #
 libdir: /usr/lib64
 lvm_size: 30000
-virt_install_command: "{{ virt_install_command_one_nic }}"
+virt_install_command: "{{ virt_install_command_one_nic_unsafe }}"
 vmhost: bvmhost-x86-04.iad2.fedoraproject.org
 volgroup: /dev/vg_guests
