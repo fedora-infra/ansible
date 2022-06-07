@@ -32,7 +32,7 @@
     - ftbfs
 
 - name: add ftbfs user
-  user: name=ftbfs uid=264 group=ftbfs createhome=yes system=yes state=present
+  user: name=ftbfs uid=264 group=ftbfs createhome=yes system=yes state=present local=yes
   when: inventory_hostname.startswith('compose-x86-01')
   tags:
     - ftbfs
