@@ -9,6 +9,7 @@ plugins = {{ openqa_webapi_plugins }}
 hide_asset_types = repo hdd
 parallel_cancel_whole_cluster = 0
 
+{% if openqa_amqp_publisher_url is defined and openqa_amqp_publisher_url %}
 [amqp]
 topic_prefix = {{ openqa_amqp_publisher_prefix }}
 url = {{ openqa_amqp_publisher_url }}
@@ -17,6 +18,7 @@ exchange = {{ openqa_amqp_publisher_exchange }}
 cacertfile = {{ openqa_amqp_publisher_cacertfile }}
 certfile = {{ openqa_amqp_publisher_certfile }}
 keyfile = {{ openqa_amqp_publisher_keyfile }}
+{% endif %}
 {% endif %}
 
 [audit/storage_duration]
