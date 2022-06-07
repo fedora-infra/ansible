@@ -339,27 +339,6 @@
   when: inventory_hostname.startswith('batcave01')
 
 #
-# Setup rhel8-split script.
-#
-
-- name: setup rhel8-split script
-  copy: src=rhel8-split.sh dest=/usr/local/bin/rhel8-split.sh mode=0755
-  tags:
-  - batcave
-  - config
-  when: inventory_hostname.startswith('batcave01')
-
-#
-# Setup rhel8-split cron job
-#
-- name: setup rhel8-split cron
-  copy: src=rhel8-split.cron dest=/etc/cron.d/rhel8-split.cron mode=0644
-  tags:
-  - batcave
-  - config
-  when: inventory_hostname.startswith('batcave01')
-
-#
 # Setup web server config
 #
 - name: install web server config for batcave (mimetypes)
