@@ -153,7 +153,7 @@
     thresholds:
       warning: 100
       critical: 1000
-  - fmc
+  #- fmc
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
