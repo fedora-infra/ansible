@@ -165,11 +165,19 @@
       - git # for checking out tests/tools
       - jq # for checking if tests changed after template load
       - python3-libsemanage # for using seboolean module
-      - nfs-utils # for configuring/running NFS server
       - perl(Class::DBI::Pg) # for using postgresql DB
       - genisoimage # for building cloud-init ISO
       - policycoreutils # for loading SELinux policy module
     state: present
+  tags:
+  - packages
+
+- name: Install various other required packages
+  package:
+    name:
+      - nfs-utils # for configuring/running NFS server
+    state: present
+  when: "openqa_nfs_workers is defined"
   tags:
   - packages
 
