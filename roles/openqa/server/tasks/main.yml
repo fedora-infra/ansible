@@ -260,19 +260,31 @@
   tags:
   - config
 
-- name: Create database
+- name: Create database (delegate)
   delegate_to: "{{ openqa_dbhost }}"
   become_user: postgres
   become: true
   postgresql_db: db={{ openqa_dbname }}
-  when: "openqa_dbhost is defined"
+  when: "openqa_dbhost is defined and openqa_dbhost != 'localhost'"
 
-- name: Ensure db user has access to database
+- name: Ensure db user has access to database (delegate)
   delegate_to: "{{ openqa_dbhost }}"
   become_user: postgres
   become: true
   postgresql_user: db={{ openqa_dbname }} user={{ openqa_dbuser }} password={{ openqa_dbpassword }} role_attr_flags=NOSUPERUSER
-  when: "openqa_dbhost is defined"
+  when: "openqa_dbhost is defined and openqa_dbhost != 'localhost'"
+
+- name: Create database (non-delegate)
+  become_user: postgres
+  become: true
+  postgresql_db: db={{ openqa_dbname }}
+  when: "openqa_dbhost is defined and openqa_dbhost == 'localhost'"
+
+- name: Ensure db user has access to database (non-delegate)
+  become_user: postgres
+  become: true
+  postgresql_user: db={{ openqa_dbname }} user={{ openqa_dbuser }} password={{ openqa_dbpassword }} role_attr_flags=NOSUPERUSER
+  when: "openqa_dbhost is defined and openqa_dbhost == 'localhost'"
 
 - name: Database config
   template: src=database.ini.pgsql.j2 dest=/etc/openqa/database.ini owner=geekotest group=root mode=0640
