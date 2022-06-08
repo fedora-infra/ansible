@@ -39,6 +39,9 @@
   - role: keytab/service
     service: mash
     host: "koji{{env_suffix}}.fedoraproject.org"
+  - role: releng
+    tags:
+    - releng
 
 # production composer nfs mounts
 
@@ -128,9 +131,6 @@
   - role: rabbit/user
     username: "pungi{{ env_suffix }}"
 
-  - role: releng
-    tags:
-    - releng
   - {
     role: "push-container-registry",
       cert_dest_dir: "/etc/docker/certs.d/registry.stg.fedoraproject.org",
