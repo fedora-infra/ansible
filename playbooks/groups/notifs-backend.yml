@@ -27,11 +27,11 @@
   #- { role: openvpn/client,
   #    when: env != "staging" }
   - ipa/client
-  - { role: keytab/service,
-      owner_user: daemon,
-      owner_group: daemon,
-      service: fmn-backend@1,
-      when: inventory_hostname.startswith('notifs-backend02.iad2') }
+    #- { role: keytab/service,
+    #  owner_user: daemon,
+    #  owner_group: daemon,
+    #  service: fmn-backend@1,
+    #  when: inventory_hostname.startswith('notifs-backend02.iad2') }
   - nagios_client
   - collectd/base
   - fedmsg/base
