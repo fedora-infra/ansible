@@ -60,9 +60,9 @@ data:
     ]
 
     [tls]
-    ca_cert = "/etc/pki/rabbitmq/ca/resultsdb.ca"
-    keyfile = "/etc/pki/rabbitmq/key/resultsdb.key"
-    certfile = "/etc/pki/rabbitmq/crt/resultsdb.crt"
+    ca_cert = "/etc/pki/rabbitmq/ca/resultsdb-ci-listener.ca"
+    keyfile = "/etc/pki/rabbitmq/key/resultsdb-ci-listener.key"
+    certfile = "/etc/pki/rabbitmq/crt/resultsdb-ci-listener.crt"
 
     [client_properties]
     app = "resultsdb_listener"
@@ -123,8 +123,4 @@ data:
 
     [sender]
     sender_type = ResultsdbSender
-{% if env == "staging" %}
-    resultsdb_url = https://resultsdb.stg.fedoraproject.org
-{% else %}
-    resultsdb_url = https://resultsdb.fedoraproject.org
-{% endif %}
+    resultsdb_url = http://resultsdb-api.resultsdb.svc.cluster.local:5001/api/v2.0

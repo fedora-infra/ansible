@@ -25,7 +25,6 @@ spec:
             - name: config-volume
               mountPath: /etc/ci-resultsdb-listener
               readOnly: true
-{% if deployment_type is defined and deployment_type not in ['local', 'dev'] %}
             - name: fedora-messaging-ca-volume
               mountPath: /etc/pki/rabbitmq/ca
               readOnly: true
@@ -38,12 +37,10 @@ spec:
             - name: fedora-messaging-config-volume
               mountPath: /etc/fedora-messaging
               readOnly: true
-{% endif %}
       volumes:
         - name: config-volume
           configMap:
             name: resultsdb-ci-listener-cfg
-{% if deployment_type is defined and deployment_type not in ['local', 'dev']%}
         - name: fedora-messaging-config-volume
           configMap:
             name: fedora-messaging-configmap
@@ -56,6 +53,5 @@ spec:
         - name: fedora-messaging-key-volume
           secret:
             secretName: resultsdb-ci-listener-fedora-messaging-key
-{% endif %}
   triggers:
     - type: ConfigChange
