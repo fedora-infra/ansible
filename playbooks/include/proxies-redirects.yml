@@ -886,3 +886,18 @@
     website: qa.fedoraproject.org
     path: /
     target: https://fedoraproject.org/wiki/QA
+
+    #  - role: httpd/redirectmatch
+    #shortname: taskotron
+    #website: taskotron.fedoraproject.org
+    #regex: ^(.*)
+    #target: https://resultsdb.fedoraproject.org/$1
+    #when: env != 'staging'
+
+  - role: httpd/redirectmatch
+    shortname: taskotron-stg
+    website: taskotron.stg.fedoraproject.org
+    regex: ^(.*)
+    target: https://resultsdb.stg.fedoraproject.org/$1
+    when: env == 'staging'
+

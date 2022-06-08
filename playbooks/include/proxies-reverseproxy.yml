@@ -594,8 +594,8 @@
     proxyurl: http://log01
     tags: data-analysis
 
-  ### entries for resultsdb and resultsdb_frontend
-  - role: httpd/reverseproxy
+  ## entries for resultsdb and resultsdb_frontend
+    - role: httpd/reverseproxy
     website: taskotron.fedoraproject.org
     destname: taskotron-resultsdb
     localpath: /resultsdb
@@ -603,7 +603,7 @@
     balancer_name: resultsdb
     balancer_members: ['resultsdb01.vpn.fedoraproject.org:80']
     http_not_https_yes_this_is_insecure_and_i_feel_bad: true
-
+  
   - role: httpd/reverseproxy
     website: taskotron.fedoraproject.org
     destname: taskotron-resultsdbapi
@@ -614,25 +614,25 @@
     http_not_https_yes_this_is_insecure_and_i_feel_bad: true
 
   ### staging entries for resultsdb and resultsdb_frontend
-  - role: httpd/reverseproxy
-    website: taskotron.stg.fedoraproject.org
-    destname: taskotron-resultsdb
-    localpath: /resultsdb
-    remotepath: /resultsdb
-    balancer_name: resultsdb-stg
-    balancer_members: ['resultsdb01.stg.iad2.fedoraproject.org:80']
-    http_not_https_yes_this_is_insecure_and_i_feel_bad: true
-    when: env == "staging"
-
-  - role: httpd/reverseproxy
-    website: taskotron.stg.fedoraproject.org
-    destname: taskotron-resultsdbapi
-    localpath: /resultsdb_api
-    remotepath: /resultsdb_api
-    balancer_name: resultsdb-stg
-    balancer_members: ['resultsdb01.stg.iad2.fedoraproject.org:80']
-    http_not_https_yes_this_is_insecure_and_i_feel_bad: true
-    when: env == "staging"
+  #  - role: httpd/reverseproxy
+  #  website: taskotron.stg.fedoraproject.org
+  #  destname: taskotron-resultsdb
+  #  localpath: /resultsdb
+  #  remotepath: /resultsdb
+  #  balancer_name: resultsdb-stg
+  #  balancer_members: ['resultsdb01.stg.iad2.fedoraproject.org:80']
+  #  http_not_https_yes_this_is_insecure_and_i_feel_bad: true
+  #  when: env == "staging"
+  #
+  #- role: httpd/reverseproxy
+  #  website: taskotron.stg.fedoraproject.org
+  #  destname: taskotron-resultsdbapi
+  #  localpath: /resultsdb_api
+  #  remotepath: /resultsdb_api
+  #  balancer_name: resultsdb-stg
+  #  balancer_members: ['resultsdb01.stg.iad2.fedoraproject.org:80']
+  #  http_not_https_yes_this_is_insecure_and_i_feel_bad: true
+  #  when: env == "staging"
 
   ### staging entries for resultsdb and resultsdb_frontend
   - role: httpd/reverseproxy
@@ -646,6 +646,19 @@
     ocp4: true
     keephost: true
     when: env == "staging"
+
+  ### production entries for resultsdb and resultsdb_frontend
+  - role: httpd/reverseproxy
+    website: resultsdb.fedoraproject.org
+    destname: zz-resultsdb-resultsdb
+    localpath: /
+    remotepath: /
+    balancer_name: resultsdb
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    targettype: openshift
+    ocp4: true
+    keephost: true
+    when: env != "staging"
 
   # This one gets its own role (instead of httpd/reverseproxy) so that it can
   # copy in some silly static resources (globe.png, index.html)
