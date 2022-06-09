@@ -1,4 +1,3 @@
-# WARNING: When changing the base distribution, adjust the python version in httpd.conf for static files
 FROM fedora:36
 LABEL \
     name="bodhi-base" \
@@ -9,13 +8,14 @@ RUN curl -o /etc/yum.repos.d/infra-tags-stg.repo https://infrastructure.fedorapr
 {% else %}
 RUN curl -o /etc/yum.repos.d/infra-tags.repo https://infrastructure.fedoraproject.org/infra/ansible/files/common/fedora-infra-tags.repo
 {% endif %}
-# While dnf has a --nodocs, it doesen't have a --docs...
-RUN sed -i '/nodocs/d' /etc/dnf/dnf.conf
 {% if env == "staging" %}
 RUN dnf install -y bodhi-server python3-pyramid_sawing python3-gunicorn --refresh
 {% else %}
 RUN dnf install -y bodhi-server-{{bodhi_version}} python3-pyramid_sawing python3-gunicorn
 {% endif %}
+
+# link the static files for a simpler httpd.conf
+RUN ln -s $(python3 -Ic "import sysconfig; print(sysconfig.get_path('purelib', 'rpm_prefix'))")/bodhi/server/static/ /srv/bodhi-static
 
 # Set up krb5
 RUN rm -f /etc/krb5.conf && \
