@@ -10,6 +10,8 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   vars:
     app: openvpn
+    ocp_nodes:
+    - worker06.ocp.iad2.fedoraproject.org
 
   roles:
   - role: openshift/project
@@ -45,8 +47,6 @@
   - role: openshift/object
     template: secrets.yml
     objectname: secrets.yml
-    ocp_nodes:
-    - worker06.ocp.iad2.fedoraproject.org
 
   - role: openshift/object
     template: configmap.yml
