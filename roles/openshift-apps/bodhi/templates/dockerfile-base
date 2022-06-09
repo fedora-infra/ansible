@@ -11,9 +11,9 @@ RUN curl -o /etc/yum.repos.d/infra-tags.repo https://infrastructure.fedoraprojec
 # While dnf has a --nodocs, it doesen't have a --docs...
 RUN sed -i '/nodocs/d' /etc/dnf/dnf.conf
 {% if env == "staging" %}
-RUN dnf install -y bodhi-server bodhi-docs python3-pyramid_sawing python3-gunicorn --refresh
+RUN dnf install -y bodhi-server python3-pyramid_sawing python3-gunicorn --refresh
 {% else %}
-RUN dnf install -y bodhi-server-{{bodhi_version}} bodhi-docs-{{bodhi_version}} python3-pyramid_sawing python3-gunicorn
+RUN dnf install -y bodhi-server-{{bodhi_version}} python3-pyramid_sawing python3-gunicorn
 {% endif %}
 
 # Set up krb5
