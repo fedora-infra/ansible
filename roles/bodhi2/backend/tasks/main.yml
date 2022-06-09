@@ -299,6 +299,46 @@
   - config
   - bodhi
 
+- name: Create /etc/pki/fedora-messaging
+  file:
+    dest: /etc/pki/fedora-messaging
+    mode: 0775
+    owner: root
+    group: root
+    state: directory
+  tags:
+  - bodhi
+
+- name: Deploy the fedora-messaging CA
+  copy:
+    src: "{{ private }}/files/rabbitmq/{{env}}/pki/ca.crt"
+    dest: /etc/pki/fedora-messaging/cacert.pem
+    mode: 0644
+    owner: apache
+    group: apache
+  tags:
+  - bodhi
+
+- name: Deploy the fedora-messaging cert
+  copy:
+    src: "{{ private }}/files/rabbitmq/{{env}}/pki/issued/bodhi{{env_suffix}}.crt"
+    dest: /etc/pki/fedora-messaging/bodhi-cert.pem
+    mode: 0644
+    owner: apache
+    group: apache
+  tags:
+  - bodhi
+
+- name: Deploy the fedora-messaging key
+  copy:
+    src: "{{ private }}/files/rabbitmq/{{env}}/pki/private/bodhi{{env_suffix}}.key"
+    dest: /etc/pki/fedora-messaging/bodhi-key.pem
+    mode: 0600
+    owner: apache
+    group: apache
+  tags:
+  - bodhi
+
 - name: Let the ftpsync user also read the fedora-messaging config
   command: /usr/bin/setfacl -m user:ftpsync:rx /etc/fedora-messaging/config.toml
   tags:
@@ -355,46 +395,6 @@
 
 - name: ensure apache is disabled on the backend
   service: name=httpd enabled=no state=stopped
-  tags:
-  - bodhi
-
-- name: Create /etc/pki/fedora-messaging
-  file:
-    dest: /etc/pki/fedora-messaging
-    mode: 0775
-    owner: root
-    group: root
-    state: directory
-  tags:
-  - bodhi
-
-- name: Deploy the fedora-messaging CA
-  copy:
-    src: "{{ private }}/files/rabbitmq/{{env}}/pki/ca.crt"
-    dest: /etc/pki/fedora-messaging/cacert.pem
-    mode: 0644
-    owner: apache
-    group: apache
-  tags:
-  - bodhi
-
-- name: Deploy the fedora-messaging cert
-  copy:
-    src: "{{ private }}/files/rabbitmq/{{env}}/pki/issued/bodhi{{env_suffix}}.crt"
-    dest: /etc/pki/fedora-messaging/bodhi-cert.pem
-    mode: 0644
-    owner: apache
-    group: apache
-  tags:
-  - bodhi
-
-- name: Deploy the fedora-messaging key
-  copy:
-    src: "{{ private }}/files/rabbitmq/{{env}}/pki/private/bodhi{{env_suffix}}.key"
-    dest: /etc/pki/fedora-messaging/bodhi-key.pem
-    mode: 0600
-    owner: apache
-    group: apache
   tags:
   - bodhi
 
