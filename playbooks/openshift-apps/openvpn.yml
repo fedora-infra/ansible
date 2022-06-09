@@ -1,6 +1,6 @@
 - name: make the app be real
   # We don't have any VPN set up on stg
-  hosts: os_masters[0]
+  hosts: os_control[0]
   user: root
   gather_facts: False
   
