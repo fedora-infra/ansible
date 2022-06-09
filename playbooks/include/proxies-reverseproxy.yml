@@ -341,10 +341,10 @@
   - role: httpd/reverseproxy
     website: bodhi.fedoraproject.org
     destname: bodhi
-    balancer_name: app-os
+    balancer_name: apps-ocp
     targettype: openshift
-    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
-    ocp4: false
+    balancer_members: "{{ocp_nodes}}"
+    ocp4: true
     keephost: true
     tags: bodhi
     when: env != "staging"
@@ -603,7 +603,7 @@
     balancer_name: resultsdb
     balancer_members: ['resultsdb01.vpn.fedoraproject.org:80']
     http_not_https_yes_this_is_insecure_and_i_feel_bad: true
-  
+
   - role: httpd/reverseproxy
     website: taskotron.fedoraproject.org
     destname: taskotron-resultsdbapi

@@ -56,11 +56,7 @@ TypesConfig /etc/mime.types
 AddDefaultCharset UTF-8
 CoreDumpDirectory /tmp
 Alias /docs /usr/share/doc/bodhi-docs/html/
-{% if env == "staging" %}
 Alias /static/v{{ bodhi_version.split('-')[0] }} /srv/bodhi/bodhi/server/static/
-{% else %}
-Alias /static/v{{ bodhi_version.split('-')[0] }} /usr/lib/python3.8/site-packages/bodhi/server/static/
-{% endif %}
 WSGIDaemonProcess bodhi display-name=bodhi processes=4 threads=1 maximum-requests=500 home=/httpdir request-timeout=90
 WSGIApplicationGroup %{GLOBAL}
 WSGISocketPrefix run/wsgi
@@ -68,6 +64,4 @@ WSGIRestrictStdout Off
 WSGIRestrictSignal Off
 WSGIPythonOptimize 1
 WSGIScriptAlias / /usr/share/bodhi/bodhi.wsgi
-{% if env == "staging" %}
 WSGIPassAuthorization On
-{% endif %}
