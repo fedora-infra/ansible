@@ -897,7 +897,7 @@
   - role: httpd/redirectmatch
     shortname: taskotron-stg
     website: taskotron.stg.fedoraproject.org
-    regex: ^(.*)
+    regex: ^/resultsdb_api/(.*)
     target: https://resultsdb.stg.fedoraproject.org/$1
     when: env == 'staging'
 
