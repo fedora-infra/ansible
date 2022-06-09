@@ -94,10 +94,23 @@
   - bodhi
   - cron
 
+- name: Determine Python version
+  command:
+    argv:
+      - python3
+      - -c
+      - "from sys import version_info as vi; print(f'{vi[0]}.{vi[1]}')"
+  register: _python3_version_result
+  changed_when: False
+
+- name: Set Python version fact
+  set_fact:
+    py3ver: "{{ _python3_version_result.stdout | trim }}"
+
 - name: put the koji sync listener script in place
   copy:
     src: koji_sync_listener.py
-    dest: /usr/lib/python3.9/site-packages/koji_sync_listener.py
+    dest: /usr/lib/python{{ py3ver }}/site-packages/koji_sync_listener.py
     mode: 0644
   when: env == "production"
   tags:
