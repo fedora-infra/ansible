@@ -50,6 +50,11 @@
 
     - role: openshift/object
       app: resultsdb-ci-listener
+      template: secrets.yml
+      objectname: secrets.yml
+
+    - role: openshift/object
+      app: resultsdb-ci-listener
       template: configmaps.yml
       objectname: configmaps.yml
 

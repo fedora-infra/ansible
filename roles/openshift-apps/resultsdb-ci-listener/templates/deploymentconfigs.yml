@@ -21,6 +21,9 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 5001
+          envFrom:
+            - secretRef:
+                name: resultsdb-ci-listener-auth
           volumeMounts:
             - name: config-volume
               mountPath: /etc/ci-resultsdb-listener
