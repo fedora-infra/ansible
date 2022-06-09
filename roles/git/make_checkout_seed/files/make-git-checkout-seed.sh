@@ -63,13 +63,12 @@ for repo in $ORIGIN_DIR/*.git; do
 done
 
 # Search and create tar balls for existing Epel branches
-archive_epel_branches() {
-  search_epel=${1:-'*epel*'}
-  branches="$(git branch -r --list "$search_epel")"
+archive_branches() {
+  branches="$(git branch -r --list | grep -P '[a-z]+\/([fF][0-9]+|epel[0-9]+|rawhide)')"
   for result in $branches; do
-    if [[ "(echo $result | grep -Eo '[0-9]+')" -gt "6" ]]; then
+    if [[ "(echo $result )" ]]; then
       git checkout "$result"
-      tar -cf - -C$WORK_DIR $(basename $SEED_DIR) | xz -2 >$OUTPUT_DIR/.git-seed-$DATE-$result.tar.gzxz
+      tar -cf - -C$WORK_DIR $(basename $SEED_DIR) | xz -2 >$OUTPUT_DIR/.git-seed-$DATE-$result.tar.xz
       tar -cf - -C$WORK_DIR $(basename $SPEC_DIR) | xz -2 >$OUTPUT_DIR/.rpm-specs-$DATE-$result.tar.xz
       rm $OUTPUT_DIR/git-seed*tar.xz
       rm $OUTPUT_DIR/rpm-specs*tar.xz
@@ -77,8 +76,6 @@ archive_epel_branches() {
       mv $OUTPUT_DIR/.rpm-specs-$DATE.tar.xz $OUTPUT_DIR/rpm-specs-$DATE-$result.tar.xz
       ln -s git-seed-$DATE-$result.tar.xz $OUTPUT_DIR/git-seed-latest.tar.xz
       ln -s rpm-specs-$DATE-$result.tar.xz $OUTPUT_DIR/rpm-specs-latest.tar.xz
-    else
-      echo "Epel versions below '7' not supported"
     fi
   done
 }
@@ -92,7 +89,7 @@ mv $OUTPUT_DIR/.rpm-specs-$DATE.tar.xz $OUTPUT_DIR/rpm-specs-$DATE.tar.xz
 ln -s git-seed-$DATE.tar.xz $OUTPUT_DIR/git-seed-latest.tar.xz
 ln -s rpm-specs-$DATE.tar.xz $OUTPUT_DIR/rpm-specs-latest.tar.xz
 
-archive_epel_branches
+archive_branches
 
 python2 /usr/local/bin/alternative_arch_report.py /srv/git_seed/rpm-specs/ |
   mail -s "[Report] Packages Restricting Arches" arch-excludes@lists.fedoraproject.org
