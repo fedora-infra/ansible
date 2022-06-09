@@ -1,0 +1,72 @@
+- name: make the app be real
+  # We don't have any VPN set up on stg
+  hosts: os_masters[0]
+  user: root
+  gather_facts: False
+  
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+  vars:
+    app: openvpn
+
+  roles:
+  - role: openshift/project
+    description: Openvpn Client
+    appowners: []
+
+  - role: openshift/object
+    objectname: imagestream.yml
+    template: imagestream.yml
+
+  - role: openshift/object
+    objectname: buildconfig.yml
+    template: buildconfig.yml
+
+  - role: openshift/object
+    template: serviceaccount.yml
+    objectname: serviceaccount.yml
+
+  - role: openshift/object
+    template: scc.yml
+    objectname: scc.yml
+
+  - role: openshift/object
+    template: scc_role.yml
+    objectname: scc_role.yml
+
+  - role: openshift/object
+    template: scc_rolebinding.yml
+    objectname: scc_rolebinding.yml
+
+  # load openVPN client certs for each node in ocp_nodes into ocp secret
+  # expect certs to be generated in {{private}}/files/vpn/pki/issued/
+  - role: openshift/object
+    template: secrets.yml
+    objectname: secrets.yml
+    ocp_nodes:
+    - worker06.ocp.iad2.fedoraproject.org
+
+  - role: openshift/object
+    template: configmap.yml
+    objectname: configmap.yml
+
+  - role: openshift/object
+    template: deployment.yml
+    objectname: deployment.yml
+
+  - role: openshift/start-build
+    buildname: openvpn
+
+###############################################
+# actions to delete the project from OpenShift
+###############################################
+# to run: sudo rbac-playbook -l os_masters_stg[0] -t delete openshift-apps/openvpn.yml
+  - role: openshift/object-delete
+    objecttype: project
+    objectname: openvpn
+    tags:
+    - never
+    - delete
+

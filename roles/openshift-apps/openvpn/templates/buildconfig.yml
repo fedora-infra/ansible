@@ -1,0 +1,27 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: openvpn
+spec:
+  failedBuildsHistoryLimit: 5
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: openvpn:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    dockerfile: |-
+      FROM registry.fedoraproject.org/fedora:latest
+      RUN dnf -y install \
+        openvpn && \
+          dnf clean all
+      WORKDIR /config
+      CMD openvpn --config openvpn.conf
+    type: Dockerfile
+  strategy:
+    dockerStrategy: {}
+    type: Docker
+  successfulBuildsHistoryLimit: 5

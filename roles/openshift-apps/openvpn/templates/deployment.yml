@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openvpn-client
+  annotations:
+    image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"openvpn:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"setup\")].image"},{"from":{"kind":"ImageStreamTag","name":"openvpn:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"openvpn\")].image"}]'
+spec:
+  replicas: {{ ocp_nodes | length }}
+  selector:
+    matchLabels:
+      app: openvpn-client
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: openvpn-client
+    spec:
+      initContainers:
+      - name: setup
+        image: image-registry.openshift-image-registry.svc:5000/openvpn-client/openvpn:latest
+        command: ["/bin/bash", "-c"]
+        args:
+        - >
+          set -e;
+          cp -v /ssl/${NODENAME}.crt /config/ssl/client.crt;
+          cp -v /ssl/${NODENAME}.key /config/ssl/client.key;
+          cp -v /ssl/ca.crt /config/ssl/;
+        env:
+        - name: NODENAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        volumeMounts:
+        - mountPath: /ssl
+          name: all-certs
+        - mountPath: /config/ssl
+          name: openvpn-ssl
+      containers:
+      - image: image-registry.openshift-image-registry.svc:5000/openvpn/openvpn:latest
+        imagePullPolicy: IfNotPresent
+        securityContext: 
+          capabilities:
+            add: ["NET_ADMIN"]
+        name: openvpn
+        volumeMounts:
+        - mountPath: /config/ssl
+          name: openvpn-ssl
+        - mountPath: /config/openvpn.conf
+          name: openvpn-config
+          readOnly: true
+          subPath: openvpn.conf
+        - mountPath: /dev/net/tun
+          readOnly: true
+          name: tun-device
+      hostNetwork: true
+      restartPolicy: Always
+      serviceAccount: openvpn
+      serviceAccountName: openvpn
+      terminationGracePeriodSeconds: 5
+      volumes:
+      - name: all-certs
+        secret:
+          secretName: openvpn-certs
+          defaultMode: 0400
+      - configMap:
+          name: openvpn-config
+        name: openvpn-config
+      - name: tun-device
+        hostPath:
+          path: /dev/net/tun
+      - name: openvpn-ssl
+        emptyDir: {}
+      nodeSelector:
+        kubernetes.io/hostname: worker06.ocp.iad2.fedoraproject.org
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - openvpn-client
+            topologyKey: "kubernetes.io/hostname"
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: ingresscontroller.operator.openshift.io/deployment-ingresscontroller
+                operator: In
+                values:
+                - default
+            topologyKey: "kubernetes.io/hostname"
+            namespaces:
+            - openshift-ingress
+
