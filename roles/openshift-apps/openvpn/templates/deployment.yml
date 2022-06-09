@@ -71,8 +71,6 @@ spec:
           path: /dev/net/tun
       - name: openvpn-ssl
         emptyDir: {}
-      nodeSelector:
-        kubernetes.io/hostname: worker06.ocp.iad2.fedoraproject.org
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
