@@ -86,8 +86,21 @@
 - name: install config for 'copr-frontend chroots-template'
   copy: src="chroots.conf" dest=/etc/copr/chroots.conf mode=600
         owner=copr-fe group=copr-fe
+  register: chroots_conf_installed
   tags:
   - config
+  - chroots_config
+
+- name: apply the config comments
+  command: copr-frontend chroots-template
+  become: yes
+  become_user: copr-fe
+  args:
+    chdir: /usr/share/copr/coprs_frontend/
+  when: chroots_conf_installed.changed
+  tags:
+  - config
+  - chroots_config
 
 - name: enable and start redis  # TODO: .service in copr-backend should depend on redis
   service: name=redis enabled=yes state=started
