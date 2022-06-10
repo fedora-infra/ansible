@@ -12,6 +12,22 @@
     - role: rabbit/user
       username: "resultsdb-ci-listener{{ env_suffix }}"
 
+    - role: rabbit/queue
+      username: "resultsdb-ci-listener{{ env_suffix }}"
+      queue_name: resultsdb{{ env_suffix }}_ci_listener
+      # TTL: 10 days (in miliseconds)
+      message_ttl: 864000000
+      routing_keys:
+        - 'org.centos.*.ci.pipeline.allpackages-build.complete'
+        - 'org.centos.*.ci.pipeline.allpackages-build.image.complete'
+        - 'org.centos.*.ci.pipeline.allpackages-build.package.test.functional.complete'
+        - 'org.centos.*.ci.pipeline.allpackages-build.package.complete'
+        - 'org.centos.*.ci.pipeline.allpackages-build.package.ignored'
+        - 'org.centos.*.ci.koji-build.test.queued'
+        - 'org.centos.*.ci.koji-build.test.running'
+        - 'org.centos.*.ci.koji-build.test.complete'
+        - 'org.centos.*.ci.koji-build.test.error'
+
     # The openshift/project role breaks if the project already exists:
     # https://pagure.io/fedora-infrastructure/issue/6404
     - role: openshift/project
