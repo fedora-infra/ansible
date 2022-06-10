@@ -10,11 +10,11 @@
 
   roles:
     - role: rabbit/user
-      username: "resultsdb-ci-listener{{ env_suffix }}"
+      username: "resultsdb{{ env_suffix }}_ci_listener"
 
     - role: rabbit/queue
-      username: "resultsdb-ci-listener{{ env_suffix }}"
-      queue_name: resultsdb{{ env_suffix }}_ci_listener
+      username: "resultsdb{{ env_suffix }}_ci_listener"
+      queue_name: "resultsdb{{ env_suffix }}_ci_listener"
       # TTL: 10 days (in miliseconds)
       message_ttl: 864000000
       routing_keys:
