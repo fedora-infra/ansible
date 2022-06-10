@@ -49,6 +49,14 @@ MAIL_DOMAIN_BLOCKLIST = [
     "0ooos3.cn",
 ]
 
+# Chat network settings
+CHAT_NETWORKS = {
+    "irc": {"default_server": "irc.libera.chat"},
+    "matrix": {"default_server": "fedora.im"},
+}
+
+CHAT_MATRIX_TO_ARGS = "web-instance[element.io]=chat.fedoraproject.org"
+
 # Banners
 TEMPLATES_CUSTOM_DIRECTORIES = ["/etc/noggin-templates"]
 ACCEPT_IMAGES_FROM = ["pagure.io"]
@@ -63,3 +71,6 @@ SECRET_KEY = from_file('/etc/noggin-secrets/session').encode('utf-8')
 
 # To disable registration:
 # REGISTRATION_OPEN = False
+
+# Fedora Messaging support
+FEDORA_MESSAGING_ENABLED = True
