@@ -15,8 +15,6 @@
     - role: rabbit/queue
       username: "resultsdb{{ env_suffix }}_ci_listener"
       queue_name: "resultsdb{{ env_suffix }}_ci_listener"
-      # TTL: 10 days (in miliseconds)
-      message_ttl: 864000000
       routing_keys:
         - 'org.centos.*.ci.pipeline.allpackages-build.complete'
         - 'org.centos.*.ci.pipeline.allpackages-build.image.complete'
