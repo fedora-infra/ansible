@@ -646,6 +646,7 @@
     ocp4: true
     keephost: true
     when: env == "staging"
+    tags: resultsdb
 
   ### production entries for resultsdb and resultsdb_frontend
   - role: httpd/reverseproxy
@@ -659,6 +660,7 @@
     ocp4: true
     keephost: true
     when: env != "staging"
+    tags: resultsdb
 
   # This one gets its own role (instead of httpd/reverseproxy) so that it can
   # copy in some silly static resources (globe.png, index.html)
