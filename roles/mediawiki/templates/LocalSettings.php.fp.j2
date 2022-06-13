@@ -9,6 +9,10 @@
 #error_reporting(1);
 #session_start();
 
+# Uncomment these two lines to enable error reporting for debug
+#error_reporting( -1 );
+#ini_set( 'display_errors', 1 );
+
 # Added for timeout testing
 require_once( "includes/DefaultSettings.php" );
 #$wgDebugLogFile         = '/tmp/out.log';
@@ -526,7 +530,12 @@ $wgGroupPermissions['Legal']['read'] = true;
 $wgGroupPermissions['Packaging']['read'] = true;
 
 wfLoadExtension( 'Lockdown' );
-$wgActorTableSchemaMigrationStage = MIGRATION_OLD;
+
+# MIGRATION_OLD was the default setting for this option anyway,
+# so lets comment it out, and use whatever the default is going
+# forward.
+# https://www.mediawiki.org/wiki/Manual:$wgActorTableSchemaMigrationStage
+# $wgActorTableSchemaMigrationStage = MIGRATION_OLD;
 
 $wgSpecialPageLockdown['Export'] = array('*');
 
