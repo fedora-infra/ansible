@@ -47,6 +47,15 @@ ocp_masters:
   - ocp01.ocp.iad2.fedoraproject.org
   - ocp02.ocp.iad2.fedoraproject.org
   - ocp03.ocp.iad2.fedoraproject.org
+# we override this here to point to the vpn endpoints of the ocp_nodes instead of
+# The real internal hostnames. This is because proxies access them via vpn.
+ocp_nodes:
+  - worker01.vpn.fedoraproject.org
+  - worker02.vpn.fedoraproject.org
+  - worker03.vpn.fedoraproject.org
+  - worker04.vpn.fedoraproject.org
+  - worker05.vpn.fedoraproject.org
+  - worker06.vpn.fedoraproject.org
 openshift_masters:
   - os-master01.vpn.fedoraproject.org
   - os-master02.vpn.fedoraproject.org

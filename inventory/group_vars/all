@@ -191,8 +191,8 @@ nrpe_procs_warn: 250
 num_cpus: 2
 # ocp4 is only set true in some proxy roles
 ocp4: false
-# All the ocp production nodes. We place this here so proxies and openvpn openshift app
-# can both use it.
+# All the ocp production workers.
+# This is used by the openvpn openshift app to make sure there's a vpn pod on each node.
 ocp_nodes:
   - worker01.ocp.iad2.fedoraproject.org
   - worker02.ocp.iad2.fedoraproject.org
