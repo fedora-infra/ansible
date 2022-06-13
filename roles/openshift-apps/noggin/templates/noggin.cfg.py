@@ -47,6 +47,7 @@ MAIL_DOMAIN_BLOCKLIST = [
     "fedoraproject.org",
     "centosproject.org",
     "0ooos3.cn",
+    "bccto.cc",
 ]
 
 # Chat network settings
