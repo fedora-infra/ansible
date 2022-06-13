@@ -15,7 +15,7 @@
   run_once: true
   register: certbot_output
   check_mode: no
-  changed_when: "not ('not yet due for renewal' in certbot_output.stderr)"
+  changed_when: "not ('not yet due for renewal' in certbot_output.stdout)"
   tags:
   - letsencrypt
 
