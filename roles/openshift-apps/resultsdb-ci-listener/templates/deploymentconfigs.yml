@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: listener
-          image: quay.io/fedora/resultsdb-listener:latest
+          image: quay.io/fedora-kube-sig/resultsdb-ci-listener:f36-1.2
           imagePullPolicy: Always
           ports:
             - containerPort: 5001
