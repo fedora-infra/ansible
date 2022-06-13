@@ -25,7 +25,6 @@ data:
         Require valid-user
       </LimitExcept>
     </Location>
-{% if deployment_type is defined and deployment_type not in ['local', 'dev'] %}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -47,4 +46,3 @@ data:
     ca_cert = "/etc/pki/rabbitmq/ca/resultsdb.ca"
     keyfile = "/etc/pki/rabbitmq/key/resultsdb.key"
     certfile = "/etc/pki/rabbitmq/crt/resultsdb.crt"
-{% endif %}

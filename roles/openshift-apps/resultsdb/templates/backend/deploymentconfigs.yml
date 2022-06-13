@@ -69,7 +69,6 @@ spec:
             - name: httpd-config-volume
               mountPath: /etc/httpd/conf.d
               readOnly: true
-{% if deployment_type is defined and deployment_type not in ['local', 'dev']%}
             - name: fedora-messaging-ca-volume
               mountPath: /etc/pki/rabbitmq/ca
               readOnly: true
@@ -82,7 +81,6 @@ spec:
             - name: fedora-messaging-config-volume
               mountPath: /etc/fedora-messaging
               readOnly: true
-{% endif %}
           readinessProbe:
             timeoutSeconds: 1
             initialDelaySeconds: 5
@@ -109,7 +107,6 @@ spec:
         - name: httpd-config-volume
           configMap:
             name: "resultsdb-httpd-config"
-{% if deployment_type is defined and deployment_type not in ['local', 'dev']%}
         - name: fedora-messaging-config-volume
           configMap:
             name: fedora-messaging-configmap
@@ -122,6 +119,5 @@ spec:
         - name: fedora-messaging-key-volume
           secret:
             secretName: resultsdb-fedora-messaging-key
-{% endif %}
   triggers:
     - type: ConfigChange
