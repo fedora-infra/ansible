@@ -1005,6 +1005,18 @@
     ocp4: true
     keephost: true
     tags: discourse2fedmsg
+    when: env == "staging"
+
+  - role: httpd/reverseproxy
+    website: "discourse2fedmsg{{ env_suffix }}.fedoraproject.org"
+    destname: discourse2fedmsg
+    balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(o_nodes_stg, openshift_nodes) }}"
+    targettype: openshift
+    ocp4: false
+    keephost: true
+    tags: discourse2fedmsg
+    when: env != "staging"
 
   - role: httpd/reverseproxy
     website: ipsilon-project.org

@@ -1,5 +1,5 @@
 - name: make the app be real
-  hosts: os_control[0]:os_control_stg[0]
+  hosts: os_masters[0]:os_control_stg[0]
   user: root
   gather_facts: False
 
@@ -60,7 +60,7 @@
   - role: openshift/route
     app: discourse2fedmsg
     routename: discourse2fedmsg
-    host: "discourse2fedmsg{{ env_suffix }}.fedoraproject.org"
+    host: "discourse2fedmsg.app.os{{ env_suffix }}.fedoraproject.org"
     serviceport: web
     servicename: discourse2fedmsg-web
 
