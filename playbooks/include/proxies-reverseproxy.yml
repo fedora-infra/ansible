@@ -946,18 +946,6 @@
     ocp4: true
     keephost: true
     tags: whatcanidoforfedora.org
-    when: env == "staging"
-
-  - role: httpd/reverseproxy
-    website: whatcanidoforfedora.org
-    destname: whatcanidoforfedora
-    balancer_name: app-os
-    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
-    targettype: openshift
-    ocp4: false
-    keephost: true
-    tags: whatcanidoforfedora.org
-    when: env != "staging"
 
   - role: httpd/reverseproxy
     website: testdays.fedoraproject.org
