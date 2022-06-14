@@ -64,3 +64,4 @@ odcs_raw_config_urls:
     config_filename: test.conf
     url: https://pagure.io/jkaluza-test-compose.git
 primary_auth_source: ipa
+odcs_expected_backend_number: "{{ groups['odcs_backend'] | length }}"
