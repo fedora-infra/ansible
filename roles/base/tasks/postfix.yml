@@ -73,7 +73,7 @@
 
 - name: create /etc/postfix/tls_policy
   copy: src="postfix/tls_policy" dest=/etc/postfix/tls_policy
-  when: inventory_hostname.startswith(('bastion','smtp-mm')) and env != 'staging'
+  when: inventory_hostname.startswith(('bastion','smtp-mm','pagure')) and env != 'staging'
   notify:
   - rebuild postfix tls_policy
   - restart postfix
