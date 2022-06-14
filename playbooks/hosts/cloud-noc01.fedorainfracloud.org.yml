@@ -1,8 +1,6 @@
 # This is a basic playbook
 
-- import_playbook: "{{ ansible_base }}ansible/playbooks/include/virt-create.yml"
-  vars:
-   myhosts: cloud-noc01.fedorainfracloud.org
+- import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml myhosts=cloud-noc01.fedorainfracloud.org"
 
 - name: make cloud noc hardware
   hosts: cloud-noc01.fedorainfracloud.org
@@ -10,9 +8,9 @@
   gather_facts: True
 
   vars_files:
-   - "{{ ansible_base }}/ansible/vars/global.yml"
-   - "{{ ansible_private }}/ansible/vars.yml"
-   - "{{ ansible_base }}/ansible/vars/{{ ansible_distribution }}.yml"
+   - /srv/web/infra/ansible/vars/global.yml
+   - "/srv/private/ansible/vars.yml"
+   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
   - base
