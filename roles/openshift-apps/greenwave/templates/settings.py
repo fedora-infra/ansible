@@ -12,7 +12,7 @@ BODHI_URL = 'https://bodhi.stg.fedoraproject.org/'
 
 SECRET_KEY = '{{stg_greenwave_secret_key}}'
 WAIVERDB_API_URL = 'https://waiverdb.stg.fedoraproject.org/api/v1.0'
-RESULTSDB_API_URL = 'https://taskotron.stg.fedoraproject.org/resultsdb_api/api/v2.0'
+RESULTSDB_API_URL = 'https://resultsdb.stg.fedoraproject.org/api/v2.0'
 GREENWAVE_API_URL = 'https://greenwave.stg.fedoraproject.org/api/v1.0'
 CORS_URL = '*'
 MESSAGING = "fedora-messaging"
@@ -24,7 +24,7 @@ BODHI_URL = 'https://bodhi.fedoraproject.org/'
 
 SECRET_KEY = '{{prod_greenwave_secret_key}}'
 WAIVERDB_API_URL = 'https://waiverdb.fedoraproject.org/api/v1.0'
-RESULTSDB_API_URL = 'https://taskotron.fedoraproject.org/resultsdb_api/api/v2.0'
+RESULTSDB_API_URL = 'https://resultsdb.fedoraproject.org/api/v2.0'
 GREENWAVE_API_URL = 'https://greenwave.fedoraproject.org/api/v1.0'
 CORS_URL = 'https://bodhi.fedoraproject.org'
 MESSAGING = "fedora-messaging"
