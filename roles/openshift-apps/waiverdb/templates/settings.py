@@ -4,7 +4,7 @@ RESULTSDB_API_URL = 'https://resultsdb.stg.fedoraproject.org/api/v2.0'
 CORS_URL = 'https://bodhi.stg.fedoraproject.org'
 {% else %}
 DATABASE_URI = 'postgresql+psycopg2://waiverdb@db01.iad2.fedoraproject.org:5432/waiverdb'
-RESULTSDB_API_URL = 'https://taskotron.fedoraproject.org/resultsdb_api/api/v2.0'
+RESULTSDB_API_URL = 'https://resultsdb.fedoraproject.org/api/v2.0'
 CORS_URL = 'https://bodhi.fedoraproject.org'
 {% endif %}
 MESSAGE_BUS_PUBLISH = True
