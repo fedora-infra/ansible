@@ -17,7 +17,8 @@ spec:
 {% if env == 'staging' %}
       # The latest successful build of master that passes tests
       # is auto-tagged here. 
-      name: quay.io/factory2/greenwave:latest
+      # name: quay.io/factory2/greenwave:latest
+      name: quay.io/factory2/greenwave:prod-fedora
 {% else %}
       # This is 'prod' tag is maintained by hand.
       name: quay.io/factory2/greenwave:prod-fedora
