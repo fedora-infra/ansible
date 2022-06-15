@@ -1,6 +1,6 @@
 {% if env == 'staging' %}
 DATABASE_URI = 'postgresql+psycopg2://waiverdb@db01.stg.iad2.fedoraproject.org:5432/waiverdb'
-RESULTSDB_API_URL = 'https://taskotron.stg.fedoraproject.org/resultsdb_api/api/v2.0'
+RESULTSDB_API_URL = 'https://resultsdb.stg.fedoraproject.org/api/v2.0'
 CORS_URL = 'https://bodhi.stg.fedoraproject.org'
 {% else %}
 DATABASE_URI = 'postgresql+psycopg2://waiverdb@db01.iad2.fedoraproject.org:5432/waiverdb'
