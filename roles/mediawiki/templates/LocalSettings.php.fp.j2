@@ -313,7 +313,11 @@ $wgNamespacesToBeSearchedDefault = array(
 );
 require_once "$IP/extensions/fedmsg-emit.php";
 # require_once "$IP/extensions/fedora-messaging-emit.php";
-require_once "$IP/extensions/HTTP302Found/HTTP302Found.php";
+
+# Disabled June 2022 -- this HTTP302Found is unmaintained and we don't appear to need
+# it anymore.
+# require_once "$IP/extensions/HTTP302Found/HTTP302Found.php";
+
 require_once "$IP/extensions/RSS/RSS.php";
 require_once "$IP/extensions/FedoraDocsRedirect/FedoraDocsRedirect.php";
 wfLoadExtension( 'ParserFunctions' );
