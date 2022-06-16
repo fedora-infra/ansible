@@ -212,12 +212,6 @@
   tags:
   - mediawiki
 
-- name: Patch OpenIDConnect plugin to require CLA+1
-  copy: src=OpenIDConnect.php
-        dest=/srv/web/fp-wiki/extensions/OpenIDConnect/src/OpenIDConnect.php
-  tags:
-  - mediawiki
-
 - name: ensure a directory exists for our SELinux policy
   file: dest=/usr/local/share/selinux/ state=directory
   tags: selinux
@@ -231,9 +225,3 @@
   command: semodule -i /usr/local/share/selinux/mediawiki.pp
   when: selinux_module is changed
   tags: selinux
-
-- name: hotfix oojs-shared/widgets/InputWidget.php so preferences work
-  copy: src=InputWidget.php dest=/srv/web/fp-wiki/vendor/oojs-shared/widgets/InputWidget.php
-  tags:
-  - mediawiki
-  - hotfix
