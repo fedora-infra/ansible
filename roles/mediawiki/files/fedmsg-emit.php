@@ -47,7 +47,7 @@ $wgExtensionCredits['parserhook'][] = array(
 		'author' => 'Ralph Bean',
 		'url' => 'https://pagure.io/fedora-infra/ansible/blob/main/f/roles/mediawiki/files/fedmsg-emit.php',
 		'description' => "A MediaWiki plugin that emits messages to the Fedora Infrastructure Message Bus.",
-		'version'  => 0.2.0,
+		'version'  => '0.2.0',
 );
 
 
