@@ -7,6 +7,8 @@
     - /srv/web/infra/ansible/vars/global.yml
     - "/srv/private/ansible/vars.yml"
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+  vars:
+    - ocp4: true
 
   roles:
   - role: openshift/project
