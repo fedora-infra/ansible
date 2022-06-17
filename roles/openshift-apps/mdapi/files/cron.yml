@@ -16,7 +16,7 @@ spec:
         spec:
           containers:
           - name: mdapi
-            image: docker-registry.default.svc:5000/mdapi/mdapi:latest
+            image: image-registry.openshift-image-registry.svc:5000/mdapi/mdapi:latest
             command: ["bash", "-c", "/code/mdapi-get_repo_md /etc/mdapi/mdapi.cfg"]
             volumeMounts:
             - name: config-volume
