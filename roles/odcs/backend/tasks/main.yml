@@ -7,6 +7,11 @@
   - packages
   - odcs
   - odcs/backend
+- name: Install support files for ISO creation
+  package:
+    name:
+    - libisoburn
+    - xorriso
 - name: Make sure httpd isn't running.
   service:
     name: httpd
