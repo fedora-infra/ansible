@@ -41,6 +41,16 @@
 
 if (!defined('MEDIAWIKI')) {echo("Cannot be run outside MediaWiki"); die(1);}
 
+$wgExtensionCredits['parserhook'][] = array(
+	  'path' => __FILE__,
+	  'name' => 'Fedmsg emit',
+		'author' => 'Ralph Bean',
+		'url' => 'https://pagure.io/fedora-infra/ansible/blob/main/f/roles/mediawiki/files/fedmsg-emit.php',
+		'description' => "A MediaWiki plugin that emits messages to the Fedora Infrastructure Message Bus.",
+		'version'  => 0.2.0,
+);
+
+
 // globals
 $config = 0;
 $queue = 0;
@@ -111,9 +121,9 @@ function initialize() {
 }
 
 # Register our hooks with mediawiki
-$wgHooks['PageContentSaveComplete'][] = 'article_save';
+$wgHooks['PageSaveComplete'][] = 'page_save';
 $wgHooks['UploadComplete'][] = 'upload_complete';
-
+#wfDebug("pants")
 # This is a reimplementation of the python code in fedmsg/crypto.py
 # That file is authoritative.  Changes there should be reflected here.
 function sign_message($message_obj) {
@@ -194,34 +204,28 @@ function emit_message($subtopic, $message) {
   $queue->send($envelope);
 }
 
-function article_save(
-  &$article,
-  &$user,
-  $text,
+function page_save(
+  $wikiPage,
+  $user,
   $summary,
-  $minoredit,
-  $watchthis,
-  $sectionanchor,
-  &$flags,
-  $revision,
-  &$status,
-  $baseRevId,
-  $undidRevId=0
+  $flags,
+  $revisionRecord,
+  $editResult,
 ) {
 
   # If for some reason or another we can't create our socket, then bail.
   if (!initialize()) { return false; }
 
   $topic = "article.edit";
-  $title = $article->getTitle();
+  $title = $wikiPage->getTitle();
   if ( $title->getNsText() ) {
     $titletext = $title->getNsText() . ":" . $title->getText();
   } else {
     $titletext = $title->getText();
   }
 
-  if ( is_object($revision) ) {
-    $url = $title->getFullURL('diff=prev&oldid=' . $revision->getId());
+  if ( is_object($revisionRecord) ) {
+    $url = $title->getFullURL('diff=prev&oldid=' . $revisionRecord->getId());
   } else {
     $url = $title->getFullURL();
   }
@@ -231,11 +235,8 @@ function article_save(
   $msg = array(
     "title" => $titletext,
     "user" => $user->getName(),
-    "minor_edit" => $minoredit,
-    "watch_this" => $watchthis,
-    "section_anchor" => $sectionanchor,
-    "revision" => $revision,
-    "base_rev_id" => $baseRevId,
+    "minor_edit" => $revisionRecord->isMinor(),
+    "revision" => $revisionRecord,
     "url" => $url,
     #"summary" => $summary,  # We *used* to send this, but it mucked things up.
     # https://fedorahosted.org/fedora-infrastructure/ticket/3738#comment:7
