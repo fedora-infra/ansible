@@ -37,3 +37,20 @@
   copy: content="# welcome.conf disabled" dest=/etc/httpd/conf.d/welcome.conf
   tags:
   - kojipkgs
+
+- name: make systemd drop-in override dir
+  file: name=/etc/systemd/system/varnish.service.d
+        state=directory
+        recurse=yes
+        owner=root group=root
+  tags:
+  - kojipkgs
+
+- name: override varnish service to restart on failure
+  copy: dest=/etc/systemd/system/varnish.service.d/restart-on-fail.conf
+        src=restart-on-fail.conf
+  notify:
+    - reload systemd
+    - reload varnish
+  tags:
+  - kojipkgs
