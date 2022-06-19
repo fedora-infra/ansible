@@ -204,3 +204,6 @@
 
 - name: restart swap.swap
   service: name="swap.swap" state=restarted
+
+- name: restart varnish
+  service: name=varnish state=restarted
