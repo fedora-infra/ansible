@@ -78,8 +78,8 @@ items:
 {% if env != 'staging' %}
                 pushd anitya_schema && \
                 pip-3 install . && \
-{% endif %}
                 popd && \
+{% endif %}
                 popd && \
                 rm -rf anitya
         # Let's use staging auth server in staging
