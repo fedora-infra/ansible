@@ -84,7 +84,7 @@ items:
                 rm -rf anitya
         # Let's use staging auth server in staging
 {% if env == 'staging' %}
-        RUN sed -i 's/id.fedoraproject.org/id.stg.fedoraproject.org/g' /usr/local/lib/python3.10/site-packages/social_auth_core-4.2.0-py3.10.egg/social_core/backends/fedora.py
+        RUN sed -i 's/id.fedoraproject.org/id.stg.fedoraproject.org/g' /usr/local/lib/python3.10/site-packages/social_auth_core-4.3.0-py3.10.egg/social_core/backends/fedora.py
 
         # Hotfix for social_auth-sqlalchemy
         # Could be removed when we switch to something else
