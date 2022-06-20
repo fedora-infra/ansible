@@ -75,8 +75,10 @@ items:
                 popd && \
                 python3 setup.py install && \
                 pip-3 install . && \
+{% if env != 'staging' %}
                 pushd anitya_schema && \
                 pip-3 install . && \
+{% endif %}
                 popd && \
                 popd && \
                 rm -rf anitya
