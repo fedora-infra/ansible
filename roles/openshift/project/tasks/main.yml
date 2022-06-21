@@ -6,7 +6,6 @@
     owner: root
     group: root
     mode: 0750
-    recurse: yes
 
 - name: Determine if project already exists
   command: oc get project {{app}}
