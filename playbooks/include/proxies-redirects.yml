@@ -873,12 +873,16 @@
     website: taskotron.fedoraproject.org
     path: /execdb/
     target: https://fedoraproject.org/wiki/Taskotron
+    tags:
+    - taskotron
 
   - role: httpd/redirect
     shortname: taskotron-buildmaster
     website: taskotron.fedoraproject.org
     path: /taskmaster/
     target: https://fedoraproject.org/wiki/Taskotron
+    tags:
+    - taskotron
 
   # redirects for qa.fp.o
   - role: httpd/redirect
@@ -888,11 +892,13 @@
     target: https://fedoraproject.org/wiki/QA
 
     #  - role: httpd/redirectmatch
-    #shortname: taskotron
-    #website: taskotron.fedoraproject.org
-    #regex: ^(.*)
-    #target: https://resultsdb.fedoraproject.org/$1
-    #when: env != 'staging'
+    shortname: taskotron
+    website: taskotron.fedoraproject.org
+    regex: ^(.*)
+    target: https://resultsdb.fedoraproject.org/$1
+    when: env != 'staging'
+    tags:
+    - taskotron
 
   - role: httpd/redirectmatch
     shortname: taskotron-stg
@@ -900,4 +906,5 @@
     regex: ^/resultsdb_api/(.*)
     target: https://resultsdb.stg.fedoraproject.org/$1
     when: env == 'staging'
-
+    tags:
+    - taskotron
