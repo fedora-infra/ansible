@@ -100,8 +100,8 @@ wiki_url = https://{{env_prefix}}fedoraproject.org/w/api.php
 test_case_base_url = https://{{env_prefix}}fedoraproject.org/wiki/
 
 # URL of the resultsdb for integrating checks and stuff
-# resultsdb_api_url = https://taskotron.fedoraproject.org/resultsdb_api/
-resultsdb_url = https://taskotron{{env_suffix}}.fedoraproject.org/resultsdb/
+resultsdb_api_url = https://resultdb{{env_suffix}}.fedoraproject.org/
+resultsdb_url = https://resultsdb{{env_suffix}}.fedoraproject.org/results/
 
 # Set this to True to enable gating based on policies enforced by Greenwave. If you set this to
 # True, be sure to have celery-beat enabled in one of the Celery workers.
