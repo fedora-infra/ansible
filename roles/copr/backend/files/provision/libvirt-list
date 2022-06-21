@@ -24,7 +24,7 @@ def _main():
 
     pool_id = args.pool or os.getenv("RESALLOC_POOL_ID")
     if not pool_id:
-        print("Specify pool ID by --pool or $RESALLOC_POOL_ID")
+        sys.stderr.write("Specify pool ID by --pool or $RESALLOC_POOL_ID\n")
         sys.exit(1)
 
     connection = args.connection if args.connection else \
@@ -33,7 +33,7 @@ def _main():
     try:
         conn = libvirt.openReadOnly(connection)
     except libvirt.libvirtError:
-        print('Failed to open connection to the hypervisor')
+        sys.stderr.write('Failed to open connection to the hypervisor\n')
         sys.exit(1)
 
     # Gather the list of all domains here
@@ -56,6 +56,7 @@ def _main():
     # Print them out, so upper level tooling can work with the list.  See:
     # roles/copr/backend/files/provision/libvirt-list
     for name in vm_names:
+        # The only stdout output comes here!
         print(name)
 
 if __name__ == "__main__":

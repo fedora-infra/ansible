@@ -25,7 +25,7 @@ def _main():
 
     pool_id = opts.pool or os.getenv("RESALLOC_POOL_ID")
     if not pool_id:
-        print("Specify pool ID by --pool or $RESALLOC_POOL_ID")
+        sys.stderr.write("Specify pool ID by --pool or $RESALLOC_POOL_ID\n")
         sys.exit(1)
 
     cmd = f"source {opts.token_file} ; echo $IBMCLOUD_API_KEY"
@@ -41,6 +41,7 @@ def _main():
         # Resalloc works with underscores, which is not allowed in IBM Cloud
         name = server["name"].replace("-", "_")
         if name.startswith(pool_id):
+            # The only stdout output comes here!
             print(name)
 
 if __name__ == "__main__":
