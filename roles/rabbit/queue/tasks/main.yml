@@ -43,7 +43,7 @@
 
 - name: Prepare the topic permissions dict
   set_fact:
-    topic_permissions: "{{ topic_permissions|default([]) + [{'vhost': vhost, 'write_priv': item}] }}"
+    topic_permissions: "{{ topic_permissions|default([]) + [{'vhost': vhost, 'read_priv': '.*', 'write_priv': item}] }}"
   loop: "{{ sent_topics }}"
   tags:
     - fedora-messaging
