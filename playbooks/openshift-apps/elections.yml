@@ -34,7 +34,7 @@
   - role: rabbit/user
     username: "elections{{ env_suffix }}"
     sent_topics:
-    - org\\.fedoraproject\\.{{ env_short }}\\.fedora_elections\\..*
+    - ^org\.fedoraproject\.{{ env_short }}\.fedora_elections\..*
 
   - role: openshift/project
     app: elections

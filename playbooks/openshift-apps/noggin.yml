@@ -14,7 +14,7 @@
   - role: rabbit/user
     username: "noggin{{ env_suffix }}"
     sent_topics:
-    - org\\.fedoraproject\\.{{ env_short }}\\.noggin\\..*
+    - ^org\.fedoraproject\.{{ env_short }}\.noggin\..*
 
   - role: openshift/project
     app: noggin
