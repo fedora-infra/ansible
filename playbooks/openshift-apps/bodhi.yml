@@ -25,8 +25,6 @@
       bodhi_version: "{{ bodhi_version }}"
 
   roles:
-  - role: rabbit/user
-    username: "bodhi{{ env_suffix }}"
   - role: rabbit/queue
     username: "bodhi{{ env_suffix }}"
     queue_name: "{{ bodhi_message_queue_name }}"
@@ -34,6 +32,9 @@
     thresholds:
       warning: 10
       critical: 100
+    sent_topics:
+    - org\\.fedoraproject\\.{{ env_short }}\\.bodhi\\..*
+
   - role: openshift/project
     app: bodhi
     description: bodhi

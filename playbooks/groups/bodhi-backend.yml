@@ -92,9 +92,6 @@
     key_src: "{{private}}/files/docker-registry/{{env}}/pki/private/containerstable.key"
     certs_group: apache
 
-  - role: rabbit/user
-    username: "bodhi{{ env_suffix }}"
-
   - role: rabbit/queue
     username: "bodhi{{ env_suffix }}"
     queue_name: "bodhi{{ env_suffix }}_composer"
@@ -102,6 +99,8 @@
     thresholds:
       warning: 10
       critical: 100
+    sent_topics:
+    - org\\.fedoraproject\\.{{ env_short }}\\.bodhi\\..*
 
   - role: rabbit/queue
     username: "bodhi{{ env_suffix }}"

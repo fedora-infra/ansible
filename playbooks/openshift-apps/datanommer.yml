@@ -9,8 +9,6 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
-  - role: rabbit/user
-    username: "datanommer{{ env_suffix }}"
   - role: rabbit/queue
     username: "datanommer{{ env_suffix }}"
     queue_name: "datanommer{{ env_suffix }}"
@@ -19,6 +17,9 @@
     thresholds:
       warning: 50
       critical: 500
+    # Datanommer does not publish messages
+    sent_topics:
+    - "^$"
 
   - role: openshift/project
     app: datanommer

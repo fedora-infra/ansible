@@ -12,6 +12,8 @@
 
   - role: rabbit/user
     username: "bugzilla2fedmsg{{ env_suffix }}"
+    sent_topics:
+    - org\\.fedoraproject\\.{{ env_short }}\\.bugzilla\\..*
 
   - role: openshift/project
     app: bugzilla2fedmsg
