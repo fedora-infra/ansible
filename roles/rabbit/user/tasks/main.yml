@@ -20,6 +20,7 @@
     - username != "nagios-monitoring"
     fail_msg: "This user name is reserved"
   tags:
+    - config
     - fedora-messaging
     - rabbitmq_cluster
 
@@ -27,10 +28,18 @@
   set_fact:
     topic_permissions: "{{ topic_permissions|default([]) + [{'vhost': vhost, 'write_priv': item}] }}"
   loop: "{{ sent_topics }}"
+  tags:
+    - config
+    - fedora-messaging
+    - rabbitmq_cluster
   when: env == "staging"
 
 - debug:
     msg: "Topic permissions: {{ topic_permissions|default([]) }}"
+  tags:
+    - config
+    - fedora-messaging
+    - rabbitmq_cluster
   when: topic_permissions is defined
 
 - name: Create the user in RabbitMQ

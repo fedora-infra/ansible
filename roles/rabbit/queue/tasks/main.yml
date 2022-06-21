@@ -45,11 +45,17 @@
   set_fact:
     topic_permissions: "{{ topic_permissions|default([]) + [{'vhost': vhost, 'write_priv': item}] }}"
   loop: "{{ sent_topics }}"
+  tags:
+    - fedora-messaging
+    - rabbitmq_cluster
   when: env == "staging"
 
 - debug:
     msg: "Topic permissions: {{ topic_permissions|default([]) }}"
   when: topic_permissions is defined
+  tags:
+    - fedora-messaging
+    - rabbitmq_cluster
 
 # See https://www.rabbitmq.com/access-control.html#permissions for details on
 # the RabbitMQ permissions configuration.
