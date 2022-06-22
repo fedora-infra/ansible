@@ -986,10 +986,22 @@
     website: packager-dashboard.fedoraproject.org
     destname: packager-dashboard
     balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, openshift_nodes) }}"
+    targettype: openshift
+    ocp4: true
+    keephost: true
+    when: env == "staging"
+    tags: packager-dashboard
+
+  - role: httpd/reverseproxy
+    website: packager-dashboard.fedoraproject.org
+    destname: packager-dashboard
+    balancer_name: app-os
     balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
     targettype: openshift
     ocp4: false
     keephost: true
+    when: env != "staging"
     tags: packager-dashboard
 
   - role: httpd/reverseproxy
