@@ -540,12 +540,11 @@
     target: http://fedoraplanet.org/
 
   # QA
-  - role: httpd/redirect
-    shortname: qa
-    website: qa.fedoraproject.org
-    target: https://fedoraproject.org/wiki/QA
-    when: env != 'staging'
-
+  #  - role: httpd/redirect
+  #  shortname: qa
+  #  website: qa.fedoraproject.org
+  #  target: https://fedoraproject.org/wiki/QA
+  #  when: env != 'staging'
 
   # Various community sites
   - role: httpd/redirect
