@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 items:
 - apiVersion: v1
@@ -10,11 +11,7 @@ items:
     runPolicy: Serial
     source:
       dockerfile: |-
-{% if env == 'staging' %}
         FROM fedora:36
-{% else %}
-        FROM fedora:32
-{% endif %}
         LABEL \
           name="release-monitoring-web" \
           vendor="Fedora Infrastructure" \
@@ -25,9 +22,7 @@ items:
                 graphviz \
                 fedora-messaging \
                 python3-alembic \
-{% if env == 'staging' %}
                 python3-beautifulsoup4 \
-{% endif %}
                 python3-arrow \
                 python3-dateutil \
                 python3-defusedxml \
@@ -39,22 +34,13 @@ items:
                 python3-ordered-set \
                 python3-pip \
                 python3-psycopg2 \
-{% if env == 'staging' %}
                 python3-semver \
-{% else %}
-                python3-pytoml \
-                python3-semver \
-                python3-social-auth-app-flask \
-                python3-social-auth-app-flask-sqlalchemy \
-{% endif %}
                 python3-sphinxcontrib-httpdomain \
                 python3-sqlalchemy \
                 python3-sqlalchemy_schemadisplay \
                 python3-sseclient \
                 python3-straight-plugin \
-{% if env == 'staging' %}
                 python3-toml \
-{% endif %}
                 python3-wtforms && \
             dnf autoremove -y && \
             dnf clean all -y
@@ -75,21 +61,16 @@ items:
                 popd && \
                 python3 setup.py install && \
                 pip-3 install . && \
-{% if env != 'staging' %}
-                pushd anitya_schema && \
-                pip-3 install . && \
-                popd && \
-{% endif %}
                 popd && \
                 rm -rf anitya
         # Let's use staging auth server in staging
 {% if env == 'staging' %}
         RUN sed -i 's/id.fedoraproject.org/id.stg.fedoraproject.org/g' /usr/local/lib/python3.10/site-packages/social_auth_core-4.3.0-py3.10.egg/social_core/backends/fedora.py
+{% endif %}
 
         # Hotfix for social_auth-sqlalchemy
         # Could be removed when we switch to something else
         RUN sed -i 's/base64.encodestring/base64.encodebytes/g' /usr/local/lib/python3.10/site-packages/social_auth_storage_sqlalchemy-1.1.0-py3.10.egg/social_sqlalchemy/storage.py
-{% endif %}
         RUN mkdir /httpdir
         RUN chmod 777 /httpdir
         EXPOSE 8080
