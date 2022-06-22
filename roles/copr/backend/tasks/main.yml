@@ -144,7 +144,11 @@
   template: src="lighttpd/dir-generator.php.j2" dest="/var/lib/copr/public_html/dir-generator.php" owner=copr group=copr mode=0755
 
 - name: install resalloc CGI script
-  copy: src=cgi-resalloc dest=/var/www/ setype=httpd_sys_script_exec_t
+  copy:
+    src: cgi-resalloc
+    dest: /var/www/
+    setype: httpd_sys_script_exec_t
+    mode: 0755
 
 - name: install the helper scripts for lighttpd log rotation
   copy:
