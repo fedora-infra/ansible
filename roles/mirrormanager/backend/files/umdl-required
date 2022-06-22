@@ -46,7 +46,7 @@ else
 fi
 
 if [ "${1}" ==  "centos" ]; then
-	CENTOS_PRIMARY="mref1-priv.iad2.centos.org"
+	CENTOS_PRIMARY="master.centos.org"
 	# check if a sync is currently in process
 	CODE=$( curl -s -o /dev/null -I -w "%{http_code}" http://${CENTOS_PRIMARY}/9-stream/.sync_in_progress )
 	if [ "${CODE}" -eq "200" ]; then
