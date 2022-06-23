@@ -108,6 +108,11 @@ def rename(filename, aliases_file):
         print(f"Error updating aliases file {e}", file=sys.stderr)
         raise
 
+def selinux():
+    try:
+        subprocess.check_call(['/usr/sbin/restorecon', '-Rv', aliases_file])
+    except IOError as e:
+        print(f"Error restoring file context {e}", file=sys.stderr)
 
 def main():
     args = sys.argv[1:]
@@ -117,6 +122,7 @@ def main():
 
     if not args:
        gen_all_aliases()
+       selinux()
        # call newaliases script so postfix gets updated
        subprocess.check_call(['/usr/bin/newaliases'])
     elif len(args) == 2 and args[0] == "update":
