@@ -1019,6 +1019,8 @@
     targettype: openshift
     ocp4: true
     keephost: true
+    tags:
+    - fedora-packages-static
 
   - role: httpd/reverseproxy
     website: "discourse2fedmsg{{ env_suffix }}.fedoraproject.org"
