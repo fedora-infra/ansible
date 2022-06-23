@@ -110,7 +110,7 @@ def rename(filename, aliases_file):
 
 def selinux():
     try:
-        subprocess.check_call(['/usr/sbin/restorecon', '-Rv', aliases_file])
+        subprocess.check_call(['/usr/sbin/restorecon', '-R', aliases_file])
     except IOError as e:
         print(f"Error restoring file context {e}", file=sys.stderr)
 
