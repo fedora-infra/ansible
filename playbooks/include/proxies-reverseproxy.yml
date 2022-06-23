@@ -979,18 +979,6 @@
     targettype: openshift
     ocp4: true
     keephost: true
-    when: env == "staging"
-    tags: testdays
-
-  - role: httpd/reverseproxy
-    website: testdays.fedoraproject.org
-    destname: testdays
-    balancer_name: app-os
-    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
-    targettype: openshift
-    ocp4: false
-    keephost: true
-    when: env != "staging"
     tags: testdays
 
   - role: httpd/reverseproxy
