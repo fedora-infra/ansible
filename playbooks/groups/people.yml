@@ -75,6 +75,8 @@
   - git/server
   - role: rabbit/user
     username: "planet{{ env_suffix }}"
+    sent_topics:
+    - ^org\.fedoraproject\.{{ env_short }}\.planet\..*
 
   - role: apache
 
