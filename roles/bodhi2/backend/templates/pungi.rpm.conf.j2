@@ -114,6 +114,12 @@ multilib = [
     })
 ]
 filter_packages = []
+
+# Note: If you change something here (affects updates for stable releases), also
+# submit the same change to pungi-fedora (affects Rawhide/Branched composes),
+# we want to keep them in sync:
+# https://pagure.io/pungi-fedora/blob/main/f/fedora.conf
+#
 # format: {arch|*: [packages]}
 multilib_blacklist = {
     '*': [
@@ -140,6 +146,12 @@ multilib_blacklist = {
         'tomcat-native',
         ],
 }
+
+# Note: If you change something here (affects updates for stable releases), also
+# submit the same change to pungi-fedora (affects Rawhide/Branched composes),
+# we want to keep them in sync:
+# https://pagure.io/pungi-fedora/blob/main/f/fedora.conf
+#
 # format: {arch|*: [packages]}
 multilib_whitelist = {
     '*': [
@@ -181,6 +193,7 @@ multilib_whitelist = {
         'yaboot',
         ],
 }
+
 createiso_skip = [
         ('^Everything$', {
             '*': True,
