@@ -894,19 +894,6 @@
     ocp4: true
     keephost: true
     header_scheme: true
-    when: env == "staging"
-    tags: calendar
-
-  - role: httpd/reverseproxy
-    website: calendar.fedoraproject.org
-    destname: calendar
-    balancer_name: app-os
-    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
-    targettype: openshift
-    ocp4: false
-    keephost: true
-    header_scheme: true
-    when: env != "staging"
     tags: calendar
 
   - role: httpd/reverseproxy
