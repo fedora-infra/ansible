@@ -270,29 +270,29 @@
     proxyurl: "{{ varnish_url }}"
     when: env != "staging"
 
-  - role: httpd/reverseproxy
-    website: apps.fedoraproject.org
-    destname: kerneltest
-    remotepath: /kerneltest
-    localpath: /kerneltest
-    balancer_name: app-os
-    targettype: openshift
-    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
-    ocp4: false
-    keephost: true
-    when: env == "staging"
-
-  - role: httpd/reverseproxy
-    website: kerneltest.fedoraproject.org
-    destname: kerneltest
-    balancer_name: app-os
-    targettype: openshift
-    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
-    ocp4: false
-    keephost: true
-    tags: kerneltest
-    header_scheme: true
-    when: env == "staging"
+    #  - role: httpd/reverseproxy
+    #    website: apps.fedoraproject.org
+    # destname: kerneltest
+    #remotepath: /kerneltest
+    #localpath: /kerneltest
+    #balancer_name: app-os
+    #targettype: openshift
+    #balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
+    #ocp4: false
+    #keephost: true
+    #when: env == "staging"
+    #
+    #  - role: httpd/reverseproxy
+    #website: kerneltest.fedoraproject.org
+    #destname: kerneltest
+    #balancer_name: app-os
+    #targettype: openshift
+    #balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
+    #ocp4: false
+    #keephost: true
+    #tags: kerneltest
+    #header_scheme: true
+    #when: env == "staging"
 
   - role: httpd/reverseproxy
     website: qa.fedoraproject.org
@@ -512,9 +512,9 @@
     website: message-tagging-service.fedoraproject.org
     destname: message-tagging-service
     balancer_name: app-os
-    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
     targettype: openshift
-    ocp4: false
+    ocp4: true
     keephost: true
     tags: message-tagging-service
 
@@ -906,15 +906,15 @@
     keephost: true
     tags: mdapi
 
-  - role: httpd/reverseproxy
-    website: wallpapers.fedoraproject.org
-    destname: wallpapers
-    balancer_name: app-os
-    balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
-    targettype: openshift
-    ocp4: false
-    keephost: true
-    tags: wallpapers
+    #  - role: httpd/reverseproxy
+    #website: wallpapers.fedoraproject.org
+    #destname: wallpapers
+    #balancer_name: app-os
+    #balancer_members: "{{ (env == 'staging')|ternary(openshift_nodes_stg, openshift_nodes) }}"
+    #targettype: openshift
+    #ocp4: false
+    #keephost: true
+    #tags: wallpapers
 
   - role: httpd/reverseproxy
     website: silverblue.fedoraproject.org

@@ -189,8 +189,8 @@ nrpe_procs_crit: 300
 # by default the number of procs we allow before we whine
 nrpe_procs_warn: 250
 num_cpus: 2
-# ocp4 is only set true in some proxy roles
-ocp4: false
+# ocp4 is default now in some proxy roles
+ocp4: true
 # All the ocp production workers.
 # This is used by the openvpn openshift app to make sure there's a vpn pod on each node.
 ocp_nodes:
