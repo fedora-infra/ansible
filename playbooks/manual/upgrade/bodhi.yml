@@ -33,12 +33,14 @@
     dnf:
       name:
       - bodhi-server
+      - bodhi-composer
       state: latest
       update_cache: true
   - name: update bodhi-server packages from testing repo
     dnf:
       name:
       - bodhi-server
+      - bodhi-composer
       state: latest
       enablerepo: infrastructure-tags-stg
       update_cache: true
@@ -58,7 +60,7 @@
     register: current_migration_version
 
 - name: Stop the front end if there are migrations to run
-  hosts: os_masters[0]:os_masters_stg[0]
+  hosts: os_control[0]:os_control_stg[0]
   user: root
   vars_files:
    - /srv/web/infra/ansible/vars/global.yml
@@ -129,7 +131,7 @@
     ignore_errors: true
 
 - name: restart the frontend
-  hosts: os_masters[0]:os_masters_stg[0]
+  hosts: os_control[0]:os_control_stg[0]
   user: root
   vars_files:
    - /srv/web/infra/ansible/vars/global.yml
