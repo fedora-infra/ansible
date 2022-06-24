@@ -44,6 +44,8 @@ spec:
         env:
         - name: KRB5_CONFIG
           value: /etc/ipa/krb5.conf
+        - name: GUNICORN_CMD_ARGS
+          value: "--bind=0.0.0.0:8000"
         volumeMounts:
         - name: config-volume
           mountPath: /opt/app-root/config/
