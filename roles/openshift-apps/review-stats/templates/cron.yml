@@ -18,7 +18,7 @@ spec:
         spec:
           containers:
           - name: build
-            image: docker-registry.default.svc:5000/review-stats/builder:latest
+            image: image-registry.openshift-image-registry.svc:5000/review-stats/builder:latest
             command: ["review-stats", "-c", "/etc/review-stats/config.cfg", "-D",
                       "make-pages", "-d", "/review-stats/"]
             env:
@@ -61,7 +61,7 @@ spec:
         spec:
           containers:
           - name: build
-            image: docker-registry.default.svc:5000/review-stats/builder:latest
+            image: image-registry.openshift-image-registry.svc:5000/review-stats/builder:latest
 {% if env == 'staging' %}
             command: ["review-stats", "-c", "/etc/review-stats/config.cfg", "-D",
                       "work-on-bugs", "-d"]
