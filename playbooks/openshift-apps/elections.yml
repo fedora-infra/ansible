@@ -108,7 +108,7 @@
     app: elections
     routename: elections
     host: "elections{{ env_suffix }}.fedoraproject.org"
-    serviceport: 8080-tcp
+    serviceport: 8000-tcp
     servicename: elections
 
   - role: openshift/object

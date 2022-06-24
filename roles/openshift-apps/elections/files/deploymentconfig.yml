@@ -39,7 +39,7 @@ spec:
       - name: elections
         image: elections:latest
         ports:
-        - containerPort: 8080
+        - containerPort: 8000
         resources: {}
         env:
         - name: KRB5_CONFIG
@@ -71,13 +71,13 @@ spec:
           initialDelaySeconds: 5
           httpGet:
             path: /
-            port: 8080
+            port: 8000
         livenessProbe:
           timeoutSeconds: 1
           initialDelaySeconds: 30
           httpGet:
             path: /
-            port: 8080
+            port: 8000
       volumes:
       - name: config-volume
         configMap:
