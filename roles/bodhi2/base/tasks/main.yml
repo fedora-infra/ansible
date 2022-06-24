@@ -9,10 +9,10 @@
     owner: root
     group: root
 
-#- name: Create the bodhi group
-#  group:
-#    name: bodhi
-#    system: yes
+- name: Create the bodhi group
+  group:
+    name: bodhi
+    system: yes
 
 - name: Create the bodhi user
   user:
@@ -22,7 +22,6 @@
     shell: /sbin/nologin
     home: /usr/share/bodhi
     system: yes
-    append: yes 
     state: present
 
 - name: Configure alembic
