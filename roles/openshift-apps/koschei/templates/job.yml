@@ -7,7 +7,7 @@ spec:
     spec:
       containers:
       - name: "job-{{name}}"
-        image: "docker-registry.default.svc:5000/koschei/koschei:latest"
+        image: "image-registry.openshift-image-registry.svc:5000/koschei/koschei:latest"
         command: ["/bin/bash", "-euxc", "{{command}}"]
         env:
           - name: SUDO_USER
