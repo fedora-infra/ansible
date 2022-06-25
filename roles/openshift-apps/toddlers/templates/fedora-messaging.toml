@@ -65,7 +65,7 @@ fasjson = true
 
 # Account to use to connect to FAS/FASJSON
 fas_url = "https://fasjson{{ env_suffix }}.fedoraproject.org/"
-{% if env == "staging" %}
+{% if env != "staging" %}
 fas_username = "{{ fedoraDummyUser }}"
 fas_password = "{{ fedoraDummyUserPassword }}"
 {% else %}
@@ -74,7 +74,7 @@ fas_password = "{{ fedoraStagingDummyUserPassword }}"
 {% endif %}
 
 # Account to use to connect to bugzilla
-{% if env == "staging" %}
+{% if env != "staging" %}
 bugzilla_url = "https://bugzilla.redhat.com"
 bugzilla_api_key = "{{ toddlers_bz_api_key }}"
 {% else %}
