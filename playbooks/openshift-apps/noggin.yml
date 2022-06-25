@@ -88,6 +88,7 @@
     servicename: noggin-web
     annotations:
       haproxy.router.openshift.io/timeout: 5m
+      haproxy.router.openshift.io/set-forwarded-headers: append
 
   - role: openshift/object
     app: noggin
