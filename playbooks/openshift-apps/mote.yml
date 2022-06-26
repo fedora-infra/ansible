@@ -1,5 +1,5 @@
 - name: make the app be real
-  hosts: os_control_stg[0]
+  hosts: os_control[0]:os_control_stg[0]
   user: root
   gather_facts: False
   vars:
@@ -68,6 +68,9 @@
     routename: mote
     serviceport: mote-tcp
     servicename: mote
+    host: "meetbot{{ env_suffix }}.fedoraproject.org"
+    annotations:
+      haproxy.router.openshift.io/set-forwarded-headers: append
 
   - role: openshift/start-build
     buildname: mote

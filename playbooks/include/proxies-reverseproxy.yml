@@ -100,25 +100,18 @@
   - role: httpd/reverseproxy
     website: meetbot.fedoraproject.org
     destname: mote
-    #remotepath: /mote/
-    # Talk directly to the app server, not haproxy
-    proxyurl: http://value01
-    when: env != "staging"
+    balancer_name: app-os
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    targettype: openshift
+    ocp4: true
+    keephost: true
+    tags: mote
 
   # The place for the raw originals
   - role: httpd/reverseproxy
     website: meetbot-raw.fedoraproject.org
     destname: meetbot
     remotepath: /meetbot/
-    # Talk directly to the app server, not haproxy
-    proxyurl: http://value02
-    when: env == "staging"
-
-  # The place for the fancy mote view
-  - role: httpd/reverseproxy
-    website: meetbot.fedoraproject.org
-    destname: mote
-    #remotepath: /mote/
     # Talk directly to the app server, not haproxy
     proxyurl: http://value02
     when: env == "staging"
