@@ -18,7 +18,11 @@ spec:
         name: mote
         imagePullPolicy: IfNotPresent
         volumeMounts:
+{% if env == 'staging' %}
         - mountPath: /srv/web/meetbot
+{% else %}
+        - mountPath: /srv
+{% endif %}
           name: meetbot
         - mountPath: /opt/app/mote/config.py
           name: mote-config
