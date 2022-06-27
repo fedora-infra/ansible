@@ -30,6 +30,8 @@
     host: "koschei{{ env_suffix }}.fedoraproject.org"
     serviceport: web
     servicename: frontend
+    annotations:
+        haproxy.router.openshift.io/set-forwarded-headers: append
 
   tasks:
     - name: Apply objects
