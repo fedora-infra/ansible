@@ -148,14 +148,20 @@
     command: oc -n bodhi scale dc/bodhi-web --replicas={{ bodhi_openshift_pods }}
     when: env == "staging"
   # Redeploy the build config as it may request a newer version in the Dockerfile
-  - role: openshift/object
-    app: bodhi
-    template: buildconfig.yml
-    objectname: buildconfig.yml
+  - import_role:
+      name: openshift/object
+    vars:
+      app: bodhi
+      template: buildconfig.yml
+      objectname: buildconfig.yml
+    when: env == "staging"
   # Start a build with the new buildconfig
-  - role: openshift/start-build
-    app: bodhi
-    buildname: bodhi-base
+  - import_role:
+      name: openshift/start-build
+    vars:
+      app: bodhi
+      buildname: bodhi-base
+    when: env == "staging"
 
   post_tasks:
   - name: tell nagios to unshush w.r.t. the frontend
