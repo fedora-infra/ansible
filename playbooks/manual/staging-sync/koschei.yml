@@ -7,7 +7,7 @@
 # production Koschei database dump, but this is not needed for now.
 
 - name: sync staging Koschei with production
-  hosts: os_masters_stg[0]
+  hosts: os_control_stg[0]
   user: root
   vars_files:
    - /srv/web/infra/ansible/vars/global.yml
@@ -44,7 +44,7 @@
     include_role: name=openshift-apps/koschei/job
     vars:
       name: db-create
-      command: "koschei-admin create-db && koschei-admin create-collection f32 --display-name 'Fedora Rawhide' --target f32 --bugzilla-product Fedora --bugzilla-version rawhide && koschei-admin create-group php"
+      command: "koschei-admin create-db && koschei-admin create-collection f37 --display-name 'Fedora Rawhide' --target f37 --bugzilla-product Fedora --bugzilla-version rawhide && koschei-admin create-group php"
 
   - name: Start frontend
     shell: oc -n koschei scale dc/frontend --replicas={{koschei_frontend_replicas}}
