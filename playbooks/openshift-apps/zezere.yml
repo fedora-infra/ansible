@@ -35,6 +35,8 @@
     host: "provision{{ env_suffix }}.fedoraproject.org"
     servicename: zezere
     serviceport: 8080
+    annotations:
+      haproxy.router.openshift.io/set-forwarded-headers: append
   - role: openshift/object
     app: zezere
     template: secret.yml
