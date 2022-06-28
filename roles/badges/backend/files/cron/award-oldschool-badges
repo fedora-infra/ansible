@@ -6,6 +6,7 @@ __main__.__requires__ = __requires__ = ["tahrir-api", "sqlalchemy>=0.7"];
 import pkg_resources
 pkg_resources.require(__requires__)
 
+import os
 import itertools
 import string
 import time
@@ -14,11 +15,14 @@ import socket
 from hashlib import md5
 import getpass
 import pprint
+from collections import defaultdict
 
+from gssapi import Credentials
+from gssapi.exceptions import GSSError
+from requests_gssapi import HTTPSPNEGOAuth
 from tahrir_api.dbapi import TahrirDatabase
 import transaction
-
-_fas_cache = {}
+import requests
 
 import logging
 log = logging.getLogger()
@@ -37,88 +41,44 @@ fedmsg.init(**fm_config)
 import fedbadges.utils
 
 
-def user_in_group(user, group_name):
-    # First, bail out if they're not in the group at all
-    if not any([g.name == group_name for g in user.memberships]):
-        return False
-
-    # Find the group_id of the group we're looking for..
-    group_id = None
-    for g in user.memberships:
-        if g.name == group_name:
-            group_id = g.id
-            break
-
-    if not group_id:
-        return False
-
-    # For that group_id, find the relevant role
-    relevant_role = None
-    for role in user.roles:
-        if role.group_id == group_id:
-            relevant_role = role
-            break
-
-    if not relevant_role:
-        return False
-
-    # They must be actually 'approved' in that group for this to count
-    return relevant_role.role_status == 'approved'
-
-def get_all_fas_users(creds):
-    fasclient = fedora.client.fas2.AccountSystem(
-        username=creds['username'],
-        password=creds['password'],
-    )
-
-    timeout = socket.getdefaulttimeout()
-    socket.setdefaulttimeout(600)
+def get_http_client():
+    os.environ["KRB5_CLIENT_KTNAME"] = fm_config.get("keytab")
     try:
-        log.info("Downloading FAS cache")
-        for a, b in itertools.product(string.lowercase, string.lowercase):
-            term = a + b + '*'
-            log.info("  Querying FAS for %r" % term)
-            request = fasclient.send_request('/user/list',
-                                             req_params={'search': term},
-                                             auth=True)
-            log.info("    Found %r matching users." % len(request['people']))
-            for person in request['people']:
-                yield person
-    finally:
-        socket.setdefaulttimeout(timeout)
+        creds = Credentials(usage="initiate")
+    except GSSError as e:
+        log.error("GSSError trying to authenticate with Kerberos", e)
+    gssapi_auth = HTTPSPNEGOAuth(opportunistic_auth=True, creds=creds)
+    session = requests.Session()
+    session.auth = gssapi_auth
+    return session
 
 
 def get_fas_groupings(fas_credentials, lookup, **config):
-    results = {}
-    packager_id, ambassadors_id = None, None
-    sponsor_types = ['sponsor', 'administrator']
-    mega_list = get_all_fas_users(fas_credentials)
-    for user in mega_list:
+    results = defaultdict(list)
+    membership_types = ("members", "sponsors")
+    http_client = get_http_client()
+    for group_name, badge_id in lookup.iteritems():
         # This is the main check.
-        for group_name, badge_id in lookup.iteritems():
-            if user_in_group(user, group_name):
-                results[group_name] = results.get(group_name, []) + [user]
+        for membership_type in membership_types:
+            url = "%sgroups/%s/%s/" % (
+                fm_config['fasjson_base_url'],
+                group_name,
+                membership_type
+            )
+            response = http_client.get(url)
+            if not response.ok:
+                continue
+            for user in response.json()["result"]:
+                username = user["username"]
+                results[group_name].append(username)
 
-        # Beyond the main check, here is a special check that makes sure they
-        # are a sponsor in the packager group.
-        if not packager_id:
-            for group in user.memberships:
-                if group.name == 'packager':
-                    packager_id = group.id
-
-        if not ambassadors_id:
-            for group in user.memberships:
-                if group.name == 'ambassadors':
-                    ambassadors_id = group.id
-
-        for role in user.roles:
-            if role.group_id == packager_id:
-                if role.role_type in sponsor_types and role.role_status == 'approved':
-                    results['sponsors'] = results.get('sponsors', []) + [user]
-
-            if role.group_id == ambassadors_id:
-                if role.role_type in sponsor_types and role.role_status == 'approved':
-                    results['ambassadors_sponsors'] = results.get('ambassadors_sponsors', []) + [user]
+                # Beyond the main check, here is a special check for the sponsors of the packager and ambassadors groups
+                if membership_type != "sponsors":
+                    continue
+                if group_name == "packager":
+                    results["sponsors"].append(username)
+                elif group_name == "ambassadors":
+                    results["ambassadors_sponsors"].append(username)
 
     return results
 
@@ -179,9 +139,9 @@ def main():
         hit_em_up(badge, members)
 
 
-def hit_em_up(badge, group):
-    for fas_user in group:
-        email = fas_user.username + "@fedoraproject.org"
+def hit_em_up(badge, members):
+    for username in members:
+        email = username + "@fedoraproject.org"
         user = tahrir.get_person(email)
 
         if not user:

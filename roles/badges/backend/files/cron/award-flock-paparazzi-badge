@@ -11,19 +11,20 @@ Author: Ralph Bean <rbean@redhat.com>
 from __future__ import print_function
 
 import __main__
-__main__.__requires__ = __requires__ = ["tahrir-api", "sqlalchemy>=0.7"];
+__main__.__requires__ = __requires__ = ["tahrir-api", "sqlalchemy>=0.7"]
 import pkg_resources
 pkg_resources.require(__requires__)
 
-import socket
 import time
-import getpass
+import os
 import ConfigParser
 
 import requests
-import fedora.client
 import transaction
 import tahrir_api.dbapi
+from gssapi import Credentials
+from gssapi.exceptions import GSSError
+from requests_gssapi import HTTPSPNEGOAuth
 
 import fedmsg
 import fedmsg.config
@@ -43,8 +44,6 @@ config.read(['flock-paparazzi.ini', '/etc/flock-paparazzi.ini'])
 flickr_api_key = config.get('general', 'flickr_api_key')
 g_plus_key = config.get('general', 'g_plus_key')
 userIP = config.get('general', 'userIP')
-fas_username = config.get('general', 'fas_username')
-fas_password = config.get('general', 'fas_password')
 
 # API urls
 flickr_url = 'https://api.flickr.com/services/rest/'
@@ -52,7 +51,19 @@ g_plus_url = 'https://www.googleapis.com/plus/v1/activities'
 
 badge_id = 'flock-paparazzi'
 
-_fas_cache = {}
+http_client = None
+
+
+def get_http_client():
+    os.environ["KRB5_CLIENT_KTNAME"] = fm_config.get("keytab")
+    try:
+        creds = Credentials(usage="initiate")
+    except GSSError as e:
+        print("GSSError trying to authenticate with Kerberos", e)
+    gssapi_auth = HTTPSPNEGOAuth(opportunistic_auth=True, creds=creds)
+    session = requests.Session()
+    session.auth = gssapi_auth
+    return session
 
 
 def get_g_plus_persons(query):
@@ -148,50 +159,24 @@ def get_flickr_persons(tags):
             yield value
 
 
-def make_fas_cache(username, password):
-    global _fas_cache
-    if _fas_cache:
-        return _fas_cache
-
-    print("No previous fas cache found.  Looking to rebuild.")
-
-    try:
-        import fedora.client.fas2
-    except ImportError:
-        print("No python-fedora installed.  Not caching fas.")
-        return {}
-
-    if not username or not password:
-        print("No fas credentials found.  Not caching fas.")
-        return {}
-
-    fasclient = fedora.client.fas2.AccountSystem(
-        username=username,
-        password=password,
+def get_username(name):
+    # First, check if the same username exists:
+    response = http_client.get(
+        "%susers/%s/" % (fm_config['fasjson_base_url'], name)
     )
-
-    timeout = socket.getdefaulttimeout()
-    socket.setdefaulttimeout(600)
-    try:
-        print("Downloading FAS cache...")
-        request = fasclient.send_request(
-            '/user/list',
-            req_params={'search': '*'},
-            auth=True,
-        )
-    finally:
-        socket.setdefaulttimeout(timeout)
-
-    print("Caching necessary user data")
-    for user in request['people']:
-        for key in ['username', 'human_name']:
-            if user[key]:
-                _fas_cache[user[key]] = user['username']
-
-    del request
-    del fasclient
-
-    return _fas_cache
+    if response.ok:
+        return name
+    # Now try with the human name
+    response = http_client.get(
+        "%ssearch/users/" % fm_config['fasjson_base_url'],
+        params={"human_name": name}
+    )
+    if not response.ok:
+        return None
+    response = response.json()
+    if response["page"]["total_results"] != 1:
+        return None
+    return response["result"][0]["username"]
 
 
 def get_persons():
@@ -206,6 +191,7 @@ def get_persons():
 
 
 def main():
+    global http_client
     # First, initialize the tahrir db connection
     uri = fm_config['badges_global']['database_uri']
     tahrir = tahrir_api.dbapi.TahrirDatabase(
@@ -213,8 +199,7 @@ def main():
         notification_callback=fedbadges.utils.notification_callback,
     )
 
-    # Then, build a fas cache.  this takes forever..
-    cache = make_fas_cache(fas_username, fas_password)
+    http_client = get_http_client()
 
     badge = tahrir.get_badge(badge_id)
     already_has_it = [a.person.nickname for a in badge.assertions]
@@ -231,14 +216,15 @@ def main():
             continue
 
         print("* Considering", person)
-        if person in cache:
-            if cache[person] in already_has_it:
-                print("Skipping %r" % cache[person])
+        username = get_username(person)
+        if username is not None:
+            if username in already_has_it:
+                print("Skipping %r" % username)
                 continue
 
-            print("  *", cache[person], "gets the badge")
-            already_has_it.append(cache[person])
-            email = cache[person] + "@fedoraproject.org"
+            print("  *", username, "gets the badge")
+            already_has_it.append(username)
+            email = username + "@fedoraproject.org"
             try:
                 transaction.begin()
                 tahrir.add_assertion(badge_id, email, None)

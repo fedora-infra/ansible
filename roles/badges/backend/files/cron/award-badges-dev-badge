@@ -12,9 +12,13 @@ import os
 import subprocess
 import shutil
 
+from gssapi import Credentials
+from gssapi.exceptions import GSSError
+from requests_gssapi import HTTPSPNEGOAuth
 from tahrir_api.dbapi import TahrirDatabase
 import fedbadges.utils
 import transaction
+import requests
 
 import fedora.client
 import socket
@@ -34,33 +38,19 @@ fedmsg.init(**fm_config)
 
 
 badge = None
-email_to_username_mapping = {}
-
-_fas_cache = {}
+http_client = None
 
 
-def make_email_to_username_mapping(fas_credentials):
-    fasclient = fedora.client.fas2.AccountSystem(
-        username=fas_credentials['username'],
-        password=fas_credentials['password'],
-    )
-
-    timeout = socket.getdefaulttimeout()
-    socket.setdefaulttimeout(600)
+def get_http_client():
+    os.environ["KRB5_CLIENT_KTNAME"] = fm_config.get("keytab")
     try:
-        log.info("Downloading FAS cache")
-        request = fasclient.send_request('/user/list',
-                                         req_params={'search': '*'},
-                                         auth=True)
-    finally:
-        socket.setdefaulttimeout(timeout)
-
-    results = {}
-    for person in request['people']:
-        if person.email:
-            results[person.email] = person.username
-
-    return results
+        creds = Credentials(usage="initiate")
+    except GSSError as e:
+        log.error("GSSError trying to authenticate with Kerberos", e)
+    gssapi_auth = HTTPSPNEGOAuth(opportunistic_auth=True, creds=creds)
+    session = requests.Session()
+    session.auth = gssapi_auth
+    return session
 
 
 def clone_repo(repo):
@@ -88,26 +78,20 @@ def gather_authors(location):
         os.chdir(pwd)
     return authors
 
+
 def emails_to_fas_accounts(emails):
     usernames = []
     for email in emails:
-        if email.endswith('@fedoraproject.org'):
-            username = email[:-1 * len('@fedoraproject.org')]
-            if not username in usernames:
-                usernames.append(username)
+        result = http_client.get(
+            "{}search/users/".format(fm_config['fasjson_base_url']),
+            params={"email": email}
+        )
+        if not result.ok:
             continue
-
-        # Otherwise, look it up in FAS and append
-        raise WTFError("wtf is going on with fas")
-
-    return usernames
-
-
-def emails_to_fas_accounts(emails):
-    usernames = []
-    for email in emails:
-        if email in email_to_username_mapping:
-            usernames.append(email_to_username_mapping[email])
+        response = result.json()
+        if response["page"]["total_results"] != 1:
+            continue
+        usernames.append(response["result"][0]["username"])
     return usernames
 
 
@@ -153,6 +137,5 @@ if __name__ == '__main__':
     badge = tahrir.get_badge(badge_id='badge-off!')
     if not badge:
         raise ValueError("badge does not exist")
-    email_to_username_mapping = make_email_to_username_mapping(
-        fm_config['fas_credentials'])
+    http_client = get_http_client()
     main()

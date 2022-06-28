@@ -6,20 +6,19 @@ __main__.__requires__ = __requires__ = ["tahrir-api", "sqlalchemy>=0.7"];
 import pkg_resources
 pkg_resources.require(__requires__)
 
+import os
 import datetime
 import time
 import urllib
 import socket
+import logging
+import re
 
 from tahrir_api.dbapi import TahrirDatabase
 import transaction
 
-_fas_cache = {}
-
-import logging
 log = logging.getLogger()
 logging.basicConfig()
-import fedora.client.fas2
 
 import fedmsg
 import fedmsg.config
@@ -32,39 +31,83 @@ fedmsg.init(**fm_config)
 
 import fedbadges.utils
 
-# generates a list of search terms
-# alpha map is just a lowercase english alphabet
+import ldap
+import ldap.sasl
+from ldap.controls.libldap import SimplePagedResultsControl
 
-def gen_fas_searchterms():
-    alpha = map(chr, range(97, 123))
-    searchterms = [ alpha_ltr + "*" for alpha_ltr in alpha ]
-    return searchterms
+LDAP_CONF = "/etc/openldap/ldap.conf"
 
 
-def get_fas_userlist(fas_credentials, search_qry):
-    creds = fas_credentials
+class LDAPClient(object):
 
-    fasclient = fedora.client.fas2.AccountSystem(
-        username=creds['username'],
-        password=creds['password'],
-    )
+    def __init__(self):
+        self.config = {}
+        self.conn = None
+        self._read_config()
 
-    timeout = socket.getdefaulttimeout()
-    socket.setdefaulttimeout(600)
-    try:
-        log.info("Downloading FAS cache")
-        request = fasclient.send_request('/user/list',
-                                         req_params={'search': search_qry},
-                                         auth=True)
-	
-    finally:
-        socket.setdefaulttimeout(timeout)
+    def _read_config(self):
+        conf_re = re.compile(r"^([A-Z_]+)\s+(.+)$")
+        with open(LDAP_CONF) as cf:
+            for line in cf:
+                mo = conf_re.match(line.strip())
+                if mo is None:
+                    continue
+                variable = mo.group(1)
+                value = mo.group(2)
+                self.config[variable] = value
 
-    # We don't actually check for CLA+1, just "2 groups"
-    return [p for p in request['people'] if len(p.memberships) > 1]
+    def connect(self):
+        self.conn = ldap.initialize(self.config["URI"].split(" ")[0])
+        self.conn.protocol_version = 3
+        self.conn.sasl_interactive_bind_s('', ldap.sasl.gssapi())
+
+    def search(self, base, filters, attrs):
+        page_size = 1000
+        base_dn = "{base},{main_base}".format(base=base,main_base=self.config['BASE'])
+        page_cookie = ""
+        while True:
+            page_control = SimplePagedResultsControl(
+                criticality=False, size=page_size, cookie=page_cookie
+            )
+            msgid = self.conn.search_ext(
+                base_dn,
+                ldap.SCOPE_SUBTREE,
+                filters,
+                attrlist=attrs,
+                serverctrls=[page_control],
+            )
+            rtype, rdata, rmsgid, serverctrls = self.conn.result3(msgid)
+            for dn, obj in rdata:
+                yield obj
+            for ctrl in serverctrls:
+                if isinstance(ctrl, SimplePagedResultsControl):
+                    page_cookie = ctrl.cookie
+                    break
+            if not page_cookie:
+                break
+
+
+def get_fas_userlist(threshold):
+    os.environ["KRB5_CLIENT_KTNAME"] = fm_config.get("keytab")
+    ldap_client = LDAPClient()
+    ldap_client.connect()
+    filters = "(&(fasCreationTime<={})(objectclass=fasUser))".format(threshold.strftime("%Y%m%d%H%M%SZ"))
+    response = ldap_client.search(base="cn=users,cn=accounts", filters=filters, attrs=["uid", "memberof"])
+    for res in response:
+        groups = []
+        for groupdn in res.get("memberof", []):
+            groupdn = groupdn.decode("ascii")
+            if not groupdn.endswith(",cn=groups,cn=accounts,{}".format(ldap_client.config['BASE'])):
+                continue
+            groupname = groupdn.split(",")[0].split("=")[1]
+            if groupname == "ipausers":
+                continue  # Assume all groups are FAS groups except this one
+            groups.append(groupname)
+        yield {"username": res["uid"][0].decode("ascii"), "groups": groups}
 
 
 def main():
+    global http_client
     now = datetime.datetime.utcnow()
     year = datetime.timedelta(days=365.5)
     mapping = {
@@ -81,26 +124,18 @@ def main():
         badge = tahrir.get_badge(badge_id=badge_id)
         assert(badge.id)
 
-    # Then, do a long query against FAS for our candidates.
-    # Here I call search terms to generate a lists of search terms
-    # Looping over the list of search terms, pass the search term to get_fas_userlists	
-
-    fas_credentials = fm_config['fas_credentials']
-    searchterms = gen_fas_searchterms()
-    for search_elem in searchterms:
-        results = get_fas_userlist(fas_credentials, search_elem)
-
-        for badge_id, delta in mapping.items():
-            badge = tahrir.get_badge(badge_id=badge_id)
-            for person in results:
-                creation = datetime.datetime.strptime(
-                    person.creation[:19], '%Y-%m-%d %H:%M:%S')
-                if now - creation > delta:
-                    hit_em_up(badge, person)
+    # Then, query IPA for users created before the threshold
+    for badge_id, delta in mapping.items():
+        badge = tahrir.get_badge(badge_id=badge_id)
+        threshold = now - delta
+        for person in get_fas_userlist(threshold):
+            if len(person["groups"]) < 2:
+                continue
+            hit_em_up(badge, person)
 
 
 def hit_em_up(badge, fas_user):
-    email = fas_user.username + "@fedoraproject.org"
+    email = fas_user["username"] + "@fedoraproject.org"
     user = tahrir.get_person(email)
 
     if not user:
@@ -110,7 +145,7 @@ def hit_em_up(badge, fas_user):
         print email, "already has", badge.id, "skipping."
         return
 
-    time.sleep(15)
+    time.sleep(1)
     print "awarding", badge.id, "to", email
     try:
         transaction.begin()
