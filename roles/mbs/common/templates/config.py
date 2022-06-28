@@ -169,7 +169,6 @@ class ProdConfiguration(BaseConfiguration):
     BASE_MODULE_ARCHES = {
         # Fedora >= 37 removes armv7hl, Fedora < 37 still have it
         # https://fedoraproject.org/wiki/Changes/RetireARMv7
-        'platform:f34': ['aarch64', 'armv7hl', 'i686', 'ppc64le', 'x86_64', 's390x'],
         'platform:f35': ['aarch64', 'armv7hl', 'i686', 'ppc64le', 'x86_64', 's390x'],
         'platform:f36': ['aarch64', 'armv7hl', 'i686', 'ppc64le', 'x86_64', 's390x'],
         'platform:el8' : ['aarch64', 'ppc64le', 'x86_64', 's390x']
