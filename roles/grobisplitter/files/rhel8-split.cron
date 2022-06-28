@@ -1,1 +1,2 @@
 10 09  * * * root /usr/local/bin/rhel8-split.sh
+0 0 1 * * root /usr/bin/find /mnt/fedora/app/fi-repo/rhel/rhel8/koji/ -mindepth 1 -maxdepth 1 -type d -mtime +30 -exec rm -rf '{}' \;
