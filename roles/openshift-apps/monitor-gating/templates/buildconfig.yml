@@ -8,8 +8,8 @@ spec:
   source:
     git:
 {% if env == 'staging' %}
-      uri: https://pagure.io/forks/pingou/fedora-ci/monitor-gating.git
-      ref: "staging"
+      uri: https://pagure.io/fedora-ci/monitor-gating.git
+      ref: "production"
 {% else %}
       uri: https://pagure.io/fedora-ci/monitor-gating.git
       ref: "production"
