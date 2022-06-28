@@ -70,6 +70,12 @@
 -A OUTPUT -p tcp -m tcp -d 8.43.85.76 --dport 443 -j ACCEPT
 
 # admin.fedoraproject.org  for fas (proyx(1)01 and proxy(1)10)
+{% if host in groups['staging'] %}
+-A OUTPUT -p tcp -m tcp -d 10.3.166.74 --dport 80 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.3.166.74 --dport 443 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.3.166.75 --dport 80 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.3.166.75 --dport 443 -j ACCEPT
+{% else %}
 -A OUTPUT -p tcp -m tcp -d 10.3.163.74 --dport 80 -j ACCEPT
 -A OUTPUT -p tcp -m tcp -d 10.3.163.74 --dport 443 -j ACCEPT
 -A OUTPUT -p tcp -m tcp -d 10.3.163.75 --dport 80 -j ACCEPT
@@ -78,9 +84,29 @@
 -A OUTPUT -p tcp -m tcp -d 10.3.163.76 --dport 443 -j ACCEPT
 -A OUTPUT -p tcp -m tcp -d 10.3.163.77 --dport 80 -j ACCEPT
 -A OUTPUT -p tcp -m tcp -d 10.3.163.77 --dport 443 -j ACCEPT
+{% endif %}
 
 # ipa client ports
-
+{% if host in groups['staging'] %}
+-A OUTPUT -p tcp -m tcp -d 10.3.166.21 --dport 80 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.3.166.63 --dport 80 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.3.166.21 --dport 443 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.3.166.63 --dport 443 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.3.166.21 --dport 389 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.3.166.63 --dport 389 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.3.166.21 --dport 636 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.3.166.63 --dport 636 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.3.166.21 --dport 88 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.3.166.63 --dport 88 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.3.166.21 --dport 88 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.3.166.63 --dport 88 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.3.166.21 --dport 464 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.3.166.63 --dport 464 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.3.166.21 --dport 464 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.3.166.63 --dport 464 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.3.166.21 --dport 53 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.3.166.63 --dport 53 -j ACCEPT
+{% else %}
 -A OUTPUT -p tcp -m tcp -d 10.3.163.54 --dport 80 -j ACCEPT
 -A OUTPUT -p tcp -m tcp -d 10.3.163.55 --dport 80 -j ACCEPT
 -A OUTPUT -p tcp -m tcp -d 10.3.163.104 --dport 80 -j ACCEPT
@@ -108,7 +134,13 @@
 -A OUTPUT -p udp -m udp -d 10.3.163.54 --dport 53 -j ACCEPT
 -A OUTPUT -p udp -m udp -d 10.3.163.55 --dport 53 -j ACCEPT
 -A OUTPUT -p udp -m udp -d 10.3.163.104 --dport 53 -j ACCEPT
+{% endif %}
 
+{% if host in groups['staging'] %}
+# Allow nfs from koji01
+-A INPUT -p tcp -m tcp -d 10.3.167.64 --dport 2049 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.3.167.64 --dport 2049 -j ACCEPT
+{% endif %}
 #nfs to vtap-fedora-nfs01.storage.phx2.redhat.com - a little to wide-open - but 
 # kinda necessary
 -A INPUT -m tcp -p tcp -s 10.3.162.11 -j ACCEPT
