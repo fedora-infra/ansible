@@ -62,8 +62,4 @@ AuthorizedKeysCommand /usr/libexec/pagure/keyhelper.py "%u" "%h" "%t" "%f"
 AuthorizedKeysCommandUser nobody
 AuthorizedKeysCommand /usr/bin/sss_ssh_authorizedkeys
 {% endif %}
-
-
-{% if sshd_sftp %}
 Subsystem sftp internal-sftp
-{% endif %}
