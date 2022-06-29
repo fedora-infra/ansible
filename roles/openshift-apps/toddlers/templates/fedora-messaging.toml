@@ -133,7 +133,7 @@ file_check_url = "https://src{{ env_suffix }}.fedoraproject.org/%(namespace)s/%(
 old_composes_url = "https://kojipkgs{{ env_suffix }}.fedoraproject.org/compose/"
 
 [consumer_config.pdc_modules]
-mbs_url = "https://mbs.{{ env_suffix }}fedoraproject.org/module-build-service/2/module-builds/"
+mbs_url = "https://mbs{{ env_suffix }}.fedoraproject.org/module-build-service/2/module-builds/"
 
 [consumer_config.check_email_overrides]
 {% if env == "staging" %}
