@@ -309,13 +309,6 @@ define service {
 
 ## Auxillary to websites but necessary to make them happen
 
-define service {
-  hostgroup_name        sundries
-  service_description   websites build happened recently
-  check_command         check_by_nrpe!check_websites_buildtime
-  use                   websitetemplate
-}
-
 {% endif %}
 
 {% if vars['nagios_location'] == 'iad2_internal' %}
