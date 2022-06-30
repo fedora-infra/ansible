@@ -41,7 +41,7 @@ spec:
             persistentVolumeClaim:
               claimName: openshift-{{ env_short }}-reviewstats
 ---
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: review-stats-work-on-bugs
