@@ -57,8 +57,13 @@ blocked_toddlers = ["debug"]
 
 
 # Configuration used when sending notifications:
+{% if env != "staging" %}
+mail_server = "bastion.stg.fedoraproject.org"
+admin_email = "admin@stg.fedoraproject.org"
+{% else %}
 mail_server = "bastion.fedoraproject.org"
 admin_email = "admin@fedoraproject.org"
+{% endif %}
 
 # Use fasjson instead of FAS
 fasjson = true
