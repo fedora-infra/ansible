@@ -17,7 +17,7 @@ ks_url: http://10.3.163.35/repo/rhel/ks/kvm-rhel-8-iad2
 # These are normally group variables, but in this case db servers are often different
 lvm_size: 1500000
 max_mem_size: "{{ mem_size }}"
-mem_size: 16384
+mem_size: 65536
 nrpe_procs_crit: 700
 #
 # Large updates pushes cause lots of db threads doing the tag moves, so up this from default.
