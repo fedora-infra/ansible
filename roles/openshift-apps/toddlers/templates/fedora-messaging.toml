@@ -136,11 +136,7 @@ old_composes_url = "https://kojipkgs{{ env_suffix }}.fedoraproject.org/compose/"
 mbs_url = "https://mbs{{ env_suffix }}.fedoraproject.org/module-build-service/2/module-builds/"
 
 [consumer_config.check_email_overrides]
-{% if env == "staging" %}
-email_overrides_url = "https://stg.pagure.io/fedora-infra/ansible/raw/main/f/roles/openshift-apps/toddlers/templates/email_overrides.toml"
-{% else %}
 email_overrides_url = "https://pagure.io/fedora-infra/ansible/raw/main/f/roles/openshift-apps/toddlers/templates/email_overrides.toml"
-{% endif %}
 
 [consumer_config.clean_retired_packages]
 pdc_active_branches = "https://pdc{{ env_suffix }}.fedoraproject.org/extras/active_branches.json"
