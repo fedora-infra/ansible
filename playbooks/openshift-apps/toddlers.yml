@@ -49,6 +49,10 @@
       - "org.fedoraproject.*.toddlers.trigger.check_email_overrides"
       # clean_retired_packages
       - "org.fedoraproject.*.toddlers.trigger.clean_retired_packages"
+      # scm_request_processor
+      - "org.fedoraproject.*.pagure.issue.new"
+      - "org.fedoraproject.*.pagure.issue.edit"
+      - "org.fedoraporject.*.pagure.issue.comment.added"
     thresholds:
       warning: 10
       critical: 100
