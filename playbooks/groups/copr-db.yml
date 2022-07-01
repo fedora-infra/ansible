@@ -25,7 +25,6 @@
   roles:
   - base
   - rkhunter
-  - { role: fas_client, when: env != "staging" }
   - { role: ipa/client, when: env == "staging" }
   - nagios_client
   - hosts

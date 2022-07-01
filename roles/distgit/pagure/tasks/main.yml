@@ -227,41 +227,6 @@
   tags:
   - selinux
 
-# HOTFIX: adjust bugzilla overrides
-#- name: HOTFIX - adjust bugzilla overrides
-#  copy: src=fas2.py dest=/usr/lib/python2.7/site-packages/fedora/client/fas2.py
-#  tags:
-#  - config
-#  - pagure
-#  - fas
-#  - hotfix
-#  - hotfixfas
-#
-#- name: generate pagure-sync-bugzilla.py script
-#  template:
-#      src: pagure-sync-bugzilla.py.j2
-#      dest: /usr/local/bin/pagure-sync-bugzilla.py
-#      owner: root
-#      group: root
-#      mode: 0700
-#  tags:
-#  - pagure
-#  - bugzilla
-
-#- name: Configure cron job for a daily pagure-sync-bugzilla.py script run
-#  cron:
-#    name: pagure-sync-bugzilla
-#    user: root
-#    minute: 0
-#    hour: 18
-#    job: /usr/local/bin/lock-wrapper pagure-sync-bugzilla "/usr/local/bin/pagure-sync-bugzilla.py"
-#    cron_file: pagure-sync-bugzilla
-#    state: present
-#  when: env != 'staging'
-#  tags:
-#  - pagure
-#  - bugzilla
-
 # Cron job to export extras information from the pagure DB
 - name: Install the apache configuration file for /extras
   copy: src={{ item }} dest=/etc/httpd/conf.d/{{ item }}

@@ -8,12 +8,6 @@
     - ipa/client
     - packages
 
-- name: Clean up annoying remnants of previous FAS client installations
-  import_tasks: cleanup.yml
-  tags:
-    - ipa/client
-    - fas-client-cleanup
-
 - name: Enable VPN hosts to talk to IPA
   import_tasks: vpn.yml
   tags:

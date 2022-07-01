@@ -86,15 +86,6 @@
 
 # shell access
 
-- name: "Warn if `fas_client_groups` is set"
-  fail:
-    msg: >-
-      `fas_client_groups` is defined, please convert to a (group var) list named
-      `ipa_client_shell_groups`
-  ignore_errors: true
-  when: fas_client_groups is defined
-  run_once: false
-
 - name: "Warn if essential IPA client variables are unset"
   fail:
     msg: "`{{ item }}` is not defined"
