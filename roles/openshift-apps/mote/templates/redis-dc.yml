@@ -14,7 +14,7 @@ spec:
         app: redis
     spec:
       containers:
-      - image: registry.redhat.io/rhel9/redis-6
+      - image: image-registry.openshift-image-registry.svc:5000/mote/redis
         name: redis
         imagePullPolicy: IfNotPresent
         volumeMounts:
@@ -27,7 +27,22 @@ spec:
           requests:
             cpu: '0'
             memory: 200Mi
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-password
+              key: password
       volumes:
       - emptyDir: {}
         name: redis-data
       restartPolicy: Always
+  triggers:
+  - type: ImageChange
+    imageChangeParams:
+      automatic: true
+      from:
+        kind: ImageStreamTag
+        name: redis:latest
+      containerNames:
+      - "redis"

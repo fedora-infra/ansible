@@ -6,6 +6,7 @@ metadata:
     app: mote
 spec:
   replicas: 1
+  revisionHistoryLimit: 5
   selector:
     app: mote
   template:
@@ -17,6 +18,12 @@ spec:
       - image: image-registry.openshift-image-registry.svc:5000/mote/mote
         name: mote
         imagePullPolicy: IfNotPresent
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-password
+              key: password
         volumeMounts:
 {% if env == 'staging' %}
         - mountPath: /srv/web/meetbot
@@ -35,6 +42,26 @@ spec:
           requests:
             cpu: '0'
             memory: 50Mi
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 9696
+            scheme: HTTP
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 30
+          successThreshold: 1
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 9696
+            scheme: HTTP
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 30
+          successThreshold: 1
+          failureThreshold: 3
       volumes:
       - name: meetbot
         persistentVolumeClaim:

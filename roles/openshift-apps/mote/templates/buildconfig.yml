@@ -13,7 +13,11 @@ spec:
   runPolicy: Serial
   source:
     git:
+{% if env == 'staging' %}
+      ref: staging
+{% else %}
       ref: main
+{% endif %}
       uri: https://github.com/fedora-infra/mote.git
     type: Git
   strategy:

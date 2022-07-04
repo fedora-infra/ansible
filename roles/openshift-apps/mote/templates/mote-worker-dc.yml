@@ -6,6 +6,7 @@ metadata:
     app: mote-worker
 spec:
   replicas: 1
+  revisionHistoryLimit: 5
   selector:
     app: mote-worker
   template:
@@ -24,7 +25,11 @@ spec:
           value: "redis://redis.{{ app }}.svc.cluster.local"
         - name: LOGLEVEL
           value: "20"
-
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-password
+              key: password
         name: mote-worker
         imagePullPolicy: IfNotPresent
         volumeMounts:

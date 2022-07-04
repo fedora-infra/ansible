@@ -23,6 +23,13 @@ spec:
         env:
         - name: REDIS_URL
           value: "redis://redis.{{ app }}.svc.cluster.local"
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-password
+              key: password
+        - name: FLASK_CACHE_TYPE
+          value: RedisCache
         imagePullPolicy: IfNotPresent
         volumeMounts:
         - mountPath: /etc/fedora-messaging/config.py

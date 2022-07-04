@@ -40,6 +40,10 @@
     when: env == "production"
 
   - role: openshift/object
+    template: redis-is.yml
+    objectname: redis-is.yml
+
+  - role: openshift/object
     template: redis-dc.yml
     objectname: redis-dc.yml
 
@@ -54,6 +58,10 @@
   - role: openshift/object
     template: mote-cm.yml
     objectname: mote-cm.yml
+
+  - role: openshift/object
+    template: secret.yml
+    objectname: secret.yml
 
   - role: openshift/object
     template: fedmsg-cm.yml
