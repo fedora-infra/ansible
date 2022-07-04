@@ -49,6 +49,10 @@ MAIL_DOMAIN_BLOCKLIST = [
     "0ooos3.cn",
     "bccto.cc",
 ]
+# Forbidden username patterns
+USERNAME_BLOCKLIST = [
+    r".*fedora.*"
+]
 
 # Chat network settings
 CHAT_NETWORKS = {
