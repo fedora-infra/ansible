@@ -34,6 +34,8 @@
     sent_topics:
     - ^org\.fedoraproject\.{{ env_short }}\.ansible\..*
     - ^org\.fedoraproject\.{{ env_short }}\.git\..*
+    - ^org\.fedoraproject\.{{ env_short }}\.infragit\..*
+    - ^org\.fedoraproject\.{{ env_short }}\.logger\.log\..*
   - role: rabbit/queue
     username: "mirror_pagure_ansible{{ env_suffix }}"
     queue_name: "mirror_pagure_ansible{{ env_suffix }}"

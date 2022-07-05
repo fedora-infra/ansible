@@ -489,3 +489,15 @@
   tags:
   - rabbitmq_cluster
   - config
+
+# VirtualHost /centos-odcs
+- import_tasks: vhost-centos-odcs.yml
+  tags:
+  - rabbitmq_cluster
+  - config
+
+# VirtualHost /mbs-private-queue
+- import_tasks: vhost-mbs-private-queue.yml
+  tags:
+  - rabbitmq_cluster
+  - config
