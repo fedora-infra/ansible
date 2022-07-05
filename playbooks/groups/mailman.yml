@@ -99,8 +99,10 @@
     mailman_hyperkitty_cookie_key: "{{ mailman_hk_cookie_key }}"
   - role: fedmsg/base
   # Set up for fedora-messaging
-  - { role: rabbit/user,
-      username: "mailman{{ env_suffix }}"}
+  - role: rabbit/user
+    username: "mailman{{ env_suffix }}"
+    sent_topics:
+    - ^org\.fedoraproject\.{{ env_short }}\.mailman\..*
 
   tasks:
   - name: install more needed packages

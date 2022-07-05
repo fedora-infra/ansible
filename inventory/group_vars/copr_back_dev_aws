@@ -40,6 +40,8 @@ messaging:
     - app_name: Copr build system
       key: copr
       username: copr
+      sent_topics:
+        - ^org\.fedoraproject\.{{ env_short }}\.copr\..*
 root_auth_users: msuchy pingou frostyx praiskup
 spawn_in_advance: "false"
 tcp_ports: [

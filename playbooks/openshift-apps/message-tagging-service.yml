@@ -37,9 +37,6 @@
 
   # Setup for fedora-messaging
 
-  - role: rabbit/user
-    username: "mts{{ env_suffix }}"
-
   - role: rabbit/queue
     username: "mts{{ env_suffix }}"
     queue_name: "mts{{ env_suffix }}"
@@ -48,6 +45,8 @@
     thresholds:
       warning: 10
       critical: 100
+    sent_topics:
+    - ^org\.fedoraproject\.{{ env_short }}\.build\.tag\..*
 
   # cacert, certificate and private key for fedora-messaging
 

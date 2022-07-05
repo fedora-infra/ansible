@@ -44,6 +44,8 @@
   roles:
   - role: rabbit/user
     username: "odcs{{ env_suffix }}"
+    sent_topics:
+    - ^org\.fedoraproject\.{{ env_short }}\.odcs\..*
   - mod_wsgi
   - role: nfs/client
     mnt_dir: '/mnt/fedora_koji'
@@ -144,8 +146,6 @@
   roles:
   - role: keytab/service
     service: odcs
-  - role: rabbit/user
-    username: "fmc{{ env_suffix }}"
   - role: rabbit/queue
     username: "fmc{{ env_suffix }}"
     queue_name: "{{ fmc_queue_name }}"
@@ -153,6 +153,8 @@
     thresholds:
       warning: 100
       critical: 1000
+    sent_topics:
+    - ^org\.fedoraproject\.{{ env_short }}\.odcs\..*
   - role: fmc
 
   handlers:

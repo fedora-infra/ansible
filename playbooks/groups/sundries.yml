@@ -55,9 +55,11 @@
     when: master_sundries_node|bool
   - role: fedora-web/kinoite/build
     when: master_sundries_node|bool
-  - { role: rabbit/user,
-      username: "sundries{{ env_suffix }}",
-      when: master_sundries_node|bool and deployment_type == "stg" }
+  - role: rabbit/user
+    username: "sundries{{ env_suffix }}"
+    sent_topics:
+    - ^$
+    when: master_sundries_node|bool and deployment_type == "stg"
   - role: fedmsg/base
     when: master_sundries_node|bool
   - role: nfs/client

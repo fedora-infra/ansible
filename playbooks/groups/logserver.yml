@@ -31,6 +31,8 @@
   # Set up for fedora-messaging
   - role: rabbit/user
     username: "logging{{ env_suffix }}"
+    sent_topics:
+    - ^org\.fedoraproject\.{{ env_short }}\.logging\.stats\..*
   - logging
 
   pre_tasks:

@@ -68,14 +68,9 @@
   include_role:
     name: rabbit/user
   vars:
-     username: copr{{ env_suffix }}
-
-- name: faf
-  run_once: true
-  include_role:
-    name: rabbit/user
-  vars:
-     username: faf{{ env_suffix }}
+    username: copr{{ env_suffix }}
+    sent_topics:
+      - ^org\.fedoraproject\.{{ env_short }}\.copr\..*
 
 - name: CentOS Stream
   run_once: true
@@ -370,13 +365,6 @@
 # MBS END
 #
 # ELN BEGIN
-
-- name: eln build user
-  run_once: true
-  include_role:
-    name: rabbit/user
-  vars:
-    username: distrobuildsync-eln
 
 - name: eln queue
   run_once: true

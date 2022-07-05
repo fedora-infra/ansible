@@ -130,6 +130,10 @@
 
   - role: rabbit/user
     username: "pungi{{ env_suffix }}"
+    sent_topics:
+    - ^org\.fedoraproject\.{{ env_short }}\.logger\.log\..*
+    - ^org\.fedoraproject\.{{ env_short }}\.pungi\..*
+    - ^org\.fedoraproject\.{{ env_short }}\.compose\..*
 
   - {
     role: "push-container-registry",

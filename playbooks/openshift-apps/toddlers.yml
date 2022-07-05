@@ -22,9 +22,6 @@
     tags:
       - appowners
 
-  - role: rabbit/user
-    username: "toddlers{{ env_suffix }}"
-
   - role: rabbit/queue
     username: toddlers{{ env_suffix }}
     queue_name: toddlers{{ env_suffix }}
@@ -56,6 +53,8 @@
     thresholds:
       warning: 10
       critical: 100
+    sent_topics:
+      - ^org\.fedoraproject\.{{ env_short }}\.toddlers\..*
 
   - role: openshift/keytab
     app: toddlers

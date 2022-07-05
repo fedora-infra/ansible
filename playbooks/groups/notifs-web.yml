@@ -27,8 +27,11 @@
   - mod_wsgi
   - role: fedmsg/base
   # Set up for fedora-messaging
-  - { role: rabbit/user,
-      username: "notifs-web{{ env_suffix }}"}
+  - role: rabbit/user
+    username: "notifs-web{{ env_suffix }}"
+    sent_topics:
+    - ^org\.fedoraproject\.{{ env_short }}\.fmn\..*
+    - ^org\.fedoraproject\.{{ env_short }}\.logger\.log\..*
   - notifs/frontend
   - sudo
 

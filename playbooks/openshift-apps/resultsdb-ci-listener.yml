@@ -9,9 +9,6 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
-    - role: rabbit/user
-      username: "resultsdb{{ env_suffix }}_ci_listener"
-
     - role: rabbit/queue
       username: "resultsdb{{ env_suffix }}_ci_listener"
       queue_name: "resultsdb{{ env_suffix }}_ci_listener"
@@ -25,6 +22,8 @@
         - 'org.centos.*.ci.koji-build.test.running'
         - 'org.centos.*.ci.koji-build.test.complete'
         - 'org.centos.*.ci.koji-build.test.error'
+      sent_topics:
+        - ^$
 
     # The openshift/project role breaks if the project already exists:
     # https://pagure.io/fedora-infrastructure/issue/6404

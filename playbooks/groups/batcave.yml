@@ -30,8 +30,6 @@
     certname: "{{wildcard_cert_name}}"
     SSLCertificateChainFile: "{{wildcard_int_file}}"
   - role: rabbit/user
-    username: "mirror_pagure_ansible{{ env_suffix }}"
-  - role: rabbit/user
     username: "batcave{{ env_suffix }}"
     sent_topics:
     - ^org\.fedoraproject\.{{ env_short }}\.ansible\..*
@@ -40,18 +38,22 @@
     username: "mirror_pagure_ansible{{ env_suffix }}"
     queue_name: "mirror_pagure_ansible{{ env_suffix }}"
     routing_keys:
-      - "io.pagure.*.pagure.git.receive"
+    - "io.pagure.*.pagure.git.receive"
     thresholds:
       warning: 10
       critical: 100
+    sent_topics:
+    - ^$
   - role: rabbit/queue
     username: "mirror_pagure_ansible{{ env_suffix }}"
     queue_name: "mirror_pagure_ansible{{ env_suffix }}_13"
     routing_keys:
-      - "io.pagure.*.pagure.git.receive"
+    - "io.pagure.*.pagure.git.receive"
     thresholds:
       warning: 10
       critical: 100
+    sent_topics:
+    - ^$
     when: datacenter != 'iad2'
   - batcave
   - role: grobisplitter

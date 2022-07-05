@@ -84,6 +84,8 @@
     username: "pagure{{ env_suffix }}"
     sent_topics:
     - ^org\.fedoraproject\.{{ env_short }}\.pagure\..*
+    - ^org\.fedoraproject\.{{ env_short }}\.git\..*
+    - ^org\.fedoraproject\.{{ env_short }}\.logger\.log\..*
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
