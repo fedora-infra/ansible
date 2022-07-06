@@ -45,6 +45,6 @@ openqa_resultsdb_user: "{{ stg_resultsdb_httpd_user }}"
 openqa_resultsdb_password: "{{ stg_resultsdb_httpd_password }}"
 openqa_secret: "{{ stg_openqa_apisecret }}"
 openqa_update_arches: ['x86_64', 'ppc64le']
-openqa_webapi_plugins: FedoraMessaging FedoraUpdateRestart
+openqa_webapi_plugins: FedoraMessaging
 openqa_wikitcms_hostname: stg.fedoraproject.org
 wikitcms_token: "{{ private }}/files/openidc/staging/wikitcms.json"

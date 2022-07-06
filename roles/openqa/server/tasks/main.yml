@@ -16,12 +16,6 @@
 # - external_hostname
 ##       string - The public hostname for the server (will be used as ServerName)
 ##       default - ansible_nodename
-# - openqa_webapi_plugins
-##       string - Space-separated list of openQA WebAPI plugins to enable
-##                Note if you enable FedoraMessaging or AMQP plugins, you should
-##                also set openqa_amqp_publisher_prefix, openqa_amqp_publisher_url
-##                and openqa_amqp_publisher_exchange
-##       default - FedoraUpdateRestart
 # - openqa_repo
 ##      string - Repo to enable when updating openQA packages. Set to
 ##               'updates-testing' to use packages from updates-testing
@@ -68,6 +62,11 @@
 ##               publish request, by just appending them, e.g.
 ##               amq.topic&cacertfile=/path/to/ca_certificate_file
 ##      default - amq.topic
+# - openqa_webapi_plugins
+##       string - Space-separated list of openQA WebAPI plugins to enable
+##                Note if you enable FedoraMessaging or AMQP plugins, you should
+##                also set openqa_amqp_publisher_prefix, openqa_amqp_publisher_url
+##                and openqa_amqp_publisher_exchange
 # - deployment_type
 ##      string - Fedora Infrastructure thing; for this role, applies an
 ##               infra-specific tweak to httpd config. Don't set it outside
