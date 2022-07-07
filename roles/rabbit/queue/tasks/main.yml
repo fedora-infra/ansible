@@ -44,9 +44,9 @@
 - name: Prepare the topic permissions dict
   set_fact:
     topic_permissions:
-      - vhost: vhost
+      - vhost: "{{ vhost }}"
         read_priv: .*
-        write_priv: sent_topics
+        write_priv: "{{ sent_topics }}"
   tags:
     - fedora-messaging
     - rabbitmq_cluster
