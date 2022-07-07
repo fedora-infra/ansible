@@ -46,8 +46,7 @@ messaging:
     - app_name: Copr build system
       key: copr
       username: copr
-      sent_topics:
-        - ^org\.fedoraproject\.{{ env_short }}\.copr\..*
+      sent_topics: ^org\.fedoraproject\.{{ env_short }}\.copr\..*
 nrpe_procs_crit: 2500
 nrpe_procs_warn: 2200
 root_auth_users: msuchy pingou frostyx praiskup

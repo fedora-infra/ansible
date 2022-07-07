@@ -70,8 +70,7 @@
     name: rabbit/user
   vars:
     username: copr{{ env_suffix }}
-    sent_topics:
-      - ^org\.fedoraproject\.{{ env_short }}\.copr\..*
+    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.copr\..*
 
 - name: CentOS Stream
   run_once: true

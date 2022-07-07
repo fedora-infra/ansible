@@ -43,12 +43,14 @@
 
 - name: Prepare the topic permissions dict
   set_fact:
-    topic_permissions: "{{ topic_permissions|default([]) + [{'vhost': vhost, 'read_priv': '.*', 'write_priv': item}] }}"
-  loop: "{{ sent_topics }}"
+    topic_permissions:
+      - vhost: vhost
+        read_priv: .*
+        write_priv: sent_topics
   tags:
     - fedora-messaging
     - rabbitmq_cluster
-  when: env == "staging"
+  when: env == "staging" and sent_topics
 
 - debug:
     msg: "Topic permissions: {{ topic_permissions|default([]) }}"

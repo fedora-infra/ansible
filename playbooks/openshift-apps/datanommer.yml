@@ -18,8 +18,7 @@
       warning: 50
       critical: 500
     # Datanommer does not publish messages
-    sent_topics:
-    - "^$"
+    sent_topics: ^$
 
   - role: openshift/project
     app: datanommer

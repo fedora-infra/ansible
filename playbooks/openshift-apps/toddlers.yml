@@ -53,8 +53,7 @@
     thresholds:
       warning: 10
       critical: 100
-    sent_topics:
-      - ^org\.fedoraproject\.{{ env_short }}\.toddlers\..*
+    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.toddlers\..*
 
   - role: openshift/keytab
     app: toddlers

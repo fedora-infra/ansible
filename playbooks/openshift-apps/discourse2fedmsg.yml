@@ -11,8 +11,7 @@
   roles:
   - role: rabbit/user
     username: "discourse2fedmsg{{ env_suffix }}"
-    sent_topics:
-    - ^org\.fedoraproject\.{{ env_short }}\.discourse\..*
+    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.discourse\..*
 
   - role: openshift/project
     app: discourse2fedmsg

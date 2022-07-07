@@ -43,8 +43,7 @@
     thresholds:
       warning: 10
       critical: 100
-    sent_topics:
-    - ^org\.fedoraproject\.{{ env_short }}\.coreos\..*
+    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.coreos\..*
 
   # Fedora Messaging secrets
   - role: openshift/secret-file

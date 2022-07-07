@@ -45,8 +45,7 @@
     thresholds:
       warning: 10
       critical: 100
-    sent_topics:
-    - ^org\.fedoraproject\.{{ env_short }}\.build\.tag\..*
+    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.build\.tag\..*
 
   # cacert, certificate and private key for fedora-messaging
 

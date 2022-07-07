@@ -21,8 +21,7 @@ messaging:
     - app_name: Copr build system
       key: copr
       username: copr
-      sent_topics:
-        - ^org\.fedoraproject\.{{ env_short }}\.copr\..*
+      sent_topics: ^org\.fedoraproject\.{{ env_short }}\.copr\..*
 nagios_Check_Services:
   dhcpd: false
   httpd: false

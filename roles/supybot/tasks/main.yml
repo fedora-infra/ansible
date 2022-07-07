@@ -104,8 +104,7 @@
     name: rabbit/user
   vars:
     username: "{{ botnames[env] }}"
-    sent_topics:
-    - ^org\.fedoraproject\.{{ env_short }}\.meetbot\..*
+    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.meetbot\..*
   when:
   - inventory_hostname.startswith('value02')
 

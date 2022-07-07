@@ -57,8 +57,7 @@
     when: master_sundries_node|bool
   - role: rabbit/user
     username: "sundries{{ env_suffix }}"
-    sent_topics:
-    - ^$
+    sent_topics: ^$
     when: master_sundries_node|bool and deployment_type == "stg"
   - role: fedmsg/base
     when: master_sundries_node|bool

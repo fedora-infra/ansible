@@ -40,8 +40,7 @@
   roles:
     - role: rabbit/user
       username: "resultsdb{{ env_suffix }}"
-      sent_topics:
-        - ^org\.fedoraproject\.{{ env_short }}\.resultsdb\..*
+      sent_topics: ^org\.fedoraproject\.{{ env_short }}\.resultsdb\..*
 
     # The openshift/project role breaks if the project already exists:
     # https://pagure.io/fedora-infrastructure/issue/6404
