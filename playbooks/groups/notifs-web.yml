@@ -29,7 +29,7 @@
   # Set up for fedora-messaging
   - role: rabbit/user
     username: "notifs-web{{ env_suffix }}"
-    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(fmn|logger\.log)\..*
+    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(fmn|logger)\..*
   - notifs/frontend
   - sudo
 

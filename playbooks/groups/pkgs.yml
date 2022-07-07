@@ -82,7 +82,7 @@
   # Set up for fedora-messaging
   - role: rabbit/user
     username: "pagure{{ env_suffix }}"
-    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(pagure|git|logger\.log)\..*
+    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(pagure|git|logger)\..*
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
