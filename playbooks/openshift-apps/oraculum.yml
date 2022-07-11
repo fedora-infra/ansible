@@ -95,6 +95,8 @@
     path: "/oidc_callback"
     serviceport: 8080-tcp
     servicename: oraculum-api-endpoint
+    annotations:
+         haproxy.router.openshift.io/set-forwarded-headers: append
 
   - role: openshift/route
     app: oraculum
