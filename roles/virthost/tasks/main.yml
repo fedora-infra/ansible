@@ -37,7 +37,7 @@
   - packages
   when: ansible_distribution == 'RedHat' and ansible_distribution_major_version|int == 7 and ansible_architecture != 'aarch64'
 
-- name: install libvirt packages on rhel8 virthosts
+- name: install libvirt packages on rhel8 or rhel9 virthosts
   package: name={{ item }} state=present
   with_items:
   - qemu-kvm
@@ -45,7 +45,7 @@
   - virt-install
   tags:
   - packages
-  when: ansible_distribution == 'RedHat' and ansible_distribution_major_version|int == 8
+  when: ansible_distribution == 'RedHat' and ansible_distribution_major_version|int > 7
 
 - name: install AAVMF uEFI tianocore on aarch64 rhel7 virthosts
   package: name={{ item }} state=present
@@ -63,6 +63,14 @@
   package: name={{ item }} state=present
   with_items:
   - libguestfs-tools-c
+  tags:
+  - packages
+  when: ansible_architecture == 'aarch64'
+
+- name: install edk2-arm for ARMv7 VMs on aarch64 rhel9 virthosts
+  dnf: name={{ item }} state=present
+  with_items:
+    - https://kojipkgs.fedoraproject.org//packages/edk2/20220526git16779ede2d36/3.fc36/noarch/edk2-arm-20220526git16779ede2d36-3.fc36.noarch.rpm
   tags:
   - packages
   when: ansible_architecture == 'aarch64'
