@@ -68,7 +68,7 @@
   when: ansible_architecture == 'aarch64'
 
 - name: install edk2-arm for ARMv7 VMs on aarch64 rhel9 virthosts
-  dnf: name={{ item }} state=present
+  dnf: name={{ item }} state=present disable_gpg_check=yes
   with_items:
     - https://kojipkgs.fedoraproject.org//packages/edk2/20220526git16779ede2d36/3.fc36/noarch/edk2-arm-20220526git16779ede2d36-3.fc36.noarch.rpm
   tags:
