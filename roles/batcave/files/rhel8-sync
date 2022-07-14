@@ -11,7 +11,7 @@ DNFOPTS='--download-metadata -m --setopt=module_platform_id="platform:el8"'
 # Need to set the arches we are going to sync down
 ARCHES="aarch64 ppc64le s390x x86_64"
 
-
+echoerr() { printf "%s\n" "$*" >&2; }
 ##
 # Do the deeds
 cd ${RHEL8SYNCDIR}
@@ -43,7 +43,7 @@ for A in ${ARCHES}; do
         echo "Syncing ${R} for ${A}"
         # Be verbose on errors.
         if [[ $? -ne 0 ]]; then
-            echo "Something went wrong with reposync -c ${RHEL8SYNCDIR}/${CONF} --repoid ${R} -a ${A} -a noarch -p ${A}"
+            echoerr "Something went wrong with reposync -c ${RHEL8SYNCDIR}/${CONF} --repoid ${R} -a ${A} -a noarch -p ${A}"
         fi
         # x86_64 is 'special' because we have to tell it for i686 also.
         if [[ ${A} == 'x86_64' ]]; then
@@ -52,7 +52,7 @@ for A in ${ARCHES}; do
            dnf reposync -c ${RHEL8SYNCDIR}/${CONF} ${DNFOPTS}  --repoid=${R} -a ${A} -a noarch -p ${A} &> /dev/null
         fi
         if [[ $? -ne 0 ]]; then
-            echo "Something went wrong with dnf reposync -c ${RHEL8SYNCDIR}/${CONF} --repoid ${R} -a ${A} -p ${A}"
+            echoerr "Something went wrong with dnf reposync -c ${RHEL8SYNCDIR}/${CONF} --repoid ${R} -a ${A} -p ${A}"
         fi
     done
 done

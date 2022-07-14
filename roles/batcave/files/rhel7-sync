@@ -17,6 +17,7 @@ done
 
 cd $RHEL7SYNCDIR
 
+echoerr() { printf "%s\n" "$*" >&2; }
 ##
 ## Sync out RHEL-7 for appropriate arches
 for A in ${ARCHES}; do
@@ -36,14 +37,14 @@ for A in ${ARCHES}; do
             echo "Syncing ${R} for ${A}"
             dnf reposync -c ${RHEL7SYNCDIR}/${CONF} ${DNFOPTS} --repoid ${R} ${DNF_ARCH} --metadata-path ${YUMDIR}/${A}
             if [[ $? -ne 0 ]]; then
-                echo "Something went wrong with reposync -c ${RHEL7SYNCDIR}/${CONF} ${DNFOPTS} --repoid ${R} ${DNF_ARCH} --metadata-path ${YUMDIR}/${A}"
+                echoerr "Something went wrong with reposync -c ${RHEL7SYNCDIR}/${CONF} ${DNFOPTS} --repoid ${R} ${DNF_ARCH} --metadata-path ${YUMDIR}/${A}"
                 continue
             fi
             ## Try to create repo
             pushd ${RHEL7SYNCDIR}/${A}/${R} &> /dev/null
             createrepo_c -q --update --workers 6 . 
             if [[ $? -ne 0 ]]; then
-                echo "Something went wrong with createrepo ${A} ${R}"
+                echoerr "Something went wrong with createrepo ${A} ${R}"
                 continue
             fi
             popd &> /dev/null
