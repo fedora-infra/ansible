@@ -14,5 +14,8 @@ SESSION_COOKIE_SECURE = True
 
 # Auth
 OIDC_CLIENT_SECRETS = "/etc/flask-oidc-dev/oidc.json"
+OIDC_SCOPES = "openid profile email https://id.fedoraproject.org/scope/groups"
+OIDC_CLIENT_AUTH_METHOD = "client_secret_post"
+OIDC_OPENID_CALLBACK = "/oidc_callback"
 OPENID_ENDPOINT = "https://id{{ env_suffix }}.fedoraproject.org/openid/"
 FAS_OPENID_ENDPOINT = "https://id{{ env_suffix }}.fedoraproject.org/openid/"
