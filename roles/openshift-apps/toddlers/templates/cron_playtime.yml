@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: playtime-packager-buzilla-sync
+  name: playtime-packager-bugzilla-sync
 spec:
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
@@ -211,6 +211,7 @@ spec:
               secretName: toddlers-fedora-messaging-crt
 
 
+{% if env != 'staging' %}
 ---
 apiVersion: batch/v1
 kind: CronJob
@@ -263,3 +264,4 @@ spec:
           - name: fedora-messaging-cert-volume
             secret:
               secretName: toddlers-fedora-messaging-crt
+{% endif %}
