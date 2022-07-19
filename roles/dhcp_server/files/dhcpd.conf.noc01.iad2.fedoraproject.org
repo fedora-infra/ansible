@@ -1131,6 +1131,26 @@ host kernel01 {
      option subnet-mask 255.255.255.0;
 }
 
+host buildhw-a64-01 {
+     hardware ethernet 50:6b:4b:6b:08:50;
+     fixed-address 10.3.170.121;
+     option routers 10.3.170.254;
+     option host-name "buildhw-a64-01";
+}
+
+host buildhw-a64-02 {
+     hardware ethernet 50:6b:4b:6a:ec:90;
+     fixed-address 10.3.170.122;
+     option routers 10.3.170.254;
+     option host-name "buildhw-a64-02";
+}
+
+host buildhw-a64-03 {
+     hardware ethernet 00:01:73:02:08:83;
+     fixed-address 10.3.170.123;
+     option routers 10.3.170.254;
+     option host-name "buildhw-a64-03";
+}
 
 host buildhw-a64-04 {
      hardware ethernet 2c:59:e5:36:9a:53;
