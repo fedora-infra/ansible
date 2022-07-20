@@ -388,12 +388,13 @@ handlers = ["console"]
             key = "{{ (env == 'production')|ternary('fedora-35', 'testkey') }}"
             keyid = "{{ (env == 'production')|ternary('9867c58f', 'd300e724') }}"
 
-            # f36-rebuild
+            # f37-rebuild
             [[consumer_config.koji_instances.primary.tags]]
-            from = "f36-rebuild"
-            to = "f36-rebuild"
-            key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('38ab71f4', 'd300e724') }}"
+            from = "f37-rebuild"
+            to = "f37-rebuild"
+            key = "{{ (env == 'production')|ternary('fedora-37', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('5323552a', 'd300e724') }}"
+            file_signing_key = "fedora-37-ima"
 
             # f36-gnome
             [[consumer_config.koji_instances.primary.tags]]
