@@ -195,11 +195,11 @@ versions = ["epel8", "epel7", "el6"]
 [consumer_config.scm_request_processor]
 # FAS username of the user that will comment on behalf of toddler
 {% if env == "staging" %}
-pagure_user = "username"
+pagure_user = "releng-bot"
 pagure_url = "https://stg.pagure.io"
 pagure_api_key = "{{ toddlers_stg_pagure_scm_request_processor_token }}"
 {% else %}
-pagure_user = "username"
+pagure_user = "releng-bot"
 pagure_url = "https://pagure.io"
 pagure_api_key = "{{ toddlers_pagure_scm_request_processor_token }}"
 {% endif %}
