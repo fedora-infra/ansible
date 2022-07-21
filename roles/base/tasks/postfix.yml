@@ -80,26 +80,16 @@
   tags:
   - postfix
   
-- name: install /etc/pki/tls/certs/gateway.crt
+# Install gateway tls cert as a pem file. 
+# This has: private key, then cert, then intermediate cert
+# This cert is a digicert one, renew it there.
+- name: install /etc/pki/tls/private/gateway-chain.pem
   copy: 
-    src="{{private}}/files/smtpd/gateway.complete.crt"
-    dest=/etc/pki/tls/certs/gateway.crt
+    src="{{private}}/files/smtpd/gateway-chain.pem"
+    dest=/etc/pki/tls/private/gateway-chain.pem
     owner=root
     group=root
-    mode=0644
-  when: inventory_hostname.startswith(('bastion','smtp-mm')) and env != 'staging'
-  notify:
-  - restart postfix
-  tags:
-  - postfix
-
-- name: Copy gateway.key
-  copy: 
-    src="{{private}}/files/smtpd/gateway.key"
-    dest=/etc/pki/tls/private/gateway.key
-    owner=root
-    group=postfix
-    mode=0640
+    mode=0600
   when: inventory_hostname.startswith(('bastion','smtp-mm')) and env != 'staging'
   notify:
   - restart postfix
