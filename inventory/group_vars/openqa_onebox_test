@@ -54,8 +54,6 @@ ipa_client_sudo_groups:
   - sysadmin-qa
 ipa_host_group: openqa-servers
 ipa_host_group_desc: OpenQA servers
-# fedora-messaging email error reporting settings
-openqa_amqp_mailto: ["adamwill@fedoraproject.org", "lruzicka@fedoraproject.org"]
 # we need this for all our fedora-messaging consumers as they are not
 # allowed to create queues on the infra AMQP broker, by broker config
 openqa_amqp_passive: true
