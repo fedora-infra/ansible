@@ -145,15 +145,15 @@
   roles:
   - role: keytab/service
     service: odcs
-  - role: rabbit/queue
-    username: "fmc{{ env_suffix }}"
-    queue_name: "{{ fmc_queue_name }}"
-    routing_keys: "{{ fmc_routing_keys }}"
-    thresholds:
-      warning: 100
-      critical: 1000
-    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.odcs\..*
-  - role: fmc
+    #  - role: rabbit/queue
+    #username: "fmc{{ env_suffix }}"
+    #queue_name: "{{ fmc_queue_name }}"
+    #routing_keys: "{{ fmc_routing_keys }}"
+    #thresholds:
+    #  warning: 100
+    #  critical: 1000
+    #sent_topics: ^org\.fedoraproject\.{{ env_short }}\.odcs\..*
+    #  - role: fmc
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
