@@ -75,7 +75,7 @@
 -A OUTPUT -p tcp -m tcp -d 10.3.166.74 --dport 443 -j ACCEPT
 -A OUTPUT -p tcp -m tcp -d 10.3.166.75 --dport 80 -j ACCEPT
 -A OUTPUT -p tcp -m tcp -d 10.3.166.75 --dport 443 -j ACCEPT
-{% else %}
+{% endif %}
 -A OUTPUT -p tcp -m tcp -d 10.3.163.74 --dport 80 -j ACCEPT
 -A OUTPUT -p tcp -m tcp -d 10.3.163.74 --dport 443 -j ACCEPT
 -A OUTPUT -p tcp -m tcp -d 10.3.163.75 --dport 80 -j ACCEPT
@@ -84,7 +84,6 @@
 -A OUTPUT -p tcp -m tcp -d 10.3.163.76 --dport 443 -j ACCEPT
 -A OUTPUT -p tcp -m tcp -d 10.3.163.77 --dport 80 -j ACCEPT
 -A OUTPUT -p tcp -m tcp -d 10.3.163.77 --dport 443 -j ACCEPT
-{% endif %}
 
 # ipa client ports
 {% if host in groups['staging'] %}
