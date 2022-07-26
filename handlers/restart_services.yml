@@ -97,6 +97,9 @@
 - name: rebuild postfix transport
   command: /usr/sbin/postmap /etc/postfix/transport
 
+- name: rebuild postfix bysender
+  command: /usr/sbin/postmap /etc/postfix/bysender
+
 - name: rebuild postfix tls_policy
   command: /usr/sbin/postmap /etc/postfix/tls_policy
 

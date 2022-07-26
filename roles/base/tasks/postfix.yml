@@ -71,6 +71,17 @@
   - base
   - config
 
+- name: install /etc/postfix/bysender file
+  copy: src="postfix/bysender" dest=/etc/postfix/bysender
+  when: inventory_hostname.startswith(('bastion')) and env != 'staging'
+  notify:
+  - rebuild postfix bysender
+  - restart postfix
+  tags:
+  - postfix
+  - base
+  - config
+
 - name: create /etc/postfix/tls_policy
   copy: src="postfix/tls_policy" dest=/etc/postfix/tls_policy
   when: inventory_hostname.startswith(('bastion','smtp-mm','pagure')) and env != 'staging'

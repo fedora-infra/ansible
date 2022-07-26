@@ -773,3 +773,8 @@ message_size_limit = 20971520
 # At least one is required to receive email
 smtpd_relay_restrictions = permit_mynetworks, reject_unauth_destination
 
+#
+# here we send emails _from_ redhat.com addresses back out the redhat.com mx
+# This avoids us sending them and causing SPF failures.
+# It depends on them allowing us to relay email out.
+sender_dependent_relayhost_maps = hash:/etc/postfix/bysender
