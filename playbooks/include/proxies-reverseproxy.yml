@@ -485,6 +485,14 @@
     destname: mirrormanager-mirrorlist
     proxyurl: http://localhost:10002
     tags: mirrors.centos.org
+    when: env != "staging"
+
+  - role: httpd/reverseproxy
+    website: mirrors.stg.centos.org
+    destname: mirrormanager-mirrorlist
+    proxyurl: http://localhost:10002
+    tags: mirrors.stg.centos.org
+    when: env == "staging"
 
   - role: httpd/reverseproxy
     website: download.fedoraproject.org
