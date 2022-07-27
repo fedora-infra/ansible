@@ -131,10 +131,6 @@ main_bridge: br0
 max_cpu: "{{ num_cpus * 5 }}"
 max_mem_size: "{{ mem_size * 5 }}"
 mem_size: 4096
-mirrors_centos_org_cert_file: mirrors.centos.org.cert
-# This is the mirrors.centos.org certs
-mirrors_centos_org_cert_name: mirrors.centos.org
-mirrors_centos_org_key_file: mirrors.centos.org.key
 nagios_Can_Connect: true
 # Nagios global variables
 nagios_Check_Services:
