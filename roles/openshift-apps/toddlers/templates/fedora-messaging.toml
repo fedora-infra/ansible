@@ -296,27 +296,47 @@ handlers = ["console"]
 
 # Toddlers logger, feel free to bump the level to DEBUG if you need to
 [log_config.loggers.toddlers]
+{% if env == "staging" %}
 level = "DEBUG"
+{% else %}
+level = "INFO"
+{% endif %}
 propagate = false
 handlers = ["console"]
 
 [log_config.loggers.toddlers.utils.bugzilla_system]
+{% if env == "staging" %}
 level = "DEBUG"
+{% else %}
+level = "INFO"
+{% endif %}
 propagate = false
 handlers = ["console"]
 
 [log_config.loggers.toddlers.plugins.pdc_retired_packages]
+{% if env == "staging" %}
 level = "DEBUG"
+{% else %}
+level = "INFO"
+{% endif %}
 propagate = false
 handlers = ["console"]
 
 [log_config.loggers.toddlers.plugins.pdc_import_compose]
+{% if env == "staging" %}
 level = "DEBUG"
+{% else %}
+level = "INFO"
+{% endif %}
 propagate = false
 handlers = ["console"]
 
 [log_config.loggers.toddlers.plugins.distgit_bugzilla_sync]
+{% if env == "staging" %}
 level = "DEBUG"
+{% else %}
+level = "INFO"
+{% endif %}
 propagate = false
 handlers = ["console"]
 
