@@ -356,3 +356,9 @@
   tags:
   - koji_builder
   - koji_builder/oomd
+
+- name: install script to update osbuild api ip in the firewall
+  copy: src=osbuildapi-update.sh dst=/usr/local/bin/osbuildapi-update.sh mode=755
+
+- name: install cron job to run osbuild api ip update script every minute.
+  copy: src=osbuildapi-update.cron dst=/etc/cron.d/osbuildapi-update.cron mode=644

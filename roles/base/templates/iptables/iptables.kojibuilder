@@ -27,6 +27,9 @@
 {% endfor %}
 {% endif %}
 
+# osbuild api for osbuild koji plugin
+-A OUTPUT -p tcp --dport 443 -m set --match-set osbuildapi dst -j ACCEPT
+
 # kojipkgs
 {% if host in groups['buildvm_s390x'] %}
 -A OUTPUT -p tcp -m tcp -d 10.16.0.17 --dport 80 -j ACCEPT
