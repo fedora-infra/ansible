@@ -151,9 +151,9 @@
     remotepath: /accounts
     localpath: /accounts-old
     balancer_name: app-os
-    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, openshift_nodes) }}"
     targettype: openshift
-    ocp4: true
+    ocp4: false
     keephost: true
     tags:
     - fas
@@ -164,9 +164,9 @@
     remotepath: /accounts
     localpath: /accounts
     balancer_name: app-os
-    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, openshift_nodes) }}"
     targettype: openshift
-    ocp4: true
+    ocp4: false
     keephost: true
     tags:
     - fas
