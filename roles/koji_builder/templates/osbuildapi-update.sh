@@ -19,7 +19,9 @@ do
      /usr/sbin/ipset add osbuildapi $j
 done
 
-# in both stg and prod apparently we use idenity.adpi.openshift.com for auth
+{% if env == 'staging' %}
+# in stg we need to add identity.api because we are using api.stage above. 
+# in prod this is already the same as api.openshift.com, so skip it.
 RESOLVEQUERY=`resolvectl --cache=no --legend=no query identity.api.openshift.com 2> /dev/null`
 test $? -eq 0 || exit $?
 
@@ -29,3 +31,4 @@ for j in $NEWIDENTITYIPS
 do
      /usr/sbin/ipset add osbuildapi $j
 done
+{% endif %}
