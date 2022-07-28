@@ -358,7 +358,7 @@
   - koji_builder/oomd
 
 - name: install script to update osbuild api ip in the firewall
-  copy: src=osbuildapi-update.sh dest=/usr/local/bin/osbuildapi-update.sh mode=755
+  template: src=osbuildapi-update.sh dest=/usr/local/bin/osbuildapi-update.sh mode=755
   tags:
   - koji_builder
 
