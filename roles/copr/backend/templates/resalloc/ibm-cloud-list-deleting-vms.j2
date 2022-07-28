@@ -1,0 +1,43 @@
+#! /usr/bin/python3
+
+"""
+List all IBM Cloud instances that are in Deleting state
+"""
+
+import argparse
+import datetime
+import os
+import subprocess
+import sys
+
+from ibm_vpc import VpcV1
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+
+DEFAULT_TOKEN_FILE = "{{ ibmcloud_token_file }}"
+SERVICE_URL = "https://jp-tok.iaas.cloud.ibm.com/v1"
+
+
+def _get_arg_parser():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--token-file", default=DEFAULT_TOKEN_FILE)
+    parser.add_argument("--pool")
+    return parser
+
+
+def _main():
+    opts = _get_arg_parser().parse_args()
+    cmd = f"source {opts.token_file} ; echo $IBMCLOUD_API_KEY"
+    output = subprocess.check_output(cmd, shell=True)
+    token = output.decode("utf-8").strip().rsplit("\n", maxsplit=1)[-1]
+    authenticator = IAMAuthenticator(token)
+    now = datetime.datetime.now()
+    service = VpcV1(now.strftime('%Y-%m-%d'), authenticator=authenticator)
+    service.set_service_url(SERVICE_URL)
+    resp = service.list_instances()
+    for server in resp.result["instances"]:
+        # Resalloc works with underscores, which is not allowed in IBM Cloud
+        if server["status"] == "deleting":
+            print("{} {}".format(server["id"], server["name"]))
+
+if __name__ == "__main__":
+    sys.exit(_main())
