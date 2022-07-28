@@ -20,9 +20,6 @@ freezes: false
 
 openqa_assetsize_ppc: 300
 openqa_assetsize_updates_ppc: 100
-# we need this bigger on stg to handle Rawhide updates, if we enable
-# Rawhide update testing in prod we can just move this to servers_common
-openqa_assetsize_updates: 260
 openqa_compose_arches: x86_64,aarch64,ppc64le
 openqa_dbname: openqa-stg
 openqa_dbpassword: "{{ stg_openqa_dbpassword }}"
