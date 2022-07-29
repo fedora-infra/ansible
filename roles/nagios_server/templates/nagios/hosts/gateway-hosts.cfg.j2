@@ -2,14 +2,32 @@
 # change to the nocs parent. Also hosts which aren't reachable should
 # be not defined on the external nagios.
 #
+
 #'ibiblio'
 define host {
   host_name                    ibiblio-gw
   alias                        ibiblio gateway
   use                          mincheck
   check_command                check-host-alive4
-  address                      152.19.134.129
+{% if vars['nagios_location'] == 'iad2_internal' %}
   parents                      iad2-gw
+{% endif %}
+  address                      152.19.134.129
+}
+
+#'iad2'
+define host {
+  host_name                    iad2-gw
+  alias                        iad2 cage gateway
+  use                          mincheck
+  check_command                check-host-alive4
+{% if vars['nagios_location'] == 'iad2_internal' %}
+  address                      10.3.163.254
+{% elif vars['nagios_location'] == 'external' %}
+  address                      209.132.185.254
+  parents                      ibiblio-gw
+{% endif %}
+
 }
 
 
@@ -23,7 +41,6 @@ define host {
 {% if vars['nagios_location'] == 'iad2_internal' %}
   parents                      iad2-gw
 {% elif vars['nagios_location'] == 'external' %}
-  address                      66.187.228.248
   parents                      ibiblio-gw
 {% endif %}
 
@@ -39,7 +56,6 @@ define host {
 {% if vars['nagios_location'] == 'iad2_internal' %}
   parents                      iad2-gw
 {% elif vars['nagios_location'] == 'external' %}
-  address                      66.187.228.248
   parents                      ibiblio-gw
 {% endif %}
 
@@ -55,7 +71,6 @@ define host {
 {% if vars['nagios_location'] == 'iad2_internal' %}
   parents                      iad2-gw
 {% elif vars['nagios_location'] == 'external' %}
-  address                      66.187.228.248
   parents                      ibiblio-gw
 {% endif %}
 
@@ -71,7 +86,6 @@ define host {
 {% if vars['nagios_location'] == 'iad2_internal' %}
   parents                      iad2-gw
 {% elif vars['nagios_location'] == 'external' %}
-  address                      66.187.228.248
   parents                      ibiblio-gw
 {% endif %}
 
@@ -87,7 +101,6 @@ define host {
 {% if vars['nagios_location'] == 'iad2_internal' %}
   parents                      iad2-gw
 {% elif vars['nagios_location'] == 'external' %}
-  address                      66.187.228.248
   parents                      ibiblio-gw
 {% endif %}
 
@@ -103,22 +116,6 @@ define host {
 {% if vars['nagios_location'] == 'iad2_internal' %}
   parents                      iad2-gw
 {% elif vars['nagios_location'] == 'external' %}
-  address                      66.187.228.248
-  parents                      ibiblio-gw
-{% endif %}
-
-}
-
-#'iad2'
-define host {
-  host_name                    iad2-gw
-  alias                        iad2 cage gateway
-  use                          mincheck
-  check_command                check-host-alive4
-{% if vars['nagios_location'] == 'iad2_internal' %}
-  address                      10.3.163.254
-{% elif vars['nagios_location'] == 'external' %}
-  address                      66.187.228.248
   parents                      ibiblio-gw
 {% endif %}
 
