@@ -218,6 +218,7 @@ def delete_instance(service, instance_name, opts):
             delete_instance_attempt(service, instance_name, opts)
             break
         except:
+            opts.log.exception("Attempt to delete instance failed")
             pass
 
 
@@ -240,12 +241,14 @@ def delete_instance_attempt(service, instance_name, opts):
             floating_ip_id = floating_ip["id"]
 
     if delete_instance_id:
-        service.delete_instance(delete_instance_id)
-    if floating_ip_id:
-        service.delete_floating_ip(floating_ip_id)
+        resp = service.delete_instance(delete_instance_id)
+        assert resp.status_code == 204
+        log.debug("Delete instance request delivered")
 
-    # enforce re-try
-    assert delete_instance_id and floating_ip_id
+    if floating_ip_id:
+        resp = service.delete_floating_ip(floating_ip_id)
+        assert resp.status_code == 204
+        log.debug("Delete IP request delivered")
 
 
 def _get_arg_parser():
