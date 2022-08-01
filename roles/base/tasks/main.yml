@@ -142,6 +142,22 @@
   - packages
   - base
 
+- name: Ensure ipset is installed
+  package: state=present name=ipset
+  tags:
+  - packages
+  - base
+
+- name: setup builder ipset if this is a new install
+  command: /usr/sbin/ipset create osbuildapi hash:ip >& /dev/null
+  ignore_errors: true
+  changed_when: false
+  when: inventory_hostname.startswith('build')
+  tags:
+    - packages
+    - base
+    - iptables
+
 - name: iptables
   template: src={{ item }} dest=/etc/sysconfig/iptables mode=0600 validate="/sbin/iptables-restore --test %s"
   with_first_found:
