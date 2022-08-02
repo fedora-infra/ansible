@@ -467,3 +467,9 @@
   tags:
   - files
   - koji_hub
+
+- name: disable systemd-oomd we do not need or want it
+  service: name=systemd-oomd state=stopped enabled=no
+  tags:
+  - koji_hub
+  - koji_hub/oomd
