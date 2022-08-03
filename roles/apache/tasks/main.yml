@@ -11,6 +11,16 @@
   - apache
   when: ansible_cmdline.ostree is not defined
 
+- name: install mod_http2 on rhel8 hosts
+  package:
+    state: present
+    name:
+     - mod_http2
+  tags:
+  - packages
+  - apache
+  when: ansible_distribution_major_version|int >= 8 and ansible_distribution == 'RedHat'
+
 - name: set apache running/enabled
   service: name=httpd enabled=yes
   ignore_errors: true

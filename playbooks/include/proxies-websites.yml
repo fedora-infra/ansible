@@ -172,7 +172,7 @@
     server_aliases: [src.stg.fedoraproject.org]
     cert_name: "{{wildcard_cert_name}}"
     sslonly: true
-    use_h2: false
+    use_h2: true
 
   - role: httpd/website
     site_name: download.fedoraproject.org
