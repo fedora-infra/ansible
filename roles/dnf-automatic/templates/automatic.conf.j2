@@ -49,20 +49,12 @@ email_host = localhost
 
 # Use this to filter DNF core messages
 debuglevel = 1
-{% if inventory_hostname.startswith('proxy') %}
-# exclude httpd for now as it's causing lockups in httpd-2.4.52+
-# https://bz.apache.org/bugzilla/show_bug.cgi?id=65769
-exclude = httpd*
-{% endif %}
-{% if inventory_hostname.startswith('build') %}
-# exclude git for now as it's breaking koji
-# https://pagure.io/fedora-infrastructure/issue/10677
-# https://pagure.io/koji/issue/3351
-exclude = git*
-{% endif %}
 {% if inventory_hostname.startswith('pkgs') %}
 # exclude jq-1.6-3.el8
 # as it's causing segfaults in https pushes
 # by running out of memory
 exclude = jq-1.6-3.el8
+{% endif %}
+{% if inventory_hostname.startswith('buildvm-a32') %}
+exclude = kernel-core*,kernel-modules*
 {% endif %}
