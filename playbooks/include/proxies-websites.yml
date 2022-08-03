@@ -173,6 +173,7 @@
     cert_name: "{{wildcard_cert_name}}"
     sslonly: true
     use_h2: true
+    tags: src.fedoraproject.org
 
   - role: httpd/website
     site_name: download.fedoraproject.org
