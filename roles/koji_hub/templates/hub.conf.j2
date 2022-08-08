@@ -121,8 +121,8 @@ channel =
     method newRepo distRepo buildSRPMFromSCM :: use createrepo
     method buildContainer :: use container
     has req_channel && has_perm customchannel :: req
-# kojid-cloud-scheduler
 {% if env == 'staging' %}
+    # kojid-cloud-scheduler tag setup for stg env only
     tag buildaws && fromtag buildaws && method build :: use buildaws
 {% endif %}
 
