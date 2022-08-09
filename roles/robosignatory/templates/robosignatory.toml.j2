@@ -133,7 +133,7 @@ handlers = ["console"]
             from = "f38-infra-candidate"
             to = "f38-infra-stg"
             key = "{{ (env == 'production')|ternary('fedora-infra', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('47dd8ef9', 'd300e724') }}"
+            keyid = "{{ (env == 'production')|ternary('809a8d7c', 'd300e724') }}"
             {% if env == "production" %}
             # ima file signing - enabled in f37
             file_signing_key = "fedora-38-ima"
@@ -168,7 +168,7 @@ handlers = ["console"]
             from = "f38-coreos-signing-pending"
             to = "coreos-pool"
             key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('5323552a', 'd300e724') }}"
+            keyid = "{{ (env == 'production')|ternary('809a8d7c', 'd300e724') }}"
             {% if env == "production" %}
             # ima file signing - enabled in f37
             file_signing_key = "fedora-38-ima"
@@ -181,7 +181,7 @@ handlers = ["console"]
             from = "f38-signing-pending"
             to = "f38-updates-testing-pending"
             key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('5323552a', 'd300e724') }}"
+            keyid = "{{ (env == 'production')|ternary('809a8d7c', 'd300e724') }}"
             {% if env == "production" %}
             # ima file signing - enabled in f37
             file_signing_key = "fedora-38-ima"
@@ -201,7 +201,7 @@ handlers = ["console"]
             from = "f38-pending"
             to = "f38"
             key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('5323552a', 'd300e724') }}"
+            keyid = "{{ (env == 'production')|ternary('809a8d7c', 'd300e724') }}"
             {% if env == "production" %}
             # ima file signing - enabled in f37
             file_signing_key = "fedora-38-ima"
@@ -211,14 +211,14 @@ handlers = ["console"]
             from = "f38-modular-pending"
             to = "f38-modular"
             key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('5323552a', 'd300e724') }}"
+            keyid = "{{ (env == 'production')|ternary('809a8d7c', 'd300e724') }}"
             type = "modular"
 
             [[consumer_config.koji_instances.primary.tags]]
             from = "f38-modular-updates-candidate"
             to = "f38-modular"
             key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('5323552a', 'd300e724') }}"
+            keyid = "{{ (env == 'production')|ternary('809a8d7c', 'd300e724') }}"
             type = "modular"
 
             #[[consumer_config.koji_instances.primary.tags]]
