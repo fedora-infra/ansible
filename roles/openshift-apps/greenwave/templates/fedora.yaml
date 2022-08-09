@@ -66,6 +66,7 @@ rules: []
 id: "kojibuild_bodhipush_remoterule"
 product_versions:
   - fedora-rawhide
+  - fedora-38
   - fedora-37
   - fedora-36
   - fedora-35
@@ -92,9 +93,9 @@ product_versions:
   # to include whatever version Rawhide is, as openQA tests don't run
   # on Rawhide. So for now this list needs to be updated each time a
   # release is branched (or goes EOL).
-  - fedora-34
   - fedora-35
   - fedora-36
+  - fedora-37
 decision_contexts:
   - bodhi_update_push_testing_critpath
   - bodhi_update_push_stable_critpath
