@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  user: root
+  gather_facts: false
+
+  roles:
+  - role: communishift
+    project_name: communishift-dev
+    project_description: CommuniShift Administration
+    appowners:
+    - dkirwan
+    - lenkaseg
+    - patrikp
+
