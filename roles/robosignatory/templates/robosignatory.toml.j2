@@ -428,8 +428,11 @@ handlers = ["console"]
             from = "f38-openh264"
             to = "f38-openh264"
             key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('5323552a', 'd300e724') }}"
-            
+            keyid = "{{ (env == 'production')|ternary('eb10b464', 'd300e724') }}"
+            {% if env == "production" %}
+            # ima file signing - enabled in f37
+            file_signing_key = "fedora-38-ima"
+            {% endif %}
 
             [[consumer_config.koji_instances.primary.tags]]
             from = "f37-openh264"
