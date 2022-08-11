@@ -20,5 +20,6 @@
       vars:
         communishift_efs_name: "{{ item }}"
   vars:
+    ansible_python_interpreter: "/usr/bin/python"
     communishift_projects:
       - communishift-dev-test
