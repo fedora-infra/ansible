@@ -12,5 +12,4 @@
       - subnet_id: "{{ communishift_subnet_id }}"
         security_groups: [ "{{ communishift_security_group }}" ]
   tags:
-    - never
     - create_efs
