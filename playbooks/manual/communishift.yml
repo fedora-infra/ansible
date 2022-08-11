@@ -1,19 +1,22 @@
 ---
 - hosts: localhost
   user: root
-  gather_facts: True
+  gather_facts: false
 
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml
     - "/srv/private/ansible/vars.yml"
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
-  roles:
-  - role: communishift
-    project_name: communishift-dev
-    project_description: CommuniShift Administration
-    appowners:
-    - dkirwan
-    - lenkaseg
-    - patrikp
-
+  tasks:
+    - name: Communishift Role
+      with_items: "{{ communishift_projects }}"
+      include_role:
+        name: communishift
+        tasks_from: main
+        apply:
+          tags:
+            - create_efs
+  vars:
+    communishift_projects:
+      - communishift-dev-test
