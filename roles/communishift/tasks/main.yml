@@ -1,4 +1,6 @@
 ---
+- include_tasks: create-efs.yml
+
 - name: Hello
   ansible.builtin.debug:
     msg: "{{ item }}"

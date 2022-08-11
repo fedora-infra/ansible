@@ -1,0 +1,15 @@
+---
+- name: EFS provisioning
+  tags:
+    - create_efs
+  community.aws.efs:
+    aws_access_key: "{{ communishift_efs_access_key }}"
+    aws_secret_key: "{{ communishift_efs_secret_key }}"
+    state: present
+    name: "{{ communishift_efs_name }}"
+    tags:
+        Name: communishift
+    region: "{{ communishift_region }}"
+    targets:
+        - subnet_id: "{{ communishift_subnet_id }}"
+          security_groups: [ "{{ communishift_security_group }}" ]
