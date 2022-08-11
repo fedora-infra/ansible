@@ -107,7 +107,7 @@
     dcname: greenwave-fedmsg-consumers
 
 - name: Change the route haproxy default timeout
-  hosts: os_masters[0]:os_masters_stg[0]
+  hosts: os_control[0]:os_control_stg[0]
   user: root
   gather_facts: False
 
