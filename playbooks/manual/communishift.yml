@@ -11,13 +11,14 @@
   tasks:
     - name: Communishift Role
       with_items: "{{ communishift_projects }}"
-      communishift_efs_name: "{{ item }}"
       include_role:
         name: communishift
         tasks_from: main
         apply:
           tags:
             - create_efs
+      vars:
+        communishift_efs_name: "{{ item }}"
   vars:
     communishift_projects:
       - communishift-dev-test
