@@ -201,13 +201,13 @@ rules:
   - !PassingTestCaseRule {test_case_name: update.server_cockpit_updates, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.server_database_client, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.server_firewall_default, scenario: "fedora.updates-server.x86_64.64bit"}
-#  - !PassingTestCaseRule {test_case_name: update.server_freeipa_replication_client, scenario: "fedora.updates-server.x86_64.64bit"}
-#  - !PassingTestCaseRule {test_case_name: update.server_freeipa_replication_master, scenario: "fedora.updates-server.x86_64.64bit"}
-#  - !PassingTestCaseRule {test_case_name: update.server_freeipa_replication_replica, scenario: "fedora.updates-server.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.server_freeipa_replication_client, scenario: "fedora.updates-server.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.server_freeipa_replication_master, scenario: "fedora.updates-server.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.server_freeipa_replication_replica, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.server_remote_logging_client, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.server_remote_logging_server, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.server_role_deploy_database_server, scenario: "fedora.updates-server.x86_64.64bit"}
-#  - !PassingTestCaseRule {test_case_name: update.server_role_deploy_domain_controller, scenario: "fedora.updates-server.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.server_role_deploy_domain_controller, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.base_reboot_unmount, scenario: "fedora.updates-workstation.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.base_selinux, scenario: "fedora.updates-workstation.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.base_service_manipulation, scenario: "fedora.updates-workstation.x86_64.64bit"}
