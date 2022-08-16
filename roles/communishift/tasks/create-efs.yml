@@ -28,7 +28,7 @@
     aws_region: "{{ communishift_region }}"
     aws_efs_filesystem_id: "{{ create_efs_filesystem_response['efs']['file_system_id'] }}"
   register: create_efs_accesspoint_response
-
+  ignore_errors: true
 
 - name: Print the response from the AWS EFS AccessPoint creation
   debug:

@@ -151,7 +151,7 @@ def run_module():
         module.exit_json(**result)
     except efs_client.exceptions.AccessPointAlreadyExists:
         result["message"] = "AWS EFS AccessPoint already exists."
-        module.fail_json(**result)
+        module.fail_json("", **result)
 
 
 def main():
