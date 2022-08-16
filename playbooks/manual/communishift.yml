@@ -18,7 +18,9 @@
           tags:
             - create_efs
       vars:
-        communishift_efs_name: "{{ item }}"
+        communishift_project_name: "{{ outer_item }}"
+      loop_control:
+        loop_var: outer_item
   vars:
     ansible_python_interpreter: "/usr/bin/python"
     communishift_projects:

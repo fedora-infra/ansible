@@ -1,9 +1,9 @@
 ---
-- include_tasks: create-efs.yml
-
 - name: Print list of Communishift Projects
   ansible.builtin.debug:
     msg: "{{ item }}"
   with_items: "{{ communishift_projects }}"
   run_once: true
+
+- include_tasks: create-efs.yml
 
