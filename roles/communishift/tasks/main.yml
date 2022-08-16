@@ -5,5 +5,6 @@
   with_items: "{{ communishift_projects }}"
   run_once: true
 
+- include_tasks: create-namespace.yml
 - include_tasks: create-efs.yml
 

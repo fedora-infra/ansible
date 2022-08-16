@@ -1,0 +1,9 @@
+---
+- name: Create a k8s namespace
+  community.okd.k8s:
+    api_key: "{{ communishift_ocp_api_token }}"
+    host: "{{ communishift_ocp_api_host }}"
+    name: "{{ communishift_project_name }}"
+    api_version: v1
+    kind: Namespace
+    state: present
