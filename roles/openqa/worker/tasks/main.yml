@@ -204,8 +204,11 @@
   when: openqa_hdds_worker|bool
 
 - name: override kernel scheduler configuration - rhbz#2009585
-  copy: src=60-block-scheduler-override.rules dest=/etc/udev/rules.d/60-block-scheduler-override.rules owner=root group=root mode=0644
+  copy: src=60-block-scheduler.rules dest=/etc/udev/rules.d/60-block-scheduler.rules owner=root group=root mode=0644
   when: "deployment_type is defined"
+
+- name: remove wrongly-named kernel scheduler config file
+  file: path=/etc/udev/rules.d/60-block-scheduler-override.rules state=absent
 
 - name: Enable and start worker services
   service: name=openqa-worker@{{ item }} enabled=yes state=started
