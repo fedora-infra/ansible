@@ -1,0 +1,4 @@
+#override the default bfq: https://bugzilla.redhat.com/show_bug.cgi?id=2009585
+ACTION=="add", SUBSYSTEM=="block", \
+  KERNEL=="mmcblk*[0-9]|msblk*[0-9]|mspblk*[0-9]|sd*[!0-9]|sr*", \
+  ATTR{queue/scheduler}="mq-deadline"
