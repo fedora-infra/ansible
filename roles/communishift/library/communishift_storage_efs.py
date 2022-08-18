@@ -62,12 +62,12 @@ RETURN = r"""
 accesspoint_id:
     description: The AccessPointId returned by the AWS EFS API creation request.
     type: str
-    returned: Only if AccessPoint does not exist and has been successfully created.
+    returned: If the EFS Filesystem exists and the AccessPoint been successfully created or already exists.
     sample: 'fsap-0938462b9b5f77388'
 full_response:
-    description: The response returned by the AWS EFS boto3 client.create_access_point().
+    description: The response returned by the AWS EFS boto3 client.create_access_point() or client.describe_access_points().
     type: str
-    returned: Only if AccessPoint does not exist and has been successfully created.
+    returned: If the EFS Filesystem exists and the AccessPoint has been successfully created or already exists.
     sample: '{'ResponseMetadata': {'RequestId': '9c3d3e41-4332-4fe3-8388-f04ccf0400a2', 'HTTPStatusCode': 200, 'HTTPHeaders': {'x-amzn-requ
 estid': '9c3d3e41-4332-4fe3-8388-f04ccf0400a2', 'content-type': 'application/json', 'content-length': '503', 'date': 'Tue, 16
 Aug 2022 10:17:43 GMT'}, 'RetryAttempts': 0}, 'ClientToken': 'communishift_storage_efs', 'Tags': [{'Key': 'communishift', 'Val
@@ -75,8 +75,7 @@ ue': 'projectname'}], 'AccessPointId': 'fsap-0938462b9b5f77388', 'AccessPointArn
 access-point/fsap-0938462b9b5f77388', 'FileSystemId': 'fs-0343e73f7765a503b', 'PosixUser': {'Uid': 50000, 'Gid': 50000}
 , 'RootDirectory': {'Path': '/', 'CreationInfo': {'OwnerUid': 50000, 'OwnerGid': 50000, 'Permissions': '775'}}, 'OwnerId': 'XXXX',
 'LifeCycleState': 'creating'}'
-
-message:
+msg:
     description: The output message that the test module generates.
     type: str
     returned: always
@@ -101,7 +100,7 @@ def run_module():
     # changed is if this module effectively modified the target
     # state will include any data that you want your module to pass back
     # for consumption, for example, in a subsequent task
-    result = dict(changed=False, accesspoint_id="", full_response="", message="")
+    result = dict(changed=False, accesspoint_id="", full_response="", msg="")
 
     # the AnsibleModule object will be our abstraction working with Ansible
     # this includes instantiation, a couple of common attr would be the
@@ -147,11 +146,16 @@ def run_module():
         result["accesspoint_id"] = response["AccessPointId"]
         result["full_response"] = response
         result["changed"] = True
-        result["message"] = "AWS EFS AccessPoint created successfully."
+        result["msg"] = "AWS EFS AccessPoint created successfully."
         module.exit_json(**result)
     except efs_client.exceptions.AccessPointAlreadyExists:
-        result["message"] = "AWS EFS AccessPoint already exists."
-        module.fail_json("", **result)
+        response = efs_client.describe_access_points(
+            FileSystemId=module.params["aws_efs_filesystem_id"]
+        )
+        result["accesspoint_id"] = response["AccessPoints"][0]["AccessPointId"]
+        result["full_response"] = response
+        result["msg"] = "AWS EFS AccessPoint already exists."
+        module.fail_json(**result)
 
 
 def main():
