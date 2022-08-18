@@ -11,7 +11,7 @@
       communishift: "{{ communishift_project_name }}"
     targets:
       - subnet_id: "{{ communishift_subnet_id }}"
-        security_groups: [ "{{ communishift_security_group }}" ]
+        security_groups: ["{{ communishift_security_group }}"]
   tags:
     - create_efs
   register: create_efs_filesystem_response
@@ -26,7 +26,8 @@
     aws_access_key_id: "{{ communishift_efs_access_key }}"
     aws_secret_access_key: "{{ communishift_efs_secret_key }}"
     aws_region: "{{ communishift_region }}"
-    aws_efs_filesystem_id: "{{ create_efs_filesystem_response['efs']['file_system_id'] }}"
+    aws_efs_filesystem_id: >-
+      {{create_efs_filesystem_response['efs']['file_system_id']}}
   register: create_efs_accesspoint_response
   ignore_errors: true
 
@@ -36,7 +37,5 @@
 
 - name: Store facts
   set_fact:
-    accesspoint_id: "{{ create_efs_accesspoint_response['accesspoint_id'] }}"
-    filesystem_id: "{{ create_efs_filesystem_response['efs']['file_system_id'] }}"
-
-
+    accesspoint_id: "{{create_efs_accesspoint_response['accesspoint_id']}}"
+    filesystem_id: "{{create_efs_filesystem_response['efs']['file_system_id']}}"

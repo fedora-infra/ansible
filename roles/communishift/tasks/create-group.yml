@@ -1,0 +1,9 @@
+---
+- name: Create a k8s group
+  community.okd.k8s:
+    api_key: "{{ communishift_ocp_api_token }}"
+    host: "{{ communishift_ocp_api_host }}"
+    name: "{{ communishift_project_name }}-admins"
+    api_version: user.openshift.io/v1
+    kind: Group
+    state: present
