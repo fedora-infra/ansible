@@ -21,7 +21,7 @@
    - { role: collectd/base, tags: ['collectd_base'] }
    - { role: sudo, tags: ['sudo'] }
    - { role: openqa/worker, tags: ['openqa_worker'] }
-   - { role: linux-system-roles.nbde_client, tags: ['nbde_client'], when: datacenter == 'iad2' and not inventory_hostname.startswith 'openqa-a64' }
+   - { role: linux-system-roles.nbde_client, tags: ['nbde_client'], when: datacenter == 'iad2' }
    - apache
 
   tasks:
