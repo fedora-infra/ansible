@@ -1,0 +1,19 @@
+---
+- name: Create a k8s Role
+  community.okd.k8s:
+    api_key: "{{ communishift_ocp_api_token }}"
+    host: "{{ communishift_ocp_api_host }}"
+    state: present
+    definition:
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: Role
+      metadata:
+        name: "{{ communishift_project_name }}-efs-role"
+        namespace: "{{ communishift_project_name }}"
+      rules:
+        - apiGroups:
+            - aws-efs.managed.openshift.io
+          resources:
+            - '*'
+          verbs:
+            - '*'
