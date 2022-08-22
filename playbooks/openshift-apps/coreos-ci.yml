@@ -3,6 +3,10 @@
   user: root
   gather_facts: false
 
+############################################
+# actions to create the project in OpenShift
+############################################
+# to run: sudo rbac-playbook -l os_control_stg openshift-apps/coreos-ci.yml
   roles:
   - role: openshift-apps/coreos-ci
     project_name: coreos-ci
@@ -17,10 +21,10 @@
     - ravanelli
     - walters
 
-  ###############################################
-  # actions to delete the project from OpenShift
-  ###############################################
-  # to run: sudo rbac-playbook -l os_control_stg -t delete openshift-apps/coreos-ci.yml
+###############################################
+# actions to delete the project from OpenShift
+###############################################
+# to run: sudo rbac-playbook -l os_control_stg -t delete openshift-apps/coreos-ci.yml
   - role: openshift/object-delete
     app: coreos-ci
     objecttype: project

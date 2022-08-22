@@ -12,6 +12,10 @@
   pre_tasks:
   - include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
 
+############################################
+# actions to create the project in OpenShift
+############################################
+# to run: sudo rbac-playbook -l os_control_stg openshift-apps/coreos-cincinnati.yml
   roles:
   - role: openshift/project
     app: coreos-cincinnati
@@ -92,7 +96,7 @@
 ###############################################
 # actions to delete the project from OpenShift
 ###############################################
-# to run: sudo rbac-playbook -l os_masters_stg[0] -t delete openshift-apps/coreos-cincinnati.yml
+# to run: sudo rbac-playbook -l os_control_stg -t delete openshift-apps/coreos-cincinnati.yml
   - role: openshift/object-delete
     app: coreos-cincinnati
     objecttype: project

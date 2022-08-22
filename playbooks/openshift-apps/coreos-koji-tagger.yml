@@ -8,6 +8,10 @@
     - "/srv/private/ansible/vars.yml"
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
+############################################
+# actions to create the project in OpenShift
+############################################
+# to run: sudo rbac-playbook -l os_control_stg openshift-apps/coreos-koji-tagger.yml
   roles:
   - role: openshift/project
     app: coreos-koji-tagger
@@ -19,8 +23,8 @@
     - mizdebsk
     - walters
 
-# Create a keytab. The default username will be like:
-# coreos-koji-tagger/coreos-koji-tagger.fedoraproject.org@FEDORAPROJECT.ORG
+  # Create a keytab. The default username will be like:
+  # coreos-koji-tagger/coreos-koji-tagger.fedoraproject.org@FEDORAPROJECT.ORG
   - role: openshift/keytab
     app: coreos-koji-tagger
     key: koji-keytab
@@ -28,7 +32,7 @@
     service: coreos-koji-tagger
     host: "coreos-koji-tagger{{ env_suffix }}.fedoraproject.org"
 
-# Copy in a kerberos config that is unique to fedora infra
+  # Copy in a kerberos config that is unique to fedora infra
   - role: openshift/object
     app: coreos-koji-tagger
     template: configmap.yml

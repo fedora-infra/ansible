@@ -3,6 +3,10 @@
   user: root
   gather_facts: false
 
+############################################
+# actions to create the project in OpenShift
+############################################
+# to run: sudo rbac-playbook -l os_control_stg openshift-apps/fedora-coreos-pipeline.yml
   roles:
   - role: openshift-apps/fedora-coreos-pipeline
     project_name: fedora-coreos-pipeline
@@ -31,10 +35,10 @@
     - walters
     - zzlotnik
 
-  ###############################################
-  # actions to delete the project from OpenShift
-  ###############################################
-  # to run: sudo rbac-playbook -l os_control_stg -t delete openshift-apps/fedora-coreos-pipeline.yml
+###############################################
+# actions to delete the project from OpenShift
+###############################################
+# to run: sudo rbac-playbook -l os_control_stg -t delete openshift-apps/fedora-coreos-pipeline.yml
   - role: openshift/object-delete
     app: fedora-coreos-pipeline
     objecttype: project

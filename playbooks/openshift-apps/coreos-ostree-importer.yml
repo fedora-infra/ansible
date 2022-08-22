@@ -26,6 +26,10 @@
          - "org.fedoraproject.prod.coreos.build.request.ostree-import"
       when: env != 'staging'
 
+############################################
+# actions to create the project in OpenShift
+############################################
+# to run: sudo rbac-playbook -l os_control_stg openshift-apps/coreos-ostree-importer.yml
   roles:
   - role: openshift/project
     app: coreos-ostree-importer
