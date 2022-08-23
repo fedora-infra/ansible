@@ -1,0 +1,22 @@
+---
+- name: Create a k8s ResourceQuota
+  community.okd.k8s:
+    api_key: "{{ communishift_ocp_api_token }}"
+    host: "{{ communishift_ocp_api_host }}"
+    state: present
+    definition:
+      apiVersion: v1
+      kind: ResourceQuota
+      metadata:
+        name: "{{ communishift_project_name }}-quota"
+        namespace: "{{ communishift_project_name }}"
+      spec:
+        hard:
+          cpu: "1" # requests.cpu
+          memory: "1Gi" # requests.memory
+          limits.cpu: "1"
+          limits.memory: "2Gi"
+          requests.storage: "5Gi"
+          persistentvolumeclaims: "1"
+          pods: "2"
+          replicationcontrollers: 1
