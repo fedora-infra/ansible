@@ -86,7 +86,7 @@ page_jinja_template = """
                 <tr>
                     <td>
                         <img class='user-avatar' src='/static/grey.jpg' alt='Avatar for {{username|e}}' data-src='https://seccdn.libravatar.org/avatar/{{user['openid_hash']}}?s=20&d=retro'>
-                        {{user.name.strip()}} <span class='text-muted'>({{username|e}})</span>
+                        {{user.name.strip()|e}} <span class='text-muted'>({{username|e}})</span>
                     </td>
 
 
