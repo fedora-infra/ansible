@@ -85,25 +85,25 @@ page_jinja_template = """
             {% for username, user in users %}
                 <tr>
                     <td>
-                        <img class='user-avatar' src='/static/grey.jpg' alt='Avatar for {{username}}' data-src='https://seccdn.libravatar.org/avatar/{{user['openid_hash']}}?s=20&d=retro'>
-                        {{user.name.strip()}} <span class='text-muted'>({{username}})</span>
+                        <img class='user-avatar' src='/static/grey.jpg' alt='Avatar for {{username|e}}' data-src='https://seccdn.libravatar.org/avatar/{{user['openid_hash']}}?s=20&d=retro'>
+                        {{user.name.strip()}} <span class='text-muted'>({{username|e}})</span>
                     </td>
 
 
                     <td>
                         {% if user['has_public_git'] %}
                         <div>
-                            <a href="https://fedorapeople.org/cgit/{{username}}/">Git repositories</a>
+                            <a href="https://fedorapeople.org/cgit/{{username|e}}/">Git repositories</a>
                         </div>
                         {% endif %}
 
                         {% if user['has_public_html'] %}
                         <div>
-                            <a href="https://{{username}}.fedorapeople.org">{{username}}'s homepage</a>
+                            <a href="https://{{username|e}}.fedorapeople.org">{{username|e}}'s homepage</a>
                         </div>
                         {% endif %}
                         <div>
-                            <a href="https://fedoraproject.org/wiki/user:{{username}}">{{username}}'s wiki page</a>
+                            <a href="https://fedoraproject.org/wiki/user:{{username|e}}">{{username|e}}'s wiki page</a>
                         </div>
                     </td>
                 </tr>
