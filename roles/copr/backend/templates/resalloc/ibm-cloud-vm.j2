@@ -253,7 +253,7 @@ def delete_instance_attempt(service, instance_name, opts):
     # Query all volumes only after already potentionaly deleting an instance.
     # The volumes might have been deleted automatically
     volume_ids = []
-    volumes = service.list_volumes(limit=999).result["volumes"]
+    volumes = service.list_volumes(limit=100).result["volumes"]
     for volume in volumes:
         if volume["name"].startswith(instance_name):
             volume_ids.append(volume["id"])

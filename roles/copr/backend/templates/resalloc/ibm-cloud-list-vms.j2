@@ -11,7 +11,9 @@ from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 
 DEFAULT_TOKEN_FILE = "{{ ibmcloud_token_file }}"
 SERVICE_URL = "https://jp-tok.iaas.cloud.ibm.com/v1"
-LIMIT = 999
+
+# Using the highest value possible
+LIMIT = 100
 
 
 def _get_arg_parser():
