@@ -250,6 +250,20 @@ def delete_instance_attempt(service, instance_name, opts):
         assert resp.status_code == 204
         log.debug("Delete IP request delivered")
 
+    # Query all volumes only after already potentionaly deleting an instance.
+    # The volumes might have been deleted automatically
+    volume_ids = []
+    volumes = service.list_volumes(limit=999).result["volumes"]
+    for volume in volumes:
+        if volume["name"].startswith(instance_name):
+            volume_ids.append(volume["id"])
+
+    if volume_ids:
+        for volume_id in volume_ids:
+            resp = service.delete_volume(volume_id)
+            assert resp.status_code == 204
+            log.debug("Delete volume request delivered")
+
 
 def _get_arg_parser():
     parser = argparse.ArgumentParser()
