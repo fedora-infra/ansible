@@ -11,6 +11,7 @@ from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 
 DEFAULT_TOKEN_FILE = "{{ ibmcloud_token_file }}"
 SERVICE_URL = "https://jp-tok.iaas.cloud.ibm.com/v1"
+LIMIT = 100
 
 
 def _get_arg_parser():
@@ -36,13 +37,29 @@ def _main():
     service = VpcV1(now.strftime('%Y-%m-%d'), authenticator=authenticator)
     service.set_service_url(SERVICE_URL)
 
-    resp = service.list_instances()
-    for server in resp.result["instances"]:
+    # Gather the list of all resources here
+    resources = set()
+
+    instances = service.list_instances(limit=LIMIT).result["instances"]
+    for server in instances:
         # Resalloc works with underscores, which is not allowed in IBM Cloud
         name = server["name"].replace("-", "_")
         if name.startswith(pool_id):
-            # The only stdout output comes here!
-            print(name)
+            resources.add(name)
+
+    volumes = service.list_volumes(limit=LIMIT).result["volumes"]
+    for volume in volumes:
+        # Resalloc works with underscores, which is not allowed in IBM Cloud
+        name = volume["name"].replace("-", "_")
+        if name.startswith(pool_id):
+            name = name.rsplit("_", 1)[0]
+            resources.add(name)
+
+    # Print them out, so upper level tooling can work with the list
+    for name in resources:
+        # The only stdout output comes here!
+        print(name)
+
 
 if __name__ == "__main__":
     sys.exit(_main())
