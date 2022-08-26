@@ -255,8 +255,15 @@ def delete_instance_attempt(service, instance_name, opts):
     volume_ids = []
     volumes = service.list_volumes(limit=100).result["volumes"]
     for volume in volumes:
-        if volume["name"].startswith(instance_name):
-            volume_ids.append(volume["id"])
+        if not volume["name"].startswith(instance_name):
+            continue
+
+        # Otherwise Error: Delete volume failed. Volume can be deleted
+        # only when its status is available or failed., Code: 409
+        if not volume["status"] in ["available", "failed"]:
+            continue
+
+        volume_ids.append(volume["id"])
 
     if volume_ids:
         for volume_id in volume_ids:
