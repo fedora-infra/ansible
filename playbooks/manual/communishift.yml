@@ -10,6 +10,13 @@
 
   tasks:
     - name: Communishift Role
+      include_role:
+        name: communishift
+        tasks_from: administration-tasks
+        apply:
+          tags:
+            - deploy-operators
+    - name: Communishift Role
       with_items: "{{ communishift_projects }}"
       include_role:
         name: communishift
@@ -22,6 +29,5 @@
       loop_control:
         loop_var: outer_item
   vars:
-    ansible_python_interpreter: "/usr/bin/python"
     communishift_projects:
       - communishift-dev-test

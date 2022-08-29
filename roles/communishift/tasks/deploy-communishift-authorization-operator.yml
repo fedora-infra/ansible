@@ -1,0 +1,42 @@
+---
+- name: Create the CommunishiftAuthorization operator k8s namespace
+  community.okd.k8s:
+    api_key: "{{ communishift_ocp_api_token }}"
+    host: "{{ communishift_ocp_api_host }}"
+    name: "communishift-authorization-operator"
+    api_version: v1
+    kind: Namespace
+    state: present
+  tags:
+    - deploy-operators
+
+
+- name: Acquire a keytab
+  include_role:
+    name: keytab/service
+  vars:
+    kt_location: "/etc/openshift_apps/communishift-authorization/communishift-authorization-operator-keytab.kt"
+    service: "communishift-authorization-operator"
+    host: "{{ communishift_ocp_api_host }}"
+  tags:
+    - deploy-operators
+
+
+- name: Create the CommunishiftAuthorization operator k8s Secret
+  community.okd.k8s:
+    api_key: "{{ communishift_ocp_api_token }}"
+    host: "{{ communishift_ocp_api_host }}"
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: "communishift-keytab-secret"
+        namespace: "communishift-authorization-operator"
+      data:
+        communishift-authorization-keytab: "{{ communishift_authorization_keytab_file | b64encode }}"
+  vars:
+     communishift_authorization_keytab_file: "{{ lookup('file', '/etc/openshift_apps/communishift-authorization/communishift-authorization-operator-keytab.kt') }}"
+  tags:
+    - deploy-operators
+
