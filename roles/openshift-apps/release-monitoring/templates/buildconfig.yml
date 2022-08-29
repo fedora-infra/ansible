@@ -44,6 +44,8 @@ items:
                 python3-wtforms && \
             dnf autoremove -y && \
             dnf clean all -y
+        # Install newer version of sphinx than what is available in Fedora 36
+        RUN pip install sphinx
         RUN git clone https://github.com/fedora-infra/anitya.git && \
                 pushd anitya && \
 {% if env == 'staging' %}
