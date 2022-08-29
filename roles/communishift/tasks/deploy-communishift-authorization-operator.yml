@@ -17,7 +17,7 @@
   vars:
     kt_location: "/etc/openshift_apps/communishift-authorization/communishift-authorization-operator-keytab.kt"
     service: "communishift-authorization-operator"
-    host: "{{ communishift_ocp_api_host }}"
+    host: "{{ communishift_ocp_api_hostname }}"
   tags:
     - deploy-operators
 
