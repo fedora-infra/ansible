@@ -10,12 +10,21 @@
   tags:
     - deploy-operators
 
+- name: Create the CommunishiftAuthorization operator keytab path
+  file:
+    path: "/etc/openshift_apps/communishift-authorization/"
+    state: directory
+    owner: root
+    group: root
+    mode: 0750
+
 
 - name: Acquire a keytab
   include_role:
     name: keytab/service
   vars:
-    kt_location: "/etc/openshift_apps/communishift-authorization/communishift-authorization-operator-keytab.kt"
+    kt_location:
+      "/etc/openshift_apps/communishift-authorization/communishift-authorization-operator-keytab.kt"
     service: "communishift-authorization-operator"
     host: "{{ communishift_ocp_api_hostname }}"
   tags:
@@ -34,9 +43,12 @@
         name: "communishift-keytab-secret"
         namespace: "communishift-authorization-operator"
       data:
-        communishift-authorization-keytab: "{{ communishift_authorization_keytab_file | b64encode }}"
+        communishift-authorization-keytab:
+          "{{ communishift_authorization_keytab_file | b64encode }}"
   vars:
-     communishift_authorization_keytab_file: "{{ lookup('file', '/etc/openshift_apps/communishift-authorization/communishift-authorization-operator-keytab.kt') }}"
+    communishift_authorization_keytab_file:
+      "{{ lookup('file',
+      '/etc/openshift_apps/communishift-authorization/communishift-authorization-operator-keytab.kt')
+      }}"
   tags:
     - deploy-operators
-
