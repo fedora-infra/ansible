@@ -47,17 +47,20 @@ author:
 """
 
 EXAMPLES = r"""
-# Create an EFS AccessPoint
-- name: Create a
+- name: Create the EFS AccessPoint
   communishift_storage_efs:
-    project_name: XXXX
-    aws_access_key_id: XXXX
-    aws_secret_access_key: XXXX
-    aws_region: XXXX
-    aws_efs_filesystem_id: XXXX
+    project_name: "{{ communishift_project_name }}"
+    aws_access_key_id: "{{ communishift_efs_access_key }}"
+    aws_secret_access_key: "{{ communishift_efs_secret_key }}"
+    aws_region: "{{ communishift_region }}"
+    aws_efs_filesystem_id: >-
+      {{create_efs_filesystem_response['efs']['file_system_id']}}
+  register: create_efs_accesspoint_response
+  ignore_errors: true
 """
 
 RETURN = r"""
+
 # These are examples of possible return values, and in general should use other names for return values.
 accesspoint_id:
     description: The AccessPointId returned by the AWS EFS API creation request.
@@ -76,10 +79,10 @@ access-point/fsap-0938462b9b5f77388', 'FileSystemId': 'fs-0343e73f7765a503b', 'P
 , 'RootDirectory': {'Path': '/', 'CreationInfo': {'OwnerUid': 50000, 'OwnerGid': 50000, 'Permissions': '775'}}, 'OwnerId': 'XXXX',
 'LifeCycleState': 'creating'}'
 msg:
-    description: The output message that the test module generates.
+    description: The output message that the module generates.
     type: str
     returned: always
-    sample: 'goodbye'
+    sample: 'AWS EFS AccessPoint already exists.'
 """
 
 from ansible.module_utils.basic import AnsibleModule
