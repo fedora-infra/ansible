@@ -7,6 +7,7 @@ LibVirt hypervisor.
 """
 
 import os
+import re
 import argparse
 import sys
 import libvirt
@@ -42,9 +43,15 @@ def _main():
     # List all the volumes in the 'images' pool that seem to be related to given
     # Pool name
     pool = conn.storagePoolLookupByName("images")
+
+    # Some of those suffixes are used by Red Hat Copr
+    known_suffixes = ["_root_disk$", "_config_cd$", "_swap$", "_root$", "_config$"]
+
     for volume in pool.listVolumes():
         if volume.startswith(pool_id):
-            vm_names.add(volume.rsplit("_", 1)[0])
+            for suffix in known_suffixes:
+                volume = re.sub(suffix, "", volume)
+            vm_names.add(volume)
 
     # List all domains that are related to given Pool (just to be 100% sure, but
     # this shouldn't add any new items to the vm_names set actually).
