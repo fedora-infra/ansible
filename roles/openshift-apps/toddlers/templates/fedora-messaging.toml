@@ -235,6 +235,16 @@ rawhide = '2222-01-01'
 [consumer_config.scm_request_processor.branch_slas.main]
 rawhide = '2222-01-01'
 
+[consumer_config.scm_request_processor.branch_slas.epel9]
+stable_api = '2032-05-31',
+security_fixes = '2032-05-31',
+bug_fixes = '2032-05-31'
+
+[consumer_config.scm_request_processor.branch_slas.epel9-next]
+stable_api = '2027-05-31',
+security_fixes = '2027-05-31',
+bug_fixes = '2027-05-31'
+
 [consumer_config.scm_request_processor.branch_slas.epel8]
 stable_api = '2029-05-31'
 security_fixes = '2029-05-31'
@@ -254,6 +264,14 @@ bug_fixes = '2024-05-31'
 stable_api = '2024-06-30'
 security_fixes = '2024-06-30'
 bug_fixes = '2024-06-30'
+
+[consumer_config.scm_request_processor.branch_slas.f37]
+bug_fixes = '2023-11-14',
+security_fixes = '2023-11-14'
+
+[consumer_config.scm_request_processor.branch_slas.f36]
+bug_fixes = '2023-05-16',
+security_fixes = '2023-05-16'
 
 [consumer_config.scm_request_processor.branch_slas.f35]
 security_fixes = '2022-11-26'
