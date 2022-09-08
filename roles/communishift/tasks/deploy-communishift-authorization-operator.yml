@@ -17,6 +17,8 @@
     owner: root
     group: root
     mode: 0750
+  tags:
+    - deploy-operators
 
 
 - name: Acquire a keytab
@@ -47,6 +49,8 @@
           "{{ communishift_ocp_api_token | b64encode }}"
         communishift-ocp-api-host:
           "{{ communishift_ocp_api_host | b64encode }}"
+  tags:
+    - deploy-operators
 
 
 - name: Create the CommunishiftAuthorization operator keytab k8s Secret
