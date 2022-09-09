@@ -1,9 +1,10 @@
+---
 - import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml myhosts=pkgs_stg:pkgs"
 
 - name: make the box be real
   hosts: pkgs_stg:pkgs
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
   - /srv/web/infra/ansible/vars/global.yml
@@ -37,7 +38,7 @@
 - name: setup users on pkgs
   hosts: pkgs_stg:pkgs
   user: root
-  gather_facts: True
+  gather_facts: true
 
   tasks:
   - name: Setup pagure user
@@ -48,12 +49,12 @@
       shell: /sbin/nologin
       comment: "Pagure User"
     when: env == "staging"
-      ## The above should be deleted when we rebuild pkgs02 in future.
+    ## The above should be deleted when we rebuild pkgs02 in future.
 
 - name: setup dist-git on the box
   hosts: pkgs_stg:pkgs
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
   - /srv/web/infra/ansible/vars/global.yml
@@ -62,27 +63,38 @@
 
   roles:
   - gitolite/check_fedmsg_hooks
-  - { role: git/make_checkout_seed, when: env != "staging" }
+  - {role: git/make_checkout_seed, when: env != "staging"}
   - git/hooks
   - git/checks
   - clamav
-  - { role: nfs/client,
-      when: env != "staging",
-      mnt_dir: '/srv/cache/lookaside',
-      nfs_src_dir: 'fedora_sourcecache', nfs_mount_opts='rw,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3' }
-  - { role: nfs/client,
-      when: env == "staging" and inventory_hostname.startswith('pkgs01'),
-      mount_stg: true,
-      mnt_dir: '/srv/cache/lookaside_prod',
-      nfs_src_dir: 'fedora_sourcecache', nfs_mount_opts='ro,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3' }
+  - {
+    role: nfs/client,
+    when: env != "staging",
+    mnt_dir: '/srv/cache/lookaside',
+    nfs_src_dir:
+      'fedora_sourcecache',
+      # yamllint disable rule:commas
+      nfs_mount_opts='rw,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3'
+  }
+  - {
+    role: nfs/client,
+    when: env == "staging" and inventory_hostname.startswith('pkgs01'),
+    mount_stg: true,
+    mnt_dir: '/srv/cache/lookaside_prod',
+    nfs_src_dir:
+      'fedora_sourcecache',
+      # yamllint disable rule:commas
+      nfs_mount_opts='ro,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3'
+  }
   - role: distgit/pagure
   - role: distgit
     tags: distgit
-  - { role: hosts, when: env == "staging" }
+  - {role: hosts, when: env == "staging"}
   # Set up for fedora-messaging
   - role: rabbit/user
     username: "pagure{{ env_suffix }}"
-    sent_topics: ^(io\.pagure\.{{ env_short }}|org\.fedoraproject\.{{ env_short }}\.(pagure|git|logger))\..*
+    sent_topics:
+      ^(io\.pagure\.{{ env_short }}|org\.fedoraproject\.{{ env_short }}\.(pagure|git|logger))\..*
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
