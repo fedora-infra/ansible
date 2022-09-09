@@ -45,3 +45,19 @@ spec:
     from:
       kind: DockerImage
       name: quay.io/fzatlouk/packager-dashboard:latest
+---
+apiVersion: v1
+kind: ImageStream
+metadata:
+  name: qa-landing
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+  - name: latest
+    from:
+      kind: ImageStreamTag
+      name: qa-landing
+status:
+  dockerImageRepository: ""
+---
