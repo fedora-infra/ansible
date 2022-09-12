@@ -138,7 +138,7 @@ def run_module():
                 "SecondaryGids": [ 0 ],
             },
             RootDirectory={
-                "Path": f"/{ module.params["project_name"] }",
+                "Path": f"/{ module.params['project_name'] }",
                 "CreationInfo": {
                     "OwnerUid": 0,
                     "OwnerGid": 0,
