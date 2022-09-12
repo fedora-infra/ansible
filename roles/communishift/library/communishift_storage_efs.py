@@ -132,15 +132,15 @@ def run_module():
                 {"Key": "Name", "Value": module.params["project_name"]},
             ],
             FileSystemId=module.params["aws_efs_filesystem_id"],
-            PosixUser={
-                "Uid": 50000,
-                "Gid": 50000,
-            },
+#            PosixUser={
+#                "Uid": 50000,
+#                "Gid": 50000,
+#            },
             RootDirectory={
                 "Path": "/",
                 "CreationInfo": {
-                    "OwnerUid": 50000,
-                    "OwnerGid": 50000,
+                    "OwnerUid": 1001,
+                    "OwnerGid": 1001,
                     "Permissions": "777",
                 },
             },
