@@ -135,9 +135,10 @@ def run_module():
             PosixUser={
                 "Uid": 1001,
                 "Gid": 1001,
+                "SecondaryGids": [ 0 ],
             },
             RootDirectory={
-                "Path": "/",
+                "Path": f"/{ module.params["project_name"] }",
                 "CreationInfo": {
                     "OwnerUid": 0,
                     "OwnerGid": 0,
