@@ -141,7 +141,7 @@ def run_module():
                 "CreationInfo": {
                     "OwnerUid": 50000,
                     "OwnerGid": 50000,
-                    "Permissions": "775",
+                    "Permissions": "777",
                 },
             },
         )
