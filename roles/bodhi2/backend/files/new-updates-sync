@@ -62,7 +62,7 @@ RELEASES = {'f37': {'topic': 'fedora',
                     'repos': {'updates': {
                         'from': 'f37-modular-updates',
                         'ostrees': [],
-                        'to': [{'arches': ['x86_64', 'aarch64', 'armhfp', 'source'],
+                        'to': [{'arches': ['x86_64', 'aarch64', 'source'],
                                 'dest': os.path.join(FEDORADEST, '37', 'Modular')},
                                {'arches': ['ppc64le', 's390x'],
                                 'dest': os.path.join(FEDORAALTDEST, '37', 'Modular')}
@@ -70,7 +70,7 @@ RELEASES = {'f37': {'topic': 'fedora',
                               'updates-testing': {
                         'from': 'f37-modular-updates-testing',
                         'ostrees': [],
-                        'to': [{'arches': ['x86_64', 'aarch64', 'armhfp', 'source'],
+                        'to': [{'arches': ['x86_64', 'aarch64', 'source'],
                                 'dest': os.path.join(FEDORADEST, 'testing', '37', 'Modular')},
                                {'arches': ['ppc64le', 's390x'],
                                 'dest': os.path.join(FEDORAALTDEST, 'testing', '37', 'Modular')}
