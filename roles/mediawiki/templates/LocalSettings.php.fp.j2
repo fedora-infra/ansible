@@ -654,3 +654,7 @@ $wgPasswordAttemptThrottle = false;
 
 # Looks like mediawiki is using undefined constants.... Let's shut that up
 error_reporting(E_ALL ^ E_NOTICE);
+
+# Set this to 10 hours (up from default 1 hour) to let people stay logged in
+# during their work day.
+$wgObjectCacheSessionExpiry = 36000
