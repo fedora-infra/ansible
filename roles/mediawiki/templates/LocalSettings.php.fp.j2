@@ -648,18 +648,9 @@ $_SERVER['HTTP_HOST'] = 'fedoraproject.org';
 $_SERVER['REQUEST_SCHEME'] = 'https';
 $_SERVER['SERVER_PORT'] = 443;
 
-#
-# increase password/login attempts because we use memcached and someone could 
-# lock a proxy out by simply trying to login from that ip a bunch of times
-#
-$wgPasswordAttemptThrottle = [
-	// Short term limit
-	[ 'count' => 500, 'seconds' => 300 ],
-	// Long term limit. We need to balance the risk
-	// of somebody using this as a DoS attack to lock someone
-	// out of their account, and someone doing a brute force attack.
-	[ 'count' => 1500, 'seconds' => 60 * 60 * 48 ],
-];
+# do not bother to throttle login attempts
+# users MUST have a valid OIDC token so brute force will get them nowhere.
+$wgPasswordAttemptThrottle = false;
 
 # Looks like mediawiki is using undefined constants.... Let's shut that up
 error_reporting(E_ALL ^ E_NOTICE);
