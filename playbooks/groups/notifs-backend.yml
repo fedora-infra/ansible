@@ -30,7 +30,7 @@
   - { role: keytab/service,
     owner_user: daemon,
     owner_group: daemon,
-    service: fmn-backend@1,
+    service: fmn-backend,
     when: inventory_hostname.startswith('notifs-backend02.iad2') or env == "staging" }
   - nagios_client
   - collectd/base
