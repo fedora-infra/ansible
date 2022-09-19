@@ -4,7 +4,11 @@ max_stale_days = 0
 excludes=[".*\\.snapshot", ".*/\\.~tmp~"]
 
 [database]
+{% if env == 'staging' %}
+url="postgresql://{{ mirrormanager_stg_db_user }}:{{ mirrormanager_stg_db_pass }}@{{ mirrormanager_db_host }}/{{ mirrormanager_stg_db_name }}"
+{% else %}
 url="postgresql://{{ mirrormanager_db_user }}:{{ mirrormanager_db_pass }}@{{ mirrormanager_db_host }}/{{ mirrormanager_db_name }}"
+{% endif %}
 
 [[category]]
 name="CentOS"

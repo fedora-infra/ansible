@@ -7,10 +7,11 @@ DBUser = koji
 DBHost = db-koji01
 LogLevel = koji:INFO koji-fedmsg-plugin:INFO
 LogFormat = %(asctime)s [%(levelname)s] m=%(method)s u=%(user_name)s p=%(process)s r=%(remoteaddr)s %(name)s: %(message)s
+DBPass = {{ kojiStgPassword }}
 {% else %}
 DBHost = db-koji01
-{% endif %}
 DBPass = {{ kojiPassword }}
+{% endif %}
 AuthPrincipal = host/koji{{env_suffix}}.fedoraproject.org
 {% if env == "staging" %}
 ProxyPrincipals = modularity@STG.FEDORAPROJECT.ORG,HTTP/koji.stg.fedoraproject.org@STG.FEDORAPROJECT.ORG,sigul/sign-bridge01.stg.iad2.fedoraproject.org@STG.FEDORAPROJECT.ORG

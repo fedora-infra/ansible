@@ -19,7 +19,11 @@ WebPrincipal = HTTP/koji{{env_suffix}}.fedoraproject.org
 LoginTimeout = 72
 
 # This must be changed and uncommented before deployment
+{% if env == 'staging' %}
 Secret = {{ kojiSecret }}
+{% else %}
+Secret = {{ kojiStgSecret }}
+{% endif %}
 
 LibPath = /usr/share/koji-web/lib
 
