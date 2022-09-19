@@ -23,7 +23,6 @@ nagios_Check_Services:
   sshd: false
   swap: false
 public_ip: 209.132.184.56
-root_auth_users: msuchy frostyx praiskup
 # todo: remove some security groups ?
 security_group: web-80-anywhere-persistent,web-443-anywhere-persistent,ssh-anywhere-persistent,default,all-icmp-persistent
 volumes: [{device: '/dev/vdc', volume_id: '5424ff3c-b1c6-4291-a0ed-2d30924f4f88'}]

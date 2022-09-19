@@ -35,7 +35,6 @@ nagios_Check_Services:
 # There is no python2 on F30
 
 public_ip: 209.132.184.48
-root_auth_users: msuchy frostyx praiskup
 security_group: web-80-anywhere-persistent,web-443-anywhere-persistent,ssh-anywhere-persistent,default,allow-nagios-persistent,node-exporter-persistent
 tcp_ports: [22, 80, 443,
   # These 8 ports are used by fedmsg.  One for each wsgi thread.
