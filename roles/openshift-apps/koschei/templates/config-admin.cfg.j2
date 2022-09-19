@@ -6,7 +6,11 @@
 config = {
     "database_config": {
         "username": "koscheiadmin",
+{% if env == 'staging' %}
         "password": "{{ koscheiadmin_db_password }}",
+{% else %}
+        "password": "{{ koscheiadmin_stg_db_password }}",
+{% endif %}
     },
 }
 
