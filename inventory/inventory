@@ -469,12 +469,8 @@ openqa-a64-worker01.iad2.fedoraproject.org
 openqa-p09-worker01.iad2.fedoraproject.org
 openqa-p09-worker02.iad2.fedoraproject.org
 openqa-x86-worker04.iad2.fedoraproject.org
-# temporarily switched to openqa_onebox_test for debugging
-#openqa-x86-worker05.iad2.fedoraproject.org
-openqa-x86-worker06.iad2.fedoraproject.org
-
-[openqa_onebox_test]
 openqa-x86-worker05.iad2.fedoraproject.org
+openqa-x86-worker06.iad2.fedoraproject.org
 
 # the workers that can run networked jobs. each server should have *one* of these per arch
 [openqa_tap_workers]
@@ -485,8 +481,6 @@ openqa-a64-worker02.iad2.fedoraproject.org
 openqa-x86-worker04.iad2.fedoraproject.org
 openqa-a64-worker01.iad2.fedoraproject.org
 openqa-p09-worker01.iad2.fedoraproject.org
-# onebox
-openqa-x86-worker05.iad2.fedoraproject.org
 
 # the workers that run createhdds to create the base disk images. Again,
 # only one per arch per instance should be present.
@@ -498,8 +492,6 @@ openqa-a64-worker02.iad2.fedoraproject.org
 openqa-x86-worker04.iad2.fedoraproject.org
 openqa-a64-worker01.iad2.fedoraproject.org
 openqa-p09-worker01.iad2.fedoraproject.org
-# onebox
-openqa-x86-worker05.iad2.fedoraproject.org
 
 # common group for variables shared between all openQA boxes
 [openqa_all_common:children]
