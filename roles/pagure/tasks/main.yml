@@ -42,6 +42,7 @@
   tags:
   - pagure
   - postgresql
+  when: env != 'pagure-staging'
 
 - name: create the pagure DB user
   become_user: postgres
@@ -52,6 +53,7 @@
   tags:
   - pagure
   - postgresql
+  when: env != 'pagure-staging'
 
 - name: create the pagure database creation
   become_user: postgres
@@ -63,6 +65,41 @@
   tags:
   - pagure
   - postgresql
+  when: env != 'pagure-staging'
+
+- name: create the pagure DB user
+  become_user: postgres
+  become: true
+  postgresql_user:
+     name: "{{ pagure_stg_db_user }}"
+     password: "{{ pagure_stg_db_pass }}"
+  tags:
+  - pagure
+  - postgresql
+  when: env == 'pagure-staging'
+
+- name: create the pagure DB user
+  become_user: postgres
+  become: true
+  postgresql_user:
+     name: "{{ pagure_stg_db_admin_user }}"
+     password: "{{ pagure_stg_db_admin_pass }}"
+  tags:
+  - pagure
+  - postgresql
+  when: env == 'pagure-staging'
+
+- name: create the pagure database creation
+  become_user: postgres
+  become: true
+  postgresql_db:
+     name: "{{ pagure_stg_db_name }}"
+     owner: "{{ pagure_stg_db_user }}"
+     encoding: UTF-8
+  tags:
+  - pagure
+  - postgresql
+  when: env == 'pagure-staging'
 
 - name: Put in robots.txt
   template: src=robots.txt.j2 dest=/var/www/html/robots.txt
