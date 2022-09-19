@@ -14,7 +14,7 @@ config = {
 
         # This is a sqlalchemy URI that points to the tahrir DB.
         {% if env == 'staging' %}
-        "database_uri": "postgresql://{{tahrirDBUser}}:{{tahrirDBPassword}}@db01.stg.iad2.fedoraproject.org/tahrir",
+        "database_uri": "postgresql://{{tahrirDBUser}}:{{tahrirstgDBPassword}}@db01.stg.iad2.fedoraproject.org/tahrir",
         {% else %}
         "database_uri": "postgresql://{{tahrirDBUser}}:{{tahrirDBPassword}}@db-tahrir/tahrir",
         {% endif %}
