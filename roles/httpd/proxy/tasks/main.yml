@@ -90,3 +90,10 @@
   tags:
   - httpd
   - httpd/proxy
+
+- name: disable systemd-oomd we do not need or want it
+  service: name=systemd-oomd state=stopped enabled=no
+  tags:
+  - httpd
+  - httpd/proxy
+  - disablesystemdoomd
