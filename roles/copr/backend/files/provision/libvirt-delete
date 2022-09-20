@@ -12,8 +12,6 @@ import time
 
 import libvirt
 
-from helpers import get_volume_pools
-
 def repeat(call, args):
     """ Repeat the given function call, with args """
     attempts = 3
@@ -61,8 +59,11 @@ def _main():
     except Exception:
         logging.exception("domain can't be removed")
 
-    for pool_name in get_volume_pools():
-        pool = repeat(conn.storagePoolLookupByName, (pool_name,))
+
+    for pool in repeat(conn.listAllStoragePools, ()):
+        if pool.name() not in ["images", "swap-space"]:
+            continue
+
         for volume_name in repeat(pool.listVolumes, ()):
             if not volume_name.startswith(args.domainname):
                 continue

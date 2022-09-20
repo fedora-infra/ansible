@@ -11,7 +11,7 @@ import re
 import argparse
 import sys
 import libvirt
-from helpers import get_hv_identification_from_pool_id, get_volume_pools
+from helpers import get_hv_identification_from_pool_id
 
 
 def _get_parser():
@@ -40,20 +40,16 @@ def _main():
     # Gather the list of all domains here
     vm_names = set()
 
-    # Some of those suffixes are used by Red Hat Copr
+    # Some of those are used by Red Hat Copr
     known_suffixes = ["_root_disk$", "_config_cd$", "_swap$", "_root$", "_config$"]
-    volume_pool_names = get_volume_pools()
+    known_pools = ["images", "swap-space"]
 
-    for pool_name in volume_pool_names:
-        try:
-            pool = conn.storagePoolLookupByName(pool_name)
-        except libvirt.libvirtError:
-            msg = "Pool {0} not found\n".format(pool_name)
-            sys.stderr.write(msg)
-            continue
-
+    for pool in conn.listAllStoragePools():
         # List all the volumes in the volume pool that seem to be related to
         # the given Pool name
+        if pool.name() not in known_pools:
+            continue
+
         for volume in pool.listVolumes():
             if volume.startswith(pool_id):
                 for suffix in known_suffixes:

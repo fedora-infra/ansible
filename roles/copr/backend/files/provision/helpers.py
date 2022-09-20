@@ -1,8 +1,3 @@
-def get_volume_pools():
-    """ Get a list of pools where to search for Resalloc-related volumes """
-    return ["images"]
-
-
 def get_hv_identification_from_pool_id(pool_id):
     """ Get unique ID of the hypervisor """
     if pool_id.startswith("copr_hv_x86_64_01"):
