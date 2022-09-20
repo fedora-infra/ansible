@@ -212,6 +212,7 @@ copr_osuosl_p09_{% if devel %}dev{% else %}prod{% endif %}:
   cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
   cmd_livecheck: "resalloc-check-vm-ip"
   cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
+  cmd_list: resalloc-openstack-list
   livecheck_period: 180
   reuse_opportunity_time: 180
   reuse_max_count: 8
