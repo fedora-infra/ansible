@@ -11,7 +11,7 @@ import re
 import argparse
 import sys
 import libvirt
-from helpers import get_hv_identification_from_pool_id
+from helpers import get_hv_identification_from_pool_id, get_volume_pools
 
 
 def _get_parser():
@@ -42,7 +42,7 @@ def _main():
 
     # Some of those suffixes are used by Red Hat Copr
     known_suffixes = ["_root_disk$", "_config_cd$", "_swap$", "_root$", "_config$"]
-    volume_pool_names = ["images", "swap-space"]
+    volume_pool_names = get_volume_pools()
 
     for pool_name in volume_pool_names:
         try:
