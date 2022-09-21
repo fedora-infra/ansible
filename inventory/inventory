@@ -1059,10 +1059,10 @@ osbs_aarch64_nodes_stg
 os_control
 ocp_controlplane
 ocp_workers
-ocp_boostrap
+#ocp_boostrap
 
 [ocp_vms:children]
-ocp_boostrap
+#ocp_boostrap
 ocp_controlplane
 
 [ocp_controlplane]
@@ -1085,10 +1085,10 @@ worker06.ocp.iad2.fedoraproject.org
 os_control_stg
 ocp_controlplane_stg
 ocp_workers_stg
-ocp_boostrap_stg
+#ocp_boostrap_stg
 
 [ocp_vms_stg:children]
-ocp_boostrap_stg
+#ocp_boostrap_stg
 ocp_controlplane_stg
 
 [ocp_controlplane_stg]
