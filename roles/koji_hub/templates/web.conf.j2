@@ -31,5 +31,6 @@ loginDisabled = True
 
 KojiHubCA = /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
 
-Tasks = buildContainer,createContainer,runroot
-ParentTasks = buildContainer
+Tasks = buildContainer,createContainer,runroot,osbuildImage
+ParentTasks = buildContainer,osbuildImage
+ToplevelTasks = osbuildImage
