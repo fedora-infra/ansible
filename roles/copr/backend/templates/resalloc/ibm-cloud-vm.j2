@@ -263,20 +263,15 @@ def delete_instance_attempt(service, instance_name, opts):
 
         log.debug("Found volume %s %s %s", volume["name"], volume["status"],
                   volume["id"])
-
-        # Otherwise Error: Delete volume failed. Volume can be deleted
-        # only when its status is available or failed., Code: 409
-        if not volume["status"] in ["available", "failed"]:
-            continue
-
         volume_ids.append(volume["id"])
 
     if volume_ids:
         for volume_id in volume_ids:
             log.info("Deleting volume %s", volume_id)
             resp = service.delete_volume(volume_id)
-            assert resp.status_code == 204
-            log.debug("Delete volume request delivered")
+            if resp.status_code != 204:
+                log.error("Can't delete volume %s, response status: %s",
+                          volume_id, resp.status_code)
 
 
 def _get_arg_parser():
