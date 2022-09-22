@@ -2,6 +2,7 @@
 
 import argparse
 import datetime
+import logging
 import os
 import subprocess
 import sys
@@ -20,11 +21,15 @@ def _get_arg_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("--token-file", default=DEFAULT_TOKEN_FILE)
     parser.add_argument("--pool")
+    parser.add_argument("--log-level", default="info")
     return parser
 
 
 def _main():
     opts = _get_arg_parser().parse_args()
+    log_level = getattr(logging, opts.log_level.upper())
+    logging.basicConfig(format='%(levelname)s: %(message)s', level=log_level)
+    log = logging.getLogger()
 
     pool_id = opts.pool or os.getenv("RESALLOC_POOL_ID")
     if not pool_id:
@@ -47,6 +52,7 @@ def _main():
         # Resalloc works with underscores, which is not allowed in IBM Cloud
         name = server["name"].replace("-", "_")
         if name.startswith(pool_id):
+            log.debug("found instance %s in state %s, id=%s", name, server["status"], server["id"])
             resources.add(name)
 
     volumes = service.list_volumes(limit=LIMIT).result["volumes"]
@@ -54,6 +60,7 @@ def _main():
         # Resalloc works with underscores, which is not allowed in IBM Cloud
         name = volume["name"].replace("-", "_")
         if name.startswith(pool_id):
+            log.debug("found volume %s in state %s, id: %s", name, volume["status"], volume["id"])
             name = name.rsplit("_", 1)[0]
             resources.add(name)
 

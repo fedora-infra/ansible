@@ -225,27 +225,30 @@ def delete_instance(service, instance_name, opts):
 def delete_instance_attempt(service, instance_name, opts):
     """ one attempt to delete instance by it's name """
     log = opts.log
-    log.info("Deleting instance %s", instance_name)
+    log.info("Searching for instance %s", instance_name)
 
     delete_instance_id = None
     response_list = service.list_instances().get_result()['instances']
     for item in response_list:
-        log.debug("Available: %s %s %s", item['id'], item['name'], item['status'])
         if instance_name == item['name']:
+            log.debug("Found instance: %s %s %s", item['id'], item['name'], item['status'])
             delete_instance_id = item['id']
 
     floating_ip_id = None
     response_list = service.list_floating_ips().get_result()['floating_ips']
     for floating_ip in response_list:
         if floating_ip["name"].startswith(instance_name):
+            log.debug("Found floating IP %s", floating_ip["name"])
             floating_ip_id = floating_ip["id"]
 
     if delete_instance_id:
+        log.info("Deleting instance %s: %s", delete_instance_id, instance_name)
         resp = service.delete_instance(delete_instance_id)
         assert resp.status_code == 204
         log.debug("Delete instance request delivered")
 
     if floating_ip_id:
+        log.info("Deleting Floating IP %s", floating_ip_id)
         resp = service.delete_floating_ip(floating_ip_id)
         assert resp.status_code == 204
         log.debug("Delete IP request delivered")
@@ -258,6 +261,9 @@ def delete_instance_attempt(service, instance_name, opts):
         if not volume["name"].startswith(instance_name):
             continue
 
+        log.debug("Found volume %s %s %s", volume["name"], volume["status"],
+                  volume["id"])
+
         # Otherwise Error: Delete volume failed. Volume can be deleted
         # only when its status is available or failed., Code: 409
         if not volume["status"] in ["available", "failed"]:
@@ -267,6 +273,7 @@ def delete_instance_attempt(service, instance_name, opts):
 
     if volume_ids:
         for volume_id in volume_ids:
+            log.info("Deleting volume %s", volume_id)
             resp = service.delete_volume(volume_id)
             assert resp.status_code == 204
             log.debug("Delete volume request delivered")
