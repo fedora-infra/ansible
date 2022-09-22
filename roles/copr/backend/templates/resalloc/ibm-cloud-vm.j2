@@ -253,8 +253,23 @@ def delete_instance_attempt(service, instance_name, opts):
         assert resp.status_code == 204
         log.debug("Delete IP request delivered")
 
-    # Query all volumes only after already potentionaly deleting an instance.
-    # The volumes might have been deleted automatically
+    # The volumes should be always automatically deleted together with the
+    # instance that they are attached to.  So normally, it would be a wasting of
+    # efforts to try to remove volumes explicitly here (we just requested
+    # an instance removal, that one is just being removed and the volumes are in
+    # a 'deleting' state at best).  Any additional request for volume removal
+    # would anyway end up with an exception and an HTTP error 409.
+    if delete_instance_id:
+        return
+
+    # In cloud-buggy situations, the volume stays around even when instance ID
+    # is correctly deleted.  Such an orphaned volume is later detected by
+    # Resalloc's `cmd_list` option (it calls the script ibm-cloud-list-vms to
+    # detect) and then `ibm-cloud-vm delete` command is called periodically by
+    # Resalloc, even for a non-existing instance (=> delete_instance_id==NULL).
+    # In such case is very correct, and we try our best, to explicitly remove
+    # the volume.
+
     volume_ids = []
     volumes = service.list_volumes(limit=100).result["volumes"]
     for volume in volumes:
@@ -266,12 +281,27 @@ def delete_instance_attempt(service, instance_name, opts):
         volume_ids.append(volume["id"])
 
     if volume_ids:
+        # hack: we raise the last caught exception only
+        raised_exception = None
+
         for volume_id in volume_ids:
-            log.info("Deleting volume %s", volume_id)
-            resp = service.delete_volume(volume_id)
+            log.info("Explicitly deleting volume %s", volume_id)
+            try:
+                resp = service.delete_volume(volume_id)
+            except Exception as exc:
+                log.error("Exception raised while deleting volume %s",
+                          volume_id)
+                raised_exception = exc
+                continue  # Trying the rest of volumes
+
             if resp.status_code != 204:
                 log.error("Can't delete volume %s, response status: %s",
                           volume_id, resp.status_code)
+
+        if raised_exception is not None:
+            # The exception will cause a re-try (re-run of
+            # delete_instance_attempt)).
+            raise raised_exception
 
 
 def _get_arg_parser():
