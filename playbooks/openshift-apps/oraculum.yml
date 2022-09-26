@@ -120,15 +120,6 @@
     annotations:
          haproxy.router.openshift.io/set-forwarded-headers: append
 
-  - role: openshift/route
-    app: oraculum
-    routename: qa-landing
-    host: "qa{{ env_suffix }}.fedoraproject.org"
-    serviceport: 8080-tcp
-    servicename: qa-landing
-    annotations:
-         haproxy.router.openshift.io/set-forwarded-headers: append
-
   - role: openshift/start-build
     app: oraculum
     buildname: packager-dashboard-build

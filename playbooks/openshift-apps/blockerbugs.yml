@@ -93,6 +93,15 @@
     serviceport: 8080-tcp
     servicename: blockerbugs
 
+  - role: openshift/route
+    app: blockerbugs
+    routename: qa-landing
+    host: "qa{{ env_suffix }}.fedoraproject.org"
+    serviceport: 8080-tcp
+    servicename: qa-landing
+    annotations:
+         haproxy.router.openshift.io/set-forwarded-headers: append
+
   - role: openshift/start-build
     app: blockerbugs
     buildname: blockerbugs-build

@@ -8,3 +8,18 @@ spec:
     local: false
 status:
   dockerImageRepository: ""
+---
+apiVersion: v1
+kind: ImageStream
+metadata:
+  name: qa-landing
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+  - name: latest
+    from:
+      kind: ImageStreamTag
+      name: qa-landing
+status:
+  dockerImageRepository: ""

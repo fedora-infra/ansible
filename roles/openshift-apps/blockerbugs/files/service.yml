@@ -14,3 +14,19 @@ spec:
   selector:
     app: blockerbugs
     deploymentconfig: blockerbugs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: blockerbugs
+  name: qa-landing
+spec:
+  ports:
+  - name: 8080-tcp
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: blockerbugs
+    deploymentconfig: qa-landing

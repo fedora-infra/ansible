@@ -28,3 +28,36 @@ spec:
   triggers:
   - type: ConfigChange
   - type: ImageChange
+  ---
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  name: qa-landing-page-build
+  labels:
+    environment: "blockerbugs"
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: qa-landing:latest
+  source:
+    type: Git
+    git:
+      uri: 'https://pagure.io/fedora-qa/landingpage.git'
+{% if env == 'staging' %}
+      ref: 'master'
+{% else %}
+      ref: 'master'
+{% endif %}
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: Dockerfile
+      env:
+      - name: "SUBDIR"
+        value: "/"
+      - name: "API"
+        value: "https://packager-dashboard{{ env_suffix }}.fedoraproject.org/api/v1/"
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
