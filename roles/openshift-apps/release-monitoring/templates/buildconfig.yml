@@ -21,6 +21,9 @@ items:
                 httpd \
                 graphviz \
                 fedora-messaging \
+{% if env == 'staging' %}
+                poetry \
+{% endif %}
                 python3-alembic \
                 python3-beautifulsoup4 \
                 python3-arrow \
@@ -52,10 +55,12 @@ items:
                 pushd anitya && \
 {% if env == 'staging' %}
                 git checkout staging && \
+                poetry config virtualenvs.create false && \
+                poetry install && \
 {% else %}
                 git checkout production && \
-{% endif %}
                 python3 setup.py install && \
+{% endif %}
                 pushd docs && \
                 mkdir -p images && \
                 python3 generate_db_schema && \
@@ -63,8 +68,10 @@ items:
                 mkdir -p ../anitya/static/docs/ && \
                 cp -r _build/html/* ../anitya/static/docs/ && \
                 popd && \
+{% if env != 'staging' %}
                 python3 setup.py install && \
                 pip-3 install . && \
+{% endif %}
                 popd && \
                 rm -rf anitya
         # Let's use staging auth server in staging
