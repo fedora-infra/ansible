@@ -76,12 +76,16 @@ items:
                 rm -rf anitya
         # Let's use staging auth server in staging
 {% if env == 'staging' %}
-        RUN sed -i 's/id.fedoraproject.org/id.stg.fedoraproject.org/g' /usr/local/lib/python3.10/site-packages/social_auth_core-4.3.0-py3.10.egg/social_core/backends/fedora.py
+        RUN sed -i 's/id.fedoraproject.org/id.stg.fedoraproject.org/g' /usr/local/lib/python3.10/site-packages/social_core/backends/fedora.py
 {% endif %}
 
         # Hotfix for social_auth-sqlalchemy
         # Could be removed when we switch to something else
+{% if env == 'staging' %}
+        RUN sed -i 's/base64.encodestring/base64.encodebytes/g' /usr/local/lib/python3.10/site-packages/social_sqlalchemy/storage.py
+{% else %}
         RUN sed -i 's/base64.encodestring/base64.encodebytes/g' /usr/local/lib/python3.10/site-packages/social_auth_storage_sqlalchemy-1.1.0-py3.10.egg/social_sqlalchemy/storage.py
+{% endif %}
         RUN mkdir /httpdir
         RUN chmod 777 /httpdir
         EXPOSE 8080
