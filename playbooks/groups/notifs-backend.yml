@@ -28,9 +28,9 @@
   #    when: env != "staging" }
   - ipa/client
   - { role: keytab/service,
-    owner_user: daemon,
-    owner_group: daemon,
-    service: fmn-backend,
+    owner_user: fedmsg,
+    owner_group: fedmsg,
+    service: fedmsg-hub-3,
     when: inventory_hostname.startswith('notifs-backend02.iad2') or env == "staging" }
   - nagios_client
   - collectd/base
