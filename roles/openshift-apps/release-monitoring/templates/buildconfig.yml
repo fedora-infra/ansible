@@ -71,8 +71,9 @@ items:
 {% if env == 'staging' %}
                 poetry build && \
                 pip-3 install dist/*.whl && \
-                # Copy the symlink, it's not part of wheel
-                cp anitya/static/bootstrap /usr/local/lib/python3.10/site-packages/anitya/static/
+                # Move bootstrap to correct folder
+                rm -f anitya/static/bootstrap
+                mv anitya/static/bootstrap-3.3.4-fedora anitya/static/bootstrap
 {% else %}
                 python3 setup.py install && \
                 pip-3 install . && \
