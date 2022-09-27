@@ -43,6 +43,10 @@ spec:
               value: "{{ stg_blockerbugs_pagure_repo_webhook_key_secret }}"
             - name: BUGZILLA_API_KEY
               value: "{{ stg_blockerbugs_bz_api_key }}"
+            - name: PAGURE_URL
+              value: "https://stg.pagure.io/"
+            - name: PAGURE_API
+              value: "https://stg.pagure.io/api/0/"
 {% else %}
             - name: POSTGRESQL_PASSWORD
               value: "{{ prod_blockerbugs_db_password }}"
@@ -54,6 +58,10 @@ spec:
               value: "{{ prod_blockerbugs_pagure_repo_webhook_key_secret }}"
             - name: BUGZILLA_API_KEY
               value: "{{ prod_blockerbugs_bz_api_key }}"
+            - name: PAGURE_URL
+              value: "https://pagure.io/"
+            - name: PAGURE_API
+              value: "https://pagure.io/api/0/"
 {% endif %}
             - name: SECRET_KEY
               value: "{{ blockerbugs_secret_key }}"
@@ -73,10 +81,6 @@ spec:
               value: "fedora-qa/blocker-review"
             - name: PAGURE_REPO_WEBHOOK_KEY
               value: "{{ blockerbugs_pagure_repo_webhook_key_secret }}"
-            - name: PAGURE_URL
-              value: "{{ blockerbugs_pagure_url }}"
-            - name: PAGURE_API
-              value: "{{ blockerbugs_pagure_url }}api/0/"
             - name: BUGZILLA_URL
               value: "{{ blockerbugs_bugzilla_url }}"
             - name: BODHI_URL
