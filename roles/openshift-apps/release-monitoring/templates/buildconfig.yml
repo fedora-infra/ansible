@@ -69,17 +69,18 @@ items:
                 cp -r _build/html/* ../anitya/static/docs/ && \
                 popd && \
 {% if env == 'staging' %}
-                poetry build && \
-                pip-3 install dist/*.whl && \
                 # Move bootstrap to correct folder
                 rm -f anitya/static/bootstrap && \
                 mv anitya/static/bootstrap-3.3.4-fedora anitya/static/bootstrap && \
+                poetry build && \
+                pip-3 install dist/*.whl && \
 {% else %}
                 python3 setup.py install && \
                 pip-3 install . && \
 {% endif %}
-                popd && \
-                rm -rf anitya
+                popd
+        # popd && \
+        # rm -rf anitya
 {% if env == 'staging' %}
         # Let's use staging auth server in staging
         RUN sed -i 's/id.fedoraproject.org/id.stg.fedoraproject.org/g' /usr/local/lib/python3.10/site-packages/social_core/backends/fedora.py
