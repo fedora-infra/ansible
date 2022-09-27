@@ -45,8 +45,13 @@ spec:
           value: "db01{{ env_suffix }}.iad2.fedoraproject.org"
         - name: POSTGRESQL_SERVICE_PORT
           value: "5432"
+{% if env == 'staging' %}
         - name: POSTGRESQL_PASSWORD
-          value: "{{ blockerbugs_db_password }}"
+          value: "{{ stg_blockerbugs_db_password }}"
+{% else %}
+        - name: POSTGRESQL_PASSWORD
+          value: "{{ prod_blockerbugs_db_password }}"
+{% endif %}
         - name: SECRET_KEY
           value: "{{ blockerbugs_secret_key }}"
         - name: BLOCKERBUGS_URL
@@ -73,8 +78,13 @@ spec:
           value: "{{ blockerbugs_pagure_url }}api/0/"
         - name: BUGZILLA_URL
           value: "{{ blockerbugs_bugzilla_url }}"
+{% if env == 'staging' %}
         - name: BUGZILLA_API_KEY
-          value: "{{ blockerbugs_bz_api_key }}"
+          value: "{{ stg_blockerbugs_bz_api_key }}"
+{% else %}
+        - name: BUGZILLA_API_KEY
+          value: "{{ prod_blockerbugs_bz_api_key }}"
+{% endif %}
         - name: BODHI_URL
           value: "https://bodhi{{ env_suffix }}.fedoraproject.org/"
         - name: OPENSHIFT_PROD

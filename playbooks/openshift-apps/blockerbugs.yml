@@ -10,7 +10,7 @@
     - packages
 
 - name: setup the database
-  hosts: db01.stg.iad2.fedoraproject.org:db01.iad2.fedoraproject.org
+  hosts: db01.stg.iad2.fedoraproject.org
   gather_facts: no
   become: yes
   become_user: postgres
@@ -22,17 +22,43 @@
   tasks:
   - name: Create the database user
     postgresql_user:
-      name: "{{ blockerbugs_db_user }}"
-      password: "{{ blockerbugs_db_password }}"
+      name: "{{ stg_blockerbugs_db_user }}"
+      password: "{{ stg_blockerbugs_db_password }}"
   - name: Create the database itself
     postgresql_db:
-      name: "{{ blockerbugs_db_name  }}"
-      owner: "{{ blockerbugs_db_user }}"
+      name: "{{ stg_blockerbugs_db_name  }}"
+      owner: "{{ stg_blockerbugs_db_user }}"
       encoding: UTF-8
   - name: Test the database creation
     postgresql_db:
-      name: "{{ blockerbugs_db_name  }}"
-      owner: "{{ blockerbugs_db_user }}"
+      name: "{{ stg_blockerbugs_db_name  }}"
+      owner: "{{ stg_blockerbugs_db_user }}"
+      encoding: UTF-8
+
+- name: setup the database
+  hosts: db01.iad2.fedoraproject.org
+  gather_facts: no
+  become: yes
+  become_user: postgres
+  vars_files:
+  - /srv/web/infra/ansible/vars/global.yml
+  - "/srv/private/ansible/vars.yml"
+  - "/srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml"
+
+  tasks:
+  - name: Create the database user
+    postgresql_user:
+      name: "{{ prod_blockerbugs_db_user }}"
+      password: "{{ prod_blockerbugs_db_password }}"
+  - name: Create the database itself
+    postgresql_db:
+      name: "{{ prod_blockerbugs_db_name  }}"
+      owner: "{{ prod_blockerbugs_db_user }}"
+      encoding: UTF-8
+  - name: Test the database creation
+    postgresql_db:
+      name: "{{ prod_blockerbugs_db_name  }}"
+      owner: "{{ prod_blockerbugs_db_user }}"
       encoding: UTF-8
 
 - name: make the app be real
