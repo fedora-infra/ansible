@@ -72,7 +72,7 @@ items:
                 poetry build && \
                 pip-3 install dist/*.whl && \
                 # Copy the symlink, it's not part of wheel
-                cp static/bootstrap /usr/local/lib/python3.10/site-packages/anitya/static/
+                cp anitya/static/bootstrap /usr/local/lib/python3.10/site-packages/anitya/static/
 {% else %}
                 python3 setup.py install && \
                 pip-3 install . && \
