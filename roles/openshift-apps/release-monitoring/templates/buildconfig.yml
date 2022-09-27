@@ -76,8 +76,8 @@ items:
 {% endif %}
                 pip-3 install . && \
                 popd
-#                popd && \
-#                rm -rf anitya
+        # popd && \
+        # rm -rf anitya
 {% if env == 'staging' %}
         # Let's use staging auth server in staging
         RUN sed -i 's/id.fedoraproject.org/id.stg.fedoraproject.org/g' /usr/local/lib/python3.10/site-packages/social_core/backends/fedora.py
