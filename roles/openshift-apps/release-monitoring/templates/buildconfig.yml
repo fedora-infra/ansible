@@ -55,8 +55,9 @@ items:
                 pushd anitya && \
 {% if env == 'staging' %}
                 git checkout staging && \
-                poetry build && \
-                pip-3 install dist/*.whl && \
+                python3 -m venv --system-site-packages .venv && \
+                source .venv/bin/activate && \
+                pip-3 install . && \
 {% else %}
                 git checkout production && \
                 python3 setup.py install && \
@@ -68,12 +69,15 @@ items:
                 mkdir -p ../anitya/static/docs/ && \
                 cp -r _build/html/* ../anitya/static/docs/ && \
                 popd && \
-{% if env != 'staging' %}
+{% if env == 'staging' %}
+                deactivate && \
+{% else %}
                 python3 setup.py install && \
 {% endif %}
                 pip-3 install . && \
-                popd && \
-                rm -rf anitya
+                popd
+#                popd && \
+#                rm -rf anitya
 {% if env == 'staging' %}
         # Let's use staging auth server in staging
         RUN sed -i 's/id.fedoraproject.org/id.stg.fedoraproject.org/g' /usr/local/lib/python3.10/site-packages/social_core/backends/fedora.py
