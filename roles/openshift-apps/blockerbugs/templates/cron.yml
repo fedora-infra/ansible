@@ -81,8 +81,6 @@ spec:
               value: "True"
             - name: PAGURE_REPO
               value: "fedora-qa/blocker-review"
-            - name: PAGURE_REPO_WEBHOOK_KEY
-              value: "{{ blockerbugs_pagure_repo_webhook_key_secret }}"
             - name: BUGZILLA_URL
               value: "{{ blockerbugs_bugzilla_url }}"
             - name: BODHI_URL
