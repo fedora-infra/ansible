@@ -81,8 +81,6 @@ spec:
               value: "True"
             - name: PAGURE_REPO
               value: "fedora-qa/blocker-review"
-            - name: BUGZILLA_URL
-              value: "{{ blockerbugs_bugzilla_url }}"
             - name: BODHI_URL
               value: "https://bodhi{{ env_suffix }}.fedoraproject.org/"
             - name: OPENSHIFT_PROD
