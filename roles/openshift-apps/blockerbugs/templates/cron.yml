@@ -47,6 +47,8 @@ spec:
               value: "https://stg.pagure.io/"
             - name: PAGURE_API
               value: "https://stg.pagure.io/api/0/"
+            - name: BUGZILLA_URL
+              value: "https://bugzilla.stage.redhat.com"
 {% else %}
             - name: POSTGRESQL_PASSWORD
               value: "{{ prod_blockerbugs_db_password }}"
@@ -62,6 +64,8 @@ spec:
               value: "https://pagure.io/"
             - name: PAGURE_API
               value: "https://pagure.io/api/0/"
+            - name: BUGZILLA_URL
+              value: "https://bugzilla.redhat.com"
 {% endif %}
             - name: SECRET_KEY
               value: "{{ blockerbugs_secret_key }}"

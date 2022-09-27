@@ -65,6 +65,8 @@ spec:
           value: "https://stg.pagure.io/"
         - name: PAGURE_API
           value: "https://stg.pagure.io/api/0/"
+        - name: BUGZILLA_URL
+          value: "https://bugzilla.stage.redhat.com"
 {% else %}
         - name: POSTGRESQL_PASSWORD
           value: "{{ prod_blockerbugs_db_password }}"
@@ -80,6 +82,8 @@ spec:
           value: "https://pagure.io/"
         - name: PAGURE_API
           value: "https://pagure.io/api/0/"
+        - name: BUGZILLA_URL
+          value: "https://bugzilla.redhat.com"
 {% endif %}
         - name: BLOCKERBUGS_URL
           value: "https://qa{{ env_suffix }}.fedoraproject.org/blockerbugs/"
@@ -95,8 +99,6 @@ spec:
           value: "True"
         - name: PAGURE_REPO
           value: "fedora-qa/blocker-review"
-        - name: BUGZILLA_URL
-          value: "{{ blockerbugs_bugzilla_url }}"
         - name: BODHI_URL
           value: "https://bodhi{{ env_suffix }}.fedoraproject.org/"
         - name: OPENSHIFT_PROD
