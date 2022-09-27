@@ -55,8 +55,6 @@ items:
                 pushd anitya && \
 {% if env == 'staging' %}
                 git checkout staging && \
-                poetry export -f requirements.txt --output requirements.txt --without-hashes && \
-                pip-3 install -r requirements.txt && \
                 poetry build && \
                 pip-3 install dist/*.whl && \
 {% else %}
@@ -72,12 +70,12 @@ items:
                 popd && \
 {% if env != 'staging' %}
                 python3 setup.py install && \
-                pip-3 install . && \
 {% endif %}
+                pip-3 install . && \
                 popd && \
                 rm -rf anitya
-        # Let's use staging auth server in staging
 {% if env == 'staging' %}
+        # Let's use staging auth server in staging
         RUN sed -i 's/id.fedoraproject.org/id.stg.fedoraproject.org/g' /usr/local/lib/python3.10/site-packages/social_core/backends/fedora.py
 {% endif %}
 
