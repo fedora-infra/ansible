@@ -139,7 +139,11 @@ items:
             command:
               - python3
             args:
+{% if env == 'staging' %}
+              - /usr/local/bin/check_service
+{% else %}
               - /usr/local/bin/check_service.py
+{% endif %}
             env:
               - name: ANITYA_WEB_CONFIG
                 value: /etc/anitya/anitya.toml
@@ -227,7 +231,11 @@ items:
             command:
               - python3
             args:
+{% if env == 'staging' %}
+              - /usr/local/bin/librariesio_consumer
+{% else %}
               - /usr/local/bin/librariesio_consumer.py
+{% endif %}
             env:
               - name: ANITYA_WEB_CONFIG
                 value: /etc/anitya/anitya.toml
