@@ -70,7 +70,7 @@ items:
                 popd && \
 {% if env == 'staging' %}
                 # Uninstall the existing anitya installation first
-                pip-3 uninstall anitya && \
+                pip-3 uninstall -y anitya && \
                 # Move bootstrap to correct folder
                 rm -f anitya/static/bootstrap && \
                 mv anitya/static/bootstrap-3.3.4-fedora anitya/static/bootstrap && \
