@@ -55,8 +55,7 @@ items:
                 pushd anitya && \
 {% if env == 'staging' %}
                 git checkout staging && \
-                poetry config virtualenvs.create false && \
-                poetry install && \
+                poetry export -f requirements.txt | pip-3 install -r /dev/stdin && \
 {% else %}
                 git checkout production && \
                 python3 setup.py install && \
@@ -68,7 +67,10 @@ items:
                 mkdir -p ../anitya/static/docs/ && \
                 cp -r _build/html/* ../anitya/static/docs/ && \
                 popd && \
-{% if env != 'staging' %}
+{% if env == 'staging' %}
+                poetry build && \
+                pip-3 install dist/*.whl && \
+{% else %}
                 python3 setup.py install && \
                 pip-3 install . && \
 {% endif %}
