@@ -55,7 +55,8 @@ items:
                 pushd anitya && \
 {% if env == 'staging' %}
                 git checkout staging && \
-                poetry export -f requirements.txt | pip-3 install -r /dev/stdin && \
+                poetry export -f requirements.txt --output requirements.txt --without-hashes && \
+                pip-3 install -r requirements.txt && \
 {% else %}
                 git checkout production && \
                 python3 setup.py install && \
