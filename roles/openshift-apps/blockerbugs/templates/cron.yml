@@ -71,8 +71,6 @@ spec:
               value: "True"
             - name: PAGURE_REPO
               value: "fedora-qa/blocker-review"
-            - name: PAGURE_REPO_TOKEN
-              value: "{{ blockerbugs_pagure_repo_token_secret }}"
             - name: PAGURE_REPO_WEBHOOK_KEY
               value: "{{ blockerbugs_pagure_repo_webhook_key_secret }}"
             - name: PAGURE_URL
