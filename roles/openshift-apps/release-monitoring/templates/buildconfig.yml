@@ -55,9 +55,8 @@ items:
                 pushd anitya && \
 {% if env == 'staging' %}
                 git checkout staging && \
-                python3 -m venv --system-site-packages .venv && \
-                source .venv/bin/activate && \
-                pip-3 install . && \
+                poetry build && \
+                pip-3 install dist/*.whl && \
 {% else %}
                 git checkout production && \
                 python3 setup.py install && \
@@ -70,14 +69,16 @@ items:
                 cp -r _build/html/* ../anitya/static/docs/ && \
                 popd && \
 {% if env == 'staging' %}
-                deactivate && \
+                poetry build && \
+                pip-3 install dist/*.whl && \
+                # Copy the symlink, it's not part of wheel
+                cp static/bootstrap /usr/local/lib/python3.10/site-packages/anitya/static/
 {% else %}
                 python3 setup.py install && \
-{% endif %}
                 pip-3 install . && \
-                popd
-        # popd && \
-        # rm -rf anitya
+{% endif %}
+                popd && \
+                rm -rf anitya
 {% if env == 'staging' %}
         # Let's use staging auth server in staging
         RUN sed -i 's/id.fedoraproject.org/id.stg.fedoraproject.org/g' /usr/local/lib/python3.10/site-packages/social_core/backends/fedora.py
