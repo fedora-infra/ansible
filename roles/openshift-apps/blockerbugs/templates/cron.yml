@@ -67,8 +67,6 @@ spec:
             - name: BUGZILLA_URL
               value: "https://bugzilla.redhat.com"
 {% endif %}
-            - name: SECRET_KEY
-              value: "{{ blockerbugs_secret_key }}"
             - name: BLOCKERBUGS_URL
               value: "https://qa{{ env_suffix }}.fedoraproject.org/blockerbugs/"
             - name: BLOCKERBUGS_API
