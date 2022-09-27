@@ -37,8 +37,13 @@ spec:
         - containerPort: 8080
         resources: {}
         env:
+{% if env == 'staging' %}
         - name: POSTGRESQL_USER
-          value: "blockerbugs"
+          value: "{{ stg_blockerbugs_db_user }}"
+{% else %}
+        - name: POSTGRESQL_USER
+          value: "{{ prod_blockerbugs_db_user }}"
+{% endif %}
         - name: POSTGRESQL_DATABASE
           value: "blockerbugs"
         - name: POSTGRESQL_SERVICE_HOST
