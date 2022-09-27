@@ -31,7 +31,7 @@
       encoding: UTF-8
   - name: Test the database creation
     postgresql_db:
-      name: "{{ stg_blockerbugs_db_name  }}"
+      name: "blockerbugs"
       owner: "{{ stg_blockerbugs_db_user }}"
       encoding: UTF-8
 
@@ -57,7 +57,7 @@
       encoding: UTF-8
   - name: Test the database creation
     postgresql_db:
-      name: "{{ prod_blockerbugs_db_name  }}"
+      name: "blockerbugs"
       owner: "{{ prod_blockerbugs_db_user }}"
       encoding: UTF-8
 
