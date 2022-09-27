@@ -72,8 +72,8 @@ items:
                 poetry build && \
                 pip-3 install dist/*.whl && \
                 # Move bootstrap to correct folder
-                rm -f anitya/static/bootstrap
-                mv anitya/static/bootstrap-3.3.4-fedora anitya/static/bootstrap
+                rm -f anitya/static/bootstrap && \
+                mv anitya/static/bootstrap-3.3.4-fedora anitya/static/bootstrap && \
 {% else %}
                 python3 setup.py install && \
                 pip-3 install . && \
