@@ -1713,10 +1713,22 @@ host bvmhost-a64-12-mgmt {
      option host-name "bvmhost-a64-12-mgmt";
 }
 
+host bvmhost-a64-12 {
+     hardware ethernet 0c:42:a1:4a:0b:f4;
+     fixed-address 10.3.170.23;
+     option host-name "bvmhost-a64-12";
+}
+
 host bvmhost-a64-13-mgmt {
      hardware ethernet d8:5e:d3:8b:5d:da;
      fixed-address 10.3.160.81;
      option host-name "bvmhost-a64-13-mgmt";
+}
+
+host bvmhost-a64-13 {
+     hardware ethernet 0c:42:a1:49:9b:d0;
+     fixed-address 10.3.170.24;
+     option host-name "bvmhost-a64-13";
 }
 
 host bvmhost-a64-14-mgmt {
@@ -1725,16 +1737,34 @@ host bvmhost-a64-14-mgmt {
      option host-name "bvmhost-a64-14-mgmt";
 }
 
+host bvmhost-a64-14 {
+     hardware ethernet 0c:42:a1:5a:00:b8;
+     fixed-address 10.3.170.25;
+     option host-name "bvmhost-a64-14";
+}
+
 host bvmhost-a64-15-mgmt {
      hardware ethernet d8:5e:d3:8b:5f:3a;
      fixed-address 10.3.160.83;
      option host-name "bvmhost-a64-15-mgmt";
 }
 
+host bvmhost-a64-15 {
+     hardware ethernet 0c:42:a1:45:6c:fc;
+     fixed-address 10.3.170.26;
+     option host-name "bvmhost-a64-15";
+}
+
 host bvmhost-a64-16-mgmt {
      hardware ethernet d8:5e:d3:8b:73:d8;
      fixed-address 10.3.160.84;
      option host-name "bvmhost-a64-16-mgmt";
+}
+
+host bvmhost-a64-16 {
+     hardware ethernet 0c:42:a1:5a:08:b0;
+     fixed-address 10.3.170.27;
+     option host-name "bvmhost-a64-16";
 }
 
 ## End of file
