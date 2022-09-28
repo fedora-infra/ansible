@@ -33,6 +33,24 @@
   - notifs
   - notifs/backend
 
+- name: ensure systemd drop-in directory exists
+  file: >
+    dest=/etc/systemd/system/fedmsg-hub-3.service.d
+    state=directory
+  tags:
+  - notifs
+  - notifs/backend
+  when:
+    inventory_hostname.startswith('notifs-backend02') or env == 'staging'
+
+- name: install fedmsg-hub-3 systemd drop-in
+  template: src=override.conf dest=/etc/systemd/system/fedmsg-hub-3.service.d/override.conf owner=root group=root mode=644
+  tags:
+  - notifs
+  - notifs/backend
+  when:
+    inventory_hostname.startswith('notifs-backend02') or env == 'staging'
+
 - name: copy database configuration
   template: >
     src={{ item }} dest=/etc/fedmsg.d/{{ item }}
