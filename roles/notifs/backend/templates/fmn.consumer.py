@@ -119,7 +119,11 @@ config = {
     "fmn.backends": ["email", "irc"],  # android is disabled.
 
     # Email
+    {% if env == 'staging' %}
+    "fmn.email.mailserver": "localhost:25",
+    {% else %}
     "fmn.email.mailserver": "bastion01.iad2.fedoraproject.org:25",
+    {% endif %}
     "fmn.email.from_address": "notifications@" + domain,
 
     # IRC
