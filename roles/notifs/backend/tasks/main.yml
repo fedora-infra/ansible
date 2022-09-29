@@ -54,7 +54,7 @@
 - name: hotfix python3-moksha-hub
   copy: >
     src=consumer.py dest=/usr/lib/python3.10/site-packages/moksha/hub/api/consumer.py
-    owner=root group=root mode=0640
+    owner=root group=root mode=0644
   notify:
   - restart fedmsg-hub
   tags:
