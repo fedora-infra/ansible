@@ -45,6 +45,8 @@
 
 - name: install fedmsg-hub-3 systemd drop-in
   template: src=override.conf.j2 dest=/etc/systemd/system/fedmsg-hub-3.service.d/override.conf owner=root group=root mode=644
+  notify:
+  - reload systemd
   tags:
   - notifs
   - notifs/backend
