@@ -69,7 +69,7 @@ class Consumer(object):
 
         for topic in iterate(self.topic):
             log.debug('Subscribing to consumer topic %s' % topic)
-            self.hub.subscribe(topic, callback)
+            self.hub.subscribe(topic.decode("utf-8"), callback)
 
         # If the consumer specifies an 'app', then setup `self.engine` to
         # be a SQLAlchemy engine, along with a configured DBSession
