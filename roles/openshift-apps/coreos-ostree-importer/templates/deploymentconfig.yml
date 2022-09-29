@@ -20,8 +20,8 @@ spec:
       - name: coreos-ostree-importer
         # sleep infinity is useful for debugging environment issues
         # comment out when not debugging
-        args: ['infinity']
-        command: ['/usr/bin/sleep']
+        args: ['-c', '/usr/local/bin/coreos-ostree-importer-wrapper || sleep infinity']
+        command: ['/usr/bin/bash']
         volumeMounts:
         - name: fedora-ostree-content-volume
           mountPath: /mnt/koji
