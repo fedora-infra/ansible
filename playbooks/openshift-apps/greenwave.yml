@@ -63,13 +63,6 @@
 
   - role: openshift/object
     app: greenwave
-    template: buildconfig.yml
-    objectname: buildconfig.yml
-    tags:
-      - apply-buildconfig
-
-  - role: openshift/object
-    app: greenwave
     template: configmap.yml
     objectname: configmap.yml
 

@@ -79,7 +79,11 @@ spec:
         image: registry/greenwave:latest
         ports:
         - containerPort: 8081
-        command: ["fedora-messaging", "consume"]
+        command:
+        - "/src/docker/docker-entrypoint.sh"
+        args:
+        - "fedora-messaging"
+        - "consume"
         volumeMounts:
         - name: config-volume
           mountPath: /etc/greenwave
