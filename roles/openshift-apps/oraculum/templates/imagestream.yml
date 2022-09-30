@@ -18,7 +18,8 @@ spec:
   - name: latest
     from:
       kind: DockerImage
-      name: gcr.io/bitnami-containers/redis:latest
+      # docker.io should be okay as bitnami is verified publisher and doesn't undergo rate-limiting
+      name: docker.io/bitnami/redis:latest
 ---
 apiVersion: v1
 kind: ImageStream
