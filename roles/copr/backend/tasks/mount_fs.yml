@@ -26,6 +26,14 @@
       stat: path=/dev/disk/by-label/copr-repo-raid10
       register: stat_repo_fs
 
+    - name: scan the raid volumes
+      when: not stat_repo_fs.stat.exists
+      shell: mdadm --assemble --scan && sleep 5
+
+    - name: stat the ext4 filesystem
+      stat: path=/dev/disk/by-label/copr-repo-raid10
+      register: stat_repo_fs
+
     - name: fail if ext4 filesystem is not found by devmapper
       debug: msg=checked
       failed_when: not stat_repo_fs.stat.exists
