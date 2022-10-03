@@ -30,11 +30,20 @@ CORS_URL = 'https://bodhi.fedoraproject.org'
 MESSAGING = "fedora-messaging"
 {% endif %}
 
+# TODO: This is for backwards compatibility. Remove in the near future.
+import importlib  # noqa: E402
+if importlib.util.find_spec("pymemcache") is None:
+    greenwave_cache_backend = "dogpile.cache.memcached"
+else:
+    greenwave_cache_backend = "dogpile.cache.pymemcache"
+
 CACHE = {
- 'backend': 'dogpile.cache.memcached',
+ 'backend': greenwave_cache_backend,
  'expiration_time': 3600, # 3600 is 1 hour
  'arguments': {
      'url': 'greenwave-memcached:11211',
-     'distributed_lock': True
+     'distributed_lock': True,
+     # Release lock in case the owner was terminated.
+     'lock_timeout': 120,
  }
 }
