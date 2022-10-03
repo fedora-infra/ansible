@@ -1,21 +1,21 @@
 ---
 # Configuration for the notifications consumer
 
-- name: install needed packages
-  package: name={{ item }} state=present
-  with_items:
-  - python-fmn
-  - python-psycopg2
-  - libsemanage-python
-  - python-gssapi
-  - python-requests-gssapi
-  # Needed to produce nice long emails about koji builds
-  - koji
-  when:
-    inventory_hostname.startswith('notifs-backend01.iad2')
-  tags:
-  - notifs
-  - notifs/backend
+#- name: install needed packages
+#  package: name={{ item }} state=present
+#  with_items:
+#  - python-fmn
+#  - python-psycopg2
+#  - libsemanage-python
+#  - python-gssapi
+#  - python-requests-gssapi
+#  # Needed to produce nice long emails about koji builds
+#  - koji
+#  when:
+#    inventory_hostname.startswith('notifs-backend01.iad2')
+#  tags:
+#  - notifs
+#  - notifs/backend
 
 - name: install needed packages
   package: name={{ item }} state=present
@@ -27,8 +27,8 @@
   - python3-requests-gssapi
   # Needed to produce nice long emails about koji builds
   - koji
-  when:
-    inventory_hostname.startswith('notifs-backend02') or env == 'staging'
+    #  when:
+    #inventory_hostname.startswith('notifs-backend02') or env == 'staging'
   tags:
   - notifs
   - notifs/backend
@@ -40,8 +40,8 @@
   tags:
   - notifs
   - notifs/backend
-  when:
-    inventory_hostname.startswith('notifs-backend02') or env == 'staging'
+    #  when:
+    #inventory_hostname.startswith('notifs-backend02') or env == 'staging'
 
 - name: install fedmsg-hub-3 systemd drop-in
   template: src=override.conf.j2 dest=/etc/systemd/system/fedmsg-hub-3.service.d/override.conf owner=root group=root mode=644
@@ -50,8 +50,8 @@
   tags:
   - notifs
   - notifs/backend
-  when:
-    inventory_hostname.startswith('notifs-backend02') or env == 'staging'
+    #  when:
+    #inventory_hostname.startswith('notifs-backend02') or env == 'staging'
 
 - name: hotfix python3-moksha-hub
   copy: >
@@ -62,8 +62,8 @@
   tags:
   - notifs
   - notifs/backend
-  when:
-    inventory_hostname.startswith('notifs-backend02') or env == 'staging'
+    #  when:
+    #inventory_hostname.startswith('notifs-backend02') or env == 'staging'
 
 - name: copy database configuration
   template: >
@@ -77,20 +77,20 @@
   - notifs
   - notifs/backend
 
-- name: Hotfix fmn for fasjson
-  copy: >
-    src=fasjson-port/{{ item }} dest=/usr/lib/python2.7/site-packages/fmn/{{ item }}
-  with_items:
-  - consumer.py
-  - fasjson_client.py
-  - fmn_fasshim.py
-  - tasks.py
-  - util.py
-  when:
-    inventory_hostname.startswith('notifs-backend01.iad') or env != 'staging'
-  tags:
-  - notifs
-  - notifs/backend
+#- name: Hotfix fmn for fasjson
+#  copy: >
+#    src=fasjson-port/{{ item }} dest=/usr/lib/python2.7/site-packages/fmn/{{ item }}
+#  with_items:
+#  - consumer.py
+#  - fasjson_client.py
+#  - fmn_fasshim.py
+#  - tasks.py
+#  - util.py
+#  when:
+#    inventory_hostname.startswith('notifs-backend01.iad') or env != 'staging'
+#  tags:
+#  - notifs
+#  - notifs/backend
 
 - name: Install fmn SSE configuration
   template: >
@@ -98,7 +98,7 @@
     owner=fedmsg group=fedmsg mode=0600
   with_items:
   - fmn.sse.py
-  when: env == "staging"
+#  when: env == "staging"
   notify:
   - restart fedmsg-hub
   tags:
@@ -130,17 +130,17 @@
   - notifs
   - notifs/backend
 
-- name: start the workers and the backend
-  service: name={{item}} enabled=yes state=started
-  with_items:
-  - fmn-backend@1
-  - fmn-worker@1
-  - fmn-worker@2
-  - fmn-worker@3
-  - fmn-worker@4
-  - fmn-worker@5
-  - fmn-worker@6
-  - fmn-celerybeat
-  tags:
-  - notifs
-  - notifs/backend
+#- name: start the workers and the backend
+#  service: name={{item}} enabled=yes state=started
+#  with_items:
+#  - fmn-backend@1
+#  - fmn-worker@1
+#  - fmn-worker@2
+#  - fmn-worker@3
+#  - fmn-worker@4
+#  - fmn-worker@5
+#  - fmn-worker@6
+#  - fmn-celerybeat
+#  tags:
+#  - notifs
+#  - notifs/backend
