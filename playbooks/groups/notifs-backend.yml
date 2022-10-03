@@ -35,6 +35,7 @@
     owner_group: fedmsg,
     service: fedmsg-hub-3,
   # Set up for fedora-messaging
+    }
   - role: rabbit/user
     username: "notifs-backend{{ env_suffix }}"
     sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(fmn|logger)\..*
