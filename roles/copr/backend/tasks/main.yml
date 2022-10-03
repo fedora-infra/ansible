@@ -421,3 +421,8 @@
     name: lighttpd
     groups: resalloc
     append: yes
+
+- name: install daily custom copr-backend crontab
+  copy: src=cron.daily/copr-backend dest=/etc/cron.daily/
+        mode=0755
+  tags: [cron_tasks]
