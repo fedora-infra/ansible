@@ -1,3 +1,35 @@
+---
+- name: raid10 volume on the production machine
+  when: devel
+  tags: mdadm
+  block:
+    - name: install LVM and RAID utilities
+      package:
+        name:
+          - lvm2
+          - mdadm
+      tags:
+        - mdadm
+
+    - name: stat the raid volumes
+      stat:
+        path: "/dev/disk/by-id/{{ item }}"
+      register: stat_raid
+      loop: "{{ copr_backend_data_raid10_volumes }}"
+
+    - name: fail if raid volumes do not exist
+      debug: msg=checked
+      failed_when: not item.stat.exists
+      loop: "{{ stat_raid.results }}"
+
+    - name: stat the ext4 filesystem
+      stat: path=/dev/disk/by-label/copr-repo-raid10
+      register: stat_repo_fs
+
+    - name: fail if ext4 filesystem is not found by devmapper
+      debug: msg=checked
+      failed_when: stat_repo_fs.stat.exists
+
 - name: prepare mount point
   file: state=directory path=/var/lib/copr/public_html
 
