@@ -28,7 +28,7 @@
 
     - name: fail if ext4 filesystem is not found by devmapper
       debug: msg=checked
-      failed_when: stat_repo_fs.stat.exists
+      failed_when: not stat_repo_fs.stat.exists
 
 - name: prepare mount point
   file: state=directory path=/var/lib/copr/public_html
