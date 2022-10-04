@@ -12,7 +12,7 @@
   notify:
   - restart apache
   when:
-    inventory_hostname.startswith('notifs-web01.iad2')
+    inventory_hostname.startswith('notifs-web02.iad2')
   tags:
   - notifs
   - notifs/frontend
@@ -28,7 +28,7 @@
   notify:
   - restart apache
   when:
-    inventory_hostname.startswith('notifs-web02') or env == 'staging'
+    inventory_hostname.startswith('notifs-web01') or env == 'staging'
   tags:
   - notifs
   - notifs/frontend
