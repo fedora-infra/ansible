@@ -58,7 +58,7 @@
       local_action: >
         template
         src="{{ files }}/osbs/dockercfg-{{env}}-secret.j2"
-        dest="/tmp/.dockercfg"
+        dest="/tmp/.dockercfg{{ env }}"
         mode=0400
 
   roles:
@@ -67,7 +67,7 @@
       osbs_secret_name: "v2-registry-dockercfg"
       osbs_secret_type: kubernetes.io/dockercfg
       osbs_secret_files:
-      - source: "/tmp/.dockercfg"
+      - source: "/tmp/.dockercfg{{ env }}"
         dest: .dockercfg
 
   post_tasks:
@@ -75,4 +75,4 @@
       local_action: >
         file
         state=absent
-        path="/tmp/.dockercfg"
+        path="/tmp/.dockercfg{{ env }}"
