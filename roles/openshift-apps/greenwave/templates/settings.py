@@ -45,5 +45,9 @@ CACHE = {
      'distributed_lock': True,
      # Release lock in case the owner was terminated.
      'lock_timeout': 120,
+     # Retry if memcached is temporarily down.
+     'enable_retry_client': True,
+     'retry_attempts': 15,
+     'retry_delay': 2,  # seconds
  }
 }
