@@ -21,9 +21,7 @@ items:
                 httpd \
                 graphviz \
                 fedora-messaging \
-{% if env == 'staging' %}
                 poetry \
-{% endif %}
                 python3-alembic \
                 python3-beautifulsoup4 \
                 python3-arrow \
@@ -55,12 +53,11 @@ items:
                 pushd anitya && \
 {% if env == 'staging' %}
                 git checkout staging && \
-                poetry build && \
-                pip-3 install dist/*.whl && \
 {% else %}
                 git checkout production && \
-                python3 setup.py install && \
 {% endif %}
+                poetry build && \
+                pip-3 install dist/*.whl && \
                 pushd docs && \
                 mkdir -p images && \
                 python3 generate_db_schema && \
@@ -68,7 +65,6 @@ items:
                 mkdir -p ../anitya/static/docs/ && \
                 cp -r _build/html/* ../anitya/static/docs/ && \
                 popd && \
-{% if env == 'staging' %}
                 # Uninstall the existing anitya installation first
                 pip-3 uninstall -y anitya && \
                 # Move bootstrap to correct folder
@@ -76,10 +72,6 @@ items:
                 mv anitya/static/bootstrap-3.3.4-fedora anitya/static/bootstrap && \
                 poetry build && \
                 pip-3 install dist/*.whl && \
-{% else %}
-                python3 setup.py install && \
-                pip-3 install . && \
-{% endif %}
                 popd && \
                 rm -rf anitya
 {% if env == 'staging' %}
@@ -89,11 +81,7 @@ items:
 
         # Hotfix for social_auth-sqlalchemy
         # Could be removed when we switch to something else
-{% if env == 'staging' %}
         RUN sed -i 's/base64.encodestring/base64.encodebytes/g' /usr/local/lib/python3.10/site-packages/social_sqlalchemy/storage.py
-{% else %}
-        RUN sed -i 's/base64.encodestring/base64.encodebytes/g' /usr/local/lib/python3.10/site-packages/social_auth_storage_sqlalchemy-1.1.0-py3.10.egg/social_sqlalchemy/storage.py
-{% endif %}
         RUN mkdir /httpdir
         RUN chmod 777 /httpdir
         EXPOSE 8080

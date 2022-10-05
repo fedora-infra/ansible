@@ -59,7 +59,7 @@
     objectname: route.yml
   - role: openshift/object
     app: release-monitoring
-    template: deploymentconfig.yml
+    file: deploymentconfig.yml
     objectname: deploymentconfig.yml
   - role: openshift/rollout
     app: release-monitoring
