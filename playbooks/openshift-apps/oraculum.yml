@@ -108,7 +108,6 @@
     serviceport: 8080-tcp
     servicename: oraculum-flower
     annotations:
-      haproxy.router.openshift.io/rewrite-target: /_flower/
       haproxy.router.openshift.io/set-forwarded-headers: append
 
   - role: openshift/route
