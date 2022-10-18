@@ -85,6 +85,9 @@ keygen_host={{ keygen_host }}
 # minimum age for builds to be pruned
 prune_days=14
 
+# the pool of pruning workers shouldn't waste all the resources
+prune_workers=4
+
 aws_cloudfront_distribution={{ aws_cloudfront_distribution }}
 
 # logging settings
