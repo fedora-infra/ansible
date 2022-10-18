@@ -40,8 +40,30 @@ product_versions:
 decision_contexts:
   - bodhi_update_push_testing
   - bodhi_update_push_testing_critpath
+  - bodhi_update_push_testing_core_critpath
+  - bodhi_update_push_testing_critical-path-apps_critpath
+  - bodhi_update_push_testing_critical-path-base_critpath
+  - bodhi_update_push_testing_critical-path-deepin-desktop_critpath
+  - bodhi_update_push_testing_critical-path-gnome_critpath
+  - bodhi_update_push_testing_critical-path-kde_critpath
+  - bodhi_update_push_testing_critical-path-lxde_critpath
+  - bodhi_update_push_testing_critical-path-lxqt_critpath
+  - bodhi_update_push_testing_critical-path-server_critpath
+  - bodhi_update_push_testing_critical-path-standard_critpath
+  - bodhi_update_push_testing_critical-path-xfce_critpath
   - bodhi_update_push_stable
   - bodhi_update_push_stable_critpath
+  - bodhi_update_push_stable_core_critpath
+  - bodhi_update_push_stable_critical-path-apps_critpath
+  - bodhi_update_push_stable_critical-path-base_critpath
+  - bodhi_update_push_stable_critical-path-deepin-desktop_critpath
+  - bodhi_update_push_stable_critical-path-gnome_critpath
+  - bodhi_update_push_stable_critical-path-kde_critpath
+  - bodhi_update_push_stable_critical-path-lxde_critpath
+  - bodhi_update_push_stable_critical-path-lxqt_critpath
+  - bodhi_update_push_stable_critical-path-server_critpath
+  - bodhi_update_push_stable_critical-path-standard_critpath
+  - bodhi_update_push_stable_critical-path-xfce_critpath
 subject_type: koji_build
 rules: []
 
@@ -52,8 +74,30 @@ product_versions:
 decision_contexts:
   - bodhi_update_push_testing
   - bodhi_update_push_testing_critpath
+  - bodhi_update_push_testing_core_critpath
+  - bodhi_update_push_testing_critical-path-apps_critpath
+  - bodhi_update_push_testing_critical-path-base_critpath
+  - bodhi_update_push_testing_critical-path-deepin-desktop_critpath
+  - bodhi_update_push_testing_critical-path-gnome_critpath
+  - bodhi_update_push_testing_critical-path-kde_critpath
+  - bodhi_update_push_testing_critical-path-lxde_critpath
+  - bodhi_update_push_testing_critical-path-lxqt_critpath
+  - bodhi_update_push_testing_critical-path-server_critpath
+  - bodhi_update_push_testing_critical-path-standard_critpath
+  - bodhi_update_push_testing_critical-path-xfce_critpath
   - bodhi_update_push_stable
   - bodhi_update_push_stable_critpath
+  - bodhi_update_push_stable_core_critpath
+  - bodhi_update_push_stable_critical-path-apps_critpath
+  - bodhi_update_push_stable_critical-path-base_critpath
+  - bodhi_update_push_stable_critical-path-deepin-desktop_critpath
+  - bodhi_update_push_stable_critical-path-gnome_critpath
+  - bodhi_update_push_stable_critical-path-kde_critpath
+  - bodhi_update_push_stable_critical-path-lxde_critpath
+  - bodhi_update_push_stable_critical-path-lxqt_critpath
+  - bodhi_update_push_stable_critical-path-server_critpath
+  - bodhi_update_push_stable_critical-path-standard_critpath
+  - bodhi_update_push_stable_critical-path-xfce_critpath
 subject_type: bodhi_update
 rules: []
 
@@ -83,11 +127,20 @@ rules:
   - !RemoteRule {}
 
 # For critical path updates in stable and Branched, we require passes
-# for all openQA update tests. This policy contains the tests we run
-# on all releases; there's an additional policy which contains tests
-# not run on the oldest stable release (see below).
+# for all openQA update tests. These policies contains the tests we run
+# on all releases; there are some additional policies which contain
+# tests not run on the oldest stable release (see below). Note the
+# non-grouped `bodhi_update_push_testing_critpath` and
+# `bodhi_update_push_stable_critpath` contexts are used when Bodhi is
+# using a non-grouped critpath source (static config file, or PDC);
+# when Bodhi is using a grouped critpath source, it will query on the
+# grouped contexts. The policies handle both cases. Obviously, all
+# the policies are applied to the non-grouped contexts.
 --- !Policy
-id: "bodhiupdate_bodhipush_openqa"
+id: "bodhiupdate_bodhipush_openqa_core"
+# these tests are gating for updates in the central critpath groups:
+# core, base, standard. those are the kinds of updates that might
+# break this stuff
 product_versions:
   # FIXME: we would use some kind of matching here, but we don't want
   # to include whatever version Rawhide is, as openQA tests don't run
@@ -98,7 +151,13 @@ product_versions:
   - fedora-37
 decision_contexts:
   - bodhi_update_push_testing_critpath
+  - bodhi_update_push_testing_core_critpath
+  - bodhi_update_push_testing_critical-path-base_critpath
+  - bodhi_update_push_testing_critical-path-standard_critpath
   - bodhi_update_push_stable_critpath
+  - bodhi_update_push_stable_core_critpath
+  - bodhi_update_push_stable_critical-path-base_critpath
+  - bodhi_update_push_stable_critical-path-standard_critpath
 subject_type: bodhi_update
 rules:
 # This list needs to stay synced with openQA if tests are added or renamed.
@@ -107,6 +166,66 @@ rules:
   - !PassingTestCaseRule {test_case_name: update.install_default_update_netinst, scenario: "fedora.updates-everything-boot-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.install_default_update_netinst, scenario: "fedora.updates-everything-boot-iso.x86_64.uefi"}
   - !PassingTestCaseRule {test_case_name: update.installer_build, scenario: "fedora.updates-everything-boot-iso.x86_64.64bit"}
+
+--- !Policy
+id: "bodhiupdate_bodhipush_openqa_workstation"
+# these tests are gating for updates in core, base, and gnome critpath
+# groups. workstation does not include standard, so these aren't gating
+# for that group
+product_versions:
+  - fedora-35
+  - fedora-36
+  - fedora-37
+decision_contexts:
+  - bodhi_update_push_testing_critpath
+  - bodhi_update_push_stable_critpath
+  - bodhi_update_push_testing_core_critpath
+  - bodhi_update_push_stable_core_critpath
+  - bodhi_update_push_testing_critical-path-base_critpath
+  - bodhi_update_push_stable_critical-path-base_critpath
+  - bodhi_update_push_testing_critical-path-gnome_critpath
+  - bodhi_update_push_stable_critical-path-gnome_critpath
+
+subject_type: bodhi_update
+rules:
+# This list needs to stay synced with openQA if tests are added or renamed.
+  - !PassingTestCaseRule {test_case_name: update.base_reboot_unmount, scenario: "fedora.updates-workstation.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.base_selinux, scenario: "fedora.updates-workstation.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.base_service_manipulation, scenario: "fedora.updates-workstation.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.base_services_start, scenario: "fedora.updates-workstation.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.base_system_logging, scenario: "fedora.updates-workstation.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.base_update_cli, scenario: "fedora.updates-workstation.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.desktop_background, scenario: "fedora.updates-workstation.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.desktop_browser, scenario: "fedora.updates-workstation.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.desktop_printing, scenario: "fedora.updates-workstation.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.desktop_terminal, scenario: "fedora.updates-workstation.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.desktop_update_graphical, scenario: "fedora.updates-workstation.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.install_default_update_live, scenario: "fedora.updates-workstation-live-iso.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.install_default_update_live, scenario: "fedora.updates-workstation-live-iso.x86_64.uefi"}
+  - !PassingTestCaseRule {test_case_name: update.live_build, scenario: "fedora.updates-workstation-live-iso.x86_64.64bit"}
+
+--- !Policy
+id: "bodhiupdate_bodhipush_openqa_kde"
+# these tests are gating for updates in core, base, standard and kde
+# critpath groups.
+product_versions:
+  - fedora-35
+  - fedora-36
+  - fedora-37
+decision_contexts:
+  - bodhi_update_push_testing_critpath
+  - bodhi_update_push_stable_critpath
+  - bodhi_update_push_testing_core_critpath
+  - bodhi_update_push_stable_core_critpath
+  - bodhi_update_push_testing_critical-path-base_critpath
+  - bodhi_update_push_stable_critical-path-base_critpath
+  - bodhi_update_push_testing_critical-path-kde_critpath
+  - bodhi_update_push_stable_critical-path-kde_critpath
+  - bodhi_update_push_testing_critical-path-standard_critpath
+  - bodhi_update_push_stable_critical-path-standard_critpath
+subject_type: bodhi_update
+rules:
+# This list needs to stay synced with openQA if tests are added or renamed.
   - !PassingTestCaseRule {test_case_name: update.base_reboot_unmount, scenario: "fedora.updates-kde.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.base_selinux, scenario: "fedora.updates-kde.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.base_service_manipulation, scenario: "fedora.updates-kde.x86_64.64bit"}
@@ -121,6 +240,29 @@ rules:
   - !PassingTestCaseRule {test_case_name: update.install_default_update_live, scenario: "fedora.updates-kde-live-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.install_default_update_live, scenario: "fedora.updates-kde-live-iso.x86_64.uefi"}
   - !PassingTestCaseRule {test_case_name: update.live_build, scenario: "fedora.updates-kde-live-iso.x86_64.64bit"}
+
+--- !Policy
+id: "bodhiupdate_bodhipush_openqa_server"
+# these tests are gating for updates in core, base, standard and server
+# critpath groups.
+product_versions:
+  - fedora-35
+  - fedora-36
+  - fedora-37
+decision_contexts:
+  - bodhi_update_push_testing_critpath
+  - bodhi_update_push_stable_critpath
+  - bodhi_update_push_testing_core_critpath
+  - bodhi_update_push_stable_core_critpath
+  - bodhi_update_push_testing_critical-path-base_critpath
+  - bodhi_update_push_stable_critical-path-base_critpath
+  - bodhi_update_push_testing_critical-path-server_critpath
+  - bodhi_update_push_stable_critical-path-server_critpath
+  - bodhi_update_push_testing_critical-path-standard_critpath
+  - bodhi_update_push_stable_critical-path-standard_critpath
+subject_type: bodhi_update
+rules:
+# This list needs to stay synced with openQA if tests are added or renamed.
   - !PassingTestCaseRule {test_case_name: update.advisory_boot, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.base_reboot_unmount, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.base_selinux, scenario: "fedora.updates-server.x86_64.64bit"}
@@ -142,38 +284,49 @@ rules:
   - !PassingTestCaseRule {test_case_name: update.server_remote_logging_server, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.server_role_deploy_database_server, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.server_role_deploy_domain_controller, scenario: "fedora.updates-server.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: update.base_reboot_unmount, scenario: "fedora.updates-workstation.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: update.base_selinux, scenario: "fedora.updates-workstation.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: update.base_service_manipulation, scenario: "fedora.updates-workstation.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: update.base_services_start, scenario: "fedora.updates-workstation.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: update.base_system_logging, scenario: "fedora.updates-workstation.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: update.base_update_cli, scenario: "fedora.updates-workstation.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: update.desktop_background, scenario: "fedora.updates-workstation.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: update.desktop_browser, scenario: "fedora.updates-workstation.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: update.desktop_printing, scenario: "fedora.updates-workstation.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: update.desktop_terminal, scenario: "fedora.updates-workstation.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: update.desktop_update_graphical, scenario: "fedora.updates-workstation.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: update.install_default_update_live, scenario: "fedora.updates-workstation-live-iso.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: update.install_default_update_live, scenario: "fedora.updates-workstation-live-iso.x86_64.uefi"}
-  - !PassingTestCaseRule {test_case_name: update.live_build, scenario: "fedora.updates-workstation-live-iso.x86_64.64bit"}
 
-# For critical path updates in stable and Branched, we require passes
-# for all openQA update tests. This policy contains upgrade tests that
-# are not run on the oldest stable release (because the tests would
-# need to start from an EOL release and we don't want to maintain that)
+# These policies contains openQA upgrade tests that are not run on the
+# oldest stable release (because the tests would need to start from an
+# EOL release and we don't want to maintain that)
 --- !Policy
-id: "bodhiupdate_bodhipush_openqa_upgrade"
+id: "bodhiupdate_bodhipush_openqa_upgrade_server"
 product_versions:
   - fedora-36
   - fedora-37
 decision_contexts:
   - bodhi_update_push_testing_critpath
   - bodhi_update_push_stable_critpath
+  - bodhi_update_push_testing_core_critpath
+  - bodhi_update_push_stable_core_critpath
+  - bodhi_update_push_testing_critical-path-base_critpath
+  - bodhi_update_push_stable_critical-path-base_critpath
+  - bodhi_update_push_testing_critical-path-server_critpath
+  - bodhi_update_push_stable_critical-path-server_critpath
+  - bodhi_update_push_testing_critical-path-standard_critpath
+  - bodhi_update_push_stable_critical-path-standard_critpath
 subject_type: bodhi_update
 rules:
 # This list needs to stay synced with openQA if tests are added or renamed.
   - !PassingTestCaseRule {test_case_name: update.upgrade_realmd_client, scenario: "fedora.updates-server-upgrade.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.upgrade_server_domain_controller, scenario: "fedora.updates-server-upgrade.x86_64.64bit"}
+
+--- !Policy
+id: "bodhiupdate_bodhipush_openqa_upgrade_workstation"
+product_versions:
+  - fedora-36
+  - fedora-37
+decision_contexts:
+  - bodhi_update_push_testing_critpath
+  - bodhi_update_push_stable_critpath
+  - bodhi_update_push_testing_core_critpath
+  - bodhi_update_push_stable_core_critpath
+  - bodhi_update_push_testing_critical-path-base_critpath
+  - bodhi_update_push_stable_critical-path-base_critpath
+  - bodhi_update_push_testing_critical-path-gnome_critpath
+  - bodhi_update_push_stable_critical-path-gnome_critpath
+subject_type: bodhi_update
+rules:
+# This list needs to stay synced with openQA if tests are added or renamed.
   - !PassingTestCaseRule {test_case_name: update.upgrade_desktop_encrypted_64bit, scenario: "fedora.updates-workstation-upgrade.x86_64.64bit"}
 
 # This policy lists tests that are expected to pass for a Rawhide compose to
