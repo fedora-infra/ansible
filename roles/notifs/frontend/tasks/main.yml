@@ -138,6 +138,15 @@
   - notifs/frontend
   - selinux
 
+- name: ensure selinux let's httpd talk to ipsilon
+  seboolean: name={{item}} state=yes persistent=yes
+  with_items:
+  - httpd_can_network_connect
+  tags:
+  - notifs
+  - notifs/frontend
+  - selinux
+
 - name: Install SAR script
   copy:
     src: fmn-sar.py
