@@ -7,4 +7,5 @@
     ProxyPass /apache-status !
 {% endif %}
     Include conf.d/openqa-common.inc
+    LimitRequestLine 16000
 </VirtualHost>
