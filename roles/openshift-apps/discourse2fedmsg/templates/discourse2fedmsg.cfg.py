@@ -4,3 +4,4 @@ DISCOURSE2FEDMSG_SECRET = "{{ discourse2fedmsg_stg_webhook_secret }}"
 {% else %}
 DISCOURSE2FEDMSG_SECRET = "{{ discourse2fedmsg_webhook_secret }}"
 {% endif %}
+SESSION_COOKIE_SECURE = False
