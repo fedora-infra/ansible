@@ -1,0 +1,26 @@
+---
+- name: Create the CentosCIAuthorization operator keytab path
+  file:
+    path: "/etc/openshift_apps/centos-ci-authorization/"
+    state: directory
+    owner: root
+    group: root
+    mode: 0750
+
+- name: Acquire a keytab for staging
+  include_role:
+    name: keytab/service
+  vars:
+    kt_location:
+      "/etc/openshift_apps/centos-ci-authorization/centos-ci-authorization-operator-stg-keytab.kt"
+    service: "centos-ci-authorization-operator-stg"
+    host: "{{centosci_stg_ocp_api_hostname}}"
+
+- name: Acquire a keytab for prod
+  include_role:
+    name: keytab/service
+  vars:
+    kt_location:
+      "/etc/openshift_apps/centos-ci-authorization/centos-ci-authorization-operator-prod-keytab.kt"
+    service: "centos-ci-authorization-operator-prod"
+    host: "{{centosci_prod_ocp_api_hostname}}"

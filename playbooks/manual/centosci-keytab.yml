@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  user: root
+  gather_facts: false
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  tasks:
+    - name: Centos CI Keytab Creation Role
+      include_role:
+        name: centosci-keytab
+        tasks_from: main
