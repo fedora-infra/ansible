@@ -197,3 +197,12 @@ sidetag =
     tag epel8-build :: allow
     tag epel7-build :: allow
     all :: deny
+
+{% if env == "staging" %}
+# Policy for building scratch builds
+build_from_scm =
+    # allow scratch build for anything from anywhere
+    bool scratch :: allow
+    # allow to build from forks
+    match scm_type GIT GIT+SSH && match scm_host src.fedoraproject.org/forks/* :: allow
+{% endif %}
