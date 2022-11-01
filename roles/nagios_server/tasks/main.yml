@@ -323,7 +323,7 @@
 # This one may go to being just a regular config file if we can make remote monitoring work
 ## Copy over system configs
 - name: Copy specialized nrpe.cfg for nagios server
-  template: src=nrpe/nrpe.cfg.j2 dest=/etc/nagios/nrpe.cfg 
+  template: src=nrpe/nrpe.cfg.j2 dest=/etc/nagios/nrpe.cfg
   notify:
   - restart nrpe
   tags:
@@ -419,6 +419,7 @@
     - rdu-hosts.cfg
     - iad2-external.cfg
     - aws-hosts.cfg
+    - ibiblio-hosts-ipv6.cfg
   when: env == "production"
   tags:
   - nagios_server
