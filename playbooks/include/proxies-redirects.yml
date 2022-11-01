@@ -892,3 +892,10 @@
     when: env == 'staging'
     tags:
     - taskotron
+
+  # fedora calendar redirect
+  - role: httpd/redirect
+    shortname: fedcalendar
+    website: apps.fedoraproject.org
+    path: /calendar
+    target: calendar.fedoraproject.org
