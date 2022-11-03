@@ -83,12 +83,12 @@ config = {
     "fmn.rules.utils.pkgdb_url": "http://pkgdb01.iad2.fedoraproject.org/pkgdb/api",
     {% endif %}
     "fmn.rules.cache": {
-	"backend": "dogpile.cache.redis",
+	"backend": "dogpile.cache.pylibmc",
+        "expiration_time": 60*60*24,   # 1 day
         "arguments": {
-            "host": "localhost",
-            "port": 6379,
-            "db": 0,
-            "redis_expiration_time": 60*60*24,   # 1 day
+            "url": ["127.0.0.1"],
+            "binary": True,
+            "behaviors": {"tcp_nodelay": True, "ketama": True},
         },
     },
 

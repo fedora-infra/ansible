@@ -24,6 +24,7 @@
   - python-psycopg2
   - python3-libsemanage
   - python3-gssapi
+  - python3-pylibmc
   - python3-requests-gssapi
   # Needed to produce nice long emails about koji builds
   - koji
@@ -42,6 +43,11 @@
   - notifs/backend
     #  when:
     #inventory_hostname.startswith('notifs-backend02') or env == 'staging'
+
+- name: ensure memcached is running
+  systemd:
+    state: started
+    name: memcached
 
 - name: install fedmsg-hub-3 systemd drop-in
   template: src=override.conf.j2 dest=/etc/systemd/system/fedmsg-hub-3.service.d/override.conf owner=root group=root mode=644
