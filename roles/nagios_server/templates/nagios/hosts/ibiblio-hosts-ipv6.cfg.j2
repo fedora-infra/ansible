@@ -1,13 +1,12 @@
-{% for host in groups['all']|sort %}
-{% if hostvars[host].datacenter == 'ibiblio' and hostvars[host].nagios_Can_Connect == true %}
-define host {
-{% if vars['nagios_location'] == 'iad2_internal' %}
-   use                     defaulttemplate
-{% else %}
-  use                          mincheck
+## This template currently only works for noc02. If noc01 gets ipv6 then
+## it will need to be revisited.
+
+{% for host in groups['all']|sort %} {%
+if hostvars[host].datacenter == 'ibiblio' and
+hostvars[host].nagios_Can_Connect == true %} define host { use mincheck
 {% endif %}
 
-   host_name               {{ host }}
+   host_name               {{ host }}-ipv6
 {% if hostvars[host].ansible_hostname is defined %}
    alias                   {{ hostvars[host].ansible_hostname }}
 {% else %}

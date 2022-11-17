@@ -419,7 +419,6 @@
     - rdu-hosts.cfg
     - iad2-external.cfg
     - aws-hosts.cfg
-    - ibiblio-hosts-ipv6.cfg
   when: env == "production"
   tags:
   - nagios_server
@@ -457,6 +456,7 @@
   template: src=nagios/hosts/{{item}}.j2 dest=/etc/nagios/hosts/{{item}} mode=0644 owner=root group=root
   with_items:
     - iad2-external.cfg
+    - ibiblio-hosts-ipv6.cfg
   when: env == "production" and nagios_location == "external"
   tags:
   - nagios_server
