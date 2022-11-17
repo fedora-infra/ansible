@@ -4,10 +4,10 @@
 {% for host in groups['all']|sort %}
 {% if hostvars[host].datacenter == 'ibiblio' and hostvars[host].nagios_Can_Connect == true %}
 define host {
-   use                     mincheck
-   host_name               {{ host }}-ipv6
+   use                     mincheck6
+   host_name               {{ hostvars[host].ansible_hostname }}-ipv6.fedoraproject.org
 {% if hostvars[host].ansible_hostname is defined %}
-   alias                   {{ hostvars[host].ansible_hostname }}
+   alias                   {{ hostvars[host].ansible_hostname }}-ipv6
 {% else %}
    alias                   {{ host }}
 {% endif %}
