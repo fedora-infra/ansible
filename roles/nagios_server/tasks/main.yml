@@ -149,7 +149,7 @@
 
 ## Copy over the template command scripts
 - name: Copy /etc/nagios/commands (templates)
-  templates: src=nagios/commands/{{ item }} dest=/etc/nagios/commands/{{ item }}
+  template: src=nagios/commands/{{ item }} dest=/etc/nagios/commands/{{ item }}
   with_items:
     - ping.cfg
   tags:
