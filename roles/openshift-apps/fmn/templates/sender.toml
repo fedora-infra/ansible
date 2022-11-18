@@ -3,6 +3,11 @@
 amqp_url = "amqps://fmn{{ env_suffix }}:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Ffmn"
 queue = "email"
 
+[tls]
+ca_cert = "/etc/pki/fedora-messaging/ca/cacert.pem"
+certfile = "/etc/pki/fedora-messaging/crt/fmn-cert.pem"
+keyfile = "/etc/pki/fedora-messaging/key/fmn-key.pem"
+
 [handler]
 class = "fmn.sender.email:EmailHandler"
 # class = "fmn.sender.irc:IRCHandler"

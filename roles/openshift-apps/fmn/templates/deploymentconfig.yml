@@ -159,14 +159,14 @@ spec:
             - name: etc-fmn
               mountPath: "/etc/fmn"
               readOnly: true
-            - name: rabbitmq-ca-volume
-              mountPath: /etc/pki/rabbitmq/ca
+            - name: fedora-messaging-ca-volume
+              mountPath: /etc/pki/fedora-messaging/ca
               readOnly: true
-            - name: rabbitmq-key-volume
-              mountPath: /etc/pki/rabbitmq/key
+            - name: fedora-messaging-key-volume
+              mountPath: /etc/pki/fedora-messaging/key
               readOnly: true
-            - name: rabbitmq-crt-volume
-              mountPath: /etc/pki/rabbitmq/crt
+            - name: fedora-messaging-crt-volume
+              mountPath: /etc/pki/fedora-messaging/crt
               readOnly: true
           env:
             - name: APP_SCRIPT
@@ -175,15 +175,15 @@ spec:
         - name: etc-fmn
           configMap:
             name: fmn
-        - name: rabbitmq-ca-volume
-          mountPath: /etc/pki/rabbitmq/ca
-          readOnly: true
-        - name: rabbitmq-key-volume
-          mountPath: /etc/pki/rabbitmq/key
-          readOnly: true
-        - name: rabbitmq-crt-volume
-          mountPath: /etc/pki/rabbitmq/crt
-          readOnly: true
+        - name: fedora-messaging-ca-volume
+          secret:
+            secretName: fedora-messaging-ca
+        - name: fedora-messaging-key-volume
+          secret:
+            secretName: fedora-messaging-key
+        - name: fedora-messaging-crt-volume
+          secret:
+            secretName: fedora-messaging-crt
   triggers:
     - type: ImageChange
       imageChangeParams:

@@ -3,9 +3,9 @@ callback = "fmn.consumer:Consumer"
 passive_declares = true
 
 [tls]
-ca_cert = "/etc/pki/rabbitmq/ca/rabbitmq-ca.crt"
-keyfile = "/etc/pki/rabbitmq/key/rabbitmq-fmn.key"
-certfile = "/etc/pki/rabbitmq/crt/rabbitmq-fmn.crt"
+ca_cert = "/etc/pki/fedora-messaging/ca/cacert.pem"
+certfile = "/etc/pki/fedora-messaging/crt/fmn-cert.pem"
+keyfile = "/etc/pki/fedora-messaging/key/fmn-key.pem"
 
 
 [client_properties]
