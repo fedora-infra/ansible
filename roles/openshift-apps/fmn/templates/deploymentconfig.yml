@@ -171,28 +171,7 @@ spec:
           env:
             - name: APP_SCRIPT
               value: ".s2i/run-consumer.sh"
-      volumes:
-        - name: etc-fmn
-          configMap:
-            name: fmn-config
-        - name: rabbitmq-ca-volume
-          mountPath: /etc/pki/rabbitmq/ca
-          readOnly: true
-        - name: rabbitmq-key-volume
-          mountPath: /etc/pki/rabbitmq/key
-          readOnly: true
-        - name: rabbitmq-crt-volume
-          mountPath: /etc/pki/rabbitmq/crt
-          readOnly:
-        - name: rabbitmq-ca-volume
-          secret:
-            secretName: rabbitmq-ca
-        - name: rabbitmq-key-volume
-          secret:
-            secretName: rabbitmq-key
-        - name: rabbitmq-crt-volume
-          secret:
-            secretName: rabbitmq-cert
+        # No need to list the volumes again
   triggers:
     - type: ImageChange
       imageChangeParams:
@@ -244,28 +223,7 @@ spec:
           env:
             - name: APP_SCRIPT
               value: ".s2i/run-sender-email.sh"
-      volumes:
-        - name: etc-fmn
-          configMap:
-            name: fmn-config
-        - name: rabbitmq-ca-volume
-          mountPath: /etc/pki/rabbitmq/ca
-          readOnly: true
-        - name: rabbitmq-key-volume
-          mountPath: /etc/pki/rabbitmq/key
-          readOnly: true
-        - name: rabbitmq-crt-volume
-          mountPath: /etc/pki/rabbitmq/crt
-          readOnly:
-        - name: rabbitmq-ca-volume
-          secret:
-            secretName: rabbitmq-ca
-        - name: rabbitmq-key-volume
-          secret:
-            secretName: rabbitmq-key
-        - name: rabbitmq-crt-volume
-          secret:
-            secretName: rabbitmq-cert
+      # No need to list the volumes again
   triggers:
     - type: ImageChange
       imageChangeParams:
