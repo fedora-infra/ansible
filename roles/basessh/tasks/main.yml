@@ -109,7 +109,7 @@
 
 - name: Set lists of certs to sign to empty
   set_fact:
-    certs_to_sign: ""
+    certs_to_sign: "[]"
   tags:
   - basessh
   - sshd_cert
