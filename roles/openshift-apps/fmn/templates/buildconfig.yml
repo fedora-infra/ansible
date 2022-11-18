@@ -32,10 +32,7 @@ spec:
   - type: ConfigChange
   - type: ImageChange
   - type: GitHub
-{% if fmn_stg_github_secret is defined and env == 'staging' %}
+{% if env == 'staging' %}
     github:
-      secret: "{{ fmn_stg_github_secret }}"
-{% elif fmn_github_secret is defined and env == 'production' %}
-    github:
-      secret: "{{ fmn_github_secret }}"
+      secretReference: fmn-github-webook
 {% endif %}
