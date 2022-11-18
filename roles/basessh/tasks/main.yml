@@ -107,16 +107,16 @@
   - sshd
   - base
 
-#- name: Set lists of certs to sign to empty
-#  set_fact:
-#    certs_to_sign: "[]"
-#  tags:
-#  - basessh
-#  - sshd_cert
-#  - sshd_config
-#  - config
-#  - sshd
-#  - base
+- name: Set lists of certs to sign to empty
+  set_fact:
+    certs_to_sign: ""
+  tags:
+  - basessh
+  - sshd_cert
+  - sshd_config
+  - config
+  - sshd
+  - base
 
 - name: Set list of certs to sign
   set_fact:
