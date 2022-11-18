@@ -175,7 +175,7 @@
 - name: Get public keys for certs to sign
   fetch: src="{{item}}.pub"
          dest="{{pubkeydir}}"
-         fail_on_missing=true
+         fail_on_missing=false
   with_items: "{{certs_to_sign}}"
   tags:
   - basessh
