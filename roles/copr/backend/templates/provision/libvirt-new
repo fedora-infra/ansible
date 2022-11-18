@@ -308,6 +308,7 @@ class LibvirtSpawner:
             "type ethernet autoconnect no",
             f"nmcli con modify '{con_name}' ipv6.address {ipv6_addr}",
             f"nmcli con modify '{con_name}' ipv6.gateway {ipv6_gw}",
+            f"nmcli con modify '{con_name}' ipv6.method manual",
             f"nmcli con modify '{con_name}' ipv4.method disabled",
             # Sometimes 'con up' fails since device doesn't exist yet, for some
             # reason ppc64 machines go directly to "connecting" state, while on
