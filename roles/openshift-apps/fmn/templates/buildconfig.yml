@@ -34,5 +34,6 @@ spec:
   - type: GitHub
 {% if env == 'staging' %}
     github:
-      secretReference: fmn-github-webook
+      secretReference:
+        name: fmn-github-webook
 {% endif %}
