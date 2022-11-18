@@ -37,7 +37,6 @@ spec:
           env:
             - name: APP_SCRIPT
               value: ".s2i/run-frontend.sh"
-
       volumes:
         - name: httpdir-volume
           emptyDir: {}
@@ -281,27 +280,27 @@ spec:
         deploymentconfig: sendria
     spec:
       containers:
-      - name: sendria
-        image: sendria:latest
-        ports:
-        - containerPort: 1025
-        - containerPort: 1080
-        resources: {}
-        readinessProbe:
-          timeoutSeconds: 1
-          initialDelaySeconds: 30
-          httpGet:
-            path: /
-            port: 1080
-        livenessProbe:
-          timeoutSeconds: 1
-          initialDelaySeconds: 40
-          httpGet:
-            path: /
-            port: 1080
+        - name: sendria
+          image: sendria:latest
+          ports:
+            - containerPort: 1025
+            - containerPort: 1080
+          resources: {}
+          readinessProbe:
+            timeoutSeconds: 1
+            initialDelaySeconds: 30
+            httpGet:
+              path: /
+              port: 1080
+          livenessProbe:
+            timeoutSeconds: 1
+            initialDelaySeconds: 40
+            httpGet:
+              path: /
+              port: 1080
   triggers:
-  - type: ConfigChange
-  - type: ImageChange
+    - type: ConfigChange
+    - type: ImageChange
       imageChangeParams:
         automatic: true
         containerNames:
