@@ -8,19 +8,19 @@ items:
   - apiVersion: v1
     kind: ImageStream
     metadata:
-      name: ubi8-python-310
-      spec:
-        lookupPolicy:
-          local: false
-        tags:
-          - name: latest
-            from:
-              kind: DockerImage
-              name: registry.access.redhat.com/ubi8/python-310:latest
-            importPolicy:
-              scheduled: true
-            referencePolicy:
-              type: Source
+      name: python-310
+    spec:
+      lookupPolicy:
+        local: false
+      tags:
+        - name: latest
+          from:
+            kind: DockerImage
+            name: quay.io/fedora/python-310:latest
+          importPolicy:
+            scheduled: true
+          referencePolicy:
+            type: Source
   - apiVersion: v1
     kind: ImageStream
     metadata:
@@ -30,4 +30,4 @@ items:
         - name: latest
           from:
             kind: DockerImage
-            name: hub.docker.com/msztolcman/sendria:v2.2.2.0
+            name: msztolcman/sendria:v2.2.2.0

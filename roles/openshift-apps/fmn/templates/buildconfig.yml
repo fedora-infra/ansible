@@ -22,8 +22,9 @@ spec:
     sourceStrategy:
       from:
         kind: ImageStreamTag
-        name: python:3.10-ubi8
-        namespace: openshift
+        # name: python:3.10
+        # namespace: openshift
+        name: python-310
   output:
     to:
       kind: ImageStreamTag
