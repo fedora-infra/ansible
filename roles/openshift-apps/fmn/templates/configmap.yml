@@ -1,0 +1,19 @@
+{% macro load_file(filename) %}{% include filename %}{%- endmacro -%}
+---
+apiVersion: v1
+kind: List
+metadata: {}
+items:
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: fmn
+    labels:
+      app: fmn
+  data:
+    fmn.cfg: |-
+      {{ load_file('fmn.cfg') | indent(6) }}
+    consumer.toml: |-
+      {{ load_file('consumer.toml') | indent(6) }}
+    sender.toml: |-
+      {{ load_file('sender.toml') | indent(6) }}

@@ -1,0 +1,41 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: fmn
+  labels:
+    app: fmn
+    build: fmn
+spec:
+  runPolicy: Serial
+  source:
+    type: Git
+    git:
+      uri: https://github.com/fedora-infra/fmn.git
+{% if env == "staging" %}
+      ref: fmn-next
+{% else %}
+      ref: stable
+{% endif %}
+    contextDir: /
+  strategy:
+    type: Source
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: python:3.10-ubi8
+        namespace: openshift
+  output:
+    to:
+      kind: ImageStreamTag
+      name: fmn:latest
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+  - type: GitHub
+{% if fmn_stg_github_secret is defined and env == 'staging' %}
+    github:
+      secret: "{{ fmn_stg_github_secret }}"
+{% elif fmn_github_secret is defined and env == 'production' %}
+    github:
+      secret: "{{ fmn_github_secret }}"
+{% endif %}

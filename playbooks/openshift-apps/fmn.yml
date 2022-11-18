@@ -1,0 +1,125 @@
+- name: setup the database
+  hosts: db01.iad2.fedoraproject.org:db01.stg.iad2.fedoraproject.org
+  gather_facts: no
+  become: yes
+  become_user: postgres
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - /srv/private/ansible/vars.yml
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  tasks:
+    - name: FMN DB user
+      postgresql_user:
+        name: fmn
+        password: "{{ (env == 'production')|ternary(fmn_prod_db_password, fmn_stg_db_password) }}"
+    - name: FMN database creation
+      postgresql_db:
+        name: fmn
+        owner: fmn
+        encoding: UTF-8
+
+- name: make the app be real
+  # Only staging for now
+  # hosts: os_control_stg:os_control
+  hosts: os_control_stg
+  user: root
+  gather_facts: False
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - /srv/private/ansible/vars.yml
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  vars:
+
+  roles:
+    - role: openshift/project
+      app: fmn
+      description: "Fedora Messaging Notifications"
+      appowners:
+        - abompard
+        - ryanlerch
+        - nphilipp
+      tags:
+        - apply-appowners
+
+    - role: openshift/object
+      app: fmn
+      file: imagestream.yml
+      objectname: imagestream.yml
+
+    - role: openshift/object
+      app: fmn
+      template: buildconfig.yml
+      objectname: buildconfig.yml
+
+    - role: openshift/object
+      app: fmn
+      template: configmap.yml
+      objectname: configmap.yml
+
+    - role: openshift/object
+      app: fmn
+      file: service.yml
+      objectname: service.yml
+
+    - role: openshift/route
+      app: fmn
+      routename: frontend
+      host: "fmn.apps.ocp{{ env_suffix }}.fedoraproject.org"
+      servicename: frontend
+      serviceport: web
+      annotations:
+        haproxy.router.openshift.io/timeout: 5m
+
+    - role: openshift/route
+      app: fmn
+      routename: api
+      host: "fmn-api.apps.ocp{{ env_suffix }}.fedoraproject.org"
+      servicename: api
+      serviceport: web
+      annotations:
+        haproxy.router.openshift.io/timeout: 5m
+
+    - role: openshift/route
+      app: fmn
+      routename: sendria
+      host: "fmn-email.apps.ocp{{ env_suffix }}.fedoraproject.org"
+      servicename: sendria
+      serviceport: web
+      annotations:
+        haproxy.router.openshift.io/timeout: 5m
+
+    - role: openshift/object
+      app: fmn
+      template: secrets.yml
+      objectname: secrets.yml
+
+    - role: openshift/object
+      app: fmn
+      template: secret-webhook.yml
+      objectname: secret-webhook.yml
+
+    # Fedora Messaging
+    - role: openshift/secret-file
+      app: fmn
+      secret_name: fedora-messaging-ca
+      key: cacert.pem
+      privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    - role: openshift/secret-file
+      app: fmn
+      secret_name: fedora-messaging-crt
+      key: fmn-cert.pem
+      privatefile: "rabbitmq/{{env}}/pki/issued/fmn{{env_suffix}}.crt"
+    - role: openshift/secret-file
+      app: fmn
+      secret_name: fedora-messaging-key
+      key: fmn-key.pem
+      privatefile: "rabbitmq/{{env}}/pki/private/fmn{{env_suffix}}.key"
+
+    # Deployment config
+    - role: openshift/object
+      app: fmn
+      template: deploymentconfig.yml
+      objectname: deploymentconfig.yml
