@@ -8,6 +8,9 @@
    - "/srv/private/ansible/vars.yml"
    - /srv/private/ansible/files/openstack/passwords.yml
 
+  handlers:
+  - import_tasks: "{{ handlers_path }}/restart_services.yml"
+
   tasks:
   # - import_tasks: "{{ tasks_path }}/persistent_cloud.yml"
   #   when: datacenter != "aws"
