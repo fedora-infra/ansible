@@ -42,7 +42,7 @@
     host: "teamsilverblue.org"
     serviceport: 8080-tcp
     servicename: silverblue
-    when: env == "production" 
+    when: env == "production"
 
   - role: openshift/route
     app: silverblue
