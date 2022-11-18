@@ -110,15 +110,6 @@ spec:
         - name: rabbitmq-crt-volume
           mountPath: /etc/pki/rabbitmq/crt
           readOnly:
-        - name: rabbitmq-ca-volume
-          secret:
-            secretName: rabbitmq-ca
-        - name: rabbitmq-key-volume
-          secret:
-            secretName: rabbitmq-key
-        - name: rabbitmq-crt-volume
-          secret:
-            secretName: rabbitmq-cert
   triggers:
     - type: ImageChange
       imageChangeParams:
