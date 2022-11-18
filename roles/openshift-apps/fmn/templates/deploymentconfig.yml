@@ -88,6 +88,16 @@ spec:
             - name: etc-fmn
               mountPath: "/etc/fmn"
               readOnly: true
+            - name: rabbitmq-ca-volume
+              mountPath: /etc/pki/rabbitmq/ca
+              readOnly: true
+            - name: rabbitmq-key-volume
+              mountPath: /etc/pki/rabbitmq/key
+              readOnly: true
+            - name: rabbitmq-crt-volume
+              mountPath: /etc/pki/rabbitmq/crt
+              readOnly: true
+
           env:
             - name: APP_SCRIPT
               value: ".s2i/run-api.sh"
@@ -109,7 +119,7 @@ spec:
           readOnly: true
         - name: rabbitmq-crt-volume
           mountPath: /etc/pki/rabbitmq/crt
-          readOnly:
+          readOnly: true
   triggers:
     - type: ImageChange
       imageChangeParams:
@@ -162,7 +172,19 @@ spec:
           env:
             - name: APP_SCRIPT
               value: ".s2i/run-consumer.sh"
-        # No need to list the volumes again
+      volumes:
+        - name: etc-fmn
+          configMap:
+            name: fmn-config
+        - name: rabbitmq-ca-volume
+          mountPath: /etc/pki/rabbitmq/ca
+          readOnly: true
+        - name: rabbitmq-key-volume
+          mountPath: /etc/pki/rabbitmq/key
+          readOnly: true
+        - name: rabbitmq-crt-volume
+          mountPath: /etc/pki/rabbitmq/crt
+          readOnly: true
   triggers:
     - type: ImageChange
       imageChangeParams:
@@ -214,7 +236,19 @@ spec:
           env:
             - name: APP_SCRIPT
               value: ".s2i/run-sender-email.sh"
-      # No need to list the volumes again
+      volumes:
+        - name: etc-fmn
+          configMap:
+            name: fmn-config
+        - name: rabbitmq-ca-volume
+          mountPath: /etc/pki/rabbitmq/ca
+          readOnly: true
+        - name: rabbitmq-key-volume
+          mountPath: /etc/pki/rabbitmq/key
+          readOnly: true
+        - name: rabbitmq-crt-volume
+          mountPath: /etc/pki/rabbitmq/crt
+          readOnly: true
   triggers:
     - type: ImageChange
       imageChangeParams:
