@@ -12,10 +12,10 @@
   pre_tasks:
   - include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
 
-############################################
-# actions to create the project in OpenShift
-############################################
-# to run: sudo rbac-playbook -l os_control_stg openshift-apps/coreos-cincinnati.yml
+  ############################################
+  # actions to create the project in OpenShift
+  ############################################
+  # to run: sudo rbac-playbook -l os_control_stg openshift-apps/coreos-cincinnati.yml
   roles:
   - role: openshift/project
     app: coreos-cincinnati
@@ -39,7 +39,7 @@
   - role: openshift/start-build
     app: coreos-cincinnati
     buildname: coreos-cincinnati
-    tags: [ never, build ]
+    tags: [never, build]
 
   - role: openshift/object
     app: coreos-cincinnati
@@ -54,7 +54,7 @@
   - role: openshift/rollout
     app: coreos-cincinnati
     dcname: coreos-cincinnati
-    tags: [ never, rollout ]
+    tags: [never, rollout]
 
   - role: openshift/object
     app: coreos-cincinnati
@@ -94,12 +94,12 @@
     serviceport: coreos-cincinnati-raw-updates-status
     servicename: coreos-cincinnati
 
-###############################################
-# actions to delete the project from OpenShift
-###############################################
-# to run: sudo rbac-playbook -l os_control_stg -t delete openshift-apps/coreos-cincinnati.yml
+  ###############################################
+  # actions to delete the project from OpenShift
+  ###############################################
+  # to run: sudo rbac-playbook -l os_control_stg -t delete openshift-apps/coreos-cincinnati.yml
   - role: openshift/object-delete
     app: coreos-cincinnati
     objecttype: project
     objectname: coreos-cincinnati
-    tags: [ never, delete ]
+    tags: [never, delete]
