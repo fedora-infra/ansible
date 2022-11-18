@@ -109,7 +109,7 @@ spec:
       volumes:
         - name: etc-fmn
           configMap:
-            name: fmn-config
+            name: fmn
         - name: rabbitmq-ca-volume
           mountPath: /etc/pki/rabbitmq/ca
           readOnly: true
@@ -174,7 +174,7 @@ spec:
       volumes:
         - name: etc-fmn
           configMap:
-            name: fmn-config
+            name: fmn
         - name: rabbitmq-ca-volume
           mountPath: /etc/pki/rabbitmq/ca
           readOnly: true
@@ -238,7 +238,7 @@ spec:
       volumes:
         - name: etc-fmn
           configMap:
-            name: fmn-config
+            name: fmn
         - name: rabbitmq-ca-volume
           mountPath: /etc/pki/rabbitmq/ca
           readOnly: true
