@@ -147,16 +147,6 @@
   - nagios_server
   notify: restart nagios
 
-## Copy over the template command scripts
-- name: Copy /etc/nagios/commands (templates)
-  template: src=nagios/commands/{{ item }} dest=/etc/nagios/commands/{{ item }}
-  with_items:
-    - ping.cfg
-  tags:
-  - nagios_config
-  - nagios_server
-  notify: restart nagios
-
 ## Copy over the contacts
 - name: Copy /etc/nagios/contacts
   synchronize: src=nagios/contacts/ dest=/etc/nagios/contacts/
@@ -265,6 +255,7 @@
     - smtp-mm.cfg
     - unbound.cfg
     - templates.cfg
+    - ping-ipv6.cfg
   tags:
   - nagios_config
   - nagios_server
