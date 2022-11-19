@@ -48,9 +48,9 @@
 
   roles:
   - base
+  - nagios_client
   - copr/copr-devel-server
   - copr/dist_git
-  - nagios_client
 
   handlers:
   - import_tasks: "../../handlers/restart_services.yml"
