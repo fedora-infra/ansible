@@ -120,7 +120,7 @@
 
 - name: Set list of certs to sign
   set_fact:
-    certs_to_sign: "{{ certs_to_sign + ['item.item.path'] }}"
+    certs_to_sign: "{{ certs_to_sign + [item.item.path] }}"
   with_items: "{{ssh_cert_files.results}}"
   when: not item.stat.exists
   tags:
@@ -134,7 +134,7 @@
 # Renew if last mod was more than 10 months ago
 - name: Get soon-to-expire certificates to sign
   set_fact:
-    certs_to_sign: "{{ certs_to_sign + ['item.item.path'] }}"
+    certs_to_sign: "{{ certs_to_sign + [item.item.path] }}"
   with_items: "{{ssh_cert_files.results}}"
   when: "item.stat.exists and item.stat.mtime|int < (lookup('pipe', 'date +%s')|int - 25920000)"
   tags:
