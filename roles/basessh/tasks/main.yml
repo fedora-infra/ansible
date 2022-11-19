@@ -176,7 +176,7 @@
   fetch: src="{{item}}.pub"
          dest="{{pubkeydir}}"
          fail_on_missing=false
-  with_items: "{{certs_to_sign|select()|list}}"
+  with_items: "{{certs_to_sign}}"
   tags:
   - basessh
   - sshd_cert
@@ -201,7 +201,7 @@
 - name: Sign the certificates
   shell: "ssh-keygen -s {{private}}/files/ssh/{{env}}_ca_host_key -t rsa-sha2-256 -I {{inventory_hostname}} -h -n {{ sign_hostnames|join(',') }} -V {{sign_validity}} -z `date +%s` {{pubkeydir}}/{{inventory_hostname}}{{item}}.pub"
   delegate_to: localhost
-  with_items: "{{certs_to_sign|select()|list}}"
+  with_items: "{{certs_to_sign}}"
   check_mode: no
   tags:
   - basessh
@@ -214,7 +214,7 @@
 - name: Copy the certificates
   copy: src="{{pubkeydir}}/{{inventory_hostname}}{{item}}-cert.pub"
         dest="{{item}}-cert.pub"
-  with_items: "{{certs_to_sign|select()|list}}"
+  with_items: "{{certs_to_sign}}"
   register: certcopy
   notify:
   - restart sshd
