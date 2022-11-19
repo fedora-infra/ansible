@@ -81,7 +81,8 @@
   when: offloading.rc == 0
 
 - name: disable offloading (persitently)
-  lineinfile: dest=/etc/sysconfig/network-scripts/ifcfg-eth0 backup=yes state=present line='ETHTOOL_OPTS="-K ${DEVICE}  tso off gro off gso off"'
+  shell: "nmcli con modify 'cloud-init eth0' ethtool.feature-tso off ethtool.feature-gro off ethtool.feature-gso off"
+  when: offloading.rc == 0
   tags:
   - config
 
