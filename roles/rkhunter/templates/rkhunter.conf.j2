@@ -335,10 +335,12 @@ ALLOWHIDDENFILE=/dev/.udev/queue.bin
 ALLOWHIDDENFILE=/dev/.udev/uevent_seqnum
 # Fedora 21+ and RHEL 7.2+ have a /etc/.updated file
 ALLOWHIDDENFILE=/etc/.updated
-{% if ansible_hostname.startswith('fed-cloud') %}
 ALLOWHIDDENFILE=/etc/.etckeeper
 ALLOWHIDDENFILE=/etc/.gitignore
-{% endif %}
+# containers-common
+ALLOWHIDDENFILE=/usr/share/man/man5/.containerignore.5.gz
+# containers-common (older versions)
+ALLOWHIDDENFILE=/usr/share/man/man5/.dockerignore.5.gz
 
 #
 # Allow the specified processes to use deleted files.
