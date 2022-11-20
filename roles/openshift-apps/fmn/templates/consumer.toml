@@ -36,6 +36,12 @@ settings_file = "/etc/fmn/fmn.cfg"
 [consumer_config.send_queue]
 url = "amqps://fmn{{ env_suffix }}:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Ffmn"
 
+[consumer_config.send_queue.tls]
+ca_cert = "/etc/pki/fedora-messaging/ca/cacert.pem"
+certfile = "/etc/pki/fedora-messaging/crt/fmn-cert.pem"
+keyfile = "/etc/pki/fedora-messaging/key/fmn-key.pem"
+
+
 [qos]
 prefetch_size = 0
 prefetch_count = 25
