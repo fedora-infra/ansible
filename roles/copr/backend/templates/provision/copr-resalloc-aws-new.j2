@@ -3,6 +3,9 @@
 echo >&2 "running: $0 $*"
 echo >&2 '$'"RESALLOC_NAME: $RESALLOC_NAME"
 
+# TODO: moved from i3.large to i4i.large because
+# https://bugzilla.redhat.com/show_bug.cgi?id=2144249
+
 cmd=(
     /usr/bin/resalloc-aws-new
       --aws-profile default
@@ -14,7 +17,7 @@ cmd=(
       --possible-subnet {{ subnet }}
 {% endfor %}
 {% if item == 'x86_64' %}
-      --instance-type i3.large
+      --instance-type i4i.large
 {% else %}
       --instance-type a1.xlarge
 {% endif %}
