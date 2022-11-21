@@ -129,13 +129,13 @@ spec:
             timeoutSeconds: 1
             initialDelaySeconds: 5
             httpGet:
-              path: /
+              path: /api/v1/heathz/ready
               port: 8080
           livenessProbe:
             timeoutSeconds: 1
             initialDelaySeconds: 20
             httpGet:
-              path: /
+              path: /api/v1/heathz/live
               port: 8080
 
       volumes:
@@ -182,7 +182,7 @@ spec:
     recreateParams:
       mid:
         execNewPod:
-          command: [ /opt/app-root/bin/fmn, database, migration, upgrade ]
+          command: [/opt/app-root/bin/fmn, database, migration, upgrade]
           containerName: consumer
           volumes:
             - etc-fmn
