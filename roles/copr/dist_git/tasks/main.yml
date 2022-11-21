@@ -33,7 +33,7 @@
 
 - name: re-allow importing autospec pre-generated srpms, https://pagure.io/copr/copr/issue/2317
   patch: src=patches/python3-rpkg-autospec.patch
-         dest=/usr/lib/python3.10/site-packages/pyrpkg/utils.py
+         dest=/usr/lib/python3.11/site-packages/pyrpkg/utils.py
   tags: patches
 
 - name: switch selinux to enforcing
