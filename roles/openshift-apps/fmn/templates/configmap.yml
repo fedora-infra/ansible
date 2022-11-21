@@ -15,5 +15,5 @@ items:
       {{ load_file('fmn.cfg') | indent(6) }}
     consumer.toml: |-
       {{ load_file('consumer.toml') | indent(6) }}
-    sender.toml: |-
-      {{ load_file('sender.toml') | indent(6) }}
+    sender-email.toml: |-
+      {{ load_file('sender-email.toml') | indent(6) }}
