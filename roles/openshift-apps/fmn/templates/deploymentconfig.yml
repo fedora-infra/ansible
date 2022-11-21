@@ -182,11 +182,10 @@ spec:
     recreateParams:
       mid:
         execNewPod:
-          command:
-            command: [/opt/app-root/bin/fmn, database, migration, upgrade]
+          command: [ /opt/app-root/bin/fmn, database, migration, upgrade ]
           containerName: consumer
           volumes:
-            - config-volume
+            - etc-fmn
         failurePolicy: Abort
   template:
     metadata:
