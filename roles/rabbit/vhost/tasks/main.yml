@@ -1,0 +1,77 @@
+---
+# Ensure a virtual host exists in RabbitMQ with a cluster replication policy.
+# This is intended to be something most applications can use, but if you need
+# more flexibility, just use the rabbitmq_vhost module directly.
+#
+# Required parameters:
+#
+#   - vhost (str): the virtual host to create in RabbitMQ.
+
+- name: Validate parameters
+  assert:
+    that:
+      - vhost != "/pubsub"
+      - vhost != "/public_pubsub"
+    fail_msg: "This virtual host name is reserved"
+  tags:
+    - config
+    - fedora-messaging
+    - rabbitmq_cluster
+
+- name: Configure the virtual host
+  run_once: true
+  delegate_to: "{{ rabbitmq_server }}"
+  rabbitmq_vhost:
+    name: "{{ vhost }}"
+    state: present
+  tags:
+    - config
+    - fedora-messaging
+    - rabbitmq_cluster
+
+- name: Configure the HA policy for the queues
+  run_once: true
+  delegate_to: "{{ rabbitmq_server }}"
+  rabbitmq_policy:
+    name: HA
+    apply_to: queues
+    pattern: .*
+    tags:
+      ha-mode: all
+      ha-sync-mode: automatic # Auto sync queues to new cluster members
+      ha-sync-batch-size: 10000 # Larger is faster, but must finish in 1 net_ticktime
+    vhost: "{{ vhost }}"
+  tags:
+    - config
+    - fedora-messaging
+    - rabbitmq_cluster
+
+- name: Grant the admin user access to the vhost
+  run_once: true
+  delegate_to: "{{ rabbitmq_server }}"
+  rabbitmq_user:
+    user: admin
+    vhost: "{{ vhost }}"
+    configure_priv: .*
+    read_priv: .*
+    write_priv: .*
+    tags: administrator
+  tags:
+    - config
+    - fedora-messaging
+    - rabbitmq_cluster
+
+- name: Grant the nagios-monitoring user access to the vhost
+  run_once: true
+  delegate_to: "{{ rabbitmq_server }}"
+  rabbitmq_user:
+    user: nagios-monitoring
+    vhost: "{{ vhost }}"
+    configure_priv: "^$"
+    read_priv: "^$"
+    write_priv: "^$"
+    tags: monitoring
+  tags:
+    - config
+    - fedora-messaging
+    - rabbitmq_cluster
