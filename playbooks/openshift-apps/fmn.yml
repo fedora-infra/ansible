@@ -51,31 +51,6 @@
         - fedora-messaging
         - rabbitmq_cluster
 
-    - role: rabbit/queue
-      username: fmn
-      vhost: /fmn
-      queue_name: email
-      thresholds:
-        warning: 10
-        critical: 100
-      tags:
-        - config
-        - fedora-messaging
-        - rabbitmq_cluster
-
-    - role: rabbit/queue
-      username: fmn
-      vhost: /fmn
-      queue_name: irc
-      # message_ttl: 300000
-      thresholds:
-        warning: 10
-        critical: 100
-      tags:
-        - config
-        - fedora-messaging
-        - rabbitmq_cluster
-
   tasks:
     - name: Grant the fmn user access to the fmn vhost
       rabbitmq_user:
@@ -84,6 +59,36 @@
         configure_priv: .*
         read_priv: .*
         write_priv: .*
+      tags:
+        - config
+        - fedora-messaging
+        - rabbitmq_cluster
+
+    - name: Create the email queue in the fmn vhost
+      rabbitmq_queue:
+        name: email
+        vhost: /fmn
+        auto_delete: no
+        durable: yes
+        # message_ttl: 300000
+        state: present
+        login_user: admin
+        login_password: "{{ (env == 'production')|ternary(rabbitmq_admin_password_production, rabbitmq_admin_password_staging) }}"
+      tags:
+        - config
+        - fedora-messaging
+        - rabbitmq_cluster
+
+    - name: Create the irc queue in the fmn vhost
+      rabbitmq_queue:
+        name: irc
+        vhost: /fmn
+        auto_delete: no
+        durable: yes
+        # message_ttl: 300000
+        state: present
+        login_user: admin
+        login_password: "{{ (env == 'production')|ternary(rabbitmq_admin_password_production, rabbitmq_admin_password_staging) }}"
       tags:
         - config
         - fedora-messaging
