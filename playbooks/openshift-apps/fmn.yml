@@ -139,6 +139,7 @@
       file: service.yml
       objectname: service.yml
 
+    # Routes
     - role: openshift/route
       app: fmn
       routename: frontend
@@ -166,6 +167,7 @@
       annotations:
         haproxy.router.openshift.io/timeout: 5m
 
+    # Secrets
     - role: openshift/object
       app: fmn
       template: secrets.yml
@@ -198,3 +200,10 @@
       app: fmn
       template: deploymentconfig.yml
       objectname: deploymentconfig.yml
+
+    # Keytab for FASJSON access
+    - role: openshift/keytab
+      app: fmn
+      key: service.keytab
+      secret_name: keytab
+      service: fmn
