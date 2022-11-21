@@ -25,6 +25,9 @@ spec:
         # name: python:3.10
         # namespace: openshift
         name: python-310:latest
+      env:
+      - name: FEDORA_ENV
+        value: "{{ env }}"
   output:
     to:
       kind: ImageStreamTag
