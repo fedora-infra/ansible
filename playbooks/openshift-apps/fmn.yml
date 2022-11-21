@@ -102,6 +102,15 @@
       objectname: secret-webhook.yml
 
     # Fedora Messaging
+    - role: rabbit/queue
+      username: "fmn{{ env_suffix }}"
+      queue_name: "fmn{{ env_suffix }}"
+      routing_keys:
+        - "#"
+      thresholds:
+        warning: 50
+        critical: 500
+      sent_topics: ^org\.fedoraproject\.{{ env_short }}\.fmn\..*
     - role: openshift/secret-file
       app: fmn
       secret_name: fedora-messaging-ca
