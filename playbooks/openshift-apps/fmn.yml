@@ -201,7 +201,10 @@
       template: deploymentconfig.yml
       objectname: deploymentconfig.yml
 
-    # Keytab for FASJSON access
+    # FASJSON access
+    - role: openshift/ipa-client
+      app: fmn
+
     - role: openshift/keytab
       app: fmn
       key: service.keytab

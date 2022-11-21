@@ -37,6 +37,18 @@ spec:
           env:
             - name: APP_SCRIPT
               value: ".s2i/run-frontend.sh"
+          readinessProbe:
+            timeoutSeconds: 1
+            initialDelaySeconds: 10
+            httpGet:
+              path: /
+              port: 8080
+          livenessProbe:
+            timeoutSeconds: 1
+            initialDelaySeconds: 5
+            httpGet:
+              path: /
+              port: 8080
       volumes:
         - name: httpdir-volume
           emptyDir: {}
@@ -108,6 +120,8 @@ spec:
                 secretKeyRef:
                   name: fmn
                   key: oidc-client-secret
+            - name: KRB5_CONFIG
+              value: /etc/ipa/krb5.conf
             - name: KRB5_CLIENT_KTNAME
               value: /etc/keytabs/service.keytab
 
@@ -182,6 +196,8 @@ spec:
           env:
             - name: APP_SCRIPT
               value: ".s2i/run-consumer.sh"
+            - name: KRB5_CONFIG
+              value: /etc/ipa/krb5.conf
             - name: KRB5_CLIENT_KTNAME
               value: /etc/keytabs/service.keytab
       volumes:
