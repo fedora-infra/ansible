@@ -92,26 +92,8 @@
   - config
   when: datacenter != "aws"
 
-- name: setup ipv6 networking general
-  lineinfile:
-    dest: /etc/sysconfig/network-scripts/ifcfg-eth0
-    backup: yes
-    state: present
-    line: "{{ item }}"
-  with_items:
-    - IPV6INIT=yes
-    - IPV6_DEFROUTE=yes
-    - IPV6_AUTOCONF=yes
-  when: aws_ipv6_addr is defined
-  tags: ipv6_config
-
-- name: setup ipv6 address
-  lineinfile:
-    dest: /etc/sysconfig/network-scripts/ifcfg-eth0
-    backup: yes
-    state: present
-    line: "IPV6ADDR={{ aws_ipv6_addr }}"
-    regex: ^IPV6ADDR=
+- name: setup ipv6 networking
+  shell: "nmcli con modify 'cloud-init eth0' ipv6.method auto ipv6.never-default no ipv6.addresses '{{ aws_ipv6_addr }}'"
   when: aws_ipv6_addr is defined
   tags: ipv6_config
 
