@@ -129,13 +129,13 @@ spec:
             timeoutSeconds: 1
             initialDelaySeconds: 5
             httpGet:
-              path: /api/v1/heathz/ready
+              path: /api/v1/healthz/ready
               port: 8080
           livenessProbe:
             timeoutSeconds: 1
             initialDelaySeconds: 20
             httpGet:
-              path: /api/v1/heathz/live
+              path: /api/v1/healthz/live
               port: 8080
 
       volumes:
