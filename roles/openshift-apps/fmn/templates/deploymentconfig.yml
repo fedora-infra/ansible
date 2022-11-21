@@ -178,8 +178,16 @@ spec:
     app: fmn
     deploymentconfig: consumer
   strategy:
-    # TODO: not rolling
     type: Recreate
+    recreateParams:
+      mid:
+        execNewPod:
+          command:
+            command: [/opt/app-root/bin/fmn, database, migration, upgrade]
+          containerName: consumer
+          volumes:
+            - config-volume
+        failurePolicy: Abort
   template:
     metadata:
       creationTimestamp: null
