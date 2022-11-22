@@ -337,7 +337,9 @@ spec:
           ports:
             - containerPort: 1025
             - containerPort: 1080
-          resources: {}
+          volumeMounts:
+            - name: data
+              mountPath: /home/sendria/data
           readinessProbe:
             timeoutSeconds: 1
             initialDelaySeconds: 30
@@ -350,6 +352,9 @@ spec:
             httpGet:
               path: /
               port: 1080
+      volumes:
+        - name: data
+          emptyDir: {}
   triggers:
     - type: ConfigChange
     - type: ImageChange

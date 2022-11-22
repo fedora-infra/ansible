@@ -2,4 +2,9 @@
 # https://github.com/msztolcman/sendria/issues/17
 
 FROM msztolcman/sendria:v2.2.2.0
-RUN chmod 0755 .local
+RUN chmod 0755 .local .local/lib/python*/site-packages/
+RUN mkdir -p .config/sendria
+RUN echo "[sendria]" > .config/sendria/config.toml
+RUN mkdir data
+ENV HOME=/home/sendria
+ENTRYPOINT [ "sendria", "--foreground", "--db=./data/mails.sqlite", "--smtp-ip=0.0.0.0", "--http-ip=0.0.0.0" ]
