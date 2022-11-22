@@ -1,6 +1,17 @@
 # nagios-client/nrpe
 
 ---
+- name: Add nrpe user with deterministic UID before nrpe.rpm creates it
+  user:
+    # Defaults taken from nrpe.spec
+    name: nrpe
+    uid: "{{nrpe_client_uid|default(null)}}"
+    comment: NRPE user for the NRPE service
+    home: /var/run/nrpe
+    shell: /sbin/nologin
+  tags:
+  - nagios_client
+
 # install pkgs:
 - name: install nagios client pkgs
   package: name={{ item }} state=present
