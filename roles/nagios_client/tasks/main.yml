@@ -5,7 +5,7 @@
   user:
     # Defaults taken from nrpe.spec
     name: nrpe
-    uid: "{{nrpe_client_uid|default(null)}}"
+    uid: "{{nrpe_client_uid|default(omit)}}"
     comment: NRPE user for the NRPE service
     home: /var/run/nrpe
     shell: /sbin/nologin
