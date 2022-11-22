@@ -1,3 +1,4 @@
+---
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
@@ -41,3 +42,28 @@ spec:
       secretReference:
         name: fmn-github-webook
 {% endif %}
+---
+# We need to build the sendria image until this is fixed:
+# https://github.com/msztolcman/sendria/issues/17
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: sendria
+  labels:
+    app: fmn
+    build: sendria
+spec:
+  runPolicy: Serial
+  source:
+    type: Dockerfile
+    dockerfile: |-
+      {{ load_file('Dockerfile-sendria') | indent(6) }}
+  strategy:
+    type: Docker
+  output:
+    to:
+      kind: ImageStreamTag
+      name: sendria:latest
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange

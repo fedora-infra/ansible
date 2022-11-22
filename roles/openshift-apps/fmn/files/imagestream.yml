@@ -25,9 +25,11 @@ items:
     kind: ImageStream
     metadata:
       name: sendria
-    spec:
-      tags:
-        - name: latest
-          from:
-            kind: DockerImage
-            name: msztolcman/sendria:v2.2.2.0
+    # We need to build the sendria image until this is fixed:
+    # https://github.com/msztolcman/sendria/issues/17
+    # spec:
+    #   tags:
+    #     - name: latest
+    #       from:
+    #         kind: DockerImage
+    #         name: msztolcman/sendria:v2.2.2.0
