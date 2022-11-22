@@ -49,6 +49,10 @@ WSGIApplicationGroup %{GLOBAL}
     Require all granted
 </Directory>
 
+<Location /openidc/>
+    Header set Access-Control-Allow-Origin "*"
+</Location>
+
 <Location /.well-known/browserid>
     ForceType application/json
 </Location>
