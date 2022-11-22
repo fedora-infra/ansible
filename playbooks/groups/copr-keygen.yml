@@ -52,9 +52,9 @@
    - "/srv/private/ansible/vars.yml"
    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
+  tasks:
   # Pre-create users and groups with specifics UIDs and GIDs
   # to avoid ID collisions with roles that are provisioned earlier
-  tasks:
   - group: name="copr-signer" state=present gid=989
   - group: name="apache" state=present gid=48
   - user: name="copr-signer" group=copr-signer groups=apache uid=992
