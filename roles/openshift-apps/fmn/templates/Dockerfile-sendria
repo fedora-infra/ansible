@@ -7,4 +7,4 @@ RUN mkdir -p .config/sendria
 RUN echo "[sendria]" > .config/sendria/config.toml
 RUN mkdir data
 ENV HOME=/home/sendria
-ENTRYPOINT [ "sendria", "--foreground", "--db=./data/mails.sqlite", "--smtp-ip=0.0.0.0", "--http-ip=0.0.0.0" ]
+ENTRYPOINT [ "/home/sendria/.local/bin/sendria", "--foreground", "--db=./data/mails.sqlite", "--smtp-ip=0.0.0.0", "--http-ip=0.0.0.0" ]
