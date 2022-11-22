@@ -93,7 +93,7 @@
   when: datacenter != "aws"
 
 - name: setup ipv6 networking
-  shell: "nmcli con modify 'cloud-init eth0' ipv6.method auto ipv6.never-default no ipv6.addresses '{{ aws_ipv6_addr }}'"
+  shell: "nmcli con modify 'cloud-init eth0' ipv6.method manual ipv6.never-default no ipv6.addresses '{{ aws_ipv6_addr }}'"
   when: aws_ipv6_addr is defined
   tags: ipv6_config
 
