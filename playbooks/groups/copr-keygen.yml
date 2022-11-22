@@ -43,6 +43,13 @@
     hostname: name="{{copr_hostbase}}.cloud.fedoraproject.org"
     when: datacenter != "aws"
 
+# To avoid ID collisions with roles that are provisioned earlier
+- name: pre-create users and groups with specifics UIDs and GIDs
+  tasks:
+  - group: name="copr-signer" state=present gid=989
+  - group: name="apache" state=present gid=48
+  - user: name="copr-signer" group=copr-signer groups=apache uid=992
+
 - name: provision instance
   hosts: copr_keygen_dev:copr_keygen_stg:copr_keygen:copr_keygen_dev_aws:copr_keygen_aws
   gather_facts: True
