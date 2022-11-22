@@ -1,11 +1,12 @@
 ---
-- name: stat the ext4 filesystem
+- name: early stat for the ext4 filesystem
   stat: path=/dev/disk/by-label/copr-repo
-  register: stat_repo_fs
+  register: stat_repo_fs_early
+  tags: mdadm
 
 - name: raid10 volume on the production machine
   tags: mdadm
-  when: not stat_repo_fs.stat.exists
+  when: not stat_repo_fs_early.stat.exists
   block:
     - name: install LVM and RAID utilities
       package:
