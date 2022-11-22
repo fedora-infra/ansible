@@ -1,6 +1,11 @@
 ---
+- name: stat the ext4 filesystem
+  stat: path=/dev/disk/by-label/copr-repo
+  register: stat_repo_fs
+
 - name: raid10 volume on the production machine
   tags: mdadm
+  when: not stat_repo_fs.stat.exists
   block:
     - name: install LVM and RAID utilities
       package:
