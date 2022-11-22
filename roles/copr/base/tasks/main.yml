@@ -58,6 +58,7 @@
   dnf:
     state: present
     pkg:
+      - acl  # useful for ansible acl module
       - "bash-completion"
       - "screen"
       - "tmux"
