@@ -1,6 +1,5 @@
 ---
 - name: raid10 volume on the production machine
-  when: not devel
   tags: mdadm
   block:
     - name: install LVM and RAID utilities
