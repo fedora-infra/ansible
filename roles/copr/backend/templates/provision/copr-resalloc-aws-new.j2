@@ -3,8 +3,12 @@
 echo >&2 "running: $0 $*"
 echo >&2 '$'"RESALLOC_NAME: $RESALLOC_NAME"
 
-# TODO: moved from i3.large to i4i.large because
+# moved from i3.large to i4i.large because
 # https://bugzilla.redhat.com/show_bug.cgi?id=2144249
+
+# 2022-11-23, trying to move from a1.xlarge => c7g.xlarge
+# (price goes up by 40%)
+# https://lists.fedoraproject.org/archives/list/buildsys@lists.fedoraproject.org/thread/VUAOXQ3BNXDZMVFR2PJCBQYWGWOIYMPD/
 
 cmd=(
     /usr/bin/resalloc-aws-new
@@ -19,7 +23,7 @@ cmd=(
 {% if item == 'x86_64' %}
       --instance-type i4i.large
 {% else %}
-      --instance-type a1.xlarge
+      --instance-type c7g.xlarge
 {% endif %}
       --tag FedoraGroup=copr
       --tag CoprPurpose=builder
