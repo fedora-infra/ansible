@@ -9,15 +9,6 @@
   - config
   - krb5
 
-- name: Check if service exists
-  delegate_to: "{{ ipa_server }}"
-  stat:
-    path: "{{ service }}/{{ host }}"
-  register: ipa_service_defined
-  tags:
-    - config
-    - krb5
-
 - name: Create service entry
   delegate_to: "{{ ipa_server }}"
   ipaservice:
@@ -25,7 +16,6 @@
     name: "{{ service }}/{{ host }}"
     principal: "{{ principal_alias | default(omit) }}"
     force: yes
-  when: not ipa_service_defined.stat.exists
   tags:
   - config
   - krb5
