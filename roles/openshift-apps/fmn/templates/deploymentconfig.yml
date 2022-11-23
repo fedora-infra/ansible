@@ -333,45 +333,45 @@ spec:
           kind: ImageStreamTag
           name: fmn:latest
 ---
-- apiVersion: apps.openshift.io/v1
-  kind: DeploymentConfig
-  metadata:
-    name: redis
-    labels:
-      app: fmn
-      service: redis
-  spec:
-    replicas: 1
-    selector:
-      app: fmn
-      deploymentconfig: redis
-    template:
-      metadata:
-        labels:
-          app: fmn
-          deploymentconfig: redis
-      spec:
-        containers:
-          - name: redis
-            image: redis:latest
-            env:
-              - name: REDIS_PASSWORD
-                valueFrom:
-                  secretKeyRef:
-                    name: fmn
-                    key: redis-password
-    triggers:
-      - type: ConfigChange
-      - type: ImageChange
-        imageChangeParams:
-          automatic: true
-          containerNames:
-            - redis
-          from:
-            kind: ImageStreamTag
-            name: redis:latest
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: redis
+  labels:
+    app: fmn
+    service: redis
+spec:
+  replicas: 1
+  selector:
+    app: fmn
+    deploymentconfig: redis
+  template:
+    metadata:
+      labels:
+        app: fmn
+        deploymentconfig: redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:latest
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: fmn
+                  key: redis-password
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - redis
+        from:
+          kind: ImageStreamTag
+          name: redis:latest
 ---
-apiVersion: v1
+apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
   labels:
