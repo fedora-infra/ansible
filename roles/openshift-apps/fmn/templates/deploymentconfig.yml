@@ -127,7 +127,7 @@ spec:
               value: /etc/ipa/krb5.conf
             - name: KRB5_CLIENT_KTNAME
               value: /etc/keytabs/service.keytab
-            - name: CACHE_ARGUMENTS_PASSWORD
+            - name: CACHE__ARGUMENTS__PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: fmn
@@ -234,7 +234,7 @@ spec:
               value: /etc/ipa/krb5.conf
             - name: KRB5_CLIENT_KTNAME
               value: /etc/keytabs/service.keytab
-            - name: CACHE_ARGUMENTS_PASSWORD
+            - name: CACHE__ARGUMENTS__PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: fmn
