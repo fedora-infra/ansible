@@ -53,6 +53,7 @@ spec:
         - name: httpdir-volume
           emptyDir: {}
   triggers:
+    - type: ConfigChange
     - type: ImageChange
       imageChangeParams:
         automatic: true
@@ -61,7 +62,6 @@ spec:
         from:
           kind: ImageStreamTag
           name: fmn:latest
-    - type: ConfigChange
 ---
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
@@ -127,6 +127,11 @@ spec:
               value: /etc/ipa/krb5.conf
             - name: KRB5_CLIENT_KTNAME
               value: /etc/keytabs/service.keytab
+            - name: CACHE_ARGUMENTS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: fmn
+                  key: redis-password
 
           readinessProbe:
             timeoutSeconds: 1
@@ -161,6 +166,7 @@ spec:
           secret:
             secretName: fedora-messaging-crt
   triggers:
+    - type: ConfigChange
     - type: ImageChange
       imageChangeParams:
         automatic: true
@@ -169,7 +175,6 @@ spec:
         from:
           kind: ImageStreamTag
           name: fmn:latest
-    - type: ConfigChange
 ---
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
@@ -229,6 +234,11 @@ spec:
               value: /etc/ipa/krb5.conf
             - name: KRB5_CLIENT_KTNAME
               value: /etc/keytabs/service.keytab
+            - name: CACHE_ARGUMENTS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: fmn
+                  key: redis-password
       volumes:
         - name: etc-fmn
           configMap:
@@ -249,6 +259,7 @@ spec:
           secret:
             secretName: fedora-messaging-crt
   triggers:
+    - type: ConfigChange
     - type: ImageChange
       imageChangeParams:
         automatic: true
@@ -257,7 +268,6 @@ spec:
         from:
           kind: ImageStreamTag
           name: fmn:latest
-    - type: ConfigChange
 ---
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
@@ -313,6 +323,7 @@ spec:
           secret:
             secretName: fedora-messaging-crt
   triggers:
+    - type: ConfigChange
     - type: ImageChange
       imageChangeParams:
         automatic: true
@@ -321,7 +332,44 @@ spec:
         from:
           kind: ImageStreamTag
           name: fmn:latest
-    - type: ConfigChange
+---
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    name: redis
+    labels:
+      app: fmn
+      service: redis
+  spec:
+    replicas: 1
+    selector:
+      app: fmn
+      deploymentconfig: redis
+    template:
+      metadata:
+        labels:
+          app: fmn
+          deploymentconfig: redis
+      spec:
+        containers:
+          - name: redis
+            image: redis:latest
+            env:
+              - name: REDIS_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: fmn
+                    key: redis-password
+    triggers:
+      - type: ConfigChange
+      - type: ImageChange
+        imageChangeParams:
+          automatic: true
+          containerNames:
+            - redis
+          from:
+            kind: ImageStreamTag
+            name: redis:latest
 ---
 apiVersion: v1
 kind: DeploymentConfig

@@ -46,3 +46,19 @@ spec:
   selector:
     app: fmn
     deploymentconfig: sendria
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  labels:
+    app: fmn
+spec:
+  ports:
+    - name: redis
+      port: 6379
+      protocol: TCP
+      targetPort: 6379
+  selector:
+    app: fmn
+    deploymentconfig: redis
