@@ -270,7 +270,7 @@ class LibvirtSpawner:
             'virt-install',
             '--connect', self.connection,
             '--ram', str(self.args.ram_size),
-            '--os-type', 'generic',
+            '--osinfo', 'fedora-unknown',
             '--vcpus', str(self.args.cpu_count),
             '--vnc',
             '--features', 'acpi=off',
