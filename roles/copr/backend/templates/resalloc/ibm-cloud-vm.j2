@@ -7,9 +7,9 @@ Start a new VM in IBM Cloud under the copr-team account.
 import argparse
 import datetime
 import logging
-import pipes
 import os
 import random
+import shlex
 import subprocess
 import sys
 
@@ -380,7 +380,7 @@ def _main():
     opts.log = log
 
     cmd = "source {} ; echo $IBMCLOUD_API_KEY".format(
-        pipes.quote(opts.token_file))
+        shlex.quote(opts.token_file))
     output = subprocess.check_output(cmd, shell=True)
     token = output.decode("utf-8").strip().rsplit("\n", maxsplit=1)[-1]
     authenticator = IAMAuthenticator(token)

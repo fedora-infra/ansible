@@ -13,8 +13,8 @@ import logging
 import subprocess
 import tempfile
 import shutil
+import shlex
 import time
-import pipes
 import argparse
 from helpers import get_hv_identification_from_pool_id
 
@@ -67,7 +67,7 @@ class LibvirtSpawner:
         """
         Run CMD, and log info.
         """
-        self.log.debug("cmd: %s", ' '.join([pipes.quote(str(x)) for x in cmd]))
+        self.log.debug("cmd: %s", ' '.join([shlex.quote(str(x)) for x in cmd]))
         start = time.time()
         status = subprocess.call(cmd, *args, **kwargs)
         self.log.debug(" -> exit_status=%s, time=%ss",
