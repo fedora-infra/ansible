@@ -204,9 +204,6 @@
       export PGDATABASE=coprdb
     dest: "{{ copr_fe_homedir }}/.bash_profile"
 
-- name: restart node exporter
-  service: state=restarted enabled=yes name=node_exporter
-
 - name: configure options in node exporter
   lineinfile:
     path: /etc/default/prometheus-node-exporter

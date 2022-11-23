@@ -54,6 +54,9 @@
   tags:
   - packages
 
+- name: restart node exporter
+  service: state=started enabled=yes name=node_exporter
+
 - name: install dev helper packages
   dnf:
     state: present
@@ -91,9 +94,6 @@
   shell: "nmcli con modify 'cloud-init eth0' ipv6.method manual ipv6.never-default no ipv6.addresses '{{ aws_ipv6_addr }}'"
   when: aws_ipv6_addr is defined
   tags: ipv6_config
-
-- name: restart node exporter
-  service: state=restarted enabled=yes name=node_exporter
 
 - name: install nrpe checks
   template: src=copr_nrpe.cfg
