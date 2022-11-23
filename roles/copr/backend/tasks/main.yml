@@ -175,9 +175,6 @@
 - name: start webserver
   service: state=started enabled=yes name=lighttpd
 
-- name: restart node exporter
-  service: state=restarted enabled=yes name=node_exporter
-
 # setup dirs for the ansible execution off of provisioning
 #- name: dirs from provision
 #  file: state=directory path="/home/copr/provision/{{ item }}" owner=copr group=copr
