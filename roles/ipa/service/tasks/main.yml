@@ -16,6 +16,15 @@
     name: "{{ service }}/{{ host }}"
     principal: "{{ principal_alias | default(omit) }}"
     force: yes
+  register: ipa_service_defined
+  ignore_errors: true
   tags:
   - config
   - krb5
+
+- name: fail only when krbprincipalname isn't already defined
+  fail:
+    msg: "Failed to define ipa/service {{ service }}/{{ host }}"
+  when:
+    - ipa_service_defined is failed
+    - "\"'krbprincipalname' already contains one or more values\" not in ipa_service_defined.msg"
