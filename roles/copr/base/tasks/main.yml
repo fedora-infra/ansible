@@ -90,9 +90,19 @@
   tags:
   - config
 
+- name: check we have the needed ipv6
+  shell: "nmcli -f IP6.ADDRESS device show eth0 | grep {{ aws_ipv6_addr }}"
+  register: ipv6_config_check
+  failed_when: false
+  changed_when: ipv6_config_check.rc == 1
+  when: aws_ipv6_addr is defined
+  tags: ipv6_config
+
 - name: setup ipv6 networking
   shell: "nmcli con modify 'cloud-init eth0' ipv6.method manual ipv6.never-default no ipv6.addresses '{{ aws_ipv6_addr }}'"
-  when: aws_ipv6_addr is defined
+  when:
+    - aws_ipv6_addr is defined
+    - ipv6_config_check.changed
   tags: ipv6_config
 
 - name: install nrpe checks
