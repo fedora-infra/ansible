@@ -87,12 +87,6 @@
   tags:
   - config
 
-- name: make sure our resolv.conf is the one being used - set PEERDNS=no in /etc/sysconfig/network
-  lineinfile: dest=/etc/sysconfig/network create=yes backup=yes state=present line='PEERDNS=no' regexp=^PEERDNS=
-  tags:
-  - config
-  when: datacenter != "aws"
-
 - name: setup ipv6 networking
   shell: "nmcli con modify 'cloud-init eth0' ipv6.method manual ipv6.never-default no ipv6.addresses '{{ aws_ipv6_addr }}'"
   when: aws_ipv6_addr is defined
