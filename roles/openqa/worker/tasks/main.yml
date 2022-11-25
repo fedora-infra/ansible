@@ -23,9 +23,20 @@
 ##             per deployment
 ##      default - false
 # - openqa_tap
-##      bool - whether this is the tap- and swtpm-enabled host or not
-##             each deployment should have *one* tap-capable worker host
-##      default - false
+##      string - tap worker classes this worker should be part of, a comma-
+##               separated string, e.g. "tap" or "tap,tap2". If this is
+##               empty, the worker will not be configured for tap and
+##               swtpm at all; if it's not empty, the worker will be
+##               configured for tap and swtpm and the string substituted
+##               into the workers.ini config file. Only *one* worker
+##               should be in each tap worker class (so there should not
+##               be two workers in the "tap" class), but if you are short
+##               on workers, one worker can be in *multiple* tap classes,
+##               meaning it will pick up more tap jobs. The purpose of
+##               having multiple tap classes is to split the load of tap
+##               jobs across more than one host, when enough hosts are
+##               available
+##      default - empty string (disabled)
 
 # Optional vars
 # - openqa_rngd

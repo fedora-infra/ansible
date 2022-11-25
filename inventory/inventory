@@ -470,7 +470,10 @@ openqa-x86-worker05.iad2.fedoraproject.org
 openqa-x86-worker06.iad2.fedoraproject.org
 
 # the workers that can run networked jobs. each server should have *one* of these per arch
-[openqa_tap_workers]
+# per tap worker class defined in os-autoinst-distri-fedora (currently there are two
+# classes; the purpose of multiple classes is to split the load of tap jobs across
+# multiple workers)
+[openqa_tap1_workers]
 # prod
 openqa-x86-worker01.iad2.fedoraproject.org
 openqa-a64-worker02.iad2.fedoraproject.org
@@ -478,6 +481,18 @@ openqa-a64-worker02.iad2.fedoraproject.org
 openqa-x86-worker04.iad2.fedoraproject.org
 openqa-a64-worker01.iad2.fedoraproject.org
 openqa-p09-worker01.iad2.fedoraproject.org
+[openqa_tap2_workers]
+# prod
+openqa-x86-worker02.iad2.fedoraproject.org
+openqa-a64-worker03.iad2.fedoraproject.org
+# lab
+openqa-x86-worker05.iad2.fedoraproject.org
+openqa-p09-worker02.iad2.fedoraproject.org
+# these do both tap and tap2 - because we only have one aarch64 worker
+# for lab, it has to handle all tap jobs
+[openqa_tap12_workers]
+# lab
+openqa-a64-worker01.iad2.fedoraproject.org
 
 # the workers that run createhdds to create the base disk images. Again,
 # only one per arch per instance should be present.
@@ -501,6 +516,12 @@ openqa_lab_workers
 [openqa_servers_common:children]
 openqa
 openqa_lab
+
+# common group for all tap workers
+[openqa_tap_workers:children]
+openqa_tap1_workers
+openqa_tap2_workers
+openqa_tap12_workers
 
 [packages]
 
