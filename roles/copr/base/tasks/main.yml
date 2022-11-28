@@ -100,7 +100,7 @@
 
 - name: setup ipv6 networking
   shell: |
-    nmcli con modify 'cloud-init eth0' ipv6.method auto ipv6.never-default no ipv6.addresses '{{ aws_ipv6_addr }}'
+    nmcli con modify 'cloud-init eth0' ipv6.method auto ipv6.may-fail yes ipv6.never-default no ipv6.addresses '{{ aws_ipv6_addr }}'
     nmcli con up 'cloud-init eth0'
   when:
     - aws_ipv6_addr is defined
