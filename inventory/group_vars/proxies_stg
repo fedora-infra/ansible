@@ -49,16 +49,6 @@ ocp_nodes_stg:
   - worker03.ocp.stg.iad2.fedoraproject.org
   - worker04.ocp.stg.iad2.fedoraproject.org
   - worker05.ocp.stg.iad2.fedoraproject.org
-openshift_masters:
-  - os-master01.stg.iad2.fedoraproject.org
-  - os-master02.stg.iad2.fedoraproject.org
-  - os-master03.stg.iad2.fedoraproject.org
-openshift_nodes:
-  - os-node01.stg.iad2.fedoraproject.org
-  - os-node02.stg.iad2.fedoraproject.org
-  - os-node03.stg.iad2.fedoraproject.org
-  - os-node04.stg.iad2.fedoraproject.org
-openshift_nodes_stg: "{{ openshift_nodes }}"
 tcp_ports: [
   # For apache, generally.
   80, 443,

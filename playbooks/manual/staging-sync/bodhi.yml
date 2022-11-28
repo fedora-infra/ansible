@@ -13,7 +13,7 @@
   - service: name=httpd state=stopped
 
 - name: bring staging services down (OpenShift web services)
-  hosts: os-master01.stg.iad2.fedoraproject.org
+  hosts: os-control01.stg.iad2.fedoraproject.org
   user: root
   vars_files:
    - /srv/web/infra/ansible/vars/global.yml
@@ -68,7 +68,7 @@
   - file: path=/var/tmp/bodhi2.dump state=absent
 
 - name: bring staging services up (OpenShift web services)
-  hosts: os-master01.stg.iad2.fedoraproject.org
+  hosts: os-control01.stg.iad2.fedoraproject.org
   user: root
   vars_files:
    - /srv/web/infra/ansible/vars/global.yml
