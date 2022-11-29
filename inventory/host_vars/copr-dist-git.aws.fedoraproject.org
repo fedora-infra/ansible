@@ -6,8 +6,8 @@ ansible_ssh_user: fedora
 copr_hostbase: copr-dist-git
 datacenter: aws
 description: copr dist git - prod instance
-#swap_file_size_mb: 2048
-#swap_file_path: /swap
+swap_file_size_mb: 50000
+swap_file_path: /swap
 
 #instance_type: t3a.medium
 #image: "{{ fedora31_x86_64 }}"
