@@ -60,6 +60,11 @@ spec:
           mountPath: /etc/fedora-messaging
           readOnly: true
         env:
+        - name: GUNICORN_CMD_ARGS
+          value: >-
+            --workers=3
+            --threads=6
+            --timeout=90
         - name: DATABASE_PASSWORD
           valueFrom:
             secretKeyRef:
