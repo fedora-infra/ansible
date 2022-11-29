@@ -1,4 +1,7 @@
 ---
+- name: install the lvm2 package
+  dnf: state=present name=lvm2
+
 - name: early stat for the ext4 filesystem
   stat: path=/dev/disk/by-label/copr-repo
   register: stat_repo_fs_early
