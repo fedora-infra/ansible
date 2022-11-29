@@ -91,7 +91,7 @@
   - config
 
 - name: check we have the needed ipv6
-  shell: "nmcli -f IP6.ADDRESS device show eth0 | grep {{ aws_ipv6_addr }}"
+  shell: "nmcli con show 'cloud-init eth0' | grep ipv6.addresses | grep {{ aws_ipv6_addr }}"
   register: ipv6_config_check
   failed_when: false
   changed_when: ipv6_config_check.rc == 1
