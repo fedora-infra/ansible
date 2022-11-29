@@ -213,3 +213,6 @@
 
 - name: reload varnish
   service: name=varnish state=reload
+
+- name: restart systemd-oomd
+  service: name=systemd-oomd state=reload

@@ -33,6 +33,7 @@
   copy: src=systemd dest=/etc
   tags:
   - config
+  notify: restart systemd-oomd
 
 - name: configure crond
   copy: src=sysconfig.crond dest=/etc/sysconfig/crond
