@@ -29,6 +29,11 @@
   tags:
   - config
 
+- name: install custom systemd service files
+  copy: src=systemd dest=/etc
+  tags:
+  - config
+
 - name: configure crond
   copy: src=sysconfig.crond dest=/etc/sysconfig/crond
   notify: restart crond
