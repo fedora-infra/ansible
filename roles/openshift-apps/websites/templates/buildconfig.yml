@@ -5,7 +5,27 @@ metadata:
   labels:
     environment: "websites"
 spec:
+  failedBuildsHistoryLimit: 2
+  successfulBuildsHistoryLimit: 1
   source:
+{% if env == 'staging' %}
+    git:
+      uri: "https://gitlab.com/fedora/websites-apps/fedora-websites/fedora-websites-3.0.git"
+      ref: main
+    dockerfile: |-
+      FROM docker.io/library/node:18 as build
+      RUN apt-get update && apt-get install -y translate-toolkit && rm -rf /var/lib/apt/lists/*
+      ADD . /websites
+      WORKDIR /websites
+      RUN npm install
+      RUN ./i18n_gen_yml.sh
+      RUN npm run generate
+
+      FROM quay.io/fedora/fedora:37
+      RUN dnf -y install s3cmd && dnf clean all
+      COPY --from=build /websites/.output/public /output
+
+{% else %}
     dockerfile: |-
       FROM fedora:34
       RUN dnf -y install \
@@ -31,9 +51,18 @@ spec:
         python3-zanata-client && \
           dnf clean all
       CMD bash /etc/websites/build.sh
+{% endif %}
   strategy:
     type: Docker
   output:
     to:
       kind: ImageStreamTag
       name: builder:latest
+  triggers:
+{% if websites_github_secret is defined %}
+  - type: GitHub
+    github:
+      secret: "{{ websites_github_secret }}"
+{% endif %}
+  - type: ConfigChange
+  - type: ImageChange

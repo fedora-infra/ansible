@@ -1,0 +1,9 @@
+#!/bin/bash
+AWS_SECRET_ACCESS_KEY={{ fedoraproject_s3_access_key }}
+AWS_ACCESS_KEY_ID={{ fedoraproject_s3_access_key_id }}
+BUCKET_NAME={{ fedoraproject_s3_bucket_name }}
+S3_GW=s3-openshift-storage.apps.ocp{{ env_suffix }}.fedoraproject.org
+
+s3cmd sync --host ${S3_GW}:443 --host-bucket ${BUCKET_NAME}.${S3_GW} s3://${BUCKET_NAME}/ --access_key=${AWS_ACCESS_KEY_ID} --secret_key=${AWS_SECRET_ACCESS_KEY} /srv/web/fedoraproject.org/ --delete-removed
+
+

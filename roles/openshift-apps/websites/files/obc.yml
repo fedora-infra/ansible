@@ -1,0 +1,7 @@
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: fedoraproject-s3
+spec:
+  generateBucketName: fedoraproject
+  storageClassName: openshift-storage.noobaa.io

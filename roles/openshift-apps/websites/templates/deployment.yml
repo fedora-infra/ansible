@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fedoraproject-push
+  annotations:
+    image.openshift.io/triggers: >-
+      [{"from":{"kind":"ImageStreamTag","name":"builder:latest","namespace":"websites"},"fieldPath":"spec.template.spec.containers[?(@.name==\"s3push\")].image","pause":"false"}]
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fedoraproject-push
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: fedoraproject-push
+    spec:
+      containers:
+      - image: image-registry.openshift-image-registry.svc:5000/websites/builder:latest
+        command: ["/bin/bash", "-c"]
+        args:
+        - |
+          s3cmd sync /output/ s3://${BUCKET_NAME}/ --host ${BUCKET_HOST}:$BUCKET_PORT --host-bucket=${BUCKET_NAME}.${BUCKET_HOST}:$BUCKET_PORT --no-check-certificate --delete-removed
+          sleep infinity
+        imagePullPolicy: Always
+        envFrom:
+        - configMapRef:
+            name: fedoraproject-s3
+        - secretRef:
+            name: fedoraproject-s3
+        name: s3push
+        resources:
+          limits:
+            cpu: 20m
+            memory: 100Mi
+          requests:
+            cpu: '0'
+            memory: 10Mi
+      terminationGracePeriodSeconds: 2
