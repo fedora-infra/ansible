@@ -230,6 +230,16 @@
   notify:
   - flush journald tmpfiles to persistent store
 
+- name: ensure packages required for rsyslog are installed
+  package: name={{ item }} state=present
+  with_items:
+  - rsyslog-gnutls
+  tags:
+  - rsyslogd
+  - config
+  - base
+  when: inventory_hostname.startswith('log01')
+
 - name: rsyslog.conf
   copy: src={{ item }} dest=/etc/rsyslog.conf mode=0644
   with_first_found:
@@ -464,7 +474,7 @@
 # rhel8 hosts do not have /usr/bin/python, but there are a few things we call
 # with that because they also run the same on python2 hosts.
 # So, we set python3 to /usr/bin/python on those hosts:
-- name : ensure that platform-python is installed on EL8 boxes
+- name: ensure that platform-python is installed on EL8 boxes
   package: name={{ item }} state=present
   with_items:
   - platform-python

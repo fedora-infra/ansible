@@ -35,7 +35,7 @@ $EscapeControlCharactersOnReceive off
 $UDPServerRun 514
 $InputTCPMaxSessions 2000
 $InputTCPServerRun 514
-$InputTCPServerRun 5000	
+$InputTCPServerRun 5000
 $IMUXSockRateLimitInterval 0
 $SystemLogRateLimitInterval 0
 $WorkDirectory /var/lib/rsyslog
@@ -213,3 +213,10 @@ local4.*					?m_http_apps;MergeFormat
 # this is only for the merged logs from auditd
 :msg, !contains, "type=AVC" ~
 local6.*					?m_audit;MergeFormat
+
+# forward to splunk host, over tls
+*.* @splunk-syslog.corp.redhat.com:514
+$DefaultNetstreamDriver gtls # use gtls netstream driver
+$ActionSendStreamDriverMode 1 # require TLS for the connection
+$ActionSendStreamDriverAuthMode anon # server is NOT authenticated
+$DefaultNetstreamDriverCAFile {{private}}/files/splunk-certs/2022-IT-Root-CA.pem
