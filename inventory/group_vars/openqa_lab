@@ -36,7 +36,7 @@ openqa_key: "{{ stg_openqa_apikey }}"
 openqa_nfs_workers: "{{ groups['openqa_lab_workers'] }}"
 # install openQA from updates-testing - this is staging, we live
 # ON THE EDGE (radical guitar riff)
-#openqa_repo: updates-testing
+openqa_repo: updates-testing
 openqa_resultsdb_url: https://resultsdb.stg.fedoraproject.org/api/v2.0/
 openqa_resultsdb_user: "{{ stg_resultsdb_httpd_user }}"
 openqa_resultsdb_password: "{{ stg_resultsdb_httpd_password }}"
