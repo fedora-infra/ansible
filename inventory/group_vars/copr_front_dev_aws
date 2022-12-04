@@ -30,6 +30,8 @@ letsencrypt:
 tcp_ports: [22, 80, 443,
     # node_exporter/prometheus
     9100,
+    # testing httpd server, `copr-frontend run`
+    5000,
 ]
 services_disabled: false
 
