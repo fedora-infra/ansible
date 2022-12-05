@@ -13,6 +13,8 @@ items:
   data:
     fmn.cfg: |-
       {{ load_file('fmn.cfg') | indent(6) }}
+    api.toml: |-
+      {{ load_file('api.toml') | indent(6) }}
     consumer.toml: |-
       {{ load_file('consumer.toml') | indent(6) }}
     sender-email.toml: |-
