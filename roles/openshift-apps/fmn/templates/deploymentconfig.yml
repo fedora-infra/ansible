@@ -132,6 +132,8 @@ spec:
                 secretKeyRef:
                   name: fmn
                   key: redis-password
+            - name: FEDORA_MESSAGING_CONF
+              value: /etc/fmn/api.toml
 
           readinessProbe:
             timeoutSeconds: 1
