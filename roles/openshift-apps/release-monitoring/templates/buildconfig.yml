@@ -72,7 +72,7 @@ items:
                 pip-3 uninstall -y anitya && \
 {% if env == 'staging' %}
                 # Install javascript dependencies
-                pushd static && \
+                pushd anitya/static && \
                 npm install && \
                 popd && \
 {% else %}
