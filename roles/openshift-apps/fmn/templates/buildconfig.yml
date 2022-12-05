@@ -40,8 +40,10 @@ spec:
   - type: GitHub
 {% if env == 'staging' %}
     github:
-      secretReference:
-        name: fmn-github-webook
+      # Not sure why secretReference does not work, but it doesn't.
+      # secretReference:
+      #   name: fmn-github-webook
+      secret: "{{ fmn_stg_github_secret }}"
 {% endif %}
 ---
 # We need to build the sendria image until this is fixed:
