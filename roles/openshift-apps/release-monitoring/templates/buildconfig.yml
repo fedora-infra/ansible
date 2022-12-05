@@ -21,6 +21,9 @@ items:
                 httpd \
                 graphviz \
                 fedora-messaging \
+{% if env == 'staging' %}
+                npm \
+{% endif %}
                 poetry \
                 python3-alembic \
                 python3-beautifulsoup4 \
@@ -67,9 +70,16 @@ items:
                 popd && \
                 # Uninstall the existing anitya installation first
                 pip-3 uninstall -y anitya && \
+{% if env == 'staging' %}
+                # Install javascript dependencies
+                pushd static && \
+                npm install && \
+                popd && \
+{% else %}
                 # Move bootstrap to correct folder
                 rm -f anitya/static/bootstrap && \
                 mv anitya/static/bootstrap-3.3.4-fedora anitya/static/bootstrap && \
+{% endif %}
                 poetry build && \
                 pip-3 install dist/*.whl && \
                 popd && \
