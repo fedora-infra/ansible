@@ -119,6 +119,7 @@ tag =
     all :: allow
 
 channel =
+    method osbuildImage :: use osbuild
     method newRepo distRepo buildSRPMFromSCM :: use createrepo
     method buildContainer :: use container
     has req_channel && has_perm customchannel :: req
