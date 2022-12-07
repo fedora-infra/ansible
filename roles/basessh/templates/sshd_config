@@ -12,23 +12,13 @@ Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.
 MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com
 {% endif %}
 
-{% set ed25519_key=True %}
-
-{% if ansible_hostname.startswith(('pkgs01','pagure02')) %}
-{%   set ed25519_key=False %}
-{% endif %}
-
-{% if no_ed25519_key is defined %}
-{%   set ed25519_key=False %}
-{% endif %}
-
 HostKey /etc/ssh/ssh_host_rsa_key
-{% if ed25519_key %}
+{% if not ansible_hostname.startswith(('pkgs01','pagure02')) %}
 HostKey /etc/ssh/ssh_host_ed25519_key
 {% endif %}
 
 HostCertificate /etc/ssh/ssh_host_rsa_key-cert.pub
-{% if ed25519_key %}
+{% if not ansible_hostname.startswith(('pkgs01','pagure02')) %}
 HostCertificate /etc/ssh/ssh_host_ed25519_key-cert.pub
 {% endif %}
 
