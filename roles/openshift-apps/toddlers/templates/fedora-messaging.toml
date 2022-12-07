@@ -175,20 +175,19 @@ notify_admins = [
 
 [consumer_config.distgit_bugzilla_sync.products.Fedora]
 namespace = "rpms"
-versions = ["rawhide", "33", "32"]
+versions = ["rawhide", "37", "36"]
 
 [consumer_config.distgit_bugzilla_sync.products."Fedora Container Images"]
 namespace = "container"
-versions = ["rawhide", "33", "32"]
+versions = ["rawhide", "37", "36"]
 
 [consumer_config.distgit_bugzilla_sync.products."Fedora Modules"]
 namespace = "modules"
 versions = []
 
 [consumer_config.distgit_bugzilla_sync.products."Fedora EPEL"]
-# To simplify to '^epel\d+$' once EL6 is EOL.
-branch_regex = '^e(pe)?l\d+$'
-versions = ["epel8", "epel7", "el6"]
+branch_regex = '^epel\d+$'
+versions = ["epel9", "epel8", "epel7"]
 
 
 # Configuration section for scm_request_processor
@@ -250,11 +249,6 @@ stable_api = '2029-05-31'
 security_fixes = '2029-05-31'
 bug_fixes = '2029-05-31'
 
-[consumer_config.scm_request_processor.branch_slas.epel8-playground]
-stable_api = '2029-05-31'
-security_fixes = '2029-05-31'
-bug_fixes = '2029-05-31'
-
 [consumer_config.scm_request_processor.branch_slas.epel8-next]
 stable_api = '2024-05-31'
 security_fixes = '2024-05-31'
@@ -266,20 +260,16 @@ security_fixes = '2024-06-30'
 bug_fixes = '2024-06-30'
 
 [consumer_config.scm_request_processor.branch_slas.f37]
-bug_fixes = '2023-11-14'
-security_fixes = '2023-11-14'
+bug_fixes = '2023-12-15'
+security_fixes = '2023-12-15'
 
 [consumer_config.scm_request_processor.branch_slas.f36]
 bug_fixes = '2023-05-16'
 security_fixes = '2023-05-16'
 
 [consumer_config.scm_request_processor.branch_slas.f35]
-security_fixes = '2022-11-26'
-bug_fixes = '2022-11-26'
-
-[consumer_config.scm_request_processor.branch_slas.f34]
-security_fixes = '2022-03-08'
-bug_fixes = '2022-03-08'
+security_fixes = '2022-12-13'
+bug_fixes = '2022-12-13'
 
 [qos]
 prefetch_size = 0
