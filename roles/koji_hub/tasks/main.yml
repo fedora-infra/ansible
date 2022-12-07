@@ -257,27 +257,6 @@
   - koji_hub
   when: env != 'staging' and ansible_hostname.startswith('koji')
 
-#
-# install staging certs and keys
-#
-- name: Install staging koji ssl cert
-  copy: src={{ private }}/files/koji/koji.stg_cert.pem dest=/etc/pki/tls/certs/koji.stg_cert.pem
-  notify:
-  - reload httpd
-  tags:
-  - config
-  - koji_hub
-  when: env == 'staging'
-
-- name: install staging koji ssl key
-  copy: src={{ private }}/files/koji/koji.stg_key.pem dest=/etc/pki/tls/private/koji.stg_key.pem
-  notify:
-  - reload httpd
-  tags:
-  - config
-  - koji_hub
-  when: env == 'staging'
-
 - name: instaall fedora-ca.cert in various places
   copy: src={{ private }}/files/fedora-ca.cert dest={{ item }} owner=apache
   with_items:
@@ -323,24 +302,6 @@
   - koji_hub
   notify: reload httpd
   when: env == "staging"
-
-- name: koji staging ssl config
-  template: src=koji-ssl.conf.stg dest=/etc/httpd/conf.d/ssl.conf
-  tags:
-  - config
-  - koji_hub
-  - sslciphers
-  notify: reload httpd
-  when: env == "staging"
-
-- name: koji ssl config
-  template: src=koji-ssl.conf dest=/etc/httpd/conf.d/ssl.conf
-  tags:
-  - config
-  - koji_hub
-  - sslciphers
-  notify: reload httpd
-  when: env != "staging"
 
 - name: koji robots.txt config
   copy: src=robots.txt dest=/var/www/html/robots.txt
