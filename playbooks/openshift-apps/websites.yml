@@ -93,33 +93,3 @@
     file: obc.yml
     objectname: obc.yml
     when: env == "staging"
-
-  - name: Get s3 secret from openshift
-    community.okd.k8s:
-      api_version: v1
-      kind: Secret
-      namespace: websites
-      name: fedoraproject-s3
-    register: s3_secret
-    when: env == "staging"
-
-  - name: Get s3 config from openshift
-    community.okd.k8s:
-      api_version: v1
-      kind: ConfigMap
-      namespace: websites
-      name: fedoraproject-s3
-    register: s3_config
-    when: env == "staging"
-
-  # S3 credentials that will be used by proxies (role fedora-web/main)
-  - name: "Save s3 credentials to {{ private }}"
-    copy:
-      dest: "{{ private }}/files/websites/s3_fedoraproject_{{ env_short }}.yml"
-      content: |
-        fedoraproject_s3_access_key: "{{ s3_secret.result.data['AWS_SECRET_ACCESS_KEY']|b64decode }}"
-        fedoraproject_s3_access_key_id: "{{ s3_secret.result.data['AWS_ACCESS_KEY_ID']|b64decode }}"
-        fedoraproject_s3_bucket_name: "{{ s3_config.result.data['BUCKET_NAME'] }}"
-      mode: 0600
-    delegate_to: localhost
-    when: env == "staging"
