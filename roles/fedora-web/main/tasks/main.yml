@@ -45,7 +45,7 @@
   - fedora-web/main
   when:
   - env == "staging"
-  - s3_access_key is defined
+  - fedoraproject_s3_bucket_name is defined
 
 - name: Make directory for the config files for {{website}} we are about to copy
   file: path=/etc/httpd/conf.d/{{website}} state=directory owner=root group=root mode=0755
