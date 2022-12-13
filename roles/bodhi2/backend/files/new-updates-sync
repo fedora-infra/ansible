@@ -126,56 +126,6 @@ RELEASES = {'f37': {'topic': 'fedora',
                                 'dest': os.path.join(FEDORAALTDEST, 'testing', '36', 'Modular')}
                               ]}}
                    },
-            'f35': {'topic': 'fedora',
-                    'version': '35',
-                    'modules': ['fedora', 'fedora-secondary'],
-                    'repos': {'updates': {
-                        'from': 'f35-updates',
-                        'ostrees': [{'ref': 'fedora/35/%(arch)s/updates/silverblue',
-                                     'dest': OSTREEDEST,
-                                     'arches': ['x86_64', 'ppc64le', 'aarch64']},
-                                    {'ref': 'fedora/35/%(arch)s/updates/kinoite',
-                                     'dest': OSTREEDEST,
-                                     'arches': ['x86_64', 'ppc64le', 'aarch64']}],
-                        'to': [{'arches': ['x86_64', 'armhfp', 'aarch64', 'source'],
-                                'dest': os.path.join(FEDORADEST, '35', 'Everything')},
-                               {'arches': ['ppc64le', 's390x'],
-                                'dest': os.path.join(FEDORAALTDEST, '35', 'Everything')}
-                              ]},
-                              'updates-testing': {
-                        'from': 'f35-updates-testing',
-                        'ostrees': [{'ref': 'fedora/35/%(arch)s/testing/silverblue',
-                                     'dest': OSTREEDEST,
-                                     'arches': ['x86_64', 'ppc64le', 'aarch64']},
-                                    {'ref': 'fedora/35/%(arch)s/testing/kinoite',
-                                     'dest': OSTREEDEST,
-                                     'arches': ['x86_64', 'ppc64le', 'aarch64']}],
-                        'to': [{'arches': ['x86_64', 'aarch64', 'armhfp', 'source'],
-                                'dest': os.path.join(FEDORADEST, 'testing', '35', 'Everything')},
-                               {'arches': ['ppc64le', 's390x'],
-                                'dest': os.path.join(FEDORAALTDEST, 'testing', '35', 'Everything')}
-                              ]}}
-                   },
-            'f35m': {'topic': 'fedora',
-                    'version': '35m',
-                    'modules': ['fedora', 'fedora-secondary'],
-                    'repos': {'updates': {
-                        'from': 'f35-modular-updates',
-                        'ostrees': [],
-                        'to': [{'arches': ['x86_64', 'aarch64', 'armhfp', 'source'],
-                                'dest': os.path.join(FEDORADEST, '35', 'Modular')},
-                               {'arches': ['ppc64le', 's390x'],
-                                'dest': os.path.join(FEDORAALTDEST, '35', 'Modular')}
-                              ]},
-                              'updates-testing': {
-                        'from': 'f35-modular-updates-testing',
-                        'ostrees': [],
-                        'to': [{'arches': ['x86_64', 'aarch64', 'armhfp', 'source'],
-                                'dest': os.path.join(FEDORADEST, 'testing', '35', 'Modular')},
-                               {'arches': ['ppc64le', 's390x'],
-                                'dest': os.path.join(FEDORAALTDEST, 'testing', '35', 'Modular')}
-                              ]}}
-                   },
             'epel9': {'topic': 'epel',
                       'version': '9',
                       'modules': ['epel'],

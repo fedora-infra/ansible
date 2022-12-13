@@ -108,12 +108,6 @@ handlers = ["console"]
             keyid = "{{ (env == 'production')|ternary('47dd8ef9', 'd300e724') }}"
 
             [[consumer_config.koji_instances.primary.tags]]
-            from = "f35-infra-candidate"
-            to = "f35-infra-stg"
-            key = "{{ (env == 'production')|ternary('fedora-infra', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('47dd8ef9', 'd300e724') }}"
-
-            [[consumer_config.koji_instances.primary.tags]]
             from = "f36-infra-candidate"
             to = "f36-infra-stg"
             key = "{{ (env == 'production')|ternary('fedora-infra', 'testkey') }}"
@@ -141,12 +135,6 @@ handlers = ["console"]
 
 
             # Gated coreos-pool tag
-
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f35-coreos-signing-pending"
-            to = "coreos-pool"
-            key = "{{ (env == 'production')|ternary('fedora-35', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('9867c58f', 'd300e724') }}"
 
             [[consumer_config.koji_instances.primary.tags]]
             from = "f36-coreos-signing-pending"
@@ -309,42 +297,6 @@ handlers = ["console"]
             keyid = "{{ (env == 'production')|ternary('38ab71f4', 'd300e724') }}"
             type = "modular"
 
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f35-signing-pending"
-            to = "f35-updates-testing-pending"
-            key = "{{ (env == 'production')|ternary('fedora-35', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('9867c58f', 'd300e724') }}"
-            {% if env == "production" %}
-            # ima file signing - disable for now per fesco
-            # file_signing_key = "fedora-files-2021"
-            {% endif %}
-
-            [consumer_config.koji_instances.primary.tags.sidetags]
-            pattern = 'f35-build-side-<seq_id>'
-            from = '<sidetag>-signing-pending'
-            to = '<sidetag>-testing-pending'
-            trusted_taggers = ['bodhi']
-
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f35-pending"
-            to = "f35"
-            key = "{{ (env == 'production')|ternary('fedora-35', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('9867c58f', 'd300e724') }}"
-
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f35-modular-pending"
-            to = "f35-modular"
-            key = "{{ (env == 'production')|ternary('fedora-35', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('9867c58f', 'd300e724') }}"
-            type = "modular"
-
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f35-modular-signing-pending"
-            to = "f35-modular-updates-testing-pending"
-            key = "{{ (env == 'production')|ternary('fedora-35', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('9867c58f', 'd300e724') }}"
-            type = "modular"
-
             #epel8 modular tags
             [[consumer_config.koji_instances.primary.tags]]
             from = "epel8-modular-signing-pending"
@@ -473,35 +425,6 @@ handlers = ["console"]
             key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
             keyid = "{{ (env == 'production')|ternary('38ab71f4', 'd300e724') }}"
             
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f35-openh264"
-            to = "f35-openh264"
-            key = "{{ (env == 'production')|ternary('fedora-35', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('9867c58f', 'd300e724') }}"
-
-            # Side tags created by releng
-
-            # f35-python
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f35-python"
-            to = "f35-python"
-            key = "{{ (env == 'production')|ternary('fedora-35', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('9867c58f', 'd300e724') }}"
-
-            # f35-boost
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f35-boost"
-            to = "f35-boost"
-            key = "{{ (env == 'production')|ternary('fedora-35', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('9867c58f', 'd300e724') }}"
-
-            # f35-kde
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f35-kde"
-            to = "f35-kde"
-            key = "{{ (env == 'production')|ternary('fedora-35', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('9867c58f', 'd300e724') }}"
-
             # f38 resigning
             [[consumer_config.koji_instances.primary.tags]]
             from = "f38"
