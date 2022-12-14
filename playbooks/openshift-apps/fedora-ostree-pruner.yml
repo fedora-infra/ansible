@@ -27,11 +27,6 @@
     template: buildconfig.yml
     objectname: buildconfig.yml
 
-  - role: openshift/start-build
-    app: fedora-ostree-pruner
-    buildname: fedora-ostree-pruner-build
-    objectname: fedora-ostree-pruner-build
-
   - role: openshift/object
     app: fedora-ostree-pruner
     template: deploymentconfig.yml
