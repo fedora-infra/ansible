@@ -9,6 +9,15 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
+    - name: Configure the communishift virtualenv
+      ansible.builtin.pip:
+        name: "{{ communishift_package }}"
+        virtualenv: /srv/web/infra/communishift/communishift_venv
+        virtualenv_site_packages: yes
+      with_items: "{{ communishift_package_list }}"
+      loop_control:
+        loop_var: communishift_package
+
     - name: Communishift Role
       include_role:
         name: communishift
@@ -16,6 +25,7 @@
         apply:
           tags:
             - deploy-operators
+
     - name: Communishift Role
       with_items: "{{ communishift_projects }}"
       include_role:
@@ -29,6 +39,9 @@
       loop_control:
         loop_var: outer_item
   vars:
+    communishift_package_list:
+      - kubernetes
+      - boto3
     communishift_projects:
       - communishift-dev-test
       - communishift-mattdm
