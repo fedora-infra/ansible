@@ -12,8 +12,6 @@
     - name: Configure the communishift virtualenv
       ansible.builtin.pip:
         name: "{{ communishift_package }}"
-        virtualenv: /srv/web/infra/communishift/communishift_venv
-        virtualenv_site_packages: yes
       with_items: "{{ communishift_package_list }}"
       loop_control:
         loop_var: communishift_package
