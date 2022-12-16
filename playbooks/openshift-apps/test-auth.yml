@@ -50,7 +50,7 @@
     - role: openshift/route
       app: test-auth
       routename: test-auth
-      host: "test-auth.app.os{{ env_suffix }}.fedoraproject.org"
+      host: "test-auth.apps.ocp{{ env_suffix }}.fedoraproject.org"
       serviceport: web
       servicename: test-auth
       annotations:

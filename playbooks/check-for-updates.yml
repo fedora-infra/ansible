@@ -9,7 +9,7 @@
 #
 
 - name: check for updates
-  hosts: distro_RedHat:distro_CentOS:!*.app.os.fedoraproject.org:!*.app.os.stg.fedoraproject.org
+  hosts: distro_RedHat:distro_CentOS:!ocp*:!worker*
   gather_facts: false
 
   tasks:
@@ -22,7 +22,7 @@
     when: yumoutput.results|length > 0
 
 - name: check for updates
-  hosts: distro_Fedora:!*.app.os.fedoraproject.org:!*.app.os.stg.fedoraproject.org
+  hosts: distro_Fedora:!ocp*:!worker*
   gather_facts: false
 
   tasks:
