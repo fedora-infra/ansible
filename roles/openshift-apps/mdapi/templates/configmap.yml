@@ -17,7 +17,7 @@ metadata:
   labels:
     app: mdapi
 data:
-  mdapi.cfg: |-
+  myconfig.py: |-
     {{ load_file('myconfig.py') | indent }}
 ---
 apiVersion: v1
