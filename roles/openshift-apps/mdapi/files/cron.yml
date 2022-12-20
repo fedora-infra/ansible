@@ -17,7 +17,7 @@ spec:
           containers:
           - name: mdapi
             image: image-registry.openshift-image-registry.svc:5000/mdapi/mdapi:latest
-            command: ["bash", "-c", "/usr/bin/mdapi --conffile /etc/mdapi/confdata/myconfig.py database"]
+            command: ["bash", "-c", "/usr/local/bin/mdapi --conffile /etc/mdapi/confdata/myconfig.py database"]
             volumeMounts:
             - name: myconfigpy-volume
               mountPath: /etc/mdapi/confdata/
