@@ -7,10 +7,11 @@ metadata:
 spec:
   source:
     git:
-      uri: https://pagure.io/mdapi.git
 {% if env == 'staging' %}
-      ref: "staging"
+      uri: https://github.com/fedora-infra/mdapi.git
+      ref: "develop"
 {% else %}
+      uri: https://pagure.io/mdapi.git
       ref: "production"
 {% endif %}
   strategy:
