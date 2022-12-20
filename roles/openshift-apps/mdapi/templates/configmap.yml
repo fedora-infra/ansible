@@ -13,6 +13,16 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  name: mdapi-myconfigpy-configmap
+  labels:
+    app: mdapi
+data:
+  mdapi.cfg: |-
+    {{ load_file('myconfig.py') | indent }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
   name: fedora-messaging-configmap
   labels:
     app: mdapi

@@ -17,8 +17,11 @@ spec:
           containers:
           - name: mdapi
             image: image-registry.openshift-image-registry.svc:5000/mdapi/mdapi:latest
-            command: ["bash", "-c", "/usr/bin/mdapi --conffile /code/mdapi/confdata/standard.py database"]
+            command: ["bash", "-c", "/usr/bin/mdapi --conffile /etc/mdapi/confdata/myconfig.py database"]
             volumeMounts:
+            - name: myconfigpy-volume
+              mountPath: /etc/mdapi/confdata/
+              readOnly: true
             - name: config-volume
               mountPath: /etc/mdapi
               readOnly: true
@@ -38,6 +41,10 @@ spec:
               readOnly: true
           restartPolicy: Never
           volumes:
+          - name: myconfigpy-volume
+            configMap:
+                defaultMode: 420
+                name: mdapi-myconfigpy-configmap
           - name: config-volume
             configMap:
                 defaultMode: 420
