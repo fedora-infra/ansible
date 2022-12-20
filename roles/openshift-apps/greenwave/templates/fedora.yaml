@@ -146,7 +146,6 @@ product_versions:
   # to include whatever version Rawhide is, as openQA tests don't run
   # on Rawhide. So for now this list needs to be updated each time a
   # release is branched (or goes EOL).
-  - fedora-35
   - fedora-36
   - fedora-37
 decision_contexts:
@@ -173,7 +172,6 @@ id: "bodhiupdate_bodhipush_openqa_workstation"
 # groups. workstation does not include standard, so these aren't gating
 # for that group
 product_versions:
-  - fedora-35
   - fedora-36
   - fedora-37
 decision_contexts:
@@ -209,7 +207,6 @@ id: "bodhiupdate_bodhipush_openqa_kde"
 # these tests are gating for updates in core, base, standard and kde
 # critpath groups.
 product_versions:
-  - fedora-35
   - fedora-36
   - fedora-37
 decision_contexts:
@@ -246,7 +243,6 @@ id: "bodhiupdate_bodhipush_openqa_server"
 # these tests are gating for updates in core, base, standard and server
 # critpath groups.
 product_versions:
-  - fedora-35
   - fedora-36
   - fedora-37
 decision_contexts:
@@ -291,7 +287,6 @@ rules:
 --- !Policy
 id: "bodhiupdate_bodhipush_openqa_upgrade_server"
 product_versions:
-  - fedora-36
   - fedora-37
 decision_contexts:
   - bodhi_update_push_testing_critpath
