@@ -131,6 +131,9 @@
   vars:
     packages:
       - copr-builder
+      # A new version of rpmlint fixes the following issue
+      # https://pagure.io/FedoraReview/issue/461
+      - rpmlint
 
 - name: put updated mock configs into /etc/mock
   copy: src=files/mock/ dest=/etc/copr-rpmbuild/mock-config-overrides
