@@ -1,0 +1,24 @@
+---
+
+- name: Create the fas2discourse keytab path on the batcave01
+  file:
+    path: "/etc/openshift_apps/fas2discourse/"
+    state: directory
+    owner: root
+    group: root
+    mode: 0750
+  tags:
+    - create-keytab
+
+
+- name: Acquire a keytab
+  include_role:
+    name: keytab/service
+  vars:
+    kt_location:
+      "/etc/openshift_apps/fas2discourse/fas2discourse-keytab.kt"
+    service: "fas2discourse"
+    host: "{{ fas2discourse_hostname }}"
+  tags:
+    - create-keytab
+
