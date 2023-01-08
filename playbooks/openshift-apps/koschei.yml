@@ -33,6 +33,7 @@
     servicename: frontend
     annotations:
         haproxy.router.openshift.io/set-forwarded-headers: append
+        haproxy.router.openshift.io/timeout: 180s
 
   tasks:
     - name: Apply objects
