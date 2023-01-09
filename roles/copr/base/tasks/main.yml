@@ -29,11 +29,13 @@
   tags:
   - config
 
-- name: install custom systemd service files
-  copy: src=systemd dest=/etc
-  tags:
-  - config
-  notify: restart systemd-oomd
+# https://bugzilla.redhat.com/show_bug.cgi?id=1941170
+- name: mask the systemd-oomd service
+  systemd:
+    name: systemd-oomd
+    state: stopped
+    enabled: no
+    masked: yes
 
 - name: configure crond
   copy: src=sysconfig.crond dest=/etc/sysconfig/crond
