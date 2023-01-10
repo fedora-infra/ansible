@@ -14,8 +14,10 @@
 -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 
 # Established connections allowed
--A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 -A OUTPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+# allow dhcp6d from aws
+-A INPUT -d fe80::/64 -p udp -m udp --dport 546 --sport 547 -j ACCEPT
 
 # if the blocked_ips is defined - drop them
 {% if blocked_ip_v6 is defined %}
