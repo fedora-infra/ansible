@@ -1,3 +1,30 @@
+ 
+hanks,
+> 
+> Stefan...
+> 
+> 
+> On Mon, Jan 9, 2023 at 4:37 PM Kevin Fenzi <kfenzi@redhat.com> wrote:
+> 
+> > Hey Stef,
+> >
+> > Just wondering what the current status is on the REQ to replace Mark?
+> >
+> > I know the job got posted before the holidays, and I heard some internal
+> > folks were interested...
+> >
+> > kevin
+> >
+> >
+> 
+> -- 
+> Thanks,
+> 
+> STEFAN MaTTEJIET
+> 
+> Engineering Manager
+> 
+> smattejiet@redhat.com    T: +353-(0)51-810-154
 #test policy file
 #earlier = higher precedence!
 
@@ -142,6 +169,9 @@ policy =
     sig fedora-epel-6 && age < 12 weeks :: keep
     sig fedora-epel-7 && age < 12 weeks :: keep
     sig fedora-epel-8 && age < 12 weeks :: keep
+
+    # Do not GC stuff in pending tags, it is likely just going out in an update
+    tag *pending :: keep
 
     #stuff to chuck semi-rapidly
     tag *-testing *-candidate *-override && order >= 2 :: untag
