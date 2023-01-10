@@ -1,4 +1,5 @@
----
+
+
 # collectd client setup
 
 # install pkg
@@ -149,7 +150,6 @@
 
 - name: copy over our pstorefs/collectd selinux module (rhel6 has no pstorefs)
   copy: src=selinux/fi-pstorefs.pp dest=/usr/share/collectd/fi-pstorefs.pp
-  when: ansible_distribution_major_version|int != 6
   register: ficpstorefs_module
   tags:
   - collectd
@@ -157,7 +157,6 @@
 
 - name: check to see if its even installed yet
   shell: semodule -l | grep fi-pstorefs | wc -l
-  when: ansible_distribution_major_version|int != 6
   register: ficpstorefs_grep
   check_mode: no
   changed_when: "'0' in ficpstorefs_grep.stdout"
@@ -167,7 +166,7 @@
 
 - name: install our pstorefs/collectd selinux module
   command: semodule -i /usr/share/collectd/fi-pstorefs.pp
-  when: ansible_distribution_major_version|int != 6 and (ficpstorefs_module is changed or ficpstorefs_grep is changed)
+  when: (ficpstorefs_module is changed or ficpstorefs_grep is changed)
   tags:
   - collectd
   - selinux
