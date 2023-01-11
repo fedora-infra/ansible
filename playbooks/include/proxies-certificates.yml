@@ -22,7 +22,7 @@
   - role: httpd/certificate
     certname: wildcard-2023.fedoraproject.org
     SSLCertificateChainFile: wildcard-2023.fedoraproject.org.intermediate.cert
-
+ 
   - role: httpd/certificate
     certname: wildcard-2022.id.fedoraproject.org
     SSLCertificateChainFile: wildcard-2022.id.fedoraproject.org.intermediate.cert
@@ -42,7 +42,7 @@
     SSLCertificateChainFile: wildcard-2023.apps.ocp.stg.fedoraproject.org.intermediate.cert
     when: env == "staging"
     tags:
- --- apps.ocp.stg.fedoraproject.org
+    - apps.ocp.stg.fedoraproject.org
 
   - role: httpd/certificate
     certname: wildcard-2022.apps.ocp.fedoraproject.org
