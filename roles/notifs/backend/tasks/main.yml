@@ -136,17 +136,35 @@
   - notifs
   - notifs/backend
 
-#- name: start the workers and the backend
-#  service: name={{item}} enabled=yes state=started
-#  with_items:
-#  - fmn-backend@1
-#  - fmn-worker@1
-#  - fmn-worker@2
-#  - fmn-worker@3
-#  - fmn-worker@4
-#  - fmn-worker@5
-#  - fmn-worker@6
-#  - fmn-celerybeat
-#  tags:
-#  - notifs
-#  - notifs/backend
+- name: start the workers and the backend
+  service: name={{item}} enabled=yes state=started
+  with_items:
+  - fmn-backend@1
+  - fmn-worker@1
+  - fmn-worker@2
+  - fmn-worker@3
+  - fmn-worker@4
+  - fmn-worker@5
+  - fmn-worker@6
+  - fmn-worker@7
+  - fmn-worker@8
+  - fmn-worker@9
+  - fmn-worker@10
+  - fmn-worker@11
+  - fmn-worker@12
+  - fmn-worker@13
+  - fmn-worker@14
+  - fmn-worker@15
+  - fmn-worker@16
+  - fmn-worker@17
+  - fmn-worker@18
+  - fmn-worker@19
+  - fmn-worker@20
+  - fmn-worker@21
+  - fmn-worker@22
+  - fmn-worker@23
+  - fmn-worker@24
+  - fmn-celerybeat
+  tags:
+  - notifs
+  - notifs/backend
