@@ -19,3 +19,17 @@ certfile = "/etc/pki/rabbitmq/pagurecert/src.fp.o.crt"
 [client_properties]
 app = "src.fp.o"
 
+[log_config.loggers.fedora_messaging]
+level = "WARNING"
+propagate = false
+handlers = ["console"]
+
+[log_config.loggers.twisted]
+level = "WARNING"
+propagate = false
+handlers = ["console"]
+
+[log_config.loggers.pika]
+level = "WARNING"
+propagate = false
+handlers = ["console"]
