@@ -24,6 +24,11 @@ MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@op
 #  /etc/ssh/sshd_config.d/  which will be automatically included below
 Include /etc/ssh/sshd_config.d/*.conf
 {% endif %} 
+{% if ansible_distribution_major_version|int >= 36 and ansible_distribution == 'Fedora' %}
+# To modify the system-wide sshd configuration, create a  *.conf  file under
+#  /etc/ssh/sshd_config.d/  which will be automatically included below
+Include /etc/ssh/sshd_config.d/*.conf
+{% endif %} 
 
 
 HostKey /etc/ssh/ssh_host_rsa_key
