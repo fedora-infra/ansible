@@ -196,6 +196,16 @@ handlers = ["console"]
             {% endif %}
 
             [[consumer_config.koji_instances.primary.tags]]
+            from = "f38-rebuild"
+            to = "f38-rebuild"
+            key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('eb10b464', 'd300e724') }}"
+            {% if env == "production" %}
+            # ima file signing - enabled in f37
+            file_signing_key = "fedora-38-ima"
+            {% endif %}
+
+            [[consumer_config.koji_instances.primary.tags]]
             from = "f38-modular-pending"
             to = "f38-modular"
             key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
