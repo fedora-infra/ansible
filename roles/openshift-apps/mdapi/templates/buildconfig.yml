@@ -11,8 +11,8 @@ spec:
       uri: https://github.com/fedora-infra/mdapi.git
       ref: "develop"
 {% else %}
-      uri: https://pagure.io/mdapi.git
-      ref: "production"
+      uri: https://github.com/fedora-infra/mdapi.git
+      ref: "prod"
 {% endif %}
   strategy:
     type: Docker

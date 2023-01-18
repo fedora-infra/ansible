@@ -68,7 +68,11 @@ PKGDB2_VERIFY = True
 DL_VERIFY = True
 
 # Whether to publish to Fedora Messaging
+{% if env == "staging" %}
 PUBLISH_CHANGES = False
+{% else %}
+PUBLISH_CHANGES = True
+{% endif %}
 
 # How long to wait between retries if processing failed
 CRON_SLEEP = 30
