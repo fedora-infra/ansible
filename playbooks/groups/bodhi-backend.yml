@@ -43,6 +43,9 @@
 
   - bodhi2/backend
 
+  - role: bodhi2/critpath
+    when: env == 'staging'
+
   - role: nfs/client
     mnt_dir: '/mnt/koji/ostree'
     nfs_src_dir: 'fedora_ostree_content/ostree'

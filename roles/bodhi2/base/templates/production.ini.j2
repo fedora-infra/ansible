@@ -541,7 +541,13 @@ reboot_pkgs = kernel kernel-smp kernel-PAE glibc hal dbus
 # Center by setting this value to `pdc`. If it isn't set, it'll just use the
 # hardcoded list below.
 # critpath.type =
+{% if env == "staging" %}
+critpath.type = json
+critpath.jsonpath = /etc/bodhi/critpath
+{% else %}
 critpath.type = pdc
+{% endif %}
+
 
 # You can hardcode a list of critical path packages instead of using the PkgDB
 # or PDC. This is used if critpath.type is not defined.

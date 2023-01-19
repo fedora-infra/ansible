@@ -1,0 +1,31 @@
+- name: Install required packages
+  package:
+    name:
+      - git # for checking out critpath generation script
+      - python3-dnf # script uses this
+    state: present
+  tags:
+  - packages
+
+- name: Create the bodhi critical path configuration directory
+  file:
+    path: /etc/bodhi/critpath
+    state: directory
+    owner: root
+    group: root
+
+- name: Check out releng repo with the script in it
+  git:
+    repo: https://pagure.io/releng.git
+    dest: /root/releng-git
+  register: gitreleng
+
+- name: Create a cron job to run the script daily
+  copy: src=critpath.cron dest=/etc/cron.daily/critpath owner=root group=root mode=0755
+  tags:
+  - config
+
+- name: Do a first run of the script if it has never run
+  command:
+    cmd: /etc/cron.daily/critpath
+    creates: /etc/bodhi/critpath/rawhide.json

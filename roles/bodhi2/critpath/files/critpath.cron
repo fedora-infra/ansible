@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# generate/update critical path data for Bodhi
+
+cd /etc/bodhi/critpath
+/root/releng-git/scripts/critpath.py all
