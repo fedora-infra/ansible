@@ -79,7 +79,7 @@ sshd_config: ssh/sshd_config.pagure
 sshd_keyhelper: true
 stunnel_destination_port: 8080
 stunnel_service: "eventsource"
-stunnel_source_port: 8088
+stunnel_source_port: :::8088
 # for systems that do not match the above - specify the same parameter in
 # the host_vars/$hostname file
 tcp_ports: [22, 25, 80, 443, 9418,
