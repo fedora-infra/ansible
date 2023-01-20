@@ -135,3 +135,17 @@
   - letsencrypt
   delegate_to: "{{ certbot_addhost }}"
   when: certbot_addhost is defined
+
+- name: Install certificate bundle
+  copy: >
+    dest=/etc/pki/tls/certs/{{site_name}}.bundle.cert
+    content="{{certbot_chain.stdout}} {{certbot_certificate.stdout}}"
+    owner=root
+    group=root
+    mode=0644
+  notify:
+  - reload stunnel
+  tags:
+  - letsencrypt
+  delegate_to: "{{ certbot_bundlehost }}"
+  when: certbot_bundlehost is defined

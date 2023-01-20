@@ -47,6 +47,7 @@
   #
   - role: letsencrypt
     site_name: "stg.pagure.io"
+    certbot_bundlehost: pagure02.fedoraproject.org
     server_aliases:
     - stg.pagure.io
     - docs.stg.pagure.org
@@ -58,6 +59,7 @@
 
   - role: letsencrypt
     site_name: "pagure.io"
+    certbot_bundlehost: pagure-stg01.fedoraproject.org
     server_aliases:
     - docs.pagure.org
     - lists.pagure.io
