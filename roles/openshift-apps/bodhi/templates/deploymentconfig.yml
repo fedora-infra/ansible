@@ -53,6 +53,9 @@ items:
           - name: config-volume
             mountPath: /etc/bodhi
             readOnly: true
+          - name: bodhi-critpath-storage
+            mountPath: /etc/bodhi/critpath
+            readOnly: true
           - name: keytab-volume
             mountPath: /etc/keytabs
             readOnly: true
@@ -91,6 +94,9 @@ items:
         - name: config-volume
           configMap:
             name: bodhi-configmap
+        - name: bodhi-critpath-storage
+          persistentVolumeClaim:
+            claimName: "bodhi-critpath-storage"
         - name: keytab-volume
           secret:
             secretName: bodhi-keytab
@@ -164,6 +170,9 @@ items:
           - name: config-volume
             mountPath: /etc/bodhi
             readOnly: true
+          - name: bodhi-critpath-storage
+            mountPath: /etc/bodhi/critpath
+            readOnly: true
           - name: keytab-volume
             mountPath: /etc/keytabs
             readOnly: true
@@ -186,6 +195,9 @@ items:
         - name: config-volume
           configMap:
             name: bodhi-configmap
+        - name: bodhi-critpath-storage
+          persistentVolumeClaim:
+            claimName: "bodhi-critpath-storage"
         - name: keytab-volume
           secret:
             secretName: bodhi-keytab
@@ -257,6 +269,9 @@ items:
           - name: config-volume
             mountPath: /etc/bodhi
             readOnly: true
+          - name: bodhi-critpath-storage
+            mountPath: /etc/bodhi/critpath
+            readOnly: true
           - name: keytab-volume
             mountPath: /etc/keytabs
             readOnly: true
@@ -279,6 +294,9 @@ items:
         - name: config-volume
           configMap:
             name: bodhi-configmap
+        - name: bodhi-critpath-storage
+          persistentVolumeClaim:
+            claimName: "bodhi-critpath-storage"
         - name: keytab-volume
           secret:
             secretName: bodhi-keytab
@@ -352,6 +370,9 @@ items:
           - name: config-volume
             mountPath: /etc/bodhi
             readOnly: true
+          - name: bodhi-critpath-storage
+            mountPath: /etc/bodhi/critpath
+            readOnly: true
           - name: keytab-volume
             mountPath: /etc/keytabs
             readOnly: true
@@ -374,6 +395,9 @@ items:
         - name: config-volume
           configMap:
             name: bodhi-configmap
+        - name: bodhi-critpath-storage
+          persistentVolumeClaim:
+            claimName: "bodhi-critpath-storage"
         - name: keytab-volume
           secret:
             secretName: bodhi-keytab

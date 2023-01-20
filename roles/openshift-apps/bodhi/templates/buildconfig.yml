@@ -25,5 +25,29 @@ items:
       to:
         kind: ImageStreamTag
         name: bodhi-base:latest
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    labels:
+      build: bodhi-critpathcron
+    name: bodhi-critpathcron
+  spec:
+    runPolicy: Serial
+    source:
+      dockerfile: |-
+        {{ load_file('dockerfile-critpathcron') | indent(8) }}
+      type: Dockerfile
+    strategy:
+      type: Docker
+      dockerStrategy:
+{% if env == "staging" %}
+        noCache: True
+{% else %}
+        noCache: False
+{% endif %}
+    output:
+      to:
+        kind: ImageStreamTag
+        name: bodhi-critpathcron:latest
 kind: List
 metadata: {}

@@ -1,0 +1,16 @@
+{% if env == "staging" %}
+FROM fedora:37
+{% else %}
+FROM fedora:37
+{% endif %}
+LABEL \
+    name="bodhi-critpathcron" \
+    vendor="Fedora Infrastructure" \
+    license="MIT"
+{% if env == "staging" %}
+RUN curl -o /etc/yum.repos.d/infra-tags.repo https://infrastructure.fedoraproject.org/infra/ansible/files/common/fedora-infra-tags.repo
+RUN curl -o /etc/yum.repos.d/infra-tags-stg.repo https://infrastructure.fedoraproject.org/infra/ansible/files/common/fedora-infra-tags-stg.repo
+{% else %}
+RUN curl -o /etc/yum.repos.d/infra-tags.repo https://infrastructure.fedoraproject.org/infra/ansible/files/common/fedora-infra-tags.repo
+{% endif %}
+RUN dnf install -y python3-dnf git fedora-repos

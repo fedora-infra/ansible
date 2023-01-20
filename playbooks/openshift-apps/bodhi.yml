@@ -67,6 +67,10 @@
     tags:
       - apply-appowners
     when: env == "staging"
+  - role: openshift/object
+    app: bodhi
+    file: pvc.yml
+    objectname: pvc.yml
   - role: openshift/keytab
     app: bodhi
     key: koji-keytab
@@ -132,6 +136,13 @@
     app: bodhi
     template: deploymentconfig.yml
     objectname: deploymentconfig.yml
+  - role: openshift/object
+    app: bodhi
+    template: critpathcron.yml
+    objectname: critpathcron.yml
+  - role: openshift/imagestream
+    app: bodhi
+    imagename: bodhi-critpathcron
   - role: openshift/rollout
     app: bodhi
     dcname: bodhi-web
@@ -165,3 +176,8 @@
     command: "oc -n bodhi annotate route bodhi-web --overwrite haproxy.router.openshift.io/timeout=180s"
     tags:
     - route-timeout
+  - name: trigger critpath cronjob
+    command: "oc -n bodhi create job critpathcron-manual-{{ lookup('pipe','date +%s') }} --from=cronjob/fedora-bodhi-critpathcron"
+    tags:
+    - never
+    - critpathcron

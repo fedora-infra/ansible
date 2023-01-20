@@ -1,0 +1,42 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: fedora-bodhi-critpathcron
+spec:
+  concurrencyPolicy: Forbid
+  schedule: "10 3 * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  activeDeadlineSeconds: 900
+  startingDeadlineSeconds: 300
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          labels:
+            parent: "cronjobbuild"
+        spec:
+          containers:
+          - name: critpath
+            image: image-registry.openshift-image-registry.svc:5000/bodhi/bodhi-critpathcron:latest
+            command: ["/bin/bash", "-c"]
+            args:
+            - |
+              cd /tmp
+              git clone --depth 1 --single-branch https://pagure.io/releng.git
+              cd /bodhi-critpath
+              /tmp/releng/scripts/critpath.py all
+            env:
+            - name: BUILD_ENV
+              value: "{{ env_short }}"
+            volumeMounts:
+            - name: bodhi-critpath
+              mountPath: /bodhi-critpath
+              readOnly: false
+          restartPolicy: Never
+          startingDeadlineSeconds: 600
+          volumes:
+          - name: bodhi-critpath
+            persistentVolumeClaim:
+              claimName: bodhi-critpath-storage
