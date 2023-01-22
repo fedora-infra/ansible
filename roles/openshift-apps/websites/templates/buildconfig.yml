@@ -18,7 +18,6 @@ spec:
       ADD . /websites
       WORKDIR /websites
       RUN npm install
-      RUN ./i18n_gen_yml.sh
       RUN npm run generate
 
       FROM quay.io/fedora/fedora:37
