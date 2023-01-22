@@ -97,3 +97,19 @@
   - httpd
   - httpd/proxy
   - disablesystemdoomd
+
+- name: create systemd drop in dir for httpd
+  file: path=/etc/systemd/system/httpd.service.d/ state=directory
+  tags:
+  - httpd
+  - httpd/proxy
+  - httpdoverride
+
+- name: create systemd drop in dir for httpd
+  copy: src=httpdoverride.conf dest=/etc/systemd/system/httpd.service.d/httpdoverride.conf
+  tags:
+  - httpd
+  - httpd/proxy
+  - httpdoverride
+  notify:
+  - reload systemd
