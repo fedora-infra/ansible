@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1beta1
+kind: AlertmanagerConfig
+metadata:
+  name: appowners-alerts
+  namespace: "{{app}}"
+spec:
+  receivers:
+  - emailConfigs:
+    - sendResolved: true
+      to: "{{ appowners | product(['fedoraproject.org']) | map('join', '@') | join(',') }}"
+    name: default
+  route:
+    groupBy:
+    - alertname
+    - namespace
+    receiver: default
