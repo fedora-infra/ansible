@@ -25,7 +25,7 @@
   tags:
   - packages
   - rsyncd
-  when: (ansible_distribution_major_version|int >= 30 and ansible_distribution == 'Fedora' and ansible_distribution_major_version|int < 34 and ansible_distribution == 'Fedora') or (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int > 8)
+  when: (ansible_distribution_major_version|int >= 30 and ansible_distribution == 'Fedora' and ansible_distribution_major_version|int < 34 and ansible_distribution == 'Fedora') or (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int == 8)
 
 - name: install necessary packages for fedora >= 34
   package:
