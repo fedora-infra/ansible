@@ -139,7 +139,8 @@
 - name: Install certificate bundle
   copy: >
     dest=/etc/pki/tls/certs/{{site_name}}.bundle.cert
-    content="{{certbot_chain.stdout}} {{certbot_certificate.stdout}}"
+    content="{{certbot_certificate.stdout}
+certbot_chain.stdout}}"
     owner=root
     group=root
     mode=0644
