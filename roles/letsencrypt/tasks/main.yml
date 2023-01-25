@@ -137,10 +137,9 @@
   when: certbot_addhost is defined
 
 - name: Install certificate bundle
-  copy: >
+  template: >
     dest=/etc/pki/tls/certs/{{site_name}}.bundle.cert
-    content="{{certbot_certificate.stdout}
-certbot_chain.stdout}}"
+    src=combined.j2
     owner=root
     group=root
     mode=0644
