@@ -13,8 +13,8 @@ gw: "{{ eth0_ipv4_gw }}"
 has_ipv4: yes
 lvm_size: 120g
 mac0: "{{ ansible_default_ipv4.macaddress }}"
-max_mem_size: 16384
-mem_size: 16384
+max_mem_size: 24576
+mem_size: 24576
 network_connections:
   - autoconnect: yes
     ip:
