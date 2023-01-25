@@ -1,25 +1,6 @@
----
-datacenter: cloud
-dns: 8.8.8.8
-eth0_ip: 38.145.48.51
-gw: 38.145.49.254
-ks_repo: http://38.145.60.16/pub/fedora/linux/releases/31/Server/aarch64/os/
-ks_url: http://38.145.60.16/repo/rhel/ks/kvm-fedora-31-ext-aarch64
-lvm_size: 140000
-max_mem_size: "{{ mem_size }}"
-mem_size: 40960
+datacenter: aws
+inventory_hostname: "aarch64-test02.fedorainfracloud.org"
 nagios_Check_Services:
-  dhcpd: false
-  httpd: false
-  mail: false
-  named: false
-  nrpe: false
-  ping: false
-  raid: false
-  sshd: false
   swap: false
-nm: 255.255.254.0
-num_cpus: 5
-virt_install_command_one_nic: virt-install -n {{ inventory_hostname }} --memory={{ mem_size }},maxmemory={{ max_mem_size }} --disk bus=virtio,path={{ volgroup }}/{{ inventory_hostname }} --vcpus={{ num_cpus }},maxvcpus={{ max_cpu }} -l {{ ks_repo }} -x 'net.ifnames=0 ksdevice=eth0 ks={{ ks_url }} console=ttyS0 hostname={{ inventory_hostname }} nameserver={{ dns }} ip={{ eth0_ipv4_ip }}::{{ eth0_ipv4_gw }}:{{ eth0_ipv4_nm }}:{{ inventory_hostname }}:eth0:none' --network bridge={{ main_bridge }},model=virtio,mac={{ mac_address }} --autostart --noautoconsole --rng /dev/random
-vmhost: cloudvmhost-aarch64-01.fedorainfracloud.org
-volgroup: /dev/vg_guests
+postfix_group: vpn
+public_ip: 18.237.17.168
