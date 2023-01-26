@@ -167,6 +167,31 @@ rules:
   - !PassingTestCaseRule {test_case_name: update.installer_build, scenario: "fedora.updates-everything-boot-iso.x86_64.64bit"}
 
 --- !Policy
+id: "bodhiupdate_bodhipush_openqa_apps"
+# these tests are gating for updates in the apps critpath group: as of
+# 2023-01, three apps are in that group (evolution, firefox and
+# thunderbird), and the tests listed here use firefox. We don't have
+# any update tests that cover evolution or thunderbird ATM
+product_versions:
+  - fedora-36
+  - fedora-37
+decision_contexts:
+# we don't list the 'generic' contexts here as all these tests are
+# pulled into those contexts via other policies
+  - bodhi_update_push_testing_critical-path-apps_critpath
+  - bodhi_update_push_stable_critical-path-apps_critpath
+
+subject_type: bodhi_update
+rules:
+# This list needs to stay synced with openQA if tests are added or renamed.
+  - !PassingTestCaseRule {test_case_name: update.desktop_browser, scenario: "fedora.updates-workstation.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.desktop_browser, scenario: "fedora.updates-kde.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.server_cockpit_default, scenario: "fedora.updates-server.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.server_cockpit_basic, scenario: "fedora.updates-server.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.server_cockpit_updates, scenario: "fedora.updates-server.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.server_realmd_join_cockpit, scenario: "fedora.updates-server.x86_64.64bit"}
+
+--- !Policy
 id: "bodhiupdate_bodhipush_openqa_workstation"
 # these tests are gating for updates in core, base, and gnome critpath
 # groups. workstation does not include standard, so these aren't gating
