@@ -3,3 +3,9 @@ allow_fas_db: false
 allow_iad2: true
 
 egress_policy_template: "{{roles_path}}/openshift/project/templates/egresspolicy.yml"
+
+alerting: false
+alert_rules:
+- pod
+- cronjob
+- buildconfig

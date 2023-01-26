@@ -13,6 +13,7 @@
   - role: openshift/project
     app: websites
     description: Fedora websites building
+    alerting: true
     appowners:
     - codeblock
     - ryanlerch
@@ -100,8 +101,3 @@
     objectname: deployment.yml
     when: env == "staging"
 
-  - role: openshift/object
-    app: websites
-    file: prometheusRules.yml
-    objectname: prometheusRules.yml
-    when: env == "staging"
