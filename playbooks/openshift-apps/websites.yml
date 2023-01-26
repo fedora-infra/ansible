@@ -1,7 +1,8 @@
+---
 - name: make the app be real
   hosts: os_control[0]:os_control_stg[0]
   user: root
-  gather_facts: False
+  gather_facts: false
   vars:
     ssh_key_path: "{{ private }}/files/websites/id_rsa_web_trans_{{ env_short }}"
   vars_files:
@@ -100,4 +101,3 @@
     template: deployment.yml
     objectname: deployment.yml
     when: env == "staging"
-

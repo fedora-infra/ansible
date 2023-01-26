@@ -1,7 +1,8 @@
+---
 - name: make the app be real
   hosts: os_control[0]:os_control_stg[0]
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml
@@ -57,17 +58,17 @@
     objectname: pvc.yml
 
 
-###############################################
-# actions to delete the project from OpenShift
-###############################################
-# to run: sudo rbac-playbook -l os_masters_stg[0] -t delete openshift-apps/docsbuilding.yml
+  ###############################################
+  # actions to delete the project from OpenShift
+  ###############################################
+  # to run: sudo rbac-playbook -l os_masters_stg[0] -t delete openshift-apps/docsbuilding.yml
   - role: openshift/object-delete
     app: docsbuilding
     objecttype: cronjob
     objectname: cron
-    tags: [ never, delete ]
+    tags: [never, delete]
   - role: openshift/object-delete
     app: docsbuilding
     objecttype: cronjob
     objectname: cron-translated
-    tags: [ never, delete ]
+    tags: [never, delete]
