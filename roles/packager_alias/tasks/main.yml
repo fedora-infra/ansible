@@ -23,7 +23,7 @@
   - packager_alias
 
 - name: Configure cron to generate the <pkg>-owner email alias
-  cron: name="package-owner-aliases" minute="49" user="root" hour="*/2"
+  cron: name="package-owner-aliases" minute="49" user="root" hour="*/3"
         job="/usr/local/bin/lock-wrapper package-owner-aliases /usr/local/bin/package-owner-aliases.sh"
         cron_file=package-owner-aliases
   tags:
