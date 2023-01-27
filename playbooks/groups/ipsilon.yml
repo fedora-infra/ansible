@@ -21,6 +21,7 @@
   - hosts
   - rsyncd
   - sudo
+  - collectd/base
   - { role: openvpn/client,
       when: env != "staging" }
   - mod_wsgi
