@@ -27,7 +27,7 @@
 
   roles: 
   - role: rabbit/queue
-    username: faf{{ env_suffix }}
+    username: "faf{{ env_suffix }}"
     queue_name: faf
     routing_keys:
       - "org.fedoraproject.*.faf.report.threshold1"
