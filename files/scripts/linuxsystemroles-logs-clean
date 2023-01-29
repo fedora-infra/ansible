@@ -1,0 +1,56 @@
+#!/bin/bash
+
+set -euo pipefail
+
+AGE_IN_DAYS=${AGE_IN_DAYS:-183}
+newest_date=$(date --date="${AGE_IN_DAYS} days ago" +%Y%m%d)
+
+if [ -z "${1:-}" ]; then
+  echo "Need a directory to pushd in" >&2
+  exit 1
+fi
+
+pushd "${1}"
+
+find -maxdepth 1 -type d | while read dir; do
+  # Case: linux-system-roles-certificate-pull-linux-system-roles_certificate-80-4f880f7-rhel-x-20210305-152227
+  if [[ "${dir}" =~ ^./linux-system-roles-[[:alnum:]._-]+-pull-linux-system-roles_([[:alnum:]._-]+)-[[:digit:]]+-([[:xdigit:]]+|HEAD)-([[:alnum:]._-]+)-([[:digit:]]+)-([[:digit:]]+)$ ]]; then
+    echo "${BASH_REMATCH[1]}" "${BASH_REMATCH[3]}" "${BASH_REMATCH[4]}" "${BASH_REMATCH[5]}" "${dir}"
+  # Case: lsr-citool_bootloader-19-0f14842_20220104-080416
+  elif [[ "${dir}" =~ ^./lsr-citool_([[:alnum:]._-]+)-[[:digit:]]+-([[:xdigit:]]+|HEAD)_([[:digit:]]+)-([[:digit:]]+)$ ]]; then
+    echo "${BASH_REMATCH[1]}" "unknown" "${BASH_REMATCH[3]}" "${BASH_REMATCH[4]}" "${dir}"
+  # Case: lsr-citool_certificate-132-212741b_RHEL-9.1.0-20220814.1_20220818-223408
+  elif [[ "${dir}" =~ ^./lsr-citool_([[:alnum:]._-]+)-[[:digit:]]+-([[:xdigit:]]+|HEAD)_([[:alnum:]._-]+)_([[:digit:]]+)-([[:digit:]]+)$ ]]; then
+    echo "${BASH_REMATCH[1]}" "${BASH_REMATCH[3]}" "${BASH_REMATCH[4]}" "${BASH_REMATCH[5]}" "${dir}"
+  # Case: lsr-citool_network-509-82dd06b_RHEL-6.10-updates-20201110.17
+  elif [[ "${dir}" =~ ^./lsr-citool_([[:alnum:]._-]+)-[[:digit:]]+-([[:xdigit:]]+|HEAD)_([[:alnum:]._-]+)$ ]]; then
+    tmod="$(stat -c %Y "${dir}")"
+    tmod="$(date --date="@${tmod}" +'%Y%m%d %H%M%S')"
+    echo "${BASH_REMATCH[1]}" "${BASH_REMATCH[3]}" "${tmod}" "${dir}"
+  # Case: lsr-citool_* (artifacts of early lsr-citool development)
+  elif [[ "${dir}" =~ ^./lsr-citool_.*$ ]]; then
+    tmod="$(stat -c %Y "${dir}")"
+    tmod="$(date --date="@${tmod}" +'%Y%m%d %H%M%S')"
+    echo unknown unknown "${tmod}" "${dir}"
+  fi
+done | sort -n -r | while read role image date time dir; do
+  # `sort -n -r` ensures that the most recent log for $role $image is on the top
+  if [[ "${role}" = unknown && "${date}" -lt "${newest_date}" ]]; then
+    # Let not artifacts of early stage of lsr-citool development to rot forever
+    rm -rf "${dir}"
+    continue
+  fi
+  latest_file=".latest_${role}_${image}"
+  if [[ -f "${latest_file}" ]]; then
+    # Latest log for $role $image seen already
+    if [[ "${date}" -lt "${newest_date}" ]]; then
+      rm -rf "${dir}"
+    fi
+  else
+    echo keeping ${role} ${image} ${date} ${time} ${dir}
+    echo "${dir}" > "${latest_file}"
+  fi
+done
+rm -rf .latest_*
+
+popd

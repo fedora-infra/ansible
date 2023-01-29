@@ -68,10 +68,18 @@
   - name: add cron script to update fullfiletimelist
     copy: src="{{ files }}/scripts/update-fullfiletimelist" dest=/usr/local/bin/update-fullfiletimelist mode=0755
 
+  - name: add cron script to prune old logs at /srv/pub/alt/linuxsystemroles/logs
+    copy: src="{{ files }}/scripts/linuxsystemroles-logs-clean" dest=/usr/local/bin/linuxsystemroles-logs-clean mode=0755
+
   - name: Update fullfiletimelist job
     cron: name="update-fullfiletimelist" hour="*/2" minute="55" user="root"
         job="/usr/local/bin/lock-wrapper update-fullfiletimelist '/usr/local/bin/update-fullfiletimelist -l /tmp/update-fullfiletimelist.lock -t /srv/pub alt'"
         cron_file=update-fullfiletimelist
+
+  - name: Prune old logs at /srv/pub/alt/linuxsystemroles/logs
+    cron: name="linuxsystemroles-logs-clean" hour="0" minute="15" user="root"
+        job="/usr/local/bin/linuxsystemroles-logs-clean /srv/pub/alt/linuxsystemroles/logs"
+        cron_file=linuxsystemroles-logs-clean
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
