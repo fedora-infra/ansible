@@ -684,6 +684,28 @@ config = dict(
 #            ),
 #        ),
 
+        # For #fedora-flatpaks
+        dict(
+            network='irc.libera.chat',
+            port=6667,
+            make_pretty=True,
+            make_terse=True,
+
+            {% if env == 'staging' %}
+            nickname='fm-stg-flatpaks',
+            {% else %}
+            nickname='fm-flatpaks',
+            {% endif %}
+            channel='fedora-flatpaks',
+            filters=dict(
+                topic=[
+                    '^((?!(pagure)).)*$',
+                ],
+                body=[
+                    '^((?!(flatpaks)).)*$',
+                ],
+            ),
+        ),
     ],
 
     ### Possible colors are ###
