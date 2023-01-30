@@ -34,7 +34,7 @@ routing_keys = ["#"]
 settings_file = "/etc/fmn/fmn.cfg"
 
 [consumer_config.send_queue]
-url = "amqps://fmn{{ env_suffix }}:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Ffmn"
+amqp_url = "amqps://fmn{{ env_suffix }}:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Ffmn"
 
 [consumer_config.send_queue.tls]
 ca_cert = "/etc/pki/fedora-messaging/ca/cacert.pem"
@@ -58,6 +58,11 @@ class = "logging.StreamHandler"
 formatter = "simple"
 stream = "ext://sys.stdout"
 
+[log_config.loggers.fmn]
+level = "DEBUG"
+propagate = false
+handlers = ["console"]
+
 [log_config.loggers.fedora_messaging]
 level = "INFO"
 propagate = false
@@ -70,9 +75,9 @@ level = "INFO"
 propagate = false
 handlers = ["console"]
 
-# Pika is the underlying AMQP client library. When debugging you may want to
+# AIO-Pika is the underlying AMQP client library. When debugging you may want to
 # lower this log level.
-[log_config.loggers.pika]
+[log_config.loggers.aio_pika]
 level = "WARNING"
 propagate = false
 handlers = ["console"]
