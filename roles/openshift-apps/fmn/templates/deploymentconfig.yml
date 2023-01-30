@@ -241,6 +241,11 @@ spec:
                 secretKeyRef:
                   name: fmn
                   key: redis-password
+            - name: CACHE__ARGUMENTS__HASH_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: fmn
+                  key: cache-hash-key
       volumes:
         - name: etc-fmn
           configMap:
