@@ -439,12 +439,12 @@ handlers = ["console"]
             keyid = "{{ (env == 'production')|ternary('38ab71f4', 'd300e724') }}"
             
             # f38 resigning
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f38"
-            to = "f38"
-            key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('eb10b464', 'd300e724') }}"
-            file_signing_key = "fedora-38-ima"
+            #[[consumer_config.koji_instances.primary.tags]]
+            #from = "f38"
+            #to = "f38"
+            #key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
+            #keyid = "{{ (env == 'production')|ternary('eb10b464', 'd300e724') }}"
+            #file_signing_key = "fedora-38-ima"
 
             # f36-gnome
             [[consumer_config.koji_instances.primary.tags]]
