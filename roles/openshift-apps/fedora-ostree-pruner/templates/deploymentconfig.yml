@@ -20,8 +20,8 @@ spec:
       - name: fedora-ostree-pruner
         # sleep infinity is useful for debugging environment issues
         # comment out when not debugging
-        # args: ['/usr/bin/sleep', 'infinity']
-        # command: ['/usr/bin/dumb-init']
+        args: ['/usr/bin/sleep', 'infinity']
+        command: ['/usr/bin/dumb-init']
         volumeMounts:
         - name: fedora-ostree-content-volume
           mountPath: /mnt/koji
