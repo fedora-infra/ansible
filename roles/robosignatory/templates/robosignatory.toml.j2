@@ -727,6 +727,10 @@ handlers = ["console"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
         key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
 
+        [consumer_config.ostree_refs."fedora/rawhide/x86_64/sericea"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
+
     [consumer_config.coreos]
     bucket = "fcos-builds"
     {% if env == "staging" %}
