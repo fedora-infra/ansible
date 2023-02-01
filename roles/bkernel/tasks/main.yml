@@ -35,12 +35,7 @@
   - bkernel
 
 - name: /var/run/pesign directory perms
-  file: state=directory path=/var/run/pesign owner=pesign group=kojibuilder mode=0770
-  tags:
-  - bkernel
-
-- name: /var/run/pesign socket perms
-  file: path=/var/run/pesign/socket owner=pesign group=kojibuilder mode=0660
+  acl: path=/var/run/pesign default=true entity=kojibuilder etype=group permissions=rwx recursive=true state=present
   tags:
   - bkernel
 
