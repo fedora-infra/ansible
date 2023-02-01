@@ -697,12 +697,13 @@ config = dict(
             nickname='fm-flatpaks',
             {% endif %}
             channel='fedora-flatpaks',
+            # show PRs and git commits for flatpaks/ namespace, and bodhi FEDORA-FLATPAK updates
             filters=dict(
                 topic=[
-                    '^((?!(pagure)).)*$',
+                    '^((?!(pagure\.pull-request|git\.receive|bodhi\.update)).)*$',
                 ],
                 body=[
-                    '^((?!(flatpaks)).)*$',
+                    '^((?!(flatpaks\/|FEDORA-FLATPAK)).)*$',
                 ],
             ),
         ),
