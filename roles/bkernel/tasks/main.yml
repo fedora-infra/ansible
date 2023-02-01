@@ -35,7 +35,7 @@
   - bkernel
 
 - name: /var/run/pesign directory perms (kojibuilder)
-  acl: path=/var/run/pesign entity=kojibuilder etype=group permissions=rwx recursive=true state=present
+  acl: path=/var/run/pesign entity=kojibuilder etype=user permissions=rwx recursive=true state=present
   tags:
   - bkernel
 
@@ -45,7 +45,7 @@
   - bkernel
 
 - name: /var/run/pesign socket perms (kojibuilder)
-  acl: path=/var/run/pesign/socket entity=kojibuilder etype=group permissions=rwx recursive=true state=present
+  acl: path=/var/run/pesign/socket entity=kojibuilder etype=user permissions=rwx recursive=true state=present
   tags:
   - bkernel
 
