@@ -34,8 +34,13 @@
   tags:
   - bkernel
 
-- name: /var/run/pesign perms
-  file: state=directory path=/var/run/pesign owner=pesign group=pesign mode=0770
+- name: /var/run/pesign directory perms
+  file: state=directory path=/var/run/pesign owner=pesign group=kojibuilder mode=0770
+  tags:
+  - bkernel
+
+- name: /var/run/pesign socket perms
+  file: path=/var/run/pesign/socket owner=pesign group=kojibuilder mode=0660
   tags:
   - bkernel
 
