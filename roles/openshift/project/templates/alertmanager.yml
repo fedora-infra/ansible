@@ -7,7 +7,7 @@ spec:
   receivers:
   - emailConfigs:
     - sendResolved: true
-      to: "{{ appowners | product(['fedoraproject.org']) | map('join', '@') | join(',') }}"
+      to: "{{ alert_users | default(appowners) | product(['fedoraproject.org']) | map('join', '@') | join(',') }}"
     name: default
   route:
     groupBy:
