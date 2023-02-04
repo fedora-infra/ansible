@@ -13,7 +13,7 @@ spec:
       annotations:
         description: Latest execution of CronJob {{$labels.namespace}}/{{$labels.cronjob}} failed to complete.
         summary: Latest job {{$labels.cronjob}} has failed.
-      expr: kube_cronjob_status_last_schedule_time - kube_cronjob_status_last_successful_time > 0
+      expr: (kube_cronjob_status_last_schedule_time - kube_cronjob_status_last_successful_time) * (1 - kube_cronjob_status_active) > 0
       for: 5m
       labels:
         severity: warning
