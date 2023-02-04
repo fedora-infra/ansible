@@ -47,11 +47,12 @@
   tags: rsnapshot_push
 
 - name: backup praiskup data
-  cron: name="backup documents - {{ item.key }}"
-        minute="0/5"
-        hour="*"
-        user={{ item.value.user }}
-        job=/usr/local/bin/"{{ item.value.command }}"
+  cron:
+    name: "backup documents - {{ item.key }}"
+    minute: "*/5"
+    hour: "*"
+    user: "{{ item.value.user }}"
+    job: "/usr/local/bin/{{ item.value.command }}"
   with_dict:
-  - "{{ rsnapshot_push.cases }}"
+    - "{{ rsnapshot_push.cases }}"
   tags: rsnapshot_push

@@ -18,14 +18,8 @@ cmd_rsync	/usr/bin/rsync
 cmd_du		/usr/bin/du
 cmd_ssh		/usr/bin/ssh
 
-{% if 'timing_plan' in item.value %}
-{% set timing_plan = item.value.timing_plan %}
-{% else %}
-{% set timing_plan = 'normal' %}
-{% endif %}
-{% if timing_plan in rsnapshot_push_defaults.timing_plans %}
+{% set timing_plan = item.value.timing_plan | default('normal') %}
 {% set plan = rsnapshot_push_defaults.timing_plans[timing_plan] %}
-{% endif %}
 {% if 'timing_plans' in rsnapshot_push and timing_plan in rsnapshot_push.timing_plans %}
 {% set plan = rsnapshot_push.timing_plans[timing_plan] %}
 {% endif %}
