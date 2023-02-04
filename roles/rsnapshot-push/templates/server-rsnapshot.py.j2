@@ -1,0 +1,71 @@
+#! /usr/bin/python3
+
+"""
+Rotate backups with appropriate rsnapshot level(s).
+{% if 'timing_plan' in item.value %}
+{% set timing_plan = item.value.timing_plan %}
+{% else %}
+{% set timing_plan = 'normal' %}
+{% endif %}
+{% if timing_plan in rsnapshot_push_defaults.timing_plans %}
+{% set plan = rsnapshot_push_defaults.timing_plans[timing_plan] %}
+{% endif %}
+{% if 'timing_plans' in rsnapshot_push and timing_plan in rsnapshot_push.timing_plans %}
+{% set plan = rsnapshot_push.timing_plans[timing_plan] %}
+{% endif %}
+"""
+
+import json
+import time
+import subprocess
+
+DB = "{{ '/'.join([rsnapshot_push.backup_dir, item.key, 'rsnapshot_push.db']) }}"
+CONFIG = "{{ '/'.join([rsnapshot_push.backup_dir, item.key, 'rsnapshot.conf']) }}"
+LEVELS = {
+{% for name, spec in plan.items() %}
+    '{{ name }}': {{ spec[0] }},
+{% endfor %}
+}
+
+
+def _get_db():
+    try:
+        with open(DB, 'r') as fdb:
+            db_dict = json.loads(fdb.read())
+    except FileNotFoundError:
+        db_dict = {}
+    # initiate the levels which are not yet in DB
+    now = time.time()
+    force_reset = False
+    for key in LEVELS:
+        if key not in db_dict or force_reset:
+            db_dict[key] = now
+            force_reset = True
+    return db_dict
+
+
+def rotate(database):
+    """ rotate backups as needed, per last runs stored in database """
+    now = time.time()
+    for level, delay in sorted(LEVELS.items(), key=lambda x: x[1]):
+        cmd = ['/bin/rsnapshot', '-c', CONFIG, level]
+        last_run = database[level]
+        if (now - last_run) > delay:
+            print("running " + ' '.join(cmd))
+            subprocess.check_call(cmd)
+            database[level] = now
+        else:
+            print("skipping " + level)
+
+
+def _main():
+    database = _get_db()
+    try:
+        rotate(database)
+    finally:
+        with open(DB, 'w') as fdb:
+            fdb.write(json.dumps(database))
+
+
+if __name__ == "__main__":
+    _main()

@@ -1,0 +1,57 @@
+#! /bin/bash
+
+dirname=$(dirname "$(readlink -f "$0")" )
+rsync_config=$dirname/rsync.conf
+rsnapshot_config=$dirname/rsnapshot.conf
+
+backup=$dirname/backup
+sync_to=$backup/.sync
+lock="$dirname/.rsync.lock"
+mkdir -p "$sync_to"
+
+cat >"$rsnapshot_config" <<EOF
+config_version	1.2
+
+cmd_cp		/usr/bin/cp
+cmd_rm		/usr/bin/rm
+cmd_rsync	/usr/bin/rsync
+cmd_du		/usr/bin/du
+cmd_ssh		/usr/bin/ssh
+
+{% if 'timing_plan' in item.value %}
+{% set timing_plan = item.value.timing_plan %}
+{% else %}
+{% set timing_plan = 'normal' %}
+{% endif %}
+{% if timing_plan in rsnapshot_push_defaults.timing_plans %}
+{% set plan = rsnapshot_push_defaults.timing_plans[timing_plan] %}
+{% endif %}
+{% if 'timing_plans' in rsnapshot_push and timing_plan in rsnapshot_push.timing_plans %}
+{% set plan = rsnapshot_push.timing_plans[timing_plan] %}
+{% endif %}
+
+{% for name, spec in plan.items() %}
+retain		{{ name }}	{{ spec[1] }}
+{% endfor %}
+
+sync_first	1
+
+snapshot_root	$backup
+backup		$sync_to	./
+logfile		$dirname/rsnapshot.log
+lockfile	$dirname/rsnapshot.pid
+EOF
+
+cat >"$rsync_config" <<EOF
+[push]
+path = $sync_to
+use chroot = 0
+read only = 0
+write only = 1
+fake super = 1
+max connections = 1
+lock file = $lock
+post-xfer exec = $dirname/rsnapshot
+EOF
+
+/usr/bin/rsync --server --daemon "--config=$rsync_config" .

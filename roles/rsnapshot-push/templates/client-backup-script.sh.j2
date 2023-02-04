@@ -1,0 +1,8 @@
+#! /bin/bash
+
+# the ::push is defined server-side target
+
+exec rsync -av --xattrs --acls \
+    --delete --delete-excluded \
+    {{ item.value.rsync_args }} \
+    {{ item.value.user }}@{{ rsnapshot_push.server_host }}::push

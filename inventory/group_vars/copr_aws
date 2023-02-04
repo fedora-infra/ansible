@@ -75,3 +75,13 @@ root_auth_users: msuchy frostyx praiskup nikromen
 aws_cloudfront_distribution: E2PUZIRCXCOXTG
 
 nrpe_client_uid: 500
+
+rsnapshot_push:
+  server_host: storinator01.rdu-cc.fedoraproject.org
+  backup_dir: /srv/nfs/copr-be
+  timing_plan: copr_be
+  cases:
+    copr-be-copr-user:
+      user: copr
+      rsync_args: --relative /home/copr/provision
+      command: rsnapshot_copr_backend

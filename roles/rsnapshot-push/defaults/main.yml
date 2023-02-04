@@ -1,0 +1,15 @@
+---
+rsnapshot_push_defaults:
+  timing_plans:
+    normal:
+      push: [0, 25]
+      daily: [86400, 10]
+      weekly: [604800, 4]
+      monthly: [2592000, 6]
+      yearly: [31536000, 3]
+
+    # we can't keep monthly increments for too large deltas
+    copr_be:
+      # Sunday / Wednesday
+      push: [0, 3]
+      biweekly: [1209600, 3]
