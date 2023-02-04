@@ -2,7 +2,7 @@
 - name: backup script
   template:
     src: client-backup-script.sh.j2
-    dest: /usr/local/bin/"{{ item.value.command }}"
+    dest: "/usr/local/bin/{{ item.value.command }}"
     owner: "{{ item.value.user }}"
     group: "{{ item.value.user }}"
     mode: 0700
@@ -17,6 +17,8 @@
     owner: "{{ item.value.user }}"
     group: "{{ item.value.user }}"
     mode: 0700
+  with_dict:
+    - "{{ rsnapshot_push.cases }}"
   delegate_to: "{{ rsnapshot_push.server_host }}"
   tags: rsnapshot_push
 
