@@ -34,6 +34,17 @@
   delegate_to: "{{ rsnapshot_push.server_host }}"
   tags: rsnapshot_push
 
+- name: install authorized key entry
+  authorized_key:
+    user: "{{ item.value.user }}"
+    state: present
+    key: "{{ item.value.ssh_pub_key }}"
+    key_options: "command=\"{{ '/'.join([rsnapshot_push.backup_dir, item.key, 'sync-daemon']) }}\""
+  delegate_to: "{{ rsnapshot_push.server_host }}"
+  with_dict:
+    - "{{ rsnapshot_push.cases }}"
+  tags: rsnapshot_push
+
 - name: rsnapshot call wrapper
   template:
     src: server-rsnapshot.py.j2
