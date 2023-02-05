@@ -70,7 +70,7 @@
     minute: "*/5"
     hour: "*"
     user: "{{ item.value.user }}"
-    job: "ionice --class=idle /usr/local/bin/{{ item.value.command }}"
+    job: "ionice --class=idle /usr/local/bin/{{ item.value.command }} >/dev/null"
   with_dict:
     - "{{ rsnapshot_push.cases }}"
   tags: rsnapshot_push
