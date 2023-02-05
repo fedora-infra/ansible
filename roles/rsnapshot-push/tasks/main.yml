@@ -64,7 +64,7 @@
   delegate_to: "{{ rsnapshot_push.server_host }}"
   tags: rsnapshot_push
 
-- name: backup praiskup data
+- name: cronjob run twice a week to trigger the backup (and rotation)
   cron:
     name: "backup documents - {{ item.key }}"
     minute: "1"

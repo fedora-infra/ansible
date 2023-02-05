@@ -1,0 +1,26 @@
+PUSH backups using rsnapshot
+============================
+
+1. use the role rsnapshot-push
+
+2. configure via vars file
+
+  | rsnapshot_push:
+  |   server_host: <hostname of the backup host, e.g. storinator>
+  |   backup_dir: <directory on server_host where to backup>
+  |   cases:
+  |     # Multiple cases are possible.  The "key" is just unique across cases.
+  |     <name-of-the-case>:
+  |       # what user to rsync under (locally/remotely, must exist on both sides)
+  |       user: <username>
+  |       # additional rsync args (including list of backed-up directories)
+  |       rsync_args: --relative <directory> --info=progress2 ...
+  |       # the script useful for triggering the rsync, stored under /usr/local/bin
+  |       command: rsnapshot_push_some_unique_name
+  |       # this allows "push" backup entry in authorized_keys on server_host
+  |       ssh_pub_key: "ssh-rsa AAAAB3NzaC1yi...."
+
+3. configure frequency of rsync runs
+
+  TODO: this is currently set globally in roles/rsnapshot-push/tasks/main.yml
+        as twice-a-week cronjob.  This needs to be configured.
