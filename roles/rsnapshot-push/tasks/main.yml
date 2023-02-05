@@ -10,6 +10,13 @@
   - "{{ rsnapshot_push.cases }}"
   tags: rsnapshot_push
 
+- name: install rsnapshot package
+  package:
+    name: rsnapshot
+    state: present
+  delegate_to: "{{ rsnapshot_push.server_host }}"
+  tags: rsnapshot_push
+
 - name: server-side case-specific backup dir
   file:
     path: "{{ '/'.join([rsnapshot_push.backup_dir, item.key]) }}"
