@@ -4,5 +4,6 @@
 
 exec rsync -av --xattrs --acls \
     --delete --delete-excluded \
+    --rsh=ssh \
     {{ item.value.rsync_args }} \
     {{ item.value.user }}@{{ rsnapshot_push.server_host }}::push
