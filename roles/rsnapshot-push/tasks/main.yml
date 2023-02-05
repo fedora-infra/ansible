@@ -67,8 +67,9 @@
 - name: backup praiskup data
   cron:
     name: "backup documents - {{ item.key }}"
-    minute: "*/5"
-    hour: "*"
+    minute: "1"
+    hour: "1"
+    day: "3,7"
     user: "{{ item.value.user }}"
     job: "ionice --class=idle /usr/local/bin/{{ item.value.command }} >/dev/null"
   with_dict:
