@@ -82,7 +82,7 @@ rsnapshot_push:
   cases:
     copr-be-copr-user:
       user: copr
-      rsync_args: --relative /var/lib/copr/public_html
+      rsync_args: --relative /var/lib/copr/public_html --info=progress2
       command: rsnapshot_copr_backend
       timing_plan: copr_be
       # copr-backend's copr/resalloc pubkey
