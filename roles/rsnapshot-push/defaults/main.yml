@@ -11,5 +11,7 @@ rsnapshot_push_defaults:
     # we can't keep monthly increments for too large deltas
     copr_be:
       # Sunday / Wednesday
-      push: [0, 3]
+      # Every 3.5 days
+      push: [302400, 3]
+      # Every 14 days
       biweekly: [1209600, 3]
