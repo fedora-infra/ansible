@@ -684,29 +684,6 @@ config = dict(
 #            ),
 #        ),
 
-        # For #fedora-flatpaks
-        dict(
-            network='irc.libera.chat',
-            port=6667,
-            make_pretty=True,
-            make_terse=True,
-
-            {% if env == 'staging' %}
-            nickname='fm-stg-flatpaks',
-            {% else %}
-            nickname='fm-flatpaks',
-            {% endif %}
-            channel='fedora-flatpaks',
-            # show PRs and git commits for flatpaks/ namespace, and bodhi FEDORA-FLATPAK updates
-            filters=dict(
-                topic=[
-                    '^((?!(pagure\.pull-request|git\.receive|bodhi\.update)).)*$',
-                ],
-                body=[
-                    '^((?!(flatpaks\/|FEDORA-FLATPAK)).)*$',
-                ],
-            ),
-        ),
     ],
 
     ### Possible colors are ###
