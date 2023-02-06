@@ -1,2 +1,15 @@
 ---
-- include_tasks: create-keytab.yml
+- name: Create the directories to hold the templates
+  file:
+    path: "/root/ocp4/openshift-apps/fas2discourse-operator"
+    state: directory
+    owner: root
+    group: root
+    mode: 0770
+    recurse: yes
+
+- include_tasks: create-operator-namespace.yml
+- include_tasks: create-keytab-secret.yml
+- include_tasks: create-discourse-apikey-secret.yml
+- include_tasks: deploy-fas2discourse-operator.yml
+
