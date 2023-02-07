@@ -173,7 +173,7 @@
   when: env != 'staging'
 
 # install the plugin with the rpm from infra repo on stg
-  - name: install fedora-messaging schemas and plugin
+- name: install fedora-messaging schemas and plugin
   package: name={{ item }} state=present
   with_items:
   - koji-fedoramessaging
