@@ -78,7 +78,11 @@
 
   - name: Prune old logs at /srv/pub/alt/linuxsystemroles/logs
     cron: name="linuxsystemroles-logs-clean" hour="0" minute="15" user="root"
-        job="/usr/local/bin/linuxsystemroles-logs-clean /srv/pub/alt/linuxsystemroles/logs"
+        job="/usr/local/bin/linuxsystemroles-logs-clean /srv/pub/alt/linuxsystemroles/logs >/dev/null"
+        cron_file=linuxsystemroles-logs-clean
+
+  - name: Set MAILTO for the previous cron job
+    cron: env=true name=MAILTO value="systemroles-owner@lists.fedorahosted.org"
         cron_file=linuxsystemroles-logs-clean
 
   handlers:
