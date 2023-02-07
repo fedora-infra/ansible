@@ -5,7 +5,7 @@ DBName = koji
 DBUser = koji
 {% if env == "staging" %}
 DBHost = db-koji01
-LogLevel = koji:INFO koji-fedmsg-plugin:INFO
+LogLevel = DEBUG
 LogFormat = %(asctime)s [%(levelname)s] m=%(method)s u=%(user_name)s p=%(process)s r=%(remoteaddr)s %(name)s: %(message)s
 DBPass = {{ kojiStgPassword }}
 {% else %}
@@ -85,8 +85,11 @@ MissingPolicyOk = False
 
 #Plugins = koji-disable-builds-plugin
 #Plugins = darkserver-plugin
+{% if env == "staging" %}
+Plugins = osbuild koji-fedoramessaging runroot_hub hub_containerbuild tag2distrepo sidetag_hub save_failed_tree
+{% else %}
 Plugins = osbuild fedmsg-koji-plugin runroot_hub hub_containerbuild tag2distrepo sidetag_hub save_failed_tree
-
+{% endif %}
 [policy]
 
 tag =

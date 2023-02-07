@@ -158,7 +158,7 @@
   - koji_hub
   - fedora-messaging
 
-# Since we're in freeze we'll have different plugins in prod and stg
+# install the old version of the plugin on prod
 - name: koji fedora-messaging plugin - installed as fedmsg-koji-plugin
   template:
         src: fedmsg-koji-plugin.py
@@ -170,6 +170,21 @@
   - config
   - koji_hub
   - fedora-messaging
+  when: env != 'staging'
+
+# install the plugin with the rpm from infra repo on stg
+  - name: install fedora-messaging schemas and plugin
+  package: name={{ item }} state=present
+  with_items:
+  - koji-fedoramessaging
+  - python3-koji-fedoramessaging-messages
+  notify:
+  - reload httpd
+  tags:
+  - packages
+  - koji_hub
+  - fedora-messaging
+  when: ansible_distribution == "Fedora" and env == 'staging'
 
 
 - name: install the configuration file for the sidetag plugin
