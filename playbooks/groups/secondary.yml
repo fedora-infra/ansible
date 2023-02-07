@@ -83,7 +83,7 @@
 
   - name: Set MAILTO for the previous cron job
     cron: env=true name=MAILTO value="systemroles-owner@lists.fedorahosted.org"
-        cron_file=linuxsystemroles-logs-clean
+        cron_file=linuxsystemroles-logs-clean user=root
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
