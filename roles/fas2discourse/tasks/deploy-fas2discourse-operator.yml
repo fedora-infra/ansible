@@ -1,2 +1,17 @@
 ---
+- name: Git checkout the fas2discourse operator codebase
+  ansible.builtin.git:
+    repo: 'https://pagure.io/cpe/fas2discourse.git'
+    dest: "/root/ocp4/openshift-apps/fas2discourse-operator/fas2discourse-operator/"
+    version: "main"
+
+- name: Run 'make install' on the fas2discourse operator
+  make:
+    chdir: "/root/ocp4/openshift-apps/fas2discourse-operator/fas2discourse-operator/"
+    target: "install"
+
+- name: Run 'make deploy' on the fas2discourse operator
+  make:
+    chdir: "/root/ocp4/openshift-apps/fas2discourse-operator/fas2discourse-operator/"
+    target: "deploy"
 
