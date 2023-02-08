@@ -1,5 +1,9 @@
 # Global list of koji tags we care about
-tags = ({'name': 'Rawhide', 'tag': 'f38'},
+tags = ({'name': 'Rawhide', 'tag': 'f39'},
+
+        {'name': 'Fedora 38', 'tag': 'f38-updates'},
+        {'name': 'Fedora 38', 'tag': 'f38'},
+        {'name': 'Fedora 38 Testing', 'tag': 'f38-updates-testing'},
 
         {'name': 'Fedora 37', 'tag': 'f37-updates'},
         {'name': 'Fedora 37', 'tag': 'f37'},
