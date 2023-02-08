@@ -112,12 +112,8 @@ product = "Fedora"
 version = "rawhide"
 keywords = "FutureFeature,Triaged"
 bug_status = "NEW"
-{% if env == "staging" %}
 short_desc_template="%(name)s-%(retrieved_version)s is available"
 short_desc_template_more_versions="New versions of %(name)s available"
-{% else %}
-short_desc_template = "%(name)s-%(latest_upstream)s is available"
-{% endif %}
 description_template = """
 Releases retrieved: %(retrieved_versions)s
 Upstream release that is considered latest: %(latest_upstream)s
