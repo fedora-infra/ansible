@@ -77,7 +77,8 @@ def _main():
         return EXIT_WARN
 
     LOG.info("The last build %s for copr-ping succeeded, took %s seconds, "
-             "elapsed since the last stop %s", build_id, took, since_last_stop)
+             "elapsed since the last stop %s seconds", build_id, took,
+             since_last_stop)
     return EXIT_OK
 
 
