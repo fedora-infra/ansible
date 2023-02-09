@@ -238,7 +238,7 @@ handlers = ["console"]
             [[consumer_config.koji_instances.primary.tags]]
             from = "f38-signing-pending"
             to = "f38-updates-testing-pending"
-            key = "{{ (env == 'production')|ternary('fedora-39', 'testkey') }}"
+            key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
             keyid = "{{ (env == 'production')|ternary('eb10b464', 'd300e724') }}"
             {% if env == "production" %}
             # ima file signing - enabled in f37
