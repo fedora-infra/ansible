@@ -6,10 +6,13 @@ Analyze "{{ ping_log }}"
 
 import sys
 import logging
-import queue
+import time
 
 FILE = "{{ ping_log }}"
 TAKE_LAST_N_ATTEMPTS = 10
+
+# NOTE: sync with cron period in roles/copr/backend/tasks/copr-ping.yml
+CRON_PERIOD = 30*60
 WARN_TIME = 6*60
 ERR_TIME = 20*60
 
@@ -23,91 +26,64 @@ logging.basicConfig(
     format='%(message)s',
     handlers=[logging.StreamHandler(sys.stdout)],
 )
+
 LOG = logging.getLogger()
+NOW = time.time()
 
 
-class Context:  # pylint: disable=too-few-public-methods
-    """ Just a context structure """
-    status = EXIT_OK
+def _main():
 
-
-def set_status(context, status):
-    """
-    Set a CTX.status to STATUS, if STATUS is worse than the actual
-    """
-    if context.status < status:
-        context.status = status
-
-
-def warning(context, msg, *args):
-    """ Throw a nagios warning """
-    LOG.warning(msg, *args)
-    set_status(context, EXIT_WARN)
-
-
-def error(context, msg, *args):
-    """ Throw a nagios error """
-    LOG.error(msg, *args)
-    set_status(context, EXIT_CRITICAL)
-
-
-def _main(context):
-    last_lines = queue.Queue()
-
-    with open(FILE) as file:
+    # Get the last log line
+    line = ""
+    with open(FILE, "r", encoding="utf-8") as file:
         for line in file:
-            last_lines.put(line)
+            pass
 
-            if len(last_lines.queue) > TAKE_LAST_N_ATTEMPTS:
-                last_lines.get()
+    values = {
+        "start": None,
+        "stop": None,
+        "exit_status": -1,
+        "build_id": 0,
+    }
 
-    builds_checked = 0
-    while last_lines.queue:
-        # re-set the state, only the last matters
-        context.status = EXIT_OK
+    for value in line.split():
+        key, value = value.split('=')
+        values[key] = value
 
-        builds_checked += 1
+    if values["start"] is None or values["stop"] is None or values["exit_status"] == -1:
+        LOG.error("some values not set in %s", FILE)
+        return EXIT_CRITICAL
 
-        line = last_lines.get()
-        values = {
-            "start": None,
-            "stop": None,
-            "exit_status": -1,
-            "build_id": 0,
-        }
-
-        for value in line.split():
-            key, value = value.split('=')
-            values[key] = value
-
-        if values["start"] is None or values["stop"] is None or values["exit_status"] == -1:
-            LOG.error("some values not set in %s", FILE)
-            sys.exit(EXIT_CRITICAL)
-
-        build_id = values["build_id"]
-        start = int(values["start"])
-        stop = int(values["stop"])
-        took = stop - start
-        if took > ERR_TIME:
-            error(context, "Build %s took %ss (allowed %s)", build_id, took,
-                  WARN_TIME)
-        elif took > WARN_TIME:
-            warning(context, "Build %s took %ss (allowed %s)", build_id, took,
-                    WARN_TIME)
-
-        if int(values["exit_status"]) != 0:
-            error(context, "Exit status is %s (non-zero) for build ID %s",
+    if int(values["exit_status"]) != 0:
+        LOG.error("Exit status is %s (non-zero) for build ID %s",
                   values["exit_status"], values["build_id"])
+        return EXIT_CRITICAL
 
-    if context.status == EXIT_OK:
-        LOG.info("The last build %s for copr-ping succeeded", build_id)
+    build_id = values["build_id"]
+    stop = int(values["stop"])
+    start = int(values["start"])
+    since_last_stop = NOW - stop
+    measured_time = since_last_stop - CRON_PERIOD
+    took = stop - start
+
+    if measured_time > ERR_TIME:
+        LOG.error("%s seconds since the last successful build, allowed %s seconds",
+                  since_last_stop, CRON_PERIOD + ERR_TIME)
+        return EXIT_CRITICAL
+
+    if measured_time > WARN_TIME:
+        LOG.warning("%s seconds since the last successful build, allowed %s seconds",
+                    since_last_stop, CRON_PERIOD + WARN_TIME)
+        return EXIT_WARN
+
+    LOG.info("The last build %s for copr-ping succeeded, took %s seconds",
+             build_id, took)
+    return EXIT_OK
 
 
 if __name__ == "__main__":
-    ctx = Context()
     try:
-        _main(ctx)
-        sys.exit(ctx.status)
+        sys.exit(_main())
     except Exception:  # pylint: disable=broad-except
         LOG.exception("UNKNOWN EXCEPTION")
         sys.exit(EXIT_CRITICAL)

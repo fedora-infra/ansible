@@ -86,6 +86,7 @@
 
 - name: rebuild the copr-ping package periodically
   ansible.builtin.cron:
+    # NOTE: sync with CRON_PERIOD in roles/copr/backend/templates/copr-ping-check.py.j2
     name: build the ping package
     minute: "{% if devel %}0{% else %}0,30{% endif %}"
     hour: "{% if devel %}1{% else %}*{% endif %}"

@@ -26,7 +26,7 @@ build_id=$(echo "$output" | grep 'Created builds:' | cut -d' ' -f3)
 exit_status=$?
 if ! expr "$build_id" : '\([0-9]*\)$'; then
     # we don't even have the build_id
-    build_id=unknown
+    build_id=failed_to_submit
 fi
 
 if test $exit_status -ne 0; then
@@ -36,7 +36,3 @@ fi
 copr watch-build "$build_id"
 exit_status=$?
 log
-
-
-
-
