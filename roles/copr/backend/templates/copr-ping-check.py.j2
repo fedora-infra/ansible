@@ -28,7 +28,7 @@ logging.basicConfig(
 )
 
 LOG = logging.getLogger()
-NOW = time.time()
+NOW = int(time.time())
 
 
 def _main():
@@ -64,7 +64,7 @@ def _main():
     start = int(values["start"])
     since_last_stop = NOW - stop
     measured_time = since_last_stop - CRON_PERIOD
-    took = stop - start
+    took = int(stop - start)
 
     if measured_time > ERR_TIME:
         LOG.error("%s seconds since the last successful build, allowed %s seconds",
