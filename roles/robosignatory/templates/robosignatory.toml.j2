@@ -108,6 +108,12 @@ handlers = ["console"]
             keyid = "{{ (env == 'production')|ternary('47dd8ef9', 'd300e724') }}"
 
             [[consumer_config.koji_instances.primary.tags]]
+            from = "epel9-infra-candidate"
+            to = "epel9-infra-stg"
+            key = "{{ (env == 'production')|ternary('fedora-infra', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('47dd8ef9', 'd300e724') }}"
+
+            [[consumer_config.koji_instances.primary.tags]]
             from = "f36-infra-candidate"
             to = "f36-infra-stg"
             key = "{{ (env == 'production')|ternary('fedora-infra', 'testkey') }}"
@@ -181,7 +187,7 @@ handlers = ["console"]
             file_signing_key = "fedora-39-ima"
             {% endif %}
 
-            # Gated rawhide and branched
+            # Gated rawhide
 
             [[consumer_config.koji_instances.primary.tags]]
             from = "f39-signing-pending"
@@ -227,6 +233,38 @@ handlers = ["console"]
             keyid = "{{ (env == 'production')|ternary('18B8e74c', 'd300e724') }}"
             type = "modular"
 
+            # Branched
+
+            [[consumer_config.koji_instances.primary.tags]]
+            from = "f38-signing-pending"
+            to = "f38-updates-testing-pending"
+            key = "{{ (env == 'production')|ternary('fedora-39', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('eb10b464', 'd300e724') }}"
+            {% if env == "production" %}
+            # ima file signing - enabled in f37
+            file_signing_key = "fedora-38-ima"
+            {% endif %}
+
+            [consumer_config.koji_instances.primary.tags.sidetags]
+            pattern = 'f38-build-side-<seq_id>'
+            from = '<sidetag>-signing-pending'
+            to = '<sidetag>-testing-pending'
+            trusted_taggers = ['bodhi']
+            {% if env == "production" %}
+            # ima file signing - enabled in f37
+            file_signing_key = "fedora-38-ima"
+            {% endif %}
+
+            [[consumer_config.koji_instances.primary.tags]]
+            from = "f38-pending"
+            to = "f38"
+            key = "{{ (env == 'production')|ternary('fedora-39', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('eb10b464', 'd300e724') }}"
+            {% if env == "production" %}
+            # ima file signing - enabled in f37
+            file_signing_key = "fedora-38-ima"
+            {% endif %}
+
             [[consumer_config.koji_instances.primary.tags]]
             from = "f38-modular-pending"
             to = "f38-modular"
@@ -240,6 +278,8 @@ handlers = ["console"]
             key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
             keyid = "{{ (env == 'production')|ternary('eb10b464', 'd300e724') }}"
             type = "modular"
+
+            # stable releases
 
             [[consumer_config.koji_instances.primary.tags]]
             from = "f37-signing-pending"
@@ -392,25 +432,25 @@ handlers = ["console"]
             [[consumer_config.koji_instances.primary.tags]]
             from = "eln-signing-pending"
             to = "eln-updates-testing-pending"
-            key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('eb10b464', 'd300e724') }}"
-            file_signing_key = "fedora-38-ima"
+            key = "{{ (env == 'production')|ternary('fedora-39', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('18B8e74c', 'd300e724') }}"
+            file_signing_key = "fedora-39-ima"
 
             [[consumer_config.koji_instances.primary.tags]]
             from = "eln-modular-updates-candidate"
             to = "eln-modular"
-            key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('eb10b464', 'd300e724') }}"
+            key = "{{ (env == 'production')|ternary('fedora-39', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('18B8e74c', 'd300e724') }}"
             type = "modular"
-            file_signing_key = "fedora-38-ima"
+            file_signing_key = "fedora-39-ima"
 
             # ELN Mass Rebuild
 
             [[consumer_config.koji_instances.primary.tags]]
             from = "eln-rebuild"
             to = "eln-rebuild"
-            key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('eb10b464', 'd300e724') }}"
+            key = "{{ (env == 'production')|ternary('fedora-39', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('18B8e74c', 'd300e724') }}"
             file_signing_key = "fedora-38-ima"
 
             [[consumer_config.koji_instances.primary.tags]]
@@ -427,7 +467,7 @@ handlers = ["console"]
             from = '<sidetag>-signing-pending'
             to = '<sidetag>-testing-pending'
             trusted_taggers = ['bodhi']
-            file_signing_key = "fedora-38-ima"
+            file_signing_key = "fedora-39-ima"
             
             # openh264 signing
             
