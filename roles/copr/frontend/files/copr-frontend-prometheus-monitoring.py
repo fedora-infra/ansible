@@ -1,5 +1,6 @@
 #! /usr/bin/python3
 
+import time
 import requests
 from bs4 import BeautifulSoup
 from prometheus_client import CollectorRegistry, write_to_textfile, Gauge
@@ -10,8 +11,21 @@ def collect_nagios_service_state(url, name, documentation, filename):
     gauge = Gauge(name, documentation, registry=registry)
     state = 0
 
+
     try:
-        response = requests.get(url)
+        # Give the Nagios (our our network) some time to recover before we
+        # pollute our Graphana metrics
+        attempt = 0
+        while True:
+            attempt += 1
+            try:
+                response = requests.get(url)
+                break
+            except Exception:
+                time.sleep(10)
+                if attempt >= 4:
+                    raise
+
         soup = BeautifulSoup(response.content, features="lxml")
         if soup.select_one("div.serviceOK"):
             state = 1
