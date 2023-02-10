@@ -9,8 +9,7 @@ from prometheus_client import CollectorRegistry, write_to_textfile, Gauge
 def collect_nagios_service_state(url, name, documentation, filename):
     registry = CollectorRegistry()
     gauge = Gauge(name, documentation, registry=registry)
-    state = 0
-
+    state = 0.0
 
     try:
         # Give the Nagios (our our network) some time to recover before we
@@ -28,7 +27,9 @@ def collect_nagios_service_state(url, name, documentation, filename):
 
         soup = BeautifulSoup(response.content, features="lxml")
         if soup.select_one("div.serviceOK"):
-            state = 1
+            state = 1.0
+        elif soup.select_one("div.serviceWARNING"):
+            state = 0.5
     except Exception:
         pass
 
