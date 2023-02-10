@@ -34,14 +34,14 @@
     name: "generating prometheus metrics"
     user: root
     minute: 0
-    job: "/usr/bin/python3 /usr/bin/monitoring.py && mv -f /var/lib/prometheus/node-exporter/copr_cdn_status.prom.new /var/lib/prometheus/node-exporter/copr_cdn_status.prom && mv -f /var/lib/prometheus/node-exporter/copr_ping_status.prom.new /var/lib/prometheus/node-exporter/copr_ping_status.prom"
+    job: "/usr/bin/python3 /usr/bin/copr-frontend-prometheus-monitoring.py"
   tags:
   - cron_tasks
 
 - name: Deploy the prometheus monitoring script
   copy:
-    src: monitoring.py
-    dest: /usr/bin/monitoring.py
+    src: copr-frontend-prometheus-monitoring.py
+    dest: /usr/bin/copr-frontend-prometheus-monitoring.py
     mode: 0750
     owner: root
     group: root
