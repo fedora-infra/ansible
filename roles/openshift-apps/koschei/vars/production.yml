@@ -71,7 +71,3 @@ koschei_cron_jobs:
   - name: track-churchyard
     schedule: "31 0-23/3 * * *"
     command: "koschei-admin psql <<<'UPDATE package SET tracked = TRUE WHERE id IN (SELECT p.id FROM package p JOIN package_group_relation pgr ON p.base_id = pgr.base_id WHERE NOT p.tracked AND pgr.group_id = 79)'"
-  # Workaround for https://github.com/fedora-infra/koschei/issues/234
-  - name: rewind-unapplied-changes
-    schedule: "42 8 * * *"
-    command: "koschei-admin psql <<<'BEGIN; DELETE FROM unapplied_change; ALTER SEQUENCE unapplied_change_id_seq RESTART; COMMIT'"
