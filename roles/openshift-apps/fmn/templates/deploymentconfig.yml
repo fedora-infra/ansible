@@ -127,11 +127,16 @@ spec:
               value: /etc/ipa/krb5.conf
             - name: KRB5_CLIENT_KTNAME
               value: /etc/keytabs/service.keytab
-            - name: CACHE__ARGUMENTS__PASSWORD
+            - name: CACHE__SETUP_ARGS__PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: fmn
                   key: redis-password
+            - name: CACHE__SETUP_ARGS__HASH_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: fmn
+                  key: cache-hash-key
             - name: FEDORA_MESSAGING_CONF
               value: /etc/fmn/api.toml
 
@@ -236,12 +241,12 @@ spec:
               value: /etc/ipa/krb5.conf
             - name: KRB5_CLIENT_KTNAME
               value: /etc/keytabs/service.keytab
-            - name: CACHE__ARGUMENTS__PASSWORD
+            - name: CACHE__SETUP_ARGS__PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: fmn
                   key: redis-password
-            - name: CACHE__ARGUMENTS__HASH_KEY
+            - name: CACHE__SETUP_ARGS__HASH_KEY
               valueFrom:
                 secretKeyRef:
                   name: fmn
