@@ -1,11 +1,11 @@
-apiVersion: v1
+apiVersion: image.openshift.io/v1
 kind: List
 items:
-  - apiVersion: v1
+  - apiVersion: image.openshift.io/v1
     kind: ImageStream
     metadata:
       name: fmn
-  - apiVersion: v1
+  - apiVersion: image.openshift.io/v1
     kind: ImageStream
     metadata:
       name: python-310
@@ -21,7 +21,7 @@ items:
             scheduled: true
           referencePolicy:
             type: Source
-  - apiVersion: v1
+  - apiVersion: image.openshift.io/v1
     kind: ImageStream
     metadata:
       name: sendria
@@ -33,7 +33,7 @@ items:
     #       from:
     #         kind: DockerImage
     #         name: msztolcman/sendria:v2.2.2.0
-  - apiVersion: v1
+  - apiVersion: image.openshift.io/v1
     kind: ImageStream
     metadata:
       name: redis
