@@ -258,7 +258,7 @@ handlers = ["console"]
             [[consumer_config.koji_instances.primary.tags]]
             from = "f38-pending"
             to = "f38"
-            key = "{{ (env == 'production')|ternary('fedora-39', 'testkey') }}"
+            key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
             keyid = "{{ (env == 'production')|ternary('eb10b464', 'd300e724') }}"
             {% if env == "production" %}
             # ima file signing - enabled in f37
@@ -451,7 +451,7 @@ handlers = ["console"]
             to = "eln-rebuild"
             key = "{{ (env == 'production')|ternary('fedora-39', 'testkey') }}"
             keyid = "{{ (env == 'production')|ternary('18B8e74c', 'd300e724') }}"
-            file_signing_key = "fedora-38-ima"
+            file_signing_key = "fedora-39-ima"
 
             [[consumer_config.koji_instances.primary.tags]]
             from = "eln"
