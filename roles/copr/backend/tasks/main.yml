@@ -406,3 +406,13 @@
   copy: src=cron.daily/copr-backend dest=/etc/cron.daily/
         mode=0755
   tags: [cron_tasks]
+
+- name: configure options in node exporter
+  lineinfile:
+    path: /etc/default/prometheus-node-exporter
+    regexp: '^ARGS='
+    line: 'ARGS=--collector.systemd'
+    backrefs: yes
+  notify: restart node_exporter
+  tags:
+    - prometheus_node_exporter
