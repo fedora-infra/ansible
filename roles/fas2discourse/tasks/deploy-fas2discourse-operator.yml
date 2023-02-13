@@ -4,6 +4,7 @@
     repo: 'https://pagure.io/cpe/fas2discourse.git'
     dest: "/root/ocp4/openshift-apps/fas2discourse-operator/fas2discourse-operator/"
     version: "main"
+    force: true
 
 - name: Run 'make install' on the fas2discourse operator
   make:
