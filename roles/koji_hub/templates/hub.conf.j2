@@ -88,7 +88,7 @@ MissingPolicyOk = False
 {% if env == "staging" %}
 Plugins = osbuild koji-fedoramessaging runroot_hub hub_containerbuild tag2distrepo sidetag_hub save_failed_tree
 {% else %}
-Plugins = osbuild fedmsg-koji-plugin runroot_hub hub_containerbuild tag2distrepo sidetag_hub save_failed_tree
+Plugins = osbuild koji-fedoramessaging runroot_hub hub_containerbuild tag2distrepo sidetag_hub save_failed_tree
 {% endif %}
 [policy]
 
