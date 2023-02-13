@@ -1,7 +1,7 @@
 {% macro load_file(filename) %}{% include filename %}{%- endmacro -%}
-apiVersion: v1
+apiVersion: build.openshift.io/v1
 items:
-- apiVersion: v1
+- apiVersion: build.openshift.io/v1
   kind: BuildConfig
   metadata:
     labels:
@@ -25,7 +25,7 @@ items:
       to:
         kind: ImageStreamTag
         name: bodhi-base:latest
-- apiVersion: v1
+- apiVersion: build.openshift.io/v1
   kind: BuildConfig
   metadata:
     labels:
