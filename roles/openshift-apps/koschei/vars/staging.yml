@@ -11,6 +11,11 @@ koschei_koji_web: koji.stg.fedoraproject.org
 koschei_oidc_provider: id.stg.fedoraproject.org
 koschei_bugzilla: bugzilla5.redhat.com
 
+koschei_pgsql_username: koscheiuser
+koschei_pgsql_password: "{{ koscheiuser_stg_db_password }}"
+koschei_pgsql_admin_username: koscheiadmin
+koschei_pgsql_admin_password: "{{ koscheiadmin_stg_db_password }}"
+
 koschei_oidc_client_secret: "{{ koschei_oidc_client_secret_stg }}"
 koschei_oidc_crypto_secret: "{{ koschei_oidc_crypto_secret_stg }}"
 

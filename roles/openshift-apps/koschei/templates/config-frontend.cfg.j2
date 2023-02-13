@@ -5,12 +5,8 @@
 config = {
     "database_config": {
         "host": "{{ koschei_pgsql_hostname }}",
-        "username": "koscheiuser",
-{% if env == 'staging' %}
-        "password": "{{ koscheiuser_stg_db_password }}",
-{% else %}
-        "password": "{{ koscheiuser_db_password }}",
-{% endif %}
+        "username": "{{ koschei_pgsql_username }}",
+        "password": "{{ koschei_pgsql_password }}",
         "database": "koschei"
     },
     "koji_config": {
