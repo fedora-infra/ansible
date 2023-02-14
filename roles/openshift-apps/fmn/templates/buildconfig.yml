@@ -39,8 +39,8 @@ spec:
   triggers:
   - type: ConfigChange
   - type: ImageChange
-  - type: GitHub
 {% if env == 'staging' %}
+  - type: GitHub
     github:
       # Not sure why secretReference does not work, but it doesn't.
       # secretReference:
