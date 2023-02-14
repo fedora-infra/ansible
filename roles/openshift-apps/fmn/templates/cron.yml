@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cleanup-generated
+spec:
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  concurrencyPolicy: Forbid
+  schedule: "51 * * * *"
+  startingDeadlineSeconds: 500
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            parent: "cleanup"
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: api
+            image: image-registry.openshift-image-registry.svc:5000/fmn/fmn:latest
+            command: ["/opt/app-root/bin/fmn", "cleanup", "generated-count", "--days", "180"]
+            env:
+              - name: CACHE__SETUP_ARGS__PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: fmn
+                    key: redis-password
+              - name: CACHE__SETUP_ARGS__HASH_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: fmn
+                    key: cache-hash-key
+            volumeMounts:
+              - name: etc-fmn
+                mountPath: "/etc/fmn"
+                readOnly: true
+          volumes:
+            - name: etc-fmn
+              configMap:
+                name: fmn

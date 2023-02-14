@@ -210,3 +210,9 @@
       key: service.keytab
       secret_name: keytab
       service: fmn
+
+    # Cron jobs
+    - role: openshift/object
+      app: fmn
+      template: cron.yml
+      objectname: cron.yml
