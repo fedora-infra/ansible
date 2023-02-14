@@ -54,7 +54,7 @@
     hostcategory: "all"
     usercategory: "all"
     hbacsvcgroup:
-      - Sudo
+      - sudo
   notify: clean sss caches
   no_log: true
   loop: "{{ ipa_servers }}"
