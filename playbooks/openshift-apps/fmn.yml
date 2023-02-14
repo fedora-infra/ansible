@@ -95,9 +95,7 @@
         - rabbitmq_cluster
 
 - name: make the app be real
-  # Only staging for now
-  # hosts: os_control_stg:os_control
-  hosts: os_control_stg
+  hosts: os_control_stg:os_control
   user: root
   gather_facts: False
 
