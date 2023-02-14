@@ -16,7 +16,9 @@ spec:
 {% if env == "staging" %}
       ref: fmn-next
 {% else %}
-      ref: stable
+      # For now, build from fmn-next as well.
+      # ref: stable
+      ref: fmn-next
 {% endif %}
     contextDir: /
   strategy:
