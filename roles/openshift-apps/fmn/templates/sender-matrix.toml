@@ -12,7 +12,7 @@ keyfile = "/etc/pki/fedora-messaging/key/fmn-key.pem"
 class = "fmn.sender.matrix:MatrixHandler"
 host = "https://fedora.ems.host"
 user_id = "@notifs-{% if env == 'staging' %}stg-{% endif %}bot:fedora.im"
-token = "{{ (env == 'production')|ternary(fmn_prod_matrix_token, fmn_stg_matrix_token }}"
+token = "{{ (env == 'production')|ternary(fmn_prod_matrix_token, fmn_stg_matrix_token) }}"
 
 [log_config]
 version = 1
