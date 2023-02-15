@@ -41,8 +41,20 @@
   copy: src=sysconfig.crond dest=/etc/sysconfig/crond
   notify: restart crond
 
-- name: install anacrontab
-  package: name=cronie-anacron state=present
+- name: install base copr packages
+  package:
+    name:
+      - acl  # useful for ansible acl module
+      - bash-completion
+      - cronie-anacron
+      - ethtool
+      - golang-github-prometheus-node-exporter
+      - rsyslog-logrotate
+      - screen
+      - tmux
+    state: present
+  tags:
+    packages
 
 - name: configure anacrond to not send mails to root user
   lineinfile: dest=/etc/anacrontab
@@ -52,34 +64,20 @@
               regexp="^MAILTO"
   notify: restart crond
 
-- name: install copr-selinux
-  dnf: state=latest pkg=copr-selinux
+- name: override the default syslog logrotate file
+  copy: src=syslog-logrotate dest=/etc/logrotate.d/syslog
   tags:
-  - packages
+  - logrotate
 
-- name: install node_exporter
-  dnf: state=present pkg=golang-github-prometheus-node-exporter
+- name: install copr-selinux
+  package:
+    state: latest
+    name: copr-selinux
   tags:
   - packages
 
 - name: restart node exporter
   service: state=started enabled=yes name=node_exporter
-
-- name: install dev helper packages
-  dnf:
-    state: present
-    pkg:
-      - acl  # useful for ansible acl module
-      - "bash-completion"
-      - "screen"
-      - "tmux"
-  tags:
-  - packages
-
-- name: install ethtool
-  dnf: state=present pkg=ethtool
-  tags:
-  - packages
 
 - name: check offloading
   shell: "ethtool -k eth0 | egrep -q 'tcp-segmentation-offload: on|generic-receive-offload: on|generic-segmentation-offload: on'"
