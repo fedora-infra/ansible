@@ -64,6 +64,8 @@ datacenter: iad2
 
 # By default, nodes don't backup any dbs on them unless they declare it.
 dbs_to_backup: []
+# dnf-automatic-install.service mode default: security-only
+dnf_automatic_type: security
 dns: "10.3.163.33"
 dns1: "10.3.163.33"
 dns2: "10.3.163.34"
@@ -273,6 +275,3 @@ wsgi_wants_apache: true
 # set no x-forward header by default
 x_forward: false
 #
-# dnf-automatic-install.service mode default: security-only
-dnf_automatic_type: security
-
