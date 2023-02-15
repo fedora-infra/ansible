@@ -59,8 +59,8 @@ spec:
       name: builder:latest
   triggers:
 {% if websites_github_secret is defined %}
-  - type: GitHub
-    github:
+  - type: GitLab
+    gitlab:
       secret: "{{ websites_github_secret }}"
 {% endif %}
   - type: ConfigChange
