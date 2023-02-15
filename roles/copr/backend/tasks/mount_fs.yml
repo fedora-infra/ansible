@@ -54,6 +54,7 @@
       Description=Monthly RAID health check in AWS
       [Timer]
       OnCalendar=Sat *-*-8..14 01:00:00
+  notify: systemctl daemon-reload
   tags:
     - mdadm
     - raid
