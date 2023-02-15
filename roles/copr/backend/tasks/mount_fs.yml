@@ -46,6 +46,20 @@
       debug: msg=checked
       failed_when: not stat_repo_fs.stat.exists
 
+- name: decrease the RAID checks if in AWS
+  file:
+    path: /etc/systemd/system/raid-check.timer
+    content: |
+      [Unit]
+      Description=Monthly RAID health check in AWS
+      [Timer]
+      OnCalendar=Sat *-*-8..14 01:00:00
+  tags:
+    - mdadm
+    - raid
+    - raid_check
+  when: datacenter == 'aws'
+
 - name: prepare mount point
   file: state=directory path=/var/lib/copr/public_html
 
