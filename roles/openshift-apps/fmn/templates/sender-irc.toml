@@ -1,5 +1,5 @@
 amqp_url = "amqps://fmn{{ env_suffix }}:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Ffmn"
-queue = "email"
+queue = "irc"
 
 [tls]
 ca_cert = "/etc/pki/fedora-messaging/ca/cacert.pem"
@@ -7,11 +7,12 @@ certfile = "/etc/pki/fedora-messaging/crt/fmn-cert.pem"
 keyfile = "/etc/pki/fedora-messaging/key/fmn-key.pem"
 
 [handler]
-class = "fmn.sender.email:EmailHandler"
-from = "Fedora Notifications <notifications{{ env_suffix }}@fedoraproject.org>"
-# smtp_host = "bastion{{ env_suffix }}.iad2.fedoraproject.org"
-smtp_host = "sendria.fmn.svc.cluster.local"
-smtp_port = 1025
+class = "fmn.sender.irc:IRCHandler"
+{% if env == "staging" %}
+irc_url = "ircs://fedora-notifstg:{{ fedora_notifstg_libera_pass }}@irc.libera.chat:6697"
+{% else %}
+irc_url = "ircs://fedora-notif:{{ fedora_notif_libera_pass }}@irc.libera.chat:6697"
+{% endif %}
 
 [log_config]
 version = 1
@@ -34,6 +35,11 @@ handlers = ["console"]
 # lower this log level.
 [log_config.loggers.aio_pika]
 level = "WARNING"
+propagate = false
+handlers = ["console"]
+
+[log_config.loggers.irc]
+level = "DEBUG"
 propagate = false
 handlers = ["console"]
 

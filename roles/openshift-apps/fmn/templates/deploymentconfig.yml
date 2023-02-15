@@ -288,7 +288,7 @@ metadata:
   labels:
     app: fmn
 spec:
-  # For IRC there can be only one. For email there can be many.
+  # There can be many pods for email.
   replicas: 1
   selector:
     app: fmn
@@ -341,6 +341,70 @@ spec:
         automatic: true
         containerNames:
           - sender-email
+        from:
+          kind: ImageStreamTag
+          name: fmn:latest
+---
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: sender-irc
+  labels:
+    app: fmn
+spec:
+  # There can be only one pod for IRC
+  replicas: 1
+  selector:
+    app: fmn
+    deploymentconfig: sender-irc
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: fmn
+        deploymentconfig: sender-irc
+    spec:
+      containers:
+        - name: sender-irc
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: etc-fmn
+              mountPath: "/etc/fmn"
+              readOnly: true
+            - name: fedora-messaging-ca-volume
+              mountPath: /etc/pki/fedora-messaging/ca
+              readOnly: true
+            - name: fedora-messaging-key-volume
+              mountPath: /etc/pki/fedora-messaging/key
+              readOnly: true
+            - name: fedora-messaging-crt-volume
+              mountPath: /etc/pki/fedora-messaging/crt
+              readOnly: true
+          env:
+            - name: APP_SCRIPT
+              value: ".s2i/run-sender-irc.sh"
+      volumes:
+        - name: etc-fmn
+          configMap:
+            name: fmn
+        - name: fedora-messaging-ca-volume
+          secret:
+            secretName: fedora-messaging-ca
+        - name: fedora-messaging-key-volume
+          secret:
+            secretName: fedora-messaging-key
+        - name: fedora-messaging-crt-volume
+          secret:
+            secretName: fedora-messaging-crt
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - sender-irc
         from:
           kind: ImageStreamTag
           name: fmn:latest

@@ -19,3 +19,5 @@ items:
       {{ load_file('consumer.toml') | indent(6) }}
     sender-email.toml: |-
       {{ load_file('sender-email.toml') | indent(6) }}
+    sender-irc.toml: |-
+      {{ load_file('sender-irc.toml') | indent(6) }}
