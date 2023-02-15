@@ -46,20 +46,26 @@
       debug: msg=checked
       failed_when: not stat_repo_fs.stat.exists
 
-- name: decrease the RAID checks if in AWS
-  copy:
-    dest: /etc/systemd/system/raid-check.timer
-    content: |
-      [Unit]
-      Description=Monthly RAID health check in AWS
-      [Timer]
-      OnCalendar=Sat *-*-8..14 01:00:00
-  notify: systemctl daemon-reload
+- name: decrease the RAID checks frequency in AWS
   tags:
     - mdadm
     - raid
     - raid_check
   when: datacenter == 'aws'
+  block:
+    - name: create the drop-in directory for raid-check.timer
+      file:
+        path: /etc/systemd/system/raid-check.timer.d/
+        state: directory
+    - name: install the drop-in raid-check.timer override
+      copy:
+        dest: /etc/systemd/system/raid-check.timer.d/05-aws.conf
+        content: |
+          [Unit]
+          Description=Monthly RAID health check in AWS
+          [Timer]
+          OnCalendar=Sat *-*-8..14 01:00:00
+      notify: systemctl daemon-reload
 
 - name: prepare mount point
   file: state=directory path=/var/lib/copr/public_html
