@@ -5,7 +5,7 @@ dns1: 8.8.8.8
 dns2: 8.8.4.4
 dns_search1: fedoraproject.org
 eol_opsys:
-  - { opsys: Fedora, release: '34' }
+  - { opsys: Fedora, release: '35' }
 # When not empty, the array should have the following form:
 #   - { opsys: "Fedora", release: "36" }
 eth2_ipv4: 8.43.85.61
@@ -17,45 +17,6 @@ faf_opsys_list:
   - fedora
   - centos
 faf_repos:
-  # Fedora 35 repositories ------------------------------------------------
-  - arch: src
-    name: fedora-35-source
-    opsys: Fedora 35
-    url:
-      - http://dl01.fedoraproject.org/pub/fedora/linux/releases/35/Everything/source/tree/
-      - http://dl01.fedoraproject.org/pub/fedora/linux/development/35/Everything/source/tree/
-  - arch: x86_64
-    name: fedora-35-x86_64
-    opsys: Fedora 35
-    url:
-      - http://dl01.fedoraproject.org/pub/fedora/linux/releases/35/Everything/x86_64/os/
-      - http://dl01.fedoraproject.org/pub/fedora/linux/development/35/Everything/x86_64/os/
-  - arch: x86_64
-    name: fedora-35-x86_64-debug
-    opsys: Fedora 35
-    url:
-      - http://dl01.fedoraproject.org/pub/fedora/linux/releases/35/Everything/x86_64/debug/tree/
-      - http://dl01.fedoraproject.org/pub/fedora/linux/development/35/Everything/x86_64/debug/tree/
-  - arch: x86_64
-    name: fedora-35-x86_64-testing-debug
-    opsys: Fedora 35
-    url:
-      - http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/35/Everything/x86_64/debug/
-  - arch: x86_64
-    name: fedora-35-x86_64-testing
-    opsys: Fedora 35
-    url:
-      - http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/35/Everything/x86_64/
-  - arch: x86_64
-    name: fedora-35-x86_64-updates-debug
-    opsys: Fedora 35
-    url:
-      - http://dl01.fedoraproject.org/pub/fedora/linux/updates/35/Everything/x86_64/debug/
-  - arch: x86_64
-    name: fedora-35-x86_64-updates
-    opsys: Fedora 35
-    url:
-      - http://dl01.fedoraproject.org/pub/fedora/linux/updates/35/Everything/x86_64/
   # Fedora 36 repositories ------------------------------------------------
   - arch: src
     name: fedora-36-source
@@ -134,6 +95,45 @@ faf_repos:
     opsys: Fedora 37
     url:
       - http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/37/Everything/x86_64/debug/
+  # Fedora 38 repositories ------------------------------------------------
+  - arch: src
+    name: fedora-38-source
+    opsys: Fedora 38
+    url:
+      - http://dl01.fedoraproject.org/pub/fedora/linux/releases/38/Everything/source/tree/
+      - http://dl01.fedoraproject.org/pub/fedora/linux/development/38/Everything/source/tree/
+  - arch: x86_64
+    name: fedora-38-x86_64
+    opsys: Fedora 38
+    url:
+      - http://dl01.fedoraproject.org/pub/fedora/linux/releases/38/Everything/x86_64/os/
+      - http://dl01.fedoraproject.org/pub/fedora/linux/development/38/Everything/x86_64/os/
+  - arch: x86_64
+    name: fedora-38-x86_64-debug
+    opsys: Fedora 38
+    url:
+      - http://dl01.fedoraproject.org/pub/fedora/linux/releases/38/Everything/x86_64/debug/tree/
+      - http://dl01.fedoraproject.org/pub/fedora/linux/development/38/Everything/x86_64/debug/tree/
+  - arch: x86_64
+    name: fedora-38-x86_64-updates
+    opsys: Fedora 38
+    url:
+      - http://dl01.fedoraproject.org/pub/fedora/linux/updates/38/Everything/x86_64/
+  - arch: x86_64
+    name: fedora-38-x86_64-updates-debug
+    opsys: Fedora 38
+    url:
+      - http://dl01.fedoraproject.org/pub/fedora/linux/updates/38/Everything/x86_64/debug/
+  - arch: x86_64
+    name: fedora-38-x86_64-testing
+    opsys: Fedora 38
+    url:
+      - http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/38/Everything/x86_64/
+  - arch: x86_64
+    name: fedora-38-x86_64-testing-debug
+    opsys: Fedora 38
+    url:
+      - http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/38/Everything/x86_64/debug/
   # Fedora Rawhide repositories -------------------------------------------
   - arch: src
     name: fedora-rawhide-source
@@ -192,8 +192,8 @@ rs_internal_arch_list:
 - source
 - x86_64
 rs_internal_centos_vers: [7, 8]
-rs_internal_fedora_vers: [35, 36, 37, rawhide]
-rs_internal_fedora_vers_removed: [30, 31, 32, 33, 34]
+rs_internal_fedora_vers: [36, 37, 38, rawhide]
+rs_internal_fedora_vers_removed: [30, 31, 32, 33, 34, 35]
 rs_use_faf_packages: true
 sar_output_file: faf.json
 sar_script: /usr/bin/faf sar
