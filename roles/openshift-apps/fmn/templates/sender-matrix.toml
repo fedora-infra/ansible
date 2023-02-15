@@ -1,0 +1,48 @@
+# A sample configuration for the FMN sender. This file is in the TOML format.
+
+amqp_url = "amqps://fmn{{ env_suffix }}:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Ffmn"
+queue = "matrix"
+
+[tls]
+ca_cert = "/etc/pki/fedora-messaging/ca/cacert.pem"
+certfile = "/etc/pki/fedora-messaging/crt/fmn-cert.pem"
+keyfile = "/etc/pki/fedora-messaging/key/fmn-key.pem"
+
+[handler]
+class = "fmn.sender.matrix:MatrixHandler"
+host = "https://fedora.ems.host"
+user_id = "@notifs-{% if env == 'staging' %}stg-{% endif %}bot:fedora.im"
+token = "{{ (env == 'production')|ternary(fmn_prod_matrix_token, fmn_stg_matrix_token }}"
+
+[log_config]
+version = 1
+disable_existing_loggers = true
+
+[log_config.formatters.simple]
+format = "[%(levelname)s %(name)s] %(message)s"
+
+[log_config.handlers.console]
+class = "logging.StreamHandler"
+formatter = "simple"
+stream = "ext://sys.stdout"
+
+[log_config.loggers.fmn]
+level = "DEBUG"
+propagate = false
+handlers = ["console"]
+
+# AIO-Pika is the underlying AMQP client library. When debugging you may want to
+# lower this log level.
+[log_config.loggers.aio_pika]
+level = "WARNING"
+propagate = false
+handlers = ["console"]
+
+[log_config.loggers.nio]
+level = "DEBUG"
+propagate = false
+handlers = ["console"]
+
+[log_config.root]
+level = "ERROR"
+handlers = ["console"]

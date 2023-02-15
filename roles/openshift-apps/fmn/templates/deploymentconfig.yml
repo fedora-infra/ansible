@@ -412,6 +412,71 @@ spec:
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
+  name: sender-matrix
+  labels:
+    app: fmn
+spec:
+  # Not sure how many concurrent connections are supported by Matrix with the
+  # same token. Let's just have one for now.
+  replicas: 1
+  selector:
+    app: fmn
+    deploymentconfig: sender-matrix
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: fmn
+        deploymentconfig: sender-matrix
+    spec:
+      containers:
+        - name: sender-matrix
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: etc-fmn
+              mountPath: "/etc/fmn"
+              readOnly: true
+            - name: fedora-messaging-ca-volume
+              mountPath: /etc/pki/fedora-messaging/ca
+              readOnly: true
+            - name: fedora-messaging-key-volume
+              mountPath: /etc/pki/fedora-messaging/key
+              readOnly: true
+            - name: fedora-messaging-crt-volume
+              mountPath: /etc/pki/fedora-messaging/crt
+              readOnly: true
+          env:
+            - name: APP_SCRIPT
+              value: ".s2i/run-sender-matrix.sh"
+      volumes:
+        - name: etc-fmn
+          configMap:
+            name: fmn
+        - name: fedora-messaging-ca-volume
+          secret:
+            secretName: fedora-messaging-ca
+        - name: fedora-messaging-key-volume
+          secret:
+            secretName: fedora-messaging-key
+        - name: fedora-messaging-crt-volume
+          secret:
+            secretName: fedora-messaging-crt
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - sender-matrix
+        from:
+          kind: ImageStreamTag
+          name: fmn:latest
+---
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
   name: redis
   labels:
     app: fmn
