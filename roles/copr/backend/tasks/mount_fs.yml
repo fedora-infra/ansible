@@ -47,8 +47,8 @@
       failed_when: not stat_repo_fs.stat.exists
 
 - name: decrease the RAID checks if in AWS
-  file:
-    path: /etc/systemd/system/raid-check.timer
+  copy:
+    dest: /etc/systemd/system/raid-check.timer
     content: |
       [Unit]
       Description=Monthly RAID health check in AWS
