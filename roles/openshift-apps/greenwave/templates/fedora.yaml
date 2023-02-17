@@ -155,6 +155,7 @@ product_versions:
   # release is branched (or goes EOL).
   - fedora-36
   - fedora-37
+  - fedora-38
 decision_contexts:
   - bodhi_update_push_testing_critpath
   - bodhi_update_push_testing_core_critpath
@@ -177,6 +178,7 @@ id: "bodhiupdate_bodhipush_openqa_netinst"
 product_versions:
   - fedora-36
   - fedora-37
+  - fedora-38
 decision_contexts:
   - bodhi_update_push_testing_critpath
   - bodhi_update_push_testing_core_critpath
@@ -206,6 +208,7 @@ id: "bodhiupdate_bodhipush_openqa_apps"
 product_versions:
   - fedora-36
   - fedora-37
+  - fedora-38
 decision_contexts:
 # we don't list the 'generic' contexts here as all these tests are
 # pulled into those contexts via other policies
@@ -229,6 +232,7 @@ id: "bodhiupdate_bodhipush_openqa_workstation"
 product_versions:
   - fedora-36
   - fedora-37
+  - fedora-38
 decision_contexts:
   - bodhi_update_push_testing_critpath
   - bodhi_update_push_stable_critpath
@@ -260,6 +264,7 @@ id: "bodhiupdate_bodhipush_openqa_workstation_live"
 product_versions:
   - fedora-36
   - fedora-37
+  - fedora-38
 decision_contexts:
   - bodhi_update_push_testing_critpath
   - bodhi_update_push_stable_critpath
@@ -287,6 +292,7 @@ id: "bodhiupdate_bodhipush_openqa_kde"
 product_versions:
   - fedora-36
   - fedora-37
+  - fedora-38
 decision_contexts:
   - bodhi_update_push_testing_critpath
   - bodhi_update_push_stable_critpath
@@ -320,6 +326,7 @@ id: "bodhiupdate_bodhipush_openqa_kde"
 product_versions:
   - fedora-36
   - fedora-37
+  - fedora-38
 decision_contexts:
   - bodhi_update_push_testing_critpath
   - bodhi_update_push_stable_critpath
@@ -349,6 +356,7 @@ id: "bodhiupdate_bodhipush_openqa_server"
 product_versions:
   - fedora-36
   - fedora-37
+  - fedora-38
 decision_contexts:
   - bodhi_update_push_testing_critpath
   - bodhi_update_push_stable_critpath
@@ -392,6 +400,7 @@ rules:
 id: "bodhiupdate_bodhipush_openqa_upgrade_server"
 product_versions:
   - fedora-37
+  - fedora-38
 decision_contexts:
   - bodhi_update_push_testing_critpath
   - bodhi_update_push_stable_critpath
@@ -413,6 +422,7 @@ rules:
 id: "bodhiupdate_bodhipush_openqa_upgrade_workstation"
 product_versions:
   - fedora-37
+  - fedora-38
 decision_contexts:
   - bodhi_update_push_testing_critpath
   - bodhi_update_push_stable_critpath
