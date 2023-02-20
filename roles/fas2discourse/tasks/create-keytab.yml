@@ -16,7 +16,7 @@
     name: keytab/service
   vars:
     kt_location:
-      "/etc/openshift_apps/fas2discourse/fas2discourse-keytab.kt"
+      "/etc/openshift_apps/fas2discourse/fas2discourse{{ env_suffix }}-keytab.kt"
     service: "fas2discourse"
     host: "{{ fas2discourse_hostname }}"
   tags:
