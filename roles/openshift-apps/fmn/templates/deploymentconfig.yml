@@ -354,7 +354,9 @@ metadata:
 spec:
   # There can be only one pod for IRC
   # Staging is currently unable to connect to IRC outside because of firewall rules.
-  replicas: {{ (env == 'production')|ternary('1', '0') }}
+  # replicas: {{ (env == 'production')|ternary('1', '0') }}
+  # Don't start in prod either until we have a secondary IRC account
+  replicas: 0
   selector:
     app: fmn
     deploymentconfig: sender-irc
