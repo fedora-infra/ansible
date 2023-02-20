@@ -39,7 +39,8 @@ spec:
   triggers:
   - type: ConfigChange
   - type: ImageChange
-{% if env == 'staging' %}
+# Enable triggered rebuild on prod for now, will disable when we actually go live
+{% if env == 'staging' or env == 'production' %}
   - type: GitHub
     github:
       # Not sure why secretReference does not work, but it doesn't.
