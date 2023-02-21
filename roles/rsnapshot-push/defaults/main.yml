@@ -10,8 +10,7 @@ rsnapshot_push_defaults:
 
     # we can't keep monthly increments for too large deltas
     copr_be:
-      # We run the cron job (rsync) twice a week.  Don't rotate the directory
-      # unless the last sync happened at least 2 days ago.
-      push: [172800, 3]
-      # Every 14 days
-      biweekly: [1209600, 3]
+      # We run the cron job (rsync) once a week.  We keep a month history.
+      # The first number means that we don't do "push" backup more frequently
+      # than that number of seconds.
+      push: [172800, 4]
