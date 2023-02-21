@@ -60,7 +60,7 @@
   lineinfile: dest=/etc/anacrontab
               backup=yes
               state=present
-              line='MAILTO=praiskup@fedoraproject.org'
+              line='MAILTO=copr-team@redhat.com'
               regexp="^MAILTO"
   notify: restart crond
 
