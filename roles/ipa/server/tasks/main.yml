@@ -231,7 +231,7 @@
 #   register: output
 #   changed_when: "'Modified permission' in output.stdout"
 #   failed_when: "'no modifications to be performed' not in output.stderr and output.rc != 0"
-# 
+#
 # # Because of the previous task, we must explicitely allow users to read their own data
 # - name: Allow users to read their own data
 #   command:
