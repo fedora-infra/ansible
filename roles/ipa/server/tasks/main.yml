@@ -676,22 +676,22 @@
   - ipa/server
   - config
 
-- name: Copy sweeper script to /usr/local/bin/
-  copy:
-    src: sweeper.py
-    dest: /usr/local/bin/sweeper
-    mode: 0755
-  tags:
-    - ipa/server
-    - config
+#- name: Copy sweeper script to /usr/local/bin/
+#  copy:
+#    src: sweeper.py
+#    dest: /usr/local/bin/sweeper
+#    mode: 0755
+#  tags:
+#    - ipa/server
+#    - config
 
-- name: Set sweeper script on a cron schedule
-  cron:
-    name: "clean up mod_auth_gssapi tokens"
-    hour: "3"
-    user: root
-    job: "python3 sweeper"
-  tags:
-    - ipa/server
-    - config
+#- name: Set sweeper script on a cron schedule
+#  cron:
+#    name: "clean up mod_auth_gssapi tokens"
+#    hour: "3"
+#    user: root
+#    job: "python3 sweeper"
+#  tags:
+#    - ipa/server
+#    - config
 
