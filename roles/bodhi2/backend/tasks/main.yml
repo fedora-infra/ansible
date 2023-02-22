@@ -181,7 +181,7 @@
   - cron
 
 - name: Set the bodhi-automated-pushes cron job
-  template: src=bodhi-automated-pushes.cron.j2 dest=/etc/cron.d/bodhi-automated-pushes
+  copy: src=bodhi-automated-pushes.cron dest=/etc/cron.d/bodhi-automated-pushes
   when: env == "production"
   tags:
   - config
