@@ -156,12 +156,14 @@ directors: board
 ## https://docs.fedoraproject.org/en-US/council/fpl/
 chair: mattdm
 
-## Fedora Community Action and Impact Coordinator
-## https://docs.fedoraproject.org/en-US/council/fcaic/
-fcaic: jwf
+## Fedora Community Architect
+## https://docs.fedoraproject.org/en-US/council/fca/
+fca: jwf
+# formerly known as Fedora Community Action & Impact Coordinator (FCAIC)
+fcaic: fca
 
 # Code of Conduct
-codeofconduct: fpl,fcaic
+codeofconduct: fpl,fca
 
 ## Fedora Program Manager
 ## https://docs.fedoraproject.org/en-US/council/fpgm/
@@ -170,11 +172,11 @@ program-manager: fpgm
 
 ## Fedora Diversity Advisor
 ## https://docs.fedoraproject.org/en-US/council/diversity-advisor/
-diversity: fpl,fcaic,siddharthvipul1
+diversity: fpl,fca,siddharthvipul1
 diversity-inclusion: diversity
 
 # Fedora Matrix admin
-matrixadmin: fpl,fcaic,kevin,nb
+matrixadmin: fpl,fca,kevin,nb
 
 # FESCo
 fesco-chair: kevin
@@ -199,19 +201,19 @@ fudcon-latam: flock-admin
 
 # flock aliases disabled for now per https://pagure.io/fedora-infrastructure/issue/10411
 # flock
-#flockpress: fcaic,fpl
-#flockinfo: fcaic,fpl
-#flock-staff: fcaic,fpl,jmadriag@redhat.com
-#flock-admin: fcaic,fpl,jmadriag@redhat.com
-#flock-coc: fcaic,fpl
+#flockpress: fca,fpl
+#flockinfo: fca,fpl
+#flock-staff: fca,fpl,jmadriag@redhat.com
+#flock-admin: fca,fpl,jmadriag@redhat.com
+#flock-coc: fca,fpl
 #flock-access: flock-admin
 #
 # flock/sponsor alias
 # https://pagure.io/fedora-infrastructure/issue/10591
-sponsors: fcaic
+sponsors: fpl,fca
 
 # swag customer email alias https://pagure.io/fedora-infrastructure/issue/10794
-swag-info: fcaic,npazmino@redhat.com
+swag-info: fca,npazmino@redhat.com
 
 # News
 #news: nman64,pfrields,sundaram,tchung,kwade
@@ -227,7 +229,7 @@ infra-security: puiterwijk,kevin,smooge,codeblock,mobrien
 webmaster: websites@lists.fedoraproject.org
 logo: rlerch@redhat.com,duffy@redhat.com,mpeck@redhat.com
 ham-radio-exams: nb,jbwillia
-podcast: x3mboy,computerkid,fcaic
+podcast: x3mboy,computerkid,fca
 
 # Misc Aliases
 cvs-access: accounts
