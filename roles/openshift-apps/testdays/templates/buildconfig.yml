@@ -18,13 +18,12 @@ spec:
 {% else %}
       ref: "master"
 {% endif %}
-  strategy:
+    strategy:
     type: Source
     sourceStrategy:
       from:
-        kind: ImageStreamTag
-        namespace: openshift
-        name: python:3.6
+        kind: DockerImage
+        name: registry.access.redhat.com/ubi8/python-39
   triggers:
   - type: ConfigChange
   - type: ImageChange
@@ -45,13 +44,12 @@ spec:
     git:
       uri: https://pagure.io/taskotron/resultsdb.git
       ref: "legacy_testdays"
-  strategy:
+    strategy:
     type: Source
     sourceStrategy:
       from:
-        kind: ImageStreamTag
-        namespace: openshift
-        name: python:3.6
+        kind: DockerImage
+        name: registry.access.redhat.com/ubi8/python-39
   triggers:
   - type: ConfigChange
   - type: ImageChange
