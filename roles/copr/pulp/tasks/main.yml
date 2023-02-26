@@ -1,0 +1,9 @@
+---
+- name: install copr packages
+  dnf:
+    state: present
+    name:
+      - python3-copr-common
+      - copr-selinux
+  tags:
+  - packages
