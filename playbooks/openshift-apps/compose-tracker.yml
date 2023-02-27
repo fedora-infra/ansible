@@ -1,7 +1,8 @@
+---
 - name: make the app be real
   hosts: os_control[0]:os_control_stg[0]
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml
@@ -11,7 +12,7 @@
   roles:
   - role: openshift/project
     app: compose-tracker
-    description: Opens issues for failed Pungi Composes against https://pagure.io/releng/failed-composes/
+    description: Opens issues for failed Composes against https://pagure.io/releng/failed-composes/
     appowners:
     - dustymabe
     - mizdebsk
@@ -48,12 +49,12 @@
     app: compose-tracker
     dcname: compose-tracker
 
-###############################################
-# actions to delete the project from OpenShift
-###############################################
-# to run: sudo rbac-playbook -l os_control_stg[0] -t delete openshift-apps/compose-tracker.yml
+  ###############################################
+  # actions to delete the project from OpenShift
+  ###############################################
+  # to run: sudo rbac-playbook -l os_control_stg[0] -t delete openshift-apps/compose-tracker.yml
   - role: openshift/object-delete
     app: compose-tracker
     objecttype: project
     objectname: compose-tracker
-    tags: [ never, delete ]
+    tags: [never, delete]
