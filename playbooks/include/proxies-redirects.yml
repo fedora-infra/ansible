@@ -874,13 +874,6 @@
     tags:
     - taskotron
 
-  # redirects for qa.fp.o
-  - role: httpd/redirect
-    shortname: qa
-    website: qa.fedoraproject.org
-    path: /
-    target: https://fedoraproject.org/wiki/QA
-
   - role: httpd/redirectmatch
     shortname: taskotron
     website: taskotron.fedoraproject.org
