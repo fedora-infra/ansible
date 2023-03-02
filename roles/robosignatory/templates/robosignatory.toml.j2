@@ -369,14 +369,6 @@ handlers = ["console"]
             keyid = "{{ (env == 'production')|ternary('38ab71f4', 'd300e724') }}"
             type = "modular"
 
-            #epel8 modular tags
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "epel8-modular-signing-pending"
-            to = "epel8-modular-updates-testing-pending"
-            key = "{{ (env == 'production')|ternary('epel-8', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('2f86d6a1', 'd300e724') }}"
-            type = "modular"
-
             # Gated bodhi updates
 
             [[consumer_config.koji_instances.primary.tags]]
