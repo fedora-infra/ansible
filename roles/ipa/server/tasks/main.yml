@@ -690,8 +690,9 @@
   cron:
     name: "clean up mod_auth_gssapi tokens"
     hour: "3"
+    minute: "0"
     user: root
-    job: "sweeper -g /run/ipa/ccaches/"
+    job: "/usr/local/bin/sweeper -g /run/ipa/ccaches/"
   tags:
     - ipa/server
     - config
