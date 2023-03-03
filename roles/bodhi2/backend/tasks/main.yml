@@ -69,6 +69,13 @@
   - bodhi/pungi
   - config
 
+- name: Put pungi general configuration in place
+  copy: src=pungi_general.conf dest=/etc/bodhi/pungi_general.conf
+  tags:
+  - bodhi
+  - bodhi/pungi
+  - config
+
 #
 # koji ssl cert for owner sync jobs below
 #

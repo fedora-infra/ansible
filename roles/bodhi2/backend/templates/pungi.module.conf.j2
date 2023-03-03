@@ -1,9 +1,9 @@
+# Import shared settings from pungi_general.conf
+from pungi_general import *
+
 # PRODUCT INFO
-release_name = '[[ release.id_prefix.title() ]]'
-release_short = '[[ release.id_prefix.title() ]]'
 release_version = '[[ release.version ]]'
 release_type = 'updates[% if request.name == 'testing' %]-testing[% endif %]'
-release_is_layered = False
 
 # GENERAL SETTINGS
 bootable = False
@@ -82,8 +82,6 @@ module_obsoletes_dir = {
     'dir': 'obsoletes'
 }
 
-hashed_directories = True
-
 # RUNROOT settings
 runroot = False
 
@@ -92,20 +90,12 @@ pdc_url = 'https://pdc{{ env_suffix }}.fedoraproject.org/rest_api/v1'
 pdc_insecure = False
 pdc_develop = True
 
-# PKGSET
-pkgset_source = 'koji' # koji, repos
-
-filter_system_release_packages = False
-
 # GATHER
 gather_method = 'nodeps'
 gather_profiler = True
 check_deps = False
-greedy_method = 'build'
 
 # CREATEREPO
-createrepo_c = True
-createrepo_checksum = 'sha256'
 createrepo_deltas = False
 [% if release.version_int >= 30 %]
 createrepo_extra_args = ['--zck', '--zck-dict-dir=/usr/share/fedora-repo-zdicts/f[[ release.version_int ]]']
