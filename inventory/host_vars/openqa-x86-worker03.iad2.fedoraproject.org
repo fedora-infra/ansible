@@ -58,8 +58,8 @@ nrpe_procs_crit: 1600
 nrpe_procs_warn: 1400
 # Has a hardware RNG
 openqa_rngd: true
-# this machines has 48 CPUs, 22 is our "just under half the number of
-# CPUs" rule-of-thumb, but it seems to be running out of memory so
+# this machines has 24 CPUs, 22 is our "just under one worker per
+# CPU" rule-of-thumb, but it seems to be running out of memory so
 # cut to 20
 openqa_workers: 20
 sudoers: "{{ private }}/files/sudo/qavirt-sudoers"

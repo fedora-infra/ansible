@@ -443,9 +443,13 @@ odcs_backend
 openqa01.iad2.fedoraproject.org
 
 [openqa_workers]
+# xeon gold 5218 (best)
 openqa-x86-worker01.iad2.fedoraproject.org
+# xeon gold 6130 (second best)
 openqa-x86-worker02.iad2.fedoraproject.org
-openqa-x86-worker03.iad2.fedoraproject.org
+# swapped from lab as 03 is kinda poorly
+# xeon e5-2683v4 (third best)
+openqa-x86-worker06.iad2.fedoraproject.org
 openqa-a64-worker02.iad2.fedoraproject.org
 openqa-a64-worker03.iad2.fedoraproject.org
 
@@ -457,9 +461,15 @@ openqa-lab01.iad2.fedoraproject.org
 openqa-a64-worker01.iad2.fedoraproject.org
 openqa-p09-worker01.iad2.fedoraproject.org
 openqa-p09-worker02.iad2.fedoraproject.org
+# xeon gold 6130 (second best)
 openqa-x86-worker04.iad2.fedoraproject.org
+# xeon e5-2680 (worst)
 openqa-x86-worker05.iad2.fedoraproject.org
-openqa-x86-worker06.iad2.fedoraproject.org
+# prod used to have 01, 02, 03 and lab had 04, 05, 06 which was nice
+# and clean, but 03 is weaker hardware and seems to be struggling
+# lately, so we swapped 03 and 06 to give prod the best hw
+# xeon e5-2680 (worst)
+openqa-x86-worker03.iad2.fedoraproject.org
 
 # the workers that can run networked jobs. each server should have *one* of these per arch
 # per tap worker class defined in os-autoinst-distri-fedora (currently there are two
