@@ -136,6 +136,16 @@
   tags:
   - releng
 
+# merge this into above after freeze
+- name: add packages to rawhide composer
+  package:
+    state: present
+    name:
+    - rpm-ostree
+  tags:
+  - releng
+  when: inventory_hostname.startswith('compose-rawhide01.iad2')
+
 - name: add pkgs from infrastructure testing repo
   dnf: state=present pkg=python3-libpagure enablerepo=infrastructure-tags-stg
 
