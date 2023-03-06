@@ -692,7 +692,7 @@
     hour: "3"
     minute: "0"
     user: root
-    job: "/usr/local/bin/sweeper -g /run/ipa/ccaches/"
+    job: "/usr/local/bin/sweeper -g /run/ipa/ccaches/ > /dev/null"
   tags:
     - ipa/server
     - config
