@@ -304,12 +304,6 @@
   - redis       # TODO: .service in copr-backend should depend on redis
   - "{{ copr_backend_target }}"
 
-- name: install aws cleaning script
-  copy: src="cleanup-vms-aws" dest=/usr/local/bin/ mode=755
-
-- name: install aws cleaning script for resalloc
-  copy: src="cleanup-vms-aws-resalloc" dest=/usr/local/bin/ mode=755
-
 - name: access.redhat.com offline token file
   set_fact: "rhn_offline_token_file=/var/lib/resallocserver/.access.redhat.com-copr-team"
   tags:
@@ -343,13 +337,6 @@
         user=copr
         state=absent
 
-- name: setup crontab for VMs
-  cron: name="cleanup AWS VMs periodically"
-        job="/usr/local/bin/cleanup-vms-aws"
-        minute="0"
-        user=copr
-        state=absent
-
 - name: setup crontab for cleaning up redis
   cron: name="prune redis VM db periodically"
         job="/usr/local/bin/cleanup-unused-vms-from-redis &>> /var/log/copr-backend/cleanup-redis-vms.log"
@@ -359,9 +346,10 @@
 
 - name: crontab for cleaning resalloc VMs
   cron: name="cleanup nova VMs periodically"
-        job="/usr/local/bin/cleanup-vms-aws-resalloc &>> /var/log/resallocserver/cron-cleanup-vms-aws.log"
+        job="true /usr/local/bin/cleanup-vms-aws-resalloc &>> /var/log/resallocserver/cron-cleanup-vms-aws.log"
         minute="*/10"
         user=resalloc
+        state=absent
 
 - name: crontab for cleaning-up unused subscriptions
   cron: name="cleanup unused Red Hat subscribed systems"

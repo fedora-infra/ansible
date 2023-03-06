@@ -30,6 +30,7 @@ aws_x86_64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else
     cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
     cmd_livecheck: "resalloc-check-vm-ip"
     cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
+    cmd_list: resalloc-aws-list
     livecheck_period: 180
     reuse_opportunity_time: 180
     reuse_max_count: 8
@@ -54,6 +55,7 @@ aws_aarch64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% els
     cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
     cmd_livecheck: "resalloc-check-vm-ip"
     cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
+    cmd_list: resalloc-aws-list
     livecheck_period: 180
     reuse_opportunity_time: 180
     reuse_max_count: 8
