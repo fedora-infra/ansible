@@ -70,7 +70,18 @@
   - config
 
 - name: Put pungi general configuration in place
-  copy: src=pungi_general.conf dest=/etc/bodhi/pungi_general.conf
+  copy:
+    src: pungi_general.conf
+    dest: /etc/bodhi/pungi_general.conf
+  tags:
+  - bodhi
+  - bodhi/pungi
+  - config
+
+- name: Put pungi multilib configuration in place
+  copy:
+    src: multilib_general.conf
+    dest: /etc/bodhi/multilib_general.conf
   tags:
   - bodhi
   - bodhi/pungi
