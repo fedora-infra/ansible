@@ -1503,7 +1503,7 @@ host vmhost-02-mgmt {
      option host-name "vmhost-02-mgmt";
 }
 host backup-mgmt {
-     hardware ethernet 74:E6:E2:FB:4D:FC;
+     hardware ethernet C8:4B:D6:8A:39:CC;
      fixed-address 10.3.160.59;
      option host-name "backup01";
 }
@@ -1769,6 +1769,16 @@ host bvmhost-a64-16 {
      filename "uefi/grubaa64.efi";
      next-server 10.3.163.10;
      option routers 10.3.170.254;
+     option subnet-mask 255.255.255.0;
+}
+
+host backup01 {
+     hardware ethernet 6c:fe:54:57:4d:00;
+     fixed-address 10.3.163.40;
+     option host-name "backup01.iad2.fedoraproject.org";
+     filename "uefi/grubx64.efi";
+     next-server 10.3.163.10;
+     option routers 10.3.163.254;
      option subnet-mask 255.255.255.0;
 }
 
