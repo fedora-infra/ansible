@@ -9,7 +9,7 @@
   - grokmirror-mirror
 
 - name: create grokmirror user to own mirrored file and run scripts
-  user: name=grokmirror
+  user: name=grokmirror local=true
 
 - name: create directory to mirror repos to
   file: dest={{grokmirror_topdir}} mode=0755 state=directory owner=grokmirror
