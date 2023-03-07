@@ -664,7 +664,7 @@ host vmhost-x86-08-stg {
      option subnet-mask 255.255.255.0;
 }
 host vmhost-x86-09-stg {
-     hardware ethernet EC:F4:BB:E1:C8:F0;
+     hardware ethernet c8:4b:d6:8a:69:a2;
      fixed-address 10.3.166.19;
      filename "uefi/grubx64.efi";
      next-server 10.3.163.10;
@@ -717,7 +717,7 @@ host bvmhost-x86-01-stg {
      option subnet-mask 255.255.255.0;
 }
 host bvmhost-x86-02-stg {
-     hardware ethernet EC:F4:BB:D9:56:10;
+     hardware ethernet 6C:FE:54:57:5F:48;
      fixed-address 10.3.167.12;
      filename "uefi/grubx64.efi";
      next-server 10.3.163.10;
@@ -818,6 +818,19 @@ host autosign01 {
      next-server 10.3.163.10;
      option routers 10.3.169.254;
      option subnet-mask 255.255.255.0;
+}
+host autosign02 {
+     hardware ethernet 6C:FE:54:57:4D:80;
+     fixed-address 10.3.169.47;
+     filename "uefi/grubx64.efi";
+     next-server 10.3.163.10;
+     option routers 10.3.169.254;
+     option subnet-mask 255.255.255.0;
+}
+host autosign02-mgmt {
+     hardware ethernet ;
+     fixed-address 10.3.160.130;
+     hardware ethernet c8:4b:d6:8a:4a:a0;
 }
 host bvmhost-x8-07 {
      hardware ethernet E4:43:4B:B1:2B:52;
@@ -1780,6 +1793,18 @@ host backup01 {
      next-server 10.3.163.10;
      option routers 10.3.163.254;
      option subnet-mask 255.255.255.0;
+}
+
+host bvmhost-x86-02-stg-mgmt {
+     hardware ethernet c8:4b:d6:8a:59:6a;
+     fixed-address 10.3.160.192;
+     option host-name "bvmhost-x86-02-stg-mgmt";
+}
+
+host vmhost-x86-09-stg-mgmt {
+     hardware ethernet c8:4b:d6:8a:69:a2;
+     fixed-address 10.3.160.42;
+     option host-name "vmhost-x86-09-stg-mgmt";
 }
 
 ## End of file
