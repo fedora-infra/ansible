@@ -259,7 +259,6 @@
     keephost: true
     ocp4: true
     tags: qa-landingpage
-    when: env == "staging"
 
   - role: httpd/reverseproxy
     website: qa.fedoraproject.org
