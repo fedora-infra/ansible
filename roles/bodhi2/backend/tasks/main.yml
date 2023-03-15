@@ -80,8 +80,8 @@
 
 - name: Put pungi multilib configuration in place
   copy:
-    src: multilib_general.conf
-    dest: /etc/bodhi/multilib_general.conf
+    src: pungi_multilib.conf
+    dest: /etc/bodhi/pungi_multilib.conf
   tags:
   - bodhi
   - bodhi/pungi
