@@ -684,7 +684,6 @@
   tags:
     - ipa/server
     - config
-  when: env == 'staging'
 
 - name: Set sweeper script on a cron schedule
   cron:
@@ -696,4 +695,3 @@
   tags:
     - ipa/server
     - config
-  when: env == 'staging'
