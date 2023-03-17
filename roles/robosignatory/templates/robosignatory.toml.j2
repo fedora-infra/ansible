@@ -864,7 +864,37 @@ handlers = ["console"]
         [consumer_config.ostree_refs."fedora/38/x86_64/sericea"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
         key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/38/aarch64/sericea"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/38/ppc64le/sericea"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/38/x86_64/updates/sericea"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/38/x86_64/testing/sericea"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/38/aarch64/updates/sericea"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/38/aarch64/testing/sericea"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/38/ppc64le/updates/sericea"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/38/ppc64le/testing/sericea"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
 
+        [consumer_config.ostree_refs."fedora/rawhide/aarch64/sericea"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-39', 'testkey') }}"
+        [consumer_config.ostree_refs."fedora/rawhide/ppc64le/sericea"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-39', 'testkey') }}"
         [consumer_config.ostree_refs."fedora/rawhide/x86_64/sericea"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
         key = "{{ (env == 'production')|ternary('fedora-39', 'testkey') }}"
