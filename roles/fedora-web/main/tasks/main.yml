@@ -3,36 +3,26 @@
     state: present
     name:
     - s3cmd
-  when: env == "staging"
   tags:
   - fedora-web
   - fedora-web/main
-
-- name: Copy in the sync-fedora-web cronjob
-  copy: src=cron-sync-fedora-web dest=/etc/cron.d/sync-fedora-web
-  tags:
-  - fedora-web
-  - fedora-web/main
-  when: env != "staging"
 
 - name: Load s3 credentials
   ansible.builtin.include_vars:
     file: "{{ private }}/files/websites/s3_fedoraproject_{{ env_short }}.yml"
   ignore_errors: true
-  when: env == "staging"
   tags:
   - fedora-web
   - fedora-web/main
 
-- name: Copy in the sync-fedora-web-stg cronjob
+- name: Copy in the sync-fedora-web-v3 cronjob
   copy:
-    src: cron-sync-fedora-web-stg
+    src: cron-sync-fedora-web-v3
     dest: /etc/cron.d/sync-fedora-web
   tags:
   - fedora-web
   - fedora-web/main
   when:
-  - env == "staging"
   - fedoraproject_s3_bucket_name is defined
 
 - name: Create fedoraproject-sync script
@@ -44,7 +34,6 @@
   - fedora-web
   - fedora-web/main
   when:
-  - env == "staging"
   - fedoraproject_s3_bucket_name is defined
 
 - name: Make directory for the config files for {{website}} we are about to copy

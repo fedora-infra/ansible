@@ -89,15 +89,12 @@
     objectname: fedora-websites-cron.yml
 
   # New websites 3.0
-  # STAGING ONLY
   - role: openshift/object
     app: websites
     file: obc.yml
     objectname: obc.yml
-    when: env == "staging"
 
   - role: openshift/object
     app: websites
     template: deployment.yml
     objectname: deployment.yml
-    when: env == "staging"

@@ -277,28 +277,6 @@
     path: /index.html
     target: https://flocktofedora.org/
 
-  # Redirect specific websites from fedoraproject.org to getfedora.org
-  - role: httpd/redirect
-    shortname: main-fedoraproject
-    website: fedoraproject.org
-    path: /index.html
-    target: https://getfedora.org/
-    when: env != "staging"
-
-  - role: httpd/redirect
-    shortname: get-fedora-old
-    website: fedoraproject.org
-    path: /get-fedora
-    target: https://getfedora.org/
-    when: env != "staging"
-
-  - role: httpd/redirect
-    shortname: sponsors
-    website: fedoraproject.org
-    path: /sponsors
-    target: https://getfedora.org/sponsors
-    when: env != "staging"
-
   - role: httpd/redirect
     shortname: code-of-conduct
     website: fedoraproject.org
@@ -317,26 +295,6 @@
     path: /code-of-conduct.html
     target: https://docs.fedoraproject.org/en-US/project/code-of-conduct/
 
-  - role: httpd/redirect
-    shortname: verify
-    website: fedoraproject.org
-    path: /verify
-    target: https://getfedora.org/verify
-    when: env != "staging"
-
-  - role: httpd/redirect
-    shortname: keys
-    website: fedoraproject.org
-    path: /keys
-    target: https://getfedora.org/keys
-    when: env != "staging"
-
-  - role: httpd/redirect
-    shortname: release-banner
-    website: fedoraproject.org
-    path: /static/js/release-counter-ext.js
-    target: https://getfedora.org/static/js/release-counter-ext.js
-    when: env != "staging"
 
 #
 # When there is no prerelease we redirect the prerelease urls
