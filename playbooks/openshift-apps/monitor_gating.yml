@@ -80,7 +80,37 @@
 
   - role: openshift/start-build
     app: monitor-gating
-    buildname: monitor-gating-build
+    buildname: monitor-gating  -build
     objectname: monitor-gating-build
     tags:
         - build
+
+ - role: openshift/object
+    app: monitor-gating
+    template: dashboard_config.yml
+    objectname: dashboard_config.yml
+
+ - role: openshift/object
+    app: monitor-gating
+    template: dashboard_configmap.yml
+    objectname: dashboard_configmap.yml
+
+ - role: openshift/object
+    app: monitor-gating
+    template: dashboard_configmap.yml
+    objectname: dashboard_configmap.yml
+
+ - role: openshift/object
+    app: monitor-gating
+    template: dashboard_route.yml
+    objectname: dashboard_route.yml
+
+ - role: openshift/object
+    app: monitor-gating
+    template: dashboard_serviceaccount.yml
+    objectname: dashboard_serviceaccount.yml
+
+ - role: openshift/object
+    app: monitor-gating
+    template: dashboard_deploymentconfig.yml
+    objectname: dashboard_deploymentconfig.yml
