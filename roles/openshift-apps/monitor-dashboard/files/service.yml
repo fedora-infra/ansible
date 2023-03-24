@@ -8,7 +8,7 @@ metadata:
     service.alpha.openshift.io/serving-cert-secret-name: grafana-tls
 spec:
   selector:
-    app: dashboard
+    app: monitor-dashboard
     service: web
   ports:
   - name: web
