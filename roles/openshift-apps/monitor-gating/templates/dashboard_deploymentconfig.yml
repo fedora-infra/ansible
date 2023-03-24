@@ -65,8 +65,6 @@ spec:
             - containerPort: 3000
             - mountPath: /etc/grafana/provisioning/datasources
               name: grafana-datasources
-#            - mountPath: /etc/grafana/provisioning/dashboards
-#              name: grafana-dashboards-provision
            - mountPath: /var/lib/grafana/dashboards
               name: grafana-dashboards
       serviceAccountName: monitor-dashboard
@@ -77,9 +75,6 @@ spec:
         - configMap:
             name: grafana-datasources
           name: grafana-datasources
-#        - configMap:
-#            name: grafana-dashboards-provision
-#          name: grafana-dashboards-provision
         - configMap:
             name: grafana-dashboards
           name: grafana-dashboards
