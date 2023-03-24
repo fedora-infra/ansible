@@ -6,10 +6,6 @@ metadata:
   name: monitor-dashboard
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: monitor-dashboard
-      deploymentconfig: monitor-dashboard
   template:
     metadata:
       labels:
@@ -58,11 +54,12 @@ spec:
             - name: 'GF_USERS_AUTO_ASSIGN_ORG_ROLE'
               value: 'Admin'
             - name: 'V'
-              value: '14'
+              value: '15'
           image: registry.hub.docker.com/grafana/grafana:latest
           name: dashboard
           ports:
             - containerPort: 3000
+          volumeMounts:
             - mountPath: /etc/grafana/provisioning/datasources
               name: grafana-datasources
             - mountPath: /var/lib/grafana/dashboards
