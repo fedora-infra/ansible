@@ -1,5 +1,5 @@
 # Switch to F36 when this PR is shipped: https://github.com/python-ldap/python-ldap/pull/458
-FROM fedora:35
+FROM fedora:37
 LABEL \
   name="fasjson" \
   vendor="Fedora Infrastructure" \
