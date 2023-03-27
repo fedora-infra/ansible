@@ -95,7 +95,7 @@
     reboot:
 
   - name: wait for libvirtd to come back on the virthost
-    wait_for: path=/run/libvirtd-sock state=present
+    wait_for: path=/run/libvirt/libvirtd-sock state=present
 
   - name: look up vmlist
     virt: command=list_vms
