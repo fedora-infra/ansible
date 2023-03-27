@@ -54,7 +54,7 @@ spec:
             - name: 'GF_USERS_AUTO_ASSIGN_ORG_ROLE'
               value: 'Admin'
             - name: 'V'
-              value: '16'
+              value: '17'
           image: registry.hub.docker.com/grafana/grafana:latest
           name: dashboard
           ports:
@@ -64,6 +64,8 @@ spec:
               name: grafana-datasources
             - mountPath: /var/lib/grafana/dashboards
               name: grafana-dashboards
+            - mountPath: /etc/grafana/provisioning/dashboards
+              name: grafana-dashboards-provision
       serviceAccountName: monitor-dashboard
       volumes:
         - name: grafana-tls
@@ -75,3 +77,6 @@ spec:
         - configMap:
             name: grafana-dashboards
           name: grafana-dashboards
+        - configMap:
+            name: grafana-dashboards-provision
+          name: grafana-dashboards-provision
