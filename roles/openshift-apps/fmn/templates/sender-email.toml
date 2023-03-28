@@ -9,9 +9,9 @@ keyfile = "/etc/pki/fedora-messaging/key/fmn-key.pem"
 [handler]
 class = "fmn.sender.email:EmailHandler"
 from = "Fedora Notifications <notifications{{ env_suffix }}@fedoraproject.org>"
-# smtp_host = "bastion{{ env_suffix }}.iad2.fedoraproject.org"
-smtp_host = "sendria.fmn.svc.cluster.local"
-smtp_port = 1025
+smtp_host = "bastion{{ env_suffix }}.fedoraproject.org"
+# smtp_host = "sendria.fmn.svc.cluster.local"
+# smtp_port = 1025
 
 [log_config]
 version = 1
