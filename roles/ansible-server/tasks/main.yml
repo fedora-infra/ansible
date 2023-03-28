@@ -16,6 +16,22 @@
   tags:
   - packages
   - ansible-server
+  when: inventory_hostname.startswith('batcave01')
+
+- name: install needed packages (rhel9)
+  package:
+    name:
+      - ansible-core
+      - git-core
+      - ansible-collection-ansible-posix
+      - ansible-collection-community-general
+      - ansible-collection-community-mysql
+      - ansible-collection-community-libvirt
+      - ansible-collection-community-rabbitmq
+  tags:
+  - packages
+  - ansible-server
+  when: inventory_hostname.startswith('batcave02')
 
 - name: generate default ansible config
   template: src=ansible.cfg.j2 dest=/etc/ansible/ansible.cfg owner=root group=root mode=0644
