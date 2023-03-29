@@ -30,7 +30,10 @@ openqa_amqp_reporter_key: /etc/pki/fedora-messaging/openqa{{ openqa_env_suffix }
 openqa_amqp_reporter_url: "amqps://openqa{{ openqa_env_suffix }}:@rabbitmq{{ openqa_env_suffix }}.fedoraproject.org/%2Fpubsub"
 # fedora-messaging resultsdb reporter settings
 openqa_amqp_resultsdb_reporter_queue: "openqa{{ openqa_env_suffix }}_resultsdb_reporter"
-openqa_amqp_resultsdb_reporter_routing_keys: ["org.fedoraproject.{{ deployment_type }}.openqa.job.done"]
+openqa_amqp_resultsdb_reporter_routing_keys:
+  - "org.fedoraproject.{{ deployment_type }}.openqa.job.done"
+  - "org.fedoraproject.{{ deployment_type }}.openqa.job.create"
+  - "org.fedoraproject.{{ deployment_type }}.openqa.job.restart"
 # fedora-messaging scheduler settings (that differ from defaults)
 openqa_amqp_scheduler_cert: /etc/pki/fedora-messaging/openqa-cert.pem
 openqa_amqp_scheduler_key: /etc/pki/fedora-messaging/openqa-key.pem
