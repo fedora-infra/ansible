@@ -64,9 +64,15 @@
   copy: src="{{ private }}/files/copr/buildsys.priv" dest=/home/copr/.ssh/id_rsa owner=copr group=copr mode=600
 
 - name: setup copr user ssh config file
-  copy: src="ssh_config" dest=/home/copr/.ssh/config  owner=copr group=copr mode=600
+  template:
+    src: "ssh_config.j2"
+    dest: /var/lib/resallocserver/.ssh/config
+    owner: resalloc
+    group: resalloc
+    mode: 0600
   tags:
-    - copr_ssh_config
+    - backend_to_hv_ssh_config
+    - provision_config
 
 - name: check known_hosts file
   command: stat /home/copr/.ssh/known_hosts

@@ -113,12 +113,15 @@
     mode: 0600
 
 - name: resalloc, ssh config file
-  copy:
-    src: "ssh_config"
+  template:
+    src: "ssh_config.j2"
     dest: /var/lib/resallocserver/.ssh/config
     owner: resalloc
     group: resalloc
     mode: 0600
+  tags:
+    - backend_to_hv_ssh_config
+    - provision_config
 
 - name: resalloc, server config
   template:
