@@ -6,5 +6,6 @@ Host *
    ServerAliveCountMax 5
    ConnectTimeout 60
 
-Host{% for host in groups["copr_hypervisor"] %}{{- ' ' + host }}{% endfor %}
+Host{% for host in groups["copr_hypervisor"] %}{{- ' ' + host }}
+{% endfor %}
   AddressFamily inet
