@@ -67,8 +67,8 @@
   template:
     src: "ssh_config.j2"
     dest: /home/copr/.ssh/config
-    owner: resalloc
-    group: resalloc
+    owner: copr
+    group: copr
     mode: 0600
   tags:
     - backend_to_hv_ssh_config
