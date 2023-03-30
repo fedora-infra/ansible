@@ -63,12 +63,6 @@
 
     - role: openshift/secret-file
       app: waiverdb
-      secret_name: waiverdb-stg-secret
-      key: client_secrets.json
-      template: client_secrets.json
-
-    - role: openshift/secret-file
-      app: waiverdb
       secret_name: waiverdb-fedora-messaging-key
       key: waiverdb.key
       privatefile: "rabbitmq/{{env}}/pki/private/waiverdb{{env_suffix}}.key"
