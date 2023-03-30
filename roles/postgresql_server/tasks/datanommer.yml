@@ -75,6 +75,13 @@
         owner: "{{ datanommerDBUser }}"
         encoding: UTF-8
 
+    - name: grant datanommer_ro read only access to datanommer2
+      postgresql_privs:
+        database: datanommer2
+        privs: SELECT
+        objs: ALL_IN_SCHEMA
+        roles: datanommer_ro
+
     # Enable timescaledb
     - name: enable timescaledb
       postgresql_ext:
