@@ -66,7 +66,7 @@
 - name: setup copr user ssh config file
   template:
     src: "ssh_config.j2"
-    dest: /var/lib/resallocserver/.ssh/config
+    dest: /home/copr/.ssh/config
     owner: resalloc
     group: resalloc
     mode: 0600
