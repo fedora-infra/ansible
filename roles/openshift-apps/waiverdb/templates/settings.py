@@ -13,6 +13,7 @@ MESSAGE_BUS_PUBLISH = True
 AUTH_METHOD = 'OIDC'
 OIDC_REQUIRED_SCOPE = 'https://waiverdb.fedoraproject.org/oidc/create-waiver'
 OIDC_CLIENT_SECRETS = '/etc/secret/client_secrets.json'
+OIDC_USERNAME_FIELD = 'sub'
 PREFERRED_URL_SCHEME='https'
 SUPERUSERS = ['bodhi@service']
 PORT = 8080
