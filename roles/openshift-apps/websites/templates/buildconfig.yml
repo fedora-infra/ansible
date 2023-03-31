@@ -17,6 +17,8 @@ spec:
 {% endif %}
   strategy:
     type: Docker
+    dockerStrategy:
+      dockerfilePath: .build/Dockerfile
   output:
     to:
       kind: ImageStreamTag
