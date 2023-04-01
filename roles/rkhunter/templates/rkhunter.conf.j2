@@ -402,6 +402,9 @@ ALLOWDEVFILE=/dev/shm/libpod_*
 ALLOWDEVFILE=/dev/shm/PostgreSQL*
 {% endif %}
 
+{% if inventory_hostname in groups['proxies'] or inventory_hostname in groups['proxies_stg'] %}
+ALLOWDEVFILE=/dev/shm/ShM.*
+{% endif %}
 #
 # This setting tells rkhunter where the inetd configuration
 # file is located.
