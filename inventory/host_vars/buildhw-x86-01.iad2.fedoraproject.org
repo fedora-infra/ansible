@@ -18,6 +18,7 @@ network_connections:
       gateway4: "{{ eth0_ipv4_gw }}"
     mac: "{{ mac0 }}"
     name: eth0
+    mtu: 9000
     state: up
     type: ethernet
   - mac: "{{ mac1 }}"
