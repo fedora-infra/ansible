@@ -36,18 +36,18 @@
     website: apps.fedoraproject.org
     path: ^/favicon.ico$
     status: 301
-    target: https://getfedora.org/static/images/favicon.ico
+    target: https://fedoraproject.org/favicon.ico
 
   - role: httpd/domainrewrite
     destname: 00-docs
     website: docs.fedoraproject.org
     path: ^/favicon.ico$
     status: 301
-    target: https://getfedora.org/static/images/favicon.ico
+    target: https://fedoraproject.org/favicon.ico
 
   - role: httpd/domainrewrite
     destname: 00-registry-icon
     website: registry.fedoraproject.org
     path: ^/favicon.ico$
     status: 301
-    target: https://getfedora.org/static/images/favicon.ico
+    target: https://fedoraproject.org/favicon.ico
