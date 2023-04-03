@@ -4,7 +4,7 @@
 # A simple script to copy database dumps over to public space on batcave01
 # Only the most recent dump is published
 #
-scp db-datanommer02.iad2.fedoraproject.org:/backups/datanommer-$(date +%F).dump.xz /srv/web/infra/db-dumps/datanommer.dump.xz
+scp db-datanommer02.iad2.fedoraproject.org:/backups/datanommer2-$(date +%F).dump.xz /srv/web/infra/db-dumps/datanommer2.dump.xz
 scp db-koji01.iad2.fedoraproject.org:/backups/koji-$(date +%F).dump.xz /srv/web/infra/db-dumps/koji.dump.xz
 scp db01.iad2.fedoraproject.org:/backups/pkgdb2-$(date +%F).dump.xz /srv/web/infra/db-dumps/pkgdb2.dump.xz
 scp db01.iad2.fedoraproject.org:/backups/koschei-$(date +%F).dump.xz /srv/web/infra/db-dumps/koschei.dump.xz
