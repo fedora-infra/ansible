@@ -17,7 +17,7 @@ spec:
 {% if env == 'staging' %}
       ref: "develop"
 {% else %}
-      ref: "master"
+      ref: "releng_requests_prod"
 {% endif %}
   strategy:
     type: Source
