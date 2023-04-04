@@ -90,6 +90,7 @@
   fail:
     msg: "`{{ item }}` is not defined"
   ignore_errors: true
+  changed_when: false
   when: lookup('vars', item, default="<undefined-sentinel>") == "<undefined-sentinel>"
   loop:
     - ipa_host_group
