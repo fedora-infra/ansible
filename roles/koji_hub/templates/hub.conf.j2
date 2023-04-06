@@ -203,16 +203,45 @@ sidetag =
     all :: deny
 
 {% if env == "staging" %}
-# Policy for building scratch builds
 build_from_scm =
-    # allow scratch build for anything from anywhere
-    bool scratch :: allow
-    # allow to build from forks
-    match scm_type GIT GIT+SSH && match scm_host src.fedoraproject.org/forks/* :: allow
-{% endif %}
-
-scm =
-      # allow scratch builds from any commits
-      bool scratch :: allow
-      match_all branches * !! deny Commit must be present on some branch
-      all :: allow
+    match scm_host src.stg.fedoraproject.org :: {
+        bool scratch :: fedpkg sources
+        match scm_repository /rpms/* :: fedpkg sources
+        match scm_repository /modules/* :: fedpkg sources
+        match scm_repository /containers/* :: fedpkg sources
+        match scm_repository /flatpaks/* :: fedpkg sources
+    }
+    match scm_host pkgs.stg.fedoraproject.org :: {
+        bool scratch :: fedpkg sources
+        match scm_repository /rpms/* :: fedpkg sources
+        match scm_repository /modules/* :: fedpkg sources
+        match scm_repository /containers/* :: fedpkg sources
+        match scm_repository /flatpaks/* :: fedpkg sources
+    }
+    match scm_host pkgs.fedoraproject.org && match scm_repository /* :: allow fedpkg sources
+    match scm_host pagure.io && match scm_repository /fedora-kickstarts.git :: allow
+    match scm_host src.fedoraproject.org :: allow fedpkg sources
+    all :: deny
+{% else %}
+build_from_scm =
+    match scm_host src.fedoraproject.org :: {
+        bool scratch :: fedpkg sources
+        match scm_repository /rpms/* :: fedpkg sources
+        match scm_repository /modules/* :: fedpkg sources
+        match scm_repository /containers/* :: fedpkg sources
+        match scm_repository /flatpaks/* :: fedpkg sources
+    }
+    match scm_host pkgs.fedoraproject.org :: {
+        bool scratch :: fedpkg sources
+        match scm_repository /rpms/* :: fedpkg sources
+        match scm_repository /modules/* :: fedpkg sources
+        match scm_repository /containers/* :: fedpkg sources
+        match scm_repository /flatpaks/* :: fedpkg sources
+    }
+    match scm_host pagure.io :: {
+        bool scratch :: allow
+        match scm_repository /fedora-kickstarts.git :: allow
+        match scm_repository /fork/*/fedora-kickstarts.git :: allow
+    }
+    all :: deny
+{%endif}
