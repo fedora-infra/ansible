@@ -13,7 +13,7 @@
   tags:
   - packages
   - rsyncd
-  when: (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int < 8) or (ansible_distribution_major_version|int < 30 and ansible_distribution == 'Fedora')
+  when: ansible_distribution == 'RedHat' and ansible_distribution_major_version|int < 8
 
 - name: install necessary packages
   package:
@@ -25,9 +25,9 @@
   tags:
   - packages
   - rsyncd
-  when: (ansible_distribution_major_version|int >= 30 and ansible_distribution == 'Fedora' and ansible_distribution_major_version|int < 34 and ansible_distribution == 'Fedora') or (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int == 8)
+  when: ansible_distribution == 'RedHat' and ansible_distribution_major_version|int == 8
 
-- name: install necessary packages for fedora >= 34
+- name: install necessary packages for fedora or rhel9
   package:
     state: present
     name:
@@ -36,9 +36,9 @@
   tags:
     - packages
     - rsyncd
-  when: (ansible_distribution_major_version|int >= 34 and ansible_distribution == 'Fedora') or (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int > 8)
+  when: ansible_distribution == 'Fedora' or (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int > 8)
 
-- name: rsyncd.conf file
+- name: rsyncd.conf file for non download servers
   copy: src={{ item }} dest=/etc/rsyncd.conf mode=0644
   with_first_found:
     - "{{ rsyncd_conf }}"
@@ -54,7 +54,7 @@
   - config
   - rsyncd
 
-- name: rsyncd.conf file
+- name: rsyncd.conf file for download servers
   template: src=rsyncd.conf.download.j2 dest=/etc/rsyncd.conf mode=0644
   notify:
   - restart daemon
@@ -63,7 +63,7 @@
   - config
   - rsyncd
 
-- name: xinetd rsync file
+- name: xinetd rsync file for rhel7 and rhel8
   copy: src={{ item }} dest=/etc/xinetd.d/rsync mode=0644
   with_first_found:
     - "{{ rsync }}"
@@ -73,30 +73,30 @@
     - rsync.default
   notify:
   - restart xinetd
-  when: ansible_distribution_major_version|int < 34 and ansible_distribution == 'Fedora'
+  when: ansible_distribution_major_version|int < 9 and ansible_distribution == 'RedHat'
   tags:
   - config
   - rsyncd
 
-- name: systemd rsync file
+- name: systemd rsync file for fedora and rhel9
   copy: src=rsyncd.service dest=/usr/lib/systemd/system/rsyncd.service mode=0644
-  when: (ansible_distribution_major_version|int >= 34 and ansible_distribution == 'Fedora') or (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int > 8)
+  when: ansible_distribution == 'Fedora' or (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int > 8)
   notify:
     - restart daemon
   tags:
     - config
     - rsyncd
 
-- name: make sure xinetd is started
-  service: name=xinetd state=started
-  when: ansible_distribution_major_version|int < 34 and ansible_distribution == 'Fedora'
+- name: make sure xinetd is started on rhel7 and rhel8
+  service: name=xinetd state=started enabled=true
+  when: ansible_distribution_major_version|int < 9 and ansible_distribution == 'RedHat'
   tags:
   - services
   - rsyncd
 
-- name: make sure rsync daemon is started
+- name: make sure rsync daemon is started on Fedora and rhel9
   service: name=rsyncd enabled=true state=started
-  when: ansible_distribution_major_version|int >= 34 and ansible_distribution == 'Fedora'
+  when: ansible_distribution == 'Fedora' or (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int > 8)
   tags:
     - services
     - rsyncd
@@ -107,4 +107,3 @@
                     persistent=true
   tags:
     - rsyncd
-  
