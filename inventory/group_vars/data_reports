@@ -1,0 +1,22 @@
+---
+# Define resources for this group of hosts here.
+csi_primary_contact: "#fedora-admin"
+csi_purpose: for developing reports against datanommerdb
+csi_relationship: |
+  - This vm is for creating reports whicl once automated will be moved elsewhere.
+csi_security_category: Low
+deployment_type: prod
+ipa_client_shell_groups:
+  - fi-apprentice
+  - sysadmin-noc
+  - sysadmin-veteran
+  - sysadmin-web
+ipa_client_sudo_groups:
+  - sysadmin-web
+ipa_host_group: datareports
+ipa_host_group_desc: data reports
+lvm_size: 30000
+max_mem_size: 8192
+mem_size: 8192
+num_cpus: 2
+primary_auth_source: ipa
