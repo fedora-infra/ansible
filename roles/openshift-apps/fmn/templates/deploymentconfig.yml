@@ -1,4 +1,5 @@
 ---
+# Frontend component (Javascript served by Apache httpd)
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
@@ -63,6 +64,7 @@ spec:
           kind: ImageStreamTag
           name: fmn:latest
 ---
+# API component (Python/FastAPI served by Uvicorn)
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
@@ -183,6 +185,7 @@ spec:
           kind: ImageStreamTag
           name: fmn:latest
 ---
+# Consumer component (Fedora Messaging consume command)
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
@@ -281,6 +284,7 @@ spec:
           kind: ImageStreamTag
           name: fmn:latest
 ---
+# Email sending component (custom python runner)
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
@@ -345,6 +349,7 @@ spec:
           kind: ImageStreamTag
           name: fmn:latest
 ---
+# IRC sending component (custom python runner)
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
@@ -412,6 +417,7 @@ spec:
           kind: ImageStreamTag
           name: fmn:latest
 ---
+# Matrix sending component (custom python runner)
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
@@ -477,6 +483,7 @@ spec:
           kind: ImageStreamTag
           name: fmn:latest
 ---
+# Redis, for caching
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
@@ -515,6 +522,8 @@ spec:
           kind: ImageStreamTag
           name: redis:latest
 ---
+# Sendria, to display email notifications in staging
+{% if env == 'staging' %}
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
@@ -569,3 +578,4 @@ spec:
         from:
           kind: ImageStreamTag
           name: sendria:latest
+{% endif %}

@@ -28,8 +28,11 @@ spec:
         kind: ImageStreamTag
         # name: python:3.10
         # namespace: openshift
+        # OpenShift does not have Python 3.10 (yet), use our own ImageStream
         name: python-310:latest
       env:
+      # The .s2i/bin/assemble script uses this to build the frontend with the
+      # correct API and Ipsilon addresses.
       - name: FEDORA_ENV
         value: "{{ env }}"
   output:
@@ -49,8 +52,8 @@ spec:
       secret: "{{ fmn_stg_github_secret }}"
 {% endif %}
 ---
-# We need to build the sendria image until this is fixed:
-# https://github.com/msztolcman/sendria/issues/17
+# Sendria, to display email notifications in staging
+{% if env == 'staging' %}
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
@@ -60,6 +63,7 @@ metadata:
     build: sendria
 spec:
   runPolicy: Serial
+  # We build the sendria image with a few fixes.
   source:
     type: Dockerfile
     dockerfile: |-
@@ -73,3 +77,4 @@ spec:
   triggers:
   - type: ConfigChange
   - type: ImageChange
+{% endif %}

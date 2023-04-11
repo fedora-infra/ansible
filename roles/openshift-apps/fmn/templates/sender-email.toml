@@ -1,3 +1,8 @@
+# Configuration for the email sender.
+# This is not a Fedora Messaging configuration (even if it looks similar)
+# because senders don't use Fedora Messaging, they only connect to FMN's own
+# VHost on RabbitMQ.
+
 amqp_url = "amqps://fmn{{ env_suffix }}:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Ffmn"
 queue = "email"
 

@@ -1,10 +1,12 @@
 apiVersion: image.openshift.io/v1
 kind: List
 items:
+  # The main FMN image
   - apiVersion: image.openshift.io/v1
     kind: ImageStream
     metadata:
       name: fmn
+  # The Python 3.10 builder image
   - apiVersion: image.openshift.io/v1
     kind: ImageStream
     metadata:
@@ -21,18 +23,12 @@ items:
             scheduled: true
           referencePolicy:
             type: Source
+  # Sendria (to view email notifications in staging)
   - apiVersion: image.openshift.io/v1
     kind: ImageStream
     metadata:
       name: sendria
-    # We need to build the sendria image until this is fixed:
-    # https://github.com/msztolcman/sendria/issues/17
-    # spec:
-    #   tags:
-    #     - name: latest
-    #       from:
-    #         kind: DockerImage
-    #         name: msztolcman/sendria:v2.2.2.0
+  # Redis (for caching)
   - apiVersion: image.openshift.io/v1
     kind: ImageStream
     metadata:

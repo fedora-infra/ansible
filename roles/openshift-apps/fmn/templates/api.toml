@@ -1,3 +1,7 @@
+#
+# Fedora Messaging configuration for the API component
+#
+
 amqp_url = "amqps://fmn{{ env_suffix }}:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fpubsub"
 passive_declares = true
 

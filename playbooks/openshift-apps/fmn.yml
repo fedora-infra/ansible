@@ -1,3 +1,8 @@
+#
+# Fedora Messaging Notifications (FMN)
+#
+
+
 - name: setup the database
   hosts: db01.iad2.fedoraproject.org:db01.stg.iad2.fedoraproject.org
   gather_facts: no
@@ -34,16 +39,22 @@
       username: "fmn{{ env_suffix }}"
       queue_name: "fmn{{ env_suffix }}"
       routing_keys:
+      # The FMN queue is subscribed to everything
         - "#"
       thresholds:
         warning: 50
         critical: 500
+      # FMN sends messages when a rule is changed, to invalidate its cache
       sent_topics: ^org\.fedoraproject\.{{ env_short }}\.fmn\..*
       tags:
         - config
         - fedora-messaging
         - rabbitmq_cluster
 
+    # FMN also has an internal VHost for communication between the consumer
+    # (which listens to the Fedora Messaging bus on /pubsub) and the senders
+    # (which send messages to the various destinations such as email, IRC,
+    # Matrix).
     - role: rabbit/vhost
       vhost: /fmn
       tags:
@@ -64,9 +75,9 @@
         - fedora-messaging
         - rabbitmq_cluster
 
-    - name: Create the email queue in the fmn vhost
+    - name: Create the sending queues in the fmn vhost
       rabbitmq_queue:
-        name: email
+        name: "{{ item }}"
         vhost: /fmn
         auto_delete: no
         durable: yes
@@ -74,21 +85,10 @@
         state: present
         login_user: admin
         login_password: "{{ (env == 'production')|ternary(rabbitmq_admin_password_production, rabbitmq_admin_password_staging) }}"
-      tags:
-        - config
-        - fedora-messaging
-        - rabbitmq_cluster
-
-    - name: Create the irc queue in the fmn vhost
-      rabbitmq_queue:
-        name: irc
-        vhost: /fmn
-        auto_delete: no
-        durable: yes
-        # message_ttl: 300000
-        state: present
-        login_user: admin
-        login_password: "{{ (env == 'production')|ternary(rabbitmq_admin_password_production, rabbitmq_admin_password_staging) }}"
+      with_items:
+        - email
+        - irc
+        - matrix
       tags:
         - config
         - fedora-messaging
@@ -146,7 +146,6 @@
       serviceport: web
       annotations:
         haproxy.router.openshift.io/timeout: 5m
-
     - role: openshift/route
       app: fmn
       routename: api
@@ -155,7 +154,7 @@
       serviceport: web
       annotations:
         haproxy.router.openshift.io/timeout: 5m
-
+    # Sendria is an email sink for testing, to avoid sending actual emails.
     - role: openshift/route
       app: fmn
       routename: sendria
@@ -164,6 +163,7 @@
       serviceport: web
       annotations:
         haproxy.router.openshift.io/timeout: 5m
+      when: env == "staging"
 
     # Secrets
     - role: openshift/object
@@ -202,7 +202,6 @@
     # FASJSON access
     - role: openshift/ipa-client
       app: fmn
-
     - role: openshift/keytab
       app: fmn
       key: service.keytab

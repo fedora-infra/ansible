@@ -1,4 +1,7 @@
 ---
+# Cleanup the counting of generated notifications in the database.
+# Increase the retained duration if you want to be able to generate generation
+# statistics over a longer period of time.
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -41,6 +44,9 @@ spec:
               configMap:
                 name: fmn
 ---
+# Refresh the cache before it is expired.
+# This will avoid message processing to be blocked while the cache is being
+# rebuilt.
 apiVersion: batch/v1
 kind: CronJob
 metadata:
