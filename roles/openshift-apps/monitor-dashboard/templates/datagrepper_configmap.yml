@@ -17,7 +17,7 @@ data:
         # expect the amount of data it generates to grow pretty steadily over time
         # and we don't want *read* operations on that database to slow down all our
         # other apps.
-        'datanommer.sqlalchemy.url': 'postgresql://datanommer_ro:{{ datanommer_ro_password }}@db-datanommer01.iad2.fedoraproject.org/datanommer',
+        'datanommer.sqlalchemy.url': 'postgresql://datanommer_ro:{{ datanommer_ro_password }}@db-datanommer02.iad2.fedoraproject.org/datanommer',
         'fedmenu_url': 'https://apps.fedoraproject.org/fedmenu',
         'fedmenu_data_url': 'https://apps.fedoraproject.org/js/data.js',
 
