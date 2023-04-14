@@ -232,7 +232,16 @@
   - role: httpd/redirect
     shortname: get-fedora
     website: get.fedoraproject.org
-    target: https://getfedora.org/
+    target: https://fedoraproject.org/
+    tags:
+    - fedoraproject.org
+
+  - role: httpd/redirect
+    shortname: main-fedoraproject
+    website: getfedora.org
+    target: https://fedoraproject.org/
+    tags:
+    - fedoraproject.org
 
   - role: httpd/redirect
     shortname: flocktofedora
@@ -281,18 +290,6 @@
     shortname: code-of-conduct
     website: fedoraproject.org
     path: /code-of-conduct
-    target: https://docs.fedoraproject.org/en-US/project/code-of-conduct/
-
-  - role: httpd/redirect
-    shortname: code-of-conduct-2
-    website: getfedora.org
-    path: /code-of-conduct
-    target: https://docs.fedoraproject.org/en-US/project/code-of-conduct/
-
-  - role: httpd/redirect
-    shortname: code-of-conduct-3
-    website: getfedora.org
-    path: /code-of-conduct.html
     target: https://docs.fedoraproject.org/en-US/project/code-of-conduct/
 
 
@@ -347,14 +344,6 @@
     regex: /prerelease.*$
     target: https://arm.stg.fedoraproject.org/$1
     redirectmatch_enabled: false
-    when: env == 'staging'
-
-  - role: httpd/redirectmatch
-    shortname: cloud-to-atomic-download
-    website: getfedora.org
-    regex: /(.*)/cloud/download.*$
-    target: https://alt.stg.fedoraproject.org/$1/cloud
-    redirectmatch_enabled: true
     when: env == 'staging'
 
   - role: httpd/redirectmatch
@@ -425,13 +414,6 @@
 
 # end of prod prerelease
 
-  - role: httpd/redirectmatch
-    shortname: cloud-to-atomic-download
-    website: getfedora.org
-    regex: /(.*)/cloud/download.*$
-    target: https://alt.fedoraproject.org/$1/cloud
-    when: env != 'staging'
-
   - role: httpd/redirect
     shortname: store
     website: store.fedoraproject.org
@@ -462,7 +444,9 @@
   - role: httpd/redirect
     shortname: site
     website: fedoraproject.com
-    target: https://getfedora.org/
+    target: https://fedoraproject.org/
+    tags:
+    - fedoraproject.org
 
   # Planet/people convenience
   - role: httpd/redirect
@@ -515,7 +499,9 @@
   - role: httpd/redirect
     shortname: kde
     website: kde.fedoraproject.org
-    target: https://spins.fedoraproject.org/kde/
+    target: https://fedoraproject.org/spins/kde/
+    tags:
+    - fedoraproject.org
 
 
   # Various sites that we are friends with
@@ -546,7 +532,9 @@
   - role: httpd/redirect
     shortname: cloud-front-page
     website: cloud.fedoraproject.org
-    target: https://alt.fedoraproject.org/cloud/
+    target: https://fedoraproject.org/cloud/
+    tags:
+    - fedoraproject.org
 
   - role: httpd/redirectmatch
     shortname: redirect-cloudstart
@@ -780,18 +768,20 @@
     shortname: 01-iot
     website: "iot.fedoraproject.org"
     path: /
-    target: https://getfedora.org/iot/
+    target: https://fedoraproject.org/iot/
     tags:
     - iot.fedoraproject.org
+    - fedoraproject.org
 
   # coreos redirects
   - role: httpd/redirect
     shortname: 01-coreos
     website: "coreos.fedoraproject.org"
     path: /
-    target: https://getfedora.org/coreos/
+    target: https://fedoraproject.org/coreos/
     tags:
     - coreos.fedoraproject.org
+    - fedoraproject.org
 
   - role: httpd/redirect
     shortname: 00-coreosfaq
