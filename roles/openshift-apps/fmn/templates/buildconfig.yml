@@ -36,14 +36,12 @@ spec:
   triggers:
   - type: ConfigChange
   - type: ImageChange
-{% if env == 'staging' %}
   - type: GitHub
     github:
       # Not sure why secretReference does not work, but it doesn't.
       # secretReference:
       #   name: fmn-github-webook
       secret: "{{ fmn_stg_github_secret }}"
-{% endif %}
 ---
 # Sendria, to display email notifications in staging
 {% if env == 'staging' %}
