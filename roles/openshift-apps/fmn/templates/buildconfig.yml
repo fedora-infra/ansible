@@ -13,13 +13,7 @@ spec:
     type: Git
     git:
       uri: https://github.com/fedora-infra/fmn.git
-{% if env == "staging" %}
-      ref: fmn-next
-{% else %}
-      # For now, build from fmn-next as well.
-      # ref: stable
-      ref: fmn-next
-{% endif %}
+      ref: {{ (env == 'production')|ternary('stable', 'staging') }}
     contextDir: /
   strategy:
     type: Source
@@ -42,8 +36,7 @@ spec:
   triggers:
   - type: ConfigChange
   - type: ImageChange
-# Enable triggered rebuild on prod for now, will disable when we actually go live
-{% if env == 'staging' or env == 'production' %}
+{% if env == 'staging' %}
   - type: GitHub
     github:
       # Not sure why secretReference does not work, but it doesn't.
