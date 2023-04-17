@@ -58,6 +58,7 @@
   - deflate.conf
   - mattdm-google-validate.conf
   - matrix.conf
+  - flathub-verified.conf
   notify:
   - reload proxyhttpd
   tags:
@@ -158,3 +159,17 @@
   - fedora-web
   - fedora-web/main
   - fedora-web/matrix
+
+# setup well-known for flathub verification
+- name: Create a file for flathub verification
+  copy:
+    dest: /srv/web/.well-known-org.flathub.VerifiedApps.txt
+    src: .well-known-org.flathub.VerifiedApps.txt
+    owner: root
+    group: root
+    mode: 0644
+    setype: httpd_sys_content_t
+  tags:
+  - fedora-web
+  - fedora-web/main
+  - fedora-web/flathub
