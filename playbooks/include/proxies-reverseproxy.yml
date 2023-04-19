@@ -141,6 +141,17 @@
     proxyurl: http://localhost:10036
 
   - role: httpd/reverseproxy
+    website: "notifications{{ env_suffix }}.fedoraproject.org"
+    destname: fmn
+    balancer_name: apps-ocp
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    targettype: openshift
+    keephost: true
+    ocp4: true
+    tags:
+    - fmn
+
+  - role: httpd/reverseproxy
     website: ask.fedoraproject.org
     destname: askbot
     proxyurl: "{{ varnish_url }}"

@@ -141,6 +141,14 @@
     - role: openshift/route
       app: fmn
       routename: frontend
+      host: "notifications{{ env_suffix }}.fedoraproject.org"
+      servicename: frontend
+      serviceport: web
+      annotations:
+        haproxy.router.openshift.io/timeout: 5m
+    - role: openshift/route
+      app: fmn
+      routename: frontend
       host: "fmn.apps.ocp{{ env_suffix }}.fedoraproject.org"
       servicename: frontend
       serviceport: web
