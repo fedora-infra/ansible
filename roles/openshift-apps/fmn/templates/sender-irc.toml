@@ -16,7 +16,7 @@ class = "fmn.sender.irc:IRCHandler"
 {% if env == "staging" %}
 irc_url = "ircs://fedora-notifstg:{{ fedora_notifstg_libera_pass }}@irc.libera.chat:6697"
 {% else %}
-irc_url = "ircs://fedora-notif:{{ fedora_notif_libera_pass }}@irc.libera.chat:6697"
+irc_url = "ircs://fedora-fmn:{{ fmn_prod_irc_password }}@irc.libera.chat:6697"
 {% endif %}
 
 [log_config]
