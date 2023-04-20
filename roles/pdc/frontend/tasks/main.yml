@@ -93,13 +93,24 @@
   notify: reload httpd
   tags: pdc
 
-- name: Install domain-specific saml2 certs and metadata
+- name: Copy over the metadata.xml rebuild script
+  copy:
+    src: create-metadata.sh
+    dest: /etc/httpd/saml2/create-metadata.sh
+    mode: 0755
+  notify:
+    - rebuild metadata
+    - reload httpd
+  tags: pdc
+
+- name: Install domain-specific saml2 certs
   copy: src="{{ private }}/files/saml2/{{ pdc_domain }}/{{ item }}"
         dest="/etc/httpd/saml2/{{ item }}"
         owner="apache" group="apache" mode=0600
   with_items:
     - certificate.pem
     - certificate.key
-    - metadata.xml
-  notify: reload httpd
+  notify:
+    - rebuild metadata
+    - reload httpd
   tags: pdc
