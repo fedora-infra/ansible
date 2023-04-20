@@ -51,7 +51,8 @@ BASEURL="$(echo "$BASEURL" | sed 's#/$##')"
 # No files should not be readable by the rest of the world.
 umask 0077
 
-CERT="$(grep -v '^-----' $DATADIR/certificate.pem)"
+# Everything between the markers, but not the markers themselves
+CERT="$(sed -n '/^-----BEGIN/,/^-----END/ {/^----/b; p}' $DATADIR/certificate.pem)"
 
 cat > $DATADIR/metadata.xml <<EOF
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
