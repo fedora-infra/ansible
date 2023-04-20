@@ -99,6 +99,12 @@
   notify:
   - restart apache
 
+- name: load the PDC SAML2 metadata that will be included in the configuration.conf file
+  uri:
+    url: https://pdc{{ env_suffix }}.fedoraproject.org/saml2/metadata
+    return_content: yes
+  register: pdc_metadata
+
 - name: copy ipsilon admin configuration
   template:
     src: "configuration.conf"
