@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: os_control_stg #:os_control
   user: root
   gather_facts: false
 
@@ -13,18 +13,6 @@
       include_role:
         name: fas2discourse
         tasks_from: create-keytab
-
-
-- hosts: os_control_stg #:os_control
-  user: root
-  gather_facts: false
-
-  vars_files:
-    - /srv/web/infra/ansible/vars/global.yml
-    - "/srv/private/ansible/vars.yml"
-    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
-
-  tasks:
     - name: fas2discourse Role
       include_role:
         name: fas2discourse
