@@ -104,6 +104,9 @@
     url: https://pdc{{ env_suffix }}.fedoraproject.org/saml2/metadata
     return_content: yes
   register: pdc_metadata
+  tags:
+  - ipsilon
+  - config
 
 - name: copy ipsilon admin configuration
   template:
