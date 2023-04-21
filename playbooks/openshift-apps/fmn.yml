@@ -148,7 +148,7 @@
         haproxy.router.openshift.io/timeout: 5m
     - role: openshift/route
       app: fmn
-      routename: frontend
+      routename: frontend-openshift
       host: "fmn.apps.ocp{{ env_suffix }}.fedoraproject.org"
       servicename: frontend
       serviceport: web
