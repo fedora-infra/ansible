@@ -205,10 +205,10 @@ $(document).ready(function(){
     // Random banners
     function random_banner(){
     var images = [], ry, lnk;
-    images[0] = "/static/images/banners/random/formats.png";
-    images[1] = "/static/images/banners/random/spins.png";
-    images[2] = "/static/images/banners/random/clouds.png";
-    images[3] = "/static/images/banners/random/2nd_arches.png";
+    images[0] = "../images/banners/random/formats.png";
+    images[1] = "../images/banners/random/spins.png";
+    images[2] = "../images/banners/random/clouds.png";
+    images[3] = "../images/banners/random/2nd_arches.png";
 
     var links = [];
     links[0] = "/get-fedora-options#formats";
@@ -264,5 +264,3 @@ $(document).ready(function(){
     $("#fedora-banners a").attr("href", banners[choices[choice]][2]);
 */
 });
-
-
