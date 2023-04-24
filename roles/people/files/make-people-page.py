@@ -37,7 +37,7 @@ page_jinja_template = """
 <head>
     <title>Fedora People</title>
     <link rel='stylesheet' href='/static/datatables.min.css'>
-    <link rel='stylesheet' href='//getfedora.org/static/css/bootstrap-theme.css'>
+    <!--<link rel='stylesheet' href='//getfedora.org/static/css/bootstrap-theme.css'>-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
@@ -62,7 +62,7 @@ page_jinja_template = """
 <body>
     <div class="jumbotron bg-fedora-blue">
         <div class="container-fluid center">
-            <img class="fedoralogotext" class="img-responsive center-block" src="//getfedora.org/static/images/fedora-logotext-white.png" alt="Fedora Logotext">
+            <img class="fedoralogotext" class="img-responsive center-block" src="//getfedora.org/assets/images/logos/fedora-white.png" alt="Fedora Logotext">
         </div>
     </div>
     <div class="container pagebody">
