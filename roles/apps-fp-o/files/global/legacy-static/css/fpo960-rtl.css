@@ -1,0 +1,229 @@
+/* This specific sheet is correcting the 960' rtl generated sheet */
+body {
+	direction:rtl;
+}
+
+#site-content ul{
+	padding-right:40px;
+}
+
+/* Changed from left to right in order to fix the Fedora Highlights problem */
+.container_16 .suffix_1{
+	padding-right:0px;
+}
+
+/* Fix for most of the header mess */
+#site-heading {
+   float:left; 
+}
+
+/* Fix language selector */
+.container_16 .prefix_10 {
+	padding-right:55px; 
+}
+
+/* Fix for the four F's position */
+#site-heading h2 {
+   float:left; 
+}
+
+.lang-dropdown {
+   background-position: right center;
+   padding-right:23px;
+   padding-left:0px;
+}
+
+ul.webpage-list, .checkmark-list {
+	padding-right:20px !important;
+}
+
+/* Fix slideshow number */
+.slideShow .navigation {
+	position:relative;
+	padding-right: 0px;
+	margin-top: -35px;
+	direction: ltr;
+}
+
+/* Fix the direction of the language selctor */
+.lang-dropdown select {
+	direction: ltr;
+}
+
+/* Fix tabs everywhere (features page and get-fedora-options) */
+#header-nav ul li {
+	float: right;
+}
+
+/* Fix "back to top" buttons position (and avoid horizontal scrollbar caused by the problem) */
+.container_16 .prefix_14 {
+	padding-right: 0px;
+}
+
+/* Fix the icon positions in the features page */
+#features-content img {
+   float: right;
+   margin-left: 15px;
+   margin-right: 0px;
+}
+
+
+/* Fix direction of <pre> tags, such as in verify */
+pre.command {
+	direction: ltr;
+}
+
+/* Fix header width for pages under Using Fedora (interviews and tutorials) */
+.page-header {
+	width: 100% !important;
+}
+
+/* Fix images positions in the Highlights section */
+#what-can-you-do img {
+    float: right;
+    margin-left: 1em;
+}
+
+/* Fix the download buttons in get-fedora-options */
+.container_16 .suffix_4, .container_16 .suffix_1 {
+	padding-right: 0px;
+	padding-left: 0px;
+}
+
+/* Fix the direction of the export regulations (which aren't translatable for a legal reason) */
+.export-regulations .details, .export-regulations>p {
+	direction: ltr;
+}
+
+/* Fix the footer list sperators */
+#footer li.first {
+    border-right: medium none;
+	border-left: 1px solid #AAAAAA;
+}
+#footer li.last {
+    border-left: medium none;
+}
+
+#interviews img, #do-it img {
+    float: right;
+    margin-left: 15px;
+	margin-right: 0px;
+}
+
+/* Fix 'smirk' image */
+img.smirk {
+	margin-left: 10px;
+}
+
+/* Fix warnning */
+p.warning {
+	background-position: right center;
+	padding-right: 40px;
+	padding-left: 10px;
+} 
+
+/* Fix tweet box direction */
+.tweet_list {
+	direction: ltr;
+}
+
+/* Fix download text align */
+#main-download-section p.small {
+    text-align: right;
+}
+
+/* Fix the get-fedora-options formats page */
+.format-block .prefix_2 {
+	padding-right: 0px;
+}
+
+/* Fixes for get-fedora-options#desktop */
+.desktop-screenshot {
+    float: left;
+}
+.desktop-versions .prefix_2 {
+	padding-right: 120px;
+	padding-left: 0px;
+}
+.star-most-compatible, .star-fedora-default {
+	margin-right: 10px;
+	margin-left: 0px;
+	background: url("../images/icons/arrow-right_sm.png") no-repeat scroll 3px center #FFEEAA;
+	background-position: right;
+	padding-right: 13px;
+	padding-left: 1px;
+}
+#get-formats .online-vendors {
+	padding-right: 59px;
+	padding-left: 0px;
+	border-right: 1px solid #DDDDDD;
+	border-left: none;
+}
+.container_16 .prefix_2 {
+	padding-left: 0px;
+}
+/* Fix direction of Latest Announcements and Planet posts */
+.join-content .grid_5 ul, .join-content .grid_6 ul {
+	direction: ltr;
+}
+
+/* Fix a problem with the slideshow */
+.slideShow ul {
+	padding-right: 0px !important;
+}
+
+/* Fix the images positions in about-fedora */
+.about-content img {
+    float: right;
+    margin-left: 1em;
+	margin-right: 0;
+}
+
+/* Fix slideshow bug in Google Chrome */
+.slides {
+	width: 100% !important;
+}
+
+
+.slides .content ul {
+  margin-right: 1em;
+  margin-left: 0em;
+
+}
+
+
+/* Fix for the horizontal scrollbar in Google Chrome */
+span#logo {
+	color: transparent !important;
+	text-indent: 0px !important;
+}
+/* aligns the numbers in get-help to the center of the bubbles */
+div.num p {
+	margin-right: 0;
+}
+#interview-full img {
+    float: left;
+}
+#tutorial_content img {
+    clear: left;
+    float: left;
+    margin-left: 0;
+    margin-right: 1em;
+}
+.slides #fedora-download img {
+	float: left;
+}
+/* Small news bar fixes for RTL */
+div.news span.news_title {
+	margin-left: 26px;
+	margin-right: 0;
+	padding: 3px 22px 4px 30px;
+}
+div.news a.news_relnotes {
+	background-position: right;
+    padding-right: 20px;
+}
+div.news a.news_download {
+    background-position: right;
+    padding-right: 20px;
+}

@@ -1,0 +1,1566 @@
+/* image margin override to override fedora.css */
+
+a:visited, a:active {
+  color: #729fcf !important;
+}
+
+img {
+  margin: auto !important;
+}
+
+/* overrides for footer. edit these to make footer taller */
+
+#footer {
+  height: 			120px;
+  margin: 			-130px 0 0;
+}
+
+#content {
+  padding:			1.5ex 2ex 150px;
+}
+
+/* positioning for header elements */
+
+#head {
+  height: 			65px;
+}
+
+#head h1 {
+  width:			200px;
+  float: 			left;
+  margin-bottom:    0;
+}
+
+#head #toolbar {
+  width: 			50%;
+  float: 			right;
+  margin-top: 			9px;
+}
+
+#login-toolbar {
+  float: 			right;
+}
+
+#content {
+  padding-top: 			20px;
+  clear: 			right;
+  padding-right:		28px;
+}
+
+#content a img { margin: 0px !important; }
+
+a {
+  color: #2B80D6;
+}
+
+/* styling for login toolbar */
+
+#toolbar {
+  vertical-align:		middle;
+  min-width:			510px;
+}
+
+#toolbar .username {
+  color: 			#2b81d6;
+  font-weight: 			700;
+  text-transform:		none;
+  padding:			5px;
+  font-size:			1.1em !important;
+}
+
+#toolbar input {
+  background-color:		white;
+  color:			#ccc;
+  font-size:			.9em;
+  padding:			5px;
+  border:			1px solid #aaa;
+}
+
+#toolbar .search-active {
+ color: #000 !important;
+}
+
+#toolbar input.button {
+  margin-left: 			5px;
+  text-transform:		uppercase;
+  font-size:			.9em;
+  vertical-align:		middle;
+  color:			white !important;
+  background-color:		#888;
+  padding:			2px;
+}
+
+#toolbar {
+  vertical-align: 		middle;
+  color: 			#888;
+  text-transform:		uppercase;
+  font-size:			.9em;
+}
+
+/** content area styling **/
+#content {
+  border-top: 4px solid #2b80d6;
+  border-left: 1px solid #eee;
+}
+
+/** ui styles **/
+.hover_menu {
+  position:absolute;
+  background-color: #eee;
+  border: 1px solid #ddd;
+  width: auto !important;
+  padding: 10px;
+  z-index: 2;
+}
+
+.hover_menu li {
+  list-style-position: inside;
+}
+
+/* left navbar tabs styling */
+
+.ui-tabs-hide { display: none; }
+
+#app-sidebar .nav {
+  margin: 0px;
+  padding: 0px;
+}
+
+#app-sidebar .nav ul {
+  margin-left: 15px;
+  margin-right: none;
+  margin-top: 12px;
+  width: 157px;
+}
+
+#app-sidebar .nav li {
+  margin: 0px !important;
+  list-style: none;
+  padding: 5px 2px 5px 6px;
+  border-bottom: 1px solid #eee;
+  display: block;
+}
+
+#app-sidebar .nav a {
+  display: block;
+  font-weight: bold;
+  color: #729FCF;
+  margin-right: 0px;
+}
+
+#app-sidebar .nav a:link,
+#app-sidebar .nav a:visited,
+#app-sidebar .nav a:active {
+  text-decoration: none;
+  font-size: 1.4em;
+}
+
+#app-sidebar .nav .ui-tabs-selected a:link,
+#app-sidebar .nav .ui-tabs-selected a:visited,
+#app-sidebar .nav .ui-tabs-selected a:active
+{
+  color: white !important;
+  background-color: #6aa6e2;
+  padding: 8px 2px;
+  padding-left: 12px;
+  -moz-border-radius: 12px 0px 0px 12px;
+  -webkit-border-top-left-radius: 12px;
+  -webkit-border-bottom-left-radius: 12px;
+}
+
+#app-sidebar .nav .ui-tabs-disabled a:link,
+#app-sidebar .nav .ui-tabs-disabled a:visited,
+#app-sidebar .nav .ui-tabs-disabled a:active
+{
+  padding-left: 8px
+}
+
+#content {
+  padding-left: 22px !important;
+  margin-left: 170px;
+}
+
+#app-sidebar {
+  float: left;
+  width: 170px;
+  padding: 0px;
+  border-right: 1px solid #eee;
+  min-height: 650px;
+  height: 100%;
+}
+#app-sidebar {
+  background: repeat-y right url('/community/images/vertical-gradient.png');
+}
+
+/** banner-header for banner images **/
+#banner-header {
+  background: url('/community/images/grad_grey_1x225.png');
+  width: 100%;
+  height: 200px;
+  -moz-border-radius: 12px;
+  overflow: hidden;
+}
+
+#banner-header a img {
+  display: block;
+  margin-top: 0px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+
+/** content div horiztonal tabs **/
+
+#content-nav ul {
+  width: 100%;
+  margin: 0px;
+  border-bottom: 1px solid #eee;
+  padding: 0px;
+  padding-bottom: 24px;
+  background: #FFFFFF url('http://fedoraproject.org/static/images/line.png') repeat-x scroll 0pt 100%;
+/* 22px because #content padding is 22px */
+  margin-left: -22px;
+  padding-left: 22px;
+  margin-bottom: 12px;
+}
+
+#content-nav li {
+  float: left;
+  margin-right: 24px;
+  list-style: none;
+}
+
+#content-nav li a:link,
+#content-nav li a:active,
+#content-nav li a:visited {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.4em;
+}
+
+#content-nav li.ui-tabs-selected a:link,
+#content-nav li.ui-tabs-selected a:active,
+#content-nav li.ui-tabs-selected a:visited {
+  color: white !important;
+  padding: 4px 12px;
+  padding-top: 6px;
+  background-color: #5499dd;
+  -moz-border-radius: 12px 12px 0px 0px;
+  -webkit-border-top-left-radius: 12px;
+  -webkit-border-top-right-radius: 12px;
+}
+
+/** content searchbox **/
+
+
+.content-searchbox {
+  float: left;
+  width: 98%;
+  background-color: #eee;
+  -moz-border-radius: 12px;
+  -webkit-border-radius: 12px;
+  padding: 8px;
+  padding-top: 11px;
+  margin: auto;
+  margin-bottom: 24px;
+}
+
+.content-searchbox .button {
+  background-color:#888888;
+  color:white !important;
+  padding:2px;
+  text-transform:uppercase;
+  vertical-align:middle;
+}
+
+.content-searchbox form {
+  margin: auto !important;
+}
+
+.content-searchbox form * {
+  float: left;
+}
+
+.content-searchbox input.searchinput {
+  width: 230px;
+}
+
+.content-searchinput {
+  width: 240px;
+  padding-right: 10px;
+}
+
+.content-searchinput .small-text {
+  float: right;
+  clear: left;
+}
+
+.small-text {
+  font-size: .8em;
+}
+
+.content-searchbox form {
+  margin: auto;
+  width: 450px;
+}
+
+.content-searchbox input {
+  padding: 2px 5px;
+  vertical-align: middle;
+  line-height: 1.5 em;
+  font-size: 1em;
+  color: #333;
+}
+
+.content-searchbox .button {
+  color: white !important;
+  padding-bottom: 1px;
+  padding-top: 1px;
+}
+
+.content-searchbox span.label {
+  font-size: 11pt;
+  margin-right: 4px;
+}
+
+#left-content-column,
+.left-content-column,
+#right-content-column,
+.right-content-column {
+  padding: 0px;
+}
+
+#left-content-column,
+.left-content-column {
+  width: 68%;
+}
+
+#left-content-column dl dd,
+.left-content-column dl dd {
+  margin-left: 0px;
+}
+
+#left-content-column dl dd div.header-list,
+.left-content-column dl dd div.header-list {
+  padding-top: 2px;
+}
+
+#left-content-column dt,
+.left-content-column dt {
+  text-transform: uppercase;
+  color: black;
+  margin-top: 18px;
+}
+
+#left-content-column h2,
+.left-content-column h2 {
+  color: #2b81d6;
+  font-weight: 900;
+  margin-top: 10px;
+  margin-bottom: 3px;
+}
+
+#right-content-column,
+.right-content-column {
+  width: 30%;
+  float: right;
+}
+
+#bottom,
+#wrapper {
+  clear: both !important;
+}
+
+h3 {
+  line-height: 100%;
+  margin-top: 10px;
+  color: #666 !important;
+}
+
+/** simple list **/
+
+.list table {
+  font-size: .9em !important;
+  width: 100%;
+  border: none !important;
+  border-bottom: 1px solid #b3b3b3 !important;
+  border-top: 1px solid #b3b3b3 !important;
+  padding: 0px !important;
+}
+
+.list table th,
+.list table td,
+.list table tr {
+  font-size: 8pt !important;
+  border: none !important;
+  vertical-align: top;
+}
+
+.list table img {
+  margin: 0px !important;
+}
+
+span.more-items {
+  float: right;
+}
+
+.list a {
+  text-decoration: none;
+}
+
+.simple-list table {
+  border: none !important;
+}
+
+.simple-list th {
+  text-align: right;
+  background: none !important;
+  width: 14em;
+}
+
+.simple-border-list li {
+  list-style-type: none;
+  min-height: 16px;
+  padding: .1em;
+}
+
+.simple-border-list ul {
+  margin-left: .2em !important;
+  margin-top: .5em !important;
+  margin-bottom: .5em !important;
+}
+
+.simple-border-list li img {
+  float: left;
+  padding-right: 5px !important;
+}
+
+.simple-border-list td.blog-post {
+  border-bottom: 1px solid #b3b3b3 !important;
+  border-collapse: separate !important;
+}
+
+.simple-border-list td.blog-post .last-modified {
+  margin-top: .8em;
+  font-size: .8em;
+  color: #ababab;
+}
+
+
+/** more advanced list with columns **/
+
+.header-list .header-details {
+  display: block;
+  float: right;
+  font-size: 75%;
+  font-weight: normal;
+  color: #999;
+  font-style: italic;
+  padding-right: 5px;
+}
+
+.header-list .header-text {
+  float: left;
+}
+
+.header-list h3 {
+  height: 12px;
+}
+
+.header-list li {
+  list-style-type: none !important;
+}
+
+.header-list table {
+  border-collapse: collapse !important;
+  border-bottom: none !important;
+}
+
+.header-list table th {
+  border-top: 1px solid #c8c8c8 !important;
+  background-color: #f0f0f0 !important;
+  vertical-align: top;
+  text-align: left;
+  padding: 6px 5px 6px 5px!important;
+  border-bottom: white 4px solid !important;
+  color: #707070;
+}
+
+.header-list table td {
+  border: none !important;
+  border-bottom: 1px solid #c8c8c8 !important;
+  padding-bottom: 4px !important;
+}
+
+.header-list table td.one-row {
+  border-bottom: none !important;
+}
+
+.header-list table tbody {
+  background: repeat-x left bottom url('/community/images/c8c8c8_dot.png') !important;
+}
+
+.message_row {
+  display: table-cell;
+}
+
+/* special style for state column of builds table to look nicer */
+
+.list table td.state {
+  color: #999;
+  font-size: .8em !important;
+}
+
+/* special style for hover menu of builds */
+
+div.ui-moksha-popup h4 {
+  padding-top: .5em;
+}
+
+div.ui-moksha-popup-panel .message {
+  padding-bottom: 20px;
+}
+
+/* special style for builds table to highlight failed builds in red */
+
+.list tr.failed-build {
+  background-color: #f9ebeb !important;
+}
+
+.list tr.security-update {
+  background-color: #ffeded !important;
+}
+
+.list tr.security-bug {
+  background-color: #ffeded !important;
+}
+
+.list tr.obsolete-update {
+  background-color: #f2f2f2 !important;
+}
+
+
+/* for cells in a table row that has an additional colspan message row beneath. this is for those cells that span one row rather than two.
+td.one-row {
+  border-bottom: none !important;
+}
+
+span.package-name a,
+span.person-name a {
+  font-weight: bold;
+}
+
+span.timestamp {
+  font-size: 7pt;
+  color: #bbb;
+}
+
+/** simple list for side panel **/
+/** styles for right content area panels **/
+
+#right-content-column .panel td,
+#right-content-column .panel div,
+#right-content-column .panel p,
+#right-content-column .panel dl,
+#right-content-column .panel ul,
+.right-content-column .panel td,
+.right-content-column .panel div,
+.right-content-column .panel p,
+.right-content-column .panel dl,
+.right-content-column .panel ul {
+  background-color: #f4f4f4;
+}
+
+#right-content-column .login div,
+.right-content-column .login div {
+  background: none !important;
+}
+
+#content #left-content-column .login h3,
+#content .left-content-column .login h3 {
+  color: white !important;
+  font-size: 1.3em !important;
+  margin-bottom: .6em;
+}
+
+#content #left-content-column .login,
+#content .left-content-column .login {
+  margin-top: 0px !important;
+  -moz-border-radius-topright: 0;
+  -moz-border-radius-bottomright: 0;
+  padding: 1em;
+}
+
+#left-content-column #login-box,
+.left-content-column #login-box {
+  float: left;
+}
+
+#left-content-column div.login-banner #login-box,
+.left-content-column div.login-banner #login-box {
+  width: 45%;
+}
+
+#left-content-column .panel#login_widget,
+.left-content-column .panel#login_widget {
+  margin-bottom: 0ex !important;
+}
+
+#left-content-column div.login-banner#banner-header,
+.left-content-column div.login-banner#banner-header {
+  background-image: url('/community/images/grad_grey_1x225.png') !important;
+  float: left;
+  margin-left: 1em;
+  height: auto !important;
+}
+
+#left-content-column div.login-banner#banner-header img,
+.left-content-column div.login-banner#banner-header img {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+  margin: 0 !important;
+}
+
+div.login-error-message {
+  background-color: #F9dBdB;
+  margin-left: 1em;
+-moz-border-radius-bottomleft:12px;
+-moz-border-radius-bottomright:12px;
+-moz-border-radius-topleft:12px;
+-moz-border-radius-topright:12px;
+  padding: 1em;
+  margin-bottom: 1em;
+  color: #000;
+}
+div.login-error-message img {
+  margin-bottom: -4px !important;
+}
+
+
+.panel p,
+.panel .message {
+  padding: 3px 12px !important;
+}
+
+.panel ul {
+  width: 100%;
+  list-style: inside none none !important;
+  margin-left: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+.panel ul li {
+  padding: 4px 6px;
+  border-bottom: 1px solid #d2d2d2;
+}
+
+.panel ul li.ui-tabs-selected {
+  background-color: #6aa6e2;
+}
+
+.panel .announce li {
+  list-style: inside url('/community/images/16_announcement.png');
+  margin-left: 2px;
+  border-bottom: dotted 1px #ddd;
+}
+
+.panel p.placeholder {
+  width: 90% !important;
+  margin-left: 1em !important;
+  margin-right: 1em !important;
+}
+
+
+.panel ul li.ui-tabs-selected a,
+.panel ul li.ui-tabs-selected a:link,
+.panel ul li.ui-tabs-selected a:active,
+.panel ul li.ui-tabs-selected a:visited {
+  color: white !important;
+  font-weight: bold;
+  padding-left: 5px;
+}
+
+.panel h4 {
+  padding-top: 0px !important;
+}
+
+
+/** FIXME html should really be using div, not span, this is a workaround **/
+span.panel {
+  display: block;
+}
+
+#right-content-column .panel,
+.right-content-column .panel {
+  margin-top: 0px;
+}
+
+#right-content-column .panel dl,
+.right-content-column .panel dl {
+  padding-top: 0em;
+  padding-bottom: .5em;
+}
+
+#content #right-content-column .panel img,
+#content .right-content-column .panel img {
+  margin: 0 !important;
+  margin-right: .6em !important;
+  min-height: 16px;
+  margin-top: -2px !important;
+}
+
+#right-content-column .panel dt,
+.right-content-column .panel dt {
+  display: block;
+  background-color: #ddd;
+  padding: .2em .5em;
+}
+
+#right-content-column .panel dd img,
+.right-content-column .panel dd img {
+  display: block;
+  float: left;
+  clear: both;
+}
+
+#right-content-column .panel dd,
+.right-content-column .panel dd {
+  width: 100%;
+  margin-left: -.1em;
+  display: block;
+  padding: .2em  1em;
+  line-height: 1.3em;
+}
+
+
+
+#right-content-column .panel dd,
+.right-content-column .panel dd {
+  margin-top: .2em;
+}
+
+/** float clearing **/
+
+.clear {
+  clear:		both;
+  /** the rest is for older browsers **/
+  height:		1px;
+  line-height:		1px;
+  font-size:		1px;
+  margin-top:		-1px;
+}
+
+#left-content-column h3,
+.left-content-column h3 {
+  font-weight: 900;
+  color: black !important;
+  text-transform: uppercase;
+  font-size: 8pt !important;
+}
+
+/** right sidebar column styles **/
+
+.panel {
+  margin-top: 12px;
+  border: none !important;
+  margin-bottom: 4ex;
+}
+
+.panel td {
+  padding: 4px 0px 4px 10px !important;
+}
+
+div.icon-panel td {
+  padding: 0px 0px 2px 10px !important;
+}
+
+#right-content-column a,
+.right-content-column a {
+  text-decoration: none;
+}
+
+#right-content-column h3,
+#right-content-column h4,
+#right-content-column dt,
+.right-content-column h3,
+.right-content-column h4,
+.right-content-column dt
+ {
+  margin: 0px !important;
+  font-weight: 900;
+}
+
+#right-content-column h4,
+.right-content-column h4 {
+  clear: left;
+}
+
+#right-content-column h3,
+.right-content-column h3 {
+  background-color: #d2d2d2;
+  -moz-border-radius: 12px 12px 0px 0px;
+  -webkit-border-top-left-radius: 12px;
+  -webkit-border-top-right-radius: 12px;
+  color: white !important;
+  font-size: 1em !important;
+  padding: 8px 6px 6px 6px;
+  text-transform: uppercase;
+}
+
+#right-content-column h4,
+.right-content-column h4 {
+  background-color: #e6e6e6;
+  font-size: small !important;
+  padding: 3px 6px;
+}
+
+#right-content-column table,
+.right-content-column table {
+  width: 100%;
+  border: none !important;
+  background-color: #f9f9f9;
+  border-collapse: collapse;
+}
+
+#right-content-column td,
+.right-content-column td {
+  border: none !important;
+}
+
+/** login box styles **/
+
+div.login {
+ background-color: #5f94c9;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  overflow: hidden !important;
+  padding: 8px 12px;
+}
+
+div.login h3 {
+  background: none !important;
+  padding: 2px 2px 5px 0px !important;
+}
+
+div.login form span {
+ color: white;
+ font-size: .8em;
+ display: block;
+ float: left;
+ margin-right: 10px;
+ width: 60px;
+}
+
+div.login form input {
+  margin-bottom: 5px;
+  max-width: 80%;
+}
+
+div.login form .button {
+  background-color: #777;
+  color: white;
+  border: 1px solid #555;
+}
+
+div.login a.small-text:link,
+div.login a.small-text:active,
+div.login a.small-text:visited {
+  color: #9ecfff !important;
+
+}
+
+.canvas .login {
+  margin-left: auto;
+  margin-right: auto;
+  //position: absolute;
+  width: 300px;
+  overflow: visible;
+}
+
+.small-text {
+  font-size: .9em;
+}
+
+.label-rule {
+  border-bottom: 1px solid;
+  border-color: #B3B3B3;
+}
+
+/* greeter h1, so you can have an image or icon in the left of it */
+h1#greeter img {
+  float: left;
+  height: 50px;
+  margin: 0px !important;
+  margin-right: 8px !important;
+}
+
+.notice {
+  margin: 0.5em auto 0.5em auto;
+  padding: 15px 10px 15px 55px;
+  width: 450px;
+  background: #eef url('/community/images/info.png') left center no-repeat;
+  border: 1px solid #cce;
+}
+
+/*** Lightbox ***/
+
+.lightbox-parent {
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+}
+
+.lightbox-black{
+  display: none;
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index:1001;
+  -moz-opacity: 0.8;
+  opacity:.80;
+  filter: alpha(opacity=80);
+}
+
+.lightbox-white {
+  position: absolute;
+  padding: 20px;
+  background-color: white;
+  opacity: 1;
+  height: 80%;
+  width: 80%;
+  margin-left: 6%;
+  display: none;
+  z-index:1002;
+  overflow: auto;
+}
+
+/** LIST PAGER **/
+
+.list .message {
+  float: left;
+  width: auto;
+  margin-top: 2px;
+}
+
+.overlay {
+  display: none;
+}
+
+.list .pager {
+  float: right;
+  width: auto;
+  margin-top: 2px;
+}
+
+.list .pager ul {
+  height: 22px;
+  padding: 0px;
+  margin: 0px !important;
+
+}
+
+.list .pager li {
+  float: left;
+  list-style-image: none;
+  list-style-type: none;
+  list-style-position: outside;
+  border: none;
+
+  margin-left: 0px;
+  margin-right: 0px;
+  border-right: 1px solid #ddd;
+  height: 19px !important;
+}
+
+.list .pager li.page-button a,
+.list .pager li.current-page,
+.list .pager li.page-ellipses,
+.list .pager li.no-link {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.list .pager li.page-ellipses {
+  width: 1.5em;
+}
+
+.list .pager a {
+  vertical-align: middle !important;
+  height: 19px !important;
+}
+
+.list .pager li.page-button:hover {
+  background-color: #6AA6E2;
+  color: white;
+}
+
+.list .pager li.page-button:hover a {
+  color: white !important;
+}
+
+.list .pager li.current-page {
+  font-weight: bold !important;
+}
+
+.pager {
+  height: 22px;
+}
+
+.alpha-pager {
+  float: none !important;
+}
+
+#left-content-column .list {
+  margin-bottom: 3em !important;
+}
+
+.page-numbers {
+  float: left;
+  width: 65% !important;
+}
+
+.page-flips {
+  float: right;
+  width: 25% !important;
+}
+
+ul.page-flips li {
+  float: right !important;
+}
+
+
+.next-page {
+  border-right: none !important;
+}
+
+.prev-page {
+  border-left: 1px solid #ddd !important;
+}
+
+.next-page, .prev-page {
+  height: 19px;
+}
+
+
+.moksha-grid-pager-top,
+.moksha-grid-pager-bottom {
+  height: 22px;
+  text-align: left;
+  width: 100% !important;
+}
+
+/** clean the html up at some point! **/
+.list .moksha-grid-pager-top .pager {
+  float: left;
+}
+
+/** special list styles **/
+
+.list button {
+  border: 1px solid #777;
+  background-color: #ddd;
+  margin-bottom: .5em;
+  min-width: 10em;
+  color: #777;
+}
+
+.list button:hover {
+  background-color: #6AA6E2;
+  background-color: #888;
+  color: white;
+}
+
+/* this needs to be fixed in fedora.css */
+th, td {
+  color: #666;
+}
+
+/* loading row for table */
+.rowtemplate, .template {
+  display: none;
+}
+
+/** moz ellipsis hackery **/
+
+.ellipsis {
+  text-overflow: ellipsis;
+  -moz-binding: url('css/ellipsis.xml#ellipsis');
+}
+
+/** app class -
+ *
+ * this is a class that is added to elements that contain
+ * apps. it will be used to pad/align between applications on the same
+ * page.
+**/
+
+.app {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+/*** links-toolbar
+ *   this is used to create a horizontal rounded box
+ *   of links in the main content area.
+***/
+
+div.links-toolbar {
+  margin-top: 2ex;
+  background-color: #e9e9e9;
+  -moz-border-radius: 9px;
+  padding: 2px 12px !important;
+}
+
+div.links-toolbar p {
+  font-weight: bold;
+  color: #888;
+}
+
+div.links-toolbar ul {
+  margin: -8px 0 12px 0 !important;
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  height: 5ex;
+}
+
+div.links-toolbar li {
+  float: left;
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  padding-right:1.5ex !important;
+  padding-left: 1.5ex !important;
+  border-right: 1px solid #ccc;
+  height: 4ex !important;
+  margin-top: 1ex;
+}
+
+div.links-toolbar li:last-child {
+  border-right: none;
+}
+
+div.links-toolbar img {
+  padding-right: 1.2ex;
+  padding-top: 1ex !important;
+  float: left;
+}
+
+
+div.links-toolbar li a,
+div.links-toolbar li a:link,
+div.links-toolbar li a:active,
+div.links-toolbar li a:visited {
+  font-weight: bold;
+  text-decoration: none;
+  }
+
+div.links-toolbar li a span {
+  float: right;
+  display: block;
+  padding-top: 1ex;
+}
+
+
+/** PROFILE PAGE USER PROFILE WIDGET **/
+
+.info-profile {
+  overflow: auto;
+}
+
+div.compact_info_content,
+div.info_content {
+  background-color: #eee;
+  -moz-border-radius: 6px;
+  padding: 12px;
+}
+
+div.info_content img,
+div.compact_info_content img {
+  margin:  0em !important;
+  margin-right: .4em !important;
+}
+
+div.info_content .timezone img,
+div.compact_info_content .timezone img {
+  margin-top: .2em !important;
+}
+
+div.info_content div.hackergotchi {
+  height: 100px;
+  width: 100px;
+  float: left;
+  margin-right: 12px;
+}
+
+div.compact_info_content div.hackergotchi {
+  height: 50px;
+  width: 50px;
+  float: left;
+  margin-right: 12px;
+}
+
+div.compact_info_content div.hackergotchi img {
+  height: 50px;
+  width: 50px;
+}
+
+div.compact_info_content p {
+  margin-bottom: 0px;
+}
+
+div.compact_info_content h3 {
+  text-transform: lowercase;
+  font-size: 1.5em !important;
+  padding: 0px;
+  margin: 0px !important;
+}
+
+div.compact_info_content h4,
+div.info_content h4 {
+  text-transform: uppercase;
+  color: black;
+}
+
+div.compact_info_content td,
+div.compact_info_content th,
+div.info_content table td,
+div.info_content table th {
+  border: none !important;
+  padding-top: 1px !important;
+  padding-bottom: 1px !important;
+  font-size: 8pt;
+}
+
+div.compact_info_content th,
+div.info_content th {
+  border: none !important;
+  background: none !important;
+  text-align: right;
+  vertical-align: top;
+  color: #666 !important;
+  font-weight: bold !important;
+  min-width: 100px !important;
+}
+
+div.compact_info_content table,
+div.info_content table {
+  margin-bottom: 10px;
+}
+
+div.info_content th {
+  min-width: 100px !important;
+}
+
+div.info_content {
+  margin-bottom: 1em;
+  min-height: 220px;
+}
+
+div.compact_info_content .col div,
+div.info_content .col div {
+  margin-top: 1em !important;
+  padding-right: 1.5em;
+}
+
+div.info_content div.info_container:first-child {
+  border-bottom: 1px solid #ccc;
+}
+div.info_content .info_container:last-child {
+  border-bottom: none !important;
+}
+
+div.compact_info_content .col div,
+div.info_content .col div {
+  margin-top: 1em !important;
+  padding-right: 1.5em;
+}
+
+div.compact_info_content .timezone span,
+div.info_content .timezone span {
+  font-weight: 700;
+}
+
+div.compact_info_content .col span.timezone_label,
+div.info_content .col span.timezone_label {
+  margin: auto !important;
+  font-size: .8em;
+  color: #999;
+  display: block;
+  font-weight: normal;
+}
+
+/* compact info widget specific styles */
+
+div.compact_info_content p {
+  margin: .3em !important;
+}
+
+div.compact_info_content .timezone,
+div.info_content .timezone {
+  min-width: 7em !important;
+  clear: right;
+  margin-top: 0px !important;
+  margin-bottom: 5px;
+}
+
+div.compact_info_content .timezone p {
+  float: left;
+}
+
+div.compact_info_content img {
+  float: left;
+}
+
+
+/** left-column styles **/
+
+div.info_content .left_col {
+  float: left;
+  border-right: 1px solid #ccc;
+}
+
+div.info_content .left_col div {
+  padding-top: 1em;
+}
+
+/** right-column styles **/
+
+div.info_content .right_col {
+  padding-left: 1em;
+}
+
+div.info_content .right_col div {
+  float: left;
+}
+
+.col {
+  float: left;
+}
+
+div.info_content .col td div {
+  padding-top: 0px;
+  margin-top: 0px !important;
+}
+
+/* updates karma styles */
+
+div.karma {
+  font-size: .8em;
+  vertical-align: middle !important;
+  color: #999;
+  padding-bottom: .2em;
+}
+
+div.karma img {
+  margin-top: .3em !important;
+  margin-bottom: -.4em !important;
+}
+
+/* package details header styles */
+
+#content h2.package-header {
+  border-bottom: 1px solid #c4c4c4;
+}
+
+#content h2 span.package-name {
+  color: #777;
+  text-transform: capitalize;
+}
+
+#content h2 span.package-summary {
+  color: #aaa;
+  font-size: 70%;
+  font-style: italic;
+  font-weight: normal;
+}
+
+/** count dashboard styles **/
+
+div.count-summary-dashboard {
+  overflow: auto;
+}
+
+.count-box a,
+.action-box a {
+  text-decoration: none;
+}
+
+div.count-summary-dashboard dl,
+div.count-summary-dashboard div.count-box,
+div.count-summary-dashboard div.action-box {
+  text-align: center;
+  -moz-border-radius: 6px;
+  margin: 1em 1.5em;
+  margin-left: 0px;
+  float: left;
+  padding: 10px;
+  max-width: 90px;
+  min-height: 110px;
+  background: white url('/community/images/count-box-gradient_light.png') repeat-x;
+}
+
+div.count-summary-dashboard div.action-box {
+  background: white url('/community/images/count-box-gradient_dark.png') repeat-x;
+}
+
+div.count-summary-dashboard .action-header {
+
+}
+
+div.count-summary-dashboard dt,
+div.count-summary-dashboard dd {
+  margin: 0px;
+}
+div.count-summary-dashboard .main-count-value {
+  font-size: 2.4em;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+}
+
+div.count-summary-dashboard .count-header,
+div.count-summary-dashboard .action-header  {
+  font-size: 1.2em;
+  text-transform: capitalize;
+  font-weight: bold;
+  color: #666;
+  margin-right: .5em;
+}
+
+div.count-summary-dashboard .main-count-header,
+div.count-summary-dashboard .action-header {
+  margin-bottom: -.3em;
+  margin-right: 0px;
+}
+
+div.count-summary-dashboard a.action-header {
+  text-decoration: none !important;
+}
+
+div.count-summary-dashboard .additional-info {
+  line-height: 1em;
+  margin-top: .5em;
+}
+
+.overlay {
+    opacity: .75;
+    z-index: 99;
+    background-color: white;
+    position: absolute;
+}
+
+moksha_extpoint {
+  display: none;
+}
+
+.menu_panel {
+  display: none;
+  position: absolute;
+  border: 1px solid #ddd;
+  background-color: #eee;
+  padding: .5em 1em;
+}
+
+.menu_panel ul {
+  margin: 0em !important;
+  margin-top: .5em !important;
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+}
+
+.menu_panel li a {
+  vertical-align: middle;
+}
+
+.menu_panel li a img {
+  width: 16px;
+  padding-right: .5em;
+  height: 16px;
+}
+
+.menu_panel li {
+  min-height: 18px !important;
+}
+
+.menu_panel img {
+  padding-top: 4px;
+  float: left;
+}
+
+.menu_panel a {
+  display: block;
+  min-height: 2em;
+}
+
+.menu_panel a:hover {
+  background-color: #5f94c9;
+  color: white !important;
+}
+
+.menu_panel span {
+  float: left;
+  height: 100%;
+  margin-top: 5px;
+}
+
+
+.info_content div.ssh_key .details div {
+  border: 1px solid #aaa;
+  margin-top: 0px ! important;
+  margin-bottom: 1em;
+  padding-top: 0px ! important;
+  font-size: 7pt ! important;
+  background-color: white;
+  max-width: 200px !important;
+  overflow: auto !important;
+}
+
+/* the following are used in the package details page, for the two bubble columns (latest rawhide buid & owner) */
+
+div.description-details-columns {
+  overflow: auto !important;
+}
+
+
+div.description-details-columns dt {
+  margin-top: 5px !important;
+  text-transform: capitalize;
+  font-weight: bold;
+  color: #777;
+}
+
+div.description-details-columns dl {
+  width: 46% !important;
+  padding: 0px 8px 5px;
+  -moz-border-radius: 5px;
+  background-color: #dae9f8;
+}
+
+div.description-details-columns dl.left-col {
+  float: left;
+}
+
+div.description-details-columns dl.right-col {
+  float: right;
+}
+
+div.description-details-columns dd a {
+  font-weight: bold;
+}
+
+div.description-details-columns dd em {
+  color: #777;
+}
+
+/* this style is used for SRPM sizes on package details sources */
+em.note {
+  color: #aaa;
+  font-size: .9em;
+}
