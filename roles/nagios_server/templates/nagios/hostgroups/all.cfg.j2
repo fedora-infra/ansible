@@ -11,6 +11,7 @@ define hostgroup{
 {% if loop.first %}
        members        {{ host }}{% else %}, {{ host }}{% endif %}
 {% endfor %}
+
 }
 {% endif %}
 {% endfor %}
