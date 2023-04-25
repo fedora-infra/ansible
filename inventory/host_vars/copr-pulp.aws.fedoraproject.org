@@ -1,16 +1,15 @@
 hostbase: copr-pulp-
 # This instance is WIP and we don't want nagios alerts yet
-nagios_Can_Connect: true
-nagios_Check_Services:
-  dhcpd: false
-  httpd: false
-  mail: false
-  named: false
-  nrpe: false
-  ping: false
-  raid: false
-  sshd: false
-  swap: false
+# nagios_Check_Services:
+#   dhcpd: false
+#   httpd: true
+#   mail: false
+#   named: false
+#   nrpe: true
+#   ping: false
+#   raid: false
+#   sshd: false
+#   swap: false
 public_ip: TODO
 swap_file_path: /swap
 swap_file_size_mb: 16384
