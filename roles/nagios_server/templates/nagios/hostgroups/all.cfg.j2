@@ -7,8 +7,10 @@
 define hostgroup{
        hostgroup_name {{ key }}
        alias          {{ key }}
-       members        {% for host in groups[key]|sort %}{% if hostvars[host].nagios_Can_Connect == true %}{{host}}, {% endif %}{% endfor %} 
-
+{% for host in groups[key]|sort if hostvars[host].nagios_Can_Connect == true %}
+{% if loop.first %}
+       members        {{ host }}{% else %}, {{ host }}{% endif %}
+{%- endfor %}
 }
 {% endif %}
 {% endfor %}
