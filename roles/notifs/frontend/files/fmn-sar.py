@@ -19,7 +19,7 @@ from six.moves.urllib.parse import urljoin
 
 
 ENV_USERNAME = "SAR_USERNAME"
-FMN_INSTANCE = "http://localhost/notifications/"
+FMN_INSTANCE = "http://localhost/notifications-old/"
 FMN_CONTEXTS = ["email", "irc"]
 
 log = logging.getLogger()
