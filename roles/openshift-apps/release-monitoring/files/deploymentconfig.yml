@@ -118,7 +118,11 @@ items:
           failurePolicy: Retry
           execNewPod:
             containerName: release-monitoring-web
-            command: ["/usr/bin/python3", "-m", "alembic", "-c", "/etc/anitya/alembic.ini", "current", "|", "grep", "'(head)'"]
+            command:
+              - /bin/bash
+              - -c
+              - |
+                python3 -m alembic -c /etc/anitya/alembic.ini current | grep '(head)'
             env:
               - name: ANITYA_WEB_CONFIG
                 value: /etc/anitya/anitya.toml
@@ -206,7 +210,11 @@ items:
           failurePolicy: Retry
           execNewPod:
             containerName: release-monitoring-web
-            command: ["/usr/bin/python3", "-m", "alembic", "-c", "/etc/anitya/alembic.ini", "current", "|", "grep", "'(head)'"]
+            command:
+              - /bin/bash
+              - -c
+              - |
+                python3 -m alembic -c /etc/anitya/alembic.ini current | grep '(head)'
             env:
               - name: ANITYA_WEB_CONFIG
                 value: /etc/anitya/anitya.toml
