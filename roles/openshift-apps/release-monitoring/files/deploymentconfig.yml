@@ -206,7 +206,7 @@ items:
           failurePolicy: Retry
           execNewPod:
             containerName: release-monitoring-web
-            command: [sleep, 1000]
+            command: [sleep, "1000"]
 #            command: [/bin/python3, -m alembic, -c /etc/anitya/alembic.ini, current | grep '(head)']
             env:
               - name: ANITYA_WEB_CONFIG
