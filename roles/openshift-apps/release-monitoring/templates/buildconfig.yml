@@ -23,7 +23,6 @@ items:
                 fedora-messaging \
                 npm \
                 poetry \
-                python3-alembic \
                 python3-beautifulsoup4 \
                 python3-arrow \
                 python3-dateutil \
@@ -47,6 +46,7 @@ items:
         # This is needed because the version 1.7.0 currently available in Fedora
         # doesn't work with sphinx 5+ and fails when building documentation
         RUN pip-3 install sphinxcontrib-httpdomain
+        RUN pip-3 install alembic
         RUN git clone https://github.com/fedora-infra/anitya.git && \
                 pushd anitya && \
 {% if env == 'staging' %}
