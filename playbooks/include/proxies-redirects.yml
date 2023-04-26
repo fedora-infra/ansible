@@ -848,3 +848,11 @@
     website: apps.fedoraproject.org
     path: /calendar
     target: https://calendar.fedoraproject.org
+
+  - role: httpd/redirect
+    shortname: fmn
+    website: apps.fedoraproject.org
+    path: /notifications
+    target: https://notifications.fedoraproject.org/
+    tags:
+    - fmn

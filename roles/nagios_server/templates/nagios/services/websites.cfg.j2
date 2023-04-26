@@ -236,8 +236,15 @@ define service {
 
 define service {
   hostgroup_name        notifs_web
-  service_description   http-apps.fedoraproject.org-notifications-fmn.web
-  check_command         check_website!localhost!/notifications!Notifications
+  service_description   http-fmn-web
+  check_command         check_website_ssl!notifications.fedoraproject.org!/healthz/ready!Notifications
+  use                   websitetemplate
+}
+
+define service {
+  hostgroup_name        notifs_web
+  service_description   http-fmn-api
+  check_command         check_website_ssl!fmn-api.apps.ocp.fedoraproject.org!/api/v1/healthz/ready!OK
   use                   websitetemplate
 }
 

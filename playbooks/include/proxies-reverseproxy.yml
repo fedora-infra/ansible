@@ -135,10 +135,12 @@
   - role: httpd/reverseproxy
     website: apps.fedoraproject.org
     destname: fedora-notifications
-    localpath: /notifications
-    remotepath: /notifications
+    localpath: /notifications-old
+    remotepath: /notifications-old
     header_scheme: true
     proxyurl: http://localhost:10036
+    tags:
+    - fmn
 
   - role: httpd/reverseproxy
     website: "notifications{{ env_suffix }}.fedoraproject.org"
