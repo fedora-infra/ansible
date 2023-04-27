@@ -29,8 +29,7 @@ spec:
     github:
       secret: "{{ fasjson_stg_github_secret }}"
 {% elif fasjson_github_secret is defined and env == 'production' %}
-  # Do we really want auto rebuilds in prod?
-  # - type: GitHub
-  #   github:
-  #     secret: "{{ fasjson_github_secret }}"
+  - type: GitHub
+    github:
+      secret: "{{ fasjson_github_secret }}"
 {% endif %}
