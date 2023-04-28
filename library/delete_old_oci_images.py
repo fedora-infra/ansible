@@ -140,6 +140,11 @@ def main():
 
                 # Find when a blob was created
                 age = resp.json().get("created")
+                if age is None:
+                    result["stdout_lines"].append(
+                        "Could not get date for {}:{} -- skipping".format(repo, digest)
+                    )
+                    continue
                 # Check if the blob is older than "days"
                 if datetime.strptime(age[:10], "%Y-%m-%d") <= datetime.now() - timedelta(days=days):
                     if not check_mode:
