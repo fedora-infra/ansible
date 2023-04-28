@@ -133,7 +133,7 @@ handlers = ["console"]
             from = "f38-infra-candidate"
             to = "f38-infra-stg"
             key = "{{ (env == 'production')|ternary('fedora-infra', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('eb10b464', 'd300e724') }}"
+            keyid = "{{ (env == 'production')|ternary('47dd8ef9', 'd300e724') }}"
             {% if env == "production" %}
             # ima file signing - enabled in f37
             file_signing_key = "fedora-38-ima"
