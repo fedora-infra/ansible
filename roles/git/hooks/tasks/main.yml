@@ -59,6 +59,33 @@
   - fedora-messaging
   when: inventory_hostname.startswith('batcave')
 
+- name: install the rabbitmq certificates for pkgs/dist-git
+  copy: src={{ item.src }}
+      dest=/etc/pki/rabbitmq/{{ item.dest }}
+      owner={{ item.owner }} group={{ item.group}} mode={{ item.mode }}
+  with_items:
+  - src: "{{private}}/files/rabbitmq/{{ env }}/pki/issued/git-hooks{{ env_suffix }}.crt"
+    dest: git-hooks.crt
+    owner: root
+    group: packager
+    mode: "444"
+  - src: "{{private}}/files/rabbitmq/{{ env }}/pki/private/git-hooks{{ env_suffix }}.key"
+    dest: git-hooks.key
+    owner: root
+    group: packager
+    mode: "440"
+  - src: "{{private}}/files/rabbitmq/{{ env }}/pki/ca.crt"
+    dest: git-hooks.ca
+    owner: root
+    group: packager
+    mode: "444"
+  tags:
+  - git
+  - git/hooks
+  - config
+  - fedora-messaging
+  when: inventory_hostname.startswith('pkgs')
+
 - name: install the git hooks
   copy: src={{item}} dest=/usr/share/git-core/ mode=0755
   with_items:
