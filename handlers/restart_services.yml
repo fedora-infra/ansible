@@ -216,3 +216,6 @@
 
 - name: restart systemd-oomd
   service: name=systemd-oomd state=reload
+
+- name: restart debuginfod
+  service: name=debuginfod state=restarted
