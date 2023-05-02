@@ -19,10 +19,10 @@ fedmsg_certs:
     group: sysadmin-releng
     owner: root
     service: releng
-# This VM is the compose host for IoT Edition which isn't blocking, so it doesn't freeze
+# This VM is the compose host for IoT Edition
 freezes: false
 koji_hub_nfs: "fedora_koji"
-ks_repo: http://10.3.163.35/pub/fedora/linux/releases/36/Everything/x86_64/os/
+ks_repo: http://10.3.163.35/pub/fedora/linux/releases/38/Everything/x86_64/os/
 ks_url: http://10.3.163.35/repo/rhel/ks/kvm-fedora
 main_bridge: br0
 mem_size: 32768
