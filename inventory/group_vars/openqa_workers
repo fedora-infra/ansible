@@ -20,4 +20,6 @@ openqa_key: "{{ prod_openqa_apikey }}"
 openqa_nfs_worker: true
 openqa_secret: "{{ prod_openqa_apisecret }}"
 openqa_workers: 4
+# 2023-04 updates, not in u-t yet, but tested on stg for a week
+openqa_scratch: ["100152615", "100390026"]
 primary_auth_source: ipa
