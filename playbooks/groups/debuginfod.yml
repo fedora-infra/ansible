@@ -3,12 +3,12 @@
 - name: make the box be real
   hosts: debuginfod:debuginfod_stg
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+  - /srv/web/infra/ansible/vars/global.yml
+  - "/srv/private/ansible/vars.yml"
+  - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
@@ -20,7 +20,7 @@
   - hosts
   - ipa/client
   - collectd/base
-  
+
   - role: nfs/client
     mount_stg: true
     mnt_dir: '/mnt/fedora_koji_prod'
@@ -28,7 +28,7 @@
 
   tasks:
   - import_tasks: "{{ tasks_path }}/motd.yml"
-    
+
   - name: install debuginfod
     tag: debuginfod
     package: name=elfutils-debuginfod state=present
@@ -40,7 +40,7 @@
   - name: install rsync for data backups
     tag: debuginfod
     package: name=rsync state=present
-    
+
   - name: install debuginfod configuration
     tag: debuginfod
     copy: src="{{ files }}/debuginfod/sysconfig.debuginfod" dest=/etc/sysconfig/debuginfod owner=root group=root mode=644
@@ -50,10 +50,10 @@
     file: >
       dest=/etc/systemd/system/debuginfod.service.d
       state=directory
-    
+
   - name: install debuginfod systemd drop-in
     tag: debuginfod
-    copy: src="{{ files }}/debuginfod/debuginfod.service.d" dest=/etc/systemd/system/debuginfod.service.d/override.conf owner=root group=root mode=644    
+    copy: src="{{ files }}/debuginfod/debuginfod.service.d" dest=/etc/systemd/system/debuginfod.service.d/override.conf owner=root group=root mode=644
 
   - name: ensure debuginfod is enabled and started
     tag: debuginfod
@@ -61,6 +61,6 @@
       name: debuginfod
       state: started
       enabled: yes
-    
+
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
