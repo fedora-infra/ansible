@@ -20,54 +20,11 @@
     - darknao
     - kevin
 
+  # legacy websites
   - role: openshift/object
     app: websites
     file: pvc.yml
     objectname: pvc.yml
-
-  - role: openshift/imagestream
-    app: websites
-    imagename: builder
-
-  - role: openshift/object
-    app: websites
-    template: buildconfig.yml
-    objectname: buildconfig.yml
-
-  - role: openshift/start-build
-    app: websites
-    buildname: websites-build
-    objectname: websites-build
-
-  - role: openshift/object
-    app: websites
-    template: configmap.yml
-    objectname: configmap.yml
-
-  - role: openshift/object
-    app: websites
-    template: cm-updatepot.yml
-    objectname: cm-updatepot.yml
-
-  - role: openshift/object
-    app: websites
-    template: gitconfig.yml
-    objectname: gitconfig.yml
-
-  - role: openshift/object
-    app: websites
-    template: sshconfig.yml
-    objectname: sshconfig.yml
-
-  - role: openshift/object
-    app: websites
-    template: cron.yml
-    objectname: cron.yml
-
-  - role: openshift/object
-    app: websites
-    template: cron-updatepot.yml
-    objectname: cron-updatepot.yml
 
   - role: openshift/imagestream
     app: websites
@@ -89,6 +46,20 @@
     objectname: fedora-websites-cron.yml
 
   # New websites 3.0
+  - role: openshift/imagestream
+    app: websites
+    imagename: builder
+
+  - role: openshift/object
+    app: websites
+    template: buildconfig.yml
+    objectname: buildconfig.yml
+
+  - role: openshift/start-build
+    app: websites
+    buildname: websites-build
+    objectname: websites-build
+
   - role: openshift/object
     app: websites
     file: obc.yml
