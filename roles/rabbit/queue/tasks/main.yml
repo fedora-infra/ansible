@@ -86,6 +86,7 @@
     auto_delete: no
     durable: yes
     message_ttl: "{{ message_ttl }}"
+    max_priority: "{{ max_priority }}"
     state: present
     login_user: admin
     login_password: "{{ (env == 'production')|ternary(rabbitmq_admin_password_production, rabbitmq_admin_password_staging) }}"
