@@ -46,6 +46,8 @@ spec:
             secretKeyRef:
               name: transtats-secret
               key: database-password
+        - name: USE_X_FORWARDED_HOST
+          value: "true"
         - name: SECURE_PROXY_SSL_HEADER_NAME
           value: "HTTP_X_FORWARDED_PROTO"
         - name: SECURE_PROXY_SSL_HEADER_VALUE
