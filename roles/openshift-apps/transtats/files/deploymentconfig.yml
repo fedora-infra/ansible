@@ -46,6 +46,10 @@ spec:
             secretKeyRef:
               name: transtats-secret
               key: database-password
+        - name: SECURE_PROXY_SSL_HEADER_NAME
+          value: "HTTP_X_FORWARDED_PROTO"
+        - name: SECURE_PROXY_SSL_HEADER_VALUE
+          value: "https"
         readinessProbe:
           timeoutSeconds: 1
           initialDelaySeconds: 5
