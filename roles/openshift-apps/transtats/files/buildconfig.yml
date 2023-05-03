@@ -42,6 +42,8 @@ spec:
       env:
       - name: UPGRADE_PIP_TO_LATEST
         value: "true"
+      - name: USE_X_FORWARDED_HOST
+        value: "true"
       - name: PIP_INDEX_URL
       - name: TS_AUTH_SYSTEM
         valueFrom:
