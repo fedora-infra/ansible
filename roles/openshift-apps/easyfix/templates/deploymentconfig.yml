@@ -54,7 +54,7 @@ spec:
       volumes:
         - name: httpdir-volume
           emptyDir: {}
-        - name: data-volume
+        - name: data
           persistentVolumeClaim:
             claimName: data
   triggers:
