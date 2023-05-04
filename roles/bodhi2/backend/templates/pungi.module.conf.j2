@@ -1,11 +1,17 @@
-# Import shared settings from pungi.general.conf
-from pungi.general import *
+# Import shared settings from pungi_general.conf
+from pungi_general import *
 # Import multilib settings from pungi_multilib.conf
 from pungi_multilib import *
 
 # PRODUCT INFO
 release_version = '[[ release.version ]]'
 release_type = 'updates[% if request.name == 'testing' %]-testing[% endif %]'
+release_name = '[[ release.id_prefix.title() ]]'
+release_short = '[[ release.id_prefix.title() ]]'
+release_is_layered = False
+
+hashed_directories = True
+
 
 # GENERAL SETTINGS
 bootable = False

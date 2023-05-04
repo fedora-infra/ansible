@@ -60,7 +60,6 @@
 - name: Put pungi configurations in place
   template: src="{{item}}" dest=/etc/bodhi/{{item}}
   with_items:
-  - pungi.general.conf.j2
   - pungi.module.conf.j2
   - pungi.rpm.conf.j2
   - variants.module.xml.j2
@@ -79,6 +78,14 @@
   - bodhi/pungi
   - config
 
+- name: Put pungi general configuration in place
+  copy:
+    src: pungi_general.conf
+    dest: /etc/bodhi/pungi_general.conf
+  tags:
+  - bodhi
+  - bodhi/pungi
+  - config
 #
 # koji ssl cert for owner sync jobs below
 #
