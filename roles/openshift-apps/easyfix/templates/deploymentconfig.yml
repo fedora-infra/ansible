@@ -36,6 +36,9 @@ spec:
               mountPath: /httpdir
             - name: data
               mountPath: /srv
+            - name: config
+              mountPath: "/etc/easyfix"
+              readOnly: true
           env:
             - name: APP_SCRIPT
               value: ".s2i/run-httpd.sh"
@@ -54,6 +57,9 @@ spec:
       volumes:
         - name: httpdir-volume
           emptyDir: {}
+        - name: config
+          configMap:
+            name: config
         - name: data
           persistentVolumeClaim:
             claimName: data
