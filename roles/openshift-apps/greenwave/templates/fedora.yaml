@@ -457,7 +457,7 @@ rules:
   - !PassingTestCaseRule {test_case_name: compose.desktop_browser, scenario: "fedora.Workstation-live-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.desktop_terminal, scenario: "fedora.KDE-live-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.desktop_terminal, scenario: "fedora.Workstation-live-iso.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: compose.install_anaconda_text, scenario: "fedora.universal.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: compose.install_anaconda_text, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.install_default, scenario: "fedora.Everything-boot-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.install_default, scenario: "fedora.Everything-boot-iso.x86_64.uefi"}
   - !PassingTestCaseRule {test_case_name: compose.install_default, scenario: "fedora.KDE-live-iso.x86_64.uefi"}
@@ -468,20 +468,20 @@ rules:
   - !PassingTestCaseRule {test_case_name: compose.install_default_upload, scenario: "fedora.KDE-live-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.install_default_upload, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.install_default_upload, scenario: "fedora.Workstation-live-iso.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: compose.install_delete_pata, scenario: "fedora.universal.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: compose.install_delete_pata, scenario: "fedora.universal.x86_64.uefi"}
-  - !PassingTestCaseRule {test_case_name: compose.install_kickstart_firewall_configured, scenario: "fedora.universal.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: compose.install_kickstart_firewall_disabled, scenario: "fedora.universal.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: compose.install_kickstart_user_creation, scenario: "fedora.universal.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: compose.install_mirrorlist_graphical, scenario: "fedora.universal.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: compose.install_multi, scenario: "fedora.universal.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: compose.install_multi, scenario: "fedora.universal.x86_64.uefi"}
+  - !PassingTestCaseRule {test_case_name: compose.install_delete_pata, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: compose.install_delete_pata, scenario: "fedora.Server-dvd-iso.x86_64.uefi"}
+  - !PassingTestCaseRule {test_case_name: compose.install_kickstart_firewall_configured, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: compose.install_kickstart_firewall_disabled, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: compose.install_kickstart_user_creation, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: compose.install_mirrorlist_graphical, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: compose.install_multi, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: compose.install_multi, scenario: "fedora.Server-dvd-iso.x86_64.uefi"}
   - !PassingTestCaseRule {test_case_name: compose.install_no_user, scenario: "fedora.KDE-live-iso.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: compose.install_repository_http_graphical, scenario: "fedora.universal.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: compose.install_repository_http_variation, scenario: "fedora.universal.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: compose.install_sata, scenario: "fedora.universal.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: compose.install_sata, scenario: "fedora.universal.x86_64.uefi"}
-  - !PassingTestCaseRule {test_case_name: compose.install_scsi_updates_img, scenario: "fedora.universal.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: compose.install_repository_http_graphical, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: compose.install_repository_http_variation, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: compose.install_sata, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: compose.install_sata, scenario: "fedora.Server-dvd-iso.x86_64.uefi"}
+  - !PassingTestCaseRule {test_case_name: compose.install_scsi_updates_img, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.realmd_join_sssd, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.server_cockpit_default, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.server_database_client, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
