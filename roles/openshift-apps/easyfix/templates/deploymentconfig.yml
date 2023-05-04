@@ -1,0 +1,69 @@
+---
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: web
+  labels:
+    app: easyfix
+spec:
+  replicas: 1
+  selector:
+    app: easyfix
+    deploymentconfig: web
+  strategy:
+    type: Rolling
+    activeDeadlineSeconds: 21600
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: easyfix
+        deploymentconfig: web
+    spec:
+      containers:
+        - name: easyfix
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: httpdir-volume
+              mountPath: /httpdir
+            - name: data
+              mountPath: /srv
+          env:
+            - name: APP_SCRIPT
+              value: ".s2i/run-httpd.sh"
+          readinessProbe:
+            timeoutSeconds: 1
+            initialDelaySeconds: 5
+            httpGet:
+              path: /
+              port: 8080
+          livenessProbe:
+            timeoutSeconds: 1
+            initialDelaySeconds: 20
+            httpGet:
+              path: /
+              port: 8080
+      volumes:
+        - name: httpdir-volume
+          emptyDir: {}
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: data
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - easyfix
+        from:
+          kind: ImageStreamTag
+          name: easyfix:latest
