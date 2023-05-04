@@ -219,4 +219,4 @@ local6.*					?m_audit;MergeFormat
 $DefaultNetstreamDriver gtls # use gtls netstream driver
 $ActionSendStreamDriverMode 1 # require TLS for the connection
 $ActionSendStreamDriverAuthMode anon # server is NOT authenticated
-$DefaultNetstreamDriverCAFile {{private}}/files/splunk-certs/2022-IT-Root-CA.pem
+$DefaultNetstreamDriverCAFile /etc/pki/tls/certs/2022-IT-Root-CA.pem

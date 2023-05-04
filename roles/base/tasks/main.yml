@@ -230,6 +230,14 @@
   notify:
   - flush journald tmpfiles to persistent store
 
+- name: install rh ca for splunk
+  copy: src={{private}}/files/splunk-certs/2022-IT-Root-CA.pem dest=/etc/pki/tls/certs/2022-IT-Root-CA.pem
+  tags:
+  - rsyslogd
+  - config
+  - base
+  when: inventory_hostname.startswith('log01')
+
 - name: ensure packages required for rsyslog are installed
   package: name={{ item }} state=present
   with_items:
