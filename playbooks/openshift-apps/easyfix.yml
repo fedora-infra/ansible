@@ -61,11 +61,6 @@
 
     - role: openshift/object
       app: easyfix
-      template: secret-webhook.yml
-      objectname: secret-webhook.yml
-
-    - role: openshift/object
-      app: easyfix
       template: deploymentconfig.yml
       objectname: deploymentconfig.yml
 
