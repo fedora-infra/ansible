@@ -60,20 +60,10 @@
 - name: Put pungi configurations in place
   template: src="{{item}}" dest=/etc/bodhi/{{item}}
   with_items:
-  - pungi.general.conf.j2
   - pungi.module.conf.j2
   - pungi.rpm.conf.j2
   - variants.module.xml.j2
   - variants.rpm.xml.j2
-  tags:
-  - bodhi
-  - bodhi/pungi
-  - config
-
-- name: Put pungi multilib configuration in place
-  copy:
-    src: pungi_multilib.conf
-    dest: /etc/bodhi/pungi_multilib.conf
   tags:
   - bodhi
   - bodhi/pungi
