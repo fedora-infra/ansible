@@ -21,7 +21,7 @@ spec:
       RUN git clone -b devel https://github.com/ryanlerch/transtats.git .
     {% endif %}
     {% if env == 'production' %}
-      RUN git clone -b main https://github.com/transtats/transtats.git .
+      RUN git clone -b devel https://github.com/ryanlerch/transtats.git .
     {% endif %}
       RUN pip3 install -r /workspace/requirements/base.txt
       RUN cp deploy/docker-compose/transtats/launch.sh /usr/bin/transtats.sh
