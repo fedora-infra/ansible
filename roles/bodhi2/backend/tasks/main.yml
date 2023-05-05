@@ -69,6 +69,23 @@
   - bodhi/pungi
   - config
 
+- name: Put pungi multilib configuration in place
+  copy:
+    src: pungi_multilib.conf
+    dest: /etc/bodhi/pungi_multilib.conf
+  tags:
+  - bodhi
+  - bodhi/pungi
+  - config
+
+- name: Put pungi general configuration in place
+  copy:
+    src: pungi_general.conf
+    dest: /etc/bodhi/pungi_general.conf
+  tags:
+  - bodhi
+  - bodhi/pungi
+  - config
 #
 # koji ssl cert for owner sync jobs below
 #
