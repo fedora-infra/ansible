@@ -251,6 +251,14 @@
     tags:
     - fedoraproject.org
 
+  # ARM redirect
+  - role: httpd/redirect
+    shortname: arm-fedoraproject
+    website: arm.fedoraproject.org
+    target: https://fedoraproject.org/
+    tags:
+    - fedoraproject.org
+
   - role: httpd/redirect
     shortname: flocktofedora
     website: flocktofedora.net
@@ -323,14 +331,6 @@
     when: env == 'staging'
 
   - role: httpd/redirectmatch
-    shortname: prerelease-to-final-arm-1
-    website: arm.fedoraproject.org
-    regex: /(.*)prerelease.*$
-    target: https://arm.stg.fedoraproject.org/$1
-    redirectmatch_enabled: false
-    when: env == 'staging'
-
-  - role: httpd/redirectmatch
     shortname: prerelease-to-final-labs-2
     website: labs.fedoraproject.org
     regex: /prerelease.*$
@@ -343,14 +343,6 @@
     website: spins.fedoraproject.org
     regex: /prerelease.*$
     target: https://spins.stg.fedoraproject.org/$1
-    redirectmatch_enabled: false
-    when: env == 'staging'
-
-  - role: httpd/redirectmatch
-    shortname: prerelease-to-final-arm-2
-    website: arm.fedoraproject.org
-    regex: /prerelease.*$
-    target: https://arm.stg.fedoraproject.org/$1
     redirectmatch_enabled: false
     when: env == 'staging'
 
@@ -381,14 +373,6 @@
     when: env != 'staging'
 
   - role: httpd/redirectmatch
-    shortname: prerelease-to-final-arm-1
-    website: arm.fedoraproject.org
-    regex: /(.*)/prerelease.*$
-    target: https://arm.fedoraproject.org/$1
-    redirectmatch_enabled: false
-    when: env != 'staging'
-
-  - role: httpd/redirectmatch
     shortname: prerelease-to-final-labs-2
     website: labs.fedoraproject.org
     regex: /prerelease.*$
@@ -401,14 +385,6 @@
     website: spins.fedoraproject.org
     regex: /prerelease.*$
     target: https://spins.fedoraproject.org/$1
-    redirectmatch_enabled: false
-    when: env != 'staging'
-
-  - role: httpd/redirectmatch
-    shortname: prerelease-to-final-arm-2
-    website: arm.fedoraproject.org
-    regex: /prerelease.*$
-    target: https://arm.fedoraproject.org/$1
     redirectmatch_enabled: false
     when: env != 'staging'
 
