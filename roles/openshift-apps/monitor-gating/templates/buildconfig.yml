@@ -9,7 +9,7 @@ spec:
     git:
 {% if env == 'staging' %}
       uri: https://pagure.io/fedora-ci/monitor-gating.git
-      ref: "production"
+      ref: "staging"
 {% else %}
       uri: https://pagure.io/fedora-ci/monitor-gating.git
       ref: "production"
