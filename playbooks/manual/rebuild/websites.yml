@@ -3,7 +3,7 @@
   user: root
   become: true
   become_user: apache
-  vars_files: 
+  vars_files:
    - /srv/web/infra/ansible/vars/global.yml
    - "/srv/private/ansible/vars.yml"
    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
@@ -15,7 +15,7 @@
 - name: Tell the proxies to sync that freshness
   hosts: proxies:proxies_stg
   user: root
-  vars_files: 
+  vars_files:
    - /srv/web/infra/ansible/vars/global.yml
    - "/srv/private/ansible/vars.yml"
    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
@@ -25,7 +25,6 @@
     command: /usr/bin/rsync --delete -a --no-owner --no-group sundries01::{{item}}/ /srv/web/{{item}}/
     with_items:
     - getfedora.org
-    - arm.fedoraproject.org
     - fedoracommunity.org
     - developer.fedoraproject.org
     - fedoraproject.org
