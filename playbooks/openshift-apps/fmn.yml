@@ -70,6 +70,12 @@
         configure_priv: .*
         read_priv: .*
         write_priv: .*
+        # We have to repeat the topic permissions here until this is fixed:
+        # https://github.com/ansible-collections/community.rabbitmq/issues/156
+        topic_permissions:
+          - vhost: /pubsub
+            read_priv: .*
+            write_priv: ^org\.fedoraproject\.{{ env_short }}\.fmn\..*
       tags:
         - config
         - fedora-messaging
