@@ -237,7 +237,7 @@ define service {
 define service {
   hostgroup_name        proxies_ocp4
   service_description   http-fmn-web
-  check_command         check_website_ssl!notifications.fedoraproject.org!/!Notifications
+  check_command         check_website_ssl!notifications.fedoraproject.org!/!FMN
   use                   websitetemplate
 }
 
