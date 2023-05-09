@@ -5,46 +5,66 @@
 
 #
 # SELinux
-# TODO: switch to the sefcontext module when we update Ansible to 2.2+
 #
 - name: set the SELinux policy for the configuration directory
-  command: semanage fcontext -a -t etc_t "{{ mailman_webui_confdir }}(/.*)?"
+  sefcontext:
+    target: "{{ mailman_webui_confdir }}(/.*)?"
+    setype: etc_t
+    state: present
   tags:
   - mailman
   - selinux
 
 - name: set the SELinux policy for the fulltext index
-  command: semanage fcontext -a -t httpd_sys_rw_content_t "{{ mailman_webui_basedir }}/fulltext_index(/.*)?"
+  sefcontext:
+    target: "{{ mailman_webui_basedir }}/fulltext_index(/.*)?"
+    setype: httpd_sys_rw_content_t
+    state: present
   tags:
   - mailman
   - selinux
 
 - name: set the SELinux policy for the static files directory
-  command: semanage fcontext -a -t httpd_sys_content_t "{{ mailman_webui_basedir }}/static(/.*)?"
+  sefcontext:
+    target: "{{ mailman_webui_basedir }}/static(/.*)?"
+    setype: httpd_sys_content_t
+    state: present
   tags:
   - mailman
   - selinux
 
 - name: set the SELinux policy for the templates override directory
-  command: semanage fcontext -a -t httpd_sys_content_t "{{ mailman_webui_basedir }}/templates(/.*)?"
+  sefcontext:
+    target: "{{ mailman_webui_basedir }}/templates(/.*)?"
+    setype: httpd_sys_content_t
+    state: present
   tags:
   - mailman
   - selinux
 
 - name: set the SELinux policy for the log directory
-  command: semanage fcontext -a -t httpd_log_t "/var/log/hyperkitty(/.*)?"
+  sefcontext:
+    target: "/var/log/hyperkitty(/.*)?"
+    setype: httpd_log_t
+    state: present
   tags:
   - mailman
   - selinux
 
 - name: set the SELinux policy for the generated postfix databases
-  command: semanage fcontext -a -t etc_aliases_t "{{ mailman_webui_basedir }}/var/data/postfix_.*"
+  sefcontext:
+    target: "{{ mailman_webui_basedir }}/var/data/postfix_.*"
+    setype: etc_aliases_t
+    state: present
   tags:
   - mailman
   - selinux
 
 - name: set the SELinux policy for the old static archives
-  command: semanage fcontext -a -t httpd_sys_content_t "{{ mailman_webui_basedir }}/old-archives/pipermail(/.*)?"
+  sefcontext:
+    target: "{{ mailman_webui_basedir }}/old-archives/pipermail(/.*)?"
+    setype: httpd_sys_content_t
+    state: present
   tags:
   - mailman
   - selinux
