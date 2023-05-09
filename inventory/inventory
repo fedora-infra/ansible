@@ -453,7 +453,9 @@ openqa-x86-worker02.iad2.fedoraproject.org
 # swapped from lab as 03 is kinda poorly
 # xeon e5-2683v4 (third best)
 openqa-x86-worker06.iad2.fedoraproject.org
-openqa-a64-worker02.iad2.fedoraproject.org
+# 2023 newer, more powerful box
+openqa-a64-worker04.iad2.fedoraproject.org
+# old, busted emag
 openqa-a64-worker03.iad2.fedoraproject.org
 
 # openqa-lab and openqa-lab-workers are pseudo-stg, see group_vars/openqa-stg for more details
@@ -461,7 +463,9 @@ openqa-a64-worker03.iad2.fedoraproject.org
 openqa-lab01.iad2.fedoraproject.org
 
 [openqa_lab_workers]
+# old, busted emags
 openqa-a64-worker01.iad2.fedoraproject.org
+openqa-a64-worker02.iad2.fedoraproject.org
 openqa-p09-worker01.iad2.fedoraproject.org
 openqa-p09-worker02.iad2.fedoraproject.org
 # xeon gold 6130 (second best)
@@ -481,9 +485,10 @@ openqa-x86-worker03.iad2.fedoraproject.org
 [openqa_tap1_workers]
 # prod
 openqa-x86-worker01.iad2.fedoraproject.org
-openqa-a64-worker02.iad2.fedoraproject.org
+openqa-a64-worker04.iad2.fedoraproject.org
 # lab
 openqa-x86-worker04.iad2.fedoraproject.org
+openqa-a64-worker01.iad2.fedoraproject.org
 openqa-p09-worker01.iad2.fedoraproject.org
 [openqa_tap2_workers]
 # prod
@@ -491,12 +496,13 @@ openqa-x86-worker02.iad2.fedoraproject.org
 openqa-a64-worker03.iad2.fedoraproject.org
 # lab
 openqa-x86-worker05.iad2.fedoraproject.org
+openqa-a64-worker02.iad2.fedoraproject.org
 openqa-p09-worker02.iad2.fedoraproject.org
 # these do both tap and tap2 - because we only have one aarch64 worker
 # for lab, it has to handle all tap jobs
 [openqa_tap12_workers]
 # lab
-openqa-a64-worker01.iad2.fedoraproject.org
+#openqa-a64-worker01.iad2.fedoraproject.org
 
 # the workers that run createhdds to create the base disk images. Again,
 # only one per arch per instance should be present.
