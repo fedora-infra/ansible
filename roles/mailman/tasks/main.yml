@@ -235,6 +235,20 @@
   - config
   - mailman
 
+- name: Create lists/users.lists.fedoraproject.org/en template dir
+  file: state=directory path=/var/lib/mailman3/templates/lists/users.lists.fedoraproject.org/en
+  tags:
+  - config
+  - mailman
+
+- name: set list:user:notice:hold template for users list
+  copy: src=mailman-template-users-list-user-notice-hold.txt
+        dest=/var/lib/mailman3/templates/lists/users.lists.fedoraproject.org/en/list:user:notice:hold.txt
+        owner=mailman group=mailman mode=0644
+  tags:
+  - config
+  - mailman
+
 #
 # Crontab
 #
