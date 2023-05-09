@@ -12,7 +12,7 @@
 # See https://www.rabbitmq.com/access-control.html#permissions for details on
 # the RabbitMQ permissions configuration.
 
-- name: Validate parameters
+- name: Validate username {{ username }}
   assert:
     that:
     - username != "admin"
@@ -25,7 +25,7 @@
     - rabbitmq_cluster
 
 - debug:
-    msg: "Topic permissions: {{ topic_permissions|default([]) }}"
+    msg: "Topic permissions: {{ topic_permissions }}"
   tags:
     - config
     - fedora-messaging
@@ -33,7 +33,7 @@
 
 # See https://www.rabbitmq.com/access-control.html#permissions for details on
 # the RabbitMQ permissions configuration.
-- name: Create the user in RabbitMQ
+- name: Create the {{ username }} user in RabbitMQ
   delegate_to: "{{ rabbitmq_server }}"
   community.rabbitmq.rabbitmq_user:
     user: "{{ username }}"

@@ -21,7 +21,7 @@
 #                        The values are numbers. Generate an alert in Nagios if
 #                        the number of messages go above these values.
 
-- name: Validate parameters
+- name: Validate queue name {{ queue_name }}
   assert:
     that:
     - "queue_name.startswith(username)"
