@@ -30,53 +30,10 @@
     - fedora-messaging
     - rabbitmq_cluster
 
-- name: Validate the user parameter
-  assert:
-    that:
-    - username != "admin"
-    - username != "guest"
-    - username != "nagios-monitoring"
-    fail_msg: "This user name is reserved"
-  tags:
-    - fedora-messaging
-    - rabbitmq_cluster
-
-- name: Prepare the topic permissions dict
-  set_fact:
-    topic_permissions:
-      - vhost: "{{ vhost }}"
-        read_priv: .*
-        write_priv: "{{ sent_topics }}"
-  tags:
-    - fedora-messaging
-    - rabbitmq_cluster
-  when: env == "staging" and sent_topics
-
-- debug:
-    msg: "Topic permissions: {{ topic_permissions|default([]) }}"
-  when: topic_permissions is defined
-  tags:
-    - fedora-messaging
-    - rabbitmq_cluster
-
-# See https://www.rabbitmq.com/access-control.html#permissions for details on
-# the RabbitMQ permissions configuration.
-- name: Create the {{ username }} user in RabbitMQ
-  delegate_to: "{{ rabbitmq_server }}"
-  community.rabbitmq.rabbitmq_user:
-    user: "{{ username }}"
-    vhost: "{{ vhost }}"
-    # Read from queues prefixed with their name and bind to the topic exchange
-    read_priv: "^(zmq\\.topic)|^(amq\\.topic)|({{ username }}.*)$"
-    # Write to queues prefixed with their name and any prefixes in
-    # write_queues, and publish to the topic exchange
-    write_priv: "^(amq\\.topic)|({{ username }}.*){% for queue in write_queues|default([]) %}|({{ queue }}.*){% endfor %}$"
-    configure_priv: "^$"  # No configuration permissions
-    topic_permissions: "{{ topic_permissions|default([]) }}"
-    state: present
-  tags:
-    - fedora-messaging
-    - rabbitmq_cluster
+- include_role:
+    name: rabbit/user
+  vars:
+    publish_only: false
 
 - name: Create the {{ queue_name }} queue in RabbitMQ
   delegate_to: "{{ rabbitmq_server }}"

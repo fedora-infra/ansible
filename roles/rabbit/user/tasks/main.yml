@@ -24,35 +24,24 @@
     - fedora-messaging
     - rabbitmq_cluster
 
-- name: Prepare the topic permissions dict
-  set_fact:
-    topic_permissions:
-      - vhost: "{{ vhost }}"
-        read_priv: .*
-        write_priv: "{{ sent_topics }}"
-  tags:
-    - config
-    - fedora-messaging
-    - rabbitmq_cluster
-  when: env == "staging" and sent_topics
-
 - debug:
     msg: "Topic permissions: {{ topic_permissions|default([]) }}"
   tags:
     - config
     - fedora-messaging
     - rabbitmq_cluster
-  when: topic_permissions is defined
 
+# See https://www.rabbitmq.com/access-control.html#permissions for details on
+# the RabbitMQ permissions configuration.
 - name: Create the user in RabbitMQ
   delegate_to: "{{ rabbitmq_server }}"
   community.rabbitmq.rabbitmq_user:
     user: "{{ username }}"
     vhost: "{{ vhost }}"
-    read_priv: "^$"  # Publish only, no reading
-    write_priv: "amq\\.topic"
+    read_priv: "{{ read_priv }}"
+    write_priv: "{{ write_priv }}"
     configure_priv: "^$"  # No configuration permissions
-    topic_permissions: "{{ topic_permissions|default([]) }}"
+    topic_permissions: "{{ (env == 'staging')|ternary(topic_permissions, []) }}"
     state: present
   tags:
     - config
