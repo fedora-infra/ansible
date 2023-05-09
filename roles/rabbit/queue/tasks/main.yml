@@ -34,6 +34,9 @@
     name: rabbit/user
   vars:
     publish_only: false
+  tags:
+    - fedora-messaging
+    - rabbitmq_cluster
 
 - name: Create the {{ queue_name }} queue in RabbitMQ
   delegate_to: "{{ rabbitmq_server }}"
