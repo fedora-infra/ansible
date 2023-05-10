@@ -333,6 +333,7 @@ vars_plugins={{ ansible_base }}/ansible/vars_plugins:~/.ansible/plugins/vars:/us
 
 # (list) Which modules to run during a play's fact gathering stage, using the default of 'smart' will try to figure it out based on connection type.
 ;facts_modules=smart
+facts_modules=smart, python3_fact
 
 # (boolean) Set this to "False" if you want to avoid host key checking by the underlying tools Ansible uses to connect to the host
 ;host_key_checking=True
