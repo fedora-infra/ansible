@@ -40,11 +40,19 @@
   tags:
   - ipsilon
 
-- name: Install Fedora-specific code
+- name: Install Fedora-specific code if it changed
   command:
     cmd: ./install.sh
     chdir: /opt/ipsilon-fedora
   when: git_update is changed
+  tags:
+  - ipsilon
+
+- name: Install Fedora-specific code on initial run
+  command:
+    cmd: ./install.sh
+    chdir: /opt/ipsilon-fedora
+    creates: "{{ ansible_facts['python3']['sitelib'] }}/ipsilon/providers/openidc/plugins/account-scopes.py"
   tags:
   - ipsilon
 
