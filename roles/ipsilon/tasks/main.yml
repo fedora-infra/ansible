@@ -45,6 +45,8 @@
     cmd: ./install.sh
     chdir: /opt/ipsilon-fedora
   when: git_update is changed
+  notify:
+  - restart apache
   tags:
   - ipsilon
 
@@ -53,6 +55,8 @@
     cmd: ./install.sh
     chdir: /opt/ipsilon-fedora
     creates: "{{ ansible_facts['python3']['sitelib'] }}/ipsilon/providers/openidc/plugins/account-scopes.py"
+  notify:
+  - restart apache
   tags:
   - ipsilon
 
