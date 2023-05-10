@@ -52,6 +52,38 @@
   tags:
   - batcave
   - config
+  when: inventory_hostname.startswith('batcave01')
+
+- name: install packages needed (rhel8)
+  package: name={{ item }} state=present
+  with_items:
+  - ansible-core              # This is our ansible master, needs ansible installed.
+  - ansible_utils             # Needed for rbac-playbook
+  - createrepo_c              # Needed for rhn sync
+  - ostree                    # Needed for rhn sync
+# - python2-sqlalchemy         # Needed for repo2json
+  - bind                      # named-checkzone for dns repo
+  - emacs-nox
+  - nano                 
+  - rpm-sign                  # for the sign-and-import playbook
+  - createrepo                # for the sign-and-import playbook
+  - unzip                     # general useful util
+  - fpaste                    # general useful util
+  - mtr                       # useful for network debugging
+  - lftp                      # needed to easily pull in builds from koji for internal repos
+  - git-email                 # needed to send patches for review to the mailing list
+  - python3-dns                # needed to have ansible remove ip-based known_host entries
+  - libvirt-client            # needed to allow migrations to be run from here.
+  - easy-rsa                  # For easy copying into ansible-private for certs.
+  - dnf                       # To get dnf reposync
+  - dnf-plugins-core          # To get dnf reposync
+  - fedora-messaging          # To send/receive messages on the amqp bus
+  - ansible-freeipa           # For the IPA server configuration tasks
+  - python3-jmespath         # for the copr playbooks
+  tags:
+  - batcave
+  - config
+  when: inventory_hostname.startswith('batcave02')
 
 - name: setup ssh_known_hosts file
   copy: src=ssh_known_hosts dest=/etc/ssh/ssh_known_hosts mode=0644
