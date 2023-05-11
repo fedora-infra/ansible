@@ -19,7 +19,7 @@
   - nagios_client
   - hosts
   # openvpn on the prod frontend nodes
-  #- { role: openvpn/client, when: "'odcs_frontend' in group_names" }
+  - { role: openvpn/client, when: "'odcs_frontend' in group_names" }
   - ipa/client
   - rsyncd
   - sudo
