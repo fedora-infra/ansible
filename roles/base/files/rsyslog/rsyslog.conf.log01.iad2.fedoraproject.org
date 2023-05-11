@@ -216,7 +216,8 @@ local4.*					?m_http_apps;MergeFormat
 local6.*					?m_audit;MergeFormat
 
 # forward to splunk host, over tls
-*.* @@splunk-syslog.corp.redhat.com:6514
+#*.* @@splunk-syslog.corp.redhat.com:6514
+*.* @@10.31.20.29:6514
 $DefaultNetstreamDriver gtls # use gtls netstream driver
 $ActionSendStreamDriverMode 1 # require TLS for the connection
 $ActionSendStreamDriverAuthMode anon # server is NOT authenticated
