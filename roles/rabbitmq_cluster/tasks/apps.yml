@@ -167,6 +167,7 @@
     name: rabbit/queue
   vars:
     username: distrobuildsync-eln
+    sent_topics: ^$
     queue_name: distrobuildsync-eln
     # TTL: 10 days (in miliseconds)
     message_ttl: 864000000
