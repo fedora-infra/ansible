@@ -18,8 +18,6 @@
   - rkhunter
   - nagios_client
   - hosts
-  # openvpn on the prod frontend nodes
-  - { role: openvpn/client, when: "'odcs_frontend' in group_names" }
   - ipa/client
   - rsyncd
   - sudo
@@ -42,6 +40,8 @@
    - "{{ vars_path }}/{{ ansible_distribution }}.yml"
 
   roles:
+  # openvpn on the prod frontend nodes
+  - { role: openvpn/client, when: env != "staging" }
   - role: rabbit/user
     username: "odcs{{ env_suffix }}"
     sent_topics: ^org\.fedoraproject\.{{ env_short }}\.odcs\..*
