@@ -23,7 +23,5 @@ openqa_secret: "{{ prod_openqa_apisecret }}"
 openqa_update_arches: ['x86_64']
 openqa_webapi_plugins: FedoraMessaging
 openqa_wikitcms_hostname: fedoraproject.org
-# 2023-04 updates, not in u-t yet, but tested on stg for a week
-openqa_scratch: ["100390026"]
 virt_install_command: "{{ virt_install_command_one_nic }} --cpu=host-passthrough,+vmx"
 wikitcms_token: "{{ private }}/files/openidc/production/wikitcms.json"
