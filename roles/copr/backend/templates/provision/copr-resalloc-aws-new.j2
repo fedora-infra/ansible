@@ -29,6 +29,9 @@ cmd=(
       --tag CoprPurpose=builder
       --tag CoprInstance={% if devel %}devel{% else %}production{% endif %}
       --tag arch={{ item }}
+{% if item == 'aarch64' %}
+      --additional-volume-size 160
+{% endif %}
       --playbook /var/lib/resallocserver/provision/builderpb-aws.yml
 )
 
