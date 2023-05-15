@@ -8,7 +8,7 @@
     mode=0644
   tags:
   - letsencrypt
-  
+
 - name: Generate (or renew) the certificate
   delegate_to: "certgetter01.iad2.fedoraproject.org"
   command: certbot certonly --expand --keep -n --webroot --webroot-path /var/www/html/ -d {{','.join([site_name] + server_aliases)}}
@@ -106,7 +106,8 @@
   tags:
   - letsencrypt
   delegate_to: "{{ certbot_addhost }}"
-  when: certbot_addhost is defined
+  when:
+    - certbot_addhost is defined
 
 - name: Install the intermediate/chain certificate (additional host)
   copy: >
@@ -120,7 +121,8 @@
   tags:
   - letsencrypt
   delegate_to: "{{ certbot_addhost }}"
-  when: certbot_addhost is defined
+  when:
+    - certbot_addhost is defined
 
 - name: Install the key (additional host)
   copy: >
@@ -134,7 +136,8 @@
   tags:
   - letsencrypt
   delegate_to: "{{ certbot_addhost }}"
-  when: certbot_addhost is defined
+  when:
+    - certbot_addhost is defined
 
 - name: Install certificate bundle
   template: >
