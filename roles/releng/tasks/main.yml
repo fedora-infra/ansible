@@ -211,6 +211,8 @@
 - name: sig_policy cron
   template: src="sig_policy.j2" dest=/etc/cron.d/sig_policy
   when: inventory_hostname.startswith('compose-x86-01.iad2')
+  tags:
+  - cronjob
 
 - name: Create /etc/pki/fedora-messaging
   file:
