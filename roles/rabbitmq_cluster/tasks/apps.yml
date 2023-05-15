@@ -33,6 +33,7 @@
     username: osci-pipelines{{ env_suffix }}
     queue_name: "{{ osci_pipeline_queue }}{{ env_suffix }}"
     message_ttl: 864000000
+    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.ci\..*
   loop:
     - "osci-pipelines{{ env_suffix }}-queue-0"
     - "osci-pipelines{{ env_suffix }}-queue-1"
