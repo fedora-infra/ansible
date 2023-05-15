@@ -16,6 +16,18 @@ SEED_DIR=$WORK_DIR/git-checkout
 # subdirectory to collect rpm speciles
 SPEC_DIR=$WORK_DIR/rpm-specs
 
+# list of branches to make extra spec tarballs for
+EXTRA_BRANCHES=("epel7" "epel8" "epel9")
+EXTRA_BRANCHES_PREFIX=extra-rpm-specs-
+
+# clear extra branches specs working directories
+rm -rf $WORK_DIR/$EXTRA_BRANCHES_PREFIX*
+
+# create extra branches specs working directories
+pushd $WORK_DIR &>/dev/null
+mkdir -p ${EXTRA_BRANCHES[@]/#/$EXTRA_BRANCHES_PREFIX}
+popd &>/dev/null
+
 # Where to store the seed tarball for download
 OUTPUT_DIR=/srv/cache/lookaside/
 
@@ -40,7 +52,6 @@ for repo in $ORIGIN_DIR/*.git; do
     pushd $working_tree &>/dev/null
     sed -i "s@url = .*@url = $repo@" $working_tree/.git/config
     git pull --all &>/dev/null
-    sed -i "s@url = .*@url = https://src.fedoraproject.org/rpms/$bname@" $working_tree/.git/config
     popd &>/dev/null
     if [ -e $working_tree/dead.package ]; then
       rm -f $working_tree/$bname.spec
@@ -52,7 +63,6 @@ for repo in $ORIGIN_DIR/*.git; do
     pushd $SEED_DIR &>/dev/null
     git clone $repo &>/dev/null
     popd &>/dev/null
-    sed -i "s@url = .*@url = https://src.fedoraproject.org/rpms/$bname@" $working_tree/.git/config
     if [ -e $working_tree/dead.package ]; then
       rm -f $working_tree/$bname.spec
       rm -f $SPEC_DIR/$bname.spec
@@ -60,26 +70,28 @@ for repo in $ORIGIN_DIR/*.git; do
       cp -p $working_tree/$bname.spec $SPEC_DIR/
     fi
   fi
-done
 
-# Search and create tar balls for existing Epel branches
-archive_branches() {
-  branches="$(git branch -r --list | grep -P '[a-z]+\/([fF][0-9]+|epel[0-9]+|rawhide)')"
-  for result in $branches; do
-    if [[ "(echo $result )" ]]; then
-      git checkout "$result"
-      tar -cf - -C$WORK_DIR $(basename $SEED_DIR) | xz -2 >$OUTPUT_DIR/.git-seed-$DATE-$result.tar.xz
-      tar -cf - -C$WORK_DIR $(basename $SPEC_DIR) | xz -2 >$OUTPUT_DIR/.rpm-specs-$DATE-$result.tar.xz
-      rm $OUTPUT_DIR/git-seed*tar.xz
-      rm $OUTPUT_DIR/rpm-specs*tar.xz
-      mv $OUTPUT_DIR/.git-seed-$DATE.tar.xz $OUTPUT_DIR/git-seed-$DATE-$result.tar.xz
-      mv $OUTPUT_DIR/.rpm-specs-$DATE.tar.xz $OUTPUT_DIR/rpm-specs-$DATE-$result.tar.xz
-      ln -s git-seed-$DATE-$result.tar.xz $OUTPUT_DIR/git-seed-latest.tar.xz
-      ln -s rpm-specs-$DATE-$result.tar.xz $OUTPUT_DIR/rpm-specs-latest.tar.xz
+  # Now we go through each of the defined extra branches, and if the branch exists and
+  # contains a specfile, we move it to the $EXTRA_BRANCHES_PREFIX$branchname directory
+  pushd $working_tree &>/dev/null
+  for branchname in ${EXTRA_BRANCHES[@]}; do
+    git ls-remote --exit-code origin $branchname &>/dev/null
+    # if exit code for git ls-remote is 0, we found the branch
+    if [ $? -eq 0 ]; then
+      git checkout $branchname &>/dev/null
+      if [ -e $working_tree/$bname.spec ]; then
+        cp -p $working_tree/$bname.spec $WORK_DIR/$EXTRA_BRANCHES_PREFIX$branchname/
+      fi
+      git checkout rawhide &>/dev/null
     fi
   done
-}
+  popd &>/dev/null
 
+  sed -i "s@url = .*@url = https://src.fedoraproject.org/rpms/$bname@" $working_tree/.git/config
+
+done
+
+# tar up and copy the rawhide / regular seed and specs tarballs like we always have
 tar -cf - -C$WORK_DIR $(basename $SEED_DIR) | xz -2 >$OUTPUT_DIR/.git-seed-$DATE.tar.xz
 tar -cf - -C$WORK_DIR $(basename $SPEC_DIR) | xz -2 >$OUTPUT_DIR/.rpm-specs-$DATE.tar.xz
 rm $OUTPUT_DIR/git-seed*tar.xz
@@ -89,7 +101,12 @@ mv $OUTPUT_DIR/.rpm-specs-$DATE.tar.xz $OUTPUT_DIR/rpm-specs-$DATE.tar.xz
 ln -s git-seed-$DATE.tar.xz $OUTPUT_DIR/git-seed-latest.tar.xz
 ln -s rpm-specs-$DATE.tar.xz $OUTPUT_DIR/rpm-specs-latest.tar.xz
 
-archive_branches
+# tar up and copy over the spec tarballs for the extra epel branches
+for branchname in ${EXTRA_BRANCHES[@]}; do
+  tar -cf - -C$WORK_DIR $(basename $WORK_DIR/$EXTRA_BRANCHES_PREFIX$branchname) | xz -2 >$OUTPUT_DIR/.rpm-specs-$branchname-$DATE.tar.xz
+  rm $OUTPUT_DIR/rpm-specs-$branchname*.tar.xz
+  mv $OUTPUT_DIR/.rpm-specs-$branchname-$DATE.tar.xz $OUTPUT_DIR/rpm-specs-$branchname-$DATE.tar.xz
+done
 
 python2 /usr/local/bin/alternative_arch_report.py /srv/git_seed/rpm-specs/ |
   mail -s "[Report] Packages Restricting Arches" arch-excludes@lists.fedoraproject.org
