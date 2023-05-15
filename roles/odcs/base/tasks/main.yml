@@ -3,7 +3,6 @@
 - name: install the packages required for ODCS
   package:
     pkg: "{{ item }}"
-    state: latest
   with_items:
   - python3-psycopg2
   - python3-odcs-common
@@ -19,7 +18,6 @@
 - name: install the latest ODCS packagess
   package:
     pkg: "{{ item }}"
-    state: latest
   with_items:
   - python3-odcs-common
   - odcs
