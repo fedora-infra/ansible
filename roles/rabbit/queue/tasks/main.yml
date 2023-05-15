@@ -15,8 +15,8 @@
 #
 # Optional parameters:
 #
-#   - write_queues (list): A list of queue name prefixes to which the user will
-#                          be allowed to publish.
+#   - sent_topics (str): A regular expression that must match the topic when a
+#                        message is published by this user.
 #   - thresholds (dict): A dictionary with two keys: "warning" and "critical".
 #                        The values are numbers. Generate an alert in Nagios if
 #                        the number of messages go above these values.
@@ -26,6 +26,7 @@
     that:
     - "queue_name.startswith(username)"
     fail_msg: "Your queue name must be prefixed with your username"
+  when: username is defined
   tags:
     - fedora-messaging
     - rabbitmq_cluster
@@ -34,6 +35,7 @@
     name: rabbit/user
   vars:
     publish_only: false
+  when: username is defined
   tags:
     - fedora-messaging
     - rabbitmq_cluster

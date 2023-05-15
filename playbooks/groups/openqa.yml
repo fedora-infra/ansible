@@ -45,9 +45,7 @@
     username: "openqa"
     queue_name: "openqa{{ openqa_env_suffix }}_scheduler"
     routing_keys: "{{ openqa_amqp_scheduler_routing_keys }}"
-    write_queues:
-        - "ci"
-        - "openqa"
+    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(openqa|ci)\..*
     vars:
       # yes, even the staging scheduler listens to production, it
       # has to or else it wouldn't schedule any jobs
@@ -58,9 +56,7 @@
     username: "openqa{{ openqa_env_suffix }}"
     queue_name: "openqa{{ openqa_env_suffix }}_resultsdb_reporter"
     routing_keys: "{{ openqa_amqp_resultsdb_reporter_routing_keys }}"
-    write_queues:
-        - "ci"
-        - "openqa"
+    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(openqa|ci)\..*
     vars:
       # for this role to work correctly we do need to look like a
       # staging server
@@ -68,12 +64,8 @@
       env_suffix: "{{ openqa_env_suffix }}"
     tags: ['rabbit']
   - role: rabbit/queue
-    username: "openqa{{ openqa_env_suffix }}"
     queue_name: "openqa{{ openqa_env_suffix }}_wiki_reporter"
     routing_keys: "{{ openqa_amqp_wiki_reporter_routing_keys }}"
-    write_queues:
-        - "ci"
-        - "openqa"
     vars:
       # for this role to work correctly we do need to look like a
       # staging server
@@ -83,12 +75,7 @@
     # relvalconsumer queue, we still use openqa auth for this as it's
     # easy that way
   - role: rabbit/queue
-    username: "openqa"
     queue_name: "openqa_relvalconsumer{{ relvalconsumer_env_suffix }}"
-    routing_keys: "{{ relvalconsumer_amqp_routing_keys }}"
-    write_queues:
-        - "ci"
-        - "openqa"
     vars:
       # yes, even the staging scheduler listens to production, it
       # has to or else it wouldn't schedule any jobs
@@ -99,12 +86,8 @@
     # relvalamiconsumer queue, we still use openqa auth for this as it's
     # easy that way
   - role: rabbit/queue
-    username: "openqa"
     queue_name: "openqa_relvalamiconsumer{{ relvalconsumer_env_suffix }}"
     routing_keys: "{{ relvalamiconsumer_amqp_routing_keys }}"
-    write_queues:
-        - "ci"
-        - "openqa"
     vars:
       # yes, even the staging updater listens to production, it
       # has to as we never publish fedimg.image.publish on stg
@@ -119,9 +102,7 @@
     username: "openqa{{ checkcompose_env_suffix }}"
     queue_name: "openqa{{ checkcompose_env_suffix }}_checkcomp"
     routing_keys: "{{ checkcompose_amqp_routing_keys }}"
-    write_queues:
-        - "ci"
-        - "openqa"
+    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(openqa|ci)\..*
     vars:
       # for this role to work correctly we do need to look like a
       # staging server
@@ -133,12 +114,8 @@
     # fedora_nightlies queue, we still use openqa auth for this as it's
     # easy that way
   - role: rabbit/queue
-    username: "openqa"
     queue_name: "openqa_fedora_nightlies"
     routing_keys: "{{ fedora_nightlies_amqp_routing_keys }}"
-    write_queues:
-        - "ci"
-        - "openqa"
     vars:
       env: "production"
     tags: ['rabbit']
