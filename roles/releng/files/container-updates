@@ -7,5 +7,5 @@ MAILTO=releng-cron@lists.fedoraproject.org
 45 5 * * * root TMPDIR=`mktemp -d /tmp/containerF37.XXXXXX` && chmod 755 $TMPDIR && pushd $TMPDIR && git clone -n https://pagure.io/pungi-fedora.git && cd pungi-fedora && git checkout f37 && LANG=en_US.UTF-8 ./container-nightly.sh RC-$(date "+\%Y\%m\%d").0 && popd && rm -rf $TMPDIR
 
 # Fedora 36 Container Updates nightly compose
-MAILTO=releng-cron@lists.fedoraproject.org
-45 7 * * * root TMPDIR=`mktemp -d /tmp/containerF36.XXXXXX` && chmod 755 $TMPDIR && pushd $TMPDIR && git clone -n https://pagure.io/pungi-fedora.git && cd pungi-fedora && git checkout f36 && LANG=en_US.UTF-8 ./container-nightly.sh RC-$(date "+\%Y\%m\%d").0 && popd && rm -rf $TMPDIR
+# MAILTO=releng-cron@lists.fedoraproject.org
+# 45 7 * * * root TMPDIR=`mktemp -d /tmp/containerF36.XXXXXX` && chmod 755 $TMPDIR && pushd $TMPDIR && git clone -n https://pagure.io/pungi-fedora.git && cd pungi-fedora && git checkout f36 && LANG=en_US.UTF-8 ./container-nightly.sh RC-$(date "+\%Y\%m\%d").0 && popd && rm -rf $TMPDIR
