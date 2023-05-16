@@ -4,6 +4,10 @@
 # cron job to invoke file daily
 # Need to setup OUTPUT_DIR to be served by apache
 
+#optional verbose (-v) flag when manually running the script
+getopts "v" option; 
+if [ $option == "v" ]; then verbose=1; else verbose=0; fi;
+
 # Where the git repos live.  These are bare repos
 ORIGIN_DIR=/srv/git/repositories/rpms
 
@@ -42,6 +46,7 @@ DATE=$(date +'%Y%m%d')
 echo "$TIMESTAMP" >$SEED_DIR/TIMESTAMP
 
 for repo in $ORIGIN_DIR/*.git; do
+  ((verbose)) && echo processing $repo
   bname=$(basename $repo .git)
   working_tree=$SEED_DIR/$bname
   # uncomment to skip processing dead.package repos
@@ -92,21 +97,30 @@ for repo in $ORIGIN_DIR/*.git; do
 done
 
 # tar up and copy the rawhide / regular seed and specs tarballs like we always have
+((verbose)) && echo Tarring git-seed
 tar -cf - -C$WORK_DIR $(basename $SEED_DIR) | xz -2 >$OUTPUT_DIR/.git-seed-$DATE.tar.xz
+((verbose)) && echo Tarring rpm-specs
 tar -cf - -C$WORK_DIR $(basename $SPEC_DIR) | xz -2 >$OUTPUT_DIR/.rpm-specs-$DATE.tar.xz
+((verbose)) && echo removing old git-seed tarball
 rm $OUTPUT_DIR/git-seed*tar.xz
+((verbose)) && echo removing old rpm-specs tarball
 rm $OUTPUT_DIR/rpm-specs*tar.xz
+((verbose)) && echo moving new git-seed tarball into place
 mv $OUTPUT_DIR/.git-seed-$DATE.tar.xz $OUTPUT_DIR/git-seed-$DATE.tar.xz
+((verbose)) && echo moving new rpm-specs tarball into place
 mv $OUTPUT_DIR/.rpm-specs-$DATE.tar.xz $OUTPUT_DIR/rpm-specs-$DATE.tar.xz
+((verbose)) && echo creating links to -latest tarballs
 ln -s git-seed-$DATE.tar.xz $OUTPUT_DIR/git-seed-latest.tar.xz
 ln -s rpm-specs-$DATE.tar.xz $OUTPUT_DIR/rpm-specs-latest.tar.xz
 
 # tar up and copy over the spec tarballs for the extra epel branches
 for branchname in ${EXTRA_BRANCHES[@]}; do
+  ((verbose)) && echo tarring up rpm-specs for $branchname
   tar -cf - -C$WORK_DIR $(basename $WORK_DIR/$EXTRA_BRANCHES_PREFIX$branchname) | xz -2 >$OUTPUT_DIR/.rpm-specs-$branchname-$DATE.tar.xz
   rm $OUTPUT_DIR/rpm-specs-$branchname*.tar.xz
   mv $OUTPUT_DIR/.rpm-specs-$branchname-$DATE.tar.xz $OUTPUT_DIR/rpm-specs-$branchname-$DATE.tar.xz
 done
 
+((verbose)) && echo running alt arch report script
 python2 /usr/local/bin/alternative_arch_report.py /srv/git_seed/rpm-specs/ |
   mail -s "[Report] Packages Restricting Arches" arch-excludes@lists.fedoraproject.org
