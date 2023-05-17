@@ -49,12 +49,3 @@ email_host = localhost
 
 # Use this to filter DNF core messages
 debuglevel = 1
-{% if inventory_hostname.startswith('pkgs') %}
-# exclude jq-1.6-3.el8
-# as it's causing segfaults in https pushes
-# by running out of memory
-exclude = jq-1.6-3.el8
-{% endif %}
-{% if inventory_hostname.startswith('buildvm-a32') %}
-exclude = kernel-core*,kernel-modules*
-{% endif %}
