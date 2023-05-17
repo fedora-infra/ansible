@@ -48,7 +48,7 @@ aws_aarch64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% els
     - arch_aarch64_native
     - aws
 {% if spot %}
-    cmd_new: copr-resalloc-aws-new-aarch64 --spot-price 0.102
+    cmd_new: copr-resalloc-aws-new-aarch64 --spot-price 0.156
 {% else %}
     cmd_new: copr-resalloc-aws-new-aarch64
 {% endif %}
