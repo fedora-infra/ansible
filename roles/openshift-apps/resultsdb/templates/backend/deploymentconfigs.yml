@@ -25,9 +25,13 @@ spec:
               # try for 10 minutes (600 seconds)
               e=$(( $(date +%s) + 600 ))
               i=0
+              entrypoint=""
+              if [ -f /app/entrypoint.sh ]; then
+                entrypoint=/app/entrypoint.sh
+              fi
               while [ $(date +%s) -lt $e ]; do
                 echo 'TRY #'$((++i))
-                if resultsdb init_db ; then
+                if $entrypoint resultsdb init_db ; then
                   exit 0
                 fi
               done
