@@ -70,3 +70,10 @@ loggers:
 {% endif %}
     handlers: [console, smtp]
     propagate: 1
+  markdown:
+{% if env == "production" %}
+    level: ERROR
+{% else %}
+    level: INFO
+{% endif %}
+    handlers: [console, smtp]
