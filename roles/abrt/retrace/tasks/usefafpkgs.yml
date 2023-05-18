@@ -1,8 +1,6 @@
 ---
-- name: check if faf installed
+- name: check if faf is installed
   command: rpm -q faf
-  args:
-    warn: no
   changed_when: false
 
 - name: add user retrace to faf db
