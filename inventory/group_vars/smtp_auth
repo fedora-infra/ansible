@@ -1,0 +1,25 @@
+---
+# Define resources for this group of hosts here.
+ipa_client_shell_access:
+  - sysadmin-noc
+  - sysadmin-tools
+  - sysadmin-veteran
+ipa_client_sudo_access:
+  - sysadmin-noc
+  - sysadmin-tools
+  - sysadmin-veteran
+ipa_host_group: smtp_auth
+ipa_host_group_desc: SMTP auth servers
+lvm_size: 20000
+mem_size: 4096
+nagios_Check_Services:
+  mail: false
+  nrpe: true
+num_cpus: 2
+postfix_group: smtp-auth
+postfix_transport_filename: transports.smtp-auth
+primary_auth_source: ipa
+# for systems that do not match the above - specify the same parameter in
+# the host_vars/$hostname file
+tcp_ports: [25]
+vpn: true
