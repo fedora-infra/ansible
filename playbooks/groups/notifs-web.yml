@@ -1,3 +1,4 @@
+---
 # create a new notifs-web server
 # NOTE: should be used with --limit most of the time
 # NOTE: make sure there is room/space for this server on the vmhost
@@ -13,17 +14,17 @@
   gather_facts: True
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
   - base
   - rkhunter
   - nagios_client
   - hosts
-  - { role: openvpn/client,
-      when: env != "staging" }
+  - {role: openvpn/client,
+     when: env != "staging"}
   - ipa/client
   - collectd/base
   - mod_wsgi
