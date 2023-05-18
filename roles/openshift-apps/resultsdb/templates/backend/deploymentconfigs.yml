@@ -48,11 +48,7 @@ spec:
     spec:
       containers:
         - name: api
-{% if env == 'staging' %}
-          image: "{{ stg_resultsdb_image }}"
-{% else %}
-          image: "{{ prod_resultsdb_image }}"
-{% endif %}
+          image: resultsdb-api
           imagePullPolicy: Always
           env:
             - name: RESULTSDB_WSGI_SCRIPT_PATH
@@ -126,3 +122,11 @@ spec:
             secretName: resultsdb-fedora-messaging-key
   triggers:
     - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - api
+        from:
+          kind: ImageStreamTag
+          name: resultsdb-api:latest

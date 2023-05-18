@@ -89,6 +89,11 @@
 
     - role: openshift/object
       app: resultsdb
+      template: backend/imagestream.yml
+      objectname: backend-imagestream.yml
+
+    - role: openshift/object
+      app: resultsdb
       template: backend/deploymentconfigs.yml
       objectname: backend-deploymentconfigs.yml
 

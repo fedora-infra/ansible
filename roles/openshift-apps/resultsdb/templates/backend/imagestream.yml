@@ -1,0 +1,17 @@
+---
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: "resultsdb-api"
+spec:
+  tags:
+  - name: latest
+    importPolicy:
+      scheduled: true
+    from:
+      kind: DockerImage
+{% if env == 'staging' %}
+      name: "{{ stg_resultsdb_image }}"
+{% else %}
+      name: "{{ prod_resultsdb_image }}"
+{% endif %}
