@@ -1,5 +1,7 @@
 ---
-- import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml myhosts=pkgs_stg:pkgs"
+- import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
+  vars:
+    myhosts: "pkgs_stg:pkgs"
 
 - name: make the box be real
   hosts: pkgs_stg:pkgs

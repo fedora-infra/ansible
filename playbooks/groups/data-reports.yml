@@ -1,7 +1,9 @@
 # create a data-reports vm
 #
 
-- import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml myhosts=data_reports"
+- import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
+  vars:
+    myhosts: "data_reports"
 
 - name: make the box be real
   hosts: data_reports

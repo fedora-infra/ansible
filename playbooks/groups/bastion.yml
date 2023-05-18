@@ -1,6 +1,6 @@
 - import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
   vars:
-    myhosts: bastion
+    myhosts: "bastion"
 
 - name: make the boxen be real for real
   hosts: bastion
