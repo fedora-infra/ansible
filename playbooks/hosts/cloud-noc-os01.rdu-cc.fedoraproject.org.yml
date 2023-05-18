@@ -1,6 +1,8 @@
 # This is a basic playbook
 
-- import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml myhosts=cloud-noc-os01.rdu-cc.fedoraproject.org"
+- import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
+  vars:
+    myhosts: "cloud-noc-os01.rdu-cc.fedoraproject.org"
 
 - name: make cloud noc hardware
   hosts: cloud-noc-os01.rdu-cc.fedoraproject.org
