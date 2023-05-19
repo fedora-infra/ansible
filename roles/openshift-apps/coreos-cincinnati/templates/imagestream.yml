@@ -1,0 +1,30 @@
+---
+apiVersion: image.openshift.io/v1
+kind: List
+items:
+  # ImageStream for Fedora image
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      labels:
+        build: coreos-cincinnati
+      name: fedora
+    spec:
+      lookupPolicy:
+        local: false
+      tags:
+        - name: "38"
+          from:
+            kind: DockerImage
+            name: registry.fedoraproject.org/fedora:38
+          importPolicy:
+            scheduled: true
+          referencePolicy:
+            type: Source
+  # ImageStream for resulting built coreos-cincinnati-img
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      labels:
+        build: coreos-cincinnati
+      name: coreos-cincinnati-img
