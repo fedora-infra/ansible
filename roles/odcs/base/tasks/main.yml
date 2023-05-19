@@ -285,6 +285,15 @@
   - odcs
   - odcs/backend
 
+- name: configure logrotate
+  copy:
+    src: "{{ roles_path }}/odcs/base/files/logrotate.d/odcs }}"
+    dest: /etc/logrotate.d/odcs
+  when: inventory_hostname.startswith('odcs-backend')
+  tags:
+  - odcs
+  - odcs/backend
+
 - name: Run systemd-tmpfiles --create
   command: systemd-tmpfiles --create
   args:
