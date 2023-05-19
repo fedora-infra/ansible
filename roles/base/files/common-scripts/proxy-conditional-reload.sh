@@ -9,7 +9,7 @@ rpm -q $PACKAGE
 
 INSTALLED=$?
 
-if [ ! -f /etc/httpd/ticketkey_*.tkey -a ! $HOST =~ (^proxy) ]; then
+if [[ ! -f "/etc/httpd/ticketkey_*.tkey" && "$HOST" =~ "^proxy" ]]; then
     # This host is not configured yet and not proxy host, do not try and restart httpd
     exit 0
 fi
