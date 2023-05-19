@@ -27,6 +27,8 @@ spec:
       kind: ImageStreamTag
       name: coreos-koji-tagger-img:latest
   triggers:
+  - type: ImageChange
+    imageChange: {}
   - type: ConfigChange
 {% if env == "staging" and coreos_koji_tagger_webhook_secret_stg is defined %}
   - type: GitHub

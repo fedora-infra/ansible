@@ -27,6 +27,8 @@ spec:
       kind: ImageStreamTag
       name: coreos-ostree-importer-img:latest
   triggers:
+  - type: ImageChange
+    imageChange: {}
   - type: ConfigChange
 {% if env == "staging" and coreos_ostree_importer_webhook_secret_stg is defined %}
   - type: GitHub

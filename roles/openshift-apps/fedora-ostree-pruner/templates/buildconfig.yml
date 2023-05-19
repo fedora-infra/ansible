@@ -27,6 +27,8 @@ spec:
       kind: ImageStreamTag
       name: fedora-ostree-pruner-img:latest
   triggers:
+  - type: ImageChange
+    imageChange: {}
   - type: ConfigChange
 {% if env == "staging" and fedora_ostree_pruner_webhook_secret_stg is defined %}
   - type: GitHub
