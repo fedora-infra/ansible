@@ -34,7 +34,10 @@
     with_items: "{{ vmlist.list_vms }}"
 
 # Call out to another playbook.  Disable any proxies that may live here
-- import_playbook: update-proxy-dns.yml status=disable proxies=myvms_new:&proxies
+- import_playbook: update-proxy-dns.yml
+  vars:
+    status: enable
+    proxies: myvms_new:&proxies
   when: nodns is not defined or not "true" in nodns
 
 - name: halt instances
@@ -146,7 +149,10 @@
     when: inventory_hostname.startswith('rabbitmq')
 
 # Call out to that dns playbook.  Put proxies back in now that they're back
-- import_playbook: update-proxy-dns.yml status=enable proxies=myvms_new:&proxies
+- import_playbook: update-proxy-dns.yml
+  vars:
+    status: enable
+    proxies: myvms_new:&proxies
   when: nodns is not defined or not nodns
 
 - name: Fix unbound if necessary
