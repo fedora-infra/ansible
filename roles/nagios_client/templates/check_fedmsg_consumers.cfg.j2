@@ -1,5 +1,4 @@
 # Fedmsg checks for consumers and producers
-command[check_fedmsg_cp_busgateway_hub]={{libdir}}/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-hub Nommer MonitoringProducer
 command[check_fedmsg_cp_busgateway_relay]={{libdir}}/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-relay RelayConsumer MonitoringProducer
 {% if (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int < 8) or (ansible_distribution_major_version|int < 30 and ansible_distribution == 'Fedora') %}
 command[check_fedmsg_cp_busgateway_gateway]={{libdir}}/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-gateway GatewayConsumer MonitoringProducer
@@ -16,7 +15,6 @@ command[check_fedmsg_cp_hotness_backend]={{libdir}}/nagios/plugins/check_fedmsg_
 command[check_fedmsg_cp_packages_backend]={{libdir}}/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-hub CacheInvalidator MonitoringProducer
 command[check_fedmsg_cp_mbs_backend]={{libdir}}/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-hub MBSConsumer MonitoringProducer
 
-command[check_fedmsg_cexceptions_busgateway_hub]={{libdir}}/nagios/plugins/check_fedmsg_consumer_exceptions.py fedmsg-hub Nommer 1 10
 command[check_fedmsg_cexceptions_busgateway_relay]={{libdir}}/nagios/plugins/check_fedmsg_consumer_exceptions.py fedmsg-relay RelayConsumer 1 10
 {% if (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int < 8) or (ansible_distribution_major_version|int < 30 and ansible_distribution == 'Fedora') %}
 command[check_fedmsg_cexceptions_busgateway_gateway]={{libdir}}/nagios/plugins/check_fedmsg_consumer_exceptions.py fedmsg-gateway GatewayConsumer 1 10
@@ -33,7 +31,6 @@ command[check_fedmsg_cexceptions_hotness_backend]={{libdir}}/nagios/plugins/chec
 command[check_fedmsg_cexceptions_packages_backend]={{libdir}}/nagios/plugins/check_fedmsg_consumer_exceptions.py fedmsg-hub CacheInvalidator 1 10
 command[check_fedmsg_cexceptions_mbs_backend]={{libdir}}/nagios/plugins/check_fedmsg_consumer_exceptions.py fedmsg-hub MBSConsumer 1 10
 
-command[check_fedmsg_cbacklog_busgateway_hub]={{libdir}}/nagios/plugins/check_fedmsg_consumer_backlog.py fedmsg-hub Nommer 500 1000
 command[check_fedmsg_cbacklog_busgateway_relay]={{libdir}}/nagios/plugins/check_fedmsg_consumer_backlog.py fedmsg-relay RelayConsumer 10 50
 {% if (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int < 8) or (ansible_distribution_major_version|int < 30 and ansible_distribution == 'Fedora') %}
 command[check_fedmsg_cbacklog_busgateway_gateway]={{libdir}}/nagios/plugins/check_fedmsg_consumer_backlog.py fedmsg-gateway GatewayConsumer 10 50

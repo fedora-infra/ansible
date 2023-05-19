@@ -379,11 +379,10 @@ command[check_datanommer_pkgdb]=/usr/lib64/nagios/plugins/check_datanommer_times
 command[check_datanommer_planet]=/usr/lib64/nagios/plugins/check_datanommer_timesince.py planet 2628000 7884000
 command[check_datanommer_resultsdb]=/usr/lib64/nagios/plugins/check_datanommer_timesince.py resultsdb 172800 172800
 command[check_datanommer_trac]=/usr/lib64/nagios/plugins/check_datanommer_timesince.py trac 86400 259200
-command[check_datanommer_rpmsign]=/usr/lib64/nagios/plugins/check_datanommer_timesince.py org.fedoraproject.prod.buildsys.rpm.sign 14400 10800
+command[check_datanommer_rpmsign]=/usr/lib64/nagios/plugins/check_datanommer_timesince.py org.fedoraproject.prod.buildsys.rpm.sign 10800 14400
 command[check_datanommer_wiki]=/usr/lib64/nagios/plugins/check_datanommer_timesince.py wiki 259200 1814400
 
 # Fedmsg checks for consumers and producers
-command[check_fedmsg_cp_busgateway_hub]=/usr/lib64/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-hub Nommer MonitoringProducer
 command[check_fedmsg_cp_busgateway_relay]=/usr/lib64/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-relay RelayConsumer MonitoringProducer
 command[check_fedmsg_cp_busgateway_gateway]=/usr/lib64/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-gateway GatewayConsumer MonitoringProducer
 command[check_fedmsg_cp_app]=/usr/lib64/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-relay RelayConsumer MonitoringProducer
@@ -395,7 +394,6 @@ command[check_fedmsg_cp_hotness_backend]=/usr/lib64/nagios/plugins/check_fedmsg_
 command[check_fedmsg_cp_packages_backend]=/usr/lib64/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-hub CacheInvalidator MonitoringProducer
 command[check_fedmsg_cp_mbs_backend]=/usr/lib64/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-hub MBSConsumer MonitoringProducer
 
-command[check_fedmsg_cexceptions_busgateway_hub]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_exceptions.py fedmsg-hub Nommer 1 10
 command[check_fedmsg_cexceptions_busgateway_relay]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_exceptions.py fedmsg-relay RelayConsumer 1 10
 command[check_fedmsg_cexceptions_busgateway_gateway]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_exceptions.py fedmsg-gateway GatewayConsumer 1 10
 command[check_fedmsg_cexceptions_app]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_exceptions.py fedmsg-relay RelayConsumer 1 10
@@ -407,7 +405,6 @@ command[check_fedmsg_cexceptions_hotness_backend]=/usr/lib64/nagios/plugins/chec
 command[check_fedmsg_cexceptions_packages_backend]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_exceptions.py fedmsg-hub CacheInvalidator 1 10
 command[check_fedmsg_cexceptions_mbs_backend]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_exceptions.py fedmsg-hub MBSConsumer 1 10
 
-command[check_fedmsg_cbacklog_busgateway_hub]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_backlog.py fedmsg-hub Nommer 500 1000
 command[check_fedmsg_cbacklog_busgateway_relay]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_backlog.py fedmsg-relay RelayConsumer 10 50
 command[check_fedmsg_cbacklog_busgateway_gateway]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_backlog.py fedmsg-gateway GatewayConsumer 10 50
 command[check_fedmsg_cbacklog_app]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_backlog.py fedmsg-relay RelayConsumer 10 50
