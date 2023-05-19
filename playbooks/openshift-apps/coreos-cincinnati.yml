@@ -27,9 +27,10 @@
     - siosm
     egress_policy_template: "{{ roles_path }}/openshift-apps/coreos-cincinnati/templates/egresspolicy.yml"
 
-  - role: openshift/imagestream
+  - role: openshift/object
     app: coreos-cincinnati
-    imagename: fedora-coreos-cincinnati
+    template: imagestream.yml
+    objectname: imagestream.yml
 
   - role: openshift/object
     app: coreos-cincinnati
@@ -38,8 +39,8 @@
 
   - role: openshift/start-build
     app: coreos-cincinnati
-    buildname: coreos-cincinnati
-    tags: [never, build]
+    buildname: coreos-cincinnati-build
+    objectname: coreos-cincinnati-build
 
   - role: openshift/object
     app: coreos-cincinnati
