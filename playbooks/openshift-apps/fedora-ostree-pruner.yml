@@ -8,6 +8,10 @@
     - "/srv/private/ansible/vars.yml"
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
+############################################
+# actions to create the project in OpenShift
+############################################
+# to run: sudo rbac-playbook -l os_control_stg openshift-apps/fedora-ostree-pruner.yml
   roles:
   - role: openshift/project
     app: fedora-ostree-pruner
