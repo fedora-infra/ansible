@@ -1,7 +1,8 @@
+---
 - name: make the app be real
   hosts: os_control:os_control_stg
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml
@@ -18,18 +19,18 @@
   # Set the fedora_messaging_routing_keys var based on the environment
   pre_tasks:
     - set_fact:
-       fedora_messaging_routing_keys:
-         - "org.fedoraproject.stg.coreos.build.request.ostree-import"
+        fedora_messaging_routing_keys:
+          - "org.fedoraproject.stg.coreos.build.request.ostree-import"
       when: env == 'staging'
     - set_fact:
-       fedora_messaging_routing_keys:
-         - "org.fedoraproject.prod.coreos.build.request.ostree-import"
+        fedora_messaging_routing_keys:
+          - "org.fedoraproject.prod.coreos.build.request.ostree-import"
       when: env != 'staging'
 
-############################################
-# actions to create the project in OpenShift
-############################################
-# to run: sudo rbac-playbook -l os_control_stg openshift-apps/coreos-ostree-importer.yml
+  ############################################
+  # actions to create the project in OpenShift
+  ############################################
+  # to run: sudo rbac-playbook -l os_control_stg openshift-apps/coreos-ostree-importer.yml
   roles:
   - role: openshift/project
     app: coreos-ostree-importer
@@ -92,12 +93,12 @@
     template: pvc.yml
     objectname: pvc.yml
 
-###############################################
-# actions to delete the project from OpenShift
-###############################################
-# to run: sudo rbac-playbook -l os_control_stg -t delete openshift-apps/coreos-ostree-importer.yml
+  ###############################################
+  # actions to delete the project from OpenShift
+  ###############################################
+  # to run: sudo rbac-playbook -l os_control_stg -t delete openshift-apps/coreos-ostree-importer.yml
   - role: openshift/object-delete
     app: coreos-ostree-importer
     objecttype: project
     objectname: coreos-ostree-importer
-    tags: [ never, delete ]
+    tags: [never, delete]

@@ -1,17 +1,18 @@
+---
 - name: make the app be real
   hosts: os_control:os_control_stg
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml
     - "/srv/private/ansible/vars.yml"
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
-############################################
-# actions to create the project in OpenShift
-############################################
-# to run: sudo rbac-playbook -l os_control_stg openshift-apps/fedora-ostree-pruner.yml
+  ############################################
+  # actions to create the project in OpenShift
+  ############################################
+  # to run: sudo rbac-playbook -l os_control_stg openshift-apps/fedora-ostree-pruner.yml
   roles:
   - role: openshift/project
     app: fedora-ostree-pruner
@@ -41,12 +42,12 @@
     template: pvc.yml
     objectname: pvc.yml
 
-###############################################
-# actions to delete the project from OpenShift
-###############################################
-# to run: sudo rbac-playbook -l os_control_stg -t delete openshift-apps/fedora-ostree-pruner.yml
+  ###############################################
+  # actions to delete the project from OpenShift
+  ###############################################
+  # to run: sudo rbac-playbook -l os_control_stg -t delete openshift-apps/fedora-ostree-pruner.yml
   - role: openshift/object-delete
     app: fedora-ostree-pruner
     objecttype: project
     objectname: fedora-ostree-pruner
-    tags: [ never, delete ]
+    tags: [never, delete]

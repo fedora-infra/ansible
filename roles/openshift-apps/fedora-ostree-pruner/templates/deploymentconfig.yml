@@ -1,3 +1,4 @@
+---
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
@@ -17,34 +18,34 @@ spec:
       name: fedora-ostree-pruner
     spec:
       containers:
-      - name: fedora-ostree-pruner
-        # sleep infinity is useful for debugging environment issues
-        # comment out when not debugging
-        # args: ['/usr/bin/sleep', 'infinity']
-        # command: ['/usr/bin/dumb-init']
-        volumeMounts:
-        - name: fedora-ostree-content-volume
-          mountPath: /mnt/koji
-        image: ""
-        imagePullPolicy: IfNotPresent
-        resources: {}
+        - name: fedora-ostree-pruner
+          # sleep infinity is useful for debugging environment issues
+          # comment out when not debugging
+          # args: ['/usr/bin/sleep', 'infinity']
+          # command: ['/usr/bin/dumb-init']
+          volumeMounts:
+            - name: fedora-ostree-content-volume
+              mountPath: /mnt/koji
+          image: ""
+          imagePullPolicy: IfNotPresent
+          resources: {}
       # The files in the ostree volumes are created with group ownership of 263.
       # We need to have 263 in our supplemental groups. See https://pagure.io/releng/issue/8811#comment-629051
       securityContext:
         supplementalGroups: [263]
       volumes:
-      - name: fedora-ostree-content-volume
-        persistentVolumeClaim:
-          claimName: fedora-ostree-content-volume
+        - name: fedora-ostree-content-volume
+          persistentVolumeClaim:
+            claimName: fedora-ostree-content-volume
       restartPolicy: Always
   test: false
   triggers:
-  - type: ConfigChange
-  - type: ImageChange
-    imageChangeParams:
-      automatic: true
-      containerNames:
-      - fedora-ostree-pruner
-      from:
-        kind: ImageStreamTag
-        name: fedora-ostree-pruner-img:latest
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - fedora-ostree-pruner
+        from:
+          kind: ImageStreamTag
+          name: fedora-ostree-pruner-img:latest

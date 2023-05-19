@@ -1,29 +1,30 @@
+---
 apiVersion: image.openshift.io/v1
 kind: List
 items:
-# ImageStream for Fedora image
-- apiVersion: image.openshift.io/v1
-  kind: ImageStream
-  metadata:
-    labels:
-      build: coreos-ostree-importer
-    name: fedora
-  spec:
-    lookupPolicy:
-      local: false
-    tags:
-    - name: "38"
-      from:
-        kind: DockerImage
-        name: registry.fedoraproject.org/fedora:38
-      importPolicy: 
-        scheduled: true
-      referencePolicy:
-        type: Source
-# ImageStream for resulting built coreos-ostree-importer-img
-- apiVersion: image.openshift.io/v1
-  kind: ImageStream
-  metadata:
-    labels:
-      build: coreos-ostree-importer
-    name: coreos-ostree-importer-img
+  # ImageStream for Fedora image
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      labels:
+        build: coreos-ostree-importer
+      name: fedora
+    spec:
+      lookupPolicy:
+        local: false
+      tags:
+        - name: "38"
+          from:
+            kind: DockerImage
+            name: registry.fedoraproject.org/fedora:38
+          importPolicy:
+            scheduled: true
+          referencePolicy:
+            type: Source
+  # ImageStream for resulting built coreos-ostree-importer-img
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      labels:
+        build: coreos-ostree-importer
+      name: coreos-ostree-importer-img

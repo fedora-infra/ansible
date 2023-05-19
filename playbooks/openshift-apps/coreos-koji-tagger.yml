@@ -1,17 +1,18 @@
+---
 - name: make the app be real
   hosts: os_control:os_control_stg
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml
     - "/srv/private/ansible/vars.yml"
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
-############################################
-# actions to create the project in OpenShift
-############################################
-# to run: sudo rbac-playbook -l os_control_stg openshift-apps/coreos-koji-tagger.yml
+  ############################################
+  # actions to create the project in OpenShift
+  ############################################
+  # to run: sudo rbac-playbook -l os_control_stg openshift-apps/coreos-koji-tagger.yml
   roles:
   - role: openshift/project
     app: coreos-koji-tagger
@@ -58,12 +59,12 @@
     template: deploymentconfig.yml
     objectname: deploymentconfig.yml
 
-###############################################
-# actions to delete the project from OpenShift
-###############################################
-# to run: sudo rbac-playbook -l os_control_stg -t delete openshift-apps/coreos-koji-tagger.yml
+  ###############################################
+  # actions to delete the project from OpenShift
+  ###############################################
+  # to run: sudo rbac-playbook -l os_control_stg -t delete openshift-apps/coreos-koji-tagger.yml
   - role: openshift/object-delete
     app: coreos-koji-tagger
     objecttype: project
     objectname: coreos-koji-tagger
-    tags: [ never, delete ]
+    tags: [never, delete]

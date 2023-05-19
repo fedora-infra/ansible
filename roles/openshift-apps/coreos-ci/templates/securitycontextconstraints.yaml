@@ -1,3 +1,4 @@
+---
 allowHostDirVolumePlugin: false
 allowHostIPC: false
 allowHostNetwork: false
@@ -8,13 +9,13 @@ allowPrivilegedContainer: false
 allowedCapabilities: null
 apiVersion: security.openshift.io/v1
 defaultAddCapabilities:
-- CAP_SETFCAP
+  - CAP_SETFCAP
 fsGroup:
   type: RunAsAny
 groups:
-- system:cluster-admins
+  - system:cluster-admins
 users:
-- system:serviceaccount:coreos-ci:coreos-ci-sa
+  - system:serviceaccount:coreos-ci:coreos-ci-sa
 kind: SecurityContextConstraints
 metadata:
   annotations:
@@ -23,7 +24,7 @@ metadata:
 priority: 10
 readOnlyRootFilesystem: false
 requiredDropCapabilities:
-- MKNOD
+  - MKNOD
 runAsUser:
   type: RunAsAny
 seLinuxContext:
@@ -31,10 +32,9 @@ seLinuxContext:
 supplementalGroups:
   type: RunAsAny
 volumes:
-- configMap
-- downwardAPI
-- emptyDir
-- persistentVolumeClaim
-- projected
-- secret
-
+  - configMap
+  - downwardAPI
+  - emptyDir
+  - persistentVolumeClaim
+  - projected
+  - secret

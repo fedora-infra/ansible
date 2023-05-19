@@ -1,3 +1,4 @@
+---
 - name: Create the directories to hold the templates
   file:
     path: "/root/ocp4/openshift-apps/{{project_name}}"
@@ -5,7 +6,7 @@
     owner: root
     group: root
     mode: 0770
-    recurse: yes
+    recurse: true
 
 # generate the templates for project to be created
 - name: create the templates

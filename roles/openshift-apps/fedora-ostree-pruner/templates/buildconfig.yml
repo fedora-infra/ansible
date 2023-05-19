@@ -1,3 +1,4 @@
+---
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
@@ -27,15 +28,15 @@ spec:
       kind: ImageStreamTag
       name: fedora-ostree-pruner-img:latest
   triggers:
-  - type: ImageChange
-    imageChange: {}
-  - type: ConfigChange
+    - type: ImageChange
+      imageChange: {}
+    - type: ConfigChange
 {% if env == "staging" and fedora_ostree_pruner_webhook_secret_stg is defined %}
-  - type: GitHub
-    github:
-      secret: "{{ fedora_ostree_pruner_webhook_secret_stg }}"
+    - type: GitHub
+      github:
+        secret: "{{ fedora_ostree_pruner_webhook_secret_stg }}"
 {% elif fedora_ostree_pruner_webhook_secret_prod is defined %}
-  - type: GitHub
-    github:
-      secret: "{{ fedora_ostree_pruner_webhook_secret_prod }}"
+    - type: GitHub
+      github:
+        secret: "{{ fedora_ostree_pruner_webhook_secret_prod }}"
 {% endif %}
