@@ -14,9 +14,17 @@
 #ini_set( 'display_errors', 1 );
 
 # Added for timeout testing
+{% if env == "staging" %}
+#require_once( "includes/DefaultSettings.php" );
+{% else %}
 require_once( "includes/DefaultSettings.php" );
+{% endif %}
 #$wgDebugLogFile         = '/tmp/out.log';
+{% if env == "staging" %}
+#$wgCaptchaClass = 'SimpleCaptcha';
+{% else %}
 $wgCaptchaClass = 'SimpleCaptcha';
+{% endif %}
 #$wgCaptchaClass = 'FancyCaptcha';
 #$wgCaptchaDirectory = "/mnt/web/attachments/captchas";
 #$wgCaptchaDirectoryLevels = 0;
@@ -650,7 +658,11 @@ $_SERVER['SERVER_PORT'] = 443;
 
 # do not bother to throttle login attempts
 # users MUST have a valid OIDC token so brute force will get them nowhere.
+{% if env == "staging" %}
+#$wgPasswordAttemptThrottle = false;
+{% else %}
 $wgPasswordAttemptThrottle = false;
+{% endif %}
 
 # Looks like mediawiki is using undefined constants.... Let's shut that up
 error_reporting(E_ALL ^ E_NOTICE);
