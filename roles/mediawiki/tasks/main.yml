@@ -51,6 +51,9 @@
   - packages
   - mediawiki
 
+# mediawiki-OpenIDConnect here is pulled from the infra repo, which is also patched to add
+# the FPCA check, and returns the message to the user:
+# "You need to have signed the FPCA to log into the wiki"
 - name: install needed packages (fedora only)
   package: name={{ item }} state=present
   with_items:
