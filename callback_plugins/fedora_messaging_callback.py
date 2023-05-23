@@ -3,6 +3,7 @@
 # skvidal@fedoraproject.org
 # rbean@redhat.com
 # karsten@redhat.com  changes for fedora-messaging
+# abompard@redhat.com changes to adapt to ansible's specific python
 
 # Ansible is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,13 +18,13 @@
 # You should have received a copy of the GNU General Public License
 # along with Ansible.  If not, see <http://www.gnu.org/licenses/>.
 
+import json
 import logging
 import os
 import pwd
-
-import fedora_messaging.config
-from fedora_messaging.api import Message, publish
-from fedora_messaging.exceptions import PublishReturned, ConnectionException
+import uuid
+from subprocess import run, PIPE, STDOUT
+from tempfile import NamedTemporaryFile
 
 try:
     from ansible.plugins.callback import CallbackBase
@@ -37,24 +38,39 @@ except ImportError:
     from ansible.utils import md5 as secure_hash
 
 LOGGER = logging.getLogger(__name__)
+FEDORA_MESSAGING_CONF = "/etc/fedora-messaging/batcave-messaging.toml"
+
 
 def getlogin():
     try:
         user = os.getlogin()
-    except OSError as e:
+    except OSError:
         user = pwd.getpwuid(os.geteuid())[0]
     return user
+
+
+def send_message(msg):
+    msg["id"] = str(uuid.uuid4())
+    env = os.environ.copy()
+    env["FEDORA_MESSAGING_CONF"] = FEDORA_MESSAGING_CONF
+    with NamedTemporaryFile() as msg_file:
+        json.dump(msg, msg_file)
+        result = run(
+            ["fedora-messaging", "publish", msg_file.name],
+            stdout=PIPE, stderr=STDOUT, text=True, env=env,
+        )
+    if result.returncode > 0:
+        LOGGER.warning(f"Fedora Messaging plugin failed: {result.stdout}")
+        print(f"Fedora Messaging plugin failed: {result.stdout}")
 
 
 class CallbackModule(CallbackBase):
     """ Publish playbook starts and stops to fedora_messaging. """
 
-    CALLBACK_NAME = "fedora_messaging_callback2"
+    CALLBACK_NAME = "fedora_messaging_callback"
     CALLBACK_TYPE = "notification"
     CALLBACK_VERSION = 2.0
     CALLBACK_NEEDS_WHITELIST = True
-    fedora_messaging.config.conf.load_config(
-        '/etc/fedora-messaging/batcave-messaging.toml')
 
     playbook_path = None
 
@@ -63,7 +79,6 @@ class CallbackModule(CallbackBase):
         self.playbook = None
 
         super(CallbackModule, self).__init__()
-
 
     def set_play_context(self, play_context):
         self.play_context = play_context
@@ -74,59 +89,44 @@ class CallbackModule(CallbackBase):
     def v2_playbook_on_play_start(self, play):
         # This gets called once for each play.. but we just issue a message once
         # for the first one.  One per "playbook"
-        if self.playbook:
-            # figure out where the playbook FILE is
-            path = os.path.abspath(self.playbook._file_name)
+        if not self.playbook:
+            return
+        # figure out where the playbook FILE is
+        path = os.path.abspath(self.playbook._file_name)
 
-            # Bail out early without publishing if we're in --check mode
-            if self.play_context.check_mode:
-                return
+        # Bail out early without publishing if we're in --check mode
+        if self.play_context.check_mode:
+            return
 
-            if not self.playbook_path:
-                try:
-                    msg = Message(
-                        topic="ansible.playbook.start",
-                        body={
-                            'playbook': path,
-                            'userid': getlogin(),
-                            'extra_vars': play._variable_manager.extra_vars,
-                            'inventory': play._variable_manager._inventory._sources,
-                            'playbook_checksum': secure_hash(path),
-                            'check': self.play_context.check_mode
-                        }
-                    )
-                    publish(msg)
-                except PublishReturned as e:
-                    LOGGER.warning(
-                        "Fedora Messaging broker rejected message %s: %s", msg.id, e
-                    )
-                    print(
-                        "Fedora Messaging broker rejected message %s: %s", msg.id, e
-                    )
-                except ConnectionException as e:
-                    LOGGER.warning("Error sending message %s: %s", msg.id, e)
-                    print("Error sending message %s: %s", msg.id, e)
-                    print(e)
-                self.playbook_path = path
+        # Only publish on playbook start
+        if self.playbook_path:
+            return
+
+        msg = {
+            "topic": "ansible.playbook.start",
+            "body": {
+                'playbook': path,
+                'userid': getlogin(),
+                'extra_vars': play._variable_manager.extra_vars,
+                'inventory': play._variable_manager._inventory._sources,
+                'playbook_checksum': secure_hash(path),
+                'check': self.play_context.check_mode
+            },
+        }
+        send_message(msg)
+        self.playbook_path = path
 
     def v2_playbook_on_stats(self, stats):
         if not self.playbook_path:
             return
 
         results = dict([(h, stats.summarize(h)) for h in stats.processed])
-        try:
-            msg = Message(
-                topic="ansible.playbook.complete",
-                body={
-                    'playbook': self.playbook_path,
-                    'userid': getlogin(),
-                    'results': results
-                }
-            )
-            publish(msg)
-        except PublishReturned as e:
-            LOGGER.warning("Fedora Messaging broker rejected message %s: %s", msg.id, e)
-            print("Fedora Messaging broker rejected message %s: %s", msg.id, e)
-        except ConnectionException as e:
-            LOGGER.warning("Error sending message %s: %s", msg.id, e)
-            print("Error sending message %s: %s", msg.id, e)
+        msg = {
+            "topic": "ansible.playbook.complete",
+            "body": {
+                'playbook': self.playbook_path,
+                'userid': getlogin(),
+                'results': results
+            },
+        }
+        send_message(msg)
