@@ -53,7 +53,7 @@ def send_message(msg):
     msg["id"] = str(uuid.uuid4())
     msg["headers"] = {
         "fedora_messaging_schema": "base.message",
-        "fedora_messaging_severity": None,
+        "fedora_messaging_severity": 20,
     }
     env = os.environ.copy()
     env["FEDORA_MESSAGING_CONF"] = FEDORA_MESSAGING_CONF
