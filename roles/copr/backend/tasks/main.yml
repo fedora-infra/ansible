@@ -261,14 +261,15 @@
   copy: dest="/home/copr/cloud/ec2rc.variable" content=""
   when: devel|bool
 
-- name: copy copr-be.conf
-  template: src="copr-be.conf.j2" dest=/etc/copr/copr-be.conf  owner=root group=copr mode=640
-  notify:
-  - restart copr-backend
-  tags:
-  - config
-  - copr_infrastructure_password
-  - provision_config
+# See https://pagure.io/fedora-infrastructure/issue/11336
+# - name: copy copr-be.conf
+#   template: src="copr-be.conf.j2" dest=/etc/copr/copr-be.conf  owner=root group=copr mode=640
+#   notify:
+#   - restart copr-backend
+#   tags:
+#   - config
+#   - copr_infrastructure_password
+#   - provision_config
 
 - name: create messaging config directory
   file: dest=/etc/copr/msgbuses state=directory owner=copr group=copr mode=0700
