@@ -1,6 +1,6 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
-from distutils.sysconfig import get_python_lib
+from subprocess import check_output
 
 from ansible.module_utils.basic import AnsibleModule
 
@@ -48,14 +48,19 @@ sitelib:
 
 
 def run_module():
-    result = {
-        "sitelib": get_python_lib(),
-    }
     module = AnsibleModule(
         argument_spec={},
         supports_check_mode=True
     )
-    module.exit_json(changed=False, ansible_facts=dict(python3=result))
+    try:
+        output = check_output([
+            "python3", "-c",
+            "from distutils.sysconfig import get_python_lib; print(get_python_lib())",
+        ])
+    except OSError:
+        module.exit_json(changed=False, ansible_facts=dict())
+    else:
+        module.exit_json(changed=False, ansible_facts=dict(python3=output.strip()))
 
 
 def main():
