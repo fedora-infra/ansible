@@ -53,7 +53,7 @@ def send_message(msg):
     msg["id"] = str(uuid.uuid4())
     env = os.environ.copy()
     env["FEDORA_MESSAGING_CONF"] = FEDORA_MESSAGING_CONF
-    with NamedTemporaryFile() as msg_file:
+    with NamedTemporaryFile(mode="w+") as msg_file:
         json.dump(msg, msg_file)
         result = run(
             ["fedora-messaging", "publish", msg_file.name],
