@@ -51,10 +51,15 @@ def getlogin():
 
 def send_message(msg):
     msg["id"] = str(uuid.uuid4())
+    msg["headers"] = {
+        "fedora_messaging_schema": "base.message",
+        "fedora_messaging_severity": None,
+    }
     env = os.environ.copy()
     env["FEDORA_MESSAGING_CONF"] = FEDORA_MESSAGING_CONF
-    with NamedTemporaryFile(mode="w+") as msg_file:
+    with NamedTemporaryFile(mode="w+", buffering=1) as msg_file:
         json.dump(msg, msg_file)
+        msg_file.write("\n")
         result = run(
             ["fedora-messaging", "publish", msg_file.name],
             stdout=PIPE, stderr=STDOUT, text=True, env=env,
