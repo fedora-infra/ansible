@@ -10,7 +10,7 @@ spec:
 {% if env == "staging" %}
       ref: staging
 {% else %}
-      ref: main 
+      ref: main
 {% endif %}
       uri: https://pagure.io/releng/compose-tracker.git
     type: Git
@@ -19,7 +19,7 @@ spec:
     dockerStrategy:
       from:
         kind: ImageStreamTag
-        name: fedora:36
+        name: fedora:38
   output:
     to:
       kind: ImageStreamTag
