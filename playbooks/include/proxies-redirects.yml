@@ -841,17 +841,10 @@
     tags:
     - fmn
 
-  - role: httpd/redirect
-    shortname: silverblue
+  - role: httpd/redirectmatch
+    shortname: 00-silverblue-redirect
     website: silverblue.fedoraproject.org
     regex: ^.*
     target: https://fedoraproject.org/silverblue
     tags:
-    - fedoraproject.org
-
-  - role: httpd/redirect
-    shortname: 00-silverblue-redirect
-    website: silverblue.fedoraproject.org
-    target: https://fedoraproject.org/silverblue
-    tags:
-      - fdsilverblue
+    - silverblue

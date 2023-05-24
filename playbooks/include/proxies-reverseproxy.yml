@@ -808,16 +808,6 @@
     tags: mdapi
 
   - role: httpd/reverseproxy
-    website: silverblue.fedoraproject.org
-    destname: silverblue
-    balancer_name: app-os
-    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
-    targettype: openshift
-    ocp4: true
-    keephost: true
-    tags: silverblue
-
-  - role: httpd/reverseproxy
     website: release-monitoring.org
     destname: release-monitoring
     balancer_name: apps-ocp
