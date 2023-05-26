@@ -134,7 +134,7 @@
 
 # TODO: consider using selinux_modules from https://galaxy.ansible.com/linux-system-roles/selinux instead
 - name: check to see what version is installed (if any)
-  shell: semodule -l -m | grep fi-collectd | cut -d: -f2
+  shell: "semodule -l -m | grep fi-collectd | cut -d: -f2"
   register: ficgeneral_installed_version
   check_mode: no
   changed_when: false
