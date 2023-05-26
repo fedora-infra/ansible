@@ -1,4 +1,4 @@
-module fi-collectd 1.11.0;
+module fi-collectd 1.11.1;
 
 require {
     type shell_exec_t;
@@ -22,7 +22,7 @@ require {
     class lnk_file read;
     class sock_file { read write getattr };
     class unix_stream_socket connectto;
-    class netlink_generic_socket create;
+    class netlink_generic_socket { create bind };
 }
 
 #============= collectd_t ==============
@@ -41,4 +41,4 @@ allow collectd_t var_run_t:sock_file { read write getattr };
 allow collectd_t anon_inodefs_t:file { write read };
 allow collectd_t initrc_t:unix_stream_socket connectto;
 allow collectd_t proc_net_t:lnk_file read;
-allow collectd_t self:netlink_generic_socket create;
+allow collectd_t self:netlink_generic_socket { create bind };
