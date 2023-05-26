@@ -132,18 +132,29 @@
   - collectd
   - selinux
 
-- name: check to see if its even installed yet
-  shell: semodule -l | grep fi-collectd | wc -l
-  register: ficgeneral_grep
+# TODO: consider using selinux_modules from https://galaxy.ansible.com/linux-system-roles/selinux instead
+- name: check to see what version is installed (if any)
+  shell: semodule -l -m | grep fi-collectd | cut -d: -f2
+  register: ficgeneral_installed_version
   check_mode: no
-  changed_when: "'0' in ficgeneral_grep.stdout"
+  changed_when: false
+  tags:
+  - collectd
+  - selinux
+
+# This cmd comes from the last example of the semodule man page
+- name: check to see what version we have
+  shell: /usr/libexec/selinux/hll/pp /usr/share/collectd/fi-collectd.pp | sha256sum | cut -d ' ' -f1
+  register: ficgeneral_local_version
+  check_mode: no
+  changed_when: false
   tags:
   - collectd
   - selinux
 
 - name: install our general collectd selinux module
   command: semodule -i /usr/share/collectd/fi-collectd.pp
-  when: ficgeneral_module is changed or ficgeneral_grep is changed
+  when: ficgeneral_module is changed or ficgeneral_installed_version != ficgeneral_local_version
   tags:
   - collectd
   - selinux
