@@ -624,15 +624,6 @@
     - registry
 
   - role: httpd/reverseproxy
-    website: registry.centos.org
-    destname: registry-centos
-    # proxyurl in this one is totally ignored, because Docker.
-    # (turns out it uses PATCH requests that Varnish cannot deal with)
-    proxyurl: "{{ varnish_url }}"
-    tags:
-    - registry
-
-  - role: httpd/reverseproxy
     website: candidate-registry.fedoraproject.org
     destname: candidate-registry
     proxyurl: http://localhost:10054
