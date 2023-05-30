@@ -11,7 +11,7 @@ try:
     check_consumer = sys.argv[2]
     backlog_warning = int(sys.argv[3])
     backlog_critical = int(sys.argv[4])
-    fname = '/var/run/fedmsg/monitoring-%s.socket' % service
+    fname = '/var/run/fedmsg/monitoring-%s-3.socket' % service
 
     if not os.path.exists(fname):
         print("UNKNOWN - %s does not exist" % fname)

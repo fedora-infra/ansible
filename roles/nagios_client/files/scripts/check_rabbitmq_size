@@ -1,4 +1,4 @@
-#!/bin/python
+#!/bin/python3
 import sys
 import requests
 
@@ -11,15 +11,15 @@ messages = r['messages']
 msg = 'Messages in queue: %i (%i consumers)' % (messages, consumers)
 
 if consumers < 1:
-    print 'CRITICAL: No consumers: %s' % msg
+    print ('CRITICAL: No consumers: %s' % msg)
     sys.exit(2)
 
-if messages > sys.argv[2]:
-    print 'CRITICAL: %s' % msg
+if str(messages) > sys.argv[2]:
+    print ('CRITICAL: %s' % msg)
     sys.exit(2)
 
-if messages > sys.argv[3]:
-    print 'WARNING: %s' % msg
+if str(messages) > sys.argv[3]:
+    print ('WARNING: %s' % msg)
     sys.exit(1)
 
 print 'OK: %s' % msg
