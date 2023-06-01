@@ -21,12 +21,13 @@ ks_url: http://10.3.163.35/repo/rhel/ks/kvm-rhel
 # These are normally group variables, but in this case db servers are often different
 lvm_size: 1750000
 max_cpu: 96
+max_mem_size: 327680
 max_parallel_maintenance_workers: 8
 max_parallel_workers: 64
 max_parallel_workers_per_gather: 32
 max_stack_depth: "6MB"
 max_worker_processes: 64
-mem_size: 131070
+mem_size: 262140
 nagios_Check_Services:
   swap: false
 nrpe_procs_crit: 700
