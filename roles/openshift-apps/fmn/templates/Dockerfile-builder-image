@@ -1,0 +1,8 @@
+FROM quay.io/fedora/python-310:latest
+LABEL \
+    name="bodhi-base" \
+    vendor="Fedora Infrastructure" \
+    license="MIT"
+USER root
+RUN dnf install -y collectd collectd-python patchutils
+USER 1001

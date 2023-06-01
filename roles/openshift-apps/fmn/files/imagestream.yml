@@ -23,6 +23,11 @@ items:
             scheduled: true
           referencePolicy:
             type: Source
+  # The Python 3.10 builder image plus collectd
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      name: python-310-collectd
   # Sendria (to view email notifications in staging)
   - apiVersion: image.openshift.io/v1
     kind: ImageStream

@@ -520,6 +520,63 @@ spec:
           kind: ImageStreamTag
           name: redis:latest
 ---
+# Collectd stats collector
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: collectd
+  labels:
+    app: fmn
+spec:
+  replicas: 1
+  selector:
+    app: fmn
+    deploymentconfig: collectd
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: fmn
+        deploymentconfig: collectd
+    spec:
+      containers:
+        - name: collectd
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: etc-fmn
+              mountPath: "/etc/fmn"
+              readOnly: true
+          env:
+            - name: APP_SCRIPT
+              value: ".s2i/run-collectd.sh"
+            - name: CACHE__SETUP_ARGS__PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: fmn
+                  key: redis-password
+            - name: CACHE__SETUP_ARGS__HASH_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: fmn
+                  key: cache-hash-key
+
+      volumes:
+        - name: etc-fmn
+          configMap:
+            name: fmn
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - collectd
+        from:
+          kind: ImageStreamTag
+          name: fmn:latest
+---
 # Sendria, to display email notifications in staging
 {% if env == 'staging' %}
 apiVersion: apps.openshift.io/v1

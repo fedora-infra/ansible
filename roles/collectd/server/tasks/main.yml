@@ -29,9 +29,27 @@
   - collectd/server
   when: ansible_distribution_major_version|int == 8
 
-# install collectd rrd config
-- name: install collectd rrd config
-  copy: src=rrdtool.conf dest=/etc/collectd.d/rrdtool.conf
+# install collectd types
+- name: install collectd types
+  copy:
+    src: "{{ item }}"
+    dest: /usr/share/collectd/{{ item }}
+  loop:
+  - fmn-types.db
+  notify:
+  - restart collectd
+  tags:
+  - config
+  - collectd/server
+
+# install collectd configs
+- name: install collectd config
+  copy:
+    src: "{{ item }}"
+    dest: /etc/collectd.d/{{ item }}
+  loop:
+  - rrdtool.conf
+  - fmn-data.conf
   notify:
   - restart collectd
   tags:

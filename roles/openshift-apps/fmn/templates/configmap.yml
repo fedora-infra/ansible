@@ -23,3 +23,5 @@ items:
       {{ load_file('sender-irc.toml') | indent(6) }}
     sender-matrix.toml: |-
       {{ load_file('sender-matrix.toml') | indent(6) }}
+    collectd.conf: |-
+      {{ load_file('collectd.conf') | indent(6) }}

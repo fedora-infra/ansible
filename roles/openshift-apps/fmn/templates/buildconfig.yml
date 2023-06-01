@@ -3,6 +3,32 @@
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
+  name: python-310-collectd
+  labels:
+    app: fmn
+    build: python-310-collectd
+spec:
+  runPolicy: Serial
+  source:
+    type: Dockerfile
+    dockerfile: |-
+      {{ load_file('Dockerfile-builder-image') | indent(6) }}
+  strategy:
+    type: Docker
+    dockerStrategy:
+      from:
+        kind: ImageStreamTag
+        name: quay.io/fedora/python-310:latest
+  output:
+    to:
+      kind: ImageStreamTag
+      name: python-310-collectd:latest
+  triggers:
+  - type: ImageChange
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
   name: fmn
   labels:
     app: fmn
@@ -20,10 +46,8 @@ spec:
     sourceStrategy:
       from:
         kind: ImageStreamTag
-        # name: python:3.10
-        # namespace: openshift
-        # OpenShift does not have Python 3.10 (yet), use our own ImageStream
-        name: python-310:latest
+        # Our own ImageStream with collectd added to it
+        name: python-310-collectd:latest
       env:
       # The .s2i/bin/assemble script uses this to build the frontend with the
       # correct API and Ipsilon addresses.
