@@ -49,7 +49,7 @@
     dest: /etc/collectd.d/{{ item }}
   loop:
   - rrdtool.conf
-  - fmn-data.conf
+  - fmn.conf
   notify:
   - restart collectd
   tags:
