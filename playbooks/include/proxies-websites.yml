@@ -1147,6 +1147,6 @@
     cert_name: directory.fedoraproject.org
     ssl: true
     sslonly: true
-    certbot: true
+    cert_name: "{{wildcard_cert_name}}"
     tags:
     - directory
