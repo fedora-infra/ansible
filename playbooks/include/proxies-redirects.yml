@@ -850,3 +850,11 @@
     target: https://fedoraproject.org/silverblue
     tags:
     - silverblue
+
+  - role: httpd/redirectmatch
+    shortname: 00-directory-redirect
+    website: directory.fedoraproject.org
+    regex: ^.*
+    target: https://www.port389.org/
+    tags:
+    - directory

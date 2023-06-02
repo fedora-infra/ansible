@@ -1141,3 +1141,12 @@
     certbot: true
     tags:
     - ipsilon-website
+
+  - role: httpd/website
+    site_name: directory.fedoraproject.org
+    cert_name: directory.fedoraproject.org
+    ssl: true
+    sslonly: true
+    certbot: true
+    tags:
+    - directory
