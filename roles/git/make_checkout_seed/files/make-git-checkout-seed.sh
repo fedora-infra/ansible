@@ -117,7 +117,6 @@ ln -s rpm-specs-$DATE.tar.xz $OUTPUT_DIR/rpm-specs-latest.tar.xz
 for branchname in ${EXTRA_BRANCHES[@]}; do
   ((verbose)) && echo tarring up rpm-specs for $branchname
   tar -cf - -C$WORK_DIR $(basename $WORK_DIR/$EXTRA_BRANCHES_PREFIX$branchname) | xz -2 >$OUTPUT_DIR/.rpm-specs-$branchname-$DATE.tar.xz
-  rm $OUTPUT_DIR/rpm-specs-$branchname*.tar.xz
   mv $OUTPUT_DIR/.rpm-specs-$branchname-$DATE.tar.xz $OUTPUT_DIR/rpm-specs-$branchname-$DATE.tar.xz
 done
 
