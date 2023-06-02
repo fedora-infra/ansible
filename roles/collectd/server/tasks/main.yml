@@ -90,7 +90,7 @@
 - name: create the service configuration directory
   file:
     path: /etc/systemd/system/collectd.service.d
-    type: directory
+    state: directory
   tags:
   - config
   - collectd/server
