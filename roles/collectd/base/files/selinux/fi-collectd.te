@@ -4,6 +4,8 @@ require {
     type shell_exec_t;
     type bin_t;
     type collectd_t;
+    type collectd_script_t;
+    type collectd_var_run_t;
     type configfs_t;
     type hostname_exec_t;
     type init_t;
@@ -16,7 +18,7 @@ require {
     type initrc_t;
     type proc_net_t;
 
-    class capability { kill setuid dac_read_search sys_ptrace setgid dac_override };
+    class capability { kill setuid dac_read_search sys_ptrace setgid dac_override chown };
     class dir { getattr read };
     class file { execute read write getattr execute_no_trans ioctl open };
     class lnk_file read;
@@ -42,3 +44,10 @@ allow collectd_t anon_inodefs_t:file { write read };
 allow collectd_t initrc_t:unix_stream_socket connectto;
 allow collectd_t proc_net_t:lnk_file read;
 allow collectd_t self:netlink_generic_socket { create bind getattr };
+# allow chown for the unix socket
+# https://bugzilla.redhat.com/show_bug.cgi?id=1304029#c9
+allow collectd_t self:capability chown;
+
+# Allow the CGI to request a flush of the RRDs through collectd's unix socket
+#============= collectd_script_t ==============
+allow collectd_script_t collectd_var_run_t:sock_file write;

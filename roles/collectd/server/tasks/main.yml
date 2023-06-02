@@ -50,6 +50,7 @@
   loop:
   - rrdtool.conf
   - fmn.conf
+  - unixsock.conf
   notify:
   - restart collectd
   tags:
@@ -82,6 +83,24 @@
   copy:
     src: collection.conf
     dest: /etc/collection.conf
+  tags:
+  - config
+  - collectd/server
+
+- name: create the service configuration directory
+  file:
+    path: /etc/systemd/system/collectd.service.d
+    type: directory
+  tags:
+  - config
+  - collectd/server
+
+- name: override the timeout for stopping collectd
+  copy:
+    src: service.timeout.conf
+    dest: /etc/systemd/system/collectd.service.d/timeout.conf
+  notify:
+  - reload systemd
   tags:
   - config
   - collectd/server
