@@ -126,7 +126,16 @@
 
 - name: postgresql config template (Fedora / el8 / postgresql 12)
   template: dest=/var/lib/pgsql/data/postgresql.conf src=postgresql.conf-12
-  when: (ansible_distribution_major_version|int > 7 and ansible_distribution == 'RedHat') or ansible_distribution != 'RedHat'
+  when: (ansible_distribution_major_version|int == 8 and ansible_distribution == 'RedHat') or ansible_distribution != 'RedHat'
+  notify:
+  - restart postgresql
+  tags:
+  - config
+  - postgresql
+
+- name: postgresql config template (el9 / postgresql 15)
+  template: dest=/var/lib/pgsql/data/postgresql.conf src=postgresql.conf-15
+  when: (ansible_distribution_major_version|int == 9 and ansible_distribution == 'RedHat')
   notify:
   - restart postgresql
   tags:

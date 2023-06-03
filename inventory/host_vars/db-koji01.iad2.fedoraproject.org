@@ -12,6 +12,7 @@ db_backup_dir: ['/backups']
 dbs_to_backup:
   - koji
 effective_cache_size: "100GB"
+effective_io_concurrency: 5
 eth0_ipv4_gw: 10.3.169.254
 eth0_ipv4_ip: 10.3.169.103
 # kernel SHMMAX value
@@ -23,10 +24,10 @@ lvm_size: 1750000
 max_cpu: 96
 max_mem_size: 327680
 max_parallel_maintenance_workers: 8
-max_parallel_workers: 64
-max_parallel_workers_per_gather: 32
+max_parallel_workers: 80
+max_parallel_workers_per_gather: 80
 max_stack_depth: "6MB"
-max_worker_processes: 64
+max_worker_processes: 80
 mem_size: 262140
 nagios_Check_Services:
   swap: false
