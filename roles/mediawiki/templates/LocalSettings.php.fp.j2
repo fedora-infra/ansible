@@ -644,6 +644,10 @@ $_SERVER['HTTP_HOST'] = 'fedoraproject.org';
 $_SERVER['REQUEST_SCHEME'] = 'https';
 $_SERVER['SERVER_PORT'] = 443;
 
+# do not bother to throttle login attempts
+# users MUST have a valid OIDC token so brute force will get them nowhere.
+$wgPasswordAttemptThrottle = false;
+
 # Looks like mediawiki is using undefined constants.... Let's shut that up
 error_reporting(E_ALL ^ E_NOTICE);
 
