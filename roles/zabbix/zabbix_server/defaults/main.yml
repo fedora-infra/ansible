@@ -1,0 +1,19 @@
+---
+# defaults file for zabbix-server
+# DB settings
+zabbix_db_type: POSTGRESQL # OVERRIDE
+zabbix_db_host: localhost  # OVERRIDE
+zabbix_db_port: 0          # OVERRIDE
+zabbix_db_name: zabbix     # OVERRIDE
+zabbix_db_user: zabbix     # OVERRIDE
+zabbix_db_pass: zabbix     # OVERRIDE
+
+zabbix_server_pkgs:
+  - zabbix-server-pgsql
+  - zabbix-web-pgsql
+  - zabbix-nginx-conf
+  - zabbix-sql-scripts
+  - zabbix-selinux-policy
+  - zabbix-agent
+  - postgresql-server
+

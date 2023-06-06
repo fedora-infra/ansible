@@ -1,0 +1,33 @@
+---
+- name: Ensuring Zabbix server is started
+  ansible.builtin.service:
+    name: zabbix-server
+    state: reloaded
+    enabled: True
+  tags:
+    zabbix-services
+
+- name: Ensuring Zabbix agent is started
+  ansible.builtin.service:
+    name: zabbix-agent
+    state: reloaded
+    enabled: True
+  tags:
+    zabbix-services
+
+- name: Ensuring nginx server is started
+  ansible.builtin.service:
+    name: nginx
+    state: reloaded
+    enabled: True
+  tags:
+    zabbix-services
+
+- name: Ensuring php-fpm service is started
+  ansible.builtin.service:
+    name: php-fpm
+    state: reloaded
+    enabled: True
+  tags:
+    zabbix-services
+

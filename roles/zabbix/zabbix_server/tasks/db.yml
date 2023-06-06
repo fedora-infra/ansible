@@ -1,0 +1,45 @@
+---
+
+- name: Run the postgresql-setup initdb command
+  ansible.builtin.shell: postgresql-setup initdb
+  args:
+    executable: /bin/bash
+  tags:
+    - db-configure
+
+# db needs to be running at this step
+- name: Ensuring postgresql server is started
+  ansible.builtin.service:
+    name: postgresql
+    state: reloaded
+    enabled: True
+  tags:
+    - zabbix-services
+
+- name: Configure the zabbix db user
+  ansible.builtin.shell: |
+    sudo -u postgres createuser --pwprompt {{ zabbix_db_user }}
+
+    expect "Enter password for new role: "
+    send "{{ zabbix_db_pass }}\n"
+
+    exit 0
+  args:
+    executable: /usr/bin/expect
+  tags:
+    - db-configure
+
+- name: Configure the zabbix db
+  ansible.builtin.shell: "sudo -u postgres createdb -O {{ zabbix_db_user }} {{ zabbix_db_name }}"
+  args:
+    executable: /bin/bash
+  tags:
+    - db-configure
+
+- name: Import the zabbix db schemas
+  ansible.builtin.shell: "zcat /usr/share/zabbix-sql-scripts/postgresql/server.sql.gz | sudo -u zabbix psql zabbix"
+  args:
+    executable: /bin/bash
+  tags:
+    - db-configure
+
