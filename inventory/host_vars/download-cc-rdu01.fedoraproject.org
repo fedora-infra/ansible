@@ -10,7 +10,7 @@ eth0_nm: 255.255.255.0
 has_ipv6: yes
 ks_repo: http://38.145.60.16/repo/rhel/RHEL7-x86_64/
 ks_url: http://38.145.60.16/repo/rhel/ks/kvm-rhel-7-ext
-lvm_size: 20000
+lvm_size: 50000
 mac_address: "52:54:00:30:a6:43"
 max_mem_size: 20480
 mem_size: 16384
@@ -39,6 +39,6 @@ postfix_group: vpn
 public_hostname: download-cc-rdu01.fedoraproject.org
 rsyncd_conf: "rsyncd.conf.download-{{ datacenter }}"
 tcp_ports: [80, 443, 873]
-vmhost: virthost-cc-rdu03.fedoraproject.org
+vmhost: vmhost-x86-cc03.rdu-cc.fedoraproject.org
 volgroup: /dev/vg_guests
 vpn: true
