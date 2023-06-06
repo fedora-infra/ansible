@@ -6,7 +6,7 @@
 
 - import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
   vars:
-    myhosts: autosign_stg
+    myhosts: "autosign_stg"
 
 - name: make the box be real
   hosts: autosign:autosign_stg
