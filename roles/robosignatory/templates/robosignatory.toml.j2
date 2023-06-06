@@ -467,6 +467,8 @@ handlers = ["console"]
             to = "f39-python"
             key = "{{ (env == 'production')|ternary('f39-python', 'testkey') }}"
             keyid = "{{ (env == 'production')|ternary('18B8e74c', 'd300e724') }}"
+            file_signing_key = "fedora-39-ima"
+
 
     [consumer_config.ostree_refs]
         [consumer_config.ostree_refs."fedora/rawhide/x86_64/iot"]
