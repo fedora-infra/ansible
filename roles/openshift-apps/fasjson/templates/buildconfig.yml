@@ -9,14 +9,12 @@ metadata:
 spec:
   runPolicy: Serial
   source:
-    type: Dockerfile
-    dockerfile: |-
-      {{ load_file('Dockerfile') | indent(6) }}
+    type: Git
+    git:
+      uri: https://github.com/fedora-infra/fasjson.git
+      ref: {{ (env == 'production')|ternary('stable', 'staging') }}
   strategy:
     type: Docker
-    dockerStrategy:
-      # Prevent Docker from caching the git clone step in the Dockerfile
-      noCache: true
   output:
     to:
       kind: ImageStreamTag
