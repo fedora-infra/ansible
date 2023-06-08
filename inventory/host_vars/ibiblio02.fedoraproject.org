@@ -16,7 +16,7 @@ has_ipv6: true
 br0_port0_mac: 6c:fe:54:5d:ff:7c
 network_connections:
   - autoconnect: true
-  - name: br0
+    name: br0
     state: up
     type: bridge
     mtu: 9000
@@ -33,6 +33,7 @@ network_connections:
       gateway4: '{{ br0_ipv4_gw }}'
       gateway6: '{{ br0_ipv6_gw }}'
   - name: br0-port0
+    autoconnect: true
     mac: "{{ br0_port0_mac }}"
     master: br0
     state: up
