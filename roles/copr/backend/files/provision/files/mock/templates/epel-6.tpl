@@ -8,7 +8,7 @@ name=Extra Packages for Enterprise Linux $releasever - $basearch
 mirrorlist=http://mirrors.fedoraproject.org/mirrorlist?repo=epel-6&arch=$basearch
 failovermethod=priority
 gpgkey=file:///usr/share/distribution-gpg-keys/epel/RPM-GPG-KEY-EPEL-6
-gpgcheck=1
+gpgcheck=0
 skip_if_unavailable=False
 
 [epel-testing]

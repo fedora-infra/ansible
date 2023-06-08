@@ -73,7 +73,7 @@
 
 # https://fedoraproject.org/wiki/Changes/StrongCryptoSettings
 - name: fallback to the legacy crypto policies
-  command: update-crypto-policies --set DEFAULT:FEDORA32
+  command: update-crypto-policies --set DEFAULT:SHA1
   when:
     - prepare_base_image is defined
 
