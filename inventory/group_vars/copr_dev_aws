@@ -52,15 +52,16 @@ copr_builder_fedora_version: 35
 
 copr_builder_images:
   aws:
-    aarch64: ami-01f304ecc82f34543
-    x86_64: ami-042faf11fcd21ca84
+    # WARNING: when changing, always remove images N-2 and older
+    aarch64: ami-0f501baf909425008
+    x86_64: ami-0bf2d362f62f81bdf
   hypervisor:
-    ppc64le: copr-builder-ppc64le-20221118_171101
-    x86_64: copr-builder-x86_64-20221118_154104
+    ppc64le: copr-builder-ppc64le-20230608_110920
+    x86_64: copr-builder-x86_64-20230608_112008
   ibm_cloud:
-    s390x: r022-fe38fac8-ba61-41cd-ad39-792fb85c381a
+    s390x: r022-520df49e-d982-4f58-9df0-f8fbda004ecf
   osuosl:
-    ppc64le: copr-builder-ppc64le-20221118_171101
+    ppc64le: copr-builder-ppc64le-20230608_110920
 
 copr_messaging: true
 datacenter: aws
