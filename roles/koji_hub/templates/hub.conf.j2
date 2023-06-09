@@ -245,3 +245,9 @@ build_from_scm =
     }
     all :: deny
 {% endif %}
+
+scm =
+      # allow scratch builds from any commits
+      bool scratch :: allow
+      match_all branches * !! deny Commit must be present on some branch
+      all :: allow
