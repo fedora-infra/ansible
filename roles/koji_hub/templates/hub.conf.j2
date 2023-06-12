@@ -207,15 +207,13 @@ build_from_scm =
     match scm_host src.stg.fedoraproject.org :: {
         bool scratch :: allow fedpkg sources
         match scm_repository /rpms/* :: allow fedpkg sources
-        match scm_repository /modules/* :: allow fedpkg sources
         match scm_repository /containers/* :: allow fedpkg sources
         match scm_repository /flatpaks/* :: allow fedpkg sources
     }
     match scm_host pkgs.stg.fedoraproject.org :: {
         bool scratch :: allow fedpkg sources
         match scm_repository /rpms/* :: allow fedpkg sources
-        match scm_repository /modules/* :: allow fedpkg sources
-        match scm_repository /containers/* :: allow fedpkg sources
+        match scm_repository /container/* :: allow fedpkg sources
         match scm_repository /flatpaks/* :: allow fedpkg sources
     }
     match scm_host pkgs.fedoraproject.org && match scm_repository /* :: allow fedpkg sources
@@ -227,15 +225,13 @@ build_from_scm =
     match scm_host src.fedoraproject.org :: {
         bool scratch :: allow fedpkg sources
         match scm_repository /rpms/* :: allow fedpkg sources
-        match scm_repository /modules/* :: allow fedpkg sources
         match scm_repository /containers/* :: allow fedpkg sources
         match scm_repository /flatpaks/* :: allow fedpkg sources
     }
     match scm_host pkgs.fedoraproject.org :: {
         bool scratch :: allow fedpkg sources
         match scm_repository /rpms/* :: allow fedpkg sources
-        match scm_repository /modules/* :: allow fedpkg sources
-        match scm_repository /containers/* :: allow fedpkg sources
+        match scm_repository /container/* :: allow fedpkg sources
         match scm_repository /flatpaks/* :: allow fedpkg sources
     }
     match scm_host pagure.io :: {
