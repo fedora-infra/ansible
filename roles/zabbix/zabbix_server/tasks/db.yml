@@ -22,6 +22,8 @@
 
     expect "Enter password for new role: "
     send "{{ zabbix_db_pass }}\n"
+    expect "Enter it again: "
+    send "{{ zabbix_db_pass }}\n"
 
     exit 0
 #  no_log: True
