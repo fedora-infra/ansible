@@ -27,6 +27,8 @@
   tags:
     - packages
 
+- include_tasks: db.yml
+
 - name: Configuring postgres server
   ansible.builtin.template:
     src: pg_hba.conf.j2
