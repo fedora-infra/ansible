@@ -35,3 +35,5 @@
   - sudo
   - zabbix/zabbix_server
 
+  handlers:
+  - import_tasks: "{{ handlers_path }}/restart_services.yml"
