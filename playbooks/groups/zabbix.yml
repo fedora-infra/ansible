@@ -24,13 +24,12 @@
     host: "zabbix{{env_suffix}}.fedoraproject.org"
     when: datacenter == 'iad2'
   - role: keytab/service
-    owner_user: apache
-    owner_group: apache
+    owner_user: nginx
+    owner_group: nginx
     service: HTTP
     host: "zabbix-external{{env_suffix}}.fedoraproject.org"
     when: datacenter != 'iad2'
   - collectd/base
-  - apache
   - sudo
   - zabbix/zabbix_server
 
