@@ -2,16 +2,15 @@
   vars:
     myhosts: "zabbix_stg"
 
-
 - name: make the box be real
   hosts: zabbix_stg
   user: root
-  gather_facts: false
+  gather_facts: True
 
   vars_files:
-    - /srv/web/infra/ansible/vars/global.yml
-    - "/srv/private/ansible/vars.yml"
-    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+   - /srv/web/infra/ansible/vars/global.yml
+   - "/srv/private/ansible/vars.yml"
+   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
   - base
@@ -28,12 +27,19 @@
     owner_user: apache
     owner_group: apache
     service: HTTP
-    host: "zabbix{{env_suffix}}.fedoraproject.org"
+    host: "zabbix-external{{env_suffix}}.fedoraproject.org"
     when: datacenter != 'iad2'
   - collectd/base
   - apache
   - sudo
   - zabbix/zabbix_server
 
+  pre_tasks:
+  - import_tasks: "{{ tasks_path }}/yumrepos.yml"
+
+  tasks:
+  - import_tasks: "{{ tasks_path }}/motd.yml"
+
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
+
