@@ -13,9 +13,25 @@
     - "/srv/private/ansible/vars.yml"
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
-  tasks:
-    - name: Run the zabbix_server Role
-      include_role:
-        name: zabbix/zabbix_server
-        tasks_from: main
+  roles:
+  - base
+  - rkhunter
+  - hosts
+  - ipa/client
+  - role: keytab/service
+    owner_user: apache
+    owner_group: apache
+    service: HTTP
+    host: "zabbix{{env_suffix}}.fedoraproject.org"
+    when: datacenter == 'iad2'
+  - role: keytab/service
+    owner_user: apache
+    owner_group: apache
+    service: HTTP
+    host: "zabbix{{env_suffix}}.fedoraproject.org"
+    when: datacenter != 'iad2'
+  - collectd/base
+  - apache
+  - sudo
+  - zabbix/zabbix_server
 
