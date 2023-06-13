@@ -1,0 +1,1 @@
+0 06  * * * root /usr/bin/find /var/log/hosts -type f -name "*.log" -print | grep -v "$(date +'/%Y/%m/%d/')" | xargs -n1 xz -1 > /dev/null
