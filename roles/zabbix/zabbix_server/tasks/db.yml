@@ -16,17 +16,13 @@
   tags:
     - zabbix-services
 
-- name: Configure the zabbix db user
-  ansible.builtin.shell: |
-    sudo -u postgres createuser --pwprompt {{ zabbix_db_user }}
 
-    expect "Enter password for new role: "
-    send "{{ zabbix_db_pass }}\n"
-    expect "Enter it again: "
-    send "{{ zabbix_db_pass }}\n"
-
-    exit 0
-#  no_log: True
+- name: Connect to acme database, create django user, and grant access to database and products table
+  postgresql_user:
+    name: "{{ zabbix_db_user }}"
+    password: "{{ zabbix_db_pass }}"
+  become: true
+  become_user: postgres
   tags:
     - db-configure
 
