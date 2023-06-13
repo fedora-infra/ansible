@@ -469,6 +469,13 @@ handlers = ["console"]
             keyid = "{{ (env == 'production')|ternary('18B8e74c', 'd300e724') }}"
             file_signing_key = "fedora-39-ima"
 
+            # f39-perl signing
+            [[consumer_config.koji_instances.primary.tags]]
+            from = "f39-perl"
+            to = "f39-perl"
+            key = "{{ (env == 'production')|ternary('fedora-39', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('18B8e74c', 'd300e724') }}"
+            file_signing_key = "fedora-39-ima"
 
     [consumer_config.ostree_refs]
         [consumer_config.ostree_refs."fedora/rawhide/x86_64/iot"]
