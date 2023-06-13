@@ -715,7 +715,7 @@ smtpd_tls_loglevel = 1
 smtpd_tls_chain_files = /etc/pki/tls/private/gateway-chain.pem
 smtpd_tls_CAfile  =   /etc/pki/tls/certs/ca-bundle.crt
 smtpd_tls_session_cache_timeout = 3600s
-smtpd_tls_session_cache_database        = btree:${queue_directory}/smtpd_scache
+#smtpd_tls_session_cache_database        = btree:${queue_directory}/smtpd_scache
 smtpd_tls_received_header               = yes
 smtpd_tls_ask_ccert                     = yes
 smtpd_tls_received_header = yes
@@ -725,6 +725,7 @@ tls_eecdh_strong_curve = prime256v1
 tls_eecdh_ultra_curve = secp384r1
 # TLS end
 #TLS Client
+smtp_use_tls = yes
 smtp_tls_fingerprint_digest=sha1
 smtp_tls_note_starttls_offer = yes
 smtp_tls_policy_maps = hash:/etc/postfix/tls_policy
@@ -738,3 +739,5 @@ smtp_tls_CAfile  = /etc/pki/tls/certs/ca-bundle.crt
 
 # Deny email from some domains
 smtpd_sender_restrictions = regexp:/etc/postfix/sender_access
+smtpd_recipient_restrictions = permit_mynetworks, reject_unauth_destination
+compatibility_level = 2
