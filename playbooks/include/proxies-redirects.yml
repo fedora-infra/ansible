@@ -852,6 +852,14 @@
     - silverblue
 
   - role: httpd/redirectmatch
+    shortname: 00-kinoite-redirect
+    website: kinoite.fedoraproject.org
+    regex: ^.*
+    target: https://fedoraproject.org/kinoite
+    tags:
+    - kinoite
+
+  - role: httpd/redirectmatch
     shortname: 00-directory-redirect
     website: directory.fedoraproject.org
     regex: ^.*
