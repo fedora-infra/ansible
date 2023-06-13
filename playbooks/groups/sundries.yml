@@ -55,8 +55,6 @@
     when: master_sundries_node|bool
   - role: fedoraloveskde/build
     when: master_sundries_node|bool
-  - role: fedora-web/kinoite/build
-    when: master_sundries_node|bool
   - role: rabbit/user
     username: "sundries{{ env_suffix }}"
     sent_topics: ^$
