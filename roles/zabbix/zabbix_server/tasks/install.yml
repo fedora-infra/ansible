@@ -84,8 +84,8 @@
     - zabbix-configuration
 
 - name: Configure /etc/php-fpm.d/www.conf file
-  ansible.builtin.template:
-    src: php-fpm_www.conf.j2
+  ansible.builtin.copy:
+    src: php-fpm_www.conf
     dest: /etc/php-fpm.d/www.conf
     mode: 0600
     owner: nginx
@@ -94,8 +94,8 @@
     - zabbix-configuration
 
 - name: Configure nginx conf.d/zabbix.conf
-  ansible.builtin.template:
-    src: php-fpm_zabbix.conf.j2
+  ansible.builtin.copy:
+    src: php-fpm_zabbix.conf
     dest: /etc/php-fpm.d/zabbix.conf
     mode: 0600
     owner: nginx
