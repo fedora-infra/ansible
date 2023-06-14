@@ -45,6 +45,14 @@
   tags:
     - zabbix-configuration
 
+- name: Set ownership on /etc/zabbix/web/
+  ansible.builtin.file:
+    path: /etc/zabbix/web
+    state: directory
+    recurse: yes
+    owner: nginx
+    group: nginx
+
 - name: Configure Zabbix web UI
   ansible.builtin.template:
     src: zabbix.conf.php.j2
@@ -75,3 +83,22 @@
   tags:
     - zabbix-configuration
 
+- name: Configure /etc/php-fpm.d/www.conf file
+  ansible.builtin.template:
+    src: php-fpm_www.conf.j2
+    dest: /etc/php-fpm.d/www.conf
+    mode: 0600
+    owner: nginx
+    group: nginx
+  tags:
+    - zabbix-configuration
+
+- name: Configure nginx conf.d/zabbix.conf
+  ansible.builtin.template:
+    src: php-fpm_zabbix.conf.j2
+    dest: /etc/php-fpm.d/zabbix.conf
+    mode: 0600
+    owner: nginx
+    group: nginx
+  tags:
+    - zabbix-configuration

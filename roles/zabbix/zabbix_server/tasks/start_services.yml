@@ -1,4 +1,12 @@
 ---
+- name: Ensuring postgresql server is started
+  ansible.builtin.service:
+    name: postgresql
+    state: reloaded
+    enabled: True
+  tags:
+    - zabbix-services
+
 - name: Ensuring Zabbix server is started
   ansible.builtin.service:
     name: zabbix-server
