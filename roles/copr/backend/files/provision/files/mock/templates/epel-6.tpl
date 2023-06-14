@@ -1,4 +1,4 @@
-include('templates/centos-6.tpl')
+include('eol/templates/rhel-6.tpl')
 
 config_opts['chroot_setup_cmd'] = 'install @buildsys-build'
 
@@ -8,7 +8,7 @@ name=Extra Packages for Enterprise Linux $releasever - $basearch
 mirrorlist=http://mirrors.fedoraproject.org/mirrorlist?repo=epel-6&arch=$basearch
 failovermethod=priority
 gpgkey=file:///usr/share/distribution-gpg-keys/epel/RPM-GPG-KEY-EPEL-6
-gpgcheck=0
+gpgcheck=1
 skip_if_unavailable=False
 
 [epel-testing]
