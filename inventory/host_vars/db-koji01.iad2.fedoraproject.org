@@ -12,7 +12,7 @@ db_backup_dir: ['/backups']
 dbs_to_backup:
   - koji
 effective_cache_size: "100GB"
-effective_io_concurrency: 0
+effective_io_concurrency: 1
 eth0_ipv4_gw: 10.3.169.254
 eth0_ipv4_ip: 10.3.169.103
 # kernel SHMMAX value
@@ -23,9 +23,9 @@ ks_url: http://10.3.163.35/repo/rhel/ks/kvm-rhel
 lvm_size: 1750000
 max_cpu: 96
 max_mem_size: 327680
-max_parallel_maintenance_workers: 8
-max_parallel_workers: 10
-max_parallel_workers_per_gather: 32
+max_parallel_maintenance_workers: 4
+max_parallel_workers: 16
+max_parallel_workers_per_gather: 2
 max_stack_depth: "6MB"
 max_worker_processes: 64
 mem_size: 262140
@@ -36,7 +36,7 @@ nrpe_procs_crit: 700
 # Large updates pushes cause lots of db threads doing the tag moves, so up this from default.
 #
 nrpe_procs_warn: 600
-num_cpus: 72
+num_cpus: 48
 shared_buffers: "8GB"
 swap: false
 vmhost: bvmhost-x86-01.iad2.fedoraproject.org
