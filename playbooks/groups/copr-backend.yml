@@ -57,6 +57,7 @@
   # Roles are run first, before tasks, regardless of where you place them here.
   roles:
   - base
+  - smtp-auth-relay
   - nagios_client
   - copr/copr-devel-server
   - copr/backend
