@@ -1,5 +1,5 @@
 - name: /etc/postfix/main.cf
-  copy: src={{ item }} dest=/etc/postfix/main.cf
+  template: src={{ item }} dest=/etc/postfix/main.cf
   with_first_found:
     - "{{ postfix_maincf }}"
     - "postfix/main.cf/main.cf.{{ ansible_fqdn }}"
