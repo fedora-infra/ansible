@@ -57,4 +57,5 @@ copr_backend_data_raid10_volumes:
   - nvme-Amazon_Elastic_Block_Store_vol0860700f1b82314b5-part1
   - nvme-Amazon_Elastic_Block_Store_vol0ea433a88aef9c644-part1
 
-postfix_group: copr_smtp_auth_relay
+postfix_group: copr
+postfix_maincf: postfix/main.cf/main.cf.copr_smtp_auth_relay

@@ -16,4 +16,5 @@ services_disabled: false
 
 aws_ipv6_addr: "2600:1f18:8ee:ae00:3cbb:7920:d83:e607/128"
 
-postfix_group: copr_smtp_auth_relay
+postfix_group: copr
+postfix_maincf: postfix/main.cf/main.cf.copr_smtp_auth_relay
