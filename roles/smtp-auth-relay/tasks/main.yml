@@ -11,7 +11,7 @@
 - name: create the password file
   copy:
     dest: /etc/postfix/sasl_passwd
-    content: "{{ smtp_auth_relay_host }}  {{ smtp_auth_relay_user }}:{{ smtp_auth_relay_password }}"
+    content: "{{ smtp_auth_relay_host }} {{ smtp_auth_relay_user }}:{{ smtp_auth_relay_password }}"
     mode: 0600
   register: smtp_relay_password_file
   tags:

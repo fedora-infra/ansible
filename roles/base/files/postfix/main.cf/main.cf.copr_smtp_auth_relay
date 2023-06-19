@@ -314,7 +314,9 @@ unknown_local_recipient_reject_code = 550
 #relayhost = uucphost
 #relayhost = [an.ip.add.ress]
 
-relayhost = {{ smtp_auth_relay_host }}
+# TODO: tamplatize
+#relayhost = {{ smtp_auth_relay_host }}
+relayhost = smtp-auth-cc-rdu01.fedoraproject.org
 
 smtp_use_tls = yes
 smtp_sasl_auth_enable = yes
