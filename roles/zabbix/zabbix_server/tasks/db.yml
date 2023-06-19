@@ -4,6 +4,7 @@
   ansible.builtin.shell: postgresql-setup initdb
   args:
     executable: /bin/bash
+  ignore_errors: True
   tags:
     - db-configure
 
@@ -28,7 +29,6 @@
 
 - name: Configure the zabbix db
   ansible.builtin.shell: "sudo -u postgres createdb -O {{ zabbix_db_user }} {{ zabbix_db_name }}"
-#  no_log: True
   tags:
     - db-configure
 
@@ -36,6 +36,7 @@
   ansible.builtin.shell: "zcat /usr/share/zabbix-sql-scripts/postgresql/server.sql.gz | sudo -u zabbix psql zabbix"
   args:
     executable: /bin/bash
+  ignore_errors: True
   tags:
     - db-configure
 
