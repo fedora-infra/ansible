@@ -97,6 +97,7 @@
   vars:
     username: gitlab-centos{{ env_suffix }}
     queue_name: gitlab-centos{{ env_suffix }}
+    sent_topics: ^org\.centos\.{{ env_short }}\.gitlab\..*
     # TTL: 10 days (in miliseconds)
     message_ttl: 864000000
     routing_keys:
