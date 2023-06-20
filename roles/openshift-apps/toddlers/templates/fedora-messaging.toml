@@ -78,6 +78,18 @@ fas_username = "{{ fedoraStagingDummyUser }}"
 fas_password = "{{ fedoraStagingDummyUserPassword }}"
 {% endif %}
 
+# Account to use to connect to pagure
+# FAS username of the user that will comment on behalf of toddler
+{% if env == "staging" %}
+pagure_user = "releng-bot"
+pagure_url = "https://stg.pagure.io"
+pagure_api_key = "{{ toddlers_stg_pagure_scm_request_processor_token }}"
+{% else %}
+pagure_user = "releng-bot"
+pagure_url = "https://pagure.io"
+pagure_api_key = "{{ toddlers_pagure_scm_request_processor_token }}"
+{% endif %}
+
 # Account to use to connect to bugzilla
 {% if env != "staging" %}
 bugzilla_url = "https://bugzilla.redhat.com"
@@ -192,16 +204,6 @@ versions = ["epel9", "epel8", "epel7"]
 
 # Configuration section for scm_request_processor
 [consumer_config.scm_request_processor]
-# FAS username of the user that will comment on behalf of toddler
-{% if env == "staging" %}
-pagure_user = "releng-bot"
-pagure_url = "https://stg.pagure.io"
-pagure_api_key = "{{ toddlers_stg_pagure_scm_request_processor_token }}"
-{% else %}
-pagure_user = "releng-bot"
-pagure_url = "https://pagure.io"
-pagure_api_key = "{{ toddlers_pagure_scm_request_processor_token }}"
-{% endif %}
 # Monitoring choices for release-monitoring.org
 monitor_choices = ['no-monitoring', 'monitoring', 'monitoring-with-scratch']
 # What we should look for in validation comment
