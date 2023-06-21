@@ -47,11 +47,11 @@
   # must listen on prod in several cases so uses the prod user
   - role: rabbit/user
     username: "{{ openqa_amqp_prod_username }}"
-    sent_topics: "^org\.fedoraproject\.prod\.(openqa|ci)\..*"
+    sent_topics: ^org\.fedoraproject\.prod\.(openqa|ci)\..*
 
   - role: rabbit/user
     username: "{{ openqa_amqp_stg_username }}"
-    sent_topics: "^org\.fedoraproject\.stg\.(openqa|ci)\..*"
+    sent_topics: ^org\.fedoraproject\.stg\.(openqa|ci)\..*
 
   - role: rabbit/queue
     queue_name: "{{ openqa_amqp_scheduler_queue }}"
