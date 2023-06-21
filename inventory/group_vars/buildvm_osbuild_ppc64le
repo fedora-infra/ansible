@@ -1,0 +1,33 @@
+# common variables for osbuild workers
+csi_primary_contact: Image Builder team - osbuilders@redhat.com
+csi_purpose: This group of VMs builds OS images via Koji using image builder for ppc64le architecture.
+csi_relationship: |
+  * Relies on koji-hub and image-builder-api (external).
+  * Produces automated builds of OS images for the architecture listed. Wokers can be scaled by adding new
+    virtual instances
+
+datacenter: iad2
+dns: 10.3.163.33
+eth0_ipv4_gw: 10.3.171.254
+
+ks_repo: http://10.3.163.35/pub/fedora-secondary/releases/38/Server/ppc64le/os/
+ks_url: http://10.3.163.35/repo/rhel/ks/kvm-fedora
+lvm_size: 102400  # 100 GB
+main_bridge: br0
+max_mem_size: "{{ mem_size }}"
+mem_size: 8192  # 8 GB
+num_cpus: 2
+virt_install_command: "{{ virt_install_command_ppc64le_one_nic_unsafe }}"
+volgroup: /dev/vg_guests
+
+# osbuild worker variables
+osbuild_worker_server_hostname: "api.openshift.com"
+osbuild_worker_server_api_base_path: "/api/image-builder-worker/v1"
+osbuild_worker_authentication_oauth_url: "https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token"
+osbuild_worker_authentication_client_id: "ab28d581-164e-42ec-99d9-dff8e2020a51"
+# the secret is turned into file in the playbook
+osbuild_worker_authentication_client_secret: "{{ osbuild_worker_client_secret }}"
+osbuild_worker_koji_instances:
+  - koji_host: "koji.fedoraproject.org"
+    krb_principal: "osbuild-automation-bot@FEDORAPROJECT.ORG"
+    krb_keytab_file: "{{ private }}/files/osbuild/worker_koji.keytab"
