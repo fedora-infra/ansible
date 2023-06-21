@@ -133,6 +133,7 @@
     routing_keys: "{{ fedora_nightlies_amqp_routing_keys }}"
     vars:
       env: "production"
+      env_suffix: ""
     tags: ['rabbit']
     when: "fedora_nightlies_amqp_queue is defined"
 
