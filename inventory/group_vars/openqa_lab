@@ -22,7 +22,7 @@ openqa_amqp_this_certfile: "{{ openqa_amqp_stg_certfile }}"
 openqa_amqp_this_keyfile: "{{ openqa_amqp_stg_keyfile }}"
 openqa_amqp_this_url: "{{ openqa_amqp_stg_url }}"
 openqa_amqp_this_username: "{{ openqa_amqp_stg_username }}"
-openqa_amqp_queue_suffix: "_stg"
+openqa_amqp_scheduler_queue: "{{ openqa_amqp_prod_username }}_scheduler_stg"
 
 openqa_assetsize_ppc: 300
 openqa_assetsize_updates_ppc: 100
