@@ -2,16 +2,17 @@
 deployment_type: prod
 external_hostname: openqa.fedoraproject.org
 freezes: false
+# AMQP publisher/listener-related stuff
+openqa_amqp_this_cacertfile: "{{ openqa_amqp_prod_cacertfile }}"
+openqa_amqp_this_certfile: "{{ openqa_amqp_prod_certfile }}"
+openqa_amqp_this_keyfile: "{{ openqa_amqp_prod_keyfile }}"
+openqa_amqp_this_url: "{{ openqa_amqp_prod_url }}"
+openqa_amqp_this_username: "{{ openqa_amqp_prod_username }}"
 openqa_compose_arches: x86_64,aarch64
 openqa_dbname: openqa
 openqa_dbpassword: "{{ prod_openqa_dbpassword }}"
 openqa_dbuser: openqa
 openqa_env: production
-openqa_env_prefix:
-# this is because openqa staging isn't really a staging host
-# we don't want to set env_suffix to stg on it because that may
-# break some other plays, but we do need the env suffix for the
-# fedora-messaging bits, so let's make our own
 openqa_env_suffix:
 openqa_key: "{{ prod_openqa_apikey }}"
 # all our workers need NFS access

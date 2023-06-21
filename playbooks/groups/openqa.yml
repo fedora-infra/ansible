@@ -43,30 +43,38 @@
    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
+  # we must always make sure both prod and stg users exist, as stg
+  # must listen on prod in several cases so uses the prod user
+  - role: rabbit/user
+    username: "{{ openqa_amqp_prod_username }}"
+    sent_topics: "^org\.fedoraproject\.prod\.(openqa|ci)\..*"
+
+  - role: rabbit/user
+    username: "{{ openqa_amqp_stg_username }}"
+    sent_topics: "^org\.fedoraproject\.stg\.(openqa|ci)\..*"
+
   - role: rabbit/queue
-    username: "openqa"
-    queue_name: "openqa{{ openqa_env_suffix }}_scheduler"
+    queue_name: "{{ openqa_amqp_scheduler_queue }}"
     routing_keys: "{{ openqa_amqp_scheduler_routing_keys }}"
-    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(openqa|ci)\..*
     vars:
       # yes, even the staging scheduler listens to production, it
       # has to or else it wouldn't schedule any jobs
       env: "production"
       env_suffix: ""
     tags: ['rabbit']
+
   - role: rabbit/queue
-    username: "openqa{{ openqa_env_suffix }}"
-    queue_name: "openqa{{ openqa_env_suffix }}_resultsdb_reporter"
+    queue_name: "{{ openqa_amqp_resultsdb_reporter_queue }}"
     routing_keys: "{{ openqa_amqp_resultsdb_reporter_routing_keys }}"
-    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(openqa|ci)\..*
     vars:
       # for this role to work correctly we do need to look like a
       # staging server
       env: "{{ openqa_env }}"
       env_suffix: "{{ openqa_env_suffix }}"
     tags: ['rabbit']
+
   - role: rabbit/queue
-    queue_name: "openqa{{ openqa_env_suffix }}_wiki_reporter"
+    queue_name: "{{ openqa_amqp_wiki_reporter_queue }}"
     routing_keys: "{{ openqa_amqp_wiki_reporter_routing_keys }}"
     vars:
       # for this role to work correctly we do need to look like a
@@ -74,21 +82,21 @@
       env: "{{ openqa_env }}"
       env_suffix: "{{ openqa_env_suffix }}"
     tags: ['rabbit']
-    # relvalconsumer queue, we still use openqa auth for this as it's
-    # easy that way
+
+    # relvalconsumer queue
   - role: rabbit/queue
-    queue_name: "openqa_relvalconsumer{{ relvalconsumer_env_suffix }}"
+    queue_name: "{{ relvalconsumer_amqp_queue }}"
     vars:
       # yes, even the staging scheduler listens to production, it
       # has to or else it wouldn't schedule any jobs
       env: "production"
       env_suffix: ""
     tags: ['rabbit']
-    when: "relvalconsumer_env_suffix is defined"
-    # relvalamiconsumer queue, we still use openqa auth for this as it's
-    # easy that way
+    when: "relvalconsumer_amqp_queue is defined"
+
+    # relvalamiconsumer queue
   - role: rabbit/queue
-    queue_name: "openqa_relvalamiconsumer{{ relvalconsumer_env_suffix }}"
+    queue_name: "{{ relvalamiconsumer_amqp_queue }}"
     routing_keys: "{{ relvalamiconsumer_amqp_routing_keys }}"
     vars:
       # yes, even the staging updater listens to production, it
@@ -96,27 +104,23 @@
       env: "production"
       env_suffix: ""
     tags: ['rabbit']
-    when: "relvalconsumer_env_suffix is defined"
+    when: "relvalamiconsumer_amqp_queue is defined"
 
-    # check-compose queue, we still use openqa auth for this as it's
-    # easy that way
+    # check-compose queue
   - role: rabbit/queue
-    username: "openqa{{ checkcompose_env_suffix }}"
-    queue_name: "openqa{{ checkcompose_env_suffix }}_checkcomp"
+    queue_name: "{{ checkcompose_amqp_queue }}"
     routing_keys: "{{ checkcompose_amqp_routing_keys }}"
-    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(openqa|ci)\..*
     vars:
       # for this role to work correctly we do need to look like a
       # staging server
       env: "{{ checkcompose_env }}"
       env_suffix: "{{ checkcompose_env_suffix }}"
     tags: ['rabbit']
-    when: "checkcompose_env_suffix is defined"
+    when: "checkcompose_amqp_queue is defined"
 
-    # fedora_nightlies queue, we still use openqa auth for this as it's
-    # easy that way
+    # fedora_nightlies queue
   - role: rabbit/queue
-    queue_name: "openqa_fedora_nightlies"
+    queue_name: "{{ fedora_nightlies_amqp_queue }}"
     routing_keys: "{{ fedora_nightlies_amqp_routing_keys }}"
     vars:
       env: "production"
@@ -185,8 +189,8 @@
   roles:
    - { role: openqa/server, tags: ['openqa_server'] }
    - { role: openqa/dispatcher, tags: ['openqa_dispatcher'] }
-   - { role: check-compose, tags: ['check-compose'], when: "checkcompose_env_suffix is defined" }
-   - { role: relvalconsumer, tags: ['relvalconsumer'], when: "relvalconsumer_env_suffix is defined" }
+   - { role: check-compose, tags: ['check-compose'], when: "checkcompose_amqp_queue is defined" }
+   - { role: relvalconsumer, tags: ['relvalconsumer'], when: "relvalconsumer_amqp_queue is defined" }
    - { role: fedora_nightlies, tags: ['fedora_nightlies'], when: "fedora_nightlies_amqp_queue is defined" }
    - { role: testcase_stats, tags: ['testcase_stats'], when: "testcase_stats_output_dir is defined" }
 

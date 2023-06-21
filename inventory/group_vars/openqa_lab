@@ -14,9 +14,14 @@ virt_install_command: "{{ virt_install_command_one_nic }} --cpu=host-passthrough
 
 deployment_type: stg
 external_hostname: openqa.stg.fedoraproject.org
-# makes sure it sends stg not prod fedmsgs
-fedmsg_env: stg
 freezes: false
+
+# AMQP publisher/listener-related stuff
+openqa_amqp_this_cacertfile: "{{ openqa_amqp_stg_cacertfile }}"
+openqa_amqp_this_certfile: "{{ openqa_amqp_stg_certfile }}"
+openqa_amqp_this_keyfile: "{{ openqa_amqp_stg_keyfile }}"
+openqa_amqp_this_url: "{{ openqa_amqp_stg_url }}"
+openqa_amqp_this_username: "{{ openqa_amqp_stg_username }}"
 
 openqa_assetsize_ppc: 300
 openqa_assetsize_updates_ppc: 100
@@ -25,11 +30,6 @@ openqa_dbname: openqa-stg
 openqa_dbpassword: "{{ stg_openqa_dbpassword }}"
 openqa_dbuser: openqastg
 openqa_env: staging
-openqa_env_prefix: stg-
-# this is because openqa staging isn't really a staging host
-# we don't want to set env_suffix to stg on it because that may
-# break some other plays, but we do need the env suffix for the
-# fedora-messaging bits, so let's make our own
 openqa_env_suffix: .stg
 openqa_key: "{{ stg_openqa_apikey }}"
 # all our workers need NFS access

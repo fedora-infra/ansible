@@ -1,15 +1,19 @@
 # This var should never be set for more than one machine
+checkcompose_prod: true
+
 # The checkcompose settings below cause system(s) in this group to
 # send out check-compose reports. This could cause duplicate reports
 # if additional systems were added to this group.
 checkcompose_emailfrom: rawhide@fedoraproject.org
 checkcompose_emailto: "test-reports@lists.fedoraproject.org"
-checkcompose_env: production
-checkcompose_env_suffix:
-checkcompose_greenwaveurl: https://greenwave.fedoraproject.org
-checkcompose_prod: true
 checkcompose_smtp: bastion.iad2.fedoraproject.org
 checkcompose_subvariant_emails:
   AtomicHost:
     error: ["dusty@dustymabe.com", "walters@verbum.org", "atomic@lists.fedoraproject.org"]
+
+checkcompose_env: production
+checkcompose_env_suffix:
+checkcompose_greenwaveurl: https://greenwave.fedoraproject.org
 checkcompose_url: "https://{{ external_hostname }}"
+
+checkcompose_amqp_cacert: "/etc/fedora-messaging/cacert.pem"
