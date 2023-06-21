@@ -26,12 +26,12 @@ openqa_amqp_smtp: bastion
 
 # fedora-messaging identity and certificate settings
 openqa_amqp_prod_cacertfile: "/etc/fedora-messaging/cacert.pem"
-openqa_amqp_prod_certfile: "etc/pki/fedora-messaging/{{ openqa_amqp_prod_username }}-cert.pem"
+openqa_amqp_prod_certfile: "/etc/pki/fedora-messaging/{{ openqa_amqp_prod_username }}-cert.pem"
 openqa_amqp_prod_keyfile: "/etc/pki/fedora-messaging/{{ openqa_amqp_prod_username }}-key.pem"
 openqa_amqp_prod_url: "amqps://{{ openqa_amqp_prod_username }}:@rabbitmq.fedoraproject.org/%2Fpubsub"
 openqa_amqp_prod_username: "openqa"
 openqa_amqp_stg_cacertfile: "/etc/fedora-messaging/stg-cacert.pem"
-openqa_amqp_stg_certfile: "etc/pki/fedora-messaging/{{ openqa_amqp_stg_username }}-cert.pem"
+openqa_amqp_stg_certfile: "/etc/pki/fedora-messaging/{{ openqa_amqp_stg_username }}-cert.pem"
 openqa_amqp_stg_keyfile: "/etc/pki/fedora-messaging/{{ openqa_amqp_stg_username }}-key.pem"
 openqa_amqp_stg_url: "amqps://{{ openqa_amqp_stg_username }}:@rabbitmq.stg.fedoraproject.org/%2Fpubsub"
 openqa_amqp_stg_username: "openqa.stg"
