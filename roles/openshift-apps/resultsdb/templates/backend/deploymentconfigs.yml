@@ -94,13 +94,13 @@ spec:
             httpGet:
               path: /api/v2.0/
               port: 5001
-          # Limit to 384MB memory. This is probably *not* enough but it is
-          # necessary in the current environment to allow for 2 replicas and
-          # rolling updates, without hitting the (very aggressive) memory quota.
           resources:
             limits:
+              memory: 500Mi
+              cpu: 300m
+            requests:
               memory: 384Mi
-              cpu: 0.3
+              cpu: 300m
       volumes:
         - name: config-volume
           secret:
