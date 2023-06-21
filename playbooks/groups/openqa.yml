@@ -47,6 +47,7 @@
   # must listen on prod in several cases so uses the prod user
   - role: rabbit/user
     username: "{{ openqa_amqp_prod_username }}"
+    publish_only: false
     sent_topics: ^org\.fedoraproject\.prod\.(openqa|ci)\..*
     vars:
       env: "production"
@@ -55,6 +56,7 @@
 
   - role: rabbit/user
     username: "{{ openqa_amqp_stg_username }}"
+    publish_only: false
     sent_topics: ^org\.fedoraproject\.stg\.(openqa|ci)\..*
     vars:
       env: "staging"
