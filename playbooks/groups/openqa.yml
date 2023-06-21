@@ -43,15 +43,24 @@
    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
-  # we must always make sure both prod and stg users exist, as stg
+  # we must always make sure the prod user exists, as stg
   # must listen on prod in several cases so uses the prod user
   - role: rabbit/user
     username: "{{ openqa_amqp_prod_username }}"
     sent_topics: ^org\.fedoraproject\.prod\.(openqa|ci)\..*
+    vars:
+      env: "production"
+      env_suffix: ""
+    tags: ['rabbit']
 
   - role: rabbit/user
     username: "{{ openqa_amqp_stg_username }}"
     sent_topics: ^org\.fedoraproject\.stg\.(openqa|ci)\..*
+    vars:
+      env: "staging"
+      env_suffix: "stg"
+    tags: ['rabbit']
+    when: "deployment_type == 'stg'"
 
   - role: rabbit/queue
     queue_name: "{{ openqa_amqp_scheduler_queue }}"
