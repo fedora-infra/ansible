@@ -58,7 +58,7 @@
     sent_topics: ^org\.fedoraproject\.stg\.(openqa|ci)\..*
     vars:
       env: "staging"
-      env_suffix: "stg"
+      env_suffix: ".stg"
     tags: ['rabbit']
     when: "deployment_type == 'stg'"
 
