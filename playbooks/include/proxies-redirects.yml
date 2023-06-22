@@ -862,7 +862,7 @@
   - role: httpd/redirectmatch
     shortname: 00-directory-redirect
     website: directory.fedoraproject.org
-    regex: ^(.*)
+    regex: ^/(.*)
     target: https://www.port389.org/$1
     tags:
     - directory
