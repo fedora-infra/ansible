@@ -148,12 +148,13 @@
   tags:
   - config
 
-# We always use the openQA cert and key here for now; we don't really
-# need a separate identity for check-compose.
+# as noted elsewhere, we are reusing the openqa user and creds for
+# convenience while the roles are all run on the same system, and
+# stg uses the prod account and credentials to listen on prod
 - name: Deploy the Fedora infra fedora-messaging cert
   copy:
-    src: "{{ private }}/files/rabbitmq/{{ checkcompose_env }}/pki/issued/openqa{{ checkcompose_env_suffix }}.crt"
-    dest: /etc/pki/fedora-messaging/openqa{{ checkcompose_env_suffix }}-cert.pem
+    src: "{{ private }}/files/rabbitmq/{{ checkcompose_env }}/pki/issued/{{ openqa_amqp_this_username }}.crt"
+    dest: "/etc/pki/fedora-messaging/{{ openqa_amqp_this_username }}-cert.pem"
     mode: 0644
     owner: root
     group: root
@@ -167,8 +168,8 @@
 # line. This needs making cleaner somehow.
 - name: Deploy the Fedora infra fedora-messaging key
   copy:
-    src: "{{ private }}/files/rabbitmq/{{ checkcompose_env }}/pki/private/openqa{{ checkcompose_env_suffix }}.key"
-    dest: /etc/pki/fedora-messaging/openqa{{ checkcompose_env_suffix }}-key.pem
+    src: "{{ private }}/files/rabbitmq/{{ checkcompose_env }}/pki/private/{{ openqa_amqp_this_username }}.key"
+    dest: "/etc/pki/fedora-messaging/{{ openqa_amqp_this_username }}-key.pem"
     mode: 0640
     owner: root
     group: geekotest

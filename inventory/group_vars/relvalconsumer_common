@@ -8,12 +8,17 @@ relvalconsumer_amqp_smtp: bastion
 
 # fedora-messaging relvalconsumer settings: most of these are the same
 # for prod and stg as they both must listen for prod messages. Only
-# the queue names differs (so is set in the non-common files). We currently
-# use the openQA user for convenience
-relvalconsumer_amqp_url: "amqps://openqa:@rabbitmq.fedoraproject.org/%2Fpubsub"
-relvalconsumer_amqp_cacert: /etc/fedora-messaging/cacert.pem
-relvalconsumer_amqp_cert: /etc/pki/fedora-messaging/openqa-cert.pem
-relvalconsumer_amqp_key: /etc/pki/fedora-messaging/openqa-key.pem
+# the queue names differs (so is set in the non-common files).
+#
+# we use the openQA rabbitmq account for this role as they run
+# on the same server and it's convenient. this means it's also
+# safe and appropriate to use variables defined in the openqa
+# group_vars. if we ever split the roles up we will have to create
+# a separate account with separate creds
+relvalconsumer_amqp_url: "{{ openqa_amqp_prod_url }}"
+relvalconsumer_amqp_cacert: "{{ openqa_amqp_prod_cacertfile }}"
+relvalconsumer_amqp_cert: "{{ openqa_amqp_prod_certfile }}"
+relvalconsumer_amqp_key: "{{ openqa_amqp_prod_keyfile }}"
 relvalconsumer_amqp_routing_keys: ["org.fedoraproject.prod.pungi.compose.status.change"]
 
 relvalamiconsumer_amqp_routing_keys: ["org.fedoraproject.prod.fedimg.image.publish"]

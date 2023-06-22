@@ -7,13 +7,16 @@ fedora_nightlies_amqp_mailto: ["adamwill@fedoraproject.org"]
 fedora_nightlies_amqp_smtp: bastion
 
 # fedora-messaging job scheduler settings
-# we currently use the openqa user, for convenience
-fedora_nightlies_amqp_username: "openqa"
-fedora_nightlies_amqp_url: "amqps://{{ fedora_nightlies_amqp_username }}:@rabbitmq.fedoraproject.org/%2Fpubsub"
-fedora_nightlies_amqp_cacert: "/etc/fedora-messaging/cacert.pem"
-fedora_nightlies_amqp_cert: "/etc/pki/fedora-messaging/{{ fedora_nightlies_amqp_username }}-cert.pem"
-fedora_nightlies_amqp_key: "/etc/pki/fedora-messaging/{{ fedora_nightlies_amqp_username }}-key.pem"
-fedora_nightlies_amqp_queue: "{{ fedora_nightlies_amqp_username }}_fedora_nightlies"
+# we use the openQA rabbitmq account for this role as they run
+# on the same server and it's convenient. this means it's also
+# safe and appropriate to use variables defined in the openqa
+# group_vars. if we ever split the roles up we will have to create
+# a separate account with separate creds
+fedora_nightlies_amqp_url: "{{ openqa_amqp_prod_url }}"
+fedora_nightlies_amqp_cacert: "{{ openqa_amqp_prod_cacertfile }}"
+fedora_nightlies_amqp_cert: "{{ openqa_amqp_prod_certfile }}"
+fedora_nightlies_amqp_key: "{{ openqa_amqp_prod_keyfile }}"
+fedora_nightlies_amqp_queue: "{{ openqa_amqp_prod_username }}_fedora_nightlies"
 fedora_nightlies_amqp_routing_keys: ["org.fedoraproject.prod.openqa.job.done", "org.fedoraproject.prod.pungi.compose.status.change"]
 fedora_nightlies_amqp_data_file: /usr/share/openqa/public/nightlies.json
 fedora_nightlies_amqp_html_file: /usr/share/openqa/public/nightlies.html

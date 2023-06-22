@@ -43,8 +43,13 @@
    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
-  # we must always make sure the prod user exists, as stg
-  # must listen on prod in several cases so uses the prod user
+  # we must always make sure the prod user exists, as stg uses the
+  # prod account to listen to things on prod. **NOTE**: this is lazy
+  # and bad practice, but we've evaluated it and it doesn't really
+  # cause any significant security risk, it just means someone with
+  # root on openqa.stg could access the rabbitmq creds for the prod
+  # user and impersonate prod openqa on the message bus, which is
+  # not a huge deal. fixing it would be kinda tedious.
   - role: rabbit/user
     username: "{{ openqa_amqp_prod_username }}"
     publish_only: false
@@ -78,8 +83,8 @@
     queue_name: "{{ openqa_amqp_resultsdb_reporter_queue }}"
     routing_keys: "{{ openqa_amqp_resultsdb_reporter_routing_keys }}"
     vars:
-      # for this role to work correctly we do need to look like a
-      # staging server
+      # this role does listen on stg, as it listens out for jobs
+      # from openqa stg
       env: "{{ openqa_env }}"
       env_suffix: "{{ openqa_env_suffix }}"
     tags: ['rabbit']
@@ -88,8 +93,8 @@
     queue_name: "{{ openqa_amqp_wiki_reporter_queue }}"
     routing_keys: "{{ openqa_amqp_wiki_reporter_routing_keys }}"
     vars:
-      # for this role to work correctly we do need to look like a
-      # staging server
+      # this role does listen on stg, as it listens out for jobs
+      # from openqa stg
       env: "{{ openqa_env }}"
       env_suffix: "{{ openqa_env_suffix }}"
     tags: ['rabbit']
@@ -98,8 +103,8 @@
   - role: rabbit/queue
     queue_name: "{{ relvalconsumer_amqp_queue }}"
     vars:
-      # yes, even the staging scheduler listens to production, it
-      # has to or else it wouldn't schedule any jobs
+      # yes, even the staging relvalconsumer listens to production,
+      # it has to because composes don't happen in stg
       env: "production"
       env_suffix: ""
     tags: ['rabbit']
@@ -122,8 +127,8 @@
     queue_name: "{{ checkcompose_amqp_queue }}"
     routing_keys: "{{ checkcompose_amqp_routing_keys }}"
     vars:
-      # for this role to work correctly we do need to look like a
-      # staging server
+      # this role does listen on stg, as it listens out for jobs
+      # from openqa stg
       env: "{{ checkcompose_env }}"
       env_suffix: "{{ checkcompose_env_suffix }}"
     tags: ['rabbit']
@@ -134,6 +139,7 @@
     queue_name: "{{ fedora_nightlies_amqp_queue }}"
     routing_keys: "{{ fedora_nightlies_amqp_routing_keys }}"
     vars:
+      # this role listens on prod as it listens for composes
       env: "production"
       env_suffix: ""
     tags: ['rabbit']

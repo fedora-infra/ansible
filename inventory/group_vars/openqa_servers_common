@@ -49,8 +49,8 @@ openqa_amqp_publisher_prefix: org.fedoraproject.{{ deployment_type }}
 openqa_amqp_publisher_url: "{{ openqa_amqp_this_url }}"
 
 # fedora-messaging job scheduler settings: most of these are the same
-# for prod and stg as they both must listen for prod messages. Only
-# the queue names differs.
+# for prod and stg as they use the same account to listen for prod
+# messages on prod rabbitmq. Only the queue names differs.
 openqa_amqp_scheduler_cert: "{{ openqa_amqp_prod_certfile }}"
 openqa_amqp_scheduler_key: "{{ openqa_amqp_prod_keyfile }}"
 openqa_amqp_scheduler_routing_keys: ["org.fedoraproject.prod.pungi.compose.status.change", "org.fedoraproject.prod.bodhi.update.request.testing", "org.fedoraproject.prod.bodhi.update.edit", "org.fedoraproject.prod.bodhi.update.status.testing.koji-build-group.build.complete", "org.fedoraproject.prod.coreos.build.state.change", "org.fedoraproject.prod.odcs.compose.state-changed"]

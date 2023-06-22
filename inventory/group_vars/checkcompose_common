@@ -7,10 +7,18 @@ checkcompose_amqp_mailto: ["adamwill@fedoraproject.org", "lruzicka@fedoraproject
 checkcompose_amqp_smtp: bastion
 
 # fedora-messaging compose report sender settings
-#  We currently use the openQA user for convenience
-checkcompose_amqp_username: "openqa{{ checkcompose_env_suffix }}"
-checkcompose_amqp_url: "amqps://{{ checkcompose_amqp_username }}:@rabbitmq{{ checkcompose_env_suffix }}.fedoraproject.org/%2Fpubsub"
-checkcompose_amqp_cert: "/etc/pki/fedora-messaging/{{ checkcompose_amqp_username }}-cert.pem"
-checkcompose_amqp_key: "/etc/pki/fedora-messaging/{{ checkcompose_amqp_username }}-key.pem"
+# we use the openQA rabbitmq account for this role as they run
+# on the same server and it's convenient. this means it's also
+# safe and appropriate to use variables defined in the openqa
+# group_vars. if we ever split the roles up we will have to create
+# a separate account with separate creds
+checkcompose_amqp_username: "{{ openqa_amqp_this_username }}"
+checkcompose_amqp_url: "{{ openqa_amqp_this_url }}"
+checkcompose_amqp_cacert: "{{ openqa_amqp_this_cacertfile }}"
+checkcompose_amqp_cert: "{{ openqa_amqp_this_certfile }}"
+checkcompose_amqp_key: "{{ openqa_amqp_this_keyfile }}"
 checkcompose_amqp_queue: "{{ checkcompose_amqp_username }}_checkcomp"
 checkcompose_amqp_routing_keys: ["org.fedoraproject.{{ deployment_type }}.openqa.job.done"]
+
+checkcompose_env: "{{ openqa_env }}"
+checkcompose_env_suffix: "{{ openqa_env_suffix }}"

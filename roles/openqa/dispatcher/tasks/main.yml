@@ -277,8 +277,8 @@
 
 - name: Deploy the Fedora infra fedora-messaging cert
   copy:
-    src: "{{ private }}/files/rabbitmq/{{ openqa_env }}/pki/issued/openqa{{ openqa_env_suffix }}.crt"
-    dest: /etc/pki/fedora-messaging/openqa{{ openqa_env_suffix }}-cert.pem
+    src: "{{ private }}/files/rabbitmq/{{ openqa_env }}/pki/issued/{{ openqa_amqp_this_username }}.crt"
+    dest: "/etc/pki/fedora-messaging/{{ openqa_amqp_this_username }}-cert.pem"
     mode: 0644
     owner: root
     group: root
@@ -288,8 +288,8 @@
 
 - name: Deploy the Fedora infra fedora-messaging key
   copy:
-    src: "{{ private }}/files/rabbitmq/{{ openqa_env }}/pki/private/openqa{{ openqa_env_suffix }}.key"
-    dest: /etc/pki/fedora-messaging/openqa{{ openqa_env_suffix }}-key.pem
+    src: "{{ private }}/files/rabbitmq/{{ openqa_env }}/pki/private/{{ openqa_amqp_this_username }}.key"
+    dest: "/etc/pki/fedora-messaging/{{ openqa_amqp_this_username }}-key.pem"
     mode: 0640
     owner: root
     group: geekotest
@@ -297,10 +297,10 @@
   tags:
   - config
 
-- name: Deploy the Fedora infra fedora-messaging prod cert on stg (for scheduler)
+- name: Deploy the Fedora infra fedora-messaging prod cert on stg (for stg consumers that listen on prod)
   copy:
-    src: "{{ private }}/files/rabbitmq/production/pki/issued/openqa.crt"
-    dest: /etc/pki/fedora-messaging/openqa-cert.pem
+    src: "{{ private }}/files/rabbitmq/production/pki/issued/{{ openqa_amqp_prod_username }}.crt"
+    dest: "/etc/pki/fedora-messaging/{{ openqa_amqp_prod_username }}-cert.pem"
     mode: 0644
     owner: root
     group: root
@@ -308,10 +308,10 @@
   tags:
   - config
 
-- name: Deploy the Fedora infra fedora-messaging prod key on stg (for scheduler)
+- name: Deploy the Fedora infra fedora-messaging prod key on stg (for stg consumers that listen on prod)
   copy:
-    src: "{{ private }}/files/rabbitmq/production/pki/private/openqa.key"
-    dest: /etc/pki/fedora-messaging/openqa-key.pem
+    src: "{{ private }}/files/rabbitmq/production/pki/private/{{ openqa_amqp_prod_username }}.key"
+    dest: "/etc/pki/fedora-messaging/{{ openqa_amqp_prod_username }}-key.pem"
     mode: 0640
     owner: root
     group: geekotest
