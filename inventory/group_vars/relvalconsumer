@@ -3,8 +3,8 @@
 # safe and appropriate to use variables defined in the openqa
 # group_vars. if we ever split the roles up we will have to create
 # a separate account with separate creds
-relvalamiconsumer_amqp_queue: "{{ openqa_amqp_this_username }}_relvalamiconsumer"
-relvalconsumer_amqp_queue: "{{ openqa_amqp_this_username }}_relvalconsumer"
+relvalamiconsumer_amqp_queue: "{{ openqa_amqp_prod_username }}_relvalamiconsumer"
+relvalconsumer_amqp_queue: "{{ openqa_amqp_prod_username }}_relvalconsumer"
 
 # This var should never be set for more than one machine
 relvalconsumer_prod: true
