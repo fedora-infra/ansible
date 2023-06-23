@@ -134,6 +134,9 @@
       # A new version of rpmlint fixes the following issue
       # https://pagure.io/FedoraReview/issue/461
       - rpmlint
+      # Tito 0.6.23 supports transitive submodule resolution
+      # Requested on IRC by @abn
+      - tito
 
 - name: put updated mock configs into /etc/mock
   copy: src=files/mock/ dest=/etc/copr-rpmbuild/mock-config-overrides
