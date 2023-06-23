@@ -86,13 +86,13 @@ spec:
             timeoutSeconds: 1
             initialDelaySeconds: 5
             httpGet:
-              path: /api/v2.0/
+              path: /api/v2.0/healthcheck
               port: 5001
           livenessProbe:
             timeoutSeconds: 1
             initialDelaySeconds: 30
             httpGet:
-              path: /api/v2.0/
+              path: /api/v2.0/healthcheck
               port: 5001
           resources:
             limits:
