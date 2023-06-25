@@ -1,0 +1,11 @@
+---
+- name: Define batcave01 as execution node
+  instance:
+    hostname: batcave01.vpn.fedoraproject.org
+    node_type: execution
+
+- name: Create batcave instance group
+  instance_group:
+    name: batcave
+    instances:
+    - batcave01.vpn.fedoraproject.org

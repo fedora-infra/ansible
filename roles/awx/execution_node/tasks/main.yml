@@ -1,0 +1,57 @@
+---
+- name: Create the awx user
+  user:
+    name: awx
+    shell: /bin/bash
+
+- name: Enable Copr repo for Ansible Receptor (Fedora)
+  community.general.copr:
+    name: ansible-awx/receptor
+  when: ansible_distribution == 'Fedora'
+
+- name: Enable Copr repo for Ansible Receptor (RHEL)
+  community.general.copr:
+    name: ansible-awx/receptor
+    chroot: epel-9-x86_64
+  when:
+  - ansible_distribution == 'RedHat'
+  - ansible_distribution_major_version|int == 9
+
+- name: Deploy podman
+  include_role:
+    name: awx/podman
+  vars:
+    podman_user: awx
+    podman_group: awx
+
+- name: Deploy Ansible Receptor
+  include_role:
+    name: awx/receptor
+  vars:
+    receptor_user: awx
+    receptor_group: awx
+    receptor_verify: true
+    receptor_tls: true
+    receptor_mintls13: false
+    receptor_work_commands:
+      ansible-runner:
+        command: ansible-runner
+        params: worker
+        allowruntimeparams: true
+        verifysignature: true
+    custom_worksign_public_keyfile:
+      "{{ private }}/files/awx/{{ inventory_hostname }}/work-public-key.pem"
+    custom_tls_certfile: "{{ private }}/files/awx/{{ inventory_hostname }}/tls/receptor.crt"
+    custom_tls_keyfile: "{{ private }}/files/awx/{{ inventory_hostname }}/tls/receptor.key"
+    custom_ca_certfile: "{{ private }}/files/awx/{{ inventory_hostname }}/tls/ca/receptor-ca.crt"
+    receptor_protocol: 'tcp'
+    receptor_listener: true
+    receptor_port: 27199
+    receptor_dependencies:
+      - python3-pip
+    ansible_host: "{{ inventory_hostname }}"
+
+- name: Install ansible-runner
+  pip:
+    name: ansible-runner
+    executable: pip3

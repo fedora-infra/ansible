@@ -1,0 +1,31 @@
+---
+- name: Create Fedora Infra project
+  project:
+    name: Fedora Infra
+    description: ""
+    scm_type: git
+    scm_url: https://pagure.io/fedora-infra/ansible.git
+    scm_clean: true
+    organization: Fedora
+    scm_update_on_launch: true
+    default_environment: Fedora ansible EE
+
+- name: Create Fedora Infra Inventory
+  inventory:
+    name: Fedora Infra
+    description: ""
+    organization: Fedora
+
+- name: Set up Fedora Infra Inventory source
+  inventory_source:
+    source_project: Fedora Infra
+    inventory: Fedora Infra
+    name: Fedora Infra Git
+    source: scm
+    source_path: inventory
+    update_on_launch: true
+
+- name: Trigger inventory update
+  inventory_source_update:
+    name: Fedora Infra Git
+    inventory: Fedora Infra

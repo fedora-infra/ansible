@@ -1,0 +1,6 @@
+---
+- name: Create Fedora Ansible Execution Environment
+  execution_environment:
+    name: Fedora ansible EE
+    image: registry.gitlab.com/darknao/fedora-ansible-ee:latest
+    pull: always

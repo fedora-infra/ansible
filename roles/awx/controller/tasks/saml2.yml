@@ -1,0 +1,50 @@
+---
+- name: Configure SAML2 authentication
+  settings:
+    settings:
+      SAML_AUTO_CREATE_OBJECTS: true
+      SOCIAL_AUTH_SAML_SP_ENTITY_ID: https://awx.fedoraproject.org/
+      SOCIAL_AUTH_SAML_SP_PUBLIC_CERT:
+        "{{ lookup('file', '{{ private }}/files/awx/{{ env }}/awx-saml.crt') }}"
+      SOCIAL_AUTH_SAML_SP_PRIVATE_KEY:
+        "{{ lookup('file', '{{ private }}/files/awx/{{ env }}/awx-saml.key') }}"
+      SOCIAL_AUTH_SAML_ORG_INFO:
+        en-US:
+          url: https://awx.fedoraproject.org/
+          name: AWX
+          displayname: Ansible AWX
+      SOCIAL_AUTH_SAML_TECHNICAL_CONTACT:
+        emailAddress: infrastructure@lists.fedoraproject.org
+        givenName: Fedora Infrastructure
+      SOCIAL_AUTH_SAML_SUPPORT_CONTACT:
+        emailAddress: infrastructure@lists.fedoraproject.org
+        givenName: Fedora Infrastructure
+      SOCIAL_AUTH_SAML_ENABLED_IDPS:
+        fedora:
+          x509cert:
+            "{{ lookup(
+                  'file',
+                  '{{ private }}/files/saml2/{{ env }}/keys/idp.crt'
+                )
+                | regex_replace('\n', '')
+            }}"
+          attr_email: "email"
+          attr_first_name: "givenname"
+          attr_last_name: "surname"
+          attr_user_permanent_id: "name_id"
+          attr_username: "name_id"
+          entity_id: "https://id.fedoraproject.org/idp/saml2/metadata"
+          url: "https://id.fedoraproject.org/idp/saml2/SSO/Redirect"
+      SOCIAL_AUTH_SAML_SECURITY_CONFIG:
+        authnRequestsSigned: true
+      SOCIAL_AUTH_SAML_USER_FLAGS_BY_ATTR:
+        is_superuser_attr: groups
+        is_superuser_value:
+          - sysadmin-main
+      SOCIAL_AUTH_SAML_ORGANIZATION_MAP: {}
+      SOCIAL_AUTH_SAML_TEAM_ATTR:
+        saml_attr: groups
+        remove: true
+        team_org_map:
+          - organization: Fedora
+            team: fedora-websites

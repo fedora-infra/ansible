@@ -900,3 +900,15 @@
     ocp4: true
     keephost: true
     tags: ipsilon-website
+
+  - role: httpd/reverseproxy
+    website: awx.fedoraproject.org
+    destname: awx
+    balancer_name: app-ocp
+    balancer_members: "{{ ocp_nodes }}"
+    targettype: openshift
+    ocp4: true
+    keephost: true
+    tags:
+    - awx
+    when: env == "production"
