@@ -265,6 +265,28 @@ buildvm-s390x-15.s390.fedoraproject.org
 buildvm-s390x-16.s390.fedoraproject.org
 buildvm-s390x-17.s390.fedoraproject.org
 
+# These are builders in the osbuild channel.
+# This means they are used for osbuild jobs and need
+# a special ipset to allow them to talk to the osbuild
+# API endpoint.
+[osbuild]
+buildhw-x86-01.iad2.fedoraproject.org
+buildhw-x86-02.iad2.fedoraproject.org
+buildhw-x86-03.iad2.fedoraproject.org
+buildhw-x86-04.iad2.fedoraproject.org
+buildhw-x86-05.iad2.fedoraproject.org
+buildhw-x86-06.iad2.fedoraproject.org
+buildhw-x86-07.iad2.fedoraproject.org
+buildhw-x86-08.iad2.fedoraproject.org
+buildhw-x86-09.iad2.fedoraproject.org
+buildhw-x86-10.iad2.fedoraproject.org
+buildhw-x86-11.iad2.fedoraproject.org
+buildhw-x86-12.iad2.fedoraproject.org
+buildhw-x86-13.iad2.fedoraproject.org
+buildhw-x86-14.iad2.fedoraproject.org
+buildhw-x86-15.iad2.fedoraproject.org
+buildhw-x86-16.iad2.fedoraproject.org
+
 [builders:children]
 buildhw
 buildvm
