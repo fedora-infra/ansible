@@ -149,8 +149,9 @@
   - base
 
 - name: setup builder ipset if this is a new install
-  command: /usr/sbin/ipset create osbuildapi hash:ip
-  creates: /etc/sysconfig/ipset-osbuildapi
+  shell: "/usr/sbin/ipset create osbuildapi hash:ip; touch /etc/sysconfig/ipset-osbuildapi"
+  args:
+      creates: /etc/sysconfig/ipset-osbuildapi
   when: "'osbuild' in group_names"
   tags:
     - base
@@ -169,8 +170,9 @@
   when: "'iad2' not in inventory_hostname or ( datacenter == 'iad2' and external == 'true')"
 
 - name: setup blocklist ipset if this is a new install
-  command: /usr/sbin/ipset create blocklist hash:ip
-  creates: /etc/sysconfig/blocklist
+  command: "/usr/sbin/ipset create blocklist hash:ip; touch /etc/sysconfig/ipset-blocklist"
+  args:
+      creates: /etc/sysconfig/ipset-blocklist
   when: "'iad2' not in inventory_hostname or ( datacenter == 'iad2' and external == 'true')"
   tags:
     - base
