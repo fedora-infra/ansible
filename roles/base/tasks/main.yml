@@ -185,7 +185,7 @@
     minute: 15
     hour: "*/2"
     job: /usr/local/bin/blocklist-update.sh
-  when: "'iad2' not in inventory_hostname or ( datacenter == 'iad2' and external == 'true')"
+  when: "'iad2' not in inventory_hostname or external is true"
   tags:
     - base
     - iptables
