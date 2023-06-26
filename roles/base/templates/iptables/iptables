@@ -14,11 +14,9 @@
 -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 -A OUTPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 
-# if the blocked_ips is defined - drop them
-{% if blocked_ips is defined %}
-{% for ip in blocked_ips %}
--A INPUT -s {{ ip }} -j DROP
-{% endfor %}
+# if the host is external, block some ips
+{% if datacenter != 'iad2' or ( datacenter == 'iad2' and hostvars[inventory_hostname].external == 'true' ) %}
+-A INPUT -p any -m set --match-set blocklist src -j REJECT
 {% endif %}
 
 # allow ssh - always

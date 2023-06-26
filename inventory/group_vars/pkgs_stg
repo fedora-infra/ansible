@@ -16,6 +16,10 @@ clamscan_paths:
   - /srv/cache/lookaside/pkgs
 # We have both celery (pagure_worker) and web thread wanting to send out fedmsg's.
 # To make things easy on the listening side (so avoid contention of binding ports), let's set the pkgs boxes to active fedmsg.
+#
+# This host is externally reachable
+#
+external: true
 fedmsg_active: True
 # These are consumed by a task in roles/fedmsg/base/main.yml
 fedmsg_certs:
