@@ -778,3 +778,8 @@ smtpd_relay_restrictions = permit_mynetworks, reject_unauth_destination
 # This avoids us sending them and causing SPF failures.
 # It depends on them allowing us to relay email out.
 sender_dependent_relayhost_maps = hash:/etc/postfix/bysender
+
+# RHEL postfix disables RFC3030 CHUNKING by default for security reasons
+# http://www.postfix.org/BDAT_README.html
+# but does so in a way which is noisy with logs. Turn it off without logging.
+smtpd_discard_ehlo_keywords = chunking, silent-discard

@@ -741,3 +741,8 @@ smtp_tls_CAfile  = /etc/pki/tls/certs/ca-bundle.crt
 smtpd_sender_restrictions = regexp:/etc/postfix/sender_access
 smtpd_recipient_restrictions = permit_mynetworks, reject_unauth_destination
 compatibility_level = 2
+
+# RHEL postfix disables RFC3030 CHUNKING by default for security reasons
+# http://www.postfix.org/BDAT_README.html
+# but does so in a way which is noisy with logs. Turn it off without logging.
+smtpd_discard_ehlo_keywords = chunking, silent-discard

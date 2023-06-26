@@ -730,3 +730,8 @@ tls_eecdh_ultra_curve = secp384r1
 # as outlined http://www.postfix.org/SMTPD_ACCESS_README.html
 # At least one is required to receive email
 smtpd_relay_restrictions = permit_mynetworks, reject_unauth_destination
+
+# RHEL postfix disables RFC3030 CHUNKING by default for security reasons
+# http://www.postfix.org/BDAT_README.html
+# but does so in a way which is noisy with logs. Turn it off without logging.
+smtpd_discard_ehlo_keywords = chunking, silent-discard
