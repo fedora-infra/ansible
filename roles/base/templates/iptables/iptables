@@ -16,7 +16,7 @@
 
 # if the host is external, block some ips
 {% if datacenter != 'iad2' or ( datacenter == 'iad2' and hostvars[inventory_hostname].external == 'true' ) %}
--A INPUT -p any -m set --match-set blocklist src -j REJECT
+-A INPUT -p all -m set --match-set blocklist src -j REJECT
 {% endif %}
 
 # allow ssh - always
