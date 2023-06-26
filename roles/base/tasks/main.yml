@@ -170,7 +170,7 @@
   when: "'iad2' not in inventory_hostname or ( datacenter == 'iad2' and external == 'true')"
 
 - name: setup blocklist ipset if this is a new install
-  command: "/usr/sbin/ipset create blocklist hash:ip; touch /etc/sysconfig/ipset-blocklist"
+  shell: "/usr/sbin/ipset create blocklist hash:ip; touch /etc/sysconfig/ipset-blocklist"
   args:
       creates: /etc/sysconfig/ipset-blocklist
   when: "'iad2' not in inventory_hostname or ( datacenter == 'iad2' and external == 'true')"
