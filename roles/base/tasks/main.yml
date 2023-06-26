@@ -167,13 +167,13 @@
   tags:
     - base
     - iptables
-  when: "datacenter != 'iad2' or ( datacenter == 'iad2' and external == 'true')"
+  when: "'iad2' not in inventory_hostname or ( datacenter == 'iad2' and external == 'true')"
 
 - name: setup blocklist ipset if this is a new install
   command: /usr/sbin/ipset create blocklist hash:ip
   ignore_errors: true
   changed_when: false
-  when: "datacenter != 'iad2' or ( datacenter == 'iad2' and external == 'true')"
+  when: "'iad2' not in inventory_hostname or ( datacenter == 'iad2' and external == 'true')"
   tags:
     - base
     - iptables
@@ -185,7 +185,7 @@
     minute: 15
     hour: "*/2"
     job: /usr/local/bin/blocklist-update.sh
-  when: "datacenter != 'iad2' or ( datacenter == 'iad2' and external == 'true')"
+  when: "'iad2' not in inventory_hostname or ( datacenter == 'iad2' and external == 'true')"
   tags:
     - base
     - iptables
