@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import json
 from subprocess import check_output
 
 from ansible.module_utils.basic import AnsibleModule
@@ -46,6 +47,18 @@ sitelib:
     sample: '/usr/lib/python3.11/site-packages'
 '''
 
+PYCODE = """
+from json import dumps
+from distutils.sysconfig import get_python_lib
+from sys import version_info
+print(dumps({
+    "sitelib": get_python_lib(),
+    "sitearch": get_python_lib(True),
+    "version": f"{version_info.major}.{version_info.minor}",
+}))
+"""
+
+
 
 def run_module():
     module = AnsibleModule(
@@ -55,12 +68,12 @@ def run_module():
     try:
         output = check_output([
             "python3", "-c",
-            "from distutils.sysconfig import get_python_lib; print(get_python_lib())",
+            PYCODE,
         ])
     except OSError:
         module.exit_json(changed=False, ansible_facts=dict())
     else:
-        module.exit_json(changed=False, ansible_facts=dict(python3=output.strip()))
+        module.exit_json(changed=False, ansible_facts=dict(python3=json.loads(output.strip())))
 
 
 def main():
