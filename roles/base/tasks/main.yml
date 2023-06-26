@@ -167,13 +167,13 @@
   tags:
     - base
     - iptables
-  when: "'iad2' not in inventory_hostname or ( datacenter == 'iad2' and external == 'true')"
+  when: "'iad2' not in inventory_hostname or external is true"
 
 - name: setup blocklist ipset if this is a new install
   shell: "/usr/sbin/ipset create blocklist hash:ip; touch /etc/sysconfig/ipset-blocklist"
   args:
       creates: /etc/sysconfig/ipset-blocklist
-  when: "'iad2' not in inventory_hostname or ( datacenter == 'iad2' and external == 'true')"
+  when: "'iad2' not in inventory_hostname or external is true"
   tags:
     - base
     - iptables
