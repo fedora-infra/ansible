@@ -540,6 +540,7 @@
   copy: src=compress-log.cron dest=/etc/cron.d/ mode=0644
   tags:
   - compress 
+  when: inventory_hostname.startswith('log0')
 
 - name: Set crypto-policy to LEGACY on fedora 33 hosts to get 2fa working
   import_tasks: crypto-policies.yml
