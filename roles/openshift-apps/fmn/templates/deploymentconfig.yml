@@ -203,7 +203,7 @@ spec:
     recreateParams:
       mid:
         execNewPod:
-          command: [/opt/app-root/bin/fmn, database, migration, upgrade]
+          command: [/opt/app-root/bin/fmn, database, sync]
           containerName: consumer
           volumes:
             - etc-fmn
