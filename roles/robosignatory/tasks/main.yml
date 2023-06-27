@@ -63,6 +63,8 @@
     owner: robosignatory
     group: robosignatory
     mode: 0640
+  notify:
+  - restart robosignatory
   tags:
   - config
   - robosignatory
@@ -93,6 +95,8 @@
     owner: robosignatory
     group: robosignatory
     mode: 0640
+  notify:
+  - restart robosignatory
   tags:
   - config
   - robosignatory
@@ -128,6 +132,8 @@
     mode: 0644
     owner: robosignatory
     group: robosignatory
+  notify:
+  - restart robosignatory
   tags:
   - config
   - robosignatory
@@ -139,6 +145,8 @@
     mode: 0600
     owner: robosignatory
     group: robosignatory
+  notify:
+  - restart robosignatory
   tags:
   - config
   - robosignatory
@@ -150,6 +158,8 @@
     owner: robosignatory
     group: robosignatory
     mode: 0640
+  notify:
+  - restart robosignatory
   tags:
   - config
   - robosignatory
@@ -177,6 +187,7 @@
   when: env == 'staging'
   notify:
   - reload systemd
+  - restart robosignatory
   tags:
   - config
   - robosignatory
