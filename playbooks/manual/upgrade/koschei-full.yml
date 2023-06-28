@@ -1,0 +1,54 @@
+# This playbook can be used to update running Koschei instance to
+# latest upstream version.  It causes user-visible downtime, but
+# unlike koschei-rolling.yml, it works even in case when there are
+# database migrations to apply.
+
+- name: Perform full Koschei update
+  hosts: os_control[0]:os_control_stg[0]
+  user: root
+  vars_files:
+   - /srv/web/infra/ansible/vars/global.yml
+   - /srv/private/ansible/vars.yml
+   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+   - /srv/web/infra/ansible/roles/openshift-apps/koschei/vars/main.yml
+   - /srv/web/infra/ansible/roles/openshift-apps/koschei/vars/{{ env }}.yml
+  handlers:
+  - import_tasks: "{{ handlers_path }}/restart_services.yml"
+
+  tasks:
+  - name: Stop backend services
+    shell: oc -n koschei scale dc/{{item.name}} --replicas=0
+    with_items: "{{ koschei_backend_services }}"
+    loop_control:
+      label: "{{ item.name }}"
+
+  - name: Stop frontend
+    shell: oc -n koschei scale dc/frontend --replicas=0
+
+  - name: Import upstream image into OpenShift
+    include_role: name=openshift/import-image
+    vars:
+      imagestreamname: koschei
+
+  - name: Run database migrations
+    include_role: name=openshift-apps/koschei/job
+    vars:
+      name: db-migrate
+      command: "koschei-admin alembic upgrade head"
+
+  # Since everything is stopped and users are seeing downtime anyway,
+  # we may as well want to vacuum the DB to improve performance.
+  - name: Vacuum database
+    include_role: name=openshift-apps/koschei/job
+    vars:
+      name: db-vacuum
+      command: "koschei-admin psql <<<'VACUUM FULL ANALYZE'"
+
+  - name: Start frontend
+    shell: oc -n koschei scale dc/frontend --replicas={{koschei_frontend_replicas}}
+
+  - name: Start backend services
+    shell: oc -n koschei scale dc/{{item.name}} --replicas=1
+    with_items: "{{ koschei_backend_services }}"
+    loop_control:
+      label: "{{ item.name }}"
