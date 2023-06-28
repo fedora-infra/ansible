@@ -32,3 +32,6 @@ koschei_cron_jobs:
   - name: db-cleanup
     schedule: "0 3 * * *"
     command: "koschei-admin cleanup --older-than 2"
+  - name: track-all
+    schedule: "40 * * * *"
+    command: "koschei-admin psql <<<'UPDATE package SET tracked = TRUE WHERE NOT tracked'"
