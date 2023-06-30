@@ -41,13 +41,13 @@
       app: resultsdb-ci-listener
       secret_name: resultsdb-ci-listener-fedora-messaging-key
       key: resultsdb-ci-listener.key
-      privatefile: "rabbitmq/{{env}}/pki/private/resultsdb{{env_suffix}}-ci-listener.key"
+      privatefile: "rabbitmq/{{env}}/pki/private/resultsdb-ci-listener.key"
 
     - role: openshift/secret-file
       app: resultsdb-ci-listener
       secret_name: resultsdb-ci-listener-fedora-messaging-crt
       key: resultsdb-ci-listener.crt
-      privatefile: "rabbitmq/{{env}}/pki/issued/resultsdb{{env_suffix}}-ci-listener.crt"
+      privatefile: "rabbitmq/{{env}}/pki/issued/resultsdb-ci-listener.crt"
 
     - role: openshift/secret-file
       app: resultsdb-ci-listener
