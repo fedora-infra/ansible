@@ -60,9 +60,9 @@ data:
     ]
 
     [tls]
-    ca_cert = "/etc/pki/rabbitmq/ca/resultsdb{{ env_suffix }}-ci-listener.ca"
-    keyfile = "/etc/pki/rabbitmq/key/resultsdb{{ env_suffix }}-ci-listener.key"
-    certfile = "/etc/pki/rabbitmq/crt/resultsdb{{ env_suffix }}-ci-listener.crt"
+    ca_cert = "/etc/pki/rabbitmq/ca/resultsdb-ci-listener.ca"
+    keyfile = "/etc/pki/rabbitmq/key/resultsdb-ci-listener.key"
+    certfile = "/etc/pki/rabbitmq/crt/resultsdb-ci-listener.crt"
 
     [client_properties]
     app = "resultsdb_listener"
