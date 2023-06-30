@@ -59,6 +59,16 @@
     #  when:
     #inventory_hostname.startswith('notifs-backend02') or env == 'staging'
 
+- name: hotfix python3-moksha-hub monitoring
+  copy: >
+    src=monitoring.py dest=/usr/lib/python3.10/site-packages/moksha/hub/monitoring.py
+    owner=root group=root mode=0644
+  notify:
+  - restart fedmsg-hub
+  tags:
+  - notifs
+  - notifs/backend
+
 - name: hotfix python3-moksha-hub
   copy: >
     src=consumer.py dest=/usr/lib/python3.10/site-packages/moksha/hub/api/consumer.py
