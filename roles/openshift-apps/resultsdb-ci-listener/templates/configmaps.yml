@@ -10,7 +10,7 @@ data:
     # For complete details on all configuration options, see the documentation
     # https://fedora-messaging.readthedocs.io/en/latest/configuration.html.
 
-    amqp_url = "amqps://resultsdb{{ env_suffix }}-ci-listener:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fpubsub"
+    amqp_url = "amqps://resultsdb{{ env_suffix }}_ci_listener:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fpubsub"
 
 {% if env == "staging" %}
     topic_prefix = "org.fedoraproject.stg"
