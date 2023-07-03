@@ -47,6 +47,8 @@
     - php-pecl-uuid
     - librsvg2-tools
     - php-pgsql # For badges db access
+    - php-mbstring
+    - fedora-messaging
   tags:
   - packages
   - mediawiki
@@ -68,17 +70,15 @@
   - packages
   - mediawiki
 
-- name: adding fedmsg emit
-  copy: src=fedmsg-emit.php dest=/usr/share/{{ wikiver }}/extensions/fedmsg-emit.php owner=root group=root mode=775
+- name: download the Fedora Messaging extension
+  git:
+    repo: https://github.com/fedora-infra/mediawiki-fedora-messaging.git
+    dest: /usr/share/{{ wikiver }}/extensions/FedoraMessaging
+    version: stable
   tags:
   - config
   - mediawiki
-
-#- name: adding fedora-messaging emit
-#  copy: src=fedora-message-emit.php dest=/usr/share/{{ wikiver }}/extensions/fedora-messaging-emit.php owner=root group=root mode=775
-#  tags:
-#  - config
-#  - mediawiki
+  - fedora-messaging
 
 - name: Create /etc/pki/fedora-messaging
   file:
@@ -87,11 +87,23 @@
     owner: root
     group: root
     state: directory
-  when: "deployment_type is defined"
   tags:
   - config
+  - mediawiki
+  - fedora-messaging
 
-# FIXME: We currently don't seem to have a wiki cert, need to create one
+- name: Deploy the fedora-messaging CA
+  copy:
+    src: "{{ private }}/files/rabbitmq/{{env}}/pki/ca.crt"
+    dest: /etc/pki/fedora-messaging/cacert.pem
+    mode: 0644
+    owner: root
+    group: root
+  tags:
+  - config
+  - mediawiki
+  - fedora-messaging
+
 - name: Deploy the Fedora wiki fedora-messaging cert
   copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/issued/mediawiki{{env_suffix}}.crt"
@@ -99,21 +111,34 @@
     mode: 0644
     owner: root
     group: root
-  when: "deployment_type is defined"
   tags:
   - config
+  - mediawiki
+  - fedora-messaging
 
-# FIXME: We currently don't seem to have a wiki key, need to create one
 - name: Deploy the Fedora wiki fedora-messaging key
   copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/private/mediawiki{{env_suffix}}.key"
     dest: /etc/pki/fedora-messaging/mediawiki{{env_suffix}}-key.pem
     mode: 0640
     owner: root
-    group: root
-  when: "deployment_type is defined"
+    group: apache
   tags:
   - config
+  - mediawiki
+  - fedora-messaging
+
+- name: Install fedora-messaging config
+  template:
+    src: "fedora-messaging.toml"
+    dest: /etc/fedora-messaging/config.toml
+    owner: root
+    group: apache
+    mode: 0640
+  tags:
+  - config
+  - mediawiki
+  - fedora-messaging
 
 - name: startup apache
   service: name=httpd enabled=yes state=started
@@ -222,9 +247,13 @@
 - name: copy over our custom selinux policy
   copy: src=selinux/mediawiki.pp dest=/usr/local/share/selinux/mediawiki.pp
   register: selinux_module
-  tags: selinux
+  tags:
+  - selinux
+  - mediawiki
 
 - name: install our custom selinux policy
   command: semodule -i /usr/local/share/selinux/mediawiki.pp
   when: selinux_module is changed
-  tags: selinux
+  tags:
+  - selinux
+  - mediawiki
