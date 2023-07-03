@@ -1,0 +1,21 @@
+#
+# Fedora Messaging configuration for the Wiki publisher
+#
+
+amqp_url = "amqps://mediawiki{{ env_suffix }}:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fpubsub"
+passive_declares = true
+
+{% if env == "staging" %}
+topic_prefix = "org.fedoraproject.stg"
+{% else %}
+topic_prefix = "org.fedoraproject.prod"
+{% endif %}
+
+[tls]
+ca_cert = "/etc/pki/fedora-messaging/cacert.pem"
+certfile = "/etc/pki/fedora-messaging/mediawiki{{env_suffix}}-cert.pem"
+keyfile = "/etc/pki/fedora-messaging/mediawiki{{env_suffix}}-key.pem"
+
+
+[client_properties]
+app = "Wiki"
