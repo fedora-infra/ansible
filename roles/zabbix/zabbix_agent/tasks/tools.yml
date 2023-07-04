@@ -16,6 +16,7 @@
     minute: "*/30"
     job: "/usr/lib/zabbix/{{ item }}"
     user: root
+    state: absent
   with_items:
     - zabbix-hw-raid-check.sh
     - zabbix-mdstat-check.sh
