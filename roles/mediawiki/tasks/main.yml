@@ -90,6 +90,10 @@
     group: apache
     mode: 0755
     state: directory
+  tags:
+  - config
+  - mediawiki
+  - fedora-messaging
 
 - name: install the php dependencies
   become: yes
@@ -98,6 +102,10 @@
     cmd: composer install
     chdir: /srv/web/fp-wiki/extensions/FedoraMessaging
   when: result_git is changed
+  tags:
+  - config
+  - mediawiki
+  - fedora-messaging
 
 - name: Create /etc/pki/fedora-messaging
   file:
