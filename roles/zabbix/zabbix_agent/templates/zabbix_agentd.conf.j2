@@ -8,6 +8,6 @@ ListenPort=10050
 StartAgents=3
 Include=/etc/zabbix/zabbix_agentd.d/*.conf
 TLSConnect={{ zabbix_tls_connect }}
-TLSAccept=psk{{ zabbix_tls_accept }}
+TLSAccept={{ zabbix_tls_accept }}
 TLSPSKIdentity={{ zabbix_tls_psk_identity }}
 TLSPSKFile=/etc/zabbix/fedora.psk
