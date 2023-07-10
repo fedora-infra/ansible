@@ -47,7 +47,7 @@
     read_priv: "{{ read_priv }}"
     write_priv: "{{ write_priv }}"
     configure_priv: "^$"  # No configuration permissions
-    topic_permissions: "{{ (env == 'staging')|ternary(topic_permissions, []) }}"
+    topic_permissions: "{{ topic_permissions }}"
     state: present
   tags:
     - config
