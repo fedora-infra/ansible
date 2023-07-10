@@ -22,6 +22,11 @@
     tags:
       - apply-appowners
 
+  - role: rabbit/user
+    username: greenwave{{ env_suffix }}
+    queue_name: greenwave{{ env_suffix }}
+    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.greenwave\..*
+
   - role: openshift/secret-file
     app: greenwave
     secret_name: greenwave-fedora-messaging-key
