@@ -49,6 +49,16 @@
     dest: "{{ zabbix_agentd }}"
   notify: restart_zabbix_agent
 
+- name: Copy zabbix-agend.conf psk config
+  copy:
+    src: "{{ item }}"
+    dest: /etc/zabbix/fedora.psk
+    owner: zabbix
+    group: zabbix
+    mode: 0600
+  with_fileglob:
+   - "{{ private }}/files/zabbix/fedora{{env_suffix}}.psk"
+
 - name: Ensuring we have a directory to put zabbix scripts
   file:
     state: directory
