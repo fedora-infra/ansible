@@ -14,12 +14,12 @@ if consumers < 1:
     print ('CRITICAL: No consumers: %s' % msg)
     sys.exit(2)
 
-if str(messages) > sys.argv[2]:
-    print ('CRITICAL: %s' % msg)
-    sys.exit(2)
-
-if str(messages) > sys.argv[3]:
+if messages > int(sys.argv[2]):
     print ('WARNING: %s' % msg)
+    sys.exit(1)
+
+if messages > int(sys.argv[3]):
+    print ('CRITICAL: %s' % msg)
     sys.exit(1)
 
 print ('OK: %s' % msg)
