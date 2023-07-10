@@ -111,6 +111,8 @@
     thresholds:
       warning: 10
       critical: 100
+    # We have to repeat this line for now (only the last one counts)
+    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.bodhi\..*
 
   - role: zabbix/zabbix_agent
     zabbix_server: apache
