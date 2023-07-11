@@ -101,7 +101,7 @@
     thresholds:
       warning: 10
       critical: 100
-    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.bodhi\..*
+    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(bodhi|pungi)\..*
 
   - role: rabbit/queue
     username: "bodhi{{ env_suffix }}"
@@ -112,7 +112,7 @@
       warning: 10
       critical: 100
     # We have to repeat this line for now (only the last one counts)
-    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.bodhi\..*
+    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(bodhi|pungi)\..*
 
   - role: zabbix/zabbix_agent
     zabbix_server: apache
