@@ -105,15 +105,6 @@
 # CENTOS GITLAB END
 
 # CENTOS KOJI BEGIN
-- name: CentOS Koji User (maybe unused, to remove)
-  run_once: true
-  include_role:
-    name: rabbit/user
-  vars:
-    username: koji-centos{{ env_suffix }}
-    sent_topics: ^org\.centos\.{{ env_short }}\.buildsys\..*
-  when: env != 'staging'
-
 - name: CentOS Stream Koji User
   run_once: true
   include_role:
