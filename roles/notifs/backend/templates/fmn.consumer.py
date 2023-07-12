@@ -62,6 +62,7 @@ config = {
         '.buildsys.rpm.sign',
         '.faf.report.threshold1',
         '.github.status',
+        '.anitya.project.version.update.v2', # Can't handle the v2, only the v1
     ],
 
     # This sets up four threads to handle incoming messages.  At the time of
