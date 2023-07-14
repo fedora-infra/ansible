@@ -449,7 +449,7 @@
 #
 
 - name: check the selinux context of ansible
-  command: matchpathcon /srv/ansible.git
+  command: matchpathcon /srv/git/ansible.git
   register: webdir
   check_mode: no
   changed_when: "1 != 1"
@@ -460,8 +460,8 @@
   - httpd
   - httpd/website
 
-- name: /git/ansible file contexts
-  command: semanage fcontext -a -t git_content_t "/srv/ansible.git(/.*)?"
+- name: /srv/git/ansible file contexts
+  command: semanage fcontext -a -t git_content_t "/srv/git/ansible.git(/.*)?"
   when: webdir.stdout.find('git_content_t') == -1
   tags:
   - config
@@ -471,7 +471,7 @@
   - httpd/website
 
 - name: check the selinux context of badges
-  command: matchpathcon /git/badges
+  command: matchpathcon /srv/git/badges
   register: webdir
   check_mode: no
   changed_when: "1 != 1"
@@ -482,8 +482,8 @@
   - httpd
   - httpd/website
 
-- name: /git/badges file contexts
-  command: semanage fcontext -a -t git_content_t "/git/badges(/.*)?"
+- name: /srv/git/badges file contexts
+  command: semanage fcontext -a -t git_content_t "/srv/git/badges(/.*)?"
   when: webdir.stdout.find('git_content_t') == -1
   tags:
   - config
@@ -493,7 +493,7 @@
   - httpd/website
 
 - name: check the selinux context of dns
-  command: matchpathcon /git/dns
+  command: matchpathcon /srv/git/dns
   register: webdir
   check_mode: no
   changed_when: "1 != 1"
@@ -504,8 +504,8 @@
   - httpd
   - httpd/website
 
-- name: /git/dns file contexts
-  command: semanage fcontext -a -t git_content_t "/git/dns(/.*)?"
+- name: /srv/git/dns file contexts
+  command: semanage fcontext -a -t git_content_t "/srv/git/dns(/.*)?"
   when: webdir.stdout.find('git_content_t') == -1
   tags:
   - config
@@ -515,7 +515,7 @@
   - httpd/website
 
 - name: check the selinux context of infra-docs
-  command: matchpathcon /git/infra-docs
+  command: matchpathcon /srv/git/infra-docs
   register: webdir
   check_mode: no
   changed_when: "1 != 1"
@@ -526,8 +526,8 @@
   - httpd
   - httpd/website
 
-- name: /git/infra-docs file contexts
-  command: semanage fcontext -a -t git_content_t "/git/infra-docs(/.*)?"
+- name: /srv/git/infra-docs file contexts
+  command: semanage fcontext -a -t git_content_t "/srv/git/infra-docs(/.*)?"
   when: webdir.stdout.find('git_content_t') == -1
   tags:
   - config
