@@ -325,26 +325,10 @@
     when: env == 'staging'
 
   - role: httpd/redirectmatch
-    shortname: prerelease-to-final-spins-1
-    website: spins.fedoraproject.org
-    regex: /(.*)prerelease.*$
-    target: https://spins.stg.fedoraproject.org/$1
-    redirectmatch_enabled: false
-    when: env == 'staging'
-
-  - role: httpd/redirectmatch
     shortname: prerelease-to-final-labs-2
     website: labs.fedoraproject.org
     regex: /prerelease.*$
     target: https://labs.stg.fedoraproject.org/$1
-    redirectmatch_enabled: false
-    when: env == 'staging'
-
-  - role: httpd/redirectmatch
-    shortname: prerelease-to-final-spins-2
-    website: spins.fedoraproject.org
-    regex: /prerelease.*$
-    target: https://spins.stg.fedoraproject.org/$1
     redirectmatch_enabled: false
     when: env == 'staging'
 
@@ -367,26 +351,10 @@
     when: env != 'staging'
 
   - role: httpd/redirectmatch
-    shortname: prerelease-to-final-spins-1
-    website: spins.fedoraproject.org
-    regex: /(.*)/prerelease.*$
-    target: https://spins.fedoraproject.org/$1
-    redirectmatch_enabled: false
-    when: env != 'staging'
-
-  - role: httpd/redirectmatch
     shortname: prerelease-to-final-labs-2
     website: labs.fedoraproject.org
     regex: /prerelease.*$
     target: https://labs.fedoraproject.org/$1
-    redirectmatch_enabled: false
-    when: env != 'staging'
-
-  - role: httpd/redirectmatch
-    shortname: prerelease-to-final-spins-2
-    website: spins.fedoraproject.org
-    regex: /prerelease.*$
-    target: https://spins.fedoraproject.org/$1
     redirectmatch_enabled: false
     when: env != 'staging'
 
@@ -490,6 +458,12 @@
     target: https://fedoraproject.org/spins/kde/
     tags:
     - fedoraproject.org
+
+  - role: httpd/redirectmatch
+    shortname: spins
+    website: spins.fedoraproject.org
+    regex: ^.*
+    target: https://fedoraproject.org/spins/
 
 
   # Various sites that we are friends with
