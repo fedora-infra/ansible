@@ -64,8 +64,6 @@
     username: "sundries{{ env_suffix }}"
     sent_topics: ^$
     when: master_sundries_node|bool and deployment_type == "stg"
-  - role: fedmsg/base
-    when: master_sundries_node|bool
   - role: nfs/client
     mnt_dir: '/srv/docs'
     nfs_src_dir: 'openshift_{{ env_short }}_docs'
