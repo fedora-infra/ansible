@@ -37,8 +37,8 @@
   become_user: postgres
   become: true
   postgresql_user:
-     name: "{{ pagure_db_user }}"
-     password: "{{ pagure_db_pass }}"
+    name: "{{ pagure_db_user }}"
+    password: "{{ pagure_db_pass }}"
   tags:
   - pagure
   - postgresql
@@ -48,8 +48,8 @@
   become_user: postgres
   become: true
   postgresql_user:
-     name: "{{ pagure_db_admin_user }}"
-     password: "{{ pagure_db_admin_pass }}"
+    name: "{{ pagure_db_admin_user }}"
+    password: "{{ pagure_db_admin_pass }}"
   tags:
   - pagure
   - postgresql
@@ -59,9 +59,9 @@
   become_user: postgres
   become: true
   postgresql_db:
-     name: "{{ pagure_db_name }}"
-     owner: "{{ pagure_db_user }}"
-     encoding: UTF-8
+    name: "{{ pagure_db_name }}"
+    owner: "{{ pagure_db_user }}"
+    encoding: UTF-8
   tags:
   - pagure
   - postgresql
@@ -71,8 +71,8 @@
   become_user: postgres
   become: true
   postgresql_user:
-     name: "{{ pagure_stg_db_user }}"
-     password: "{{ pagure_stg_db_pass }}"
+    name: "{{ pagure_stg_db_user }}"
+    password: "{{ pagure_stg_db_pass }}"
   tags:
   - pagure
   - postgresql
@@ -82,8 +82,8 @@
   become_user: postgres
   become: true
   postgresql_user:
-     name: "{{ pagure_stg_db_admin_user }}"
-     password: "{{ pagure_stg_db_admin_pass }}"
+    name: "{{ pagure_stg_db_admin_user }}"
+    password: "{{ pagure_stg_db_admin_pass }}"
   tags:
   - pagure
   - postgresql
@@ -93,9 +93,9 @@
   become_user: postgres
   become: true
   postgresql_db:
-     name: "{{ pagure_stg_db_name }}"
-     owner: "{{ pagure_stg_db_user }}"
-     encoding: UTF-8
+    name: "{{ pagure_stg_db_name }}"
+    owner: "{{ pagure_stg_db_user }}"
+    encoding: UTF-8
   tags:
   - pagure
   - postgresql
@@ -129,10 +129,10 @@
   - hotfix
 
 # This now fails when there are broken symlinks. Lets figure out a better way to do this - kevin
-#- name: Adjust owner of /srv/git
-#  file: name=/srv/git state=directory recurse=yes owner=git group=git
-#  tags:
-#  - gitolite
+# - name: Adjust owner of /srv/git
+#   file: name=/srv/git state=directory recurse=yes owner=git group=git
+#   tags:
+#   - gitolite
 
 - name: create all the directories where we store the git repos
   file: state=directory
@@ -219,7 +219,7 @@
             dest={{ item.dest }}
             owner=root group=root mode=0600
   with_items:
-  - { file: stunnel-conf.j2, dest: /etc/stunnel/stunnel.conf }
+  - {file: stunnel-conf.j2, dest: /etc/stunnel/stunnel.conf}
   notify: restart stunnel
   tags:
   - pagure
@@ -339,8 +339,8 @@
             dest={{ item.location }}/{{ item.file }}
             owner=git group=postfix mode=0640
   with_items:
-  - { file: pagure.cfg, location: /etc/pagure }
-  - { file: alembic.ini, location: /etc/pagure }
+  - {file: pagure.cfg, location: /etc/pagure}
+  - {file: alembic.ini, location: /etc/pagure}
   tags:
   - config
   - web
@@ -363,7 +363,7 @@
   command: /usr/bin/python3 /usr/share/pagure/pagure_createdb.py
   changed_when: "1 != 1"
   environment:
-      PAGURE_CONFIG: /etc/pagure/pagure.cfg
+    PAGURE_CONFIG: /etc/pagure/pagure.cfg
   tags:
   - web
   - pagure
