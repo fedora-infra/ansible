@@ -348,6 +348,17 @@
   notify:
   - restart apache
 
+- name: Install client_secrets for ipsilon
+  template: src=client_secrets.json
+            dest=/etc/pagure
+            owner=root group=root mode=0600
+  tags:
+  - config
+  - web
+  - pagure
+  when: env == 'pagure-staging'
+
+
 - name: create the database scheme
   command: /usr/bin/python3 /usr/share/pagure/pagure_createdb.py
   changed_when: "1 != 1"
