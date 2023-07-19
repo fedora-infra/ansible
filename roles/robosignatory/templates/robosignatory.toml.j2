@@ -480,7 +480,7 @@ handlers = ["console"]
             [[consumer_config.koji_instances.primary.tags]]
             from = "f39-rebuild"
             to = "f39-rebuild"
-            key = "{{ (env == 'production')|ternary('fedora-infra', 'testkey') }}"
+            key = "{{ (env == 'production')|ternary('fedora-39', 'testkey') }}"
             keyid = "{{ (env == 'production')|ternary('18B8e74c', 'd300e724') }}"
             {% if env == "production" %}
             # ima file signing - enabled in f37
