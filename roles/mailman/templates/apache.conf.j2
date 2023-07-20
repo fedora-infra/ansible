@@ -32,7 +32,7 @@ WSGIPythonOptimize 1
 
 Alias /pipermail/ {{ mailman_webui_basedir }}/old-archives/pipermail/
 <Directory {{ mailman_webui_basedir }}/old-archives/pipermail>
-    Options MultiViews FollowSymLinks
+    Options FollowSymLinks
     AllowOverride None
     Require all granted
     AddDefaultCharset Off
