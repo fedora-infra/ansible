@@ -5,7 +5,7 @@
 ; parameter for individual calls.
 ; default_mounts = /mnt/archive,/mnt/workdir
 {% if env == 'production' %}
-default_mounts = /mnt/koji,/dev/fuse
+default_mounts = /mnt/koji
 {% elif env == 'staging' %}
 ; In staging we also need the production split volume
 default_mounts = /mnt/koji,/mnt/fedora_koji_prod/koji,/etc/kojid/secrets
@@ -15,7 +15,7 @@ default_mounts = /mnt/koji,/mnt/fedora_koji_prod/koji,/etc/kojid/secrets
 ; Each extra_mount needs to start with some of these prefixes. Other paths are
 ; not allowed for mounting. Only absolute paths are allowed here, no
 ; wildcards.
-safe_roots = /mnt/koji/compose,/mnt/koji/atomic-cd,/srv/odcs/,/dev/fuse
+safe_roots = /mnt/koji/compose,/mnt/koji/atomic-cd,/srv/odcs/
 
 ; path substitutions is tuple per line, delimited by comma, order is
 ; important. 
@@ -47,12 +47,6 @@ mountpoint = /srv/odcs
 path = /srv/odcs
 fstype = bind
 options = bind
-
-[path5]
-mountpoint = /dev/fuse
-path = /dev/fuse
-fstype = bind
-options = none
 
 {% if env == 'staging' %}
 ; we need to mount the production split volume here.
