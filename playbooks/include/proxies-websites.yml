@@ -370,6 +370,8 @@
     sslonly: true
     certbot: true
     when: env == "production"
+    tags:
+    - flocktofedora.org
 
   - role: httpd/website
     site_name: flocktofedora.net
