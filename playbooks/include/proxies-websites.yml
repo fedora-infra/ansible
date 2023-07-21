@@ -470,6 +470,8 @@
     server_aliases: [start.stg.fedoraproject.org]
     sslonly: true
     cert_name: "{{wildcard_cert_name}}"
+    tags:
+    - start.fedoraproject.org
 
   - role: httpd/website
     site_name: kde.fedoraproject.org
