@@ -171,20 +171,20 @@
 # ELN END
 
 # ELN CS BEGIN
-
-- name: eln cs queue
-  run_once: true
-  include_role:
-    name: rabbit/queue
-  vars:
-    username: distrobuildsync-cs
-    sent_topics: ^$
-    queue_name: distrobuildsync-cs
-    # TTL: 10 days (in miliseconds)
-    message_ttl: 864000000
-    routing_keys:
-      - "#.buildsys.repo.init"
-      - "#.buildsys.repo.done"
-      - "#.buildsys.tag"
-
+#
+#- name: eln cs queue
+#  run_once: true
+#  include_role:
+#    name: rabbit/queue
+#  vars:
+#    username: distrobuildsync-cs
+#    sent_topics: ^$
+#    queue_name: distrobuildsync-cs
+#    # TTL: 10 days (in miliseconds)
+#    message_ttl: 864000000
+#    routing_keys:
+#      - "#.buildsys.repo.init"
+#      - "#.buildsys.repo.done"
+#      - "#.buildsys.tag"
+#
 # ELN END
