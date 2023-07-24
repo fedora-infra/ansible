@@ -155,17 +155,9 @@
     proxies: myvms_new:&proxies
   when: nodns is not defined or not nodns
 
-- name: Fix unbound if necessary
-  # intersection - hosts that are in our dynamic group and also in unbound-dns
-  hosts: "myvms_new:&unbound"
-  user: root
-
   vars_files:
    - /srv/web/infra/ansible/vars/global.yml
    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
-
-  tasks:
-  - import_tasks: "{{ tasks_path }}/restart_unbound.yml"
 
 #  - name: get info on guests (postreboot)
 #    virt: command=info

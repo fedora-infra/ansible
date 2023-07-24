@@ -26,13 +26,6 @@ define hostgroup {
 
 }
 
-define hostgroup {
-        hostgroup_name unbound
-        alias          External DNS
-        members        {% for host in groups["unbound"]|sort %}{{ host }}{% if not loop.last %}, {% endif %} {% endfor %}
-
-}
-
 {% for key, value in groups.items()|sort %}
 {% if groups[key] != [] and key.startswith('copr')  %}
 define hostgroup {
