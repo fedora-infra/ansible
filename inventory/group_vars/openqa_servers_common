@@ -73,9 +73,9 @@ openqa_amqp_resultsdb_reporter_routing_keys:
 openqa_amqp_wiki_reporter_queue: "{{ openqa_amqp_this_username }}_wiki_reporter"
 openqa_amqp_wiki_reporter_routing_keys: ["org.fedoraproject.{{ deployment_type }}.openqa.job.done"]
 
-openqa_assetsize: 500
-openqa_assetsize_aarch64: 350
-openqa_assetsize_updates: 250
+openqa_assetsize: 450
+openqa_assetsize_aarch64: 325
+openqa_assetsize_updates: 225
 # stg and prod use the same database server
 openqa_dbhost: db-openqa01.iad2.fedoraproject.org
 openqa_email: adamwill@fedoraproject.org
