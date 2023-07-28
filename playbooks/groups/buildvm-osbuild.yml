@@ -23,6 +23,7 @@
     - hosts
     - ipa/client
     - sudo
+    - nagios_client
 
   handlers:
     - import_tasks: "{{ handlers_path }}/restart_services.yml"
