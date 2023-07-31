@@ -41,7 +41,7 @@
         srpm-build: "{{srpm_build}}"
       extra:
         mock.package_manager: dnf
-        mock.new_chroot : 0
+        mock.new_chroot: 0
     tags: rpm
 
   - name: create the {{release}} tags
@@ -55,16 +55,16 @@
       - parent: "{{ item.parent }}"
         priority: 0
     loop:
-      - { name: "{{release}}-updates", perm: admin, parent: "{{release}}" , arches: ""}
-      - { name: "{{release}}-updates-testing", perm: admin, parent: "{{release}}", arches: "" }
-      - { name: "{{release}}-updates-pending", perm: admin, parent: "{{release}}", arches: "" }
-      - { name: "{{release}}-override", perm: fedora-override, parent: "{{release}}", arches: "" }
-      - { name: "{{release}}-updates-candidate", perm: '', parent: "{{release}}", arches: "" }
-      - { name: "{{release}}-compose", perm: '', parent: "{{release}}", arches: "" }
-      - { name: "{{release}}-updates-testing-pending", perm: 'autosign', parent: "{{release}}-updates-testing", arches: "" }
-      - { name: "{{release}}-signing-pending", perm: 'autosign', parent: "{{release}}-updates-testing-pending", arches: "" }
-      - { name: "{{release}}-pending", perm: '', parent: "{{release}}-updates", arches: "" }
-      - { name: "{{release}}-build", perm: 'admin', parent: "{{release}}-override", arches: "armv7hl i686 x86_64 aarch64 ppc64le s390x" }
+      - {name: "{{release}}-updates", perm: admin, parent: "{{release}}", arches: ""}
+      - {name: "{{release}}-updates-testing", perm: admin, parent: "{{release}}", arches: ""}
+      - {name: "{{release}}-updates-pending", perm: admin, parent: "{{release}}", arches: ""}
+      - {name: "{{release}}-override", perm: fedora-override, parent: "{{release}}", arches: ""}
+      - {name: "{{release}}-updates-candidate", perm: '', parent: "{{release}}", arches: ""}
+      - {name: "{{release}}-compose", perm: '', parent: "{{release}}", arches: ""}
+      - {name: "{{release}}-updates-testing-pending", perm: 'autosign', parent: "{{release}}-updates-testing", arches: ""}
+      - {name: "{{release}}-signing-pending", perm: 'autosign', parent: "{{release}}-updates-testing-pending", arches: ""}
+      - {name: "{{release}}-pending", perm: '', parent: "{{release}}-updates", arches: ""}
+      - {name: "{{release}}-build", perm: 'admin', parent: "{{release}}-override", arches: "armv7hl i686 x86_64 aarch64 ppc64le s390x"}
     tags: rpm
 
   - name: create the main infra tags
@@ -80,8 +80,8 @@
         tag2distrepo.enabled: "true"
         tag2distrepo.keys: 47dd8ef9
     loop:
-      - { name: "{{release}}-infra", perm: 'infra', parent: "{{release}}-build", arches: "" }
-      - { name: "{{release}}-infra-stg", perm: 'infra', parent: "{{release}}-infra", arches: "" }
+      - {name: "{{release}}-infra", perm: 'infra', parent: "{{release}}-build", arches: ""}
+      - {name: "{{release}}-infra-stg", perm: 'infra', parent: "{{release}}-infra", arches: ""}
     tags: infra
 
   - name: create the other infra tags
@@ -94,8 +94,8 @@
       - parent: "{{ item.parent }}"
         priority: 0
     loop:
-      - { name: "{{release}}-infra-candidate", perm: 'infra', parent: "{{release}}-infra-stg", arches: "" }
-      - { name: "{{release}}-infra-build", perm: 'infra', parent: "{{release}}-infra-stg", arches: "" }
+      - {name: "{{release}}-infra-candidate", perm: 'infra', parent: "{{release}}-infra-stg", arches: ""}
+      - {name: "{{release}}-infra-build", perm: 'infra', parent: "{{release}}-infra-stg", arches: ""}
     tags: infra
 
 
@@ -127,8 +127,7 @@
       - parent: "{{release}}"
         priority: 0
     loop:
-      - { name: "{{release}}-modularity", perm: '', parent: "", arches: "" }
-      - { name: "{{release}}-container-build", perm: '', parent: "{{release}}-container", arches: "x86_64" }
+      - {name: "{{release}}-container-build", perm: '', parent: "{{release}}-container", arches: "x86_64"}
     tags: openh264
 
 
@@ -164,60 +163,6 @@
       extra:
         tag2distrepo.enabled: "true"
     tags: coreos
-
-  - name: create the main modularity tags
-    koji_tag:
-      koji: koji
-      name: "{{release}}-modular"
-      state: present
-      perm: autosign
-      extra:
-        mock.package_manager: dnf
-    tags: modularity
-
-  - name: create the rest of the modularity tags
-    koji_tag:
-      koji: koji
-      name: "{{ item.name }}"
-      state: present
-      perm: "{{ item.perm }}"
-      arches: "{{item.arches}}"
-      inheritance:
-      - parent: "{{ item.parent }}"
-        priority: 0
-    loop:
-      - { name: "{{release}}-modular-updates", perm: admin, parent: "{{release}}-modular" , arches: ""}
-      - { name: "{{release}}-modular-updates-candidate", perm: '', parent: "{{release}}-modular-updates", arches: "" }
-      - { name: "{{release}}-modular-updates-testing", perm: admin, parent: "{{release}}-modular-updates", arches: "" }
-      - { name: "{{release}}-modular-updates-testing-pending", perm: 'autosign', parent: "{{release}}-modular-updates-testing", arches: "" }
-      - { name: "{{release}}-modular-updates-pending", perm: admin, parent: "{{release}}-modular-updates", arches: "" }
-      - { name: "{{release}}-modular-signing-pending", perm: 'autosign', parent: "{{release}}-modular-updates-testing-pending", arches: "" }
-      - { name: "{{release}}-modular-override", perm: fedora-override, parent: "{{release}}-modular-updates", arches: "" }
-      - { name: "{{release}}-modular-pending", perm: '', parent: "{{release}}-modular-updates", arches: "" }
-    tags: modularity
-
-
-  - name: add the modularity external repo
-    koji_external_repo:
-      koji: koji
-      name: "{{release}}-build"
-      url: "https://kojipkgs.fedoraproject.org/repos/{{release}}-build/latest/$arch/"
-      state: present
-    tags: modularity
-
-
-  - name: create the module-{{release}}-build tag
-    koji_tag:
-      koji: koji
-      name: "module-{{release}}-build"
-      state: present
-      inheritance:
-      - parent: "module-package-list"
-        priority: 0
-      external_repos:
-        - repo: "{{release}}-build"
-          priority: 5
-    tags: modularity
 
 
   - name: create the {{release}} target

@@ -207,20 +207,6 @@ handlers = ["console"]
             file_signing_key = "fedora-39-ima"
             {% endif %}
 
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f39-modular-pending"
-            to = "f39-modular"
-            key = "{{ (env == 'production')|ternary('fedora-39', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('18B8e74c', 'd300e724') }}"
-            type = "modular"
-
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f39-modular-updates-candidate"
-            to = "f39-modular"
-            key = "{{ (env == 'production')|ternary('fedora-39', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('18B8e74c', 'd300e724') }}"
-            type = "modular"
-
             # Branched
 
             [[consumer_config.koji_instances.primary.tags]]
