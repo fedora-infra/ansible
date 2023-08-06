@@ -4,3 +4,9 @@ collections:
     type: git
     source: https://github.com/ansible-collections/community.postgresql.git
     version: 2.1.5
+
+roles:
+  # Needed for copr-pulp playbooks
+  # https://pagure.io/fedora-infrastructure/issue/11396
+  - name: geerlingguy.postgresql
+    version: 3.5.0
