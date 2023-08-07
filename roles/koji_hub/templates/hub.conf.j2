@@ -74,10 +74,12 @@ MissingPolicyOk = False
 # KojiTraceback = normal
 
 ## These options are intended for planned outages
-#ServerOffline = True
+ServerOffline = True
 #OfflineMessage = 'planned outage see https://www.fedorastatus.org'
-#LockOut = True
+OfflineMessage = 'We are in the middle of branching new fedora release'
+LockOut = True
 #OfflineMessage = 'koji is being migrated to a new datacenter'
+
 ## If ServerOffline is True, the server will always report a ServerOffline fault (with
 ## OfflineMessage as the fault string).
 ## If LockOut is True, the server will report a ServerOffline fault for all non-admin
