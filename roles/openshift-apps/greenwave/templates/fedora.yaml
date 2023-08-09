@@ -256,11 +256,32 @@ rules:
   - !PassingTestCaseRule {test_case_name: update.base_services_start, scenario: "fedora.updates-workstation.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.base_system_logging, scenario: "fedora.updates-workstation.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.base_update_cli, scenario: "fedora.updates-workstation.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: update.desktop_background, scenario: "fedora.updates-workstation.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.desktop_browser, scenario: "fedora.updates-workstation.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.desktop_printing, scenario: "fedora.updates-workstation.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.desktop_terminal, scenario: "fedora.updates-workstation.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.desktop_update_graphical, scenario: "fedora.updates-workstation.x86_64.64bit"}
+
+--- !Policy
+id: "bodhiupdate_bodhipush_openqa_workstation_background"
+# this policy contains just the desktop background test; it's split out because
+# often, at branch time, we don't yet have new backgrounds for the branched
+# release, so the test will always fail, so we cannot gate on it
+product_versions:
+  - fedora-37
+  - fedora-38
+  - fedora-rawhide
+decision_contexts:
+  - bodhi_update_push_testing_critpath
+  - bodhi_update_push_stable_critpath
+  - bodhi_update_push_testing_core_critpath
+  - bodhi_update_push_stable_core_critpath
+  - bodhi_update_push_testing_critical-path-base_critpath
+  - bodhi_update_push_stable_critical-path-base_critpath
+  - bodhi_update_push_testing_critical-path-gnome_critpath
+  - bodhi_update_push_stable_critical-path-gnome_critpath
+subject_type: bodhi_update
+rules:
+  - !PassingTestCaseRule {test_case_name: update.desktop_background, scenario: "fedora.updates-workstation.x86_64.64bit"}
 
 --- !Policy
 id: "bodhiupdate_bodhipush_openqa_workstation_live"
@@ -320,11 +341,34 @@ rules:
   - !PassingTestCaseRule {test_case_name: update.base_services_start, scenario: "fedora.updates-kde.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.base_system_logging, scenario: "fedora.updates-kde.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.base_update_cli, scenario: "fedora.updates-kde.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: update.desktop_background, scenario: "fedora.updates-kde.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.desktop_browser, scenario: "fedora.updates-kde.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.desktop_printing, scenario: "fedora.updates-kde.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.desktop_terminal, scenario: "fedora.updates-kde.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.desktop_update_graphical, scenario: "fedora.updates-kde.x86_64.64bit"}
+
+--- !Policy
+id: "bodhiupdate_bodhipush_openqa_kde_background"
+# this policy contains just the desktop background test; it's split out because
+# often, at branch time, we don't yet have new backgrounds for the branched
+# release, so the test will always fail, so we cannot gate on it
+product_versions:
+  - fedora-37
+  - fedora-38
+  - fedora-rawhide
+decision_contexts:
+  - bodhi_update_push_testing_critpath
+  - bodhi_update_push_stable_critpath
+  - bodhi_update_push_testing_core_critpath
+  - bodhi_update_push_stable_core_critpath
+  - bodhi_update_push_testing_critical-path-base_critpath
+  - bodhi_update_push_stable_critical-path-base_critpath
+  - bodhi_update_push_testing_critical-path-kde_critpath
+  - bodhi_update_push_stable_critical-path-kde_critpath
+  - bodhi_update_push_testing_critical-path-standard_critpath
+  - bodhi_update_push_stable_critical-path-standard_critpath
+subject_type: bodhi_update
+rules:
+  - !PassingTestCaseRule {test_case_name: update.desktop_background, scenario: "fedora.updates-kde.x86_64.64bit"}
 
 --- !Policy
 id: "bodhiupdate_bodhipush_openqa_kde"
