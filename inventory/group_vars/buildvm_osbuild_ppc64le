@@ -22,6 +22,9 @@ volgroup: /dev/vg_guests
 
 # setup access to workers
 ipa_server: ipa01.iad2.fedoraproject.org
+ipa_host_group: osbuild
+ipa_host_group_desc: osbuild Build vms
+primary_auth_source: ipa
 ipa_client_shell_groups:
   - sysadmin-osbuild
   - sysadmin-releng
