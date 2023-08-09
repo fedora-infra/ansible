@@ -221,6 +221,37 @@ ostree = {
             "failable": ["x86_64"]
         },
         [% endif %]
+        # Fedora Onyx
+        [% if release.version_int >= 39 %]
+        {
+            "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
+            "treefile": "fedora-onyx.yaml",
+            "config_url": "https://pagure.io/workstation-ostree-config.git",
+            "config_branch": "f[[ release.version ]]",
+            "repo": [
+                "Everything",
+                [% if request.name == 'testing' %]
+                    # In the case of testing, also inject the last stable updates
+                    "https://kojipkgs{{ env_suffix }}.fedoraproject.org/compose/updates/f[[ release.version_int ]]-updates/compose/Everything/$basearch/os/",
+                [% endif %]
+                # For F39 the compose location is going to be under /compose/branched/
+                [% if release.version_int == 39 %]
+                    "https://kojipkgs{{ env_suffix }}.fedoraproject.org/compose/branched/latest-Fedora-[[ release.version_int ]]/compose/Everything/$basearch/os/"
+                [% else %]
+                    "https://kojipkgs{{ env_suffix }}.fedoraproject.org/compose/[[ release.version_int ]]/latest-Fedora-[[ release.version_int ]]/compose/Everything/$basearch/os/"
+                [% endif %]
+            ]
+            "ostree_repo": "/mnt/koji/compose/ostree/repo",
+            [% if request.name == 'stable' %]
+                "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/updates/onyx",
+            [% else %]
+                "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/testing/onyx",
+            [% endif %]
+            "tag_ref": False,
+            "arches": ["x86_64"],
+            "failable": ["x86_64"]
+        },
+        [% endif %]
     ]
 }
 [% endif %]
