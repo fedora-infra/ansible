@@ -150,13 +150,14 @@ id: "bodhiupdate_bodhipush_openqa_core"
 # core, base, standard. those are the kinds of updates that might
 # break this stuff
 product_versions:
-  # FIXME: we would use some kind of matching here, but we don't want
-  # to include whatever version Rawhide is, as openQA tests don't run
-  # on Rawhide. So for now this list needs to be updated each time a
-  # release is branched (or goes EOL).
+  # we could do something like fedora-3* , fedora-4*, fedora-5*...
+  # here, possibly. however, right after branching, tests for Rawhide
+  # tend not to pass right away, so it may be good that we have to
+  # manually enable branching for it...
   - fedora-37
   - fedora-38
   - fedora-39
+  - fedora-40
   - fedora-rawhide
 decision_contexts:
   - bodhi_update_push_testing_critpath
@@ -181,6 +182,7 @@ product_versions:
   - fedora-37
   - fedora-38
   - fedora-39
+  - fedora-40
   - fedora-rawhide
 decision_contexts:
   - bodhi_update_push_testing_critpath
@@ -212,6 +214,7 @@ product_versions:
   - fedora-37
   - fedora-38
   - fedora-39
+  - fedora-40
   - fedora-rawhide
 decision_contexts:
 # we don't list the 'generic' contexts here as all these tests are
@@ -237,6 +240,7 @@ product_versions:
   - fedora-37
   - fedora-38
   - fedora-39
+  - fedora-40
   - fedora-rawhide
 decision_contexts:
   - bodhi_update_push_testing_critpath
@@ -269,6 +273,7 @@ id: "bodhiupdate_bodhipush_openqa_workstation_background"
 product_versions:
   - fedora-37
   - fedora-38
+  - fedora-40
   - fedora-rawhide
 decision_contexts:
   - bodhi_update_push_testing_critpath
@@ -291,6 +296,7 @@ product_versions:
   - fedora-37
   - fedora-38
   - fedora-39
+  - fedora-40
   - fedora-rawhide
 decision_contexts:
   - bodhi_update_push_testing_critpath
@@ -320,6 +326,7 @@ product_versions:
   - fedora-37
   - fedora-38
   - fedora-39
+  - fedora-40
   - fedora-rawhide
 decision_contexts:
   - bodhi_update_push_testing_critpath
@@ -354,6 +361,7 @@ id: "bodhiupdate_bodhipush_openqa_kde_background"
 product_versions:
   - fedora-37
   - fedora-38
+  - fedora-40
   - fedora-rawhide
 decision_contexts:
   - bodhi_update_push_testing_critpath
@@ -378,6 +386,7 @@ product_versions:
   - fedora-37
   - fedora-38
   - fedora-39
+  - fedora-40
   - fedora-rawhide
 decision_contexts:
   - bodhi_update_push_testing_critpath
@@ -409,6 +418,7 @@ product_versions:
   - fedora-37
   - fedora-38
   - fedora-39
+  - fedora-40
   - fedora-rawhide
 decision_contexts:
   - bodhi_update_push_testing_critpath
@@ -454,6 +464,7 @@ id: "bodhiupdate_bodhipush_openqa_upgrade_server"
 product_versions:
   - fedora-38
   - fedora-39
+  - fedora-40
   - fedora-rawhide
 decision_contexts:
   - bodhi_update_push_testing_critpath
@@ -477,6 +488,7 @@ id: "bodhiupdate_bodhipush_openqa_upgrade_workstation"
 product_versions:
   - fedora-38
   - fedora-39
+  - fedora-40
   - fedora-rawhide
 decision_contexts:
   - bodhi_update_push_testing_critpath
