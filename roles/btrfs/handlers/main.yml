@@ -1,0 +1,5 @@
+---
+- name: restart btrfs-balance
+  service:
+    name: btrfs-balance.timer
+    state: restarted

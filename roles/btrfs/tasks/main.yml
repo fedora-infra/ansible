@@ -1,0 +1,34 @@
+---
+- name: Install btrfsmaintenance package
+  package:
+    state: present
+    name:
+    - btrfsmaintenance
+
+
+- name: Create /etc/systemd/system/btrfs-balance.timer.d
+  file:
+    state: directory
+    path: /etc/systemd/system/btrfs-balance.timer.d
+    owner: root
+    group: root
+    mode: 0755
+
+
+- name: Configure btrfs-balance timer
+  template:
+    src: schedule.conf.j2
+    dest: /etc/systemd/system/btrfs-balance.timer.d/schedule.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+  - reload systemd
+  - restart btrfs-balance
+
+
+- name: Ensure btrfs-balance is enabled and started
+  service:
+    name: btrfs-balance.timer
+    enabled: yes
+    state: started
