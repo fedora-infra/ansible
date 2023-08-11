@@ -88,6 +88,12 @@
       when: env == "staging"
     - role: btrfs
       btrfs_balance_period: weekly
+    # push built Flatpaks to candidate registry
+    - role: login-registry
+      candidate_registry: "candidate-registry.stg.fedoraproject.org"
+      candidate_registry_osbs_username: "{{candidate_registry_osbs_stg_username}}"
+      candidate_registry_osbs_password: "{{candidate_registry_osbs_stg_password}}"
+      when: env == "staging"
 
   tasks:
     - import_tasks: "{{ tasks_path }}/motd.yml"

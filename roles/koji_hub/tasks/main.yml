@@ -206,6 +206,12 @@
   - koji_hub
   - rpmautospec
 
+- name: install Flatpak hub plugin
+  package: name=koji-flatpak-hub state=present
+  tags:
+  - koji_hub
+  when: env == "staging"
+
 #
 # install keytabs
 #

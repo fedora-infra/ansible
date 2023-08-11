@@ -124,6 +124,21 @@
   - koji_builder
   - rpmautospec
 
+- name: install Flatpak builder plugin
+  package: name=koji-flatpak-builder state=present
+  tags:
+  - koji_builder
+  when: env == "staging"
+
+- name: configure flatpak-builder plugin
+  template: src=flatpak.conf dest=/etc/kojid/plugins/flatpak.conf
+  vars:
+    candidate_registry: "candidate-registry.stg.fedoraproject.org"
+  notify:
+  - restart kojid
+  tags:
+  - koji_builder
+
 - name: Install arm UEFI firmware package (aarch64 only)
   package: name=edk2-arm state=present
   tags:
