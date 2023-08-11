@@ -517,3 +517,14 @@
   tags:
   - pagure
   - letsencrypt
+
+# httplib2 0.10.3, as available in EL8, hardcodes TLSv1. The next version
+# (0.11.0) chooses the TLS version that is supported by both client and server.
+# That variable is only available since Python 3.5+, but EL8 has Python 3.6, so
+# we're good to patch. The alternative would be for EL8 to update httplib2 to
+# at least version 0.11.0.
+- name: Patch httplib2 to not hardcode TLSv1, which is not accepted by Ipsilon
+  ansible.builtin.replace:
+    path: /usr/lib/python3.6/site-packages/httplib2/__init__.py
+    regexp: 'ssl\.PROTOCOL_TLSv1'
+    replace: 'ssl.PROTOCOL_TLS'
