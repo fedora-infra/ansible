@@ -64,6 +64,16 @@
   tags:
     - zabbix-configuration
 
+- name: Install IDP certificate
+  ansible.builtin.copy:
+    src: "{{ private }}/files/saml2/{{ env }}/keys/idp.crt"
+    dest: /usr/share/zabbix/conf/certs/idp.crt
+    mode: 0644
+    owner: nginx
+    group: nginx
+  tags:
+    - zabbix-configuration
+
 - name: Configure nginx nginx.conf
   ansible.builtin.template:
     src: nginx.conf.j2
