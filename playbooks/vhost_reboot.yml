@@ -34,7 +34,8 @@
     with_items: "{{ vmlist.list_vms }}"
 
 # Call out to another playbook.  Disable any proxies that may live here
-- import_playbook: update-proxy-dns.yml
+- name: update proxy dns if needed
+  import_playbook: update-proxy-dns.yml
   vars:
     status: enable
     proxies: myvms_new:&proxies
@@ -149,15 +150,12 @@
     when: inventory_hostname.startswith('rabbitmq')
 
 # Call out to that dns playbook.  Put proxies back in now that they're back
-- import_playbook: update-proxy-dns.yml
+- name: update proxy dns if needed
+  import_playbook: update-proxy-dns.yml
   vars:
     status: enable
     proxies: myvms_new:&proxies
   when: nodns is not defined or not nodns
-
-  vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
 #  - name: get info on guests (postreboot)
 #    virt: command=info
