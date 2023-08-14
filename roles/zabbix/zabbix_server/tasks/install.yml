@@ -66,7 +66,10 @@
 
 - name: Install IDP certificate
   ansible.builtin.copy:
-    src: "{{ private }}/files/saml2/{{ env }}/keys/idp.crt"
+    content: "{{ lookup('ansible.builtin.file',
+            private + '/files/saml2/' + env + '/keys/idp.crt')
+            | regex_search('-----BEGIN CERTIFICATE-----\n[^-]*\n-----END CERTIFICATE-----',
+            multiline=True) }}\n"
     dest: /usr/share/zabbix/conf/certs/idp.crt
     mode: 0644
     owner: nginx
