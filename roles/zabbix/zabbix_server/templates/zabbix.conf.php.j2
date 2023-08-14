@@ -52,5 +52,4 @@ $IMAGE_FORMAT_DEFAULT   = IMAGE_FORMAT_PNG;
 //$SSO['SP_CERT']                       = 'conf/certs/sp.crt';
 //$SSO['IDP_CERT']              = 'conf/certs/idp.crt';
 //$SSO['SETTINGS']              = [];
-
-
+$SSO_SETTINGS=['strict' => false, 'baseurl' => "https://zabbix{{ env_suffix }}.fedoraproject.org", 'use_proxy_headers' => true]
