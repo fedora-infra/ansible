@@ -22,6 +22,7 @@ custom_rules: [
   # yet as of 2015-04-27 (threebean).
   '-A INPUT -p tcp -m tcp --dport 9941 -s 104.207.133.220 -j ACCEPT',
   '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.115 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.116 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.117 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.118 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.119 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.120 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.121 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.122 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.123 -j ACCEPT']
+external: true
 ipa_client_shell_groups:
   - fi-apprentice
   - sysadmin-noc
