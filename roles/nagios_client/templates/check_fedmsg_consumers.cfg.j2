@@ -3,7 +3,7 @@ command[check_fedmsg_cp_busgateway_relay]={{libdir}}/nagios/plugins/check_fedmsg
 {% if (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int < 8) or (ansible_distribution_major_version|int < 30 and ansible_distribution == 'Fedora') %}
 command[check_fedmsg_cp_busgateway_gateway]={{libdir}}/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-gateway GatewayConsumer MonitoringProducer
 {% else %}
-command[check_fedmsg_cp_busgateway_gateway]={{libdir}}/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-gateway GatewayConsumer MonitoringProducer
+command[check_fedmsg_cp_busgateway_gateway]={{libdir}}/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-gateway- GatewayConsumer MonitoringProducer
 {% endif %}
 command[check_fedmsg_cp_anitya_relay]={{libdir}}/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-relay RelayConsumer MonitoringProducer
 command[check_fedmsg_cp_app]={{libdir}}/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-relay RelayConsumer MonitoringProducer
