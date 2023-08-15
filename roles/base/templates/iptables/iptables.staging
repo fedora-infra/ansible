@@ -15,7 +15,7 @@
 -A OUTPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 
 # if the host is external, block some ips
-{% if external == 'true' %}
+{% if external %}
 -A INPUT -p all -m set --match-set blocklist src -j REJECT
 {% endif %}
 
