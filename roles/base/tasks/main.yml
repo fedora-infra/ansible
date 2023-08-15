@@ -167,6 +167,7 @@
   tags:
     - base
     - iptables
+    - blocklist
   when: "'iad2' not in inventory_hostname or external is true"
 
 - name: setup blocklist update cron job
@@ -180,6 +181,7 @@
   tags:
     - base
     - iptables
+    - blocklist
 
 - name: iptables
   template: src={{ item }} dest=/etc/sysconfig/iptables mode=0600 validate="/sbin/iptables-restore --test %s"
