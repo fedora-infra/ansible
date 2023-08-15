@@ -128,12 +128,11 @@
   package: name=koji-flatpak-builder state=present
   tags:
   - koji_builder
-  when: env == "staging"
 
 - name: configure flatpak-builder plugin
   template: src=flatpak.conf dest=/etc/kojid/plugins/flatpak.conf
   vars:
-    candidate_registry: "candidate-registry.stg.fedoraproject.org"
+    candidate_registry: "candidate-registry{{ env_suffix }}.fedoraproject.org"
   notify:
   - restart kojid
   tags:
