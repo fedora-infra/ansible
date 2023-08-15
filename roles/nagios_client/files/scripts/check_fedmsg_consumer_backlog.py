@@ -11,7 +11,13 @@ try:
     check_consumer = sys.argv[2]
     backlog_warning = int(sys.argv[3])
     backlog_critical = int(sys.argv[4])
-    fname = '/var/run/fedmsg/monitoring-%s-3.socket' % service
+    if os.path.exists('/var/run/fedmsg/monitoring-%s-.socket' % service):
+        fname = '/var/run/fedmsg/monitoring-%s-.socket' % service
+    elif os.path.exists('/var/run/fedmsg/monitoring-%s-3.socket' % service):
+        fname = '/var/run/fedmsg/monitoring-%s-3.socket' % service
+    else:
+        print("UNKNOWN - socket file does not exists")
+        sys.exit(3)
 
     if not os.path.exists(fname):
         print("UNKNOWN - %s does not exist" % fname)
