@@ -26,14 +26,6 @@ spec:
         app: maubot
         deploymentconfig: maubot
     spec:
-      initContainers:
-        - name: init-maubot
-          image: maubot:latest
-          volumeMounts:
-            - name: maubot-storage
-              mountPath: /maubot
-          command:
-            - mkdir -p /maubot/plugins /maubot/trash /maubot/logs /maubot/crypto
       containers:
         - name: maubot
           image: maubot:latest
