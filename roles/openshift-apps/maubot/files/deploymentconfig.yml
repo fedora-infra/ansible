@@ -2,14 +2,14 @@
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
-  name: web
+  name: maubot
   labels:
     app: maubot
 spec:
   replicas: 1
   selector:
     app: maubot
-    deploymentconfig: web
+    deploymentconfig: maubot
   strategy:
     type: Rolling
     activeDeadlineSeconds: 21600
@@ -24,7 +24,7 @@ spec:
       creationTimestamp: null
       labels:
         app: maubot
-        deploymentconfig: web
+        deploymentconfig: maubot
     spec:
       containers:
         - name: maubot
@@ -32,11 +32,11 @@ spec:
           ports:
             - containerPort: 8080
           volumeMounts:
-            - name: data
-              mountPath: /maubot
             - name: config
               mountPath: /config
               readOnly: true
+            - name: data
+              mountPath: /maubot
           readinessProbe:
             timeoutSeconds: 1
             initialDelaySeconds: 5
