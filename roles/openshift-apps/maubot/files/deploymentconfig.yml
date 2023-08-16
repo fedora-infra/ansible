@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: maubot
-          imagePullPolicy: Always
+          image: registry/maubot:latest
           ports:
             - containerPort: 8080
           volumeMounts:
