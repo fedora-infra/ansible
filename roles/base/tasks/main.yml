@@ -176,7 +176,7 @@
     user: root
     minute: 15
     hour: "*/2"
-    job: /usr/local/bin/blocklist-update.sh
+    job: "/usr/local/bin/blocklist-update.sh >& /dev/null"
   when: "'iad2' not in inventory_hostname or external | bool"
   tags:
     - base
