@@ -27,7 +27,8 @@ spec:
         deploymentconfig: maubot
     spec:
       initContainers:
-        - image: maubot:latest
+        - name: init-maubot
+          image: maubot:latest
           volumeMounts:
             - name: maubot-storage
               mountPath: /maubot
