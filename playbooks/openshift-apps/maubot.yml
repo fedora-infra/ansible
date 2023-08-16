@@ -1,0 +1,53 @@
+- name: make the app be real
+  hosts: os_control_stg
+  user: root
+  gather_facts: False
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  roles:
+  - role: openshift/project
+    app: maubot
+    description: Maubot
+    appowners:
+    - ryanlerch
+    - kevin
+
+  - role: openshift/object
+    app: maubot
+    template: imagestream.yml
+    objectname: imagestream.yml
+
+  - role: openshift/object
+    app: maubot
+    template: buildconfig.yml
+    objectname: buildconfig.yml
+
+  - role: openshift/start-build
+    app: maubot
+    buildname: maubot-build
+    objectname: maubot-build
+
+  - role: openshift/object
+    app: maubot
+    file: service.yml
+    objectname: service.yml
+
+  - role: openshift/route
+    app: maubot
+    routename: web
+    host: host: "maubot.apps.ocp{{ env_suffix }}.fedoraproject.org"
+    serviceport: web
+    servicename: web
+
+  - role: openshift/object
+    app: maubot
+    file: deploymentconfig.yml
+    objectname: deploymentconfig.yml
+
+  - role: openshift/rollout
+    app: maubot
+    dcname: maubot

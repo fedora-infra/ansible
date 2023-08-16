@@ -1,0 +1,28 @@
+{% macro load_file(filename) %}{% include filename %}{%- endmacro -%}
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: maubot-build
+  labels:
+    app: maubot
+    build: maubot
+spec:
+  runPolicy: Serial
+  source:
+    dockerfile: |-
+      FROM fedora:38
+      RUN mkdir -p /maubot/plugins /maubot/trash /maubot/logs /maubot/crypto
+      RUN dnf -y install python3-pip && dnf -y clean all
+      RUN pip install maubot[encryption]
+      WORKDIR /maubot
+      ENTRYPOINT /usr/bin/python3 -m maubot -c /config/config.yml
+    type: Dockerfile
+  strategy:
+    type: Docker
+    dockerStrategy:
+      noCache: false
+  output:
+    to:
+      kind: ImageStreamTag
+      name: maubot:latest

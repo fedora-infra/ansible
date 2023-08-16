@@ -1,0 +1,58 @@
+---
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: web
+  labels:
+    app: maubot
+spec:
+  replicas: 1
+  selector:
+    app: maubot
+    deploymentconfig: web
+  strategy:
+    type: Rolling
+    activeDeadlineSeconds: 21600
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: maubot
+        deploymentconfig: web
+    spec:
+      containers:
+        - name: maubot
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: data
+              mountPath: /maubot
+            - name: config
+              mountPath: /config
+              readOnly: true
+          readinessProbe:
+            timeoutSeconds: 1
+            initialDelaySeconds: 5
+            httpGet:
+              path: /
+              port: 8080
+          livenessProbe:
+            timeoutSeconds: 1
+            initialDelaySeconds: 20
+            httpGet:
+              path: /
+              port: 8080
+      volumes:
+        - name: config
+          configMap:
+            name: config
+        - name: data
+          persistentVolumeClaim:
+            claimName: data
