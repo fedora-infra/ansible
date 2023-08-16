@@ -56,3 +56,12 @@ spec:
         - name: maubot-storage
           persistentVolumeClaim:
             claimName: maubot-storage
+  triggers:
+  - type: ImageChange
+    imageChangeParams:
+      automatic: true
+      containerNames:
+      - "maubot"
+      from:
+        kind: ImageStreamTag
+        name: maubot:latest
