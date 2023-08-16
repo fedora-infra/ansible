@@ -12,7 +12,6 @@ spec:
   source:
     dockerfile: |-
       FROM fedora:38
-      RUN mkdir -p /maubot/plugins /maubot/trash /maubot/logs /maubot/crypto
       RUN dnf -y install python3-pip && dnf -y clean all
       RUN pip install maubot[encryption]
       WORKDIR /maubot
