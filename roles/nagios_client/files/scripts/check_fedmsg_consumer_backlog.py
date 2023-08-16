@@ -11,7 +11,9 @@ try:
     check_consumer = sys.argv[2]
     backlog_warning = int(sys.argv[3])
     backlog_critical = int(sys.argv[4])
-    if os.path.exists('/var/run/fedmsg/monitoring-%s-.socket' % service):
+    if os.path.exists('/var/run/fedmsg/monitoring-%s.socket' % service):
+        fname = '/var/run/fedmsg/monitoring-%s.socket' % service
+    elif os.path.exists('/var/run/fedmsg/monitoring-%s-.socket' % service):
         fname = '/var/run/fedmsg/monitoring-%s-.socket' % service
     elif os.path.exists('/var/run/fedmsg/monitoring-%s-3.socket' % service):
         fname = '/var/run/fedmsg/monitoring-%s-3.socket' % service
