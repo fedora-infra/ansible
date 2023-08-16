@@ -35,9 +35,7 @@ homeservers:
 
 admins:
     root: ""
-    {% if env == 'staging' %}
     {{ maubot_stg_admin_user }}: "{{ maubot_stg_admin_password }}"
-    {% endif %}
 
 api_features:
     login: true
