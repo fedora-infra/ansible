@@ -2,14 +2,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: maubot
+  name: web
   labels:
     app: maubot
 spec:
   ports:
-    - name: maubot
+    - name: web
       port: 8080
       targetPort: 8080
   selector:
     app: maubot
-    deploymentconfig: maubot
+    deploymentconfig: web
