@@ -26,6 +26,11 @@
     template: buildconfig.yml
     objectname: buildconfig.yml
 
+  - role: openshift/object
+    app: mdapi
+    file: storage.yml
+    objectname: storage.yml
+
   - role: openshift/start-build
     app: maubot
     buildname: maubot-build
