@@ -442,7 +442,9 @@ rules:
   - !PassingTestCaseRule {test_case_name: update.base_system_logging, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.base_update_cli, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.realmd_join_cockpit, scenario: "fedora.updates-server.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.realmd_join_cockpit_ad, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.realmd_join_sssd, scenario: "fedora.updates-server.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.realmd_join_sssd_ad, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.server_cockpit_basic, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.server_cockpit_default, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.server_cockpit_updates, scenario: "fedora.updates-server.x86_64.64bit"}
@@ -455,6 +457,7 @@ rules:
   - !PassingTestCaseRule {test_case_name: update.server_remote_logging_server, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.server_role_deploy_database_server, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.server_role_deploy_domain_controller, scenario: "fedora.updates-server.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.server_samba_domain_controller, scenario: "fedora.updates-server.x86_64.64bit"}
 
 # These policies contains openQA upgrade tests that are not run on the
 # oldest stable release (because the tests would need to start from an
