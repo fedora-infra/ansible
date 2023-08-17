@@ -37,6 +37,9 @@ spec:
               readOnly: true
             - name: maubot-storage
               mountPath: /maubot
+            - name: ipa-config-volume
+              mountPath: /etc/ipa
+              readOnly: true
             - name: keytab-volume
               mountPath: /etc/keytabs
               readOnly: true
@@ -59,6 +62,9 @@ spec:
         - name: maubot-storage
           persistentVolumeClaim:
             claimName: maubot-storage
+        - name: ipa-config-volume
+          configMap:
+            name: ipa-client-config
         - name: keytab-volume
           secret:
             secretName: maubot-keytab
