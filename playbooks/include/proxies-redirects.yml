@@ -846,3 +846,11 @@
     target: https://www.port389.org/$1
     tags:
     - directory
+
+  - role: httpd/redirectmatch
+    shortname: 00-podcast-redirect
+    website: podcast.fedoraproject.org
+    regex: ^.*
+    target: https://fedoraproject.org/podcast/
+    tags:
+    - podcast
