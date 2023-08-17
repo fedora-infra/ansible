@@ -16,6 +16,13 @@
     - ryanlerch
     - kevin
 
+  - role: openshift/keytab
+    app: maubot
+    key: service.keytab
+    secret_name: maubot-keytab
+    service: HTTP
+    host: "maubot.apps.ocp{{env_suffix}}.fedoraproject.org"
+
   - role: openshift/object
     app: maubot
     file: imagestream.yml

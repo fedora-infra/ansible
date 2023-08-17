@@ -37,6 +37,9 @@ spec:
               readOnly: true
             - name: maubot-storage
               mountPath: /maubot
+            - name: keytab-volume
+              mountPath: /etc/keytabs
+              readOnly: true
           readinessProbe:
             timeoutSeconds: 1
             initialDelaySeconds: 5
@@ -56,6 +59,9 @@ spec:
         - name: maubot-storage
           persistentVolumeClaim:
             claimName: maubot-storage
+        - name: keytab-volume
+          secret:
+            secretName: maubot-keytab
   triggers:
   - type: ImageChange
     imageChangeParams:
