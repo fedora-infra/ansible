@@ -15,6 +15,7 @@ spec:
       RUN dnf -y install python3-pip fasjson-client && dnf -y clean all
       RUN pip install maubot[encryption]
       WORKDIR /maubot
+      ENV KRB5_CONFIG=/etc/ipa/krb5.conf
       ENTRYPOINT /usr/bin/python3 -m maubot -c /config/config.yml
     type: Dockerfile
   strategy:
