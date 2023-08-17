@@ -23,6 +23,9 @@
     service: HTTP
     host: "maubot.apps.ocp{{env_suffix}}.fedoraproject.org"
 
+  - role: openshift/ipa-client
+    app: maubot
+
   - role: openshift/object
     app: maubot
     file: imagestream.yml
