@@ -58,3 +58,50 @@
   - nagios_client
   - copr/copr-devel-server
   - copr/pulp
+
+
+- name: Use pulp_installer collection
+  hosts: copr_pulp_dev_aws:copr_pulp_aws
+  gather_facts: True
+
+  collections:
+    - pulp.pulp_installer
+
+  roles:
+    - pulp_all_services
+
+  environment:
+    DJANGO_SETTINGS_MODULE: pulpcore.app.settings
+
+  vars:
+    pulp_settings:
+      # Production key is `copr_pulp_secret_key`
+      secret_key: "{{ copr_dev_pulp_secret_key }}"
+      content_origin: "https://{{ ansible_fqdn }}"
+
+    # Production key is `copr_pulp_default_admin_password`
+    pulp_default_admin_password: "{{ copr_dev_pulp_default_admin_password }}"
+
+    pulp_workers: 1
+    # pulp_configure_firewall: none
+
+    pulp_install_plugins:
+      # galaxy-ng:
+      # pulp-2to3-migration:
+      # pulp-ansible:
+      # pulp-certguard:
+      # pulp-container:
+      # pulp-cookbook:
+      # pulp-deb:
+      # pulp-file:
+      # pulp-gem:
+      # pulp-maven:
+      # pulp-npm:
+      # pulp-python:
+      pulp-rpm:
+
+    # We have some issue with
+    # ModuleNotFoundError: No module named 'selinux'
+    # and installing `python3-libselinux` or `selinux` inside of
+    # `source /usr/local/lib/pulp/bin/activate` doesn't help
+    pulp_install_selinux_policies: false
