@@ -17,16 +17,6 @@
   - import_tasks: "{{ tasks_path }}/aws_cloud.yml"
     when: datacenter == 'aws'
 
-
-  - name: gather facts
-    setup:
-    check_mode: no
-    ignore_errors: True
-    register: facts
-  - name: install python2 and dnf stuff
-    raw: dnf -y install python-dnf libselinux-python yum
-    when: facts is failed
-
 - name: cloud basic setup
   hosts: copr_pulp_dev_aws:copr_pulp_aws
   gather_facts: True
