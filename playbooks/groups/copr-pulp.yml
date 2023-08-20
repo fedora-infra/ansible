@@ -10,16 +10,12 @@
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
-  pre_tasks:
-  - import_tasks: "{{ tasks_path }}/aws_cloud.yml"
-    when: datacenter == 'aws'
-
   tasks:
   # - import_tasks: "{{ tasks_path }}/persistent_cloud.yml"
   #   when: datacenter != 'aws'
 
-  # - import_tasks: "{{ tasks_path }}/aws_cloud.yml"
-  #   when: datacenter == 'aws'
+  - import_tasks: "{{ tasks_path }}/aws_cloud.yml"
+    when: datacenter == 'aws'
 
 
   - name: gather facts
