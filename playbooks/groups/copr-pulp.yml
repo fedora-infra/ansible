@@ -34,6 +34,7 @@
 
 - name: cloud basic setup
   hosts: copr_pulp_dev_aws:copr_pulp_aws
+  become: true
   gather_facts: True
 
   vars_files:
@@ -51,6 +52,7 @@
 
 - name: provision instance
   hosts: copr_pulp_dev_aws:copr_pulp_aws
+  become: true
   gather_facts: True
 
   vars_files:
@@ -67,6 +69,7 @@
 
 - name: Use pulp_installer collection
   hosts: copr_pulp_dev_aws:copr_pulp_aws
+  become: true
   gather_facts: True
 
   collections:
