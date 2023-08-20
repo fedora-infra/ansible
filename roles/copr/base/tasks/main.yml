@@ -50,12 +50,15 @@
       - cronie-anacron
       - ethtool
       - golang-github-prometheus-node-exporter
-      - rsyslog-logrotate
       - screen
       - tmux
     state: present
   tags:
     packages
+
+- name: install rsyslog-logrotate
+  package: name=rsyslog-logrotate state=present
+  when: ansible_distribution == 'Fedora'
 
 - name: configure anacrond to not send mails to root user
   lineinfile: dest=/etc/anacrontab
@@ -69,6 +72,7 @@
   copy: src=syslog-logrotate dest=/etc/logrotate.d/rsyslog
   tags:
   - logrotate
+  when: ansible_distribution == 'Fedora'
 
 - name: install copr-selinux
   package:
