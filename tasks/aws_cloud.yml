@@ -70,7 +70,9 @@
   raw: sudo dnf -y install python3-dnf python3-libselinux python3
   when:
   - birthday is defined
-  - facts is failed
+  # For copr-pulp-instance it doesn't fail even though python3 package
+  # is not installed
+  # - facts is failed
 
 # - name: Include SSH config
 #   import_role: name=basessh

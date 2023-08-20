@@ -14,12 +14,6 @@
   # - import_tasks: "{{ tasks_path }}/persistent_cloud.yml"
   #   when: datacenter != 'aws'
 
-  # TODO Remove this in favor of aws_cloud.yml
-  - name: install python3 and dnf stuff
-    raw: sudo dnf -y install python3-dnf python3-libselinux python3
-    when:
-    - birthday is defined
-
   - import_tasks: "{{ tasks_path }}/aws_cloud.yml"
     when: datacenter == 'aws'
 
