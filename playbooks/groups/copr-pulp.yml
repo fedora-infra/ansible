@@ -1,7 +1,6 @@
 - name: check/create instance
   hosts: copr_pulp_dev_aws:copr_pulp_aws
   gather_facts: False
-  remote_user: centos
 
   vars_files:
    - /srv/web/infra/ansible/vars/global.yml
@@ -31,7 +30,6 @@
 - name: cloud basic setup
   hosts: copr_pulp_dev_aws:copr_pulp_aws
   gather_facts: True
-  remote_user: centos
 
   vars_files:
    - /srv/web/infra/ansible/vars/global.yml
