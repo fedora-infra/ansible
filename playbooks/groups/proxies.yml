@@ -43,6 +43,15 @@
   #- import_tasks: "{{ tasks_path }}/apache.yml"
   #- import_tasks: "{{ tasks_path }}/mod_wsgi.yml"
 
+  - name: Ensure nf_conntrack module is loaded before tuning ip_conntrack_max
+    copy:
+      content: |
+        nf_conntrack
+      dest: /etc/modules-load.d/nf_conntrack.conf
+      owner: root
+      group: root
+      mode: 0644
+
   - name: set ip_conntrack_max to a high value as the proxies deal with lots of connections
     sysctl: name=net.nf_conntrack_max value=26214400 state=present sysctl_set=yes reload=yes
 
