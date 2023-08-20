@@ -32,6 +32,11 @@
       path: /usr/bin/python3
     become: true
 
+  # TODO Move this to base/tasks/main.yml
+  - name: install iptables-services
+    package: name=iptables-services state=present
+    become: true
+
 - name: cloud basic setup
   hosts: copr_pulp_dev_aws:copr_pulp_aws
   become: true
