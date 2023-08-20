@@ -22,6 +22,7 @@
     package: name={{ item }} state=present
     with_items:
     - platform-python
+    become: true
 
   # TODO Remove in favor of base/tasks/main.yml
   - name: symlink /usr/bin/python to /usr/bin/python3
@@ -29,6 +30,7 @@
       name: python
       link: /usr/bin/python
       path: /usr/bin/python3
+    become: true
 
 - name: cloud basic setup
   hosts: copr_pulp_dev_aws:copr_pulp_aws
