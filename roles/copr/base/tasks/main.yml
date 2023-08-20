@@ -36,6 +36,7 @@
     state: stopped
     enabled: no
     masked: yes
+  when: ansible_distribution == 'Fedora'
 
 - name: configure crond
   copy: src=sysconfig.crond dest=/etc/sysconfig/crond
