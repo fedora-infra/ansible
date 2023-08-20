@@ -17,6 +17,19 @@
   - import_tasks: "{{ tasks_path }}/aws_cloud.yml"
     when: datacenter == 'aws'
 
+  # TODO Remove in favor of base/tasks/main.yml
+  - name: install platform-python
+    package: name={{ item }} state=present
+    with_items:
+    - platform-python
+
+  # TODO Remove in favor of base/tasks/main.yml
+  - name: symlink /usr/bin/python to /usr/bin/python3
+    alternatives:
+      name: python
+      link: /usr/bin/python
+      path: /usr/bin/python3
+
 - name: cloud basic setup
   hosts: copr_pulp_dev_aws:copr_pulp_aws
   gather_facts: True
