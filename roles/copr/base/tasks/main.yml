@@ -93,11 +93,15 @@
 
 - name: disable offloading
   command: ethtool -K eth0 tso off gro off gso off
-  when: offloading.rc == 0
+  when:
+    - offloading.rc == 0
+    - ansible_distribution == 'Fedora'
 
 - name: disable offloading (persitently)
   shell: "nmcli con modify 'cloud-init eth0' ethtool.feature-tso off ethtool.feature-gro off ethtool.feature-gso off"
-  when: offloading.rc == 0
+  when:
+    - offloading.rc == 0
+    - ansible_distribution == 'Fedora'
   tags:
   - config
 
@@ -106,7 +110,9 @@
   register: ipv6_config_check
   failed_when: false
   changed_when: ipv6_config_check.rc == 1
-  when: aws_ipv6_addr is defined
+  when:
+    - aws_ipv6_addr is defined
+    - ansible_distribution == 'Fedora'
   tags: ipv6_config
 
 - name: setup ipv6 networking
@@ -116,6 +122,7 @@
   when:
     - aws_ipv6_addr is defined
     - ipv6_config_check.changed
+    - ansible_distribution == 'Fedora'
   tags: ipv6_config
 
 - name: install nrpe checks
