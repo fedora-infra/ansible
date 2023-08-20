@@ -37,6 +37,12 @@
     package: name=iptables-services state=present
     become: true
 
+  # TODO Postfix should have probably been installed by base/tasks/main.yml
+  # but it wasn't for this instance
+  - name: install postfix
+    package: name=postfix state=present
+    become: true
+
 - name: cloud basic setup
   hosts: copr_pulp_dev_aws:copr_pulp_aws
   become: true
