@@ -162,6 +162,9 @@
 
 - name: put copr-rpmbuild configuration file in the right place
   copy: src=files/main.ini dest=/etc/copr-rpmbuild/main.ini
+  when:
+    # TODO: use the default main.ini provided by copr-rpmbuild
+    - prepare_base_image is not defined
 
 - name: mockbuilder user
   user: name=mockbuilder groups=mock

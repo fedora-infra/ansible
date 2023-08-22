@@ -74,6 +74,8 @@
   tags:
   - provision_config
   - copr_rpmbuild_main_ini
+  when:
+    when: "'copr_hypervisor' not in group_names"
 
 - name: put rpkg configuration file into the provision subdir
   template: src="{{ roles_path }}/copr/backend/templates/provision/rpkg.conf.j2"
