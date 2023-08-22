@@ -1,74 +1,16 @@
-#! /usr/bin/python3
+#! /bin/bash
 
-import argparse
-import datetime
-import logging
-import os
-import subprocess
-import sys
+case $RESALLOC_NAME in
+    *tokyo*)
+        zone=jp-tok
+        ;;
+    *)
+        echo "Can't decide what location to assign from: $RESALLOC_NAME"
+        exit 1
+        ;;
+esac
 
-from ibm_vpc import VpcV1
-from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
-
-DEFAULT_TOKEN_FILE = "{{ ibmcloud_token_file }}"
-SERVICE_URL = "https://jp-tok.iaas.cloud.ibm.com/v1"
-
-# Using the highest value possible
-LIMIT = 100
-
-
-def _get_arg_parser():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--token-file", default=DEFAULT_TOKEN_FILE)
-    parser.add_argument("--pool")
-    parser.add_argument("--log-level", default="info")
-    return parser
-
-
-def _main():
-    opts = _get_arg_parser().parse_args()
-    log_level = getattr(logging, opts.log_level.upper())
-    logging.basicConfig(format='%(levelname)s: %(message)s', level=log_level)
-    log = logging.getLogger()
-
-    pool_id = opts.pool or os.getenv("RESALLOC_POOL_ID")
-    if not pool_id:
-        sys.stderr.write("Specify pool ID by --pool or $RESALLOC_POOL_ID\n")
-        sys.exit(1)
-
-    cmd = f"source {opts.token_file} ; echo $IBMCLOUD_API_KEY"
-    output = subprocess.check_output(cmd, shell=True)
-    token = output.decode("utf-8").strip().rsplit("\n", maxsplit=1)[-1]
-    authenticator = IAMAuthenticator(token)
-    now = datetime.datetime.now()
-    service = VpcV1(now.strftime('%Y-%m-%d'), authenticator=authenticator)
-    service.set_service_url(SERVICE_URL)
-
-    # Gather the list of all resources here
-    resources = set()
-
-    instances = service.list_instances(limit=LIMIT).result["instances"]
-    for server in instances:
-        # Resalloc works with underscores, which is not allowed in IBM Cloud
-        name = server["name"].replace("-", "_")
-        if name.startswith(pool_id):
-            log.debug("found instance %s in state %s, id=%s", name, server["status"], server["id"])
-            resources.add(name)
-
-    volumes = service.list_volumes(limit=LIMIT).result["volumes"]
-    for volume in volumes:
-        # Resalloc works with underscores, which is not allowed in IBM Cloud
-        name = volume["name"].replace("-", "_")
-        if name.startswith(pool_id):
-            log.debug("found volume %s in state %s, id: %s", name, volume["status"], volume["id"])
-            name = name.rsplit("_", 1)[0]
-            resources.add(name)
-
-    # Print them out, so upper level tooling can work with the list
-    for name in resources:
-        # The only stdout output comes here!
-        print(name)
-
-
-if __name__ == "__main__":
-    sys.exit(_main())
+exec resalloc-ibm-cloud-list-vms \
+    --token-file "{{ ibmcloud_token_file }}" \
+    --zone "$zone" \
+    "$@"
