@@ -1,4 +1,10 @@
 ---
+- name: Unconditionally reboot the machine with all defaults
+  ansible.builtin.reboot:
+  tags:
+    - never
+    - reboot_copr_hypervisor
+
 - name: OpenStack package repository for RHEL8, noarch only
   copy:
     content: |
