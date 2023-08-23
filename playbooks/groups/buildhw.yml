@@ -92,6 +92,17 @@
     host: "odcs{{ env_suffix }}.fedoraproject.org"
     kt_location: /etc/kojid/secrets/odcs_inner.keytab
     when: env == "staging"
+    # push built Flatpaks to candidate registry
+  - role: login-registry
+    candidate_registry: "candidate-registry.fedoraproject.org"
+    candidate_registry_osbs_username: "{{candidate_registry_osbs_prod_username}}"
+    candidate_registry_osbs_password: "{{candidate_registry_osbs_prod_password}}"
+    when: env == "production"
+  - role: login-registry
+    candidate_registry: "candidate-registry.stg.fedoraproject.org"
+    candidate_registry_osbs_username: "{{candidate_registry_osbs_stg_username}}"
+    candidate_registry_osbs_password: "{{candidate_registry_osbs_stg_password}}"
+    when: env == "staging"
 
   tasks:
   - import_tasks: "{{ tasks_path }}/motd.yml"
