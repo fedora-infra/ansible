@@ -9,7 +9,7 @@ set -- $(echo "$RESALLOC_RESOURCE_DATA" | base64 --decode)
 
 # Don't give-up unregistering after the first attempt
 for _ in a b c; do
-    ssh root@"$1" "subscription-manager unregister" && break
+    timeout 180 ssh root@"$1" "subscription-manager unregister" && break
     sleep 5
 done
 
