@@ -5,6 +5,11 @@ Host *
    ServerAliveInterval 20
    ServerAliveCountMax 5
    ConnectTimeout 60
+{% if devel %}
+   ControlPath=~/.ssh/.ssh_socket_%h_%p_%r
+   ControlMaster=auto
+   ControlPersist=60
+{% endif %}
 
 Host{% for host in groups["copr_hypervisor"] %}{{ ' ' + host }}{% endfor +%}
   AddressFamily inet
