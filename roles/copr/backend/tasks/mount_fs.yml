@@ -53,18 +53,20 @@
     - raid_check
   when: datacenter == 'aws'
   block:
-    - name: create the drop-in directory for raid-check.timer
-      file:
-        path: /etc/systemd/system/raid-check.timer.d/
-        state: directory
     - name: install the drop-in raid-check.timer override
       copy:
-        dest: /etc/systemd/system/raid-check.timer.d/05-aws.conf
+        dest: /etc/systemd/system/raid-check.timer
         content: |
           [Unit]
           Description=Monthly RAID health check in AWS
+
           [Timer]
           OnCalendar=Sat *-*-8..14 01:00:00
+          Persistent=true
+          AccuracySec=24h
+
+          [Install]
+          WantedBy=timers.target
       notify: systemctl daemon-reload
 
 - name: prepare mount point
