@@ -28,6 +28,7 @@
   - base
   - rkhunter
   - nagios_client
+  - {role: zabbix/zabbix_agent, when: env == "staging"}
   - hosts
   - ipa/client
   - collectd/base
@@ -44,7 +45,7 @@
     service: HTTP
     owner_user: apache
     host: "koji{{env_suffix}}.fedoraproject.org"
-  - { role: nfs/server, when: env == "staging" }
+  - {role: nfs/server, when: env == "staging"}
 
     # production nfs mounts from netapp
   - role: nfs/client
