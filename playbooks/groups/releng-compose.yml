@@ -28,6 +28,8 @@
   - ipa/client
   - rkhunter
   - nagios_client
+  - { role: zabbix/zabbix_agent,
+      when: env == "staging" }
   - collectd/base
   - sudo
   - role: keytab/service
