@@ -35,7 +35,7 @@ initContainers:
   - name: RELEASEVER
     value: "{{ release }}"
   - name: DNF_CONF
-    value: "dnf{{ '_stg' if env == 'staging' else '' }}_$(RELEASEVER).conf"
+    value: "dnf_$(RELEASEVER).conf"
   - name: TMPDIR
     value: /src/results/f$(RELEASEVER)/tmp
   - name: THREAD_MAX_CONN
