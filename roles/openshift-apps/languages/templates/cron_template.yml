@@ -28,6 +28,9 @@ initContainers:
   - ./build.py
   - "--results"
   - f$(RELEASEVER)
+{% if env == 'staging' %}
+  - blue.*
+{% endif %}
   env:
   - name: RELEASEVER
     value: "{{ release }}"

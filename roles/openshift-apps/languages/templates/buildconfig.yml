@@ -11,7 +11,7 @@ spec:
   source:
     git:
       uri: "https://pagure.io/fedora-l10n/fedora-localization-statistics.git"
-      ref: main
+      ref: {{ 'staging' if env == 'staging' else 'main' }}
   strategy:
     type: Docker
     dockerStrategy:
