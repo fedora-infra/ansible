@@ -23,6 +23,7 @@
   - basessh
   - rkhunter
   - nagios_client
+  - {role: zabbix/zabbix_agent, when: env == "staging"}
   - hosts
   - ipa/client
   - collectd/base
@@ -77,8 +78,8 @@
     owner_user: robosignatory
     owner_group: robosignatory
 
-  - { role: linux-system-roles.nbde_client, when: datacenter == 'iad2' }
-  - { role: serial-console, when: datacenter == 'iad2'}
+  - {role: linux-system-roles.nbde_client, when: datacenter == 'iad2'}
+  - {role: serial-console, when: datacenter == 'iad2'}
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
