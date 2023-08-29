@@ -26,7 +26,7 @@
       dest: /usr/bin/nbde_client-network-flush
       owner: root
       group: root
-      mode: 755 
+      mode: 755
 
   - name: tell NetworkManager we don't want any auto connections
     copy:
@@ -34,21 +34,22 @@
       dest: /etc/NetworkManager/conf.d/noautodefault.conf
       owner: root
       group: root
-      mode: 644 
+      mode: 644
 
   roles:
   - base
-  - { role: rkhunter }
-  - { role: nagios_client }
+  - {role: rkhunter}
+  - {role: nagios_client}
+  - {role: zabbix/zabbix_agent, when: env == "staging"}
   - hosts
-  - { role: openvpn/client, when: vpn|bool }
+  - {role: openvpn/client, when: vpn|bool}
   - ipa/client
-  - { role: collectd/base }
-  - { role: iscsi_client, when: "inventory_hostname.startswith(('bvmhost-x86-06', 'bvmhost-x86-07')) and datacenter == 'iad2'" }
+  - {role: collectd/base}
+  - {role: iscsi_client, when: "inventory_hostname.startswith(('bvmhost-x86-06', 'bvmhost-x86-07')) and datacenter == 'iad2'"}
   - sudo
   - virthost
-  - { role: linux-system-roles.nbde_client, tags: ['nbde_client'], when: datacenter == 'iad2' and nbde|bool }
-  - { role: serial-console, when: datacenter == 'iad2' and not inventory_hostname.startswith('buildvmhost-s390x') }
+  - {role: linux-system-roles.nbde_client, tags: ['nbde_client'], when: datacenter == 'iad2' and nbde|bool}
+  - {role: serial-console, when: datacenter == 'iad2' and not inventory_hostname.startswith('buildvmhost-s390x')}
 
   tasks:
   - import_tasks: "{{ tasks_path }}/motd.yml"
