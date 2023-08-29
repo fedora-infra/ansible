@@ -19,6 +19,7 @@
   - base
   - rkhunter
   - nagios_client
+  - {role: zabbix/zabbix_agent, when: env == "staging"}
   - hosts
   - ipa/client
   - collectd/base
