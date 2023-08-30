@@ -14,9 +14,9 @@
   gather_facts: True
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+  - /srv/web/infra/ansible/vars/global.yml
+  - "/srv/private/ansible/vars.yml"
+  - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   pre_tasks:
   - include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
@@ -27,6 +27,7 @@
   - rkhunter
   - ipa/client
   - nagios_client
+  - {role: zabbix/zabbix_agent, when: env == "staging"}
   - hosts
   - postgresql_server
   - collectd/base
