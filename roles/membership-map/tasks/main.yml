@@ -1,0 +1,43 @@
+---
+- name: Remove files installed in membership-map/build
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - /usr/local/bin/membership-map.py
+    - /etc/cron.d/membership-map-build
+    - /srv/web/membership-map/
+    - /usr/local/bin/membership-mwclient.py
+    - /etc/cron.d/membership-mwclient-build
+  tags:
+    - cleanup
+
+- name: Remove files installed in membership-map/proxy
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - /etc/httpd/conf.d/{{website}}/membership-map.conf
+    - /etc/cron.d/sync-membership-map.cron
+  tags:
+    - cleanup
+
+- name: Remove interactive map file from mirror manager 
+  file:
+    path: /var/www/mirrormanager-statistics/map/{{ item }}
+    state: absent
+  with_items:
+  - OpenLayers.js
+  - img/east-mini.png
+  - img/layer-switcher-maximize.png
+  - img/layer-switcher-minimize.png
+  - img/north-mini.png
+  - img/slider.png
+  - img/south-mini.png
+  - img/west-mini.png
+  - img/zoombar.png
+  - img/zoom-minus-mini.png
+  - img/zoom-plus-mini.png
+  - theme/default/style.css
+  tags:
+  - cleanup
