@@ -15,9 +15,9 @@ spec:
     git:
       uri: https://pagure.io/fedora-qa/blockerbugs
 {% if env == 'staging' %}
-      ref: "gunicorn_py311"
+      ref: "develop"
 {% else %}
-      ref: "gunicorn_py311"
+      ref: "master"
 {% endif %}
   strategy:
     type: Source
