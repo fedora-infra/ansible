@@ -27,17 +27,20 @@
     path: /var/www/mirrormanager-statistics/map/{{ item }}
     state: absent
   with_items:
-  - OpenLayers.js
-  - img/east-mini.png
-  - img/layer-switcher-maximize.png
-  - img/layer-switcher-minimize.png
-  - img/north-mini.png
-  - img/slider.png
-  - img/south-mini.png
-  - img/west-mini.png
-  - img/zoombar.png
-  - img/zoom-minus-mini.png
-  - img/zoom-plus-mini.png
-  - theme/default/style.css
+    - OpenLayers.js
+    - img/east-mini.png
+    - img/layer-switcher-maximize.png
+    - img/layer-switcher-minimize.png
+    - img/north-mini.png
+    - img/slider.png
+    - img/south-mini.png
+    - img/west-mini.png
+    - img/zoombar.png
+    - img/zoom-minus-mini.png
+    - img/zoom-plus-mini.png
+    - theme/default/style.css
+    - mirrors.html
+    - f-dot.png
+    - /var/www/mirrormanager-statistics/map
   tags:
   - cleanup
