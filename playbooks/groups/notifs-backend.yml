@@ -13,9 +13,9 @@
   gather_facts: True
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+  - /srv/web/infra/ansible/vars/global.yml
+  - "/srv/private/ansible/vars.yml"
+  - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
@@ -30,6 +30,7 @@
   #    when: env != "staging" }
   - ipa/client
   - nagios_client
+  - {role: zabbix/zabbix_agent, when: env == "staging"}
   - collectd/base
   - fedmsg/base
   - role: keytab/service
@@ -72,9 +73,9 @@
     when: inventory_hostname.startswith('notifs-backend01.iad2')
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+  - /srv/web/infra/ansible/vars/global.yml
+  - "/srv/private/ansible/vars.yml"
+  - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
