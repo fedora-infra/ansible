@@ -10,9 +10,9 @@
   gather_facts: True
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+  - /srv/web/infra/ansible/vars/global.yml
+  - "/srv/private/ansible/vars.yml"
+  - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   pre_tasks:
   - include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
@@ -20,16 +20,17 @@
 
   roles:
   - base
-  - { role: openvpn/client,
-      when: env != "staging" }
+  - {role: openvpn/client,
+     when: env != "staging"}
   - ipa/client
   - rkhunter
   - nagios_client
+  - {role: zabbix/zabbix_agent, when: env == "staging"}
   - collectd/base
   - sudo
   - rsyncd
-  - { role: mirrormanager/mirrorlist_proxy,
-      when: env == "staging" or "'mirrorlist_proxy' in group_names" }
+  - {role: mirrormanager/mirrorlist_proxy,
+     when: env == "staging" or "'mirrorlist_proxy' in group_names"}
   - apache
 #  - role: zabbix/zabbix_agent
 #when: env == "staging"
@@ -84,9 +85,9 @@
   gather_facts: False
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+  - /srv/web/infra/ansible/vars/global.yml
+  - "/srv/private/ansible/vars.yml"
+  - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
@@ -101,7 +102,7 @@
   # Re-run hosts here so things are ok for the haproxy check
   #
   - hosts
-  
+
   tasks:
 
 # After setting up the "basics" of the proxy hosts above, here below we break
@@ -125,9 +126,9 @@
   gather_facts: False
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+  - /srv/web/infra/ansible/vars/global.yml
+  - "/srv/private/ansible/vars.yml"
+  - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
