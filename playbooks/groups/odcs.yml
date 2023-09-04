@@ -8,9 +8,9 @@
   gather_facts: True
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+  - /srv/web/infra/ansible/vars/global.yml
+  - "/srv/private/ansible/vars.yml"
+  - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
@@ -19,6 +19,7 @@
   - base
   - rkhunter
   - nagios_client
+  - {role: zabbix/zabbix_agent, when: env == "staging"}
   - hosts
   - ipa/client
   - rsyncd
@@ -37,13 +38,13 @@
   gather_facts: True
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - "{{ vars_path }}/{{ ansible_distribution }}.yml"
+  - /srv/web/infra/ansible/vars/global.yml
+  - "/srv/private/ansible/vars.yml"
+  - "{{ vars_path }}/{{ ansible_distribution }}.yml"
 
   roles:
   # openvpn on the prod frontend nodes
-  - { role: openvpn/client, when: env != "staging" }
+  - {role: openvpn/client, when: env != "staging"}
   - role: rabbit/user
     username: "odcs{{ env_suffix }}"
     sent_topics: ^org\.fedoraproject\.{{ env_short }}\.odcs\..*
@@ -78,9 +79,9 @@
   gather_facts: True
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+  - /srv/web/infra/ansible/vars/global.yml
+  - "/srv/private/ansible/vars.yml"
+  - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
   - role: nfs/client
@@ -120,9 +121,9 @@
   gather_facts: True
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+  - /srv/web/infra/ansible/vars/global.yml
+  - "/srv/private/ansible/vars.yml"
+  - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
   - role: odcs/backend
@@ -140,9 +141,9 @@
   gather_facts: True
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+  - /srv/web/infra/ansible/vars/global.yml
+  - "/srv/private/ansible/vars.yml"
+  - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
   - role: keytab/service
