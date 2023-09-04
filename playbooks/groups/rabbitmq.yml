@@ -8,9 +8,9 @@
   gather_facts: True
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+  - /srv/web/infra/ansible/vars/global.yml
+  - "/srv/private/ansible/vars.yml"
+  - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
@@ -19,6 +19,7 @@
   - base
   - rkhunter
   - nagios_client
+  - {role: zabbix/zabbix_agent, when: env == "staging"}
   - hosts
   - ipa/client
   - collectd/base
