@@ -8,42 +8,43 @@
   gather_facts: True
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+  - /srv/web/infra/ansible/vars/global.yml
+  - "/srv/private/ansible/vars.yml"
+  - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
   - base
   - rkhunter
   - nagios_client
+  - {role: zabbix/zabbix_agent, when: env == "staging"}
   - hosts
-  - { role: openvpn/client,
-      when: env != "staging" }
+  - {role: openvpn/client,
+     when: env != "staging"}
   - ipa/client
-  - { role: keytab/service,
-      owner_user: daemon,
-      owner_group: daemon,
-      service: ursabot,
-      when: inventory_hostname.startswith('value02.stg') }
-  - { role: keytab/service,
-      owner_user: daemon,
-      owner_group: daemon,
-      service: zodbot,
-      when: inventory_hostname.startswith('value02.iad2') }
+  - {role: keytab/service,
+     owner_user: daemon,
+     owner_group: daemon,
+     service: ursabot,
+     when: inventory_hostname.startswith('value02.stg')}
+  - {role: keytab/service,
+     owner_user: daemon,
+     owner_group: daemon,
+     service: zodbot,
+     when: inventory_hostname.startswith('value02.iad2')}
   - collectd/base
   - apache
-  - { role: fedmsg/base,
-      when: inventory_hostname.startswith('value01') }
-  - { role: fedmsg/irc,
-      when: inventory_hostname.startswith('value01') }
+  - {role: fedmsg/base,
+     when: inventory_hostname.startswith('value01')}
+  - {role: fedmsg/irc,
+     when: inventory_hostname.startswith('value01')}
   - supybot
   - sudo
   - rsyncd
   - role: collectd/fedmsg-service
     process: fedmsg-irc
-  - { role: mote,
-      when: inventory_hostname.startswith('value01') }
-  - { role: nfs/client, when: env != "staging", nfs_mount_opts: "rw,hard,bg,intr,noatime,nodev,nosuid,nfsvers=3", mnt_dir: '/srv/',  nfs_src_dir: 'fedora_value_prod' }
+  - {role: mote,
+     when: inventory_hostname.startswith('value01')}
+  - {role: nfs/client, when: env != "staging", nfs_mount_opts: "rw,hard,bg,intr,noatime,nodev,nosuid,nfsvers=3", mnt_dir: '/srv/', nfs_src_dir: 'fedora_value_prod'}
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
