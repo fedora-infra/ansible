@@ -86,9 +86,6 @@
     service: bodhi
     host: "bodhi{{ env_suffix }}.fedoraproject.org"
 
-  - role: zabbix/zabbix_agent
-    when: env == "staging"
-
   - role: push-container-registry
     cert_dest_dir: "/etc/docker/certs.d/registry{{ env_suffix }}.fedoraproject.org"
     cert_src: "{{private}}/files/docker-registry/{{env}}/pki/issued/containerstable.crt"
@@ -114,11 +111,6 @@
       critical: 100
     # We have to repeat this line for now (only the last one counts)
     sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(bodhi|pungi)\..*
-
-  - role: zabbix/zabbix_agent
-    zabbix_server: apache
-    zabbix_server_ip: apache
-    when: env == "staging"
 
   tasks:
   - name: create secondary volume dir for stg bodhi
