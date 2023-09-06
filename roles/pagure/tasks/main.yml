@@ -177,6 +177,19 @@
   - pagure
   - mirror
 
+# On RHEL 8.8 and newer the paguremirroring fails
+# because of dubious ownership. This is allowing
+# paguremirroring to work again
+- name: Configure git directories as safe
+  git_config:
+    name: safe.directory
+    scope: system
+    value: *
+  tags:
+  - pagure
+  - mirror
+  when: env == 'pagure-staging'
+
 # Set-up postfix and the milter for postfix
 
 - name: Add the /etc/aliases file
