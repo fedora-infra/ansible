@@ -8,10 +8,10 @@ spec:
   - ReadWriteMany
   resources:
     requests:
-    {% if env == 'staging' %}
+{% if env == 'staging' %}
       storage: 25Gi
-    {% else %}
+{% else %}
       storage: 5Gi
-    {% endif %}
+{% endif %}
   storageClassName: ""
   volumeName: fedora-value-{{env_short}}
