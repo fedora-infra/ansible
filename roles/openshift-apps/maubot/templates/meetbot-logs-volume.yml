@@ -1,9 +1,8 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: meetbot-storage
+  name: meetbot-logs
 spec:
-  # we use a nfs volume shared with meetbot on value02
   accessModes:
   - ReadWriteMany
   resources:

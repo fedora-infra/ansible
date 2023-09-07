@@ -43,6 +43,11 @@
 
   - role: openshift/object
     app: maubot
+    template: meetbot-logs-volume.yml
+    objectname: meetbot-logs-volume.yml
+
+  - role: openshift/object
+    app: maubot
     template: configmap.yml
     objectname: configmap.yml
 

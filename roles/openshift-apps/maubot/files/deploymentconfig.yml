@@ -28,6 +28,8 @@ spec:
               readOnly: true
             - name: maubot-storage
               mountPath: /maubot
+            - name: meetbot-logs
+              mountPath: /meetbot_logs
             - name: ipa-config-volume
               mountPath: /etc/ipa
               readOnly: true
@@ -53,6 +55,9 @@ spec:
         - name: maubot-storage
           persistentVolumeClaim:
             claimName: maubot-storage
+        - name: meetbot-logs
+          persistentVolumeClaim:
+            claimName: meetbot-logs
         - name: ipa-config-volume
           configMap:
             name: ipa-client-config
