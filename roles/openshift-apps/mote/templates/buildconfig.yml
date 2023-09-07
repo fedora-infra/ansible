@@ -14,7 +14,7 @@ spec:
   source:
     git:
 {% if env == 'staging' %}
-      ref: staging
+      ref: main
 {% else %}
       ref: main
 {% endif %}
