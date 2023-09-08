@@ -98,3 +98,13 @@
   - role: openshift/rollout
     app: maubot
     dcname: maubot
+
+  ###############################################
+  # actions to delete the project from OpenShift
+  ###############################################
+  # to run: sudo rbac-playbook -l os_control_stg -t delete openshift-apps/maubot.yml
+  - role: openshift/object-delete
+    app: maubot
+    objecttype: project
+    objectname: maubot
+    tags: [never, delete]
