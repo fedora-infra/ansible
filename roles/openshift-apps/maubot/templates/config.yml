@@ -1,5 +1,5 @@
 
-database: sqlite:///maubot.db
+database: postgresql://maubot:{{ (env == 'production')|ternary(maubot_prod_db_password, maubot_stg_db_password) }}@db01{{ env_suffix }}.iad2.fedoraproject.org/maubot
 
 crypto_database: default
 
@@ -8,14 +8,14 @@ database_opts:
     max_size: 10
 
 plugin_directories:
-    upload: /maubot/plugins
+    upload: /maubot
     load:
-    - /maubot/plugins
-    trash: /maubot/trash
+    - /maubot
+    trash: delete
 
 plugin_databases:
-    sqlite: /maubot/plugins
-    postgres: null
+    #sqlite: /maubot/plugins
+    postgres: default
     postgres_max_conns_per_plugin: 3
     postgres_opts: {}
 
