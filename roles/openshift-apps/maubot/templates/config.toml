@@ -1,0 +1,22 @@
+amqp_url = "amqps://maubot{{ env_suffix }}.fedoraproject.org:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fpubsub"
+
+{% if env == "staging" %}
+topic_prefix = "org.fedoraproject.stg"
+{% else %}
+topic_prefix = "org.fedoraproject.prod"
+{% endif %}
+
+publish_exchange = "amq.topic"
+passive_declares = true
+
+[tls]
+ca_cert = "/etc/pki/rabbitmq/ca/maubot.ca"
+keyfile = "/etc/pki/rabbitmq/key/maubot.key"
+certfile = "/etc/pki/rabbitmq/crt/maubot.crt"
+
+[client_properties]
+app = "maubot"
+
+[qos]
+prefetch_size = 0
+prefetch_count = 25
