@@ -31,6 +31,14 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
+    # Set up for fedora-messaging
+  - name: Create the RabbitMQ user
+    import_role:
+      name: rabbit/user
+    vars:
+      username: "zodbot-{{ env_short }}"
+      sent_topics: ^org\.fedoraproject\.{{ env_short }}\.meetbot\..*
+
   - role: openshift/project
     app: maubot
     description: Maubot
@@ -108,3 +116,4 @@
     objecttype: project
     objectname: maubot
     tags: [never, delete]
+maubot-4-9k5mfmaubot-4-9k5mf
