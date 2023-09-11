@@ -44,7 +44,7 @@
     process: fedmsg-irc
   - {role: mote,
      when: inventory_hostname.startswith('value01')}
-  - {role: nfs/client
+  - {role: nfs/client,
       nfs_mount_opts: "rw,hard,bg,intr,noatime,nodev,nosuid,nfsvers=3"
       mnt_dir: '/srv/'
       nfs_src_dir: 'fedora_value_{{env_short}}'
