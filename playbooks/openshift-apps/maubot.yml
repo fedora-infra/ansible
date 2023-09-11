@@ -32,7 +32,7 @@
 
   roles:
   - role: rabbit/user
-    username: "zodbot-{{ env_short }}"
+    username: "maubot{{ env_suffix }}"
     sent_topics: ^org\.fedoraproject\.{{ env_short }}\.meetbot\..*
 
   - role: openshift/project
@@ -76,6 +76,24 @@
     app: maubot
     template: configmap.yml
     objectname: configmap.yml
+
+  - role: openshift/secret-file
+    app: maubot
+    secret_name: maubot-fedora-messaging-key
+    key: maubot.key
+    privatefile: "rabbitmq/{{env}}/pki/private/maubot{{env_suffix}}.key"
+
+  - role: openshift/secret-file
+    app: maubot
+    secret_name: maubot-fedora-messaging-crt
+    key: maubot.crt
+    privatefile: "rabbitmq/{{env}}/pki/issued/maubot{{env_suffix}}.crt"
+
+  - role: openshift/secret-file
+    app: maubot
+    secret_name: maubot-fedora-messaging-ca
+    key: maubot.ca
+    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
 
   - role: openshift/start-build
     app: maubot

@@ -36,6 +36,9 @@ spec:
             - name: keytab-volume
               mountPath: /etc/keytabs
               readOnly: true
+            - name: fedora-messaging-config-volume
+              mountPath: /etc/fedora-messaging/
+              readOnly: true
           readinessProbe:
             timeoutSeconds: 1
             initialDelaySeconds: 5
@@ -64,6 +67,9 @@ spec:
         - name: keytab-volume
           secret:
             secretName: maubot-keytab
+        - name: fedora-messaging-config-volume
+          configMap:
+            name: fedora-messaging-configmap
   triggers:
   - type: ImageChange
     imageChangeParams:
