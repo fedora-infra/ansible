@@ -26,7 +26,7 @@ spec:
               key: password
         volumeMounts:
 {% if env == 'staging' %}
-        - mountPath: /srv/web/meetbot
+        - mountPath: /srv
 {% else %}
         - mountPath: /srv
 {% endif %}

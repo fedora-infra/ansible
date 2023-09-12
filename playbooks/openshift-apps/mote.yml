@@ -34,11 +34,9 @@
     template: mote-worker-dc.yml
     objectname: mote-worker-dc.yml
 
-  # meetbot is not advertising on fedmsg.stg
   - role: openshift/object
     template: fedmsg-dc.yml
     objectname: fedmsg-dc.yml
-    when: env == "production"
 
   - role: openshift/object
     template: redis-is.yml
