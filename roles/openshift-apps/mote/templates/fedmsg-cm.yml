@@ -8,9 +8,13 @@ data:
     callback = "fedora_messaging.example:printer"
 
     [tls]
-    ca_cert = "/opt/app/mote/fedora-messaging/cacert.pem"
-    keyfile = "/opt/app/mote/fedora-messaging/fedora-key.pem"
-    certfile = "/opt/app/mote/fedora-messaging/fedora-cert.pem"
+{% if env == 'staging' %}
+    ca_cert = "/etc/fedora-messaging/stg-cacert.pem"
+{% else %}
+    ca_cert = "/etc/fedora-messaging/cacert.pem"
+{% endif %}
+    keyfile = "/etc/fedora-messaging/fedora{{env_suffix}}-key.pem"
+    certfile = "/etc/fedora-messaging/fedora{{env_suffix}}-cert.pem"
 
     [client_properties]
     app = "Mote"
