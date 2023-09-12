@@ -32,7 +32,7 @@ data:
     [[bindings]]
     queue = "4321048e-0e18-46e4-8722-6651dcdfe953"
     exchange = "amq.topic"
-    routing_keys = [ "org.fedoraproject.*.meetbot.meeting.complete" ]
+    routing_keys = [ "org.fedoraproject.{{env_short}}.meetbot.meeting.complete" ]
 
     [qos]
     prefetch_size = 0
@@ -68,4 +68,3 @@ data:
     [log_config.root]
     level = "ERROR"
     handlers = ["console"]
-

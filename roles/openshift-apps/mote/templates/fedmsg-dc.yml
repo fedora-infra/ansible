@@ -32,10 +32,9 @@ spec:
           value: RedisCache
         imagePullPolicy: IfNotPresent
         volumeMounts:
-        - mountPath: /etc/fedora-messaging/config.py
+        - mountPath: /etc/fedora-messaging/config.toml
           name: fedmsg-config
           readOnly: true
-          subPath: config.toml
         resources:
           limits:
             cpu: 100m
