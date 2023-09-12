@@ -65,7 +65,6 @@
   - role: openshift/object
     template: fedmsg-cm.yml
     objectname: fedmsg-cm.yml
-    when: env == "production"
 
   - role: openshift/object
     template: pvc.yml
