@@ -14,7 +14,6 @@ plugin_directories:
     trash: delete
 
 plugin_databases:
-    #sqlite: /maubot/plugins
     postgres: default
     postgres_max_conns_per_plugin: 3
     postgres_opts: {}
@@ -35,7 +34,11 @@ homeservers:
 
 admins:
     root: ""
+{% if env == 'staging' %}
     {{ maubot_stg_admin_user }}: "{{ maubot_stg_admin_password }}"
+{% else %}
+    {{ maubot_prod_admin_user }}: "{{ maubot_prod_admin_password }}"
+{% endif %}
 
 api_features:
     login: true
