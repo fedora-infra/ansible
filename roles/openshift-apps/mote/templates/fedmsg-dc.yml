@@ -35,6 +35,7 @@ spec:
         - mountPath: /etc/fedora-messaging/config.toml
           name: fedmsg-config
           readOnly: true
+          subPath: config.toml
         resources:
           limits:
             cpu: 100m
