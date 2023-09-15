@@ -145,11 +145,6 @@
   when:
   - prepare_base_image is not defined
 
-- name: don't update macros for now
-  shell: sed -i "s|*rpm-macros||" /usr/bin/copr-update-builder
-  when:
-  - prepare_base_image is not defined
-
 - name: run /bin/copr-update-builder from copr-builder package
   shell: /usr/bin/copr-update-builder
 
