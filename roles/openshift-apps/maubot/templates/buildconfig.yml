@@ -12,8 +12,8 @@ spec:
   source:
     dockerfile: |-
       FROM fedora:38
-      RUN dnf -y install python3-pip fasjson-client python3-jinja2 fedora-messaging && dnf -y clean all
-      RUN pip install maubot[encryption] python-slugify httpx httpx_gssapi
+      RUN dnf -y install python3-pip && dnf -y clean all
+      RUN pip install maubot[encryption] python-slugify httpx httpx_gssapi jinja2 fedora-messaging meetbot-messages
       WORKDIR /maubot
       ENV KRB5_CONFIG=/etc/ipa/krb5.conf
       ENTRYPOINT /usr/bin/python3 -m maubot -c /config/config.yml
