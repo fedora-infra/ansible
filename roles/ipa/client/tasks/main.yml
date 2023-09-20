@@ -27,6 +27,7 @@
          -U -N --force-join
          --mkhomedir
          --no-ssh
+         --no-sshd
     creates: /etc/ipa/default.conf
   notify: clean sss caches
   tags:
