@@ -33,6 +33,14 @@
     - ipa/client
     - config
 
+- name: Remove ipa sshd config since we do not need it
+  file:
+    state: absent
+    path: /etc/ssh/sshd_config.d/04-ipa.conf
+  tags:
+    - ipa/client
+    - config
+
 - name: Prepare IPA-related information to make the following more efficient
   delegate_to: localhost
   import_tasks: prepare-ipa-info.yml
