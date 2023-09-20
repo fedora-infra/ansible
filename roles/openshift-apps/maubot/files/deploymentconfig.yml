@@ -60,6 +60,8 @@ spec:
             httpGet:
               path: /
               port: 8080
+      securityContext:
+        supplementalGroups: [2]
       volumes:
         - name: config
           configMap:
