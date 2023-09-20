@@ -26,8 +26,21 @@
   tags:
   - ipa/server
   - packages
+  when: ansible_distribution_major_version|int <= 8 and ansible_distribution == 'RedHat'
 
-# TODO: need pynag for monitoring, not yet in rhel8.
+- name: install needed packages
+  package: name={{ item }} state=present
+  with_items:
+  - haveged
+  - ipa-server
+  - ipa-server-dns
+  - ipa-fas
+  tags:
+  - ipa/server
+  - packages
+  when: ansible_distribution_major_version|int >= 9 and ansible_distribution == 'RedHat'
+
+# TODO: need pynag for monitoring, not yet in rhel9.
 
 - name: enable haveged
   service: name=haveged state=started enabled=yes
