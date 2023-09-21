@@ -28,6 +28,7 @@ initContainers:
   - ./build.py
   - "--results"
   - f$(RELEASEVER)
+  - "--store-srpms-in-results"
 {% if env == 'staging' %}
   - blue.*
 {% endif %}
@@ -63,9 +64,8 @@ containers:
   args:
   - >
     ./build_language_list.py --results f$(RELEASEVER) --refresh &&
-    ./build_language_list.py --results f$(RELEASEVER) --analyzealllang &&
-    ./build_tm.py --results f$(RELEASEVER) --compress &&
-    ./build_stats.py --results f$(RELEASEVER)
+    ./build_stats.py --results f$(RELEASEVER) &&
+    ./build_tm.py --results f$(RELEASEVER) --compress
   env:
   - name: RELEASEVER
     value: "{{ release }}"
