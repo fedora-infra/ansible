@@ -18,7 +18,7 @@
 - name: Ensuring Zabbix agent is started
   ansible.builtin.service:
     name: zabbix-agent
-    state: reloaded
+    state: restarted
     enabled: True
   tags:
     zabbix-services
