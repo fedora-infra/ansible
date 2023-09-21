@@ -26,7 +26,7 @@
   - collectd/base
   - { role: rsyncd, when: datacenter == 'iad2' }
   - sudo
-  - mod_wsgi
+  #- mod_wsgi
   - role: keytab/service
     owner_user: apache
     owner_group: apache
