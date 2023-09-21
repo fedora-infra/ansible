@@ -1,0 +1,21 @@
+- name: Create the zabbix keytab path
+  file:
+    path: "/etc/openshift_apps/zabbix/"
+    state: directory
+    owner: root
+    group: root
+    mode: 0750
+  tags:
+    - create-keytab
+
+
+- name: Acquire a keytab
+  include_role:
+    name: keytab/service
+  vars:
+    kt_location:
+      "/etc/openshift_apps/zabbix/zabbix_server.kt"
+    service: "zabbix"
+    host: "{{ communishift_ocp_api_hostname }}"
+  tags:
+    - create-keytab

@@ -29,6 +29,7 @@
 
 - name: Configure the zabbix db
   ansible.builtin.shell: "sudo -u postgres createdb -O {{ zabbix_db_user }} {{ zabbix_db_name }}"
+  ignore_errors: True
   tags:
     - db-configure
 
