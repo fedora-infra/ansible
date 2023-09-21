@@ -854,3 +854,11 @@
     target: https://fedoraproject.org/podcast/
     tags:
     - podcast
+
+  - role: httpd/redirectmatch
+    shortname: 00-docs-dei
+    website: docs.fedoraproject.org
+    regex: (?i)^/en-US/diversity-inclusion
+    target: https://docs.fedoraproject.org/en-US/dei/
+    tags:
+    - docs
