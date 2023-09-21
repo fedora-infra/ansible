@@ -61,7 +61,7 @@ spec:
               path: /
               port: 8080
       securityContext:
-        supplementalGroups: ['daemon']
+        supplementalGroups: [2]
       volumes:
         - name: config
           configMap:
