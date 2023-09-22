@@ -156,3 +156,16 @@
   - name: make sure selinux contexts are right on srv
     command: restorecon -R /srv
     changed_when: false
+
+- name: Remove membership-map files
+  hosts: proxies_stg
+  user: root
+  gather_facts: True
+
+  vars_files:
+   - /srv/web/infra/ansible/vars/global.yml
+   - "/srv/private/ansible/vars.yml"
+   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  roles:
+  - membership-map
