@@ -35,3 +35,8 @@ spec:
     github:
       secret: "{{ datagrepper_stg_github_secret }}"
 {% endif %}
+{% if datagrepper_github_secret is defined and env == 'production' %}
+  - type: GitHub
+    github:
+      secret: "{{ datagrepper_prod_github_secret }}"
+{% endif %}

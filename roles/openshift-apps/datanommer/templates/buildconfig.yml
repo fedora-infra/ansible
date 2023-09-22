@@ -35,3 +35,8 @@ spec:
     github:
       secret: "{{ datanommer_stg_github_secret }}"
 {% endif %}
+{% if datanommer_github_secret is defined and env == 'production' %}
+  - type: GitHub
+    github:
+      secret: "{{ datanommer_prod_github_secret }}"
+{% endif %}
