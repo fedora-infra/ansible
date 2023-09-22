@@ -8,9 +8,13 @@ eol_opsys:
   - { opsys: Fedora, release: '36' }
 # When not empty, the array should have the following form:
 #   - { opsys: "Fedora", release: "36" }
-eth2_ipv4: 8.43.85.61
+eth2_ipv4_ip: 8.43.85.61
 eth2_ipv4_gw: 8.43.85.254
 eth2_ipv4_nm: 23
+eth2_ipv6_ip: "2620:52:3:1:dead:beef:cafe:c005"
+eth2_ipv6_gw: "2620:52:3:1:ffff:ffff:ffff:fffe"
+eth2_ipv6_nm: 64
+has_ipv6: yes
 
 # List of supported operating systems
 faf_opsys_list:
@@ -136,7 +140,8 @@ network_connections:
   - autoconnect: true
     ip:
       address:
-      - '{{ eth2_ipv4 }}/{{ eth2_ipv4_nm }}'
+      - '{{ eth2_ipv4_ip }}/{{ eth2_ipv4_nm }}'
+      - '{{ eth2_ipv6_ip }}/{{ eth2_ipv6_nm }}'
       dhcp4: false
       dns:
       - '{{ dns1 }}'
@@ -144,6 +149,7 @@ network_connections:
       dns_search:
       - '{{ dns_search1 }}'
       gateway4: '{{ eth2_ipv4_gw }}'
+      gateway6: '{{ eth2_ipv6_gw }}'
     mac: '{{ mac0 }}'
     name: eth2
     state: up
