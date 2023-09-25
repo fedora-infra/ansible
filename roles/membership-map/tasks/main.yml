@@ -22,7 +22,7 @@
   tags:
     - cleanup
 
-- name: Remove interactive map file from mirror manager 
+- name: Remove interactive map file from mirror manager
   file:
     path: /var/www/mirrormanager-statistics/map/{{ item }}
     state: absent
