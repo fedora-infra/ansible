@@ -379,3 +379,17 @@ handlers = ["console"]
 [log_config.root]
 level = "ERROR"
 handlers = ["console"]
+
+# Configuration section for check_commit_rights
+[consumer_config.check_commit_rights]
+exclude_users = []
+{% if env == "staging" %}
+notify_emails = [
+#    "nobody@fedoraproject.org",
+    "fedora_stg@sparebit.simplelogin.com",
+]
+{% else %}
+notify_emails = [
+    "admin@fedoraproject.org",
+]
+{% endif %}
