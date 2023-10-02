@@ -36,6 +36,8 @@
       - rsync
       # For staging the release candidate composes
       - compose-utils
+      # for comps
+      - python3-xmltodict
     state: present
   tags:
   - packages
