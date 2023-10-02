@@ -512,6 +512,7 @@
   - import-mm2.py
   - periodic.py
   - mailman-sar.py
+  - hyperkitty-delete-list.py
 
 - name: install the templatized scripts
   template: src={{ item }}.j2 dest="{{ mailman_webui_basedir }}/bin/{{ item }}"
