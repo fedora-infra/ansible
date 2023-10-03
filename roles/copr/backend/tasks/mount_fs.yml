@@ -7,7 +7,7 @@
   register: stat_repo_fs_early
   tags: mdadm
 
-- name: raid10 volume on the production machine
+- name: VG on two RAIDs
   tags: mdadm
   when: not stat_repo_fs_early.stat.exists
   block:
@@ -23,7 +23,9 @@
       stat:
         path: "/dev/disk/by-id/{{ item }}"
       register: stat_raid
-      loop: "{{ copr_backend_data_raid10_volumes }}"
+      loop:
+        - "{{ copr_backend_data_raid10_volumes }}"
+        - "{{ copr_backend_data_2_raid1_volumes }}"
 
     - name: fail if raid volumes do not exist
       debug: msg=checked
