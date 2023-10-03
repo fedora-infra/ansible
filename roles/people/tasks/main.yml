@@ -196,41 +196,41 @@
 - name: set quotas for people who have more set
   command: xfs_quota -x -c 'limit bsoft={{ item.quota }} bhard={{ item.quota }} {{ item.user }}' /srv
   with_items:
-  - { user: adamwill, quota: 3g }
-  - { user: apache, quota: 1000g }
-  - { user: ausil, quota: 10g }
-  - { user: bollocks, quota: 12g }
-  - { user: dmarlin, quota: 5g }
-  - { user: duffy, quota: 10g }
-  - { user: dustymabe, quota: 10g }
-  - { user: dwalsh, quota: 5g }
-  - { user: hadess, quota: 5g }
-  - { user: imcleod, quota: 15g }
-  - { user: jdulaney, quota: 5g }
-  - { user: jforbes, quota: 5g }
-  - { user: jibecfed, quota: 10g }
-  - { user: jnovy, quota: 5g }
-  - { user: kalev, quota: 5g }
-  - { user: kashyapc, quota: 5g }
-  - { user: lupinix, quota: 8g }
-  - { user: mimccune, quota: 3g }
-  - { user: nb, quota: 5g }
-  - { user: nobody, quota: 1000g }
-  - { user: npmccallum, quota: 5g }
-  - { user: parasense, quota: 5g }
-  - { user: pingou, quota: 15g }
-  - { user: planet-user, quota: 1000g }
-  - { user: ppisar, quota: 4g }
-  - { user: pulpadmin, quota: 10g }
-  - { user: sapnetweavergatewayonfedora, quota: 5g }
-  - { user: slagle, quota: 7g }
-  - { user: spot, quota: 15g }
-  - { user: spstarr, quota: 4g }
-  - { user: steved, quota: 5g }
-  - { user: tflink, quota: 10g }
-  - { user: thunderbirdtr, quota: 3g }
-  - { user: zbyszek, quota: 20g }
-  - { user: zpericic, quota: 5g }
+  - {user: adamwill, quota: 3g}
+  - {user: apache, quota: 1000g}
+  - {user: ausil, quota: 10g}
+  - {user: bollocks, quota: 12g}
+  - {user: dmarlin, quota: 5g}
+  - {user: duffy, quota: 10g}
+  - {user: dustymabe, quota: 10g}
+  - {user: dwalsh, quota: 5g}
+  - {user: hadess, quota: 5g}
+  - {user: imcleod, quota: 15g}
+  - {user: jdulaney, quota: 5g}
+  - {user: jforbes, quota: 5g}
+  - {user: jibecfed, quota: 10g}
+  - {user: jnovy, quota: 5g}
+  - {user: kalev, quota: 5g}
+  - {user: kashyapc, quota: 5g}
+  - {user: lupinix, quota: 8g}
+  - {user: mimccune, quota: 3g}
+  - {user: nb, quota: 5g}
+  - {user: nobody, quota: 1000g}
+  - {user: npmccallum, quota: 5g}
+  - {user: parasense, quota: 5g}
+  - {user: pingou, quota: 15g}
+  - {user: planet-user, quota: 1000g}
+  - {user: ppisar, quota: 4g}
+  - {user: pulpadmin, quota: 10g}
+  - {user: sapnetweavergatewayonfedora, quota: 5g}
+  - {user: slagle, quota: 7g}
+  - {user: spot, quota: 15g}
+  - {user: spstarr, quota: 4g}
+  - {user: steved, quota: 5g}
+  - {user: tflink, quota: 10g}
+  - {user: thunderbirdtr, quota: 3g}
+  - {user: zbyszek, quota: 20g}
+  - {user: zpericic, quota: 5g}
   check_mode: no
   register: xfs_quotaoutput
   changed_when: "xfs_quotaoutput.rc != 0"
