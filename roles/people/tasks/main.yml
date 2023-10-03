@@ -40,7 +40,7 @@
 - name: Allow README in directory listing
   ansible.builtin.replace:
     path: /etc/httpd/conf.d/autoindex.conf
-    regexp: "(README^[*])"
+    regexp: "(README[*])"
     replace: ""
 
 
