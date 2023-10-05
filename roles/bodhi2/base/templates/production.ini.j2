@@ -202,10 +202,10 @@ pungi.extracmdline = --notification-script=/usr/bin/pungi-fedmsg-notification --
 # You can put credentials for skopeo to use in $HOME/.docker/config.json
 # https://github.com/projectatomic/skopeo#private-registries-with-authentication
 # skopeo.cmd = /usr/bin/skopeo
-skopeo.cmd = /usr/bin/bodhi-skopeo-lite
+skopeo.cmd = /usr/bin/skopeo
 
 # Comma separated list of extra flags to pass to the skopeo copy command.
-# skopeo.extra_copy_flags =
+skopeo.extra_copy_flags = -a
 
 # Container hostnames. You can specify a port as well, using the traditional syntax (i.e., localhost:5000).
 # container.destination_registry = registry.fedoraproject.org
