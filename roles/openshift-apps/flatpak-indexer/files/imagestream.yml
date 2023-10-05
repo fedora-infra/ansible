@@ -18,7 +18,7 @@ apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
   name: fedora
-  spec:
+spec:
     lookupPolicy:
       local: false
     tags:
@@ -35,7 +35,7 @@ apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
   name: ubi8-go-toolset
-  spec:
+spec:
     lookupPolicy:
       local: false
     tags:
@@ -52,7 +52,7 @@ apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
   name: ubi8-python-39
-  spec:
+spec:
     lookupPolicy:
       local: false
     tags:
