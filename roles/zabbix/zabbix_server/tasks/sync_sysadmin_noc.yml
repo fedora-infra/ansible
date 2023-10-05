@@ -34,7 +34,7 @@
     msg: "{{ zabbix_fasjson_response['group'] }}"
 
 - set_fact:
-  zabbix_sysadmin_noc_members: "{{ zabbix_fasjson_response['group']|from_json }}"
+    zabbix_sysadmin_noc_members: "{{ zabbix_fasjson_response['group']|from_json }}"
   tags:
     - never
     - sync_users
