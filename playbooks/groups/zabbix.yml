@@ -29,7 +29,7 @@
 
   - name: Sync sysadmin-noc membership to the zabbix server
     include_role:
-      name: zabbix_server
+      name: zabbix/zabbix_server
       tasks_from: sync_sysadmin_noc
       apply:
         tags:
