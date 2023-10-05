@@ -137,6 +137,11 @@
       # Tito 0.6.23 supports transitive submodule resolution
       # Requested on IRC by @abn
       - tito
+      # We want fedora-review 0.10.0 which generates `review.json` file
+      # This is important for the fedora-review-service
+      # https://github.com/FrostyX/fedora-review-service/issues/30
+      - fedora-review
+
 
 - name: put updated mock configs into /etc/mock
   copy: src=files/mock/ dest=/etc/copr-rpmbuild/mock-config-overrides
