@@ -34,10 +34,10 @@
     msg: "{{ zabbix_fasjson_response['group'] }}"
 
 - set_fact:
+  zabbix_sysadmin_noc_members: "{{ zabbix_fasjson_response['group']|from_json }}"
   tags:
     - never
     - sync_users
-    zabbix_sysadmin_noc_members: "{{ zabbix_fasjson_response['group']|from_json }}"
 
 - name: Create a the zabbix user for each sysadmin-noc member.
     # set task level variables as we change ansible_connection plugin here
