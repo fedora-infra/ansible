@@ -20,11 +20,6 @@ cmd=(
 {% for subnet in aws_arch_subnets[item] %}
       --possible-subnet {{ subnet }}
 {% endfor %}
-{% if item == 'x86_64' %}
-      --instance-type i4i.large
-{% else %}
-      --instance-type c7g.xlarge
-{% endif %}
       --tag FedoraGroup=copr
       --tag CoprPurpose=builder
       --tag CoprInstance={% if devel %}devel{% else %}production{% endif %}

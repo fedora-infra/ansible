@@ -1,15 +1,16 @@
-{% macro aws_x86_64(max, max_starting, max_prealloc, spot=False) %}
-aws_x86_64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else %}prod{% endif %}:
+---
+{% macro aws(arch, max, max_starting, max_prealloc, spot=False) %}
+aws_{{ arch }}_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else %}prod{% endif %}:
     max: {{ max }}
     max_starting: {{ max_starting }}
     max_prealloc: {{ max_prealloc }}
     tags:
-    - name: copr_builder
-{% if spot %}
-      priority: -5
-{% else %}
-      priority: -10
+    - copr_builder
+{% if arch == 'x86_64' %}
+      priority: {% if spot %}-5{% else %}-10{% endif %}
 {% endif %}
+    - aws
+{% if arch == 'x86_64' %}
     - arch_x86_64
     - arch_x86_64_native
     - arch_i386
@@ -21,36 +22,21 @@ aws_x86_64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else
     - arch_armhfp
     - arch_armhfp_emulated
     - arch_noarch
-    - aws
-{% if spot %}
-    cmd_new: copr-resalloc-aws-new-x86_64 --spot-price 0.156
 {% else %}
-    cmd_new: copr-resalloc-aws-new-x86_64
-{% endif %}
-    cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
-    cmd_livecheck: "resalloc-check-vm-ip"
-    cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
-    cmd_list: resalloc-aws-list
-    livecheck_period: 180
-    reuse_opportunity_time: 180
-    reuse_max_count: 8
-    reuse_max_time: 1800
-{% endmacro %}
-
-{% macro aws_aarch64(max, max_starting, max_prealloc, spot=False) %}
-aws_aarch64_{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else %}prod{% endif %}:
-    max: {{ max }}
-    max_starting: {{ max_starting }}
-    max_prealloc: {{ max_prealloc }}
-    tags:
-    - copr_builder
     - arch_aarch64
     - arch_aarch64_native
-    - aws
-{% if spot %}
-    cmd_new: copr-resalloc-aws-new-aarch64 --spot-price 0.156
+{% endif %}
+
+{% if arch == 'x86_64' %}
+{% set itype='i4i.large' %}
 {% else %}
-    cmd_new: copr-resalloc-aws-new-aarch64
+{% set itype='c7g.xlarge' %}
+{% endif %}
+
+{% if spot %}
+    cmd_new: copr-resalloc-aws-new-{{ arch }} --instance-type {{ itype }} --spot-price 0.156
+{% else %}
+    cmd_new: copr-resalloc-aws-new-{{ arch }} --instance-type {{ itype }}
 {% endif %}
     cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
     cmd_livecheck: "resalloc-check-vm-ip"
@@ -223,16 +209,14 @@ copr_osuosl_p09_{% if devel %}dev{% else %}prod{% endif %}:
   reuse_max_count: 8
   reuse_max_time: 1800
 
-{{ aws_x86_64(builders.aws.x86_64[0], builders.aws.x86_64[1],
-              builders.aws.x86_64[2])
-}}
-{{ aws_aarch64(builders.aws.aarch64[0], builders.aws.aarch64[1],
-               builders.aws.aarch64[2])
-}}
+{{ aws('x86_64', builders.aws.x86_64[0], builders.aws.x86_64[1],
+       builders.aws.x86_64[2]) }}
 
-{{ aws_x86_64(builders.aws_spot.x86_64[0], builders.aws_spot.x86_64[1],
-              builders.aws_spot.x86_64[2], True)
-}}
-{{ aws_aarch64(builders.aws_spot.aarch64[0], builders.aws_spot.aarch64[1],
-               builders.aws_spot.aarch64[2], True)
-}}
+{{ aws('aarch64', builders.aws.aarch64[0], builders.aws.aarch64[1],
+       builders.aws.aarch64[2]) }}
+
+{{ aws('x86_64', builders.aws_spot.x86_64[0], builders.aws_spot.x86_64[1],
+       builders.aws_spot.x86_64[2], True) }}
+
+{{ aws('aarch64', builders.aws_spot.aarch64[0], builders.aws_spot.aarch64[1],
+       builders.aws_spot.aarch64[2], True) }}
