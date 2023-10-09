@@ -1,6 +1,6 @@
 ---
-{% macro aws(arch, max, max_starting, max_prealloc, spot=False, on_demand=None) %}
-aws_{{ arch }}_{{ on_demand if on_demand else '' }}{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else %}prod{% endif %}:
+{% macro aws(arch, max, max_starting, max_prealloc, spot=False, on_demand=none) %}
+aws_{{ arch }}_{{ on_demand if on_demand is not none else '' }}{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else %}prod{% endif %}:
 {% if not on_demand %}
     max: {{ max }}
     max_starting: {{ max_starting }}
@@ -32,17 +32,18 @@ aws_{{ arch }}_{{ on_demand if on_demand else '' }}{% if spot %}spot{% else %}no
     - arch_aarch64_native
 {% endif %}
 {% if on_demand %}
+
     on_demand_tags:
     - on_demand_{{ on_demand }}
 {% endif %}
 
-{% if arch == 'x86_64' and on_demand is None %}
+{% if arch == 'x86_64' and on_demand is none %}
 {% set itype='i4i.large' %}
 {% elif arch == 'x86_64' and on_demand == 'powerful' %}
 {% set itype='r7a.16xlarge' %}
-{% elif arhc == 'aarch64' and on_demand is None %}
+{% elif arch == 'aarch64' and on_demand is none %}
 {% set itype='c7g.xlarge' %}
-{% elif arhc == 'aarch64' and on_demand is 'powerful' %}
+{% elif arch == 'aarch64' and on_demand == 'powerful' %}
 {% set itype='r7g.16xlarge' %}
 {% endif %}
 
