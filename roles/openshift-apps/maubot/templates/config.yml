@@ -61,12 +61,6 @@ logging:
         normal:
             format: "[%(asctime)s] [%(levelname)s@%(name)s] %(message)s"
     handlers:
-        file:
-            class: logging.handlers.RotatingFileHandler
-            formatter: normal
-            filename: /maubot/maubot.log
-            maxBytes: 10485760
-            backupCount: 10
         console:
             class: logging.StreamHandler
             formatter: colored
@@ -79,4 +73,4 @@ logging:
             level: WARN
     root:
         level: WARN
-        handlers: [file, console]
+        handlers: [console]

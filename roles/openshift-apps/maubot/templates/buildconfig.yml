@@ -12,8 +12,18 @@ spec:
   source:
     dockerfile: |-
       FROM fedora:38
-      RUN dnf -y install python3-pip python3-gssapi && dnf -y clean all
+      RUN dnf -y install python3-pip python3-gssapi git && dnf -y clean all
       RUN pip install maubot[encryption] python-slugify httpx httpx_gssapi jinja2 fedora-messaging meetbot-messages
+      RUN \
+        curl https://raw.githubusercontent.com/fedora-infra/matrix-bots/main/install-plugins-from-git.py -o /usr/local/bin/install-maubot-plugins && \
+        chmod +x /usr/local/bin/install-maubot-plugins && \
+        mkdir /maubot && \
+        for plugin in maubot-fedora maubot-adminclient; do \
+          install-maubot-plugins -o /maubot -b staging https://github.com/fedora-infra/${plugin}; \
+        done && \
+        install-maubot-plugins -o /maubot \
+          https://github.com/jkhsjdhjs/maubot-webhook.git \
+          https://github.com/GregSutcliffe/maubot-meetings.git
       WORKDIR /maubot
       ENV KRB5_CONFIG=/etc/ipa/krb5.conf
       ENTRYPOINT /usr/bin/python3 -m maubot -c /config/config.yml

@@ -26,8 +26,6 @@ spec:
             - name: config
               mountPath: /config
               readOnly: true
-            - name: maubot-storage
-              mountPath: /maubot
             - name: meetbot-logs
               mountPath: /meetbot_logs
             - name: ipa-config-volume
@@ -66,9 +64,6 @@ spec:
         - name: config
           configMap:
             name: config
-        - name: maubot-storage
-          persistentVolumeClaim:
-            claimName: maubot-storage
         - name: meetbot-logs
           persistentVolumeClaim:
             claimName: meetbot-logs
