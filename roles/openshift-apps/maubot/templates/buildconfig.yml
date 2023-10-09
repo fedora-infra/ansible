@@ -19,7 +19,7 @@ spec:
         chmod +x /usr/local/bin/install-maubot-plugins && \
         mkdir /maubot && \
         for plugin in maubot-fedora maubot-adminclient; do \
-          install-maubot-plugins -o /maubot -b staging https://github.com/fedora-infra/${plugin}; \
+          install-maubot-plugins -o /maubot -b {{ (env == "production")|ternary("stable", "staging") }} https://github.com/fedora-infra/${plugin}; \
         done && \
         install-maubot-plugins -o /maubot \
           https://github.com/jkhsjdhjs/maubot-webhook.git \
