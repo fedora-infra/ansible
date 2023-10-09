@@ -1,6 +1,6 @@
 ---
 {% macro aws(arch, max, max_starting, max_prealloc, spot=False, on_demand=none) %}
-aws_{{ arch }}_{{ on_demand if on_demand is not none else '' }}{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else %}prod{% endif %}:
+aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else %}prod{% endif %}:
 {% if not on_demand %}
     max: {{ max }}
     max_starting: {{ max_starting }}
