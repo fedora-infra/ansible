@@ -168,7 +168,9 @@ copr_p09_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
 # Z Cloud instances
 copr_ibm_cloud_s390x_tokyo_{% if devel %}dev{% else %}prod{% endif %}:
   max: {{ builders.ibm_cloud_tokyo.s390x[0] }}
+{% if not devel %}
   max_prealloc: {{ builders.ibm_cloud_tokyo.s390x[1] }}
+{% endif %}
   max_starting: {{ builders.ibm_cloud_tokyo.s390x[2] }}
   tags:
     - copr_builder
