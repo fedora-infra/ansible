@@ -10,7 +10,7 @@ aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot 
     max_starting: 5
 {% endif %}
     tags:
-    - copr_builder
+    - name: copr_builder
 {% if arch == 'x86_64' %}
       priority: {% if spot %}-5{% else %}-10{% endif +%}
 {% endif %}
