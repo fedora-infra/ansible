@@ -6,8 +6,8 @@ aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot 
     max_starting: {{ max_starting }}
     max_prealloc: {{ max_prealloc }}
 {% else %}
-    max: 5
-    max_starting: 5
+    max: 1
+    max_starting: 1
 {% endif %}
     tags:
     - name: copr_builder
@@ -33,7 +33,7 @@ aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot 
 {% endif %}
 {% if on_demand %}
 
-    on_demand_tags:
+    tags_on_demand:
     - on_demand_{{ on_demand }}
 {% endif %}
 
@@ -182,7 +182,7 @@ copr_ibm_cloud_s390x_tokyo_{% if devel %}dev{% else %}prod{% endif %}:
     - ibm_cloud
     - tokyo
 {% if devel %}
-  on_demand_tags:
+  tags_on_demand:
 {% endif %}
     - arch_s390x
     - arch_s390x_native
