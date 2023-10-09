@@ -175,10 +175,13 @@ copr_ibm_cloud_s390x_tokyo_{% if devel %}dev{% else %}prod{% endif %}:
     - copr_builder
     - name: arch_noarch
       priority: -30
-    - arch_s390x
-    - arch_s390x_native
     - ibm_cloud
     - tokyo
+{% if devel %}
+  on_demand_tags:
+{% endif %}
+    - arch_s390x
+    - arch_s390x_native
   cmd_new: '/var/lib/resallocserver/resalloc_provision/ibm-cloud-vm --log-level debug create "$RESALLOC_NAME"'
   cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
   cmd_livecheck: "resalloc-check-vm-ip"
