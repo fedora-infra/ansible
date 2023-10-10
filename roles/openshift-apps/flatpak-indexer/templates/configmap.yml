@@ -42,7 +42,7 @@ data:
             extract_icons: True
             delta_keep: 30d
             flatpak_annotations: True
-{% for architecture in [ 'amd64', 'arm64' ] %}
+{% for architecture in [ 'amd64', 'arm64', 'ppc64le' ] %}
         latest-{{ architecture }}:
             output: ${OUTPUT_DIR}/fedora/flatpak-latest-{{ architecture }}.json
             registry: fedora
@@ -74,7 +74,7 @@ data:
             bodhi_status: testing
             extract_icons: True
             flatpak_annotations: True
-{% for architecture in [ 'amd64', 'arm64' ] %}
+{% for architecture in [ 'amd64', 'arm64', 'ppc64le' ] %}
         testing-{{ architecture }}:
             output: ${OUTPUT_DIR}/fedora/flatpak-testing-{{ architecture }}.json
             registry: fedora
