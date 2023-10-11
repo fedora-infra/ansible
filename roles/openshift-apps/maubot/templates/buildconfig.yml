@@ -45,3 +45,6 @@ spec:
   - type: GitHub
     github:
       secret: "{{ (env == 'production')|ternary(maubot_prod_github_secret, maubot_stg_github_secret) }}"
+  - type: Generic
+    generic:
+      secret: "{{ (env == 'production')|ternary(maubot_prod_github_secret, maubot_stg_github_secret) }}"
