@@ -32,19 +32,16 @@ spec:
     type: Docker
     dockerStrategy:
       noCache: false
-      # from:
-      #   kind: ImageStreamTag
-      #   name: fedora:38
+      from:
+        kind: ImageStreamTag
+        name: fedora:38
   output:
     to:
       kind: ImageStreamTag
       name: maubot:latest
   triggers:
-  - type: ConfigChange
-  - type: ImageChange
-  - type: GitHub
-    github:
-      secret: "{{ (env == 'production')|ternary(maubot_prod_github_secret, maubot_stg_github_secret) }}"
-  - type: Generic
-    generic:
-      secret: "{{ (env == 'production')|ternary(maubot_prod_github_secret, maubot_stg_github_secret) }}"
+    - type: ConfigChange
+    - type: ImageChange
+    - type: Generic
+      generic:
+        secret: "{{ (env == 'production')|ternary(maubot_prod_github_secret, maubot_stg_github_secret) }}"

@@ -6,3 +6,22 @@ items:
     kind: ImageStream
     metadata:
       name: maubot
+  # The Fedora image
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      name: fedora
+      labels:
+        build: maubot-build
+    spec:
+      lookupPolicy:
+        local: false
+      tags:
+      - name: "38"
+        from:
+          kind: DockerImage
+          name: quay.io/fedora/fedora:38
+        importPolicy:
+          scheduled: true
+        referencePolicy:
+          type: Source
