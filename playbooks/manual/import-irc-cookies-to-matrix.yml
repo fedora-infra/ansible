@@ -8,15 +8,13 @@
    - /srv/web/infra/ansible/vars/global.yml
    - "/srv/private/ansible/vars.yml"
    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
-  handlers:
-  - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   tasks:
 
     - name: add the pgpass file
       copy:
         content: |
-          db01{{ env_suffix }}.iad2.fedoraproject.org:*:maubot:maubot::{{ {{ (env == 'production')|ternary(maubot_prod_db_password, maubot_stg_db_password) }} }}
+          db01{{ env_suffix }}.iad2.fedoraproject.org:*:maubot:maubot::{{ (env == 'production')|ternary(maubot_prod_db_password, maubot_stg_db_password) }}
         dest: /root/.pgpass
         owner: root
         group: root
