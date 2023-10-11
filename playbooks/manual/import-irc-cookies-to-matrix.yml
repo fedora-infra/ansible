@@ -37,4 +37,4 @@
           - /usr/local/bin/karma-to-cookies-db
           - -i
           - zodbot{% if env == "staging" %}-stg{% endif %}-fedora
-          - /var/lib/zodbot/data/karma.db
+          - /var/lib/{{ (env == 'production')|ternary('zodbot', 'ursabot') }}/data/karma.db
