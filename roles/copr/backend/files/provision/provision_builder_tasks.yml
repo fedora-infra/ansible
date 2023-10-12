@@ -236,11 +236,11 @@
     gather_subset:
     - hardware
 
-- name: Make sure that at least 135G of swap is available
+- name: Make sure that we have 140G memory or SWAP for Mock caches
   assert:
     that:
-      - ansible_memory_mb.swap.free >= 1024 * 135
-    fail_msg: "Swap is not available, the builder is unusable"
-    success_msg: "Swap seems to be available for this builder"
+      - ansible_memory_mb.swap.free + ansible_memory_mb.real.free >= 1024 * 140
+    fail_msg: "Not enough memory+swap, the builder is unusable"
+    success_msg: "Builder has enough memory/swap!"
   when:
   - prepare_base_image is not defined
