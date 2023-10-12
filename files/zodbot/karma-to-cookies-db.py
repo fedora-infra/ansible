@@ -54,10 +54,11 @@ def main():
             continue
         if not release.startswith("f"):
             continue
+        release = release[1:]  # Only the number
         print(release, len(data))
         for agent, gifts in data.items():
             for recip, value in gifts.items():
-                cookie = Cookie(from_user=agent, to_user=recip, release=release.upper(), value=value)
+                cookie = Cookie(from_user=agent, to_user=recip, release=release, value=value)
                 session.add(cookie)
                 try:
                     session.commit()
