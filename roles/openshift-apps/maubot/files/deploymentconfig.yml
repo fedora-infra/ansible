@@ -86,11 +86,12 @@ spec:
           secret:
               secretName: maubot-fedora-messaging-crt
   triggers:
-  - type: ImageChange
-    imageChangeParams:
-      automatic: true
-      containerNames:
-      - "maubot"
-      from:
-        kind: ImageStreamTag
-        name: maubot:latest
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - maubot
+        from:
+          kind: ImageStreamTag
+          name: maubot:latest
