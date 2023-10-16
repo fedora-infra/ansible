@@ -20,7 +20,7 @@ spec:
         mkdir /maubot && \
         for plugin in maubot-fedora maubot-adminclient maubot-meetings; do \
           install-maubot-plugins -o /maubot -b {{ (env == "production")|ternary("stable", "staging") }} https://github.com/fedora-infra/${plugin}; \
-        done && \
+        done;
       WORKDIR /maubot
       ENV KRB5_CONFIG=/etc/ipa/krb5.conf
       ENTRYPOINT /usr/bin/python3 -m maubot -c /config/config.yml
