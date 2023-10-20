@@ -59,7 +59,7 @@ aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot 
     cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
     cmd_list: resalloc-aws-list
     livecheck_period: 180
-    reuse_opportunity_time: 180
+    reuse_opportunity_time: 90
     reuse_max_count: 8
     reuse_max_time: 1800
 {% endmacro %}
@@ -93,7 +93,7 @@ copr_hv_x86_64_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
     cmd_list: "/var/lib/resallocserver/provision/libvirt-list"
     livecheck_period: 180
-    reuse_opportunity_time: 180
+    reuse_opportunity_time: 90
     reuse_max_count: 8
     reuse_max_time: 1800
 {% else %}
@@ -127,7 +127,7 @@ copr_hv_ppc64le_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
     cmd_list: "/var/lib/resallocserver/provision/libvirt-list"
     livecheck_period: 180
-    reuse_opportunity_time: 180
+    reuse_opportunity_time: 90
     reuse_max_count: 8
     reuse_max_time: 1800
 
@@ -161,7 +161,7 @@ copr_p09_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
     cmd_list: "/var/lib/resallocserver/provision/libvirt-list"
     livecheck_period: 180
-    reuse_opportunity_time: 180
+    reuse_opportunity_time: 90
     reuse_max_count: 8
     reuse_max_time: 1800
 
@@ -192,7 +192,7 @@ copr_ibm_cloud_s390x_tokyo_{% if devel %}dev{% else %}prod{% endif %}:
   cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
   cmd_list: "/var/lib/resallocserver/resalloc_provision/ibm-cloud-list-vms"
   livecheck_period: 180
-  reuse_opportunity_time: 180
+  reuse_opportunity_time: 90
   reuse_max_count: 8
   reuse_max_time: 1800
 
@@ -223,7 +223,7 @@ copr_osuosl_p09_{% if devel %}dev{% else %}prod{% endif %}:
   cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
   cmd_list: '/var/lib/resallocserver/resalloc_provision/osuosl-list'
   livecheck_period: 180
-  reuse_opportunity_time: 180
+  reuse_opportunity_time: 90
   reuse_max_count: 8
   reuse_max_time: 1800
 
