@@ -1,11 +1,11 @@
 #! /bin/bash
 
-case $RESALLOC_NAME in
+case $RESALLOC_POOL_ID in
     *tokyo*)
         zone=jp-tok
         ;;
     *)
-        echo "Can't decide what location to assign from: $RESALLOC_NAME"
+        echo "Can't decide what location to assign from: $RESALLOC_POOL_ID"
         exit 1
         ;;
 esac

@@ -1,16 +1,5 @@
 #! /bin/bash
 
-case $RESALLOC_NAME in
-    *tokyo*)
-        zone=jp-tok
-        ;;
-    *)
-        echo "Can't decide what location to assign from: $RESALLOC_NAME"
-        exit 1
-        ;;
-esac
-
 exec resalloc-ibm-cloud-list-deleting-vms \
     --token-file "{{ ibmcloud_token_file }}" \
-    --zone "$zone" \
     "$@"
