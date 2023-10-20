@@ -256,3 +256,5 @@
   loop:
     - path: /var/lib/copr-rpmbuild
       size: 15000000
+  when:
+  - prepare_base_image is not defined
