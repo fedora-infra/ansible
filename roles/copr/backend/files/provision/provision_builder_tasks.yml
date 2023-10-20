@@ -246,3 +246,13 @@
     success_msg: "Builder has enough memory/swap!"
   when:
   - prepare_base_image is not defined
+
+- name: check disk space
+  include_tasks:
+    file: check_path_free_space.yml
+  vars:
+    path: "{{ item.path }}"
+    size: "{{ item.size|int }}"
+  loop:
+    - path: /var/lib/copr-rpmbuild
+      size: 15000000
