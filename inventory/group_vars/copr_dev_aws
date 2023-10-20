@@ -21,11 +21,11 @@ backend_base_url: "https://download.copr-dev.fedorainfracloud.org"
 builders:
   # max|spawn_concurrently|prealloc
   aws:
-    aarch64: [2, 1, 1]
-    x86_64: [4, 1, 1]
+    aarch64: [2, 0, 0]
+    x86_64: [4, 0, 0]
   aws_spot:
-    aarch64: [5, 2, 1]
-    x86_64: [5, 2, 2]
+    aarch64: [5, 1, 1]
+    x86_64: [5, 1, 1]
   ppc64le_hypervisor_01:
     ppc64le: [2, 1, 1]
   ppc64le_hypervisor_02:
@@ -41,7 +41,8 @@ builders:
   x86_hypervisor_04:
     x86_64: [2, 1, 1]
   ibm_cloud_tokyo:
-    s390x: [2, 1, 1]
+    # s390x is on-demand
+    s390x: [2, 1, 0]
 copr_aws_region: us-east-1
 # don't forget to update ip in ./copr-keygen-stg, due to custom firewall rules
 
