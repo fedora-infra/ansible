@@ -30,6 +30,18 @@ export VIRSH_DEFAULT_CONNECT_URI=
 test -n "$image" || die "first argument (image) required"
 test -f "$image" || die "image $image not found"
 
+# Per osuosl stack admin suggestion, ad long BUILD state (this decreases the
+# BUILD time from 3 minutes to < 20s):
+#   If you want it faster, I recommend you upload it as raw otherwise the
+#   hypervisor has to import the image into Ceph every time you build a new
+#   VM.
+# Actually, per 2023 research in https://github.com/fedora-copr/copr/issues/2869
+# converting all images to raw make our builds spawn much faster (ssh available
+# in 30s compared to 10 and more minutes with qcow2).
+qemu-img convert -O raw "$image" "$image.raw"
+cp --sparse=always "$image.raw" "$image"
+rm "$image.raw"
+
 pool=images
 for connection in $libvirt_connections; do
     virsh --connect="$connection" vol-create-as --pool "$pool" "$new_volume" 1M
@@ -41,19 +53,11 @@ ppc64le)
     # We are going to upload the same image to OpenStack
     . "{{ provision_directory }}/.rc-osuosl.sh"
 
-    # Per osuosl stack admin suggestion, ad long BUILD state:
-    #   If you want it faster, I recommend you upload it as raw otherwise the
-    #   hypervisor has to import the image into Ceph every time you build a new
-    #   VM.
-    # (this decreases the BUILD time from 3 minutes to < 20s)
-    file=/tmp/raw-image
-    rm -rf "$file"
-    qemu-img convert "$image" "$file"
     glance image-create \
         --name "$new_volume" \
         --disk-format raw \
         --container-format bare \
-        --file "$file" --progress
+        --file "$image" --progress
     ;;
 esac
 
