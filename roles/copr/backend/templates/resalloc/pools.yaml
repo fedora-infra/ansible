@@ -6,8 +6,8 @@ aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot 
     max_starting: {{ max_starting }}
     max_prealloc: {{ max_prealloc }}
 {% else %}
-    max: 1
-    max_starting: 1
+    max: 10
+    max_starting: 4
 {% endif %}
     tags:
     - name: copr_builder
