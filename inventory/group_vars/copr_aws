@@ -39,8 +39,12 @@ builders:
     x86_64: [20, 4, 20]
   x86_hypervisor_04:
     x86_64: [20, 4, 20]
-  ibm_cloud_tokyo:
+  ibm_cloud_us_east:
+    # s390x is on-demand
     s390x: [18, 6, 6]
+  ibm_cloud_tokyo:
+    # tokyo is evacuated
+    s390x: [0, 6, 6]
 copr_aws_region: us-east-1
 # don't forget to update ip in ./copr-keygen, due to custom firewall rules
 
@@ -57,7 +61,9 @@ copr_builder_images:
     ppc64le: copr-builder-ppc64le-20230608_110920
     x86_64: copr-builder-x86_64-20230608_112008
   ibm_cloud:
-    s390x: r022-520df49e-d982-4f58-9df0-f8fbda004ecf
+    s390x:
+      tokyo: r022-520df49e-d982-4f58-9df0-f8fbda004ecf
+      us_east: r014-28482f8a-f9aa-421a-a140-ffa1539d1c56
   osuosl:
     ppc64le: copr-builder-ppc64le-20230608_110920
 
