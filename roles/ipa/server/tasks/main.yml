@@ -86,6 +86,30 @@
   - config
   when: ipa_initial
 
+- name: Create LDIF directory
+  file:
+    path: /root/ldif
+    state: directory
+    owner: root
+    group: root
+    mode: 0750
+  tags:
+  - ipa/server
+  - config
+
+- name: Copy LDIF files
+  copy:
+    src: "{{item}}"
+    dest: /root/ldif/{{item}}
+  with_items:
+  - grant_anonymous_replication_view.ldif
+  - grant_fas_sync.ldif
+  - use_id_fp_o.ldif
+  - replica-install.ldif
+  tags:
+  - ipa/server
+  - config
+
 - name: determine whether we need to set up replication
   stat: path=/etc/ipa/default.conf
   register: replication_status
@@ -138,6 +162,7 @@
              --forwarder=10.3.163.34
              --skip-conncheck
              --log-file=/var/log/ipainstall.log
+             --dirsrv-config-file=/root/ldif/replica-install.ldif
              /root/ipa_replica_{{inventory_hostname}}.gpg
              creates=/etc/ipa/default.conf
     when: ansible_distribution_major_version|int < 8
@@ -158,6 +183,7 @@
              --log-file=/var/log/ipainstall.log
              --domain={{ipa_realm}}
              --server=ipa01{{ env_suffix }}.iad2.fedoraproject.org
+             --dirsrv-config-file=/root/ldif/replica-install.ldif
              creates=/etc/ipa/default.conf
     when: ansible_distribution_major_version|int >= 8
   when: not ipa_initial and not replication_status.stat.exists
@@ -607,22 +633,6 @@
   - ipa/server
   - config
 
-
-- name: Create LDIF directory
-  file: path=/root/ldif state=directory owner=root group=root mode=0750
-  tags:
-  - ipa/server
-  - config
-
-- name: Copy LDIF files
-  copy: src={{item}} dest=/root/ldif/{{item}}
-  with_items:
-  - grant_anonymous_replication_view.ldif
-  - grant_fas_sync.ldif
-  - use_id_fp_o.ldif
-  tags:
-  - ipa/server
-  - config
 
 # This is a special one, in that it needs to apply on each master since it's non-replicated.
 - name: Grant access to replication status
