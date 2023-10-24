@@ -94,88 +94,76 @@
   - config
   when: not ipa_initial
 
-- name: create replica file
-  delegate_to: ipa01{{ env_suffix }}.iad2.fedoraproject.org
-  command: ipa-replica-prepare
-           --password={{ipa_dm_password}}
-           {{inventory_hostname}}
-           creates=/var/lib/ipa/replica-info-{{inventory_hostname}}.gpg
-  tags:
-  - ipa/server
-  - config
-  when: not ipa_initial and ansible_distribution_major_version|int < 8 and not replication_status.stat.exists
+- name: configure replication
+  block:
+  - name: create replica file
+    delegate_to: ipa01{{ env_suffix }}.iad2.fedoraproject.org
+    command: ipa-replica-prepare
+             --password={{ipa_dm_password}}
+             {{inventory_hostname}}
+             creates=/var/lib/ipa/replica-info-{{inventory_hostname}}.gpg
+    when: ansible_distribution_major_version|int < 8
 
-- name: retrieve replica file
-  delegate_to: ipa01{{ env_suffix }}.iad2.fedoraproject.org
-  fetch: src=/var/lib/ipa/replica-info-{{inventory_hostname}}.gpg
-         dest=/tmp/ipa_replica_{{inventory_hostname}}.gpg
-         flat=yes
-  tags:
-  - ipa/server
-  - config
-  when: not ipa_initial and ansible_distribution_major_version|int < 8 and not replication_status.stat.exists
+  - name: retrieve replica file
+    delegate_to: ipa01{{ env_suffix }}.iad2.fedoraproject.org
+    fetch: src=/var/lib/ipa/replica-info-{{inventory_hostname}}.gpg
+           dest=/tmp/ipa_replica_{{inventory_hostname}}.gpg
+           flat=yes
+    when: ansible_distribution_major_version|int < 8
 
-- name: deploy replica file
-  copy: src=/tmp/ipa_replica_{{inventory_hostname}}.gpg
-        dest=/root/ipa_replica_{{inventory_hostname}}.gpg
-        mode=0600 owner=root group=root
-  tags:
-  - ipa/server
-  - config
-  when: not ipa_initial and ansible_distribution_major_version|int < 8 and not replication_status.stat.exists
+  - name: deploy replica file
+    copy: src=/tmp/ipa_replica_{{inventory_hostname}}.gpg
+          dest=/root/ipa_replica_{{inventory_hostname}}.gpg
+          mode=0600 owner=root group=root
+    when: ansible_distribution_major_version|int < 8
 
-- name: destroy replica file on ansible host
-  delegate_to: localhost
-  file: path=/tmp/ipa_replica_{{inventory_hostname}}.gpg state=absent
-  tags:
-  - ipa/server
-  - config
-  when: not ipa_initial and ansible_distribution_major_version|int < 8 and not replication_status.stat.exists
+  - name: destroy replica file on ansible host
+    delegate_to: localhost
+    file: path=/tmp/ipa_replica_{{inventory_hostname}}.gpg state=absent
+    when: ansible_distribution_major_version|int < 8
 
-- name: deploy replica
-  command: ipa-replica-install
-           --setup-ca
-           --setup-kra
-           --password={{ipa_dm_password}}
-           --admin-password={{ipa_admin_password}}
-           --mkhomedir
-           --no-ntp
-           --unattended
-           --no-ssh
-           --no-sshd
-           --setup-dns
-           --forwarder=10.3.163.33
-           --forwarder=10.3.163.34
-           --skip-conncheck
-           --log-file=/var/log/ipainstall.log
-           /root/ipa_replica_{{inventory_hostname}}.gpg
-           creates=/etc/ipa/default.conf
-  tags:
-  - ipa/server
-  - config
-  when: not ipa_initial and ansible_distribution_major_version|int < 8 and not replication_status.stat.exists
+  - name: deploy replica
+    command: ipa-replica-install
+             --setup-ca
+             --setup-kra
+             --password={{ipa_dm_password}}
+             --admin-password={{ipa_admin_password}}
+             --mkhomedir
+             --no-ntp
+             --unattended
+             --no-ssh
+             --no-sshd
+             --setup-dns
+             --forwarder=10.3.163.33
+             --forwarder=10.3.163.34
+             --skip-conncheck
+             --log-file=/var/log/ipainstall.log
+             /root/ipa_replica_{{inventory_hostname}}.gpg
+             creates=/etc/ipa/default.conf
+    when: ansible_distribution_major_version|int < 8
 
-- name: deploy replica
-  command: ipa-replica-install
-           --setup-ca
-           --setup-kra
-           --admin-password={{ipa_admin_password}}
-           --no-host-dns
-           --mkhomedir
-           --no-ntp
-           --unattended
-           --no-ssh
-           --no-sshd
-           --skip-conncheck
-           --force-join
-           --log-file=/var/log/ipainstall.log
-           --domain={{ipa_realm}}
-           --server=ipa01{{ env_suffix }}.iad2.fedoraproject.org
-           creates=/etc/ipa/default.conf
+  - name: deploy replica
+    command: ipa-replica-install
+             --setup-ca
+             --setup-kra
+             --admin-password={{ipa_admin_password}}
+             --no-host-dns
+             --mkhomedir
+             --no-ntp
+             --unattended
+             --no-ssh
+             --no-sshd
+             --skip-conncheck
+             --force-join
+             --log-file=/var/log/ipainstall.log
+             --domain={{ipa_realm}}
+             --server=ipa01{{ env_suffix }}.iad2.fedoraproject.org
+             creates=/etc/ipa/default.conf
+    when: ansible_distribution_major_version|int >= 8
+  when: not ipa_initial and not replication_status.stat.exists
   tags:
   - ipa/server
   - config
-  when: not ipa_initial and ansible_distribution_major_version|int >= 8 and not replication_status.stat.exists
 
 - name: Disable rewrites
   copy: src=ipa-rewrite.conf dest=/etc/httpd/conf.d/ipa-rewrite.conf
