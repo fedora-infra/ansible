@@ -9,6 +9,14 @@ case $RESALLOC_NAME in
         subnets_ids="jp-tok-1:02e7-84755ffa-97bb-4067-b618-24c788c901cb jp-tok-2:02f7-98674f68-aae1-4ea1-a889-5a0b7a07f4b8 jp-tok-3:02g7-6d92562d-b868-411f-a962-99271d609ba6"
         zone=jp-tok
         ;;
+    *washington*)
+        vpc_id=r014-e90f14b0-a9c0-4c0b-bc81-207904b2d19e
+        security_group_id=r014-941706bd-062c-4d4c-9512-9a31b8f257d7
+        ssh_key_id=r014-fc1c1b90-5a7f-4cc6-a6d4-b273bd19be99
+        instance_type=cz2-2x4
+        subnets_ids="us-east-1:0757-df8209fd-e4e4-4659-bcca-b60c9eddfb35 us-east-2:0767-4cb7e11d-14db-48a8-9d1d-c59679112cd5 us-east-3:0777-bc697f15-4f13-4843-b338-d8950e3d23c0"
+        zone=us-east
+        ;;
     *)
         echo "Can't decide what location to assign from: $RESALLOC_NAME"
         exit 1

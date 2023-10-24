@@ -168,7 +168,7 @@ copr_p09_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
 {% endif %}
 {% endfor %}
 
-# Z Cloud instances
+# Z Cloud instances Tokyo
 copr_ibm_cloud_s390x_tokyo_{% if devel %}dev{% else %}prod{% endif %}:
   max: {{ builders.ibm_cloud_tokyo.s390x[0] }}
 {% if not devel %}
@@ -195,6 +195,36 @@ copr_ibm_cloud_s390x_tokyo_{% if devel %}dev{% else %}prod{% endif %}:
   reuse_opportunity_time: 90
   reuse_max_count: 8
   reuse_max_time: 1800
+
+
+# Z Cloud instances in Washington
+copr_ibm_cloud_s390x_washington_{% if devel %}dev{% else %}prod{% endif %}:
+  max: {{ builders.ibm_cloud_washington.s390x[0] }}
+{% if not devel %}
+  max_prealloc: {{ builders.ibm_cloud_washington.s390x[1] }}
+{% endif %}
+  max_starting: {{ builders.ibm_cloud_washington.s390x[2] }}
+  tags:
+    - copr_builder
+    - name: arch_noarch
+      priority: -30
+    - ibm_cloud
+    - washington
+{% if devel %}
+  tags_on_demand:
+{% endif %}
+    - arch_s390x
+    - arch_s390x_native
+  cmd_new: '/var/lib/resallocserver/resalloc_provision/ibm-cloud-vm create "$RESALLOC_NAME"'
+  cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
+  cmd_livecheck: "resalloc-check-vm-ip"
+  cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
+  cmd_list: "/var/lib/resallocserver/resalloc_provision/ibm-cloud-list-vms"
+  livecheck_period: 180
+  reuse_opportunity_time: 90
+  reuse_max_count: 8
+  reuse_max_time: 1800
+
 
 # Power9 VMs in openpower-controller.osuosl.org
 copr_osuosl_p09_{% if devel %}dev{% else %}prod{% endif %}:
