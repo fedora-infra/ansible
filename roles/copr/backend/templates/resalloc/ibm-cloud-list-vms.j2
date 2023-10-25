@@ -1,11 +1,14 @@
 #! /bin/bash
 
 case $RESALLOC_POOL_ID in
-    *tokyo*)
+    *s390x*tokyo*)
         zone=jp-tok
         ;;
+    *s390x*us_east*)
+        jp-tok
+        ;;
     *)
-        echo "Can't decide what location to assign from: $RESALLOC_POOL_ID"
+        echo "Can't decide what location to assign from pool id: '$RESALLOC_POOL_ID'"
         exit 1
         ;;
 esac
