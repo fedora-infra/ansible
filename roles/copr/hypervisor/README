@@ -1,38 +1,49 @@
 HOW TO SETUP A NEW HYPERVISOR
 =============================
 
-First make sure you understand how resalloc foniguration works (pools.yaml), and
-that the referenced scripts (like 'libvirt-new' and 'vm-delete') can can
-correctly identify the pool/hypervisor (those scripts likely need an update!) —
-and thus assign (and later remove) appropriate IPv6 addresses, swap volumes,
-etc.
+First make sure you understand how resalloc configuration works
+(pools.yaml contents and format), and that the referenced scripts (like
+'libvirt-new' and 'vm-delete') can correctly identify the pool/hypervisor
+(those scripts likely need to be updated when you are adding new
+hypervisor).  Especially check that the scripts can assign (and later
+remove) appropriate IPv6 addresses to builders, work with swap, etc.
 
-Before the groups/copr-hypervisor.yml is run against the new host, manually
-prepare the swap volume:
+Before the groups/copr-hypervisor.yml is run against the new host,
+manually prepare the disk layout.  Typically there are many disks we might
+be tempted to place everything into raid6, but this would be suboptimal!
+We do something like this instead (on each of those disks):
 
-  1. disable the small zram swap (Fedora hypervisors)
-        a) swapoff /dev/zram0
-        b) dnf remove zram-generator-defaults
-  2. remove old (small) swap, adjust this appropriately!
-        a) swapoff /dev/mapper/vg_guests-LogVol01
-        b) lvremove /dev/vg_guests/LogVol01
-  3. create a larger SWAP volume
-        a) lvcreate -L 300G vg_guests -n swap
-        b) mkswap -L swap /dev/mapper/vg_guests-swap
-        c) Note that this requires changing /etc/fstab, and then
-           /etc/sysconfig/grub, and
-        d) regenerating the /boot grub config
-           $ grub2-mkconfig -o /boot/grub2/grub.cfg
+sdd                      8:48   0 279.4G  0 disk
+├─sdd1                   8:49   0     8M  0 part
+├─sdd2                   8:50   0     1G  0 part
+│ └─md0                  9:0    0  1022M  0 raid1 /boot
+├─sdd3                   8:51   0    40G  0 part  [SWAP]
+├─sdd4                   8:52   0     1K  0 part
+├─sdd5                   8:53   0    10G  0 part
+│ └─md127                9:127  0    60G  0 raid6
+│   └─vg_server-root   253:0    0    32G  0 lvm   /
+└─sdd6                   8:54   0 228.4G  0 part
+  └─md126                9:126  0   1.8T  0 raid0
+    └─vg_guests-images 253:1    0   1.8T  0 lvm   /libvirt-images
 
-Manually create space for volumes/images:
+The layout description:
 
-  1. assign the rest of the volume group to images
-        a) lvcreate -n images -l 100%FREE vg_guests
-        b) mkfs.ext4 /dev/mapper/vg_guests-images -L vmvolumes
+  1. I.e. /boot (or efi) partition is on raid1 spread across all (even 10)
+     the disks.
+  2. There's SWAP partition, namely because if there are multiple SWAP
+     partitions, with the same priority mount option, kernel spreads the
+     swap use among all the partitions uniformly.
+  3. There's / partition, this can be on raid6 because we don't write to
+     that partition that often, and some redundancy is needed to not loose
+     the machine upon a disk failure.  We create `vg_server-root` LV on
+     the raid6 to ease potential future data movements to different disks.
+  4. There's the large 'raid0' which hosts `vg_guests-images` LV, which is
+     mounted on /libvirt-images for use by libvirt.  This is a read-write
+     intensive place, so raid0 helps us to speed things up.
 
 Manually create the br0 interface:
 
-  TODO: Not done by @praiskup but the infra team, TODO: add HOWTO
+  TODO: Not done by @praiskup but the infra team, we need a HOWTO!
 
 
 General VM requirements for builder VMs
@@ -46,6 +57,7 @@ General VM requirements for builder VMs
   - 32GB tmpfs mountpoint for /var/cache/mock
   - 140GB+ SWAP for tmpfs for mock root(s) => /var/lib/mock
 
+
 AMD hypervisors
 ===============
 
@@ -53,8 +65,6 @@ vmhost-x86-copr0[1-4].rdu-cc.fedoraproject.org
 
 - 256G RAM
 - 64 threads (2x16 cores, AMD EPYC 7302 16-Core Processor)
-- 2.6T+ storage
-- 300 G SWAP
 
 This brings us 32+ (few devel) overcommitted builders on each builder:
 
