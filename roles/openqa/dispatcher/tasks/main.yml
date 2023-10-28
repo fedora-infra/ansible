@@ -176,7 +176,7 @@
   package:
     name: ['fedora-messaging', 'python3-fedfind', 'python3-wikitcms', 'python3-openqa_client',
            'python3-requests', 'python3-resultsdb_api', 'python3-resultsdb_conventions-fedora',
-           'python3-setuptools', 'python3-six', 'python3-pip']
+           'python3-six', 'python3-pip']
     state: present
   tags:
   - packages
@@ -220,9 +220,7 @@
   check_mode: no
 
 - name: Install fedora_openqa
-  command: "python3 setup.py install"
-  args:
-    chdir: /root/fedora_openqa
+  command: "python3 -m pip install /root/fedora_openqa"
   when: "gittools is changed or insttools.rc != 0"
   notify:
   - restart openqa consumers
