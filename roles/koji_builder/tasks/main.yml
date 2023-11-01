@@ -384,3 +384,22 @@
   tags:
   - koji_builder
   - koji_builder/osbuildapi
+
+- name: create override dir for systemd-nspawn containers config
+  file:
+       state: directory
+       owner: root
+       group: root
+       mode: 0755
+       path: /etc/systemd/system/machine-.scope.d
+  when: inventory_hostname.startswith(('buildhw-a64'))
+  tags:
+  - koji_builder
+  - koji_builder/nspawn
+
+- name: create override config for systemd-nspawn containers to allow coredumps
+  template: src=nspawn-override.conf dest=/etc/systemd/system/machine-.scope.d/80-infra.conf mode=0644
+  when: inventory_hostname.startswith(('buildhw-a64'))
+  tags:
+  - koji_builder
+  - koji_builder/nspawn
