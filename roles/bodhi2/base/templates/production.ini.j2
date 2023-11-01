@@ -170,6 +170,7 @@ compose_stage_dir = /mnt/koji/compose/updates/
 #  * 'release': The Release being mashed.
 #  * 'request': The request being mashed.
 #  * 'updates': The Updates being mashed.
+#  * 'cr_config': The createrepo_c settings loaded from config file.
 #
 # NOTE: The jinja2 configuration for these templates replaces the {'s and }'s with ['s and ]'.
 # e.g.: a block becomes [% if <something %], and a variable is [[ varname ]].
@@ -197,6 +198,8 @@ pungi.extracmdline = --notification-script=/usr/bin/pungi-fedmsg-notification --
 # What to pass to Pungi's --label flag, which is metadata included in its composeinfo.json.
 # pungi.labeltype = Update
 
+# Path to the file with createrepo_c settings
+# createrepo_c_config = /etc/bodhi/createrepo_c.ini
 
 # The skopeo executable to use to copy container images.
 # You can put credentials for skopeo to use in $HOME/.docker/config.json

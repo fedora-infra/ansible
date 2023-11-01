@@ -88,6 +88,16 @@
   - bodhi
   - bodhi/pungi
   - config
+
+- name: Put createrepo_c configuration in place
+  copy:
+    src: createrepo_c.ini
+    dest: /etc/bodhi/createrepo_c.ini
+  tags:
+  - bodhi
+  - bodhi/pungi
+  - config
+
 #
 # koji ssl cert for owner sync jobs below
 #
