@@ -1,5 +1,12 @@
 ---
-{% macro aws(arch, max, max_starting, max_prealloc, spot=False, on_demand=none) %}
+
+# Note: higher priority pools are used first
+# default priority is 0
+# reserved instances in cloud has > 0
+# on-premise instance < 0
+# high performance instances <= 40
+
+{% macro aws(arch, max, max_starting, max_prealloc, spot=False, on_demand=none, priority=0) %}
 aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else %}prod{% endif %}:
 {% if not on_demand %}
     max: {{ max }}
@@ -11,9 +18,7 @@ aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot 
 {% endif %}
     tags:
     - name: copr_builder
-{% if arch == 'x86_64' %}
-      priority: {% if spot %}-5{% else %}-10{% endif +%}
-{% endif %}
+      priority: {{ priority }}
     - aws
 {% if arch == 'x86_64' %}
     - arch_x86_64
@@ -257,20 +262,42 @@ copr_osuosl_p09_{% if devel %}dev{% else %}prod{% endif %}:
   reuse_max_count: 8
   reuse_max_time: 1800
 
+#### AWS x_86_64
+# on-premise HV has priority 0 and above
+# AWS should have priority < 0 unless it is reserved instance for which we pay anyway
+
+# reserved instances
+{{ aws('x86_64', 1, 1, 1, priority=20 }}
+
+{{ aws('x86_64', builders.aws_spot.x86_64[0], builders.aws_spot.x86_64[1],
+       builders.aws_spot.x86_64[2], True, priority=-2) }}
+
 {{ aws('x86_64', builders.aws.x86_64[0], builders.aws.x86_64[1],
-       builders.aws.x86_64[2]) }}
+       builders.aws.x86_64[2], priority=-10 ) }}
+
+### AARCH 64 builders
+
+# reserved instance
+{{ aws('aarch64', 3, 2, 3, priority=20 }}
+
+{{ aws('aarch64', builders.aws_spot.aarch64[0], builders.aws_spot.aarch64[1],
+       builders.aws_spot.aarch64[2], spot=True, priority=-1) }}
 
 {{ aws('aarch64', builders.aws.aarch64[0], builders.aws.aarch64[1],
-       builders.aws.aarch64[2]) }}
+       builders.aws.aarch64[2]), priority=-5 }}
+
+
+#### High performance builders
+# priority should be less than any other normal builder. i.e., <= -40
 
 {{ aws('x86_64', builders.aws_spot.x86_64[0], builders.aws_spot.x86_64[1],
-       builders.aws_spot.x86_64[2], True) }}
+       builders.aws_spot.x86_64[2], spot=True, on_demand='powerful', priority=-40) }}
 
 {{ aws('aarch64', builders.aws_spot.aarch64[0], builders.aws_spot.aarch64[1],
-       builders.aws_spot.aarch64[2], True) }}
+       builders.aws_spot.aarch64[2], spot=True, on_demand='powerful', priority=-40) }}
 
 {{ aws('x86_64', builders.aws_spot.x86_64[0], builders.aws_spot.x86_64[1],
-       builders.aws_spot.x86_64[2], True, 'powerful') }}
+       builders.aws_spot.x86_64[2], on_demand='powerful', priority=-60) }}
 
 {{ aws('aarch64', builders.aws_spot.aarch64[0], builders.aws_spot.aarch64[1],
-       builders.aws_spot.aarch64[2], True, 'powerful') }}
+       builders.aws_spot.aarch64[2], on_demand='powerful', priority=-60) }}
