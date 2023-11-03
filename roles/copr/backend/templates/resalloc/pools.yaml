@@ -9,7 +9,7 @@
 # on-premise instance < 0
 # high performance instances <= 40
 
-{% macro aws(arch, max, max_starting, max_prealloc, spot=False, on_demand=none, priority=0, reserved=True) %}
+{% macro aws(arch, max, max_starting, max_prealloc, spot=False, on_demand=none, priority=0, reserved=False) %}
 aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot %}spot{% else %}normal{% endif %}{% if reserved %}reserved{% endif %}_{% if devel %}dev{% else %}prod{% endif %}:
 {% if not on_demand %}
     max: {{ max }}
