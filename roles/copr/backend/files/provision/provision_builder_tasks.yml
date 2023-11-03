@@ -14,7 +14,7 @@
     - "'osuosl' in lookup('env', 'RESALLOC_NAME')"
 
 - name: setup the hostname so we can easily identify the box
-  hostname: name="{{ lookup('env', 'RESALLOC_NAME') | default('unknown-builder') | replace('_', '-') }}"
+  hostname: name="{{ lookup('env', 'RESALLOC_NAME', default='unknown-builder') | replace('_', '-') }}"
   when: prepare_base_image is not defined
 
 - name: put infra repos into yum.repos.d
@@ -107,7 +107,7 @@
       --pool-id 8a85f9a17c71102f017ce611251c770f
       --user copr-team
       --pass "{{ copr_red_hat_subscription_password }}"
-      --system "{{ lookup('env', 'RESALLOC_NAME') | default('unknown-builder') }}"
+      --system "{{ lookup('env', 'RESALLOC_NAME', default='unknown-builder') | replace('_', '-')  }}"
   no_log: true
   when: prepare_base_image is not defined
 
