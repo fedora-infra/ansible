@@ -284,7 +284,7 @@ copr_osuosl_p09_{% if devel %}dev{% else %}prod{% endif %}:
        builders.aws_spot.aarch64[2], spot=True, priority=-1) }}
 
 {{ aws('aarch64', builders.aws.aarch64[0], builders.aws.aarch64[1],
-       builders.aws.aarch64[2]), priority=-5 }}
+       builders.aws.aarch64[2], priority=-5) }}
 
 
 #### High performance builders
