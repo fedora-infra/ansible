@@ -9,8 +9,8 @@
 # on-premise instance < 0
 # high performance instances <= 40
 
-{% macro aws(arch, max, max_starting, max_prealloc, spot=False, on_demand=none, priority=0) %}
-aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot %}spot{% else %}normal{% endif %}_{% if devel %}dev{% else %}prod{% endif %}:
+{% macro aws(arch, max, max_starting, max_prealloc, spot=False, on_demand=none, priority=0, reserved=True) %}
+aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot %}spot{% else %}normal{% endif %}{% if reserved %}reserved{% endif %}_{% if devel %}dev{% else %}prod{% endif %}:
 {% if not on_demand %}
     max: {{ max }}
     max_starting: {{ max_starting }}
@@ -270,7 +270,7 @@ copr_osuosl_p09_{% if devel %}dev{% else %}prod{% endif %}:
 # AWS should have priority < 0 unless it is reserved instance for which we pay anyway
 
 # reserved instances
-{{ aws('x86_64', 1, 1, 1, priority=20) }}
+{{ aws('x86_64', 1, 1, 1, priority=20, reserved=True) }}
 
 {{ aws('x86_64', builders.aws_spot.x86_64[0], builders.aws_spot.x86_64[1],
        builders.aws_spot.x86_64[2], True, priority=-2) }}
@@ -281,7 +281,7 @@ copr_osuosl_p09_{% if devel %}dev{% else %}prod{% endif %}:
 ### AARCH 64 builders
 
 # reserved instance
-{{ aws('aarch64', 3, 2, 3, priority=20) }}
+{{ aws('aarch64', 3, 2, 3, priority=20, reserved=True) }}
 
 {{ aws('aarch64', builders.aws_spot.aarch64[0], builders.aws_spot.aarch64[1],
        builders.aws_spot.aarch64[2], spot=True, priority=-1) }}
