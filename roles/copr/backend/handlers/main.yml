@@ -13,3 +13,6 @@
 
 - name: restart node_exporter
   action: service name=node_exporter state=restarted
+
+- name: restart resalloc
+  action: service name=resalloc state=restarted
