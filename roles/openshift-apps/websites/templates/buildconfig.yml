@@ -5,6 +5,7 @@ metadata:
   labels:
     environment: "websites"
 spec:
+  runPolicy: SerialLatestOnly
   failedBuildsHistoryLimit: 2
   successfulBuildsHistoryLimit: 1
   source:
