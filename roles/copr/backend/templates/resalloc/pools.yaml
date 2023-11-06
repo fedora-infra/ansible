@@ -304,3 +304,14 @@ copr_osuosl_p09_{% if devel %}dev{% else %}prod{% endif %}:
 
 {{ aws('aarch64', builders.aws_spot.aarch64[0], builders.aws_spot.aarch64[1],
        builders.aws_spot.aarch64[2], on_demand='powerful', priority=-60) }}
+
+
+#### Evacuate machines in older pools
+
+{% for poolname in ['aws_aarch64_reserved', 'aws_x86_64_spotreserved', 'aws_aarch64_spotreserved' %}
+{{ poolname }}_{% if devel %}dev{% else %}prod{% endif %}:
+    max: 0
+    cmd_new: /bin/true
+    cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
+    cmd_list: resalloc-aws-list
+{% endfor %}
