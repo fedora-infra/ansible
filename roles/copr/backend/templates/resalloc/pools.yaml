@@ -13,7 +13,7 @@
 aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot %}spot{% else %}normal{% endif %}{% if reserved %}reserved{% endif %}_{% if devel %}dev{% else %}prod{% endif %}:
 {% if on_demand %}
     max: 10
-    max_starting: 1
+    max_starting: 4
 {% elif reserved and devel %}
     max: 0
 {% else %}
