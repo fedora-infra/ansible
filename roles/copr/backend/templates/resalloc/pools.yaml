@@ -11,13 +11,15 @@
 
 {% macro aws(arch, max, max_starting, max_prealloc, spot=False, on_demand=none, priority=0, reserved=False) %}
 aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot %}spot{% else %}normal{% endif %}{% if reserved %}reserved{% endif %}_{% if devel %}dev{% else %}prod{% endif %}:
-{% if not on_demand %}
+{% if on_demand %}
+    max: 10
+    max_starting: 1
+{% elif reserved and devel %}
+    max: 0
+{% else %}
     max: {{ max }}
     max_starting: {{ max_starting }}
     max_prealloc: {{ max_prealloc }}
-{% else %}
-    max: 10
-    max_starting: 1
 {% endif %}
     tags:
     - name: copr_builder
