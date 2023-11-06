@@ -25,6 +25,7 @@ aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot 
     - name: copr_builder
       priority: {{ priority }}
     - aws
+    - arch_noarch
 {% if arch == 'x86_64' %}
     - arch_x86_64
     - arch_x86_64_native
@@ -36,7 +37,6 @@ aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot 
     - arch_i686_native
     - arch_armhfp
     - arch_armhfp_emulated
-    - arch_noarch
 {% else %}
     - arch_aarch64
     - arch_aarch64_native
