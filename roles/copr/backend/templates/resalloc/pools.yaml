@@ -308,7 +308,7 @@ copr_osuosl_p09_{% if devel %}dev{% else %}prod{% endif %}:
 
 #### Evacuate machines in older pools
 
-{% for poolname in ['aws_aarch64_reserved', 'aws_x86_64_spotreserved', 'aws_aarch64_spotreserved' %}
+{% for poolname in ['aws_aarch64_reserved', 'aws_x86_64_spotreserved', 'aws_aarch64_spotreserved'] %}
 {{ poolname }}_{% if devel %}dev{% else %}prod{% endif %}:
     max: 0
     cmd_new: /bin/true
