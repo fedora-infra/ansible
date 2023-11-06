@@ -532,9 +532,6 @@ handlers = ["console"]
         [consumer_config.ostree_refs."fedora/rawhide/aarch64/iot"]
         directory = "/mnt/fedora_koji/koji/compose/iot/repo/"
         key = "{{ (env == 'production')|ternary('fedora-40', 'testkey') }}"
-        [consumer_config.ostree_refs."fedora/rawhide/armhfp/iot"]
-        directory = "/mnt/fedora_koji/koji/compose/iot/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-40', 'testkey') }}"
         
         [consumer_config.ostree_refs."fedora/devel/x86_64/iot"]
         directory = "/mnt/fedora_koji/koji/compose/iot/repo/"
@@ -542,19 +539,13 @@ handlers = ["console"]
         [consumer_config.ostree_refs."fedora/devel/aarch64/iot"]
         directory = "/mnt/fedora_koji/koji/compose/iot/repo/"
         key = "{{ (env == 'production')|ternary('fedora-39', 'testkey') }}"
-        [consumer_config.ostree_refs."fedora/devel/armhfp/iot"]
-        directory = "/mnt/fedora_koji/koji/compose/iot/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-39', 'testkey') }}"
 
         [consumer_config.ostree_refs."fedora/stable/x86_64/iot"]
         directory = "/mnt/fedora_koji/koji/compose/iot/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-39', 'testkey') }}"
         [consumer_config.ostree_refs."fedora/stable/aarch64/iot"]
         directory = "/mnt/fedora_koji/koji/compose/iot/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-38', 'testkey') }}"
-        [consumer_config.ostree_refs."fedora/stable/armhfp/iot"]
-        directory = "/mnt/fedora_koji/koji/compose/iot/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-36', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-39', 'testkey') }}"
 
         [consumer_config.ostree_refs."fedora/37/x86_64/silverblue"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
