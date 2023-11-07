@@ -369,34 +369,42 @@ def set_koji_ownership(tag, namespace, packages, arches, verbose=False):
 
         for pkg in packages:
             owner = get_pagure_project_owner(namespace, pkg, verbose=verbose)
+            if (
+                namespace == 'flatpaks'
+                and not pkg.startswith('flatpak-')
+                and not pkg.endswith('-flatpak')
+            ):
+                koji_pkg = pkg + '-flatpak'
+            else
+                koji_pkg = pkg
             # When the user is created in fedora infra, they wont be added to koji
             # until they logged into koji for the first time
             # Set the owner to 'releng' until they logged into koji
             if not session.getUser(owner):
                 owner = 'releng'
-            if pkg not in koji_pkgs:
+            if koji_pkg not in koji_pkgs:
                 extra_arches = None
-                if pkg in EXTRA_ARCH_LIST:
-                    extra_arches = " ".join(EXTRA_ARCH_LIST[pkg])
+                if koji_pkg in EXTRA_ARCH_LIST:
+                    extra_arches = " ".join(EXTRA_ARCH_LIST[koji_pkg])
                 if verbose:
                     print('- Adding the package "{0}" to the package list for '
                           'the tag "{1}" on arch "{2}" and applicable extra '
-                          'arches'.format(pkg, tag, arch))
+                          'arches'.format(koji_pkg, tag, arch))
                 session.packageListAdd(
-                    tag, pkg, owner=owner, extra_arches=extra_arches)
-            elif koji_pkgs[pkg]['owner_name'] != owner:
+                    tag, koji_pkg, owner=owner, extra_arches=extra_arches)
+            elif koji_pkgs[koji_pkg]['owner_name'] != owner:
                 if verbose:
                     print('- Setting the owner on package "{0}" for the tag '
                           '"{1}" on arch "{2}"'
-                          .format(pkg, tag, arch))
+                          .format(koji_pkg, tag, arch))
                 try:
-                    session.packageListSetOwner(tag, pkg, owner, force=True)
+                    session.packageListSetOwner(tag, koji_pkg, owner, force=True)
                 except:
                     # Onwer is not added to koji yet, setting releng as owner
                     print('- Setting releng as owner on package "{0}" for the tag '
                           '"{1}" on arch "{2}"'
-                          .format(pkg, tag, arch))
-                    session.packageListSetOwner(tag, pkg, 'releng', force=True)
+                          .format(koji_pkg, tag, arch))
+                    session.packageListSetOwner(tag, koji_pkg, 'releng', force=True)
 
 
 
