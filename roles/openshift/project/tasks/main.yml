@@ -19,7 +19,7 @@
     dest=/etc/openshift_apps/{{app}}/project.yml
 
 - name: Create project
-  shell: oc apply -f /etc/openshift_apps/{{app}}/project.yml
+  shell: oc apply -f --validate=strict /etc/openshift_apps/{{app}}/project.yml
   when: "'not found' in project_exists.stderr"
 
 - name: deployer.yml
