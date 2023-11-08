@@ -19,6 +19,9 @@
 # along with Fedora Project Infrastructure Ansible Repository.  If
 # not, see <http://www.gnu.org/licenses/>.
 
+# Don’t create files named '*'.
+shopt -s nullglob
+
 export MSGTOPIC_PREFIX=logging.stats
 export MSGBODY_PRESET="loghost=$(hostname) run_id=$(uuidgen -r)"
 simple_message_to_bus combinehttplogs.start
