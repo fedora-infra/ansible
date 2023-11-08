@@ -160,10 +160,6 @@ kern.*						?r_kern;TraditionalFormat
 #                     MERGED  R E M O T E   L O G G I N G                          #
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#
 
-# forward to splunk host, over tls
-#*.* @@splunk-syslog.corp.redhat.com:6514
-#*.* @@10.31.20.29:6514
-
  $DefaultNetstreamDriverCAFile /etc/pki/tls/certs/2022-IT-Root-CA.pem
  *.* action(
      type="omfwd"
