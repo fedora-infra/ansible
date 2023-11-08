@@ -60,6 +60,13 @@
     - mod_ssl
   when: env == "production" and nagios_location == "external"
 
+- name: set sebooleans so nagios can talk to the certgetter01 for ssl certs
+  seboolean: name=httpd_can_network_connect
+             state=true
+             persistent=true
+  tags:
+  - nagios_server
+  - selinux
 
 # ## Copy over the httpd SSL certs for external
 # - name: Install the SSL cert so that we can use https
