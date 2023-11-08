@@ -373,9 +373,9 @@ def set_koji_ownership(tag, namespace, packages, arches, verbose=False):
                 namespace == 'flatpaks'
                 and not pkg.startswith('flatpak-')
                 and not pkg.endswith('-flatpak')
-            ):
+               ):
                 koji_pkg = pkg + '-flatpak'
-            else
+            else:
                 koji_pkg = pkg
             # When the user is created in fedora infra, they wont be added to koji
             # until they logged into koji for the first time
