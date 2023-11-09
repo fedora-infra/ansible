@@ -57,6 +57,7 @@
     proxyurl: http://localhost:10068
     keephost: true
     header_scheme: true
+    when: env == "production"
     tags: zabbix
 
   - role: httpd/reverseproxy
