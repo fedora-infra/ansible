@@ -12,7 +12,7 @@ db_backup_dir: ['/backups']
 dbs_to_backup:
   - koji
 effective_cache_size: "100GB"
-effective_io_concurrency: 0
+effective_io_concurrency: 1
 eth0_ipv4_gw: 10.3.169.254
 eth0_ipv4_ip: 10.3.169.103
 # kernel SHMMAX value
@@ -36,8 +36,9 @@ nrpe_procs_crit: 700
 # Large updates pushes cause lots of db threads doing the tag moves, so up this from default.
 #
 nrpe_procs_warn: 600
-num_cpus: 48
-shared_buffers: "30GB"
+num_cpus: 64
+shared_buffers: "48GB"
 swap: false
+temp_buffers: "32MB"
 vmhost: bvmhost-x86-01.iad2.fedoraproject.org
 volgroup: /dev/vg_guests
