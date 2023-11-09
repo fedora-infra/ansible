@@ -914,6 +914,13 @@
     cert_name: "{{wildcard_cert_name}}"
 
   - role: httpd/website
+    site_name: zabbix.fedoraproject.org
+    sslonly: true
+    #server_aliases: [zabbix.fedoraproject.org]
+    cert_name: "{{wildcard_cert_name}}"
+    tags: zabbix
+
+  - role: httpd/website
     site_name: zabbix.stg.fedoraproject.org
     sslonly: true
     #server_aliases: [zabbix.stg.fedoraproject.org]

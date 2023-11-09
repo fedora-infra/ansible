@@ -311,7 +311,7 @@ ALLOWHIDDENDIR=/etc/.java
 #
 # Allow the specified hidden files.
 # One file per line (use multiple ALLOWHIDDENFILE lines).
-# 
+#
 ALLOWHIDDENFILE=/usr/share/man/man1/..1.gz
 ALLOWHIDDENFILE=/usr/bin/.ssh-add.hmac
 ALLOWHIDDENFILE=/usr/bin/.ssh-agent.hmac
@@ -398,7 +398,7 @@ ALLOWDEVFILE=/dev/shm/sem.slapd*.stats
 {% if inventory_hostname in groups['retrace'] or inventory_hostname in groups['releng_compose'] or inventory_hostname in groups['releng_compose_stg'] %}
 ALLOWDEVFILE=/dev/shm/libpod_*
 {% endif %}
-{% if inventory_hostname in groups['dbserver'] or inventory_hostname in groups['dbserver_stg'] or inventory_hostname in groups['pkgs'] or inventory_hostname in groups['pagure'] or inventory_hostname in groups['pagure_stg'] or inventory_hostname in groups['zabbix_stg'] or inventory_hostname in groups['retrace'] %}
+{% if inventory_hostname in groups['dbserver'] or inventory_hostname in groups['dbserver_stg'] or inventory_hostname in groups['pkgs'] or inventory_hostname in groups['pagure'] or inventory_hostname in groups['pagure_stg'] or inventory_hostname in groups['zabbix'] or  inventory_hostname in groups['zabbix_stg'] or inventory_hostname in groups['retrace'] %}
 ALLOWDEVFILE=/dev/shm/PostgreSQL*
 {% endif %}
 
@@ -531,16 +531,16 @@ ALLOW_SYSLOG_REMOTE_LOGGING=1
 #
 APP_WHITELIST="sshd:4.3p2 sshd:5.2p1 httpd:2.2.3 httpd:2.2.13 php:5.1.6 named:9.3.6 openssl:0.9.8e php:5.2.6 named:9.3.6-P1"
 
-# 
+#
 # Scan for suspicious files in directories containing temporary files and
 # directories posing a relatively higher risk due to user write access.
 # Please do not enable by default as suspscan is CPU and I/O intensive and prone to
 # producing false positives. Do review all settings before usage.
 # Also be aware that running suspscan in combination with verbose logging on,
 # RKH's default, will show all ignored files.
-# Please consider adding all directories the user the (web)server runs as has 
+# Please consider adding all directories the user the (web)server runs as has
 # write access to including the document root (example: "/var/www") and log
-# directories (example: "/var/log/httpd"). 
+# directories (example: "/var/log/httpd").
 #
 # A space-separated list of directories to scan.
 #
@@ -562,7 +562,7 @@ SUSPSCAN_MAXSIZE=10240000
 #
 # Score threshold. Below this value no hits will be reported.
 # A value of "200" seems "good" after testing on malware. Please adjust
-# locally if necessary. 
+# locally if necessary.
 #
 SUSPSCAN_THRESH=200
 
