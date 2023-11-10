@@ -55,11 +55,6 @@
   - cloud
   - .ssh
 
-- name: add copr-buildsys keys to copr user path
-  copy: src="{{ item }}" dest=/home/copr/cloud/ owner=copr group=copr mode=0600
-  with_fileglob:
-   - "{{ private }}/files/openstack/copr-copr/*"
-
 - name: setup privkey for copr user
   copy: src="{{ private }}/files/copr/buildsys.priv" dest=/home/copr/.ssh/id_rsa owner=copr group=copr mode=600
 
