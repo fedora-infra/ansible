@@ -6,7 +6,6 @@
   vars_files:
    - /srv/web/infra/ansible/vars/global.yml
    - /srv/private/ansible/vars.yml
-   - /srv/private/ansible/files/openstack/passwords.yml
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
@@ -51,7 +50,6 @@
   vars_files:
    - /srv/web/infra/ansible/vars/global.yml
    - /srv/private/ansible/vars.yml
-   - /srv/private/ansible/files/openstack/passwords.yml
    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   # Roles are run first, before tasks, regardless of where you place them here.
