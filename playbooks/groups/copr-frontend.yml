@@ -50,7 +50,6 @@
 
   roles:
    - base
-   - { role: sudo, sudoers: "{{ private }}/files/sudo/copr-sudoers", when: devel|bool }
    - nagios_client
    - copr/copr-devel-server
    - copr/frontend
