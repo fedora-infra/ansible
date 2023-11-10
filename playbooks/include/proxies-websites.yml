@@ -1173,3 +1173,11 @@
     cert_name: "{{wildcard_cert_name}}"
     tags:
     - directory
+
+  - role: httpd/website
+    site_name: discussions.fedoraproject.org
+    ssl: true
+    sslonly: true
+    cert_name: "{{wildcard_cert_name}}"
+    tags:
+    - discussion

@@ -870,3 +870,11 @@
     target: https://fedoraproject.org/cloud/
     tags:
     - cloud
+
+  - role: httpd/redirectmatch
+    shortname: 00-discussion-redirect
+    website: discussions.fedoraproject.org
+    regex: ^.*
+    target: https://discussion.fedoraproject.org
+    tags:
+    - discussion
