@@ -98,7 +98,8 @@
     - stat: path={{ private_key_file }}
       register: key_stat
 
-    - shell: 'ssh-keygen -b 4096 -t rsa -q -N "" -f {{ private_key_file }}'
+    - name: create ssh keypair for password-less connection to nested-VMs
+      shell: 'ssh-keygen -b 4096 -t rsa -q -N "" -f {{ private_key_file }}'
       when: not key_stat.stat.exists
 
 #    - name: install composer packages
