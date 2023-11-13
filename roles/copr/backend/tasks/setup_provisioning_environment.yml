@@ -61,7 +61,6 @@
     src: "{{ roles_path }}/copr/backend/templates/provision/{{ item }}"
     dest: "{{ provision_directory }}/{{ item }}"
   with_items:
-  - nova_cloud_vars.yml
   - aws_cloud_vars.yml
   tags:
   - provision_config
