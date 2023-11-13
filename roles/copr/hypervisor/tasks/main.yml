@@ -144,7 +144,7 @@
   with_file:
   - buildsys.pub
 
-- name: add root keys for sysadmin-main and other allowed users
+- name: add @copr keys for sysadmin-main and other allowed users
   authorized_key: user=copr key="{{ item }}"
   with_lines:
   - "{{ auth_keys_from_fas }} @sysadmin-copr"
