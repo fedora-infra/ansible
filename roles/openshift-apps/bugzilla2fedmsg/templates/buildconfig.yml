@@ -15,7 +15,7 @@ spec:
       from:
         kind: ImageStreamTag
         namespace: openshift
-        name: python:3.6
+        name: python:3.9-ubi8
   triggers:
   - type: ImageChange
   - type: ConfigChange
