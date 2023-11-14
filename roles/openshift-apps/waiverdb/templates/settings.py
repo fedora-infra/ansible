@@ -15,6 +15,7 @@ MESSAGE_BUS_PUBLISH = True
 AUTH_METHOD = 'OIDC'
 OIDC_CLIENT_SECRETS = '/etc/secret/client_secrets.json'
 OIDC_USERNAME_FIELD = 'sub'
+OIDC_OVERWRITE_REDIRECT_URI = '{{ waiverdb_oidc_overwrite_redirect_uri }}'
 PREFERRED_URL_SCHEME='https'
 SUPERUSERS = ['bodhi@service']
 PORT = 8080
