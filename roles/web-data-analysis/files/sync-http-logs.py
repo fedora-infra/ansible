@@ -119,7 +119,7 @@ def sync_http_logs(synced_host):
             return
         raise
 
-    log.info("Started sync from %s.", synced_host)
+    # log.info("Started sync from %s.", synced_host)
     send_sync_msg("sync.host.start", synced_host=synced_host)
 
     for days_in_past in range(1, DAYS_TO_FETCH + 1):
@@ -138,13 +138,13 @@ def sync_http_logs(synced_host):
         target_dir_undated.mkdir(parents=True, exist_ok=True)
         target_dir_dated.mkdir(exist_ok=True)
 
-        log.info(
-            "... host %s, log date %s, seeding dated logfiles from undated", synced_host, log_date
-        )
+        # log.info(
+        #     "log.info %s, log date %s, seeding dated logfiles from undated", synced_host, log_date
+        # )
         seed_dated_logfiles(date, target_dir_undated, target_dir_dated)
 
         for attempt in range(1, RETRY_ATTEMPTS + 1):
-            log.info("... host %s, log date %s, attempt %d", synced_host, log_date, attempt)
+            # log.info("... host %s, log date %s, attempt %d", synced_host, log_date, attempt)
             try:
                 exitcode = subprocess.call(
                     RSYNC_CMD + [f"{synced_host}::log/httpd/*{date_str}*", str(target_dir_dated)],
@@ -169,16 +169,16 @@ def sync_http_logs(synced_host):
                     )
                 send_sync_msg(topic, synced_host=synced_host, log_date=log_date, reason=reason)
 
-        log.info(
-            "... host %s, log date %s, linking back undated logfiles from dated",
-            synced_host,
-            log_date,
-        )
+        # log.info(
+        #     "... host %s, log date %s, linking back undated logfiles from dated",
+        #     synced_host,
+        #     log_date,
+        # )
         link_back_undated_logfiles(date, target_dir_dated, target_dir_undated)
 
         send_sync_msg("sync.host.logdate.finish", synced_host=synced_host, log_date=log_date)
 
-    log.info(f"Finished sync from {synced_host}.")
+    # log.info(f"c{synced_host}.")
     send_sync_msg("sync.host.finish", synced_host=synced_host)
 
 
