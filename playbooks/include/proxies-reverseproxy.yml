@@ -128,14 +128,6 @@
 
   - role: httpd/reverseproxy
     website: apps.fedoraproject.org
-    destname: nuancier
-    localpath: /nuancier
-    remotepath: /nuancier
-    header_scheme: true
-    proxyurl: "{{ varnish_url }}"
-
-  - role: httpd/reverseproxy
-    website: apps.fedoraproject.org
     destname: github2fedmsg
     localpath: /github2fedmsg
     remotepath: /github2fedmsg

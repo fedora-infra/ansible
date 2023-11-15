@@ -42,11 +42,6 @@ sub vcl_init {
   fas.add_backend(fas01);
 }
 
-backend nuancier {
-    .host = "localhost";
-    .port = "10035";
-}
-
 backend mirrormanager {
     .host = "localhost";
     .port = "10008";
@@ -212,19 +207,6 @@ sub vcl_recv {
         if (req.url ~ "^/kerneltest") {
             set req.backend_hint = kerneltest;
             if (req.url ~ "^/kerneltest/static/") {
-                unset req.http.cookie;
-                set req.http.clear-cookies = "yes";
-                set req.url = regsub(req.url, "\?.*", "");
-            }
-        }
-        if (req.url ~ "^/nuancier") {
-            set req.backend_hint = nuancier;
-            if (req.url ~ "^/nuancier/static/") {
-                unset req.http.cookie;
-                set req.http.clear-cookies = "yes";
-                set req.url = regsub(req.url, "\?.*", "");
-            }
-            if (req.url ~ "^/nuancier/cache/") {
                 unset req.http.cookie;
                 set req.http.clear-cookies = "yes";
                 set req.url = regsub(req.url, "\?.*", "");

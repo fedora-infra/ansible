@@ -248,13 +248,6 @@ define service {
   use                   websitetemplate
 }
 
-define service {
-  hostgroup_name        nuancier
-  service_description   http-apps.fedoraproject.org-nuancier
-  check_command         check_website!localhost!/nuancier!Nuancier
-  use                   websitetemplate
-}
-
 #define service {
 #  hostgroup_name	packages
 #  service_description	http-packages-internal
