@@ -21,5 +21,5 @@ postfix_transport_filename: transports.smtp-auth
 primary_auth_source: ipa
 # for systems that do not match the above - specify the same parameter in
 # the host_vars/$hostname file
-tcp_ports: [25]
+tcp_ports: [25, 587]
 vpn: true
