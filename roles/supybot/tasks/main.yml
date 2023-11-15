@@ -5,20 +5,6 @@
   - supybot-fedora
   - supybot-koji
   - supybot-notify
-  - supybot-pinglists
-  - supybot-fedmsg
-  - packagedb-cli
-  - python-simplejson
-  when: inventory_hostname.startswith('value01')
-  tags: supybot
-
-- name: install limnoria package
-  package: name={{ item }} state=present enablerepo=epel-testing
-  with_items:
-  - limnoria
-  - supybot-fedora
-  - supybot-koji
-  - supybot-notify
   - supybot-meetbot
   - python3-sgmllib3k
   when: inventory_hostname.startswith('value02')
@@ -56,7 +42,7 @@
     minute: "0"
     user: apache
     job: "/usr/local/bin/meetings_by_team.sh"
-    state: "{{ 'present' if inventory_hostname.startswith('value01') else 'absent' }}"
+    state: "{{ 'present' if inventory_hostname.startswith('value02') else 'absent' }}"
   tags: supybot
 
 - name: setup archive script
@@ -70,9 +56,9 @@
     minute: "30"
     user: apache
     job: "/usr/local/bin/archive.sh >& /dev/null"
-    state: "{{ 'present' if inventory_hostname.startswith('value01') else 'absent' }}"
+    state: "{{ 'present' if inventory_hostname.startswith('value02') else 'absent' }}"
   tags: supybot
-  when: inventory_hostname.startswith('value01')
+  when: inventory_hostname.startswith('value02')
 
 - name: setup meetbot.conf apache config
   copy: src=meetbot.conf dest=/etc/httpd/conf.d/meetbot.conf mode=644
