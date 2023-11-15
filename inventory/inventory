@@ -293,26 +293,6 @@ noc01.iad2.fedoraproject.org
 [noc_rdu_cc]
 cloud-noc-os01.rdu-cc.fedoraproject.org
 
-[notifs:children]
-notifs_backend
-notifs_web
-
-[notifs_stg:children]
-notifs_backend_stg
-notifs_web_stg
-
-[notifs_backend]
-notifs-backend01.iad2.fedoraproject.org
-
-[notifs_backend_stg]
-notifs-backend01.stg.iad2.fedoraproject.org
-
-[notifs_web]
-notifs-web01.iad2.fedoraproject.org
-
-[notifs_web_stg]
-notifs-web01.stg.iad2.fedoraproject.org
-
 [memcached]
 memcached01.iad2.fedoraproject.org
 
@@ -681,8 +661,6 @@ memcached01.stg.iad2.fedoraproject.org
 mm-backend01.stg.iad2.fedoraproject.org
 mm-crawler01.stg.iad2.fedoraproject.org
 mm-frontend01.stg.iad2.fedoraproject.org
-notifs-backend01.stg.iad2.fedoraproject.org
-notifs-web01.stg.iad2.fedoraproject.org
 odcs-backend01.stg.iad2.fedoraproject.org
 odcs-frontend01.stg.iad2.fedoraproject.org
 os-control01.stg.iad2.fedoraproject.org
@@ -806,7 +784,6 @@ badges_backend
 busgateway
 fedimg
 mbs_backend
-notifs_backend
 pkgs
 
 [fedmsg_hubs_stg:children]
@@ -814,7 +791,6 @@ badges_backend_stg
 busgateway_stg
 fedimg_stg
 mbs_backend_stg
-notifs_backend_stg
 pkgs_stg
 
 [fedmsg_ircs:children]
@@ -853,10 +829,6 @@ fedmsg_gateways_stg
 [python34_fedmsg:children]
 mailman
 #mailman_stg
-notifs_backend
-notifs_web
-notifs_backend_stg
-notifs_web_stg
 
 ## END fedmsg services
 
@@ -1159,7 +1131,6 @@ mailman01.iad2.fedoraproject.org
 people02.fedoraproject.org
 pagure02.fedoraproject.org
 pkgs01.iad2.fedoraproject.org
-notifs-web01.iad2.fedoraproject.org
 #wiki01.iad2.fedoraproject.org
 
 [nfs_servers]
@@ -1227,7 +1198,6 @@ mbs
 memcached
 mm
 nagios_iad2
-notifs
 oci_registry
 odcs
 openqa
