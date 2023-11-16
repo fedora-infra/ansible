@@ -177,7 +177,9 @@
     # This will clean the previous installation and allows
     # the replica to be deployed.
   - name: clean client installation
-    command: ipa-server-install --uninstall
+    command: ipa-server-install
+             --uninstall
+             --unattended
     when: ansible_distribution_major_version|int >= 9
 
   - name: deploy replica
