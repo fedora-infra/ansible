@@ -8,8 +8,8 @@
       apiVersion: v1
       kind: LimitRange
       metadata:
-        name: "{{ communishift_project_name }}-limitrange"
-        namespace: "{{ communishift_project_name }}"
+        name: "{{ item.value.name }}-limitrange"
+        namespace: "{{ item.value.name }}"
       spec:
         limits:
           - default:

@@ -8,8 +8,8 @@
       apiVersion: v1
       kind: ResourceQuota
       metadata:
-        name: "{{ communishift_project_name }}-quota"
-        namespace: "{{ communishift_project_name }}"
+        name: "{{ item.value.name }}-quota"
+        namespace: "{{ item.value.name }}"
       spec:
         hard:
           cpu: "{{ item.value.cpu_requests | 1 }}" # requests.cpu

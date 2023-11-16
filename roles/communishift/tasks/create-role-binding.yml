@@ -8,8 +8,8 @@
       apiVersion: rbac.authorization.k8s.io/v1
       kind: RoleBinding
       metadata:
-        name: "{{ communishift_project_name }}-group-rolebinding"
-        namespace: "{{ communishift_project_name }}"
+        name: "{{ item.value.name }}-group-rolebinding"
+        namespace: "{{ item.value.name }}"
       roleRef:
         apiGroup: rbac.authorization.k8s.io
         kind: ClusterRole
@@ -17,7 +17,7 @@
       subjects:
         - apiGroup: rbac.authorization.k8s.io
           kind: Group
-          name: "{{ communishift_project_name }}-admins"
+          name: "{{ item.value.name }}-admins"
 
 - name: Create a k8s RoleBinding for storage permissions
   community.okd.k8s:
@@ -28,13 +28,13 @@
       apiVersion: rbac.authorization.k8s.io/v1
       kind: RoleBinding
       metadata:
-        name: "{{ communishift_project_name }}-efs-rolebinding"
-        namespace: "{{ communishift_project_name }}"
+        name: "{{ item.value.name }}-efs-rolebinding"
+        namespace: "{{ item.value.name }}"
       roleRef:
         apiGroup: rbac.authorization.k8s.io
         kind: Role
-        name: "{{ communishift_project_name }}-efs-role"
+        name: "{{ item.value.name }}-efs-role"
       subjects:
         - apiGroup: rbac.authorization.k8s.io
           kind: Group
-          name: "{{ communishift_project_name }}-admins"
+          name: "{{ item.value.name }}-admins"

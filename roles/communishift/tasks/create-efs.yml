@@ -5,10 +5,10 @@
     aws_secret_key: "{{ communishift_efs_secret_key }}"
     region: "{{ communishift_region }}"
     state: present
-    name: "{{ communishift_project_name }}"
+    name: "{{ item.value.name }}"
     tags:
-      Name: "{{ communishift_project_name }}"
-      communishift: "{{ communishift_project_name }}"
+      Name: "{{ item.value.name }}"
+      communishift: "{{ item.value.name }}"
     targets:
       - subnet_id: "{{ communishift_subnet_id }}"
         security_groups: ["{{ communishift_security_group }}"]
@@ -22,7 +22,7 @@
 
 - name: Create the EFS AccessPoint
   communishift_storage_efs:
-    project_name: "{{ communishift_project_name }}"
+    project_name: "{{ item.value.name }}"
     aws_access_key_id: "{{ communishift_efs_access_key }}"
     aws_secret_access_key: "{{ communishift_efs_secret_key }}"
     aws_region: "{{ communishift_region }}"

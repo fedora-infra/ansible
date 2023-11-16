@@ -49,7 +49,7 @@ author:
 EXAMPLES = r"""
 - name: Create the EFS AccessPoint
   communishift_storage_efs:
-    project_name: "{{ communishift_project_name }}"
+    project_name: "{{ item.value.name }}"
     aws_access_key_id: "{{ communishift_efs_access_key }}"
     aws_secret_access_key: "{{ communishift_efs_secret_key }}"
     aws_region: "{{ communishift_region }}"
