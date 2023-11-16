@@ -170,8 +170,11 @@
              --log-file=/var/log/ipainstall.log
              --dirsrv-config-file=/root/ldif/replica-install.ldif
              /root/ipa_replica_{{inventory_hostname}}.gpg
-             creates=/etc/ipa/default.conf
     when: ansible_distribution_major_version|int < 8
+  when: not ipa_initial and replication_status.rc > 0
+  tags:
+  - ipa/server
+  - config
 
   - name: deploy replica
     command: ipa-replica-install
@@ -190,7 +193,6 @@
              --domain={{ipa_realm}}
              --server=ipa01{{ env_suffix }}.iad2.fedoraproject.org
              --dirsrv-config-file=/root/ldif/replica-install.ldif
-             creates=/etc/ipa/default.conf
     when: ansible_distribution_major_version|int >= 8
   when: not ipa_initial and replication_status.rc > 0
   tags:
