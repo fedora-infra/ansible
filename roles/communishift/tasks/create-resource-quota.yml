@@ -12,11 +12,11 @@
         namespace: "{{ communishift_project_name }}"
       spec:
         hard:
-          cpu: "1" # requests.cpu
-          memory: "1Gi" # requests.memory
-          limits.cpu: "1"
-          limits.memory: "2Gi"
-          requests.storage: "5Gi"
+          cpu: "{{ item.value.cpu_requests | 1 }}" # requests.cpu
+          memory: "{{ item.value.memory_requests | 1Gi }}" # requests.memory
+          limits.cpu: "{{ item.value.cpu_limits | 1 }}"
+          limits.memory: "{{ item.value.memory_limits | 2Gi }}"
+          requests.storage: "{{ item.value.storage_requests | 5Gi }}"
           persistentvolumeclaims: "1"
           pods: "2"
           replicationcontrollers: 1

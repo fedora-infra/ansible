@@ -33,6 +33,26 @@ br0_nm: 255.255.255.0
 br1_nm: 255.255.255.0
 # assume collectd apache
 collectd_apache: true
+# communishift project resource overrides
+communishift_projects:
+  communishift-dev-test:
+    name: communishift-dev-test
+  communishift-fedora-review-service:
+    name: communishift-fedora-review-service
+  communishift-lightspeed-build:
+    name: communishift-lightspeed-build
+  communishift-log-detective:
+    name: communishift-log-detective
+  communishift-mattdm:
+    name: communishift-mattdm
+  communishift-openscanhub:
+    name: communishift-openscanhub
+    cpu_requests: 2
+    memory_requests: 2Gi
+    cpu_limits: 2
+    memory_limits: 4Gi
+  communishift-planet:
+    name: communishift-planet
 # true or false if we are or are not a copr build virthost.
 # Default to false
 copr_build_virthost: false

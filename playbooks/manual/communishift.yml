@@ -32,10 +32,7 @@
         apply:
           tags:
             - create_efs
-      vars:
-        communishift_project_name: "{{ outer_item }}"
-      loop_control:
-        loop_var: outer_item
+      loop: "{{ lookup('dict', communishift_projects) }}"
   vars:
     communishift_package_list:
       - kubernetes
