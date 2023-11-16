@@ -118,6 +118,7 @@
 - name: determine whether we need to set up replication
   shell: ipactl status
   register: replication_status
+  ignore_errors: true
   tags:
   - ipa/server
   - config
