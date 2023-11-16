@@ -287,13 +287,6 @@ define service {
 ## Internal services
 
 define service {
-  host_name             value01.iad2.fedoraproject.org
-  service_description   http-møte
-  check_command         check_website!localhost!/!møte
-  use                   websitetemplate
-}
-
-define service {
   hostgroup_name        koji
   service_description   http-koji
   check_command         check_website!koji.fedoraproject.org!/koji/hosts!fedoraproject.org
