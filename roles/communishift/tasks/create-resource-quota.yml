@@ -12,11 +12,11 @@
         namespace: "{{ item.value.name }}"
       spec:
         hard:
-          cpu: "{{ item.value.cpu_requests | 1 }}" # requests.cpu
-          memory: "{{ item.value.memory_requests | 1Gi }}" # requests.memory
-          limits.cpu: "{{ item.value.cpu_limits | 1 }}"
-          limits.memory: "{{ item.value.memory_limits | 2Gi }}"
-          requests.storage: "{{ item.value.storage_requests | 5Gi }}"
+          cpu: "{{ item.value.cpu_requests | default("1") }}" # requests.cpu
+          memory: "{{ item.value.memory_requests | default("1Gi") }}" # requests.memory
+          limits.cpu: "{{ item.value.cpu_limits | default("1") }}"
+          limits.memory: "{{ item.value.memory_limits | default("2Gi") }}"
+          requests.storage: "{{ item.value.storage_requests | default("5Gi" }}"
           persistentvolumeclaims: "1"
           pods: "2"
           replicationcontrollers: 1
