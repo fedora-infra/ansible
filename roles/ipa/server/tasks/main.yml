@@ -110,8 +110,13 @@
   - ipa/server
   - config
 
+  # ipactl status has return code > 0 when the IPA is not set up yet
+  # even if the client is already installed
+  # Previously we checked in /etc/ipa/default.conf exists, but this
+  # is already created in ipa/client role so the replica never
+  # started
 - name: determine whether we need to set up replication
-  stat: path=/etc/ipa/default.conf
+  shell: ipactl status
   register: replication_status
   tags:
   - ipa/server
@@ -186,7 +191,7 @@
              --dirsrv-config-file=/root/ldif/replica-install.ldif
              creates=/etc/ipa/default.conf
     when: ansible_distribution_major_version|int >= 8
-  when: not ipa_initial and not replication_status.stat.exists
+  when: not ipa_initial and replication_status.rc > 0
   tags:
   - ipa/server
   - config
