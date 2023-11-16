@@ -23,7 +23,7 @@
     - "postfix/master.cf/master.cf.{{ host_group }}"
     - "postfix/master.cf/master.cf.{{ postfix_group }}"
     - "postfix/master.cf/master.cf"
-  when: inventory_hostname.startswith(('smtp-mm', 'mailman', 'noc02', 'bastion'))
+  when: inventory_hostname.startswith(('smtp-mm', 'mailman', 'noc02', 'bastion', 'smtp-auth'))
   notify:
   - restart postfix
   tags:
