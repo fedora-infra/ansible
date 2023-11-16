@@ -172,6 +172,14 @@
              /root/ipa_replica_{{inventory_hostname}}.gpg
     when: ansible_distribution_major_version|int < 8
 
+    # The ipa-client-install makes the ipa-replica-install fail
+    # on RHEL 9 with: "Your system is partly configured."
+    # This will clean the previous installation and allows
+    # the replica to be deployed.
+  - name: clean client installation
+    command: ipa-server-install --uninstall
+    when: ansible_distribution_major_version|int >= 9
+
   - name: deploy replica
     command: ipa-replica-install
              --setup-ca
