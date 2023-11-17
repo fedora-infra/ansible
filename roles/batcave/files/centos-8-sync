@@ -9,17 +9,7 @@ CENT_EXCLUDES="--exclude=isos --exclude=kickstart --exclude=s390x"
 
 SERVER=centos-master01.iad2.fedoraproject.org
 
-## Mirror regular CentOS-8
-
-RSYNC_DESTDIR=/mnt/fedora/app/fi-repo/centos/centos-8/
-RSYNC_MOD="CentOS-community-cage/centos/8/"
-
-mkdir -p ${RSYNC_DESTDIR}
-
-
-${RSYNC} ${RS_OPT} ${RS_DEADLY} ${CENT_EXCLUDES} ${SERVER}::${RSYNC_MOD} ${RSYNC_DESTDIR}
-
-## Now mirror CentOS-8 Stream
+## Mirror CentOS-8-Stream
 
 RSYNC_DESTDIR=/mnt/fedora/app/fi-repo/centos/centos-8-stream/
 RSYNC_MOD="CentOS-community-cage/centos/8-stream/"
@@ -28,4 +18,3 @@ mkdir -p ${RSYNC_DESTDIR}
 
 
 ${RSYNC} ${RS_OPT} ${RS_DEADLY} ${CENT_EXCLUDES} ${SERVER}::${RSYNC_MOD} ${RSYNC_DESTDIR}
-
