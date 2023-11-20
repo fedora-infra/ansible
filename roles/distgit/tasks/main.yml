@@ -218,6 +218,12 @@
   tags:
   - distgit
 
+- name: Schedule the script to get retired packages
+  copy: src="retired-packages.cron" dest="/etc/cron.d/retired-packages.cron" mode=755 owner=root group=root
+  when: inventory_hostname.startswith('pkgs01.stg.iad2')
+  tags:
+  - distgit
+
 - name: install the two scripts needed for mass-branching
   copy: src={{item}} dest=/usr/local/bin/{{item}} owner=root group=root mode=0755
   with_items:
