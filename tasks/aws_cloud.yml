@@ -23,7 +23,6 @@
   register: hostkey
   loop:
     - rsa
-    - ecdsa
     - ed25519
   when: birthday is defined
 
