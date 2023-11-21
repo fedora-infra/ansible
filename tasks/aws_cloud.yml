@@ -63,7 +63,7 @@
     state: absent
   loop: "{{ found_ssh_certs.files }}"
   when:
-    - found_ssh_certs is success
+    - found_ssh_certs is not skipped
 
 # from https://github.com/praiskup/ansible-role-fix-root-ssh
 - name: allow root ssh connections
