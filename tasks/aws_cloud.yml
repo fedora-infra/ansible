@@ -18,6 +18,18 @@
   - /root/.ssh/known_hosts
   when: birthday is defined
 
+- name: birthday=on - drop other known host entries
+  local_action: known_hosts path={{ item.0 }}
+                host={{ item.1 }}
+                state=absent
+  with_nested:
+    - [/root/.ssh/known_hosts]
+    - "{{ additional_known_hosts_cleanup[inventory_hostname] }}"
+
+  when:
+    - additional_known_hosts_cleanup is defined
+    - additional_known_hosts_cleanup[inventory_hostname] is defined
+
 - name: gather the temporary ssh host key from the new instance
   local_action: command ssh-keyscan -t {{ item }} {{ inventory_hostname }}
   register: hostkey

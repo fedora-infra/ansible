@@ -1,9 +1,12 @@
 # Put here configuration for all copr instances (production, devel, ...)
 ---
-
 postfix_group: copr
 postfix_maincf: postfix/main.cf/main.cf.copr_smtp_auth_relay
 #TODO: tamplatize main.cf
 smtp_auth_relay_host: smtp-auth-cc-rdu01.fedoraproject.org
 smtp_auth_relay_user: copr@fedoraproject.org
 smtp_auth_relay_password: "{{ copr_smtp_password }}"
+
+additional_known_hosts_cleanup:
+    copr-be-dev.aws.fedoraproject.org:
+        - copr-be-dev-temp.aws.fedoraproject.org
