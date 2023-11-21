@@ -46,6 +46,25 @@
     - "{{ hostkey.results }}"
   when: birthday is defined
 
+- name: find old signatures done against the other hostname
+  find:
+    paths: /etc/ssh
+    file_type: file
+    patterns: "ssh_host_*_key-cert.pub"
+  register: found_ssh_certs
+  when:
+    - birthday is defined
+    - additional_known_hosts_cleanup is defined
+    - additional_known_hosts_cleanup[inventory_hostname] is defined
+
+- name: remove old signed certificates
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ found_ssh_certs.files }}"
+  when:
+    - found_ssh_certs is success
+
 # from https://github.com/praiskup/ansible-role-fix-root-ssh
 - name: allow root ssh connections
   lineinfile:
