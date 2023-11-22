@@ -1,5 +1,11 @@
 #!/bin/bash
 
+
+# This scripts is used to send messages to the Fedora message bus. It will catch problems with
+# actually sending the underlying message so that other scripts using it continue regardless.
+
+set +e
+
 # To set a common prefix for all messages, do `export MSGTOPIC_PREFIX=...` in callers.
 if [ -n "$MSGTOPIC_PREFIX" -a "${MSGTOPIC_PREFIX%.}" = "$MSGTOPIC_PREFIX" ]; then
     MSGTOPIC_PREFIX="${MSGTOPIC_PREFIX}."
@@ -31,6 +37,6 @@ for body_piece in $MSGBODY_PRESET "$@"; do
 done
 body="${body}}"
 
-fedora-messaging publish - << EOF >/dev/null
+fedora-messaging publish - << EOF >/dev/null || :
 {"body": ${body}, "headers": {"fedora_messaging_schema": "base.message", "fedora_messaging_severity": 20, "sent-at": "${sent_at}"}, "id": "${id}", "queue": "queue", "topic": "${topic}"}
 EOF

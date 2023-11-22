@@ -37,7 +37,10 @@ log = logging.getLogger(__name__)
 
 def send_bus_msg(topic, **kwargs):
     msg = message.Message(topic=f"{MSGTOPIC_PREFIX}.{topic}", body=kwargs)
-    api.publish(msg)
+    try:
+        api.publish(msg)
+    except Exception as exc:
+        log.warning("Can’t send message to the bus: %s, %s", msg, exc)
 
 
 def send_sync_msg(topic, **kwargs):
