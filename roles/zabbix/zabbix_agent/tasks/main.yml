@@ -67,6 +67,14 @@
     owner: zabbix
     group: zabbix
 
+- name: Ensuring we have a directory to put zabbix logs
+  file:
+    state: directory
+    path: /var/log/zabbix
+    mode: 0770
+    owner: zabbix
+    group: zabbix
+
 - name: Adding some other conf files under zabbix_agentd.d
   template:
     src: "{{ item }}.j2"
