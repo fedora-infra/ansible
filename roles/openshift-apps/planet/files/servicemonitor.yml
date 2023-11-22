@@ -1,0 +1,13 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    monitoring-key: 'cpe'
+  name: planet-service
+spec:
+  endpoints:
+    - path: /metrics
+      port: web
+  selector:
+    matchLabels:
+      app: planet
