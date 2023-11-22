@@ -243,7 +243,7 @@
   assert:
     that:
       - ansible_memory_mb.swap.free + ansible_memory_mb.real.free >= 1024 * 140
-    fail_msg: "Not enough memory+swap, the builder is unusable"
+    fail_msg: "Not enough memory+swap, the builder is unusable: {{ ansible_memory_mb.swap.free }} MB SWAP and {{ ansible_memory_mb.real.free }} MB RAM"
     success_msg: "Builder has enough memory/swap!"
   when:
   - prepare_base_image is not defined
