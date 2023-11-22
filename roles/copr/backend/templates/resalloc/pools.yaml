@@ -178,6 +178,7 @@ copr_p09_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
 {% endif %}
 {% endfor %}
 
+{% if False %}
 # Z Cloud instances Tokyo
 copr_ibm_cloud_s390x_tokyo_{% if devel %}dev{% else %}prod{% endif %}:
   max: {{ builders.ibm_cloud_tokyo.s390x[0] }}
@@ -205,6 +206,7 @@ copr_ibm_cloud_s390x_tokyo_{% if devel %}dev{% else %}prod{% endif %}:
   reuse_opportunity_time: 90
   reuse_max_count: 8
   reuse_max_time: 1800
+{% endif %}
 
 
 # Z Cloud instances in Washington
@@ -267,29 +269,37 @@ copr_osuosl_p09_{% if devel %}dev{% else %}prod{% endif %}:
   reuse_max_count: 8
   reuse_max_time: 1800
 
-#### AWS x_86_64
+#### AWS x86_64
 # on-premise HV has priority 0 and above
 # AWS should have priority < 0 unless it is reserved instance for which we pay anyway
 
 # reserved instances
+{% if not devel %}
 {{ aws('x86_64', 1, 1, 1, priority=20, reserved=True) }}
+{% endif %}
 
 {{ aws('x86_64', builders.aws_spot.x86_64[0], builders.aws_spot.x86_64[1],
        builders.aws_spot.x86_64[2], True, priority=-2) }}
 
+{% if not devel %}
 {{ aws('x86_64', builders.aws.x86_64[0], builders.aws.x86_64[1],
        builders.aws.x86_64[2], priority=-10 ) }}
+{% endif %}
 
 ### AARCH 64 builders
 
+{% if not devel %}
 # reserved instance
 {{ aws('aarch64', 3, 2, 3, priority=20, reserved=True) }}
+{% endif %}
 
 {{ aws('aarch64', builders.aws_spot.aarch64[0], builders.aws_spot.aarch64[1],
        builders.aws_spot.aarch64[2], spot=True, priority=-1) }}
 
+{% if not devel %}
 {{ aws('aarch64', builders.aws.aarch64[0], builders.aws.aarch64[1],
        builders.aws.aarch64[2], priority=-5) }}
+{% endif %}
 
 
 #### High performance builders
