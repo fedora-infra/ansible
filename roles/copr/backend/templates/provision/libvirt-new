@@ -92,7 +92,7 @@ class LibvirtSpawner:
     def execute_spinup_playbook(self, host, playbook):
         """ Run given playbook agains the given host """
         cmd = ['timeout', '600', 'ansible-playbook', playbook, '-i', host + ","]
-        if self.call(cmd, stdout=sys.stderr):
+        if self.call(cmd, stdout=sys.stderr, stdin=subprocess.DEVNULL):
             raise Exception("can't spinup")
 
     def cleanup(self, success):
