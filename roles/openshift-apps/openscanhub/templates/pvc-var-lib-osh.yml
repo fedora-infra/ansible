@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-var-lib-osh
+spec:
+  volumeName: fedora-openscanhub-var-lib-osh-{{env_short}}
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      # This should be manually expanded when production
+      # has gone beyond this limit.
+{% if env == "staging" %}
+      storage: 32Gi
+{% else %}
+      storage: 512Gi
+{% endif %}
+  storageClassName: 'ocs-storagecluster-cephfs'
+  volumeMode: Filesystem

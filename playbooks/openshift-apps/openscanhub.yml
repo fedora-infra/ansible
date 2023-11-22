@@ -33,3 +33,8 @@
     tags:
       - apply-appowners
     when: env == "staging"
+  - role: openshift/object
+    app: openscanhub
+    template: pvc-var-lib-osh.yml
+    objectname: pvc-var-lib-osh.yml
+    when: env == "staging"
