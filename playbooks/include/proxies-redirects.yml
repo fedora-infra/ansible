@@ -410,6 +410,14 @@
     tags:
     - fedoraproject.org
 
+  # Fedora start page
+  - role: httpd/redirect
+    shortname: site
+    website: start.fedoraproject.org 
+    target: https://fedoraproject.org/start
+    tags:
+    - fedoraproject.org
+
   # Planet/people convenience
   - role: httpd/redirect
     shortname: infofeed
