@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    app.openshift.io/vcs-ref: ""
+    app.openshift.io/vcs-uri: https://github.com/siteshwar/openscanhub-deployment-configs.git
+    openshift.io/generated-by: OpenShiftWebConsole
+  labels:
+    app: fedora-osh-hub
+    app.kubernetes.io/component: fedora-osh-hub
+    app.kubernetes.io/instance: fedora-osh-hub
+    app.kubernetes.io/name: fedora-osh-hub
+    app.kubernetes.io/part-of: openscanhub
+  name: fedora-osh-hub
+  namespace: openscanhub
+  resourceVersion: "2899601165"
+  uid: 33917870-d8f2-4618-89fa-85c6fd44b071
+spec:
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: 8080-tcp
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: fedora-osh-hub
+    deployment: fedora-osh-hub
+  sessionAffinity: None
+  type: ClusterIP

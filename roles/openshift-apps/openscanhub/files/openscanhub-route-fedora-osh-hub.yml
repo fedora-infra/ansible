@@ -1,0 +1,25 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: fedora-osh-hub
+    app.kubernetes.io/component: fedora-osh-hub
+    app.kubernetes.io/instance: fedora-osh-hub
+    app.kubernetes.io/name: fedora-osh-hub
+    app.kubernetes.io/part-of: openscanhub
+  # TODO: This should be a template and use production for production instance.
+  name: staging
+  namespace: openscanhub
+  resourceVersion: "2899601169"
+  uid: 1c280b7f-39a4-40fc-a850-396147e1c1af
+spec:
+  port:
+    targetPort: 8080-tcp
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  to:
+    kind: Service
+    name: fedora-osh-hub
+    weight: 100
+  wildcardPolicy: None
