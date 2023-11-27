@@ -84,6 +84,15 @@
   - meetbot
   - supybot
 
+- name: Turn on httpd_use_nfs to allow meetbot-raw to serve meetings
+  seboolean: name={{ item }} state=true persistent=true
+  with_items:
+  - httpd_use_nfs
+  tags:
+  - meetbot
+  - config
+  - selinux
+
   # Set up for fedora-messaging
 - name: Create the RabbitMQ user
   import_role:
