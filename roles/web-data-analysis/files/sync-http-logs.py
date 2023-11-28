@@ -246,7 +246,7 @@ try:
     worker_pool = Pool(PARALLEL_WORKERS, initializer=init_worker)
 
     send_sync_msg("sync.start")
-    log.info("=== START OF RUN ===")
+    #log.info("=== START OF RUN ===")
 
     log.debug("Mapping synced hosts to pool workers.")
     try:
@@ -256,7 +256,7 @@ try:
         worker_pool.terminate()
 
     send_sync_msg("sync.finish")
-    log.info("=== FINISH OF RUN ===")
+    #log.info("=== FINISH OF RUN ===")
 except Exception as e:
     if not isinstance(e, KeyboardInterrupt):
         log.exception("Something went wrong, caught an exception:")
