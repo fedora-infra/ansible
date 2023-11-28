@@ -608,6 +608,39 @@
   - ipa/server
   - config
 
+  # Add the missing topology segments that are missed during replication
+  # Ignore any failure as that means that segment is already in place
+- name: Add the missing segments for ca suffix
+  command:
+    argv:
+      - ipa
+      - topologysegment-add
+      - leftnode="{{ inventory_hostname }}"
+      - rightnode="{{ hostvars[item]['ansible_hostname'] }}"
+      - "ca"
+      - "{{ inventory_hostname-hostvars[item]['ansible_hostname']}}"
+  with_items: "{{ (env == 'production')|ternary(groups['ipa'], groups['ipa_stg']) }}"
+  ignore_errors: true
+  tags:
+  - ipa/server
+  - config
+
+  # Add the missing topology segments that are missed during replication
+  # Ignore any failure as that means that segment is already in place
+- name: Add the missing segments for domain suffix
+  command:
+    argv:
+      - ipa
+      - topologysegment-add
+      - leftnode="{{ inventory_hostname }}"
+      - rightnode="{{ hostvars[item]['ansible_hostname'] }}"
+      - "domain"
+      - "{{ inventory_hostname-hostvars[item]['ansible_hostname']}}"
+  with_items: "{{ (env == 'production')|ternary(groups['ipa'], groups['ipa_stg']) }}"
+  ignore_errors: true
+  tags:
+  - ipa/server
+  - config
 
 - name: Destroy admin ticket
   command: kdestroy -A
