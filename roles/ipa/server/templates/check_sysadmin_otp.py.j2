@@ -59,7 +59,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Check for sysadmin users with no otp token set, admin credentials are required to run script")
     parser.add_argument("-u", "--username", default="admin", help="ipa user to use")
     parser.add_argument("-c", "--cert-path", default="/etc/ipa/ca.crt", help="location of ipa cert")
-    parser.add_argument("-s", "--server-address", default="ipa01{{ env_suffix }}.iad2.fedoraproject.org", help="server to run against")
+    parser.add_argument("-s", "--server-address", default="{{ ipa_server }}", help="server to run against")
     parser.add_argument("-p", "--password", help="ipa user password", required=True)
 
 
