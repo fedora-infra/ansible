@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: flatpak-cache
+  labels:
+    app: flatpak-cache
+    service: flatpak-cache
+  namespace: flatpak-cache
+spec:
+  ports:
+    - name: web
+      port: 80
+      targetPort: 8080
+  selector:
+    deploymentconfig: flatpak-cache

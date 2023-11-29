@@ -1,0 +1,17 @@
+{% macro load_file(filename) %}{% include filename %}{%- endmacro -%}
+---
+apiVersion: v1
+kind: List
+metadata: {}
+items:
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: flatpak-cache-configmap
+    labels:
+      app: flatpak-cache
+  data:
+    flatpak-cache.vcl: |-
+      {{ load_file('flatpak-cache.vcl') | indent(6) }}
+    start.sh: |-
+      {{ load_file('start.sh') | indent(6) }}

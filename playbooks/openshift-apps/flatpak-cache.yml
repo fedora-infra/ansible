@@ -1,0 +1,61 @@
+- name: make the app be real
+  # hosts: os_control_stg[0]:os_control[0]
+  hosts: os_control_stg[0]
+  user: root
+  gather_facts: False
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - /srv/private/ansible/vars.yml
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  vars:
+
+  roles:
+    - role: openshift/project
+      app: flatpak-cache
+      description: "Flatpak Cache"
+      appowners:
+        - leo
+      tags:
+        - apply-appowners
+
+    - role: openshift/object
+      app: flatpak-cache
+      file: imagestream.yml
+      objectname: imagestream.yml
+
+    - role: openshift/object
+      app: flatpak-cache
+      template: buildconfig.yml
+      objectname: buildconfig.yml
+
+    - role: openshift/object
+      app: flatpak-cache
+      file: storage.yml
+      objectname: storage.yml
+
+    - role: openshift/object
+      app: flatpak-cache
+      template: configmap.yml
+      objectname: configmap.yml
+
+    - role: openshift/object
+      app: flatpak-cache
+      file: service.yml
+      objectname: service.yml
+
+    # Routes
+    - role: openshift/route
+      app: flatpak-cache
+      routename: web
+      host: "flatpak-cache.apps.ocp{{ env_suffix }}.fedoraproject.org"
+      servicename: web
+      serviceport: web
+      annotations:
+        haproxy.router.openshift.io/timeout: 5m
+
+    - role: openshift/object
+      app: flatpak-cache
+      template: deployment.yml
+      objectname: deployment.yml
