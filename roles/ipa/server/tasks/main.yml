@@ -197,7 +197,7 @@
              --force-join
              --log-file=/var/log/ipainstall.log
              --domain={{ipa_realm}}
-             --server=ipa01{{ env_suffix }}.iad2.fedoraproject.org
+             --server=ipa02{{ env_suffix }}.iad2.fedoraproject.org
              --dirsrv-config-file=/root/ldif/replica-install.ldif
     when: ansible_distribution_major_version|int >= 8
   when: not ipa_initial and replication_status.rc > 0
