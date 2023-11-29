@@ -206,7 +206,7 @@
   - config
 
 - name: Disable rewrites
-  copy: src=ipa-rewrite.conf dest=/etc/httpd/conf.d/ipa-rewrite.conf
+  template: src=ipa-rewrite.conf dest=/etc/httpd/conf.d/ipa-rewrite.conf
   notify:
   - reload httpd
   tags:
