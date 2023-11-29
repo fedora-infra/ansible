@@ -83,9 +83,15 @@ check_deps = False
 repoclosure_backend = 'dnf'
 
 # CREATEREPO
+[% if release.version_int >= 40 %]
+createrepo_deltas = [
+    ('^Everything$', {'*': False})
+]
+[% else %]
 createrepo_deltas = [
     ('^Everything$', {'*': True})
 ]
+[% endif %]
 createrepo_database = True
 [% if release.version_int >= 30 %]
 createrepo_extra_args = ['--zck', '--zck-dict-dir=/usr/share/fedora-repo-zdicts/f[[ release.version_int ]]']
