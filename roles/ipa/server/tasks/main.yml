@@ -127,7 +127,7 @@
 - name: configure replication
   block:
   - name: create replica file
-    delegate_to: {{ ipa_server }}
+    delegate_to: "{{ipa_server}}"
     command: ipa-replica-prepare
              --password={{ipa_dm_password}}
              {{inventory_hostname}}
@@ -135,7 +135,7 @@
     when: ansible_distribution_major_version|int < 8
 
   - name: retrieve replica file
-    delegate_to: {{ ipa_server }}
+    delegate_to: "{{ipa_server}}"
     fetch: src=/var/lib/ipa/replica-info-{{inventory_hostname}}.gpg
            dest=/tmp/ipa_replica_{{inventory_hostname}}.gpg
            flat=yes
@@ -197,7 +197,7 @@
              --force-join
              --log-file=/var/log/ipainstall.log
              --domain={{ipa_realm}}
-             --server={{ ipa_server }}
+             --server={{ipa_server}}
              --dirsrv-config-file=/root/ldif/replica-install.ldif
     when: ansible_distribution_major_version|int >= 8
   when: not ipa_initial and replication_status.rc > 0
