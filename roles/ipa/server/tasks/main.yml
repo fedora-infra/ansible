@@ -618,7 +618,7 @@
       - leftnode="{{ inventory_hostname }}"
       - rightnode="{{ hostvars[item]['ansible_hostname'] }}"
       - "ca"
-      - "{{ inventory_hostname-hostvars[item]['ansible_hostname']}}"
+      - "{{ inventory_hostname }}-{{ hostvars[item]['ansible_hostname']}}"
   with_items: "{{ (env == 'production')|ternary(groups['ipa'], groups['ipa_stg']) }}"
   ignore_errors: true
   tags:
@@ -635,7 +635,7 @@
       - leftnode="{{ inventory_hostname }}"
       - rightnode="{{ hostvars[item]['ansible_hostname'] }}"
       - "domain"
-      - "{{ inventory_hostname-hostvars[item]['ansible_hostname']}}"
+      - "{{ inventory_hostname }}-{{ hostvars[item]['ansible_hostname']}}"
   with_items: "{{ (env == 'production')|ternary(groups['ipa'], groups['ipa_stg']) }}"
   ignore_errors: true
   tags:
