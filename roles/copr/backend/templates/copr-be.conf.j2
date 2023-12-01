@@ -68,7 +68,7 @@ builds_max_workers_sandbox=35
 
 # Maximum number of concurrent background processes spawned for handling
 # actions.
-actions_max_workers=20
+actions_max_workers={% if env == 'production' %}20{% else %}4{% endif %}
 
 # publish fedmsg notifications from workers if true
 # default is false
