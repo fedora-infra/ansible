@@ -1,0 +1,67 @@
+---
+- name: make the app be real
+  hosts: os_control[0]:os_control_stg[0]
+  user: root
+  gather_facts: False
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  roles:
+  - role: openshift/project
+    app: planet
+    description: "Fedora Planet"
+    appowners:
+    - phsmoura
+    - kevin
+    tags:
+      - apply-appowners
+    when: env == "staging"
+
+    - role: openshift/project
+    app: planet
+    description: "Fedora Planet"
+    appowners:
+    - phsmoura
+    - kevin
+    tags:
+      - apply-appowners
+    when: env == "production"
+
+# Keytabs
+  - role: openshift/keytab
+    app: planet
+    key: http
+    secret_name: planet-keytab-http
+    service: HTTP
+    host: "{{ env_suffix }}.newplanet.org"
+
+  - role: openshift/imagestream
+    app: planet
+    imagename: planet
+
+  - role: openshift/object
+    app: planet
+    template: buildconfig.yml
+    objectname: buildconfig.yml
+
+  - role: openshift/object
+    app: planet
+    file: service.yml
+    objectname: service.yml
+
+  - role: openshift/route
+    app: planet
+    routename: planet
+    host: "{{ env_suffix }}.newplanet.org"
+    serviceport: web
+    servicename: planet-web
+    annotations:
+      haproxy.router.openshift.io/timeout: 5m
+
+  - role: openshift/object
+    app: planet
+    template: deployment.yml
+    objectname: deployment.yml
