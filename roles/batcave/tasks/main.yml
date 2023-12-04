@@ -200,8 +200,10 @@
 # This is another script to announce commits, this time to the fedmsg bus
 #
 
-- name: install fedmsg-announce-commits script
-  copy: src=fedmsg-announce-commits.py dest=/usr/local/bin/fedmsg-announce-commits.py mode=0755
+- name: install packages needed
+  package:
+    name: fedora-messaging-git-hook
+    state: present
   tags:
   - batcave
   - config
