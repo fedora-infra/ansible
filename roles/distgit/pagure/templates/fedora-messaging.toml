@@ -19,6 +19,11 @@ certfile = "/etc/pki/rabbitmq/pagurecert/src.fp.o.crt"
 [client_properties]
 app = "src.fp.o"
 
+[consumer_config]
+excluded_paths = ["/requests/"]
+with_namespace = true
+url_template = "https://src{{ env_suffix }}.fedoraproject.org/{namespace}/{repo}/c/{rev}?branch={branch}"
+
 [log_config.loggers.fedora_messaging]
 level = "WARNING"
 propagate = false
