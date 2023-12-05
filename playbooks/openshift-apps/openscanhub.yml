@@ -39,7 +39,7 @@
     objectname: pvc-var-lib-osh.yml
   - role: openshift/keytab
     app: openscanhub
-    key: /etc/httpd/conf/httpd.keytab
+    key: service.keytab
     secret_name: openscanhub-keytab
     service: HTTP
     # https://pagure.io/fedora-infra/ansible/pull-request/1669#comment-195794
