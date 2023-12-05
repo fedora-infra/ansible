@@ -114,16 +114,6 @@ handlers = ["console"]
             keyid = "{{ (env == 'production')|ternary('47dd8ef9', 'd300e724') }}"
 
             [[consumer_config.koji_instances.primary.tags]]
-            from = "f37-infra-candidate"
-            to = "f37-infra-stg"
-            key = "{{ (env == 'production')|ternary('fedora-infra', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('47dd8ef9', 'd300e724') }}"
-            {% if env == "production" %}
-            # ima file signing - enabled in f37
-            file_signing_key = "fedora-37-ima"
-            {% endif %}
-
-            [[consumer_config.koji_instances.primary.tags]]
             from = "f38-infra-candidate"
             to = "f38-infra-stg"
             key = "{{ (env == 'production')|ternary('fedora-infra', 'testkey') }}"
@@ -154,16 +144,6 @@ handlers = ["console"]
             {% endif %}
 
             # Gated coreos-pool tag
-
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f37-coreos-signing-pending"
-            to = "coreos-pool"
-            key = "{{ (env == 'production')|ternary('fedora-37', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('5323552a', 'd300e724') }}"
-            {% if env == "production" %}
-            # ima file signing - enabled in f37
-            file_signing_key = "fedora-37-ima"
-            {% endif %}
 
             [[consumer_config.koji_instances.primary.tags]]
             from = "f38-coreos-signing-pending"
@@ -305,58 +285,6 @@ handlers = ["console"]
             keyid = "{{ (env == 'production')|ternary('eb10b464', 'd300e724') }}"
             type = "modular"
 
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f37-signing-pending"
-            to = "f37-updates-testing-pending"
-            key = "{{ (env == 'production')|ternary('fedora-37', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('5323552a', 'd300e724') }}"
-            {% if env == "production" %}
-            # ima file signing - disable for now per fesco
-            file_signing_key = "fedora-37-ima"
-            {% endif %}
-
-            [consumer_config.koji_instances.primary.tags.sidetags]
-            pattern = 'f37-build-side-<seq_id>'
-            from = '<sidetag>-signing-pending'
-            to = '<sidetag>-testing-pending'
-            trusted_taggers = ['bodhi']
-            {% if env == "production" %}
-            # ima file signing - disable for now per fesco
-            file_signing_key = "fedora-37-ima"
-            {% endif %}
-
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f37-pending"
-            to = "f37"
-            key = "{{ (env == 'production')|ternary('fedora-37', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('5323552a', 'd300e724') }}"
-            {% if env == "production" %}
-            # ima file signing - disable for now per fesco
-            file_signing_key = "fedora-37-ima"
-            {% endif %}
-
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f37-modular-pending"
-            to = "f37-modular"
-            key = "{{ (env == 'production')|ternary('fedora-37', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('5323552a', 'd300e724') }}"
-            type = "modular"
-            {% if env == "production" %}
-            # ima file signing - disable for now per fesco
-            file_signing_key = "fedora-37-ima"
-            {% endif %}
-
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f37-modular-signing-pending"
-            to = "f37-modular-updates-testing-pending"
-            key = "{{ (env == 'production')|ternary('fedora-37', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('5323552a', 'd300e724') }}"
-            type = "modular"
-            {% if env == "production" %}
-            # ima file signing - disable for now per fesco
-            file_signing_key = "fedora-37-ima"
-            {% endif %}
-
             # Gated bodhi updates
 
             [[consumer_config.koji_instances.primary.tags]]
@@ -479,16 +407,6 @@ handlers = ["console"]
             {% if env == "production" %}
             # ima file signing - enabled in f37
             file_signing_key = "fedora-38-ima"
-            {% endif %}
-            
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f37-openh264"
-            to = "f37-openh264"
-            key = "{{ (env == 'production')|ternary('fedora-37', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('5323552a', 'd300e724') }}"
-            {% if env == "production" %}
-            # ima file signing - enabled in f37
-            file_signing_key = "fedora-37-ima"
             {% endif %}
             
             # f38 resigning
