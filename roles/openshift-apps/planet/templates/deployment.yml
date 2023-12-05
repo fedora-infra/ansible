@@ -27,7 +27,7 @@
         containers:
         - env:
           - name: KRB5CCNAME
-            value: FILE:/tmp/tgt
+            value: FILE:/etc/krb5.conf.d/tgt
           imagePullPolicy: Always
           name: planet
           resources: {}

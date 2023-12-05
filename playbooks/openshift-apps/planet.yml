@@ -1,6 +1,6 @@
 ---
 - name: make the app be real
-  hosts: os_control[0]:os_control_stg[0]
+  hosts: os_control_stg[0]
   user: root
   gather_facts: False
 
@@ -36,7 +36,7 @@
     key: http
     secret_name: planet-keytab-http
     service: HTTP
-    host: "{{ env_suffix }}.newplanet.org"
+    host: "planet.apps.ocp{{env_suffix}}.fedoraproject.org"
 
   - role: openshift/imagestream
     app: planet
@@ -55,7 +55,7 @@
   - role: openshift/route
     app: planet
     routename: planet
-    host: "{{ env_suffix }}.newplanet.org"
+    host: "planet.{{env_suffix}}.fedoraproject.org "
     serviceport: web
     servicename: planet-web
     annotations:
