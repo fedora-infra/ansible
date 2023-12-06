@@ -12,6 +12,6 @@ items:
       app: flatpak-cache
   data:
     flatpak-cache.vcl: |-
-      {{ load_file('flatpak-cache.vcl') | indent(6) }}
+      {{ load_file('squid.conf') | indent(6) }}
     start.sh: |-
       {{ load_file('start.sh') | indent(6) }}

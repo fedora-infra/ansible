@@ -17,6 +17,8 @@
       description: "Flatpak Cache"
       appowners:
         - leo
+        - kevin
+        - adamwill
       tags:
         - apply-appowners
 
@@ -34,6 +36,24 @@
       app: flatpak-cache
       file: storage.yml
       objectname: storage.yml
+
+    - role: openshift/secret-file
+      app: flatpak-cache
+      secret_name: flatpak-cache-ca
+      key: ca.crt
+      privatefile: "flatpak-cache-certs/{{env}}/pki/ca.crt"
+
+    - role: openshift/secret-file
+      app: flatpak-cache
+      secret_name: flatpak-cache-key
+      key: ca.key
+      privatefile: "flatpak-cache-certs/{{env}}/pki/ca.key"
+
+    - role: openshift/secret-file
+      app: flatpak-cache
+      secret_name: flatpak-cache-dhparam
+      key: dh.pem
+      privatefile: "flatpak-cache-certs/{{env}}/pki/dh.pem"
 
     - role: openshift/object
       app: flatpak-cache

@@ -28,16 +28,25 @@
         - env:
           volumeMounts:
           - name: config-volume
-            mountPath: /etc/varnish
+            mountPath: /etc/squid
             readOnly: true
           - name: data
             mountPath: /srv
+          - name: flatpak-cache-ca-volume
+            mountPath: /etc/pki/squid/ca
+            readOnly: true
+          - name: flatpak-cache-key-volume
+            mountPath: /etc/pki/squid/key
+            readOnly: true
+          - name: flatpak-cache-dhparam
+            mountPath: /etc/pki/squid/dhparam
+            readOnly: true
           imagePullPolicy: Always
           name: flatpak-cache
           command:
             - bash
           args:
-            - /etc/varnish/start.sh
+            - /etc/squid/start.sh
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
@@ -53,3 +62,12 @@
         - name: data
           persistentVolumeClaim:
             claimName: data
+        - name: flatpak-cache-ca-volume
+          secret:
+            secretName: flatpak-cache-ca
+        - name: flatpak-cache-key-volume
+          secret:
+            secretName: flatpak-cache-key
+        - name: flatpak-cache-dhparam-volume
+          secret:
+            secretName: flatpak-cache-dhparam

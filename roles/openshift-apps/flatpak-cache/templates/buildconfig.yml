@@ -21,9 +21,10 @@ items:
                 hostname \
                 nss_wrapper \
                 bind-utils \
-                varnish && \
+                squid && \
             dnf autoremove -y && \
             dnf clean all -y
+            RUN mkdir -p /var/spool/squid
         EXPOSE 80
       type: Dockerfile
     strategy:
