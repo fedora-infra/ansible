@@ -3,7 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: pvc-var-lib-osh
 spec:
-  volumeName: fedora-openscanhub-var-lib-osh-{{env_short}}
+  # TODO: This name should be set when `storageClassName` is NFS
+  # volumeName: fedora-openscanhub-var-lib-osh-{{env_short}}
   accessModes:
   - ReadWriteOnce
   resources:
