@@ -57,7 +57,11 @@ ks_repo: http://38.145.60.16/repo/rhel/RHEL8-x86_64/
 ks_url: http://38.145.60.16/repo/rhel/ks/kvm-rhel-8-ext
 # These are normally group variables, but in this case db servers are often different
 lvm_size: 500000
+max_parallel_maintenance_workers: 4
+max_parallel_workers: 8
+max_parallel_workers_per_gather: 2
 max_stack_depth: "6MB"
+max_worker_processes: 20
 mem_size: 65536
 nagios_Check_Services:
   swap: false
@@ -68,6 +72,6 @@ nrpe_procs_crit: 900
 nrpe_procs_warn: 800
 num_cpus: 24
 # Should be 0.25 of memory
-shared_buffers: "16GB"
+shared_buffers: "24GB"
 vmhost: vmhost-x86-03.iad2.fedoraproject.org
 volgroup: /dev/vg_guests
