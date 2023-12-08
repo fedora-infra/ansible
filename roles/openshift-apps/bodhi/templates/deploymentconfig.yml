@@ -84,7 +84,7 @@ items:
               path: /healthz/ready
               port: 8080
           livenessProbe:
-            timeoutSeconds: 10
+            timeoutSeconds: 15
             initialDelaySeconds: 30
             periodSeconds: 60
             httpGet:
