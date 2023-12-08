@@ -47,6 +47,8 @@ data:
     {{ load_file('production.ini.j2') | indent }}
   celeryconfig.py: |-
     {{ load_file('celeryconfig.py.j2') | indent }}
+  alembic.ini: |-
+    {{ load_file('alembic.ini') | indent }}
 ---
 apiVersion: v1
 kind: ConfigMap
