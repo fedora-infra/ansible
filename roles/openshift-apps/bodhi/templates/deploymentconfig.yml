@@ -20,9 +20,9 @@ items:
             - /bin/sh
             - '-c'
             - >-
-              (/usr/bin/alembic-3 -c /srv/bodhi/alembic.ini current | grep -q
-              "(head)") || ( cd /srv/bodhi && /usr/bin/alembic-3 -c
-              /srv/bodhi/alembic.ini upgrade head)
+              (/usr/bin/alembic-3 -c /etc/bodhi/alembic.ini current | grep -q
+              "(head)") || ( cd /etc/bodhi && /usr/bin/alembic-3 -c
+              /etc/bodhi/alembic.ini upgrade head)
           containerName: bodhi-web
           volumes:
             - config-volume
