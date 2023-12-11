@@ -25,14 +25,24 @@
           deployment: planet
       spec:
         containers:
-        - env:
-          - name: KRB5CCNAME
-            value: FILE:/etc/krb5.conf.d/tgt
-          imagePullPolicy: Always
-          name: planet
-          resources: {}
-          terminationMessagePath: /dev/termination-log
-          terminationMessagePolicy: File
+        - name: planet
+          image: planet:latest
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+          - name: ipa-config-volume
+            mountPath: /etc/ipa
+            readOnly: true
+          - name: keytab-volume
+            mountPath: /etc/keytabs
+            readOnly: true
+        volumes:
+        - name: ipa-config-volume
+          configMap:
+            name: ipa-client-config
+        - name: keytab-volume
+          secret:
+          secretName: planet-keytab
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         schedulerName: default-scheduler
