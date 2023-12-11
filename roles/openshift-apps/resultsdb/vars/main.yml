@@ -11,6 +11,6 @@ resultsdb_additional_result_outcomes: ['CRASHED', 'QUEUED', 'RUNNING']
 
 # frontend vars
 stg_resultsdb_frontend_image: 'quay.io/factory2/resultsdb_frontend:latest'
-prod_resultsdb_frontend_image: 'quay.io/fedora-kube-sig/resultsdb-frontend:latest-f35'
+prod_resultsdb_frontend_image: 'quay.io/factory2/resultsdb_frontend:prod-fedora'
 prod_resultsdb_frontend_api_url: 'http://resultsdb-api.resultsdb.svc.cluster.local:5001/api/v2.0'
 stg_resultsdb_frontend_api_url: 'http://resultsdb-api.resultsdb.svc.cluster.local:5001/api/v2.0'
