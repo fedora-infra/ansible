@@ -360,7 +360,7 @@
   - bodhi
 
 - name: Let the ftpsync user also read the fedora-messaging config
-  acl: path=/etc/fedora-messaging/config.toml entity=ftpsync etype=group permissions=r-x state=present
+  acl: path=/etc/fedora-messaging/config.toml entity=ftpsync etype=user permissions=r-x state=present
   tags:
   - config
   - bodhi
