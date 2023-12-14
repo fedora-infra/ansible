@@ -27,7 +27,7 @@ max_parallel_maintenance_workers: 4
 max_parallel_workers: 20
 max_parallel_workers_per_gather: 5
 max_stack_depth: "6MB"
-max_worker_processes: 56
+max_worker_processes: 60
 mem_size: 262140
 nagios_Check_Services:
   swap: false
@@ -39,6 +39,6 @@ nrpe_procs_warn: 600
 num_cpus: 64
 shared_buffers: "64GB"
 swap: false
-temp_buffers: "48MB"
+temp_buffers: "96MB"
 vmhost: bvmhost-x86-01.iad2.fedoraproject.org
 volgroup: /dev/vg_guests
