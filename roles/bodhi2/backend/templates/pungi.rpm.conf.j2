@@ -170,7 +170,6 @@ ostree = {
             "failable": ["x86_64", "ppc64le", "aarch64" ]
         },
         # Fedora Kinoite
-        [% if release.version_int >= 35 %]
         {
             "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
             [% if release.version_int >= 39 %]
@@ -203,9 +202,7 @@ ostree = {
             "arches": ["x86_64", "ppc64le", "aarch64" ],
             "failable": ["x86_64", "ppc64le", "aarch64" ]
         },
-        [% endif %]
         # Fedora Sericea
-        [% if release.version_int >= 38 %]
         {
             "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
             [% if release.version_int >= 39 %]
@@ -238,7 +235,6 @@ ostree = {
             "arches": ["x86_64", "aarch64"],
             "failable": ["x86_64", "aarch64"]
         },
-        [% endif %]
         # Fedora Onyx
         [% if release.version_int >= 39 %]
         {
