@@ -124,7 +124,7 @@
     topic_permissions:
       - vhost: /pubsub
         read_priv: .*
-        write_priv: ^org\.fedoraproject\.{{ env_short }}\.bodhi\..*
+        write_priv: "{{ bodhi_sent_topics }}"
   tags:
   - rabbitmq_cluster
   - config

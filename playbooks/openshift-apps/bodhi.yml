@@ -20,6 +20,7 @@
 
   pre_tasks:
   - include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
+  - include_vars: /srv/web/infra/ansible/vars/apps/bodhi.yml
   - set_fact:
     args:
       bodhi_version: "{{ bodhi_version }}"
@@ -32,7 +33,7 @@
     thresholds:
       warning: 10
       critical: 100
-    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.bodhi\..*
+    sent_topics: "{{ bodhi_sent_topics }}"
 
   - role: openshift/project
     app: bodhi
