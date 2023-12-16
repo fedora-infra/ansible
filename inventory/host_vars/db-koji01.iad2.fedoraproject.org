@@ -12,7 +12,7 @@ db_backup_dir: ['/backups']
 dbs_to_backup:
   - koji
 effective_cache_size: "100GB"
-effective_io_concurrency: 10
+effective_io_concurrency: 20
 eth0_ipv4_gw: 10.3.169.254
 eth0_ipv4_ip: 10.3.169.103
 # kernel SHMMAX value
@@ -24,8 +24,8 @@ lvm_size: 1750000
 max_cpu: 96
 max_mem_size: 327680
 max_parallel_maintenance_workers: 4
-max_parallel_workers: 20
-max_parallel_workers_per_gather: 5
+max_parallel_workers: 40
+max_parallel_workers_per_gather: 10
 max_stack_depth: "6MB"
 max_worker_processes: 60
 mem_size: 262140
@@ -39,6 +39,6 @@ nrpe_procs_warn: 600
 num_cpus: 64
 shared_buffers: "64GB"
 swap: false
-temp_buffers: "96MB"
+temp_buffers: "192MB"
 vmhost: bvmhost-x86-01.iad2.fedoraproject.org
 volgroup: /dev/vg_guests
