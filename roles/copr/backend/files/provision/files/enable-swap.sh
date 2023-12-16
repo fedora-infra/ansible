@@ -35,14 +35,12 @@ elif grep POWER9 /proc/cpuinfo; then
     swap_device=/dev/$swap_device_base
     truncate -s 164G "$file"
     losetup "$swap_device_base" "$file"
-elif test -e /dev/xvda1 && test -e /dev/nvme0n1; then
-    # AWS aarch64 machine.  We use separate volume allocation as the default
-    # root disk in our instance type is too small.
-    swap_device=/dev/nvme0n1
-elif test -e /dev/nvme1n1; then
-    # AWS x86_64 machine.  There's >= 400G space on the default volume in our
-    # instance type.
-    swap_device=/dev/nvme1n1
+elif test -e /dev/nvme0n1; then
+    for vol in /dev/nvme{0,1}n1; do
+        # Detect there are no partitions
+        test -e "$vol" || continue
+        test "$(lsblk -n "$vol" | wc -l)" -eq 1 && swap_device=$vol && break
+    done
 else
     # This should be a machine in IBM Cloud
     generic_mount
