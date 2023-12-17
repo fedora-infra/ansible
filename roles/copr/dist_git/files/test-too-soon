@@ -1,0 +1,38 @@
+#! /bin/bash
+
+# Return non-zero exit status if this script has been run before more than N
+# days (or never).  Arguments are $ID (word or description) and number of days.
+# Use like 'test-not-before last-dist-git-cleanup-run 10 || do_something'
+
+id=$1
+days=$2
+file=/var/tmp/
+umask 0077
+dir="/var/tmp/test-too-soon-script-$(id -u -n)"
+file=$dir/$id
+lock=$file.lock
+coeficient="24*3600"
+log() { echo >&2 "LOG: $id: $*"; }
+mkdir -p "$dir"
+(
+    flock 9
+    stamp=$(date +%s)
+    if test ! -e "$file"; then
+        log "running for the first time"
+        echo "$stamp" > "$file"
+        exit 1
+    fi
+
+    old_stamp=$(cat "$file")
+
+    last=$(( (stamp - old_stamp) / ("$coeficient") ))
+    if test $(( stamp - old_stamp )) -ge $(( days * ("$coeficient") )); then
+        log "Last run $old_stamp, before $last days, running."
+        echo "$stamp" > "$file"
+        exit 1
+    else
+        log "Last run $old_stamp, before $last days, skipping."
+        exit 0
+    fi
+) 9>"$lock"
+# no more tasks, exit status inherited from sub-shell

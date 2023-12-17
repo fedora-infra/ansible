@@ -133,12 +133,33 @@
 - name: install .config/copr for copr-dist-git user (required for pruning)
   template: src="copr.conf" dest="/home/copr-dist-git/.config/copr" owner=copr-dist-git group=copr-dist-git
 
+- name: install the helper cron scripts
+  copy:
+    src: "{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    mode: '0755'
+  tags:
+    - config
+    - cron
+  loop:
+    - test-too-soon
+
 - name: install copr-dist-git.daily cron file
   copy: src="copr-dist-git.daily" dest="/etc/cron.daily/copr-dist-git" mode=755
   tags:
-  - config
+    - config
+    - cron
 
-- name: install copr-dist-git.monthly cron file
-  copy: src="copr-dist-git.monthly" dest="/etc/cron.monthly/copr-dist-git" mode=755
+- name: install copr-dist-git.weekly cron file
+  copy: src="copr-dist-git.weekly" dest="/etc/cron.weekly/copr-dist-git" mode=755
   tags:
-  - config
+    - config
+    - cron
+
+- name: drop monthly cron job
+  file:
+    path: /etc/cron.weekly/copr-dist-git
+    state: absent
+  tags:
+    - config
+    - cron

@@ -4,6 +4,11 @@
 # When you uncomment this, all the sources from the dist-git lookaside cache
 # will be periodically unlinked, except for those sources mentioned in the
 # last commits of the git repo branches.
+
+# We run this on Sunday 4.22 every week (default cron weekly timing).  To run
+# this bi-weekly, we have to skip every second run.
+/usr/local/bin/test-too-soon "cleaning-dist-git-data-volume" 10 && exit 0
+
 runuser -c 'dist-git-clear-tarballs.py' - copr-dist-git
 
 # From time to time assure that the CGIT caches are consistent, and that the
