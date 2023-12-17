@@ -158,7 +158,7 @@
 
 - name: drop monthly cron job
   file:
-    path: /etc/cron.weekly/copr-dist-git
+    path: /etc/cron.monthly/copr-dist-git
     state: absent
   tags:
     - config
