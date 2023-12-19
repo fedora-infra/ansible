@@ -154,7 +154,7 @@
   notify: restart nagios
 
 - name: Copy Matrix-Notify script
-  copy: src=scripts/matrix-notify.sh dest=/usr/local/bin/ mode=0700 owner=root group=root
+  copy: src=scripts/matrix-notify.sh dest=/usr/local/bin/matrix-notify.sh mode=0700 owner=root group=root
   tags:
   - nagios_config
   - nagios_server
