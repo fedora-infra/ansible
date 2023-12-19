@@ -153,12 +153,6 @@
   - nagios_server
   notify: restart nagios
 
-- name: Copy Matrix-Notify script
-  copy: src=scripts/matrix-notify.sh dest=/usr/local/bin/matrix-notify.sh mode=0700 owner=root group=root
-  tags:
-  - nagios_config
-  - nagios_server
-
 ## Copy over the contacts
 - name: Copy /etc/nagios/contacts
   synchronize: src=nagios/contacts/ dest=/etc/nagios/contacts/
@@ -448,6 +442,13 @@
   - nagios_config
   - nagios_hosts
   notify: restart nagios
+
+- name: Copy Matrix-Notify script
+  template: src=scripts/matrix-notify.sh.j2 dest=/usr/local/bin/matrix-notify.sh mode=0700 owner=root group=root
+  tags:
+  - nagios_config
+  - nagios_server
+
 
 ## These are only available to the internal server
 - name: Build out nagios host templates (production)
