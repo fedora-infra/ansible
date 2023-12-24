@@ -746,3 +746,6 @@ compatibility_level = 2
 # http://www.postfix.org/BDAT_README.html
 # but does so in a way which is noisy with logs. Turn it off without logging.
 smtpd_discard_ehlo_keywords = chunking, silent-discard
+
+# reject mailers that do bad pipelining.
+smtpd_data_restrictions = reject_unauth_pipelining
