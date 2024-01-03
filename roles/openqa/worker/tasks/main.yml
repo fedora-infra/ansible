@@ -69,7 +69,7 @@
 
 - name: Install required packages
   package:
-    name: ['openqa-worker', 'os-autoinst']
+    name: ['openqa-worker', 'os-autoinst', 'ffmpeg-free']
     state: latest
     enablerepo: "{{ openqa_repo }}"
   notify:
