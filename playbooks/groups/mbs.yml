@@ -19,7 +19,7 @@
   - base
   - rkhunter
   - nagios_client
-  - {role: zabbix/zabbix_agent, when: env == "staging"}
+  - zabbix/zabbix_agent
   - hosts
   # openvpn on the prod frontend nodes
   - {role: openvpn/client, when: "'mbs_frontend' in group_names and datacenter == 'iad2'"}

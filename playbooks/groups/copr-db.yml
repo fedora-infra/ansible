@@ -27,7 +27,7 @@
   - rkhunter
   - {role: ipa/client, when: env == "staging"}
   - nagios_client
-  - {role: zabbix/zabbix_agent, when: env == "staging"}
+  - zabbix/zabbix_agent
   - hosts
   #- postgresql_server
   #- collectd/base

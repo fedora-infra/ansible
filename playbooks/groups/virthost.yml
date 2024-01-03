@@ -40,7 +40,7 @@
   - base
   - {role: rkhunter}
   - {role: nagios_client}
-  - {role: zabbix/zabbix_agent, when: env == "staging"}
+  - zabbix/zabbix_agent
   - hosts
   - {role: openvpn/client, when: vpn|bool}
   - ipa/client

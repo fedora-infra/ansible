@@ -18,7 +18,7 @@
   - hosts
   - rkhunter
   - nagios_client
-  - {role: zabbix/zabbix_agent, when: env == "staging"}
+  - zabbix/zabbix_agent
   - ipa/client
   - collectd/base
   - sudo

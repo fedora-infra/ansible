@@ -34,7 +34,7 @@
   roles:
   - base
   - nagios_client
-  - {role: zabbix/zabbix_agent, when: env == "staging"}
+  - zabbix/zabbix_agent
   - collectd/base
   - hosts
   - ipa/client
