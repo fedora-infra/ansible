@@ -25,14 +25,13 @@
   - ipa/client
   - rkhunter
   - nagios_client
-  - {role: zabbix/zabbix_agent, when: env == "staging"}
+  - zabbix/zabbix_agent
   - collectd/base
   - sudo
   - rsyncd
   - {role: mirrormanager/mirrorlist_proxy,
      when: env == "staging" or "'mirrorlist_proxy' in group_names"}
   - apache
-#  - role: zabbix/zabbix_agent
 #when: env == "staging"
 
   tasks:
