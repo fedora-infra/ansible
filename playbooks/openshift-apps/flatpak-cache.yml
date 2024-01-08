@@ -47,7 +47,7 @@
       app: flatpak-cache
       secret_name: flatpak-cache-key
       key: ca.key
-      privatefile: "flatpak-cache-certs/{{env}}/pki/ca.key"
+      privatefile: "flatpak-cache-certs/{{env}}/pki/private/ca.key"
 
     - role: openshift/secret-file
       app: flatpak-cache
