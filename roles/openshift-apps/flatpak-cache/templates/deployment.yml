@@ -38,10 +38,11 @@ spec:
           - name: flatpak-cache-key-volume
             mountPath: /etc/pki/squid/key
             readOnly: true
-          - name: flatpak-cache-dhparam
+          - name: flatpak-cache-dhparam-volume
             mountPath: /etc/pki/squid/dhparam
             readOnly: true
           imagePullPolicy: Always
+          image: flatpak-cache:latest
           name: flatpak-cache
           command:
             - bash
