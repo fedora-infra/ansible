@@ -42,7 +42,7 @@ spec:
             mountPath: /etc/pki/squid/dhparam
             readOnly: true
           imagePullPolicy: Always
-          image: flatpak-cache:latest
+          image: image-registry.openshift-image-registry.svc:5000/flatpak-cache/flatpak-cache:latest
           name: flatpak-cache
           command:
             - bash
