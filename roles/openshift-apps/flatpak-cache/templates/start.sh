@@ -1,3 +1,3 @@
-exec squid 
+exec /sbin/squid
   --foreground 
-  -f squid.conf
+  -f /etc/squid/squid.conf
