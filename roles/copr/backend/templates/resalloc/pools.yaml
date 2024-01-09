@@ -228,12 +228,15 @@ copr_ic_s390x_{{ t + '_' if t or '' }}us_east_{% if devel %}dev{% else %}prod{% 
       priority: -30
     - ibm_cloud
     - us_east
-{% if devel or t == 'hp' %}
+{% if devel %}
   tags_on_demand:
 {% endif %}
     - arch_s390x
     - arch_s390x_native
 {% if t == 'hp' %}
+{% if not devel %}
+  tags_on_demand:
+{% endif %}
     - on_demand_powerful
 {% endif %}
   cmd_new: '/var/lib/resallocserver/resalloc_provision/ibm-cloud-vm create "$RESALLOC_NAME"'
