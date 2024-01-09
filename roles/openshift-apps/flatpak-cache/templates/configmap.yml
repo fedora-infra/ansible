@@ -13,5 +13,7 @@ items:
   data:
     squid.conf: |-
       {{ load_file('squid.conf') | indent(6) }}
+    mime.conf: |-
+      {{ load_file('mime.conf') | indent(6) }}
     start.sh: |-
       {{ load_file('start.sh') | indent(6) }}
