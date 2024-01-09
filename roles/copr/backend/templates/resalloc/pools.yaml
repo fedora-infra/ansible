@@ -209,8 +209,8 @@ copr_ibm_cloud_s390x_tokyo_{% if devel %}dev{% else %}prod{% endif %}:
 {% endif %}
 
 
-# Z Cloud instances in Washington
-{% for t in ['', 'powerful'] %}
+# Z Cloud instances in Washington (hp == high performance)
+{% for t in ['', 'hp'] %}
 copr_ic_s390x_{{ t + '_' if t or '' }}us_east_{% if devel %}dev{% else %}prod{% endif %}:
 {% if not t %}
   max: {{ builders.ibm_cloud_us_east.s390x[0] }}
@@ -228,12 +228,12 @@ copr_ic_s390x_{{ t + '_' if t or '' }}us_east_{% if devel %}dev{% else %}prod{% 
       priority: -30
     - ibm_cloud
     - us_east
-{% if devel or t == 'powerful' %}
+{% if devel or t == 'hp' %}
   tags_on_demand:
 {% endif %}
     - arch_s390x
     - arch_s390x_native
-{% if t == 'powerful' %}
+{% if t == 'hp' %}
     - on_demand_powerful
 {% endif %}
   cmd_new: '/var/lib/resallocserver/resalloc_provision/ibm-cloud-vm create "$RESALLOC_NAME"'
