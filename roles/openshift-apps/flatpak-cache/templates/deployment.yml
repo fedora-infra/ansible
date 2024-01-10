@@ -31,7 +31,7 @@ spec:
             mountPath: /etc/squid
             readOnly: true
           - name: data
-            mountPath: /srv
+            mountPath: /var/spool/squid
           - name: flatpak-cache-ca-volume
             mountPath: /etc/pki/squid/ca
             readOnly: true
