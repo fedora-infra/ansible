@@ -42,8 +42,8 @@
       # The FMN queue is subscribed to everything
         - "#"
       thresholds:
-        warning: 50
-        critical: 500
+        warning: 20000
+        critical: 25000
       # FMN sends messages when a rule is changed, to invalidate its cache
       sent_topics: ^org\.fedoraproject\.{{ env_short }}\.fmn\..*
       tags:
