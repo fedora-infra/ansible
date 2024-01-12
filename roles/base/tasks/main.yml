@@ -29,7 +29,7 @@
 - name: global default packages to install (yum)
   package: state=present name={{ item }}
   with_items:
-   - "{{ global_pkgs_inst }}"
+    - "{{ global_pkgs_inst }}"
   tags:
   - packages
   - base
@@ -40,14 +40,18 @@
   tags:
   - packages
   - base
-  when: ansible_distribution_major_version|int >= 8 and ansible_distribution == 'RedHat' and ansible_cmdline.ostree is not defined
+  when: >
+    ansible_distribution_major_version|int >= 8 and
+    ansible_distribution == 'RedHat' and ansible_cmdline.ostree is not defined
 
 - name: global default packages to install (dnf)
   dnf: state=present name="{{ global_pkgs_inst }}"
   tags:
   - packages
   - base
-  when: ansible_distribution_major_version|int > 29 and ansible_distribution == 'Fedora' and ansible_cmdline.ostree is not defined
+  when: >
+    ansible_distribution_major_version|int > 29 and
+    ansible_distribution == 'Fedora' and ansible_cmdline.ostree is not defined
 
 - name: make sure hostname is set right on all hosts
   hostname: name="{{inventory_hostname}}"
@@ -74,7 +78,7 @@
 - name: dist pkgs to remove (yum)
   package: state=absent name={{ item }}
   with_items:
-   - "{{ base_pkgs_erase }}"
+    - "{{ base_pkgs_erase }}"
   tags:
   - packages
   - base
@@ -83,7 +87,7 @@
 - name: dist pkgs to install (yum)
   package: state=present name={{ item }}
   with_items:
-   - "{{ base_pkgs_inst }}"
+    - "{{ base_pkgs_inst }}"
   tags:
   - packages
   - base
@@ -94,33 +98,44 @@
   tags:
   - packages
   - base
-  when: ansible_distribution_major_version|int > 29 and ansible_distribution == 'Fedora' and ansible_cmdline.ostree is not defined
+  when: >
+    ansible_distribution_major_version|int > 29 and
+    ansible_distribution == 'Fedora' and ansible_cmdline.ostree is not defined
 
 - name: dist pkgs to remove (dnf)
   dnf: state=absent name="{{ base_pkgs_erase }}"
   tags:
   - packages
   - base
-  when: ansible_distribution_major_version|int >= 8 and ansible_distribution == 'RedHat' and ansible_cmdline.ostree is not defined
+  when: >
+    ansible_distribution_major_version|int >= 8 and
+    ansible_distribution == 'RedHat' and
+    ansible_cmdline.ostree is not defined
 
 - name: dist pkgs to install (dnf)
   dnf: state=present name="{{ base_pkgs_inst }}"
   tags:
   - packages
   - base
-  when: ansible_distribution_major_version|int > 29 and ansible_distribution == 'Fedora' and ansible_cmdline.ostree is not defined
+  when: >
+    ansible_distribution_major_version|int > 29 and
+    ansible_distribution == 'Fedora' and
+    ansible_cmdline.ostree is not defined
 
 - name: dist pkgs to install (dnf)
   dnf: state=present name="{{ base_pkgs_inst }}"
   tags:
   - packages
   - base
-  when: ansible_distribution_major_version|int >= 8 and ansible_distribution == 'RedHat' and ansible_cmdline.ostree is not defined
+  when: >
+    ansible_distribution_major_version|int >= 8 and
+    ansible_distribution == 'RedHat' and
+    ansible_cmdline.ostree is not defined
 
 - name: dist disabled services
   service: state=stopped enabled=false name={{ item }}
   with_items:
-   - "{{ service_disabled }}"
+    - "{{ service_disabled }}"
   tags:
   - service
   - config
@@ -129,12 +144,15 @@
 - name: dist enabled services
   service: state=started enabled=true name={{ item }}
   with_items:
-   - "{{ service_enabled }}"
+    - "{{ service_enabled }}"
   tags:
   - service
   - config
   - base
-  when: ansible_distribution_major_version|int > 31 and ansible_distribution == 'Fedora' or ansible_distribution == 'RedHat'
+  when: >
+    ansible_distribution_major_version|int > 31 and
+    ansible_distribution == 'Fedora' or
+    ansible_distribution == 'RedHat'
 
 - name: Ensure iptables is installed
   package: state=present name=iptables
@@ -151,7 +169,7 @@
 - name: setup builder ipset if this is a new install
   shell: "/usr/sbin/ipset create osbuildapi hash:ip; touch /etc/sysconfig/ipset-osbuildapi"
   args:
-      creates: /etc/sysconfig/ipset-osbuildapi
+    creates: /etc/sysconfig/ipset-osbuildapi
   when: "'osbuild' in group_names"
   tags:
     - base
@@ -184,13 +202,17 @@
     - blocklist
 
 - name: iptables
-  template: src={{ item }} dest=/etc/sysconfig/iptables mode=0600 validate="/sbin/iptables-restore --test %s"
+  template:
+    src: "{{ item }}"
+    dest: /etc/sysconfig/iptables
+    mode: '0600'
+    validate: "/sbin/iptables-restore --test %s"
   with_first_found:
-   - iptables/iptables.{{ datacenter }}
-   - iptables/iptables.{{ inventory_hostname }}
-   - iptables/iptables.{{ host_group }}
-   - iptables/iptables.{{ env }}
-   - iptables/iptables
+    - iptables/iptables.{{ datacenter }}
+    - iptables/iptables.{{ inventory_hostname }}
+    - iptables/iptables.{{ host_group }}
+    - iptables/iptables.{{ env }}
+    - iptables/iptables
   when: baseiptables|bool
   notify:
   - restart iptables
@@ -211,11 +233,11 @@
 - name: ip6tables
   template: src={{ item }} dest=/etc/sysconfig/ip6tables mode=0600 backup=yes
   with_first_found:
-   - iptables/ip6tables.{{ datacenter }}
-   - iptables/ip6tables.{{ inventory_hostname }}
-   - iptables/ip6tables.{{ host_group }}
-   - iptables/ip6tables.{{ env }}
-   - iptables/ip6tables
+    - iptables/ip6tables.{{ datacenter }}
+    - iptables/ip6tables.{{ inventory_hostname }}
+    - iptables/ip6tables.{{ host_group }}
+    - iptables/ip6tables.{{ env }}
+    - iptables/ip6tables
   when: baseiptables|bool
   notify:
   - restart ip6tables
@@ -256,7 +278,8 @@
   - flush journald tmpfiles to persistent store
 
 - name: install rh ca for splunk
-  copy: src={{private}}/files/splunk-certs/2022-IT-Root-CA.pem dest=/etc/pki/tls/certs/2022-IT-Root-CA.pem
+  copy: src={{ private }}/files/splunk-certs/2022-IT-Root-CA.pem
+        dest=/etc/pki/tls/certs/2022-IT-Root-CA.pem
   tags:
   - rsyslogd
   - config
@@ -299,7 +322,7 @@
 - name: add rsyslog config to /etc/rsyslog.d
   copy: src={{ item }} dest=/etc/rsyslog.d/ owner=root group=root mode=0644
   with_fileglob:
-   - rsyslog/*.conf
+    - rsyslog/*.conf
   notify:
   - restart rsyslog
   tags:
@@ -343,7 +366,8 @@
   - config
 
 - name: rsyslogd put systemd limits directory for file handles
-  copy: src=rsyslog/rsyslog-limits-systemd dest=/etc/systemd/system/rsyslog.service.d/limits.conf mode=0644
+  copy: src=rsyslog/rsyslog-limits-systemd
+        dest=/etc/systemd/system/rsyslog.service.d/limits.conf mode=0644
   when: inventory_hostname.startswith('log') or inventory_hostname.startswith('people')
   tags:
   - rsyslogd
@@ -409,7 +433,7 @@
 - name: Install common scripts
   copy: src={{ item }} dest=/usr/local/bin/ owner=root group=root mode=0755
   with_fileglob:
-   - common-scripts/*
+    - common-scripts/*
   tags:
   - config
   - base
@@ -428,7 +452,7 @@
   import_tasks: watchdog.yml
 
 
-#Set PS1 to show stage environment at PS1
+# Set PS1 to show stage environment at PS1
 #
 - name: set PS1 for stage in /etc/profile.d
   copy: >
@@ -443,7 +467,7 @@
   - config
   - prompt
 
-#Set PS1 to show prod environment at PS1
+# Set PS1 to show prod environment at PS1
 #
 - name: set PS1 for prod in /etc/profile.d
   copy: >
@@ -458,7 +482,7 @@
   - config
   - prompt
 
-#Set PS1 to show prod-iad2 environment at PS1
+# Set PS1 to show prod-iad2 environment at PS1
 #
 - name: set PS1 for prod in /etc/profile.d
   copy: >
@@ -532,8 +556,18 @@
 - name: daily cron job to compress merged log under /var/log/hosts
   copy: src=compress-log.cron dest=/etc/cron.d/ mode=0644
   tags:
-  - compress 
+  - compress
   when: inventory_hostname.startswith('log0')
 
 - name: Set crypto-policy to LEGACY on fedora 33 hosts to get 2fa working
   import_tasks: crypto-policies.yml
+
+- name: proxy log rotate for proxy servers
+  copy: src="{{ files }}"/common/rsyslog-logrotate dest=/etc/logrotate.d/rsyslog-logrotate mode=0644
+  when: inventory_hostname.startswith('proxy')
+  notify:
+  - restart rsyslog
+  tags:
+  - rsyslogd
+  - config
+  - base
