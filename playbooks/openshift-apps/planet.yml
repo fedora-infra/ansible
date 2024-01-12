@@ -20,17 +20,17 @@
       - apply-appowners
     when: env == "staging"
 
-    - role: openshift/project
-    app: planet
-    description: "Fedora Planet"
-    appowners:
-    - phsmoura
-    - kevin
-    tags:
-      - apply-appowners
-    when: env == "production"
+  # - role: openshift/project
+  #   app: planet
+  #   description: "Fedora Planet"
+  #   appowners:
+  #   - phsmoura
+  #   - kevin
+  #   tags:
+  #     - apply-appowners
+  #   when: env == "production"
 
-# Keytabs
+  # Keytabs
   - role: openshift/keytab
     app: planet
     key: http
