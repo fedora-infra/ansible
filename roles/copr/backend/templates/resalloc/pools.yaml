@@ -232,9 +232,11 @@ copr_ic_s390x_{{ t + '_' if t or '' }}us_east_{% if devel %}dev{% else %}prod{% 
   tags_on_demand:
 {% endif %}
     - arch_s390x
-    - arch_s390x_native
+    - name: arch_s390x_native
 {% if t == 'hp' %}
-{% if not devel %}
+{% if devel %}
+      priority: -30
+{% else %}
   tags_on_demand:
 {% endif %}
     - on_demand_powerful
