@@ -75,6 +75,16 @@
       annotations:
         haproxy.router.openshift.io/timeout: 5m
 
+    - role: openshift/route
+      app: flatpak-cache
+      routename: web-direct
+      host: "flatpak-cache{{ env_suffix }}.fedoraproject.org"
+      servicename: flatpak-cache
+      serviceport: web
+      termination_passthrough: true
+      annotations:
+        haproxy.router.openshift.io/timeout: 5m
+
     - role: openshift/object
       app: flatpak-cache
       template: deployment.yml
