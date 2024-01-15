@@ -70,7 +70,7 @@
       app: flatpak-cache
       routename: web
       host: "flatpak-cache.apps.ocp{{ env_suffix }}.fedoraproject.org"
-      servicename: web
+      servicename: flatpak-cache
       serviceport: web
       annotations:
         haproxy.router.openshift.io/timeout: 5m
