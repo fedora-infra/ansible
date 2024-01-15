@@ -688,6 +688,7 @@
   - role: httpd/website
     site_name: flatpak-cache.stg.fedoraproject.org
     sslonly: false
+    certbot: true
     tags:
     - flatpak-cache.stg.fedoraproject.org
     when: env == "staging"
