@@ -914,3 +914,15 @@
     tags:
     - awx
     when: env == "production"
+
+  - role: httpd/reverseproxy
+    website: "flatpak-cache{{ env_suffix }}.fedoraproject.org"
+    destname: apps.ocp
+    balancer_name: apps-ocp
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    targettype: openshift
+    ocp4: true
+    keephost: true
+    tags:
+    - flatpak-cache.stg.fedoraproject.org
+    when: env == "staging"
