@@ -44,6 +44,8 @@ spec:
           imagePullPolicy: Always
           image: image-registry.openshift-image-registry.svc:5000/flatpak-cache/flatpak-cache:latest
           name: flatpak-cache
+          ports:
+            - containerPort: 3128
           command:
             - bash
           args:
