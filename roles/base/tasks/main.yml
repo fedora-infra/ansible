@@ -563,7 +563,7 @@
   import_tasks: crypto-policies.yml
 
 - name: proxy log rotate for proxy servers
-  copy: src="{{ files }}"/common/rsyslog-logrotate dest=/etc/logrotate.d/rsyslog-logrotate mode=0644
+  copy: src="{{ files }}/common/rsyslog-logrotate" dest=/etc/logrotate.d/rsyslog-logrotate mode=0644
   when: inventory_hostname.startswith('proxy')
   notify:
   - restart rsyslog
