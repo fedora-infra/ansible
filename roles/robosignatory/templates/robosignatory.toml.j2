@@ -433,14 +433,15 @@ handlers = ["console"]
             keyid = "{{ (env == 'production')|ternary('18B8e74c', 'd300e724') }}"
             file_signing_key = "fedora-39-ima"
 
+            # F40 Mass Rebuild
             [[consumer_config.koji_instances.primary.tags]]
-            from = "f39-rebuild"
-            to = "f39-rebuild"
-            key = "{{ (env == 'production')|ternary('fedora-39', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('18B8e74c', 'd300e724') }}"
+            from = "f40-rebuild"
+            to = "f40-rebuild"
+            key = "{{ (env == 'production')|ternary('fedora-40', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('a15B79cc', 'd300e724') }}"
             {% if env == "production" %}
             # ima file signing - enabled in f37
-            file_signing_key = "fedora-39-ima"
+            file_signing_key = "fedora-40-ima"
             {% endif %}
 
     [consumer_config.ostree_refs]
