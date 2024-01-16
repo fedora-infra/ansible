@@ -697,9 +697,21 @@ pyramid.default_locale_name = en
 
 pyramid.includes =
     pyramid_sawing
+    cornice
 pyramid_sawing.file = /etc/bodhi/logging.yaml
 
 debugtoolbar.hosts = 127.0.0.1 ::1
+
+##
+## CORS settings
+##
+{% if env == "staging" %}
+cors.policy.origins = https://src.stg.fedoraproject.org
+cors.policy.headers = Content-Type, Accept
+cors.policy.expose_headers = Content-Type, Accept
+cors.policy.methods = GET, OPTIONS
+cors.policy.max_age = 3600
+{% endif %}
 
 ##
 ## Database
