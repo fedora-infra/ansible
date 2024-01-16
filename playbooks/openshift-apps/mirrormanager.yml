@@ -88,12 +88,6 @@
       annotations:
         haproxy.router.openshift.io/timeout: 5m
 
-    # Secrets
-    - role: openshift/object
-      app: mirrormanager
-      template: secret-webhook.yml
-      objectname: secret-webhook.yml
-
     # Fedora Messaging
     - role: openshift/secret-file
       app: mirrormanager
