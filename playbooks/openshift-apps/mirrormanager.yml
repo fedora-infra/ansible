@@ -12,6 +12,7 @@
     - /srv/web/infra/ansible/vars/global.yml
     - /srv/private/ansible/vars.yml
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/apps/mirrormanager.yml
 
   tasks:
     - name: DB user
@@ -35,6 +36,7 @@
     - /srv/web/infra/ansible/vars/global.yml
     - /srv/private/ansible/vars.yml
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/apps/mirrormanager.yml
 
   roles:
     - role: rabbit/user
