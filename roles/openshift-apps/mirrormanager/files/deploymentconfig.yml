@@ -1,0 +1,122 @@
+---
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: frontend
+  labels:
+    app: mirrormanager
+spec:
+  replicas: 1
+  selector:
+    app: mirrormanager
+    deploymentconfig: frontend
+  strategy:
+    type: Rolling
+    activeDeadlineSeconds: 21600
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: mirrormanager
+        deploymentconfig: frontend
+    spec:
+      containers:
+      - name: mirrormanager
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: mm-config
+          mountPath: "/etc/mirrormanager"
+          readOnly: true
+        - name: statistics
+          mountPath: /var/www/mirrormanager-statistics
+        - name: wsgi-script
+          mountPath: "/opt/app-root/src/deploy"
+          readOnly: true
+        - name: script
+          mountPath: "/opt/scripts"
+          readOnly: true
+        - name: fedora-messaging-config
+          mountPath: "/etc/fedora-messaging"
+          readOnly: true
+        - name: fedora-messaging-ca
+          mountPath: /etc/pki/fedora-messaging/cacert.pem
+          subPath: cacert.pem
+          readOnly: true
+        - name: fedora-messaging-crt
+          mountPath: /etc/pki/fedora-messaging/cert.pem
+          subPath: cert.pem
+          readOnly: true
+        - name: fedora-messaging-key
+          mountPath: /etc/pki/fedora-messaging/key.pem
+          subPath: key.pem
+          readOnly: true
+        # - name: ipa-config
+        #   mountPath: "/etc/ipa"
+        #   readOnly: true
+        env:
+        - name: MM2_CONFIG
+          value: "/etc/mirrormanager/mm.cfg"
+        - name: APP_MODULE
+          value: "deploy.wsgi"
+        - name: APP_CONFIG
+          value: "/etc/mirrormanager/gunicorn.conf.py"
+        # readinessProbe:
+        #   timeoutSeconds: 10
+        #   initialDelaySeconds: 5
+        #   periodSeconds: 60
+        #   httpGet:
+        #     path: "/healthz/ready"
+        #     port: 8080
+        # livenessProbe:
+        #   timeoutSeconds: 10
+        #   initialDelaySeconds: 10
+        #   periodSeconds: 60
+        #   httpGet:
+        #     path: "/healthz/live"
+        #     port: 8080
+      volumes:
+      - name: mm-config
+        configMap:
+          name: mirrormanager
+      - name: statistics
+        persistentVolumeClaim:
+          claimName: statistics
+      - name: wsgi-script
+        configMap:
+          name: wsgi-script
+      - name: scripts
+        configMap:
+          name: scripts
+      - name: fedora-messaging-config
+        configMap:
+          name: fedora-messaging-config
+      - name: fedora-messaging-ca
+        secret:
+          secretName: fedora-messaging-ca
+      - name: fedora-messaging-crt
+        secret:
+          secretName: fedora-messaging-crt
+      - name: fedora-messaging-key
+        secret:
+          secretName: fedora-messaging-key
+      # - name: ipa-config
+      #   configMap:
+      #     name: ipa-client-config
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+    imageChangeParams:
+      automatic: true
+      containerNames:
+      - mirrormanager
+      from:
+        kind: ImageStreamTag
+        name: mirrormanager:latest

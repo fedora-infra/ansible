@@ -1,0 +1,38 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: statistics
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: ocs-storagecluster-cephfs
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: fedora-ftp
+# spec:
+#   accessModes:
+#   - ReadOnlyMany
+#   resources:
+#     requests:
+#       storage: 1Gi
+#   storageClassName: ""
+#   volumeName: fedora_ftp/fedora.redhat.com/pub
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: fedora-ftp-archive
+# spec:
+#   accessModes:
+#   - ReadOnlyMany
+#   resources:
+#     requests:
+#       storage: 1Gi
+#   storageClassName: ""
+#   volumeName: fedora_ftp_archive

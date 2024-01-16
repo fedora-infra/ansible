@@ -1,0 +1,45 @@
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: mirrormanager2
+  labels:
+    app: mirrormanager2
+    build: mm
+spec:
+  runPolicy: Serial
+  source:
+    type: Git
+    git:
+      # uri: https://github.com/fedora-infra/mirrormanager2.git
+      uri: https://github.com/abompard/mirrormanager2.git
+{% if env == "staging" %}
+      # ref: staging
+      ref: refactor-utilities
+{% else %}
+      ref: master
+{% endif %}
+    contextDir: /
+  strategy:
+    type: Source
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        # name: python:3.11
+        # namespace: openshift
+        # OpenShift does not have Python 3.11 (yet), use our own ImageStream
+        name: python-311:latest
+  output:
+    to:
+      kind: ImageStreamTag
+      name: mirrormanager2:latest
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+  - type: GitHub
+    github:
+{% if env == 'staging' %}
+      secret: "{{ mirrormanager_stg_github_secret }}"
+{% elif env == 'production' %}
+      secret: "{{ mirrormanager_prod_github_secret }}"
+{% endif %}

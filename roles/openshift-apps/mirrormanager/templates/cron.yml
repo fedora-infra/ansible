@@ -1,0 +1,62 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: generate-worldmap
+spec:
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  concurrencyPolicy: Forbid
+  schedule: "50 20 * * *"
+  startingDeadlineSeconds: 500
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: mirrormanager
+            image: mirrormanager:latest
+            command: ["/opt/app-root/bin/mm2_generate-worldmap", "--output", "/var/www/mirrormanager-statistics/map/"]
+            volumeMounts:
+              - name: mm-config
+                mountPath: "/etc/mirrormanager"
+                readOnly: true
+          volumes:
+            - name: mm-config
+              configMap:
+                name: mm-config
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: sync-crawler-logs
+spec:
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  concurrencyPolicy: Forbid
+  schedule: "55 * * * *"
+  startingDeadlineSeconds: 500
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: mirrormanager
+            image: mirrormanager:latest
+            command: ["bash", "/opt/scripts/sync-crawler-logs.sh"]
+            volumeMounts:
+              - name: mm-config
+                mountPath: "/etc/mirrormanager"
+                readOnly: true
+              - name: script
+                mountPath: "/opt/scripts"
+                readOnly: true
+          volumes:
+            - name: mm-config
+              configMap:
+                name: mm-config
+            - name: scripts
+              configMap:
+                name: scripts

@@ -1,0 +1,136 @@
+#
+# MirrorManager
+#
+
+---
+- name: setup the database
+  hosts: db01.iad2.fedoraproject.org:db01.stg.iad2.fedoraproject.org
+  gather_facts: no
+  become: yes
+  become_user: postgres
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - /srv/private/ansible/vars.yml
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  tasks:
+    - name: DB user
+      postgresql_user:
+        name: "{{ (env == 'production')|ternary(mirrormanager_db_user, mirrormanager_stg_db_user) }}"
+        password: "{{ (env == 'production')|ternary(mirrormanager_db_pass, mirrormanager_stg_db_pass) }}"
+    - name: FMN database creation
+      postgresql_db:
+        name: "{{ (env == 'production')|ternary(mirrormanager_db_name, mirrormanager_stg_db_name) }}"
+        owner: "{{ (env == 'production')|ternary(mirrormanager_db_user, mirrormanager_stg_db_user) }}"
+        encoding: UTF-8
+
+- name: make the app be real
+  # Only staging for now
+  # hosts: os_control_stg:os_control
+  hosts: os_control_stg
+  user: root
+  gather_facts: false
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - /srv/private/ansible/vars.yml
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  roles:
+    - role: rabbit/user
+      username: "mirrormanager{{ env_suffix }}"
+      sent_topics: ^org\.fedoraproject\.{{ env_short }}\.mirrormanager\..*
+      tags:
+        - config
+        - fedora-messaging
+        - rabbitmq_cluster
+
+    - role: openshift/project
+      app: mirrormanager
+      description: "MirrorManager"
+      appowners:
+        - abompard
+        - nphilipp
+        - adrian
+      tags:
+        - apply-appowners
+
+    - role: openshift/object
+      app: mirrormanager
+      file: imagestream.yml
+      objectname: imagestream.yml
+
+    - role: openshift/object
+      app: mirrormanager
+      template: buildconfig.yml
+      objectname: buildconfig.yml
+
+    - role: openshift/object
+      app: mirrormanager
+      template: configmap.yml
+      objectname: configmap.yml
+
+    - role: openshift/object
+      app: mirrormanager
+      file: service.yml
+      objectname: service.yml
+
+    # Routes
+    - role: openshift/route
+      app: mirrormanager
+      routename: frontend
+      # host: "mirrormanager{{ env_suffix }}.fedoraproject.org"
+      host: "mirrors.apps.ocp{{ env_suffix }}.fedoraproject.org"
+      servicename: frontend
+      serviceport: web
+      annotations:
+        haproxy.router.openshift.io/timeout: 5m
+
+    # Secrets
+    - role: openshift/object
+      app: mirrormanager
+      template: secret-webhook.yml
+      objectname: secret-webhook.yml
+
+    # Fedora Messaging
+    - role: openshift/secret-file
+      app: mirrormanager
+      secret_name: fedora-messaging-ca
+      key: cacert.pem
+      privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    - role: openshift/secret-file
+      app: mirrormanager
+      secret_name: fedora-messaging-crt
+      key: fmn-cert.pem
+      privatefile: "rabbitmq/{{env}}/pki/issued/fmn{{env_suffix}}.crt"
+    - role: openshift/secret-file
+      app: mirrormanager
+      secret_name: fedora-messaging-key
+      key: fmn-key.pem
+      privatefile: "rabbitmq/{{env}}/pki/private/fmn{{env_suffix}}.key"
+
+    # Deployment config
+    - role: openshift/object
+      app: mirrormanager
+      file: deploymentconfig.yml
+      objectname: deploymentconfig.yml
+
+    # Cron jobs
+    - role: openshift/object
+      app: mirrormanager
+      template: cron.yml
+      objectname: cron.yml
+
+    - role: openshift/start-build
+      app: mirrormanager
+      buildname: mm
+      tags:
+      - never
+      - build
+
+    - role: openshift/rollout
+      app: mirrormanager
+      dcname: frontend
+      tags:
+      - never
+      - rollout
