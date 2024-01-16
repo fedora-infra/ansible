@@ -62,3 +62,5 @@
     when: copr_messaging
   - role: rsnapshot-push
     when: env == "production"
+  - role: log-detective-backup
+    when: env == "production"

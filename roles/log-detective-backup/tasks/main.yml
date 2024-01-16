@@ -1,0 +1,44 @@
+---
+- name: Add the user 'log-detective-backup'
+  ansible.builtin.user:
+    name: "{{ ld_backup_user }}"
+    comment: User used for backing-up log-detective.com
+    uid: 15151
+  tags:
+    - log_detective_backup
+
+- name: create the log-detective.com backup directory
+  ansible.builtin.file:
+    path: "{{ ld_backup_path }}"
+    state: directory
+    owner: "{{ ld_backup_user }}"
+    group: "{{ ld_backup_user }}"
+    mode: '0700'
+  tags:
+    - log_detective_backup
+
+- name: install the log-detective-backup package dependencies
+  package:
+    name:
+      - wget
+    state: present
+  tags:
+    - log_detective_backup
+
+- name: install the backup script
+  template:
+    src: backup.sh.j2
+    dest: "{{ ld_backup_script }}"
+    mode: '0755'
+  tags:
+    - log_detective_backup
+
+- name: install the cron job downloading the log-detective dumps
+  ansible.builtin.cron:
+    name: "download log-detective data dump"
+    minute: "0"
+    hour: "*"
+    job: "{{ ld_backup_script }}"
+    user: "{{ ld_backup_user }}"
+  tags:
+    - log_detective_backup

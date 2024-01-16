@@ -1,0 +1,5 @@
+#! /bin/sh
+
+basename=$(date +%s).tar.gz
+
+wget -O "{{ ld_backup_path }}/$basename" "{{ ld_dump_url }}"
