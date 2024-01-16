@@ -35,6 +35,9 @@ spec:
         - name: mm-config
           mountPath: "/etc/mirrormanager"
           readOnly: true
+        - name: mm-secrets
+          mountPath: "/etc/mirrormanager-secrets"
+          readOnly: true
         - name: statistics
           mountPath: /var/www/mirrormanager-statistics
         - name: wsgi-script
@@ -86,6 +89,9 @@ spec:
       - name: mm-config
         configMap:
           name: mirrormanager
+      - name: mm-secrets
+        secret:
+          secretName: secrets
       - name: statistics
         persistentVolumeClaim:
           claimName: statistics

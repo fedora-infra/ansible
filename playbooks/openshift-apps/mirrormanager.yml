@@ -69,6 +69,11 @@
 
     - role: openshift/object
       app: mirrormanager
+      template: secrets.yml
+      objectname: secrets.yml
+
+    - role: openshift/object
+      app: mirrormanager
       template: configmap.yml
       objectname: configmap.yml
 
@@ -81,8 +86,7 @@
     - role: openshift/route
       app: mirrormanager
       routename: frontend
-      # host: "mirrormanager{{ env_suffix }}.fedoraproject.org"
-      host: "mirrors.apps.ocp{{ env_suffix }}.fedoraproject.org"
+      host: "{{ mirrormanager_hostname }}"
       servicename: frontend
       serviceport: web
       annotations:

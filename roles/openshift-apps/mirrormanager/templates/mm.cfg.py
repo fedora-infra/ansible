@@ -2,7 +2,7 @@
 # This is the config file for MirrorManager as intended to be used in OpenShift
 #
 
-OIDC_CLIENT_SECRETS = '/etc/mirrormanager/client_secrets.json'
+OIDC_CLIENT_SECRETS = '/etc/mirrormanager-secrets/client_secrets.json'
 
 # This is the directory the code enabled by SHOW_STATISTICS will use
 # to locate the statistics files and display them.
