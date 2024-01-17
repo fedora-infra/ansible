@@ -8,7 +8,7 @@ whitelist='/srv/torrent/btholding/whitelist'
 
 
 if len(sys.argv) < 2:
-    print "Usage: torrentstats.py /path/to/torrent/stats/file"
+    print("Usage: torrentstats.py /path/to/torrent/stats/file")
     sys.exit(1)
     
 torrents = {}
@@ -34,4 +34,4 @@ for line in open(sys.argv[1],'r').readlines():
     tdict['seeds'] = 1
     tlist.append(tdict)
 
-print simplejson.dumps(tlist)
+print(simplejson.dumps(tlist))
