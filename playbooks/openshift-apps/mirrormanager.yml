@@ -69,6 +69,11 @@
 
     - role: openshift/object
       app: mirrormanager
+      file: storage.yml
+      objectname: storage.yml
+
+    - role: openshift/object
+      app: mirrormanager
       template: secrets.yml
       objectname: secrets.yml
 
