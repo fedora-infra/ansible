@@ -77,7 +77,7 @@ SMTP_SERVER = 'bastion{{ env_suffix }}.fedoraproject.org'
 
 # This is the directory the code enabled by SHOW_STATISTICS will use
 # to locate the statistics files and display them.
-# STATISTICS_BASE = '/var/www/mirrormanager-statistics/data'
+STATISTICS_BASE = '/var/lib/mirrormanager/statistics/data'
 
 # Countries which have to be excluded.
 EMBARGOED_COUNTRIES = ['CU', 'IR', 'KP', 'SD', 'SY']
@@ -98,7 +98,10 @@ EMBARGOED_COUNTRIES = ['CU', 'IR', 'KP', 'SD', 'SY']
 # SHOW_PROPAGATION = True
 
 # Where to look for the above mentioned propagation images.
-# PROPAGATION_BASE = '/var/www/mirrormanager-statistics/data/propagation'
+PROPAGATION_BASE = '/var/lib/mirrormanager/statistics/data/propagation'
+
+# Where the GeoIP database lives
+GEOIP_BASE = "/var/lib/mirrormanager/geoip"
 
 # Disable master rsync server ACL
 # Fedora does not use it and therefore it is set to False

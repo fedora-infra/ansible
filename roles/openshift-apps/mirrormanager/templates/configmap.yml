@@ -11,8 +11,8 @@ items:
     labels:
       app: mirrormanager
   data:
-    mm.cfg: |-
-      {{ load_file('mm.cfg.py') | indent(6) }}
+    mirrormanager2.cfg: |-
+      {{ load_file('mirrormanager2.cfg.py') | indent(6) }}
     gunicorn.conf.py: |-
       {{ load_file('gunicorn.conf.py') | indent(6) }}
 - apiVersion: v1

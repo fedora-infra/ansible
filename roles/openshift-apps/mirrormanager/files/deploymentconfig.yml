@@ -38,8 +38,8 @@ spec:
         - name: secrets
           mountPath: "/etc/mirrormanager-secrets"
           readOnly: true
-        - name: statistics
-          mountPath: /var/www/mirrormanager-statistics
+        - name: data
+          mountPath: /var/lib/mirrormanager
         - name: wsgi-script
           mountPath: "/opt/app-root/src/deploy"
           readOnly: true
@@ -66,7 +66,7 @@ spec:
         #   readOnly: true
         env:
         - name: MM2_CONFIG
-          value: "/etc/mirrormanager/mm.cfg"
+          value: "/etc/mirrormanager/mirrormanager2.cfg"
         - name: APP_MODULE
           value: "deploy.wsgi"
         - name: APP_CONFIG
@@ -92,9 +92,9 @@ spec:
       - name: secrets
         secret:
           secretName: secrets
-      - name: statistics
+      - name: data
         persistentVolumeClaim:
-          claimName: statistics
+          claimName: data
       - name: wsgi-script
         configMap:
           name: wsgi-script
