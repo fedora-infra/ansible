@@ -22,41 +22,47 @@ spec:
               - name: config
                 mountPath: "/etc/mirrormanager"
                 readOnly: true
+              - name: statistics
+                mountPath: "/var/www/mirrormanager-statistics"
           volumes:
             - name: config
               configMap:
                 name: config
----
-apiVersion: batch/v1
-kind: CronJob
-metadata:
-  name: sync-crawler-logs
-spec:
-  successfulJobsHistoryLimit: 3
-  failedJobsHistoryLimit: 3
-  concurrencyPolicy: Forbid
-  schedule: "55 * * * *"
-  startingDeadlineSeconds: 500
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          restartPolicy: Never
-          containers:
-          - name: mirrormanager
-            image: mirrormanager:latest
-            command: ["bash", "/opt/scripts/sync-crawler-logs.sh"]
-            volumeMounts:
-              - name: config
-                mountPath: "/etc/mirrormanager"
-                readOnly: true
-              - name: scripts
-                mountPath: "/opt/scripts"
-                readOnly: true
-          volumes:
-            - name: config
-              configMap:
-                name: config
-            - name: scripts
-              configMap:
-                name: scripts
+            - name: statistics
+              persistentVolumeClaim:
+                claimName: statistics
+
+# ---
+# apiVersion: batch/v1
+# kind: CronJob
+# metadata:
+#   name: sync-crawler-logs
+# spec:
+#   successfulJobsHistoryLimit: 3
+#   failedJobsHistoryLimit: 3
+#   concurrencyPolicy: Forbid
+#   schedule: "55 * * * *"
+#   startingDeadlineSeconds: 500
+#   jobTemplate:
+#     spec:
+#       template:
+#         spec:
+#           restartPolicy: Never
+#           containers:
+#           - name: mirrormanager
+#             image: mirrormanager:latest
+#             command: ["bash", "/opt/scripts/sync-crawler-logs.sh"]
+#             volumeMounts:
+#               - name: config
+#                 mountPath: "/etc/mirrormanager"
+#                 readOnly: true
+#               - name: scripts
+#                 mountPath: "/opt/scripts"
+#                 readOnly: true
+#           volumes:
+#             - name: config
+#               configMap:
+#                 name: config
+#             - name: scripts
+#               configMap:
+#                 name: scripts
