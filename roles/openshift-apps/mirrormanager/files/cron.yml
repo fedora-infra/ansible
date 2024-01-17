@@ -17,7 +17,12 @@ spec:
           containers:
           - name: mirrormanager
             image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
-            command: ["/opt/app-root/bin/mm2_generate-worldmap", "--output", "/var/www/mirrormanager-statistics/map/"]
+            command:
+              - "/opt/app-root/bin/mm2_generate-worldmap"
+              - "-c"
+              - "/etc/mirrormanager/mm.cfg"
+              - "--output"
+              - "/var/www/mirrormanager-statistics/map/"
             volumeMounts:
               - name: config
                 mountPath: "/etc/mirrormanager"
