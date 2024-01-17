@@ -1,4 +1,4 @@
-apiVersion: apps.openshift.io/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
@@ -42,7 +42,7 @@ spec:
           name: ipa-client-config
       - name: keytab-volume
         secret:
-        secretName: planet-keytab
+          secretName: planet-keytab
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
