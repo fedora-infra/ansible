@@ -19,13 +19,13 @@ spec:
             image: mirrormanager:latest
             command: ["/opt/app-root/bin/mm2_generate-worldmap", "--output", "/var/www/mirrormanager-statistics/map/"]
             volumeMounts:
-              - name: mm-config
+              - name: config
                 mountPath: "/etc/mirrormanager"
                 readOnly: true
           volumes:
-            - name: mm-config
+            - name: config
               configMap:
-                name: mm-config
+                name: config
 ---
 apiVersion: batch/v1
 kind: CronJob
@@ -47,16 +47,16 @@ spec:
             image: mirrormanager:latest
             command: ["bash", "/opt/scripts/sync-crawler-logs.sh"]
             volumeMounts:
-              - name: mm-config
+              - name: config
                 mountPath: "/etc/mirrormanager"
                 readOnly: true
               - name: scripts
                 mountPath: "/opt/scripts"
                 readOnly: true
           volumes:
-            - name: mm-config
+            - name: config
               configMap:
-                name: mm-config
+                name: config
             - name: scripts
               configMap:
                 name: scripts
