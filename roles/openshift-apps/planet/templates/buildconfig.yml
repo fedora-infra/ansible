@@ -1,41 +1,41 @@
-- apiVersion: build.openshift.io/v1
-  kind: BuildConfig
-  metadata:
-    annotations:
-      app.openshift.io/vcs-ref: ""
-      app.openshift.io/vcs-uri: https://github.com/fedora-infra/planet
-    labels:
-      app: planet
-      app.kubernetes.io/component: planet
-      app.kubernetes.io/instance: planet
-      app.kubernetes.io/name: planet
-      app.kubernetes.io/part-of: planet-app
-    name: planet
-  spec:
-    nodeSelector: null
-    output:
-      to:
-        kind: ImageStreamTag
-        name: planet:latest
-    postCommit: {}
-    resources: {}
-    runPolicy: Serial
-    source:
-      contextDir: /
-      git:
-        uri: https://github.com/fedora-infra/planet
-      type: Git
-    strategy:
-      dockerStrategy:
-        dockerfilePath: Dockerfile
-      type: Docker
-    triggers:
-    - generic:
-        secretReference:
-          name: planet-generic-webhook-secret
-      type: Generic
-    - github:
-        secretReference:
-          name: planet-github-webhook-secret
-      type: GitHub
-    - type: ConfigChange
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  annotations:
+    app.openshift.io/vcs-ref: ""
+    app.openshift.io/vcs-uri: https://github.com/fedora-infra/planet
+  labels:
+    app: planet
+    app.kubernetes.io/component: planet
+    app.kubernetes.io/instance: planet
+    app.kubernetes.io/name: planet
+    app.kubernetes.io/part-of: planet-app
+  name: planet
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: planet:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    contextDir: /
+    git:
+      uri: https://github.com/fedora-infra/planet
+    type: Git
+  strategy:
+    dockerStrategy:
+      dockerfilePath: Dockerfile
+    type: Docker
+  triggers:
+  - generic:
+      secretReference:
+        name: planet-generic-webhook-secret
+    type: Generic
+  - github:
+      secretReference:
+        name: planet-github-webhook-secret
+    type: GitHub
+  - type: ConfigChange
