@@ -55,7 +55,7 @@
   - role: openshift/route
     app: planet
     routename: planet
-    host: "planet.{{env_suffix}}.fedoraproject.org "
+    host: "planet{{env_suffix}}.fedoraproject.org "
     serviceport: web
     servicename: planet-web
     annotations:
