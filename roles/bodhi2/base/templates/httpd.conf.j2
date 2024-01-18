@@ -48,11 +48,6 @@ MaxRequestWorkers 100
     ExpiresDefault "access plus 1 month"
     Header unset ETag
 </Location>
-{% if env == 'staging' %}
-<IfModule mod_headers.c>
-    Header set Access-Control-Allow-Origin "https://src.stg.fedoraproject.org"
-</IfModule>
-{% endif %}
 LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
 CustomLog /httpdir/accesslog combined
 ErrorLog /httpdir/errorlog
