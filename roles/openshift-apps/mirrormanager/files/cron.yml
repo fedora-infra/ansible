@@ -34,6 +34,8 @@ spec:
             - name: data
               persistentVolumeClaim:
                 claimName: data
+          securityContext:
+            supplementalGroups: [1001280000]
 ---
 apiVersion: batch/v1
 kind: CronJob
@@ -67,7 +69,8 @@ spec:
             - name: data
               persistentVolumeClaim:
                 claimName: data
-
+          securityContext:
+            supplementalGroups: [1001280000]
 # ---
 # apiVersion: batch/v1
 # kind: CronJob
