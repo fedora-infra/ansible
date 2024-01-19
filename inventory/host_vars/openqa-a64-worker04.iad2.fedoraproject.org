@@ -59,7 +59,7 @@ nrpe_procs_warn: 250
 openqa_rngd: true
 openqa_tap_iface: eth2
 # this is a powerful machine, can handle more openQA workers
-openqa_workers: 35
+openqa_workers: 30
 sudoers: "{{ private }}/files/sudo/qavirt-sudoers"
 # firewall ports for server->worker websockets connections
 # this port is 'QEMUPORT plus 1'
