@@ -13,6 +13,7 @@
   - geolite2-country
   tags:
   - packages
+  when: ansible_hostname != "mm-crawler-dev.stg.iad2.fedoraproject.org"
 
 - name: create /etc/mirrormanager
   file: path=/etc/mirrormanager state=directory

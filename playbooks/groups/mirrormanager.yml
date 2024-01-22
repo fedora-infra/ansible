@@ -65,8 +65,7 @@
   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
-  - {role: mirrormanager/crawler
-     when: ansible_hostname != "mm-crawler-dev.stg.iad2.fedoraproject.org"}
+  - mirrormanager/crawler
   - {role: rsyncd,
      when: env != "staging"}
   - {role: openvpn/client, when: datacenter != "iad2"}
