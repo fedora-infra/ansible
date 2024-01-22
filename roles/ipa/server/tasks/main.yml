@@ -73,7 +73,25 @@
   tags:
   - ipa/server
   - config
-  when: ipa_initial
+  when: ipa_initial and ansible_distribution_major_version|int <= 8 and ansible_distribution == 'RedHat'
+
+- name: install IPA
+  command: ipa-server-install
+           --realm={{ipa_realm}}
+           --domain={{ipa_realm}}
+           --ds-password={{ipa_dm_password}}
+           --admin-password={{ipa_admin_password}}
+           --mkhomedir
+           --no-ntp
+           --unattended
+           --no-ssh
+           --no-sshd
+           --log-file=/var/log/ipainstall.log
+           creates=/etc/ipa/default.conf
+  tags:
+  - ipa/server
+  - config
+  when: ipa_initial and ansible_distribution_major_version|int > 8 and ansible_distribution == 'RedHat'
 
 - name: install IPA vault
   command: ipa-kra-install

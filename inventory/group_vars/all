@@ -135,11 +135,11 @@ freezes: true
 install_noc: none
 ipa_admin_password: "{{ ipa_prod_admin_password }}"
 ipa_realm: FEDORAPROJECT.ORG
-ipa_server: ipa01.iad2.fedoraproject.org
+ipa_server: ipa03.iad2.fedoraproject.org
 ipa_server_nodes:
   - ipa01.iad2.fedoraproject.org
   - ipa02.iad2.fedoraproject.org
-  #- ipa03.iad2.fedoraproject.org
+  - ipa03.iad2.fedoraproject.org
 ks_repo: http://infrastructure.fedoraproject.org/repo/rhel/RHEL7-x86_64/
 # defaults for virt installs
 ks_url: http://infrastructure.fedoraproject.org/repo/rhel/ks/kvm-rhel-7
