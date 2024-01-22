@@ -33,22 +33,10 @@ spec:
         - name: keytab-volume
           mountPath: /etc/keytabs
           readOnly: true
-        - name: krb-config-volume
-          mountPath: /etc/krb5
-          readOnly: true
-        - name: ipa-config-volume
-          mountPath: /etc/ipa
-          readOnly: true
       volumes:
       - name: keytab-volume
         secret:
-          secretName: planet-keytab-http
-      - name: krb-config-volume
-        configMap:
-          name: krb5-config
-      - name: ipa-config-volume
-        configMap:
-          name: ipa-client-config      
+          secretName: planet-keytab-http   
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
