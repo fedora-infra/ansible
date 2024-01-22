@@ -141,6 +141,3 @@ robosignatory, tag2distrepo, ci-resultsdb-listener, stylo, mirrorlist
 resultsdb, Nagios, koschei, wiki / mediawiki, wiki / moin, waiverdb, 
 greenwave, ODCS, Mailman3 / HK, mailman 2, OSBS, pungi, koji, MBS, 
 IPA, rabbitmq, geoip,ipsilon
-
-We are reviewing PR's during the morning EU standup (https://board.net/p/fedora-infra-daily),
-so feel free to jump in and discuss.
