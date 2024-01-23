@@ -18,7 +18,7 @@ spec:
         curl https://raw.githubusercontent.com/fedora-infra/matrix-bots/main/install-plugins-from-git.py -o /usr/local/bin/install-maubot-plugins && \
         chmod +x /usr/local/bin/install-maubot-plugins && \
         mkdir /maubot && \
-        for plugin in maubot-fedora maubot-adminclient maubot-meetings maubot-webhook maubot-pagure-notifications; do \
+        for plugin in maubot-fedora maubot-adminclient maubot-meetings maubot-webhook maubot-pagure-notifications maubot-gitlab; do \
           install-maubot-plugins -o /maubot -b {{ (env == "production")|ternary("stable", "staging") }} https://github.com/fedora-infra/${plugin}; \
         done;
       WORKDIR /maubot
