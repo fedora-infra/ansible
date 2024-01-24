@@ -1,17 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: planet
   labels:
     app: planet
-    app.kubernetes.io/component: planet
-    app.kubernetes.io/instance: planet
-    app.kubernetes.io/name: planet
-    app.kubernetes.io/part-of: planet-app
-  name: planet
 spec:
-  progressDeadlineSeconds: 600
   replicas: 1
-  revisionHistoryLimit: 10
   selector:
     matchLabels:
       app: planet
@@ -36,9 +30,5 @@ spec:
       volumes:
       - name: keytab-volume
         secret:
-          secretName: planet-keytab-http   
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
-      schedulerName: default-scheduler
-      securityContext: {}
-      terminationGracePeriodSeconds: 30
+          secretName: planet-keytab-http
+          
