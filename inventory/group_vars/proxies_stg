@@ -61,12 +61,6 @@ tcp_ports: [
   6443,
   # This is for RabbitMQ internal-public access
   15671,
-  # This is for the haproxy HTML stats page
-  # TODO -- there's no need for this to be wide open to the world.  With this
-  # in place, you can visit https://apps.fedoraproject.org:8080 and get the
-  # haproxy stats page.  We should close this and just have admins go through
-  # the apache reverseproxy at https://admin.fedoraproject.org/haproxy/proxy1
-  8080,
   # This is for TOTP
   8443,
   # For fedmsg websocket server over stunnel
