@@ -198,7 +198,7 @@
 - name: set quotas for people who have more set
   command: xfs_quota -x -c 'limit bsoft={{ item.quota }} bhard={{ item.quota }} {{ item.user }}' /srv
   with_items:
-  - {user: adamwill, quota: 3g}
+  - {user: adamwill, quota: 5g}
   - {user: apache, quota: 1000g}
   - {user: ausil, quota: 10g}
   - {user: bollocks, quota: 12g}
