@@ -21,6 +21,14 @@ spec:
     triggers:
     - type: ConfigChange
     - type: ImageChange
+{% if env == 'staging' %}
     - type: GitHub
       github:
-        secret: "{{ planet_stg_github_secret }}"
+        secretReference:
+          name: planet-stg-github-webhook-secret
+{% elif env == 'production' %}
+    - type: GitHub
+      github:
+        secretReference:
+          name: planet-github-webhook-secret
+{% endif %}
