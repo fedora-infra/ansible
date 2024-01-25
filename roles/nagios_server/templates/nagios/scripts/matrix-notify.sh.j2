@@ -1,4 +1,6 @@
 #!/bin/bash
 stdin=$(cat)
 
-curl -X POST -H "Content-Type: application/json" -u {{ matrix_nonbot_auth }} https://maubot.apps.ocp.fedoraproject.org/plugin/nonbot-nagios/send?service=$1 -d "$stdin"
+host=$(hostname -s)
+
+curl -X POST -H "Content-Type: application/json" -u {{ matrix_nonbot_auth }} https://maubot.apps.ocp.fedoraproject.org/plugin/nonbot-nagios/send?host=$host&service=$1 -d "$stdin"
