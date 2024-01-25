@@ -35,7 +35,7 @@ items:
   data:
     wsgi.py: |-
       {{ load_file('wsgi.py') | indent(6) }}
-  __init__.py: ""
+    __init__.py: ""
 - apiVersion: v1
   kind: ConfigMap
   metadata:
