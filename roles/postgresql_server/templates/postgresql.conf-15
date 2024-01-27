@@ -800,3 +800,6 @@ default_text_search_config = 'pg_catalog.english'
 #------------------------------------------------------------------------------
 
 # Add settings for extensions here
+
+session_preload_libraries = 'auto_explain'
+auto_explain.log_min_duration = '30s'
