@@ -19,11 +19,9 @@ RUN dnf install -y bodhi-server python3-pyramid_sawing python3-gunicorn sed --re
 RUN dnf install -y bodhi-server-{{bodhi_version}} python3-pyramid_sawing python3-gunicorn sed
 {% endif %}
 
-{% if env == "staging" %}
 # Temporary patch for testing fix for pod crashes
 RUN curl https://github.com/fedora-infra/bodhi/commit/7a9d7fc09d4b2eb7653e29b6feeb148abd064054.patch -o /tmp/nullPool.patch
 RUN patch -p3 -ruN -d /usr/lib/python3.11/site-packages/bodhi < /tmp/nullPool.patch
-{% endif %}
 
 # link the static files for a simpler httpd.conf
 RUN ln -s $(python3 -Ic "import sysconfig; print(sysconfig.get_path('purelib', 'rpm_prefix'))")/bodhi/server/static/ /srv/bodhi-static
