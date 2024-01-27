@@ -44,7 +44,7 @@ loggers:
 {% if env == "production" %}
     level: ERROR
 {% else %}
-    level: DEBUG
+    level: INFO
 {% endif %}
     handlers: [console, smtp]
   twisted:
