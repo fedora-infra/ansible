@@ -12,23 +12,23 @@ spec:
     git:
       uri: https://github.com/fedora-infra/planet
       ref: {{ (env == 'production')|ternary('stable', 'staging') }}
-    strategy:
-      type: Docker
-    output:
-      to:
-        kind: ImageStreamTag
-        name: planet:latest
-    triggers:
-    - type: ConfigChange
-    - type: ImageChange
+  strategy:
+    type: Docker
+  output:
+    to:
+      kind: ImageStreamTag
+      name: planet:latest
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
 {% if env == 'staging' %}
-    - type: GitHub
-      github:
-        secretReference:
-          name: planet_stg_github_secret
+  - type: GitHub
+    github:
+      secretReference:
+        name: planet_stg_github_secret
 {% elif env == 'production' %}
-    - type: GitHub
-      github:
-        secretReference:
-          name: planet_github_secret
+  - type: GitHub
+    github:
+      secretReference:
+        name: planet_github_secret
 {% endif %}
