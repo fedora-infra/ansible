@@ -13,7 +13,7 @@ network_connections:
   - autoconnect: yes
     ip:
       address:
-        - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
+        - "{{ eth0_ipv4_ip }}/{{ eth0_ipv4_nm }}"
       dhcp4: no
       dns:
         - "{{ dns1 }}"
