@@ -25,10 +25,10 @@ spec:
     - type: GitHub
       github:
         secretReference:
-          name: planet-stg-github-webhook-secret
+          name: planet_stg_github_secret
 {% elif env == 'production' %}
     - type: GitHub
       github:
         secretReference:
-          name: planet-github-webhook-secret
+          name: planet_github_secret
 {% endif %}
