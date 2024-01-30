@@ -761,6 +761,14 @@ host bvmhost-x86-05-stg {
      option subnet-mask 255.255.255.0;
 }
 
+host bvmhost-a64-01-stg {
+     hardware ethernet 0c:42:a1:c2:5d:a6;
+     fixed-address 10.3.167.16;
+     filename "uefi/grubaa64.efi";
+     next-server 10.3.163.10;
+     option routers 10.3.167.254;
+     option subnet-mask 255.255.255.0;
+}
 
 # Build network
 host bvmhost-x86-01 {
