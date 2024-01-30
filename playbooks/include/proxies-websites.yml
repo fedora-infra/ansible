@@ -835,8 +835,8 @@
     # Must not be sslonly, because example.id.fedoraproject.org must be reachable
     # via plain http for openid identity support
     sslonly: false
-    cert_name: wildcard-2023.id.fedoraproject.org
-    SSLCertificateChainFile: wildcard-2023.id.fedoraproject.org.intermediate.cert
+    cert_name: wildcard-2024.id.fedoraproject.org
+    SSLCertificateChainFile: wildcard-2024.id.fedoraproject.org.intermediate.cert
     tags:
     - id.fedoraproject.org
     when: env == "production"
