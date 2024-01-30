@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: planet
-        image: planet:latest
+        image: image-registry.openshift-image-registry.svc:5000/planet/planet:latest
         ports:
           - containerPort: 8080
         volumeMounts:
