@@ -87,8 +87,8 @@ handlers = ["console"]
             [consumer_config.koji_instances.primary.options]
             # Only ssl and kerberos are supported at the moment
             authmethod = "kerberos"
-            principal = "autosign/autosign01{{ env_suffix }}.{{datacenter}}.fedoraproject.org@{% if env != 'production' %}STG.{% endif %}FEDORAPROJECT.ORG"
-            keytab = "/etc/krb5.autosign_autosign01{{ env_suffix }}.{{datacenter}}.fedoraproject.org.keytab"
+            principal = "autosign/{{ inventory_hostname_short }}{{ env_suffix }}.{{datacenter}}.fedoraproject.org@{% if env != 'production' %}STG.{% endif %}FEDORAPROJECT.ORG"
+            keytab = "/etc/krb5.autosign_{{ inventory_hostname_short }}{{ env_suffix }}.{{datacenter}}.fedoraproject.org.keytab"
             krb_rdns = false
 
             # Temporary tags
