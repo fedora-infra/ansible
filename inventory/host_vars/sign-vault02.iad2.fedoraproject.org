@@ -4,16 +4,16 @@ dns1: 10.3.163.33
 dns2: 10.3.163.34
 dns_search1: "iad2.fedoraproject.org"
 dns_search2: "fedoraproject.org"
-eth0_ipv4_ip: 10.3.169.26
-eth0_ipv4_gw: 10.3.169.254
-eth0_mac: "{{ mac0 }}"
+eth1_ipv4_ip: 10.3.169.27
+eth1_ipv4_gw: 10.3.169.254
+eth1_mac: "{{ mac0 }}"
 has_ipv4: yes
 mac0: B4:45:06:FB:8B:3E
 network_connections:
   - autoconnect: yes
     ip:
       address:
-        - "{{ eth0_ipv4_ip }}/{{ eth0_ipv4_nm }}"
+        - "{{ eth1_ipv4_ip }}/{{ eth1_ipv4_nm }}"
       dhcp4: no
       dns:
         - "{{ dns1 }}"
@@ -21,9 +21,9 @@ network_connections:
       dns_search:
         - "{{ dns_search1 }}"
         - "{{ dns_search2 }}"
-      gateway4: "{{ eth0_ipv4_gw }}"
-    mac: "{{ eth0_mac }}"
-    name: eth0
+      gateway4: "{{ eth1_ipv4_gw }}"
+    mac: "{{ eth1_mac }}"
+    name: eth1
     state: up
     type: ethernet
 resolvconf: "resolv.conf/iad2"
