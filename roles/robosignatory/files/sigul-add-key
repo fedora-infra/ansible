@@ -1,0 +1,5 @@
+#!/bin/bash -e
+# Courtesy of puiterwijk
+passphrase=$(systemd-ask-password "Please enter passphrase for 'autosign' key: ")
+keyctl add user "sigul:autosign" "${passphrase}" @s
+exec /usr/bin/fedora-messaging --conf /etc/fedora-messaging/robosignatory.toml consume

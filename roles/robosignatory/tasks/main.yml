@@ -165,7 +165,7 @@
   - robosignatory
   - robosignatory-config
 
-- name: Create /etc/systemd/system/fm-consumer@.service.d
+- name: Create /etc/systemd/system/fm-consumer@.service.d (staging)
   file:
     state: directory
     path: /etc/systemd/system/fm-consumer@.service.d
@@ -177,7 +177,7 @@
   - config
   - robosignatory
 
-- name: Configure fm-consumer@.service to run as robosignatory
+- name: Configure fm-consumer@.service to run as robosignatory (staging)
   copy:
     src: fm-consumer@.service
     dest: /etc/systemd/system/fm-consumer@.service.d/local.conf
@@ -192,12 +192,40 @@
   - config
   - robosignatory
 
-- name: Ensure fedora-messaging is enabled and started on the backend
+- name: Ensure fedora-messaging is enabled and started on the backend (staging)
   service:
     name: fm-consumer@robosignatory.service
     enabled: yes
     state: started
   when: env == 'staging'
+  tags:
+  - config
+  - robosignatory
+
+- name: Configure key add script
+  copy:
+    src: sigul-add-key
+    dest: /usr/local/bin/sigul-add-key
+    owner: root
+    group: root
+    mode: 0711
+  when: env != 'staging'
+  notify:
+  - reload systemd
+  tags:
+  - config
+  - robosignatory
+
+- name: Configure robosignatory.service
+  copy:
+    src: robosignatory.service
+    dest: /etc/systemd/system/robosignatory.service
+    owner: root
+    group: root
+    mode: 0644
+  when: env != 'staging'
+  notify:
+  - reload systemd
   tags:
   - config
   - robosignatory

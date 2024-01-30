@@ -1,0 +1,12 @@
+[Unit]
+Description=Robosignatory
+
+[Service]
+Type=simple
+User = robosignatory
+Group = robosignatory
+Restart=no
+ExecStart=/usr/bin/keyctl session - /usr/local/bin/sigul-add-key
+
+[Install]
+WantedBy=multi-user.target
