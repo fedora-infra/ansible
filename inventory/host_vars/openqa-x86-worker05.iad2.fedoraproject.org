@@ -59,10 +59,8 @@ nrpe_procs_warn: 1400
 # Has a hardware RNG
 openqa_rngd: true
 openqa_tap_iface: em1
-# this machines has 24 CPUs, 22 is our "just under one worker per
-# CPU" rule-of-thumb, but it seems to be running out of memory so
-# cut to 20
-openqa_workers: 20
+# xeon e5-2683v4, 32 physical CPUs
+openqa_workers: 30
 sudoers: "{{ private }}/files/sudo/qavirt-sudoers"
 # firewall ports for server->worker websockets connections
 # this port is 'QEMUPORT plus 1'
