@@ -46,6 +46,7 @@ decision_contexts:
   - bodhi_update_push_testing_critical-path-base_critpath
   - bodhi_update_push_testing_critical-path-build_critpath
   - bodhi_update_push_testing_critical-path-compose_critpath
+  - bodhi_update_push_testing_critical-path-coreos_critpath
   - bodhi_update_push_testing_critical-path-deepin-desktop_critpath
   - bodhi_update_push_testing_critical-path-gnome_critpath
   - bodhi_update_push_testing_critical-path-kde_critpath
@@ -62,6 +63,7 @@ decision_contexts:
   - bodhi_update_push_stable_critical-path-base_critpath
   - bodhi_update_push_stable_critical-path-build_critpath
   - bodhi_update_push_stable_critical-path-compose_critpath
+  - bodhi_update_push_stable_critical-path-coreos_critpath
   - bodhi_update_push_stable_critical-path-deepin-desktop_critpath
   - bodhi_update_push_stable_critical-path-gnome_critpath
   - bodhi_update_push_stable_critical-path-kde_critpath
@@ -505,6 +507,23 @@ subject_type: bodhi_update
 rules:
 # This list needs to stay synced with openQA if tests are added or renamed.
   - !PassingTestCaseRule {test_case_name: update.upgrade_desktop_encrypted_64bit, scenario: "fedora.updates-workstation-upgrade.x86_64.64bit"}
+
+# This policy enforces gating for CoreOS-owned packages.
+# See https://github.com/coreos/fedora-coreos-tracker/issues/1617 for details.
+--- !Policy
+id: "kojibuild_bodhipush_coreos"
+product_versions:
+  - fedora-39
+  - fedora-40
+  - fedora-rawhide
+decision_contexts:
+  - bodhi_update_push_testing_critical-path-coreos_critpath
+  - bodhi_update_push_stable_critical-path-coreos_critpath
+subject_type: koji_build
+rules:
+  # test case name source of truth at (the resultsdb-report script prepends `coreos.`):
+  # https://github.com/coreos/coreos-ci/blob/1d353f8fac/jobs/bodhi-trigger.Jenkinsfile#L245
+  - !PassingTestCaseRule {test_case_name: coreos.cosa.build-and-test}
 
 # This policy lists tests that are expected to pass for a Rawhide compose to
 # meet the basic release criteria.
