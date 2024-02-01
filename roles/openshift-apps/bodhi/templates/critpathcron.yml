@@ -26,7 +26,7 @@ spec:
               cd /tmp
               git clone --depth 1 --single-branch https://pagure.io/releng.git
               cd /bodhi-critpath
-              /tmp/releng/scripts/critpath.py all --srpm
+              /tmp/releng/scripts/critpath.py all --srpm --with-coreos
             env:
             - name: BUILD_ENV
               value: "{{ env_short }}"
