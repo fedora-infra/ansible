@@ -21,14 +21,30 @@ spec:
       containers:
       - name: planet
         image: image-registry.openshift-image-registry.svc:5000/planet/planet:latest
+        env:
+        - name: KRB5_CONFIG
+          value: '/etc/krb5.conf'
+          name: KRB5_CLIENT_KTNAME
+          value: '/etc/keytabs/http'
         ports:
           - containerPort: 8080
         volumeMounts:
         - name: keytab-volume
           mountPath: /etc/keytabs
           readOnly: true
+        - name: krb-config-volume
+          mountPath: /etc/krb5
+          readOnly: true
+        - name: ipa-config-volume
+          mountPath: /etc/ipa
+          readOnly: true
       volumes:
       - name: keytab-volume
         secret:
           secretName: planet-keytab-http
-          
+      - name: krb-config-volume
+        configMap:
+          name: krb5-config
+      - name: ipa-config-volume
+        configMap:
+          name: ipa-client-config
