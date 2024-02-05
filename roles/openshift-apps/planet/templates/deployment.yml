@@ -30,7 +30,8 @@ spec:
           - containerPort: 8080
         volumeMounts:
         - name: keytab-volume
-          mountPath: /etc/keytabs
+          mountPath: /etc/keytabs/http
+          subPath: http
           readOnly: true
         - name: krb-config-volume
           mountPath: /etc/krb5
