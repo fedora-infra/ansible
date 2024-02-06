@@ -95,6 +95,8 @@ Plugins = osbuild koji-fedoramessaging runroot_hub hub_containerbuild tag2distre
 [policy]
 
 tag =
+    # We don't want to allow any draft builds to be tagged yet
+    is_draft :: deny
     user mbs/mbs.fedoraproject.org && tag module-* && package kernel shim grub2 pesign fwupd fwupd-efi :: allow
     user mbs/mbs.fedoraproject.org && fromtag module-* && package kernel shim grub2 pesign fwupd fwupd-efi:: allow
     user bodhi && tag *-override && package kernel shim grub2 pesign fwupd fwupd-efi :: allow
