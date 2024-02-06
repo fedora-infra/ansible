@@ -259,3 +259,15 @@
       size: 15000000
   when:
   - prepare_base_image is not defined
+
+
+- name: detect package versions
+  package_facts: manager=auto
+
+- name: assure up2date packages
+  assert:
+    that:
+      - ansible_facts.packages[item.name][0].version is version(item.version, '>=')
+  loop:
+    - name: mock-core-configs
+      version: '39.4'
