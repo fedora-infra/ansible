@@ -36,7 +36,7 @@
     key: http
     secret_name: planet-keytab-http
     service: HTTP
-    host: "planet{{env_suffix}}.fedoraproject.org"
+    host: "planet.apps.ocp{{env_suffix}}.fedoraproject.org"
 
   - role: openshift/imagestream
     app: planet
@@ -63,7 +63,7 @@
   - role: openshift/route
     app: planet
     routename: planet
-    host: "planet{{env_suffix}}.fedoraproject.org"
+    host: "planet.apps.ocp{{env_suffix}}.fedoraproject.org"
     serviceport: web
     servicename: planet-web
     annotations:
