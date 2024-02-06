@@ -23,7 +23,7 @@ spec:
         image: image-registry.openshift-image-registry.svc:5000/planet/planet:latest
         env:
         - name: KRB5_CONFIG
-          value: '/etc/krb5.conf'
+          value: '/etc/krb5/krb5.conf'
           name: KRB5_CLIENT_KTNAME
           value: '/etc/keytabs/http'
         ports:
