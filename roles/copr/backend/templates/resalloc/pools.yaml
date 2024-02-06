@@ -78,7 +78,11 @@ aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot 
 {% for hv in ["01", "02", "03", "04"] %}
 {% if "x86_hypervisor_" + hv in builders %}
 copr_hv_x86_64_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
+{% if hv == "02" %}
+    max: 0
+{% else %}
     max: {{ builders["x86_hypervisor_" + hv]["x86_64"][0] }}
+{% endif %}
     max_starting: {{ builders["x86_hypervisor_" + hv]["x86_64"][1] }}
     max_prealloc: {{ builders["x86_hypervisor_" + hv]["x86_64"][2] }}
     tags:
