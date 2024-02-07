@@ -62,7 +62,7 @@
   tags:
   - koji_builder
 
-- name: add pkgs (staging)
+- name: Install packages needed by koji_builders
   package:
     state: present
     name:
