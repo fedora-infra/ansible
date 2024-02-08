@@ -408,7 +408,7 @@ handlers = ["console"]
             # ima file signing - enabled in f37
             file_signing_key = "fedora-38-ima"
             {% endif %}
-            
+
             # f38 resigning
             [[consumer_config.koji_instances.primary.tags]]
             from = "f38"
@@ -432,6 +432,14 @@ handlers = ["console"]
             key = "{{ (env == 'production')|ternary('fedora-39', 'testkey') }}"
             keyid = "{{ (env == 'production')|ternary('18B8e74c', 'd300e724') }}"
             file_signing_key = "fedora-39-ima"
+
+            # resigning f40 builds with f41 key before branching. Remove after branching.
+            [[consumer_config.koji_instances.primary.tags]]
+            from = "f40"
+            to = "f40"
+            key = "{{ (env == 'production')|ternary('fedora-41', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('2e99d6ad1', 'd300e724') }}"
+            file_signing_key = "fedora-41-ima"
 
             # F40 Mass Rebuild
             [[consumer_config.koji_instances.primary.tags]]
