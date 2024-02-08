@@ -208,7 +208,7 @@
     dest: /usr/local/bin/sigul-add-key
     owner: root
     group: root
-    mode: 0711
+    mode: 0755
   when: env != 'staging'
   notify:
   - reload systemd
