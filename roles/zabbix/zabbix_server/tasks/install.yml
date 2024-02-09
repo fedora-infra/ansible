@@ -46,6 +46,15 @@
   tags:
     - zabbix-configuration
 
+- name: Set ownership on /var/run/zabbix/
+  ansible.builtin.file:
+    path: /var/run/zabbix/
+    state: directory
+    recurse: yes
+    mode: 0770
+    owner: zabbix
+    group: zabbix
+
 - name: Set ownership on /etc/zabbix/web/
   ansible.builtin.file:
     path: /etc/zabbix/web
