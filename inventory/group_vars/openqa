@@ -18,8 +18,6 @@ openqa_env_suffix:
 openqa_key: "{{ prod_openqa_apikey }}"
 # all our workers need NFS access
 openqa_nfs_workers: "{{ groups['openqa_workers'] }}"
-# use updates-testing for now to get 2023-05 updates
-openqa_repo: updates-testing
 openqa_resultsdb_url: https://resultsdb.fedoraproject.org/api/v2.0/
 openqa_resultsdb_user: "{{ prod_resultsdb_httpd_user }}"
 openqa_resultsdb_password: "{{ prod_resultsdb_httpd_password }}"
