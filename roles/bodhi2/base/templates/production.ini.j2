@@ -623,11 +623,11 @@ buildroot_overrides.expire_after = 1
 # You can have releases to extend its buildroot override tags from other releases.
 # When submitting a Buildroot Override for that Release, the build will be tagged
 # with the override_tag of its Release AND the override tags of the inherited releases.
-# Left Release.name goes lowercase, right Release.names must be specified exactly.
+# Left uses Release.setting_prefix, right uses Release.name.
 # Below is an example, all EPEL-9 builds submitted as buildroot overrides will also
 # be tagged as EPEL-9N and EPEL-8 overrides.
-# epel-9.override-extend = EPEL-9N,EPEL-8
-epel-9.override-extend = EPEL-9N
+# epel9.override-extend = EPEL-9N,EPEL-8
+epel9.override-extend = EPEL-9N
 
 
 ##
