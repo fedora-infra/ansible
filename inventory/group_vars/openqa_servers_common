@@ -53,7 +53,7 @@ openqa_amqp_publisher_url: "{{ openqa_amqp_this_url }}"
 # messages on prod rabbitmq. Only the queue names differs.
 openqa_amqp_scheduler_cert: "{{ openqa_amqp_prod_certfile }}"
 openqa_amqp_scheduler_key: "{{ openqa_amqp_prod_keyfile }}"
-openqa_amqp_scheduler_routing_keys: ["org.fedoraproject.prod.pungi.compose.status.change", "org.fedoraproject.prod.bodhi.update.request.testing", "org.fedoraproject.prod.bodhi.update.edit", "org.fedoraproject.prod.bodhi.update.status.testing.koji-build-group.build.complete", "org.fedoraproject.prod.coreos.build.state.change", "org.fedoraproject.prod.odcs.compose.state-changed"]
+openqa_amqp_scheduler_routing_keys: ["org.fedoraproject.prod.pungi.compose.status.change", "org.fedoraproject.prod.bodhi.update.status.testing.koji-build-group.build.complete", "org.fedoraproject.prod.coreos.build.state.change", "org.fedoraproject.prod.odcs.compose.state-changed"]
 openqa_amqp_scheduler_url: "{{ openqa_amqp_prod_url }}"
 
 # fedora-messaging reporter settings (for both wiki/resultsdb reporters)
