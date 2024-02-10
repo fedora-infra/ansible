@@ -84,6 +84,11 @@
     when: env == 'production' and inventory_hostname.startswith('koji')
 
   - role: nfs/client
+    mnt_dir: '/mnt/fedora_koji/koji/vol/fedora_koji_archive06'
+    nfs_src_dir: 'fedora_koji_archive06'
+    when: env == 'production' and inventory_hostname.startswith('koji')
+
+  - role: nfs/client
     mnt_dir: '/mnt/koji/ostree'
     nfs_src_dir: 'fedora_ostree_content/ostree'
     mount_stg: true

@@ -131,6 +131,11 @@
     nfs_src_dir: '/fedora_koji_archive05'
     when: "'releng_compose' in group_names"
 
+  - role: nfs/client
+    mnt_dir: '/mnt/fedora_koji/koji/vol/fedora_koji_archive06'
+    nfs_src_dir: '/fedora_koji_archive06'
+    when: "'releng_compose' in group_names"
+
   - role: rabbit/user
     username: "pungi{{ env_suffix }}"
     sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(pungi|compose|logger)\..*
