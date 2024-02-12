@@ -54,4 +54,6 @@ num_cpus: 16
 primary_auth_source: ipa
 virt_install_command: "{{ virt_install_command_two_nic_unsafe }}"
 zabbix_templates:
-  - zabbix_templates/releng_compose_cronjobs.json
+  - "zabbix_templates/releng_compose_cronjobs.json"
+zabbix_hostgroups:
+  - "fedora releng compose"
