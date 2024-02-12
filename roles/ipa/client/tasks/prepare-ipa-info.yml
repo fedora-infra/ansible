@@ -126,6 +126,10 @@
     and
     hostvars[item]['ipa_host_group'] is defined
 
+
+- name: debug ipa_server_host_groups_dict
+  debug: var=ipa_server_host_groups_dict
+
 # ipa_server_host_groups ->
 #   [
 #     ["ipa_server_1", "host_group_1"],
