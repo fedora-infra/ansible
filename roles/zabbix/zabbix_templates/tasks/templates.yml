@@ -1,0 +1,34 @@
+---
+- name: Set API token
+  tags: always
+  set_fact:
+    ansible_zabbix_auth_key: "{{ (env == 'staging')|ternary(zabbix_stg_apikey, zabbix_apikey) }}"
+    ansible_network_os: community.zabbix.zabbix
+    ansible_connection: httpapi
+    ansible_httpapi_port: 443
+    ansible_httpapi_use_ssl: true
+    ansible_httpapi_validate_certs: false
+    ansible_host: "{{ (env == 'staging')|ternary(zabbix_stg_hostname, zabbix_hostname) }}"
+    ansible_zabbix_url_path: ""  # If Zabbix WebUI runs on non-default (zabbix) path ,e.g. http://<FQDN>/zabbixeu
+
+#- name: Get Zabbix template as JSON
+#  community.zabbix.zabbix_template_info:
+#    template_name: fedora releng compose cronjobs
+#    format: json
+#    omit_date: yes
+#  register: zabbix_template_json
+
+#- name: Write Zabbix templte to JSON file
+#  local_action:
+#    module: copy
+#    content: "{{ zabbix_template_json['template_json'] }}"
+#    dest: "roles/zabbix_server/files/zabbix_templates/releng_compose_cronjobs.json"
+
+- name: Import Zabbix templates from JSON
+  community.zabbix.zabbix_template:
+    template_json: "{{ lookup('file', item }}"
+    state: present
+  with_items: "{{ zabbix_templates }}" # Templates specific to an ansible group, can be overwridden in inventory/group_vars/group_name
+  tags:
+    - zabbix_templates
+

@@ -16,6 +16,6 @@
     kt_location:
       "/etc/openshift_apps/zabbix/zabbix_server.kt"
     service: "zabbix"
-    host: "{{ communishift_ocp_api_hostname }}"
+    host: "{{ (env == 'staging')|ternary(zabbix_stg_hostname, zabbix_hostname) }}"
   tags:
     - create-keytab
