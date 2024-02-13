@@ -12,13 +12,13 @@
     ansible_zabbix_url_path: ""  # If Zabbix WebUI runs on non-default (zabbix) path ,e.g. http://<FQDN>/zabbixeu
 
 
-- include_tasks: templates.yml
-  tags:
-  - zabbix_templates
-
 - include_tasks: hostgroups.yml
   tags:
   - zabbix_hostgroups
+
+- include_tasks: templates.yml
+  tags:
+  - zabbix_templates
 
 - include_tasks: add_hosts_to_hostgroups.yml
   tags:
