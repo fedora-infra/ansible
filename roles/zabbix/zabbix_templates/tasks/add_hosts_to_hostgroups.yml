@@ -1,5 +1,5 @@
 ---
-- name: Create host groups
+- name: Add hosts to  hostgroups
   community.zabbix.zabbix_host:
     host_name: "{{ inventory_hostname }}"
     host_groups: "{{ item['hostgroup']}}"
