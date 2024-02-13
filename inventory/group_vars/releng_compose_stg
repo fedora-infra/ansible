@@ -11,5 +11,7 @@ koji_weburl: "https://koji.stg.fedoraproject.org/koji"
 mem_size: 8192
 nfs_mount_opts: "rw,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3"
 num_cpus: 4
-zabbix_templates: "{{ [] }}"
-zabbix_hostgroups: "{{ [] }}"
+zabbix_templates:
+  - group: "releng_compose"
+    template: "releng_compose_cronjobs.json"
+    hostgroup: "fedora releng compose"
