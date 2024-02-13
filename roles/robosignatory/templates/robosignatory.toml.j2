@@ -229,15 +229,15 @@ handlers = ["console"]
 
             # Branched
 
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f40-signing-pending"
-            to = "f40-updates-testing-pending"
-            key = "{{ (env == 'production')|ternary('fedora-40', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('a15B79cc', 'd300e724') }}"
-            {% if env == "production" %}
-            # ima file signing - enabled in f37
-            file_signing_key = "fedora-40-ima"
-            {% endif %}
+#            [[consumer_config.koji_instances.primary.tags]]
+#            from = "f40-signing-pending"
+#            to = "f40-updates-testing-pending"
+#            key = "{{ (env == 'production')|ternary('fedora-40', 'testkey') }}"
+#            keyid = "{{ (env == 'production')|ternary('a15B79cc', 'd300e724') }}"
+#            {% if env == "production" %}
+#            # ima file signing - enabled in f37
+#            file_signing_key = "fedora-40-ima"
+#            {% endif %}
 
             [consumer_config.koji_instances.primary.tags.sidetags]
             pattern = 'f40-build-side-<seq_id>'
