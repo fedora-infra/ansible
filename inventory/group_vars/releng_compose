@@ -55,5 +55,5 @@ primary_auth_source: ipa
 virt_install_command: "{{ virt_install_command_two_nic_unsafe }}"
 zabbix_templates:
   - group: "releng_compose"
-    template: "zabbix_templates/releng_compose_cronjobs.json"
+    template: "releng_compose_cronjobs.json"
     hostgroup: "fedora releng compose"
