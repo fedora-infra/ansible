@@ -1,10 +1,10 @@
 ---
-- name: Add hosts to  hostgroups
+- name: Add templates to hosts
   community.zabbix.zabbix_host:
     host_name: "{{ inventory_hostname }}"
     host_groups: "{{ item['hostgroup']}}"
-#    link_templates: "{{ item['template'] }}"
+    link_templates: "{{ item['template'] }}"
     force: false
   with_items: "{{ zabbix_templates }}"
   tags:
-    - zabbix_add_hosts_to_hostgroups
+    - zabbix_add_templates_to_hosts
