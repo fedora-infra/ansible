@@ -3,7 +3,7 @@
   # set task level variables as we change ansible_connection plugin here
   community.zabbix.zabbix_group:
     state: present
-    host_groups: "{{ item }}"
-  with_items: "{{ zabbix_hostgroups }}" # Hostgroups specific to an ansible group can be overridden in inventory/group_vars/group_name
+    host_groups: "{{ item['hostgroup'] }}"
+  with_items: "{{ zabbix_templates }}" # Hostgroups specific to an ansible group can be overridden in inventory/group_vars/group_name
   tags:
     - zabbix_hostgroups

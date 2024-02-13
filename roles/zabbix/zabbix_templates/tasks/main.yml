@@ -19,3 +19,7 @@
 - include_tasks: hostgroups.yml
   tags:
   - zabbix_hostgroups
+
+- include_tasks: add_hosts_to_hostgroups.yml
+  tags:
+  - zabbix_add_hosts_to_hostgroups
