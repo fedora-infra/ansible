@@ -29,7 +29,8 @@
   - rkhunter
   - nagios_client
   - zabbix/zabbix_agent
-#  - zabbix/zabbix_templates
+  - { role: zabbix/zabbix_templates,
+      when: env == "staging" }
   - collectd/base
   - sudo
   - role: keytab/service
