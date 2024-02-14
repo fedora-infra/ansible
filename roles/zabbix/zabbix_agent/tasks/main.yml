@@ -4,19 +4,23 @@
     - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
     - "{{ ansible_distribution }}.yml"
     - common.yml
+  tags:
+    - zabbix_agent
 
 - name: Installing Zabbix packages
   yum:
     name: "{{ zabbix_pkgs_list }}"
     state: latest
   register: pkg_install
+  tags:
+    - zabbix_agent
 
 - name: Installing selinux dependency packages
   yum:
     name: "{{ pkgs_list }}"
     state: installed
   tags:
-    - packages
+    - zabbix_agent
 
 - name: Distributing custom selinux policies
   copy:
@@ -26,10 +30,14 @@
   with_items:
     - centos-zabbix-agent.pp
   when: ansible_distribution == "Centos"
+  tags:
+    - zabbix_agent
 
 - name: reload custom selinux files
   shell: /usr/sbin/semodule -u "/etc/selinux/centos/centos-zabbix-agent.pp"
   when: ansible_distribution == "Centos" and ansible_selinux.status == "enabled" and sepolicy.changed
+  tags:
+    - zabbix_agent
 
 - name: Allowing zabbix to connect to network resources
   seboolean:
@@ -37,17 +45,23 @@
     persistent: yes
     state: yes
   when: ansible_selinux.status == "enabled"
+  tags:
+    - zabbix_agent
 
 - name: Ensures config directory
   file:
     path: "{{ zabbix_agentd_dir }}"
     state: directory
+  tags:
+    - zabbix_agent
 
 - name: Configuring Zabbix agentd
   template:
     src: zabbix_agentd.conf.j2
     dest: "{{ zabbix_agentd }}"
   notify: restart_zabbix_agent
+  tags:
+    - zabbix_agent
 
 - name: Copy zabbix-agend.conf psk config
   copy:
@@ -58,6 +72,8 @@
     mode: 0600
   with_fileglob:
    - "{{ private }}/files/zabbix/fedora{{env_suffix}}.psk"
+  tags:
+    - zabbix_agent
 
 - name: Ensuring we have a directory to put zabbix scripts
   file:
@@ -66,6 +82,8 @@
     mode: 0770
     owner: zabbix
     group: zabbix
+  tags:
+    - zabbix_agent
 
 - name: Set ownership on /var/run/zabbix/
   ansible.builtin.file:
@@ -75,6 +93,8 @@
     mode: 0770
     owner: zabbix
     group: zabbix
+  tags:
+    - zabbix_agent
 
 - name: Ensuring we have a directory to put zabbix logs
   file:
@@ -83,6 +103,8 @@
     mode: 0770
     owner: zabbix
     group: zabbix
+  tags:
+    - zabbix_agent
 
 - name: Adding some other conf files under zabbix_agentd.d
   template:
@@ -93,6 +115,8 @@
   notify: restart_zabbix_agent
   with_items:
     - interface-alias.conf
+  tags:
+    - zabbix_agent
 
 - name: Enabling Zabbix service
   service:
@@ -101,5 +125,7 @@
     enabled: yes
   with_items:
     - zabbix-agent
+  tags:
+    - zabbix_agent
 
 - include_tasks: tools.yml
