@@ -7,8 +7,6 @@ spec:
   schedule: "10 3 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
-  activeDeadlineSeconds: 900
-  startingDeadlineSeconds: 300
   jobTemplate:
     spec:
       backoffLimit: 0
@@ -35,7 +33,8 @@ spec:
               mountPath: /bodhi-critpath
               readOnly: false
           restartPolicy: Never
-          startingDeadlineSeconds: 600
+          activeDeadlineSeconds: 900
+          startingDeadlineSeconds: 300
           volumes:
           - name: bodhi-critpath
             persistentVolumeClaim:
