@@ -1,0 +1,15 @@
+{% macro load_file(filename) %}{% include filename %}{%- endmacro -%}
+---
+apiVersion: v1
+kind: List
+metadata: {}
+items:
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: settings_local-config
+    labels:
+      app: openscanhub
+  data:
+    settings_local.ocp.py: |-
+      {{ load_file('settings_local.ocp.py') | indent(6) }}

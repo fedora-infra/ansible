@@ -53,6 +53,9 @@ spec:
             name: openscanhub-pvc-osh-configs
           - mountPath: /etc/keytabs
             name: openscanhub-keytab
+          - mountPath: /usr/lib/python3.9/site-packages/osh/hub/settings_local.py
+            name: settings_local-configmap
+            subPath: settings_local.py
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -69,3 +72,6 @@ spec:
           secret:
             defaultMode: 420
             secretName: openscanhub-keytab
+        - name: settings_local-configmap
+          configMap:
+            name: settings_local-config
