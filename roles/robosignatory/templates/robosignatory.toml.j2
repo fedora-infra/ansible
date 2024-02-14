@@ -449,10 +449,10 @@ handlers = ["console"]
 
         [consumer_config.ostree_refs."fedora/stable/x86_64/iot"]
         directory = "/mnt/fedora_koji/koji/compose/iot/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-40', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-39', 'testkey') }}"
         [consumer_config.ostree_refs."fedora/stable/aarch64/iot"]
         directory = "/mnt/fedora_koji/koji/compose/iot/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-40', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-39', 'testkey') }}"
 
         # f38 silveblue ostree refs
 
