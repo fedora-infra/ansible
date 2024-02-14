@@ -511,15 +511,16 @@ rules:
 # This policy enforces gating for CoreOS-owned packages.
 # See https://github.com/coreos/fedora-coreos-tracker/issues/1617 for details.
 --- !Policy
-id: "kojibuild_bodhipush_coreos"
+id: "bodhiupdate_bodhipush_coreos"
 product_versions:
   - fedora-39
   - fedora-40
+  - fedora-41
   - fedora-rawhide
 decision_contexts:
   - bodhi_update_push_testing_critical-path-coreos_critpath
   - bodhi_update_push_stable_critical-path-coreos_critpath
-subject_type: koji_build
+subject_type: bodhi_update
 rules:
   # test case name source of truth at (the resultsdb-report script prepends `coreos.`):
   # https://github.com/coreos/coreos-ci/blob/1d353f8fac/jobs/bodhi-trigger.Jenkinsfile#L245
