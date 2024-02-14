@@ -2,9 +2,9 @@
 # at the Koji build level and report results which will be found by queries
 # against these policies.
 
-# bodhiupdate_ policies are for bodhi_update subjects; Fedora openQA runs
-# tests at the Bodhi update level and reports results which will be found by
-# queries against these policies.
+# bodhiupdate_ policies are for bodhi_update subjects; Fedora openQA and
+# Fedora CoreOS CI run tests at the Bodhi update level and report results
+# which will be found by queries against these policies.
 
 # As of 2020-11, we know that Bodhi runs queries for both of these subject
 # types when deciding whether to push updates to various stages (these are the
@@ -83,8 +83,12 @@ decision_contexts:
   - bodhi_update_push_testing
   - bodhi_update_push_testing_critpath
   - bodhi_update_push_testing_core_critpath
+  - bodhi_update_push_testing_critical-path-anaconda_critpath
   - bodhi_update_push_testing_critical-path-apps_critpath
   - bodhi_update_push_testing_critical-path-base_critpath
+  - bodhi_update_push_testing_critical-path-build_critpath
+  - bodhi_update_push_testing_critical-path-compose_critpath
+  - bodhi_update_push_testing_critical-path-coreos_critpath
   - bodhi_update_push_testing_critical-path-deepin-desktop_critpath
   - bodhi_update_push_testing_critical-path-gnome_critpath
   - bodhi_update_push_testing_critical-path-kde_critpath
@@ -96,8 +100,12 @@ decision_contexts:
   - bodhi_update_push_stable
   - bodhi_update_push_stable_critpath
   - bodhi_update_push_stable_core_critpath
+  - bodhi_update_push_stable_critical-path-anaconda_critpath
   - bodhi_update_push_stable_critical-path-apps_critpath
   - bodhi_update_push_stable_critical-path-base_critpath
+  - bodhi_update_push_stable_critical-path-build_critpath
+  - bodhi_update_push_stable_critical-path-compose_critpath
+  - bodhi_update_push_stable_critical-path-coreos_critpath
   - bodhi_update_push_stable_critical-path-deepin-desktop_critpath
   - bodhi_update_push_stable_critical-path-gnome_critpath
   - bodhi_update_push_stable_critical-path-kde_critpath
