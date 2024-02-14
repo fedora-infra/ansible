@@ -5,7 +5,7 @@
 This script does a few things:
 - It iterates over all the spec files found in the given directory
 - For each of these files it finds all the lines starting with `ExclusiveArch`
-  or `ExcludesArch`
+  or `ExcludeArch`
 - It thus builds a dictionnary of filenames -> list of lines of interest
 - If it ran before and this ``RESULTS`` file is found, it compares the
   current list of packages with the old one and report:
@@ -42,13 +42,13 @@ def parse_folder(arg):
     with open(os.path.join(foldername, filename)) as stream:
         data = stream.read()
 
-    cnt = data.count('ExclusiveArch') + data.count('ExcludesArch')
+    cnt = data.count('ExclusiveArch') + data.count('ExcludeArch')
 
     lines = []
     if cnt > 0:
         data = data.split('\n')
         for line in data:
-            if line.startswith(('ExclusiveArch', 'ExcludesArch')):
+            if line.startswith(('ExclusiveArch', 'ExcludeArch')):
                 lines.append(line)
             if len(lines) == cnt:
                 break
