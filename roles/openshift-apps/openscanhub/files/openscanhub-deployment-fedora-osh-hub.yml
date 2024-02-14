@@ -49,8 +49,6 @@ spec:
         volumeMounts:
           - mountPath: /var/lib/osh/
             name: openscanhub-pvc-var-lib-osh
-          - mountPath: /mnt/osh-configs
-            name: openscanhub-pvc-osh-configs
           - mountPath: /etc/keytabs
             name: openscanhub-keytab
           - mountPath: /usr/lib/python3.9/site-packages/osh/hub/settings_local.py
@@ -65,9 +63,6 @@ spec:
         - name: openscanhub-pvc-var-lib-osh
           persistentVolumeClaim:
             claimName: openscanhub-pvc-var-lib-osh
-        - name: openscanhub-pvc-osh-configs
-          persistentVolumeClaim:
-            claimName: openscanhub-pvc-osh-configs
         - name: openscanhub-keytab
           secret:
             defaultMode: 420
