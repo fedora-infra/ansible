@@ -48,3 +48,18 @@
     # https://pagure.io/fedora-infra/ansible/pull-request/1669#comment-195809
     host: "staging-openscanhub.apps.ocp.stg.fedoraproject.org"
     when: env == "staging"
+  - role: openshift/object
+    app: openscanhub
+    file: openscanhub-deployment-fedora-osh-hub.yml
+    objectname: openscanhub-deployment-fedora-osh-hub
+    when: env == "staging"
+  - role: openshift/object
+    app: openscanhub
+    file: openscanhub-route-fedora-osh-hub.yml
+    objectname: openscanhub-route-fedora-osh-hub
+    when: env == "staging"
+  - role: openshift/object
+    app: openscanhub
+    file: openscanhub-service-fedora-osh-hub.yml
+    objectname: openscanhub-service-fedora-osh-hub
+    when: env == "staging"
