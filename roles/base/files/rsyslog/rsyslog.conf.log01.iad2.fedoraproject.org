@@ -161,21 +161,21 @@ kern.*						?r_kern;TraditionalFormat
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#
 
  $DefaultNetstreamDriverCAFile /etc/pki/tls/certs/2022-IT-Root-CA.pem
- *.* action(
-     type="omfwd"
-     target="10.31.20.29"
-     port="6514"
-     protocol="tcp"
-     queue.filename="fwdRule1"       # unique name prefix for spool files
-     queue.maxdiskspace="1g"         # 1gb space limit (use as much as possible)
-     queue.saveonshutdown="on"       # save messages to disk on shutdown
-     queue.type="LinkedList"         # run asynchronously
-     queue.size="500000"
-     action.resumeRetryCount="10"    # 10 retries if host is down
-     StreamDriver="gtls"
-     StreamDriverMode="1"
-     StreamDriverAuthMode="anon"     # not authenticated
- )
+# *.* action(
+#     type="omfwd"
+#     target="10.31.20.29"
+#     port="6514"
+#     protocol="tcp"
+#     queue.filename="fwdRule1"       # unique name prefix for spool files
+#     queue.maxdiskspace="1g"         # 1gb space limit (use as much as possible)
+#     queue.saveonshutdown="on"       # save messages to disk on shutdown
+#     queue.type="LinkedList"         # run asynchronously
+#     queue.size="500000"
+#     action.resumeRetryCount="10"    # 10 retries if host is down
+#     StreamDriver="gtls"
+#     StreamDriverMode="1"
+#     StreamDriverAuthMode="anon"     # not authenticated
+# )
 
 
 
