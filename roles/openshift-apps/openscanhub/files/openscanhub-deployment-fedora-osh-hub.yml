@@ -54,6 +54,9 @@ spec:
           - mountPath: /usr/lib/python3.9/site-packages/osh/hub/settings_local.py
             name: settings-local-configmap
             subPath: settings_local.py
+          - mountPath: /etc/httpd/conf.d/osh-hub-httpd.conf
+            name: osh-hub-httpd-configmap
+            subPath: osh-hub-httpd.conf
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -70,3 +73,6 @@ spec:
         - name: settings-local-configmap
           configMap:
             name: settings-local-config
+        - name: osh-hub-httpd-configmap
+          configMap:
+            name: osh-hub-httpd-config

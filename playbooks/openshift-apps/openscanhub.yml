@@ -43,6 +43,10 @@
     app: openscanhub
     template: settings-local-configmap.yml
     objectname: settings-local-configmap
+  - role: openshift/object
+    app: openscanhub
+    template: osh-hub-httpd-configmap.yml
+    objectname: osh-hub-httpd-configmap
   - role: openshift/keytab
     app: openscanhub
     key: service.keytab
