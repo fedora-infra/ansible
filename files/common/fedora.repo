@@ -14,7 +14,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
 [fedora-debuginfo]
 name=Fedora $releasever - $basearch - Debug
 {% if ansible_distribution_major_version|int < ( FedoraBranchedNumber|int if FedoraBranched == True else FedoraRawhideNumber|int )  %}
-baseurl=http://infrastructure.fedoraproject.org/pub{{ archive_if_archived }}/fedora/linux/releases/$releasever/Everything/$basearch/debug/tree/
+baseurl=https://infrastructure.fedoraproject.org/pub{{ archive_if_archived }}/fedora/linux/releases/$releasever/Everything/$basearch/debug/tree/
 #metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-debug-$releasever&arch=$basearch
 {% else %}
 baseurl=https://infrastructure.fedoraproject.org/pub/fedora/linux/development/$releasever/Everything/$basearch/debug/tree/
@@ -27,7 +27,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
 [fedora-source]
 name=Fedora $releasever - Source
 {% if ansible_distribution_major_version|int < ( FedoraBranchedNumber|int if FedoraBranched|int is defined else FedoraRawhideNumber|int )  %}
-baseurl=http://infrastructure.fedoraproject.org/pub{{ archive_if_archived }}/fedora/linux/releases/$releasever/Everything/source/tree/
+baseurl=https://infrastructure.fedoraproject.org/pub{{ archive_if_archived }}/fedora/linux/releases/$releasever/Everything/source/tree/
 #metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-source-$releasever&arch=$basearch
 {% else %}
 baseurl=https://infrastructure.fedoraproject.org/pub/fedora/linux/development/$releasever/Everything/source/tree
