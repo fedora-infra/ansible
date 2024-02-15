@@ -271,3 +271,11 @@
   loop:
     - name: mock-core-configs
       version: '39.4'
+
+# Hotfix for https://github.com/fedora-copr/copr/issues/3140
+- name: Install custom mock-custom-build.cfg.j2
+  copy:
+    src: files/mock-custom-build.cfg.j2
+    dest: /etc/copr-rpmbuild/mock-custom-build.cfg.j2
+  when:
+  - prepare_base_image is not defined
