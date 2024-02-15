@@ -102,7 +102,7 @@
             "triggers": [
               {
                 "uuid": "8f1a97314c904e6baebcd1c84028b5e0",
-                "expression": "last(/compose-iot-01.iad2.fedoraproject.org/vfs.file.exists[/tmp/fedora-compose-rawhide-iot])=1 and min(/compose-iot-01.iad2.fedoraproject.org/vfs.file.exists[/tmp/fedora-compose-rawhide-iot],8h)>0",
+                "expression": "last(/compose-iot01.iad2.fedoraproject.org/vfs.file.exists[/tmp/fedora-compose-rawhide-iot])=1 and min(/compose-iot01.iad2.fedoraproject.org/vfs.file.exists[/tmp/fedora-compose-rawhide-iot],8h)>0",
                 "name": "rawhide-iot cronjob stalled",
                 "priority": "HIGH"
               }
