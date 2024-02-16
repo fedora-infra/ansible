@@ -1,0 +1,65 @@
+include('/etc/mock/{{ chroot }}.cfg')
+
+config_opts.setdefault('plugin_conf', {})
+config_opts['plugin_conf'].setdefault('tmpfs_opts', {})
+config_opts['plugin_conf']['tmpfs_opts']['keep_mounted'] = True
+
+{% if buildroot_pkgs %}
+config_opts['chroot_additional_packages'] = '{{ buildroot_pkgs| join(" ") }}'
+{% endif %}
+{% if enable_net %}
+config_opts['rpmbuild_networking'] = True
+config_opts['use_host_resolv'] = True
+{% else %}
+config_opts['rpmbuild_networking'] = False
+config_opts['use_host_resolv'] = False
+{% endif %}
+{%- if isolation not in ["default", None] %}
+config_opts['isolation'] = '{{ isolation }}'
+{%- endif %}
+
+{%- for key, value in macros.items() %}
+config_opts['macros']['{{ key }}'] = '{{ value }}'
+{%- endfor %}
+
+{%- if bootstrap == "on" %}
+config_opts['use_bootstrap'] = True
+config_opts['use_bootstrap_image'] = False
+{%- elif bootstrap == "off" %}
+config_opts['use_bootstrap'] = False
+config_opts['use_bootstrap_image'] = False
+{%- elif bootstrap in ["image", "custom_image"] %}
+config_opts['use_bootstrap'] = True
+config_opts['use_bootstrap_image'] = True
+{%- if bootstrap_image %}
+config_opts['bootstrap_image'] = "{{ bootstrap_image }}"
+{%- endif %}
+{%- endif %}
+{%- if modules %}
+config_opts['module_setup_commands'] = {{ modules |pprint }}
+{%- endif %}
+
+{% if repos %}
+config_opts["dnf.conf"] += """
+{% for repo in repos %}
+[{{ repo["id"] }}]
+name='{{ repo["name"] }}'
+baseurl={{ repo["baseurl"] }}
+gpgcheck=0
+enabled=1
+skip_if_unavailable=0
+metadata_expire=0
+cost=1
+best=1
+
+{%- if repo.get("priority") is not none %}
+priority={{ repo["priority"] }}
+{%- endif %}
+
+{%- if "module_hotfixes" in repo %}
+module_hotfixes={{ repo["module_hotfixes"] }}
+{% endif -%}
+
+{% endfor %}
+"""
+{% endif %}
