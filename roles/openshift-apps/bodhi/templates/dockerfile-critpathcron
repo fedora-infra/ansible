@@ -13,4 +13,4 @@ RUN curl -o /etc/yum.repos.d/infra-tags-stg.repo https://infrastructure.fedorapr
 {% else %}
 RUN curl -o /etc/yum.repos.d/infra-tags.repo https://infrastructure.fedoraproject.org/infra/ansible/files/common/fedora-infra-tags.repo
 {% endif %}
-RUN dnf install -y python3-dnf git fedora-repos
+RUN dnf install -y python3-dnf python3-yaml git fedora-repos
