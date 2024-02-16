@@ -11,5 +11,5 @@ items:
     labels:
       app: openscanhub
   data:
-    settings_local.ocp.py: |-
-      {{ load_file('settings_local.ocp.py') | indent(6) }}
+    settings_local.py: |-
+      {{ load_file('settings_local.py') | indent(6) }}
