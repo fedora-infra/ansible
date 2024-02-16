@@ -26,6 +26,8 @@ spec:
           value: '/etc/krb5/krb5.conf'
           name: KRB5_CLIENT_KTNAME
           value: '/etc/keytabs/http'
+          name: KRB5CCNAME
+          value: '/tmp/ccache'
         ports:
           - containerPort: 8080
         volumeMounts:
