@@ -3,7 +3,7 @@ config_opts['rpmbuild_networking'] = True
 config_opts['use_host_resolv'] = True
 
 {# Hotfix for https://github.com/fedora-copr/copr/issues/3140 #}
-{%- if not chroot.startswith("fedora-rawhide-") %}
+{%- if not chroot.startswith("fedora-rawhide-") and not "fedora-40" in chroot %}
 # We don't do 'dnf builddep' for the custom method, so we don't need to install
 # python3-dnf-plugins core or dnf5-plugins at all.
 config_opts["bootstrap_image_ready"] = True
