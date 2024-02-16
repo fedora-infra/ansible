@@ -56,7 +56,7 @@
     # We should get separate approval for "opencanhub.fedoraproject.org"
     # Fix below line if correct route is not generated.
     # https://pagure.io/fedora-infra/ansible/pull-request/1669#comment-195809
-    host: "staging-openscanhub.apps.ocp.stg.fedoraproject.org"
+    host: "openscanhub.stg.fedoraproject.org"
     when: env == "staging"
   - role: openshift/object
     app: openscanhub
