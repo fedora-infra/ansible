@@ -1,0 +1,19 @@
+- name: make the app be real
+  hosts: os_control[0]:os_control_stg[0]
+  user: root
+  gather_facts: false
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  roles:
+  - role: openshift/object
+    app: openshift-config
+    objectname: error-code-pages.yml
+    template: error-code-pages.yml
+
+  post_tasks:
+  - name: Patch ingress controller with custom error pages
+    command: oc patch -n openshift-ingress-operator ingresscontroller/default --patch '{"spec":{"httpErrorCodePages":{"name":"fedora-error-code-pages"}}}' --type=merge

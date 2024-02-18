@@ -1,0 +1,260 @@
+HTTP/1.0 503 Service Unavailable
+Pragma: no-cache
+Cache-Control: private, max-age=0, no-cache, no-store
+Connection: close
+Content-Type: text/html
+
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+    body {
+      font-family: "Montserrat", "ui-sans-serif", "system-ui", "sans-serif";
+      line-height: 1.66666667;
+      font-size: 16px;
+      color: #333;
+      margin: 0;
+    }
+
+    .main {
+      background-color: #fff;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 400;
+      text-align: center;
+    }
+
+    p {
+      margin: 0 5px 10px;
+    }
+
+    .alert.alert-info {
+      background-color: #F0F0F0;
+      margin-top: 30px;
+      padding: 30px;
+      border-radius: 0px;
+    }
+
+    .alert p {
+      padding-left: 35px;
+    }
+
+    ul {
+      padding-left: 51px;
+      position: relative;
+    }
+
+    li {
+      font-size: 14px;
+      margin-bottom: 1em;
+    }
+
+    p.info {
+      position: relative;
+      font-size: 20px;
+    }
+
+    p.info:before,
+    p.info:after {
+      content: "";
+      left: 0;
+      position: absolute;
+      top: 0;
+    }
+
+    p.info:before {
+      background: #3c6eb4;
+      border-radius: 16px;
+      color: #fff;
+      content: "i";
+      font: bold 16px/24px serif;
+      height: 24px;
+      left: 0px;
+      text-align: center;
+      top: 4px;
+      width: 24px;
+    }
+
+    a {
+      text-decoration: none;
+      color: #3c6eb4;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    code {
+      background-color: #dedede;
+      color: #4c4c4c;
+    }
+
+    div.footer {
+      margin: 0 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      padding: 2rem 0;
+    }
+
+    .footer .logo {
+      width: 200px;
+      flex: none;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .footer .logo img {
+      height: 3rem;
+    }
+
+    .footer .links {
+      width: 100%;
+    }
+
+    .footer a {
+      color: #79818b;
+    }
+
+    .footer a:hover {
+      color: #535961;
+    }
+
+    .links ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      row-gap: 1ex;
+      column-gap: 2rem;
+      padding-left: 0;
+      text-align: center;
+    }
+
+    .links ul>li {
+      list-style-type: none;
+      font-size: 16px;
+      margin: auto 0;
+    }
+
+    @media (min-width: 768px) {
+      .main {
+        padding: 6em;
+      }
+
+      h1 {
+        text-align: left;
+      }
+
+      .alert.alert-info {
+        border-radius: 10px;
+      }
+
+      div.footer {
+        flex-wrap: nowrap;
+        padding: 4rem 0;
+      }
+
+      .links ul {
+        flex-wrap: nowrap;
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #000000;
+        color: #e5e7eb;
+      }
+
+      .main {
+        background-color: #171717;
+      }
+
+      .alert.alert-info {
+        background-color: #262626;
+      }
+
+      h1 {
+        color: #51a2da;
+      }
+
+      a {
+        color: #51a2da;
+      }
+
+      code {
+        background-color: #1e293b;
+        color: #9a9fa6;
+      }
+
+      .footer a {
+        color: #9a9fa6;
+      }
+
+      .footer a:hover {
+        color: #c5c7cc;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <h1>Application is not available :(</h1>
+    <p>The application is currently not serving requests at this endpoint. It may not have been started or is still
+      starting.</p>
+
+    <div class="alert alert-info">
+      <p class="info">
+        Possible reasons you are seeing this page:
+      </p>
+      <ul>
+        <li>
+          <strong>Scheduled maintenance.</strong>
+          Check if there is a maintenance planned or known outage on the <a
+            href="https://status.fedoraproject.org/">Fedora Infrastructure Status</a> page.
+        </li>
+        <li>
+          <strong>Service outage.</strong>
+          If you see this message for an extended time, it might indicate a more serious problem with this application.
+          Contact the <b>oncall</b> person for more information on the <a
+            href="https://chat.fedoraproject.org/#/#admin:fedoraproject.org">Fedora Infrastructure Matrix channel</a> by
+          using the <code>!oncall</code> command.
+          Alternatively, open a ticket on the <a href="https://pagure.io/fedora-infrastructure/issues/">Fedora
+            Infrastructure issue tracker</a>.
+        </li>
+        <li>
+          <strong>Configuration issue.</strong>
+          If you are a developer working on this application, make sure that the resources exposed by this route (pods,
+          services, deployments, etc) exist and have at least one pod running.
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="logo"><a href="https://fedoraproject.org"><img
+          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKwAAAAyCAMAAAD2g8DZAAAB0VBMVEVHcExRotpQod1RotpRotpRotpRotpRotpRotpRotpRotpRotpRotpRotpQo9tQottQottRotpQottRotpRotpQotpRotpRotpRotpQottRotpRotpRotpRotpRotpRotpRotpRotpRotpQotpRotpRotpRotpQottRotpQotpRotpRotpRotpQotpQottQotpRotpQotpRotpRotpRotpQottRotpRotpRotpRotpRotpQpNxRotpRotpQottRotpRotpRotpRotpRotpQottQottRotpRotpRotpQotpRotpQotpRotpQotpRotpQottQotpRotpRotpRotpQotpQotxQottQo9pRotpQotpRotpQodtQotpRotpRotpRotpQotpRotpQottRotpQotpQottRotpQotpRotpQottRotpRotpQotpQotpRotpQottQotpQottRotpRotpRotpRotpQottRotpRotpRotpRotpRotpRotpQotpQottRotpRotpRotpRottRotpRotpQotpQod1RotpQotpRotpQotpRotpRotpQptpQotpQotpRotpRotpRotpRotpRotpQotpQotpRotpPn+BQotpRoto5ikCbAAAAmnRSTlMA/gFi/fw7wz37QY6k6gMFGPoG7O8aL+b4C7T3kXmU89Wmqyvh54UMfiOax1Z3ERXOCov5sA67aWZjnQKgyRPj3LLe2Bwlc2zEN9Na0kz0FjW8z6MPDQkE8CC+MRSAe5UqwB6HUghQM+kCuZNDJtpODRB2b/XrF+62rj6b1ng50ajGLVvxJwSPRtlYVEoDITyXXSnMbUhfggI/fSjcaAAAB2dJREFUaN7NmvdX2zoUx21jF0IhQJgZNMw0pEmAsBLK3qOMAo+9RyEpBUqhlNKWPV4H3eP5r32SZcuyY0h6OIdj/VBsSbY+ka7u/V65FBVWLgPnlqZCzrDS0HgeU0TpuDzLzmF5orBdnmc6Re0/SOHDCpc7oUPU9EEDr1m46mS9sbpT+StL6iKjJ9SlGY6/pnC2Jf2w3n/FRyiW+3ph3TjkI5YOndAuveKjKJYkXcB+4aMqd/XA+l5zb3GhtvWeqoReIkJ80IF/3dFifXyEWl/a5J9SWBz+NBOsC96iX6vRYp05w+1PrLj2i5r0oqaJ5stKnC+jGinJk+C+YYzVilu75GS5sVww5CvXpJEWG9KeRDNUAJjSnRvB5mqwbs3DluVN54cKeJGHG3LJH1FUID/xyBjFUC7QMeYmrK0a2oWvhks8DVvW4Fx+xlObRagE84BQlWIvA/+OR2O3924K69Gy2GPQEI821mPoh0dxS7b8ZBu4ped6npuHAiUds9RtwHZpsNLxoMEmejATuH6Dm2rxcjPQCGpQoHgYpG4Ddoy9CjZBvP4HXOfgJkOf9OQsmPm04r8a7KawMXwkWC9FmQhP3C09eQd4ghzqVmF9kWB517BpmpbbbCRs7O3ClkeE5TMLyLZXV8MGW2IcT6dWTarA4e1xLvwOtI6oYI35bxMsjdXtl7K9Z9iyNyhT/w/H9LoZ9Wl98bR6z7E4hHxNc2RYZckxErAdD41Go+i0guvjyH/UvyDkGfO6sUz0xD9MBCyzHisulyH0Tuw7CXKV8ik0NfUgTw26a8U+vTVjsMPK38I2mAhY67+gVJ7C2z45cvCVk9gXu4gN/D2EYSsGScnkQ7/uHTnOAmWcIW53foIOVgXkoaOq2+1+IMB2ut1u/34YbGYpASsrhnSFCxzwoj4VlWHPC7BeldjfHYa1cWRVFdWq6GJdpijyPi8DDZEnwKL4ZogC9hykRbXox7pcHaws1JOQqC95mr3QmEXAJoWQz3b4q3zIhd+TYeny7s9VrrYzahKoU0NedlvbTAOsHydhe2OkiEnAJtVfawY7jaC4gORywqY378AbmKNYeN0uxTi+4SN8LzO/S2PYdnjRJNRTZwGYVbPrEiz3Fdv7cYkFTV9SNpgBNkOGNci6iYB9TV+7wSRvkLwFW0SdWDoObk5awIaBUXpfiiJBGy3CeiFec7o0xsQ27PZHhCXTESyUmXHBMDDEFDro6t70eB4JsD0ez9uZkzCb03RdcKpGxXOxkQvBUH+LtZd46JGQCOuHiog45ukB80ZfINiUbxr+1fzfA9DkxLAF0BS9CVkRvYFmUCjHEsfrf8NK/Szgj48YMz8FwcL6GqLe2IFmFMKmlapAhyfaG9NYNOcSwyY8PDiMwnV1a8GChbRDIzi9KwXmAiDDwGrTp8S4f7oQLOwTTwK9ABVzCDZRQfp88SCRlfNVyWKhJW9G4We5Pg3YJOAzGoym1ZC45bmB4/vAb4EOqRtqnR9DeUHvlHSyvhPuQyYMdtKXqkyuxQs7dHT7UcB+N2rAVnAwbknSbCu3U+hUBzqsmEmoagG2jlOKeARbHwa7Knmi3hzbHgmbBluzMOydK2Fl8U2aQZocVzKnW6QewEQNCg05J8CewUCUQdYfQ6erhu20o/fZfiYjcYhhR2Ez9qls0VUSJytdE3ZcMpLD98RU1qpEVvEJqkBbmygHaMcpYD+VwBeuuYexksWw1nQxnxPKGvRvTVqwRMJIwmajl+x1KraHA9R1DSvvIewUPIJ4TiSe0EsHVLDzcJ0fDxFbEMPSMCQ8E1eT/npVIskRqTgJmw+jcq1sh8VxMM4dwY187xO2wTIR9gj2TsD1pdBzpXlVsPnQ6UqfNJhyheuywLr4bcEIhPjg1JpYF6MNKyTrKQHs5U/4gSHx+ITeQ3PI/LLjcCtIrkHRUSQLMWSa0oDdEoczwnBLwHKrwgbOztv1CbGlZVSDVXF8pID9Bknog35hmHM4c4uQQ9gF9VOr+ct+Sb5C2JZCQRJ5+ouTPzuE5dzfoDTMgP0lONvuWKXrArpC4fmWKjVYlQdzykwhIPhudmd/IFW44paF0x5kWDTLKiXiHXTcx3Ic+gkrrZQaloGug96vrj5MUftZKOTmicPlvMhHnqq0ZlpxFJnVLp5NkSmRFe5ZPxJImQpxhD5fKV3X7LbcYWVOBcsXvh8R+8U9iuIweRnMVojIX54QXCVSpkLV1ZRJezh2AoRI+qN4THYg1fN2WwWqOwXm0yy/cUJKuQwJyVXgT5tCfNPNbzvHxib8h5qfmDo2lAojOGgviFN8l6h6AE3A3pR7QSZhRb6BFXvq2uDrEcqc2+zAqq/VV5JotRbWOrH9Mc7CBvKNpf7Dwu3MrplZhtoIJc7VUWqksrKoP4AwdWqFxAylt7TUhZ3mMxuTQ+KiKU7EmIriPuVbzSa1OKwwB8V3GFU52HWflkw6OKLviopVJx/tFqKZVr18Du3LjIiam6Gbb4vL19KyOR5d/ZeD5IVmLc1iWFmz3I251BPp/0aulY8MQTbAAAAAAElFTkSuQmCC"
+          alt="Fedora Logo"></a></div>
+    <div class="links">
+      <div>
+        <ul>
+          <li><a href="https://docs.fedoraproject.org/en-US/infra/day_to_day_fedora/">About Fedora Infrastructure</a>
+          </li>
+          <li><a href="https://docs.fedoraproject.org/en-US/legal/privacy/">Privacy
+              Statement</a></li>
+          <li><a href="https://docs.fedoraproject.org/en-US/legal/">Legal</a>
+          </li>
+          <li><a href="https://docs.fedoraproject.org/en-US/project/code-of-conduct/">Code
+              of Conduct</a></li>
+          <li><a href="https://fedoraproject.org/sponsors">Sponsors</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="logo">
+    </div>
+  </div>
+</body>
+
+</html>
