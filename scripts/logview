@@ -266,7 +266,7 @@ def main(args):
             for file in f:
                 if file.endswith('.info'):
                     pb = parse_info(os.path.join(r, file))
-                    pb_name = os.path.splitext(os.path.basename(pb['playbook']))[0]
+                    pb_name = os.path.splitext(os.path.basename(pb['playbook']))[0] if "playbook" in pb else "???"
                     pb_date = datetime_from_path(r)
                     if (
                             opts.list_all or opts.since
