@@ -1,4 +1,4 @@
 # Runs the `sig_policy.py` script
 MAILTO=releng-cron@lists.fedoraproject.org
 PAGURE_API_TOKEN={{ fesco_sig_policy_src_token }}
-30 9 * * 1 root TMPDIR=`mktemp -d /tmp/sig_policy.XXXXXXXXXX` && chmod 755 $TMPDIR && cd $TMPDIR && git clone https://pagure.io/releng.git && cd releng/scripts/fesco/sig-policy && python sig_policy.py
+30 9 * * 1 root touch /tmp/fedora-compose-sig_policy && TMPDIR=`mktemp -d /tmp/sig_policy.XXXXXXXXXX` && chmod 755 $TMPDIR && cd $TMPDIR && git clone https://pagure.io/releng.git && cd releng/scripts/fesco/sig-policy && python sig_policy.py && rm /tmp/fedora-compose-sig_policy
