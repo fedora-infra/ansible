@@ -8,6 +8,15 @@
     - "/srv/private/ansible/vars.yml"
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
+  pre_tasks:
+  - name: Create project directory
+    file:
+      path: /etc/openshift_apps/openshift-config
+      state: directory
+      owner: root
+      group: root
+      mode: 0750
+
   roles:
   - role: openshift/object
     app: openshift-config
