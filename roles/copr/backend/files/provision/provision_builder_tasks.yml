@@ -274,7 +274,7 @@
 
 # Hotfix for https://github.com/fedora-copr/copr/issues/3140
 # Hotfix for https://github.com/fedora-copr/copr/issues/3146
-- name: Install custom mock-custom-build.cfg.j2
+- name: Install custom copr-rpmbuild configs
   copy:
     src: "files/{{ item }}"
     dest: "/etc/copr-rpmbuild/{{ item }}"
