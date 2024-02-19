@@ -1,1 +1,1 @@
-30 4 * * * root git clone https://pagure.io/releng.git && cd releng/scripts && bash get_retired_packages.sh
+30 4 * * * root TMPDIR=`mktemp -d /tmp/releng.XXXXXXX` && chmod 755 $TMPDIR && cd $TMPDIR && git clone https://pagure.io/releng.git && cd releng/scripts && bash get_retired_packages.sh
