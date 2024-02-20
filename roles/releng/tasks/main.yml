@@ -87,7 +87,11 @@
 
 # rawhide group
 - name: rawhide group
-  group: name=rawhide gid=265 state=present
+  ansible.builtin.group:
+    name: "rawhide"
+    gid: 265
+    state: present
+
 # rawhide user 265
 - name: add rawhide user
   user: name=rawhide uid=265 group=rawhide home=/tmp comment="rawhide compose account"
