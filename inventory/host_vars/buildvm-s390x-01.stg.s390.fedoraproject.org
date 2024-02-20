@@ -3,25 +3,11 @@ dns1: 10.3.163.33
 dns2: 10.3.163.34
 dns_search1: "iad2.fedoraproject.org"
 dns_search2: "fedoraproject.org"
-enc900_ipv4_ip: 10.16.0.25
-enc900_ipv4_gw: 10.16.0.254
-enc900_ipv4_nm: 24
+eth0_ipv4_gw: 10.16.0.38
+eth0_ipv4_ip: 10.16.0.254
 has_ipv4: yes
-network_connections:
-  - autoconnect: yes
-    ip:
-      address:
-        - "{{ enc900_ipv4_ip }}/{{ enc900_ipv4_nm }}"
-      dhcp4: no
-      dns:
-        - "{{ dns1 }}"
-        - "{{ dns2 }}"
-      dns_search:
-        - "{{ dns_search1 }}"
-        - "{{ dns_search2 }}"
-      gateway4: "{{ enc900_ipv4_gw }}"
-    mac: "{{ ansible_default_ipv4.macaddress }}"
-    name: enc900
-    state: up
-    type: ethernet
+lvm_size: 102400
+mem_size: 8192
+num_cpus: 2
 varnish_group: s390kojipkgs
+volgroup: /dev/fedora_rdu-z16-l52
