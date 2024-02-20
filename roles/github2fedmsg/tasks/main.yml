@@ -67,6 +67,17 @@
   notify:
   - restart apache
 
+  # Fix for https://pagure.io/fedora-infrastructure/issue/11776
+- name: hotfix - Fix the KeyError when looking for user in github event
+  ansible.posix.patch:
+    src: 11776.patch
+    dest: /usr/lib/python2.7/site-packages/github2fedmsg/views/webhooks.py
+  tags:
+  - hotfix
+  - github2fedmsg
+  notify:
+  - restart apache
+
 - name: ensure selinux lets httpd talk to postgres
   seboolean: name=httpd_can_network_connect_db persistent=yes state=yes
   tags:
