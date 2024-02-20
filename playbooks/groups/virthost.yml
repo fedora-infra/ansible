@@ -49,7 +49,7 @@
   - sudo
   - virthost
   - {role: linux-system-roles.nbde_client, tags: ['nbde_client'], when: datacenter == 'iad2' and nbde|bool}
-  - {role: serial-console, when: datacenter == 'iad2' and not inventory_hostname.startswith('buildvmhost-s390x')}
+  - {role: serial-console, when: datacenter == 'iad2' and not inventory_hostname.startswith(('buildvmhost-s390x','bvmhost-s390x')}
 
   tasks:
   - import_tasks: "{{ tasks_path }}/motd.yml"
