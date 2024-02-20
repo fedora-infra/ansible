@@ -11,5 +11,6 @@ main_bridge: br0
 mem_size: 8192
 num_cpus: 2
 varnish_group: s390kojipkgs
+virt_install_command: "{{ virt_install_command_s390x_one_nic }}"
 vmhost: bvmhost-s390x-01.stg.s390.fedoraproject.org
 volgroup: /dev/fedora_rdu-z16-l51
