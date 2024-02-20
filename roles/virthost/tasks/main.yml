@@ -18,26 +18,7 @@
   - virthost
   when: ansible_distribution == 'RedHat' and ansible_distribution_major_version|int == 8
 
-- name: install openstack 7 repo file
-  copy: src=rhel7-os.repo dest=/etc/yum.repos.d/rhel7-os.repo
-  tags:
-  - repos
-  - rhel7-os-repo
-  when: ansible_distribution == 'RedHat' and ansible_distribution_major_version|int == 7 and ansible_architecture == 'x86_64'
-
-- name: install libvirt packages on rhel7 virthosts
-  package: name={{ item }} state=present
-  with_items:
-  - qemu-kvm-rhev
-  - qemu-kvm-tools-rhev
-  - qemu-img-rhev
-  - libvirt
-  - virt-install
-  tags:
-  - packages
-  when: ansible_distribution == 'RedHat' and ansible_distribution_major_version|int == 7 and ansible_architecture != 'aarch64'
-
-- name: install libvirt packages on rhel8 or rhel9 virthosts
+- name: install libvirt packages on virthost
   package: name={{ item }} state=present
   with_items:
   - qemu-kvm
@@ -45,59 +26,6 @@
   - virt-install
   tags:
   - packages
-  when: ansible_distribution == 'RedHat' and ansible_distribution_major_version|int > 7
-
-- name: install AAVMF uEFI tianocore on aarch64 rhel7 virthosts
-  package: name={{ item }} state=present
-  with_items:
-  - AAVMF
-  - qemu-kvm
-  - qemu-img
-  - libvirt
-  - virt-install
-  tags:
-  - packages
-  when: ansible_architecture == 'aarch64'
-
-- name: install libguestfs-tools for ARMv7 VMs on aarch64 rhel7 virthosts
-  package: name={{ item }} state=present
-  with_items:
-  - libguestfs-tools-c
-  tags:
-  - packages
-  when: ansible_architecture == 'aarch64'
-
-- name: install edk2-arm for ARMv7 VMs on aarch64 rhel9 virthosts
-  dnf: name={{ item }} state=present disable_gpg_check=yes
-  with_items:
-    - https://kojipkgs.fedoraproject.org//packages/edk2/20220526git16779ede2d36/3.fc36/noarch/edk2-arm-20220526git16779ede2d36-3.fc36.noarch.rpm
-  tags:
-  - packages
-  when: ansible_architecture == 'aarch64'
-
-# install libvirtd.conf
-#
-# This provides us with the ability to use virt-manager from non root accounts.
-#
-- name: install libvirtd.conf
-  copy: src="{{ files }}/virthost/libvirtd.conf" dest=/etc/libvirt/libvirtd.conf
-  notify:
-  - restart libvirtd
-  tags:
-  - config
-  when: ansible_distribution == 'RedHat' and ansible_distribution_major_version|int == 7 and not inventory_hostname.startswith('virthost-aarch64-os')
-
-- name: install libvirtd.conf
-  copy: src="{{ files }}/virthost/libvirtd.conf.os" dest=/etc/libvirt/libvirtd.conf
-  notify:
-  - restart libvirtd
-  tags:
-  - config
-  when: ansible_distribution == 'RedHat' and ansible_distribution_major_version|int == 7 and inventory_hostname.startswith('virthost-aarch64-os')
-
-- name: enable libvirtd
-  service: name=libvirtd state=started enabled=yes
-  when: ansible_distribution == 'RedHat' and ansible_distribution_major_version|int == 7
 
 #
 # Disable lvmetad as it causes lots of problems with iscsi shared lvm and caching.
@@ -117,14 +45,6 @@
   tags:
   - config
   - nolvmetad
-
-- name: set bridging to work right -
-  copy: src="{{ files }}/virthost/99-bridge.rules" dest=/etc/udev/rules.d/99-bridge.rules
-  notify:
-  - restart bridge
-  tags:
-  - config
-  when: ansible_distribution == 'RedHat' and ansible_distribution_major_version|int == 7
 
 #
 # Some virthosts we want to use nested virt (a tech preview in rhel 7.2)
