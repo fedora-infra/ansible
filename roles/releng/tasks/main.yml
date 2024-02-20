@@ -91,7 +91,6 @@
     name: "rawhide"
     gid: 265
     state: present
-    local: true
 
 # rawhide user 265
 - name: add rawhide user
@@ -103,7 +102,6 @@
     create_home: false
     comment: "rawhide compose account"
     state: present
-    local: true
 
 - name: make a bunch of dirs
   file: state=directory path={{ item }}

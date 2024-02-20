@@ -8,3 +8,12 @@
   with_items: "{{ zabbix_templates }}"
   tags:
     - zabbix_add_templates_to_hosts
+  vars:
+    ansible_zabbix_auth_key: "{{ (env == 'staging')|ternary(zabbix_stg_apikey, zabbix_apikey) }}"
+    ansible_network_os: community.zabbix.zabbix
+    ansible_connection: httpapi
+    ansible_httpapi_port: 443
+    ansible_httpapi_use_ssl: true
+    ansible_httpapi_validate_certs: false
+    ansible_host: "{{ (env == 'staging')|ternary(zabbix_stg_hostname, zabbix_hostname) }}"
+    ansible_zabbix_url_path: ""  # If Zabbix WebUI runs on non-default (zabbix) path ,e.g. http://<FQDN>/zabbixeu
