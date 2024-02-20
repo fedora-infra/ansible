@@ -95,7 +95,14 @@
 
 # rawhide user 265
 - name: add rawhide user
-  user: name=rawhide uid=265 group=rawhide home=/tmp comment="rawhide compose account"
+  ansible.builtin.user:
+    name: "rawhide"
+    uid: 265
+    group: "rawhide"
+    home: "/tmp"
+    comment: "rawhide compose account"
+    state: present
+    local: true
 
 - name: make a bunch of dirs
   file: state=directory path={{ item }}
