@@ -108,11 +108,11 @@ buildvm-s390x-10.s390.fedoraproject.org
 buildvm-s390x-11.s390.fedoraproject.org
 buildvm-s390x-12.s390.fedoraproject.org
 buildvm-s390x-13.s390.fedoraproject.org
-buildvm-s390x-14.s390.fedoraproject.org
 
 [buildvm_s390x_kvm]
 buildvm-s390x-01.s390.fedoraproject.org
 buildvm-s390x-01.stg.s390.fedoraproject.org
+buildvm-s390x-14.s390.fedoraproject.org
 buildvm-s390x-15.s390.fedoraproject.org
 buildvm-s390x-16.s390.fedoraproject.org
 buildvm-s390x-17.s390.fedoraproject.org
@@ -127,6 +127,11 @@ buildvm-s390x-25.s390.fedoraproject.org
 # These two have more cpu/memory for 'heavybuilder' channel
 buildvm-s390x-26.s390.fedoraproject.org
 buildvm-s390x-27.s390.fedoraproject.org
+
+[buildvm_s390x_rdu]
+buildvm-s390x-01.s390.fedoraproject.org
+buildvm-s390x-01.stg.s390.fedoraproject.org
+buildvm-s390x-14.s390.fedoraproject.org
 
 [buildvm_s390x:children]
 buildvm_s390x_zvm
@@ -264,6 +269,9 @@ buildvm-ppc64le-09.iad2.fedoraproject.org
 buildvm-ppc64le-18.iad2.fedoraproject.org
 buildvm-ppc64le-27.iad2.fedoraproject.org
 buildvm-ppc64le-33.iad2.fedoraproject.org
+buildvm-s390x-11.s390.fedoraproject.org
+buildvm-s390x-12.s390.fedoraproject.org
+buildvm-s390x-13.s390.fedoraproject.org
 buildvm-s390x-15.s390.fedoraproject.org
 buildvm-s390x-16.s390.fedoraproject.org
 buildvm-s390x-17.s390.fedoraproject.org
