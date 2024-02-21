@@ -90,7 +90,7 @@ MissingPolicyOk = False
 {% if env == "staging" %}
 Plugins = osbuild koji-fedoramessaging runroot_hub hub_containerbuild tag2distrepo sidetag_hub save_failed_tree flatpak kiwi
 {% else %}
-Plugins = osbuild koji-fedoramessaging runroot_hub hub_containerbuild tag2distrepo sidetag_hub save_failed_tree flatpak
+Plugins = osbuild koji-fedoramessaging runroot_hub hub_containerbuild tag2distrepo sidetag_hub save_failed_tree flatpak kiwi
 {% endif %}
 [policy]
 
@@ -246,6 +246,7 @@ build_from_scm =
         bool scratch :: allow
         match scm_repository /fedora-kickstarts.git :: allow
         match scm_repository /fork/*/fedora-kickstarts.git :: allow
+        match scm_repository /fedora-kiwi-descriptions :: allow
     }
     all :: deny
 {% endif %}
