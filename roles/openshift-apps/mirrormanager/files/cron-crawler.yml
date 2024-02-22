@@ -1,0 +1,41 @@
+#
+### Crawler cron jobs
+#
+{% for cronjob in mirrormanager_cron_crawler %}
+---
+# Category: {{ cronjob.category }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: crawler-{{ cronjob.category|lower|replace(" ", "-") }}
+spec:
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  concurrencyPolicy: Forbid
+  schedule: "{{ cronjob.schedule }}"
+  startingDeadlineSeconds: 500
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: mirrormanager
+            image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
+            command:
+              - "/opt/app-root/bin/mm2_crawler"
+              - "--category"
+              - "{{ cronjob.category }}"
+              - "--threads"
+              - "{{ cronjob.threads }}"
+              - "--timeout-minutes"
+              - "240"
+            volumeMounts:
+              - name: config
+                mountPath: "/etc/mirrormanager"
+                readOnly: true
+          volumes:
+            - name: config
+              configMap:
+                name: config
+{% endfor %}

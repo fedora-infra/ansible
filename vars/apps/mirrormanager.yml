@@ -4,3 +4,22 @@ mirrormanager_db_host: "db01{{ env_suffix }}"
 mirrormanager_oidc_client_id: "mirrormanager"
 # Move that to an env var to target a specific deployment
 mm2_checkin: false
+mirrormanager_cron_crawler:
+  - category: "Fedora Linux"
+    schedule: "0 */12 * * *"
+    threads: 20
+  - category: "Fedora Secondary Arches"
+    schedule: "0 3,9 * * *"
+    threads: 10
+  - category: "Fedora EPEL"
+    schedule: "45 */6 * * *"
+    threads: 20
+  - category: "Fedora Archive"
+    schedule: "0 2 * * *"
+    threads: 10
+  - category: "Fedora Other"
+    schedule: "0 14 * * *"
+    threads: 10
+  - category: "CentOS"
+    schedule: "0 5,11 * * *"
+    threads: 20

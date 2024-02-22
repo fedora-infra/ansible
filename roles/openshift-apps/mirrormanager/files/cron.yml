@@ -1,13 +1,16 @@
+#
+# Propagation
+#
 ---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: generate-worldmap
+  name: propagation-check
 spec:
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
   concurrencyPolicy: Forbid
-  schedule: "50 20 * * *"
+  schedule: "27 */2 * * *"
   startingDeadlineSeconds: 500
   jobTemplate:
     spec:
@@ -18,45 +21,7 @@ spec:
           - name: mirrormanager
             image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
             command:
-              - "/opt/app-root/bin/mm2_generate-worldmap"
-              - "--output"
-              - "/var/lib/mirrormanager/statistics/map/"
-            volumeMounts:
-              - name: config
-                mountPath: "/etc/mirrormanager"
-                readOnly: true
-              - name: data
-                mountPath: "/var/lib/mirrormanager"
-          volumes:
-            - name: config
-              configMap:
-                name: config
-            - name: data
-              persistentVolumeClaim:
-                claimName: data
-          securityContext:
-            supplementalGroups: [1001280000]
----
-apiVersion: batch/v1
-kind: CronJob
-metadata:
-  name: get-geoip
-spec:
-  successfulJobsHistoryLimit: 3
-  failedJobsHistoryLimit: 3
-  concurrencyPolicy: Forbid
-  schedule: "48 * * * *"
-  startingDeadlineSeconds: 500
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          restartPolicy: Never
-          containers:
-          - name: mirrormanager
-            image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
-            command:
-              - "curl"
+              - "mm2_crawler"
               - "--create-dirs"
               - "--output-dir"
               - "/var/lib/mirrormanager/geoip"

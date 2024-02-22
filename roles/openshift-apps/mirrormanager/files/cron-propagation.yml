@@ -1,0 +1,97 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: propagation-check-current
+spec:
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  concurrencyPolicy: Forbid
+  schedule: "27 */2 * * *"
+  startingDeadlineSeconds: 500
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: mirrormanager
+            image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
+            command:
+              - "/opt/app-root/bin/mm2_crawler"
+              - "--threads"
+              - "50"
+              - "propagation"
+            volumeMounts:
+              - name: config
+                mountPath: "/etc/mirrormanager"
+                readOnly: true
+          volumes:
+            - name: config
+              configMap:
+                name: config
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: propagation-check-centos-9
+spec:
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  concurrencyPolicy: Forbid
+  schedule: "44 */2 * * *"
+  startingDeadlineSeconds: 500
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: mirrormanager
+            image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
+            command:
+              - "/opt/app-root/bin/mm2_crawler"
+              - "--threads"
+              - "50"
+              - "propagation"
+              - "--product"
+              - "CentOS"
+              - "--version"
+              - "9-stream"
+            volumeMounts:
+              - name: config
+                mountPath: "/etc/mirrormanager"
+                readOnly: true
+          volumes:
+            - name: config
+              configMap:
+                name: config
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: propagation-expire-stats
+spec:
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  concurrencyPolicy: Forbid
+  schedule: "10 2,18 * * *"
+  startingDeadlineSeconds: 500
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: mirrormanager
+            image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
+            command:
+              - "/opt/app-root/bin/mm2_expire-stats"
+            volumeMounts:
+              - name: config
+                mountPath: "/etc/mirrormanager"
+                readOnly: true
+          volumes:
+            - name: config
+              configMap:
+                name: config

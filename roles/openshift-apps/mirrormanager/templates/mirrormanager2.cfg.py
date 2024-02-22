@@ -79,6 +79,9 @@ SMTP_SERVER = "bastion{{ env_suffix }}.fedoraproject.org"
 # to locate the statistics files and display them.
 # STATISTICS_BASE = "/var/lib/mirrormanager/statistics/data"
 
+# How long to keep the access stats, in days
+#ACCESS_STATS_KEEP_DAYS = 30
+
 # Countries which have to be excluded.
 EMBARGOED_COUNTRIES = ["CU", "IR", "KP", "SD", "SY"]
 
@@ -102,6 +105,10 @@ EMBARGOED_COUNTRIES = ["CU", "IR", "KP", "SD", "SY"]
 
 # Where to look for the above mentioned propagation images.
 # PROPAGATION_BASE = "/var/lib/mirrormanager/statistics/data/propagation"
+
+# How long to keep the propagation stats, in days
+#PROPAGATION_KEEP_DAYS = 30
+PROPAGATION_KEEP_DAYS = 14
 
 # Where the GeoIP database lives
 GEOIP_BASE = "/var/lib/mirrormanager/geoip"
@@ -179,6 +186,9 @@ CRAWLER_SEND_EMAIL =  False
 # If a host fails for CRAWLER_AUTO_DISABLE times in a row
 # the host will be disable automatically (user_active)
 # CRAWLER_AUTO_DISABLE = 4
+
+# To get the current versions
+BODHI_URL = "https://bodhi{{ env_suffix }}.fedoraproject.org"
 
 UMDL_PREFIX = "/srv/"
 
