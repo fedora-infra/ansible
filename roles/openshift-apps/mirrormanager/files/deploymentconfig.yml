@@ -46,20 +46,9 @@ spec:
         - name: scripts
           mountPath: "/opt/scripts"
           readOnly: true
-        - name: fedora-messaging-config
-          mountPath: "/etc/fedora-messaging"
-          readOnly: true
-        - name: fedora-messaging-ca
-          mountPath: /etc/pki/fedora-messaging/cacert.pem
-          subPath: cacert.pem
-          readOnly: true
-        - name: fedora-messaging-crt
-          mountPath: /etc/pki/fedora-messaging/cert.pem
-          subPath: cert.pem
-          readOnly: true
-        - name: fedora-messaging-key
-          mountPath: /etc/pki/fedora-messaging/key.pem
-          subPath: key.pem
+        - name: ssh-key
+          mountPath: /etc/mirrormanager-ssh/ssh_mirrorlist_proxies.key
+          subPath: ssh_mirrorlist_proxies.key
           readOnly: true
         # - name: ipa-config
         #   mountPath: "/etc/ipa"
@@ -101,18 +90,9 @@ spec:
       - name: scripts
         configMap:
           name: scripts
-      - name: fedora-messaging-config
-        configMap:
-          name: fedora-messaging-config
-      - name: fedora-messaging-ca
+      - name: ssh-key
         secret:
-          secretName: fedora-messaging-ca
-      - name: fedora-messaging-crt
-        secret:
-          secretName: fedora-messaging-crt
-      - name: fedora-messaging-key
-        secret:
-          secretName: fedora-messaging-key
+          secretName: ssh_mirrorlist_proxies_key
       # - name: ipa-config
       #   configMap:
       #     name: ipa-client-config

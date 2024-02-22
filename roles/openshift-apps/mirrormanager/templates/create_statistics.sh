@@ -4,7 +4,7 @@ MIRRORLIST_PROXIES="{% for host in groups['mirrorlist_proxies'] %} {{ host }} {%
 
 MIRRORLIST_LOGDIR="/var/log/mirrormanager"
 MIRRORLIST_LOGFILES="mirrorlist1.service.log mirrorlist2.service.log"
-SSH_KEY="/etc/mirrormanager-secrets/ssh_mirrorlist_proxies.key"
+SSH_KEY="/etc/mirrormanager-ssh/ssh_mirrorlist_proxies.key"
 REMOTE_USER="mirrormanager"
 
 SSH="ssh -i ${SSH_KEY}"

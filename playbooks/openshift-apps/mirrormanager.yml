@@ -97,22 +97,12 @@
       annotations:
         haproxy.router.openshift.io/timeout: 5m
 
-    # Fedora Messaging
+    # SSH key to get the access logs
     - role: openshift/secret-file
       app: mirrormanager
-      secret_name: fedora-messaging-ca
-      key: cacert.pem
-      privatefile: "rabbitmq/{{env}}/pki/ca.crt"
-    - role: openshift/secret-file
-      app: mirrormanager
-      secret_name: fedora-messaging-crt
-      key: fmn-cert.pem
-      privatefile: "rabbitmq/{{env}}/pki/issued/fmn{{env_suffix}}.crt"
-    - role: openshift/secret-file
-      app: mirrormanager
-      secret_name: fedora-messaging-key
-      key: fmn-key.pem
-      privatefile: "rabbitmq/{{env}}/pki/private/fmn{{env_suffix}}.key"
+      secret_name: ssh_mirrorlist_proxies_key
+      key: ssh_mirrorlist_proxies.key
+      privatefile: "mirrormanager/id_rsa.pub"
 
     # Deployment config
     - role: openshift/object
