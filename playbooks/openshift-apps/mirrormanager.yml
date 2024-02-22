@@ -127,11 +127,11 @@
     #   objectname: cron.yml
     - role: openshift/object
       app: mirrormanager
-      file: cron-crawler.yml
+      template: cron-crawler.yml
       objectname: cron-crawler.yml
     - role: openshift/object
       app: mirrormanager
-      file: cron-propagation.yml
+      template: cron-propagation.yml
       objectname: cron-propagation.yml
 
     - role: openshift/start-build
