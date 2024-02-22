@@ -133,6 +133,10 @@
       app: mirrormanager
       template: cron-propagation.yml
       objectname: cron-propagation.yml
+    - role: openshift/object
+      app: mirrormanager
+      template: cron-accesses.yml
+      objectname: cron-accesses.yml
 
     - role: openshift/start-build
       app: mirrormanager

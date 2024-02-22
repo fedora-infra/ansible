@@ -1,0 +1,69 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: mirrorlist-statistics
+spec:
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  concurrencyPolicy: Forbid
+  schedule: "4 */2 * * *"
+  startingDeadlineSeconds: 500
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: mirrormanager
+            image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
+            command: ["bash", "/opt/scripts/create_statistics.sh"]
+            volumeMounts:
+              - name: config
+                mountPath: "/etc/mirrormanager"
+                readOnly: true
+              - name: scripts
+                mountPath: "/opt/scripts"
+                readOnly: true
+          volumes:
+            - name: config
+              configMap:
+                name: config
+            - name: scripts
+              configMap:
+                name: scripts
+---
+## Also include stats from the previous day
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: mirrorlist-statistics-yesterday
+spec:
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  concurrencyPolicy: Forbid
+  schedule: "55 0 * * *"
+  startingDeadlineSeconds: 500
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: mirrormanager
+            image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
+            command: ["bash", "/opt/scripts/create_statistics.sh", "yesterday"]
+            volumeMounts:
+              - name: config
+                mountPath: "/etc/mirrormanager"
+                readOnly: true
+              - name: scripts
+                mountPath: "/opt/scripts"
+                readOnly: true
+          volumes:
+            - name: config
+              configMap:
+                name: config
+            - name: scripts
+              configMap:
+                name: scripts
