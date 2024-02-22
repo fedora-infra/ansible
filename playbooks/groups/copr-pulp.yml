@@ -1,10 +1,11 @@
+---
 - name: check/create instance
   hosts: copr_pulp_dev_aws:copr_pulp_aws
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
@@ -51,11 +52,11 @@
 - name: cloud basic setup
   hosts: copr_pulp_dev_aws:copr_pulp_aws
   become: true
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
@@ -69,12 +70,12 @@
 - name: provision instance
   hosts: copr_pulp_dev_aws:copr_pulp_aws
   become: true
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
   - base
@@ -85,7 +86,7 @@
 - name: Use pulp_installer collection
   hosts: copr_pulp_dev_aws:copr_pulp_aws
   become: true
-  gather_facts: True
+  gather_facts: true
 
   collections:
     - pulp.pulp_installer
@@ -97,9 +98,9 @@
     DJANGO_SETTINGS_MODULE: pulpcore.app.settings
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   vars:
     pulp_settings:
