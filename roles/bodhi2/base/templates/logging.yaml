@@ -47,6 +47,13 @@ loggers:
     level: INFO
 {% endif %}
     handlers: [console, smtp]
+  gunicorn:
+{% if env == "production" %}
+    level: INFO
+{% else %}
+    level: DEBUG
+{% endif %}
+    handlers: [console, smtp]
   twisted:
 {% if env == "production" %}
     level: ERROR
