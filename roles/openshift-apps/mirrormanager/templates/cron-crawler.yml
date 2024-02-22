@@ -24,12 +24,13 @@ spec:
             image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
             command:
               - "/opt/app-root/bin/mm2_crawler"
-              - "--category"
-              - "{{ cronjob.category }}"
               - "--threads"
               - "{{ cronjob.threads }}"
               - "--timeout-minutes"
               - "240"
+              - "crawl"
+              - "--category"
+              - "{{ cronjob.category }}"
             volumeMounts:
               - name: config
                 mountPath: "/etc/mirrormanager"

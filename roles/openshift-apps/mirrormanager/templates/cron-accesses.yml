@@ -25,6 +25,10 @@ spec:
               - name: scripts
                 mountPath: "/opt/scripts"
                 readOnly: true
+              - name: ssh-key
+                mountPath: /etc/mirrormanager-ssh/ssh_mirrorlist_proxies.key
+                subPath: ssh_mirrorlist_proxies.key
+                readOnly: true
           volumes:
             - name: config
               configMap:
@@ -32,6 +36,9 @@ spec:
             - name: scripts
               configMap:
                 name: scripts
+            - name: ssh-key
+              secret:
+                secretName: ssh-mirrorlist-proxies-key
 ---
 ## Also include stats from the previous day
 apiVersion: batch/v1
@@ -60,6 +67,10 @@ spec:
               - name: scripts
                 mountPath: "/opt/scripts"
                 readOnly: true
+              - name: ssh-key
+                mountPath: /etc/mirrormanager-ssh/ssh_mirrorlist_proxies.key
+                subPath: ssh_mirrorlist_proxies.key
+                readOnly: true
           volumes:
             - name: config
               configMap:
@@ -67,3 +78,6 @@ spec:
             - name: scripts
               configMap:
                 name: scripts
+            - name: ssh-key
+              secret:
+                secretName: ssh-mirrorlist-proxies-key

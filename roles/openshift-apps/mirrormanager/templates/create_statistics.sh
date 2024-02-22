@@ -7,7 +7,7 @@ MIRRORLIST_LOGFILES="mirrorlist1.service.log mirrorlist2.service.log"
 SSH_KEY="/etc/mirrormanager-ssh/ssh_mirrorlist_proxies.key"
 REMOTE_USER="mirrormanager"
 
-SSH="ssh -i ${SSH_KEY}"
+SSH="ssh -i ${SSH_KEY} -o 'StrictHostKeyChecking no' -o 'BatchMode yes'"
 DATE=`date +%Y%m%d`
 OUTPUT=`mktemp -d`
 
