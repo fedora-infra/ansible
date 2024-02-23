@@ -9,7 +9,8 @@ set -x
 
 rm -rf ${CACHEDIR}/old
 mkdir -p ${CACHEDIR}/old
-cp -ar ${CACHEDIR}/*  ${CACHEDIR}/old/ 2>/dev/null
+chmod g+w ${CACHEDIR}/old
+cp -ar ${CACHEDIR}/*.*  ${CACHEDIR}/old/
 
 ${MM_ROOT}/bin/generate-mirrorlist-cache -o ${CACHEDIR}/mirrorlist_cache.proto
 
