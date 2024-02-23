@@ -127,6 +127,10 @@
       app: mirrormanager
       template: cron-mirrorlist-cache.yml
       objectname: cron-mirrorlist-cache.yml
+    - role: openshift/object
+      app: mirrormanager
+      template: cron-geoip.yml
+      objectname: cron-geoip.yml
 
     - role: openshift/start-build
       app: mirrormanager
