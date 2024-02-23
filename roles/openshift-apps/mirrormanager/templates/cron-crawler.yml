@@ -35,8 +35,51 @@ spec:
               - name: config
                 mountPath: "/etc/mirrormanager"
                 readOnly: true
+              - name: data
+                mountPath: "/var/lib/mirrormanager"
           volumes:
             - name: config
               configMap:
                 name: config
+            - name: data
+              persistentVolumeClaim:
+                claimName: data
 {% endfor %}
+#
+### Download GeoIP database
+#
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: download-geoip-db
+spec:
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  concurrencyPolicy: Forbid
+  schedule: "48 * * * *"
+  startingDeadlineSeconds: 500
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: mirrormanager
+            image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
+            command:
+              - "curl"
+              - "--create-dirs"
+              - "--output-dir"
+              - "/var/lib/mirrormanager/geoip"
+              - "-O"
+              - "https://infrastructure.fedoraproject.org/infra/bigfiles/geoip/GeoLite2-City.mmdb"
+            volumeMounts:
+              - name: data
+                mountPath: "/var/lib/mirrormanager"
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: data
+          securityContext:
+            supplementalGroups: [1001280000]

@@ -111,10 +111,6 @@
       objectname: deploymentconfig.yml
 
     # Cron jobs
-    # - role: openshift/object
-    #   app: mirrormanager
-    #   file: cron.yml
-    #   objectname: cron.yml
     - role: openshift/object
       app: mirrormanager
       template: cron-crawler.yml

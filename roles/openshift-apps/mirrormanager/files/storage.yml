@@ -1,4 +1,21 @@
 ---
+# Right now this only contains the downloaded GeoIP database, less than 100Mb. Feel free to downsize if needed.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ocs-storagecluster-cephfs
+---
+# This contains:
+# - the extracted netblocks, around 30Mb
+# - the mirrorlist cache, around 300Mb
+# - the previous version of all that in an old/ directory
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
