@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 MIRRORLIST_PROXIES="{% for host in groups['mirrorlist_proxies'] %} {{ host }} {% endfor %}"
 
@@ -7,11 +7,13 @@ MIRRORLIST_LOGFILES="mirrorlist1.service.log mirrorlist2.service.log"
 SSH_KEY="/etc/mirrormanager-ssh/ssh_mirrorlist_proxies.key"
 REMOTE_USER="mirrormanager"
 
-SSH="ssh -i ${SSH_KEY} -o 'StrictHostKeyChecking no' -o 'BatchMode yes'"
+SSH="ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no -o BatchMode=yes"
 DATE=`date +%Y%m%d`
 OUTPUT=`mktemp -d`
 
 trap "rm -f ${OUTPUT}/*; rmdir ${OUTPUT}" QUIT TERM INT HUP EXIT
+
+set -x
 
 for proxy in ${MIRRORLIST_PROXIES}; do
 	if [ "$1" == "yesterday" ]; then
