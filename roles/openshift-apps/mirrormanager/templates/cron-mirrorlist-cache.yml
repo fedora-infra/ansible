@@ -44,6 +44,8 @@ spec:
             - name: data
               persistentVolumeClaim:
                 claimName: mirrorlist-cache
+          securityContext:
+            supplementalGroups: [1001280000]
 ---
 # Sync netblocks list once a day
 apiVersion: batch/v1
@@ -64,7 +66,7 @@ spec:
           containers:
           - name: mirrormanager
             image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
-            command: ["/opt/app-root/bin/mm2_get-netblocks", "global", "-o", "/data/global_netblocks.txt"]
+            command: ["mm2_get-netblocks", "global", "-o", "/data/global_netblocks.txt"]
             volumeMounts:
               - name: config
                 mountPath: "/etc/mirrormanager"
@@ -78,6 +80,8 @@ spec:
             - name: data
               persistentVolumeClaim:
                 claimName: mirrorlist-cache
+          securityContext:
+            supplementalGroups: [1001280000]
 ---
 # Run the script for Internet2 netblocks very late to
 # make sure the files are all there. The script is
@@ -101,7 +105,7 @@ spec:
           containers:
           - name: mirrormanager
             image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
-            command: ["/opt/app-root/bin/mm2_get-netblocks", "internet2", "-o", "/data/i2_netblocks.txt"]
+            command: ["mm2_get-netblocks", "internet2", "-o", "/data/i2_netblocks.txt"]
             volumeMounts:
               - name: config
                 mountPath: "/etc/mirrormanager"
@@ -115,6 +119,8 @@ spec:
             - name: data
               persistentVolumeClaim:
                 claimName: mirrorlist-cache
+          securityContext:
+            supplementalGroups: [1001280000]
 ---
 # Amazon EC2 netblocks
 apiVersion: batch/v1
@@ -135,7 +141,7 @@ spec:
           containers:
           - name: mirrormanager
             image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
-            command: ["/opt/app-root/bin/mm2_update-EC2-netblocks"]
+            command: ["mm2_update-EC2-netblocks"]
             volumeMounts:
               - name: config
                 mountPath: "/etc/mirrormanager"
