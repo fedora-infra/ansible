@@ -1,3 +1,4 @@
+{% macro load_file(filename) %}{% include filename %}{%- endmacro -%}
 ---
 # Build a derivative of the python-311 builder image with Rust added to it
 apiVersion: build.openshift.io/v1
