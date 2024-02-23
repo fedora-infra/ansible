@@ -1,10 +1,42 @@
 ---
+# Build a derivative of the python-311 builder image with Rust added to it
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: python-311-with-rust
+  labels:
+    app: mirrormanager
+    build: python-311-with-rust
+spec:
+  runPolicy: Serial
+  source:
+    type: Dockerfile
+    dockerfile: |-
+      {{ load_file('Dockerfile-builder-image') | indent(6) }}
+  strategy:
+    type: Docker
+    dockerStrategy:
+      from:
+        kind: ImageStreamTag
+        # name: python:3.11
+        # namespace: openshift
+        # OpenShift does not have Python 3.11 (yet), use our own ImageStream
+        name: python-311:latest
+  output:
+    to:
+      kind: ImageStreamTag
+      name: python-311-with-rust:latest
+  triggers:
+  - type: ImageChange
+
+---
+# Build MirrorManager
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
   name: mirrormanager2
   labels:
-    app: mirrormanager2
+    app: mirrormanager
     build: mm
 spec:
   runPolicy: Serial
@@ -25,10 +57,8 @@ spec:
     sourceStrategy:
       from:
         kind: ImageStreamTag
-        # name: python:3.11
-        # namespace: openshift
-        # OpenShift does not have Python 3.11 (yet), use our own ImageStream
-        name: python-311:latest
+        # Our own ImageStream with rust added to it
+        name: python-311-with-rust:latest
   output:
     to:
       kind: ImageStreamTag

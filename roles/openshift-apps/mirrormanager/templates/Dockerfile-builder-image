@@ -1,0 +1,8 @@
+FROM quay.io/fedora/python-311:latest
+LABEL \
+    name="python-311-with-rust" \
+    vendor="Fedora Infrastructure" \
+    license="MIT"
+USER root
+RUN dnf install -y cargo
+USER 1001
