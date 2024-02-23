@@ -13,6 +13,7 @@ OUTPUT=`mktemp -d`
 
 trap "rm -f ${OUTPUT}/*; rmdir ${OUTPUT}" QUIT TERM INT HUP EXIT
 
+set -e
 set -x
 
 for proxy in ${MIRRORLIST_PROXIES}; do
