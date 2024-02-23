@@ -100,7 +100,7 @@
     # SSH key to get the access logs
     - role: openshift/secret-file
       app: mirrormanager
-      secret-name: ssh-mirrorlist-proxies-key
+      secret_name: ssh-mirrorlist-proxies-key
       key: ssh_mirrorlist_proxies.key
       privatefile: "mirrormanager/id_rsa.pub"
 
