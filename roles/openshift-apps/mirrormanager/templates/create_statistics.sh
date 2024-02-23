@@ -32,4 +32,4 @@ else
 	OPTIONS=""
 fi
 
-mm2_mirrorlist-statistics ${OPTIONS} -l ${OUTPUT}/mirrorlist.log.gz
+mm2_mirrorlist-statistics ${OPTIONS} ${OUTPUT}/mirrorlist.log.gz
