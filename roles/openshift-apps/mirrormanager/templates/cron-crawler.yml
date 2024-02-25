@@ -28,9 +28,9 @@ spec:
               - "{{ cronjob.threads }}"
               - "--timeout-minutes"
               - "240"
-              - "crawl"
               - "--category"
               - "{{ cronjob.category }}"
+              - "crawl"
             volumeMounts:
               - name: config
                 mountPath: "/etc/mirrormanager"
