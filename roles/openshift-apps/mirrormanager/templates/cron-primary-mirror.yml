@@ -1,0 +1,49 @@
+#
+### Primary mirror scanning cron jobs
+#
+{% for cronjob in mirrormanager_cron_primary_mirror %}
+---
+# Category: {{ cronjob.category }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: primary-mirror-{{ cronjob.category|lower|replace(" ", "-") }}
+spec:
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  concurrencyPolicy: Forbid
+  schedule: "{{ cronjob.schedule }}"
+  startingDeadlineSeconds: 500
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: mirrormanager
+            image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
+            command: ["bash", "/opt/app-root/bin/primary-mirror-wrapper.sh", "{{ cronjob.category }}"]
+            volumeMounts:
+              - name: config
+                mountPath: "/etc/mirrormanager"
+                readOnly: true
+              - name: data
+                mountPath: "/var/lib/mirrormanager"
+              - name: mirror
+                mountPath: "/srv/pub"
+              - name: mirror-archive
+                mountPath: "/srv/pub/archive"
+          volumes:
+            - name: config
+              configMap:
+                name: config
+            - name: data
+              persistentVolumeClaim:
+                claimName: data
+            - name: mirror
+              persistentVolumeClaim:
+                claimName: primary-mirror
+            - name: mirror-archive
+              persistentVolumeClaim:
+                claimName: primary-mirror-archive
+{% endfor %}

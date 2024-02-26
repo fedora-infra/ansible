@@ -29,3 +29,24 @@ mirrormanager_cron_crawler:
     schedule: "0 5,11 * * *"
     threads: 20
     timeout: 300
+mirrormanager_cron_primary_mirror:
+  # check if category Fedora Linux needs updating every 30 minutes
+  - category: "fedora"
+    schedule: "10,40 * * * *"
+  # check if category Fedora Secondary Arches needs updating every 30 minutes
+  - category: "fedora-secondary"
+    schedule: "20,50 * * * *"
+  # check if category Fedora EPEL needs updating every 30 minutes
+  - category: "epel"
+    schedule: "0,30 * * * *"
+  # check if category Fedora Codecs needs updating once a day
+  - category: "codecs"
+    schedule: "15 20 * * *"
+  # the following two categories are updated every two hours
+  - category: "archive"
+    schedule: "15 */2 * * *"
+  - category: "alt"
+    schedule: "45 */2 * * *"
+  # check if category CentOS needs updating every 15 minutes
+  - category: "centos"
+    schedule: "57,12,27,42 * * * *"

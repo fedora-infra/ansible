@@ -27,29 +27,61 @@ spec:
     requests:
       storage: 2Gi
   storageClassName: ocs-storagecluster-cephfs
-# ---
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: fedora-ftp
-# spec:
-#   accessModes:
-#   - ReadOnlyMany
-#   resources:
-#     requests:
-#       storage: 1Gi
-#   storageClassName: ""
-#   volumeName: fedora_ftp/fedora.redhat.com/pub
-# ---
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: fedora-ftp-archive
-# spec:
-#   accessModes:
-#   - ReadOnlyMany
-#   resources:
-#     requests:
-#       storage: 1Gi
-#   storageClassName: ""
-#   volumeName: fedora_ftp_archive
+---
+### NFS
+## https://docs.openshift.com/container-platform/4.14/storage/persistent_storage/persistent-storage-nfs.html
+# First, the PVs
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: primary-mirror
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+  - ReadOnlyMany
+  nfs:
+    path: fedora_ftp/fedora.redhat.com/pub
+    server: ntap-iad2-c02-fedora01-nfs01a
+  persistentVolumeReclaimPolicy: Retain
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: primary-mirror-archive
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+  - ReadOnlyMany
+  nfs:
+    path: fedora_ftp_archive
+    server: ntap-iad2-c02-fedora01-nfs01a
+  persistentVolumeReclaimPolicy: Retain
+---
+# Then, the PVCs
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: primary-mirror
+spec:
+  accessModes:
+  - ReadOnlyMany
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ""
+  volumeName: fedora_ftp/fedora.redhat.com/pub
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: primary-mirror-archive
+spec:
+  accessModes:
+  - ReadOnlyMany
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ""
+  volumeName: fedora_ftp_archive
