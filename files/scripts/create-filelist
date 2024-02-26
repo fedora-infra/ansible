@@ -26,6 +26,9 @@ except ImportError:
     SUPPORTED_IMAGE_FORMATS = []
 
 
+CHECKSUM_ALGORITHMS = ("sha1", "md5", "sha256", "sha512")
+
+
 class SEntry(object):
     """A simpler DirEntry-like object."""
 
@@ -61,16 +64,16 @@ class SEntry(object):
         self.ftype = ftype + perm
 
 
-def sha1(fname):
-    """Return the SHA1 checksum of a file in hex."""
+def get_checksum(algo, fname):
+    """Return the checksum of a file in hex."""
     fh = open(fname, 'rb')
-    sha1 = hashlib.sha1()
+    hasher = getattr(hashlib, algo)()
     block = fh.read(2 ** 16)
     while len(block) > 0:
-        sha1.update(block)
+        hasher.update(block)
         block = fh.read(2 ** 16)
 
-    return sha1.hexdigest()
+    return hasher.hexdigest()
 
 
 def recursedir(path='.', skip=[], alwaysskip=['.~tmp~'], in_restricted=False):
@@ -115,6 +118,15 @@ def recursedir(path='.', skip=[], alwaysskip=['.~tmp~'], in_restricted=False):
             for re in recursedir(se.path, alwaysskip=alwaysskip, in_restricted=this_restricted):
                 yield re
         yield se
+
+
+def write_checksum_section(algo, files, output):
+    print('\n[Checksums {}]'.format(algo.upper()), file=output)
+
+    # It's OK if the checksum section is empty, but we should include it anyway
+    # as the client expects it.
+    for f in sorted(files):
+        print('{0}\t{1}'.format(get_checksum(algo, f), f), file=output)
 
 
 def parseopts():
@@ -194,12 +206,8 @@ def main():
                                           entry.size, entry.path[2:]),
               file=opts.timelist)
 
-    print('\n[Checksums SHA1]', file=opts.timelist)
-
-    # It's OK if the checksum section is empty, but we should include it anyway
-    # as the client expects it.
-    for f in sorted(checksums):
-        print('{0}\t{1}'.format(sha1(f), f), file=opts.timelist)
+    for algo in CHECKSUM_ALGORITHMS:
+        write_checksum_section(algo, checksums, opts.timelist)
 
     print('\n[End]', file=opts.timelist)
 
