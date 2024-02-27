@@ -26,6 +26,8 @@ spec:
               - "/opt/app-root/bin/mm2_crawler"
               - "--threads"
               - "{{ cronjob.threads }}"
+              - "--global-timeout"
+              - "{{ cronjob.timeout }}"
               - "--category"
               - "{{ cronjob.category }}"
               - "crawl"

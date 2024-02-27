@@ -7,19 +7,25 @@ mm2_checkin: false
 mirrormanager_cron_crawler:
   - category: "Fedora Linux"
     schedule: "0 */12 * * *"
-    threads: 20
+    threads: 40
+    timeout: 600
   - category: "Fedora Secondary Arches"
     schedule: "0 3,9 * * *"
     threads: 10
+    timeout: 300
   - category: "Fedora EPEL"
     schedule: "45 */6 * * *"
     threads: 20
+    timeout: 300
   - category: "Fedora Archive"
     schedule: "0 2 * * *"
     threads: 10
+    timeout: 600
   - category: "Fedora Other"
     schedule: "0 14 * * *"
-    threads: 10
+    threads: 20
+    timeout: 600
   - category: "CentOS"
     schedule: "0 5,11 * * *"
     threads: 20
+    timeout: 300
