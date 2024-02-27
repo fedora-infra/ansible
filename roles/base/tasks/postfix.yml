@@ -49,7 +49,7 @@
     value: false
   notify:
   - reload systemd
-  when: inventory_hostname.startswith(('buildvm-s390x','buildvmhost-s390x'))
+  when: inventory_hostname.startswith(('buildvm-s390x'))
   tags:
   - postfix
   - config
