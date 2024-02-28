@@ -85,7 +85,7 @@ class LibvirtSpawner:
         Knowing the IP address of recently started VM, wait for the SSH server
         responding on that IP.
         """
-        script = "resalloc-aws-wait-for-ssh"
+        script = "resalloc-wait-for-ssh"
         if self.call([script, '--timeout', '180', host, '--log', 'debug']):
             raise Exception("waiting not successful")
 

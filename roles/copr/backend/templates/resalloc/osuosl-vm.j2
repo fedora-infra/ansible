@@ -16,7 +16,7 @@ resalloc-openstack-new \
     --image "{{ copr_builder_images.osuosl.ppc64le  }}" \
     --flavor "$flavor" \
     --name "$RESALLOC_NAME" \
-    --post-command "set -x ; resalloc-aws-wait-for-ssh --timeout 250 --log debug \"\$RESALLOC_OS_IP\" >&2 && ansible-playbook $playbook -i \"\$RESALLOC_OS_IP,\" >&2 " \
+    --post-command "set -x ; resalloc-wait-for-ssh --timeout 250 --log debug \"\$RESALLOC_OS_IP\" >&2 && ansible-playbook $playbook -i \"\$RESALLOC_OS_IP,\" >&2 " \
     --key-pair-id copr-builder \
     --nic  net-id="$network" \
     --print-ip
