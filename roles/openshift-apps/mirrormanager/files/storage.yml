@@ -41,8 +41,8 @@ spec:
   accessModes:
   - ReadOnlyMany
   nfs:
-    path: fedora_ftp/fedora.redhat.com/pub
     server: ntap-iad2-c02-fedora01-nfs01a
+    path: /fedora_ftp/fedora.redhat.com/pub
   persistentVolumeReclaimPolicy: Retain
 ---
 apiVersion: v1
@@ -55,8 +55,8 @@ spec:
   accessModes:
   - ReadOnlyMany
   nfs:
-    path: fedora_ftp_archive
     server: ntap-iad2-c02-fedora01-nfs01a
+    path: /fedora_ftp_archive
   persistentVolumeReclaimPolicy: Retain
 ---
 # Then, the PVCs
@@ -71,7 +71,7 @@ spec:
     requests:
       storage: 1Gi
   storageClassName: ""
-  volumeName: fedora_ftp/fedora.redhat.com/pub
+  volumeName: primary-mirror
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -84,4 +84,4 @@ spec:
     requests:
       storage: 1Gi
   storageClassName: ""
-  volumeName: fedora_ftp_archive
+  volumeName: primary-mirror-archive
