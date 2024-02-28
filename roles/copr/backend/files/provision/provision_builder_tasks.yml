@@ -135,8 +135,8 @@
     - starting_builder
     - "'failed' in enable_swap_active.stdout"
 
-- name: print out the output
-  debug: var=enable_swap_active.stdout_lines
+- name: print out the enable-swap failure logs
+  debug: var=journalctl_output.stdout_lines
   when:
     - starting_builder
     - "'failed' in enable_swap_active.stdout"
