@@ -80,5 +80,4 @@ try_indefinitely subscription-manager register --force \
         --username "$opt_user" \
         --password "$opt_pass" \
         --name "$opt_system"
-
 try_indefinitely subscription-manager attach --pool "$opt_pool_id"
