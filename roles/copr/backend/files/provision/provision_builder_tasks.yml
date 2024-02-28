@@ -127,6 +127,14 @@
   register: rh_subscribtion_task
   when: starting_builder
 
+- name: make sure the enable-swap service has already finished
+  shell: "systemctl is-active enable-swap || :"
+  register: enable_swap_active
+  until: "'inactive' in enable_swap_active.stdout"
+  retries: 20
+  delay: 1
+  when: starting_builder
+
 - name: Collect facts about builder hardware
   setup:
     gather_subset:
