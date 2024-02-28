@@ -52,4 +52,6 @@ spec:
             - name: mirror-archive
               persistentVolumeClaim:
                 claimName: primary-mirror-archive
+          securityContext:
+            supplementalGroups: [1001280000]
 {% endfor %}

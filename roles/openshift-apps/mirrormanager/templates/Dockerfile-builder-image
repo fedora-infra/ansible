@@ -4,5 +4,8 @@ LABEL \
     vendor="Fedora Infrastructure" \
     license="MIT"
 USER root
+# Add RPM-only modules
+RUN dnf install -y python3-pyrpmmd
+# Add Rust
 RUN dnf install -y cargo
 USER 1001

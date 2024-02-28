@@ -56,6 +56,11 @@ if [ "${1}" ==  "centos" ]; then
 		date
 		exit 0
 	fi
+	if [ "${CODE}" -eq "000" ]; then
+		echo -n "CentOS primary mirror is unreachable. Skipping scan at "
+		date
+		exit 1
+	fi
 	FFTL="http://${CENTOS_PRIMARY}/9-stream/COMPOSE_ID"
 	FILEDATE=`date +%s -d"$( curl -s --head ${FFTL} | awk 'BEGIN {FS=": "}/^Last-Modified/{print $2}' )"`
 	FFTL_SIGS="http://${CENTOS_PRIMARY}/SIGs/9-stream/COMPOSE_ID"
