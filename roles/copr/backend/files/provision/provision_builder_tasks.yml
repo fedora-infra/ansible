@@ -127,6 +127,32 @@
   register: rh_subscribtion_task
   when: starting_builder
 
+- name: Collect facts about builder hardware
+  setup:
+    gather_subset:
+    - hardware
+
+- name: Make sure that we have 140G memory or SWAP for Mock caches
+  assert:
+    that:
+      - ansible_memory_mb.swap.free + ansible_memory_mb.real.free >= 1024 * 140
+    fail_msg: "Not enough memory+swap, the builder is unusable: {{ ansible_memory_mb.swap.free }} MB SWAP and {{ ansible_memory_mb.real.free }} MB RAM"
+    success_msg: "Builder has enough memory/swap!"
+  when:
+    - starting_builder
+
+- name: check disk space
+  include_tasks:
+    file: check_path_free_space.yml
+  vars:
+    path: "{{ item.path }}"
+    size: "{{ item.size|int }}"
+  loop:
+    - path: /var/lib/copr-rpmbuild
+      size: 15000000
+  when:
+    - starting_builder
+
 - name: stop and disable systemd-oomd, rhbz 2051154
   service:
     name: systemd-oomd
@@ -248,32 +274,6 @@
 
 - name: mount cache filesystem on /var/cache/mock
   mount: path=/var/cache/mock state=mounted src=mock_cache_tmpfs fstype=tmpfs opts="size=32G"
-  when:
-    - starting_builder
-
-- name: Collect facts about builder hardware
-  setup:
-    gather_subset:
-    - hardware
-
-- name: Make sure that we have 140G memory or SWAP for Mock caches
-  assert:
-    that:
-      - ansible_memory_mb.swap.free + ansible_memory_mb.real.free >= 1024 * 140
-    fail_msg: "Not enough memory+swap, the builder is unusable: {{ ansible_memory_mb.swap.free }} MB SWAP and {{ ansible_memory_mb.real.free }} MB RAM"
-    success_msg: "Builder has enough memory/swap!"
-  when:
-    - starting_builder
-
-- name: check disk space
-  include_tasks:
-    file: check_path_free_space.yml
-  vars:
-    path: "{{ item.path }}"
-    size: "{{ item.size|int }}"
-  loop:
-    - path: /var/lib/copr-rpmbuild
-      size: 15000000
   when:
     - starting_builder
 
