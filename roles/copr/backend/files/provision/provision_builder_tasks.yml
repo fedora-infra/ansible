@@ -97,6 +97,13 @@
   when:
     - preparing_image
 
+- name: disable subscription manager on host
+  ini_file:
+    dest: /etc/dnf/plugins/subscription-manager.conf
+    section: main
+    option: enabled
+    value: "0"
+
 - name: install the subscription-manager script
   copy:
     src: copr-rh-subscribe.sh
