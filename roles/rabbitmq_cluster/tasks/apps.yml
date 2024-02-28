@@ -89,20 +89,13 @@
       warning:  1000
       critical: 10000
 
-# CENTOS GITLAB BEGIN
-- name: CentOS Gitlab Queue
+- name: CentOS Integration SIG
   run_once: true
   include_role:
-    name: rabbit/queue
+    name: rabbit/user
   vars:
-    username: gitlab-centos{{ env_suffix }}
-    queue_name: gitlab-centos{{ env_suffix }}
-    sent_topics: ^org\.centos\.{{ env_short }}\.(sig\.integration\.)?gitlab\..*
-    # TTL: 10 days (in miliseconds)
-    message_ttl: 864000000
-    routing_keys:
-      - "org.centos.{{ env_short }}.gitlab.#"
-# CENTOS GITLAB END
+    username: centos-integration{{ env_suffix }}
+    sent_topics: ^org\.centos\.sig\.integration\..*
 
 # CENTOS KOJI BEGIN
 - name: CentOS Stream Koji User
