@@ -1,8 +1,14 @@
 ---
+- name: define helper facts
+  set_fact:
+    starting_builder: prepare_base_image is not defined
+    preparing_image: prepare_base_image is defined
+  tags: always
+
 - name: disable zram SWAP on builders, it is too small, issue 2077
   package: name=zram-generator-defaults state=absent
   when:
-    - prepare_base_image is defined
+    - preparing_image
 
 - name: drop extremely slow libvirt resolver
   lineinfile:
@@ -10,23 +16,23 @@
     regexp: 'nameserver 192.168.122.1'
     state: 'absent'
   when:
-    - prepare_base_image is not defined
+    - starting_builder
     - "'osuosl' in lookup('env', 'RESALLOC_NAME')"
 
 - name: setup the hostname so we can easily identify the box
   hostname: name="{{ lookup('env', 'RESALLOC_NAME', default='unknown-builder') | replace('_', '-') }}"
-  when: prepare_base_image is not defined
+  when: starting_builder
 
 - name: put infra repos into yum.repos.d
   copy: src=files/dnf/infra-tags.repo dest=/etc/yum.repos.d
-  #when:
-  #- prepare_base_image is defined
+  # when:
+  # - preparing_image
 
 - name: put infra stg repos into yum.repos.d if staging
   copy: src=files/dnf/infra-tags-stg.repo dest=/etc/yum.repos.d
   when:
     - devel
-    - prepare_base_image is not defined
+    - starting_builder
 
 - name: disable updates-testing
   file:
@@ -42,7 +48,7 @@
       # This is important for the AWS images only.  Other images (like libvirt,
       # IBM Cloud, etc.) are already updated.
       - kernel-core
-  when: prepare_base_image is defined
+  when: preparing_image
   register: system_updated
 
 - name: disable updates-testing, could be restored after update
@@ -60,23 +66,23 @@
 #   # - "@copr/copr-dev"
 #   when:
 #     - devel
-#     - prepare_base_image is not defined
+#     - starting_builder
 
 - name: clean dnf cache before checking for updated packages
   shell: dnf clean all
   when:
-    - prepare_base_image is defined
+    - preparing_image
 
 - name: set lower metadata expire time to enforce download
   ini_file: dest=/etc/dnf/dnf.conf section=main option=metadata_expire value=1h
   when:
-    - prepare_base_image is defined
+    - preparing_image
 
 # https://fedoraproject.org/wiki/Changes/StrongCryptoSettings
 - name: fallback to the legacy crypto policies
   command: update-crypto-policies --set DEFAULT:SHA1
   when:
-    - prepare_base_image is defined
+    - preparing_image
 
 # NetworkManager-wait-online takes too long on VMS on our hypervisors.  And we
 # don't seem to need hcn-init service triggering that.
@@ -86,12 +92,12 @@
     state: stopped
     enabled: no
   failed_when: false
-  when: prepare_base_image is defined
+  when: preparing_image
 
 - name: install subscription-manager
   package: name=subscription-manager state=present
   when:
-    - prepare_base_image is defined
+    - preparing_image
 
 - name: install the subscription-manager script
   copy:
@@ -99,7 +105,7 @@
     dest: /usr/local/bin/copr-rh-subscribe.sh
     mode: 0755
   when:
-    - prepare_base_image is defined
+    - preparing_image
 
 - name: Activate Red Hat Subscription
   shell:
@@ -110,7 +116,7 @@
       --pass "{{ copr_red_hat_subscription_password }}"
       --system "{{ lookup('env', 'RESALLOC_NAME', default='unknown-builder') | replace('_', '-')  }}"
   no_log: true
-  when: prepare_base_image is not defined
+  when: starting_builder
 
 - name: stop and disable systemd-oomd, rhbz 2051154
   service:
@@ -125,7 +131,7 @@
     value: 0
     state: present
   when:
-    - prepare_base_image is not defined
+    - starting_builder
 
 - name: install copr-builder and other latest packages
   dnf: state=latest pkg={{ packages }}
@@ -151,7 +157,7 @@
   # conditional, per https://pagure.io/copr/copr/issue/1189 - as we don't want
   # to bake broken mock configuration into the image.
   when:
-  - prepare_base_image is not defined
+    - starting_builder
 
 - name: run /bin/copr-update-builder from copr-builder package
   shell: /usr/bin/copr-update-builder
@@ -172,17 +178,17 @@
   copy: src=files/main.ini dest=/etc/copr-rpmbuild/main.ini
   when:
     # TODO: use the default main.ini provided by copr-rpmbuild
-    - prepare_base_image is not defined
+    - starting_builder
 
 - name: mockbuilder user
   user: name=mockbuilder groups=mock
   when:
-    - prepare_base_image is defined
+    - preparing_image
 
 - name: mockbuilder .ssh
   file: state=directory path=/home/mockbuilder/.ssh mode=0700 owner=mockbuilder group=mockbuilder
   when:
-    - prepare_base_image is defined
+    - preparing_image
 
 - name: mockbuilder authorized_keys
   authorized_key: user=mockbuilder key='{{ lookup('file', 'files/buildsys.pub') }}'
@@ -200,12 +206,12 @@
     group: root
     mode: 0644
   when:
-    - prepare_base_image is defined
+    - preparing_image
 
 - name: disable core dumps
   ini_file: dest=/etc/systemd/coredump.conf section=Coredump option=Storage value=none
   when:
-    - prepare_base_image is defined
+    - preparing_image
 
 - name: 'Remove %_install_langs from /etc/rpm/macros.image-language-conf'
   lineinfile:
@@ -213,7 +219,7 @@
     regexp: '^%_install_lang.*'
     state: 'absent'
   when:
-    - prepare_base_image is defined
+    - preparing_image
 
 - name: Disable DNF makecache timer
   systemd:
@@ -221,7 +227,7 @@
     state: stopped
     enabled: no
   when:
-    - prepare_base_image is defined
+    - preparing_image
 
 - name: Disable DNF makecache service
   systemd:
@@ -229,7 +235,7 @@
     state: stopped
     enabled: no
   when:
-    - prepare_base_image is defined
+    - preparing_image
 
 - name: mount cache filesystem on /var/cache/mock
   mount: path=/var/cache/mock state=mounted src=mock_cache_tmpfs fstype=tmpfs opts="size=32G"
@@ -246,7 +252,7 @@
     fail_msg: "Not enough memory+swap, the builder is unusable: {{ ansible_memory_mb.swap.free }} MB SWAP and {{ ansible_memory_mb.real.free }} MB RAM"
     success_msg: "Builder has enough memory/swap!"
   when:
-  - prepare_base_image is not defined
+    - starting_builder
 
 - name: check disk space
   include_tasks:
@@ -258,7 +264,7 @@
     - path: /var/lib/copr-rpmbuild
       size: 15000000
   when:
-  - prepare_base_image is not defined
+    - starting_builder
 
 
 - name: detect package versions
@@ -279,7 +285,7 @@
     src: "files/{{ item }}"
     dest: "/etc/copr-rpmbuild/{{ item }}"
   when:
-    - prepare_base_image is not defined
+    - starting_builder
   loop:
     - mock-custom-build.cfg.j2
     - mock.cfg.j2
