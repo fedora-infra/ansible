@@ -22,10 +22,13 @@ spec:
           containers:
           - name: mirrormanager
             image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
-            command: ["bash", "/opt/app-root/bin/primary-mirror-wrapper.sh", "{{ cronjob.category }}"]
+            command: ["bash", "/opt/scripts/primary-mirror-wrapper.sh", "{{ cronjob.category }}"]
             volumeMounts:
               - name: config
                 mountPath: "/etc/mirrormanager"
+                readOnly: true
+              - name: scripts
+                mountPath: "/opt/scripts"
                 readOnly: true
               - name: data
                 mountPath: "/var/lib/mirrormanager"
@@ -37,6 +40,9 @@ spec:
             - name: config
               configMap:
                 name: config
+            - name: scripts
+              configMap:
+                name: scripts
             - name: data
               persistentVolumeClaim:
                 claimName: data
