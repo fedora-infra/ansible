@@ -114,6 +114,10 @@
       --pass "{{ copr_red_hat_subscription_password }}"
       --system "{{ lookup('env', 'RESALLOC_NAME', default='unknown-builder') | replace('_', '-')  }}"
   no_log: true
+  # run in the background, gather results later
+  async: 300
+  poll: 0
+  register: rh_subscribtion_task
   when: starting_builder
 
 - name: stop and disable systemd-oomd, rhbz 2051154
@@ -288,3 +292,13 @@
   loop:
     - mock-custom-build.cfg.j2
     - mock.cfg.j2
+
+- name: Check that we have successfully finished the subscription
+  async_status:
+    jid: "{{ rh_subscribtion_task.ansible_job_id }}"
+  register: job_result
+  until: job_result.finished
+  retries: 100
+  delay: 2
+  when:
+    - starting_builder
