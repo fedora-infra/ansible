@@ -1,8 +1,8 @@
 ---
 - name: define helper facts
   set_fact:
-    starting_builder: prepare_base_image is not defined
-    preparing_image: prepare_base_image is defined
+    starting_builder: "{{ prepare_base_image is not defined }}"
+    preparing_image: "{{ prepare_base_image is defined }}"
   tags: always
 
 - name: disable zram SWAP on builders, it is too small, issue 2077
