@@ -85,13 +85,13 @@ check_deps = False
 repoclosure_backend = 'dnf'
 
 # CREATEREPO
-[% if release.version_int >= 40 %]
+[% if cr_config.drpms_enabled %]
 createrepo_deltas = [
-    ('^Everything$', {'*': False})
+    ('^Everything$', {'*': True})
 ]
 [% else %]
 createrepo_deltas = [
-    ('^Everything$', {'*': True})
+    ('^Everything$', {'*': False})
 ]
 [% endif %]
 createrepo_database = True
