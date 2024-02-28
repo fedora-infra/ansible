@@ -123,10 +123,24 @@
 - name: make sure the enable-swap service has already finished
   shell: "systemctl is-active enable-swap || :"
   register: enable_swap_active
-  until: "'inactive' in enable_swap_active.stdout"
+  until: "'inactive' in enable_swap_active.stdout or 'failed' in enable_swap_active.stdout"
   retries: 20
   delay: 1
   when: starting_builder
+
+- name: debug the swap failure
+  shell: journalctl -u enable-swap
+  register: journalctl_output
+  when:
+    - starting_builder
+    - "'failed' in enable_swap_active.stdout"
+
+- name: print out the output
+  debug: var=enable_swap_active.stdout_lines
+  when:
+    - starting_builder
+    - "'failed' in enable_swap_active.stdout"
+  failed_when: true
 
 - name: Collect facts about builder hardware
   setup:
