@@ -88,5 +88,7 @@ mkdir /var/lib/copr-rpmbuild/workspace
 rpm --setperms copr-rpmbuild || :
 rpm --setugids copr-rpmbuild || :
 
+partprobe || :
+
 mkswap "${swap_device}${part_suffix}2"
 swapon "${swap_device}${part_suffix}2"
