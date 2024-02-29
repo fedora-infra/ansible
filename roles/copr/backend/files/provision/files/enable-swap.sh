@@ -88,7 +88,12 @@ mkdir /var/lib/copr-rpmbuild/workspace
 rpm --setperms copr-rpmbuild || :
 rpm --setugids copr-rpmbuild || :
 
+# Wait till the partition appears
 partprobe || :
+partition=${swap_device}${part_suffix}2
+while ! test -e "$partition"; do
+    sleep 0.1
+done
 
-mkswap "${swap_device}${part_suffix}2"
-swapon "${swap_device}${part_suffix}2"
+mkswap "$partition"
+swapon "$partition"
