@@ -61,13 +61,17 @@ build_max_workers_arch_per_owner=s390x=12
 {% if env == 'production' %}
 builds_max_workers_owner=90
 {% elif devel %}
-builds_max_workers_owner=15
+builds_max_workers_owner=8
 {% else %}
 builds_max_workers_owner=0
 {% endif %}
 
 # Maximum number of concurrently running tasks per build sandbox.
+{% if env == 'production' %}
 builds_max_workers_sandbox=35
+{% else %}
+builds_max_workers_sandbox=4
+{% endif %}
 
 # Maximum number of concurrent background processes spawned for handling
 # actions.
