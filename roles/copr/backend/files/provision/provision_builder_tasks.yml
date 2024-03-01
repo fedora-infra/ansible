@@ -329,3 +329,6 @@
   delay: 2
   when:
     - starting_builder
+
+- name: Set up motd for builder
+  shell: "copr-builder help > /etc/motd || :"
