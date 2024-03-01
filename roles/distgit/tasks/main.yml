@@ -219,7 +219,7 @@
   - distgit
 
 - name: Schedule the script to get retired packages
-  copy: src="retired-packages.cron" dest="/etc/cron.d/retired-packages.cron" mode=755 owner=root group=root
+  copy: src="retired-packages.cron" dest="/etc/cron.d/retired-packages.cron" mode=644 owner=root group=root
   tags:
   - distgit
 
