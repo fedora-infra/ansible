@@ -34,6 +34,11 @@
     - devel
     - starting_builder
 
+- name: work-around for wrongly generated ami
+  file:
+    path: /etc/yum.repos.d/pr.repo
+    state: absent
+
 - name: disable updates-testing
   file:
     path: /etc/yum.repos.d/fedora-updates-testing.repo
