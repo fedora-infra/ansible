@@ -917,15 +917,11 @@
 
   - role: httpd/reverseproxy
     website: "flatpak-cache{{ env_suffix }}.fedoraproject.org"
-    destname: apps.ocp
-    balancer_name: apps-ocp
-    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
-    targettype: openshift
-    ocp4: true
-    keephost: true
+    destname: flatpak-cache
+    proxyurl: http://worker01.ocp.stg.iad2.fedoraproject.org:31444
     http_not_https_yes_this_is_insecure_and_i_feel_bad: true
     tags:
-    - flatpak-cache.stg.fedoraproject.org
+    - flatpak-cache
     when: env == "staging"
 
   - role: httpd/reverseproxy
