@@ -41,6 +41,9 @@ spec:
         - name: ipa-config-volume
           mountPath: /etc/ipa
           readOnly: true
+        - name: planet-build-storage
+          mountPath: /var/www/html
+          readOnly: false
       volumes:
       - name: keytab-volume
         secret:
@@ -51,3 +54,6 @@ spec:
       - name: ipa-config-volume
         configMap:
           name: ipa-client-config
+      - name: planet-build-storage
+        persistentVolumeClaim:
+          claimName: planet-http-storage

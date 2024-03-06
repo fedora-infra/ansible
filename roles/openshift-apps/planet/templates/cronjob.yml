@@ -1,0 +1,62 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: build-planet
+  namespace: planet
+spec:
+  schedule: '*/5 * * * *'
+  concurrencyPolicy: Forbid
+  suspend: false
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    metadata:
+      name: build-planet
+    spec:
+      template:
+        spec:
+          containers:
+          - name: build-planet
+            image: image-registry.openshift-image-registry.svc:5000/planet/planet:latest
+            command: ["/bin/bash", "-c"]
+            # Running build_planet.py twice to bypass undefined method error
+            args:
+            - |
+              /usr/bin/python3 /pluto/build_planet.py
+              /usr/bin/python3 /pluto/build_planet.py
+            env:
+            - name: KRB5_CONFIG
+              value: '/etc/krb5/krb5.conf'
+            - name: KRB5_CLIENT_KTNAME
+              value: '/etc/keytabs/http'
+            - name: KRB5CCNAME
+              value: '/tmp/ccache'
+            volumeMounts:
+            - name: keytab-volume
+              mountPath: /etc/keytabs/http
+              subPath: http
+              readOnly: true
+            - name: krb-config-volume
+              mountPath: /etc/krb5
+              readOnly: true
+            - name: ipa-config-volume
+              mountPath: /etc/ipa
+              readOnly: true
+            - name: planet-build-storage
+              mountPath: /var/www/html
+              readOnly: false
+          volumes:
+          - name: keytab-volume
+            secret:
+              secretName: planet-keytab-http
+          - name: krb-config-volume
+            configMap:
+              name: krb5-config
+          - name: ipa-config-volume
+            configMap:
+              name: ipa-client-config
+          - name: planet-build-storage
+            persistentVolumeClaim:
+              claimName: planet-http-storage
+          restartPolicy: OnFailure
+          terminationGracePeriodSeconds: 30

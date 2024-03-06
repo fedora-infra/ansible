@@ -73,3 +73,8 @@
     app: planet
     template: deployment.yml
     objectname: deployment.yml
+
+  - role: openshift/object
+    app: planet
+    template: cronjob.yml
+    objectname: cronjob.yml
