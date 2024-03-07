@@ -73,6 +73,24 @@
     file: openscanhub-service-fedora-osh-hub.yml
     objectname: openscanhub-service-fedora-osh-hub
     when: env == "staging"
+
+  # Configurations for redis.
+  - role: openshift/object
+    app: openscanhub
+    file: deployment-redis-6-c9s.yml
+    objectname: deployment-redis-6-c9s
+    when: env == "staging"
+  - role: openshift/object
+    app: openscanhub
+    file: route-redis-6-c9s.yml
+    objectname: route-redis-6-c9s
+    when: env == "staging"
+  - role: openshift/object
+    app: openscanhub
+    file: service-redis-6-c9s.yml
+    objectname: service-redis-6-c9s
+    when: env == "staging"
+
     # sudo rbac-playbook -l staging -t delete openshift-apps/openscanhub.yml
   - role: openshift/object-delete
     app: openscanhub

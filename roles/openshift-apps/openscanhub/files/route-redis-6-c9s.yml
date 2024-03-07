@@ -1,0 +1,27 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  creationTimestamp: "2024-03-07T13:22:42Z"
+  labels:
+    app: redis-6-c9s
+    app.kubernetes.io/component: redis-6-c9s
+    app.kubernetes.io/instance: redis-6-c9s
+    app.kubernetes.io/name: redis-6-c9s
+    app.kubernetes.io/part-of: openscanhub
+    app.openshift.io/runtime-version: c9s
+  name: redis-6-c9s
+  namespace: openscanhub
+  resourceVersion: "772873091"
+  uid: acfbf57f-c945-44f9-86a8-a7726955f37b
+spec:
+  host: redis
+  port:
+    targetPort: 6379-tcp
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  to:
+    kind: Service
+    name: redis-6-c9s
+    weight: 100
+  wildcardPolicy: None
