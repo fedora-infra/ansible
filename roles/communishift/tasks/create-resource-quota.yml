@@ -18,5 +18,5 @@
           limits.memory: "{{ item.value.memory_limits | default('2Gi') }}"
           requests.storage: "{{ item.value.storage_requests | default('5Gi') }}"
           persistentvolumeclaims: "1"
-          pods: "2"
+          pods: "{{ item.value.pods | default('4') }}"
           replicationcontrollers: 1
