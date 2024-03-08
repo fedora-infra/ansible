@@ -84,7 +84,7 @@ fi
 
 # Rerun scan after 24 hours
 if [ "$LASTRUN" -gt "$FILEDATE" ] && [ "$LASTRUN" -gt $(expr $CURDATE - 86400) ]; then
-	# no changes on the master mirror
+	echo "No changes on the master mirror (${FFTL})"
 	# abort
 	exit 0
 fi

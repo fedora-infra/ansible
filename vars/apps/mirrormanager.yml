@@ -6,29 +6,50 @@ mirrormanager_oidc_client_id: "mirrormanager"
 mm2_checkin: false
 mirrormanager_cron_crawler:
   - category: "Fedora Linux"
-    schedule: "0 */12 * * *"
+    schedule: "0 */12 * * 1-6"
     threads: 40
     timeout: 600
+    include_disabled: false
+  - category: "Fedora Linux"
+    schedule: "0 */12 * * 7"
+    threads: 40
+    timeout: 660
+    include_disabled: true
   - category: "Fedora Secondary Arches"
     schedule: "0 3,9 * * *"
     threads: 10
     timeout: 300
+    include_disabled: false
   - category: "Fedora EPEL"
-    schedule: "45 */6 * * *"
+    schedule: "45 */6 * * 1-6"
     threads: 20
     timeout: 300
+    include_disabled: false
+  - category: "Fedora EPEL"
+    schedule: "45 */6 * * 7"
+    threads: 20
+    timeout: 300
+    include_disabled: true
   - category: "Fedora Archive"
     schedule: "0 2 * * *"
     threads: 10
     timeout: 600
+    include_disabled: false
   - category: "Fedora Other"
     schedule: "0 14 * * *"
     threads: 20
     timeout: 600
+    include_disabled: false
   - category: "CentOS"
-    schedule: "0 5,11 * * *"
+    schedule: "0 5,11 * * 1-6"
     threads: 20
     timeout: 300
+    include_disabled: false
+  - category: "CentOS"
+    schedule: "0 5,11 * * 7"
+    threads: 20
+    timeout: 300
+    include_disabled: true
 mirrormanager_cron_primary_mirror:
   # check if category Fedora Linux needs updating every 30 minutes
   - category: "fedora"
