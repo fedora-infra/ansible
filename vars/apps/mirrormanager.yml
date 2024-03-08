@@ -11,7 +11,7 @@ mirrormanager_cron_crawler:
     timeout: 600
     include_disabled: false
   - category: "Fedora Linux"
-    schedule: "0 */12 * * 7"
+    schedule: "0 */12 * * 0"
     threads: 40
     timeout: 660
     include_disabled: true
@@ -26,7 +26,7 @@ mirrormanager_cron_crawler:
     timeout: 300
     include_disabled: false
   - category: "Fedora EPEL"
-    schedule: "45 */6 * * 7"
+    schedule: "45 */6 * * 0"
     threads: 20
     timeout: 300
     include_disabled: true
@@ -46,7 +46,7 @@ mirrormanager_cron_crawler:
     timeout: 300
     include_disabled: false
   - category: "CentOS"
-    schedule: "0 5,11 * * 7"
+    schedule: "0 5,11 * * 0"
     threads: 20
     timeout: 300
     include_disabled: true
