@@ -229,6 +229,14 @@
 #   shell: /usr/bin/copr-update-builder
 #   when: mock_updated.changed
 
+- name: patch from https://github.com/rpm-software-management/mock/pull/1341
+  patch:
+    src: patches/mock-allowerasing.patch
+    dest: /usr/lib/python3.12/site-packages/mockbuild/config.py
+  when:
+    - starting_builder
+  ignore_errors: true
+
 - name: put copr-rpmbuild configuration file in the right place
   copy: src=files/main.ini dest=/etc/copr-rpmbuild/main.ini
   when:
