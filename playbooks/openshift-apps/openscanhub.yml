@@ -94,18 +94,18 @@
   # Configurations for resalloc-server.
   - role: openshift/object
     app: openscanhub
-    file: deployment-resalloc-server-6-c9s.yml
-    objectname: deployment-resalloc-server-6-c9s
+    file: deployment-resalloc-server.yml
+    objectname: deployment-resalloc-server
     when: env == "staging"
   - role: openshift/object
     app: openscanhub
-    file: route-resalloc-server-6-c9s.yml
-    objectname: route-resalloc-server-6-c9s
+    file: route-resalloc-server.yml
+    objectname: route-resalloc-server
     when: env == "staging"
   - role: openshift/object
     app: openscanhub
-    file: service-resalloc-server-6-c9s.yml
-    objectname: service-resalloc-server-6-c9s
+    file: service-resalloc-server.yml
+    objectname: service-resalloc-server
     when: env == "staging"
 
     # sudo rbac-playbook -l staging -t delete openshift-apps/openscanhub.yml
