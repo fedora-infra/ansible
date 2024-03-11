@@ -52,8 +52,16 @@ spec:
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
+        volumeMounts:
+          - mountPath: /etc/resallocserver/server.yaml
+            name: etc-resallocserver-server-configmap
+            subPath: server.yaml
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
+      volumes:
+        - name: etc-resallocserver-server-configmap
+          configMap:
+            name: etc-resallocserver-server-config

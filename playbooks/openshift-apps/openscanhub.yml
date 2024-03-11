@@ -94,6 +94,11 @@
   # Configurations for resalloc-server.
   - role: openshift/object
     app: openscanhub
+    template: etc-resallocserver-server-configmap.yml
+    objectname: etc-resallocserver-server-configmap
+    when: env == "staging"
+  - role: openshift/object
+    app: openscanhub
     file: deployment-resalloc-server.yml
     objectname: deployment-resalloc-server
     when: env == "staging"
