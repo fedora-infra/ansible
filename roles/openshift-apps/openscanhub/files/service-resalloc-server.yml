@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftWebConsole
+  creationTimestamp: "2024-03-11T09:30:15Z"
+  labels:
+    app: resalloc-server
+    app.kubernetes.io/component: resalloc-server
+    app.kubernetes.io/instance: resalloc-server
+    app.kubernetes.io/name: resalloc-server
+    app.kubernetes.io/part-of: openscanhub
+    app.openshift.io/runtime-version: staging
+  name: resalloc-server
+  namespace: openscanhub
+  resourceVersion: "776279920"
+  uid: b668647e-a6f4-4bb7-b31b-5da52f89a97b
+spec:
+  clusterIP: 172.30.212.200
+  clusterIPs:
+  - 172.30.212.200
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: 49100-tcp
+    port: 49100
+    protocol: TCP
+    targetPort: 49100
+  selector:
+    app: resalloc-server
+    deployment: resalloc-server
+  sessionAffinity: None
+  type: ClusterIP

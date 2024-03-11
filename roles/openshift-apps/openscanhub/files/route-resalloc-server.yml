@@ -1,0 +1,24 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  creationTimestamp: "2024-03-11T09:30:15Z"
+  labels:
+    app: resalloc-server
+    app.kubernetes.io/component: resalloc-server
+    app.kubernetes.io/instance: resalloc-server
+    app.kubernetes.io/name: resalloc-server
+    app.kubernetes.io/part-of: openscanhub
+    app.openshift.io/runtime-version: staging
+  name: resalloc-server
+  namespace: openscanhub
+  resourceVersion: "776279924"
+  uid: f8f28302-c25e-4dce-864d-b073a6b2dd55
+spec:
+  host: resalloc-server
+  port:
+    targetPort: 49100-tcp
+  to:
+    kind: Service
+    name: resalloc-server
+    weight: 100
+  wildcardPolicy: None
