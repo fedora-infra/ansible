@@ -11,5 +11,5 @@ items:
     labels:
       app: openscanhub
   data:
-    etc-resallocserver-server.yaml: |-
+    server.yaml: |-
       {{ load_file('etc-resallocserver-server.yaml') | indent(6) }}
