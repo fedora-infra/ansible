@@ -99,6 +99,11 @@
     when: env == "staging"
   - role: openshift/object
     app: openscanhub
+    template: etc-resallocserver-pools-configmap.yml
+    objectname: etc-resallocserver-pools-configmap
+    when: env == "staging"
+  - role: openshift/object
+    app: openscanhub
     file: deployment-resalloc-server.yml
     objectname: deployment-resalloc-server
     when: env == "staging"

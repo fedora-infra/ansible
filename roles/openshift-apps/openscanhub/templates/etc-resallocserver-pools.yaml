@@ -1,0 +1,60 @@
+# This is the prefix for the name of the virtual machines.
+{% if env == 'staging' %}
+staging_openscanhub_aws_spot_x86_64:
+{% else %}
+openscanhub_aws_spot_x86_64:
+{% endif %}
+
+# This should be the same value for `MAX_SINGLE_USE_WORKERS` in `settings_local.py`.
+{% if env == 'staging' %}
+    max: 4
+{% else %}
+    max: 32
+{% endif %}
+
+{% if env == 'staging' %}
+    max_starting: 4
+{% else %}
+    max_starting: 32
+{% endif %}
+
+    max_prealloc: 0
+    # spot price should be cca 0.01
+    cmd_new: "/etc/resallocserver/vm-provisioning/resalloc-start-aws-spot-x86_64"
+    cmd_delete: resalloc-aws-delete --aws-profile default
+    cmd_livecheck: "/etc/resallocserver/vm-provisioning/resalloc-check-vm-ip"
+    livecheck_period: 30
+    cmd_list: resalloc-aws-list --aws-profile default
+    cmd_release: "/etc/resallocserver/vm-provisioning/resalloc-vm-release"
+
+    reuse_opportunity_time: 0
+    reuse_max_count: 0
+    reuse_max_time: 0
+
+      # TODO: Choose which tags we shall select?
+      #    tags:
+      #        - aws
+      #        - aws_spot
+      #        - name: openscanhub_worker
+      #          priority: -5
+      #        - arch_noarch
+      #        - arch_x86_64
+      #        - arch_x86_64_native
+      #        - arch_i386
+      #        - arch_i386_native
+      #        - arch_i586
+      #        - arch_i586_native
+      #        - arch_i686
+      #        - arch_i686_native
+      #        - arch_armhfp
+      #        - arch_armhfp_emulated
+      #        - arch_s390x
+      #        - arch_s390x_emulated
+      #        - arch_s390
+      #        - arch_s390_emulated
+      #        - arch_ppc64le
+      #        - arch_ppc64le_emulated
+      #        - arch_ppc64
+      #        - arch_ppc64_emulated
+      #        - arch_ppc
+      #        - arch_ppc_emulated

@@ -56,6 +56,9 @@ spec:
           - mountPath: /etc/resallocserver/server.yaml
             name: etc-resallocserver-server-configmap
             subPath: server.yaml
+          - mountPath: /etc/resallocserver/pools.yaml
+            name: etc-resallocserver-pools-configmap
+            subPath: pools.yaml
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -65,3 +68,6 @@ spec:
         - name: etc-resallocserver-server-configmap
           configMap:
             name: etc-resallocserver-server-config
+        - name: etc-resallocserver-pools-configmap
+          configMap:
+            name: etc-resallocserver-pools-config
