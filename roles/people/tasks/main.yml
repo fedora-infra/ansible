@@ -265,6 +265,11 @@
   tags:
   - people
 
+- name: copy robots.txt for fedorapeople.org
+  copy: src=robots.txt dest=/srv/people/site/robots.txt
+  tags:
+  - people
+
 - name: copy static files to make main fedorapeople.org index page
   copy: src=static/ dest=/srv/people/site/static
   tags:
