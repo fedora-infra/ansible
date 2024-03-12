@@ -4,4 +4,4 @@ kind: Secret
 metadata:
   name: aws-openscanhub-key
 data:
-  aws-openscanhub-key: {{ lookup('file', private+'/files/openscanhub/openscanhub.key') | b64encode }}
+  id_rsa: {{ lookup('file', private+'/files/openscanhub/openscanhub.key') | b64encode }}
