@@ -1,20 +1,9 @@
 ---
-_copr_be_conf: copr-be.conf
-# There is no python2 on F30
-
 # what is the main backend service name
 copr_backend_target: copr-backend.target
-# copr_builder_image_name: "Fedora-Cloud-Base-20141203-21"
-copr_builder_flavor_name: "ms2.builder"
-copr_builder_key_name: "buildsys"
-copr_builder_network_name: "copr-net"
-copr_builder_security_groups: "ssh-anywhere-copr,default,ssh-from-persistent-copr"
+
 # Copr vars
 copr_hostbase: copr-be
-copr_nova_auth_url: "https://fedorainfracloud.org:5000/v2.0"
-copr_nova_tenant_id: "5d99f099b7fe4b0387f0352f6301ba6a"
-copr_nova_tenant_name: "copr"
-copr_nova_username: "copr"
 csi_primary_contact: "msuchy (mirek), frostyx, praiskup IRC #fedora-admin, #fedora-buildsys"
 csi_purpose: Provide the backend for copr (3rd party packages)
 csi_relationship: |
@@ -46,9 +35,10 @@ messaging:
       key: copr
       username: copr
       sent_topics: ^org\.fedoraproject\.{{ env_short }}\.copr\..*
+
 nrpe_procs_crit: 2500
 nrpe_procs_warn: 2200
-spawn_in_advance: "true"
+
 tcp_ports: [
     22, 80, 443,
     # node_exporter/prometheus
