@@ -12,14 +12,14 @@ spec:
   source:
     type: Git
     git:
-      uri: https://github.com/jmflinuxtx/kerneltest-harness.git
+      uri: https://github.com/fedora-infra/kerneltest.git
   strategy:
     type: Source
     sourceStrategy:
       from:
         kind: ImageStreamTag
         namespace: openshift
-        name: python:3.6
+        name: python:3.10
   triggers:
   - type: ConfigChange
   - type: ImageChange

@@ -66,7 +66,7 @@
   - role: openshift/route
     app: kerneltest
     routename: kerneltest
-    host: "kerneltest{{ env_suffix }}.fedoraproject.org"
+    host: "kerneltest.apps.ocp{{ env_suffix }}.fedoraproject.org"
     serviceport: web
     servicename: kerneltest-web
 

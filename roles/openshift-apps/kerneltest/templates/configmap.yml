@@ -1,13 +1,36 @@
 {% macro load_file(filename) %}{% include filename %}{%- endmacro -%}
 ---
 apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: kerneltest-configmap
-  labels:
-    app: kerneltest
-data:
-  config.toml: |-
-    {{ load_file('config.toml') | indent }}
-  client_secrets.json: |-
-    {{ load_file('client_secrets.json') | indent }}
+kind: List
+metadata: {}
+items:
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: kerneltest-config-map
+    labels:
+      app: kerneltest
+  data:
+    config.toml: |-
+      {{ load_file('kerneltest.toml') | indent }}
+    client_secrets.json: |-
+      {{ load_file('client_secrets.json') | indent }}
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: alembic-upgrade-script
+    labels:
+      app: kerneltest
+  data:
+    alembic_upgrade.sh: |-
+          {{ load_file('alembic_upgrade.sh') | indent }}
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: wsgi-script
+    labels:
+      app: kerneltest
+  data:
+    alembic_upgrade.sh: |-
+          {{ load_file('wsgi.py') | indent }}
+    
