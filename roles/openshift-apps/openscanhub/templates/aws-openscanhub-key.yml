@@ -1,0 +1,7 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: aws-openscanhub-key
+data:
+  aws-openscanhub-key: {{ lookup('file', private+'/files/openscanhub/openscanhub.key') | b64encode }}
