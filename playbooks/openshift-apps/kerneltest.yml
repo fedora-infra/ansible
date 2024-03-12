@@ -1,0 +1,76 @@
+- name: setup the database
+  hosts: db01.iad2.fedoraproject.org:db01.stg.iad2.fedoraproject.org
+  gather_facts: no
+  become: yes
+  become_user: postgres
+  vars_files:
+  - /srv/web/infra/ansible/vars/global.yml
+  - /srv/private/ansible/vars.yml
+  - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  tasks:
+  - name: kerneltest DB user
+    postgresql_user:
+      name: "{{ (env == 'production')|ternary(kerneltest_db_user,kerneltest_stg_db_user) }}"
+      password: "{{ (env == 'production')|ternary(kerneltest_db_pass,kerneltest_stg_db_pass) }}"
+  - name: kerneltest database creation
+    postgresql_db:
+      name: "{{ kerneltest_db_name }}"
+      owner: "{{ (env == 'production')|ternary(kerneltest_db_user,kerneltest_stg_db_user) }}"
+      encoding: UTF-8
+
+
+- name: make the app be real
+  hosts: os_masters_stg[0]
+  user: root
+  gather_facts: False
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  pre_tasks:
+  - include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
+
+  roles:
+  - role: openshift/project
+    app: kerneltest
+    description: kerneltest
+    appowners:
+    - pingou
+    - ryanlerch
+    tags:
+      - apply-appowners
+
+  - role: openshift/object
+    app: kerneltest
+    file: imagestream.yml
+    objectname: imagestream.yml
+
+  - role: openshift/object
+    app: kerneltest
+    template: buildconfig.yml
+    objectname: buildconfig.yml
+
+  - role: openshift/object
+    app: kerneltest
+    file: service.yml
+    objectname: service.yml
+
+  - role: openshift/object
+    app: kerneltest
+    template: configmap.yml
+    objectname: configmap.yml
+
+  - role: openshift/route
+    app: kerneltest
+    routename: kerneltest
+    host: "kerneltest{{ env_suffix }}.fedoraproject.org"
+    serviceport: web
+    servicename: kerneltest-web
+
+  - role: openshift/object
+    app: kerneltest
+    file: deploymentconfig.yml
+    objectname: deploymentconfig.yml
