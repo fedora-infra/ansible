@@ -28,6 +28,8 @@ spec:
               - "{{ cronjob.threads }}"
               - "--global-timeout"
               - "{{ cronjob.timeout }}"
+              - "--host-timeout"
+              - "{{ cronjob.host_timeout | default('190') }}"
               - "--category"
               - "{{ cronjob.category }}"
               - "--{{ cronjob.include_disabled | ternary('include', 'exclude') }}-disabled"

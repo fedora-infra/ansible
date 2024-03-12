@@ -34,6 +34,8 @@ mirrormanager_cron_crawler:
     schedule: "0 2 * * *"
     threads: 10
     timeout: 600
+    # This can be a veeery long crawl
+    host_timeout: 300
     include_disabled: false
   - category: "Fedora Other"
     schedule: "0 14 * * *"
