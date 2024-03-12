@@ -104,6 +104,11 @@
     when: env == "staging"
   - role: openshift/object
     app: openscanhub
+    template: aws-credentials-configmap.yml
+    objectname: aws-credentials-configmap
+    when: env == "staging"
+  - role: openshift/object
+    app: openscanhub
     file: deployment-resalloc-server.yml
     objectname: deployment-resalloc-server
     when: env == "staging"

@@ -59,6 +59,9 @@ spec:
           - mountPath: /etc/resallocserver/pools.yaml
             name: etc-resallocserver-pools-configmap
             subPath: pools.yaml
+          - mountPath: /var/lib/resallocserver/.aws/credentials
+            name: aws-credentials-configmap
+            subPath: credentials
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -71,3 +74,6 @@ spec:
         - name: etc-resallocserver-pools-configmap
           configMap:
             name: etc-resallocserver-pools-config
+        - name: aws-credentials-configmap
+          configMap:
+            name: aws-credentials-config
