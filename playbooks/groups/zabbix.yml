@@ -20,6 +20,7 @@
   - collectd/base
   - sudo
   - zabbix/zabbix_server
+  - { role: openvpn/client, when: env != "staging" }
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
