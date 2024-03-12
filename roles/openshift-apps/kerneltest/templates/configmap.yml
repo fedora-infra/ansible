@@ -12,7 +12,7 @@ items:
       app: kerneltest
   data:
     config.toml: |-
-      {{ load_file('kerneltest.toml') | indent }}
+      {{ load_file('config.toml') | indent }}
     client_secrets.json: |-
       {{ load_file('client_secrets.json') | indent }}
 - apiVersion: v1
