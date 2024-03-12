@@ -21,7 +21,7 @@
 
 
 - name: make the app be real
-  hosts: os_masters_stg[0]
+  hosts: os_control_stg:os_control
   user: root
   gather_facts: False
 
