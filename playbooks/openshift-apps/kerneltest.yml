@@ -63,6 +63,9 @@
     template: configmap.yml
     objectname: configmap.yml
 
+  - role: openshift/ipa-client
+    app: kerneltest
+
   - role: openshift/route
     app: kerneltest
     routename: kerneltest
