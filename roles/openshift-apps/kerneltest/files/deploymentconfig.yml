@@ -18,13 +18,15 @@ spec:
         failurePolicy: Abort
         execNewPod:
           containerName: kerneltest
-          command: ["/opt/app-root/config/alembic_upgrade.sh"]
+          command: ["/etc/alembic-upgrade-script/alembic_upgrade.sh"]
           env:
           - name: PYTHONPATH
             value: /opt/app-root/src
           volumes:
             - kerneltest-config-volume
-            - kerneltest-secret-volume
+            - kerneltest-secrets-volume
+            - alembic-upgrade-script-volume
+            - wsgi-script-volume
             - ipa-config-volume
   template:
     metadata:
