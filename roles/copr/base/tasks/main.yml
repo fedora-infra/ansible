@@ -100,7 +100,7 @@
     - ansible_distribution == 'Fedora'
 
 - name: disable offloading (persitently)
-  shell: "nmcli con modify 'cloud-init eth0' ethtool.feature-tso off ethtool.feature-gro off ethtool.feature-gso off"
+  shell: "nmcli con modify '{{ aws_ipv6_con }}' ethtool.feature-tso off ethtool.feature-gro off ethtool.feature-gso off"
   when:
     - offloading.rc == 0
     - ansible_distribution == 'Fedora'
@@ -108,7 +108,7 @@
   - config
 
 - name: check we have the needed ipv6
-  shell: "nmcli con show 'cloud-init eth0' | grep ipv6.addresses | grep {{ aws_ipv6_addr }}"
+  shell: "nmcli con show '{{ aws_ipv6_con }}' | grep ipv6.addresses | grep {{ aws_ipv6_addr }}"
   register: ipv6_config_check
   failed_when: false
   changed_when: ipv6_config_check.rc == 1
