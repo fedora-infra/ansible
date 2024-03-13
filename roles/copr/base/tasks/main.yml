@@ -114,7 +114,6 @@
   changed_when: ipv6_config_check.rc == 1
   when:
     - aws_ipv6_addr is defined
-    - ansible_distribution == 'Fedora'
   tags: ipv6_config
 
 - name: setup ipv6 networking
@@ -124,7 +123,6 @@
   when:
     - aws_ipv6_addr is defined
     - ipv6_config_check.changed
-    - ansible_distribution == 'Fedora'
   tags: ipv6_config
 
 - name: install nrpe checks
