@@ -7,13 +7,13 @@ mm2_checkin: false
 mirrormanager_cron_crawler:
   # Active distros: regular weekdays run on active mirrors.
   - category: "Fedora Linux"
-    schedule: "0 */12 * * 1-6"
+    schedule: "0 1,13 * * 1-6"
     threads: 40
     timeout: 600
     include_disabled: false
   # Active distros: Sunday run on active and inactive mirrors, may last up to 18h
   - category: "Fedora Linux"
-    schedule: "0 0 * * 0"
+    schedule: "0 1 * * 0"
     threads: 40
     timeout: 1080  # 18h
     include_disabled: true
