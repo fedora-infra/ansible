@@ -4,5 +4,8 @@ kind: Secret
 metadata:
   name: aws-openscanhub-key
 data:
+  # Newline are added explicitly as the EOL character was removed by the lookup function.
+  # It was causing issues with ssh and it was giving this error:
+  # ```Load key "/var/lib/resallocserver/.ssh/id_rsa": error in libcrypto```
   id_rsa: "{{ (lookup('file', private+'/files/openscanhub/openscanhub.key') + '\n') | b64encode }}"
   id_rsa.pub: "{{ (lookup('file', private+'/files/openscanhub/openscanhub.key.pub') + '\n') | b64encode }}"
