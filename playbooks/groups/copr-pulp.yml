@@ -19,6 +19,10 @@
     vars:
       temporary_remote_user: ec2-user
 
+  - import_tasks: "{{ tasks_path }}/swap.yml"
+    when:
+      - swap_file_size_mb is defined
+
   # TODO Remove in favor of base/tasks/main.yml
   - name: install platform-python
     package: name={{ item }} state=present
