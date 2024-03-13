@@ -17,8 +17,8 @@ openscanhub_aws_spot_x86_64:
 {% else %}
     max_starting: 32
 {% endif %}
-
-    max_prealloc: 0
+    # `max_prealloc` is ignored when `tags_on_demand` is used.
+    # max_prealloc: 0
     # spot price should be cca 0.01
     cmd_new: "/etc/resallocserver/vm-provisioning/resalloc-start-aws-spot-x86_64"
     cmd_delete: resalloc-aws-delete --aws-profile default
@@ -32,5 +32,6 @@ openscanhub_aws_spot_x86_64:
     reuse_max_time: 0
 
     # TODO: Choose which tags we shall select?
-    tags:
+    # Avoid preallocating machines with on demand tags.
+    tags_on_demand:
         - arch_x86_64
