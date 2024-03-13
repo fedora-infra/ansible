@@ -1,4 +1,1 @@
-from kerneltest.app import APP
-
-if __name__ == '__main__':
-   APP.run()
+from kerneltest.app import APP as application
