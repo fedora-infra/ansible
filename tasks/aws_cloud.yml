@@ -72,7 +72,7 @@
     path: /etc/cloud/cloud.cfg
     regexp: '^disable_root:'
     line: 'disable_root: 0'
-  remote_user: fedora
+  remote_user: "{{ temporary_remote_user if temporary_remote_user is defined else 'fedora' }}"
   become: true
   become_user: root
   when: birthday is defined
@@ -83,7 +83,7 @@
     regexp: '.*Please login as the user.* ssh-rsa '
     replace: 'ssh-rsa '
     backup: yes
-  remote_user: fedora
+  remote_user: "{{ temporary_remote_user if temporary_remote_user is defined else 'fedora' }}"
   become: true
   become_user: root
   when: birthday is defined

@@ -16,6 +16,8 @@
 
   - import_tasks: "{{ tasks_path }}/aws_cloud.yml"
     when: datacenter == 'aws'
+    vars:
+      temporary_remote_user: ec2-user
 
   # TODO Remove in favor of base/tasks/main.yml
   - name: install platform-python
