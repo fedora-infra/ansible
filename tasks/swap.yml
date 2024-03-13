@@ -15,7 +15,9 @@
   file:
     path: "{{ swap_file_path }}"
     attr: +C
-  when: swap_touch.changed
+  when:
+    - swap_touch.changed
+    - ansible_distribution == 'Fedora'
   tags:
     - swap
 
