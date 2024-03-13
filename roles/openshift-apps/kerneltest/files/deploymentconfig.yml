@@ -54,6 +54,8 @@ spec:
           value: "--bind=0.0.0.0:8080"
         - name: KERNELTEST_CONFIG
           value: /etc/kerneltest-config/config.toml
+        - name: APP_MODULE
+          value: "deploy.wsgi"
         volumeMounts:
         - name: kerneltest-config-volume
           mountPath: /etc/kerneltest-config

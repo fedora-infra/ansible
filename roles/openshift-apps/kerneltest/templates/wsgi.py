@@ -1,1 +1,4 @@
-from fedora_elections import APP as application
+from fedora_elections import APP
+
+if __name__ == '__main__':
+   APP.run()
