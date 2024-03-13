@@ -45,6 +45,8 @@ spec:
                 readOnly: true
               - name: data
                 mountPath: "/var/lib/mirrormanager"
+              - name: logs
+                mountPath: "/var/log/mirrormanager"
           volumes:
             - name: config
               configMap:
@@ -52,7 +54,52 @@ spec:
             - name: data
               persistentVolumeClaim:
                 claimName: data
+            - name: logs
+              persistentVolumeClaim:
+                claimName: logs
 {% endfor %}
+#
+### Rotate logs
+#
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: logrotate-crawler-logs
+spec:
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  concurrencyPolicy: Forbid
+  schedule: "56 23 * * *"
+  startingDeadlineSeconds: 500
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: mirrormanager
+            image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
+            command:
+              - "logrotate"
+              - "--state"
+              - "/var/log/mirrormanager/logrotate.state"
+              - "/etc/mirrormanager/logrotate.conf"
+            volumeMounts:
+              - name: config
+                mountPath: "/etc/mirrormanager"
+                readOnly: true
+              - name: logs
+                mountPath: "/var/log/mirrormanager"
+          volumes:
+            - name: config
+              configMap:
+                name: config
+            - name: logs
+              persistentVolumeClaim:
+                claimName: logs
+          securityContext:
+            supplementalGroups: [1001280000]
 #
 ### Download GeoIP database
 #

@@ -39,9 +39,9 @@ mirrormanager_cron_crawler:
   - category: "Fedora Archive"
     schedule: "0 2 * * *"
     threads: 20
-    timeout: 600
+    timeout: 720
     # This can be a veeery long crawl per host
-    host_timeout: 300
+    host_timeout: 600
     include_disabled: false
   # Other content
   - category: "Fedora Other"

@@ -8,4 +8,6 @@ USER root
 RUN dnf install -y python3-pyrpmmd
 # Add Rust
 RUN dnf install -y cargo
+# Add Logrotate
+RUN dnf install -y logrotate
 USER 1001

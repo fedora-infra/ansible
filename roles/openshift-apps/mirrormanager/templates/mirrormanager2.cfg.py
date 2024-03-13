@@ -134,7 +134,7 @@ GEOIP_BASE = "/var/lib/mirrormanager/geoip"
 # which can the be used in the web interface by the mirror admins.
 # Other parts besides the crawler are also using this variable to
 # decide where to store log files.
-MM_LOG_DIR = "/var/lib/mirrormanager/logs"
+MM_LOG_DIR = "/var/log/mirrormanager"
 
 # This is used to exclude certain protocols to be entered
 # for host category URLs at all.

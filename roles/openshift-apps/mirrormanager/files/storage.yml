@@ -12,6 +12,19 @@ spec:
       storage: 1Gi
   storageClassName: ocs-storagecluster-cephfs
 ---
+# Crawler logs, made available to mirror admins
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: logs
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: ocs-storagecluster-cephfs
+---
 # This contains:
 # - the extracted netblocks, around 30Mb
 # - the mirrorlist cache, around 300Mb

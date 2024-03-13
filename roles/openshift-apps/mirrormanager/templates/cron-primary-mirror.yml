@@ -32,6 +32,8 @@ spec:
                 readOnly: true
               - name: data
                 mountPath: "/var/lib/mirrormanager"
+              - name: logs
+                mountPath: "/var/log/mirrormanager"
               - name: mirror
                 mountPath: "/srv/pub"
               - name: mirror-archive
@@ -46,6 +48,9 @@ spec:
             - name: data
               persistentVolumeClaim:
                 claimName: data
+            - name: logs
+              persistentVolumeClaim:
+                claimName: logs
             - name: mirror
               persistentVolumeClaim:
                 claimName: primary-mirror

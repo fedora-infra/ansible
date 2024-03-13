@@ -39,7 +39,9 @@ spec:
           mountPath: "/etc/mirrormanager-secrets"
           readOnly: true
         - name: data
-          mountPath: /var/lib/mirrormanager
+          mountPath: "/var/lib/mirrormanager"
+        - name: logs
+          mountPath: "/var/log/mirrormanager"
         - name: wsgi-script
           mountPath: "/opt/app-root/src/deploy"
           readOnly: true
@@ -80,6 +82,9 @@ spec:
       - name: data
         persistentVolumeClaim:
           claimName: data
+      - name: logs
+        persistentVolumeClaim:
+          claimName: logs
       - name: wsgi-script
         configMap:
           name: wsgi-script
