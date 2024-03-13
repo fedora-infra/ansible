@@ -7,7 +7,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: crawler-{{ cronjob.category|lower|replace(" ", "-") }}{% if cronjob.include_disabled %}-all{% endif %}
+  name: crawler-{{ cronjob.category|lower|replace(" ", "-") }}{{ cronjob.include_disabled | ternary('-all', '') }}
 spec:
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
