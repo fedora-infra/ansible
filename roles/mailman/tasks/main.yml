@@ -571,12 +571,26 @@
   when: inventory_hostname.startswith('mailman01')
   tags: mailman
 
+- name: Enable post-actions plugin
+  dnf:
+    enable_plugin:
+    - post-transaction-actions
+  tags: mailman
+  when: env == 'staging'
+
+# Sync databases and collect static files on RPM install/upgrade
+- name: install the post-transaction trigger
+  template: src=post-transaction.action.j2
+            dest=/etc/dnf/post-transaction-actions.d/hyperkitty.action
+  tags: mailman
+  when: env == 'staging'
 
 # Sync databases and collect static files on RPM install/upgrade
 - name: install the post-transaction trigger
   template: src=post-transaction.action.j2
             dest=/etc/yum/post-actions/hyperkitty.action
   tags: mailman
+  when: env == 'production'
 
 # Systemd
 - name: install the systemd service files
