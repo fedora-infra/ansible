@@ -84,6 +84,7 @@ spec:
             image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
             command:
               - "logrotate"
+              - "-v"
               - "--state"
               - "/var/log/mirrormanager/logrotate.state"
               - "/etc/mirrormanager/logrotate.conf"
