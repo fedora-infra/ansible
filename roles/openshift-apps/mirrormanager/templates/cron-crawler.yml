@@ -28,7 +28,7 @@ spec:
               - "{{ cronjob.threads }}"
               - "--global-timeout"
               - "{{ cronjob.timeout }}"
-{% if cronjob.host_timeout %}
+{% if cronjob.host_timeout is defined %}
               - "--host-timeout"
               - "{{ cronjob.host_timeout }}"
 {% endif %}
