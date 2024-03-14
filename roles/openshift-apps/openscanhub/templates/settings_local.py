@@ -129,5 +129,30 @@ DEVEL_EMAIL_ADDRESS = "no-reply@example.org"
 URL_PREFIX = ""
 STATIC_URL = URL_PREFIX + '/static/'
 
+# If this setting is enabled, a worker is only used to perform a single task.
+ENABLE_SINGLE_USE_WORKERS = True
+
+{% if env == 'staging' %}
+# This number should be same as the `max` field in the `/etc/resallocserver/pools.yaml`
+# on the resalloc server. Otherwise, we may end up with too less or too many tickets
+# being opened.
+MAX_SINGLE_USE_WORKERS = 4
+
+# TODO: This url is used to dynamically generate worker configuration files.
+SINGLE_USE_WORKER_OSH_HUB_URL = "https://openscanhub.stg.fedoraproject.org/osh/xmlrpc"
+{% else %}
+# This number should be same as the `max` field in the `/etc/resallocserver/pools.yaml`
+# on the resalloc server. Otherwise, we may end up with too less or too many tickets
+# being opened.
+MAX_SINGLE_USE_WORKERS = 32
+
+# TODO: This url is used to dynamically generate worker configuration files.
+SINGLE_USE_WORKER_OSH_HUB_URL = "https://openscanhub.fedoraproject.org/osh/xmlrpc"
+{% endif %}
+
+# TODO: What should we use here if we want to deploy across multiple clouds?
+# May be, related public key should be copied when a new worker is set up.
+SINGLE_USE_WORKER_SSH_PRIVATE_KEY = "/etc/osh/worker-manager/id_rsa"
+
 # TODO: Change this for staging and production deployments.
 ALLOWED_HOSTS = ['*']

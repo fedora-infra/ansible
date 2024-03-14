@@ -57,6 +57,9 @@ spec:
           - mountPath: /etc/httpd/conf.d/osh-hub-httpd.conf
             name: osh-hub-httpd-configmap
             subPath: osh-hub-httpd.conf
+          - mountPath: /etc/osh/worker-manager/id_rsa
+            name: aws-openscanhub-key
+            subPath: id_rsa
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -76,3 +79,7 @@ spec:
         - name: osh-hub-httpd-configmap
           configMap:
             name: osh-hub-httpd-config
+        - name: aws-openscanhub-key
+          secret:
+            defaultMode: 400
+            secretName: aws-openscanhub-key
