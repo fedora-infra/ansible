@@ -8,3 +8,5 @@ DB_URL = "postgresql://{{ kerneltest_db_user }}:{{ kerneltest_db_pass }}@{{ kern
 ADMIN_GROUP = ["sysadmin-kernel", "sysadmin-main"]
 OIDC_CLIENT_SECRETS = "/etc/kerneltest-config/client_secrets.json"
 OIDC_CALLBACK_ROUTE = '/oidc_callback'
+
+LOG_DIR = '/srv/testlogs'

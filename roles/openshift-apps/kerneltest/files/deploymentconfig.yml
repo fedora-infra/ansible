@@ -72,6 +72,8 @@ spec:
         - name: ipa-config-volume
           mountPath: /etc/ipa
           readOnly: true
+        - name: testlogs
+          mountPath: /srv/testlogs
         readinessProbe:
           timeoutSeconds: 1
           initialDelaySeconds: 5
@@ -97,6 +99,9 @@ spec:
       # - name: kerneltest-secrets-volume
       #   secret:
       #     secretName: kerneltest-secrets
+      - name: testlogs
+        persistentVolumeClaim:
+          claimName: testlogs
       - name: ipa-config-volume
         configMap:
           name: ipa-client-config

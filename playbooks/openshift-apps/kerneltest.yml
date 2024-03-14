@@ -54,6 +54,11 @@
     objectname: buildconfig.yml
 
   - role: openshift/object
+    app: easyfix
+    file: storage.yml
+    objectname: storage.yml
+
+  - role: openshift/object
     app: kerneltest
     file: service.yml
     objectname: service.yml
