@@ -151,6 +151,7 @@
   - fedora-messaging
   - httpd
   - python3-pylibmc
+  - python3-dnf-plugin-post-transaction-actions
   tags:
   - packages
   - mailman
@@ -571,13 +572,6 @@
         owner=root group=apache mode=0640
   when: inventory_hostname.startswith('mailman01')
   tags: mailman
-
-- name: Enable post-actions plugin
-  dnf:
-    enable_plugin:
-    - post-transaction-actions
-  tags: mailman
-  when: env == 'staging'
 
 # Sync databases and collect static files on RPM install/upgrade
 - name: install the post-transaction trigger
