@@ -582,7 +582,7 @@
 # Sync databases and collect static files on RPM install/upgrade
 - name: install the post-transaction trigger
   template: src=post-transaction.action.j2
-            dest=/etc/dnf/post-transaction-actions.d/hyperkitty.action
+            dest=/etc/dnf/plugins/post-transaction-actions.d/hyperkitty.action
   tags: mailman
   when: env == 'staging'
 
