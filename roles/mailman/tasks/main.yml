@@ -2,90 +2,92 @@
 # Configuration for Mailman 3
 # PostgreSQL initialization must have been done already
 
+- name: Enable SELinux policies
+  block:
+  #
+  # SELinux
+  #
+  - name: set the SELinux policy for the configuration directory
+    sefcontext:
+      target: "{{ mailman_webui_confdir }}(/.*)?"
+      setype: etc_t
+      state: present
+    tags:
+    - mailman
+    - selinux
 
-#
-# SELinux
-#
-- name: set the SELinux policy for the configuration directory
-  sefcontext:
-    target: "{{ mailman_webui_confdir }}(/.*)?"
-    setype: etc_t
-    state: present
-  tags:
-  - mailman
-  - selinux
+  - name: set the SELinux policy for the fulltext index
+    sefcontext:
+      target: "{{ mailman_webui_basedir }}/fulltext_index(/.*)?"
+      setype: httpd_sys_rw_content_t
+      state: present
+    tags:
+    - mailman
+    - selinux
 
-- name: set the SELinux policy for the fulltext index
-  sefcontext:
-    target: "{{ mailman_webui_basedir }}/fulltext_index(/.*)?"
-    setype: httpd_sys_rw_content_t
-    state: present
-  tags:
-  - mailman
-  - selinux
+  - name: set the SELinux policy for the static files directory
+    sefcontext:
+      target: "{{ mailman_webui_basedir }}/static(/.*)?"
+      setype: httpd_sys_content_t
+      state: present
+    tags:
+    - mailman
+    - selinux
 
-- name: set the SELinux policy for the static files directory
-  sefcontext:
-    target: "{{ mailman_webui_basedir }}/static(/.*)?"
-    setype: httpd_sys_content_t
-    state: present
-  tags:
-  - mailman
-  - selinux
+  - name: set the SELinux policy for the templates override directory
+    sefcontext:
+      target: "{{ mailman_webui_basedir }}/templates(/.*)?"
+      setype: httpd_sys_content_t
+      state: present
+    tags:
+    - mailman
+    - selinux
 
-- name: set the SELinux policy for the templates override directory
-  sefcontext:
-    target: "{{ mailman_webui_basedir }}/templates(/.*)?"
-    setype: httpd_sys_content_t
-    state: present
-  tags:
-  - mailman
-  - selinux
+  - name: set the SELinux policy for the log directory
+    sefcontext:
+      target: "/var/log/hyperkitty(/.*)?"
+      setype: httpd_log_t
+      state: present
+    tags:
+    - mailman
+    - selinux
 
-- name: set the SELinux policy for the log directory
-  sefcontext:
-    target: "/var/log/hyperkitty(/.*)?"
-    setype: httpd_log_t
-    state: present
-  tags:
-  - mailman
-  - selinux
+  - name: set the SELinux policy for the generated postfix databases
+    sefcontext:
+      target: "{{ mailman_webui_basedir }}/var/data/postfix_.*"
+      setype: etc_aliases_t
+      state: present
+    tags:
+    - mailman
+    - selinux
 
-- name: set the SELinux policy for the generated postfix databases
-  sefcontext:
-    target: "{{ mailman_webui_basedir }}/var/data/postfix_.*"
-    setype: etc_aliases_t
-    state: present
-  tags:
-  - mailman
-  - selinux
+  - name: set the SELinux policy for the old static archives
+    sefcontext:
+      target: "{{ mailman_webui_basedir }}/old-archives/pipermail(/.*)?"
+      setype: httpd_sys_content_t
+      state: present
+    tags:
+    - mailman
+    - selinux
 
-- name: set the SELinux policy for the old static archives
-  sefcontext:
-    target: "{{ mailman_webui_basedir }}/old-archives/pipermail(/.*)?"
-    setype: httpd_sys_content_t
-    state: present
-  tags:
-  - mailman
-  - selinux
+  - name: allow Apache to remotely connect to PostgreSQL
+    seboolean: name=httpd_can_network_connect_db state=yes persistent=yes
+    tags:
+    - mailman
+    - selinux
 
-- name: allow Apache to remotely connect to PostgreSQL
-  seboolean: name=httpd_can_network_connect_db state=yes persistent=yes
-  tags:
-  - mailman
-  - selinux
+  - name: allow Apache to remotely connect to Mailman
+    seboolean: name=httpd_can_network_connect state=yes persistent=yes
+    tags:
+    - mailman
+    - selinux
 
-- name: allow Apache to remotely connect to Mailman
-  seboolean: name=httpd_can_network_connect state=yes persistent=yes
-  tags:
-  - mailman
-  - selinux
-
-- name: allow Apache to remotely connect to Memcached
-  seboolean: name=httpd_can_network_memcache state=yes persistent=yes
-  tags:
-  - mailman
-  - selinux
+  - name: allow Apache to remotely connect to Memcached
+    seboolean: name=httpd_can_network_memcache state=yes persistent=yes
+    tags:
+    - mailman
+    - selinux
+  when: env == 'production'
 
 
 #
@@ -98,14 +100,17 @@
   - hyperkitty.{{ansible_distribution}}.repo
   - hyperkitty.repo
   tags: mailman
+  when: env == 'production'
 
 - name: install GPG to validate the key
   package: state=present name=gnupg
   tags: mailman
+  when: env == 'production'
 
 - name: add the GPG key
   rpm_key: state=present key=https://repos.fedorapeople.org/repos/abompard/abompard.asc
   tags: mailman
+  when: env == 'production'
 
 - name: install needed packages
   package: name={{ item }} state=present
@@ -133,23 +138,39 @@
   tags:
   - packages
   - mailman
+  when: env == 'production'
+
+- name: install needed packages
+  package: name={{ item }} state=present
+  with_items:
+  - mailman3
+  # - mailman3-hyperkitty
+  - hyperkitty
+  - postorius
+  - memcached
+  - fedora-messaging
+  - httpd
+  tags:
+  - packages
+  - mailman
+  when: env = 'staging'
 
 - name: setup the mailman3-fedmsg repo
   copy: src=mailman3-fedmsg-plugin.RedHat.repo
         dest=/etc/yum.repos.d/mailman3-fedmsg-plugin.repo
-  when: ansible_distribution == 'RedHat'
+  when: ansible_distribution == 'RedHat' and env == 'production'
   tags: mailman
 
 - name: add the GPG key for the mailman3-fedmsg-plugin repo
   rpm_key: state=present
-           key=https://copr-be.cloud.fedoraproject.org/results/ralph/fedmsg-python34/pubkey.gpg
-  when: ansible_distribution == 'RedHat'
+          key=https://copr-be.cloud.fedoraproject.org/results/ralph/fedmsg-python34/pubkey.gpg
+  when: ansible_distribution == 'RedHat' and env == 'production'
   tags: mailman
 
 - name: install the mailman3 fedmsg plugin rpm
   package: name=mailman3-fedmsg-plugin
   notify: restart mailman3
-  when: ansible_distribution == 'RedHat'
+  when: ansible_distribution == 'RedHat' and env == 'production'
   tags: mailman
 
 - name: copy in our fedmsg-plugin conf file
@@ -158,6 +179,7 @@
   - fedmsgdconfig
   - mailman
   notify: restart mailman3
+  when: env == 'production'
 
 - name: install packages when not using source extracts
   package: name={{ item }} state=present
@@ -168,13 +190,14 @@
   tags:
   - packages
   - mailman
+  when: env == 'production'
 
 ## install hotfix for e-mails containing broken unicode
 ## see issue https://pagure.io/fedora-infrastructure/issue/8824
 ## see upstream merge request https://gitlab.com/mailman/mailman/-/merge_requests/350
 - name: hotfix - let mailman cope with e-mails containing broken unicode
   patch: src={{ files }}/hotfix/mailman3/mailman3-broken-unicode-emails.patch
-         dest=/usr/lib/python3.4/site-packages/mailman/email/message.py
+        dest=/usr/lib/python3.4/site-packages/mailman/email/message.py
   notify:
   - restart mailman3
   - reload apache
@@ -182,6 +205,7 @@
   - mailman
   - hotfix
   - patches
+  when: env == 'production'
 
 # Add the Nest banner
 # See issue https://pagure.io/fedora-infrastructure/issue/10103
@@ -332,6 +356,7 @@
   tags:
   - config
   - mailman
+  when: env == 'production'
 
 - name: install the hyperkitty settings test file
   copy: src=settings_test.py
@@ -340,6 +365,7 @@
   tags:
   - config
   - mailman
+  when: env == 'production'
 
 - name: install the fedora-specific modules
   copy: src={{ item }}.py
@@ -355,6 +381,17 @@
     - reload apache
 
 - name: install the hyperkitty urls file
+  copy: src=mailman3_urls.py
+        dest="{{ mailman_webui_confdir }}/urls.py"
+        owner=root group=root mode=0644
+  tags:
+  - config
+  - mailman
+  notify:
+    - reload apache
+  when: env == 'staging'
+
+- name: install the hyperkitty urls file
   copy: src=urls.py
         dest="{{ mailman_webui_confdir }}/urls.py"
         owner=root group=root mode=0644
@@ -363,6 +400,7 @@
   - mailman
   notify:
     - reload apache
+  when: env == 'production'
 
 - name: install the hyperkitty wsgi file
   copy: src=webui.wsgi
