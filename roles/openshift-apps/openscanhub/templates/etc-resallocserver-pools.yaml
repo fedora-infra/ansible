@@ -34,7 +34,8 @@ openscanhub_aws_spot_x86_64:
     # We have to specify empty tags while using `tags_on_demand`.
     # https://github.com/praiskup/resalloc/pull/151
     # TODO: Remove this in the future.
-    tags: []
+    tags:
+         - dummy_tag_to_keep_resalloc_happy
 
     # TODO: Choose which tags we shall select?
     # Avoid preallocating machines with on demand tags.
