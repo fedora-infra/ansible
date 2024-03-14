@@ -453,7 +453,7 @@
 # Add the Nest banner
 # See issue https://pagure.io/fedora-infrastructure/issue/10103
 - name: Replace the top.html template in hyperkitty to change banner
-  copy: src=top.html dest="{{ mailman_webui_basedir }}templates/hyperkitty/top.html"
+  copy: src=top.html dest="{{ mailman_webui_basedir }}/templates/hyperkitty/top.html"
   notify:
   - reload apache
   tags:
