@@ -2,6 +2,10 @@
 # Replace "apache" by your webserver user ("www-data" on Debian systems) and
 # set the path to the Django project directory
 
+{% if env == 'staging' %}
+MAILTO=""
+{% endif %}
+
 {% if ansible_hostname == 'mailman01' %}
 @hourly  apache  django-admin runjobs hourly  --pythonpath {{ mailman_webui_confdir }} --settings settings
 @daily   apache  django-admin runjobs daily   --pythonpath {{ mailman_webui_confdir }} --settings settings
