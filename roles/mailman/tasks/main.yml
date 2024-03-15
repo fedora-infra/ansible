@@ -152,6 +152,8 @@
   - httpd
   - python3-pylibmc
   - python3-dnf-plugin-post-transaction-actions
+  - python3-psycopg2
+  - sassc
   tags:
   - packages
   - mailman
@@ -347,7 +349,6 @@
   tags:
   - config
   - mailman
-  when: env == 'production'
 
 - name: install the hyperkitty settings test file
   copy: src=settings_test.py
@@ -482,6 +483,13 @@
   copy: src=navbar-brand.html
         dest="{{ mailman_webui_basedir }}/templates/hyperkitty/navbar-brand.html"
   tags: mailman
+  when: env == 'production'
+
+- name: install our fedora-specific brand template override
+  copy: src=mailman3_navbar-brand.html
+        dest="{{ mailman_webui_basedir }}/templates/hyperkitty/navbar-brand.html"
+  tags: mailman
+  when: env == 'staging'
 
 - name: install our fedora-specific page headers
   copy: src=headers.html
