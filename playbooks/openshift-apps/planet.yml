@@ -1,6 +1,6 @@
 ---
 - name: make the app be real
-  hosts: os_control_stg[0]
+  hosts: os_control[0]:os_control_stg[0]
   user: root
   gather_facts: False
 
@@ -18,17 +18,6 @@
     - kevin
     tags:
       - apply-appowners
-    when: env == "staging"
-
-  # - role: openshift/project
-  #   app: planet
-  #   description: "Fedora Planet"
-  #   appowners:
-  #   - phsmoura
-  #   - kevin
-  #   tags:
-  #     - apply-appowners
-  #   when: env == "production"
 
   # Keytabs
   - role: openshift/keytab
