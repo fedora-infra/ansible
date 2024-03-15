@@ -57,7 +57,9 @@ INSTALLED_APPS = (
     'hyperkitty',
     'rest_framework',
     'django_gravatar',
+{% if env != 'staging' %}
     'paintstore',
+{% endif %}
     'compressor',
     'haystack',
     'django_extensions',
