@@ -36,4 +36,13 @@ items:
     wsgi.py: |-
       {{ load_file('wsgi.py') | indent(6) }}
     __init__.py: ""
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: fedora-messaging-config
+    labels:
+      app: {{ app }}
+  data:
+    config.toml: |-
+      {{ load_file('fedora-messaging.toml') | indent(6) }}
     

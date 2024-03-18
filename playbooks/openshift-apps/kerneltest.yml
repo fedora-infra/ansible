@@ -43,6 +43,22 @@
     tags:
       - apply-appowners
 
+  - role: openshift/secret-file
+    app: kerneltest
+    secret_name: fedora-messaging-ca
+    key: cacert.pem
+    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+  - role: openshift/secret-file
+    app: kerneltest
+    secret_name: fedora-messaging-crt
+    key: kerneltest-cert.pem
+    privatefile: "rabbitmq/{{env}}/pki/issued/kerneltest{{env_suffix}}.crt"
+  - role: openshift/secret-file
+    app: kerneltest
+    secret_name: fedora-messaging-key
+    key: kerneltest-key.pem
+    privatefile: "rabbitmq/{{env}}/pki/private/kerneltest{{env_suffix}}.key"
+
   - role: openshift/object
     app: kerneltest
     file: imagestream.yml

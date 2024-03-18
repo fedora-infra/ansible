@@ -66,9 +66,21 @@ spec:
         - name: wsgi-script-volume
           mountPath: "/opt/app-root/src/deploy"
           readOnly: true
-        # - name: kerneltest-secrets-volume
-        #   mountPath: /etc/kerneltest-secrets
-        #   readOnly: true
+        - name: fedora-messaging-config-volume
+          mountPath: "/etc/fedora-messaging"
+          readOnly: true
+        - name: fedora-messaging-ca-volume
+          mountPath: /etc/pki/fedora-messaging/cacert.pem
+          subPath: cacert.pem
+          readOnly: true
+        - name: fedora-messaging-crt-volume
+          mountPath: /etc/pki/fedora-messaging/kerneltest-cert.pem
+          subPath: kerneltest-cert.pem
+          readOnly: true
+        - name: fedora-messaging-key-volume
+          mountPath: /etc/pki/fedora-messaging/kerneltest-key.pem
+          subPath: kerneltest-key.pem
+          readOnly: true
         - name: ipa-config-volume
           mountPath: /etc/ipa
           readOnly: true
@@ -96,9 +108,18 @@ spec:
       - name: wsgi-script-volume
         configMap:
           name: wsgi-script
-      # - name: kerneltest-secrets-volume
-      #   secret:
-      #     secretName: kerneltest-secrets
+      - name: fedora-messaging-config-volume
+        configMap:
+          name: fedora-messaging-config
+      - name: fedora-messaging-ca-volume
+        secret:
+          secretName: fedora-messaging-ca
+      - name: fedora-messaging-crt-volume
+        secret:
+          secretName: fedora-messaging-crt
+      - name: fedora-messaging-key-volume
+        secret:
+          secretName: fedora-messaging-key
       - name: testlogs
         persistentVolumeClaim:
           claimName: testlogs
