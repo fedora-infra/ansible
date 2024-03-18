@@ -1,3 +1,4 @@
+---
 # create a new mailman server
 # NOTE: make sure there is room/space for this server on the vmhost
 # NOTE: most of these vars_path come from group_vars/mirrorlist or from hostvars
@@ -9,7 +10,7 @@
 - name: make the box be real
   hosts: mailman_stg:mailman
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
   - /srv/web/infra/ansible/vars/global.yml
@@ -21,8 +22,8 @@
   - rkhunter
   - nagios_client
   - hosts
-  - { role: openvpn/client,
-      when: env != "staging" }
+  - {role: openvpn/client,
+     when: env != "staging"}
   - ipa/client
   - collectd/base
   - sudo
@@ -86,7 +87,7 @@
 - name: setup mailman and hyperkitty
   hosts: mailman_stg:mailman
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
   - /srv/web/infra/ansible/vars/global.yml
@@ -99,8 +100,8 @@
     mailman_hyperkitty_admin_db_pass: "{{ mailman_hk_admin_db_pass }}"
     mailman_hyperkitty_db_pass: "{{ mailman_hk_db_pass }}"
     mailman_hyperkitty_cookie_key: "{{ mailman_hk_cookie_key }}"
-  - { role: fedmsg/base,
-      when: env != "staging" }
+  - {role: fedmsg/base,
+     when: env != "staging"}
   # Set up for fedora-messaging
   - role: rabbit/user
     username: "mailman{{ env_suffix }}"
@@ -115,9 +116,9 @@
     tags:
     - packages
 
-  #- name: easy access to the postgresql databases
-  #  template: src=$files/mailman/pgpass.j2 dest=/root/.pgpass
-  #            owner=root group=root mode=0600
+#  - name: easy access to the postgresql databases
+#    template: src=$files/mailman/pgpass.j2 dest=/root/.pgpass
+#              owner=root group=root mode=0600
 
   - name: start services
     service: state=started enabled=yes name={{ item }}
