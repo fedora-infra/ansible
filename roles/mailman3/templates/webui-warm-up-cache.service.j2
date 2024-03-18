@@ -1,0 +1,14 @@
+[Unit]
+Description=Mailman web UI warm up cache
+Requires=memcached.service
+After=memcached.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/mailman-web hyperkitty_warm_up_cache
+User=mailman
+Group=mailman
+WorkingDirectory=/etc/mailman3
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,14 @@
+[Unit]
+Description=Mailman web UI async tasks runner
+After=network.target remote-fs.target
+
+[Service]
+ExecStart=/usr/bin/mailman-web qcluster
+ExecStop=/bin/kill -s TERM $MAINPID
+User=mailman
+Group=mailman
+WorkingDirectory=/etc/mailman3
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

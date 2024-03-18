@@ -1,0 +1,452 @@
+---
+# Configuration for Mailman 3
+# PostgreSQL initialization must have been done already
+
+#
+# SELinux
+#
+- name: Set the SELinux policy for the fulltext index
+  community.general.sefcontext:
+    target: "{{ mailman_webui_basedir }}/fulltext_index(/.*)?"
+    setype: httpd_sys_rw_content_t
+    state: present
+  tags:
+    - mailman
+    - selinux
+
+- name: Set the SELinux policy for the static files directory
+  community.general.sefcontext:
+    target: "{{ mailman_webui_basedir }}/static(/.*)?"
+    setype: httpd_sys_content_t
+    state: present
+  tags:
+    - mailman
+    - selinux
+
+- name: Set the SELinux policy for the templates override directory
+  community.general.sefcontext:
+    target: "{{ mailman_webui_basedir }}/templates(/.*)?"
+    setype: httpd_sys_content_t
+    state: present
+  tags:
+    - mailman
+    - selinux
+
+- name: set the SELinux policy for the log directory
+  community.general.sefcontext:
+    target: "{{ mailman_log_directory }}(/.*)?"
+    setype: httpd_log_t
+    state: present
+  tags:
+    - mailman
+    - selinux
+
+- name: Set the SELinux policy for the generated postfix databases
+  community.general.sefcontext:
+    target: "{{ mailman_webui_basedir }}/var/data/postfix_.*"
+    setype: etc_aliases_t
+    state: present
+  tags:
+    - mailman
+    - selinux
+
+- name: Set the SELinux policy for the old static archives
+  community.general.sefcontext:
+    target: "{{ mailman_webui_basedir }}/old-archives/pipermail(/.*)?"
+    setype: httpd_sys_content_t
+    state: present
+  tags:
+    - mailman
+    - selinux
+
+- name: Allow Apache to remotely connect to PostgreSQL
+  ansible.posix.seboolean:
+    name: httpd_can_network_connect_db
+    state: yes
+    persistent: yes
+  tags:
+    - mailman
+    - selinux
+
+- name: Allow Apache to remotely connect to Mailman
+  ansible.posix.seboolean:
+    name: httpd_can_network_connect
+    state: yes
+    persistent: yes
+  tags:
+    - mailman
+    - selinux
+
+- name: Allow Apache to remotely connect to Memcached
+  ansible.posix.seboolean:
+    name: httpd_can_network_memcache
+    state: yes
+    persistent: yes
+  tags:
+    - mailman
+    - selinux
+
+
+- name: Install needed packages
+  ansible.builtin.package:
+    name: {{item}}
+    state: present
+  with_items:
+    - httpd
+    - hyperkitty
+    - fedora-messaging
+    - mailman3
+    - memcached
+    - postorius
+    - python3-mailman-hyperkitty
+    - python3-mailman-web
+    - python3-mod_wsgi
+    - python3-pylibmc
+    - python3-psycopg2
+    - python3-whoosh
+    - sassc
+  tags:
+    - packages
+    - mailman
+
+- name: Set the mailman conffile
+  ansible.builtin.template:
+    src: mailman.cfg.j2
+    dest: /etc/mailman.cfg
+    owner: mailman
+    group: mailman
+    mode: 0640
+  tags:
+    - config
+    - mailman
+  notify:
+    - restart mailman3
+
+#
+# Logging
+#
+- name: Ensuring log directory exists
+  ansible.builtin.file:
+    path: "{{ mailman3_log_directory }}"
+    state: directory
+    owner: mailman
+    group: mailman
+  tags:
+    - logging
+    - mailman
+
+- name: Mailman logging -- rotation
+  ansible.builtin.copy:
+    src: mailman3.logrotate.conf
+    dest: /etc/logrotate.d/mailman3
+  tags:
+    - logging
+    - mailman
+
+- name: Ensuring mailman-core is started
+  ansible.builtin.service:
+    name: mailman3
+    state: started
+    enabled: yes
+  tags:
+    - mailman
+
+#
+# HyperKitty + Postorius setup
+#
+- name: Create site/en dir
+  ansible.builtin.file:
+    state: directory
+    path: /var/lib/mailman3/templates/site/en
+  tags:
+    - config
+    - mailman
+
+- name: Set default list footer
+  ansible.builtin.copy:
+    src: mailman-template-list-member-generic-footer.txt
+    dest: /var/lib/mailman3/templates/site/en/list:member:generic:footer.txt
+    owner: mailman
+    group: mailman
+    mode: 0644
+  tags:
+    - config
+    - mailman
+
+- name: Set default list:admin:action:post template
+  ansible.builtin.copy:
+    src: mailman-template-list-admin-action-post.txt
+    dest: /var/lib/mailman3/templates/site/en/list:admin:action:post.txt
+    owner: mailman
+    group: mailman
+    mode: 0644
+  tags:
+    - config
+    - mailman
+
+- name: Create lists/users.lists.fedoraproject.org/en template dir
+  ansible.builtin.file:
+    state: directory
+    path: /var/lib/mailman3/templates/lists/users.lists.fedoraproject.org/en
+  tags:
+    - config
+    - mailman
+
+- name: Set list:user:notice:hold template for users list
+  anisble.builtin.copy:
+    src: mailman-template-users-list-user-notice-hold.txt
+    dest: /var/lib/mailman3/templates/lists/users.lists.fedoraproject.org/en/list:user:notice:hold.txt
+    owner: mailman
+    group: mailman
+    mode: 0644
+  tags:
+    - config
+    - mailman
+
+- name: Install the hyperkitty/postorius settings file
+  ansible.builtin.template:
+    src: settings.py.j2
+    dest: "{{ mailman_webui_confdir }}/settings.py"
+    owner: root
+    group: apache
+    mode: 0640
+  tags:
+    - config
+    - mailman
+  notify:
+    - reload apache
+
+- name: Install the hyperkitty/postorius httpd conf file
+  ansible.builtin.template:
+    src: apache.conf.j2
+    dest: /etc/httpd/conf.d/mailman-webui.conf
+  tags:
+    - config
+    - mailman
+  notify:
+    - reload apache
+
+- name: Create the fulltext index dir
+  ansible.builtin.file:
+    path: "{{ mailman_webui_basedir }}/fulltext_index"
+    state: directory
+    owner: apache
+    group: apache
+    mode: 0755
+  tags: mailman
+
+- name: Create the hyperkitty static files dirs
+  ansible.builtin.file:
+    path: "{{ mailman_webui_basedir }}/{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  with_items:
+    - static
+    - static-fedora
+  register: static_root_dir
+  tags: mailman
+
+- name: Create the fedora-specific hyperkitty img dir
+  ansible.builtin.file:
+    path: "{{ mailman_webui_basedir }}/static-fedora/hyperkitty/img"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  tags:
+    - mailman
+    - hyperkitty
+
+- name: Create the hyperkitty templates override dirs
+  ansible.builtin.file:
+    path: "{{ mailman_webui_basedir }}/templates/{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  with_items:
+    - hyperkitty
+    - django_mailman3
+  tags:
+    - mailman
+    - hypperkitty
+
+# Add the Nest banner
+# See issue https://pagure.io/fedora-infrastructure/issue/10103
+- name: Replace the top.html template in hyperkitty/postorius to change banner
+  ansible.builtin.copy:
+    src: top.html
+    dest: "{{ mailman_webui_basedir }}/templates/hyperkitty/top.html"
+  notify:
+    - reload apache
+  tags:
+    - mailman
+    - banner
+    - hyperkitty
+
+- name: Install our fedora-specific logo
+  ansible.builtin.copy:
+    src: logo-hyperkitty-fedora.png
+    dest: "{{ mailman_webui_basedir }}/static-fedora/logo-hyperkitty-fedora.png"
+  tags:
+    - mailman
+    - hyperkitty
+
+- name: Install our fedora-specific favicon
+  ansible.builtin.copy:
+    src: favicon.ico
+    dest: "{{ mailman_webui_basedir }}/static-fedora/favicon.ico"
+  tags:
+    - mailman
+    - hyperkitty
+
+- name: Install our fedora-specific robots.txt
+  ansible.builtin.copy:
+    src: robots.txt
+    dest: "{{ mailman_webui_basedir }}/static-fedora/robots.txt"
+  tags:
+    - mailman
+    - hyperkitty
+
+- name: Install our fedora-specific brand template override
+  ansible.builtin.copy:
+    src: navbar-brand.html
+    dest: "{{ mailman_webui_basedir }}/templates/hyperkitty/navbar-brand.html"
+  tags:
+    - mailman
+    - hyperkitty
+
+- name: Install our fedora-specific page headers
+  ansible.builtin.copy:
+    src: headers.html
+    dest: "{{ mailman_webui_basedir }}/templates/hyperkitty/headers.html"
+  tags:
+    - mailman
+    - hyperkitty
+
+- name: Install our fedora-specific login page extension
+  ansible.builtin.copy:
+    src: login_extra_top.html
+    dest: "{{ mailman_webui_basedir }}/templates/django_mailman3/login_extra_top.html"
+  tags:
+    - mailman
+    - hyperkitty
+
+- name: Create dirs for signup_closed page
+  ansible.builtin.file:
+    path: "{{ mailman_webui_basedir }}/templates/account"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  tags:
+    - mailman
+    - hyperkitty
+
+- name: Install our fedora-specific signup_closed page
+  ansible.builtin.copy:
+    src: signup_closed.html
+    dest: "{{ mailman_webui_basedir }}/templates/account/signup_closed.html"
+  tags:
+    - mailman
+    - hyperkitty
+
+- name: Install our fedmenu js hook
+  ansible.builtin.template:
+    src: bottom.html
+    dest: "{{mailman_webui_basedir }}/templates/hyperkitty/bottom.html"
+  tags:
+    - mailman
+    - hyperkitty
+
+
+- name: Ensuring we have correct DB schema for django apps
+  ansible.builtin.command:
+    cmd: mailman-web migrate
+    chdir: /etc/mailman3
+  become_user: mailman
+  tags:
+    - mailman
+    - db
+
+#
+# Plug HyperKitty into Mailman
+#
+- name: Copy the mailman-hyperkitty conffile
+  ansible.builtin.copy:
+    src: mailman-hyperkitty.cfg
+    dest: "/etc/mailman3.d/hyperkitty.cfg"
+    owner: mailman
+    group: mailman
+    mode: 0640
+  tags:
+    - config
+    - mailman
+    - hyperkitty
+  notify:
+    - restart mailman3
+
+- name: Populating static_root dir with django files/css
+  ansible.builtin.command:
+    cmd: mailman-web collectstatic --no-input
+    chdir: /etc/mailman3
+  become_user: mailman
+  when:
+    - static_root_dir is changed
+
+#
+# Scripts
+#
+
+- name: Install the staging-sync script
+  ansible.builtin.copy:
+    src: prod-to-stg.py
+    dest: "{{ mailman_webui_basedir }}/bin/prod-to-stg.py"
+  when: env == "staging"
+  tags: mailman
+
+#
+# Systemd
+#
+- name: Install the systemd service files
+  ansible.builtin.template:
+    src: "{{ item }}.service.j2"
+    dest: "/etc/systemd/system/{{ item }}.service"
+  with_items:
+    - webui-qcluster
+    - webui-warm-up-cache
+  notify:
+    - systemctl daemon-reload
+  tags:
+    - config
+    - mailman
+    - systemd
+
+# Memcached
+- name: Set the memcached sysconfig file
+  ansible.builtin.copy:
+    src: memcached.sysconfig
+    dest: /etc/sysconfig/memcached
+  notify:
+    - restart memcached
+  tags:
+    - mailman
+    - memcached
+
+# Start services
+- name: Start services
+  ansible.builtin.systemd:
+    state: started
+    enabled: yes
+    name: {{item}}
+  with_items:
+    - httpd
+    - mailman3
+    - postfix
+    - webui-qcluster
+    - webui-warm-up-cache
+  tags:
+    - mailman
+    - hyperkitty
