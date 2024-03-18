@@ -35,6 +35,7 @@ spec:
               - "--category"
               - "{{ cronjob.category }}"
               - "--{{ cronjob.include_disabled | ternary('include', 'exclude') }}-disabled"
+              - "--no-fail"
               - "--debug"
               - "crawl"
             env:
@@ -60,10 +61,10 @@ spec:
               persistentVolumeClaim:
                 claimName: logs
 {% endfor %}
+---
 #
 ### Rotate logs
 #
----
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -103,10 +104,10 @@ spec:
                 claimName: logs
           securityContext:
             supplementalGroups: [1001280000]
+---
 #
 ### Download GeoIP database
 #
----
 apiVersion: batch/v1
 kind: CronJob
 metadata:
