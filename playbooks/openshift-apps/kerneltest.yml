@@ -33,7 +33,12 @@
   pre_tasks:
   - include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
 
+
   roles:
+  - role: rabbit/user
+    username: "kerneltest{{ env_suffix }}"
+    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.kerneltest\..*
+
   - role: openshift/project
     app: kerneltest
     description: kerneltest
