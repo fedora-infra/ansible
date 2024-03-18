@@ -2,91 +2,89 @@
 # Configuration for Mailman 3
 # PostgreSQL initialization must have been done already
 
-- name: Enable SELinux policies
-  block:
-  #
-  # SELinux
-  #
-  - name: set the SELinux policy for the configuration directory
-    sefcontext:
-      target: "{{ mailman_webui_confdir }}(/.*)?"
-      setype: etc_t
-      state: present
-    tags:
-    - mailman
-    - selinux
+#
+# SELinux
+#
+- name: set the SELinux policy for the configuration directory
+  sefcontext:
+    target: "{{ mailman_webui_confdir }}(/.*)?"
+    setype: etc_t
+    state: present
+  tags:
+  - mailman
+  - selinux
 
-  - name: set the SELinux policy for the fulltext index
-    sefcontext:
-      target: "{{ mailman_webui_basedir }}/fulltext_index(/.*)?"
-      setype: httpd_sys_rw_content_t
-      state: present
-    tags:
-    - mailman
-    - selinux
+- name: set the SELinux policy for the fulltext index
+  sefcontext:
+    target: "{{ mailman_webui_basedir }}/fulltext_index(/.*)?"
+    setype: httpd_sys_rw_content_t
+    state: present
+  tags:
+  - mailman
+  - selinux
 
-  - name: set the SELinux policy for the static files directory
-    sefcontext:
-      target: "{{ mailman_webui_basedir }}/static(/.*)?"
-      setype: httpd_sys_content_t
-      state: present
-    tags:
-    - mailman
-    - selinux
+- name: set the SELinux policy for the static files directory
+  sefcontext:
+    target: "{{ mailman_webui_basedir }}/static(/.*)?"
+    setype: httpd_sys_content_t
+    state: present
+  tags:
+  - mailman
+  - selinux
 
-  - name: set the SELinux policy for the templates override directory
-    sefcontext:
-      target: "{{ mailman_webui_basedir }}/templates(/.*)?"
-      setype: httpd_sys_content_t
-      state: present
-    tags:
-    - mailman
-    - selinux
+- name: set the SELinux policy for the templates override directory
+  sefcontext:
+    target: "{{ mailman_webui_basedir }}/templates(/.*)?"
+    setype: httpd_sys_content_t
+    state: present
+  tags:
+  - mailman
+  - selinux
 
-  - name: set the SELinux policy for the log directory
-    sefcontext:
-      target: "/var/log/hyperkitty(/.*)?"
-      setype: httpd_log_t
-      state: present
-    tags:
-    - mailman
-    - selinux
+- name: set the SELinux policy for the log directory
+  sefcontext:
+    target: "/var/log/hyperkitty(/.*)?"
+    setype: httpd_log_t
+    state: present
+  tags:
+  - mailman
+  - selinux
 
-  - name: set the SELinux policy for the generated postfix databases
-    sefcontext:
-      target: "{{ mailman_webui_basedir }}/var/data/postfix_.*"
-      setype: etc_aliases_t
-      state: present
-    tags:
-    - mailman
-    - selinux
+- name: set the SELinux policy for the generated postfix databases
+  sefcontext:
+    target: "{{ mailman_webui_basedir }}/var/data/postfix_.*"
+    setype: etc_aliases_t
+    state: present
+  tags:
+  - mailman
+  - selinux
 
-  - name: set the SELinux policy for the old static archives
-    sefcontext:
-      target: "{{ mailman_webui_basedir }}/old-archives/pipermail(/.*)?"
-      setype: httpd_sys_content_t
-      state: present
-    tags:
-    - mailman
-    - selinux
+- name: set the SELinux policy for the old static archives
+  sefcontext:
+    target: "{{ mailman_webui_basedir }}/old-archives/pipermail(/.*)?"
+    setype: httpd_sys_content_t
+    state: present
+  tags:
+  - mailman
+  - selinux
 
-  - name: allow Apache to remotely connect to PostgreSQL
-    seboolean: name=httpd_can_network_connect_db state=yes persistent=yes
-    tags:
-    - mailman
-    - selinux
+- name: allow Apache to remotely connect to PostgreSQL
+  seboolean: name=httpd_can_network_connect_db state=yes persistent=yes
+  tags:
+  - mailman
+  - selinux
 
-  - name: allow Apache to remotely connect to Mailman
-    seboolean: name=httpd_can_network_connect state=yes persistent=yes
-    tags:
-    - mailman
-    - selinux
+- name: allow Apache to remotely connect to Mailman
+  seboolean: name=httpd_can_network_connect state=yes persistent=yes
+  tags:
+  - mailman
+  - selinux
 
-  - name: allow Apache to remotely connect to Memcached
-    seboolean: name=httpd_can_network_memcache state=yes persistent=yes
-    tags:
-    - mailman
-    - selinux
+- name: allow Apache to remotely connect to Memcached
+  seboolean: name=httpd_can_network_memcache state=yes persistent=yes
+  tags:
+  - mailman
+  - selinux
   when: env == 'production'
 
 
