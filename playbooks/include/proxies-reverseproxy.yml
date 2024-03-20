@@ -248,9 +248,13 @@
     destname: kerneltest
     remotepath: /kerneltest
     localpath: /kerneltest
+    balancer_name: apps-ocp
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    targettype: openshift
+    ocp4: true
+    keephost: true
     header_scheme: true
-    proxyurl: "{{ varnish_url }}"
-    when: env != "staging"
+    tags: kerneltest
 
   - role: httpd/reverseproxy
     website: qa.fedoraproject.org

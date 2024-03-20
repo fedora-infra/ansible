@@ -95,9 +95,12 @@
   - role: openshift/route
     app: kerneltest
     routename: kerneltest
-    host: "kerneltest.apps.ocp{{ env_suffix }}.fedoraproject.org"
+    host: "apps{{ env_suffix }}.fedoraproject.org"
+    path: "/kerneltest"
     serviceport: web
     servicename: kerneltest-web
+    annotations:
+      haproxy.router.openshift.io/timeout: 5m
 
   - role: openshift/object
     app: kerneltest
