@@ -244,7 +244,7 @@
     proxyurl: http://localhost:10032
 
   - role: httpd/reverseproxy
-    website: kerneltest{{ env_suffix }}.fedoraproject.org
+    website: kerneltest.fedoraproject.org
     destname: kerneltest
     balancer_name: apps-ocp
     balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
@@ -253,6 +253,7 @@
     keephost: true
     header_scheme: true
     tags: kerneltest
+    when: env == "staging"
 
   - role: httpd/reverseproxy
     website: qa.fedoraproject.org
