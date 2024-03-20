@@ -244,10 +244,8 @@
     proxyurl: http://localhost:10032
 
   - role: httpd/reverseproxy
-    website: apps.fedoraproject.org
+    website: kerneltest{{ env_suffix }}.fedoraproject.org
     destname: kerneltest
-    remotepath: /kerneltest
-    localpath: /kerneltest
     balancer_name: apps-ocp
     balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
     targettype: openshift
