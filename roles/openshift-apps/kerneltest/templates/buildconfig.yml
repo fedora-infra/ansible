@@ -13,6 +13,11 @@ spec:
     type: Git
     git:
       uri: https://github.com/fedora-infra/kerneltest.git
+{% if env == "staging" %}
+      ref: staging
+{% else %}
+      ref: stable
+{% endif %}
   strategy:
     type: Source
     sourceStrategy:
@@ -23,3 +28,13 @@ spec:
   triggers:
   - type: ConfigChange
   - type: ImageChange
+{% if kerneltest_stg_github_secret is defined and env == 'staging' %}
+  - type: GitHub
+    github:
+      secret: "{{ kerneltest_stg_github_secret }}"
+{% endif %}
+{% if kerneltest_prod_github_secret is defined and env == 'production' %}
+  - type: GitHub
+    github:
+      secret: "{{ kerneltest_prod_github_secret }}"
+{% endif %}
