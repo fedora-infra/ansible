@@ -886,3 +886,10 @@
     target: https://discussion.fedoraproject.org
     tags:
     - discussion
+
+  - role: httpd/redirect
+    shortname: kerneltest
+    website: apps.fedoraproject.org
+    path: /kerneltest
+    target: "https://kerneltest{{env_suffix}}.fedoraproject.org"
+    tags: kerneltest
