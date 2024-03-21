@@ -1,0 +1,73 @@
+{% macro load_file(filename) %}{% include filename %}{%- endmacro -%}
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: fedbadges
+  labels:
+    app: badges
+    build: fedbadges
+spec:
+  runPolicy: Serial
+  source:
+    type: Git
+    git:
+      uri: https://github.com/fedora-infra/fedbadges.git
+      # ref: {{ (env == 'production')|ternary('stable', 'staging') }}
+      ref: fedora-messaging
+    contextDir: /
+  strategy:
+    type: Source
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: python-310:latest
+  output:
+    to:
+      kind: ImageStreamTag
+      name: fedbadges:latest
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+  # - type: GitHub
+  #   github:
+  #     # Not sure why secretReference does not work, but it doesn't.
+  #     # secretReference:
+  #     #   name: github-webook
+  #     secret: "{{ badges_stg_github_secret }}"
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: tahrir
+  labels:
+    app: badges
+    build: tahrir
+spec:
+  runPolicy: Serial
+  source:
+    type: Git
+    git:
+      uri: https://github.com/fedora-infra/tahrir.git
+      # ref: {{ (env == 'production')|ternary('stable', 'staging') }}
+      ref: develop
+    contextDir: /
+  strategy:
+    type: Source
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: python-310:latest
+  output:
+    to:
+      kind: ImageStreamTag
+      name: tahrir:latest
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+  # - type: GitHub
+  #   github:
+  #     # Not sure why secretReference does not work, but it doesn't.
+  #     # secretReference:
+  #     #   name: github-webook
+  #     secret: "{{ badges_stg_github_secret }}"

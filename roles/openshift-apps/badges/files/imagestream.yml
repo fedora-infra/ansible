@@ -1,0 +1,29 @@
+apiVersion: image.openshift.io/v1
+kind: List
+items:
+  # The main images
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      name: fedbadges
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      name: tahrir
+  # The Python 3.10 builder image
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      name: python-310
+    spec:
+      lookupPolicy:
+        local: false
+      tags:
+        - name: latest
+          from:
+            kind: DockerImage
+            name: quay.io/fedora/python-310:latest
+          importPolicy:
+            scheduled: true
+          referencePolicy:
+            type: Source

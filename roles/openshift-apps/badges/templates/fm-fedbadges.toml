@@ -1,0 +1,95 @@
+#
+# Fedora Messaging configuration for the consumer component
+#
+
+amqp_url = "amqps://fedbadges{{ env_suffix }}:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fpubsub"
+callback = "fedbadges.consumer:FedoraBadgesConsumer"
+passive_declares = true
+
+[tls]
+ca_cert = "/etc/pki/fedora-messaging/ca/cacert.pem"
+certfile = "/etc/pki/fedora-messaging/crt/fedbadges-cert.pem"
+keyfile = "/etc/pki/fedora-messaging/key/fedbadges-key.pem"
+
+
+[client_properties]
+app = "Fedbadges"
+
+# If the exchange or queue name  has a "." in it, use quotes as seen here.
+[exchanges."amq.topic"]
+type = "topic"
+durable = true
+auto_delete = false
+arguments = {}
+
+[queues."fedbadges{{ env_suffix }}"]
+durable = true
+auto_delete = false
+exclusive = false
+arguments = {}
+
+[[bindings]]
+queue = "fedbadges{{ env_suffix }}"
+exchange = "amq.topic"
+routing_keys = ["#"]
+
+
+[consumer_config]
+
+# This tells the consumer where to look for its BadgeRule definitions.  It
+# may be a relative or an absolute path on the file system.
+badges_directory = "/var/lib/badges/badges"
+
+# Number of seconds to delay before consuming a message for our event loop.
+# This is here to help us mitigate distributed race conditions between
+# fedbadges and datanommer.
+consume_delay = 1
+
+# This is a sqlalchemy URI that points to the Badges DB.  In
+# production, this will be a postgres URI.
+database_uri = "postgresql://{{ tahrirDBUser }}:{{ (env == 'production')|ternary(tahrirDBPassword, tahrirstgDBPassword) }}@db01{{ env_suffix }}.iad2.fedoraprject.org/tahrir"
+
+# Datanommer database URI
+datanommer_db_uri = "postgresql://{{ datanommerDBUser }}:{{ (env == 'production')|ternary(datanommerDBPassword, datanommer_stg_db_password) }}@db-datanommer{{ (env == 'production')|ternary('02', '01') }}{{ env_suffix }}.iad2.fedoraproject.org/datanommer2"
+datagrepper_url = "https://apps{{ env_suffix }}.fedoraproject.org/datagrepper"
+distgit_hostname = "src{{ env_suffix }}.fedoraproject.org"
+id_provider_hostname = "id{{ env_suffix }}.fedoraproject.org"
+fasjson_base_url = "https://fasjson{{ env_suffix }}.fedoraproject.org"
+
+
+[qos]
+prefetch_size = 0
+prefetch_count = 25
+
+[log_config]
+version = 1
+disable_existing_loggers = true
+
+[log_config.formatters.simple]
+format = "[%(asctime)s] [%(levelname)s %(name)s] %(message)s"
+
+[log_config.handlers.console]
+class = "logging.StreamHandler"
+formatter = "simple"
+stream = "ext://sys.stdout"
+
+[log_config.loggers.fedbadges]
+level = "DEBUG"
+propagate = false
+handlers = ["console"]
+
+[log_config.loggers.fedora_messaging]
+level = "INFO"
+propagate = false
+handlers = ["console"]
+
+# Twisted is the asynchronous framework that manages the TCP/TLS connection, as well
+# as the consumer event loop. When debugging you may want to lower this log level.
+[log_config.loggers.twisted]
+level = "INFO"
+propagate = false
+handlers = ["console"]
+
+[log_config.root]
+level = "ERROR"
+handlers = ["console"]
