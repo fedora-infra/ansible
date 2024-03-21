@@ -253,7 +253,6 @@
     keephost: true
     header_scheme: true
     tags: kerneltest
-    when: env == "staging"
 
   - role: httpd/reverseproxy
     website: qa.fedoraproject.org
