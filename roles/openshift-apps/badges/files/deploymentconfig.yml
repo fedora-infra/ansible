@@ -110,7 +110,7 @@ spec:
           - frontend
         from:
           kind: ImageStreamTag
-          name: badges:latest
+          name: tahrir:latest
 ---
 # Consumer component (Fedora Messaging consume command)
 apiVersion: apps.openshift.io/v1
@@ -197,4 +197,4 @@ spec:
           - consumer
         from:
           kind: ImageStreamTag
-          name: badges:latest
+          name: fedbadges:latest
