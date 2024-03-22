@@ -8,12 +8,12 @@ metadata:
     app.kubernetes.io/name: fedora-osh-hub
     app.kubernetes.io/part-of: openscanhub
   # TODO: This should be a template and use production for production instance.
-  name: staging
+  name: openscanhub{{ env_suffix }}-fedoraproject-org
   namespace: openscanhub
   resourceVersion: "2899601169"
   uid: 1c280b7f-39a4-40fc-a850-396147e1c1af
 spec:
-  host: openscanhub.stg.fedoraproject.org
+  host: openscanhub{{ env_suffix }}.fedoraproject.org
   port:
     targetPort: 8080-tcp
   tls:

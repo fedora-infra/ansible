@@ -52,12 +52,15 @@
     key: service.keytab
     secret_name: openscanhub-keytab
     service: HTTP
-    # https://pagure.io/fedora-infra/ansible/pull-request/1669#comment-195794
-    # We should get separate approval for "opencanhub.fedoraproject.org"
-    # Fix below line if correct route is not generated.
-    # https://pagure.io/fedora-infra/ansible/pull-request/1669#comment-195809
     host: "openscanhub.stg.fedoraproject.org"
     when: env == "staging"
+  - role: openshift/keytab
+    app: openscanhub
+    key: service.keytab
+    secret_name: openscanhub-keytab
+    service: HTTP
+    host: "openscanhub.fedoraproject.org"
+    when: env == "production"
   - role: openshift/object
     app: openscanhub
     file: openscanhub-deployment-fedora-osh-hub.yml
@@ -65,7 +68,7 @@
     when: env == "staging"
   - role: openshift/object
     app: openscanhub
-    file: openscanhub-route-fedora-osh-hub.yml
+    template: openscanhub-route-fedora-osh-hub.yml
     objectname: openscanhub-route-fedora-osh-hub
     when: env == "staging"
   - role: openshift/object
