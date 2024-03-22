@@ -107,11 +107,22 @@
       annotations:
         haproxy.router.openshift.io/timeout: 5m
 
-    # Deployment config
-    - role: openshift/object
+    # Fedora Messaging
+    - role: openshift/secret-file
       app: badges
-      file: deploymentconfig.yml
-      objectname: deploymentconfig.yml
+      secret_name: fedora-messaging-ca
+      key: cacert.pem
+      privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    - role: openshift/secret-file
+      app: badges
+      secret_name: fedora-messaging-crt
+      key: fedbadges-cert.pem
+      privatefile: "rabbitmq/{{env}}/pki/issued/fedbadges{{env_suffix}}.crt"
+    - role: openshift/secret-file
+      app: badges
+      secret_name: fedora-messaging-key
+      key: fedbadges-key.pem
+      privatefile: "rabbitmq/{{env}}/pki/private/fedbadges{{env_suffix}}.key"
 
     # FASJSON access
     - role: openshift/ipa-client
@@ -121,6 +132,12 @@
       key: fedbadges.keytab
       secret_name: fedbadges-keytab
       service: fedbadges
+
+    # Deployment config
+    - role: openshift/object
+      app: badges
+      file: deploymentconfig.yml
+      objectname: deploymentconfig.yml
 
     - role: openshift/start-build
       app: badges
