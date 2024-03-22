@@ -1,0 +1,14 @@
+---
+badges_db_host: "db01{{ env_suffix }}"
+badges_db_name: "tahrir"
+badges_award_cronjobs:
+  - name: group-membership
+    schedule: "25 13 * * *"
+  - name: libravatar
+    schedule: "40 14 */2 * *"
+  - name: mirror
+    schedule: "20 */2 * * *"
+  - name: lifecycle
+    schedule: "40 2 * * 3"
+  - name: badges-dev
+    schedule: "40 2 * * 4"

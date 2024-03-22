@@ -12,7 +12,7 @@
     - /srv/web/infra/ansible/vars/global.yml
     - /srv/private/ansible/vars.yml
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
-    # - /srv/web/infra/ansible/vars/apps/badges.yml
+    - /srv/web/infra/ansible/vars/apps/badges.yml
 
   tasks:
     - name: DB user
@@ -36,7 +36,7 @@
     - /srv/web/infra/ansible/vars/global.yml
     - /srv/private/ansible/vars.yml
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
-    # - /srv/web/infra/ansible/vars/apps/badges.yml
+    - /srv/web/infra/ansible/vars/apps/badges.yml
 
   roles:
     - role: rabbit/user
@@ -138,6 +138,12 @@
       app: badges
       file: deploymentconfig.yml
       objectname: deploymentconfig.yml
+
+    # Cron jobs
+    - role: openshift/object
+      app: badges
+      template: cron-award.yml
+      objectname: cron-award.yml
 
     - role: openshift/start-build
       app: badges

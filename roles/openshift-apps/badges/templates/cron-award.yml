@@ -1,0 +1,45 @@
+#
+### Badges-awarding cron jobs
+#
+{% for cronjob in badges_award_cronjobs %}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: award-{{ cronjob.name }}
+spec:
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  concurrencyPolicy: Forbid
+  schedule: "{{ cronjob.schedule }}"
+  startingDeadlineSeconds: 500
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: badges
+            image: image-registry.openshift-image-registry.svc:5000/badges/fedbadges:latest
+            command: ["/opt/app-root/bin/award-{{ cronjob.name }}"]
+            volumeMounts:
+              - name: etc-badges
+                mountPath: "/etc/badges"
+                readOnly: true
+              - name: ipa-config-volume
+                mountPath: /etc/ipa
+                readOnly: true
+              - name: keytab-volume
+                mountPath: /etc/keytabs
+                readOnly: true
+          volumes:
+            - name: etc-badges
+              configMap:
+                name: badges
+            - name: ipa-config-volume
+              configMap:
+                name: ipa-client-config
+            - name: keytab-volume
+              secret:
+                secretName: keytab
+{% endfor %}
