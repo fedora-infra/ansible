@@ -80,6 +80,10 @@
   # Configurations for redis.
   - role: openshift/object
     app: openscanhub
+    template: pvc-var-lib-redis-data.yml
+    objectname: pvc-var-lib-redis-data
+  - role: openshift/object
+    app: openscanhub
     file: deployment-redis-6-c9s.yml
     objectname: deployment-redis-6-c9s
     when: env == "staging"

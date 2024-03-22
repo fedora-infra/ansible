@@ -53,7 +53,7 @@ spec:
         terminationMessagePolicy: File
         volumeMounts:
         - mountPath: /var/lib/redis/data
-          name: redis-6-c9s-1
+          name: pvc-var-lib-redis-data
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
