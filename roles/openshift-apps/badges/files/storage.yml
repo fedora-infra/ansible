@@ -1,0 +1,13 @@
+---
+# The fedora-badges repo
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: rules
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: ocs-storagecluster-cephfs

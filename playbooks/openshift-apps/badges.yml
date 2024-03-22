@@ -21,7 +21,7 @@
         password: "{{ (env == 'production')|ternary(tahrirDBPassword, tahrirstgDBPassword) }}"
     - name: Database creation
       postgresql_db:
-        name: "tahrir"
+        name: "{{ badges_db_name }}"
         owner: "{{ tahrirDBUser }}"
         encoding: UTF-8
 
@@ -97,6 +97,11 @@
       file: service.yml
       objectname: service.yml
 
+    - role: openshift/object
+      app: badges
+      file: storage.yml
+      objectname: storage.yml
+
     # Routes
     - role: openshift/route
       app: badges
@@ -144,6 +149,10 @@
       app: badges
       template: cron-award.yml
       objectname: cron-award.yml
+    - role: openshift/object
+      app: badges
+      template: cron-update-rules.yml
+      objectname: cron-update-rules.yml
 
     - role: openshift/start-build
       app: badges

@@ -1,17 +1,16 @@
 #
-### Badges-awarding cron jobs
+### Update the rules repo
 #
-{% for cronjob in badges_award_cronjobs %}
 ---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: award-{{ cronjob.name }}
+  name: update-rules
 spec:
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
   concurrencyPolicy: Forbid
-  schedule: "{{ cronjob.schedule }}"
+  schedule: "*/15 * * * *"
   startingDeadlineSeconds: 500
   jobTemplate:
     spec:
@@ -21,7 +20,7 @@ spec:
           containers:
           - name: badges
             image: image-registry.openshift-image-registry.svc:5000/badges/fedbadges:latest
-            command: ["/opt/app-root/bin/award-{{ cronjob.name }}"]
+            command: ["bash", "/etc/badges/checkout-rules-repo.sh"]
             volumeMounts:
               - name: etc-badges
                 mountPath: "/etc/badges"
@@ -48,4 +47,3 @@ spec:
             - name: keytab-volume
               secret:
                 secretName: keytab
-{% endfor %}

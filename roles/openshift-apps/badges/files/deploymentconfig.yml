@@ -36,6 +36,9 @@ spec:
             - name: etc-badges
               mountPath: "/etc/badges"
               readOnly: true
+            - name: rules
+              mountPath: "/var/lib/badges"
+              readOnly: true
             - name: ipa-config-volume
               mountPath: /etc/ipa
               readOnly: true
@@ -86,6 +89,9 @@ spec:
         - name: etc-badges
           configMap:
             name: badges
+        - name: rules
+          persistentVolumeClaim:
+            claimName: rules
         - name: ipa-config-volume
           configMap:
             name: ipa-client-config
@@ -149,6 +155,9 @@ spec:
             - name: etc-badges
               mountPath: "/etc/badges"
               readOnly: true
+            - name: rules
+              mountPath: "/var/lib/badges"
+              readOnly: true
             - name: ipa-config-volume
               mountPath: /etc/ipa
               readOnly: true
@@ -173,6 +182,9 @@ spec:
         - name: etc-badges
           configMap:
             name: badges
+        - name: rules
+          persistentVolumeClaim:
+            claimName: rules
         - name: ipa-config-volume
           configMap:
             name: ipa-client-config
