@@ -1,0 +1,21 @@
+#!/bin/sh
+
+#Sync using reposync instead of rsync until available
+SERVER=composes.stream.centos.org
+TOPDIR=stream-10/production/latest-CentOS-Stream/compose
+ 
+## mirror CentOS-10
+ 
+DESTDIR=/mnt/fedora/app/fi-repo/centos/centos-10
+ 
+mkdir -p ${DESTDIR}
+ 
+for basearch in aarch64 ppc64le s390x x86_64
+do
+    for repo in BaseOS AppStream CRB
+    do
+            mkdir -p ${DESTDIR}/${repo}
+        cd ${DESTDIR}
+        reposync --download-metadata --disablerepo=* --repofrompath=$repo,https://$SERVER/$TOPDIR/$repo/$basearch/os --enablerepo=$repo
+    done
+done
