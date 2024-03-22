@@ -47,10 +47,10 @@ consume_delay = 1
 
 # This is a sqlalchemy URI that points to the Badges DB.  In
 # production, this will be a postgres URI.
-database_uri = "postgresql://{{ tahrirDBUser }}:{{ (env == 'production')|ternary(tahrirDBPassword, tahrirstgDBPassword) }}@db01{{ env_suffix }}.iad2.fedoraprject.org/tahrir"
+database_uri = "postgresql://{{ tahrirDBUser }}:{{ (env == 'production')|ternary(tahrirDBPassword, tahrirstgDBPassword) }}@db01{{ env_suffix }}/tahrir"
 
 # Datanommer database URI
-datanommer_db_uri = "postgresql://{{ datanommerDBUser }}:{{ (env == 'production')|ternary(datanommerDBPassword, datanommer_stg_db_password) }}@db-datanommer{{ (env == 'production')|ternary('02', '01') }}{{ env_suffix }}.iad2.fedoraproject.org/datanommer2"
+datanommer_db_uri = "postgresql://{{ datanommerDBUser }}:{{ (env == 'production')|ternary(datanommerDBPassword, datanommer_stg_db_password) }}@db-datanommer{{ (env == 'production')|ternary('02', '01') }}{{ env_suffix }}/datanommer2"
 datagrepper_url = "https://apps{{ env_suffix }}.fedoraproject.org/datagrepper"
 distgit_hostname = "src{{ env_suffix }}.fedoraproject.org"
 id_provider_hostname = "id{{ env_suffix }}.fedoraproject.org"
