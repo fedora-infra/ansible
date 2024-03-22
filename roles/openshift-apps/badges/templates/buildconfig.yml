@@ -29,12 +29,14 @@ spec:
   triggers:
   - type: ConfigChange
   - type: ImageChange
-  # - type: GitHub
-  #   github:
-  #     # Not sure why secretReference does not work, but it doesn't.
-  #     # secretReference:
-  #     #   name: github-webook
-  #     secret: "{{ badges_stg_github_secret }}"
+  {#
+  - type: GitHub
+    github:
+      # Not sure why secretReference does not work, but it doesn't.
+      # secretReference:
+      #   name: github-webook
+      secret: "{{ badges_stg_github_secret }}"
+  #}
 ---
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
@@ -65,9 +67,11 @@ spec:
   triggers:
   - type: ConfigChange
   - type: ImageChange
-  # - type: GitHub
-  #   github:
-  #     # Not sure why secretReference does not work, but it doesn't.
-  #     # secretReference:
-  #     #   name: github-webook
-  #     secret: "{{ badges_stg_github_secret }}"
+  {#
+  - type: GitHub
+    github:
+      # Not sure why secretReference does not work, but it doesn't.
+      # secretReference:
+      #   name: github-webook
+      secret: "{{ badges_stg_github_secret }}"
+  #}
