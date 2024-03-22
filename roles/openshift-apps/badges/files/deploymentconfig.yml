@@ -168,7 +168,7 @@ spec:
             - name: KRB5_CONFIG
               value: /etc/ipa/krb5.conf
             - name: KRB5_CLIENT_KTNAME
-              value: /etc/keytabs/service.keytab
+              value: /etc/keytabs/fedbadges.keytab
       volumes:
         - name: etc-badges
           configMap:
@@ -178,7 +178,7 @@ spec:
             name: ipa-client-config
         - name: keytab-volume
           secret:
-            secretName: keytab
+            secretName: fedbadges-keytab
         - name: fedora-messaging-ca-volume
           secret:
             secretName: fedora-messaging-ca

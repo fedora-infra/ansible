@@ -113,6 +113,15 @@
       file: deploymentconfig.yml
       objectname: deploymentconfig.yml
 
+    # FASJSON access
+    - role: openshift/ipa-client
+      app: badges
+    - role: openshift/keytab
+      app: badges
+      key: fedbadges.keytab
+      secret_name: fedbadges-keytab
+      service: fedbadges
+
     - role: openshift/start-build
       app: badges
       buildname: "{{ item }}"
