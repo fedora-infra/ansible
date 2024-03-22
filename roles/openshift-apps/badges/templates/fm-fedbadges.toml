@@ -38,7 +38,7 @@ routing_keys = ["#"]
 
 # This tells the consumer where to look for its BadgeRule definitions.  It
 # may be a relative or an absolute path on the file system.
-badges_directory = "/var/lib/badges/badges"
+badges_directory = "/var/lib/badges/rules"
 
 # Number of seconds to delay before consuming a message for our event loop.
 # This is here to help us mitigate distributed race conditions between
@@ -55,6 +55,15 @@ datagrepper_url = "https://apps{{ env_suffix }}.fedoraproject.org/datagrepper"
 distgit_hostname = "src{{ env_suffix }}.fedoraproject.org"
 id_provider_hostname = "id{{ env_suffix }}.fedoraproject.org"
 fasjson_base_url = "https://fasjson{{ env_suffix }}.fedoraproject.org"
+
+# This is a set of data that tells our consumer what Open Badges Issuer
+# should be kept as the issuer of all the badges we create.
+[consumer_config.badge_issuer]
+issuer_id = "Fedora Project"
+issuer_origin = "https://apps.fedoraproject.org"
+issuer_name = "Fedora Project"
+issuer_url = "http://fedoraproject.org"
+issuer_email = "badges@fedoraproject.org"
 
 
 [qos]
