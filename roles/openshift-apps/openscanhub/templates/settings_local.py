@@ -154,5 +154,4 @@ SINGLE_USE_WORKER_OSH_HUB_URL = "https://openscanhub.fedoraproject.org/xmlrpc"
 # May be, related public key should be copied when a new worker is set up.
 SINGLE_USE_WORKER_SSH_PRIVATE_KEY = "/etc/osh/worker-manager/id_rsa"
 
-# TODO: Change this for staging and production deployments.
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['openscanhub{{ env_suffix }}.fedoraproject.org']
