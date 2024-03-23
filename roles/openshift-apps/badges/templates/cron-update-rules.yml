@@ -47,3 +47,5 @@ spec:
             - name: keytab-volume
               secret:
                 secretName: fedbadges-keytab
+          securityContext:
+            supplementalGroups: [1001280000]
