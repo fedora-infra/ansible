@@ -27,7 +27,7 @@ spec:
                 readOnly: true
               - name: rules
                 mountPath: "/var/lib/badges"
-                readOnly: true
+                readOnly: false
               - name: ipa-config-volume
                 mountPath: /etc/ipa
                 readOnly: true
@@ -46,4 +46,4 @@ spec:
                 name: ipa-client-config
             - name: keytab-volume
               secret:
-                secretName: keytab
+                secretName: fedbadges-keytab
