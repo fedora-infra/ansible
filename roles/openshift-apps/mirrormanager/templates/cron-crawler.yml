@@ -36,7 +36,6 @@ spec:
               - "{{ cronjob.category }}"
               - "--{{ cronjob.include_disabled | ternary('include', 'exclude') }}-disabled"
               - "--no-fail"
-              - "--debug"
               - "crawl"
             env:
               # Defaults to 80 columns, not very readable
