@@ -44,7 +44,7 @@ workers: {{ mailman_rest_api_workers }}
 {% for item in mailman_log_items %}
 
 [loggin.{{ item }}]
-level: {{ mailman_log_level }}
+level: info
 path: {{ mailman_log_directory }}/{{ item }}.log
 
 {% endfor %}
