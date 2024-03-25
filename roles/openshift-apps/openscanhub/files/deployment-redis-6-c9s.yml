@@ -60,5 +60,6 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
       volumes:
-      - emptyDir: {}
-        name: redis-6-c9s-1
+      - name: pvc-var-lib-redis-data
+        persistentVolumeClaim:
+          claimName: pvc-var-lib-redis-data
