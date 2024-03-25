@@ -44,22 +44,28 @@ mirrormanager_cron_crawler:
   # Archived distros
   # This can be a veeery long crawl
   - category: "Fedora Archive"
-    schedule: "0 2 * * 1-6"
+    schedule: "0 2 * * 2,4"
     threads: 20
-    timeout: 1380  # 23h
+    timeout: 2700  # 45h
     include_disabled: false
   - category: "Fedora Archive"
-    schedule: "0 2 * * 0"
+    schedule: "0 2 * * 6"
     threads: 20
-    timeout: 1380  # 23h
+    timeout: 2700  # 45h
     #host_timeout: 600
     include_disabled: true
   # Other content
+  # This can be a veeery long crawl
   - category: "Fedora Other"
-    schedule: "0 14 * * *"
+    schedule: "0 14 * * 2,4"
     threads: 20
-    timeout: 1380  # 23h
+    timeout: 2700  # 45h
     include_disabled: false
+  - category: "Fedora Other"
+    schedule: "0 14 * * 6"
+    threads: 20
+    timeout: 2700  # 45h
+    include_disabled: true
   # CentOS: regular weekdays run on active mirrors.
   - category: "CentOS"
     schedule: "0 5,11 * * 1-6"
