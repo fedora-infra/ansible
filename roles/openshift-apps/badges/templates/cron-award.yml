@@ -35,6 +35,9 @@ spec:
               - name: keytab-volume
                 mountPath: /etc/keytabs
                 readOnly: true
+            env:
+              - name: FEDORA_MESSAGING_CONF
+                value: "/etc/badges/fm-fedbadges.toml"
           volumes:
             - name: etc-badges
               configMap:
