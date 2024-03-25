@@ -225,9 +225,6 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 ACCOUNT_UNIQUE_EMAIL  = True
-# Disable local signup
-ACCOUNT_ADAPTER = "django_fedora_nosignup.NoLocalSignUpAdapter"
-SOCIALACCOUNT_ADAPTER = "django_fedora_nosignup.SignUpEnabledSocialAdapter"
 
 SOCIALACCOUNT_PROVIDERS = {
     'openid': {
@@ -335,10 +332,6 @@ LOGGING = {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse'
         },
-        'exclude_useless_errors': {
-            '()': 'django.utils.log.CallbackFilter',
-            'callback': django_fedora.exclude_useless_errors,
-        }
     },
     'handlers': {
         'mail_admins': {
