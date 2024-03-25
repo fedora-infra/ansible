@@ -193,7 +193,7 @@
     - mailman
 
 - name: Set list:user:notice:hold template for users list
-  anisble.builtin.copy:
+  ansible.builtin.copy:
     src: mailman-template-users-list-user-notice-hold.txt
     dest: /var/lib/mailman3/templates/lists/users.lists.fedoraproject.org/en/list:user:notice:hold.txt
     owner: mailman
