@@ -150,6 +150,9 @@ MAX_SINGLE_USE_WORKERS = 32
 SINGLE_USE_WORKER_OSH_HUB_URL = "https://openscanhub.fedoraproject.org/xmlrpc"
 {% endif %}
 
+# This user is used to ssh to newly created worker.
+SINGLE_USE_WORKER_SSH_USER = "ec2-user"
+
 # TODO: What should we use here if we want to deploy across multiple clouds?
 # May be, related public key should be copied when a new worker is set up.
 SINGLE_USE_WORKER_SSH_PRIVATE_KEY = "/etc/osh/worker-manager/id_rsa"
