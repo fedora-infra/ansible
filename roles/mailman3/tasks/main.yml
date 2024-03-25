@@ -127,7 +127,7 @@
 #
 - name: Ensuring log directory exists
   ansible.builtin.file:
-    path: "{{ mailman3_log_directory }}"
+    path: "{{ mailman_log_directory }}"
     state: directory
     owner: mailman
     group: mailman
