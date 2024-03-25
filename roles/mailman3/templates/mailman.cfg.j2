@@ -41,7 +41,7 @@ admin_user: {{ mailman_rest_api_user }}
 admin_pass: {{ mailman_rest_api_pass }}
 workers: {{ mailman_rest_api_workers }}
 
-{% for item in mailman3_log_items %}
+{% for item in mailman_log_items %}
 
 [loggin.{{ item }}]
 level: {{ mailman_log_level }}
