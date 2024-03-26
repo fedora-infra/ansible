@@ -336,14 +336,14 @@ LOGGING = {
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
-            'filters': ['require_debug_false', 'exclude_useless_errors'],
+            'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
         },
         'file':{
             'level': 'DEBUG',
             #'class': 'logging.handlers.RotatingFileHandler',
             'class': 'logging.handlers.WatchedFileHandler',
-            'filename': '/var/log/hyperkitty/hyperkitty.log',
+            'filename': '{{ mailman_log_directory }}/hyperkitty.log',
             'formatter': 'verbose',
         },
         'null': {

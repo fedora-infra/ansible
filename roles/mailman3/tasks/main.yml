@@ -207,7 +207,7 @@
   ansible.builtin.template:
     src: settings.py.j2
     dest: "{{ mailman_webui_confdir }}/settings.py"
-    owner: root
+    owner: mailman
     group: apache
     mode: 0640
   tags:
