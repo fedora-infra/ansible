@@ -117,6 +117,17 @@
   - packages
   when: "ansible_architecture is defined and ansible_architecture == 'aarch64'"
 
+# Encoding with ffmpeg gives us better videos, but it seems like it
+# doesn't work well on aarch64, it overwhelms the CPU and makes tests
+# often fail
+- name: Block ffmpeg-free in dnf config (aarch64 only)
+  ini_file:
+    path: /etc/dnf/dnf.conf
+    section: main
+    option: excludepkgs
+    value: ffmpeg-free
+  when: "ansible_architecture is defined and ansible_architecture == 'aarch64'"
+
 - name: Install rng-tools (if specified by openqa_rngd var)
   package: name=rng-tools state=present
   tags:
