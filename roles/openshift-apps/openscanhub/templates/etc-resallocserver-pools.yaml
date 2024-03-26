@@ -7,13 +7,13 @@ openscanhub_aws_spot_x86_64:
 
 # This should be the same value for `MAX_SINGLE_USE_WORKERS` in `settings_local.py`.
 {% if env == 'staging' %}
-    max: 4
+    max: 128
 {% else %}
     max: 32
 {% endif %}
 
 {% if env == 'staging' %}
-    max_starting: 4
+    max_starting: 128
 {% else %}
     max_starting: 32
 {% endif %}

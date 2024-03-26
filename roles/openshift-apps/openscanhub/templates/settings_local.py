@@ -136,7 +136,7 @@ ENABLE_SINGLE_USE_WORKERS = True
 # This number should be same as the `max` field in the `/etc/resallocserver/pools.yaml`
 # on the resalloc server. Otherwise, we may end up with too less or too many tickets
 # being opened.
-MAX_SINGLE_USE_WORKERS = 4
+MAX_SINGLE_USE_WORKERS = 128
 
 # TODO: This url is used to dynamically generate worker configuration files.
 SINGLE_USE_WORKER_OSH_HUB_URL = "https://openscanhub.stg.fedoraproject.org/xmlrpc"
