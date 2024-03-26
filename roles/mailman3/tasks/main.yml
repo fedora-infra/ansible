@@ -393,6 +393,9 @@
     cmd: mailman-web collectstatic --no-input
     chdir: /etc/mailman3
   become_user: mailman
+  tags:
+    - mailman
+    - hyperkitty
   when:
     - static_root_dir is changed
 
