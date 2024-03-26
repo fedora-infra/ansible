@@ -15,4 +15,4 @@
   command: /usr/bin/systemctl daemon-reload
 
 - name: restart mailmanweb
-  service: name=maimanweb state restarted
+  service: name=mailmanweb state=restarted
