@@ -2,91 +2,6 @@
 # Configuration for Mailman 3
 # PostgreSQL initialization must have been done already
 
-#
-# SELinux
-#
-- name: Set the SELinux policy for the fulltext index
-  community.general.sefcontext:
-    target: "{{ mailman_webui_basedir }}/fulltext_index(/.*)?"
-    setype: httpd_sys_rw_content_t
-    state: present
-  tags:
-    - mailman
-    - selinux
-
-- name: Set the SELinux policy for the static files directory
-  community.general.sefcontext:
-    target: "{{ mailman_webui_basedir }}/static(/.*)?"
-    setype: httpd_sys_content_t
-    state: present
-  tags:
-    - mailman
-    - selinux
-
-- name: Set the SELinux policy for the templates override directory
-  community.general.sefcontext:
-    target: "{{ mailman_webui_basedir }}/templates(/.*)?"
-    setype: httpd_sys_content_t
-    state: present
-  tags:
-    - mailman
-    - selinux
-
-- name: set the SELinux policy for the log directory
-  community.general.sefcontext:
-    target: "{{ mailman_log_directory }}(/.*)?"
-    setype: httpd_log_t
-    state: present
-  tags:
-    - mailman
-    - selinux
-
-- name: Set the SELinux policy for the generated postfix databases
-  community.general.sefcontext:
-    target: "{{ mailman_webui_basedir }}/var/data/postfix_.*"
-    setype: etc_aliases_t
-    state: present
-  tags:
-    - mailman
-    - selinux
-
-- name: Set the SELinux policy for the old static archives
-  community.general.sefcontext:
-    target: "{{ mailman_webui_basedir }}/old-archives/pipermail(/.*)?"
-    setype: httpd_sys_content_t
-    state: present
-  tags:
-    - mailman
-    - selinux
-
-- name: Allow Apache to remotely connect to PostgreSQL
-  ansible.posix.seboolean:
-    name: httpd_can_network_connect_db
-    state: yes
-    persistent: yes
-  tags:
-    - mailman
-    - selinux
-
-- name: Allow Apache to remotely connect to Mailman
-  ansible.posix.seboolean:
-    name: httpd_can_network_connect
-    state: yes
-    persistent: yes
-  tags:
-    - mailman
-    - selinux
-
-- name: Allow Apache to remotely connect to Memcached
-  ansible.posix.seboolean:
-    name: httpd_can_network_memcache
-    state: yes
-    persistent: yes
-  tags:
-    - mailman
-    - selinux
-
-
 - name: Install needed packages
   ansible.builtin.package:
     name: "{{item}}"
@@ -98,6 +13,7 @@
     - mailman3
     - memcached
     - postorius
+    - python3-gunicorn
     - python3-mailman-hyperkitty
     - python3-mailman-web
     - python3-mod_wsgi
@@ -207,19 +123,6 @@
   ansible.builtin.template:
     src: settings.py.j2
     dest: "{{ mailman_webui_confdir }}/settings.py"
-    owner: mailman
-    group: apache
-    mode: 0640
-  tags:
-    - config
-    - mailman
-  notify:
-    - reload apache
-
-- name: Install the hyperkitty/postorius httpd conf file
-  ansible.builtin.template:
-    src: apache.conf.j2
-    dest: /etc/httpd/conf.d/mailman-webui.conf
   tags:
     - config
     - mailman
@@ -230,8 +133,8 @@
   ansible.builtin.file:
     path: "{{ mailman_webui_basedir }}/fulltext_index"
     state: directory
-    owner: apache
-    group: apache
+    owner: mailman
+    group: mailman
     mode: 0755
   tags: mailman
 
@@ -280,7 +183,7 @@
     src: top.html
     dest: "{{ mailman_webui_basedir }}/templates/hyperkitty/top.html"
   notify:
-    - reload apache
+    - restart mailmanweb
   tags:
     - mailman
     - banner
@@ -399,6 +302,26 @@
   when:
     - static_root_dir is changed
 
+- name: Systemd unit to start postorius/hyperkitty through gunicorn
+  ansible.builtin.template:
+    src: mailmanweb.service.j2
+    dest: /etc/systemd/system/mailmanweb.service
+  register: mailmanweb_systemd
+  notify: restart mailmanweb
+  tags:
+    - mailman
+    - systemd
+
+- name: Enable the mailmanweb server
+  ansible.builtin.systemd:
+    name: mailmanweb
+    daemon-reload: "{% if mailmanweb_systemd is changed %}yes{% else %}no{% endif %}"
+    state: started
+    enabled: yes
+  tags:
+    - mailman
+    - systemd
+
 #
 # Scripts
 #
@@ -447,6 +370,29 @@
     - mailman
     - memcached
 
+# Httpd
+- name: Import needed httpd configurations
+  ansible.builtin.template:
+    src: "mailmanweb.conf.j2"
+    dest: "/etc/httpd/conf.d/mailmanweb.conf"
+  notify:
+    - reload apache
+  tags:
+    - config
+    - httpd
+    - mailman
+
+- name: Allow Apache to remotely connect to gunicorn
+  ansible.posix.seboolean:
+    name: httpd_can_network_connect
+    state: yes
+    persistent: yes
+  notify:
+    - restart apache
+  tags:
+    - mailman
+    - selinux
+
 # Start services
 - name: Start services
   ansible.builtin.systemd:
@@ -456,6 +402,7 @@
   with_items:
     - httpd
     - mailman3
+    - mailmanweb
     - postfix
     - webui-qcluster
     - webui-warm-up-cache

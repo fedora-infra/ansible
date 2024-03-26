@@ -26,6 +26,7 @@ mailman_hyperkitty_admin_db_pass: changeme
 mailman_hyperkitty_db_pass: changeme
 mailman_hyperkitty_cookie_key: changeme
 mailman_hyperkitty_archiver_key: changeme
+mailman_gunicorn_workers: 4
 mailman_domains:
 - lists.example.com
 - lists.example.org
@@ -33,4 +34,4 @@ mailman_social_login: []
 
 # Apache configuration
 # Use mailman-web wsgi for mailman3
-wsgi_dir: /usr/lib/python3.9/site-packages/mailman_web
+mailman_httpd_hostname: lists.fedoraproject.org

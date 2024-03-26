@@ -5,8 +5,14 @@
 - name: reload apache
   service: name=httpd state=reloaded
 
+- name: restart apache
+  service: name=httpd state=restarted
+
 - name: restart memcached
   service: name=memcached state=restarted
 
 - name: systemctl daemon-reload
   command: /usr/bin/systemctl daemon-reload
+
+- name: restart mailmanweb
+  service: name=maimanweb state restarted
