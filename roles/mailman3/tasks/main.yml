@@ -373,8 +373,11 @@
 # Httpd
 - name: Import needed httpd configurations
   ansible.builtin.template:
-    src: "mailmanweb.conf.j2"
-    dest: "/etc/httpd/conf.d/mailmanweb.conf"
+    src: "{{item}}.j2"
+    dest: "/etc/httpd/conf.d/{{item}}"
+  with_items:
+    - mailmanweb.conf
+    - ssl-mailmanweb.conf
   notify:
     - reload apache
   tags:
