@@ -387,7 +387,7 @@
 
 - name: Allow Apache to remotely connect to gunicorn
   ansible.posix.seboolean:
-    name: httpd_can_network_connect
+    name: httpd_can_network_relay
     state: yes
     persistent: yes
   notify:
