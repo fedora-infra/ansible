@@ -32,11 +32,30 @@
   command: "ppc64_cpu --smt=off"
   when: "smtcheck.stdout is defined and smtcheck.stdout.find('is off') == -1"
 
+- name: Check createhdds directory exists with correct ownership
+  file: path=/root/createhdds state=directory owner=root group=root
+
+# we don't want to run the checkout if createhdds is on a non-standard
+# branch, as that usually means we're messing around on staging and
+# don't want the checkout reset to HEAD.
+- name: Check if tests are checked out and on a non-standard branch
+  command: "git status" # noqa 303
+  args:
+    chdir: /root/createhdds
+  register: createhddsbranch
+  failed_when: "1 != 1"
+  changed_when: "1 != 1"
+  check_mode: no
+
 - name: Check out createhdds
   git:
     repo: https://pagure.io/fedora-qa/createhdds.git
     dest: /root/createhdds
     version: "{{ openqa_createhdds_branch }}"
+  when: >
+    (createhddsbranch.stderr.find('ot a git repository') != -1) or
+    (createhddsbranch.stdout.find('On branch main') != -1 and
+    createhddsbranch.stdout.find('Changes not staged') == -1)
 
 - name: Set up createhdds cron job
   copy: src=createhdds dest=/etc/cron.daily/createhdds owner=root group=root mode=0755
