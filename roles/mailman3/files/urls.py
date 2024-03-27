@@ -12,5 +12,5 @@ urlpatterns = [
     re_path(r'^archives/', include('hyperkitty.urls')),
     re_path(r'', include('django_mailman3.urls')),
     re_path(r'^accounts/', include('allauth.urls')),
-    re_path(r'^django-admin/', include(admin.site.urls)),
+    re_path(r'^django-admin/', admin.site.urls),
 ]
