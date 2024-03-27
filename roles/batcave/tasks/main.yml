@@ -623,3 +623,20 @@
   - postgres
   - config
   - packages
+
+#
+# apply patch for uri module to allow it to work with newer python (fedora) machines
+# from old python (rhel9 control host/batcave01)
+#
+# https://github.com/ansible/ansible/issues/81256
+# https://github.com/ansible/ansible/pull/81257
+#
+# keep this until ansible-core updates to 2.15.x
+#
+- name: apply uri module patch to ansible
+  ansible.posix.patch:
+    src: urls.py.patch
+    basedir: /usr/lib/python3.9/site-packages/ansible/module_utils/
+  tags:
+  - batcave
+  - hotfix
