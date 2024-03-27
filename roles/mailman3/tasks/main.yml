@@ -130,7 +130,7 @@
     - restart mailmanweb
 
 - name: Install the hyperkitty/postorius urls file
-  ansible.builtin.file:
+  ansible.builtin.copy:
     src: urls.py
     dest: "{{ mailman_webui_confdir }}/urls.py"
   tags:
