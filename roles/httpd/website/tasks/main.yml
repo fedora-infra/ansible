@@ -25,6 +25,8 @@
 - name: Letsencrypt certificate stuff
   include_role: name=letsencrypt
   when: certbot == True
+  tags:
+  - letsencrypt
 
 - name: Copy over primary template for {{site_name}}
   template: >
