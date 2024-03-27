@@ -127,7 +127,17 @@
     - config
     - mailman
   notify:
-    - reload apache
+    - restart mailmanweb
+
+- name: Install the hyperkitty/postorius urls file
+  ansible.builtin.file:
+    src: urls.py
+    dest: "{{ mailman_webui_confdir }}/urls.py"
+  tags:
+    - config
+    - mailman
+  notify:
+    - restart mailmanweb
 
 - name: Create the fulltext index dir
   ansible.builtin.file:

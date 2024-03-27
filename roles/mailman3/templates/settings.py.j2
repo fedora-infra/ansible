@@ -43,7 +43,7 @@ MAILMAN_REST_API_PASS = '{{ mailman_rest_api_pass }}'
 MAILMAN_ARCHIVER_KEY = '{{ mailman_hyperkitty_archiver_key }}'
 MAILMAN_ARCHIVER_FROM = ('127.0.0.1', '::1')
 
-ROOT_URLCONF = 'mailman_web.urls'
+ROOT_URLCONF = 'urls'
 
 # Application definition
 
@@ -119,8 +119,6 @@ TEMPLATES = [
         },
     },
 ]
-
-WSGI_APPLICATION = 'wsgi.application'
 
 
 # Database
