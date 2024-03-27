@@ -152,8 +152,8 @@
   ansible.builtin.file:
     path: "{{ mailman_webui_basedir }}/{{ item }}"
     state: directory
-    owner: root
-    group: root
+    owner: mailman
+    group: mailman
     mode: 0755
   with_items:
     - static
@@ -165,8 +165,8 @@
   ansible.builtin.file:
     path: "{{ mailman_webui_basedir }}/static-fedora/hyperkitty/img"
     state: directory
-    owner: root
-    group: root
+    owner: mailman
+    group: mailman
     mode: 0755
   tags:
     - mailman
@@ -176,8 +176,8 @@
   ansible.builtin.file:
     path: "{{ mailman_webui_basedir }}/templates/{{ item }}"
     state: directory
-    owner: root
-    group: root
+    owner: mailman
+    group: mailman
     mode: 0755
   with_items:
     - hyperkitty
@@ -304,6 +304,17 @@
 - name: Populating static_root dir with django files/css
   ansible.builtin.command:
     cmd: mailman-web collectstatic --no-input
+    chdir: /etc/mailman3
+  become_user: mailman
+  tags:
+    - mailman
+    - hyperkitty
+  when:
+    - static_root_dir is changed
+
+- name: Compress static files
+  ansible.builtin.command:
+    cmd: mailman-web compress
     chdir: /etc/mailman3
   become_user: mailman
   tags:
