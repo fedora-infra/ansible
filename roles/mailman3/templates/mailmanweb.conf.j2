@@ -1,12 +1,34 @@
-<VirtualHost *:80>
-   ServerName {{ mailman_httpd_hostname }}
-   DocumentRoot /var/www/html/
-#   CustomLog logs/{{ mailman_httpd_hostname }}.log combined
-#   ErrorLog logs/{{ mailman_httpd_hostname }}_error.log
+Alias /favicon.ico {{ mailman_webui_basedir }}/static/favicon.ico
+Alias /robots.txt  {{ mailman_webui_basedir }}/static/robots.txt
+Alias /static      {{ mailman_webui_basedir }}/static
 
-   RewriteEngine On
-   RewriteCond $1 !^.well-known
-   RewriteCond %{HTTPS} !=on
-   RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L]
+<Directory "{{ mailman_webui_basedir }}/static">
+    Order deny,allow
+    Allow from all
+    Require all granted
+</Directory>
 
-</VirtualHost>
+ProxyPreserveHost On
+ProxyRequests off
+
+# Not redirecting/proxying static content (served locally)
+ProxyPass /static !
+ProxyPass /pipermail !
+
+# Proxying to gunicorn mailmanweb backend
+ProxyPass / http://127.0.0.1:8000/
+ProxyPassReverse / http://127.0.0.1:8000/
+
+# Old static archives
+
+Alias /pipermail/ {{ mailman_webui_basedir }}/old-archives/pipermail/
+<Directory {{ mailman_webui_basedir }}/old-archives/pipermail>
+    Options FollowSymLinks
+    AllowOverride None
+    Require all granted
+    AddDefaultCharset Off
+</Directory>
+
+RedirectMatch ^/pipermail[/]*$ /
+RedirectMatch ^/mailman/listinfo/$ /
+RedirectMatch ^/mailman$ /

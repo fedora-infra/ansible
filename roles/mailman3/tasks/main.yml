@@ -387,7 +387,6 @@
     dest: "/etc/httpd/conf.d/{{item}}"
   with_items:
     - mailmanweb.conf
-    - ssl-mailmanweb.conf
   notify:
     - reload apache
   tags:
