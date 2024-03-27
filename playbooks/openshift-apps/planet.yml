@@ -63,6 +63,15 @@
     annotations:
       haproxy.router.openshift.io/timeout: 5m
 
+  - role: openshift/route
+    app: planet
+    routename: planet
+    host: "planet{{env_suffix}}.fedoraproject.org"
+    serviceport: web
+    servicename: planet
+    annotations:
+      haproxy.router.openshift.io/timeout: 5m
+
   - role: openshift/object
     app: planet
     template: deployment.yml
