@@ -1,0 +1,8 @@
+#!/bin/bash
+mailto='admin@fedoraproject.org'
+source /root/sshagent >>/dev/null
+export ANSIBLE_HOST_KEY_CHECKING=False
+export HOME=/root/
+#export ANSIBLE_SSH_PIPELINING=False
+export ANSIBLE_HASH_BEHAVIOUR=merge
+timeout 24h ansible-playbook /srv/web/infra/ansible/playbooks/groups/proxies.yml -t letsencrypt -f 20 |& grep fatal
