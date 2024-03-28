@@ -20,6 +20,10 @@ ProxyPass /pipermail !
 ProxyPass / http://127.0.0.1:8000/
 ProxyPassReverse / http://127.0.0.1:8000/
 
+# Redirecting to hyperkitty if nothing is specified
+RewriteEngine on
+RewriteRule  ^/$    /archives [R,L]
+
 # Old static archives
 
 Alias /pipermail/ {{ mailman_webui_basedir }}/old-archives/pipermail/
