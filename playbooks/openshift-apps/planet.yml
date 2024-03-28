@@ -49,6 +49,11 @@
     file: service.yml
     objectname: service.yml
 
+  - role: openshift/object
+    app: planet
+    file: pvc.yml
+    objectname: pvc.yml
+
   - role: openshift/route
     app: planet
     routename: planet
