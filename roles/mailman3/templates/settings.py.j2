@@ -349,21 +349,11 @@ LOGGING = {
         },
     },
     'loggers': {
-        'django.request': {
+        'django': {
             'handlers': [
                 'file',
-                # Don't send an email on server errors, there's just too many
-                #{% if env == 'production' %}
-                #'mail_admins',
-                #{% endif %}
-                #
-
             ],
-            'level': 'DEBUG',
-        },
-        'django.security.DisallowedHost': {
-            'handlers': ['null'],
-            'propagate': False,
+            'level': 'INFO',
         },
         'requests.packages.urllib3': {
             'level': 'WARNING',
