@@ -49,11 +49,12 @@ sitelib:
 
 PYCODE = """
 from json import dumps
-from distutils.sysconfig import get_python_lib
+from sysconfig import get_path, get_scheme_names
 from sys import version_info
+scheme = "rpm_prefix" if "rpm_prefix" in get_scheme_names() else "posix_prefix"
 print(dumps({
-    "sitelib": get_python_lib(),
-    "sitearch": get_python_lib(True),
+    "sitelib": get_path("purelib", scheme),
+    "sitearch": get_path("platlib", scheme),
     "version": f"{version_info.major}.{version_info.minor}",
 }))
 """
