@@ -50,13 +50,13 @@
       username: "fedbadges{{ env_suffix }}"
       queue_name: "fedbadges{{ env_suffix }}"
       routing_keys:
-      # The FMN queue is subscribed to everything
+      # The badges queue is subscribed to everything
         - "#"
       thresholds:
         warning: 20000
         critical: 25000
-      # Fedbadges does not send messages
-      sent_topics: "^$"
+      # It sends a message when a badge is awarded
+      sent_topics: ^org\.fedoraproject\.{{ env_short }}\.badges\..*
       tags:
         - config
         - fedora-messaging
