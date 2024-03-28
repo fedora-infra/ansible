@@ -34,8 +34,6 @@ max_mem_size: "{{ mem_size }}"
 mem_size: 10240
 nfs_mount_opts: "rw,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3"
 num_cpus: 4
-# These variables are for koji-containerbuild/osbs
-osbs_url: "osbs.stg.fedoraproject.org"
 source_registry: "registry.stg.fedoraproject.org"
 virt_install_command: "{{ virt_install_command_ppc64le_one_nic_unsafe }}"
 volgroup: /dev/vg_guests

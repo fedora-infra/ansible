@@ -1,9 +1,5 @@
 ---
 # Define resources for this group of hosts here.
-# Add custom iptable rule to allow stage koji to talk to
-# osbs-dev.fedorainfracloud.org (will move to stage osbs later, this is for the
-# sake of testing).
-custom_rules: ['-A OUTPUT -p tcp -m tcp -d 209.132.184.60 --dport 8443 -j ACCEPT']
 docker_registry: "candidate-registry.stg.fedoraproject.org"
 # These are consumed by a task in roles/fedmsg/base/main.yml
 fedmsg_certs:
@@ -27,11 +23,9 @@ fedmsg_certs:
 ipa_client_shell_groups:
   - fi-apprentice
   - sysadmin-noc
-  - sysadmin-osbs
   - sysadmin-releng
   - sysadmin-veteran
 ipa_client_sudo_groups:
-  - sysadmin-osbs
   - sysadmin-releng
 ipa_host_group: kojihub
 ipa_host_group_desc: Koji Hub hosts
@@ -45,7 +39,6 @@ mem_size: 8192
 # NOTE -- staging mounts read-only
 nfs_mount_opts: "ro,hard,bg,intr,noatime,nodev,nosuid,nfsvers=3"
 num_cpus: 8
-osbs_url: "osbs.stg.fedoraproject.org"
 source_registry: "registry.stg.fedoraproject.org"
 # for systems that do not match the above - specify the same parameter in
 # the host_vars/$hostname file

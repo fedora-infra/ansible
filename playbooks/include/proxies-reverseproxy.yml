@@ -614,11 +614,6 @@
     keephost: true
 
   - role: httpd/reverseproxy
-    website: osbs.fedoraproject.org
-    destname: osbs
-    proxyurl: http://localhost:10047
-
-  - role: httpd/reverseproxy
     website: registry.fedoraproject.org
     destname: registry-fedora
     # proxyurl in this one is totally ignored, because Docker.

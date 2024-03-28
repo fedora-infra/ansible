@@ -26,8 +26,6 @@ lvm_size: 262144
 max_mem_size: "{{ mem_size }}"
 mem_size: 15360
 num_cpus: 6
-# These variables are for koji-containerbuild/osbs
-osbs_url: "osbs.fedoraproject.org"
 source_registry: "registry.fedoraproject.org"
 virt_install_command: "{{ virt_install_command_one_nic_unsafe }}"
 volgroup: /dev/BuildGuests

@@ -661,12 +661,6 @@
     - fedoraloveskde
 
   - role: httpd/website
-    site_name: osbs.fedoraproject.org
-    server_aliases: [osbs.stg.fedoraproject.org]
-    sslonly: true
-    cert_name: "{{wildcard_cert_name}}"
-
-  - role: httpd/website
     site_name: "provision{{ env_suffix }}.fedoraproject.org"
     # Zezere needs non-HTTPS for netboot
     sslonly: false
