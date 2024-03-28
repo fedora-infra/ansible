@@ -416,6 +416,24 @@
     - mailman
     - selinux
 
+- name: Set the SELinux policy for the static files directory
+  community.general.sefcontext:
+    target: "{{ mailman_webui_basedir }}/static(/.*)?"
+    setype: httpd_sys_content_t
+    state: present
+  tags:
+  - mailman
+  - selinux
+
+- name: Set the SELinux policy for the templates override directory
+  community.general.sefcontext:
+    target: "{{ mailman_webui_basedir }}/templates(/.*)?"
+    setype: httpd_sys_content_t
+    state: present
+  tags:
+  - mailman
+  - selinux
+
 # Start services
 - name: Start services
   ansible.builtin.systemd:
