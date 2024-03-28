@@ -9,7 +9,8 @@ Alias /static      {{ mailman_webui_basedir }}/static
 </Directory>
 
 ProxyPreserveHost On
-ProxyRequests off
+ProxyRequests Off
+ProxyAddHeaders Off
 
 # Not redirecting/proxying static content (served locally)
 ProxyPass /static !
