@@ -1,0 +1,47 @@
+# create an os server
+- import_playbook:  "/srv/web/infra/ansible/playbooks/include/virt-create.yml myhosts=os_control_stg:os_control"
+
+- name: make the box be real
+  hosts: os_control:os_control_stg
+  user: root
+  gather_facts: True
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  roles:
+    - base
+    - rkhunter
+    - nagios_client
+    - hosts
+    - ipa/client
+    - rsyncd
+    - sudo
+
+  tasks:
+
+  - name: Create the directories to hold the templates
+    file:
+      path: "/etc/openshift_apps"
+      state: directory
+      owner: root
+      group: root
+      mode: 0770
+
+  - name: copy oc rpm
+    copy:
+      src: /srv/web/infra/bigfiles/openshiftboot/oc-client/oc-client.rpm
+      dest: /root/oc-client.rpm
+
+  - name: make sure oc-client is installed
+    dnf:
+      name: /root/oc-client.rpm
+      state: installed
+
+  - import_tasks: "{{ tasks_path }}/yumrepos.yml"
+  - import_tasks: "{{ tasks_path }}/motd.yml"
+
+  handlers:
+  - import_tasks: "{{ handlers_path }}/restart_services.yml"
