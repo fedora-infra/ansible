@@ -47,6 +47,10 @@ spec:
             env:
               - name: FEDORA_MESSAGING_CONF
                 value: "/etc/badges/fm-fedbadges.toml"
+              - name: KRB5_CONFIG
+                value: /etc/ipa/krb5.conf
+              - name: KRB5_CLIENT_KTNAME
+                value: /etc/keytabs/fedbadges.keytab
           volumes:
             - name: etc-badges
               configMap:
