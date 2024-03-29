@@ -35,7 +35,7 @@ KojiHubCA = /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
 Tasks = buildContainer,createContainer,runroot,osbuildImage,createKiwiImage
 ParentTasks = buildContainer,osbuildImage,kiwiBuild
 {% else %}
-Tasks = buildContainer,createContainer,runroot,osbuildImage
-ParentTasks = buildContainer,osbuildImage
+Tasks = buildContainer,createContainer,runroot,osbuildImage,createKiwiImage
+ParentTasks = buildContainer,osbuildImage,kiwiBuild
 {% endif %}
 ToplevelTasks = osbuildImage
