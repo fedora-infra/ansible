@@ -12,16 +12,7 @@
   - batcave
   - config
 
-# https://pagure.io/fedora-infrastructure/issue/6422
-- name: put openshift repo on batcave for the oc client tools
-  template: src="{{ files }}/openshift/openshift.repo" dest="/etc/yum.repos.d/openshift.repo"
-  tags:
-  - batcave
-  - config
-  - packages
-  - yumrepos
-
-- name: install packages needed (rhel8)
+- name: install packages needed
   package: name={{ item }} state=present
   with_items:
   - srm                       # secure rm to delete sensitive files.
