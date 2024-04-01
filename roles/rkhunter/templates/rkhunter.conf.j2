@@ -608,8 +608,8 @@ OS_VERSION_FILE=/etc/{{ ansible_distribution|lower }}-release
 #RTKT_DIR_WHITELIST=""
 #RTKT_FILE_WHITELIST=""
 {% if inventory_hostname in groups['ipa'] or inventory_hostname in groups['ipa_stg'] %}
-RTKT_FILE_WHITELIST="/var/log/pki/pki-tomcat/ca/system"
-RTKT_FILE_WHITELIST="/var/log/pki/pki-tomcat/kra/system"
+RTKT_FILE_WHITELIST="/var/log/pki/pki-tomcat/ca"
+RTKT_FILE_WHITELIST="/var/log/pki/pki-tomcat/kra"
 {% endif %}
 
 #
@@ -638,7 +638,5 @@ SCRIPTWHITELIST=/usr/bin/GET
 SCRIPTWHITELIST=/sbin/ifup
 SCRIPTWHITELIST=/sbin/ifdown
 {% endif %}
-{% if inventory_hostname.startswith(('db','pagure','retrace','anitya','upstream')) %}
-# Set this size very large on postgres running servers.
+# zabbix uses shm and can grow quite large, so bump this limit a lot.
 IPC_SEG_SIZE=100000000000
-{% endif %}
