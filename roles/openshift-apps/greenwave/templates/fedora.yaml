@@ -212,7 +212,8 @@ subject_type: bodhi_update
 rules:
 # This list needs to stay synced with openQA if tests are added or renamed.
   - !PassingTestCaseRule {test_case_name: update.install_default_update_netinst, scenario: "fedora.updates-everything-boot-iso.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: update.install_default_update_netinst, scenario: "fedora.updates-everything-boot-iso.x86_64.uefi"}
+# uncomment approx 2024-05-02 - adamw
+#  - !PassingTestCaseRule {test_case_name: update.install_default_update_netinst, scenario: "fedora.updates-everything-boot-iso.x86_64.bios"}
   - !PassingTestCaseRule {test_case_name: update.installer_build, scenario: "fedora.updates-everything-boot-iso.x86_64.64bit"}
 
 --- !Policy
@@ -327,7 +328,8 @@ subject_type: bodhi_update
 rules:
 # This list needs to stay synced with openQA if tests are added or renamed.
   - !PassingTestCaseRule {test_case_name: update.install_default_update_live, scenario: "fedora.updates-workstation-live-iso.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: update.install_default_update_live, scenario: "fedora.updates-workstation-live-iso.x86_64.uefi"}
+  # uncomment approx 2024-05-02 - adamw
+#  - !PassingTestCaseRule {test_case_name: update.install_default_update_live, scenario: "fedora.updates-workstation-live-iso.x86_64.bios"}
   - !PassingTestCaseRule {test_case_name: update.live_build, scenario: "fedora.updates-workstation-live-iso.x86_64.64bit"}
 
 --- !Policy
@@ -420,7 +422,8 @@ subject_type: bodhi_update
 rules:
 # This list needs to stay synced with openQA if tests are added or renamed.
   - !PassingTestCaseRule {test_case_name: update.install_default_update_live, scenario: "fedora.updates-kde-live-iso.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: update.install_default_update_live, scenario: "fedora.updates-kde-live-iso.x86_64.uefi"}
+    # uncomment approx 2024-05-02 - adamw
+#  - !PassingTestCaseRule {test_case_name: update.install_default_update_live, scenario: "fedora.updates-kde-live-iso.x86_64.bios"}
   - !PassingTestCaseRule {test_case_name: update.live_build, scenario: "fedora.updates-kde-live-iso.x86_64.64bit"}
 
 --- !Policy
@@ -547,7 +550,7 @@ product_versions:
 decision_context: rawhide_compose_sync_to_mirrors
 subject_type: compose
 rules:
-  - !PassingTestCaseRule {test_case_name: compose.cloud_autocloud, scenario: "fedora.Cloud_Base-qcow2-qcow2.x86_64.uefi"}
+  - !PassingTestCaseRule {test_case_name: compose.cloud_autocloud, scenario: "fedora.Cloud_Base-qcow2-qcow2.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.base_system_logging, scenario: "fedora.KDE-live-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.base_system_logging, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.base_system_logging, scenario: "fedora.Workstation-live-iso.x86_64.64bit"}
@@ -560,28 +563,28 @@ rules:
   - !PassingTestCaseRule {test_case_name: compose.desktop_terminal, scenario: "fedora.Workstation-live-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.install_anaconda_text, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.install_default, scenario: "fedora.Everything-boot-iso.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: compose.install_default, scenario: "fedora.Everything-boot-iso.x86_64.uefi"}
-  - !PassingTestCaseRule {test_case_name: compose.install_default, scenario: "fedora.KDE-live-iso.x86_64.uefi"}
+  - !PassingTestCaseRule {test_case_name: compose.install_default, scenario: "fedora.Everything-boot-iso.x86_64.bios"}
+  - !PassingTestCaseRule {test_case_name: compose.install_default, scenario: "fedora.KDE-live-iso.x86_64.bios"}
   - !PassingTestCaseRule {test_case_name: compose.install_default, scenario: "fedora.Server-boot-iso.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: compose.install_default, scenario: "fedora.Server-boot-iso.x86_64.uefi"}
-  - !PassingTestCaseRule {test_case_name: compose.install_default, scenario: "fedora.Server-dvd-iso.x86_64.uefi"}
-  - !PassingTestCaseRule {test_case_name: compose.install_default, scenario: "fedora.Workstation-live-iso.x86_64.uefi"}
+  - !PassingTestCaseRule {test_case_name: compose.install_default, scenario: "fedora.Server-boot-iso.x86_64.bios"}
+  - !PassingTestCaseRule {test_case_name: compose.install_default, scenario: "fedora.Server-dvd-iso.x86_64.bios"}
+  - !PassingTestCaseRule {test_case_name: compose.install_default, scenario: "fedora.Workstation-live-iso.x86_64.bios"}
   - !PassingTestCaseRule {test_case_name: compose.install_default_upload, scenario: "fedora.KDE-live-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.install_default_upload, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.install_default_upload, scenario: "fedora.Workstation-live-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.install_delete_pata, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: compose.install_delete_pata, scenario: "fedora.Server-dvd-iso.x86_64.uefi"}
+  - !PassingTestCaseRule {test_case_name: compose.install_delete_pata, scenario: "fedora.Server-dvd-iso.x86_64.bios"}
   - !PassingTestCaseRule {test_case_name: compose.install_kickstart_firewall_configured, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.install_kickstart_firewall_disabled, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.install_kickstart_user_creation, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.install_mirrorlist_graphical, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.install_multi, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: compose.install_multi, scenario: "fedora.Server-dvd-iso.x86_64.uefi"}
+  - !PassingTestCaseRule {test_case_name: compose.install_multi, scenario: "fedora.Server-dvd-iso.x86_64.bios"}
   - !PassingTestCaseRule {test_case_name: compose.install_no_user, scenario: "fedora.KDE-live-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.install_repository_http_graphical, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.install_repository_http_variation, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.install_sata, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
-  - !PassingTestCaseRule {test_case_name: compose.install_sata, scenario: "fedora.Server-dvd-iso.x86_64.uefi"}
+  - !PassingTestCaseRule {test_case_name: compose.install_sata, scenario: "fedora.Server-dvd-iso.x86_64.bios"}
   - !PassingTestCaseRule {test_case_name: compose.install_scsi_updates_img, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.realmd_join_sssd, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: compose.server_cockpit_default, scenario: "fedora.Server-dvd-iso.x86_64.64bit"}
