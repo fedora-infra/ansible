@@ -84,18 +84,18 @@
     objectname: pvc-var-lib-redis-data
   - role: openshift/object
     app: openscanhub
-    file: deployment-redis-6-c9s.yml
-    objectname: deployment-redis-6-c9s
+    file: deployment-redis.yml
+    objectname: deployment-redis
     when: env == "staging"
   - role: openshift/object
     app: openscanhub
-    file: route-redis-6-c9s.yml
-    objectname: route-redis-6-c9s
+    file: route-redis.yml
+    objectname: route-redis
     when: env == "staging"
   - role: openshift/object
     app: openscanhub
-    file: service-redis-6-c9s.yml
-    objectname: service-redis-6-c9s
+    file: service-redis.yml
+    objectname: service-redis
     when: env == "staging"
 
   # Configurations for resalloc-server.

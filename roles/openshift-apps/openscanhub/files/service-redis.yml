@@ -5,13 +5,13 @@ metadata:
     openshift.io/generated-by: OpenShiftWebConsole
   creationTimestamp: "2024-03-07T13:22:42Z"
   labels:
-    app: redis-6-c9s
-    app.kubernetes.io/component: redis-6-c9s
-    app.kubernetes.io/instance: redis-6-c9s
-    app.kubernetes.io/name: redis-6-c9s
+    app: redis
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/instance: redis
+    app.kubernetes.io/name: redis
     app.kubernetes.io/part-of: openscanhub
     app.openshift.io/runtime-version: c9s
-  name: redis-6-c9s
+  name: redis
   namespace: openscanhub
   resourceVersion: "772873089"
   uid: c72c04f9-939d-417d-867e-e29dea2afbfa
@@ -29,7 +29,7 @@ spec:
     protocol: TCP
     targetPort: 6379
   selector:
-    app: redis-6-c9s
-    deployment: redis-6-c9s
+    app: redis
+    deployment: redis
   sessionAffinity: None
   type: ClusterIP

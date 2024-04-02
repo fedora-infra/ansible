@@ -5,18 +5,18 @@ metadata:
     alpha.image.policy.openshift.io/resolve-names: '*'
     app.openshift.io/route-disabled: "false"
     deployment.kubernetes.io/revision: "1"
-    image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"redis-6-c9s:c9s","namespace":"openscanhub"},"fieldPath":"spec.template.spec.containers[?(@.name==\"redis-6-c9s\")].image","pause":"false"}]'
+    image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"redis:c9s","namespace":"openscanhub"},"fieldPath":"spec.template.spec.containers[?(@.name==\"redis\")].image","pause":"false"}]'
     openshift.io/generated-by: OpenShiftWebConsole
   creationTimestamp: "2024-03-07T13:22:42Z"
   generation: 1
   labels:
-    app: redis-6-c9s
-    app.kubernetes.io/component: redis-6-c9s
-    app.kubernetes.io/instance: redis-6-c9s
-    app.kubernetes.io/name: redis-6-c9s
+    app: redis
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/instance: redis
+    app.kubernetes.io/name: redis
     app.kubernetes.io/part-of: openscanhub
     app.openshift.io/runtime-namespace: openscanhub
-  name: redis-6-c9s
+  name: redis
   namespace: openscanhub
   resourceVersion: "772873714"
   uid: 1cb2c91a-fa3d-4d27-8911-d66254fb9881
@@ -26,7 +26,7 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      app: redis-6-c9s
+      app: redis
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -38,13 +38,13 @@ spec:
         openshift.io/generated-by: OpenShiftWebConsole
       creationTimestamp: null
       labels:
-        app: redis-6-c9s
-        deployment: redis-6-c9s
+        app: redis
+        deployment: redis
     spec:
       containers:
       - image: quay.io/sclorg/redis-6-c9s:c9s
         imagePullPolicy: IfNotPresent
-        name: redis-6-c9s
+        name: redis
         ports:
         - containerPort: 6379
           protocol: TCP
