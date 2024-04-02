@@ -63,18 +63,18 @@
     when: env == "production"
   - role: openshift/object
     app: openscanhub
-    file: openscanhub-deployment-fedora-osh-hub.yml
-    objectname: openscanhub-deployment-fedora-osh-hub
+    file: deployment-fedora-osh-hub.yml
+    objectname: deployment-fedora-osh-hub
     when: env == "staging"
   - role: openshift/object
     app: openscanhub
-    template: openscanhub-route-fedora-osh-hub.yml
-    objectname: openscanhub-route-fedora-osh-hub
+    template: route-fedora-osh-hub.yml
+    objectname: route-fedora-osh-hub
     when: env == "staging"
   - role: openshift/object
     app: openscanhub
-    file: openscanhub-service-fedora-osh-hub.yml
-    objectname: openscanhub-service-fedora-osh-hub
+    file: service-fedora-osh-hub.yml
+    objectname: service-fedora-osh-hub
     when: env == "staging"
 
   # Configurations for redis.
