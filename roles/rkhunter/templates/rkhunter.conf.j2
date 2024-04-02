@@ -608,8 +608,7 @@ OS_VERSION_FILE=/etc/{{ ansible_distribution|lower }}-release
 #RTKT_DIR_WHITELIST=""
 #RTKT_FILE_WHITELIST=""
 {% if inventory_hostname in groups['ipa'] or inventory_hostname in groups['ipa_stg'] %}
-RTKT_FILE_WHITELIST="/var/log/pki/pki-tomcat/ca"
-RTKT_FILE_WHITELIST="/var/log/pki/pki-tomcat/kra"
+RTKT_DIR_WHITELIST="/var/log/pki/pki-tomcat"
 {% endif %}
 
 #
