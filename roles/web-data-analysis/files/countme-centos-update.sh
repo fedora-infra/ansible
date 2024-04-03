@@ -24,6 +24,10 @@ PUBLIC_TOTALS_CSV=$PUBLIC_DATA_DIR/totals-centos.csv
 # They should be in PATH somewhere...
 UPDATE_RAWDB=countme-update-rawdb.sh
 UPDATE_TOTALS=countme-update-totals.sh
+UPDATE_TRIM=countme-trim-raw
+# Names of the post update commands. They should be in PATH somewhere...
+PUSH_SPLIT=split-totals-db.sh
+PUSH_REZIP=rezip
 
 # ------------------------------ NOTE ------------------------------
 # Everything below this line should try to be identical between the
@@ -107,6 +111,7 @@ PATH="$PATH:/usr/local/bin"
 command -v $UPDATE_RAWDB  >/dev/null || die "can't find '$UPDATE_RAWDB'"
 command -v $UPDATE_TOTALS >/dev/null || die "can't find '$UPDATE_TOTALS'"
 command -v git            >/dev/null || die "can't find 'git'"
+command -v $UPDATE_TRIM   >/dev/null || die "can't find '$UPDATE_TRIM'"
 
 # Apply other CLI options
 if [ "$PROGRESS" ]; then
@@ -121,6 +126,8 @@ set -e
 _run $UPDATE_RAWDB --rawdb $RAW_DB --logfmt $LOGFMT
 _run $UPDATE_TOTALS --rawdb $RAW_DB --totals-db $TOTALS_DB --totals-csv $TOTALS_CSV
 
+_run $UPDATE_TRIM --rw $RAW_DB 2
+
 # If needed: init local git repo and mark file(s) to be tracked therein
 if [ ! -d $LOCAL_DATA_DIR/.git ]; then
     _run $_GIT init
@@ -132,6 +139,12 @@ _run $_GIT diff --quiet || _run $_GIT commit -a -m "$(date -u +%F) update"
 # Copy new data into place
 _run atomic_copy $TOTALS_DB $PUBLIC_TOTALS_DB
 _run atomic_copy $TOTALS_CSV $PUBLIC_TOTALS_CSV
+
+command -v $PUSH_SPLIT   >/dev/null || die "can't find '$PUSH_SPLIT'"
+command -v $PUSH_REZIP   >/dev/null || die "can't find '$PUSH_REZIP'"
+
+_run $PUSH_SPLIT $PUBLIC_TOTALS_DB
+_run $PUSH_REZIP $PUBLIC_DATA_DIR/*.db
 
 simple_message_to_bus $CMD_NAME.finish
 
