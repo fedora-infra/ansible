@@ -34,6 +34,13 @@ class: mailman_hyperkitty.Archiver
 enable: yes
 configuration: /etc/mailman3.d/hyperkitty.cfg
 
+[archiver.fedmsg]
+class: mailman3_fedmsg_plugin.Archiver
+enable: yes
+
+[archiver.prototype]
+enable: yes
+
 [webservice]
 hostname: localhost
 port: 8001
