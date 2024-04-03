@@ -4,9 +4,6 @@ metadata:
   name: fedora-osh-hub
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: fedora-osh-hub
   strategy:
     type: Recreate
   template:
