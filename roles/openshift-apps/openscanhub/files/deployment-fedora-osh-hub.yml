@@ -1,51 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    alpha.image.policy.openshift.io/resolve-names: '*'
-    app.openshift.io/route-disabled: "false"
-    app.openshift.io/vcs-ref: ""
-    app.openshift.io/vcs-uri: https://github.com/siteshwar/openscanhub-deployment-configs.git
-    deployment.kubernetes.io/revision: "9"
-    image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"fedora-osh-hub:latest","namespace":"openscanhub"},"fieldPath":"spec.template.spec.containers[?(@.name==\"fedora-osh-hub\")].image","pause":"false"}]'
-    openshift.io/generated-by: OpenShiftWebConsole
-  generation: 9
-  labels:
-    app: fedora-osh-hub
-    app.kubernetes.io/component: fedora-osh-hub
-    app.kubernetes.io/instance: fedora-osh-hub
-    app.kubernetes.io/name: fedora-osh-hub
-    app.kubernetes.io/part-of: openscanhub
   name: fedora-osh-hub
-  namespace: openscanhub
-  resourceVersion: "2902507635"
-  uid: 752d6a40-41e4-4c2a-ba01-1ee5076c7661
 spec:
-  progressDeadlineSeconds: 600
   replicas: 1
-  revisionHistoryLimit: 10
   selector:
     matchLabels:
       app: fedora-osh-hub
   strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
+    type: Recreate
   template:
-    metadata:
-      creationTimestamp: null
-      labels:
-        app: fedora-osh-hub
-        deployment: fedora-osh-hub
     spec:
       containers:
       - image: quay.io/openscanhub-fedora-infra/ocp:staging
         imagePullPolicy: Always
         name: fedora-osh-hub
-        resources: {}
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
         volumeMounts:
           - mountPath: /var/lib/osh/
             name: openscanhub-pvc-var-lib-osh
@@ -60,11 +29,7 @@ spec:
           - mountPath: /etc/osh/worker-manager/id_rsa
             name: aws-openscanhub-key
             subPath: id_rsa
-      dnsPolicy: ClusterFirst
       restartPolicy: Always
-      schedulerName: default-scheduler
-      securityContext: {}
-      terminationGracePeriodSeconds: 30
       volumes:
         - name: openscanhub-pvc-var-lib-osh
           persistentVolumeClaim:
