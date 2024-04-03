@@ -10,6 +10,9 @@ spec:
   strategy:
     type: Recreate
   template:
+    metadata:
+      labels:
+        app: fedora-osh-hub
     spec:
       containers:
       - image: quay.io/openscanhub-fedora-infra/ocp:staging
