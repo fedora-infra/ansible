@@ -1,7 +1,6 @@
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  creationTimestamp: "2024-03-07T13:22:42Z"
   labels:
     app: redis
     app.kubernetes.io/component: redis
@@ -11,8 +10,6 @@ metadata:
     app.openshift.io/runtime-version: c9s
   name: redis
   namespace: openscanhub
-  resourceVersion: "772873091"
-  uid: acfbf57f-c945-44f9-86a8-a7726955f37b
 spec:
   host: redis
   port:
