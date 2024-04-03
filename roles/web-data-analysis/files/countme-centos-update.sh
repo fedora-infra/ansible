@@ -1,8 +1,11 @@
 #!/bin/bash
 
+# What are we called (used for message bus so don't just use cmd $0)
+CMD_NAME=countme-centos-update
+
 export MSGTOPIC_PREFIX=logging.stats
 export MSGBODY_PRESET="loghost=$(hostname) run_id=$(uuidgen -r)"
-simple_message_to_bus countme-centos-update.start
+simple_message_to_bus $CMD_NAME.start
 
 # Where do we keep our local/internal data?
 LOCAL_DATA_DIR=/var/lib/countme
@@ -16,9 +19,17 @@ PUBLIC_DATA_DIR=/var/www/html/csv-reports/countme
 PUBLIC_TOTALS_DB=$PUBLIC_DATA_DIR/totals-centos.db
 PUBLIC_TOTALS_CSV=$PUBLIC_DATA_DIR/totals-centos.csv
 
-# Names of the update commands. They are from the python3-mirrors-countme rpm
+# Names of the update commands.
+# From python3*-mirrors-countme Eg. python3.11-mirrors-countme-0.1.2-1.el8
+# They should be in PATH somewhere...
 UPDATE_RAWDB=countme-update-rawdb.sh
 UPDATE_TOTALS=countme-update-totals.sh
+
+# ------------------------------ NOTE ------------------------------
+# Everything below this line should try to be identical between the
+# fedora/centos scripts, to make any changes easier. Add more options
+# above and then have the code below be the same.
+# ------------------------------ NOTE ------------------------------
 
 # How we're gonna call git - our local repo dir is LOCAL_DATA_DIR
 _GIT="git -C $LOCAL_DATA_DIR"
@@ -39,16 +50,16 @@ _run() {
     if [ "$DRYRUN" ]; then 
       return 0
     else
-      simple_message_to_bus countme-centos-update.command.start command="$@"
+      simple_message_to_bus $CMD_NAME.command.start command="$@"
       "$@"
       RESULT=$?
-      simple_message_to_bus countme-centos-update.command.finish command="$@" result="$?"
+      simple_message_to_bus $CMD_NAME.command.finish command="$@" result="$?"
       return $RESULT
     fi
 }
 
 # CLI help text
-HELP_USAGE="usage: countme-centos-updates.sh [OPTION]..."
+HELP_USAGE="usage: $CMD_NAME.sh [OPTION]..."
 HELP_OPTIONS="
 Options:
   -h, --help           Show this message and exit
@@ -62,7 +73,7 @@ if [ -z "$PROGRESS" -a -t 2 ]; then PROGRESS=1; fi
 
 # Parse CLI options with getopt(1)
 _GETOPT_TMP=$(getopt \
-    --name countme-centos-update \
+    --name $CMD_NAME \
     --options hvnp \
     --longoptions help,verbose,dryrun,progress,checkoutdir: \
     -- "$@")
@@ -122,5 +133,5 @@ _run $_GIT diff --quiet || _run $_GIT commit -a -m "$(date -u +%F) update"
 _run atomic_copy $TOTALS_DB $PUBLIC_TOTALS_DB
 _run atomic_copy $TOTALS_CSV $PUBLIC_TOTALS_CSV
 
-simple_message_to_bus countme-centos-update.finish
+simple_message_to_bus $CMD_NAME.finish
 
