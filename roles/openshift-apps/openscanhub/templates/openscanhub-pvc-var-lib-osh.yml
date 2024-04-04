@@ -3,10 +3,10 @@ kind: PersistentVolumeClaim
 metadata:
   name: openscanhub-pvc-var-lib-osh
 spec:
-  # TODO: This name should be set when `storageClassName` is NFS
-  # volumeName: fedora-openscanhub-var-lib-osh-{{env_short}}
+  # This volume is on NFS.
+  volumeName: fedora-openscanhub-var-lib-osh-{{env_short}}
   accessModes:
-  - ReadWriteOnce
+  - ReadWriteMany
   resources:
     requests:
       # This should be manually expanded when production
@@ -16,5 +16,4 @@ spec:
 {% else %}
       storage: 512Gi
 {% endif %}
-  storageClassName: 'ocs-storagecluster-cephfs'
-  volumeMode: Filesystem
+  storageClassName: ''
