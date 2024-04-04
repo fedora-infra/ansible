@@ -29,6 +29,9 @@ spec:
     spec:
       containers:
         - name: frontend
+            image: tahrir:latest
+            command: ["gunicorn"]
+            args: ["--paste", "/etc/badges/tahrir.ini", "-b", "0.0.0.0:8080", "-w", "4", "--log-level", "DEBUG", "-k", "gthread", "--threads", "2", "--preload", "--log-file=-"]
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -56,15 +59,15 @@ spec:
               readOnly: true
 
           env:
-            - name: APP_MODULE
-              value: "deploy.wsgi"
-            - name: APP_CONFIG
-              value: "/etc/noggin/gunicorn.conf.py"
-            - name: OIDC_CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: badges
-                  key: oidc-client-secret
+            # - name: APP_MODULE
+            #   value: "deploy.wsgi"
+            # - name: APP_CONFIG
+            #   value: "/etc/noggin/gunicorn.conf.py"
+            # - name: OIDC_CLIENT_SECRET
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: badges
+            #       key: oidc-client-secret
             - name: KRB5_CONFIG
               value: /etc/ipa/krb5.conf
             - name: KRB5_CLIENT_KTNAME
