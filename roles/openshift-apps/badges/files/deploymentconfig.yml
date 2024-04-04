@@ -61,7 +61,7 @@ spec:
 
           env:
             - name: GUNICORN_CMD_ARGS
-              value: "--bind=0.0.0.0:8080 --forwarded-allow-ips=\"*\""
+              value: "--bind=0.0.0.0:8080"
             - name: APP_MODULE
               value: "deploy.wsgi"
             - name: KRB5_CONFIG
