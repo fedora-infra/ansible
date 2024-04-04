@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-image-uploader
+  annotations:
+    image.openshift.io/triggers: >-
+      [
+        {
+          "from": {
+            "kind":"ImageStreamTag",
+            "namespace":"cloud-image-uploader"
+            "name":"cloud-image-uploader:latest",
+          },
+          "fieldPath":"spec.template.spec.containers[?(@.name==\"cloud-image-uploader\")].image",
+          "pause":"false"
+        }
+      ]
+spec:
+  replicas: 1
+  selector:
+    app: cloud-image-uploader
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: cloud-image-uploader
+    spec:
+      volumes:
+        - name: config-volume
+          configMap:
+            name: cloud-image-uploader-configmap
+        - name: fedora-messaging-ca-volume
+          secret:
+            secretName: cloud-image-uploader-fedora-messaging-ca
+        - name: fedora-messaging-key-volume
+          secret:
+            secretName: cloud-image-uploader-fedora-messaging-key
+        - name: fedora-messaging-cert-volume
+          secret:
+            secretName: cloud-image-uploader-fedora-messaging-crt
+      containers:
+        - name: cloud-image-uploader
+          image: cloud-image-uploader/cloud-image-uploader:latest
+          imagePullPolicy: Always
+          env:
+            - name: AZURE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: azure-credentials
+                  key: secret
+            - name: AZURE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: azure-credentials
+                  key: client_id
+            - name: AZURE_TENANT
+              valueFrom:
+                secretKeyRef:
+                  name: azure-credentials
+                  key: tenant_id
+            - name: AZURE_SUBSCRIPTION_ID
+              valueFrom:
+                secretKeyRef:
+                  name: azure-credentials
+                  key: subscription_id
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/fedora-messaging
+              readOnly: true
+            - name: fedora-messaging-ca-volume
+              mountPath: /etc/pki/rabbitmq/ca
+              readOnly: true
+            - name: fedora-messaging-key-volume
+              mountPath: /etc/pki/rabbitmq/key
+              readOnly: true
+            - name: fedora-messaging-cert-volume
+              mountPath: /etc/pki/rabbitmq/cert
+              readOnly: true

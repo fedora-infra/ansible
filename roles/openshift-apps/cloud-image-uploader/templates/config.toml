@@ -1,0 +1,101 @@
+# This file is in the TOML format.
+# For complete details on all configuration options, see the documentation
+# https://fedora-messaging.readthedocs.io/en/latest/configuration.html.
+
+amqp_url = "amqps://cloud-image-uploader:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fpubsub"
+callback = "fedora_cloud_image_uploader:Uploader"
+passive_declares = true
+
+[tls]
+ca_cert = "/etc/pki/rabbitmq/ca/fedora-messaging-cloud-image-uploader-ca.crt"
+keyfile = "/etc/pki/rabbitmq/key/fedora-messaging-cloud-image-uploader.key"
+certfile = "/etc/pki/rabbitmq/cert/fedora-messaging-cloud-image-uploader.crt"
+
+[client_properties]
+app = "Fedora Cloud Image Uploader"
+app_url = "https://pagure.io/cloud-image-uploader"
+app_contacts_email = "cloud@lists.fedoraproject.org"
+
+[[bindings]]
+queue = "fedora-image-uploader"
+exchange = "amq.topic"
+routing_keys = ["org.fedoraproject.{{ env }}.buildsys.build.state.change"]
+
+[queues.fedora-image-uploader]
+durable = true
+auto_delete = false
+exclusive = false
+arguments = {}
+
+[consumer_config.azure]
+location = "eastus"
+{% if env == "staging" %}
+resource_group_name = "fedora-cloud"
+storage_account_name = "fedoraimages"
+{% else %}
+resource_group_name = "fedora-cloud-staging"
+storage_account_name = "fedoraimagesstaging"
+{% endif %}
+gallery_name = "Fedora"
+gallery_description = "The Fedora compute gallery."
+storage_container_name = "vhds"
+
+# A list of regions and replication settings for uploaded images.	
+#
+# Images need to be replicated to the region to be usable.
+{% if env == "staging" %}
+
+[[consumer_config.azure.target_regions]]
+name = "eastus"
+regional_replica_count = 3
+storage_account_type = "Standard_ZRS"
+
+{% else %}
+
+[[consumer_config.azure.target_regions]]
+name = "eastus"
+regional_replica_count = 1
+storage_account_type = "Standard_LRS"
+
+{% endif %}
+
+
+[qos]
+prefetch_size = 0
+prefetch_count = 25
+
+[log_config]
+version = 1
+disable_existing_loggers = true
+
+[log_config.formatters.simple]
+format = "[%(asctime)s %(name)s %(levelname)s] %(message)s"
+
+[log_config.handlers.console]
+class = "logging.StreamHandler"
+formatter = "simple"
+stream = "ext://sys.stdout"
+
+[log_config.loggers.fedora_messaging]
+level = "INFO"
+propagate = false
+handlers = ["console"]
+	
+[log_config.loggers.fedora_cloud_image_uploader]
+level = "INFO"
+propagate = false
+handlers = ["console"]
+
+[log_config.loggers.twisted]
+level = "INFO"
+propagate = false
+handlers = ["console"]
+	
+[log_config.loggers.pika]
+level = "WARNING"
+propagate = false
+handlers = ["console"]
+
+[log_config.root]
+level = "ERROR"
+handlers = ["console"]

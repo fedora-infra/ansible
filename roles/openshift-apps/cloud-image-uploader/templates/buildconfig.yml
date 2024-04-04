@@ -1,0 +1,31 @@
+apiVersion: build.openshift.io/v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    labels:
+      build: cloud-image-uploader-build
+    name: cloud-image-uploader-build
+  spec:
+    runPolicy: Serial
+    source:
+      type: git
+      git:
+        uri: https://pagure.io/cloud-image-uploader.git
+{% if env == 'staging' %}
+        ref: main
+{% else %}
+        ref: prod
+{% endif %}
+    strategy:
+      type: Docker
+      dockerStrategy:
+        dockerfilePath: Containerfile
+    triggers:
+    - type: ImageChange
+    output:
+      to:
+        kind: ImageStreamTag
+        name: cloud-image-uploader:latest
+kind: List
+metadata: {}

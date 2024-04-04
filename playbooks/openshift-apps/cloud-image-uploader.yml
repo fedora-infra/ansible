@@ -1,0 +1,77 @@
+- name: make the app be real
+  hosts: os_control_stg
+  user: root
+  gather_facts: False
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  roles:
+  - role: rabbit/queue
+    username: "cloud-image-uploader"
+    queue_name: "cloud-image-uploader"
+    routing_keys:
+      - "org.fedoraproject.{{ env }}.buildsys.build.state.change"
+    thresholds:
+      warning: 10
+      critical: 50
+
+  - role: openshift/project
+    app: cloud-image-uploader
+    description: AMQP consumer that uploads Cloud images to cloud providers
+    appowners:
+    - jcline
+
+  - role: openshift/object
+    app: cloud-image-uploader
+    file: imagestream.yml
+    objectname: imagestream.yml
+
+  - role: openshift/object
+    app: cloud-image-uploader
+    template: buildconfig.yml
+    objectname: buildconfig.yml
+
+  - role: openshift/object
+    app: cloud-image-uploader
+    template: configmap.yml
+    objectname: configmap.yml
+
+  - role: openshift/secret-file
+    app: cloud-image-uploader
+    secret_name: cloud-image-uploader-fedora-messaging-key
+    key: cloud-image-uploader.key
+    privatefile: "rabbitmq/{{env}}/pki/private/cloud-image-uploader{{env_suffix}}.key"
+
+  - role: openshift/secret-file
+    app: cloud-image-uploader
+    secret_name: cloud-image-uploader-fedora-messaging-crt
+    key: cloud-image-uploader.crt
+    privatefile: "rabbitmq/{{env}}/pki/issued/cloud-image-uploader{{env_suffix}}.crt"
+
+  - role: openshift/secret-file
+    app: cloud-image-uploader
+    secret_name: cloud-image-uploader-fedora-messaging-ca
+    key: cloud-image-uploader.ca
+    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+
+  - role: openshift/object
+    app: cloud-image-uploader
+    template: secret.yml
+    objectname: secret.yml
+
+  - role: openshift/start-build
+    app: cloud-image-uploader
+    buildname: cloud-image-uploader-build
+    objectname: cloud-image-uploader-build
+
+  - role: openshift/object
+    app: cloud-image-uploader
+    file: deployment.yml
+    objectname: deployment.yml
+
+  - role: openshift/rollout
+    app: cloud-image-uploader
+    dcname: cloud-image-uploader
