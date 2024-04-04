@@ -5,11 +5,12 @@ metadata:
   name: frontend
   labels:
     app: badges
+    service: web
+  namespace: badges
 spec:
   ports:
     - name: web
       port: 8080
       targetPort: 8080
   selector:
-    app: badges
     deploymentconfig: frontend
