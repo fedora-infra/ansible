@@ -3,6 +3,32 @@
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
+  name: python-310-custom-builder
+  labels:
+    app: badges
+    build: python-310-custom-builder
+spec:
+  runPolicy: Serial
+  source:
+    type: Dockerfile
+    dockerfile: |-
+      {{ load_file('Dockerfile-builder-image') | indent(6) }}
+  strategy:
+    type: Docker
+    dockerStrategy:
+      from:
+        kind: ImageStreamTag
+        name: python-310:latest
+  output:
+    to:
+      kind: ImageStreamTag
+      name: python-310-custom-builder:latest
+  triggers:
+  - type: ImageChange
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
   name: fedbadges
   labels:
     app: badges
@@ -21,7 +47,7 @@ spec:
     sourceStrategy:
       from:
         kind: ImageStreamTag
-        name: python-310:latest
+        name: python-310-custom-builder:latest
   output:
     to:
       kind: ImageStreamTag
@@ -59,7 +85,7 @@ spec:
     sourceStrategy:
       from:
         kind: ImageStreamTag
-        name: python-310:latest
+        name: python-310-custom-builder:latest
   output:
     to:
       kind: ImageStreamTag

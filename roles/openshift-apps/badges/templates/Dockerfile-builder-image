@@ -1,0 +1,8 @@
+FROM quay.io/fedora/python-310:latest
+LABEL \
+    name="python-310-badges-custom-builder" \
+    vendor="Fedora Infrastructure" \
+    license="MIT"
+USER root
+RUN dnf install -y cyrus-sasl-gssapi
+USER 1001
