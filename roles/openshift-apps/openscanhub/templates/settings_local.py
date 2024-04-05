@@ -85,8 +85,10 @@ TIME_ZONE = 'Europe/Prague'
 KRB_AUTH_PRINCIPAL = 'HTTP/covscan.lab.eng.brq2.redhat.com@REDHAT.COM'
 KRB_AUTH_KEYTAB = '/etc/httpd/conf/httpd.keytab'
 
-# Regular users cannot bind to port 25.
-EMAIL_PORT = 8025
+# This should work with both staging and production.
+# https://docs.fedoraproject.org/en-US/infra/sysadmin_guide/bastion-hosts-info/
+EMAIL_HOST = "bastion.fedoraproject.org"
+EMAIL_PORT = 25
 
 ###############################################################################
 # OpenScanHub SPECIFIC
