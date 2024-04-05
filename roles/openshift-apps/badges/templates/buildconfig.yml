@@ -77,7 +77,11 @@ spec:
     type: Git
     git:
       uri: https://github.com/fedora-infra/tahrir.git
-      # ref: {{ (env == 'production')|ternary('stable', 'staging') }}
+{% if env == "staging" %}
+      ref: staging
+{% else %}
+      ref: stable
+{% endif %}
       ref: develop
     contextDir: /
   strategy:
@@ -93,11 +97,13 @@ spec:
   triggers:
   - type: ConfigChange
   - type: ImageChange
-{#
+{% if tahrir_stg_github_secret is defined and env == 'staging' %}
   - type: GitHub
     github:
-      # Not sure why secretReference does not work, but it doesn't.
-      # secretReference:
-      #   name: github-webook
-      secret: "{{ badges_stg_github_secret }}"
-#}
+      secret: "{{ tahrir_stg_github_secret }}"
+{% endif %}
+{% if tahrir_prod_github_secret is defined and env == 'production' %}
+  - type: GitHub
+    github:
+      secret: "{{ tahrir_prod_github_secret }}"
+{% endif %}
