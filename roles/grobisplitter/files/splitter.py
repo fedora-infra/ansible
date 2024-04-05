@@ -192,7 +192,7 @@ def validate_filenames(directory, repoinfo):
     return isok
 
 
-def get_default_modules(directory):
+def get_default_modules(directory, *, hack_python39=False):
     """
     Work through the list of modules and come up with a default set of
     modules which would be the minimum to output.
@@ -275,14 +275,15 @@ def get_default_modules(directory):
                         if tmp_name in tempdict:
                             # print("We found %s" % tmp_name)
                             # Get the stream version we are looking at
-                            ts1=ourname.split(":")[2]
+                            n1,_,ts1,*_=ourname.split(":")
                             # Get the stream version we stored away
                             ts2=tempdict[tmp_name].split(":")[2]
                             # See if we got a newer one. We probably
                             # don't as it is a sorted list but we
                             # could have multiple contexts which would
                             # change things.
-                            if ( int(ts1) > int(ts2) ):
+                            if ( int(ts1) > int(ts2) or
+                                 (hack_python39 and n1 == "python39" and len(str(ts1)) < len(str(ts2))) ):
                                 # print ("%s > %s newer for %s", ts1,ts2,ourname)
                                 tempdict[tmp_name] = ourname
                         else:
@@ -343,6 +344,8 @@ def parse_args():
     parser.add_argument('--create-repos', help='Create repository metadatas',
                         action='store_true', default=False)
     parser.add_argument('--only-defaults', help='Only output default modules',
+                        action='store_true', default=False)
+    parser.add_argument('--hack-python39', help='Hack around https://pagure.io/releng/issue/11947',
                         action='store_true', default=False)
     return parser.parse_args()
 
@@ -407,7 +410,8 @@ def main():
     repos = parse_repository(args.repository)
 
     if args.only_defaults:
-        def_modules = get_default_modules(args.repository)
+        def_modules = get_default_modules(args.repository,
+                                          hack_python39=args.hack_python39)
     else:
         def_modules = set()
 

@@ -48,7 +48,7 @@ for ARCH in ${ARCHES}; do
 	echo "splitter ${ARCH} baseos failed"
 	exit
     fi
-    ${BINDIR}/splitter.py --action hardlink --target CS-8-002 ${HOMEDIR}/AppStream/${ARCH}/os/ --only-defaults &> /dev/null
+    ${BINDIR}/splitter.py --action hardlink --target CS-8-002 ${HOMEDIR}/AppStream/${ARCH}/os/ --only-defaults --hack-python39 &> /dev/null
     if [ $? -ne 0 ]; then
 	echo "splitter ${ARCH} appstream failed"
 	exit
