@@ -52,10 +52,10 @@ spec:
             - name: fedora-messaging-ca-volume
               mountPath: /etc/pki/fedora-messaging/ca
               readOnly: true
-            - name: fedora-messaging-key-volume
+            - name: tahrir-fedora-messaging-key-volume
               mountPath: /etc/pki/fedora-messaging/key
               readOnly: true
-            - name: fedora-messaging-crt-volume
+            - name: tahrir-fedora-messaging-crt-volume
               mountPath: /etc/pki/fedora-messaging/crt
               readOnly: true
 
@@ -103,12 +103,12 @@ spec:
         - name: fedora-messaging-ca-volume
           secret:
             secretName: fedora-messaging-ca
-        - name: fedora-messaging-key-volume
+        - name: tahrir-fedora-messaging-key-volume
           secret:
-            secretName: fedora-messaging-key
-        - name: fedora-messaging-crt-volume
+            secretName: tahrir-fedora-messaging-key
+        - name: tahrir-fedora-messaging-crt-volume
           secret:
-            secretName: fedora-messaging-crt
+            secretName: tahrir-fedora-messaging-crt
   triggers:
     - type: ConfigChange
     - type: ImageChange

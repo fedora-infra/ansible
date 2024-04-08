@@ -129,6 +129,17 @@
       key: fedbadges-key.pem
       privatefile: "rabbitmq/{{env}}/pki/private/fedbadges{{env_suffix}}.key"
 
+    - role: openshift/secret-file
+      app: badges
+      secret_name: tahrir-fedora-messaging-crt
+      key: tahrir-cert.pem
+      privatefile: "rabbitmq/{{env}}/pki/issued/tahrir{{env_suffix}}.crt"
+    - role: openshift/secret-file
+      app: badges
+      secret_name: tahrir-fedora-messaging-key
+      key: tahrir-key.pem
+      privatefile: "rabbitmq/{{env}}/pki/private/tahrir{{env_suffix}}.key"
+
     # FASJSON access
     - role: openshift/ipa-client
       app: badges
