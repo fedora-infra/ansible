@@ -68,10 +68,10 @@ INSTALLED_APPS = (
     'django_q',
     'hyperkitty',
     'postorius',
-    {% for service_name, service_data in mailman_login.items() %}
+{% for service_name, service_data in mailman_login.items() %}
     'allauth.socialaccount.providers.{{ service_data.provider }}',
-    {% endfor %}
-    'allauth.socialaccount.providers.openid',
+{% endfor %}
+    'allauth.socialaccount.providers.openid_connect',
 )
 
 
@@ -223,6 +223,9 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 ACCOUNT_UNIQUE_EMAIL  = True
+# Disable local signup
+ACCOUNT_ADAPTER = "django_fedora_nosignup.NoLocalSignUpAdapter"
+SOCIALACCOUNT_ADAPTER = "django_fedora_nosignup.SignUpEnabledSocialAdapter"
 
 SOCIALACCOUNT_PROVIDERS = {
     'openid': {

@@ -285,6 +285,19 @@
     - mailman
     - db
 
+- name: Install the fedora-specific modules
+  ansible.builtin.copy:
+    src: django_fedora_nosignup.py
+    dest: "{{ mailman_webui_confdir }}/django_fedora_nosignup.py"
+    owner: root
+    group: root
+    mode: 0644
+  tags:
+  - config
+  - mailman
+  notify:
+    - reload apache
+
 #
 # Plug HyperKitty into Mailman
 #
