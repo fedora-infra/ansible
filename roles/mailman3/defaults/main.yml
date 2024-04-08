@@ -32,3 +32,12 @@ mailman_domains:
 - lists.example.com
 - lists.example.org
 mailman_social_login: []
+
+# OpenID-connect settings
+# Attention that you should ensure that callback/redirect_url set at the provider side will end with /
+# see https://docs.allauth.org/en/latest/socialaccount/providers/openid_connect.html#openid-connect
+mailman_openidc_provider_id: fedora
+mailman_openidc_name: Fedora Account
+mailman_openidc_server_url: https://id.fedoraproject.org/openidc
+mailman_openidc_client_id: mailman3
+mailman_openidc_secret: boooooooooooooyoushouldnotreadthisasnotused

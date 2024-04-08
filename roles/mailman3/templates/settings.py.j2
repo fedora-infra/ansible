@@ -64,7 +64,6 @@ INSTALLED_APPS = (
     'django_extensions',
     'django_gravatar',
     'django_mailman3',
-    'django_mailman3.lib.auth.fedora',
     'django_q',
     'hyperkitty',
     'postorius',
@@ -228,6 +227,19 @@ ACCOUNT_ADAPTER = "django_fedora_nosignup.NoLocalSignUpAdapter"
 SOCIALACCOUNT_ADAPTER = "django_fedora_nosignup.SignUpEnabledSocialAdapter"
 
 SOCIALACCOUNT_PROVIDERS = {
+    'openid_connect': {
+        "SERVERS": [
+            {
+                "id": "{{ mailman3_openidc_provider_id }}",
+                "name": "{{ mailman3_openidc_name }}",
+                "server_url": "{{ mailman3_openidc_server_url }}",
+                "APP": {
+                    "client_id": "{{ mailman3_openidc_client_id }}",
+                    "secret": "{{ mailman3_openidc_secret }}",
+                },
+            },
+        ]
+    },
     'openid': {
         'SERVERS': [
             dict(id='yahoo',
