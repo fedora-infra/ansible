@@ -30,11 +30,11 @@ arguments = {}
 [consumer_config.azure]
 location = "eastus"
 {% if env == "staging" %}
-resource_group_name = "fedora-cloud"
-storage_account_name = "fedoraimages"
-{% else %}
 resource_group_name = "fedora-cloud-staging"
 storage_account_name = "fedoraimagesstaging"
+{% else %}
+resource_group_name = "fedora-cloud"
+storage_account_name = "fedoraimages"
 {% endif %}
 gallery_name = "Fedora"
 gallery_description = "The Fedora compute gallery."
@@ -47,15 +47,15 @@ storage_container_name = "vhds"
 
 [[consumer_config.azure.target_regions]]
 name = "eastus"
-regional_replica_count = 3
-storage_account_type = "Standard_ZRS"
+regional_replica_count = 1
+storage_account_type = "Standard_LRS"
 
 {% else %}
 
 [[consumer_config.azure.target_regions]]
 name = "eastus"
-regional_replica_count = 1
-storage_account_type = "Standard_LRS"
+regional_replica_count = 3
+storage_account_type = "Standard_ZRS"
 
 {% endif %}
 
