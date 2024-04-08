@@ -233,6 +233,7 @@ SOCIALACCOUNT_PROVIDERS = {
                 "id": "{{ mailman_openidc_provider_id }}",
                 "name": "{{ mailman_openidc_name }}",
                 "server_url": "{{ mailman_openidc_server_url }}",
+                "token_auth_method": "client_secret_post",
                 "APP": {
                     "client_id": "{{ mailman_openidc_client_id }}",
                     "secret": "{{ mailman_openidc_secret }}",
