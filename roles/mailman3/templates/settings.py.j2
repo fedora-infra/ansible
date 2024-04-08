@@ -230,12 +230,12 @@ SOCIALACCOUNT_PROVIDERS = {
     'openid_connect': {
         "SERVERS": [
             {
-                "id": "{{ mailman3_openidc_provider_id }}",
-                "name": "{{ mailman3_openidc_name }}",
-                "server_url": "{{ mailman3_openidc_server_url }}",
+                "id": "{{ mailman_openidc_provider_id }}",
+                "name": "{{ mailman_openidc_name }}",
+                "server_url": "{{ mailman_openidc_server_url }}",
                 "APP": {
-                    "client_id": "{{ mailman3_openidc_client_id }}",
-                    "secret": "{{ mailman3_openidc_secret }}",
+                    "client_id": "{{ mailman_openidc_client_id }}",
+                    "secret": "{{ mailman_openidc_secret }}",
                 },
             },
         ]
