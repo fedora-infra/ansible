@@ -1,4 +1,4 @@
-#!/usr/bin/python -tt
+#!/usr/bin/env python3
 # generate html and rss output files based on ini of torrents.
 # (c) 2007 Seth Vidal - skvidal @ fedoraproject.org
 
@@ -15,7 +15,7 @@
 # map=http://url/to/map.png
 # group is optional. if not listed group == description
 
-import ConfigParser
+import configparser
 import sys
 import glob
 import time
@@ -39,10 +39,8 @@ def rsstime(etime):
     
 def do_html_output(config, groups):
     myout = open(config.htmlout, 'w')
-    head =  open('%s' % config.htmlheader).read()
-    foot =  open('%s' % config.htmlfooter).read()
-    
-    myout.write(head)
+    with open(config.htmlheader) as head:
+        myout.write(head.read())
     
     for group in groups:
         msg = """
@@ -64,16 +62,15 @@ def do_html_output(config, groups):
             """ % (config.torrent_url, torrent.torrent, torrent.torrent, torrent.description, torrent.size, torrent.map, outputtime(torrent.releasedate))
             myout.write(msg)
         
-    myout.write(foot)
+    with open(config.htmlfooter) as foot:
+        myout.write(foot.read())
     myout.close()
     
 def do_rss_output(config, groups):
 
     myout = open(config.rssout, 'w')
-    head =  open('%s' % config.rssheader).read()
-    foot =  open('%s' % config.rssfooter).read()
-    
-    myout.write(head)
+    with open(config.rssheader) as head:
+        myout.write(head.read())
     
     for group in groups:
         for torrent in sorted(group.torrents, key=operator.attrgetter('releasedate', 'torrent')):
@@ -83,26 +80,22 @@ def do_rss_output(config, groups):
             <pubDate>%s</pubDate>
            </item>"""  % (torrent.description, config.torrent_url, torrent.torrent, rsstime(torrent.releasedate))
             myout.write(msg)
-    myout.write(foot)
+    with open(config.rssfooter) as foot:
+        myout.write(foot.read())
     myout.close()
     
     
-class Group(object):
+class Group:
     def __init__(self, name, date):
         self.name = name
         self.releasedate = date
         self.torrents = []
     
-    def __cmp__(self, other):
-        if other.releasedate > self.releasedate:
-            return -1
-        if self.releasedate > other.releasedate:
-            return 1
-        
-        return 0
+    def __lt__(self, other):
+        return self.releasedate < other.releasedate
         
 
-class Torrent(object):
+class Torrent:
     def __init__(self):
         self.torrent = None
         self.group = None
@@ -112,10 +105,10 @@ class Torrent(object):
         self.map = None
 
 
-class Config(object):
+class Config:
     def __init__(self, cpobj):
         if not cpobj.has_section('main'):
-            print >> sys.stderr, "no main section in config, exiting"
+            print("no main section in config, exiting", file=sys.stderr)
             sys.exit(1)
         try:
             self.inidir = cpobj.get('main', 'inidir')
@@ -126,23 +119,23 @@ class Config(object):
             self.rssfooter = cpobj.get('main', 'rssfooter')
             self.htmlout =  cpobj.get('main', 'htmlout')
             self.rssout = cpobj.get('main', 'rssout')
-        except ConfigParser.NoOptionError, e:
-            print >> sys.stderr, "Config file missing required option: %s" % e
+        except configparser.NoOptionError as e:
+            print("Config file missing required option:", e, file=sys.stderr)
             sys.exit(1)
             
 def main():
 
-    conf = ConfigParser.ConfigParser()
+    conf = configparser.ConfigParser()
     conf.read(globconf)
     config = Config(conf)
     
     fs = glob.glob(config.inidir + '/*.ini')
     for fn in fs:
-        c = ConfigParser.ConfigParser()
+        c = configparser.ConfigParser()
         c.read(fn)
         for s in c.sections():
             if 'releasedate' not in c.options(s) or 'description' not in c.options(s):
-                print >> sys.stderr,  "bad torrent config for %s" % s
+                print("bad torrent config for", s, file=sys.stderr)
                 continue
             if c.has_option(s,'group'):
                 g = c.get(s, 'group')
@@ -150,7 +143,7 @@ def main():
                 g = c.get(s, 'description')
             
             thisdate = time.mktime(time.strptime(c.get(s, 'releasedate'), timeformat))
-            if groups.has_key(g):
+            if g in groups:
                 thisgroup = groups[g]
                 if thisgroup.releasedate < thisdate:
                     thisgroup.releasedate = thisdate
@@ -177,9 +170,7 @@ def main():
             
             thisgroup.torrents.append(this)
     
-    sortgroups = groups.values()
-    sortgroups.sort()
-    sortgroups.reverse()
+    sortgroups = sorted(groups.values())
     
     do_html_output(config, sortgroups)
     do_rss_output(config, sortgroups)
@@ -187,4 +178,3 @@ def main():
         
 if __name__ == "__main__":
     main()
-    
