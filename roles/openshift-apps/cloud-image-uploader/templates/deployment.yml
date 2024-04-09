@@ -18,7 +18,8 @@ metadata:
 spec:
   replicas: 1
   selector:
-    app: cloud-image-uploader
+    matchLabels:
+      app: cloud-image-uploader
   strategy:
     type: Recreate
   template:
