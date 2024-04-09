@@ -36,6 +36,12 @@ spec:
           - mountPath: /etc/osh/worker-manager/id_rsa
             name: aws-openscanhub-key
             subPath: id_rsa
+        livenessProbe:
+        exec:
+          command:
+            - /usr/bin/bash
+            - '-c'
+            - /usr/bin/pgrep Agent-manager
       restartPolicy: Always
       volumes:
         - name: openscanhub-pvc-var-lib-osh
@@ -55,12 +61,6 @@ spec:
           secret:
             defaultMode: 400
             secretName: aws-openscanhub-key
-      livenessProbe:
-      exec:
-        command:
-          - /usr/bin/bash
-          - '-c'
-          - pgrep Agent-manager
       timeoutSeconds: 1
       periodSeconds: 10
       successThreshold: 1
