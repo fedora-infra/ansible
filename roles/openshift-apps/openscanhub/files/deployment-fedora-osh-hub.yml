@@ -24,7 +24,7 @@ spec:
         name: fedora-osh-hub
         volumeMounts:
           - mountPath: /var/lib/osh/
-            name: openscanhub-pvc-var-lib-osh
+            name: pvc-var-lib-osh
           - mountPath: /etc/keytabs
             name: openscanhub-keytab
           - mountPath: /usr/lib/python3.9/site-packages/osh/hub/settings_local.py
@@ -48,9 +48,9 @@ spec:
           failureThreshold: 3
       restartPolicy: Always
       volumes:
-        - name: openscanhub-pvc-var-lib-osh
+        - name: pvc-var-lib-osh
           persistentVolumeClaim:
-            claimName: openscanhub-pvc-var-lib-osh
+            claimName: pvc-var-lib-osh
         - name: openscanhub-keytab
           secret:
             defaultMode: 420

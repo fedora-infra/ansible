@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: openscanhub-pvc-var-lib-osh
+  name: pvc-var-lib-osh
 spec:
   # This volume is on NFS.
   volumeName: fedora-openscanhub-var-lib-osh-{{env_short}}

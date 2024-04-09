@@ -39,8 +39,8 @@
     when: env == "staging"
   - role: openshift/object
     app: openscanhub
-    template: openscanhub-pvc-var-lib-osh.yml
-    objectname: openscanhub-pvc-var-lib-osh
+    template: pvc-var-lib-osh.yml
+    objectname: pvc-var-lib-osh
   - role: openshift/object
     app: openscanhub
     template: settings-local-configmap.yml
