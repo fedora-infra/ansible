@@ -37,11 +37,15 @@ spec:
             name: aws-openscanhub-key
             subPath: id_rsa
         livenessProbe:
-        exec:
-          command:
-            - /usr/bin/bash
-            - '-c'
-            - /usr/bin/pgrep Agent-manager
+          exec:
+            command:
+              - /usr/bin/bash
+              - '-c'
+              - /usr/bin/pgrep Agent-manager
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
       restartPolicy: Always
       volumes:
         - name: openscanhub-pvc-var-lib-osh
@@ -61,7 +65,3 @@ spec:
           secret:
             defaultMode: 400
             secretName: aws-openscanhub-key
-      timeoutSeconds: 1
-      periodSeconds: 10
-      successThreshold: 1
-      failureThreshold: 3
