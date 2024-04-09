@@ -69,7 +69,7 @@
 
   - role: openshift/object
     app: cloud-image-uploader
-    file: deployment.yml
+    template: deployment.yml
     objectname: deployment.yml
 
   - role: openshift/rollout
