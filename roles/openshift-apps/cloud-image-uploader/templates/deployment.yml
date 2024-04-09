@@ -42,7 +42,7 @@ spec:
             secretName: cloud-image-uploader-fedora-messaging-crt
       containers:
         - name: cloud-image-uploader
-          image: cloud-image-uploader/cloud-image-uploader:latest
+          image: image-registry.openshift-image-registry.svc:5000/cloud-image-uploader/cloud-image-uploader:latest
           imagePullPolicy: Always
           env:
             - name: AZURE_SECRET
