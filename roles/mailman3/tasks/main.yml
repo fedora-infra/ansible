@@ -78,6 +78,7 @@
   tags:
     - config
     - mailman
+    - hyperkitty
 
 - name: Set default list footer
   ansible.builtin.copy:
@@ -89,6 +90,7 @@
   tags:
     - config
     - mailman
+    - hyperkitty
 
 - name: Set default list:admin:action:post template
   ansible.builtin.copy:
@@ -100,6 +102,7 @@
   tags:
     - config
     - mailman
+    - hyperkitty
 
 - name: Create lists/users.lists.fedoraproject.org/en template dir
   ansible.builtin.file:
@@ -108,6 +111,7 @@
   tags:
     - config
     - mailman
+    - hyperkitty
 
 - name: Set list:user:notice:hold template for users list
   ansible.builtin.copy:
@@ -119,6 +123,7 @@
   tags:
     - config
     - mailman
+    - hyperkitty
 
 - name: Install the hyperkitty/postorius settings file
   ansible.builtin.template:
@@ -127,6 +132,7 @@
   tags:
     - config
     - mailman
+    - hyperkitty
   notify:
     - restart mailmanweb
 
@@ -137,6 +143,7 @@
   tags:
     - config
     - mailman
+    - hyperkitty
   notify:
     - restart mailmanweb
 
@@ -147,7 +154,9 @@
     owner: mailman
     group: mailman
     mode: 0755
-  tags: mailman
+  tags:
+    - mailman
+    - hyperkitty
 
 - name: Create the hyperkitty static files dirs
   ansible.builtin.file:
@@ -160,7 +169,9 @@
     - static
     - static-fedora
   register: static_root_dir
-  tags: mailman
+  tags:
+    - mailman
+    - hyperkitty
 
 - name: Create the fedora-specific hyperkitty img dir
   ansible.builtin.file:
@@ -293,8 +304,8 @@
     group: root
     mode: 0644
   tags:
-  - config
-  - mailman
+    - config
+    - mailman
   notify:
     - reload apache
 
@@ -346,6 +357,7 @@
   tags:
     - mailman
     - systemd
+    - hyperkitty
 
 - name: Enable the mailmanweb server
   ansible.builtin.systemd:
@@ -356,6 +368,7 @@
   tags:
     - mailman
     - systemd
+    - hyperkitty
 
 #
 # Scripts
