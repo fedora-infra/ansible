@@ -24,6 +24,7 @@ ProxyAddHeaders Off
 # Not redirecting/proxying static content (served locally)
 ProxyPass /static !
 ProxyPass /pipermail !
+ProxyPass /apache-status !
 
 # Proxying to gunicorn mailmanweb backend
 ProxyPass / http://127.0.0.1:8000/
