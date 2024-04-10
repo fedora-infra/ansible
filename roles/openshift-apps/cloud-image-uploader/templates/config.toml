@@ -21,7 +21,7 @@ queue = "cloud-image-uploader{{ env_suffix }}"
 exchange = "amq.topic"
 routing_keys = ["org.fedoraproject.{{ env }}.buildsys.build.state.change"]
 
-[queues.fedora-image-uploader]
+[queues."cloud-image-uploader{{ env_suffix }}"]
 durable = true
 auto_delete = false
 exclusive = false
