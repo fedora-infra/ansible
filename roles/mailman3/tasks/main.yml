@@ -303,7 +303,7 @@
 #
 - name: Copy the mailman-hyperkitty conffile
   ansible.builtin.template:
-    src: mailman-hyperkitty.cfg
+    src: mailman-hyperkitty.cfg.j2
     dest: "/etc/mailman3.d/hyperkitty.cfg"
     owner: mailman
     group: mailman
