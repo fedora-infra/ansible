@@ -10,8 +10,8 @@
 
   roles:
   - role: rabbit/queue
-    username: "cloud-image-uploader"
-    queue_name: "cloud-image-uploader"
+    username: "cloud-image-uploader{{ env_suffix }}"
+    queue_name: "cloud-image-uploader{{ env_suffix }}"
     routing_keys:
       - "org.fedoraproject.{{ env }}.buildsys.build.state.change"
     thresholds:

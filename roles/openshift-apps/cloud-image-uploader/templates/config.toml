@@ -2,7 +2,7 @@
 # For complete details on all configuration options, see the documentation
 # https://fedora-messaging.readthedocs.io/en/latest/configuration.html.
 
-amqp_url = "amqps://cloud-image-uploader:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fpubsub"
+amqp_url = "amqps://cloud-image-uploader{{ env_suffix }}:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fpubsub"
 callback = "fedora_cloud_image_uploader:Uploader"
 passive_declares = true
 
@@ -17,7 +17,7 @@ app_url = "https://pagure.io/cloud-image-uploader"
 app_contacts_email = "cloud@lists.fedoraproject.org"
 
 [[bindings]]
-queue = "cloud-image-uploader"
+queue = "cloud-image-uploader{{ env_suffix }}"
 exchange = "amq.topic"
 routing_keys = ["org.fedoraproject.{{ env }}.buildsys.build.state.change"]
 
