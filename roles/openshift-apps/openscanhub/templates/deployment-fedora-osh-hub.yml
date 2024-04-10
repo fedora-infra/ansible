@@ -19,7 +19,7 @@ spec:
         deployment: fedora-osh-hub
     spec:
       containers:
-      - image: quay.io/openscanhub-fedora-infra/ocp:staging
+      - image: quay.io/openscanhub-fedora-infra/ocp:{{ env }}
         imagePullPolicy: Always
         name: fedora-osh-hub
         volumeMounts:

@@ -65,7 +65,7 @@
     when: env == "production"
   - role: openshift/object
     app: openscanhub
-    file: deployment-fedora-osh-hub.yml
+    template: deployment-fedora-osh-hub.yml
     objectname: deployment-fedora-osh-hub
     when: env == "staging"
   - role: openshift/object
@@ -123,17 +123,17 @@
     when: env == "staging"
   - role: openshift/object
     app: openscanhub
-    file: deployment-resalloc-server.yml
+    template: deployment-resalloc-server.yml
     objectname: deployment-resalloc-server
     when: env == "staging"
   - role: openshift/object
     app: openscanhub
-    file: route-resalloc-server.yml
+    template: route-resalloc-server.yml
     objectname: route-resalloc-server
     when: env == "staging"
   - role: openshift/object
     app: openscanhub
-    file: service-resalloc-server.yml
+    template: service-resalloc-server.yml
     objectname: service-resalloc-server
     when: env == "staging"
 

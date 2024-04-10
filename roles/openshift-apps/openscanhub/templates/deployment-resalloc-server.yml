@@ -25,7 +25,7 @@ spec:
         deployment: resalloc-server
     spec:
       containers:
-      - image: quay.io/openscanhub-fedora-infra/resalloc-server:staging
+      - image: quay.io/openscanhub-fedora-infra/resalloc-server:{{ env }}
         imagePullPolicy: Always
         name: resalloc-server
         ports:
