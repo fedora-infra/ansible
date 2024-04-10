@@ -7,9 +7,9 @@ callback = "fedora_cloud_image_uploader:Uploader"
 passive_declares = true
 
 [tls]
-ca_cert = "/etc/pki/rabbitmq/ca/fedora-messaging-cloud-image-uploader-ca.crt"
-keyfile = "/etc/pki/rabbitmq/key/fedora-messaging-cloud-image-uploader.key"
-certfile = "/etc/pki/rabbitmq/cert/fedora-messaging-cloud-image-uploader.crt"
+ca_cert = "/etc/pki/rabbitmq/ca/cloud-image-uploader.ca"
+keyfile = "/etc/pki/rabbitmq/key/cloud-image-uploader.key"
+certfile = "/etc/pki/rabbitmq/cert/cloud-image-uploader.crt"
 
 [client_properties]
 app = "Fedora Cloud Image Uploader"
