@@ -185,7 +185,7 @@
     - django_mailman3
   tags:
     - mailman
-    - hypperkitty
+    - hyperkitty
 
 # Add the Nest banner
 # See issue https://pagure.io/fedora-infrastructure/issue/10103
@@ -302,7 +302,7 @@
 # Plug HyperKitty into Mailman
 #
 - name: Copy the mailman-hyperkitty conffile
-  ansible.builtin.copy:
+  ansible.builtin.template:
     src: mailman-hyperkitty.cfg
     dest: "/etc/mailman3.d/hyperkitty.cfg"
     owner: mailman
