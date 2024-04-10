@@ -3,18 +3,12 @@ kind: PersistentVolumeClaim
 metadata:
   name: pvc-var-lib-redis-data
 spec:
-  # TODO: This name should be set when `storageClassName` is NFS
-  # volumeName: fedora-openscanhub-var-lib-osh-{{env_short}}
+  volumeName: fedora-openscanhub-pvc-var-lib-redis-data-{{env_short}}
   accessModes:
-  - ReadWriteOnce
+  - ReadWriteMany
   resources:
     requests:
       # This should be manually expanded when production
       # has gone beyond this limit.
-{% if env == "staging" %}
       storage: 1Gi
-{% else %}
-      storage: 2Gi
-{% endif %}
-  storageClassName: 'ocs-storagecluster-cephfs'
-  volumeMode: Filesystem
+  storageClassName: ''
