@@ -17,7 +17,7 @@ app_url = "https://pagure.io/cloud-image-uploader"
 app_contacts_email = "cloud@lists.fedoraproject.org"
 
 [[bindings]]
-queue = "fedora-image-uploader"
+queue = "cloud-image-uploader"
 exchange = "amq.topic"
 routing_keys = ["org.fedoraproject.{{ env }}.buildsys.build.state.change"]
 
