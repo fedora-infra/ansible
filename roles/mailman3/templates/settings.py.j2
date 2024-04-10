@@ -48,9 +48,6 @@ ROOT_URLCONF = 'urls'
 # Application definition
 
 INSTALLED_APPS = (
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
     'compressor',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
@@ -63,10 +60,13 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'django_extensions',
     'django_gravatar',
-    'django_mailman3',
     'django_q',
     'hyperkitty',
     'postorius',
+    'django_mailman3',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 {% for service_name, service_data in mailman_login.items() %}
     'allauth.socialaccount.providers.{{ service_data.provider }}',
 {% endfor %}
