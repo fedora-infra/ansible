@@ -40,7 +40,7 @@ spec:
     git:
       uri: https://github.com/fedora-infra/fedbadges.git
       # ref: {{ (env == 'production')|ternary('stable', 'staging') }}
-      ref: fedora-messaging
+      ref: develop
     contextDir: /
   strategy:
     type: Source
