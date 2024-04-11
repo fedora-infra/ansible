@@ -5,6 +5,10 @@ metadata:
   namespace: openscanhub
   labels:
     app: fedora-osh-hub
+    app.kubernetes.io/component: fedora-osh-hub
+    app.kubernetes.io/instance: fedora-osh-hub
+    app.kubernetes.io/name: fedora-osh-hub
+    app.kubernetes.io/part-of: openscanhub
 spec:
   replicas: 1
   selector:
