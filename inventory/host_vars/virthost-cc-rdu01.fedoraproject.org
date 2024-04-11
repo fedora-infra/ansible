@@ -6,7 +6,8 @@ br0_ipv4_nm: 24
 br0_port0_mac: '{{ mac0 }}'
 datacenter: rdu-cc
 dns1: 8.8.8.8
-dns_search1: fedoraproject.org
+dns_search1: vpn.fedoraproject.org
+dns_search2: fedoraproject.org
 mac0: c8:4b:d6:af:2f:ef
 network_connections:
   - autoconnect: true
@@ -18,6 +19,7 @@ network_connections:
       - '{{ dns1 }}'
       dns_search:
       - '{{ dns_search1 }}'
+      - '{{ dns_search2 }}'
       gateway4: '{{ br0_ipv4_gw }}'
     name: br0
     state: up
@@ -27,7 +29,7 @@ network_connections:
     name: br0-port0
     state: up
     type: ethernet
-nrpe_procs_crit: 1000
-nrpe_procs_warn: 900
+nrpe_procs_crit: 1700
+nrpe_procs_warn: 1500
 postfix_group: vpn
 vpn: true
