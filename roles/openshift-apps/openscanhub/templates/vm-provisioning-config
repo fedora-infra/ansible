@@ -1,4 +1,6 @@
-env={{ env }}
+# This variable should be used to determine which Copr repository
+# (staging or production) to use when running a playbook.
+export env={{ env }}
 
 declare -A \
     aws_image \
