@@ -38,6 +38,28 @@
     app: cloud-image-uploader
     template: configmap.yml
     objectname: configmap.yml
+    vars:
+      azure_image_regions:
+        - "australiaeast"
+        - "brazilsouth"
+        - "canadacentral"
+        - "centralindia"
+        - "eastasia"
+        - "eastus"
+        - "eastus2"
+        - "francecentral"
+        - "japaneast"
+        - "koreacentral"
+        - "northeurope"
+        - "norwayeast"
+        - "qatarcentral"
+        - "southafricanorth"
+        - "switzerlandnorth"
+        - "uksouth"
+        - "westeurope"
+        - "westus3"
+
+
 
   - role: openshift/secret-file
     app: cloud-image-uploader

@@ -53,13 +53,15 @@ storage_account_type = "Standard_LRS"
 
 {% else %}
 
+{% for region in azure_image_regions %}
 [[consumer_config.azure.target_regions]]
-name = "eastus"
+name = "{{ region }}"
 regional_replica_count = 3
 storage_account_type = "Standard_ZRS"
 
-{% endif %}
+{% endfor %}
 
+{% endif %}
 
 [qos]
 prefetch_size = 0
