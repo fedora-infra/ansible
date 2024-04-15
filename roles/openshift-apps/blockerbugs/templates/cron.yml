@@ -6,11 +6,11 @@ spec:
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
-  activeDeadlineSeconds: 900
   startingDeadlineSeconds: 600
   schedule: "*/30 * * * *"
   jobTemplate:
     spec:
+      activeDeadlineSeconds: 900
       template:
         spec:
           restartPolicy: Never
