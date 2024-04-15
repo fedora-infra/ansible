@@ -7,14 +7,13 @@ spec:
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
   activeDeadlineSeconds: 900
-  startingDeadlineSeconds: 180
+  startingDeadlineSeconds: 600
   schedule: "*/30 * * * *"
   jobTemplate:
     spec:
       template:
         spec:
           restartPolicy: Never
-          startingDeadlineSeconds: 600
           containers:
           - name: blockerbugs-sync
             image: image-registry.openshift-image-registry.svc:5000/blockerbugs/blockerbugs:latest
