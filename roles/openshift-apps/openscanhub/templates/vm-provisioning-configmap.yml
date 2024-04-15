@@ -11,5 +11,5 @@ items:
     labels:
       app: openscanhub
   data:
-    pools.yaml: |-
-      {{ load_file('vm-provisioning-config') }}
+    config: |-
+      {{ load_file('vm-provisioning-config') | indent(6) }}
