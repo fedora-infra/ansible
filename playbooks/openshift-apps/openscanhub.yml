@@ -113,6 +113,11 @@
     when: env == "staging"
   - role: openshift/object
     app: openscanhub
+    template: vm-provisioning-configmap.yml
+    objectname: vm-provisioning-configmap
+    when: env == "staging"
+  - role: openshift/object
+    app: openscanhub
     template: aws-credentials-configmap.yml
     objectname: aws-credentials-configmap
     when: env == "staging"

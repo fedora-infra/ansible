@@ -38,6 +38,9 @@ spec:
           - mountPath: /etc/resallocserver/pools.yaml
             name: etc-resallocserver-pools-configmap
             subPath: pools.yaml
+          - mountPath: /etc/resallocserver/vm-provisioning/config
+            name: vm-provisioning-configmap
+            subPath: config
           - mountPath: /var/lib/resallocserver/.aws/credentials
             name: aws-credentials-configmap
             subPath: credentials
@@ -55,6 +58,9 @@ spec:
         - name: etc-resallocserver-pools-configmap
           configMap:
             name: etc-resallocserver-pools-config
+        - name: vm-provisioning-configmap
+          configMap:
+            name: vm-provisioning-config
         - name: aws-credentials-configmap
           configMap:
             name: aws-credentials-config
