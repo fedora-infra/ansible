@@ -1,5 +1,5 @@
 ---
-br0_ipv4: 10.3.163.28
+br0_ipv4_ip: 10.3.163.28
 br0_ipv4_gw: 10.3.163.254
 br0_ipv4_nm: 24
 br0_port0_mac: "{{ mac1 }}"
@@ -9,13 +9,13 @@ dns2: 10.3.163.34
 dns_search1: "iad2.fedoraproject.org"
 dns_search2: "fedoraproject.org"
 has_ipv4: yes
-mac1: 24:6e:96:b1:61:f8
+mac1: a8:3c:a5:36:2a:b0
 nbde: false
 network_connections:
   - autoconnect: yes
     ip:
       address:
-        - "{{ br0_ipv4 }}/{{ br0_ipv4_nm }}"
+        - "{{ br0_ipv4_ip }}/{{ br0_ipv4_nm }}"
       dhcp4: no
       dns:
         - "{{ dns1 }}"
