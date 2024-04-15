@@ -67,17 +67,14 @@
     app: openscanhub
     template: deployment-fedora-osh-hub.yml
     objectname: deployment-fedora-osh-hub
-    when: env == "staging"
   - role: openshift/object
     app: openscanhub
     template: route-fedora-osh-hub.yml
     objectname: route-fedora-osh-hub
-    when: env == "staging"
   - role: openshift/object
     app: openscanhub
     file: service-fedora-osh-hub.yml
     objectname: service-fedora-osh-hub
-    when: env == "staging"
 
   # Configurations for redis.
   - role: openshift/object
@@ -88,59 +85,48 @@
     app: openscanhub
     file: deployment-redis.yml
     objectname: deployment-redis
-    when: env == "staging"
   - role: openshift/object
     app: openscanhub
     file: route-redis.yml
     objectname: route-redis
-    when: env == "staging"
   - role: openshift/object
     app: openscanhub
     file: service-redis.yml
     objectname: service-redis
-    when: env == "staging"
 
   # Configurations for resalloc-server.
   - role: openshift/object
     app: openscanhub
     template: etc-resallocserver-server-configmap.yml
     objectname: etc-resallocserver-server-configmap
-    when: env == "staging"
   - role: openshift/object
     app: openscanhub
     template: etc-resallocserver-pools-configmap.yml
     objectname: etc-resallocserver-pools-configmap
-    when: env == "staging"
   - role: openshift/object
     app: openscanhub
     template: vm-provisioning-configmap.yml
     objectname: vm-provisioning-configmap
-    when: env == "staging"
   - role: openshift/object
     app: openscanhub
     template: aws-credentials-configmap.yml
     objectname: aws-credentials-configmap
-    when: env == "staging"
   - role: openshift/object
     app: openscanhub
     template: aws-openscanhub-key.yml
     objectname: aws-openscanhub-key
-    when: env == "staging"
   - role: openshift/object
     app: openscanhub
     template: deployment-resalloc-server.yml
     objectname: deployment-resalloc-server
-    when: env == "staging"
   - role: openshift/object
     app: openscanhub
     template: route-resalloc-server.yml
     objectname: route-resalloc-server
-    when: env == "staging"
   - role: openshift/object
     app: openscanhub
     template: service-resalloc-server.yml
     objectname: service-resalloc-server
-    when: env == "staging"
 
     # sudo rbac-playbook -l staging -t delete openshift-apps/openscanhub.yml
   - role: openshift/object-delete
