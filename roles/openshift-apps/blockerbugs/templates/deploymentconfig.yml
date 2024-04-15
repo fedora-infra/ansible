@@ -107,6 +107,7 @@ spec:
 {% else %}
           value: "1"
 {% endif %}
+        volumeMounts:
         - name: blockerbugs-secret-volume
           mountPath: /opt/app-root/secret/
           readOnly: true
