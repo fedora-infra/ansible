@@ -8,6 +8,16 @@
   tags:
     - db-configure
 
+- name: Configure /var/lib/pgsql/data/postgresql.conf file
+  ansible.builtin.copy:
+    src: postgresql.conf
+    dest: /var/lib/pgsql/data/postgresql.conf
+    mode: 0600
+    owner: postgres
+    group: postgres
+  tags:
+    - db-configure
+
 # db needs to be running at this step
 - name: Ensuring postgresql server is started
   ansible.builtin.service:
