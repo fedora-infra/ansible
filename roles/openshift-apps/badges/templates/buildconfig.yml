@@ -39,8 +39,7 @@ spec:
     type: Git
     git:
       uri: https://github.com/fedora-infra/fedbadges.git
-      # ref: {{ (env == 'production')|ternary('stable', 'staging') }}
-      ref: develop
+      ref: {{ (env == 'production')|ternary('stable', 'staging') }}
     contextDir: /
   strategy:
     type: Source
@@ -55,14 +54,12 @@ spec:
   triggers:
   - type: ConfigChange
   - type: ImageChange
-{#
   - type: GitHub
     github:
       # Not sure why secretReference does not work, but it doesn't.
       # secretReference:
       #   name: github-webook
-      secret: "{{ badges_stg_github_secret }}"
-#}
+      secret: "{{ (env == 'production')|ternary(badges_prod_github_secret, badges_stg_github_secret) }}"
 ---
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
@@ -77,11 +74,7 @@ spec:
     type: Git
     git:
       uri: https://github.com/fedora-infra/tahrir.git
-{% if env == "staging" %}
-      ref: staging
-{% else %}
-      ref: stable
-{% endif %}
+      ref: {{ (env == 'production')|ternary('stable', 'staging') }}
     contextDir: /
   strategy:
     type: Source
@@ -96,13 +89,9 @@ spec:
   triggers:
   - type: ConfigChange
   - type: ImageChange
-{% if tahrir_stg_github_secret is defined and env == 'staging' %}
   - type: GitHub
     github:
-      secret: "{{ tahrir_stg_github_secret }}"
-{% endif %}
-{% if tahrir_prod_github_secret is defined and env == 'production' %}
-  - type: GitHub
-    github:
-      secret: "{{ tahrir_prod_github_secret }}"
-{% endif %}
+      # Not sure why secretReference does not work, but it doesn't.
+      # secretReference:
+      #   name: github-webook
+      secret: "{{ (env == 'production')|ternary(badges_prod_github_secret, badges_stg_github_secret) }}"
