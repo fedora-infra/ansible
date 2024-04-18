@@ -323,22 +323,6 @@
 # This should be disabled when there is a prerelease
 
   - role: httpd/redirectmatch
-    shortname: prerelease-to-final-labs-1
-    website: labs.fedoraproject.org
-    regex: /(.*)prerelease.*$
-    target: https://labs.stg.fedoraproject.org/$1
-    redirectmatch_enabled: false
-    when: env == 'staging'
-
-  - role: httpd/redirectmatch
-    shortname: prerelease-to-final-labs-2
-    website: labs.fedoraproject.org
-    regex: /prerelease.*$
-    target: https://labs.stg.fedoraproject.org/$1
-    redirectmatch_enabled: false
-    when: env == 'staging'
-
-  - role: httpd/redirectmatch
     shortname: prerelease-to-final-alt-1
     website: alt.fedoraproject.org
     regex: /prerelease.*$
@@ -347,22 +331,6 @@
     when: env == 'staging'
 
 # end staging
-
-  - role: httpd/redirectmatch
-    shortname: prerelease-to-final-labs-1
-    website: labs.fedoraproject.org
-    regex: /(.*)/prerelease.*$
-    target: https://labs.fedoraproject.org/$1
-    redirectmatch_enabled: false
-    when: env != 'staging'
-
-  - role: httpd/redirectmatch
-    shortname: prerelease-to-final-labs-2
-    website: labs.fedoraproject.org
-    regex: /prerelease.*$
-    target: https://labs.fedoraproject.org/$1
-    redirectmatch_enabled: false
-    when: env != 'staging'
 
   - role: httpd/redirectmatch
     shortname: prerelease-to-final-alt-1
@@ -413,7 +381,7 @@
   # Fedora start page
   - role: httpd/redirect
     shortname: site
-    website: start.fedoraproject.org 
+    website: start.fedoraproject.org
     target: https://fedoraproject.org/start
     tags:
     - fedoraproject.org
@@ -478,7 +446,17 @@
     website: spins.fedoraproject.org
     regex: ^.*
     target: https://fedoraproject.org/spins/
+    tags:
+    - fedoraproject.org
 
+  # Labs
+  - role: httpd/redirectmatch
+    shortname: labs
+    website: labs.fedoraproject.org
+    regex: ^.*
+    target: https://fedoraproject.org/labs/
+    tags:
+    - fedoraproject.org
 
   # Various sites that we are friends with
   - role: httpd/redirect
