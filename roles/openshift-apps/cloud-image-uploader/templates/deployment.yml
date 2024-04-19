@@ -33,6 +33,7 @@ spec:
         - name: cloud-image-uploader
           image: image-registry.openshift-image-registry.svc:5000/cloud-image-uploader/cloud-image-uploader:latest
           imagePullPolicy: Always
+          workingDir: /srv/cloud-uploader/
           env:
             - name: AZURE_SECRET
               valueFrom:
