@@ -112,6 +112,7 @@
     mailman_openidc_secret: "{{ mailman_stg_oidc_pass }}"
     mailman_httpd_hostname: lists.stg.fedoraproject.org
     mailman_openidc_client_id: "mailman3{{ env_suffix }}"
+    mailman_hyperkitty_su_pass: "{{ mailman_stg_hk_su_pass }}"
     when: env == "staging"
   - {role: fedmsg/base,
      when: env != "staging"}
