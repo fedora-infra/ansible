@@ -1,3 +1,7 @@
+# Fedora 40 Cloud nightly compose
+MAILTO=releng-cron@lists.fedoraproject.org
+15 8 * * * root TMPDIR=`mktemp -d /tmp/CloudF40.XXXXXX` && chmod 755 $TMPDIR && pushd $TMPDIR && git clone -n https://pagure.io/pungi-fedora.git && cd pungi-fedora && git checkout f40 && LANG=en_US.UTF-8 ./cloud-nightly.sh RC-$(date "+\%Y\%m\%d").0 && popd && rm -rf $TMPDIR
+
 # Fedora 39 Cloud nightly compose
 MAILTO=releng-cron@lists.fedoraproject.org
 15 6 * * * root touch /tmp/fedora-compose-cloud-updates && TMPDIR=`mktemp -d /tmp/CloudF39.XXXXXX` && chmod 755 $TMPDIR && pushd $TMPDIR && git clone -n https://pagure.io/pungi-fedora.git && cd pungi-fedora && git checkout f39 && LANG=en_US.UTF-8 ./cloud-nightly.sh RC-$(date "+\%Y\%m\%d").0 && popd && rm -rf $TMPDIR && rm /tmp/fedora-compose-cloud-updates
@@ -5,7 +9,3 @@ MAILTO=releng-cron@lists.fedoraproject.org
 # Fedora 38 Cloud nightly compose
 MAILTO=releng-cron@lists.fedoraproject.org
 15 7 * * * root touch /tmp/fedora-compose-cloud-updates && TMPDIR=`mktemp -d /tmp/CloudF38.XXXXXX` && chmod 755 $TMPDIR && pushd $TMPDIR && git clone -n https://pagure.io/pungi-fedora.git && cd pungi-fedora && git checkout f38 && LANG=en_US.UTF-8 ./cloud-nightly.sh RC-$(date "+\%Y\%m\%d").0 && popd && rm -rf $TMPDIR && rm /tmp/fedora-compose-cloud-updates
-
-# Fedora 37 Cloud nightly compose
-#MAILTO=releng-cron@lists.fedoraproject.org
-#15 8 * * * root TMPDIR=`mktemp -d /tmp/CloudF37.XXXXXX` && chmod 755 $TMPDIR && pushd $TMPDIR && git clone -n https://pagure.io/pungi-fedora.git && cd pungi-fedora && git checkout f37 && LANG=en_US.UTF-8 ./cloud-nightly.sh RC-$(date "+\%Y\%m\%d").0 && popd && rm -rf $TMPDIR
