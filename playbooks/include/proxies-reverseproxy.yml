@@ -239,9 +239,15 @@
     - datagrepper
 
   - role: httpd/reverseproxy
-    website: badges.fedoraproject.org
+    website: "badges{{ env_suffix }}.fedoraproject.org"
     destname: badges
-    proxyurl: http://localhost:10032
+    balancer_name: apps-ocp
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    targettype: openshift
+    keephost: true
+    ocp4: true
+    tags:
+    - badges
 
   - role: httpd/reverseproxy
     website: kerneltest.fedoraproject.org
