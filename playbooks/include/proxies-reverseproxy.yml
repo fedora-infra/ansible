@@ -239,7 +239,7 @@
     - datagrepper
 
   - role: httpd/reverseproxy
-    website: "badges{{ env_suffix }}.fedoraproject.org"
+    website: "badges.fedoraproject.org"
     destname: badges
     balancer_name: apps-ocp
     balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
