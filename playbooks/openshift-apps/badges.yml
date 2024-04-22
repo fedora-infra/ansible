@@ -104,6 +104,14 @@
     - role: openshift/route
       app: badges
       routename: frontend
+      host: "badges{{ env_suffix }}.fedoraproject.org"
+      servicename: frontend
+      serviceport: web
+      annotations:
+        haproxy.router.openshift.io/timeout: 5m
+    - role: openshift/route
+      app: badges
+      routename: frontend-openshift
       host: "badges.apps.ocp{{ env_suffix }}.fedoraproject.org"
       servicename: frontend
       serviceport: web
