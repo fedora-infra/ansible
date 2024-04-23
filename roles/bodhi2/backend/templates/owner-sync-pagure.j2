@@ -193,17 +193,15 @@ def get_active_releases_from_bodhi():
 
     rv = requests.get(bodhi_url, timeout=60)
 
-    if not rv.ok:
-        return []
-
-    active_releases = []
-    rv_json = rv.json()
-    if rv_json['releases']:
-        for release in rv_json['releases']:
-            if re.match(r'^(f|epel)\d{1,2}$', release['branch']):
-                active_releases.append(release['branch'])
-    return list(set(active_releases))
-
+    if rv.ok:
+        active_releases = []
+        rv_json = rv.json()
+        if rv_json['releases']:
+            for release in rv_json['releases']:
+                if re.match(r'^(f|epel)\d{1,2}$', release['branch']):
+                    active_releases.append(release['branch'])
+        return list(set(active_releases))
+    return []
 
 def get_project_branches(session, namespace, project_name):
     """
@@ -224,12 +222,12 @@ def get_project_branches(session, namespace, project_name):
             get_branches_url, headers=headers, timeout=60)
     rv_json = rv.json()
 
-    if not rv.ok:
-        # When specific namespace has no branches, API returns error "Project not found".
-        # Do not fail. Return "no branches found" instead.
-        return project_name, []
+    if rv.ok:
+        return rv_json.get("branches", ())
 
-    return rv_json.get("branches", ())
+    # When specific namespace has no branches, API returns error "Project not found".
+    # Do not fail. Return "no branches found" instead.
+    return project_name, []
 
 
 def get_project_name_and_its_active_branches(session, namespace, active_releases,
@@ -273,16 +271,18 @@ def get_pagure_project_names_from_page(session, namespace, page,
     if verbose:
         print('- Querying {0}'.format(url))
     response = session.get(url, verify=VERIFY, timeout=120)
-    if not bool(response):
+
+    if bool(response):
+        names = set()
+        for project in response.json()['projects']:
+            names.add(project['name'])
+
+        return names
+
+    else:
         print("Failed to talk to %r %r." % (
-            response.request.url, response), file=sys.stderr)
+        response.request.url, response), file=sys.stderr)
         return set()
-
-    names = set()
-    for project in response.json()['projects']:
-        names.add(project['name'])
-
-    return names
 
 
 def get_pagure_project_branches(namespace, package=None, verbose=False):
