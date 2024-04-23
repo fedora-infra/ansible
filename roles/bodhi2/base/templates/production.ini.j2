@@ -548,6 +548,13 @@ critpath.jsonpath = /etc/bodhi/critpath
 # files. This is used if critpath.type is not defined.
 # critpath_pkgs =
 
+{% if env == 'staging' %}
+
+# The net karma required to submit a critial path update to a pending release.
+# min_karma = 2
+
+{% else %}
+
 # The number of admin approvals it takes to be able to push a critical path
 # update to stable for a pending release.
 # critpath.num_admin_approvals = 2
@@ -555,6 +562,8 @@ critpath.num_admin_approvals = 0
 
 # The net karma required to submit a critial path update to a pending release.
 # critpath.min_karma = 2
+
+{% endif %}
 
 # Allow critpath to submit for stable after 2 weeks with no negative karma
 # critpath.stable_after_days_without_negative_karma = 14
@@ -579,6 +588,38 @@ fedora_modular.mandatory_days_in_testing = 7
 # critpath number of admin approvals, and the critpath minimum karma. For example, if we want to set
 # Fedora 28 as a pre-beta, and we want it to have different rules in pre-beta and post-beta, we
 # could do something like this:
+
+{% if env == 'staging' %}
+
+{% if FedoraBranchedBodhi is defined and FedoraBranchedBodhi == 'preenable' %}
+f{{ FedoraBranchedNumber }}.status = pre_beta
+f{{ FedoraBranchedNumber }}.pre_beta.mandatory_days_in_testing = 0
+f{{ FedoraBranchedNumber }}.pre_beta.min_karma = 0
+f{{ FedoraBranchedNumber }}.pre_beta.critpath.mandatory_days_in_testing = 0
+{% elif FedoraBranchedBodhi is defined and FedoraBranchedBodhi == 'prebeta' %}
+f{{ FedoraBranchedNumber }}.status = pre_beta
+f{{ FedoraBranchedNumber }}.pre_beta.mandatory_days_in_testing = 3
+f{{ FedoraBranchedNumber }}.pre_beta.min_karma = 1
+f{{ FedoraBranchedNumber }}.pre_beta.critpath.mandatory_days_in_testing = 14
+{% elif FedoraBranchedBodhi is defined and FedoraBranchedBodhi == 'postbeta' %}
+f{{ FedoraBranchedNumber }}.status = post_beta
+f{{ FedoraBranchedNumber }}.post_beta.mandatory_days_in_testing = 7
+f{{ FedoraBranchedNumber }}.post_beta.min_karma = 2
+f{{ FedoraBranchedNumber }}.post_beta.critpath.stable_after_days_without_negative_karma = 14
+{% endif %}
+
+# Rawhide layered containers are shipped through bodhi and rawhide containers not require any day
+# in testing
+f{{ FedoraRawhideNumber }}c.status = pre_beta
+f{{ FedoraRawhideNumber }}c.pre_beta.mandatory_days_in_testing = 0
+# Rawhide gating - Updates in rawhide don't require any days in testing.
+f{{ FedoraRawhideNumber }}.status = pre_beta
+f{{ FedoraRawhideNumber }}.pre_beta.mandatory_days_in_testing = 0
+f{{ FedoraRawhideNumber }}.pre_beta.min_karma = 0
+f{{ FedoraRawhideNumber }}.pre_beta.critpath.mandatory_days_in_testing = 0
+
+{% else %}
+
 {% if FedoraBranchedBodhi is defined and FedoraBranchedBodhi == 'preenable' %}
 f{{ FedoraBranchedNumber }}.status = pre_beta
 f{{ FedoraBranchedNumber }}.pre_beta.mandatory_days_in_testing = 0
@@ -606,6 +647,7 @@ f{{ FedoraRawhideNumber }}.pre_beta.mandatory_days_in_testing = 0
 f{{ FedoraRawhideNumber }}.pre_beta.critpath.min_karma = 0
 f{{ FedoraRawhideNumber }}.pre_beta.critpath.stable_after_days_without_negative_karma = 0
 
+{% endif %}
 
 # ELN gating - Updates in ELN don't require any days in testing.
 eln.status = pre_beta
