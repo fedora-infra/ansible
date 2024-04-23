@@ -64,6 +64,15 @@ distgit_hostname = "src{{ env_suffix }}.fedoraproject.org"
 id_provider_hostname = "id{{ env_suffix }}.fedoraproject.org"
 fasjson_base_url = "https://fasjson{{ env_suffix }}.fedoraproject.org"
 
+# Cache configuation
+[consumer_config.cache]
+backend = "dogpile.cache.pymemcache"
+expiration_time = 600
+[consumer_config.cache.arguments]
+url = "memcached01:11211"
+distributed_lock = true
+lock_timeout = 5
+
 # This is a set of data that tells our consumer what Open Badges Issuer
 # should be kept as the issuer of all the badges we create.
 [consumer_config.badge_issuer]
@@ -205,5 +214,5 @@ propagate = false
 handlers = ["console"]
 
 [log_config.root]
-level = "ERROR"
+level = "WARNING"
 handlers = ["console"]
