@@ -158,7 +158,7 @@
     # Deployment config
     - role: openshift/object
       app: badges
-      file: deploymentconfig.yml
+      template: deploymentconfig.yml
       objectname: deploymentconfig.yml
 
     # Cron jobs
