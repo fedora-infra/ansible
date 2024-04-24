@@ -59,7 +59,7 @@
 
   - role: nfs/client
     mnt_dir: '/mnt/koji/ostree'
-    nfs_src_dir: 'fedora_ostree_content-stg/ostree'
+    nfs_src_dir: 'fedora_ostree_content_stg/ostree'
     when: env == 'staging'
 
   - role: nfs/client
