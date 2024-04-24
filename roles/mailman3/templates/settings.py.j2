@@ -67,10 +67,10 @@ INSTALLED_APPS = (
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'django_mailman3.lib.auth.fedora',
 {% for service_name, service_data in mailman_login.items() %}
     'allauth.socialaccount.providers.{{ service_data.provider }}',
 {% endfor %}
-    'allauth.socialaccount.providers.openid_connect',
 )
 
 
@@ -227,19 +227,9 @@ ACCOUNT_ADAPTER = "django_fedora_nosignup.NoLocalSignUpAdapter"
 SOCIALACCOUNT_ADAPTER = "django_fedora_nosignup.SignUpEnabledSocialAdapter"
 
 SOCIALACCOUNT_PROVIDERS = {
-    'openid_connect': {
-        "SERVERS": [
-            {
-                "id": "{{ mailman_openidc_provider_id }}",
-                "name": "{{ mailman_openidc_name }}",
-                "server_url": "{{ mailman_openidc_server_url }}",
-                "token_auth_method": "client_secret_post",
-                "APP": {
-                    "client_id": "{{ mailman_openidc_client_id }}",
-                    "secret": "{{ mailman_openidc_secret }}",
-                },
-            },
-        ]
+    'fedora': {
+        "server_url": "{{ mailman_openidc_server_url }}",
+        "token_auth_method": "client_secret_post",
     },
     'openid': {
         'SERVERS': [
