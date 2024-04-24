@@ -129,7 +129,7 @@ metadata:
     app: badges
 spec:
   # There can be as many as necessary
-  replicas: {{ (env == 'production')|ternary(5, 1) }}
+  replicas: {{ (env == 'production')|ternary(2, 1) }}
   selector:
     app: badges
     deploymentconfig: consumer
