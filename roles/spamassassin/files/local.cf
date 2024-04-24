@@ -23,6 +23,8 @@ score RCVD_IN_RP_SAFE 0
 # header RCVD_IN_PBL              eval:check_rbl('zen-lastexternal', 'sh-zen.redhat.com.', '127.0.0.1[01]')
 # header RCVD_IN_CSS              eval:check_rbl_sub('zen', 'sh-zen.redhat.com.', '127.0.0.3')
 # uridnsbl        URIBL_SBL       sh-sbl.redhat.com.       TXT
+# Disable spamhaus queries
+dns_query_restriction deny spamhaus.org
 
 # # Red Hat's private anubis mirror
 # header __RCVD_IN_ANBREP eval:check_rbl('anubisrep-lastexternal', 'anb-rep.redhat.com.')
