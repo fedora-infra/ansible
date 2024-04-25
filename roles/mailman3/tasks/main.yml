@@ -427,6 +427,7 @@
   tags: mailman
   with_items:
   - mailman-sar.py
+  - migrate_fedora_auth.py
 
 - name: Install the staging-sync script
   ansible.builtin.copy:
