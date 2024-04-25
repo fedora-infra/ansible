@@ -1789,5 +1789,14 @@ host vmhost-x86-09-stg-mgmt {
      option host-name "vmhost-x86-09-stg-mgmt";
 }
 
+host bvmhost-p09-01-stg {
+     hardware ethernet b8:ce:f6:88:9a:de;
+     fixed-address 10.3.167.19;
+     option host-name "bvmhost-p09-01.stg.iad2.fedoraproject.org";
+     next-server 10.3.163.10;
+     option routers 10.3.167.254;
+     option subnet-mask 255.255.255.0;
+}
+
 ## End of file
 
