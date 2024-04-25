@@ -220,6 +220,10 @@
   - badges/backend
   - sar
 
+# Deprecated service, will be retired
+- name: fedmsg-hub service
+  service: name=fedmsg-hub state=stopped enabled=no
+
 # https://raw.githubusercontent.com/fedora-infra/datanommer/python2/datanommer.models/datanommer/models/__init__.py
 - name: hotfix datanommer.models with version from python2 branch
   copy:
