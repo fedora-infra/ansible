@@ -67,7 +67,7 @@ fasjson_base_url = "https://fasjson{{ env_suffix }}.fedoraproject.org"
 # Cache configuation
 [consumer_config.cache]
 backend = "dogpile.cache.pymemcache"
-expiration_time = 600
+expiration_time = 3600
 [consumer_config.cache.arguments]
 url = "memcached01{{ env_suffix }}:11211"
 distributed_lock = true
