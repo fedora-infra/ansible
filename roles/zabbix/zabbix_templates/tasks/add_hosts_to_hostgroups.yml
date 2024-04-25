@@ -9,6 +9,7 @@
   with_items: "{{ zabbix_templates }}"
   tags:
     - zabbix_add_hosts_to_hostgroups
+    - zabbix_templates
   vars:
     ansible_zabbix_auth_key: "{{ (env == 'staging')|ternary(zabbix_stg_apikey, zabbix_apikey) }}"
     ansible_network_os: community.zabbix.zabbix

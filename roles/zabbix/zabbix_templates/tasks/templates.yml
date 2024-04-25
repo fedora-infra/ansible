@@ -18,6 +18,7 @@
     state: present
   with_items: "{{ zabbix_templates }}" # Templates specific to an ansible group, can be overwridden in inventory/group_vars/group_name
   tags:
+    - zabbix_add_templates
     - zabbix_templates
   vars:
     ansible_zabbix_auth_key: "{{ (env == 'staging')|ternary(zabbix_stg_apikey, zabbix_apikey) }}"
