@@ -1,16 +1,16 @@
 ---
 - include_tasks: hostgroups.yml
   tags:
-  - zabbix_add_hostgroups
+  - zabbix_templates
 
 - include_tasks: add_hosts_to_hostgroups.yml
   tags:
-  - zabbix_add_hosts_to_hostgroups
+  - zabbix_templates
 
 - include_tasks: templates.yml
   tags:
-  - zabbix_add_templates
+  - zabbix_templates
 
 - include_tasks: add_templates_to_hosts.yml
   tags:
-  - zabbix_add_templates_to_hosts
+  - zabbix_templates
