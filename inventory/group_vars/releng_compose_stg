@@ -11,4 +11,4 @@ koji_weburl: "https://koji.stg.fedoraproject.org/koji"
 mem_size: 8192
 nfs_mount_opts: "rw,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3"
 num_cpus: 4
-zabbix_templates: "{{ [] }}"
+zabbix_templates: "{{ [] }}" # We don't run composes in staging, but if this changes, consider putting in the configuration in the production group.

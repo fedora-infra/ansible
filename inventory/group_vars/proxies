@@ -82,3 +82,7 @@ tcp_ports: [
   # custom_rules
 ]
 varnish_group: proxies
+zabbix_templates:
+  - group: "proxies" # Ansible group
+    template: "external_hosts_https.json" # Template name in roles/zabbix/zabbix_templates/files/templatename.json
+    hostgroup: "fedora external hosts" # Zabbix hostgroup
