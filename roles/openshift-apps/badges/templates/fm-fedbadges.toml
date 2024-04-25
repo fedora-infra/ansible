@@ -58,7 +58,7 @@ consume_delay = 1
 database_uri = "postgresql://{{ tahrirDBUser }}:{{ (env == 'production')|ternary(tahrirDBPassword, tahrirstgDBPassword) }}@{{ badges_db_host }}/{{ badges_db_name }}"
 
 # Datanommer database URI
-datanommer_db_uri = "postgresql://{{ tahrirDBUser }}:{{ (env == 'production')|ternary(tahrirDBPassword, tahrirstgDBPassword) }}@db-datanommer{{ (env == 'production')|ternary('02', '01') }}{{ env_suffix }}/datanommer2"
+datanommer_db_uri = "postgresql://{{ tahrirDBUser }}:{{ (env == 'production')|ternary(tahrirDBPassword, tahrirstgDBPassword) }}@{{ datanommer_db_hostname }}{{ env_suffix }}/datanommer2"
 datagrepper_url = "https://apps{{ env_suffix }}.fedoraproject.org/datagrepper"
 distgit_hostname = "src{{ env_suffix }}.fedoraproject.org"
 id_provider_hostname = "id{{ env_suffix }}.fedoraproject.org"

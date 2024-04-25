@@ -32,7 +32,7 @@ exchange = "amq.topic"
 routing_keys = ["#"]
 
 [consumer_config]
-datanommer_sqlalchemy_url = 'postgresql://{{ datanommerDBUser }}:{{ (env == 'production')|ternary(datanommerDBPassword, datanommer_stg_db_password) }}@db-datanommer{{ (env == 'production')|ternary('02', '01') }}{{ env_suffix }}.iad2.fedoraproject.org/datanommer2'
+datanommer_sqlalchemy_url = 'postgresql://{{ datanommerDBUser }}:{{ (env == 'production')|ternary(datanommerDBPassword, datanommer_stg_db_password) }}@{{ datanommer_db_hostname }}{{ env_suffix }}.iad2.fedoraproject.org/datanommer2'
 alembic_ini = "/etc/fedora-messaging/alembic.ini"
 
 [log_config]

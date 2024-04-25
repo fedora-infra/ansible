@@ -4,7 +4,7 @@
 
 APP_PATH = "https://apps{{ env_suffix }}.fedoraproject.org/datagrepper"
 DEFAULT_QUERY_DELTA = 86400
-DATANOMMER_SQLALCHEMY_URL = "postgresql://datagrepper:{{ (env == 'production')|ternary(datagrepper_prod_db_password, datagrepper_stg_db_password) }}@db-datanommer{{ (env == 'production')|ternary('02', '01') }}{{ env_suffix }}.iad2.fedoraproject.org/datanommer2"
+DATANOMMER_SQLALCHEMY_URL = "postgresql://datagrepper:{{ (env == 'production')|ternary(datagrepper_prod_db_password, datagrepper_stg_db_password) }}@{{ datanommer_db_hostname }}{{ env_suffix }}.iad2.fedoraproject.org/datanommer2"
 
 # Only allow ajax/websockets connections back to our domains.
 # https://github.com/fedora-infra/datagrepper/pull/192
