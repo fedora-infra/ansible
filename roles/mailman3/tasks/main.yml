@@ -320,29 +320,6 @@
   notify:
     - reload mailmanweb
 
-- name: Create superuser for django-admin
-  ansible.builtin.command:
-    cmd: mailman-web createsuperuser --username "{{ mailman_hyperkitty_su_username }}" --no-input --email "{{ mailman_hyperkitty_su_email }}"
-  become_user: mailman
-  register: command_result
-  tags:
-    - mailman
-    - hyperkitty
-  # Ignore error when the username already exists
-  failed_when:
-    - "'That username is already taken.' not in command_result.stderr"
-    - "command_result.rc != 0"
-
-- name: Change superuser password
-  ansible.builtin.expect:
-    command: mailman-web changepassword {{ mailman_hyperkitty_su_username }}
-    responses:
-      - 'Password:' : {{ mailman_hyperkitty_su_pass }}
-  become_user: mailman
-  tags:
-    - mailman
-    - hyperkitty
-
 #
 # Plug HyperKitty into Mailman
 #
