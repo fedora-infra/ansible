@@ -28,9 +28,7 @@
   - collectd/base
   - sudo
   - spamassassin
-  # mailman3 role doesn't need mod_wsgi anymore
-  - {role: mod_wsgi,
-     when: env != "staging"}
+  - mod_wsgi
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
