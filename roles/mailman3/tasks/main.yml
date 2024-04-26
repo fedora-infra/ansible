@@ -346,8 +346,6 @@
   tags:
     - mailman
     - hyperkitty
-  when:
-    - static_root_dir is changed
 
 - name: Compress static files
   ansible.builtin.command:
@@ -358,8 +356,6 @@
   tags:
     - mailman
     - hyperkitty
-  when:
-    - static_root_dir is changed
 
 - name: Systemd unit to start postorius/hyperkitty through gunicorn
   ansible.builtin.template:
