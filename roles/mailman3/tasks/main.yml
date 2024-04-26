@@ -301,6 +301,7 @@
     cmd: mailman-web migrate
     chdir: /etc/mailman3
   become_user: mailman
+  become: true
   tags:
     - mailman
     - db
@@ -341,6 +342,7 @@
     cmd: mailman-web collectstatic --no-input
     chdir: /etc/mailman3
   become_user: mailman
+  become: true
   tags:
     - mailman
     - hyperkitty
@@ -352,6 +354,7 @@
     cmd: mailman-web compress
     chdir: /etc/mailman3
   become_user: mailman
+  become: true
   tags:
     - mailman
     - hyperkitty
