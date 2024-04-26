@@ -468,6 +468,17 @@
     - mailman
     - selinux
 
+- name: Allow Apache to connect to localhost gunicorn
+  ansible.posix.seboolean:
+    name: httpd_can_network_connect
+    state: yes
+    persistent: yes
+  notify:
+    - restart apache
+  tags:
+    - mailman
+    - selinux
+
 - name: Set the SELinux policy for the static files directory
   community.general.sefcontext:
     target: "{{ mailman_webui_basedir }}/static(/.*)?"
@@ -485,6 +496,9 @@
   tags:
   - mailman
   - selinux
+
+- name: Apply SELinux changes
+  command: restorecon -irv "{{ mailman_webui_basedir}}"
 
 # Start services
 - name: Start services
