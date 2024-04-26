@@ -396,7 +396,7 @@
 
 - name: Install the scripts
   ansible.builtin.copy:
-    src: {{ item }}
+    src: {{item}}
     dest: "{{ mailman_webui_basedir }}/bin/{{ item }}"
     owner: root
     group: root
