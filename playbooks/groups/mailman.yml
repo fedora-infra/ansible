@@ -109,6 +109,7 @@
     mailman_hyperkitty_db_pass: "{{ mailman_hk_db_pass }}"
     mailman_hyperkitty_cookie_key: "{{ mailman_hk_cookie_key }}"
     mailman_hyperkitty_archiver_key: "{{ mailman_hk_stg_archiver_key }}"
+    mailman_openidc_server_url: "https://id.stg.fedoraproject.org/"
     mailman_httpd_hostname: lists.stg.fedoraproject.org
     when: env == "staging"
   - {role: fedmsg/base,
