@@ -1,5 +1,5 @@
 ---
-br0_ipv4: 10.3.171.18
+br0_ipv4_ip: 10.3.171.18
 br0_ipv4_gw: 10.3.171.254
 br0_ipv4_nm: 24
 br0_port0_mac: "{{ mac2 }}"
@@ -16,7 +16,7 @@ network_connections:
   - autoconnect: yes
     ip:
       address:
-        - "{{ br0_ipv4 }}/{{ br0_ipv4_nm }}"
+        - "{{ br0_ipv4_ip }}/{{ br0_ipv4_nm }}"
       dhcp4: no
       dns:
         - "{{ dns1 }}"
