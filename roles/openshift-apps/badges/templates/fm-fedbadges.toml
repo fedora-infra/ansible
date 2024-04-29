@@ -75,7 +75,8 @@ password = "{{ (env == 'production')|ternary(badges_prod_redis_password, badges_
 db = 0
 redis_expiration_time = 86400
 distributed_lock = true
-lock_timeout = 5
+# Lock timeout should be longer than the longest datanommer query
+lock_timeout = 14400
 thread_local_lock = false
 
 # This is a set of data that tells our consumer what Open Badges Issuer
