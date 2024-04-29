@@ -103,10 +103,10 @@
       template: buildconfig.yml
       objectname: buildconfig.yml
 
-    # - role: openshift/object
-    #   app: badges
-    #   template: secrets.yml
-    #   objectname: secrets.yml
+    - role: openshift/object
+      app: badges
+      template: secrets.yml
+      objectname: secrets.yml
 
     - role: openshift/object
       app: badges
