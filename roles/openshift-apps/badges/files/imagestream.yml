@@ -32,3 +32,14 @@ items:
     kind: ImageStream
     metadata:
       name: python-310-custom-builder
+  # Redis (for caching)
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      name: redis
+    spec:
+      tags:
+        - name: latest
+          from:
+            kind: DockerImage
+            name: docker.io/bitnami/redis:latest

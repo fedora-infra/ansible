@@ -66,12 +66,17 @@ fasjson_base_url = "https://fasjson{{ env_suffix }}.fedoraproject.org"
 
 # Cache configuation
 [consumer_config.cache]
-backend = "dogpile.cache.pymemcache"
+backend = "dogpile.cache.redis"
 expiration_time = 86400
 [consumer_config.cache.arguments]
-url = "memcached01{{ env_suffix }}:11211"
+host = "redis.badges.svc.cluster.local"
+port = 6379
+password = "{{ (env == 'production')|ternary(badges_prod_redis_password, badges_stg_redis_password) }}"
+db = 0
+redis_expiration_time = 86400
 distributed_lock = true
 lock_timeout = 5
+thread_local_lock = false
 
 # This is a set of data that tells our consumer what Open Badges Issuer
 # should be kept as the issuer of all the badges we create.

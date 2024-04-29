@@ -212,3 +212,42 @@ spec:
         from:
           kind: ImageStreamTag
           name: fedbadges:latest
+---
+# Redis, for caching
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: redis
+  labels:
+    app: badges
+    service: redis
+spec:
+  replicas: 1
+  selector:
+    app: badges
+    deploymentconfig: redis
+  template:
+    metadata:
+      labels:
+        app: badges
+        deploymentconfig: redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:latest
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: badges
+                  key: redis-password
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - redis
+        from:
+          kind: ImageStreamTag
+          name: redis:latest
