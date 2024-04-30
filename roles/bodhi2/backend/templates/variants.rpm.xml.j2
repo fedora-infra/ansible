@@ -6,12 +6,34 @@
             <arch>x86_64</arch>
             <arch>s390x</arch>
             <arch>ppc64le</arch>
-            [% if release.version_int == 36 %]
-            <arch>armhfp</arch>
-            [% endif %]
             [% if release.version_int != 7 %]
             <arch>aarch64</arch>
             [% endif %]
+        </arches>
+    </variant>
+    <variant id="Silverblue" name="Silverblue" type="variant" is_empty="true">
+        <arches>
+            <arch>aarch64</arch>
+            <arch>x86_64</arch>
+            <arch>ppc64le</arch>
+        </arches>
+    </variant>
+    <variant id="Kinoite" name="Kinoite" type="variant" is_empty="true">
+        <arches>
+            <arch>aarch64</arch>
+            <arch>x86_64</arch>
+            <arch>ppc64le</arch>
+        </arches>
+    </variant>
+    <variant id="Sericea" name="Sericea" type="variant" is_empty="true">
+        <arches>
+            <arch>aarch64</arch>
+            <arch>x86_64</arch>
+        </arches>
+    </variant>
+    <variant id="Onyx" name="Onyx" type="variant" is_empty="true">
+        <arches>
+            <arch>x86_64</arch>
         </arches>
     </variant>
 </variants>
