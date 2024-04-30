@@ -1,18 +1,15 @@
-#!/usr/bin/python2
-
-from __future__ import unicode_literals, print_function
-
+#!/usr/bin/env python
 import os
 import sys
 import psycopg2
 
-from ConfigParser import ConfigParser
+from configparser import ConfigParser
 from subprocess import call
-from urlparse import urlparse
 
+# Read the database information from mailman config
+sys.path.insert(0, '/etc/mailman3')
 if not os.getenv("DJANGO_SETTINGS_MODULE"):
-    os.environ["DJANGO_SETTINGS_MODULE"] = "settings_admin"
-sys.path.insert(0, "/srv/webui/config")
+    os.environ["DJANGO_SETTINGS_MODULE"] = "settings"
 
 import django
 django.setup()
@@ -32,9 +29,6 @@ DJANGO_TABLES_TO_EMPTY = [
     "account_emailconfirmation",
     "openid_openidnonce",
     "openid_openidstore",
-    "social_auth_association",
-    "social_auth_nonce",
-    "social_auth_usersocialauth",
     "socialaccount_socialtoken",
 ]
 DJANGO_INDICES_TO_RECREATE = [
@@ -157,7 +151,6 @@ def do_mailman():
 
 def do_django():
     from django.db import connection, transaction
-    from django.core.management import call_command
     with connection.cursor() as cursor:
         cursor.execute("UPDATE auth_user SET password = '!INVALID'")
         print(cursor.query)
@@ -191,18 +184,19 @@ def do_django():
         #                   n=name, t=table, c=create))
         #    print(cursor.query)
     connection.commit()
-    call_command("loaddata", "/srv/webui/config/initial-data.json")
 
 
 def main():
     call(["systemctl", "stop", "webui-qcluster"])
     call(["systemctl", "stop", "mailman3"])
+    call(["systemctl", "stop", "mailmanweb"])
     call(["systemctl", "stop", "httpd"])
     call(["systemctl", "stop", "crond"])
     do_mailman()
     do_django()
     call(["systemctl", "start", "crond"])
     call(["systemctl", "start", "httpd"])
+    call(["systemctl", "start", "mailmanweb"])
     call(["systemctl", "start", "mailman3"])
     call(["systemctl", "start", "webui-qcluster"])
 
