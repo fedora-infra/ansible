@@ -128,6 +128,12 @@ createiso_skip = [
                 [% endif %]
             ]' %}
 
+[% if request.name == 'stable' %]
+    [% set ostreeref = 'updates' %]
+[% else %]
+    [% set ostreeref = 'testing' %]
+[% endif %]
+
 {% if env != "staging" %}
 [% if release.id_prefix == 'FEDORA' %]
 ostree = {
@@ -144,11 +150,7 @@ ostree = {
             "config_branch": "f[[ release.version ]]",
             "repo": {{ repos }},
             "ostree_repo": "/mnt/koji/compose/ostree/repo",
-            [% if request.name == 'stable' %]
-                "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/updates/silverblue",
-            [% else %]
-                "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/testing/silverblue",
-            [% endif %]
+            "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/[[ ostreeref ]]/silverblue",
             "tag_ref": False,
             "arches": ["x86_64", "ppc64le", "aarch64" ],
             "failable": ["x86_64", "ppc64le", "aarch64" ]
@@ -165,11 +167,7 @@ ostree = {
             "config_branch": "f[[ release.version ]]",
             "repo": {{ repos }},
             "ostree_repo": "/mnt/koji/compose/ostree/repo",
-            [% if request.name == 'stable' %]
-                "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/updates/kinoite",
-            [% else %]
-                "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/testing/kinoite",
-            [% endif %]
+            "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/[[ ostreeref ]]/kinoite",
             "tag_ref": False,
             "arches": ["x86_64", "ppc64le", "aarch64" ],
             "failable": ["x86_64", "ppc64le", "aarch64" ]
@@ -186,11 +184,7 @@ ostree = {
             "config_branch": "f[[ release.version ]]",
             "repo": {{ repos }},
             "ostree_repo": "/mnt/koji/compose/ostree/repo",
-            [% if request.name == 'stable' %]
-                "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/updates/sericea",
-            [% else %]
-                "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/testing/sericea",
-            [% endif %]
+            "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/[[ ostreeref ]]/sericea",
             "tag_ref": False,
             "arches": ["x86_64", "aarch64"],
             "failable": ["x86_64", "aarch64"]
@@ -206,11 +200,7 @@ ostree = {
             "config_branch": "f[[ release.version ]]",
             "repo": {{ repos }},
             "ostree_repo": "/mnt/koji/compose/ostree/repo",
-            [% if request.name == 'stable' %]
-                "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/updates/onyx",
-            [% else %]
-                "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/testing/onyx",
-            [% endif %]
+            "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/[[ ostreeref ]]/onyx",
             "tag_ref": False,
             "arches": ["x86_64"],
             "failable": ["x86_64"]
