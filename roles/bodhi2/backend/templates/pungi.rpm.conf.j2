@@ -21,31 +21,7 @@ comps_file = {
 }
 variants_file='variants.xml'
 sigkeys = [
-[% if release.version_int == 25 %]
-    'fdb19c98',
-[% elif release.version_int == 26 %]
-    '64dab85d',
-[% elif release.version_int == 27 %]
-    'f5282ee4',
-[% elif release.version_int == 28 %]
-    '9db62fb1',
-[% elif release.version_int == 30 %]
-    'cfc659b9',
-[% elif release.version_int == 31 %]
-    '3c3359c4',
-[% elif release.version_int == 32 %]
-    '12c944d0',
-[% elif release.version_int == 33 %]
-    '9570ff31',
-[% elif release.version_int == 34 %]
-    '45719a39',
-[% elif release.version_int == 35 %]
-    '9867c58f',
-[% elif release.version_int == 36 %]
-    '38ab71f4',
-[% elif release.version_int == 37 %]
-    '5323552a',
-[% elif release.version_int == 38 %]
+[% if release.version_int == 38 %]
     'eb10b464',
 [% elif release.version_int == 39 %]
     '18B8e74c',
@@ -60,7 +36,7 @@ sigkeys = [
 [% elif release.version_int == 8 %]
     '2f86d6a1'
 [% elif release.version_int == 9 %]
-    '3228467c'
+    '3228467c',
 [% endif %]
 {% if env == "staging" %}
     None
