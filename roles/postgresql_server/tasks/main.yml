@@ -24,7 +24,7 @@
       state=enabled
   when: inventory_hostname.startswith('db-fas01')
 
-- name: on db-koji01 enable the postgresql 15 module.
+- name: on db-koji01 and db01.stg enable the postgresql 15 module.
   copy:
     dest: /etc/dnf/modules.d/postgresql.module
     content: |
@@ -33,7 +33,7 @@
       stream=15
       profiles=
       state=enabled
-  when: inventory_hostname.startswith('db-koji01')
+  when: inventory_hostname.startswith(('db-koji01','db01.stg'))
 
 - name: install postgresql server packages (EL < 8)
   package:
