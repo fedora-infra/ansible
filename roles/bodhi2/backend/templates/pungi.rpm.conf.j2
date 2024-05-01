@@ -137,121 +137,109 @@ createiso_skip = [
 {% if env != "staging" %}
 [% if release.id_prefix == 'FEDORA' %]
 ostree = {
-    "^Everything$": [
-        # Fedora Silverblue
-        {
-            "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
-            [% if release.version_int >= 39 %]
-            "unified_core": True,
-            "runroot_packages": ["selinux-policy-targeted"],
-            [% endif %]
-            "treefile": "fedora-silverblue.yaml",
-            "config_url": "https://pagure.io/workstation-ostree-config.git",
-            "config_branch": "f[[ release.version ]]",
-            "repo": {{ repos }},
-            "ostree_repo": "/mnt/koji/compose/ostree/repo",
-            "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/[[ ostreeref ]]/silverblue",
-            "tag_ref": False,
-            "arches": ["x86_64", "ppc64le", "aarch64" ],
-            "failable": ["x86_64", "ppc64le", "aarch64" ]
-        },
-        # Fedora Kinoite
-        {
-            "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
-            [% if release.version_int >= 39 %]
-            "unified_core": True,
-            "runroot_packages": ["selinux-policy-targeted"],
-            [% endif %]
-            "treefile": "fedora-kinoite.yaml",
-            "config_url": "https://pagure.io/workstation-ostree-config.git",
-            "config_branch": "f[[ release.version ]]",
-            "repo": {{ repos }},
-            "ostree_repo": "/mnt/koji/compose/ostree/repo",
-            "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/[[ ostreeref ]]/kinoite",
-            "tag_ref": False,
-            "arches": ["x86_64", "ppc64le", "aarch64" ],
-            "failable": ["x86_64", "ppc64le", "aarch64" ]
-        },
-        # Fedora Sway Atomic (formerly Sericea)
-        {
-            "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
-            [% if release.version_int >= 39 %]
-            "unified_core": True,
-            "runroot_packages": ["selinux-policy-targeted"],
-            [% endif %]
-            "treefile": "fedora-sericea.yaml",
-            "config_url": "https://pagure.io/workstation-ostree-config.git",
-            "config_branch": "f[[ release.version ]]",
-            "repo": {{ repos }},
-            "ostree_repo": "/mnt/koji/compose/ostree/repo",
-            "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/[[ ostreeref ]]/sericea",
-            "tag_ref": False,
-            "arches": ["x86_64", "aarch64"],
-            "failable": ["x86_64", "aarch64"]
-        },
-        # Fedora Budgie Atomic (formerly Onyx)
+    "^Silverblue$": {
+        "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
         [% if release.version_int >= 39 %]
-        {
-            "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
-            "unified_core": True,
-            "runroot_packages": ["selinux-policy-targeted"],
-            "treefile": "fedora-onyx.yaml",
-            "config_url": "https://pagure.io/workstation-ostree-config.git",
-            "config_branch": "f[[ release.version ]]",
-            "repo": {{ repos }},
-            "ostree_repo": "/mnt/koji/compose/ostree/repo",
-            "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/[[ ostreeref ]]/onyx",
-            "tag_ref": False,
-            "arches": ["x86_64"],
-            "failable": ["x86_64"]
-        },
+        "unified_core": True,
+        "runroot_packages": ["selinux-policy-targeted"],
         [% endif %]
-    ]
+        "treefile": "fedora-silverblue.yaml",
+        "config_url": "https://pagure.io/workstation-ostree-config.git",
+        "config_branch": "f[[ release.version ]]",
+        "repo": {{ repos }},
+        "ostree_repo": "/mnt/koji/compose/ostree/repo",
+        "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/[[ ostreeref ]]/silverblue",
+        "tag_ref": False,
+        "arches": ["x86_64", "ppc64le", "aarch64" ],
+        "failable": ["x86_64", "ppc64le", "aarch64" ]
+    },
+    "^Kinoite$": {
+        "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
+        [% if release.version_int >= 39 %]
+        "unified_core": True,
+        "runroot_packages": ["selinux-policy-targeted"],
+        [% endif %]
+        "treefile": "fedora-kinoite.yaml",
+        "config_url": "https://pagure.io/workstation-ostree-config.git",
+        "config_branch": "f[[ release.version ]]",
+        "repo": {{ repos }},
+        "ostree_repo": "/mnt/koji/compose/ostree/repo",
+        "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/[[ ostreeref ]]/kinoite",
+        "tag_ref": False,
+        "arches": ["x86_64", "ppc64le", "aarch64" ],
+        "failable": ["x86_64", "ppc64le", "aarch64" ]
+    },
+    "^Sericea$": {
+        "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
+        [% if release.version_int >= 39 %]
+        "unified_core": True,
+        "runroot_packages": ["selinux-policy-targeted"],
+        [% endif %]
+        "treefile": "fedora-sericea.yaml",
+        "config_url": "https://pagure.io/workstation-ostree-config.git",
+        "config_branch": "f[[ release.version ]]",
+        "repo": {{ repos }},
+        "ostree_repo": "/mnt/koji/compose/ostree/repo",
+        "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/[[ ostreeref ]]/sericea",
+        "tag_ref": False,
+        "arches": ["x86_64", "aarch64"],
+        "failable": ["x86_64", "aarch64"]
+    },
+    [% if release.version_int >= 39 %]
+    "^Onyx$": {
+        "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
+        "unified_core": True,
+        "runroot_packages": ["selinux-policy-targeted"],
+        "treefile": "fedora-onyx.yaml",
+        "config_url": "https://pagure.io/workstation-ostree-config.git",
+        "config_branch": "f[[ release.version ]]",
+        "repo": {{ repos }},
+        "ostree_repo": "/mnt/koji/compose/ostree/repo",
+        "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/[[ ostreeref ]]/onyx",
+        "tag_ref": False,
+        "arches": ["x86_64"],
+        "failable": ["x86_64"]
+    },
+    [% endif %]
 }
 [% if release.version_int >= 40 %]
 ostree_container = {
-    "^Everything$": [
-        # Fedora Silverblue
-        {
-            "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
-            "config_url": "https://pagure.io/workstation-ostree-config.git",
-            "config_branch": "f[[ release.version ]]",
-            "repo": {{ repos }},
-            "treefile": "fedora-silverblue.yaml",
-            "arches": ["x86_64", "ppc64le", "aarch64"],
-            "failable": ['*'],
-        },
-        # Fedora Kinoite
-        {
-            "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
-            "config_url": "https://pagure.io/workstation-ostree-config.git",
-            "config_branch": "f[[ release.version ]]",
-            "repo": {{ repos }},
-            "treefile": "fedora-kinoite.yaml",
-            "arches": ["x86_64", "ppc64le", "aarch64"],
-            "failable": ['*'],
-        },
-        # Fedora Sway Atomic (formerly Sericea)
-        {
-            "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
-            "config_url": "https://pagure.io/workstation-ostree-config.git",
-            "config_branch": "f[[ release.version ]]",
-            "repo": {{ repos }},
-            "treefile": "fedora-sericea.yaml",
-            "arches": ["x86_64", "aarch64"],
-            "failable": ['*'],
-        },
-        {
-        # Fedora Budgie Atomic (formerly Onyx)
-            "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
-            "config_url": "https://pagure.io/workstation-ostree-config.git",
-            "config_branch": "f[[ release.version ]]",
-            "repo": {{ repos }},
-            "treefile": "fedora-onyx.yaml",
-            "arches": ["x86_64"],
-            "failable": ['*'],
-        },
-    ],
+    "^Silverblue$": {
+        "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
+        "config_url": "https://pagure.io/workstation-ostree-config.git",
+        "config_branch": "f[[ release.version ]]",
+        "repo": {{ repos }},
+        "treefile": "fedora-silverblue.yaml",
+        "arches": ["x86_64", "ppc64le", "aarch64"],
+        "failable": ['*'],
+    },
+    "^Kinoite$": {
+        "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
+        "config_url": "https://pagure.io/workstation-ostree-config.git",
+        "config_branch": "f[[ release.version ]]",
+        "repo": {{ repos }},
+        "treefile": "fedora-kinoite.yaml",
+        "arches": ["x86_64", "ppc64le", "aarch64"],
+        "failable": ['*'],
+    },
+    "^Sericea$": {
+        "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
+        "config_url": "https://pagure.io/workstation-ostree-config.git",
+        "config_branch": "f[[ release.version ]]",
+        "repo": {{ repos }},
+        "treefile": "fedora-sericea.yaml",
+        "arches": ["x86_64", "aarch64"],
+        "failable": ['*'],
+    },
+    "^Onyx$": {
+        "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
+        "config_url": "https://pagure.io/workstation-ostree-config.git",
+        "config_branch": "f[[ release.version ]]",
+        "repo": {{ repos }},
+        "treefile": "fedora-onyx.yaml",
+        "arches": ["x86_64"],
+        "failable": ['*'],
+    },
 }
 [% endif %]
 [% endif %]
