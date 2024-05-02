@@ -343,6 +343,16 @@
   - batcave
   - config
   when: inventory_hostname.startswith('batcave01')
+#
+# Setup centos 10 sync script.
+#
+
+- name: setup centos 10 sync script
+  copy: src=centos-10-sync dest=/mnt/fedora/app/fi-repo/centos/centos-10-sync mode=0775
+  tags:
+  - batcave
+  - config
+  when: inventory_hostname.startswith('batcave01')
 
 #
 # Setup web server config
