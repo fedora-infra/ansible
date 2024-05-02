@@ -12,7 +12,7 @@ spec:
   source:
     dockerfile: |-
       FROM fedora:40
-      RUN dnf -y install python3-pip python3-gssapi git libpq-devel gcc && dnf -y clean all
+      RUN dnf -y install python3-pip python3-gssapi git libpq-devel gcc python-devel && dnf -y clean all
       RUN pip install maubot[encryption] python-slugify httpx httpx_gssapi jinja2 fedora-messaging meetbot-messages pydantic maubot-fedora-messages backoff arrow python-gitlab
       RUN \
         curl https://raw.githubusercontent.com/fedora-infra/matrix-bots/main/install-plugins-from-git.py -o /usr/local/bin/install-maubot-plugins && \
