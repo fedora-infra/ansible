@@ -11,7 +11,7 @@ spec:
   runPolicy: Serial
   source:
     dockerfile: |-
-      FROM fedora:38
+      FROM fedora:40
       RUN dnf -y install python3-pip python3-gssapi git && dnf -y clean all
       RUN pip install maubot[encryption] python-slugify httpx httpx_gssapi jinja2 fedora-messaging meetbot-messages pydantic maubot-fedora-messages backoff arrow python-gitlab
       RUN \
