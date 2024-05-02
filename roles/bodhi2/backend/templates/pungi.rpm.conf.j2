@@ -148,10 +148,8 @@ createiso_skip = [
 ostree = {
     "^Silverblue$": {
         "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
-        [% if release.version_int >= 39 %]
         "unified_core": True,
         "runroot_packages": ["selinux-policy-targeted"],
-        [% endif %]
         "treefile": "fedora-silverblue.yaml",
         "config_url": "https://pagure.io/workstation-ostree-config.git",
         "config_branch": "f[[ release.version ]]",
@@ -164,10 +162,8 @@ ostree = {
     },
     "^Kinoite$": {
         "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
-        [% if release.version_int >= 39 %]
         "unified_core": True,
         "runroot_packages": ["selinux-policy-targeted"],
-        [% endif %]
         "treefile": "fedora-kinoite.yaml",
         "config_url": "https://pagure.io/workstation-ostree-config.git",
         "config_branch": "f[[ release.version ]]",
@@ -180,10 +176,8 @@ ostree = {
     },
     "^Sericea$": {
         "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
-        [% if release.version_int >= 39 %]
         "unified_core": True,
         "runroot_packages": ["selinux-policy-targeted"],
-        [% endif %]
         "treefile": "fedora-sericea.yaml",
         "config_url": "https://pagure.io/workstation-ostree-config.git",
         "config_branch": "f[[ release.version ]]",
@@ -194,7 +188,6 @@ ostree = {
         "arches": ["x86_64", "aarch64"],
         "failable": ["x86_64", "aarch64"]
     },
-    [% if release.version_int >= 39 %]
     "^Onyx$": {
         "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
         "unified_core": True,
@@ -209,7 +202,6 @@ ostree = {
         "arches": ["x86_64"],
         "failable": ["x86_64"]
     },
-    [% endif %]
 }
 [% if release.version_int >= 40 %]
 ostree_container = {
