@@ -21,7 +21,7 @@ backend mailman {
         .url = "/";
         .interval = 5s;
         .timeout = 5s;
-{% if env != staging %}
+{% if env != 'staging' %}
 	.expected_response = 301;
 {% else %}
 	.expected_response = 302;
