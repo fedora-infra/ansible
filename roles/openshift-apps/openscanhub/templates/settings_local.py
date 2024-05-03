@@ -127,7 +127,7 @@ UMB_TOPIC_PREFIX = 'topic://VirtualTopic.eng.OpenScanHub.scan'
 NOTIFICATION_EMAIL_ADDRESS = "openscanhub@lists.fedoraproject.org"
 
 # E-mail address where notifications about failed/cancelled tasks are sent
-DEVEL_EMAIL_ADDRESS = "no-reply@example.org"
+DEVEL_EMAIL_ADDRESS = ""
 
 # Default e-mail domain name for sending notifications to the user.
 # It is used when `email` field in the user model is not set.
