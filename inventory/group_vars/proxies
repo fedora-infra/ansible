@@ -38,7 +38,7 @@ lvm_size: 100000
 # This is used in the httpd.conf to determine the value for serverlimit and
 # maxrequestworkers. On 8gb proxies, 900 seems fine. But on 4gb proxies, this
 # should be lowered in the host vars for that proxy.
-maxrequestworkers: 1500
+maxrequestworkers: 2500
 mem_size: 8192
 nagios_Check_Services:
   swap: false
