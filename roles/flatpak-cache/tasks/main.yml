@@ -31,17 +31,6 @@
   - flatpak-cache
   - config
 
-- name: Ensure /var/lib/squid/ssl_db exists
-  file:
-    path: /var/lib/squid/ssl_db
-    state: directory
-    owner: squid
-    group: squid
-    mode: 0755
-  tags:
-  - flatpak-cache
-  - config
-
 - name: Install squid configuration file
   template: src=squid.conf dest=/etc/squid/squid.conf
   tags:
@@ -59,9 +48,21 @@
   - "{{private}}/files/flatpak-cache-certs/production/pki/ca.crt"
   - "{{private}}/files/flatpak-cache-certs/production/pki/private/ca.key"
   - "{{private}}/files/flatpak-cache-certs/production/pki/dh.pem"
+  tags:
+  - flatpak-cache
+  - config
+
+- name: Check if /var/lib/squid/ssl_db/index.txt exists
+  stat:
+    path: /var/lib/squid/ssl_db/index.txt
+  register: index_txt_stat
+  tags:
+  - flatpak-cache
+  - config
 
 - name: Generate SSL Database
   command: /usr/lib64/squid/security_file_certgen -c -s /var/lib/squid/ssl_db -M 4096
+  when: not index_txt_stat.stat.exists
   tags:
   - flatpak-cache
   - config
