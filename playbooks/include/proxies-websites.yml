@@ -682,14 +682,6 @@
     when: env == "staging"
 
   - role: httpd/website
-    site_name: flatpak-cache.stg.fedoraproject.org
-    sslonly: false
-    x_forward: true
-    tags:
-    - flatpak-cache.stg.fedoraproject.org
-    when: env == "staging"
-
-  - role: httpd/website
     site_name: apps.ocp.stg.fedoraproject.org
     server_aliases: ["*.apps.ocp.stg.fedoraproject.org", api.apps.ocp.stg.fedoraproject.org]
     sslonly: true

@@ -919,15 +919,6 @@
     when: env == "production"
 
   - role: httpd/reverseproxy
-    website: "flatpak-cache{{ env_suffix }}.fedoraproject.org"
-    destname: flatpak-cache
-    proxyurl: http://worker01.ocp.stg.iad2.fedoraproject.org:31444
-    http_not_https_yes_this_is_insecure_and_i_feel_bad: true
-    tags:
-    - flatpak-cache
-    when: env == "staging"
-
-  - role: httpd/reverseproxy
     website: "openscanhub{{ env_suffix }}.fedoraproject.org"
     destname: openscanhub
     balancer_name: apps-ocp
