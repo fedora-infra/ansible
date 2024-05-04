@@ -22,3 +22,7 @@
   - collectd/base
   - sudo
   - flatpak-cache
+
+
+  handlers:
+  - import_tasks: "{{ handlers_path }}/restart_services.yml"
