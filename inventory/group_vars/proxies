@@ -34,7 +34,7 @@ ipa_client_sudo_groups:
   - sysadmin-web
 ipa_host_group: proxies
 ipa_host_group_desc: Proxies between internal hosts and the Internet
-lvm_size: 50000
+lvm_size: 100000
 # This is used in the httpd.conf to determine the value for serverlimit and
 # maxrequestworkers. On 8gb proxies, 900 seems fine. But on 4gb proxies, this
 # should be lowered in the host vars for that proxy.
