@@ -61,7 +61,7 @@
   - "{{private}}/files/flatpak-cache-certs/production/pki/dh.pem"
 
 - name: Generate SSL Database
-  command: /usr/lib64/squid/security_file_certgen -c -s /var/lib/squid/ssl_db
+  command: /usr/lib64/squid/security_file_certgen -c -s /var/lib/squid/ssl_db -M 4096
   tags:
   - flatpak-cache
   - config
