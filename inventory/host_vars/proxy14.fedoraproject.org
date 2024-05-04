@@ -5,9 +5,9 @@ dns1: 8.8.8.8
 dns2: 8.8.4.4
 dns_search1: "vpn.fedoraproject.org"
 dns_search2: "fedoraproject.org"
-eth0_ipv4: 8.43.85.67
+eth0_ipv4_ip: 8.43.85.67
 eth0_ipv4_gw: 8.43.85.254
-eth0_ipv6: "2620:52:3:1:dead:beef:cafe:fed7"
+eth0_ipv6_ip: "2620:52:3:1:dead:beef:cafe:fed7"
 eth0_ipv6_gw: "2620:52:3:1:ffff:ffff:ffff:fffe"
 eth0_ipv6_nm: 64
 freezes: true
@@ -15,15 +15,14 @@ has_ipv4: yes
 has_ipv6: yes
 ks_repo: http://38.145.60.16/pub/fedora/linux/releases/39/Server/x86_64/os/
 ks_url: http://38.145.60.16/repo/rhel/ks/kvm-fedora
-mac0: "52:54:00:19:67:0C"
 max_mem_size: 32768
 mem_size: 16384
 network_connections:
   - autoconnect: yes
     ip:
       address:
-        - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
-        - "{{ eth0_ipv6 }}/{{ eth0_ipv6_nm }}"
+        - "{{ eth0_ipv4_ip }}/{{ eth0_ipv4_nm }}"
+        - "{{ eth0_ipv6_ip }}/{{ eth0_ipv6_nm }}"
       dhcp4: no
       dns:
         - "{{ dns1 }}"
@@ -44,6 +43,6 @@ postfix_group: vpn
 public_hostname: proxy14.fedoraproject.org
 # This is consumed by the roles/fedora-web/main role
 sponsor: redhat
-vmhost: vmhost-x86-cc05.rdu-cc.fedoraproject.org
-volgroup: /dev/rhel_vmhost-x86-05
+vmhost: vmhost-x86-cc03.rdu-cc.fedoraproject.org
+volgroup: /dev/vg_guests
 vpn: true
