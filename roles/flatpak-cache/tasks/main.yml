@@ -49,25 +49,16 @@
   - config
 
 - name: Install SSL Certificates
-  copy: src={{ item.src }}
-      dest=/etc/pki/squid/{{ item.dest }}
-      owner={{ item.owner }} group={{ item.group }} mode = {{ item.mode }}
+  copy:
+    src: "{{ item }}"
+    dest: /etc/pki/squid/
+    owner: squid
+    group: squid
+    mode: 0644
   with_items:
-  - src: "{{private}}/files/flatpak-cache-certs/production/pki/ca.crt"
-    dest: ca.crt
-    owner: squid
-    group: squid
-    mode: "0644"
-  - src: "{{private}}/files/flatpak-cache-certs/production/pki/private/ca.key"
-    dest: ca.key
-    owner: squid
-    group: squid
-    mode: "0644"
-  - src: "{{private}}/files/flatpak-cache-certs/production/pki/dh.pem"
-    dest: dh.pem
-    owner: squid
-    group: squid
-    mode: "0644"
+  - "{{private}}/files/flatpak-cache-certs/production/pki/ca.crt"
+  - "{{private}}/files/flatpak-cache-certs/production/pki/private/ca.key"
+  - "{{private}}/files/flatpak-cache-certs/production/pki/dh.pem"
 
 - name: Generate SSL Database
   command: /usr/lib64/squid/security_file_certgen -c -s /var/lib/squid/ssl_db
