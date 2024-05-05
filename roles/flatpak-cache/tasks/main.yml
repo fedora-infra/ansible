@@ -32,7 +32,7 @@
   - config
 
 - name: Install squid configuration file
-  template: src=squid.conf dest=/etc/squid/squid.conf
+  template: src=squid.conf dest=/etc/squid/squid.conf owner=squid group=squid
   tags:
   - flatpak-cache
   - config
@@ -43,7 +43,7 @@
     dest: /etc/pki/squid/
     owner: squid
     group: squid
-    mode: 0644
+    mode: 0640
   with_items:
   - "{{private}}/files/flatpak-cache-certs/production/pki/ca.crt"
   - "{{private}}/files/flatpak-cache-certs/production/pki/private/ca.key"
