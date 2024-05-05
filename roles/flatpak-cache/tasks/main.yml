@@ -52,21 +52,6 @@
   - flatpak-cache
   - config
 
-- name: Check if /var/lib/squid/ssl_db/index.txt exists
-  stat:
-    path: /var/lib/squid/ssl_db/index.txt
-  register: index_txt_stat
-  tags:
-  - flatpak-cache
-  - config
-
-- name: Generate SSL Database
-  command: /usr/lib64/squid/security_file_certgen -c -s /var/lib/squid/ssl_db -M 4096
-  when: not index_txt_stat.stat.exists
-  tags:
-  - flatpak-cache
-  - config
-
 - name: Enable and start squid service
   systemd_service:
     name: squid.service
