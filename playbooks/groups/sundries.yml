@@ -30,10 +30,7 @@
   - collectd/base
   - mod_wsgi
   - geoip
-  - {
-    role: geoip-city-wsgi/app,
-    when: ansible_distribution_major_version|int <= 7 and ansible_distribution == 'RedHat'
-  }
+  - geoip-city-wsgi/app
   - role: easyfix/gather
     when: master_sundries_node|bool
   - role: bz_review_report
@@ -42,8 +39,6 @@
   - freemedia
   - sudo
   - pager_server
-  - role: zanata
-    when: master_sundries_node|bool
   - role: fedora-web/build
     when: master_sundries_node|bool
   - role: fedora-web/translation
