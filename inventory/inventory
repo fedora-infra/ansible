@@ -28,26 +28,6 @@ certgetter01.iad2.fedoraproject.org
 [backup]
 backup01.iad2.fedoraproject.org
 
-[badges:children]
-badges_backend
-badges_web
-
-[badges_stg:children]
-badges_backend_stg
-badges_web_stg
-
-[badges_backend]
-badges-backend01.iad2.fedoraproject.org
-
-[badges_backend_stg]
-badges-backend01.stg.iad2.fedoraproject.org
-
-[badges_web]
-badges-web01.iad2.fedoraproject.org
-
-[badges_web_stg]
-badges-web01.stg.iad2.fedoraproject.org
-
 [basset]
 
 [basset_stg]
@@ -203,8 +183,6 @@ db-datanommer01.stg.iad2.fedoraproject.org
 
 # clients that talk to the main postgres stg servers
 [postgres_clients_stg]
-badges-backend01.stg.iad2.fedoraproject.org
-badges-web01.stg.iad2.fedoraproject.org
 bodhi-backend01.stg.iad2.fedoraproject.org
 busgateway01.stg.iad2.fedoraproject.org
 koji01.stg.iad2.fedoraproject.org
@@ -611,8 +589,6 @@ zabbix01.stg.iad2.fedoraproject.org
 #
 [staging]
 autosign01.stg.iad2.fedoraproject.org
-badges-backend01.stg.iad2.fedoraproject.org
-badges-web01.stg.iad2.fedoraproject.org
 # basset01.stg.iad2.fedoraproject.org
 bodhi-backend01.stg.iad2.fedoraproject.org
 bvmhost-x86-01.stg.iad2.fedoraproject.org
@@ -778,14 +754,12 @@ wiki02.iad2.fedoraproject.org
 
 # assorted categories of fedmsg services, for convenience
 [fedmsg_hubs:children]
-badges_backend
 busgateway
 fedimg
 mbs_backend
 pkgs
 
 [fedmsg_hubs_stg:children]
-badges_backend_stg
 busgateway_stg
 fedimg_stg
 mbs_backend_stg
@@ -1074,7 +1048,6 @@ batcave01.iad2.fedoraproject.org
 bodhi-backend01.iad2.fedoraproject.org
 
 [sar]
-badges-backend01.iad2.fedoraproject.org
 bodhi-backend01.iad2.fedoraproject.org
 mailman01.iad2.fedoraproject.org
 people02.fedoraproject.org
@@ -1119,7 +1092,6 @@ iad2_staging
 
 [iad2_production:children]
 backup
-badges
 bastion_iad2
 batcave_iad2
 bodhi_backend
@@ -1168,7 +1140,6 @@ virthost
 wiki
 
 [iad2_staging:children]
-badges_stg
 bastion_stg
 bodhi_backend_stg
 buildvm_stg
