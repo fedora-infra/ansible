@@ -19,9 +19,6 @@ MAILMAN_TABLES_TO_REPLACE = [
     ("domain", "mail_host"),
     ("mailinglist", "mail_host"),
     ("mailinglist", "list_id"),
-    #("ban", "list_id"),
-    #("bounceevent", "list_id"),
-    #("member", "list_id"),
     ("template", "context"),
     ("acceptablealias", "alias"),
 ]
@@ -31,50 +28,17 @@ DJANGO_TABLES_TO_EMPTY = [
     "openid_openidstore",
     "socialaccount_socialtoken",
 ]
-DJANGO_INDICES_TO_RECREATE = [
-    ("hyperkitty_thread", "hyperkitty_thread_mailinglist_id", "(mailinglist_id)"),
-    ("hyperkitty_thread", "hyperkitty_thread_mailinglist_id_like", "(mailinglist_id varchar_pattern_ops)"),
-    ("hyperkitty_email", "hyperkitty_email_mailinglist_id", "(mailinglist_id)"),
-    ("hyperkitty_email", "hyperkitty_email_mailinglist_id_like", "(mailinglist_id varchar_pattern_ops)"),
-]
-DJANGO_CONSTRAINTS_TO_RECREATE = [
-    ("hyperkitty_thread", "hyperkitty_thread_mailinglist_id_371b52d98485a593_uniq", "UNIQUE (mailinglist_id, thread_id)"),
-    ("hyperkitty_thread", "mailinglist_id_refs_name_3725eec2", "FOREIGN KEY (mailinglist_id) REFERENCES hyperkitty_mailinglist(name) DEFERRABLE INITIALLY DEFERRED"),
-    ("hyperkitty_email", "hyperkitty_email_mailinglist_id_57f04aace3f8ee5e_uniq", "UNIQUE (mailinglist_id, message_id)"),
-    ("hyperkitty_email", "mailinglist_id_refs_name_654506d3", "FOREIGN KEY (mailinglist_id) REFERENCES hyperkitty_mailinglist(name) DEFERRABLE INITIALLY DEFERRED"),
-]
-
-
-def get_mapping(cursor, table, column):
-    ml_mapping = {}
-    query = "SELECT {c} FROM {t}".format(c=column, t=table)
-    print(query)
-    cursor.execute(query)
-    for row in cursor:
-        value = row[0]
-        orig_value = value.replace(
-            "lists.stg.fedoraproject.org", "lists.fedoraproject.org"
-            ).replace(
-            "lists.stg.fedorahosted.org", "lists.fedorahosted.org")
-        changed_value = value.replace(
-            "lists.fedoraproject.org", "lists.stg.fedoraproject.org"
-            ).replace(
-            "lists.fedorahosted.org", "lists.stg.fedorahosted.org")
-        if orig_value == changed_value:
-            continue
-        ml_mapping[orig_value] = changed_value
-    return ml_mapping
 
 
 def update_col_1(connection, table, column, where=None, pk="id"):
     cursor = connection.cursor()
     cursor_2 = connection.cursor()
-    where = " WHERE {}".format(where) if where is not None else ""
+    query_where = " WHERE {}".format(where) if where is not None else ""
     #query = "SELECT COUNT(*) FROM {t} {w}".format(t=table, w=where)
     #cursor.execute(query)
     #count = cursor.fetchone()[0]
     query = "SELECT {pk}, {c} FROM {t} {w}".format(
-        t=table, c=column, pk=pk, w=where)
+        t=table, c=column, pk=pk, w=query_where)
     #query += " LIMIT 10000"
     print(query)
     #print("{} lines".format(count))
@@ -85,7 +49,9 @@ def update_col_1(connection, table, column, where=None, pk="id"):
         changed_value = value.replace(
             "lists.fedoraproject.org", "lists.stg.fedoraproject.org"
             ).replace(
-            "lists.fedorahosted.org", "lists.stg.fedorahosted.org")
+            "lists.fedorahosted.org", "lists.stg.fedorahosted.org"
+            ).replace(
+            "lists.pagure.io", "lists.stg.pagure.io")
         if value == changed_value:
             continue
         if column == pk:
@@ -106,36 +72,20 @@ def update_col_1(connection, table, column, where=None, pk="id"):
     cursor.executemany(query, updates)
 
 
-def update_col_2(ml_mapping, cursor, table, column, where=None):
-    query_where = " AND {}".format(where) if where is not None else ""
-    query = "SELECT COUNT(*) FROM {t} {w}".format(t=table, w=where)
-    cursor.execute(query)
-    count = cursor.fetchone()[0]
-    print("Updating {} rows.".format(count))
-    for name_orig, name_new in ml_mapping.items():
-        query = "UPDATE {t} SET {c} = %s WHERE {c} = %s {w}".format(
-            t=table, c=column, w=query_where)
-        params = (name_new, name_orig)
-        print(query % params)
-        cursor.execute(query, params)
-
-
 def do_mailman():
     config = ConfigParser()
     config.read("/etc/mailman.cfg")
     conn = psycopg2.connect(config.get("database", "url"))
-    #db_url = urlparse(config.get("database", "url"))
-    #conn = psycopg2.connect(
-    #    "dbname={scheme} user={username} password={password} host={hostname}".format(db_url)
-    #    )
 
     with conn.cursor() as cursor:
-        ml_mapping = get_mapping(cursor, "mailinglist", "list_id")
         for table, column in MAILMAN_TABLES_TO_REPLACE:
             update_col_1(conn, table, column)
-        update_col_2(ml_mapping, cursor, "ban", "list_id")
-        update_col_2(ml_mapping, cursor, "member", "list_id")
-        update_col_2(ml_mapping, cursor, "bounceevent", "list_id")
+        update_col_1(conn, "ban", "list_id",
+                     where="list_id !~ 'lists.stg'")
+        update_col_1(conn, "member", "list_id",
+                     where="list_id !~ 'lists.stg'")
+        update_col_1(conn, "bounceevent", "list_id",
+                     where="list_id !~ 'lists.stg'")
         update_col_1(conn, "pendedkeyvalue", "value",
                      """ "key" = 'list_id' OR "key" = '_mod_listid' """
                      """ OR "key" = 'envsender'""")
@@ -158,31 +108,13 @@ def do_django():
         for table in DJANGO_TABLES_TO_EMPTY:
             cursor.execute("DELETE FROM %s" % table)
             print(cursor.query)
-        #for table, name, create in DJANGO_CONSTRAINTS_TO_RECREATE:
-        #    cursor.execute(
-        #        "ALTER TABLE {t} DROP CONSTRAINT IF EXISTS {n}".format(
-        #            t=table, n=name))
-        #    print(cursor.query)
-        for table, name, column in DJANGO_INDICES_TO_RECREATE:
-            cursor.execute("DROP INDEX IF EXISTS {n}".format(t=table, n=name))
-            print(cursor.query)
         with transaction.atomic():
-            cursor.execute("SET CONSTRAINTS ALL DEFERRED")
-            ml_mapping = get_mapping(cursor, "hyperkitty_mailinglist", "name")
             # Replace in tables with prod domains:
             update_col_1(connection, "django_mailman3_maildomain", "mail_domain")
-            update_col_1(connection, "hyperkitty_mailinglist", "name", pk="name")
-            update_col_2(ml_mapping, cursor, "hyperkitty_thread", "mailinglist_id")
-            update_col_2(ml_mapping, cursor, "hyperkitty_email", "mailinglist_id")
-            cursor.execute("SET CONSTRAINTS ALL IMMEDIATE")
-        for table, name, column in DJANGO_INDICES_TO_RECREATE:
-            cursor.execute("CREATE INDEX {n} ON {t} {c}".format(
-                           n=name, t=table, c=column))
-            print(cursor.query)
-        #for table, name, create in DJANGO_CONSTRAINTS_TO_RECREATE:
-        #    cursor.execute("ALTER TABLE {t} ADD CONSTRAINT {n} {c}".format(
-        #                   n=name, t=table, c=create))
-        #    print(cursor.query)
+            update_col_1(connection, "hyperkitty_mailinglist", "name",
+                         where="name !~ 'lists.stg'")
+            update_col_1(connection, "hyperkitty_mailinglist", "list_id",
+                         where="list_id !~ 'lists.stg'")
     connection.commit()
 
 
