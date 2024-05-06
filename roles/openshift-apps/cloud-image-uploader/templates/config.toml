@@ -19,7 +19,7 @@ app_contacts_email = "cloud@lists.fedoraproject.org"
 [[bindings]]
 queue = "cloud-image-uploader{{ env_suffix }}"
 exchange = "amq.topic"
-routing_keys = ["org.fedoraproject.*.buildsys.build.state.change"]
+routing_keys = ["org.fedoraproject.*.pungi.compose.status.change"]
 
 [queues."cloud-image-uploader{{ env_suffix }}"]
 durable = true
