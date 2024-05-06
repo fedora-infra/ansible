@@ -170,14 +170,6 @@ define service {
 ## Other Frontend Websites
 
 define service {
-  hostgroup_name        badges_web
-  service_description   http-badges.fedoraproject.org-tahrir
-  check_command         check_website!localhost!/!Tahrir
-  use                   websitetemplate
-  event_handler         restart_httpd
-}
-
-define service {
   hostgroup_name        moby_registry
   service_description   http-moby-registry
   check_command         check_website!localhost:5000!/v2/!{}
