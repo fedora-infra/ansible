@@ -78,6 +78,7 @@ distributed_lock = true
 # Lock timeout should be longer than the longest datanommer query
 lock_timeout = 14400
 thread_local_lock = false
+socket_keepalive = true
 
 # This is a set of data that tells our consumer what Open Badges Issuer
 # should be kept as the issuer of all the badges we create.
