@@ -4,9 +4,9 @@
 # Please check with sysadmin-main before pushing out an update here.
 #
 *filter
-:INPUT DROP []
-:FORWARD ACCEPT []
-:OUTPUT ACCEPT []
+:INPUT DROP [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
 
 # loopback allowed
 -A INPUT -i lo -j ACCEPT
