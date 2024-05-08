@@ -6,46 +6,38 @@ Extract all emails from a selected address and prints them in JSON to the
 standard output.
 """
 
-from __future__ import absolute_import, unicode_literals, print_function
-
 import argparse
 import json
 import logging
 import os
 import sys
 
+from configparser import ConfigParser
 import requests
-from six.moves.urllib.parse import urljoin
 
+config = ConfigParser()
+config.read("/etc/mailman.cfg")
+username = config.get("webservice", "admin_user")
+userpass = config.get("webservice", "admin_pass")
 
 ENV_EMAIL = "SAR_EMAIL"
 HYPERKITTY_INSTANCE = "http://localhost/archives/"
 MAILMAN_INSTANCE = "http://localhost:8001/"
-MAILMAN_AUTH = ("restadmin", "restpass")
+MAILMAN_AUTH = (username, userpass)
 
 log = logging.getLogger()
 
 
 def get_emails(address):
     url = urljoin(HYPERKITTY_INSTANCE, "api/sender/{}/emails/".format(address))
-    result = {"next": url}
-    count = None
     email_urls = []
-    while result.get("next"):
-        url = result["next"]
-        response = requests.get(url)
-        if response.status_code >= 300:
-            log.error("Could not get URL %s: %d %s",
-                      url, response.status_code, response.reason)
-            break
-        result = response.json()
-        if count is None:
-            count = result["count"]
-        email_urls.extend([e["url"] for e in result["results"]])
-    if count != len(email_urls):
-        log.error("Mismatch in the number of emails: got %s but there are "
-                  "%s in total.", len(email_urls), count)
-        raise ValueError
+    response = requests.get(url)
+    if response.status_code >= 300:
+        log.error("Could not get URL %s: %d %s",
+                  url, response.status_code, response.reason)
+        raise ConnectionError
+    result = response.json()
+    email_urls.extend([e["url"] for e in result])
     emails = []
     for url in email_urls:
         response = requests.get(url)
