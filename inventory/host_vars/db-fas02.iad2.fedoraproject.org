@@ -1,0 +1,40 @@
+---
+#
+# Only allow postgresql access from the frontend nodes and hosted.
+#
+custom_rules: [
+  # Openshift nodes (egress policy will block connection from non-authorized projects)
+  '-A INPUT -p tcp -m tcp -s 10.3.163.69   --dport 5432 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 10.3.163.70   --dport 5432 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 10.3.163.71   --dport 5432 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 10.3.163.72   --dport 5432 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 10.3.163.73   --dport 5432 -j ACCEPT',
+  # noc01 needs to connect to check the db
+  '-A INPUT -p tcp -m tcp -s 10.3.163.10   --dport 5432 -j ACCEPT',
+  # Ipsilon VMs
+  '-A INPUT -p tcp -m tcp -s 10.3.163.105  --dport 5432 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 10.3.163.106  --dport 5432 -j ACCEPT']
+# This is a generic list, monitored by collectd
+databases:
+  - fas2
+  - ipsilon
+datacenter: iad2
+db_backup_dir: ['/backups']
+# This is a more strict list, to be made publicly available
+dbs_to_backup:
+  - fas2
+  - ipsilon
+effective_cache_size: "6GB"
+eth0_ipv4_gw: 10.3.163.254
+eth0_ipv4_ip: 10.3.163.115
+ks_repo: http://38.145.60.16/repo/rhel/RHEL9-x86_64/
+ks_url: http://38.145.60.16/repo/rhel/ks/kvm-rhel
+# These are normally group variables, but in this case db servers are often different
+lvm_size: 100000
+max_stack_depth: "4MB"
+mem_size: 16384
+nrpe_procs_crit: 800
+#
+# Large updates pushes cause lots of db threads doing the tag moves, so up this from default.
+#
+nrpe_procs_warn: 600
+num_cpus: 8
+shared_buffers: "2GB"
+temp_buffers: "8MB"
+vmhost: vmhost-x86-08.iad2.fedoraproject.org
+volgroup: /dev/vg_guests
