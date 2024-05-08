@@ -57,6 +57,7 @@ ks_repo: http://38.145.60.16/repo/rhel/RHEL9-x86_64/
 ks_url: http://38.145.60.16/repo/rhel/ks/kvm-rhel
 # These are normally group variables, but in this case db servers are often different
 lvm_size: 1500000
+max_cpu: "{{ num_cpus }}"
 max_stack_depth: "6MB"
 max_worker_processes: 12
 mem_size: 65536
