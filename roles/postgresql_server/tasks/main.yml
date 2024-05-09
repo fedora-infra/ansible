@@ -231,4 +231,4 @@
   - GBDR
 
 - import_tasks: datanommer.yml
-  when: inventory_hostname.startswith('db-datanommer02') or (env == "staging" and inventory_hostname.startswith('db-datanommer'))
+  when: inventory_hostname.startswith('db-datanommer02.iad2') or (env == "staging" and inventory_hostname.startswith('db-datanommer01.stg'))
