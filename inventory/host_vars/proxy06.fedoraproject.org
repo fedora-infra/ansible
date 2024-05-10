@@ -4,10 +4,10 @@ dns1: 8.8.8.8
 dns2: 8.8.4.4
 dns_search1: "vpn.fedoraproject.org"
 dns_search2: "fedoraproject.org"
-eth0_ipv4: 140.211.169.196
+eth0_ipv4_ip: 140.211.169.196
 eth0_ipv4_gw: 140.211.169.193
 eth0_ipv4_nm: 26
-eth0_ipv6: "2605:bc80:3010:600:dead:beef:cafe:fed9"
+eth0_ipv6_ip: "2605:bc80:3010:600:dead:beef:cafe:fed9"
 eth0_ipv6_gw: "2605:bc80:3010:600::1"
 eth0_ipv6_nm: 64
 freezes: true
@@ -15,15 +15,14 @@ has_ipv4: yes
 has_ipv6: yes
 ks_repo: http://38.145.60.16/pub/fedora/linux/releases/39/Server/x86_64/os/
 ks_url: http://38.145.60.16/repo/rhel/ks/kvm-fedora
-mac0: 52:54:00:fd:23:7f
-max_mem_size: 20000
-mem_size: 16384
+max_mem_size: 40000
+mem_size: 32768
 network_connections:
   - autoconnect: yes
     ip:
       address:
-        - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
-        - "{{ eth0_ipv6 }}/{{ eth0_ipv6_nm }}"
+        - "{{ eth0_ipv4_ip }}/{{ eth0_ipv4_nm }}"
+        - "{{ eth0_ipv6_ip }}/{{ eth0_ipv6_nm }}"
       dhcp4: no
       dns:
         - "{{ dns1 }}"
@@ -34,7 +33,7 @@ network_connections:
         - "{{ dns_search2 }}"
       gateway4: "{{ eth0_ipv4_gw }}"
       gateway6: "{{ eth0_ipv6_gw }}"
-    mac: "{{ mac0 }}"
+    mac: "{{ ansible_default_ipv4.macaddress }}"
     name: eth0
     type: ethernet
 nrpe_procs_crit: 1400
@@ -44,6 +43,6 @@ postfix_group: vpn
 public_hostname: proxy06.fedoraproject.org
 # This is consumed by the roles/fedora-web/main role
 sponsor: osuosl
-vmhost: osuosl01.fedoraproject.org
+vmhost: osuosl02.fedoraproject.org
 volgroup: /dev/vg_guests
 vpn: true
