@@ -1,2 +1,2 @@
 MAILTO=releng-cron@lists.fedoraproject.org
-30 4 * * * root TMPDIR=`mktemp -d /tmp/releng.XXXXXXX` && chmod 755 $TMPDIR && pushd $TMPDIR >& /dev/null && git clone -q https://pagure.io/releng.git && cd releng/scripts && bash get_retired_packages.sh && popd && rm -fr $TMPDIR
+30 4 * * * root TMPDIR=`mktemp -d /tmp/releng.XXXXXXX` && chmod 755 $TMPDIR && pushd $TMPDIR >& /dev/null && git clone -q https://pagure.io/releng.git && cd releng/scripts && bash get_retired_packages.sh && popd >& /dev/null && rm -fr $TMPDIR
