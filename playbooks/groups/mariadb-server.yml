@@ -4,12 +4,12 @@
 
 - import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
   vars:
-    myhosts: "db03.stg.iad2.fedoraproject.org:db03.iad2.fedoraproject.org:db04.iad2.fedoraproject.org:db04.stg.iad2.fedoraproject.org"
+    myhosts: "db03.stg.iad2.fedoraproject.org:db03.iad2.fedoraproject.org:db04.iad2.fedoraproject.org"
 
 # Once the instance exists, configure it.
 
 - name: configure mariadb server system
-  hosts: db03.stg.iad2.fedoraproject.org:db03.iad2.fedoraproject.org:db04.iad2.fedoraproject.org:db04.stg.iad2.fedoraproject.org
+  hosts: db03.stg.iad2.fedoraproject.org:db03.iad2.fedoraproject.org:db04.iad2.fedoraproject.org
   user: root
   gather_facts: True
 
