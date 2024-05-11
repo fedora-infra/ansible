@@ -11,18 +11,7 @@
       stream=12
       profiles=
       state=enabled
-  when: ansible_distribution_major_version|int >= 8 and ansible_distribution == 'RedHat' and not inventory_hostname.startswith(('db-fas01.stg','db-koji01'))
-
-- name: on db-fas01 enable the postgresql 9.6 module.
-  copy:
-    dest: /etc/dnf/modules.d/postgresql.module
-    content: |
-      [postgresql]
-      name=postgresql
-      stream=9.6
-      profiles=
-      state=enabled
-  when: inventory_hostname.startswith('db-fas01')
+  when: ansible_distribution_major_version|int == 8
 
 - name: on db-koji01 and db01.stg enable the postgresql 15 module.
   copy:
@@ -178,44 +167,6 @@
   with_items:
   - "{{ dbs_to_backup }}"
   when: dbs_to_backup != []
-  tags:
-  - cron
-  - postgresql
-
-#- name: install script to kill long running pgsql jobs
-#  copy: >
-#    src=kill_idle_xact_92.sh
-#    dest=/usr/local/bin/kill_idle_xact_92.sh
-#    mode=0755
-#  when: inventory_hostname.startswith('db-koji01')
-#  tags:
-#  - cron
-#  - postgresql
-#
-#- name: Set up a cron job to kill long postresql queries
-#  copy: >
-#    src=koji-cleanup-locks.cron
-#    dest=/etc/cron.d/koji-cleanup-locks.cron
-#  when: inventory_hostname.startswith('db-koji01')
-#  tags:
-#  - cron
-#  - postgresql
-#
-- name: Set up a script for cron job to clean long fas sessions on fas database server only
-  copy: >
-    src=fasdb-cleanup-sessions
-    dest=/usr/local/bin/fasdb-cleanup-sessions
-    mode=755
-  when: inventory_hostname.startswith('db-fas01')
-  tags:
-  - cron
-  - postgresql
-
-- name: Set up a cron job to clean long fas sessions on fas database server only
-  copy: >
-    src=fasdb-cleanup-sessions.cron
-    dest=/etc/cron.d/fasdb-cleanup-sessions.cron
-  when: inventory_hostname.startswith('db-fas01')
   tags:
   - cron
   - postgresql
