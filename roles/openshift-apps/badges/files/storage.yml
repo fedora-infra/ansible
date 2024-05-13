@@ -11,3 +11,15 @@ spec:
     requests:
       storage: 5Gi
   storageClassName: ocs-storagecluster-cephfs
+---
+# Redis
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
