@@ -32,10 +32,10 @@ loginDisabled = True
 KojiHubCA = /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
 
 {% if env == 'staging' %}
-Tasks = buildContainer,createContainer,runroot,osbuildImage,createKiwiImage
-ParentTasks = buildContainer,osbuildImage,kiwiBuild
+Tasks = buildContainer,createContainer,flatpakBuild,flatpakBuildArch,runroot,osbuildImage,createKiwiImage
+ParentTasks = buildContainer,flatpakBuild,osbuildImage,kiwiBuild
 {% else %}
-Tasks = buildContainer,createContainer,runroot,osbuildImage,createKiwiImage
-ParentTasks = buildContainer,osbuildImage,kiwiBuild
+Tasks = buildContainer,createContainer,flatpakBuild,flatpakBuildArch,runroot,osbuildImage,createKiwiImage
+ParentTasks = buildContainer,flatpakBuild,osbuildImage,kiwiBuild
 {% endif %}
-ToplevelTasks = osbuildImage
+ToplevelTasks = flatpakBuild,osbuildImage
