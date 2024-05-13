@@ -26,8 +26,8 @@ UPDATE_RAWDB=countme-update-rawdb.sh
 UPDATE_TOTALS=countme-update-totals.sh
 UPDATE_TRIM=countme-trim-raw
 # Names of the post update commands. They should be in PATH somewhere...
-PUSH_SPLIT=split-totals-db.sh
-PUSH_REZIP=rezip
+PUSH_SPLIT=countme-split-totals-db.sh
+PUSH_REZIP=countme-rezip
 
 # ------------------------------ NOTE ------------------------------
 # Everything below this line should try to be identical between the
