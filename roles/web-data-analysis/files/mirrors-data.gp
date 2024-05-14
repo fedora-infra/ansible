@@ -10,7 +10,7 @@ set key outside right top Right title 'Legend' box 3
 ##
 set output "/var/www/html/csv-reports/images/mirrors-all-points.png"
 set title "Fedora+Epel Yum Unique IPs"
-plot ["2007-05-17":"2024-06-30"] \
+plot ["2007-05-17":"2024-12-31"] \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:2  title 'epel4' with lines lw 3,\
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:3  title 'epel5' with lines lw 3,\
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:4  title 'epel6' with lines lw 3,\
@@ -101,13 +101,13 @@ unset output
 
 # set output "/var/www/html/csv-reports/images/fedora-daily.png"
 # set title "Fedora Daily Totals Unique IPs"
-# plot ["2007-05-17":"2024-06-30"] \
+# plot ["2007-05-17":"2024-12-31"] \
 #      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:36 title 'Fedora' with lines lw 3
 # unset output
 
 set output "/var/www/html/csv-reports/images/fedora-os-all.png"
 set title "Fedora OS Yum Unique IPs"
-plot ["2007-05-17":"2024-06-30"] \
+plot ["2007-05-17":"2024-12-31"] \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:6  title 'fed03' with lines lw 3,\
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:7  title 'fed04' with lines lw 3,\
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:8  title 'fed05' with lines lw 3,\
@@ -166,7 +166,7 @@ unset output
 
 set output "/var/www/html/csv-reports/images/fedora-os-modular.png"
 set title "Fedora Modular Users Unique IPs"
-plot ["2018-01-01":"2024-06-30"] \
+plot ["2018-01-01":"2024-12-31"] \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:59 title 'modular' with lines lw 3, \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:60 title 'modular_rawhide' with lines lw 3, \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:61 title 'modular_f27' with lines lw 3, \
@@ -186,7 +186,7 @@ unset output
 
 set output "/var/www/html/csv-reports/images/fedora-os-latest.png"
 set title "Fedora Selected Versions Unique IPs"
-plot ["2020-01-01":"2024-06-30"] \
+plot ["2020-01-01":"2024-12-31"] \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:36 title 'Fedora' with lines lw 3,\
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:67 title 'fed32' with lines lw 3, \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:68 title 'fed33' with lines lw 3, \
@@ -204,7 +204,7 @@ unset output
 
 set output "/var/www/html/csv-reports/images/fedora-os-latest-stacked.png"
 set title "Fedora Selected Versions Unique IPs"
-plot ["2020-01-01":"2024-06-30"] \
+plot ["2020-01-01":"2024-12-31"] \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:36 title 'Fedora' with lines lw 3,\
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($67+$68+$74+$75+$76+$33) title 'fed32' with filledcurves x1,\
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($68+$74+$75+$76+$33) title 'fed33' with filledcurves x1,\
@@ -216,7 +216,7 @@ unset output
 
 set output "/var/www/html/csv-reports/images/fedora-hardware-full.png"
 set title "Fedora Hardware via Unique IPs"
-plot ["2007-05-17":"2024-06-30"] \
+plot ["2007-05-17":"2024-12-31"] \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:37 title 'alpha' with lines lw 3,\
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:38 title 'ARM' with lines lw 3,\
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:39 title 'ARM64' with lines lw 3,\
@@ -235,7 +235,7 @@ unset output
 
 set output "/var/www/html/csv-reports/images/fedora-hardware-2nd.png"
 set title "Fedora Secondary via Unique IPs"
-plot ["2007-05-17":"2024-06-30"] \
+plot ["2007-05-17":"2024-12-31"] \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:37 title 'alpha' with lines lw 3,\
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:38 title 'ARM' with lines lw 3,\
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:39 title 'ARM64' with lines lw 3,\
@@ -252,7 +252,7 @@ unset output
 
 set output "/var/www/html/csv-reports/images/fedora-epel-stacked.png"
 set title "Fedora Yum Unique IPs"
-plot ["2007-05-17":"2024-06-30"] \
+plot ["2007-05-17":"2024-12-31"] \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($2+$3+$4+$5+$72+$73+$6+$7+$8+$9+$10+$11+$12+$13+$14+$15+$16+$17+$18+$19+$20+$21+$22+$23+$24+$25+$26+$27+$28+$29+$30+$31+$32+$65+$66+$67+$68+$74+$75+$76+$77+$78+$79+$33) title 'rawhide' w filledcurves x1, \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($2+$3+$4+$5+$72+$73+$6+$7+$8+$9+$10+$11+$12+$13+$14+$15+$16+$17+$18+$19+$20+$21+$22+$23+$24+$25+$26+$27+$28+$29+$30+$31+$32+$65+$66+$67+$68+$74+$75+$76+$77+$78+$79) title 'f39' w filledcurves x1, \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($2+$3+$4+$5+$72+$73+$6+$7+$8+$9+$10+$11+$12+$13+$14+$15+$16+$17+$18+$19+$20+$21+$22+$23+$24+$25+$26+$27+$28+$29+$30+$31+$32+$65+$66+$67+$68+$74+$75+$76+$77+$78) title 'f38' w filledcurves x1, \
@@ -302,7 +302,7 @@ unset output
 
 set output "/var/www/html/csv-reports/images/fedora-stacked.png"
 set title "Fedora Yum Unique IPs"
-plot ["2007-05-17":"2024-06-30"] \
+plot ["2007-05-17":"2024-12-31"] \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($6+$7+$8+$9+$10+$11+$12+$13+$14+$15+$16+$17+$18+$19+$20+$21+$22+$23+$24+$25+$26+$27+$28+$29+$30+$31+$32+$65+$66+$67+$68+$74+$75+$76+$77+$78+$79+$33) title 'rawhide' w filledcurves x1, \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($6+$7+$8+$9+$10+$11+$12+$13+$14+$15+$16+$17+$18+$19+$20+$21+$22+$23+$24+$25+$26+$27+$28+$29+$30+$31+$32+$65+$66+$67+$68+$74+$75+$76+$77+$78+$79) title 'f39' w filledcurves x1, \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($6+$7+$8+$9+$10+$11+$12+$13+$14+$15+$16+$17+$18+$19+$20+$21+$22+$23+$24+$25+$26+$27+$28+$29+$30+$31+$32+$65+$66+$67+$68+$74+$75+$76+$77+$78) title 'f38' w filledcurves x1, \
@@ -345,7 +345,7 @@ unset output
 
 set output "/var/www/html/csv-reports/images/fedora-rev-all-stacked.png"
 set title "Fedora Yum Reverse Unique IPs"
-plot ["2007-05-17":"2024-06-30"] \
+plot ["2007-05-17":"2024-12-31"] \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($33+$68+$67+$66+$65+$32+$31+$30+$29+$28+$27+$26+$25+$24+$23+$22+$21+$20+$19+$18+$17+$16+$15+$14+$13+$12+$11+$10+$9+$8+$7+$6) title 'fed03' w filledcurves x1 lc rgb "#F0F0F0", \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($33+$68+$67+$66+$65+$32+$31+$30+$29+$28+$27+$26+$25+$24+$23+$22+$21+$20+$19+$18+$17+$16+$15+$14+$13+$12+$11+$10+$9+$8+$7) title 'fed04' w filledcurves x1 lc rgb "#F0F0F0", \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($33+$68+$67+$66+$65+$32+$31+$30+$29+$28+$27+$26+$25+$24+$23+$22+$21+$20+$19+$18+$17+$16+$15+$14+$13+$12+$11+$10+$9+$8) title 'fed05' w filledcurves x1 lc rgb "#F0F0F0", \
@@ -382,7 +382,7 @@ unset output
 
 set output "/var/www/html/csv-reports/images/fedora-rev-latest-stacked.png"
 set title "Fedora Yum Unique IPs"
-plot ["2018-01-01":"2024-06-30"] \
+plot ["2018-01-01":"2024-12-31"] \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:36 title 'Fedora' with lines lw 3,\
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($66+$67+$68+$75+$76+$77+$33) title 'fed31' with filledcurves x1,\
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($67+$68+$75+$76+$77+$33) title 'fed32' with filledcurves x1,\
@@ -396,7 +396,7 @@ unset output
 
 set output "/var/www/html/csv-reports/images/fedora-select-stacked.png"
 set title "Fedora Yum Unique IPs"
-plot ["2007-05-17":"2024-06-30"] \
+plot ["2007-05-17":"2024-12-31"] \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($6+$7+$8+$9+$10+$11+$12+$13+$14+$15+$16+$17+$18+$19+$20+$21+$22+$23+$24+$25+$26+$27+$28+$29+$30+$31+$32+$65+$66+$67+$68+$74+$75+$76+$77+$78+$79+$33)  title 'fedora-future' w filledcurves x1, \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($6+$7+$8+$9+$10+$11+$12+$13+$14+$15+$16+$17+$18+$19+$20+$21+$22+$23+$24+$25+$26+$27+$28+$29+$30+$31+$32+$65+$66+$67+$68)  title 'fedora 30-33' w filledcurves x1, \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($6+$7+$8+$9+$10+$11+$12+$13+$14+$15+$16+$17+$18+$19+$20+$21+$22+$23+$24+$25+$26+$27+$28+$29+$30+$31+$32+$65)  title 'fedora 26-30' w filledcurves x1, \
@@ -414,7 +414,7 @@ unset output
 
 set output "/var/www/html/csv-reports/images/epel-all.png"
 set title "Epel Yum Unique IPs"
-plot ["2007-05-17":"2024-06-30"] \
+plot ["2007-05-17":"2024-12-31"] \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:2  title 'epel4' with lines lw 3,\
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:3  title 'epel5' with lines lw 3,\
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:4  title 'epel6' with lines lw 3,\
@@ -424,25 +424,32 @@ plot ["2007-05-17":"2024-06-30"] \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:35 title 'EPEL' with lines lw 3
 unset output
 
-set output "/var/www/html/csv-reports/images/epel-daily.png"
-set title "Fedora Epel Totals Unique IPs"
-plot ["2007-05-17":"2024-06-30"] \
-     '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:35 title 'EPEL' with lines lw 3
-unset output
-
-
-set output "/var/www/html/csv-reports/images/epel-arch.png"
-set title "Epel ARCH Unique IPs"
-plot ["2007-05-17":"2024-06-30"] \
-     '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:48  title 'x86_32' with lines lw 3,\
-     '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:50  title 'x86_64' with lines lw 3,\
-     '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:52  title 'ppc' with lines lw 3,\
+set output "/var/www/html/csv-reports/images/epel-all-short.png"
+set title "Epel Yum Unique IPs"
+plot ["2019-12-31":"2024-12-31"] \
+     '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:2  title 'epel4' with lines lw 3,\
+     '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:3  title 'epel5' with lines lw 3,\
+     '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:4  title 'epel6' with lines lw 3,\
+     '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:5  title 'epel7' with lines lw 3,\
+     '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:72 title 'epel8' with lines lw 3,\
+     '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:73 title 'epel9' with lines lw 3,\
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:35 title 'EPEL' with lines lw 3
 unset output
 
 set output "/var/www/html/csv-reports/images/epel-stacked.png"
 set title "Epel Releases Unique IPs"
-plot ["2007-05-17":"2024-06-30"] \
+plot ["2007-05-17":"2024-12-31"] \
+     '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($2+$3+$4+$5+$72+$73)  title 'epel9' w filledcurves x1, \
+     '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($2+$3+$4+$5+$72)  title 'epel8' w filledcurves x1, \
+     '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($2+$3+$4+$5)  title 'epel7' w filledcurves x1, \
+     '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($2+$3+$4)     title 'epel6' w filledcurves x1, \
+     '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($2+$3)        title 'epel5' w filledcurves x1, \
+     '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($2)           title 'epel4' w filledcurves x1
+unset output
+
+set output "/var/www/html/csv-reports/images/epel-stacked-short.png"
+set title "Epel Releases Unique IPs"
+plot ["2019-12-31":"2024-12-31"] \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($2+$3+$4+$5+$72+$73)  title 'epel9' w filledcurves x1, \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($2+$3+$4+$5+$72)  title 'epel8' w filledcurves x1, \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($2+$3+$4+$5)  title 'epel7' w filledcurves x1, \
