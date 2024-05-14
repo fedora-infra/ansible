@@ -4,12 +4,12 @@
 
 - import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
   vars:
-    myhosts: "db-fas01.stg.iad2.fedoraproject.org:db01.stg.iad2.fedoraproject.org:db-koji01.stg.iad2.fedoraproject.org:db-fas01.iad2.fedoraproject.org:db01.iad2.fedoraproject.org:db-datanommer01.iad2.fedoraproject.org:db-koji01.iad2.fedoraproject.org:db-openqa01.iad2.fedoraproject.org:db-datanommer01.stg.iad2.fedoraproject.org:db-datanommer02.iad2.fedoraproject.org:db02.iad2.fedoraproject.org:db-fas02.iad2.fedoraproject.org"
+    myhosts: "db-fas01.stg.iad2.fedoraproject.org:db01.stg.iad2.fedoraproject.org:db-koji01.stg.iad2.fedoraproject.org:db-fas01.iad2.fedoraproject.org:db01.iad2.fedoraproject.org:db-datanommer01.iad2.fedoraproject.org:db-koji01.iad2.fedoraproject.org:db-openqa01.iad2.fedoraproject.org:db-datanommer01.stg.iad2.fedoraproject.org:db-datanommer02.iad2.fedoraproject.org:db02.iad2.fedoraproject.org"
 
 # Once the instance exists, configure it.
 
 - name: configure postgresql server system
-  hosts: db-fas01.stg.iad2.fedoraproject.org:db01.stg.iad2.fedoraproject.org:db-koji01.stg.iad2.fedoraproject.org:db-fas01.iad2.fedoraproject.org:db01.iad2.fedoraproject.org:db-datanommer01.iad2.fedoraproject.org:db-koji01.iad2.fedoraproject.org:db-openqa01.iad2.fedoraproject.org:db-datanommer01.stg.iad2.fedoraproject.org:db-datanommer02.iad2.fedoraproject.org:db02.iad2.fedoraproject.org:db-fas02.iad2.fedoraproject.org
+  hosts: db-fas01.stg.iad2.fedoraproject.org:db01.stg.iad2.fedoraproject.org:db-koji01.stg.iad2.fedoraproject.org:db-fas01.iad2.fedoraproject.org:db01.iad2.fedoraproject.org:db-datanommer01.iad2.fedoraproject.org:db-koji01.iad2.fedoraproject.org:db-openqa01.iad2.fedoraproject.org:db-datanommer01.stg.iad2.fedoraproject.org:db-datanommer02.iad2.fedoraproject.org:db02.iad2.fedoraproject.org
   user: root
   gather_facts: True
 
