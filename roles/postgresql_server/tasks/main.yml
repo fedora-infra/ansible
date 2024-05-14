@@ -13,7 +13,7 @@
       state=enabled
   when: ansible_distribution_major_version|int == 8
 
-- name: on db-koji01 and db01.stg and db-datanommer02.stg enable the postgresql 15 module.
+- name: on db-koji01 and db01.stg and db-fas01 enable the postgresql 15 module.
   copy:
     dest: /etc/dnf/modules.d/postgresql.module
     content: |
@@ -22,7 +22,7 @@
       stream=15
       profiles=
       state=enabled
-  when: inventory_hostname.startswith(('db-koji01','db01.stg'))
+  when: inventory_hostname.startswith(('db-koji01','db01.stg','db-fas01'))
 
 - name: install postgresql server packages (EL < 8)
   package:
