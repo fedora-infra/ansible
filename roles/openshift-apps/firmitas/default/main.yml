@@ -1,0 +1,12 @@
+firmitas_namespace: "firmitas"
+firmitas_project_description: "Firmitas is a monitoring application which alerts about the expiration of RabbitMQ certs."
+firmitas_application_name: "{{ firmitas_namespace }}"
+firmitas_pagure_secret_volume_name: "firmitas-pagure-volume"
+firmitas_pagure_secret_name: "firmitas-pagure-secret"
+firmitas_stg_pagure_apikey: "OVERRIDEME" # in the ansible-private repo
+firmitas_stg_pagure_host: "OVERRIDEME" # in the ansible-private repo
+firmitas_pagure_apikey: "OVERRIDEME" # in the ansible-private repo
+firmitas_pagure_host: "OVERRIDEME" # in the ansible-private repo
+firmitas_certs_location: "https://infrastructure.fedoraproject.org/infra/rabbitmq-certs/"
+firmitas_requester: "t0xic0der"
+firmitas_image: "image-registry.openshift-image-registry.svc:5000/{{ firmitas_namespace }}/{{ firmitas_application_name }}:latest"

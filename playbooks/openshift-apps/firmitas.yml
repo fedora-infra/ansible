@@ -1,0 +1,15 @@
+---
+- hosts: os_control_stg #:os_control
+  user: root
+  gather_facts: false
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  tasks:
+    - name: Firmitas Role
+      include_role:
+        name: openshift-apps/firmitas
+        tasks_from: main

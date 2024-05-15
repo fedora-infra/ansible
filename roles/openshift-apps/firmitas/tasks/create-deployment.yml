@@ -1,0 +1,11 @@
+---
+# generate the templates for project to be created
+- name: create the deployment template
+  template:
+    src: "deployment.yml"
+    dest: "/root/ocp4/openshift-apps/firmitas/deployment.yml"
+    mode: 0770
+
+# apply created openshift resources
+- name: oc apply resources
+  command: "/root/bin/oc apply -f /root/ocp4/openshift-apps/firmitas/deployment.yml"

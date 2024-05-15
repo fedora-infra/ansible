@@ -1,0 +1,23 @@
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: "{{ firmitas_application_name }}-build"
+spec:
+  source:
+    git:
+{% if env == 'staging' %}
+      ref: main
+{% else %}
+      ref: main
+{% endif %}
+      uri: https://github.com/fedora-infra/firmitas.git
+    type: Git
+  strategy:
+    type: Docker
+  successfulBuildsHistoryLimit: 3
+  output:
+    to:
+      kind: ImageStreamTag
+      name: "{{ firmitas_application_name }}:latest"
+
