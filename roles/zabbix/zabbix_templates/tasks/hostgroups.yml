@@ -5,7 +5,6 @@
     state: present
     host_groups: "{{ item['hostgroup'] }}"
   with_items: "{{ zabbix_templates }}" # Hostgroups specific to an ansible group can be overridden in inventory/group_vars/group_name
-  run_once: True
   tags:
     - zabbix_add_hostgroups
     - zabbix_templates
