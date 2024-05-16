@@ -56,4 +56,5 @@ virt_install_command: "{{ virt_install_command_two_nic_unsafe }}"
 zabbix_templates:
   - group: "releng_compose"
     template: "releng_compose_cronjobs.json"
+    custom_template: true # Is the template official template bundled with Zabbix or one of our custom templates
     hostgroup: "fedora releng compose"

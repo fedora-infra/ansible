@@ -23,3 +23,8 @@ tcp_ports: [
   # HTTP API
   #15672,
 ]
+zabbix_templates:
+  - group: "rabbitmq" # Ansible group
+    template: "RabbitMQ node by Zabbix agent" # Template name in roles/zabbix/zabbix_templates/files/templatename.json
+    custom_template: false # Is the template official template bundled with Zabbix or one of our custom templates
+    hostgroup: "fedora rabbitmq" # Zabbix hostgroup

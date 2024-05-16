@@ -85,4 +85,5 @@ varnish_group: proxies
 zabbix_templates:
   - group: "proxies" # Ansible group
     template: "external_hosts_http.json" # Template name in roles/zabbix/zabbix_templates/files/templatename.json
+    custom_template: true # Is the template official template bundled with Zabbix or one of our custom templates
     hostgroup: "fedora external hosts" # Zabbix hostgroup
