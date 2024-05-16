@@ -72,41 +72,6 @@
   - packages
   - mediawiki
 
-- name: download the Fedora Messaging extension
-  git:
-    repo: https://github.com/fedora-infra/mediawiki-fedora-messaging.git
-    dest: /usr/share/{{ wikiver }}/extensions/FedoraMessaging
-    version: stable
-  register: result_git
-  tags:
-  - config
-  - mediawiki
-  - fedora-messaging
-
-- name: Create a directory for the php dependencies
-  file:
-    path: /srv/web/fp-wiki/extensions/FedoraMessaging/vendor
-    owner: apache
-    group: apache
-    mode: 0755
-    state: directory
-  tags:
-  - config
-  - mediawiki
-  - fedora-messaging
-
-- name: install the php dependencies
-  become: yes
-  become_user: apache
-  command:
-    cmd: composer install
-    chdir: /srv/web/fp-wiki/extensions/FedoraMessaging
-  when: result_git is changed
-  tags:
-  - config
-  - mediawiki
-  - fedora-messaging
-
 - name: Create /etc/pki/fedora-messaging
   file:
     dest: /etc/pki/fedora-messaging
@@ -266,6 +231,41 @@
   file: dest=/srv/web/{{wikiname}}-wiki/vendor src=/usr/share/{{ wikiver }}/vendor state=link
   tags:
   - mediawiki
+
+- name: download the Fedora Messaging extension
+  git:
+    repo: https://github.com/fedora-infra/mediawiki-fedora-messaging.git
+    dest: /usr/share/{{ wikiver }}/extensions/FedoraMessaging
+    version: stable
+  register: result_git
+  tags:
+  - config
+  - mediawiki
+  - fedora-messaging
+
+- name: Create a directory for the php dependencies
+  file:
+    path: /srv/web/fp-wiki/extensions/FedoraMessaging/vendor
+    owner: apache
+    group: apache
+    mode: 0755
+    state: directory
+  tags:
+  - config
+  - mediawiki
+  - fedora-messaging
+
+- name: install the php dependencies
+  become: yes
+  become_user: apache
+  command:
+    cmd: composer install
+    chdir: /srv/web/fp-wiki/extensions/FedoraMessaging
+  when: result_git is changed
+  tags:
+  - config
+  - mediawiki
+  - fedora-messaging
 
 - name: ensure a directory exists for our SELinux policy
   file: dest=/usr/local/share/selinux/ state=directory
