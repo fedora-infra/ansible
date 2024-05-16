@@ -11,7 +11,11 @@ items:
     runPolicy: Serial
     source:
       dockerfile: |-
+{% if env == 'staging' %}
+        FROM fedora:40
+{% else %}
         FROM fedora:38
+{% endif %}
         LABEL \
           name="release-monitoring-web" \
           vendor="Fedora Infrastructure" \
@@ -75,12 +79,14 @@ items:
                 rm -rf anitya
 {% if env == 'staging' %}
         # Let's use staging auth server in staging
-        RUN sed -i 's/id.fedoraproject.org/id.stg.fedoraproject.org/g' /usr/local/lib/python3.11/site-packages/social_core/backends/fedora.py
+        RUN sed -i 's/id.fedoraproject.org/id.stg.fedoraproject.org/g' /usr/local/lib/python3.12/site-packages/social_core/backends/fedora.py
 {% endif %}
 
         # Hotfix for social_auth-sqlalchemy
         # Could be removed when we switch to something else
-        RUN sed -i 's/base64.encodestring/base64.encodebytes/g' /usr/local/lib/python3.11/site-packages/social_sqlalchemy/storage.py
+{% if env == 'staging' %}
+        RUN sed -i 's/base64.encodestring/base64.encodebytes/g' /usr/local/lib/python3.12/site-packages/social_sqlalchemy/storage.py
+{% endif %}
         RUN mkdir /httpdir
         RUN chmod 777 /httpdir
         EXPOSE 8080
