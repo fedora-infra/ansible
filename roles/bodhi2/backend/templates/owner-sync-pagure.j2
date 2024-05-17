@@ -25,6 +25,7 @@ from functools import partial
 
 import requests
 import koji
+import re
 
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
@@ -52,8 +53,10 @@ IPA_REALM = '{{ ipa_realm }}'
 ENV_SUFFIX = '{{ env_suffix }}'
 if STAGING:
     PAGURE_URL = 'https://src.stg.fedoraproject.org/'
+    BODHI_URL = 'https://bodhi.stg.fedoraproject.org/'
 else:
     PAGURE_URL = 'https://src.fedoraproject.org/'
+    BODHI_URL = 'https://bodhi.fedoraproject.org/'
 # In case the above variables end up being filled in by Ansible
 if not PAGURE_URL.endswith('/'):
     PAGURE_URL = PAGURE_URL + '/'
