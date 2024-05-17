@@ -52,11 +52,23 @@ IPA_REALM = '{{ ipa_realm }}'
 ENV_SUFFIX = '{{ env_suffix }}'
 if STAGING:
     PAGURE_URL = 'https://src.stg.fedoraproject.org/'
+    PDC_URL = 'https://pdc.stg.fedoraproject.org/rest_api/v1/'
 else:
     PAGURE_URL = 'https://src.fedoraproject.org/'
+    PDC_URL = 'https://pdc.fedoraproject.org/rest_api/v1/'
 # In case the above variables end up being filled in by Ansible
 if not PAGURE_URL.endswith('/'):
     PAGURE_URL = PAGURE_URL + '/'
+if not PDC_URL.endswith('/'):
+    PDC_URL = PDC_URL + '/'
+
+PDC_TYPES = {
+    'rpms': 'rpm',
+    'modules': 'module',
+    'flatpaks': 'flatpak',
+    'container': 'container',
+}
+
 
 RAWHIDE = '{{ FedoraRawhideNumber }}'
 EXTRA_ARCH_LIST = {
@@ -174,54 +186,8 @@ def get_branch_and_arches(tag, version):
     return branch, arches
 
 
-def get_active_releases_from_bodhi():
-    bodhi_url = '{0}releases/?exclude_archived=True'.format(BODHI_URL)
-
-    rv = requests.get(bodhi_url, timeout=60)
-
-    if rv.ok:
-        active_releases = []
-        rv_json = rv.json()
-        if rv_json['releases']:
-            for release in rv_json['releases']:
-                if re.match(r'^(f|epel)\d{1,2}$', release['branch']):
-                    active_releases.append(release['branch'])
-        return list(set(active_releases))
-    return []
-
-def get_project_branches(session, namespace, project_name):
-    """
-    Returns list of branches for the repo from Pagure dist-git.
-    :param logger: A logger object
-    :param url: a string of the URL to Pagure
-    :param namespace: a string determines a type of the repository
-    :param repo_name: a string of the repository name
-    :return: a list of branches
-    """
-    get_branches_url = '{0}api/0/{1}/{2}/git/branches'.format(PAGURE_URL, namespace, project_name)
-
-    headers = {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-    }
-    try:
-        rv = requests.get(
-            get_branches_url, headers=headers, timeout=60)
-        rv_json = rv.json()
-
-        if rv.ok:
-            return rv_json.get("branches", ())
-    except ValueError:
-        print(f"Failing for namespace: {namespace}, project_name: {project_name}, url: {get_branches_url}")
-    # When specific namespace has no branches, API returns error "Project not found".
-    # Do not fail. Return "no branches found" instead.
-    except:
-        print("Something else got broken for namespace: {namespace}, project_name: {project_name}, url: {get_branches_url}")
-    return project_name, []
-
-
-def get_project_name_and_its_active_branches(session, namespace, active_releases,
-                                             lookaside, project_name, verbose=False):
+def get_pdc_project_name_and_branch(session, namespace, project_name,
+                                    verbose=False):
     """
     Gets the branches on a project. This function is used for mapping.
     :param namespace: string of the namespace the project is in
@@ -237,21 +203,18 @@ def get_project_name_and_its_active_branches(session, namespace, active_releases
         active=True,
     )
     if verbose:
-        print('- Querying pagure distgit for package branches')
-    project_branches = get_project_branches(session, namespace, project_name)
-    print(project_branches)
-    try:
-        active_package_branches = list(set(active_releases) & set(project_branches)) + ['rawhide']
-        for branch in active_package_branches:
-            if project_name in lookaside[branch]:
-                active_package_branches.remove(branch)
+        print('- Querying {0} {1}'.format(project_branches_url, params))
+    project_branches_rv = session.get(
+        project_branches_url, params=params, verify=VERIFY, timeout=60)
 
-        return project_name, active_package_branches
+    # If the project's branches can't be reported, just return no branches and
+    # it will be skipped later on
+    if not project_branches_rv.ok:
+        return project_name, []
 
-    except TypeError:
-        print("One of the lists is probably empty: active_releases: {active_releases}, project_branches: {project_branches}")
-        # Check if a package is not retired on any of the branches
-    return project_name, []
+    data = project_branches_rv.json()
+    return project_name, [branch['name'] for branch in data['results']]
+
 
 def get_pagure_project_names_from_page(session, namespace, page,
                                        package=None, verbose=False):
@@ -282,7 +245,7 @@ def get_pagure_project_names_from_page(session, namespace, page,
     return names
 
 
-def get_pagure_project_branches(namespace, active_releases, lookaside, package=None, verbose=False):
+def get_pagure_project_branches(namespace, package=None, verbose=False):
     """
     Gets all the branches of all the Pagure projects in the desired namespace
     :param namespace: string of the namespace to query for projects
@@ -324,13 +287,13 @@ def get_pagure_project_branches(namespace, active_releases, lookaside, package=N
 
     # Since we are going to multi-thread, we need to make a partial function
     # call so that all the function needs is an iterable to run
-    partial_get_project_name_and_branch = partial(
-        get_project_name_and_its_active_branches, session, namespace, active_releases, lookaside,
+    partial_get_pdc_project_name_and_branch = partial(
+        get_pdc_project_name_and_branch, session, namespace,
         verbose=verbose)
     # Get a list of tuples in the form of (project, [branch...]), then convert
     # that to a dictionary
     project_names_to_branches = dict(pool.map(
-        partial_get_project_name_and_branch, project_names))
+        partial_get_pdc_project_name_and_branch, project_names))
     pool.close()
     return project_names_to_branches
 
@@ -469,22 +432,6 @@ if __name__ == '__main__':
             'arches': arches
         }
         unique_namespaces.update(namespaces)
-
-    # Let's start with getting the active releases from bodhi
-    active_releases = get_active_releases_from_bodhi()
-
-    # Let's fetch the json files with retired packages per release from lookaside cache
-    # This is a bit ugly, but the idea is to have the latest release removed in favor of rawhide
-    rawhide_active_releases = active_releases[:]
-    rawhide_active_releases.remove(max(rawhide_active_releases))
-    rawhide_active_releases.append('rawhide')
-    # Let's store the json files with retired packages in lookaside
-    lookaside = {}
-    for branch in rawhide_active_releases:
-        url = "https://src.fedoraproject.org/lookaside/retired_in_{0}.json".format(branch)
-        rv = requests.get(url)  # change to session
-        lookaside[branch] = rv.json()
-
 
     # Get all the project to branch mappings for every namespace
     namespace_to_projects = {}
