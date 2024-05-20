@@ -22,6 +22,9 @@ spec:
           # init_db isn't dropping anything, so it's safe to call every time the pod starts
           command: ["python", "/opt/app-root/src/oraculum/cli.py", "init_db"]
           # and then just the gunicorn for the frontend part of the backend :)
+          env:
+          - name: PYTHONPATH
+            value: "${PYTHONPATH}:/opt/app-root/src"
           volumes:
            - oraculum-secret-volume
   template:
