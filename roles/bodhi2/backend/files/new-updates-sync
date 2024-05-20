@@ -110,62 +110,6 @@ RELEASES = {'f40': {'topic': 'fedora',
                                 'dest': os.path.join(FEDORAALTDEST, 'testing', '39', 'Everything')}
                               ]}}
                    },
-            'f38': {'topic': 'fedora',
-                    'version': '38',
-                    'modules': ['fedora', 'fedora-secondary'],
-                    'repos': {'updates': {
-                        'from': 'f38-updates',
-                        'ostrees': [{'ref': 'fedora/38/%(arch)s/updates/silverblue',
-                                     'dest': OSTREEDEST,
-                                     'arches': ['x86_64', 'ppc64le', 'aarch64']},
-                                    {'ref': 'fedora/38/%(arch)s/updates/kinoite',
-                                     'dest': OSTREEDEST,
-                                     'arches': ['x86_64', 'ppc64le', 'aarch64']},
-                                    {'ref': 'fedora/38/%(arch)s/updates/sericea',
-                                     'dest': OSTREEDEST,
-                                     'arches': ['x86_64', 'ppc64le', 'aarch64']}],
-                        'to': [{'arches': ['x86_64', 'aarch64', 'source'],
-                                'dest': os.path.join(FEDORADEST, '38', 'Everything')},
-                               {'arches': ['ppc64le', 's390x'],
-                                'dest': os.path.join(FEDORAALTDEST, '38', 'Everything')}
-                              ]},
-                              'updates-testing': {
-                        'from': 'f38-updates-testing',
-                        'ostrees': [{'ref': 'fedora/38/%(arch)s/testing/silverblue',
-                                     'dest': OSTREEDEST,
-                                     'arches': ['x86_64', 'ppc64le', 'aarch64']},
-                                    {'ref': 'fedora/38/%(arch)s/testing/kinoite',
-                                     'dest': OSTREEDEST,
-                                     'arches': ['x86_64', 'ppc64le', 'aarch64']},
-                                    {'ref': 'fedora/38/%(arch)s/testing/sericea',
-                                     'dest': OSTREEDEST,
-                                     'arches': ['x86_64', 'ppc64le', 'aarch64']}],
-                        'to': [{'arches': ['x86_64', 'aarch64', 'source'],
-                                'dest': os.path.join(FEDORADEST, 'testing', '38', 'Everything')},
-                               {'arches': ['ppc64le', 's390x'],
-                                'dest': os.path.join(FEDORAALTDEST, 'testing', '38', 'Everything')}
-                              ]}}
-                   },
-            'f38m': {'topic': 'fedora',
-                    'version': '38m',
-                    'modules': ['fedora', 'fedora-secondary'],
-                    'repos': {'updates': {
-                        'from': 'f38-modular-updates',
-                        'ostrees': [],
-                        'to': [{'arches': ['x86_64', 'aarch64', 'source'],
-                                'dest': os.path.join(FEDORADEST, '38', 'Modular')},
-                               {'arches': ['ppc64le', 's390x'],
-                                'dest': os.path.join(FEDORAALTDEST, '38', 'Modular')}
-                              ]},
-                              'updates-testing': {
-                        'from': 'f38-modular-updates-testing',
-                        'ostrees': [],
-                        'to': [{'arches': ['x86_64', 'aarch64', 'source'],
-                                'dest': os.path.join(FEDORADEST, 'testing', '38', 'Modular')},
-                               {'arches': ['ppc64le', 's390x'],
-                                'dest': os.path.join(FEDORAALTDEST, 'testing', '38', 'Modular')}
-                              ]}}
-                   },
             'epel9': {'topic': 'epel',
                       'version': '9',
                       'modules': ['epel'],
