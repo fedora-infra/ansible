@@ -20,11 +20,8 @@ spec:
           containerName: oraculum-api-endpoint
           # Oraculum would automatically proceed with upgrade_db if necessary
           # init_db isn't dropping anything, so it's safe to call every time the pod starts
-          command: ["python", "/opt/app-root/src/oraculum/cli.py", "init_db"]
+          command: ["python", "-m", "oraculum.cli", "init_db"]
           # and then just the gunicorn for the frontend part of the backend :)
-          env:
-          - name: PYTHONPATH
-            value: "${PYTHONPATH}:/opt/app-root/src"
           volumes:
            - oraculum-secret-volume
   template:
