@@ -8,9 +8,8 @@ metadata:
 spec:
   replicas: 1
   selector:
-    matchLabels:
-      app: monitor-dashboard
-      deploymentconfig: monitor-dashboard
+    app: monitor-dashboard
+    deploymentconfig: monitor-dashboard
   template:
     metadata:
       labels:
