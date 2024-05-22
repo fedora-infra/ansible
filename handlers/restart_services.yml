@@ -181,19 +181,6 @@
 - name: restart chronyd
   service: name=chronyd state=restarted
 
-- name: restart mbs poller
-  systemd:
-    name: mbs-poller
-    state: restarted
-  when: not mbs_frontend
-
-- name: restart mbs workers
-  systemd:
-    name: "mbs-worker@{{ item }}"
-    state: restarted
-  with_sequence: start=0 end={{ mbs_num_workers - 1 }}
-  when: not mbs_frontend
-
 - name: restart kojira
   systemd:
     name: kojira

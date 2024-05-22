@@ -82,7 +82,6 @@ handlers = ["console"]
     # The keys here need to be the same in the sigul bridge
         [consumer_config.koji_instances.primary]
         url = "https://koji{{ env_suffix }}.fedoraproject.org/kojihub"
-        mbs_user = "mbs/mbs{{ env_suffix }}.fedoraproject.org"
 
             [consumer_config.koji_instances.primary.options]
             # Only ssl and kerberos are supported at the moment

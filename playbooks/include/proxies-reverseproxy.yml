@@ -654,11 +654,6 @@
     when: env == "staging"
 
   - role: httpd/reverseproxy
-    website: mbs.fedoraproject.org
-    destname: mbs
-    proxyurl: http://localhost:10063
-
-  - role: httpd/reverseproxy
     website: koji.fedoraproject.org
     destname: koji
     keephost: true

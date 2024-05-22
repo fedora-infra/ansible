@@ -254,10 +254,6 @@
         configure_priv: "^$"
         read_priv: "^$"
         write_priv: "^$"
-      - vhost: /mbs-private-queue
-        configure_priv: "^$"
-        read_priv: "^$"
-        write_priv: "^$"
       - vhost: /centos-odcs
         configure_priv: "^$"
         read_priv: "^$"
@@ -283,10 +279,6 @@
         read_priv: "^$"
         write_priv: "^$"
       - vhost: /public_pubsub
-        configure_priv: "^$"
-        read_priv: "^$"
-        write_priv: "^$"
-      - vhost: /mbs-private-queue
         configure_priv: "^$"
         read_priv: "^$"
         write_priv: "^$"
@@ -492,12 +484,6 @@
 
 # VirtualHost /centos-odcs
 - import_tasks: vhost-centos-odcs.yml
-  tags:
-  - rabbitmq_cluster
-  - config
-
-# VirtualHost /mbs-private-queue
-- import_tasks: vhost-mbs-private-queue.yml
   tags:
   - rabbitmq_cluster
   - config

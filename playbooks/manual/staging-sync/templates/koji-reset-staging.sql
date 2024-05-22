@@ -103,7 +103,7 @@ insert into host_channels (host_id, channel_id, creator_id) values (
 
 -- Add some people to be admins, only in staging.  Feel free to grow this list..
 
-{% for username in ['modularity', 'mizdebsk', 'psabata', 'jkaluza', 'fivaldi', 'mprahl', 'mbs/mbs.stg.fedoraproject.org'] %}
+{% for username in ['mizdebsk', 'psabata', 'jkaluza', 'fivaldi'] %}
 select now() as time, 'adding staging admin {{username}}' as msg;
 insert into users (name, usertype, status) values ('{{username}}', 0, 0) on conflict do nothing;
 insert into user_perms (user_id, perm_id, active, creator_id) values (

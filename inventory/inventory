@@ -112,26 +112,6 @@ mailman01.iad2.fedoraproject.org
 [mailman_stg]
 mailman01.stg.iad2.fedoraproject.org
 
-[mbs_frontend]
-mbs-frontend01.iad2.fedoraproject.org
-
-[mbs_frontend_stg]
-mbs-frontend01.stg.iad2.fedoraproject.org
-
-[mbs_backend]
-mbs-backend01.iad2.fedoraproject.org
-
-[mbs_backend_stg]
-mbs-backend01.stg.iad2.fedoraproject.org
-
-[mbs:children]
-mbs_frontend
-mbs_backend
-
-[mbs_stg:children]
-mbs_frontend_stg
-mbs_backend_stg
-
 [bodhi_backend]
 # This one handles the mashing/releng stuff
 bodhi-backend01.iad2.fedoraproject.org
@@ -636,8 +616,6 @@ ipa03.stg.iad2.fedoraproject.org
 ipsilon01.stg.iad2.fedoraproject.org
 koji01.stg.iad2.fedoraproject.org
 mailman01.stg.iad2.fedoraproject.org
-mbs-backend01.stg.iad2.fedoraproject.org
-mbs-frontend01.stg.iad2.fedoraproject.org
 memcached01.stg.iad2.fedoraproject.org
 mm-backend01.stg.iad2.fedoraproject.org
 mm-crawler01.stg.iad2.fedoraproject.org
@@ -756,13 +734,11 @@ wiki02.iad2.fedoraproject.org
 [fedmsg_hubs:children]
 busgateway
 fedimg
-mbs_backend
 pkgs
 
 [fedmsg_hubs_stg:children]
 busgateway_stg
 fedimg_stg
-mbs_backend_stg
 pkgs_stg
 
 [fedmsg_ircs:children]
@@ -1116,7 +1092,6 @@ koji
 kojipkgs
 logging
 mailman
-mbs
 memcached
 mm
 nagios_iad2
@@ -1153,7 +1128,6 @@ github2fedmsg_stg
 ipa_stg
 ipsilon_stg
 koji_stg
-mbs_stg
 memcached_stg
 mm_stg
 oci_registry_stg

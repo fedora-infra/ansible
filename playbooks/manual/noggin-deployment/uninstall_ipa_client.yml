@@ -1,5 +1,5 @@
 - name: Uninstall IPA client
-  hosts: bodhi_backend_stg:bugzilla2fedmsg_stg:github2fedmsg_stg:ipsilon_stg:mbs_stg:buildvm_stg:buildvm_ppc64le_stg:buildvm_aarch64_stg:buildvm_armv7_stg:buildvm_s390x_stg
+  hosts: bodhi_backend_stg:bugzilla2fedmsg_stg:github2fedmsg_stg:ipsilon_stg:buildvm_stg:buildvm_ppc64le_stg:buildvm_aarch64_stg:buildvm_armv7_stg:buildvm_s390x_stg
   user: root
   vars_files:
   - /srv/web/infra/ansible/vars/global.yml
@@ -15,7 +15,6 @@
 - import_playbook: "/srv/web/infra/ansible/playbooks/groups/bugzilla2fedmsg.yml"
 - import_playbook: "/srv/web/infra/ansible/playbooks/groups/github2fedmsg.yml"
 - import_playbook: "/srv/web/infra/ansible/playbooks/groups/ipsilon.yml"
-- import_playbook: "/srv/web/infra/ansible/playbooks/groups/mbs.yml"
 - import_playbook: "/srv/web/infra/ansible/playbooks/groups/buildvm.yml"
 
 
