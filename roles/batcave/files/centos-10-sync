@@ -14,8 +14,8 @@ for basearch in aarch64 ppc64le s390x x86_64
 do
     for repo in BaseOS AppStream CRB
     do
-        mkdir -p $DESTDIR/$repo/$basearch/os/
-        cd $DESTDIR/$repo/$basearch/os/
-        reposync --download-metadata --disablerepo=* --repofrompath=$repo,https://$SERVER/$TOPDIR/$repo/$basearch/os/ --enablerepo=$repo
+        mkdir -p $DESTDIR/$repo/$basearch
+        cd $DESTDIR/$repo/$basearch
+        reposync --download-metadata --disablerepo=* --repofrompath=os,https://$SERVER/$TOPDIR/$repo/$basearch/os/ --enablerepo=os
     done
 done
