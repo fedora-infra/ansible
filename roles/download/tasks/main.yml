@@ -102,4 +102,24 @@
   - httpd
   - httpd/proxy
 
+- name: Set tcp read buffers higher for download improvements
+  sysctl:
+   name: net.ipv4.tcp_rmem
+   value: "4096 131072 67108864"
+   sysctl_file: /etc/sysctl.d/10-tcp-socket-buffers.conf
+  tags:
+  - service
+  - config
+
+- name: Set tcp write buffers higher for download improvements
+  sysctl:
+   name: net.ipv4.tcp_wmem
+   value: "4096 16384 67108864"
+   sysctl_file: /etc/sysctl.d/10-tcp-socket-buffers.conf
+  tags:
+  - service
+  - config
+
+##
+
 ##
