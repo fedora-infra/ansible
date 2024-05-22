@@ -22,10 +22,10 @@ from urllib.parse import urljoin
 import multiprocessing.pool
 from math import ceil
 from functools import partial
+import re
 
 import requests
 import koji
-import re
 
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
@@ -233,12 +233,6 @@ def get_project_name_and_its_active_branches(session, namespace, active_releases
     :return: a tuple containing the string of the project and a list of
     branches
     """
-    project_branches_url = '{0}component-branches/'.format(PDC_URL)
-    params = dict(
-        global_component=project_name,
-        type=PDC_TYPES[namespace],
-        active=True,
-    )
     if verbose:
         print('- Querying pagure distgit for package branches')
     project_branches = get_project_branches(session, namespace, project_name)
@@ -273,16 +267,18 @@ def get_pagure_project_names_from_page(session, namespace, page,
     if verbose:
         print('- Querying {0}'.format(url))
     response = session.get(url, verify=VERIFY, timeout=120)
-    if not bool(response):
+
+    if bool(response):
+        names = set()
+        for project in response.json()['projects']:
+            names.add(project['name'])
+
+        return names
+
+    else:
         print("Failed to talk to %r %r." % (
-            response.request.url, response), file=sys.stderr)
+        response.request.url, response), file=sys.stderr)
         return set()
-
-    names = set()
-    for project in response.json()['projects']:
-        names.add(project['name'])
-
-    return names
 
 
 def get_pagure_project_branches(namespace, active_releases, lookaside, package=None, verbose=False):
@@ -496,7 +492,7 @@ if __name__ == '__main__':
             print('Querying for all the projects with the namespace "{0}"'
                   .format(namespace))
         namespace_to_projects[namespace] = \
-            get_pagure_project_branches(namespace, package=package, verbose=verbose)
+            get_pagure_project_branches(namespace, active_releases, lookaside, package=package, verbose=verbose)
 
     for tag, info in list(tag_info.items()):
         if verbose:
