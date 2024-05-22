@@ -1,0 +1,14 @@
+- name: IS_OPENSHIFT
+  value: "1"
+- name: SECRET_KEY
+  value: "{{ (env == 'production')|ternary(kanban_secret_key, kanban_secret_key_stg) }}"
+- name: POSTGRESQL_DATABASE
+  value: "{{ kanban_db_name }}"
+- name: POSTGRESQL_USER
+  value: "{{ kanban_db_user }}"
+- name: POSTGRESQL_PASSWORD
+  value: "{{ (env == 'production')|ternary(kanban_db_pass, kanban_db_pass_stg) }}"
+- name: POSTGRESQL_SERVICE_HOST
+  value: "db01{{ env_suffix }}.iad2.fedoraproject.org"
+- name: POSTGRESQL_SERVICE_PORT
+  value: "5432"

@@ -1,0 +1,120 @@
+- name: Prepare setting up the database
+  hosts: db01.iad2.fedoraproject.org:db01.stg.iad2.fedoraproject.org
+  gather_facts: no
+  user: root
+
+  tasks:
+  - name: install psycopg2 for the postgresql ansible modules
+    package: name=python3-psycopg2 state=present
+    tags:
+    - packages
+
+- name: Setup PROD database
+  hosts: db01.iad2.fedoraproject.org
+  gather_facts: no
+  become: yes
+  become_user: postgres
+  vars_files:
+  - /srv/web/infra/ansible/vars/global.yml
+  - "/srv/private/ansible/vars.yml"
+  - "/srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml"
+
+  tasks:
+  - name: Create the database user
+    postgresql_user:
+      name: "{{ kanban_db_user }}"
+      password: "{{ kanban_db_pass }}"
+  - name: Create the database itself
+    postgresql_db:
+      name: "{{ kanban_db_name }}"
+      owner: "{{ kanban_db_user }}"
+      encoding: UTF-8
+  - name: Test the database creation
+    postgresql_db:
+      name: "{{ kanban_db_name }}"
+      owner: "{{ kanban_db_user }}"
+      encoding: UTF-8
+
+- name: Setup STG database
+  hosts: db01.stg.iad2.fedoraproject.org
+  gather_facts: no
+  become: yes
+  become_user: postgres
+  vars_files:
+  - /srv/web/infra/ansible/vars/global.yml
+  - "/srv/private/ansible/vars.yml"
+  - "/srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml"
+
+  tasks:
+  - name: Create the database user
+    postgresql_user:
+      name: "{{ kanban_db_user }}"
+      password: "{{ kanban_db_pass_stg }}"
+  - name: Create the database itself
+    postgresql_db:
+      name: "{{ kanban_db_name }}"
+      owner: "{{ kanban_db_user }}"
+      encoding: UTF-8
+  - name: Test the database creation
+    postgresql_db:
+      name: "{{ kanban_db_name }}"
+      owner: "{{ kanban_db_user }}"
+      encoding: UTF-8
+
+- name: Make the app be real
+  hosts: os_control[0]:os_control_stg[0]
+  user: root
+  gather_facts: False
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  roles:
+  - role: openshift/project
+    app: kanban
+    description: kanban
+    appowners:
+    - frantisekz
+    alert_users:
+    - frantisekz
+    tags:
+      - apply-appowners
+
+  - role: openshift/object
+    app: kanban
+    template: buildconfig.yml
+    objectname: buildconfig.yml
+
+  - role: openshift/object
+    app: kanban
+    template: deploymentconfig.yml
+    objectname: deploymentconfig.yml
+
+  - role: openshift/object
+    app: kanban
+    template: imagestream.yml
+    objectname: imagestream.yml
+
+  - role: openshift/object
+    app: kanban
+    file: service.yml
+    objectname: service.yml
+
+  - role: openshift/object
+    app: kanban
+    template: secret.yml
+    objectname: secret.yml
+
+  - role: openshift/route
+    app: kanban
+    routename: kanban
+    host: "kanban.qa{{ env_suffix }}.fedoraproject.org"
+    serviceport: 8080-tcp
+    servicename: kanban
+
+  - role: openshift/start-build
+    app: kanban
+    buildname: kanban-build
+    objectname: kanban-build

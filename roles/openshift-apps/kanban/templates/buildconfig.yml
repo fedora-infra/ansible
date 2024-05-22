@@ -1,0 +1,26 @@
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: kanban-build
+  labels:
+    environment: "kanban"
+spec:
+  source:
+    type: Git
+    git:
+      uri: https://pagure.io/fedora-qa/kanban
+      ref: {{ (env == 'production')|ternary('master', 'develop') }}
+  strategy:
+    type: Source
+    sourceStrategy:
+      from:
+        kind: DockerImage
+        name: registry.access.redhat.com/ubi9/python-311
+  output:
+    to:
+      kind: ImageStreamTag
+      name: kanban:latest
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
