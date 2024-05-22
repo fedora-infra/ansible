@@ -4,7 +4,7 @@ kind: Service
 metadata:
   labels:
     app: kanban
-  name: kanban
+  name: kanban-web
 spec:
   ports:
   - name: 8080-tcp
@@ -13,4 +13,4 @@ spec:
     targetPort: 8080
   selector:
     app: kanban
-    deploymentconfig: kanban
+    deploymentconfig: kanban-web
