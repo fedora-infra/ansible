@@ -377,3 +377,10 @@
   copy: src=restart-consumers.cron dest=/etc/cron.daily/restart-consumers owner=root group=root mode=0755
   tags:
   - config
+
+# This papers over the weird problem that we occasionally just fail
+# to report a completed test to resultsdb, which can cause updates
+# to get blocked. the subcommand tries to find such cases and send
+# the missing reports
+- name: Set up cron job to find and submit missing results to resultsdb
+  copy: src=report-blocked.cron dest=/etc/cron.daily/report-blocked owner=root group=root mode=0755

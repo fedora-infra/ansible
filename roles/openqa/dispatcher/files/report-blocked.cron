@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# find 'blocked' updates where a test completed but for some reason we
+# did not submit the result to resultsdb, and submit it
+
+/usr/local/bin/fedora-openqa blocked --report
