@@ -236,7 +236,6 @@ def get_project_name_and_its_active_branches(session, namespace, active_releases
     if verbose:
         print('- Querying pagure distgit for package branches')
     project_branches = get_project_branches(session, namespace, project_name)
-    print(project_branches)
     try:
         active_package_branches = list(set(active_releases) & set(project_branches)) + ['rawhide']
         for branch in active_package_branches:
