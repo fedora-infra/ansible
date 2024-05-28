@@ -1,0 +1,7 @@
+[Unit]
+Description=Run hyperkitty minutely maintenance every minute
+Requires=hyperkitty.target
+PartOf=hyperkitty.target
+
+[Timer]
+OnCalendar=*-*-* *:*:00

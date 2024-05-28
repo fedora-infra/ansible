@@ -1,0 +1,13 @@
+[Unit]
+Description=hyperkitty timed maintenance
+After=mailman3.service
+Wants=hyperkitty-minutely.timer
+Wants=hyperkitty-quarter_hourly.timer
+Wants=hyperkitty-hourly.timer
+Wants=hyperkitty-daily.timer
+Wants=hyperkitty-monthly.timer
+Wants=hyperkitty-weekly.timer
+Wants=hyperkitty-yearly.timer
+
+[Install]
+WantedBy=timers.target

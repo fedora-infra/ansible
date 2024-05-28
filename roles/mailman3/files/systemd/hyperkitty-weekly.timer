@@ -1,0 +1,9 @@
+[Unit]
+Description=Run hyperkitty weekly maintenance every week
+Requires=hyperkitty.target
+PartOf=hyperkitty.target
+
+[Timer]
+OnCalendar=Mon *-*-* 00:00:00
+RandomizedDelaySec=3h
+Persistent=true

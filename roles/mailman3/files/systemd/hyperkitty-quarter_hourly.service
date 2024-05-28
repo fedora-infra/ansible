@@ -1,0 +1,7 @@
+[Unit]
+Description=hyperkitty maintenance every 15 minutes
+
+[Service]
+Type=oneshot
+User=mailman
+ExecStart=mailman-web runjobs quarter_hourly

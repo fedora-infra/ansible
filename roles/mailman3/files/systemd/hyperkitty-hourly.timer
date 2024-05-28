@@ -1,0 +1,8 @@
+[Unit]
+Description=Run hyperkitty hourly maintenance every hour
+Requires=hyperkitty.target
+PartOf=hyperkitty.target
+
+[Timer]
+OnCalendar=*-*-* *:00:00
+RandomizedDelaySec=10m

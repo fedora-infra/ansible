@@ -1,0 +1,9 @@
+[Unit]
+Description=Run hyperkitty yearly maintenance every year
+Requires=hyperkitty.target
+PartOf=hyperkitty.target
+
+[Timer]
+OnCalendar=*-01-01 00:00:00
+RandomizedDelaySec=12h
+Persistent=true

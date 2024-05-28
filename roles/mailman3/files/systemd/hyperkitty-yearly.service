@@ -1,0 +1,7 @@
+[Unit]
+Description=hyperkitty yearly maintenance
+
+[Service]
+Type=oneshot
+User=mailman
+ExecStart=mailman-web runjobs yearly

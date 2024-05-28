@@ -1,0 +1,9 @@
+[Unit]
+Description=Run hyperkitty maintenance every 15 minutes
+Requires=hyperkitty.target
+PartOf=hyperkitty.target
+
+[Timer]
+OnCalendar=*-*-* *:*/15:00
+Persistent=true
+RandomizedDelaySec=5m
