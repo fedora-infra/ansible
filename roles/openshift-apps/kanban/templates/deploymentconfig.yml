@@ -38,7 +38,7 @@ spec:
         - containerPort: 8080
         resources: {}
         env:
-          {{ load_file('envvars.jinja') | indent(8) }}
+        {{ load_file('envvars.jinja') | indent(8) }}
         volumeMounts:
         - name: kanban-secret-volume
           mountPath: /opt/app-root/secret/
