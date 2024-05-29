@@ -21,11 +21,12 @@ ${MM_ROOT}/bin/generate-mirrorlist-cache -o ${CACHEDIR}/mirrorlist_cache.proto
 # Update the files on the proxies
 {% if env == 'production' %}
 for server in ${MIRRORLIST_PROXY}; do
+	# *.txt files are netblocks
 	rsync -az --delete-delay --delay-updates --delete \
 		-e "ssh -i ${MM_SSH_KEY}" \
 		${MM_ROOT}/src/utility/country_continent.csv \
 		${CACHEDIR}/mirrorlist_cache.proto \
-		${CACHEDIR}/*.txt \  # Netblocks
+		${CACHEDIR}/*.txt \
 		${MM_USER}@${server}:/srv/mirrorlist/data/mirrorlist1/ &
 done
 {% endif %}
