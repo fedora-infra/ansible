@@ -51,7 +51,7 @@ CACHE = {
     "expiration_time": 100,
     "arguments": {
         "url": "memcached01{{env_suffix}}:11211",
-    "distributed_lock": true,
+    "distributed_lock": True,
     "lock_timeout": 5,
     },
 }
