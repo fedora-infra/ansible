@@ -1,7 +1,9 @@
 #!/bin/bash
 
 MIRRORLIST_PROXY="{% for host in groups['mirrorlist_proxies'] %} {{ host }} {% endfor %}"
+MM_USER=mirrormanager
 MM_ROOT=/opt/app-root
+MM_SSH_KEY=/etc/mirrormanager-ssh/ssh_mirrorlist_proxies.key
 CACHEDIR=/data
 
 set -e
@@ -20,9 +22,10 @@ ${MM_ROOT}/bin/generate-mirrorlist-cache -o ${CACHEDIR}/mirrorlist_cache.proto
 {% if env == 'production' %}
 for server in ${MIRRORLIST_PROXY}; do
 	rsync -az --delete-delay --delay-updates --delete \
+		-e "ssh -i ${MM_SSH_KEY}" \
 		${MM_ROOT}/src/utility/country_continent.csv \
 		${CACHEDIR}/mirrorlist_cache.proto \
 		${CACHEDIR}/*.txt \  # Netblocks
-		${server}:/srv/mirrorlist/data/mirrorlist1/ &
+		${MM_USER}@${server}:/srv/mirrorlist/data/mirrorlist1/ &
 done
 {% endif %}
