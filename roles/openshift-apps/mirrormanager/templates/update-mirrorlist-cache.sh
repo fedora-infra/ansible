@@ -29,4 +29,6 @@ for server in ${MIRRORLIST_PROXY}; do
 		${CACHEDIR}/*.txt \
 		${MM_USER}@${server}:/srv/mirrorlist/data/mirrorlist1/ &
 done
+# Wait for the background jobs
+wait $(jobs -p)
 {% endif %}
