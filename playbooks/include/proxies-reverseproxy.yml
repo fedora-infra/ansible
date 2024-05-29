@@ -927,7 +927,7 @@
     tags: openscanhub
 
   - role: httpd/reverseproxy
-    website: kanban.qa.fedoraproject.org
+    website: "kanban.qa{{ env_suffix }}fedoraproject.org"
     destname: kanban
     balancer_name: apps-ocp
     balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
