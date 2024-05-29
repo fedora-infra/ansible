@@ -10,7 +10,7 @@ set -x
 rm -rf ${CACHEDIR}/old
 mkdir -p ${CACHEDIR}/old
 chmod g+w ${CACHEDIR}/old
-if ls ${CACHEDIR}/*.* >/dev/null; then
+if ls ${CACHEDIR}/*.* &>/dev/null; then
 	cp -arf ${CACHEDIR}/*.*  ${CACHEDIR}/old/
 fi
 
