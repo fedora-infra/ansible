@@ -23,7 +23,7 @@ ${MM_ROOT}/bin/generate-mirrorlist-cache -o ${CACHEDIR}/mirrorlist_cache.proto
 for server in ${MIRRORLIST_PROXY}; do
 	# *.txt files are netblocks
 	rsync -az --delete-delay --delay-updates --delete \
-		-e "ssh -i ${MM_SSH_KEY}" \
+		-e "ssh -i ${MM_SSH_KEY} -o BatchMode=yes -o StrictHostKeyChecking=no" \
 		${MM_ROOT}/src/utility/country_continent.csv \
 		${CACHEDIR}/mirrorlist_cache.proto \
 		${CACHEDIR}/*.txt \
