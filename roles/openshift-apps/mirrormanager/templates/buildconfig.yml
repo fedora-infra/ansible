@@ -44,14 +44,8 @@ spec:
   source:
     type: Git
     git:
-      # uri: https://github.com/fedora-infra/mirrormanager2.git
-      uri: https://github.com/abompard/mirrormanager2.git
-{% if env == "staging" %}
-      # ref: staging
-      ref: refactor-utilities
-{% else %}
-      ref: master
-{% endif %}
+      uri: https://github.com/fedora-infra/mirrormanager2.git
+      ref: "{{ env }}"
     contextDir: /
   strategy:
     type: Source
