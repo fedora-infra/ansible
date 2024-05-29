@@ -130,7 +130,7 @@ def main():
             showlogs += " -f --since 1s"
         else:
             showlogs += " | less"
-        print(f"{Color.BOLD}—→ {name}:{Color.END} {status.value} {details or ''}")
+        print(f"{Color.BOLD}→ {name}:{Color.END} {status.value} {details or ''}")
         print(showlogs)
 
 
