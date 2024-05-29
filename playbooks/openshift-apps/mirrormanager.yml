@@ -97,7 +97,7 @@
 
     - role: openshift/route
       app: mirrormanager
-      routename: frontend
+      routename: frontend-openshift
       host: "mirrormanager.apps.ocp{{ env_suffix }}.fedoraproject.org"
       servicename: frontend
       serviceport: web
