@@ -925,3 +925,14 @@
     keephost: true
     ocp4: true
     tags: openscanhub
+
+  - role: httpd/reverseproxy
+    website: kanban.qa.fedoraproject.org
+    destname: kanban
+    balancer_name: apps-ocp
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    targettype: openshift
+    keephost: true
+    ocp4: true
+    tags:
+    - kanban

@@ -1179,3 +1179,11 @@
     cert_name: "{{wildcard_cert_name}}"
     tags:
     - openscanhub
+
+  - role: httpd/website
+    site_name: "kanban.qa{{ env_suffix }}.fedoraproject.org"
+    ssl: true
+    sslonly: true
+    certbot: true
+    tags:
+    - kanban
