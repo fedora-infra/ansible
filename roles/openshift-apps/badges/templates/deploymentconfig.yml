@@ -60,10 +60,12 @@ spec:
               readOnly: true
 
           env:
-            - name: GUNICORN_CMD_ARGS
-              value: "--bind=0.0.0.0:8080"
+            - name: FLASK_CONFIG
+              value: "/etc/badges/tahrir.cfg"
             - name: APP_MODULE
               value: "deploy.wsgi"
+            - name: APP_CONFIG
+              value: "/etc/badges/gunicorn.conf.py"
             - name: KRB5_CONFIG
               value: /etc/ipa/krb5.conf
             - name: KRB5_CLIENT_KTNAME
@@ -71,18 +73,22 @@ spec:
             - name: FEDORA_MESSAGING_CONF
               value: /etc/badges/fm-tahrir.toml
 
-          # readinessProbe:
-          #   timeoutSeconds: 1
-          #   initialDelaySeconds: 5
-          #   httpGet:
-          #     path: /api/v1/healthz/ready
-          #     port: 8080
-          # livenessProbe:
-          #   timeoutSeconds: 1
-          #   initialDelaySeconds: 20
-          #   httpGet:
-          #     path: /api/v1/healthz/live
-          #     port: 8080
+{% if env == 'staging' %}
+          readinessProbe:
+            timeoutSeconds: 10
+            initialDelaySeconds: 5
+            periodSeconds: 60
+            httpGet:
+              path: "/healthz/ready"
+              port: 8080
+          livenessProbe:
+            timeoutSeconds: 10
+            initialDelaySeconds: 10
+            periodSeconds: 60
+            httpGet:
+              path: "/healthz/live"
+              port: 8080
+{% endif %}
 
       volumes:
         - name: etc-badges

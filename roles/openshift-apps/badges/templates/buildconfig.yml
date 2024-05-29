@@ -74,7 +74,8 @@ spec:
     type: Git
     git:
       uri: https://github.com/fedora-infra/tahrir.git
-      ref: {{ (env == 'production')|ternary('stable', 'staging') }}
+      # ref: {{ (env == 'production')|ternary('stable', 'staging') }}
+      ref: {{ (env == 'production')|ternary('stable', 'flask') }}
     contextDir: /
   strategy:
     type: Source
