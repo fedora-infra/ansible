@@ -34,7 +34,6 @@ spec:
       containers:
       - name: kanban-web
         image: kanban:latest
-        command: ["sleep", "60"]
         ports:
         - containerPort: 8080
         resources: {}
