@@ -67,21 +67,25 @@
   cron: name="handle-propagation" minute="45" hour="*/2" user="mirrormanager"
         job="/usr/local/bin/handle_propagation.sh"
         cron_file=handle-propagation
+        disabled=true
 
 - name: create worldmap cronjob
   cron: name="create-worldmap" minute="50" hour="20" user="mirrormanager"
         job="/usr/local/bin/create_maps.sh"
         cron_file=create-worldmap
+        disabled=true
 
 - name: create mirrorlist statistics cronjob
   cron: name="create-statistics" minute="4" hour="*/2" user="mirrormanager"
         job="/usr/local/bin/create_statistics.sh"
         cron_file=create-statistics
+        disabled=true
 
 - name: create yesterdays mirrorlist statistics cronjob
   cron: name="yesterdays-statistics" minute="55" hour="0" user="mirrormanager"
         job="/usr/local/bin/create_statistics.sh yesterday"
         cron_file=yesterdays-statistics
+        disabled=true
 
 - name: setup /var/lib/mirrormanager/.ssh directory
   copy: >

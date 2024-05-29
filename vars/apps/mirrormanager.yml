@@ -1,5 +1,5 @@
 ---
-mirrormanager_hostname: "mirrors.apps.ocp{{ env_suffix }}.fedoraproject.org"
+mirrormanager_hostname: "mirrormanager{{ env_suffix }}.fedoraproject.org"
 mirrormanager_db_host: "db01{{ env_suffix }}"
 mirrormanager_oidc_client_id: "mirrormanager"
 # Move that to an env var to target a specific deployment

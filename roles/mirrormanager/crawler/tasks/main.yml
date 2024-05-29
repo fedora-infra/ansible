@@ -51,4 +51,5 @@
   cron: name="propagation-check" minute="27" hour="*/2" user="mirrormanager"
         job="/usr/local/bin/check_propagation.sh"
         cron_file=propagation-check
+        disabled=true
   when: inventory_hostname.startswith('mm-crawler01.iad2')
