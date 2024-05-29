@@ -42,6 +42,12 @@
       name: /root/oc-client.rpm
       state: installed
 
+  - name: copy the jobs-summary script
+    copy:
+      src: "{{ files }}/scripts/jobs-summary"
+      dest: /usr/local/bin/jobs-summary
+      mode: 0755
+
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
   - import_tasks: "{{ tasks_path }}/motd.yml"
 

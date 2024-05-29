@@ -1,0 +1,138 @@
+#!/usr/bin/env python3
+# vim: set et ts=4 sw=4 si
+
+import json
+import os
+import sys
+import datetime
+from argparse import ArgumentParser
+from enum import Enum
+from subprocess import run, PIPE
+
+
+class TermHandler(type):
+
+    def is_tty(cls):
+        if "NO_COLOR" in os.environ:
+            return False
+        if "FORCE_COLOR" in os.environ:
+            return True
+        return sys.stdout.isatty()
+
+    def __getattr__(cls, name):
+        if cls.is_tty():
+            return getattr(cls, f"_{name}")
+        else:
+            return ""
+
+
+class Color(metaclass=TermHandler):
+    _END = '\033[0m'
+    _HEADER = '\033[95m'
+    _OKBLUE = '\033[94m'
+    _OKCYAN = '\033[96m'
+    _OKGREEN = '\033[92m'
+    _WARNING = '\033[93m'
+    _FAIL = '\033[91m'
+    _BOLD = '\033[1m'
+    _UNDERLINE = '\033[4m'
+
+    # def __getattribute__(self, name):
+    #     print("Calling __getattribute__")
+    #     return object.__getattribute__(self, f"_{name}")
+
+
+class Status(Enum):
+    ACTIVE = f"{Color.OKBLUE}ACTIVE{Color.END}"
+    FAILED = f"{Color.FAIL}FAILED{Color.END}"
+    DONE = f"{Color.OKGREEN}DONE{Color.END}"
+    UNKNOWN = f"{Color.WARNING}UNKNOWN{Color.END}"
+
+
+def fromisoformat(date_string):
+    try:
+        return datetime.datetime.fromisoformat(date_string.rstrip("Z"))
+    except AttributeError:
+        return datetime.datetime(
+            year=int(date_string[0:4]),
+            month=int(date_string[5:7]),
+            day=int(date_string[8:10]),
+            hour=int(date_string[11:13]),
+            minute=int(date_string[14:16]),
+            second=int(date_string[17:19]),
+        )
+
+
+def get_duration(date_string, until=None):
+    until = fromisoformat(until) if until is not None else datetime.datetime.now()
+    date = fromisoformat(date_string)
+    duration = int((until - date).total_seconds())
+    hours = int(duration / 3600)
+    minutes = int((duration % 3600) / 60)
+    seconds = int(duration % 60)
+    output = [
+        f"{hours}h" if hours else "",
+        f"{minutes}m" if minutes else "",
+        f"{seconds}s" if seconds else "",
+    ]
+    return "".join(output)
+
+
+def parse_json_output(project_name):
+    jobs = {}
+    statuses = {}
+    result = run(["oc", "-n", project_name, "get", "jobs", "--sort-by=.metadata.creationTimestamp", "-o", "json"], stdout=PIPE, check=True, universal_newlines=True)
+    result = json.loads(result.stdout)
+    for job in result["items"]:
+        cronjob = list([ref["name"] for ref in job["metadata"]["ownerReferences"] if ref["kind"] == "CronJob"])[0]
+        full_name = job["metadata"]["name"]
+        jobs[cronjob] = full_name
+        details = None
+        if job["status"].get("active", 0) > 0:
+            status = Status.ACTIVE
+            duration = get_duration(job['status']['startTime'])
+            details = f"for {duration}"
+            failures = job["status"].get("failed", 0)
+            if failures > 0:
+                details += f" {Color.WARNING}(failed {failures} time{'s' if failures > 1 else ''}, was restarted){Color.END}"
+        elif job["status"].get("failed", 0) > 0:
+            status = Status.FAILED
+            try:
+                completed = job['status']['conditions'][0]['lastTransitionTime']
+            except KeyError:
+                pass
+            else:
+                at = get_duration(completed)
+                duration = get_duration(job['status']['startTime'], completed)
+                details = f"{at} ago, ran for {duration}"
+        elif job["status"].get("succeeded") == job["spec"]["completions"]:
+            status = Status.DONE
+            completed = job['status']['completionTime']
+            at = get_duration(completed)
+            duration = get_duration(job['status']['startTime'], completed)
+            details = f"{at} ago, ran for {duration}"
+        else:
+            status = Status.UNKNOWN
+        statuses[cronjob] = (status, details)
+    return jobs, statuses
+
+
+def main():
+    parser = ArgumentParser()
+    parser.add_argument("project_name")
+    args = parser.parse_args()
+    jobs, statuses = parse_json_output(args.project_name)
+    for name in sorted(jobs):
+        full_name = jobs[name]
+        status, details = statuses[name]
+        showlogs = f"oc -n {args.project_name} logs job/{full_name}"
+        if status == Status.ACTIVE:
+            showlogs += " -f --since 1s"
+        else:
+            showlogs += " | less"
+        print(f"{Color.BOLD}—→ {name}:{Color.END} {status.value} {details or ''}")
+        print(showlogs)
+
+
+if __name__ == "__main__":
+    main()
