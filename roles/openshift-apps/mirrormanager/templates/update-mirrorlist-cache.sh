@@ -20,7 +20,7 @@ ${MM_ROOT}/bin/generate-mirrorlist-cache -o ${CACHEDIR}/mirrorlist_cache.proto
 {% if env == 'production' %}
 for server in ${MIRRORLIST_PROXY}; do
 	rsync -az --delete-delay --delay-updates --delete \
-		${MM_ROOT}/mirrormanager2/utility/country_continent.csv \
+		${MM_ROOT}/src/utility/country_continent.csv \
 		${CACHEDIR}/mirrorlist_cache.proto \
 		${CACHEDIR}/*.txt \  # Netblocks
 		${server}:/srv/mirrorlist/data/mirrorlist1/ &
