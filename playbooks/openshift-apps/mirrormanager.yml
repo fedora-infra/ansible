@@ -94,6 +94,7 @@
       serviceport: web
       annotations:
         haproxy.router.openshift.io/timeout: 5m
+
     - role: openshift/route
       app: mirrormanager
       routename: frontend
@@ -102,7 +103,7 @@
       serviceport: web
       annotations:
         haproxy.router.openshift.io/timeout: 5m
-      when: mirrormanager_hostname != "mirrormanager.apps.ocp{{ env_suffix }}.fedoraproject.org"
+      when: mirrormanager_hostname != "mirrormanager.apps.ocp{}.fedoraproject.org".format(env_suffix)
 
     # SSH key to get the access logs
     - role: openshift/secret-file
