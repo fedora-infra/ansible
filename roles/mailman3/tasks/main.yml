@@ -208,6 +208,27 @@
     - mailman
     - hyperkitty
 
+- name: Copy the initial user fixture
+  ansible.builtin.template:
+    src: initial-data.json.j2
+    dest: "{{ mailman_webui_confdir }}/initial-data.json"
+    owner: root
+    group: root
+    mode: 0640
+  tags:
+    - mailman
+    - hyperkitty
+
+- name: Initialize authentication providers
+  ansible.builtin.command:
+    cmd: mailman-web loaddata "{{ mailman_webui_confdir }}/initial-data.json"
+    chdir: /etc/mailman3
+  become_user: mailman
+  become: true
+  tags:
+    - mailman
+    - hyperkitty
+
 # Add the Nest banner
 # See issue https://pagure.io/fedora-infrastructure/issue/10103
 - name: Replace the top.html template in hyperkitty/postorius to change banner
