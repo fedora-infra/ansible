@@ -20,7 +20,7 @@ spec:
           - name: kanban-sync
             image: image-registry.openshift-image-registry.svc:5000/kanban/kanban:latest
             env:
-            {{ load_file('envvars.jinja') | indent(8) }}
+            {{ load_file('envvars.jinja') | indent(12) }}
             volumeMounts:
             - name: kanban-secret-volume
               mountPath: /opt/app-root/secret/
