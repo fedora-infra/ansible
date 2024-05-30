@@ -11,11 +11,7 @@ items:
     runPolicy: Serial
     source:
       dockerfile: |-
-{% if env == 'staging' %}
         FROM fedora:40
-{% else %}
-        FROM fedora:38
-{% endif %}
         LABEL \
           name="release-monitoring-web" \
           vendor="Fedora Infrastructure" \
@@ -84,9 +80,7 @@ items:
 
         # Hotfix for social_auth-sqlalchemy
         # Could be removed when we switch to something else
-{% if env == 'staging' %}
         RUN sed -i 's/base64.encodestring/base64.encodebytes/g' /usr/local/lib/python3.12/site-packages/social_sqlalchemy/storage.py
-{% endif %}
         RUN mkdir /httpdir
         RUN chmod 777 /httpdir
         EXPOSE 8080
