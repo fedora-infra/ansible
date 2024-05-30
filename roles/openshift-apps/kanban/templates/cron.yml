@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: sync
+spec:
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 600
+  schedule: "*/10 * * * *"
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 900
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: kanban-sync
+            image: image-registry.openshift-image-registry.svc:5000/kanban/kanban:latest
+            env:
+            {{ load_file('envvars.jinja') | indent(8) }}
+            volumeMounts:
+            - name: kanban-secret-volume
+              mountPath: /opt/app-root/secret/
+              readOnly: true
+            command: ["python", "-m", "kanban.cli", "update_issues", "-v", "delta:1"]
+          volumes:
+          - name: kanban-secret-volume
+            secret:
+              secretName: kanban-secret

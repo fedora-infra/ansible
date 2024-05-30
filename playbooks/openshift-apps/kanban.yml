@@ -108,6 +108,11 @@
     template: secret.yml
     objectname: secret.yml
 
+  - role: openshift/object
+    app: kanban
+    template: cron.yml
+    objectname: cron.yml
+
   - role: openshift/route
     app: kanban
     routename: kanban
