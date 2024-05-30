@@ -1,3 +1,5 @@
+{% macro load_file(filename) %}{% include filename %}{%- endmacro -%}
+---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
