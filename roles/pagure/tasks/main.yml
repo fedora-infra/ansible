@@ -129,6 +129,16 @@
   - fix_log
   - hotfix
 
+# Fix for https://pagure.io/fedora-infrastructure/issue/11957
+- name: Set ACL for newly created files in /var/log/pagure
+  ansible.postfix.acl:
+    path: /var/log/pagure
+    default: true
+    etype: group
+    permissions: "rw"
+    state: present
+
+
 # This now fails when there are broken symlinks. Lets figure out a better way to do this - kevin
 # - name: Adjust owner of /srv/git
 #   file: name=/srv/git state=directory recurse=yes owner=git group=git
