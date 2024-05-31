@@ -89,7 +89,7 @@ config = {
         },
     },
     {% if env == 'staging' %}
-    "plugins": ['fedmsg', 'osci'],
+    "plugins": ['fedmsg', 'osci', 'copr'],
     {% else %}
     "plugins": ['fedmsg'],
     {% endif %}
@@ -121,6 +121,32 @@ config = {
             "namespace": "koschei",
         },
     },
+    {% if env == 'staging' %}
+    "copr": {
+        "frontend_url": "https://copr.stg.fedorainfracloud.org/",
+        "build_log_url": "https://download.copr-dev.fedorainfracloud.org/results/"
+                         "{copr_owner}/{copr_name}/{copr_chroot}/"
+                         "{build_id:08d}-{package_name}/build.log.gz",
+        "copr_owner": "koschei",
+        "chroot_name": "custom-1-x86_64",
+        "config_path": "/etc/koschei/copr-config",
+        "overriding_by_exclusions": True,
+        "max_builds": 2,
+        "fedmsg_topic": "org.fedoraproject.{{ fedmsg_env }}.copr.build.end",
+        "default_schedule_count": 8,
+        "name_prefix": "k",
+        "require_admin": True,
+        "description": """
+        This Copr project was created automatically by Koschei as part
+        of rebuild request {request_id}.  To find more information
+        about this project, see Koschei documentation.
+        """,
+        "instructions": """
+        This Copr project is used internally by Koschei and its
+        contents are not meant to be installed by users.
+        """,
+    },
+    {% endif %}
     "caching": {
         "rpm_requires": {
             "backend": "dogpile.cache.memcached",

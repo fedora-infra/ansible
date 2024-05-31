@@ -7,6 +7,8 @@ stringData:
     {{ lookup('template', roles_path + '/openshift-apps/koschei/templates/config-backend.cfg.j2') | indent }}
   fedora-messaging.toml: |
     {{ lookup('template', roles_path + '/openshift-apps/koschei/templates/fedora-messaging.toml.j2') | indent }}
+  copr-config: |
+    {{ lookup('template', roles_path + '/openshift-apps/koschei/templates/copr-config.j2') | indent }}
   krb5.conf: |
     {{ lookup('template', roles_path + '/base/templates/krb5.conf.j2') | indent }}
 data:

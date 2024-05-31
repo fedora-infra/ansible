@@ -44,7 +44,7 @@ config = {
         },
     },
     {% if env == 'staging' %}
-    "plugins": [],
+    "plugins": ['copr'],
     {% else %}
     "plugins": ['pagure'],
     {% endif %}

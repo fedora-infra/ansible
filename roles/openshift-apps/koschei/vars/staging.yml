@@ -11,6 +11,11 @@ koschei_koji_web: koji.stg.fedoraproject.org
 koschei_oidc_provider: id.stg.fedoraproject.org
 koschei_bugzilla: bugzilla5.redhat.com
 
+koschei_copr_url: https://copr.stg.fedoraproject.org
+koschei_copr_username: koschei
+koschei_copr_login: "{{ koschei_copr_login_stg }}"
+koschei_copr_token: "{{ koschei_copr_token_stg }}"
+
 koschei_pgsql_username: koscheiuser
 koschei_pgsql_password: "{{ koscheiuser_stg_db_password }}"
 koschei_pgsql_admin_username: koscheiadmin
@@ -27,6 +32,7 @@ koschei_backend_services:
   - { name: build-resolver, cpu: [ 1000, 1500 ],  memory: [ 1024, 4096 ] }
   - { name: repo-resolver,  cpu: [ 2000, 8000 ],  memory: [ 1024, 4096 ] }
   - { name: watcher,        cpu: [ 1000, 1500 ],  memory: [  256,  512 ] }
+  - { name: copr-resolver,  cpu: [ 1000, 1500 ],  memory: [ 1024, 4096 ] }
 
 koschei_cron_jobs:
   - name: db-cleanup
