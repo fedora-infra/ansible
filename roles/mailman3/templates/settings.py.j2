@@ -73,7 +73,9 @@ INSTALLED_APPS = (
     'allauth.socialaccount',
     'django_mailman3.lib.auth.fedora',
 {% for service_name, service_data in mailman_login.items() %}
+{% if service_data.provider != "fedora" %}
     'allauth.socialaccount.providers.{{ service_data.provider }}',
+{% endif %}
 {% endfor %}
 )
 

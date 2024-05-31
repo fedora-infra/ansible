@@ -213,7 +213,7 @@
     src: initial-data.json.j2
     dest: "{{ mailman_webui_confdir }}/initial-data.json"
     owner: root
-    group: root
+    group: mailman
     mode: 0640
   tags:
     - mailman
