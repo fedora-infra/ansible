@@ -29,6 +29,10 @@ pid_file: /run/mailman3/master.pid
 class: mailman.database.postgresql.PostgreSQLDatabase
 url: postgresql://mailmanadmin:{{ mailman_mailman_db_pass }}@{{ mailman_db_server }}/mailman
 
+# As we don't have a NNTP server let's disable the runner
+[nntp]
+gatenews_every: 0
+
 [archiver.hyperkitty]
 class: mailman_hyperkitty.Archiver
 enable: yes
