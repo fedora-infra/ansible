@@ -1,7 +1,7 @@
 #!/bin/sh
 
 BASE_SRC_DIR=/srv/private/ansible/files/rabbitmq
-BASE_DEST_DIR=/var/cache/rabbitmq-certs
+BASE_DEST_DIR=/srv/web/infra/rabbitmq-certs
 EXPIRATION_FILE=expiration.txt
 
 set -e
