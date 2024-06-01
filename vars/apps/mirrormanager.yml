@@ -45,12 +45,12 @@ mirrormanager_cron_crawler:
   # This can be a veeery long crawl
   - category: "Fedora Archive"
     schedule: "0 2 * * 2,4"
-    threads: 20
+    threads: 10
     timeout: 2700  # 45h
     include_disabled: false
   - category: "Fedora Archive"
     schedule: "0 2 * * 6"
-    threads: 20
+    threads: 10
     timeout: 2700  # 45h
     #host_timeout: 600
     include_disabled: true
