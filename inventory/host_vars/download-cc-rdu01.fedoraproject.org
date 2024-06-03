@@ -1,6 +1,9 @@
 ---
 datacenter: rdu-cc
 dns1: 8.8.8.8
+dns2: 8.8.4.4
+dns_search1: vpn.fedoraproject.org
+dns_search2: fedoraproject.org
 eth0_ipv4_gw: 8.43.85.254
 eth0_ipv4_ip: 8.43.85.72
 eth0_ipv6_gw: "2620:52:3:1:ffff:ffff:ffff:fffe"
@@ -12,8 +15,8 @@ ks_repo: http://38.145.60.16/repo/rhel/RHEL9-x86_64/
 ks_url: http://38.145.60.16/repo/rhel/ks/kvm-rhel
 lvm_size: 50000
 mac_address: "52:54:00:30:a6:43"
-max_mem_size: 20480
-mem_size: 16384
+max_mem_size: 49152
+mem_size: 32768
 network_connections:
   - autoconnect: yes
     ip:
