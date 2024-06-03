@@ -450,6 +450,17 @@
     - mailman
     - systemd
 
+- name: Install hyperkitty target
+  ansible.builtin.copy:
+    src: "systemd/hyperkitty.target"
+    dest: "/etc/systemd/system/hyperkitty.target"
+  notify:
+    - systemctl daemon-reload
+  tags:
+    - config
+    - mailman
+    - systemd
+
 - name: Install the systemd cron services
   ansible.builtin.copy:
     src: "systemd/{{ item }}.service"
