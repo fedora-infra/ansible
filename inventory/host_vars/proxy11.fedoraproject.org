@@ -4,10 +4,10 @@ dns1: 8.8.8.8
 dns2: 8.8.4.4
 dns_search1: "vpn.fedoraproject.org"
 dns_search2: "fedoraproject.org"
-eth0_ipv4: 67.219.144.68
+eth0_ipv4_ip: 67.219.144.68
 eth0_ipv4_gw: 67.219.144.65
 eth0_ipv4_nm: 28
-eth0_ipv6: "2604:1580:fe00:0:dead:beef:cafe:fed1"
+eth0_ipv6_ip: "2604:1580:fe00:0:dead:beef:cafe:fed1"
 eth0_ipv6_gw: "2604:1580:fe00::1"
 eth0_ipv6_nm: 64
 freezes: true
@@ -22,8 +22,8 @@ network_connections:
   - autoconnect: yes
     ip:
       address:
-        - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
-        - "{{ eth0_ipv6 }}/{{ eth0_ipv6_nm }}"
+        - "{{ eth0_ipv4_ip }}/{{ eth0_ipv4_nm }}"
+        - "{{ eth0_ipv6_ip }}/{{ eth0_ipv6_nm }}"
       dhcp4: no
       dns:
         - "{{ dns1 }}"
