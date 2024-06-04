@@ -1,6 +1,6 @@
-# https://docs.openshift.com/container-platform/3.11/rest_api/oapi/v1.DeploymentConfig.html#object-schema
-apiVersion: apps.openshift.io/v1
-kind: DeploymentConfig
+# https://docs.openshift.com/container-platform/4.15/rest_api/workloads_apis/deployment-apps-v1.html
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: admin
   labels:
@@ -8,7 +8,8 @@ metadata:
 spec:
   replicas: 1
   selector:
-    service: admin
+    matchLabels:
+      service: admin
   strategy:
     type: Recreate
   template:
@@ -44,12 +45,3 @@ spec:
       - name: keytab
         secret:
           secretName: keytab
-  triggers:
-  - type: ImageChange
-    imageChangeParams:
-      automatic: true
-      from:
-        kind: ImageStreamTag
-        name: koschei:latest
-      containerNames:
-        - admin
