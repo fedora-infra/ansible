@@ -63,6 +63,13 @@ config = {
         "scheduler": {
             "watchdog": True,
         },
+        "copr_resolver": {
+            "memory_limit": 1024**2,  # kilobytes
+            "watchdog": True,
+        },
+        "copr_scheduler": {
+            "watchdog": True,
+        },
     },
     "priorities": {
         "calculation_interval": 3600,  # seconds
