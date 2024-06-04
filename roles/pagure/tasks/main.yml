@@ -137,7 +137,9 @@
     etype: group
     permissions: "rw"
     state: present
-
+  tags:
+  - pagure
+  - fix_log
 
 # This now fails when there are broken symlinks. Lets figure out a better way to do this - kevin
 # - name: Adjust owner of /srv/git
