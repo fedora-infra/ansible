@@ -50,7 +50,7 @@
         - frontend-deployment
         - frontend-service
 
-    - name: Apply DeploymentConfig
+    - name: Apply Deployment
       include_role: name=openshift/object
       vars:
         template: backend-deployment.yml

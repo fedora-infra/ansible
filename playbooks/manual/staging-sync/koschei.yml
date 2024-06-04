@@ -19,14 +19,17 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   tasks:
-  - name: Stop backend services
-    shell: oc -n koschei scale dc/{{item.name}} --replicas=0
-    with_items: "{{ koschei_backend_services }}"
-    loop_control:
-      label: "{{ item.name }}"
+  - name: Delete all jobs
+    shell: oc -n koschei delete job --all
 
-  - name: Stop frontend
-    shell: oc -n koschei scale dc/frontend --replicas=0
+  - name: Pause all deployments
+    shell: oc -n koschei rollout pause deploy
+
+  - name: Delete all replica sets
+    shell: oc -n koschei delete rs --all
+
+  - name: Delete all pods
+    shell: oc -n koschei delete pod --all
 
   - name: Drop koschei database
     postgresql_db: name=koschei state=absent
@@ -46,11 +49,5 @@
       name: db-create
       command: "koschei-admin create-db && koschei-admin create-collection f41 --display-name 'Fedora Rawhide' --target f41 --bugzilla-product Fedora --bugzilla-version rawhide && koschei-admin create-group php"
 
-  - name: Start frontend
-    shell: oc -n koschei scale dc/frontend --replicas={{koschei_frontend_replicas}}
-
-  - name: Start backend services
-    shell: oc -n koschei scale dc/{{item.name}} --replicas=1
-    with_items: "{{ koschei_backend_services }}"
-    loop_control:
-      label: "{{ item.name }}"
+  - name: Resume all deployments
+    shell: oc -n koschei rollout resume deploy
