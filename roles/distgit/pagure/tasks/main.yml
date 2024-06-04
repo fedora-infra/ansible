@@ -97,6 +97,18 @@
   - pagure
   - hotfix
 
+# Fix for https://pagure.io/fedora-infrastructure/issue/11957
+- name: Set ACL for newly created files in /var/log/pagure
+  ansible.posix.acl:
+    path: /var/log/pagure
+    default: true
+    etype: group
+    permissions: "rw"
+    state: present
+  tags:
+  - pagure
+  - fix_log
+
 - name: create the /srv/tmp folder where to clone repos
   file: state=directory
                path=/srv/tmp
