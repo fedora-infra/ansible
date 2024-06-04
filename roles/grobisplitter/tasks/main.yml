@@ -17,10 +17,9 @@
 
 - name: copy local/bin files
   copy: src={{item}} dest=/usr/local/bin/ mode=0755
-  with_items: 
+  with_items:
     - splitter.py
     - rhel8-split.sh
-    - cents8-split.sh
   tags:
     - grobi
 
@@ -28,6 +27,5 @@
   copy: src={{item}} dest=/etc/cron.d/ mode=0644
   with_items:
     - rhel8-split.cron
-    - cents8-split.cron
   tags:
     - grobi

@@ -22,7 +22,7 @@
   - ostree                    # Needed for rhn sync
   - bind                      # named-checkzone for dns repo
   - emacs-nox
-  - nano                 
+  - nano
   - rpm-sign                  # for the sign-and-import playbook
   - createrepo                # for the sign-and-import playbook
   - unzip                     # general useful util
@@ -322,17 +322,6 @@
   - config
   when: inventory_hostname.startswith('batcave01')
 
-
-#
-# Setup centos sync script.
-#
-
-- name: setup centos sync script
-  copy: src=centos-8-sync dest=/mnt/fedora/app/fi-repo/centos/centos-8-sync mode=0775
-  tags:
-  - batcave
-  - config
-  when: inventory_hostname.startswith('batcave01')
 
 #
 # sync-centos cron job
