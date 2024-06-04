@@ -127,7 +127,7 @@ config = {
         "build_log_url": "https://download.copr-dev.fedorainfracloud.org/results/"
                          "{copr_owner}/{copr_name}/{copr_chroot}/"
                          "{build_id:08d}-{package_name}/build.log.gz",
-        "copr_owner": "koschei",
+        "copr_owner": "{{ koschei_copr_username }}",
         "chroot_name": "custom-1-x86_64",
         "config_path": "/etc/koschei/copr-config",
         "overriding_by_exclusions": False,
