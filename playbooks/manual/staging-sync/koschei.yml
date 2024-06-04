@@ -44,7 +44,7 @@
     include_role: name=openshift-apps/koschei/job
     vars:
       name: db-create
-      command: "koschei-admin create-db && koschei-admin create-collection f39 --display-name 'Fedora Rawhide' --target f39 --bugzilla-product Fedora --bugzilla-version rawhide && koschei-admin create-group php"
+      command: "koschei-admin create-db && koschei-admin create-collection f41 --display-name 'Fedora Rawhide' --target f41 --bugzilla-product Fedora --bugzilla-version rawhide && koschei-admin create-group php"
 
   - name: Start frontend
     shell: oc -n koschei scale dc/frontend --replicas={{koschei_frontend_replicas}}
