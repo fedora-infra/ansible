@@ -123,7 +123,7 @@
 - name: create the /var/log/pagure folder where to store the logs
   file: state=directory
                path=/var/log/pagure
-               owner=git group=git mode=0755
+               owner=git group=git mode=0775
   tags:
   - pagure
   - fix_log
