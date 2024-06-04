@@ -11,7 +11,7 @@ spec:
     matchLabels:
       service: frontend
   strategy:
-    type: Rolling
+    type: RollingUpdate
   template:
     metadata:
       labels:
