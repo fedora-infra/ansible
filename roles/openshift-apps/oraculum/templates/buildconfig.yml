@@ -15,7 +15,7 @@ spec:
     git:
       uri: https://pagure.io/fedora-qa/oraculum
 {% if env == 'staging' %}
-      ref: "test_s2i"
+      ref: "oidc_v2"
 {% else %}
       ref: "master"
 {% endif %}
