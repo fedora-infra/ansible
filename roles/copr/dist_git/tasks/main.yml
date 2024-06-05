@@ -163,3 +163,6 @@
   tags:
     - config
     - cron
+
+- name: install /etc/gitconfig file
+  copy: src="gitconfig" dest="/etc/gitconfig"
