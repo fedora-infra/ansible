@@ -50,7 +50,7 @@ aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot 
 {% if arch == 'x86_64' and on_demand is none %}
 {% set itype='c7i.xlarge' %}
 {% elif arch == 'x86_64' and on_demand == 'powerful' %}
-{% set itype='c7i.8xlarge' %}
+{% set itype='c7a.8xlarge' %}
 {% elif arch == 'aarch64' and on_demand is none %}
 {% set itype='c7g.xlarge' %}
 {% elif arch == 'aarch64' and on_demand == 'powerful' %}
@@ -58,7 +58,7 @@ aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot 
 {% endif %}
 
 {% if spot and on_demand == 'powerful' %}
-    cmd_new: copr-resalloc-aws-new-{{ arch }} --instance-type {{ itype }} --spot-price 3.4 --root-volume-size 18
+    cmd_new: copr-resalloc-aws-new-{{ arch }} --instance-type {{ itype }} --root-volume-size 18
 {% elif spot %}
     cmd_new: copr-resalloc-aws-new-{{ arch }} --instance-type {{ itype }} --spot-price 0.156
 {% else %}
