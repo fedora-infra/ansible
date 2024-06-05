@@ -57,6 +57,7 @@ ADMIN_GROUP = ["sysadmin-main", "sysadmin-web"]
 
 # Email of the admin to which send notification or error
 # ADMIN_EMAIL = "admin@fedoraproject.org"
+ADMIN_EMAIL = "abompard@fedoraproject.org"
 
 # Email address used in the "From" field of the emails sent.
 # Default: ``nobody@fedoraproject.org``.
@@ -181,7 +182,11 @@ SKIP_PATHS_FOR_VERSION = [
 ###
 
 # Specify whether the crawler should send a report by email
+{% if env == "staging" %}
 CRAWLER_SEND_EMAIL =  False
+{% else %}
+CRAWLER_SEND_EMAIL =  True
+{% endif %}
 
 # If a host fails for CRAWLER_AUTO_DISABLE times in a row
 # the host will be disable automatically (user_active)
