@@ -5,79 +5,45 @@ mirrormanager_oidc_client_id: "mirrormanager"
 # Move that to an env var to target a specific deployment
 mm2_checkin: false
 mirrormanager_cron_crawler:
-  # Active distros: regular weekdays run on active mirrors.
+  # Fedora: run on active mirrors.
   - category: "Fedora Linux"
-    schedule: "0 1,13 * * 1-6"
+    schedule: "0 1,13 * * *"
     threads: 40
     timeout: 600
     include_disabled: false
-  # Active distros: Sunday run on active and inactive mirrors, may last up to 18h
-  - category: "Fedora Linux"
-    schedule: "0 1 * * 0"
-    threads: 40
-    timeout: 1080  # 18h
-    include_disabled: true
   # Secondary arches
   # This can be a veeery long crawl because it has all versions for secondary arches
   - category: "Fedora Secondary Arches"
-    schedule: "0 9 * * 1-6"
+    schedule: "0 9 * * *"
     threads: 30
     timeout: 1380
     include_disabled: false
-  - category: "Fedora Secondary Arches"
-    schedule: "0 9 * * 0"
-    threads: 30
-    timeout: 1380
-    include_disabled: true
-  # EPEL: regular weekdays run on active mirrors.
+  # EPEL: run on active mirrors.
   - category: "Fedora EPEL"
-    schedule: "45 */6 * * 1-6"
+    schedule: "45 */6 * * *"
     threads: 40
     timeout: 300
     include_disabled: false
-  # EPEL: Sunday run on active and inactive mirrors, may last up to 18h
-  - category: "Fedora EPEL"
-    schedule: "45 0 * * 0"
-    threads: 40
-    timeout: 1080
-    include_disabled: true
   # Archived distros
   # This can be a veeery long crawl
   - category: "Fedora Archive"
-    schedule: "0 2 * * 2,4"
+    schedule: "0 2 * * 2,4,6"
     threads: 10
     timeout: 2700  # 45h
     include_disabled: false
-  - category: "Fedora Archive"
-    schedule: "0 2 * * 6"
-    threads: 10
-    timeout: 2700  # 45h
-    #host_timeout: 600
-    include_disabled: true
   # Other content
   # This can be a veeery long crawl
   - category: "Fedora Other"
-    schedule: "0 14 * * 2,4"
+    schedule: "0 14 * * 2,4,6"
     threads: 20
     timeout: 2700  # 45h
     include_disabled: false
-  - category: "Fedora Other"
-    schedule: "0 14 * * 6"
-    threads: 20
-    timeout: 2700  # 45h
-    include_disabled: true
-  # CentOS: regular weekdays run on active mirrors.
+  # CentOS: run on active mirrors.
   - category: "CentOS"
-    schedule: "0 5,11 * * 1-6"
+    schedule: "0 5,11 * * *"
     threads: 40
     timeout: 300
     include_disabled: false
-  # CentOS: Sunday run on active and inactive mirrors, may last up to 18h
-  - category: "CentOS"
-    schedule: "0 5 * * 0"
-    threads: 40
-    timeout: 1080
-    include_disabled: true
 mirrormanager_cron_primary_mirror:
   # check if category Fedora Linux needs updating every 30 minutes
   - category: "fedora"
