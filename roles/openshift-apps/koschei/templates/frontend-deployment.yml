@@ -51,6 +51,9 @@ spec:
         secret:
           secretName: frontend-config
       topologySpreadConstraints:
-      - topologyKey: kubernetes.io/hostname
+      - labelSelector:
+          matchLabels:
+            service: frontend
+        topologyKey: kubernetes.io/hostname
         maxSkew: 1
         whenUnsatisfiable: ScheduleAnyway
