@@ -55,6 +55,10 @@ OIDC_CLIENT_SECRETS = "/etc/mirrormanager-secrets/client_secrets.json"
 # to be recognized as an admin.
 ADMIN_GROUP = ["sysadmin-main", "sysadmin-web"]
 
+# Official URL of MirrorManager. This is needed for the crawler to send emails with full URLs to MirrorManager
+SERVER_NAME = "{{ mirrormanager_hostname }}"
+PREFERRED_URL_SCHEME = "https"
+
 # Email of the admin to which send notification or error
 # ADMIN_EMAIL = "admin@fedoraproject.org"
 ADMIN_EMAIL = "abompard@fedoraproject.org"
