@@ -42,24 +42,24 @@ spec:
               mountPath: "/var/lib/mirrormanager"
             - name: logs
               mountPath: "/var/log/mirrormanager"
-        volumes:
-          - name: config
-            configMap:
-              name: config
-          - name: scripts
-            configMap:
-              name: scripts
-          - name: ssh-key
-            secret:
-              secretName: ssh-mirrorlist-proxies-key
-          - name: data
-            persistentVolumeClaim:
-              claimName: mirrorlist-cache
-          - name: var-lib
-            persistentVolumeClaim:
-              claimName: data
-          - name: logs
-            persistentVolumeClaim:
-              claimName: logs
-        securityContext:
-          supplementalGroups: [1001280000]
+      volumes:
+        - name: config
+          configMap:
+            name: config
+        - name: scripts
+          configMap:
+            name: scripts
+        - name: ssh-key
+          secret:
+            secretName: ssh-mirrorlist-proxies-key
+        - name: data
+          persistentVolumeClaim:
+            claimName: mirrorlist-cache
+        - name: var-lib
+          persistentVolumeClaim:
+            claimName: data
+        - name: logs
+          persistentVolumeClaim:
+            claimName: logs
+      securityContext:
+        supplementalGroups: [1001280000]
