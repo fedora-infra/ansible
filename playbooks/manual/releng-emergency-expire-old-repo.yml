@@ -50,4 +50,4 @@
         msg: "You can watch the logs with 'oc -n {{ app }} logs -f job/{{ job_name }}'"
 
     - name: Wait for the command to complete
-      shell: oc -n {{ app }} wait --for=condition=Complete job/{{ job_name }}
+      shell: oc -n {{ app }} wait --for=condition=Complete --timeout=10m job/{{ job_name }}
