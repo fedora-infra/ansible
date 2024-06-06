@@ -521,8 +521,8 @@ rules:
 --- !Policy
 id: "bodhiupdate_bodhipush_coreos"
 product_versions:
-  - fedora-{{FedoraCycleNumber}}
-  - fedora-{{FedoraCycleNumber+1}}
+  - fedora-{{ FedoraCycleNumber }}
+  - fedora-{{ FedoraCycleNumber|int + 1 }}
   - fedora-rawhide
 decision_contexts:
   - bodhi_update_push_testing_critical-path-coreos_critpath
