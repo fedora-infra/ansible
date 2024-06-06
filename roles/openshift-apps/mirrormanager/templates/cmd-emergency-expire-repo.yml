@@ -10,7 +10,6 @@ spec:
   activeDeadlineSeconds: 1800
   backoffLimit: 3
   template:
-    name: {{ job_name }}
     spec:
       restartPolicy: Never
       containers:
