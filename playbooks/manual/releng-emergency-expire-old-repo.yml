@@ -44,6 +44,7 @@
         name: openshift/object
       vars:
         template: cmd-emergency-expire-repo.yml
+        objectname: cmd-emergency-expire-repo.yml
 
     - debug:
         msg: "You can watch the logs with 'oc -n {{ app }} logs -f job/{{ job_name }}'"
