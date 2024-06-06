@@ -1,0 +1,65 @@
+# Manual command
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ job_name }}
+spec:
+  parallelism: 1
+  completions: 1
+  activeDeadlineSeconds: 1800
+  backoffLimit: 3
+  template:
+    name: {{ job_name }}
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: mirrormanager
+          image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
+          command:
+            - "bash"
+            - "/opt/scripts/emergency-expire-repo.sh"
+            - "{{ product }}"
+            - "{{ version }}"
+          env:
+            # Defaults to 80 columns, not very readable
+            - name: COLUMNS
+              value: "160"
+          volumeMounts:
+            - name: config
+              mountPath: "/etc/mirrormanager"
+              readOnly: true
+            - name: scripts
+              mountPath: "/opt/scripts"
+              readOnly: true
+            - name: ssh-key
+              mountPath: /etc/mirrormanager-ssh/ssh_mirrorlist_proxies.key
+              subPath: ssh_mirrorlist_proxies.key
+              readOnly: true
+            - name: data
+              mountPath: /data
+            - name: var-lib
+              mountPath: "/var/lib/mirrormanager"
+            - name: logs
+              mountPath: "/var/log/mirrormanager"
+        volumes:
+          - name: config
+            configMap:
+              name: config
+          - name: scripts
+            configMap:
+              name: scripts
+          - name: ssh-key
+            secret:
+              secretName: ssh-mirrorlist-proxies-key
+          - name: data
+            persistentVolumeClaim:
+              claimName: mirrorlist-cache
+          - name: var-lib
+            persistentVolumeClaim:
+              claimName: data
+          - name: logs
+            persistentVolumeClaim:
+              claimName: logs
+        securityContext:
+          supplementalGroups: [1001280000]

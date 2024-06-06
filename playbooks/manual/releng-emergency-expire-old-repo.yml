@@ -15,24 +15,38 @@
 # Possible product: Fedora/EPEL/RHEL
 
 - name: Expire old repo files
-  hosts: mm-backend01.iad2.fedoraproject.org
-  become_user: mirrormanager
+  # hosts: os_control
+  # Testing for now:
+  hosts: os_control_stg
+  user: root
   gather_facts: False
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/apps/mirrormanager.yml
+
+  vars:
+    app: mirrormanager
+    job_name: cmd-emergency-expire-repo-{{ product|lower|replace(" ", "-") }}-{{ version|lower|replace(" ", "-") }}
 
   tasks:
-  - name: Expire old files
-    command: /usr/bin/mm2_emergency-expire-repo {{product}} {{version}}
 
-  - name: Recreate pickle
-    command: /usr/bin/mm2_update-mirrorlist-server
+    - name: Validate parameters
+      assert:
+        that:
+        - product is defined
+        - version is defined
+        fail_msg: "You need to define product and version"
 
-  - name: Sync the pickle
-    command: /usr/local/bin/sync_pkl_to_mirrorlists.sh
+    - include_role:
+        name: openshift/object
+      vars:
+        template: cmd-emergency-expire-repo.yml
 
-  handlers:
-  - import_tasks: "{{ handlers_path }}/restart_services.yml"
+    - debug:
+        msg: "You can watch the logs with 'oc -n {{ app }} logs -f job/{{ job_name }}'"
+
+    - name: Wait for the command to complete
+      shell: oc -n {{ app }} wait --for=condition=Complete job/{{ job_name }}

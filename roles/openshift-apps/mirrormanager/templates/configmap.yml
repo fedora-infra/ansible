@@ -48,3 +48,5 @@ items:
       {{ load_file('update-mirrorlist-cache.sh') | indent(6) }}
     primary-mirror-wrapper.sh: |-
       {{ load_file('primary-mirror-wrapper.sh') | indent(6) }}
+    emergency-expire-repo.sh: |-
+      {{ load_file('emergency-expire-repo.sh') | indent(6) }}
