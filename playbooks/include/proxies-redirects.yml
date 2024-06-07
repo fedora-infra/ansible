@@ -871,3 +871,10 @@
     path: /kerneltest
     target: "https://kerneltest{{env_suffix}}.fedoraproject.org"
     tags: kerneltest
+
+  - role: httpd/redirect
+    shortname: epel.io
+    website: epel.io
+    target: https://docs.fedoraproject.org/en-US/epel/
+    tags:
+      - epel.io

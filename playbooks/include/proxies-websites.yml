@@ -1187,3 +1187,11 @@
     certbot: true
     tags:
     - kanban
+
+  - role: httpd/website
+    site_name: "epel.io"
+    ssl: true
+    sslonly: true
+    certbot: true
+    tags:
+      - epel.io
