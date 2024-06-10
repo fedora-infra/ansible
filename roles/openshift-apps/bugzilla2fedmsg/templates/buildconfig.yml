@@ -9,6 +9,7 @@ spec:
     type: Git
     git:
       uri: https://github.com/fedora-infra/bugzilla2fedmsg.git
+      ref: {{ env }}
   strategy:
     type: Source
     sourceStrategy:
