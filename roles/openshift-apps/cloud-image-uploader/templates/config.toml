@@ -79,15 +79,24 @@ class = "logging.StreamHandler"
 formatter = "simple"
 stream = "ext://sys.stdout"
 
+[log_config.handlers.email]
+class = "logging.handlers.SMTPHandler"
+formatter = "simple"
+level = "ERROR"
+mailhost = "bastion"
+fromaddr = "fedora-image-uploader@fedoraproject.org"
+toaddrs = ["jeremy@jcline.org"]
+subject = "An error occurred in fedora-image-uploader"
+
 [log_config.loggers.fedora_messaging]
 level = "INFO"
 propagate = false
-handlers = ["console"]
+handlers = ["console", "email"]
 
 [log_config.loggers.fedora_cloud_image_uploader]
 level = "INFO"
 propagate = false
-handlers = ["console"]
+handlers = ["console", "email"]
 
 [log_config.loggers.twisted]
 level = "INFO"
@@ -101,4 +110,4 @@ handlers = ["console"]
 
 [log_config.root]
 level = "ERROR"
-handlers = ["console"]
+handlers = ["console", "email"]
