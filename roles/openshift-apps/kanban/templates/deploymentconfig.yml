@@ -44,16 +44,16 @@ spec:
           mountPath: /opt/app-root/secret/
           readOnly: true
         readinessProbe:
-          timeoutSeconds: 5
+          timeoutSeconds: 15
           initialDelaySeconds: 5
           httpGet:
-            path: /
+            path: /api/0/probe/
             port: 8080
         livenessProbe:
-          timeoutSeconds: 15
-          initialDelaySeconds: 30
+          timeoutSeconds: 25
+          initialDelaySeconds: 60
           httpGet:
-            path: /
+            path: /api/0/probe/
             port: 8080
       volumes:
       - name: kanban-secret-volume
