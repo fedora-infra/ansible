@@ -42,7 +42,11 @@ routing_keys = ["#"]  # This is dynamically generated in the code
 # Comment out or remove this line if you want to enable the debug toddler.
 # Or add more toddlers to the list (using their name) if you want to disable
 # more of them.
+{% if env == "staging" %}
 blocked_toddlers = ["debug"]
+{% else %}
+blocked_toddlers = ["debug", "distgit_commit_processor"]
+{% endif %}
 
 [consumer_config.default]
 # Configuration common to all toddlers.
@@ -400,11 +404,6 @@ notify_emails = [
 
 # Configuration section for distgit_commit_processor
 [consumer_config.distgit_commit_processor]
-{% if env == "staging" %}
-enabled = true
-{% else %}
-enabled = false
-{% endif %}
 mail_from = "notifications@{{ env_prefix }}fedoraproject.org"
 mail_to = "scm-commits@lists.{{ env_prefix }}fedoraproject.org"
 # This is the default subject
