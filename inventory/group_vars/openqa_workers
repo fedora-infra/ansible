@@ -18,8 +18,6 @@ openqa_hostname: openqa01.iad2.fedoraproject.org
 openqa_key: "{{ prod_openqa_apikey }}"
 # we are all NFS workers for now at least
 openqa_nfs_worker: true
-# use updates-testing for now to get 2023-05 updates
-openqa_repo: updates-testing
 openqa_secret: "{{ prod_openqa_apisecret }}"
 openqa_workers: 4
 primary_auth_source: ipa
