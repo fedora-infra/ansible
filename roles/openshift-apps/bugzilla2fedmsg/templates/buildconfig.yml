@@ -20,6 +20,9 @@ spec:
   triggers:
   - type: ImageChange
   - type: ConfigChange
+  - type: GitHub
+    github:
+      secret: "{{ (env == 'production')|ternary(bugzilla2fedmsg_prod_github_secret, bugzilla2fedmsg_stg_github_secret) }}"
   output:
     to:
       kind: ImageStreamTag
