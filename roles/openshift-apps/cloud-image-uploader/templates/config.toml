@@ -5,6 +5,12 @@
 amqp_url = "amqps://cloud-image-uploader{{ env_suffix }}:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fpubsub"
 callback = "fedora_image_uploader:Uploader"
 passive_declares = true
+publish_exchange = "amq.topic"
+{% if env == "staging" %}
+topic_prefix = "org.fedoraproject.stg"
+{% else %}
+topic_prefix = "org.fedoraproject.prod"
+{% endif %}
 
 [tls]
 ca_cert = "/etc/pki/rabbitmq/ca/cloud-image-uploader.ca"

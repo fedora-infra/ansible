@@ -9,6 +9,10 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
+  - role: rabbit/user
+    username: "cloud-image-uploader{{ env_suffix }}"
+    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.fedora_image_uploader\..*
+
   - role: rabbit/queue
     username: "cloud-image-uploader{{ env_suffix }}"
     queue_name: "cloud-image-uploader{{ env_suffix }}"
