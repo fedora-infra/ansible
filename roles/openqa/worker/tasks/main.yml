@@ -69,7 +69,7 @@
 
 - name: Install required packages
   package:
-    name: ['openqa-worker', 'os-autoinst', 'ffmpeg-free']
+    name: ['openqa-worker', 'os-autoinst']
     state: latest
     enablerepo: "{{ openqa_repo }}"
   notify:
@@ -98,6 +98,13 @@
 - name: Add _openqa_worker user to geekotest group
   user: name=_openqa-worker groups=geekotest append=yes
   when: "openqa_static_uid is defined"
+
+- name: Install ffmpeg-free (not on aarch64)
+  package: name=ffmpeg-free state=present
+  tags:
+  - packages
+  when: "ansible_architecture is defined and ansible_architecture != 'aarch64'"
+
 
 - name: Install UEFI firmware package (x86_64 only)
   package: name=edk2-ovmf state=present
