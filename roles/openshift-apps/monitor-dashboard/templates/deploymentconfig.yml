@@ -27,7 +27,7 @@ spec:
             - "-tls-key=/etc/tls/private/tls.key"
             - "-pass-basic-auth=false"
             - "-skip-auth-regex=(public|api/snapshots/.+|dashboard/snapshot/.+)"
-          image: registry.hub.docker.com/openshift/oauth-proxy:latest
+          image: registry.svc.ci.openshift.org/ci/oauth-proxy:v1
           name: oauth-proxy
           ports:
             - containerPort: 8443
