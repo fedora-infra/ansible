@@ -3,7 +3,7 @@
 # https://fedora-messaging.readthedocs.io/en/latest/configuration.html.
 
 amqp_url = "amqps://cloud-image-uploader{{ env_suffix }}:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fpubsub"
-callback = "fedora_cloud_image_uploader:Uploader"
+callback = "fedora_image_uploader:Uploader"
 passive_declares = true
 
 [tls]
@@ -93,7 +93,7 @@ level = "INFO"
 propagate = false
 handlers = ["console", "email"]
 
-[log_config.loggers.fedora_cloud_image_uploader]
+[log_config.loggers.fedora_image_uploader]
 level = "INFO"
 propagate = false
 handlers = ["console", "email"]
