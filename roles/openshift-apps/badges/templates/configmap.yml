@@ -17,10 +17,6 @@ items:
       {{ load_file('fm-fedbadges.toml') | indent(6) }}
     checkout-rules-repo.sh: |-
       {{ load_file('checkout-rules-repo.sh') | indent(6) }}
-    tahrir.ini: |-
-      {{ load_file('tahrir.ini') | indent(6) }}
-    secrets.ini: |-
-      {{ load_file('secrets.ini') | indent(6) }}
     tahrir.cfg: |-
       {{ load_file('tahrir.cfg.py') | indent(6) }}
     gunicorn.conf.py: |-

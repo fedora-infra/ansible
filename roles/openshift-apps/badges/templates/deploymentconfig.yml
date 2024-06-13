@@ -73,7 +73,6 @@ spec:
             - name: FEDORA_MESSAGING_CONF
               value: /etc/badges/fm-tahrir.toml
 
-{% if env == 'staging' %}
           readinessProbe:
             timeoutSeconds: 10
             initialDelaySeconds: 5
@@ -88,7 +87,6 @@ spec:
             httpGet:
               path: "/healthz/live"
               port: 8080
-{% endif %}
 
       volumes:
         - name: etc-badges
