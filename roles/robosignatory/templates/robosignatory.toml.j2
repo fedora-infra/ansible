@@ -113,6 +113,12 @@ handlers = ["console"]
             keyid = "{{ (env == 'production')|ternary('47dd8ef9', 'd300e724') }}"
 
             [[consumer_config.koji_instances.primary.tags]]
+            from = "epel10-infra-candidate"
+            to = "epel10-infra-stg"
+            key = "{{ (env == 'production')|ternary('fedora-infra', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('47dd8ef9', 'd300e724') }}"
+
+            [[consumer_config.koji_instances.primary.tags]]
             from = "f39-infra-candidate"
             to = "f39-infra-stg"
             key = "{{ (env == 'production')|ternary('fedora-infra', 'testkey') }}"
