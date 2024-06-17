@@ -652,3 +652,9 @@
   tags:
   - batcave
   - hotfix
+
+- name: Empty default welcome.conf
+  copy: dest=/etc/httpd/conf.d/welcome.conf content=""
+  tags:
+  - batcave
+  - config
