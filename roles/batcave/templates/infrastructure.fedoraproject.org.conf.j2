@@ -134,7 +134,7 @@ ScriptAlias /cgi-bin/ "/var/www/cgi-bin/"
   SSLProtocol {{ ssl_protocols }}
   SSLCipherSuite {{ ssl_ciphers }}
 
-  Redirect "/" "https://docs.fedoraproject.org/en-US/infra/"
+  RedirectMatch "^/$" "https://docs.fedoraproject.org/en-US/infra/"
 # robots location
 Alias /robots.txt /srv/web/robots.txt.lockbox01
 
