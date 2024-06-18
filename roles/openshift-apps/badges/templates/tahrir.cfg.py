@@ -27,6 +27,7 @@ TAHRIR_DEFAULT_ISSUER = "fedora-project"
 TAHRIR_DEFAULT_AVATAR = "retro"
 TAHRIR_DISPLAY_TAGS = ["content", "development", "community", "quality", "event", "miscellaneous"]
 TAHRIR_PNGS_PATH = "/var/lib/badges/pngs"
+TAHRIR_STLS_PATH = "/var/lib/badges/stls"
 TAHRIR_SITEDOCS_SUBDIR = "../fedora-sitedocs"
 TAHRIR_USE_FEDMSG = True
 TAHRIR_EMAIL_DOMAIN = "{{env_prefix}}fedoraproject.org"
