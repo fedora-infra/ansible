@@ -234,6 +234,18 @@ handlers = ["console"]
             # Gated bodhi updates
 
             [[consumer_config.koji_instances.primary.tags]]
+            from = "epel10.0-signing-pending"
+            to = "epel10.0-testing-pending"
+            key = "{{ (env == 'production')|ternary('epel-10', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('e37ed158', 'd300e724') }}"
+
+            [consumer_config.koji_instances.primary.tags.sidetags]
+            pattern = 'epel10.0-build-side-<seq_id>'
+            from = '<sidetag>-signing-pending'
+            to = '<sidetag>-testing-pending'
+            trusted_taggers = ['bodhi']
+
+            [[consumer_config.koji_instances.primary.tags]]
             from = "epel9-signing-pending"
             to = "epel9-testing-pending"
             key = "{{ (env == 'production')|ternary('epel-9', 'testkey') }}"
