@@ -42,11 +42,15 @@ routing_keys = ["#"]  # This is dynamically generated in the code
 # Comment out or remove this line if you want to enable the debug toddler.
 # Or add more toddlers to the list (using their name) if you want to disable
 # more of them.
-{% if env == "staging" %}
-blocked_toddlers = ["debug"]
-{% else %}
-blocked_toddlers = ["debug", "distgit_commit_processor"]
+blocked_toddlers = [
+    "debug",
+    # Block pdc_modules toddler – MBS is retired. Can be removed once toddler has been updated to a
+    # version which doesn’t come with pdc_modules.
+    "pdc_modules",
+{% if env != "staging" %}
+    "distgit_commit_processor",
 {% endif %}
+]
 
 [consumer_config.default]
 # Configuration common to all toddlers.
@@ -152,9 +156,6 @@ file_check_url = "https://src{{ env_suffix }}.fedoraproject.org/%(namespace)s/%(
 
 [consumer_config.pdc_import_compose]
 old_composes_url = "https://kojipkgs{{ env_suffix }}.fedoraproject.org/compose/"
-
-[consumer_config.pdc_modules]
-mbs_url = "https://mbs{{ env_suffix }}.fedoraproject.org/module-build-service/2/module-builds/"
 
 [consumer_config.check_email_overrides]
 email_overrides_url = "https://pagure.io/fedora-infra/ansible/raw/main/f/roles/openshift-apps/toddlers/templates/email_overrides.toml"
