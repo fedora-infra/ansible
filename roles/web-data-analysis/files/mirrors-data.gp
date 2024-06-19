@@ -363,18 +363,6 @@ plot ["2007-05-17":"2024-12-31"] \
      '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($33) title 'rawhide' w filledcurves x1 lc rgb "#FF0000"
 unset output
 
-set output "/var/www/html/csv-reports/images/fedora-rev-latest-stacked.png"
-set title "Fedora Yum Unique IPs"
-plot ["2018-01-01":"2024-12-31"] \
-     '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:36 title 'Fedora' with lines lw 3,\
-     '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($33) title 'rawhide' with filledcurves x1
-     '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($33+$79) title 'fed39' with filledcurves x1,\
-     '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($33+$79+$78) title 'fed38' with filledcurves x1,\
-     '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($33+$79+$78+$77) title 'fed37' with filledcurves x1,\
-     '/var/www/html/csv-reports/mirrors/mirrorsdata-all.csv' using 1:($33+$79+$78+$77+$76) title 'fed36' with filledcurves x1,\
-unset output
-
-
 set output "/var/www/html/csv-reports/images/fedora-select-stacked.png"
 set title "Fedora Yum Unique IPs"
 plot ["2007-05-17":"2024-12-31"] \
