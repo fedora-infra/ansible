@@ -78,7 +78,7 @@
     owner_user: robosignatory
     owner_group: robosignatory
 
-  - {role: linux-system-roles.nbde_client, when: datacenter == 'iad2'}
+  - {role: linux-system-roles.nbde_client, when: datacenter == 'iad2' and env != 'staging' }
   - {role: serial-console, when: datacenter == 'iad2'}
 
   pre_tasks:
