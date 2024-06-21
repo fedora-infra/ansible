@@ -32,6 +32,9 @@
   ansible.posix.patch:
     src: django_mailman3_patch/django-mailman3-fedora-oidc.patch
     basedir: /usr/lib/python3.9/site-packages/
+  tags:
+    - mailman
+    - patch
 
 - name: Set the mailman conffile
   ansible.builtin.template:
