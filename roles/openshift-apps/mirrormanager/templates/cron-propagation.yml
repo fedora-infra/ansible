@@ -1,7 +1,7 @@
 #
 # Propagation checks
 #
-{% from "_macros.yml" import volumes, common_env, security_context %}
+{% from "_macros.yml" import common_volume_mounts, common_volumes, common_env, security_context %}
 ---
 apiVersion: batch/v1
 kind: CronJob
