@@ -1,7 +1,7 @@
-diff --git a/django_mailman3/lib/auth/fedora/provider.py b/django_mailman3/lib/auth/fedora/provider.py
+diff --git django_mailman3/lib/auth/fedora/provider.py django_mailman3/lib/auth/fedora/provider.py
 index b371fbb..966dda0 100644
---- a/django_mailman3/lib/auth/fedora/provider.py
-+++ b/django_mailman3/lib/auth/fedora/provider.py
+--- django_mailman3/lib/auth/fedora/provider.py
++++ django_mailman3/lib/auth/fedora/provider.py
 @@ -18,59 +18,71 @@
  #
  # Author: Aurelien Bompard <abompard@fedoraproject.org>
@@ -121,10 +121,10 @@ index b371fbb..966dda0 100644
              verified=True, primary=False))
          return ret
  
-diff --git a/django_mailman3/lib/auth/fedora/urls.py b/django_mailman3/lib/auth/fedora/urls.py
+diff --git django_mailman3/lib/auth/fedora/urls.py django_mailman3/lib/auth/fedora/urls.py
 index ca371a8..54dd656 100644
---- a/django_mailman3/lib/auth/fedora/urls.py
-+++ b/django_mailman3/lib/auth/fedora/urls.py
+--- django_mailman3/lib/auth/fedora/urls.py
++++ django_mailman3/lib/auth/fedora/urls.py
 @@ -1,5 +1,5 @@
  # -*- coding: utf-8 -*-
 -# Copyright (C) 2012-2023 by the Free Software Foundation, Inc.
@@ -152,10 +152,10 @@ index ca371a8..54dd656 100644
 -            name='fedora_callback'),
 -]
 +urlpatterns = default_urlpatterns(FedoraProvider)
-diff --git a/django_mailman3/lib/auth/fedora/views.py b/django_mailman3/lib/auth/fedora/views.py
+diff --git django_mailman3/lib/auth/fedora/views.py django_mailman3/lib/auth/fedora/views.py
 index 505f9f7..4b1779e 100644
---- a/django_mailman3/lib/auth/fedora/views.py
-+++ b/django_mailman3/lib/auth/fedora/views.py
+--- django_mailman3/lib/auth/fedora/views.py
++++ django_mailman3/lib/auth/fedora/views.py
 @@ -18,107 +18,60 @@
  #
  # Author: Aurelien Bompard <abompard@fedoraproject.org>
@@ -310,10 +310,10 @@ index 505f9f7..4b1779e 100644
 -        return ret
 +oauth2_login = OAuth2LoginView.adapter_view(FedoraAdapter)
 +oauth2_callback = OAuth2CallbackView.adapter_view(FedoraAdapter)
-diff --git a/django_mailman3/tests/test_lib_auth_fedora_provider.py b/django_mailman3/tests/test_lib_auth_fedora_provider.py
+diff --git django_mailman3/tests/test_lib_auth_fedora_provider.py django_mailman3/tests/test_lib_auth_fedora_provider.py
 index 29c5508..851dce4 100644
---- a/django_mailman3/tests/test_lib_auth_fedora_provider.py
-+++ b/django_mailman3/tests/test_lib_auth_fedora_provider.py
+--- django_mailman3/tests/test_lib_auth_fedora_provider.py
++++ django_mailman3/tests/test_lib_auth_fedora_provider.py
 @@ -15,14 +15,13 @@
  #
  # You should have received a copy of the GNU General Public License along with
