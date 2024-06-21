@@ -84,7 +84,10 @@ def parse_json_output(project_name):
     result = run(["oc", "-n", project_name, "get", "jobs", "--sort-by=.metadata.creationTimestamp", "-o", "json"], stdout=PIPE, check=True, universal_newlines=True)
     result = json.loads(result.stdout)
     for job in result["items"]:
-        cronjob = list([ref["name"] for ref in job["metadata"]["ownerReferences"] if ref["kind"] == "CronJob"])[0]
+        try:
+            cronjob = list([ref["name"] for ref in job["metadata"]["ownerReferences"] if ref["kind"] == "CronJob"])[0]
+        except (KeyError, IndexError):
+            continue
         full_name = job["metadata"]["name"]
         jobs[cronjob] = full_name
         details = None
