@@ -1,5 +1,4 @@
-{% macro common_volume_mounts(with_ssh=False) %}
-          volumeMounts:
+{% macro common_volume_mounts(with_ssh=False) -%}
             - name: config
               mountPath: "/etc/mirrormanager"
               readOnly: true
@@ -15,12 +14,12 @@
               readOnly: true
             - name: mirrorlist-cache
               mountPath: /var/cache/mirrorlist
-{%- if with_ssh %}
+{% if with_ssh %}
             - name: ssh-key
               mountPath: /etc/mirrormanager-ssh/ssh_mirrorlist_proxies.key
               subPath: ssh_mirrorlist_proxies.key
               readOnly: true
-{%- endif %}
+{% endif %}
             - name: fedora-messaging-ca-volume
               mountPath: /etc/pki/fedora-messaging/ca
               readOnly: true
@@ -30,14 +29,13 @@
             - name: fedora-messaging-crt-volume
               mountPath: /etc/pki/fedora-messaging/crt
               readOnly: true
-          # - name: ipa-config
-          #   mountPath: "/etc/ipa"
-          #   readOnly: true
+            # - name: ipa-config
+            #   mountPath: "/etc/ipa"
+            #   readOnly: true
 {% endmacro %}
 
 
-{% macro common_volumes(with_ssh=False) %}
-      volumes:
+{% macro common_volumes(with_ssh=False) -%}
         - name: config
           configMap:
             name: config
@@ -56,11 +54,11 @@
         - name: mirrorlist-cache
           persistentVolumeClaim:
             claimName: mirrorlist-cache
-{%- if with_ssh %}
+{% if with_ssh %}
         - name: ssh-key
           secret:
             secretName: ssh-mirrorlist-proxies-key
-{%- endif %}
+{% endif %}
         - name: fedora-messaging-ca-volume
           secret:
             secretName: fedora-messaging-ca
@@ -70,13 +68,13 @@
         - name: fedora-messaging-crt-volume
           secret:
             secretName: fedora-messaging-crt
-      # - name: ipa-config
-      #   configMap:
-      #     name: ipa-client-config
+        # - name: ipa-config
+        #   configMap:
+        #     name: ipa-client-config
 {% endmacro %}
 
 
-{% macro common_env() %}
+{% macro common_env() -%}
             - name: MM2_CONFIG
               value: "/etc/mirrormanager/mirrormanager2.cfg"
             - name: FEDORA_MESSAGING_CONF
@@ -87,7 +85,7 @@
 {% endmacro %}
 
 
-{% macro security_context() %}
+{% macro security_context() -%}
       securityContext:
         supplementalGroups: [1001280000]
 {% endmacro %}
