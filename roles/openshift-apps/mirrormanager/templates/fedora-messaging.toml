@@ -12,9 +12,9 @@ topic_prefix = "org.fedoraproject.prod"
 {% endif %}
 
 [tls]
-ca_cert = "/etc/pki/fedora-messaging/cacert.pem"
-keyfile = "/etc/pki/fedora-messaging/key.pem"
-certfile = "/etc/pki/fedora-messaging/cert.pem"
+ca_cert = "/etc/pki/fedora-messaging/ca/cacert.pem"
+keyfile = "/etc/pki/fedora-messaging/key/key.pem"
+certfile = "/etc/pki/fedora-messaging/crt/cert.pem"
 
 [client_properties]
 app = "MirrorManager"
