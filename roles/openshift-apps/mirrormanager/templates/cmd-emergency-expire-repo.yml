@@ -1,3 +1,4 @@
+{% from "_macros.yml" import common_volume_mounts, common_volumes, common_env, security_context %}
 # Manual command
 ---
 apiVersion: batch/v1
@@ -21,44 +22,9 @@ spec:
             - "{{ product }}"
             - "{{ version }}"
           env:
-            # Defaults to 80 columns, not very readable
-            - name: COLUMNS
-              value: "160"
+            {{ common_env() }}
           volumeMounts:
-            - name: config
-              mountPath: "/etc/mirrormanager"
-              readOnly: true
-            - name: scripts
-              mountPath: "/opt/scripts"
-              readOnly: true
-            - name: ssh-key
-              mountPath: /etc/mirrormanager-ssh/ssh_mirrorlist_proxies.key
-              subPath: ssh_mirrorlist_proxies.key
-              readOnly: true
-            - name: data
-              mountPath: /data
-            - name: var-lib
-              mountPath: "/var/lib/mirrormanager"
-            - name: logs
-              mountPath: "/var/log/mirrormanager"
+            {{ common_volume_mounts(with_ssh=True) }}
       volumes:
-        - name: config
-          configMap:
-            name: config
-        - name: scripts
-          configMap:
-            name: scripts
-        - name: ssh-key
-          secret:
-            secretName: ssh-mirrorlist-proxies-key
-        - name: data
-          persistentVolumeClaim:
-            claimName: mirrorlist-cache
-        - name: var-lib
-          persistentVolumeClaim:
-            claimName: data
-        - name: logs
-          persistentVolumeClaim:
-            claimName: logs
-      securityContext:
-        supplementalGroups: [1001280000]
+        {{ common_volumes(with_ssh=True) }}
+      {{ security_context() }}

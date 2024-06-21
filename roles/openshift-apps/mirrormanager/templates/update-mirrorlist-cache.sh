@@ -4,7 +4,7 @@ MIRRORLIST_PROXY="{% for host in groups['mirrorlist_proxies'] %} {{ host }} {% e
 MM_USER=mirrormanager
 MM_ROOT=/opt/app-root
 MM_SSH_KEY=/etc/mirrormanager-ssh/ssh_mirrorlist_proxies.key
-CACHEDIR=/data
+CACHEDIR=/var/cache/mirrorlist
 
 set -e
 set -x

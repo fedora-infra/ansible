@@ -1,6 +1,7 @@
 #
 ### Crawler cron jobs
 #
+{% from "_macros.yml" import common_volume_mounts, common_volumes, common_env %}
 {% for cronjob in mirrormanager_cron_crawler %}
 ---
 # Category: {{ cronjob.category }}
@@ -20,45 +21,30 @@ spec:
         spec:
           restartPolicy: Never
           containers:
-          - name: mirrormanager
-            image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
-            command:
-              - "/opt/app-root/bin/mm2_crawler"
-              - "--threads"
-              - "{{ cronjob.threads }}"
-              - "--global-timeout"
-              - "{{ cronjob.timeout }}"
+            - name: mirrormanager
+              image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
+              command:
+                - "/opt/app-root/bin/mm2_crawler"
+                - "--threads"
+                - "{{ cronjob.threads }}"
+                - "--global-timeout"
+                - "{{ cronjob.timeout }}"
 {% if cronjob.host_timeout is defined %}
-              - "--host-timeout"
-              - "{{ cronjob.host_timeout }}"
+                - "--host-timeout"
+                - "{{ cronjob.host_timeout }}"
 {% endif %}
-              - "--category"
-              - "{{ cronjob.category }}"
-              - "--{{ cronjob.include_disabled | ternary('include', 'exclude') }}-disabled"
-              - "--no-fail"
-              - "crawl"
-            env:
-              # Defaults to 80 columns, not very readable
-              - name: COLUMNS
-                value: "160"
-            volumeMounts:
-              - name: config
-                mountPath: "/etc/mirrormanager"
-                readOnly: true
-              - name: data
-                mountPath: "/var/lib/mirrormanager"
-              - name: logs
-                mountPath: "/var/log/mirrormanager"
+                - "--category"
+                - "{{ cronjob.category }}"
+                - "--{{ cronjob.include_disabled | ternary('include', 'exclude') }}-disabled"
+                - "--no-fail"
+                - "crawl"
+              env:
+                {{ common_env() | indent(4) }}
+              volumeMounts:
+                {{ common_volume_mounts() | indent(4) }}
+
           volumes:
-            - name: config
-              configMap:
-                name: config
-            - name: data
-              persistentVolumeClaim:
-                claimName: data
-            - name: logs
-              persistentVolumeClaim:
-                claimName: logs
+            {{ common_volumes() | indent(4) }}
 {% endfor %}
 ---
 #
@@ -80,29 +66,28 @@ spec:
         spec:
           restartPolicy: Never
           containers:
-          - name: mirrormanager
-            image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
-            command:
-              - "logrotate"
-              - "-v"
-              - "--state"
-              - "/var/log/mirrormanager/logrotate.state"
-              - "/etc/mirrormanager/logrotate.conf"
-            volumeMounts:
+            - name: mirrormanager
+              image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
+              command:
+                - "logrotate"
+                - "-v"
+                - "--state"
+                - "/var/log/mirrormanager/logrotate.state"
+                - "/etc/mirrormanager/logrotate.conf"
+              volumeMounts:
+                - name: config
+                  mountPath: "/etc/mirrormanager"
+                  readOnly: true
+                - name: logs
+                  mountPath: "/var/log/mirrormanager"
+            volumes:
               - name: config
-                mountPath: "/etc/mirrormanager"
-                readOnly: true
+                configMap:
+                  name: config
               - name: logs
-                mountPath: "/var/log/mirrormanager"
-          volumes:
-            - name: config
-              configMap:
-                name: config
-            - name: logs
-              persistentVolumeClaim:
-                claimName: logs
-          securityContext:
-            supplementalGroups: [1001280000]
+                persistentVolumeClaim:
+                  claimName: logs
+          {{ security_context() | indent(4) }}
 ---
 #
 ### Download GeoIP database
@@ -123,21 +108,20 @@ spec:
         spec:
           restartPolicy: Never
           containers:
-          - name: mirrormanager
-            image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
-            command:
-              - "curl"
-              - "--create-dirs"
-              - "--output-dir"
-              - "/var/lib/mirrormanager/geoip"
-              - "-O"
-              - "https://infrastructure.fedoraproject.org/infra/bigfiles/geoip/GeoLite2-City.mmdb"
-            volumeMounts:
-              - name: data
-                mountPath: "/var/lib/mirrormanager"
-          volumes:
-            - name: data
-              persistentVolumeClaim:
-                claimName: data
-          securityContext:
-            supplementalGroups: [1001280000]
+            - name: mirrormanager
+              image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
+              command:
+                - "curl"
+                - "--create-dirs"
+                - "--output-dir"
+                - "/var/lib/mirrormanager/geoip"
+                - "-O"
+                - "https://infrastructure.fedoraproject.org/infra/bigfiles/geoip/GeoLite2-City.mmdb"
+              volumeMounts:
+                - name: var-lib
+                  mountPath: "/var/lib/mirrormanager"
+            volumes:
+              - name: var-lib
+                persistentVolumeClaim:
+                  claimName: data
+          {{ security_context() | indent(4) }}

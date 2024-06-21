@@ -1,6 +1,7 @@
 #
 ### Primary mirror scanning cron jobs
 #
+{% from "_macros.yml" import volumes, common_env, security_context %}
 {% for cronjob in mirrormanager_cron_primary_mirror %}
 ---
 # Category: {{ cronjob.category }}
@@ -20,43 +21,24 @@ spec:
         spec:
           restartPolicy: Never
           containers:
-          - name: mirrormanager
-            image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
-            command: ["bash", "/opt/scripts/primary-mirror-wrapper.sh", "{{ cronjob.category }}"]
-            volumeMounts:
-              - name: config
-                mountPath: "/etc/mirrormanager"
-                readOnly: true
-              - name: scripts
-                mountPath: "/opt/scripts"
-                readOnly: true
-              - name: data
-                mountPath: "/var/lib/mirrormanager"
-              - name: logs
-                mountPath: "/var/log/mirrormanager"
-              - name: mirror
-                mountPath: "/srv/pub"
-              - name: mirror-archive
-                mountPath: "/srv/pub/archive"
+            - name: mirrormanager
+              image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
+              command: ["bash", "/opt/scripts/primary-mirror-wrapper.sh", "{{ cronjob.category }}"]
+              env:
+                {{ common_env() | indent(4) }}
+              volumeMounts:
+                {{ common_volume_mounts(with_ssh=True) | indent(4) }}
+                - name: mirror
+                  mountPath: "/srv/pub"
+                - name: mirror-archive
+                  mountPath: "/srv/pub/archive"
           volumes:
-            - name: config
-              configMap:
-                name: config
-            - name: scripts
-              configMap:
-                name: scripts
-            - name: data
-              persistentVolumeClaim:
-                claimName: data
-            - name: logs
-              persistentVolumeClaim:
-                claimName: logs
+            {{ common_volumes(with_ssh=True) | indent(4) }}
             - name: mirror
               persistentVolumeClaim:
                 claimName: primary-mirror
             - name: mirror-archive
               persistentVolumeClaim:
                 claimName: primary-mirror-archive
-          securityContext:
-            supplementalGroups: [1001280000]
+          {{ security_context() | indent(4) }}
 {% endfor %}

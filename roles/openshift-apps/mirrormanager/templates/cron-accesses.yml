@@ -1,3 +1,4 @@
+{% from "_macros.yml" import common_volume_mounts, common_volumes, common_env %}
 ---
 apiVersion: batch/v1
 kind: CronJob
@@ -15,30 +16,16 @@ spec:
         spec:
           restartPolicy: Never
           containers:
-          - name: mirrormanager
-            image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
-            command: ["bash", "/opt/scripts/create_statistics.sh"]
-            volumeMounts:
-              - name: config
-                mountPath: "/etc/mirrormanager"
-                readOnly: true
-              - name: scripts
-                mountPath: "/opt/scripts"
-                readOnly: true
-              - name: ssh-key
-                mountPath: /etc/mirrormanager-ssh/ssh_mirrorlist_proxies.key
-                subPath: ssh_mirrorlist_proxies.key
-                readOnly: true
+            - name: mirrormanager
+              image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
+              command: ["bash", "/opt/scripts/create_statistics.sh"]
+              env:
+                {{ common_env() | indent(4) }}
+              volumeMounts:
+                {{ common_volume_mounts(with_ssh=True) | indent(4) }}
           volumes:
-            - name: config
-              configMap:
-                name: config
-            - name: scripts
-              configMap:
-                name: scripts
-            - name: ssh-key
-              secret:
-                secretName: ssh-mirrorlist-proxies-key
+            {{ common_volumes(with_ssh=True) | indent(4) }}
+
 ---
 ## Also include stats from the previous day
 apiVersion: batch/v1
@@ -57,27 +44,12 @@ spec:
         spec:
           restartPolicy: Never
           containers:
-          - name: mirrormanager
-            image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
-            command: ["bash", "/opt/scripts/create_statistics.sh", "yesterday"]
-            volumeMounts:
-              - name: config
-                mountPath: "/etc/mirrormanager"
-                readOnly: true
-              - name: scripts
-                mountPath: "/opt/scripts"
-                readOnly: true
-              - name: ssh-key
-                mountPath: /etc/mirrormanager-ssh/ssh_mirrorlist_proxies.key
-                subPath: ssh_mirrorlist_proxies.key
-                readOnly: true
+            - name: mirrormanager
+              image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
+              command: ["bash", "/opt/scripts/create_statistics.sh", "yesterday"]
+              env:
+                {{ common_env() | indent(4) }}
+              volumeMounts:
+                {{ common_volume_mounts(with_ssh=True) | indent(4) }}
           volumes:
-            - name: config
-              configMap:
-                name: config
-            - name: scripts
-              configMap:
-                name: scripts
-            - name: ssh-key
-              secret:
-                secretName: ssh-mirrorlist-proxies-key
+            {{ common_volumes(with_ssh=True) | indent(4) }}

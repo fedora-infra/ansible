@@ -1,0 +1,78 @@
+{% from "_macros.yml" import common_volume_mounts, common_volumes, common_env %}
+---
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: frontend
+  labels:
+    app: mirrormanager
+spec:
+  replicas: 1
+  selector:
+    app: mirrormanager
+    deploymentconfig: frontend
+  strategy:
+    type: Rolling
+    activeDeadlineSeconds: 21600
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: mirrormanager
+        deploymentconfig: frontend
+    spec:
+      containers:
+        - name: mirrormanager
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: APP_MODULE
+              value: "deploy.wsgi"
+            - name: APP_CONFIG
+              value: "/etc/mirrormanager/gunicorn.conf.py"
+            {{ common_env() }}
+
+          # readinessProbe:
+          #   timeoutSeconds: 10
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 60
+          #   httpGet:
+          #     path: "/healthz/ready"
+          #     port: 8080
+          # livenessProbe:
+          #   timeoutSeconds: 10
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 60
+          #   httpGet:
+          #     path: "/healthz/live"
+          #     port: 8080
+
+          volumeMounts:
+            {{ common_volume_mounts() }}
+            - name: secrets
+              mountPath: "/etc/mirrormanager-secrets"
+              readOnly: true
+
+      volumes:
+        {{ common_volumes() }}
+        - name: secrets
+          secret:
+            secretName: secrets
+
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - mirrormanager
+        from:
+          kind: ImageStreamTag
+          name: mirrormanager2:latest

@@ -21,6 +21,8 @@ items:
       {{ load_file('scan-primary-mirror.toml') | indent(6) }}
     scan-primary-mirror-centos.toml: |-
       {{ load_file('scan-primary-mirror-centos.toml') | indent(6) }}
+    fedora-messaging.toml: |-
+      {{ load_file('fedora-messaging.toml') | indent(6) }}
     logrotate.conf: |-
       {{ load_file('logrotate.conf') | indent(6) }}
     ssh_known_hosts: |-
