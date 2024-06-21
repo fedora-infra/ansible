@@ -80,13 +80,13 @@ spec:
                   readOnly: true
                 - name: logs
                   mountPath: "/var/log/mirrormanager"
-            volumes:
-              - name: config
-                configMap:
-                  name: config
-              - name: logs
-                persistentVolumeClaim:
-                  claimName: logs
+          volumes:
+            - name: config
+              configMap:
+                name: config
+            - name: logs
+              persistentVolumeClaim:
+                claimName: logs
           {{ security_context() | indent(4) }}
 ---
 #
@@ -120,8 +120,8 @@ spec:
               volumeMounts:
                 - name: var-lib
                   mountPath: "/var/lib/mirrormanager"
-            volumes:
-              - name: var-lib
-                persistentVolumeClaim:
-                  claimName: data
+          volumes:
+            - name: var-lib
+              persistentVolumeClaim:
+                claimName: data
           {{ security_context() | indent(4) }}

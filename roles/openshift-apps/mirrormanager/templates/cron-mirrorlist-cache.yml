@@ -75,12 +75,15 @@ spec:
         spec:
           restartPolicy: Never
           containers:
-          - name: mirrormanager
-            image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
-            command: ["mm2_get-netblocks", "--debug", "internet2", "/var/cache/mirrorlist/i2_netblocks.txt"]
-            env:
+            - name: mirrormanager
+              image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
+              command: ["mm2_get-netblocks", "--debug", "internet2", "/var/cache/mirrorlist/i2_netblocks.txt"]
+              env:
                 {{ common_env() | indent(4) }}
-              {{ volumes() | indent(4) }}
+              volumeMounts:
+                {{ common_volume_mounts() | indent(4) }}
+          volumes:
+            {{ common_volumes() | indent(4) }}
           {{ security_context() | indent(4) }}
 ---
 # Amazon EC2 netblocks
@@ -100,13 +103,13 @@ spec:
         spec:
           restartPolicy: Never
           containers:
-          - name: mirrormanager
-            image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
-            command: ["mm2_update-EC2-netblocks"]
-            volumeMounts:
-              - name: config
-                mountPath: "/etc/mirrormanager"
-                readOnly: true
+            - name: mirrormanager
+              image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
+              command: ["mm2_update-EC2-netblocks"]
+              volumeMounts:
+                - name: config
+                  mountPath: "/etc/mirrormanager"
+                  readOnly: true
           volumes:
             - name: config
               configMap:
