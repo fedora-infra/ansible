@@ -1,4 +1,4 @@
-{% macro common_volume_mounts() %}
+{% macro common_volume_mounts(with_ssh=False) %}
           volumeMounts:
             - name: config
               mountPath: "/etc/mirrormanager"
