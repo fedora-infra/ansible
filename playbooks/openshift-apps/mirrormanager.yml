@@ -122,12 +122,12 @@
       app: mirrormanager
       secret_name: fedora-messaging-crt
       key: cert.pem
-      privatefile: "rabbitmq/{{env}}/pki/issued/mirrormanager2{{env_suffix}}.crt"
+      privatefile: "rabbitmq/{{env}}/pki/issued/mirrormanager{{env_suffix}}.crt"
     - role: openshift/secret-file
       app: mirrormanager
       secret_name: fedora-messaging-key
       key: key.pem
-      privatefile: "rabbitmq/{{env}}/pki/private/mirrormanager2{{env_suffix}}.key"
+      privatefile: "rabbitmq/{{env}}/pki/private/mirrormanager{{env_suffix}}.key"
 
     # Deployment config
     - role: openshift/object

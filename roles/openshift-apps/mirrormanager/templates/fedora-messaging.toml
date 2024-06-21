@@ -1,4 +1,4 @@
-amqp_url = "amqps://mirrormanager2{{ env_suffix }}:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fpubsub"
+amqp_url = "amqps://mirrormanager{{ env_suffix }}:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fpubsub"
 
 # Just check if the queue exist, don't try to create it (the server does not allow it).
 passive_declares = true
