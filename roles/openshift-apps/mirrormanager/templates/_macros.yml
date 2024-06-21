@@ -33,6 +33,8 @@
           # - name: ipa-config
           #   mountPath: "/etc/ipa"
           #   readOnly: true
+{% endmacro %}
+
 
 {% macro common_volumes(with_ssh=False) %}
       volumes:
