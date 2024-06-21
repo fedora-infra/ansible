@@ -1,3 +1,5 @@
+---
+
 - name: Install packages
   package:
     name:
@@ -55,7 +57,7 @@
     mode: 0644
   tags:
   - fedora-docs-translation
- 
+
 - copy:
     src: docs-translation-update
     dest: /usr/local/bin/docs-translation-update
@@ -74,5 +76,3 @@
   tags:
   - fedora-docs-translation
   when: env == "production" and inventory_hostname.startswith('sundries01')
-
-
