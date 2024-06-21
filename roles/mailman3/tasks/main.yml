@@ -26,6 +26,14 @@
     - packages
     - mailman
 
+# This is needed till https://src.fedoraproject.org/rpms/python-django-mailman3/pull-request/2
+# is available
+- name: Apply django_mailman3 patch
+  ansible.posix.patch:
+    src: django_mailman3_patch/django-mailman3-fedora-oidc.patch
+    basedir: /usr/lib/python3.9/site-packages/django_mailman3/
+    strip: 1
+
 - name: Set the mailman conffile
   ansible.builtin.template:
     src: mailman.cfg.j2

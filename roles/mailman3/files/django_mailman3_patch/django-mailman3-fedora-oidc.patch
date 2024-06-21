@@ -1,0 +1,422 @@
+diff --git a/django_mailman3/lib/auth/fedora/provider.py b/django_mailman3/lib/auth/fedora/provider.py
+index b371fbb..966dda0 100644
+--- a/django_mailman3/lib/auth/fedora/provider.py
++++ b/django_mailman3/lib/auth/fedora/provider.py
+@@ -18,59 +18,71 @@
+ #
+ # Author: Aurelien Bompard <abompard@fedoraproject.org>
+ #
++import logging
+ 
+-from urllib.parse import urlparse
+-
+-from django.urls import reverse
+-from django.utils.http import urlencode
++from django.conf import settings as django_settings
+ 
+ from allauth.account.models import EmailAddress
+ from allauth.socialaccount import providers
+-from allauth.socialaccount.providers.openid.provider import (
+-    OpenIDAccount, OpenIDProvider)
+-from allauth.socialaccount.providers.openid.utils import (
+-    get_email_from_response)
++from allauth.socialaccount.providers.base import ProviderAccount
++from allauth.socialaccount.providers.oauth2.provider import OAuth2Provider
+ 
+ 
+-def extract_username(url):
+-    return urlparse(url).netloc.split('.')[0]
++_log = logging.getLogger(__name__)
+ 
+ 
+-class FedoraAccount(OpenIDAccount):
++class FedoraAccount(ProviderAccount):
+ 
+     def get_brand(self):
+         return dict(id='fedora', name='Fedora')
+ 
+     def to_str(self):
+-        return extract_username(self.account.uid)
++        return self.account.extra_data.get("preferred_username")
+ 
+ 
+-class FedoraProvider(OpenIDProvider):
++class FedoraProvider(OAuth2Provider):
+     id = 'fedora'
+     name = 'Fedora'
+     account_class = FedoraAccount
+-    endpoint = 'https://id.fedoraproject.org'
+-    login_view = 'fedora_login'
+ 
+-    def get_login_url(self, request, **kwargs):
+-        url = reverse(self.login_view)
+-        if kwargs:
+-            url += '?' + urlencode(kwargs)
++    @property
++    def settings(self):
++        if not hasattr(self, "_settings"):
++            self._settings = django_settings.SOCIALACCOUNT_PROVIDERS.get(
++                self.id
++            )
++        return self._settings
++
++    @property
++    def server_url(self):
++        url = self.settings["server_url"]
++        return self.wk_server_url(url)
++
++    def wk_server_url(self, url):
++        well_known_uri = "/.well-known/openid-configuration"
++        if not url.endswith(well_known_uri):
++            url += well_known_uri
+         return url
+ 
+-    def extract_username(self, data):
+-        """
+-        https://fedoraproject.org/wiki/OpenID
+-        For fedoraproject.org, the identity_url looks like:
++    @property
++    def token_auth_method(self):
++        return self.settings.get("token_auth_method")
+ 
+-        https://username.id.fedoraproject.org
+-        """
+-        return extract_username(data.identity_url)
++    def get_default_scope(self):
++        return ["openid", "profile", "email"]
++
++    def extract_uid(self, data):
++        return str(data["sub"])
+ 
+     def extract_common_fields(self, data):
+-        fields = super(FedoraProvider, self).extract_common_fields(data)
+-        fields['username'] = self.extract_username(data)
+-        return fields
++        return dict(
++            email=data.get("email"),
++            username=data.get("preferred_username"),
++            name=data.get("name"),
++            user_id=data.get("user_id"),
++            picture=data.get("picture"),
++            zoneinfo=data.get("zoneinfo"),
++        )
+ 
+     def extract_email_addresses(self, data):
+         """
+@@ -81,7 +93,7 @@ class FedoraProvider(OpenIDProvider):
+                       primary=True)]
+         """
+         ret = []
+-        primary_email = get_email_from_response(data)
++        primary_email = data.get("email")
+         if primary_email:
+             # It would be added by cleanup_email_addresses(), but we add it
+             # here to mark it as verified.
+@@ -89,7 +101,7 @@ class FedoraProvider(OpenIDProvider):
+                 email=primary_email, verified=True, primary=True))
+         # Add the email alias provided by the Fedora project.
+         ret.append(EmailAddress(
+-            email='%s@fedoraproject.org' % self.extract_username(data),
++            email='%s@fedoraproject.org' % self.extract_uid(data),
+             verified=True, primary=False))
+         return ret
+ 
+diff --git a/django_mailman3/lib/auth/fedora/urls.py b/django_mailman3/lib/auth/fedora/urls.py
+index ca371a8..54dd656 100644
+--- a/django_mailman3/lib/auth/fedora/urls.py
++++ b/django_mailman3/lib/auth/fedora/urls.py
+@@ -1,5 +1,5 @@
+ # -*- coding: utf-8 -*-
+-# Copyright (C) 2012-2023 by the Free Software Foundation, Inc.
++# Copyright (C) 2012-2024 by the Free Software Foundation, Inc.
+ #
+ # This file is part of Django-Mailman.
+ #
+@@ -18,16 +18,9 @@
+ #
+ # Author: Aurelien Bompard <abompard@fedoraproject.org>
+ #
++from allauth.socialaccount.providers.oauth2.urls import default_urlpatterns
+ 
++from .provider import FedoraProvider
+ 
+-from django.urls import re_path
+ 
+-from . import views
+-
+-
+-urlpatterns = [
+-    re_path('^fedora/login/$', views.LoginView.as_view(),
+-            name="fedora_login"),
+-    re_path('^fedora/callback/$', views.CallbackView.as_view(),
+-            name='fedora_callback'),
+-]
++urlpatterns = default_urlpatterns(FedoraProvider)
+diff --git a/django_mailman3/lib/auth/fedora/views.py b/django_mailman3/lib/auth/fedora/views.py
+index 505f9f7..4b1779e 100644
+--- a/django_mailman3/lib/auth/fedora/views.py
++++ b/django_mailman3/lib/auth/fedora/views.py
+@@ -18,107 +18,60 @@
+ #
+ # Author: Aurelien Bompard <abompard@fedoraproject.org>
+ #
+-
+-from django.http import HttpResponseRedirect
+-from django.shortcuts import render
+-from django.urls import reverse
+-from django.utils.decorators import method_decorator
+-from django.views.decorators.csrf import csrf_exempt
+-from django.views.generic import View
+-
+-from allauth.socialaccount import providers
+-from allauth.socialaccount.app_settings import QUERY_EMAIL
+-from allauth.socialaccount.helpers import (
+-    complete_social_login, render_authentication_error)
+-from allauth.socialaccount.models import SocialLogin
+-from allauth.socialaccount.providers.base import AuthError
+-from allauth.socialaccount.providers.openid.forms import LoginForm
+-from allauth.socialaccount.providers.openid.utils import (
+-    AXAttributes, SRegFields)
+-from allauth.socialaccount.providers.openid.views import _openid_consumer
+-from openid.consumer import consumer
+-from openid.consumer.discover import DiscoveryFailure
+-from openid.extensions.ax import AttrInfo, FetchRequest
+-from openid.extensions.sreg import SRegRequest
++import requests
++from allauth.socialaccount.providers.oauth2.views import (
++    OAuth2Adapter, OAuth2CallbackView, OAuth2LoginView)
+ 
+ from .provider import FedoraProvider
+ 
+ 
+-class LoginView(View):
++class FedoraAdapter(OAuth2Adapter):
++    provider_id = FedoraProvider.id
++
++    @property
++    def openid_config(self):
++        if not hasattr(self, "_openid_config"):
++            server_url = self.get_provider().server_url
++            resp = requests.get(server_url)
++            resp.raise_for_status()
++            self._openid_config = resp.json()
++        return self._openid_config
+ 
+-    form_class = LoginForm
+-    template_name = 'openid/login.html'
+-    provider = FedoraProvider
+-    callback_view = 'fedora_callback'
++    @property
++    def basic_auth(self):
++        token_auth_method = self.get_provider().settings.get(
++            "token_auth_method"
++        )
++        if token_auth_method:
++            return token_auth_method == "client_secret_basic"
++        return "client_secret_basic" in self.openid_config.get(
++            "token_endpoint_auth_methods_supported", []
++        )
+ 
+-    def get(self, request, *args, **kwargs):
+-        if 'openid' in request.GET or self.provider.endpoint:
+-            return self.post(request, *args, **kwargs)
+-        form = LoginForm(initial={'next': request.GET.get('next'),
+-                                  'process': request.GET.get('process')})
+-        return render(request, self.template_name, {'form': form})
++    @property
++    def access_token_url(self):
++        return self.openid_config["token_endpoint"]
+ 
+-    def post(self, request, *args, **kwargs):
+-        data = dict(list(request.GET.items()) + list(request.POST.items()))
+-        if self.provider.endpoint:
+-            data['openid'] = self.provider.endpoint
+-        form = LoginForm(data)
+-        if form.is_valid():
+-            client = _openid_consumer(
+-                request, self.provider, self.provider.endpoint)
+-            try:
+-                auth_request = client.begin(form.cleaned_data['openid'])
+-                if QUERY_EMAIL:
+-                    sreg = SRegRequest()
+-                    for name in SRegFields:
+-                        sreg.requestField(field_name=name,
+-                                          required=True)
+-                    auth_request.addExtension(sreg)
+-                    ax = FetchRequest()
+-                    for name in AXAttributes:
+-                        ax.add(AttrInfo(name,
+-                                        required=True))
+-                    auth_request.addExtension(ax)
+-                callback_url = reverse(self.callback_view)
+-                SocialLogin.stash_state(request)
+-                redirect_url = auth_request.redirectURL(
+-                    request.build_absolute_uri('/'),
+-                    request.build_absolute_uri(callback_url))
+-                return HttpResponseRedirect(redirect_url)
+-            # UnicodeDecodeError:
+-            # see https://github.com/necaris/python3-openid/issues/1
+-            except (UnicodeDecodeError, DiscoveryFailure) as e:
+-                if request.method == 'POST':
+-                    form._errors["openid"] = form.error_class([e])
+-                else:
+-                    return render_authentication_error(
+-                        request, self.provider.id, exception=e)
+-        return render(request, self.template_name, {'form': form})
++    @property
++    def authorize_url(self):
++        return self.openid_config["authorization_endpoint"]
+ 
++    @property
++    def profile_url(self):
++        return self.openid_config["userinfo_endpoint"]
+ 
+-class CallbackView(View):
++    def complete_login(self, request, app, token, response):
++        response = (
++            requests.get(self.profile_url, headers={
++                "Authorization": "Bearer " + str(token)
++            })
++        )
++        response.raise_for_status()
++        extra_data = response.json()
++        return self.get_provider().sociallogin_from_response(
++            request, extra_data
++        )
+ 
+-    provider = FedoraProvider
+ 
+-    @method_decorator(csrf_exempt)
+-    def dispatch(self, request, *args, **kwargs):
+-        client = _openid_consumer(request)
+-        response = client.complete(
+-            dict(list(request.GET.items()) + list(request.POST.items())),
+-            request.build_absolute_uri(request.path))
+-        if response.status == consumer.SUCCESS:
+-            login = providers.registry \
+-                .by_id(self.provider.id) \
+-                .sociallogin_from_response(request, response)
+-            login.state = SocialLogin.unstash_state(request)
+-            ret = complete_social_login(request, login)
+-        else:
+-            if response.status == consumer.CANCEL:
+-                error = AuthError.CANCELLED
+-            else:
+-                error = AuthError.UNKNOWN
+-            ret = render_authentication_error(
+-                request,
+-                self.provider.id,
+-                error=error)
+-        return ret
++oauth2_login = OAuth2LoginView.adapter_view(FedoraAdapter)
++oauth2_callback = OAuth2CallbackView.adapter_view(FedoraAdapter)
+diff --git a/django_mailman3/tests/test_lib_auth_fedora_provider.py b/django_mailman3/tests/test_lib_auth_fedora_provider.py
+index 29c5508..851dce4 100644
+--- a/django_mailman3/tests/test_lib_auth_fedora_provider.py
++++ b/django_mailman3/tests/test_lib_auth_fedora_provider.py
+@@ -15,14 +15,13 @@
+ #
+ # You should have received a copy of the GNU General Public License along with
+ # Django-Mailman3.  If not, see <http://www.gnu.org/licenses/>.
++from unittest.mock import patch
+ 
+-
+-from unittest.mock import Mock, patch
+-
+-from django.test import RequestFactory, TestCase
++from django.test import RequestFactory
+ from django.urls import reverse
+ 
+-from openid.consumer import consumer
++from allauth.socialaccount.tests import setup_app
++from allauth.tests import TestCase
+ 
+ from django_mailman3.lib.auth.fedora.provider import (
+     FedoraAccount, FedoraProvider)
+@@ -45,39 +44,61 @@ class TestFedoraProvider(TestCase):
+     """
+     Test FedoraProvider openid authentication.
+     """
++    provider_id = FedoraProvider.id
+ 
+-    @patch('allauth.socialaccount.providers.openid.views._openid_consumer')
+-    def setUp(self, consumer_mock):
+-        self.factory = RequestFactory()
+-        client = Mock()
+-        complete = Mock()
+-        consumer_mock.return_value = client
+-        client.complete = complete
+-        self.complete_response = Mock()
+-        complete.return_value = self.complete_response
+-        self.complete_response.status = consumer.SUCCESS
+-        self.complete_response.identity_url = 'http://bob.id.fedoraproject.org'
++    def setUp(self):
++        self.app = setup_app(self.provider_id)
++        self.app.provider_id = self.provider_id
++        self.app.provider = "fedora"
++        self.app.save()
++        self.request = RequestFactory().get("/")
++        self.provider = self.app.get_provider(self.request)
+ 
+     def test_get_login_url(self):
+-        req = self.factory.get('/')
+-        login_url = FedoraProvider(req).get_login_url(req)
++        req = self.request
++        login_url = self.provider.get_login_url(req)
+         self.assertEqual(login_url, reverse('fedora_login'))
+-        login_url = FedoraProvider(req).get_login_url(req, query1='value1')
++        login_url = self.provider.get_login_url(req, query1='value1')
+         new_url = reverse('fedora_login') + '?query1=value1'
+         self.assertEqual(login_url, new_url)
+ 
+-    def test_extract_username(self):
+-        req = self.factory.get('/')
+-        username = FedoraProvider(req).extract_username(self.complete_response)
+-        self.assertEqual(username, 'bob')
+-
+     def test_extract_email_addresses(self):
+-        with patch('django_mailman3.lib.auth.fedora.provider'
+-                   '.get_email_from_response') as email_mock:
+-            email_mock.return_value = 'testuser@example.com'
+-            req = self.factory.get('/')
+-            emails = FedoraProvider(req).extract_email_addresses(
+-                self.complete_response)
++        emails = self.provider.extract_email_addresses(
++            {"email": "testuser@example.com", "sub": "bob"})
+         self.assertEqual(len(emails), 2)
+         self.assertEqual(sorted([x.email for x in emails]),
+                          ['bob@fedoraproject.org', 'testuser@example.com'])
++
++    def test_server_url(self):
++        mock_sp_settings = {
++            "server_url": "https://id.fedoraproject.org"
++        }
++        with patch(
++                "django_mailman3.lib.auth.fedora.provider.django_settings"
++        ) as mock_settings:
++            mock_settings.SOCIALACCOUNT_PROVIDERS.get.return_value = (
++                mock_sp_settings
++            )
++            server_url = self.provider.server_url
++
++        self.assertEqual(
++            server_url,
++            "https://id.fedoraproject.org/.well-known/openid-configuration"
++        )
++
++    def test_token_auth_method(self):
++        mock_sp_settings = {
++            "token_auth_method": "basic_auth_token"
++        }
++        with patch(
++                "django_mailman3.lib.auth.fedora.provider.django_settings"
++        ) as mock_settings:
++            mock_settings.SOCIALACCOUNT_PROVIDERS.get.return_value = (
++                mock_sp_settings
++            )
++            token_auth_method = self.provider.token_auth_method
++
++        self.assertEqual(
++            token_auth_method,
++            "basic_auth_token"
++        )
