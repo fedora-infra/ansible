@@ -4,7 +4,7 @@ metadata:
   name: build-planet
   namespace: planet
 spec:
-  schedule: '*/5 * * * *'
+  schedule: '*/20 * * * *'
   concurrencyPolicy: Forbid
   suspend: false
   successfulJobsHistoryLimit: 3
@@ -13,6 +13,7 @@ spec:
     metadata:
       name: build-planet
     spec:
+      activeDeadlineSeconds: 900 # 15min
       template:
         spec:
           containers:
