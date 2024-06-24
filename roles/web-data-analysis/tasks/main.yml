@@ -55,9 +55,9 @@
     - web-data
 
 - name: clean out non-useful images
-  ansible.builtin.file: path=/var/www/html/csv-reports/images/{{item}}
+  ansible.builtin.file: path="/var/www/html/csv-reports/images/{{item}}"
    state: absent
-  with_items: [ hotspot-all.png, fedora-rev-latest-stacked.png ]
+  with_items: [hotspot-all.png, fedora-rev-latest-stacked.png]
 
 - name: scripts to condense data down for further processing
   copy: src={{item}} dest=/usr/local/bin/ mode=0755
