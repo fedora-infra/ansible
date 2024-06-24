@@ -17,4 +17,5 @@ for env in staging production; do
         exp_date=`openssl x509 -enddate -noout -dateopt iso_8601 -in $cert | cut -d= -f2`
         echo -e "$name\t$exp_date" >> ${dest_dir}/${EXPIRATION_FILE}
     done
+    chcon -t httpd_sys_content_t -R ${dest_dir}
 done
