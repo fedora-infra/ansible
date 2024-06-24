@@ -33,6 +33,42 @@ auto_delete = false
 exclusive = false
 arguments = {}
 
+# For now, just enable AWS support in staging.
+{% if env == "staging" %}
+[consumer_config.aws]
+base_region = "us-east-1"
+s3_bucket_name = "fedora-s3-bucket-fedimg-testing"
+ami_description = ""
+ami_volume_dev_name = "/dev/sda1"
+ami_volume_type = "gp3"
+ami_volume_size = {{ aws_volume_size }}
+ami_regions = [
+    "af-south-1",
+    "eu-north-1",
+    "ap-south-1",
+    "eu-west-3",
+    "eu-west-2",
+    "eu-south-1",
+    "eu-west-1",
+    "ap-northeast-3",
+    "ap-northeast-2",
+    "me-south-1",
+    "ap-northeast-1",
+    "sa-east-1",
+    "ca-central-1",
+    "ap-east-1",
+    "ap-southeast-1",
+    "ap-southeast-2",
+    "ap-southeast-3",
+    "eu-central-1",
+    "us-east-1",
+    "us-east-2",
+    "us-west-1",
+    "us-west-2",
+]
+publish_amqp_messages = false
+{% endif %}
+
 [consumer_config.azure]
 location = "eastus"
 {% if env == "staging" %}
