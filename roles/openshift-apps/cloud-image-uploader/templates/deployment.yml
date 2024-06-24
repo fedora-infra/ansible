@@ -55,6 +55,16 @@ spec:
                 secretKeyRef:
                   name: azure-credentials
                   key: subscription_id
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws-credentials
+                  key: access_key_id
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-credentials
+                  key: secret_access_key
           volumeMounts:
             - name: config-volume
               mountPath: /etc/fedora-messaging
