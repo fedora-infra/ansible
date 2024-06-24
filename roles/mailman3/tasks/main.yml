@@ -352,6 +352,27 @@
   notify:
     - restart mailmanweb
 
+# Memcached
+- name: Set the memcached sysconfig file
+  ansible.builtin.copy:
+    src: memcached.sysconfig
+    dest: /etc/sysconfig/memcached
+  notify:
+    - restart memcached
+  tags:
+    - mailman
+    - memcached
+
+- name: Enable memcached
+  ansible.builtin.systemd:
+    name: memcached
+    state: started
+    enabled: yes
+  tags:
+    - mailman
+    - systemd
+    - memcached
+
 #
 # Plug HyperKitty into Mailman
 #
@@ -508,17 +529,6 @@
     - config
     - mailman
     - systemd
-
-# Memcached
-- name: Set the memcached sysconfig file
-  ansible.builtin.copy:
-    src: memcached.sysconfig
-    dest: /etc/sysconfig/memcached
-  notify:
-    - restart memcached
-  tags:
-    - mailman
-    - memcached
 
 # Httpd
 - name: Import needed httpd configurations
