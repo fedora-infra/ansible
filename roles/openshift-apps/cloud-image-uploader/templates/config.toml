@@ -37,7 +37,7 @@ arguments = {}
 {% if env == "staging" %}
 [consumer_config.aws]
 base_region = "us-east-1"
-s3_bucket_name = "fedora-s3-bucket-fedimg-testing"
+s3_bucket_name = "fedora-s3-bucket-fedimg-staging"
 ami_description = ""
 ami_volume_dev_name = "/dev/sda1"
 ami_volume_type = "gp3"
