@@ -13,7 +13,7 @@ from mailman_web.settings.mailman import *  # noqa: F403
 SECRET_KEY = '{{ mailman_hyperkitty_cookie_key }}'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = { mailman_hyperkitty_debug }
+DEBUG = {{ mailman_hyperkitty_debug }}
 
 ADMINS = (
      ('HyperKitty Admin', 'abompard@fedoraproject.org'),
