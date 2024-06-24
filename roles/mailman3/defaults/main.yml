@@ -6,7 +6,7 @@ mailman_rest_api_user: restadmin
 mailman_rest_api_pass: changeme
 mailman_rest_api_workers: 2
 mailman_log_directory: /var/log/mailman3
-mailman_log_level: debug
+mailman_log_level: info
 mailman_log_items:
   - archiver
   - bounce
@@ -17,12 +17,14 @@ mailman_log_items:
   - smtp
   - subscribe
   - task
+mailman_smtp_port: 25
 
 # Mailman DB settings (the values should be provided by playbook)
 mailman_db_server: localhost
 mailman_mailman_db_pass: changeme
 
 # Hyperkitty/Postorius settings (the values should be provided by playbook)
+mailman_hyperkitty_debug: false
 mailman_hyperkitty_admin_db_pass: changeme
 mailman_hyperkitty_db_pass: changeme
 mailman_hyperkitty_cookie_key: changeme
