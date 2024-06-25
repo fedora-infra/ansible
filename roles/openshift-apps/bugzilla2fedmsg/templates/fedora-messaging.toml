@@ -38,7 +38,7 @@ certfile = "/etc/pki/fedora-messaging/bugzilla2fedmsg-cert.pem"
     queue = "/queue/Consumer.fedorainfra.DO-NOT-COPY.VirtualTopic.eng.bugzilla.>"
 
     # Heartbeat to keep the connection open
-    heartbeat = 1000
+    heartbeat = 10000
 
     # How many messages to prefetch
     prefetch_size = 100
@@ -59,7 +59,7 @@ version = 1
 disable_existing_loggers = true
 
 [log_config.formatters.simple]
-format = "[%(name)s %(levelname)s] %(message)s"
+format = "%(asctime)s [%(name)s %(levelname)s] %(message)s"
 
 [log_config.handlers.console]
 class = "logging.StreamHandler"
