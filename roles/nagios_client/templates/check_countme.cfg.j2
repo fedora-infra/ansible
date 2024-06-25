@@ -1,0 +1,16 @@
+# Raw DB Warn: 1d Crit: 2d
+command[check_countme_fedora_raw]={{ libdir }}/nagios/plugins/check_file_age -w 86400 -c 172800 -f /var/lib/countme/raw.db
+command[check_countme_centos_raw]={{ libdir }}/nagios/plugins/check_file_age -w 86400 -c 172800 -f /var/lib/countme/raw-centos.db
+
+# Totals DB Warn: 7d Crit: 8d
+command[check_countme_fedora_tot]={{ libdir }}/nagios/plugins/check_file_age -w 604800 -c 691200 -f /var/lib/countme/totals.db
+command[check_countme_centos_tot]={{ libdir }}/nagios/plugins/check_file_age -w 604800 -c 691200 -f /var/lib/countme/totals-centos.db
+
+# Web copied: Warn: 1d Crit: 2d
+# Web Generated: Warn: 7d Crit: 8d
+command[check_countme_fedora_web1]={{ libdir }}/nagios/plugins/check_file_age -w 86400 -c 172800 -f /var/www/html/csv-reports/countme/totals.db
+command[check_countme_centos_web1]={{ libdir }}/nagios/plugins/check_file_age -w 86400 -c 172800 -f /var/www/html/csv-reports/countme/totals-centos.db
+command[check_countme_fedora_web2]={{ libdir }}/nagios/plugins/check_file_age -w 604800 -c 691200 -f /var/www/html/csv-reports/countme/totals-countme.db.gz
+command[check_countme_centos_web2]={{ libdir }}/nagios/plugins/check_file_age -w 604800 -c 691200 -f /var/www/html/csv-reports/countme/totals-centos-countme.db.gz
+command[check_countme_fedora_web3]={{ libdir }}/nagios/plugins/check_file_age -w 604800 -c 691200 -f /var/www/html/csv-reports/countme/totals-unique.db.gz
+command[check_countme_centos_web3]={{ libdir }}/nagios/plugins/check_file_age -w 604800 -c 691200 -f /var/www/html/csv-reports/countme/totals-centos-unique.db.gz
