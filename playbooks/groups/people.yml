@@ -28,6 +28,7 @@
         passno=0
         dump=0
         state=mounted
+    when: inventory_hostname.startswith('people02')
     tags:
     - mount
 
@@ -40,6 +41,33 @@
         passno=0
         dump=0
         state=mounted
+    when: inventory_hostname.startswith('people02')
+    tags:
+    - mount
+
+  - name: mount project volume
+    mount: >
+        name=/project
+        src=/dev/mapper/vg_vm-project
+        fstype=xfs
+        opts="noatime,noexec,nosuid,nodev"
+        passno=0
+        dump=0
+        state=mounted
+    when: inventory_hostname.startswith('people01')
+    tags:
+    - mount
+
+  - name: mount srv volume
+    mount: >
+        name=/srv
+        src=/dev/mapper/vg_vm-srv
+        fstype=xfs
+        opts="usrquota,gqnoenforce,noatime,noexec,nosuid,nodev"
+        passno=0
+        dump=0
+        state=mounted
+    when: inventory_hostname.startswith('people01')
     tags:
     - mount
 
