@@ -12,10 +12,11 @@ spec:
   source:
     type: Git
     git:
-      uri: https://github.com/fedora-infra/kerneltest.git
 {% if env == "staging" %}
-      ref: staging
+      uri: https://github.com/AdamWill/kerneltest.git
+      ref: invalid-input-logerror
 {% else %}
+      uri: https://github.com/fedora-infra/kerneltest.git
       ref: stable
 {% endif %}
   strategy:
