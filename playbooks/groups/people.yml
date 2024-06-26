@@ -72,12 +72,13 @@
   - cgit/clean_lock_cron
   - cgit/make_pkgs_list
   - clamav
-  - planet
-  - { role: letsencrypt, site_name: 'fedoraplanet.org' }
+  - { role: planet, when: inventory_hostname.startswith('people02') }
+  - { role: letsencrypt, site_name: 'fedoraplanet.org', when: inventory_hostname.startswith('people02')  }
   - git/server
   - role: rabbit/user
     username: "planet{{ env_suffix }}"
     sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(planet|logger)\..*
+    when: when: inventory_hostname.startswith('people02')
 
   - role: apache
 
