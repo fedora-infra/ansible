@@ -78,7 +78,7 @@
   - role: rabbit/user
     username: "planet{{ env_suffix }}"
     sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(planet|logger)\..*
-    when: when: inventory_hostname.startswith('people02')
+    when: inventory_hostname.startswith('people02')
 
   - role: apache
 
