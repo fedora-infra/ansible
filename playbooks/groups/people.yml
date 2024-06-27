@@ -22,32 +22,6 @@
   - name: mount project volume
     mount: >
         name=/project
-        src=/dev/mapper/GuestVolGroup00-project
-        fstype=xfs
-        opts="noatime,noexec,nosuid,nodev"
-        passno=0
-        dump=0
-        state=mounted
-    when: inventory_hostname.startswith('people02')
-    tags:
-    - mount
-
-  - name: mount srv volume
-    mount: >
-        name=/srv
-        src=/dev/mapper/GuestVolGroup00-srv
-        fstype=xfs
-        opts="usrquota,gqnoenforce,noatime,noexec,nosuid,nodev"
-        passno=0
-        dump=0
-        state=mounted
-    when: inventory_hostname.startswith('people02')
-    tags:
-    - mount
-
-  - name: mount project volume
-    mount: >
-        name=/project
         src=/dev/mapper/vg_vm-project
         fstype=xfs
         opts="noatime,noexec,nosuid,nodev"
@@ -100,13 +74,7 @@
   - cgit/clean_lock_cron
   - cgit/make_pkgs_list
   - clamav
-  - { role: planet, when: inventory_hostname.startswith('people02') }
-  - { role: letsencrypt, site_name: 'fedoraplanet.org', when: inventory_hostname.startswith('people02')  }
   - git/server
-  - role: rabbit/user
-    username: "planet{{ env_suffix }}"
-    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(planet|logger)\..*
-    when: inventory_hostname.startswith('people02')
 
   - role: apache
 
