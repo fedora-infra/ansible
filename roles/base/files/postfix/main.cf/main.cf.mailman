@@ -698,3 +698,8 @@ relay_domains = hash:/var/lib/mailman3/data/postfix_domains
 smtpd_sender_restrictions =
 	check_sender_access regexp:/etc/postfix/sender_access
 	permit
+
+# This has to be set in newer postfix 3.3.0 or later or it will refuse to 
+# send any email. ;( 
+smtpd_recipient_restrictions = permit_mynetworks, reject_unauth_destination
+smtpd_relay_restrictions = permit_mynetworks, reject_unauth_destination
