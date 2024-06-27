@@ -541,6 +541,16 @@
   - httpd
   - httpd/website
 
+# On RHEL 8.8 and newer, git operations fail because of dubious ownership. This should fix it.
+- name: Configure git directories as safe
+  git_config:
+    name: safe.directory
+    scope: system
+    value: "*"
+  tags:
+  - config
+  - batcave
+
 - name: Add SAR script for koji
   copy: src=koji_sar.py dest=/usr/local/bin/koji_sar.py owner=root mode=0700
   tags:
