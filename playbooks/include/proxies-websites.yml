@@ -1195,3 +1195,11 @@
     certbot: true
     tags:
       - epel.io
+
+  - role: httpd/website
+    site_name: "fedoraplanet.org"
+    ssl: true
+    sslonly: true
+    certbot: true
+    tags:
+      - fedoraplanet.org
