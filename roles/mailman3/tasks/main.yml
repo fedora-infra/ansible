@@ -147,8 +147,11 @@
 
 - name: Install the hyperkitty/postorius settings file
   ansible.builtin.template:
-    src: settings.py.j2
-    dest: "{{ mailman_webui_confdir }}/settings.py"
+    src: "{{ item }}.j2"
+    dest: "{{ mailman_webui_confdir }}/{{ item }}"
+  with_items:
+    - settings.py
+    - settings_admin.py
   tags:
     - config
     - mailman
@@ -334,6 +337,8 @@
     chdir: /etc/mailman3
   become_user: mailman
   become: true
+  environment:
+    DJANGO_SETTINGS_MODULE = "{{ mailman_webui_confdir }}/settings_admin.py"
   tags:
     - mailman
     - db
