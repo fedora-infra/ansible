@@ -338,7 +338,7 @@
   become_user: mailman
   become: true
   environment:
-    DJANGO_SETTINGS_MODULE = "{{ mailman_webui_confdir }}/settings_admin.py"
+    DJANGO_SETTINGS_MODULE: "{{ mailman_webui_confdir }}/settings_admin.py"
   tags:
     - mailman
     - db
