@@ -13,6 +13,7 @@ import os
 import sys
 
 from configparser import ConfigParser
+from six.moves.urllib.parse import urljoin
 import requests
 
 config = ConfigParser()
