@@ -44,8 +44,8 @@ enable: yes
 [webservice]
 hostname: localhost
 port: 8001
-admin_user: {{ mailman_rest_api_user }}
-admin_pass: {{ mailman_rest_api_pass }}
+admin_user: {{ mailman_rest_api_username }}
+admin_pass: {{ mailman_rest_api_password }}
 workers: {{ mailman_rest_api_workers }}
 
 {% for item in mailman_log_items %}
