@@ -134,7 +134,7 @@
   - config
   - distgit
 
-- name: Make sure apache can access the fedora-messasing ca
+- name: Make sure apache can access the fedora-messaging ca
   acl:
     path: /etc/pki/rabbitmq/git-hooks.ca
     entity: apache
@@ -145,7 +145,7 @@
   - distgit
   when: inventory_hostname.startswith('batcave')
 
-- name: Make sure apache can access the fedora-messasing crt
+- name: Make sure apache can access the fedora-messaging crt
   acl:
     path: /etc/pki/rabbitmq/git-hooks.crt
     entity: apache
@@ -156,7 +156,7 @@
   - distgit
   when: inventory_hostname.startswith('batcave')
 
-- name: Make sure apache can access the fedora-messasing key
+- name: Make sure apache can access the fedora-messaging key
   acl:
     path: /etc/pki/rabbitmq/git-hooks.key
     entity: apache
