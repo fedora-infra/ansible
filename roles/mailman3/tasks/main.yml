@@ -333,12 +333,10 @@
 
 - name: Ensuring we have correct DB schema for django apps
   ansible.builtin.command:
-    cmd: mailman-web migrate
+    cmd: mailman-web migrate --pythonpath {{ mailman_webui_confdir }} --settings settings_admin --no-input
     chdir: /etc/mailman3
   become_user: mailman
   become: true
-  environment:
-    DJANGO_SETTINGS_MODULE: "{{ mailman_webui_confdir }}/settings_admin.py"
   tags:
     - mailman
     - db
