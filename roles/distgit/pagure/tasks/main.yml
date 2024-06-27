@@ -26,7 +26,9 @@
   - pagure
   - packages
 
-- name: Set httpd_can_network_connect flag on and keep it persistent across reboots so apache can talk to redis
+- name: >-
+    Set httpd_can_network_connect flag on and keep it persistent across reboots so apache can talk
+    to redis
   seboolean:
     name: httpd_can_network_connect
     state: yes
@@ -34,35 +36,35 @@
 
 # Set-up stunnel for the event source server
 
-  #- name: install stunnel service definition
-  #  copy: src=stunnel.service
-  #        dest=/usr/lib/systemd/system/stunnel.service
-  #        owner=root group=root mode=0755
-  #  notify:
-  #  - reload systemd
-  #  - restart stunnel
-  #  tags:
-  #  - pagure
-  #  - stunnel
+# - name: install stunnel service definition
+#   copy: src=stunnel.service
+#         dest=/usr/lib/systemd/system/stunnel.service
+#         owner=root group=root mode=0755
+#   notify:
+#   - reload systemd
+#   - restart stunnel
+#   tags:
+#   - pagure
+#   - stunnel
 
-  #- name: ensure old stunnel init file is gone
-  #  file: dest=/etc/init.d/stunnel/stunnel.init state=absent
-  #  tags:
-  #  - pagure
-  #  - stunnel
-  #  - config
+# - name: ensure old stunnel init file is gone
+#   file: dest=/etc/init.d/stunnel/stunnel.init state=absent
+#   tags:
+#   - pagure
+#   - stunnel
+#   - config
 
-  #- name: install stunnel.conf
-  #  template: src={{ item.file }}
-  #            dest={{ item.dest }}
-  #            owner=root group=root mode=0600
-  #  with_items:
-  #  - { file: stunnel-conf.j2, dest: /etc/stunnel/stunnel.conf }
-  #  notify: restart stunnel
-  #  tags:
-  #  - pagure
-  #  - stunnel
-  #  - config
+# - name: install stunnel.conf
+#   template: src={{ item.file }}
+#             dest={{ item.dest }}
+#             owner=root group=root mode=0600
+#   with_items:
+#   - { file: stunnel-conf.j2, dest: /etc/stunnel/stunnel.conf }
+#   notify: restart stunnel
+#   tags:
+#   - pagure
+#   - stunnel
+#   - config
 
 # Set-up Pagure
 
@@ -121,9 +123,12 @@
             dest={{ item.location }}/{{ item.file }}
             owner=pagure group=postfix mode=0640
   with_items:
-  - { file: pagure.cfg, location: /etc/pagure }
-  - { file: alembic.ini, location: /etc/pagure }
-  - { file: pagure_plugins.cfg, location: /etc/pagure }
+  - file: pagure.cfg
+    location: /etc/pagure
+  - file: alembic.ini
+    location: /etc/pagure
+  - file: pagure_plugins.cfg
+    location: /etc/pagure
   tags:
   - config
   - web
@@ -136,7 +141,8 @@
             dest={{ item.location }}/{{ item.file }}
             owner=pagure group=packager mode=0640
   with_items:
-  - { file: pagure_hook.cfg, location: /etc/pagure }
+  - file: pagure_hook.cfg
+    location: /etc/pagure
   tags:
   - config
   - web
@@ -148,7 +154,7 @@
   command: /usr/bin/python3 /usr/share/pagure/pagure_createdb.py
   changed_when: "1 != 1"
   environment:
-      PAGURE_CONFIG: /etc/pagure/pagure.cfg
+    PAGURE_CONFIG: /etc/pagure/pagure.cfg
   tags:
   - web
   - pagure
@@ -310,8 +316,8 @@
 
 - name: install the configuration file for fedora-messaging
   template:
-      src=fedora-messaging.toml
-      dest=/etc/fedora-messaging/config.toml
+    src=fedora-messaging.toml
+    dest=/etc/fedora-messaging/config.toml
   tags:
   - pagure
   - fedora-messaging
@@ -354,15 +360,15 @@
   with_items:
   - httpd
   - postfix
-#  - stunnel
+  #  - stunnel
   - redis
   - pagure_ev
   - pagure_logcom
-#  - pagure_milter
+  #  - pagure_milter
   - pagure_webhook
   - pagure_worker
-#  - pagure_api_key_expire_mail
-#  - pagure_api_key_expire_mail.timer
+  #  - pagure_api_key_expire_mail
+  #  - pagure_api_key_expire_mail.timer
   tags:
   - pagure
   - service
