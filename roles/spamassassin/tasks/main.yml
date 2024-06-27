@@ -42,3 +42,8 @@
   service: name=spamassassin enabled=true state=started
   tags:
   - service
+
+- name: setup logrotate to our needs
+  copy: src="spamassassin.logrotate" dest=/etc/logrotate.d/spamassassin
+  tags:
+  - config
