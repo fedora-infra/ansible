@@ -168,6 +168,15 @@
   tags:
   - pagure
 
+# On RHEL 8.8 and newer, git operations fail because of dubious ownership. This should fix it.
+- name: Configure git directories as safe
+  git_config:
+    name: safe.directory
+    scope: system
+    value: "*"
+  tags:
+  - pagure
+
 # Set things up for the mirroring feature
 
 - name: create the `paguremirroring` group
@@ -185,18 +194,6 @@
       groups: paguremirroring,git
       shell: /bin/nologin
       home: /srv/mirror
-  tags:
-  - pagure
-  - mirror
-
-# On RHEL 8.8 and newer the paguremirroring fails
-# because of dubious ownership. This is allowing
-# paguremirroring to work again
-- name: Configure git directories as safe
-  git_config:
-    name: safe.directory
-    scope: system
-    value: "*"
   tags:
   - pagure
   - mirror

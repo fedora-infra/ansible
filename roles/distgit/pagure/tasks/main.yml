@@ -182,6 +182,15 @@
   - gitolite
   - pagure
 
+# On RHEL 8.8 and newer, git operations fail because of dubious ownership. This should fix it.
+- name: Configure git directories as safe
+  git_config:
+    name: safe.directory
+    scope: system
+    value: "*"
+  tags:
+  - pagure
+
 - name: Install the apache configuration file
   template: src={{ item }} dest=/etc/httpd/conf.d/{{ item }}
             owner=root group=root mode=0644
