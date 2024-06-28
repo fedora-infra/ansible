@@ -1198,6 +1198,8 @@
 
   - role: httpd/website
     site_name: "fedoraplanet.org"
+    server_aliases:
+    - stg.fedoraplanet.org
     ssl: true
     sslonly: true
     certbot: true
