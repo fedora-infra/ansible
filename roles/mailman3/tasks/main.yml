@@ -436,6 +436,18 @@
     - hyperkitty
 
 #
+# Logrotate
+#
+
+- name: Setup logrotate
+  ansible.builtin.template:
+    src: "mailman.logrotate.j2"
+    dest: /etc/logrotate.d/mailman
+  tags:
+  - logrotate
+  - config
+
+#
 # Scripts
 #
 
