@@ -282,16 +282,6 @@
   - config
   when: inventory_hostname.startswith('batcave01')
 #
-# Setup rhel7 sync script.
-#
-
-- name: setup rhel7 sync copy script
-  copy: src=rhel7-sync dest=/mnt/fedora/app/fi-repo/rhel/rhel7/rhel7-sync mode=0775
-  tags:
-  - batcave
-  - config
-  when: inventory_hostname.startswith('batcave01')
-#
 # Setup rhel8 sync script.
 #
 
