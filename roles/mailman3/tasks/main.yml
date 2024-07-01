@@ -56,8 +56,64 @@
   tags:
     - config
     - mailman
+    - fedora-messaging
   notify:
     - restart mailman3
+
+- name: Create folder where we'll place the certs
+  ansible.builtin.file:
+    path: /etc/pki/rabbitmq/mailman/
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+  tags:
+    - mailman
+    - fedora-messaging
+
+- name: Deploy mailman/rabbitmq certificate
+  ansible.builtin.copy:
+    src: {{ item.src }}
+    dest: "/etc/pki/rabbitmq/mailman/{{ item.dest }}"
+    owner: root
+    group: root
+    mode: {{ item.mode }}
+  when: env == 'staging'
+  with_items:
+    - src: "{{private}}/files/rabbitmq/staging/pki/issued/mailman3-fedmsg-plugin.stg.crt"
+      dest: mailman3-fedmsg-plugin.crt
+      mode: "444"
+    - src: "{{private}}/files/rabbitmq/staging/pki/private/mailman3-fedmsg-plugin.stg.key"
+      dest: mailman3-fedmsg-plugin.key
+      mode: "440"
+    - src: "{{private}}/files/rabbitmq/staging/pki/ca.crt"
+      dest: mailman3-fedmsg-plugin.ca
+      mode: "444"
+  tags:
+  - mailman
+  - fedora-messaging
+
+- name: Deploy mailman/rabbitmq certificate
+  ansible.builtin.copy:
+    src: {{ item.src }}
+    dest: "/etc/pki/rabbitmq/mailman/{{ item.dest }}"
+    owner: root
+    group: root
+    mode: {{ item.mode }}
+  when: env != 'staging'
+  with_items:
+    - src: "{{private}}/files/rabbitmq/production/pki/issued/mailman3-fedmsg-plugin.crt"
+      dest: mailman3-fedmsg-plugin.crt
+      mode: "444"
+    - src: "{{private}}/files/rabbitmq/production/pki/private/mailman3-fedmsg-plugin.key"
+      dest: mailman3-fedmsg-plugin.key
+      mode: "440"
+    - src: "{{private}}/files/rabbitmq/production/pki/ca.crt"
+      dest: mailman3-fedmsg-plugin.ca
+      mode: "444"
+  tags:
+  - mailman
+  - fedora-messaging
 
 #
 # Logging

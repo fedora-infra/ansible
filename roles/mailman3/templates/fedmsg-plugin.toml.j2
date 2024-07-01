@@ -5,9 +5,9 @@ publish_exchange = "amq.topic"
 topic_prefix = ""
 
 [tls]
-ca_cert = "/etc/fedora-messaging/cacert.pem"
-keyfile = "/etc/fedora-messaging/mailman3-key.pem"
-certfile = "/etc/fedora-messaging/mailman3-cert.pem"
+ca_cert = "/etc/pki/rabbitmq/mailman/mailman3-fedmsg-plugin.ca"
+keyfile = "/etc/pki/rabbitmq/mailman/mailman3-fedmsg-plugin.key"
+certfile = "/etc/pki/rabbitmq/mailman/mailman3-fedmsg-plugin.crt"
 
 [client_properties]
 app = "Mailman3"
