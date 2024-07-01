@@ -73,11 +73,11 @@
 
 - name: Deploy mailman/rabbitmq certificate
   ansible.builtin.copy:
-    src: {{ item.src }}
-    dest: "/etc/pki/rabbitmq/mailman/{{ item.dest }}"
+    src: {{item.src}}
+    dest: "/etc/pki/rabbitmq/mailman/{{item.dest}}"
     owner: root
     group: root
-    mode: {{ item.mode }}
+    mode: {{item.mode}}
   when: env == 'staging'
   with_items:
     - src: "{{private}}/files/rabbitmq/staging/pki/issued/mailman3-fedmsg-plugin.stg.crt"
@@ -95,11 +95,11 @@
 
 - name: Deploy mailman/rabbitmq certificate
   ansible.builtin.copy:
-    src: {{ item.src }}
-    dest: "/etc/pki/rabbitmq/mailman/{{ item.dest }}"
+    src: {{item.src}}
+    dest: "/etc/pki/rabbitmq/mailman/{{item.dest}}"
     owner: root
     group: root
-    mode: {{ item.mode }}
+    mode: {{item.mode}}
   when: env != 'staging'
   with_items:
     - src: "{{private}}/files/rabbitmq/production/pki/issued/mailman3-fedmsg-plugin.crt"
