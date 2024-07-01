@@ -95,12 +95,6 @@ handlers = ["console"]
             # Infra tags
 
             [[consumer_config.koji_instances.primary.tags]]
-            from = "epel7-infra-candidate"
-            to = "epel7-infra-stg"
-            key = "{{ (env == 'production')|ternary('fedora-infra', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('47dd8ef9', 'd300e724') }}"
-
-            [[consumer_config.koji_instances.primary.tags]]
             from = "epel8-infra-candidate"
             to = "epel8-infra-stg"
             key = "{{ (env == 'production')|ternary('fedora-infra', 'testkey') }}"
@@ -280,18 +274,6 @@ handlers = ["console"]
             to = "epel8-next-testing-pending"
             key = "{{ (env == 'production')|ternary('epel-8', 'testkey') }}"
             keyid = "{{ (env == 'production')|ternary('2f86d6a1', 'd300e724') }}"
-
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "epel7-signing-pending"
-            to = "epel7-testing-pending"
-            key = "{{ (env == 'production')|ternary('epel-7', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('352c64e5', 'd300e724') }}"
-
-            [consumer_config.koji_instances.primary.tags.sidetags]
-            pattern = 'epel7-build-side-<seq_id>'
-            from = '<sidetag>-signing-pending'
-            to = '<sidetag>-testing-pending'
-            trusted_taggers = ['bodhi']
 
             # ELN signing
 

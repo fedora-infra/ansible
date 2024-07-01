@@ -21,7 +21,7 @@ SEED_DIR=$WORK_DIR/git-checkout
 SPEC_DIR=$WORK_DIR/rpm-specs
 
 # list of branches to make extra spec tarballs for
-EXTRA_BRANCHES=("epel7" "epel8" "epel9")
+EXTRA_BRANCHES=("epel8" "epel9")
 EXTRA_BRANCHES_PREFIX=extra-rpm-specs-
 
 # clear extra branches specs working directories

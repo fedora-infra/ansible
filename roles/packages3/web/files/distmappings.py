@@ -71,12 +71,6 @@ tags = ({'name': 'Rawhide', 'tag': 'f41'},
         {'name': 'EPEL 8 Testing', 'tag': 'epel8-testing'},
         {'name': 'EPEL 8 Staging', 'tag': 'epel8-staging'},
 
-        {'name': 'EPEL 7', 'tag': 'epel7'},
-        {'name': 'EPEL 7 Testing', 'tag': 'epel7-testing'},
-
-        {'name': 'EPEL 6', 'tag': 'dist-6E-epel'},
-        {'name': 'EPEL 6 Testing', 'tag': 'dist-6E-epel-testing'},
-
        )
 
 tags_to_name_map = {}

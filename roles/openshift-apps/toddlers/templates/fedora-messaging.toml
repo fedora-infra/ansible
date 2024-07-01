@@ -204,7 +204,7 @@ versions = []
 
 [consumer_config.distgit_bugzilla_sync.products."Fedora EPEL"]
 branch_regex = '^epel\d+$'
-versions = ["epel9", "epel8", "epel7"]
+versions = ["epel9", "epel8"]
 
 
 # Configuration section for scm_request_processor
@@ -260,11 +260,6 @@ bug_fixes = '2029-05-31'
 stable_api = '2024-05-31'
 security_fixes = '2024-05-31'
 bug_fixes = '2024-05-31'
-
-[consumer_config.scm_request_processor.branch_slas.epel7]
-stable_api = '2024-06-30'
-security_fixes = '2024-06-30'
-bug_fixes = '2024-06-30'
 
 [consumer_config.scm_request_processor.branch_slas.f40]
 bug_fixes = '2025-05-13'

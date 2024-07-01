@@ -175,8 +175,8 @@ package_list =
     # People with pkglist permission can manage package lists in
     # active f$N and epel$N tags.
     has_perm pkglist :: {
-        # Rawhide and epel7: adding, unblocking and blocking is allowed.
-        tag f{{FedoraRawhideNumber}} epel7 && match action add unblock block :: allow
+        # Rawhide adding, unblocking and blocking is allowed.
+        tag f{{FedoraRawhideNumber}} && match action add unblock block :: allow
         # In branched blocking is allowed only before final freeze.
         tag f{{FedoraBranchedNumber}} && match action add unblock {{ 'block' if not Frozen or FedoraBranchedBodhi != 'postbeta' else '' }} :: allow
         # Stable releases: only adding and unblocking is allowed.
@@ -203,7 +203,6 @@ sidetag =
     tag epel9-build :: allow
     tag epel8-next-build :: allow
     tag epel8-build :: allow
-    tag epel7-build :: allow
     all :: deny
 
 {% if env == "staging" %}
