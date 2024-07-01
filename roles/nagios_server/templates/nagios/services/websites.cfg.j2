@@ -204,14 +204,6 @@ define service {
 }
 
 define service {
-  hostgroup_name        mm_frontend
-  service_description   http-mm-publiclist-internal
-  check_command         check_website_publiclist!localhost!/mirrormanager/api/mirroradmins/?name=dl.fedoraproject.org
-  use                   internalwebsitetemplate
-  event_handler         restart_httpd
-}
-
-define service {
   hostgroup_name        proxies_ocp4
   service_description   http-fmn-web
   check_command         check_website_ssl!notifications.fedoraproject.org!/!FMN
