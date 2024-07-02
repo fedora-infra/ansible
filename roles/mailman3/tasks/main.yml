@@ -76,7 +76,7 @@
     src: "{{item.src}}"
     dest: "/etc/pki/rabbitmq/mailman/{{item.dest}}"
     owner: root
-    group: root
+    group: mailman
     mode: "{{item.mode}}"
   when: env == 'staging'
   with_items:
@@ -98,7 +98,7 @@
     src: "{{item.src}}"
     dest: "/etc/pki/rabbitmq/mailman/{{item.dest}}"
     owner: root
-    group: root
+    group: mailman
     mode: "{{item.mode}}"
   when: env != 'staging'
   with_items:
