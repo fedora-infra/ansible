@@ -1,8 +1,12 @@
 # A sample configuration for fedora-messaging. This file is in the TOML format.
-amqp_url = "amqp://"
+amqp_url = "amqps://mailman{{ env_suffix }}:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fpubsub"
 passive_declares = false
 publish_exchange = "amq.topic"
-topic_prefix = ""
+{% if env == "staging" %}
+topic_prefix = "org.fedoraproject.stg"
+{% else %}
+topic_prefix = "io.fedoraproject.prod"
+{% endif %}
 
 [tls]
 ca_cert = "/etc/pki/rabbitmq/mailman/mailman3-fedmsg-plugin.ca"
