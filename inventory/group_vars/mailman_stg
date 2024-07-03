@@ -48,11 +48,12 @@ mailman_login:
   fedora:
     display_name: Fedora
     provider: fedora
-mem_size: 4096
+max_mem_size: 32768
+mem_size: 32768
 nrpe_check_postfix_queue_crit: 50
 # by default, the number of emails in queue before we whine
 nrpe_check_postfix_queue_warn: 20
-num_cpus: 2
+num_cpus: 4
 # for systems that do not match the above - specify the same parameter in
 # the host_vars/$hostname file
 
