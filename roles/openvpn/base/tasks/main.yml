@@ -17,8 +17,6 @@
   tags:
   - install
   - openvpn
-  #notify:
-  #- restart openvpn (RHEL7+)
 
 - name: Install ca for server
   copy: src={{ private }}/files/vpn/pki/ca.crt
@@ -30,7 +28,7 @@
   #notify:
   #- restart openvpn (Fedora)
 
-- name: Install certificate and key (rhel7 or fedora) for server
+- name: Install certificate and key (rhel or fedora) for server
   copy: src={{ private }}/files/vpn/pki/ca.crt
         dest=/etc/openvpn/server/ca.crt
         owner=root group=root mode=0600
@@ -39,8 +37,6 @@
   - openvpn
   #notify:
   #- restart openvpn (Fedora)
-  #- restart openvpn (RHEL7)
-  #- restart openvpn (RHEL6)
   when: inventory_hostname.startswith('bastion0')
 
 - name: install fix-routes.sh script

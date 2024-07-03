@@ -93,17 +93,6 @@
   - selinux
   - koji_hub
 
-- name: install fedora-messaging as a dependency for the plugin (rhel7)
-  package: name={{ item }} state=present
-  with_items:
-  - python2-fedora-messaging
-  - python2-koji-sidetag-plugin-hub
-  tags:
-  - packages
-  - koji_hub
-  - fedora-messaging
-  when: ansible_distribution == "RedHat" and ansible_distribution_major_version|int == 7
-
 - name: install fedora-messaging as a dependency for the plugin (fedora)
   package: name={{ item }} state=present
   with_items:

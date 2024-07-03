@@ -1,9 +1,0 @@
----
-datacenter: rdu
-# nfs mount options, overrides the all/default
-nfs_mount_opts: "ro,hard,bg,intr,noatime,nodev,nosuid,actimeo=600,nfsvers=3"
-nrpe_procs_crit: 1000
-nrpe_procs_warn: 900
-rsyncd_conf: "rsyncd.conf.download-{{ datacenter }}"
-tcp_ports: [80, 443, 873]
-virt_install_command: "{{ virt_install_command_rhel6 }}"

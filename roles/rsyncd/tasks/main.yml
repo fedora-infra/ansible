@@ -63,7 +63,7 @@
   - config
   - rsyncd
 
-- name: xinetd rsync file for rhel7 and rhel8
+- name: xinetd rsync file for rhel8
   copy: src={{ item }} dest=/etc/xinetd.d/rsync mode=0644
   with_first_found:
     - "{{ rsync }}"
@@ -87,7 +87,7 @@
     - config
     - rsyncd
 
-- name: make sure xinetd is started on rhel7 and rhel8
+- name: make sure xinetd is started on rhel8
   service: name=xinetd state=started enabled=true
   when: ansible_distribution_major_version|int < 9 and ansible_distribution == 'RedHat'
   tags:

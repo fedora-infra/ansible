@@ -19,9 +19,8 @@
   - openvpn
 #  notify:
 #  - restart openvpn (Fedora)
-#  - restart openvpn (RHEL6+)
 
-- name: Install configuration files (rhel7 and fedora)
+- name: Install configuration files (rhel and fedora)
   copy: src={{ item.file }}
         dest={{ item.dest }}
         owner=root group=root mode={{ item.mode }}
@@ -37,9 +36,8 @@
   - openvpn
 #  notify:
 #  - restart openvpn (Fedora)
-#  - restart openvpn (RHEL7)
 
-- name: Make sure openvpn is running in rhel 7+
+- name: Make sure openvpn is running in rhel 8+
   service: name=openvpn-client@openvpn state=started enabled=true
   tags:
   - service
@@ -55,7 +53,7 @@
 - name: Create directories for post-vpn service configs
   file: path="/etc/systemd/system/{{item}}.service.d" state=directory
   with_items: "{{postvpnservices}}"
-  when: is_fedora is defined or (ansible_distribution_major_version|int >= 7 and ansible_distribution == 'RedHat')
+  when: is_fedora is defined or (ansible_distribution_major_version|int >= 8 and ansible_distribution == 'RedHat')
   tags:
   - service
   - openvpn
@@ -63,7 +61,7 @@
 - name: Deploy postvpn.conf for post-vpn services
   copy: src=postvpn.conf dest="/etc/systemd/system/{{item}}.service.d/postvpn.conf"
   with_items: "{{postvpnservices}}"
-  when: is_fedora is defined or (ansible_distribution_major_version|int >= 7 and ansible_distribution == 'RedHat')
+  when: is_fedora is defined or (ansible_distribution_major_version|int >= 8 and ansible_distribution == 'RedHat')
   tags:
   - service
   - openvpn

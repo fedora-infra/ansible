@@ -5,18 +5,7 @@
 # Things in here are things we want to do to every machine no matter what.
 #
 
-#
-# on rhel6 and rhel7 installing policycoreutils-python is all we need for ansible
-#
-- name: ensure packages required for semanage are installed (rhel 6 and 7)
-  package: name={{ item }} state=present
-  with_items:
-  - policycoreutils-python
-  tags:
-  - selinux
-  when: ansible_distribution_major_version|int < 8 and ansible_distribution == 'RedHat'
 
-#
 # On fedora and rhel larger than 7, all we need is policycoreutils-python-utils,
 # which in turn pulls in python3-policycoreutils
 #
@@ -25,15 +14,6 @@
   when: ansible_distribution_major_version|int > 7
   tags:
   - selinux
-
-- name: global default packages to install (yum)
-  package: state=present name={{ item }}
-  with_items:
-    - "{{ global_pkgs_inst }}"
-  tags:
-  - packages
-  - base
-  when: ansible_distribution_major_version|int < 8 and ansible_distribution == 'RedHat'
 
 - name: global default packages to install (dnf)
   dnf: state=present name="{{ global_pkgs_inst }}"

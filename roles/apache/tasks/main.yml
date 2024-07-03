@@ -54,26 +54,6 @@
   - hotfix
   - apache
 
-- name: hotfix - copy over new httpd sysconfig (el6)
-  copy: src="{{ files }}/hotfix/httpd/httpd.sysconfig" dest=/etc/sysconfig/httpd
-  when: ansible_distribution_major_version|int == 6 and ansible_distribution == 'RedHat'
-  notify:
-  - reload apache
-  tags:
-  - config
-  - hotfix
-  - apache
-
-- name: hotfix - copy over new httpd sysconfig (el7)
-  copy: src="{{ files }}/hotfix/httpd/httpd.sysconfig" dest=/etc/sysconfig/httpd
-  when: ansible_distribution_major_version|int == 7 and ansible_distribution == 'RedHat'
-  notify:
-  - reload apache
-  tags:
-  - config
-  - hotfix
-  - apache
-
 - name: add appserver headers.conf
   template: src="{{ files }}/httpd/headers.conf.j2" dest=/etc/httpd/conf.d/headers.conf
   notify:
