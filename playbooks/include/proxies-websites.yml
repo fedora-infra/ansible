@@ -799,6 +799,7 @@
     server_aliases: [lists.stg.fedoraproject.org]
     sslonly: true
     cert_name: "{{wildcard_cert_name}}"
+    tags: lists.fedoraproject.org
 
   - role: httpd/website
     site_name: lists.fedorahosted.org

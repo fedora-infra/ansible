@@ -78,6 +78,7 @@
     header_scheme: true
     keephost: true
     proxyurl: "{{ varnish_url }}"
+    tags: lists.fedoraproject.org
 
   - role: httpd/reverseproxy
     website: lists.fedorahosted.org
