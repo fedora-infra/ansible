@@ -878,3 +878,15 @@
     target: https://docs.fedoraproject.org/en-US/epel/
     tags:
       - epel.io
+
+  - role: httpd/redirect
+    shortname: mirrormanager
+    website: mirrors.fedoraproject.org
+    target: "https://mirrormanager{{env_suffix}}.fedoraproject.org"
+    tags: mirrormanager
+
+  - role: httpd/redirect
+    shortname: mirrormanager
+    website: "mirrors{{env_suffix}}.centos.org"
+    target: "https://mirrormanager{{env_suffix}}.fedoraproject.org"
+    tags: mirrormanager
