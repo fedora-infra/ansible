@@ -35,7 +35,7 @@ RewriteEngine on
 RewriteRule  ^/$    /archives [R,L]
 # Spiders-gone-wild
 # These spiders do not follow robots.txt
-RewriteCond %{HTTP_USER_AGENT ^.*(Bytespider|ClaudeBot).*$ [NC]
+RewriteCond %{HTTP_USER_AGENT} ^.*(Bytespider|ClaudeBot).*$ [NC]
 RewriteRule .* - [F,L]
 
 # Old static archives
