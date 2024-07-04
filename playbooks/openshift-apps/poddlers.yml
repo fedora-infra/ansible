@@ -10,6 +10,24 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
     - /srv/web/infra/ansible/vars/apps/poddlers.yml
 
+  pre_tasks:
+    - import_role:
+        name: rabbit/user
+      vars:
+        username: toddlers{{ env_suffix }}
+        sent_topics: ^org\.fedoraproject\.{{ env_short }}\.toddlers\..*
+
+    - import_role:
+        name: rabbit/queue
+      vars:
+        username: toddlers{{ env_suffix }}
+        queue_name: toddlers{{ env_suffix }}-{{ item.name }}
+        routing_keys: "{{ item.topics }}"
+        thresholds:
+          warning: 10
+          critical: 100
+      loop: "{{ poddlers_toddlers }}"
+
   roles:
     - role: openshift/project
       app: poddlers
@@ -22,19 +40,6 @@
         - jnsamyak
       tags:
         - appowners
-
-    - role: rabbit/user
-      username: toddlers{{ env_suffix }}
-      sent_topics: ^org\.fedoraproject\.{{ env_short }}\.toddlers\..*
-
-    - role: rabbit/queue
-      username: toddlers{{ env_suffix }}
-      queue_name: toddlers{{ env_suffix }}-{{ item.name }}
-      routing_keys: "{{ item.topics }}"
-      thresholds:
-        warning: 10
-        critical: 100
-      loop: "{{ poddlers_toddlers }}"
 
     - role: openshift/keytab
       app: poddlers
