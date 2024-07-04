@@ -1,0 +1,47 @@
+{% from "_macros.yml" import common_volume_mounts, common_volumes, common_env %}
+{% for toddler in poddlers_command %}
+---
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: {{ toddler.name }}
+  labels:
+    app: poddlers
+spec:
+  replicas: {{ toddler.replicas|default(1) }}
+  selector:
+    app: poddlers
+    deploymentconfig: {{ toddler.name }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: poddlers
+        deploymentconfig: {{ toddler.name }}
+    spec:
+      containers:
+        - name: toddlers
+          image: toddlers:latest
+          env:
+            - name: FEDORA_MESSAGING_CONF
+              value: /etc/fedora-messaging/{{ toddler.name }}.toml
+            {{ common_env() }}
+
+          volumeMounts:
+            {{ common_volume_mounts() }}
+
+      volumes:
+        {{ common_volumes() }}
+
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - toddlers
+        from:
+          kind: ImageStreamTag
+          name: toddlers:latest
+{% endfor %}

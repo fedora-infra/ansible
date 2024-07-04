@@ -1,0 +1,33 @@
+{% from "_macros.yml" import common_volume_mounts, common_volumes, common_env %}
+{% for cronjob in poddlers_cronjobs %}
+{% if not cronjob.only_env|defined or cronjob.only_env == env %}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: playtime-{{ cronjob.name }}
+spec:
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  concurrencyPolicy: Forbid
+  schedule: "{{ cronjob.name }}"
+  startingDeadlineSeconds: 500
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            parent: "cron_playtime_toddlers"
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: toddlers
+              image: image-registry.openshift-image-registry.svc:5000/toddlers/toddlers:latest
+              command: ["/usr/bin/python3", "/code/toddlers/playtime.py", "{{ cronjob.command }}"]
+              env:
+                {{ common_env() | indent(4) }}
+              volumeMounts:
+                {{ common_volume_mounts() | indent(4) }}
+          volumes:
+            {{ common_volumes() | indent(4) }}
+{% endfor %}

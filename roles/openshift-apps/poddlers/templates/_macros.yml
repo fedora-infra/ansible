@@ -1,0 +1,55 @@
+{% macro common_volume_mounts() -%}
+            - name: toddlers-secret-volume
+              mountPath: /etc/fedora-messaging
+              readOnly: true
+            - name: fedora-messaging-ca-volume
+              mountPath: /etc/pki/rabbitmq/ca
+              readOnly: true
+            - name: fedora-messaging-key-volume
+              mountPath: /etc/pki/rabbitmq/key
+              readOnly: true
+            - name: fedora-messaging-cert-volume
+              mountPath: /etc/pki/rabbitmq/cert
+              readOnly: true
+            - name: ipa-config-volume
+              mountPath: /etc/ipa
+              readOnly: true
+            - name: keytab-volume
+              mountPath: /etc/keytabs
+              readOnly: true
+            - name: temp-volume
+              mountPath: /var/tmp
+{% endmacro %}
+
+
+{% macro common_volumes() -%}
+        - name: toddlers-secret-volume
+          secret:
+            secretName: toddlers-secret
+        - name: fedora-messaging-ca-volume
+          secret:
+            secretName: toddlers-fedora-messaging-ca
+        - name: fedora-messaging-key-volume
+          secret:
+          secretName: toddlers-fedora-messaging-key
+        - name: fedora-messaging-cert-volume
+          secret:
+            secretName: toddlers-fedora-messaging-crt
+        - name: ipa-config-volume
+          configMap:
+            name: ipa-client-config
+        - name: keytab-volume
+          secret:
+            secretName: keytab
+        - name: temp-volume
+{% endmacro %}
+
+
+{% macro common_env() -%}
+            - name: PYTHONPATH
+              value: "/code"
+            - name: KRB5_CONFIG
+              value: /etc/ipa/krb5.conf
+            - name: KRB5_CLIENT_KTNAME
+              value: /etc/keytabs/service.keytab
+{% endmacro %}
