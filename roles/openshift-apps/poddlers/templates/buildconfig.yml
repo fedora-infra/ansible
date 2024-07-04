@@ -9,12 +9,12 @@ spec:
   source:
     type: Git
     git:
-#       uri: https://pagure.io/fedora-infra/toddlers.git
-# {% if env == 'staging' %}
-#       ref: "staging"
-# {% else %}
-#       ref: "production"
-# {% endif %}
+      #       uri: https://pagure.io/fedora-infra/toddlers.git
+      # {% if env == 'staging' %}
+      #       ref: "staging"
+      # {% else %}
+      #       ref: "production"
+      # {% endif %}
       uri: https://pagure.io/fork/abompard/fedora-infra/toddlers.git
       ref: poddlers
   strategy:
@@ -28,12 +28,5 @@ spec:
       kind: ImageStreamTag
       name: toddlers:latest
   triggers:
-  - type: ConfigChange
-  - type: ImageChange
-  - type: GitHub
-    github:
-{% if env == 'staging' %}
-      secret: "{{ toddlers_stg_github_secret }}"
-{% elif env == 'production' %}
-      secret: "{{ toddlers_prod_github_secret }}"
-{% endif %}
+    - type: ConfigChange
+    - type: ImageChange
