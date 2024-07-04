@@ -27,6 +27,10 @@ spec:
             value: "/opt/app-root/bin/bugzilla2fedmsg"
           # - name: FEDORA_MESSAGING_CONF
           #   value: "/etc/fedora-messaging/config.toml"
+          - name: KRB5_CONFIG
+            value: /etc/ipa/krb5.conf
+          - name: KRB5_CLIENT_KTNAME
+            value: /etc/keytabs/service.keytab
         volumeMounts:
           - name: fedora-messaging-config-volume
             mountPath: /etc/fedora-messaging
@@ -51,6 +55,12 @@ spec:
             mountPath: /etc/pki/stomp/msg-client-fedora-prod.key
             subPath: msg-client-fedora-prod.key
             readOnly: true
+          - name: ipa-config-volume
+            mountPath: /etc/ipa
+            readOnly: true
+          - name: keytab-volume
+            mountPath: /etc/keytabs
+            readOnly: true
       volumes:
         - name: fedora-messaging-config-volume
           configMap:
@@ -70,6 +80,12 @@ spec:
         - name: stomp-key-volume
           secret:
             secretName: stomp-key
+        - name: ipa-config-volume
+          configMap:
+            name: ipa-client-config
+        - name: keytab-volume
+          secret:
+            secretName: keytab
 
   triggers:
   - type: ConfigChange

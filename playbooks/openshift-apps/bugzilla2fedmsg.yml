@@ -55,6 +55,15 @@
     key: msg-client-fedora-prod.key
     privatefile: "bugzilla2fedmsg/msg-client-fedora-prod.key"
 
+    # FASJSON access
+  - role: openshift/ipa-client
+    app: bugzilla2fedmsg
+  - role: openshift/keytab
+    app: bugzilla2fedmsg
+    key: service.keytab
+    secret_name: keytab
+    service: bugzilla2fedmsg
+
   - role: openshift/imagestream
     app: bugzilla2fedmsg
     imagename: bugzilla2fedmsg
