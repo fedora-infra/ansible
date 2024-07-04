@@ -11,13 +11,13 @@
     - /srv/web/infra/ansible/vars/apps/poddlers.yml
 
   pre_tasks:
-    - import_role:
+    - include_role:
         name: rabbit/user
       vars:
         username: toddlers{{ env_suffix }}
         sent_topics: ^org\.fedoraproject\.{{ env_short }}\.toddlers\..*
 
-    - import_role:
+    - include_role:
         name: rabbit/queue
       vars:
         username: toddlers{{ env_suffix }}
