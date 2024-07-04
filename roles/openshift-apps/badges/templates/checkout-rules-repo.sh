@@ -10,6 +10,7 @@ if [ ! -d "$DIR/.git" ]; then
 fi
 
 git config --global --add safe.directory $DIR
+git fetch origin
 {% if env == 'staging' %}
 git -C $DIR checkout staging
 {% endif %}
