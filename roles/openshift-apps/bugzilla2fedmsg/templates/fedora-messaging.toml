@@ -18,6 +18,8 @@ certfile = "/etc/pki/fedora-messaging/bugzilla2fedmsg-cert.pem"
 
 
 [consumer_config]
+    fasjson_url = "https://fasjson{{ env_suffix }}.fedoraproject.org"
+
     [consumer_config.stomp]
     # Broker URI
     # http://nikipore.github.io/stompest/protocol.html#stompest.protocol.failover.StompFailoverUri
