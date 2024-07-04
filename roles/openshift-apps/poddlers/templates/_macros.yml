@@ -25,7 +25,7 @@
 {% macro common_volumes() -%}
         - name: toddlers-secret-volume
           secret:
-            secretName: toddlers-secret
+            secretName: secrets
         - name: fedora-messaging-ca-volume
           secret:
             secretName: toddlers-fedora-messaging-ca
