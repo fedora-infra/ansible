@@ -30,4 +30,5 @@ spec:
                 {{ common_volume_mounts() | indent(4) }}
           volumes:
             {{ common_volumes() | indent(4) }}
+{% endif %}
 {% endfor %}
