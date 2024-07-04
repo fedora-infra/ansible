@@ -1,6 +1,6 @@
 {% from "_macros.yml" import common_volume_mounts, common_volumes, common_env %}
 {% for cronjob in poddlers_cronjobs %}
-{% if not cronjob.only_env|defined or cronjob.only_env == env %}
+{% if not cronjob.only_env is defined or cronjob.only_env == env %}
 ---
 apiVersion: batch/v1
 kind: CronJob
