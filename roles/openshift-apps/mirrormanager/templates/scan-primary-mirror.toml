@@ -21,11 +21,11 @@ type="directory"
 url="/srv/pub/epel/"
 
 [[repository_mapping]]
-regex="pub/epel/testing/[\\d]/[^M].*"
+regex="^pub/epel/testing/\\d+(?:\\.\\d+)?/Everything/"
 prefix="testing-epel"
 
 [[repository_mapping]]
-regex="pub/epel/[\\d]/[^M].*"
+regex="^pub/epel/\\d+(?:\\.\\d+)?/Everything/"
 prefix="epel"
 
 [[repository_mapping]]
