@@ -73,10 +73,6 @@
     template: buildconfig.yml
     objectname: buildconfig.yml
 
-  - role: openshift/start-build
-    app: bugzilla2fedmsg
-    buildname: bugzilla2fedmsg-build
-
   - role: openshift/object
     app: bugzilla2fedmsg
     template: configmap.yml
