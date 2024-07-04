@@ -9,14 +9,14 @@ spec:
   source:
     type: Git
     git:
-      #       uri: https://pagure.io/fedora-infra/toddlers.git
-      # {% if env == 'staging' %}
-      #       ref: "staging"
-      # {% else %}
-      #       ref: "production"
-      # {% endif %}
+      # uri: https://pagure.io/fedora-infra/toddlers.git
       uri: https://pagure.io/fork/abompard/fedora-infra/toddlers.git
       ref: poddlers
+{% if env == 'staging' %}
+      #ref: "staging"
+{% else %}
+      #ref: "production"
+{% endif %}
   strategy:
     type: Source
     sourceStrategy:
