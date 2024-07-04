@@ -75,6 +75,11 @@
 
     - role: openshift/object
       app: poddlers
+      template: secrets.yml
+      objectname: secrets.yml
+
+    - role: openshift/object
+      app: poddlers
       template: cron-playtime.yml
       objectname: cron-playtime.yml
       tags:
@@ -84,11 +89,6 @@
       app: poddlers
       template: deploymentconfig.yml
       objectname: deploymentconfig.yml
-
-    - role: openshift/object
-      app: poddlers
-      template: secrets.yml
-      objectname: secrets.yml
 
     - role: openshift/object
       app: poddlers
