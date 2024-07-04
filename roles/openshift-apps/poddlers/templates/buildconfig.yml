@@ -1,4 +1,35 @@
 ---
+# Build a derivative of the python-311 builder image with dependencies added
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: python-311-with-deps
+  labels:
+    app: poddlers
+    build: python-311-with-deps
+spec:
+  runPolicy: Serial
+  source:
+    type: Dockerfile
+    dockerfile: |-
+      {{ load_file('Dockerfile-builder-image') | indent(6) }}
+  strategy:
+    type: Docker
+    dockerStrategy:
+      from:
+        kind: ImageStreamTag
+        name: python:3.11-ubi9
+        namespace: openshift
+  output:
+    to:
+      kind: ImageStreamTag
+      name: python-311-with-deps:latest
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+
+---
+# Build Toddlers
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
@@ -22,8 +53,8 @@ spec:
     sourceStrategy:
       from:
         kind: ImageStreamTag
-        name: python:3.11-ubi9
-        namespace: openshift
+        # Our own ImageStream with deps added to it
+        name: python-3.11-with-deps:latest
   output:
     to:
       kind: ImageStreamTag

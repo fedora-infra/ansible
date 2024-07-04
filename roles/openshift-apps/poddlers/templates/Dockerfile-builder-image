@@ -1,0 +1,15 @@
+FROM registry.access.redhat.com/ubi9/python-311:latest
+LABEL \
+    name="python-311-with-deps" \
+    vendor="Fedora Infrastructure" \
+    license="MIT"
+USER root
+# Add RPM-only modules
+RUN dnf install -y \
+        cairo-devel \
+        cairo-gobject-devel \
+        gobject-introspection-devel \
+        libmodulemd \
+    && dnf clean all
+
+USER 1001

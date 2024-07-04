@@ -8,3 +8,17 @@ spec:
     local: false
 status:
   dockerImageRepository: ""
+
+
+kind: List
+items:
+  # The main image
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      name: toddlers
+  # The Python 3.11 builder image plus dependencies
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      name: python-311-with-deps
