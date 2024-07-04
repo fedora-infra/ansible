@@ -10,7 +10,7 @@ spec:
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
   concurrencyPolicy: Forbid
-  schedule: "{{ cronjob.name }}"
+  schedule: "{{ cronjob.schedule }}"
   startingDeadlineSeconds: 500
   jobTemplate:
     spec:
