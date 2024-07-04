@@ -69,3 +69,13 @@ primary_auth_source: ipa
 tcp_ports: [25, 80, 443,
   # For outgoing fedmsg
   3000, 3001, 3002, 3003]
+
+# mailman role variables
+mailman_rest_api_username: "{{ mailman_rest_api_user }}"
+mailman_rest_api_password: "{{ mailman_rest_api_pass }}"
+mailman_mailman_db_pass: "{{ mailman_mm_db_pass }}"
+mailman_hyperkitty_admin_db_pass: "{{ mailman_hk_admin_db_pass }}"
+mailman_hyperkitty_db_pass: "{{ mailman_hk_db_pass }}"
+mailman_hyperkitty_cookie_key: "{{ mailman_hk_cookie_key }}"
+mailman_hyperkitty_archiver_key: "{{ mailman_hk_archiver_key }}"
+mailman_smtp_port: 587
