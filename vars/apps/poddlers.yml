@@ -16,7 +16,7 @@ poddlers_toddlers:
       - "org.fedoraproject.*.toddlers.trigger.clean_retired_packages"
 
   - name: distgit-bugzilla-sync
-    callback: distgit_bugzilla_sync.DistgitBugzillaSync
+    callback: distgit_bugzilla_sync:DistgitBugzillaSync
     topics:
       - "org.fedoraproject.*.toddlers.trigger.distgit_bugzilla_sync"
 
@@ -48,7 +48,7 @@ poddlers_toddlers:
       - "org.fedoraproject.*.toddlers.trigger.packager_bugzilla_sync"
 
   - name: packagers-without-bugzilla
-    callback: packagers_without_bugzilla:PackagerWithoutBugzilla
+    callback: packagers_without_bugzilla:PackagersWithoutBugzilla
     topics:
       - "org.fedoraproject.*.toddlers.trigger.packagers_without_bugzilla"
 
