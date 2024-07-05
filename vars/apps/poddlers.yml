@@ -1,80 +1,80 @@
 ---
 poddlers_toddlers:
   - name: check-commit-rights
-    callback: check_commit_rights.CheckCommitRights
+    callback: check_commit_rights:CheckCommitRights
     topics:
       - "org.fedoraproject.*.toddlers.trigger.check_commit_rights"
 
   - name: check-email-overrides
-    callback: check_email_overrides.CheckEmailOverrides
+    callback: check_email_overrides:CheckEmailOverrides
     topics:
       - "org.fedoraproject.*.toddlers.trigger.check_email_overrides"
 
   - name: clean-retired-packages
-    callback: clean_retired_packages.CleanRetiredPackages
+    callback: clean_retired_packages:CleanRetiredPackages
     topics:
       - "org.fedoraproject.*.toddlers.trigger.clean_retired_packages"
 
   - name: distgit-bugilla-sync
-    callback: distgit_bugilla_sync
+    callback: distgit_bugilla_sync.DistgitBugzillaSync
     topics:
       - "org.fedoraproject.*.toddlers.trigger.distgit_bugzilla_sync"
 
   - name: distgit-commit-processor
-    callback: distgit_commit_processor.DistGitCommitProcessor
+    callback: distgit_commit_processor:DistGitCommitProcessor
     topics:
       - "org.fedoraproject.*.git.receive"
 
   - name: flag-ci-pr
-    callback: flag_ci_pr.FlagCIPR
+    callback: flag_ci_pr:FlagCIPR
     topics:
       - "org.centos.*.ci.dist-git-pr.test.error"
       - "org.centos.*.ci.dist-git-pr.test.complete"
       - "org.centos.*.ci.dist-git-pr.test.running"
 
   - name: flag-commit-build
-    callback: flag_commit_build.FlagCommitBuild
+    callback: flag_commit_build:FlagCommitBuild
     topics:
       - "org.fedoraproject.*.buildsys.build.state.change"
 
   - name: koji-block-retired
-    callback: koji_block_retired.KojiBlockRetired
+    callback: koji_block_retired:KojiBlockRetired
     topics:
       - "org.fedoraproject.*.git.receive"
 
   - name: packager-bugilla-sync
-    callback: packager_bugilla_sync.PackagerBugzillaSync
+    callback: packager_bugilla_sync:PackagerBugzillaSync
     topics:
       - "org.fedoraproject.*.toddlers.trigger.packager_bugzilla_sync"
 
   - name: packagers-without-bugzilla
-    callback: packagers_without_bugzilla.PackagerWithoutBugzilla
+    callback: packagers_without_bugzilla:PackagerWithoutBugzilla
     topics:
       - "org.fedoraproject.*.toddlers.trigger.packagers_without_bugzilla"
 
   - name: pdc-import-compose
-    callback: pdc_import_compose.PDCImportCompose
+    callback: pdc_import_compose:PDCImportCompose
     topics:
       - "org.fedoraproject.*.toddlers.trigger.pdc_import_compose"
       - "org.fedoraproject.*.pungi.compose.status.change"
 
   - name: pdc-modules
-    callback: pdc_modules.PDCModules
+    callback: pdc_modules:PDCModules
     topics:
       - "org.fedoraproject.*.mbs.module.state.change"
 
   - name: pdc-unretire-packages
-    callback: pdc_unretire_packages
+    callback: pdc_unretire_packages:PDCUnretirePackages
     topics:
       - "io.pagure.*.pagure.issue.new"
 
   - name: pdc-update-critpath
-    callback: pdc_update_critpath
+    callback: pdc_update_critpath:PDCUpdateCritpath
     topics:
       - "org.fedoraproject.*.toddlers.trigger.pdc_update_critpath"
 
   - name: scm-request-processor
-    callback: scm_request_processor
+    callback: scm_request_processor:SCMRequestProcessor
     topics:
       - "org.fedoraproject.*.pagure.issue.new"
       - "org.fedoraproject.*.pagure.issue.edit"
