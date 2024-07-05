@@ -7,6 +7,23 @@ items:
     kind: ImageStream
     metadata:
       name: toddlers
+    # The Python 3.11 builder image
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      name: python-311
+    spec:
+      lookupPolicy:
+        local: false
+      tags:
+        - name: latest
+          from:
+            kind: DockerImage
+            name: quay.io/fedora/python-311:latest
+          importPolicy:
+            scheduled: true
+          referencePolicy:
+            type: Source
   # The Python 3.11 builder image plus dependencies
   - apiVersion: image.openshift.io/v1
     kind: ImageStream

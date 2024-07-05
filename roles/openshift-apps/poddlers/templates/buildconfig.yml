@@ -19,8 +19,8 @@ spec:
     dockerStrategy:
       from:
         kind: ImageStreamTag
-        name: python:3.11-ubi9
-        namespace: openshift
+        # Use our own Fedora-based ImageStream
+        name: python-311:latest
   output:
     to:
       kind: ImageStreamTag
