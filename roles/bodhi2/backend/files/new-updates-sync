@@ -152,20 +152,6 @@ RELEASES = {'f40': {'topic': 'fedora',
                                   'dest': os.path.join(EPELDEST, '8', 'Everything')}
                                 ]}}
                      },
-            'epel8n': {'topic': 'epel',
-                      'version': '8',
-                      'modules': ['epel'],
-                      'repos': {'epel-testing': {
-                          'from': 'epel8-next-testing',
-                          'to': [{'arches': ['x86_64', 'aarch64', 'ppc64le', 'source'],
-                                  'dest': os.path.join(EPELDEST, 'testing', 'next', '8', 'Everything')}
-                                ]},
-                                'epel': {
-                          'from': 'epel8-next',
-                          'to': [{'arches': ['x86_64', 'aarch64', 'ppc64le', 'source'],
-                                  'dest': os.path.join(EPELDEST, 'next', '8', 'Everything')}
-                                ]}}
-                     },
            }
 
 
