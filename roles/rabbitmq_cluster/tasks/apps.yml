@@ -158,8 +158,10 @@
     # TTL: 10 days (in miliseconds)
     message_ttl: 864000000
     routing_keys:
+      - "#.buildsys.repo.init"
       - "#.buildsys.repo.done"
       - "#.buildsys.tag"
+      - "#.buildsys.task.state.change"
 
 # ELN END
 
