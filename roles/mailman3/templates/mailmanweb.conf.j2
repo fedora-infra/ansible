@@ -33,9 +33,11 @@ ProxyPassReverse / http://127.0.0.1:8000/
 # Redirecting to hyperkitty if nothing is specified
 RewriteEngine on
 RewriteRule  ^/$    /archives [R,L]
+
 # Spiders-gone-wild
-# These spiders do not follow robots.txt
-RewriteCond %{HTTP_USER_AGENT} ^.*(Bytespider|ClaudeBot).*$ [NC]
+# These spiders may not follow robots.txt and will
+# hit admin sections which consume large amounts of CPU
+RewriteCond %{HTTP_USER_AGENT} ^.*(Bytespider|ClaudeBot|Amazonbot|YandexBot|claudebot|ChatGLM-Spider|GPTBot|Barkrowler|YisouSpider|MJ12bot).*$ [NC]
 RewriteRule .* - [F,L]
 
 # Old static archives
