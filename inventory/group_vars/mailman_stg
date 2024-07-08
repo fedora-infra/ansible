@@ -74,3 +74,8 @@ mailman_hyperkitty_cookie_key: "{{ mailman_hk_cookie_key }}"
 mailman_hyperkitty_archiver_key: "{{ mailman_hk_stg_archiver_key }}"
 mailman_openidc_server_url: "https://id.stg.fedoraproject.org/"
 mailman_httpd_hostname: lists.stg.fedoraproject.org
+
+# Setting debug variables to 'true' disables mail sending
+# If you want to enable it just set it to 'false'
+mailman_debug: true
+mailman_hyperkitty_debug: true

@@ -16,6 +16,12 @@ listinfo_url = /admin/
 # Set the paths to be Fedora-compliant
 layout: fhs
 
+{% if mailman_debug %}
+[devmode]
+enabled: yes
+recipient: ""
+{% endif %}
+
 [paths.fhs]
 bin_dir: /usr/libexec/mailman3
 var_dir: /var/lib/mailman3
