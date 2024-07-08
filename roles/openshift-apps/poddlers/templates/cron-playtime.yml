@@ -23,7 +23,11 @@ spec:
           containers:
             - name: toddlers
               image: image-registry.openshift-image-registry.svc:5000/poddlers/toddlers:latest
-              command: ["/opt/app-root/bin/toddlers-playtime", "{{ cronjob.command }}"]
+              command: [
+                "/opt/app-root/bin/toddlers-playtime",
+                "--conf", "/etc/fedora-messaging/{{ cronjob.name }}.toml",
+                "{{ cronjob.command }}"
+              ]
               env:
                 {{ common_env() | indent(4) }}
               volumeMounts:
