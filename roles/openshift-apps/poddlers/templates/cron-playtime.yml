@@ -23,7 +23,7 @@ spec:
           containers:
             - name: toddlers
               image: image-registry.openshift-image-registry.svc:5000/poddlers/toddlers:latest
-              command: ["/usr/bin/python3", "/code/toddlers/playtime.py", "{{ cronjob.command }}"]
+              command: ["/opt/app-root/bin/toddlers-playtime", "{{ cronjob.command }}"]
               env:
                 {{ common_env() | indent(4) }}
               volumeMounts:
