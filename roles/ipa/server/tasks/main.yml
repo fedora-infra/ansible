@@ -14,20 +14,6 @@
   - ipa/server
   - config
 
-# TODO: consider switching to https://github.com/freeipa/ansible-freeipa
-- name: install needed packages
-  package: name={{ item }} state=present
-  with_items:
-  - haveged
-  - ipa-server
-  - ipa-server-dns
-  - ipa-fas
-  - pynag # needed for nagios checks
-  tags:
-  - ipa/server
-  - packages
-  when: ansible_distribution_major_version|int <= 8 and ansible_distribution == 'RedHat'
-
 - name: install needed packages
   package: name={{ item }} state=present
   with_items:
@@ -53,27 +39,6 @@
   tags:
   - ipa/server
   - config
-
-- name: install IPA
-  command: ipa-server-install
-           --realm={{ipa_realm}}
-           --domain={{ipa_realm}}
-           --ds-password={{ipa_dm_password}}
-           --admin-password={{ipa_admin_password}}
-           --mkhomedir
-           --no-ntp
-           --unattended
-           --no-ssh
-           --no-sshd
-           --setup-dns
-           --forwarder=10.3.163.33
-           --forwarder=10.3.163.34
-           --log-file=/var/log/ipainstall.log
-           creates=/etc/ipa/default.conf
-  tags:
-  - ipa/server
-  - config
-  when: ipa_initial and ansible_distribution_major_version|int <= 8 and ansible_distribution == 'RedHat'
 
 - name: install IPA
   command: ipa-server-install
@@ -144,52 +109,6 @@
 
 - name: configure replication
   block:
-  - name: create replica file
-    delegate_to: "{{ipa_server}}"
-    command: ipa-replica-prepare
-             --password={{ipa_dm_password}}
-             {{inventory_hostname}}
-             creates=/var/lib/ipa/replica-info-{{inventory_hostname}}.gpg
-    when: ansible_distribution_major_version|int < 8
-
-  - name: retrieve replica file
-    delegate_to: "{{ipa_server}}"
-    fetch: src=/var/lib/ipa/replica-info-{{inventory_hostname}}.gpg
-           dest=/tmp/ipa_replica_{{inventory_hostname}}.gpg
-           flat=yes
-    when: ansible_distribution_major_version|int < 8
-
-  - name: deploy replica file
-    copy: src=/tmp/ipa_replica_{{inventory_hostname}}.gpg
-          dest=/root/ipa_replica_{{inventory_hostname}}.gpg
-          mode=0600 owner=root group=root
-    when: ansible_distribution_major_version|int < 8
-
-  - name: destroy replica file on ansible host
-    delegate_to: localhost
-    file: path=/tmp/ipa_replica_{{inventory_hostname}}.gpg state=absent
-    when: ansible_distribution_major_version|int < 8
-
-  - name: deploy replica
-    command: ipa-replica-install
-             --setup-ca
-             --setup-kra
-             --password={{ipa_dm_password}}
-             --admin-password={{ipa_admin_password}}
-             --mkhomedir
-             --no-ntp
-             --unattended
-             --no-ssh
-             --no-sshd
-             --setup-dns
-             --forwarder=10.3.163.33
-             --forwarder=10.3.163.34
-             --skip-conncheck
-             --log-file=/var/log/ipainstall.log
-             --dirsrv-config-file=/root/ldif/replica-install.ldif
-             /root/ipa_replica_{{inventory_hostname}}.gpg
-    when: ansible_distribution_major_version|int < 8
-
     # The ipa-client-install makes the ipa-replica-install fail
     # on RHEL 9 with: "Your system is partly configured."
     # This will clean the previous installation and allows
