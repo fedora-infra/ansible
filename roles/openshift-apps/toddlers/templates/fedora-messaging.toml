@@ -47,9 +47,7 @@ blocked_toddlers = [
     # Block pdc_modules toddler – MBS is retired. Can be removed once toddler has been updated to a
     # version which doesn’t come with pdc_modules.
     "pdc_modules",
-{% if env != "staging" %}
     "distgit_commit_processor",
-{% endif %}
 ]
 
 [consumer_config.default]
