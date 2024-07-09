@@ -1,4 +1,4 @@
-{% from "_macros.yml" import common_volume_mounts, common_volumes, common_env %}
+{% from "_macros.yml" import common_volume_mounts, common_volumes, common_env, security_context %}
 ---
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
@@ -65,6 +65,7 @@ spec:
         - name: secrets
           secret:
             secretName: secrets
+      {{ security_context() }}
 
   triggers:
     - type: ConfigChange
