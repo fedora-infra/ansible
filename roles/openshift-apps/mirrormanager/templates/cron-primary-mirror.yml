@@ -1,7 +1,7 @@
 #
 ### Primary mirror scanning cron jobs
 #
-{% from "_macros.yml" import common_volume_mounts, common_volumes, common_env, security_context %}
+{% from "_macros.yml" import common_volume_mounts, common_volumes, common_env, security_context with context %}
 {% for cronjob in mirrormanager_cron_primary_mirror %}
 ---
 # Category: {{ cronjob.category }}
