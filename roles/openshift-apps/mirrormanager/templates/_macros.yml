@@ -85,6 +85,7 @@
 {% endmacro %}
 
 
+{# oc describe project/mirrormanager | grep supplemental-groups #}
 {% macro security_context() -%}
       securityContext:
         supplementalGroups: [{{ (env == "staging")|ternary("1001280000", "1000890000") }}]
