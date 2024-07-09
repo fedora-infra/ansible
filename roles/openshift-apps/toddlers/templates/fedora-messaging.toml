@@ -404,9 +404,9 @@ mail_from = "notifications@{{ env_prefix }}fedoraproject.org"
 mail_to = "scm-commits@lists.{{ env_prefix }}fedoraproject.org"
 # This is the default subject
 # mail_subject_tmpl = "{message.summary}"
-mail_content_tmpl = """Notification time stamped {headers['sent-at']}
+mail_content_tmpl = """Notification time stamped {headers[sent-at]}
 
 {message}
 
-    {commit['url']}
+    {commit[url]}
 """
