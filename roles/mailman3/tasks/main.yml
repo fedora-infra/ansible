@@ -425,8 +425,8 @@
 - name: Enable memcached
   ansible.builtin.systemd:
     name: memcached
-    state: started
-    enabled: yes
+    state: stopped
+    enabled: no
   tags:
     - mailman
     - systemd

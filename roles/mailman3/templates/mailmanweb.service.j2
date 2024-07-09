@@ -11,5 +11,5 @@ Type=simple
 User=mailman
 Group=mailman
 WorkingDirectory=/etc/mailman3
-ExecStart=/usr/bin/gunicorn --max-requests 50000 --timeout 1000 --workers={{ mailman_gunicorn_workers }} --forwarded-allow-ips="*" mailman_web.wsgi
+ExecStart=/usr/bin/gunicorn --max-requests 50000 --timeout 1000 --workers={{ mailman_gunicorn_workers }} --log-devel=debug --forwarded-allow-ips="*" mailman_web.wsgi
 ExecStop=/bin/kill -s TERM $MAINPID
