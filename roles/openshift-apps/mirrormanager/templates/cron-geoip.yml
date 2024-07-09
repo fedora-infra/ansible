@@ -35,7 +35,7 @@ spec:
                 claimName: data
           {{ security_context() | indent(4) }}
 ---
-# Generate the mirrors location text file
+# Set the mirrors location in the database
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -54,20 +54,12 @@ spec:
           containers:
           - name: mirrormanager
             image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
-            command:
-              - "mm2_generate-worldmap"
-              - "--output"
-              - "/var/lib/mirrormanager/map"
+            command: ["mm2_generate-worldmap"]
             volumeMounts:
               - name: config
                 mountPath: "/etc/mirrormanager"
-              - name: var-lib
-                mountPath: "/var/lib/mirrormanager"
           volumes:
             - name: config
               configMap:
                 name: config
-            - name: var-lib
-              persistentVolumeClaim:
-                claimName: data
           {{ security_context() | indent(4) }}
