@@ -88,5 +88,6 @@
 {% macro security_context() -%}
       securityContext:
         fsGroup: 1001280000
+        fsGroupChangePolicy: OnRootMismatch
         supplementalGroups: [1001280000]
 {% endmacro %}
