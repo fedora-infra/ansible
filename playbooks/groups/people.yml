@@ -29,7 +29,6 @@
         passno=0
         dump=0
         state=mounted
-    when: inventory_hostname.startswith('people01')
     tags:
     - mount
 
@@ -42,7 +41,6 @@
         passno=0
         dump=0
         state=mounted
-    when: inventory_hostname.startswith('people01')
     tags:
     - mount
 

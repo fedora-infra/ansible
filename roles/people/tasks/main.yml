@@ -7,36 +7,12 @@
   with_items:
   - cvs
   - git
-  - bzr
-  - mercurial
-  - lftp
-  - quota
-  - nano
-  - pyliblzma
-  - libxml2-python
-  - tree            # requested in ticket 5148
-  - mod_ssl
-  - python36-jinja2  # needed now for make-people-page.py
-  when: inventory_hostname.startswith('people02')
-  tags:
-  - packages
-  - people
-
-#
-# Install packages needed for fedora people (rhel9)
-#
-- name: install packages needed for fedora people
-  package: name={{ item }} state=present
-  with_items:
-  - cvs
-  - git
   - mercurial
   - lftp
   - quota
   - nano
   - tree            # requested in ticket 5148
   - mod_ssl
-  when: inventory_hostname.startswith('people01')
   tags:
   - packages
   - people
@@ -159,25 +135,6 @@
 - name: set the SELinux policy for the web dir
   command: semanage fcontext -a -t httpd_sys_content_t "/srv/people(/.*)?"
   when: gitcontext.stdout.find('httpd_sys_content_t') == -1
-  tags:
-  - config
-  - selinux
-
-- name: check the selinux context of the planet dir
-  command: matchpathcon "/srv/planet"
-  register: gitcontext
-  check_mode: no
-  changed_when: false
-  when: inventory_hostname.startswith('people02')
-  tags:
-  - config
-  - selinux
-
-- name: set the SELinux policy for the planet dir
-  command: semanage fcontext -a -t httpd_sys_content_t "/srv/planet(/.*)?"
-  when: >-
-    gitcontext.stdout.find('httpd_sys_content_t') == -1
-    and inventory_hostname.startswith('people02')
   tags:
   - config
   - selinux
