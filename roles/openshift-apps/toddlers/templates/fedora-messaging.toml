@@ -400,6 +400,7 @@ notify_emails = [
 [consumer_config.distgit_commit_processor]
 mail_from = "notifications@{{ env_prefix }}fedoraproject.org"
 mail_to = "scm-commits@lists.{{ env_prefix }}fedoraproject.org"
+# The templates are passed to str.format() => no quotes in dictionary keys!
 # This is the default subject
 # mail_subject_tmpl = "{message.summary}"
 mail_content_tmpl = """Notification time stamped {headers[sent-at]}
