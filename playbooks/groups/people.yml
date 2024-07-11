@@ -1,3 +1,4 @@
+---
 # Create a people server
 #
 #
@@ -8,12 +9,12 @@
 - name: make the box be real
   hosts: people
   user: root
-  gather_facts: True
+  gather_facts: yes
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   pre_tasks:
 
@@ -63,7 +64,8 @@
   roles:
   - base
   - collectd/base
-  - { role: openvpn/client, when: env != "staging" }
+  - role: openvpn/client
+    when: env != "staging"
   - ipa/client
   - hosts
   - nagios_client

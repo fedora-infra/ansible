@@ -16,7 +16,7 @@
   - libxml2-python
   - tree            # requested in ticket 5148
   - mod_ssl
-  - python36-jinja2 # needed now for make-people-page.py
+  - python36-jinja2  # needed now for make-people-page.py
   when: inventory_hostname.startswith('people02')
   tags:
   - packages
@@ -175,8 +175,9 @@
 
 - name: set the SELinux policy for the planet dir
   command: semanage fcontext -a -t httpd_sys_content_t "/srv/planet(/.*)?"
-  when: gitcontext.stdout.find('httpd_sys_content_t') == -1
-  when: inventory_hostname.startswith('people02')
+  when: >-
+    gitcontext.stdout.find('httpd_sys_content_t') == -1
+    and inventory_hostname.startswith('people02')
   tags:
   - config
   - selinux
@@ -217,7 +218,8 @@
 # It's also safe to aways run.
 #
 - name: set quotas for people who have more set
-  command: xfs_quota -x -c 'limit bsoft={{ item.quota }} bhard={{ item.quota }} {{ item.user }}' /srv
+  command: >-
+    xfs_quota -x -c 'limit bsoft={{ item.quota }} bhard={{ item.quota }} {{ item.user }}' /srv
   with_items:
   - {user: adamwill, quota: 8g}
   - {user: apache, quota: 1000g}
