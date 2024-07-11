@@ -157,6 +157,16 @@
   - config
   - selinux
 
+# On RHEL 8.8 and newer, git operations fail because of dubious ownership. This should fix it.
+- name: Configure git directories as safe
+  git_config:
+    name: safe.directory
+    scope: system
+    value: "*"
+  tags:
+  - config
+  - git
+
 #
 # This sets the default, it's safe to always run.
 # Default quota for users is 2gb
