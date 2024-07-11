@@ -58,11 +58,6 @@ poddlers_toddlers:
       - "org.fedoraproject.*.toddlers.trigger.pdc_import_compose"
       - "org.fedoraproject.*.pungi.compose.status.change"
 
-  - name: pdc-modules
-    callback: pdc_modules:PDCModules
-    topics:
-      - "org.fedoraproject.*.mbs.module.state.change"
-
   - name: pdc-unretire-packages
     callback: pdc_unretire_packages:PDCUnretirePackages
     topics:
