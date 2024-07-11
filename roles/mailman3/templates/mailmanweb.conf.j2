@@ -25,6 +25,11 @@ ProxyAddHeaders Off
 ProxyPass /static !
 ProxyPass /pipermail !
 ProxyPass /apache-status !
+ProxyPass /favicon.ico !
+ProxyPass /robots.txt !
+# This needs to be removed to re-enable the search in hyperkitty
+ProxyPass /archives/search !
+
 
 # Proxying to gunicorn mailmanweb backend
 ProxyPass / http://127.0.0.1:8000/
@@ -33,6 +38,8 @@ ProxyPassReverse / http://127.0.0.1:8000/
 # Redirecting to hyperkitty if nothing is specified
 RewriteEngine on
 RewriteRule  ^/$    /archives [R,L]
+# This needs to be removed to re-enable the search in hyperkitty
+RewriteRule  ^/archives/search$ - [F]
 
 # Spiders-gone-wild
 # These spiders may not follow robots.txt and will
