@@ -1,5 +1,12 @@
 ---
 # Define resources for this group of hosts here.
+# Block some ips that are using too mauch resources
+custom_rules: [
+    '-A INPUT -s 81.69.171.38/32 -j REJECT',
+    '-A INPUT -s 175.24.248.206/32 -j REJECT',
+    '-A INPUT -s 47.76.209.138/32 -j REJECT',
+    '-A INPUT -s 47.76.99.127/32 -j REJECT'
+]
 csi_primary_contact: Fedora admins - admin@fedoraproject.org
 csi_purpose: Run the pagure instances for fedora
 csi_relationship: |
