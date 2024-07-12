@@ -533,7 +533,7 @@
   - config
   - python3alternative
 
-- name: daily cron job to compress merged log under /var/log/hosts
+- name: cron jobs to compress logs under /var/log/hosts and /mnt/fedora_stats
   copy: src=compress-log.cron dest=/etc/cron.d/ mode=0644
   tags:
   - compress
