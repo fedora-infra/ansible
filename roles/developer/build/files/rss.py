@@ -63,8 +63,7 @@ for feed in map(feedparser.parse, FedMag):
             if not article_desc.startswith('<p>'):
                 article_desc = '<p>%s</p>' % article_desc
         except AttributeError:
-            print ('AttributeError. Going to next item')
-            continue
+            article_desc = title
         # we got
         # Tue, 20 Oct 2015 03:28:42 +0000
         # But we expect
