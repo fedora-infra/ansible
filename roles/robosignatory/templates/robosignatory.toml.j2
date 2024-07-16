@@ -363,13 +363,13 @@ handlers = ["console"]
             keyid = "{{ (env == 'production')|ternary('18B8e74c', 'd300e724') }}"
             file_signing_key = "fedora-39-ima"
 
-            # F40 Mass Rebuild
+            # F41 Mass Rebuild
             [[consumer_config.koji_instances.primary.tags]]
-            from = "f40-rebuild"
-            to = "f40-rebuild"
-            key = "{{ (env == 'production')|ternary('fedora-40', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('a15B79cc', 'd300e724') }}"
-            file_signing_key = "fedora-40-ima"
+            from = "f41-rebuild"
+            to = "f41-rebuild"
+            key = "{{ (env == 'production')|ternary('fedora-41', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('e99d6ad1', 'd300e724') }}"
+            file_signing_key = "fedora-41-ima"
 
             # F41 Python Side tag (f41-python)
             [[consumer_config.koji_instances.primary.tags]]
