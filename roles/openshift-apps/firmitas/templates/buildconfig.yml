@@ -3,7 +3,7 @@ apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
   name: "{{ firmitas_application_name }}-build"
-  namespace:"{{ firmitas_namespace }}"
+  namespace: "{{ firmitas_namespace }}"
 spec:
   source:
     git:
@@ -21,4 +21,3 @@ spec:
     to:
       kind: ImageStreamTag
       name: "{{ firmitas_application_name }}:latest"
-
