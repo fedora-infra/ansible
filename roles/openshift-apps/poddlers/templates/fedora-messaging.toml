@@ -206,6 +206,13 @@ versions = []
 branch_regex = '^epel\d+$'
 versions = ["epel9", "epel8"]
 
+[consumer_config.koji_block_retired]
+# Set correct koji profile for corresponding koji ClientSession
+{% if env == "staging" %}
+profile = "stg"
+{% else %}
+profile = "koji"
+{% endif %}
 
 # Configuration section for scm_request_processor
 [consumer_config.scm_request_processor]
