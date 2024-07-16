@@ -6,6 +6,9 @@ metadata:
   namespace: "{{firmitas_namespace}}"
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: "{{firmitas_application_name}}"
   template:
     metadata:
     spec:
