@@ -12,4 +12,4 @@
 
 # Start a build
 - name: "oc start-build {{ firmitas_application_name }}-build"
-  command: "/root/bin/oc start-build {{ firmitas_application_name }}-build"
+  command: "/root/bin/oc start-build {{ firmitas_application_name }}-build -n {{ firmitas_namespace }}"
