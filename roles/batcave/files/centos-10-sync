@@ -3,7 +3,7 @@
 ## Set up variables we use
 RSYNC='/usr/bin/rsync'
 RS_OPT="-avSHP --numeric-ids"
-RS_DEADLY="--delete --delete-delay --delay-updates"
+RS_DEADLY="--delete --delete-excluded --delete-delay --delay-updates"
 CENT_EXCLUDES="--exclude=iso --exclude=kickstart --exclude=images --exclude=debug --exclude=source"
 
 SERVER=centos-master01.iad2.fedoraproject.org
