@@ -3,11 +3,16 @@ br0_ipv4: 8.43.85.64
 br0_ipv4_gw: 8.43.85.254
 br0_ipv4_nm: 24
 br0_port0_mac: '{{ mac0 }}'
+br1_ipv4: 172.23.1.13
+br1_ipv4_gw: 172.23.1.254
+br1_ipv4_nm: 24
+br1_port0_mac: '{{ mac2 }}'
 datacenter: rdu-cc
 dns1: 8.8.8.8
 dns2: 8.8.4.4
 dns_search1: fedoraproject.org
 mac0: C8:4B:D6:98:5D:74
+mac2: c8:4b:d6:98:5d:75
 network_connections:
   - autoconnect: true
     ip:
@@ -26,6 +31,26 @@ network_connections:
   - mac: '{{ br0_port0_mac }}'
     master: br0
     name: br0-port0
+    state: up
+    type: ethernet
+  - autoconnect: true
+    ip:
+      address:
+      - '{{ br1_ipv4 }}/{{ br1_ipv4_nm }}'
+      dhcp4: false
+      dns:
+      - '{{ dns1 }}'
+      - '{{ dns2 }}'
+      dns_search:
+      - '{{ dns_search1 }}'
+      gateway4: '{{ br1_ipv4_gw }}'
+      auto_gateway: false
+    name: br1
+    state: up
+    type: bridge
+  - mac: '{{ br1_port0_mac }}'
+    master: br1
+    name: br1-port0
     state: up
     type: ethernet
 nrpe_procs_crit: 1300
