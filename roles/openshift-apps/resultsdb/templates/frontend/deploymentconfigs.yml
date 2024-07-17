@@ -51,7 +51,7 @@ spec:
               path: /
               port: 5002
           livenessProbe:
-            timeoutSeconds: 1
+            timeoutSeconds: 5
             initialDelaySeconds: 30
             httpGet:
               path: /
