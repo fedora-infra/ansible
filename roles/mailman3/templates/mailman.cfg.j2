@@ -54,9 +54,13 @@ admin_user: {{ mailman_rest_api_username }}
 admin_pass: {{ mailman_rest_api_password }}
 workers: {{ mailman_rest_api_workers }}
 
+[logging.root]
+level: {{ mailman_log_level }}
+path: {{ mailman_log_directory }}/mailman.log
+
 {% for item in mailman_log_items %}
 
-[loggin.{{ item }}]
+[logging.{{ item }}]
 level: {{ mailman_log_level }}
 path: {{ mailman_log_directory }}/{{ item }}.log
 
