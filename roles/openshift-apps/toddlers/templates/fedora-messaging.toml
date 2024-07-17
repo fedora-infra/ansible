@@ -211,6 +211,8 @@ profile = "stg"
 {% else %}
 profile = "koji"
 {% endif %}
+principal = {{service}}/{{host}}
+keytab = /etc/keytabs/service.keytab
 
 # Configuration section for scm_request_processor
 [consumer_config.scm_request_processor]
