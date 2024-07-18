@@ -5,10 +5,10 @@
 
 - import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
   vars:
-    myhosts: "releng_compose:releng_compose_stg"
+    myhosts: "releng_compose:releng_compose_stg:releng_compose_eln"
 
 - name: Setup releng compose hosts
-  hosts: releng_compose:releng_compose_stg
+  hosts: releng_compose:releng_compose_stg:releng_compose_eln
   user: root
   gather_facts: true
   tags:
