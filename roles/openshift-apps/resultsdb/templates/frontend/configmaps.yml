@@ -30,7 +30,7 @@ metadata:
 data:
   resultsdb_frontend.conf: |-
     RequestHeader unset X-Forwarded-Host
-    WSGIDaemonProcess resultsdb_frontend user=apache group=apache threads=5
+    WSGIDaemonProcess resultsdb_frontend user=apache group=apache threads=10
     WSGIScriptAlias / /usr/share/resultsdb_frontend/resultsdb_frontend.wsgi
     WSGISocketPrefix /tmp/wsgi
     
