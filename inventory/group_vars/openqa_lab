@@ -24,6 +24,7 @@ openqa_amqp_this_url: "{{ openqa_amqp_stg_url }}"
 openqa_amqp_this_username: "{{ openqa_amqp_stg_username }}"
 openqa_amqp_scheduler_queue: "{{ openqa_amqp_prod_username }}_scheduler_stg"
 
+openqa_assetsize_updates_aarch64: 50
 openqa_assetsize_ppc: 300
 openqa_assetsize_updates_ppc: 100
 openqa_compose_arches: x86_64,aarch64,ppc64le
@@ -42,7 +43,7 @@ openqa_resultsdb_url: https://resultsdb.stg.fedoraproject.org/api/v2.0/
 openqa_resultsdb_user: "{{ stg_resultsdb_httpd_user }}"
 openqa_resultsdb_password: "{{ stg_resultsdb_httpd_password }}"
 openqa_secret: "{{ stg_openqa_apisecret }}"
-openqa_update_arches: ['x86_64', 'ppc64le']
+openqa_update_arches: ['aarch64', 'x86_64', 'ppc64le']
 openqa_webapi_plugins: FedoraMessaging
 openqa_wikitcms_hostname: stg.fedoraproject.org
 wikitcms_token: "{{ private }}/files/openidc/staging/wikitcms.json"
