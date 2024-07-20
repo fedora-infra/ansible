@@ -22,7 +22,7 @@ openqa_resultsdb_url: https://resultsdb.fedoraproject.org/api/v2.0/
 openqa_resultsdb_user: "{{ prod_resultsdb_httpd_user }}"
 openqa_resultsdb_password: "{{ prod_resultsdb_httpd_password }}"
 openqa_secret: "{{ prod_openqa_apisecret }}"
-openqa_update_arches: ['x86_64']
+openqa_update_arches: ['aarch64', 'x86_64']
 openqa_webapi_plugins: FedoraMessaging
 openqa_wikitcms_hostname: fedoraproject.org
 virt_install_command: "{{ virt_install_command_one_nic }} --cpu=host-passthrough,+vmx"
