@@ -9,3 +9,7 @@
 # apply created openshift resources
 - name: oc apply resources
   command: "/root/bin/oc apply -f /root/ocp4/openshift-apps/firmitas/deployment.yml"
+  retries: 3
+  delay: 5
+  register: deployment_result
+  until: deployment_result.rc == 0

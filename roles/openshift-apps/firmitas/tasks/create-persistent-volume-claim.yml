@@ -9,3 +9,4 @@
 # apply created openshift resources
 - name: oc apply resources
   command: "/root/bin/oc apply -f /root/ocp4/openshift-apps/firmitas/persistent-volume-claim.yml"
+  ignore_errors: true
