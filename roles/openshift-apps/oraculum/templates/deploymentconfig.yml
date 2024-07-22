@@ -131,7 +131,7 @@ spec:
       containers:
       - name: oraculum-worker
         image: packager-dashboard:latest
-        command: ["celery", "-A", "oraculum.celery_app", "worker", "-c", "8", "--loglevel=INFO"]
+        command: ["celery", "-A", "oraculum.celery_app", "worker", "-c", "4", "--loglevel=INFO"]
         resources: {}
         env:
         # Database
