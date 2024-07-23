@@ -26,6 +26,9 @@ spec:
       containers:
       - image: "{{ firmitas_image }}"
         name: "{{ firmitas_application_name }}"
+        env:
+          - name: FIRMITAS_CONFIG
+            value: "/etc/firmitas/myconfig.py"
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
@@ -51,11 +54,11 @@ spec:
             cpu: 10m
             memory: 256Mi
         volumeMounts:
-          - name: "{{ firmitas_pagure_secret_volume_name }}"
+          - name: "{{ firmitas_application_name }}-configuration-secret-volume"
             mountPath: "/etc/firmitas/"
       volumes:
-        - name: "{{ firmitas_pagure_secret_volume_name }}"
+        - name: "{{ firmitas_application_name }}-configuration-secret-volume"
           secret:
-            secretName: "{{ firmitas_pagure_secret_name }}"
+            secretName: "{{ firmitas_application_name }}-configuration-secret"
       terminationGracePeriodSeconds: 10
 
