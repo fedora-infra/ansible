@@ -1,4 +1,8 @@
 ---
+- name: ensures /ocp4/openshift-apps/firmitas/ dir exists
+  file:
+    path: "/ocp4/openshift-apps/firmitas/"
+    state: directory
 
 - include_tasks: create-namespace.yml
 - include_tasks: create-pagure-apikey-secret.yml
