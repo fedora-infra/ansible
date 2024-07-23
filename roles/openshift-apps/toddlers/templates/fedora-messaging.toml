@@ -418,3 +418,22 @@ mail_content_tmpl = """Notification time stamped {headers[sent-at]}
 
     {commit[url]}
 """
+
+[consumer_config.pagure_fas_groups_sync]
+{% if env == "staging" %}
+pagure_url = "https://stg.pagure.io"
+# Token needs to have following permissions:
+# - adding_member_to_group
+# - removing_member_from_group
+pagure_api_key = "{{ toddlers_stg_pagure_fas_groups_sync_token }}"
+{% else %}
+pagure_url = "https://pagure.io"
+# Token needs to have following permissions:
+# - adding_member_to_group
+# - removing_member_from_group
+pagure_api_key = "{{ toddlers_pagure_fas_groups_sync_token }}"
+{% endif %}
+
+[consumer_config.pagure_fas_groups_sync.group_map]
+#Mapping of FAS groups to Pagure groups
+infra-sig = 'fedora-infra'
