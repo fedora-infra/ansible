@@ -51,6 +51,9 @@
       - "org.fedoraproject.*.pagure.issue.new"
       - "org.fedoraproject.*.pagure.issue.edit"
       - "org.fedoraproject.*.pagure.issue.comment.added"
+      # pagure_fas_groups_sync
+      - "org.fedoraproject.*.toddlers.trigger.pagure_fas_groups_sync"
+      - "org.fedoraproject.*.fas.group.member.sponsor"
     thresholds:
       warning: 10
       critical: 100
