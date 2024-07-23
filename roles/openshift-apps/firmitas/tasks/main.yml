@@ -1,7 +1,7 @@
 ---
-- name: ensures /ocp4/openshift-apps/firmitas/ dir exists
+- name: ensures /root/ocp4/openshift-apps/firmitas/ dir exists
   file:
-    path: "/ocp4/openshift-apps/firmitas/"
+    path: "/root/ocp4/openshift-apps/firmitas/"
     state: directory
 
 - include_tasks: create-namespace.yml
