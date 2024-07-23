@@ -12,7 +12,15 @@ spec:
     app: webhook2fedmsg
     deploymentconfig: app
   strategy:
-    resources: {}
+    type: Recreate
+    recreateParams:
+      mid:
+        execNewPod:
+          command: [/opt/app-root/bin/flask, db, sync]
+          containerName: app
+          volumes:
+            - config
+        failurePolicy: Abort
   template:
     metadata:
       labels:
