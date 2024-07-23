@@ -1,0 +1,108 @@
+#
+# Webhook to Fedora Messaging
+#
+
+- name: setup the database
+  hosts: db01.iad2.fedoraproject.org:db01.stg.iad2.fedoraproject.org
+  gather_facts: no
+  become: yes
+  become_user: postgres
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - /srv/private/ansible/vars.yml
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  tasks:
+    - name: webhook2fedmsg DB user
+      postgresql_user:
+        name: webhook2fedmsg
+        password: "{{ (env == 'production')|ternary(webhook2fedmsg_prod_db_password, webhook2fedmsg_stg_db_password) }}"
+    - name: webhook2fedmsg database creation
+      postgresql_db:
+        name: webhook2fedmsg
+        owner: webhook2fedmsg
+        encoding: UTF-8
+
+- name: make the app be real
+  hosts: os_control[0]:os_control_stg[0]
+  user: root
+  gather_facts: False
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  roles:
+  - role: rabbit/user
+    username: "webhook2fedmsg{{ env_suffix }}"
+    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(github|discourse)\..*
+
+  - role: openshift/project
+    app: webhook2fedmsg
+    description: "Relay webhooks to Fedora Messaging"
+    appowners:
+    - ryanlerch
+    - abompard
+    - t0xic0der
+    - kevin
+    tags:
+      - apply-appowners
+  
+  - role: openshift/secret-file
+    app: webhook2fedmsg
+    secret_name: fedora-messaging-ca
+    key: cacert.pem
+    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+  - role: openshift/secret-file
+    app: webhook2fedmsg
+    secret_name: fedora-messaging-crt
+    key: webhook2fedmsg-cert.pem
+    privatefile: "rabbitmq/{{env}}/pki/issued/webhook2fedmsg{{env_suffix}}.crt"
+  - role: openshift/secret-file
+    app: webhook2fedmsg
+    secret_name: fedora-messaging-key
+    key: webhook2fedmsg-key.pem
+    privatefile: "rabbitmq/{{env}}/pki/private/webhook2fedmsg{{env_suffix}}.key"
+
+  - role: openshift/imagestream
+    app: webhook2fedmsg
+    imagename: webhook2fedmsg
+
+  - role: openshift/object
+    app: webhook2fedmsg
+    template: buildconfig.yml
+    objectname: buildconfig.yml
+  
+  - role: openshift/object
+    app: webhook2fedmsg
+    template: configmap.yml
+    objectname: configmap.yml
+
+  - role: openshift/object
+    app: webhook2fedmsg
+    file: service.yml
+    objectname: service.yml
+
+  - role: openshift/route
+    app: webhook2fedmsg
+    routename: web
+    host: "webhook2fedmsg{{ env_suffix }}.fedoraproject.org"
+    serviceport: web
+    servicename: web
+
+  - role: openshift/object
+    app: webhook2fedmsg
+    template: deploymentconfig.yml
+    objectname: deploymentconfig.yml
+
+  # - role: openshift/start-build
+  #   app: webhook2fedmsg
+  #   buildname: webhook2fedmsg
+  #   tags:
+  #   - never
+  #   - build
+
+  # - role: openshift/rollout
+  #   app: webhook2fedmsg
+  #   dcname: webhook2fedmsg

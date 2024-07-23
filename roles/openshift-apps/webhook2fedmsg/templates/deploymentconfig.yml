@@ -1,0 +1,98 @@
+---
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: webhook2fedmsg
+    service: webhook2fedmsg
+  name: app
+spec:
+  replicas: 1
+  selector:
+    app: webhook2fedmsg
+    deploymentconfig: app
+  strategy:
+    resources: {}
+  template:
+    metadata:
+      labels:
+        app: webhook2fedmsg
+        deploymentconfig: app
+    spec:
+      containers:
+      - image: webhook2fedmsg:latest
+        name: app
+        env:
+        - name: APP_MODULE
+          value: "deploy.wsgi"
+        - name: W2FM_APPCONFIG
+          value: "/etc/webhook2fedmsg/config.toml"
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        volumeMounts:
+        - name: config
+          mountPath: "/etc/webhook2fedmsg"
+          readOnly: true
+        - name: script
+          mountPath: "/opt/app-root/src/deploy"
+          readOnly: true
+        - name: fedora-messaging-config
+          mountPath: "/etc/fedora-messaging"
+          readOnly: true
+        - name: fedora-messaging-ca
+          mountPath: /etc/pki/fedora-messaging/cacert.pem
+          subPath: cacert.pem
+          readOnly: true
+        - name: fedora-messaging-crt
+          mountPath: /etc/pki/fedora-messaging/webhook2fedmsg-cert.pem
+          subPath: webhook2fedmsg-cert.pem
+          readOnly: true
+        - name: fedora-messaging-key
+          mountPath: /etc/pki/fedora-messaging/webhook2fedmsg-key.pem
+          subPath: webhook2fedmsg-key.pem
+          readOnly: true
+        # readinessProbe:
+        #   timeoutSeconds: 10
+        #   initialDelaySeconds: 5
+        #   periodSeconds: 60
+        #   httpGet:
+        #     path: "/healthz/ready"
+        #     port: 8080
+        # livenessProbe:
+        #   timeoutSeconds: 10
+        #   initialDelaySeconds: 3
+        #   periodSeconds: 60
+        #   httpGet:
+        #     path: "/healthz/live"
+        #     port: 8080
+      volumes:
+      - name: webhook2fedmsg-config
+        configMap:
+          name: config
+      - name: wsgi-script
+        configMap:
+          name: wsgi-script
+      - name: fedora-messaging-config
+        configMap:
+          name: fedora-messaging-config
+      - name: fedora-messaging-ca
+        secret:
+          secretName: fedora-messaging-ca
+      - name: fedora-messaging-crt
+        secret:
+          secretName: fedora-messaging-crt
+      - name: fedora-messaging-key
+        secret:
+          secretName: fedora-messaging-key
+
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+    imageChangeParams:
+      automatic: true
+      containerNames:
+      - app
+      from:
+        kind: ImageStreamTag
+        name: webhook2fedmsg:latest

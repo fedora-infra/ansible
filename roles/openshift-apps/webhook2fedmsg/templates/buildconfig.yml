@@ -1,0 +1,30 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: webhook2fedmsg
+  labels:
+    app: webhook2fedmsg
+    build: webhook2fedmsg
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: webhook2fedmsg:latest
+  source:
+    type: Git
+    git:
+      uri: https://github.com/fedora-infra/webhook-to-fedora-messaging.git
+      ref: "{{ env }}"
+  strategy:
+    type: Source
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        namespace: openshift
+        name: python:3.11-ubi9
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+  - type: GitHub
+    github:
+      secret: "{{ (env == 'staging')|ternary(webhook2fedmsg_stg_webhook_secret, webhook2fedmsg_prod_webhook_secret) }}"
