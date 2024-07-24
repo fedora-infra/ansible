@@ -58,6 +58,10 @@ workers: {{ mailman_rest_api_workers }}
 level: {{ mailman_log_level }}
 path: {{ mailman_log_directory }}/mailman.log
 
+[logging.database]
+level: warning
+path: {{ mailman_log_directory }}/database.log
+
 {% for item in mailman_log_items %}
 
 [logging.{{ item }}]
