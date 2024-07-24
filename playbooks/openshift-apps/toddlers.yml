@@ -64,6 +64,7 @@
     key: service.keytab
     secret_name: toddlers-keytab
     service: toddlers
+    host: "koji{{env_suffix}}.fedoraproject.org"
 
   - role: openshift/ipa-client
     app: toddlers
