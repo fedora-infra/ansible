@@ -30,7 +30,7 @@ spec:
           - name: KRB5_CONFIG
             value: /opt/config/krb5.conf
           - name: KRB5_CLIENT_KTNAME
-            value: /etc/keytab/koji-keytab
+            value: /etc/keytabs/monitor-gating-keytab
           - name: OPENSHIFT
             value: "True"
 {% if env != "staging" %}
