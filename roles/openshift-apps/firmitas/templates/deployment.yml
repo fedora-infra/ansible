@@ -29,6 +29,8 @@ spec:
         env:
           - name: FIRMITAS_CONFIG
             value: "/etc/firmitas/myconfig.py"
+        command: ["firmitas"]
+        args: ["--conffile", "/etc/firmitas/myconfig.py"]
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
