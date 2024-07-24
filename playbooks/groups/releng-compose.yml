@@ -52,7 +52,7 @@
   - role: nfs/client
     mnt_dir: '/mnt/fedora_koji'
     nfs_src_dir: "{{ koji_hub_nfs }}"
-    when: "'releng_compose' in group_names"
+    when: "'releng_compose' or 'releng_compose_eln' in group_names"
   - role: nfs/client
     mnt_dir: '/mnt/koji/ostree'
     nfs_src_dir: 'fedora_ostree_content/ostree'
@@ -72,7 +72,7 @@
   - role: nfs/client
     mnt_dir: '/pub'
     nfs_src_dir: 'fedora_ftp/fedora.redhat.com/pub'
-    when: "'releng_compose' in group_names"
+    when: "'releng_compose' or 'releng_compose_eln' in group_names"
 
 # staging composer nfs mounts
 
