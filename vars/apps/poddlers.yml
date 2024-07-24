@@ -75,6 +75,12 @@ poddlers_toddlers:
       - "org.fedoraproject.*.pagure.issue.edit"
       - "org.fedoraproject.*.pagure.issue.comment.added"
 
+  - name: pagure-fas-groups-sync
+    callback: pagure_fas_groups_sync:PagureFASGroupsSync
+    topics:
+      - "org.fedoraproject.*.fas.group.member.sponsor"
+      - "org.fedoraproject.*.toddlers.trigger.pagure_fas_groups_sync"
+
 poddlers_cronjobs:
   - name: packager-bugzilla-sync
     schedule: "0 */6 * * *"
@@ -100,3 +106,6 @@ poddlers_cronjobs:
     schedule: "0 8 */2 * *"
     only_env: staging
     command: check-commit-rights
+  - name: pagure-fas-groups-sync
+    schedule: "0 4 * * *"
+    command: pagure_fas_groups_sync

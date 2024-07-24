@@ -75,6 +75,8 @@
 
     - role: openshift/object
       app: poddlers
+      service: poddlers
+      host: "koji{{env_suffix}}.fedoraproject.org"
       template: secrets.yml
       objectname: secrets.yml
 
