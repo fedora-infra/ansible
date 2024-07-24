@@ -64,7 +64,6 @@
     key: service.keytab
     secret_name: toddlers-keytab
     service: toddlers
-    host: "koji{{env_suffix}}.fedoraproject.org"
 
   - role: openshift/ipa-client
     app: toddlers
@@ -107,6 +106,7 @@
   - role: openshift/object
     app: toddlers
     service: toddlers
+    host: "koji{{env_suffix}}.fedoraproject.org"
     template: secret.yml
     objectname: secret.yml
 
