@@ -1,0 +1,20 @@
+---
+csi_primary_contact: "msuchy (mirek), ttomecek"
+csi_purpose: Development machine for Logdetective
+csi_relationship: |
+  - Training of models for Logdetective
+# These variables are pushed into /etc/system_identification by the base role.
+# Groups and individual hosts should override them with specific info.
+# See http://infrastructure.fedoraproject.org/csi/security-policy/
+csi_security_category: Low
+description: Machine for developers of Logdetective
+
+datacenter: aws
+devel: false
+root_auth_users: msuchy frostyx praiskup nikromen ttomecek jpodivin
+
+nrpe_client_uid: 500
+
+tcp_ports: [
+    22, 80, 443,
+]
