@@ -21,7 +21,8 @@
 
 - name: cloud basic setup
   hosts: logdetective
-  user: root
+  become: True
+  become_user: root
   gather_facts: True
   vars_files:
    - /srv/web/infra/ansible/vars/global.yml
@@ -41,7 +42,8 @@
 
 - name: provision instance
   hosts: logdetective
-  user: root
+  become: True
+  become_user: root
   gather_facts: True
 
   vars_files:
