@@ -1,6 +1,6 @@
 - name: Install packages
   package:
-    name: ['os-autoinst-openvswitch', 'tunctl', 'NetworkManager-ovs']
+    name: ['os-autoinst-openvswitch', 'NetworkManager-ovs']
     state: latest
     enablerepo: "{{ openqa_repo }}"
   tags:
@@ -61,7 +61,7 @@
   failed_when: "1 != 1"
 
 - name: Create openvswitch interfaces for tap devices
-  shell: "nmcli con add type tun mode tap owner '$(id -u _openqa-worker)' group '$(getent group nogroup | cut -f3 -d:)' con.int 'tap{{ item }}' master 'tap{{ item }}'"
+  shell: "nmcli con add type tun mode tap owner $(id -u _openqa-worker) group $(getent group nogroup | cut -f3 -d:) con.int tap{{ item }} master tap{{ item }}"
   with_sequence: start=0 end={{ openqa_workers | int }}
   when: tapsexist.rc > 0
 
