@@ -1,39 +1,69 @@
 - name: Install packages
   package:
-    name: ['os-autoinst-openvswitch', 'tunctl', 'network-scripts']
+    name: ['os-autoinst-openvswitch', 'NetworkManager-ovs']
     state: latest
     enablerepo: "{{ openqa_repo }}"
   tags:
   - packages
+  register: packages
+
+- name: Ensure NetworkManager service is enabled and started
+  service: name=NetworkManager enabled=yes state=started
+
+- name: Restart NetworkManager service if we just installed or updated packages
+  service: name=NetworkManager state=restarted
+  when: "(packages is defined) and (packages is changed)"
 
 - name: Enable ipv4_forward in sysctl
   sysctl: name=net.ipv4.ip_forward value=1 state=present sysctl_set=yes reload=yes
 
 - name: Start openvswitch service
   service: name=openvswitch enabled=yes state=started
-  with_sequence: "count={{ openqa_workers }}"
 
-- name: Enable network service (needed for openvswitch devices)
-  service: name=network enabled=yes state=started
-  ignore_errors: yes
+- name: Create openvswitch bridge
+  community.general.nmcli:
+    conn_name: ovs-br
+    ifname: br0
+    type: ovs-bridge
+    state: present
 
-- name: openvswitch bridge device config
-  copy: src=ifcfg-br0 dest=/etc/sysconfig/network-scripts/ifcfg-br0 owner=root group=root mode=0644
-  notify:
-  - restart network
-  tags:
-  - config
+- name: Create openvswitch port for openvswitch bridge
+  community.general.nmcli:
+    conn_name: ovs-br-port
+    ifname: br0
+    master: br0
+    type: ovs-port
+    state: present
 
-- name: Install ifup-pre-local script to create tap devices
-  copy: src=ifup-pre-local dest=/sbin/ifup-pre-local owner=root group=root mode=0755
+- name: Create openvswitch interface for openvswitch bridge
+  community.general.nmcli:
+    conn_name: ovs-br-if
+    ifname: br0
+    master: br0
+    ip4: '172.16.2.2/15'
+    type: ovs-interface
+    state: present
 
-- name: openvswitch tap devices config
-  template: src=ifcfg-tap.j2 dest=/etc/sysconfig/network-scripts/ifcfg-tap{{ item }} owner=root group=root mode=0644
+- name: Create openvswitch ports for tap devices
+  community.general.nmcli:
+    conn_name: ovs-tap{{ item }}-port
+    ifname: tap{{ item }}
+    master: br0
+    type: ovs-port
+    state: present
   with_sequence: start=0 end={{ openqa_workers | int }}
-  notify:
-  - restart network
-  tags:
-  - config
+
+# nmcli collection does not support tun type
+- name: Check whether tap device interface connection profiles exist
+  shell: "(for i in {0..{{ openqa_workers | int }}}; do ip addr show tap$i || exit 1; done)"
+  register: tapsexist
+  changed_when: "1 != 1"
+  failed_when: "1 != 1"
+
+- name: Create openvswitch interfaces for tap devices
+  shell: "nmcli con add type tun mode tap owner $(id -u _openqa-worker) group $(getent group nogroup | cut -f3 -d:) con.int tap{{ item }} master tap{{ item }}"
+  with_sequence: start=0 end={{ openqa_workers | int }}
+  when: tapsexist.rc > 0
 
 - name: Install openvswitch sysconfig file
   copy: src=os-autoinst-openvswitch.sysconfig dest=/etc/sysconfig/os-autoinst-openvswitch owner=root group=root mode=0644

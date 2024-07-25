@@ -167,10 +167,7 @@
   when: openqa_nfs_worker|bool
 
 - include_tasks: tap-setup.yml
-  when: "openqa_tap and not openqa_tap_nm|bool"
-
-- include_tasks: tap-setup-nm.yml
-  when: "openqa_tap and openqa_tap_nm|bool"
+  when: openqa_tap
 
 - name: Tell git it's OK for _openqa-worker to run 'git' on the test dir
   copy: src=gitconfig dest=/etc/gitconfig owner=root group=root mode=0644
