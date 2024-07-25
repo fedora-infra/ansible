@@ -139,14 +139,14 @@ spec:
     deploymentconfig: consumer
   strategy:
     type: Recreate
-    # recreateParams:
-    #   mid:
-    #     execNewPod:
-    #       command: [/opt/app-root/bin/fmn, database, sync]
-    #       containerName: consumer
-    #       volumes:
-    #         - etc-badges
-    #     failurePolicy: Abort
+    recreateParams:
+      mid:
+        execNewPod:
+          command: [/opt/app-root/bin/tahrir-sync-db, /etc/badges/tahrir.cfg]
+          containerName: consumer
+          volumes:
+            - etc-badges
+        failurePolicy: Abort
   template:
     metadata:
       creationTimestamp: null
