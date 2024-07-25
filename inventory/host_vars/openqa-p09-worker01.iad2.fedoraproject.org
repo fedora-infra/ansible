@@ -11,7 +11,7 @@ enp1s0f0np0_mac: "{{ mac1 }}"
 enp1s0f1np1_mac: "{{ mac2 }}"
 freezes: false
 # enp1s0f0np0 is default network
-# enp1s0f1 is disabled/nothing
+# enp1s0f1np1 is disabled/nothing
 # NOTE network configuration beyond the scope of linux-system-roles on
 # this host is performed by the openqa/worker role
 
@@ -37,8 +37,8 @@ network_connections:
     state: up
     type: ethernet
   - autoconnect: no
-    mac: "{{ enp1s0f1_mac }}"
-    name: enp1s0f1
+    mac: "{{ enp1s0f1np1_mac }}"
+    name: enp1s0f1np1
     state: down
     type: ethernet
 nrpe_procs_crit: 300
