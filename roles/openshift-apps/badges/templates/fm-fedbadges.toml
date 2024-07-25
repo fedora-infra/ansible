@@ -57,6 +57,9 @@ consume_delay = 1
 # production, this will be a postgres URI.
 database_uri = "postgresql://{{ tahrirDBUser }}:{{ (env == 'production')|ternary(tahrirDBPassword, tahrirstgDBPassword) }}@{{ badges_db_host }}/{{ badges_db_name }}"
 
+# Email domain for badges
+email_domain = "{{ env_prefix }}fedoraproject.org"
+
 # Datanommer database URI
 datanommer_db_uri = "postgresql://{{ tahrirDBUser }}:{{ (env == 'production')|ternary(tahrirDBPassword, tahrirstgDBPassword) }}@{{ datanommer_db_hostname }}{{ env_suffix }}/datanommer2"
 datagrepper_url = "https://apps{{ env_suffix }}.fedoraproject.org/datagrepper"
