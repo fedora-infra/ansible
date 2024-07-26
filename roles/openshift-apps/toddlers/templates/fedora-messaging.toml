@@ -114,6 +114,9 @@ koji_url = "https://koji{{ env_suffix }}.fedoraproject.org"
 # Base URL for the Koji package db
 kojipkgs_url = "https://kojipkgs{{ env_suffix }}.fedoraproject.org"
 
+# Base URL for Bodhi
+bodhi_url = "https://bodhi{{ env_suffix }}.fedoraproject.org"
+
 # Account to use to connect to Pagure-as-dist-git
 dist_git_url = "https://src{{ env_suffix }}.fedoraproject.org"
 {% if env == "staging" %}
