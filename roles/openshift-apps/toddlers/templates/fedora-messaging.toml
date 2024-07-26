@@ -44,12 +44,12 @@ routing_keys = ["#"]  # This is dynamically generated in the code
 # more of them.
 blocked_toddlers = [
     "debug",
-    # Block pdc_modules toddler – MBS is retired. Can be removed once toddler has been updated to a
-    # version which doesn’t come with pdc_modules.
-    "pdc_modules",
     "distgit_commit_processor",
     "koji_block_retired",
+    # Block all the PDC related toddlers
     "pdc_import_compose",
+    "pdc_unretire_packages",
+    "pdc_update_critpath"
 ]
 
 [consumer_config.default]
