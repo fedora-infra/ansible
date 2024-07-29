@@ -45,12 +45,14 @@ routing_keys = ["#"]  # This is dynamically generated in the code
 blocked_toddlers = [
     "debug",
     "distgit_commit_processor",
-    "koji_block_retired",
     # Block all the PDC related toddlers
     "pdc_import_compose",
     "pdc_unretire_packages",
     "distgit_bugzilla_sync",
     "pdc_update_critpath"
+{% if env != "staging" %}
+    "koji_block_retired",
+{% endif %}
 ]
 
 [consumer_config.default]
