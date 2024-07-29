@@ -38,6 +38,10 @@ def generate_index(mailinglists: list) -> None:
     """Generate indexes for the lists one by one."""
     for mailinglist in mailinglists:
         print("Generating index for {0}".format(mailinglist))
+        print("Generating index for {0} [{1}/{2}]".format(
+            mailinglist, mailinglists.index(mailinglist) + 1, len(mailinglists)
+            )
+        )
         call(["sudo", "-u", MAILMAN_USER, "mailman-web", "update_index_one_list", mailinglist])
         print("Finished generating index for {0}".format(mailinglist))
 
