@@ -186,7 +186,9 @@ def get_active_releases_from_bodhi():
         rv_json = rv.json()
         if rv_json['releases']:
             for release in rv_json['releases']:
-                if re.match(r'^(f|epel)\d{1,2}$', release['branch']):
+                if re.match(r'^(f)\d{1,2}$', release['branch']):
+                    active_releases.append(release['branch'])
+                if re.match(r'^(epel)\d{1}$', release['branch']):
                     active_releases.append(release['branch'])
         return list(set(active_releases))
     return []
