@@ -39,4 +39,4 @@
 
   tasks:
     - debug:
-        msg: "Job started. You can watch the logs with:\noc -n {{app}} logs -f job/move-to-archive-{{product|lower|replace(' ', '-')}}-{{version|lower|replace(' ', '-')}}"
+        msg: "Job started. You can watch the logs with:\noc -n mirrormanager logs -f job/move-to-archive-{{product|lower|replace(' ', '-')}}-{{version|lower|replace(' ', '-')}}"
