@@ -1,0 +1,40 @@
+# This playbook moves a distro version to the archive in MirrorManager's DB
+
+# Usage:
+#  --extra-vars="product='EPEL' version='7'"
+# product => The product name in MirrorManager's DB. Currently one of:
+#            "Fedora", "EPEL" or "RHEL"
+# version => The version that must be archived.
+
+- name: Run the move-to-archive script
+  hosts: 
+    - os_masters[0]
+    - os_masters_stg[0]
+  user: root
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - /srv/private/ansible/vars.yml
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/apps/mirrormanager.yml
+  handlers:
+    - import_tasks: "{{ handlers_path }}/restart_services.yml"
+
+  pre_tasks:
+    - name: Validate the product {{ product }}
+      assert:
+        that:
+        - product is defined
+        - product in ["Fedora", "EPEL", "RHEL"]
+        fail_msg: "The 'product' variable is not set correctly"
+    - name: Validate the version {{ version }}
+      assert:
+        that:
+        - version is defined
+        fail_msg: "The 'version' variable is not defined"
+
+  roles:
+    - role: openshift/object
+      app: mirrormanager
+      template: cmd-move-to-archive.yml
+      objectname: cmd-move-to-archive.yml
+      always_apply: true

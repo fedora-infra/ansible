@@ -1,0 +1,41 @@
+{% from "_macros.yml" import common_volume_mounts, common_volumes, common_env, security_context with context %}
+# Manual command
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ job_name }}
+spec:
+  parallelism: 1
+  completions: 1
+  activeDeadlineSeconds: 1800
+  backoffLimit: 3
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: mirrormanager
+          image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
+          command:
+            - "/opt/app-root/bin/mm2_move-to-archive
+            - "--product"
+            - "{{ product }}"
+            - "--version"
+            - "{{ version }}"
+          env:
+            {{ common_env() }}
+          volumeMounts:
+            {{ common_volume_mounts(with_ssh=True) }}
+            - name: mirror
+              mountPath: "/srv/pub"
+            - name: mirror-archive
+              mountPath: "/srv/pub/archive"
+      volumes:
+        {{ common_volumes(with_ssh=True) }}
+        - name: mirror
+          persistentVolumeClaim:
+            claimName: primary-mirror
+        - name: mirror-archive
+          persistentVolumeClaim:
+            claimName: primary-mirror-archive
+      {{ security_context() }}

@@ -15,4 +15,4 @@
 
 - name: Call `oc apply` on the copied file
   shell: oc -n {{os_app}} apply --validate=strict -f /etc/openshift_apps/{{os_app}}/{{objectname}}
-  when: object_template.changed or object_template_fullpath.changed or object_file.changed
+  when: object_template.changed or object_template_fullpath.changed or object_file.changed or always_apply
