@@ -41,8 +41,8 @@
 
   tasks:
     - debug:
-        msg: "Job started. You can watch the logs with:\noc -n mirrormanager logs -f job/{{job_name}}"
+        msg: "Job started. You can watch the logs with: oc -n mirrormanager logs -f job/{{job_name}}"
     - debug:
-        msg: "You can cancel it with:\noc -n mirrormanager delete job/{{job_name}}"
+        msg: "You can cancel it with: oc -n mirrormanager delete job/{{job_name}}"
     - debug:
-        msg: "When it's done, clean it up with:\noc -n mirrormanager delete job/{{job_name}}"
+        msg: "When it's done, clean it up with: oc -n mirrormanager delete job/{{job_name}}"
