@@ -7,9 +7,7 @@
 # version => The version that must be archived.
 
 - name: Run the move-to-archive script
-  hosts: 
-    - os_masters[0]
-    - os_masters_stg[0]
+  hosts: os_control[0]:os_control_stg[0]
   user: root
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml
