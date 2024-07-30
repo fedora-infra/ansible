@@ -36,3 +36,7 @@
       template: cmd-move-to-archive.yml
       objectname: cmd-move-to-archive.yml
       always_apply: true
+
+  tasks:
+    - debug:
+        msg: "Job started. You can watch the logs with:\noc -n {{app}} logs -f job/move-to-archive-{{product|lower|replace(' ', '-')}}-{{version|lower|replace(' ', '-')}}"
