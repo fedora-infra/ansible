@@ -15,10 +15,10 @@ poddlers_toddlers:
     topics:
       - "org.fedoraproject.*.toddlers.trigger.clean_retired_packages"
 
-  - name: distgit-bugzilla-sync
-    callback: distgit_bugzilla_sync:DistgitBugzillaSync
-    topics:
-      - "org.fedoraproject.*.toddlers.trigger.distgit_bugzilla_sync"
+  # - name: distgit-bugzilla-sync
+  #   callback: distgit_bugzilla_sync:DistgitBugzillaSync
+  #   topics:
+  #     - "org.fedoraproject.*.toddlers.trigger.distgit_bugzilla_sync"
 
   - name: distgit-commit-processor
     callback: distgit_commit_processor:DistGitCommitProcessor
@@ -37,10 +37,10 @@ poddlers_toddlers:
     topics:
       - "org.fedoraproject.*.buildsys.build.state.change"
 
-  - name: koji-block-retired
-    callback: koji_block_retired:KojiBlockRetired
-    topics:
-      - "org.fedoraproject.*.git.receive"
+  # - name: koji-block-retired
+  #   callback: koji_block_retired:KojiBlockRetired
+  #   topics:
+  #     - "org.fedoraproject.*.git.receive"
 
   - name: packager-bugzilla-sync
     callback: packager_bugzilla_sync:PackagerBugzillaSync
@@ -52,21 +52,21 @@ poddlers_toddlers:
     topics:
       - "org.fedoraproject.*.toddlers.trigger.packagers_without_bugzilla"
 
-  - name: pdc-import-compose
-    callback: pdc_import_compose:PDCImportCompose
-    topics:
-      - "org.fedoraproject.*.toddlers.trigger.pdc_import_compose"
-      - "org.fedoraproject.*.pungi.compose.status.change"
+  # - name: pdc-import-compose
+  #   callback: pdc_import_compose:PDCImportCompose
+  #   topics:
+  #     - "org.fedoraproject.*.toddlers.trigger.pdc_import_compose"
+  #     - "org.fedoraproject.*.pungi.compose.status.change"
 
-  - name: pdc-unretire-packages
-    callback: pdc_unretire_packages:PDCUnretirePackages
-    topics:
-      - "io.pagure.*.pagure.issue.new"
+  # - name: pdc-unretire-packages
+  #   callback: pdc_unretire_packages:PDCUnretirePackages
+  #   topics:
+  #     - "io.pagure.*.pagure.issue.new"
 
-  - name: pdc-update-critpath
-    callback: pdc_update_critpath:PDCUpdateCritpath
-    topics:
-      - "org.fedoraproject.*.toddlers.trigger.pdc_update_critpath"
+  # - name: pdc-update-critpath
+  #   callback: pdc_update_critpath:PDCUpdateCritpath
+  #   topics:
+  #     - "org.fedoraproject.*.toddlers.trigger.pdc_update_critpath"
 
   - name: scm-request-processor
     callback: scm_request_processor:SCMRequestProcessor
@@ -92,7 +92,6 @@ poddlers_cronjobs:
     command: check_email_overrides
   - name: clean-retired-packages
     schedule: "0 8 1 * *"
-    only_env: production
     command: clean_retired_packages
   - name: packagers-without-bugzilla
     schedule: "0 7 * * *"
@@ -108,4 +107,5 @@ poddlers_cronjobs:
     command: check-commit-rights
   - name: pagure-fas-groups-sync
     schedule: "0 4 * * *"
+    only_env: staging
     command: pagure_fas_groups_sync
