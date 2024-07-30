@@ -16,6 +16,8 @@
     - /srv/web/infra/ansible/vars/apps/mirrormanager.yml
   handlers:
     - import_tasks: "{{ handlers_path }}/restart_services.yml"
+  vars:
+    job_name: move-to-archive-{{ product|lower|replace(" ", "-") }}-{{ version|lower|replace(" ", "-") }}-{{ ansible_date_time.epoch }}
 
   pre_tasks:
     - name: Validate the product {{ product }}
@@ -39,4 +41,8 @@
 
   tasks:
     - debug:
-        msg: "Job started. You can watch the logs with:\noc -n mirrormanager logs -f job/move-to-archive-{{product|lower|replace(' ', '-')}}-{{version|lower|replace(' ', '-')}}"
+        msg: "Job started. You can watch the logs with:\noc -n mirrormanager logs -f job/{{job_name}}"
+    - debug:
+        msg: "You can cancel it with:\noc -n mirrormanager delete job/{{job_name}}"
+    - debug:
+        msg: "When it's done, clean it up with:\noc -n mirrormanager delete job/{{job_name}}"

@@ -4,7 +4,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: move-to-archive-{{ product|lower|replace(" ", "-") }}-{{ version|lower|replace(" ", "-") }}
+  name: "{{ job_name }}"
 spec:
   parallelism: 1
   completions: 1
