@@ -1,5 +1,5 @@
 {% from "_macros.yml" import common_volume_mounts, common_volumes, common_env, security_context with context %}
-# Manual command
+# Manual command: move-to-archive
 ---
 apiVersion: batch/v1
 kind: Job
@@ -17,7 +17,7 @@ spec:
         - name: mirrormanager
           image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
           command:
-            - "/opt/app-root/bin/mm2_move-to-archive
+            - "/opt/app-root/bin/mm2_move-to-archive"
             - "--product"
             - "{{ product }}"
             - "--version"
