@@ -175,11 +175,11 @@ def get_project_name_and_its_active_branches(session, namespace, active_branches
         print('- Querying pagure distgit for package branches')
     project_branches = get_project_branches(session, namespace, project_name)
     try:
-        active_package_branches = active_branches & project_branches
-        for branch in active_package_branches:
-            if branch in lookaside:
-                if project_name in lookaside[branch]:
-                    active_package_branches.remove(branch)
+        active_package_branches = {
+            branch
+            for branch in active_branches & project_branches
+            if not (branch in lookaside and project_name in lookaside[branch])
+        }
 
         return project_name, active_package_branches
 
