@@ -21,7 +21,6 @@ from urllib.parse import urljoin
 import multiprocessing.pool
 from math import ceil
 from functools import partial
-import re
 
 import requests
 import koji
@@ -108,94 +107,32 @@ def get_options():
     return opts
 
 
-def get_namespaces_and_version_from_tag(tag):
-    if 'container' in tag:
-        namespaces = ['container']
-        version = tag.split('-')[0].split('f')[1]
-    elif 'docker' in tag:
-        namespaces = ['container']
-        version = tag.split('-')[0].split('f')[1]
-    elif 'modular' in tag:
-        namespaces = ['flatpaks', 'modules']
-        try:
-            version = tag.split('-')[0].split('f')[1]
-        except IndexError:
-            version = RAWHIDE
-    elif 'flatpak' in tag:
-        namespaces = ['flatpaks']
-        version = tag.split('-')[0].split('f')[1]
-    elif tag == 'module-package-list':
-        # See https://pagure.io/releng/issue/6663
-        # and https://pagure.io/fm-orchestrator/issue/333
-        namespaces = ['rpms']
-        version = RAWHIDE
-    else:
-        namespaces = ['rpms']
-        if tag.startswith('epel'):
-            version = tag.split('epel')[1]
-        elif tag.startswith('f'):
-            version = tag.split('f')[1]
-        elif tag.endswith('epel') and tag.startswith('dist'):
-            # This is for older EPEL tags such as dit-6E-epel
-            version = tag.split('-')[1][:-1]
-        else:
-            print('Error: an invalid tag was specified', file=sys.stderr)
-            sys.exit(1)
-
-    return namespaces, version
-
-
-def get_branch_and_arches(tag, version):
-    if tag.startswith('epel'):
-        # Ex: epel7 => epel7
-        branch = tag
-        arches = ["primary"]
-    elif tag.endswith('epel'):
-        # Ex: dist-6E-epel => el6
-        branch = 'el%s' % version
-        arches = ["primary"]
-    elif tag == 'module-package-list':
-        branch = 'rawhide'
-        arches = ["primary"]
-    else:
-        # Fedora
-        if version == RAWHIDE:
-            branch = 'rawhide'
-        else:
-            branch = tag.split('-')[0]
-
-        if STAGING:
-            arches = ["primary"]
-        else:
-            if version <= "26":
-                arches = ["primary", "s390"]
-            else:
-                # Yay!  Everything in primary.
-                arches = ["primary"]
-
-    return branch, arches
-
-
 def get_active_releases_from_bodhi():
-    bodhi_url = '{0}releases/?exclude_archived=True'.format(BODHI_URL)
-
-    rv = requests.get(bodhi_url, timeout=60)
-
-    if rv.ok:
-        active_releases = []
+    def get_page(page):
+        rv = requests.get(
+            BODHI_URL + 'releases/',
+            params={'exclude_archived': True, 'page': page},
+            timeout=60,
+        )
+        rv.raise_for_status()
         rv_json = rv.json()
-        if rv_json['releases']:
-            for release in rv_json['releases']:
-                if re.match(r'^(f)\d{1,2}$', release['branch']):
-                    active_releases.append(release['branch'])
-                if re.match(r'^(epel)\d{1}$', release['branch']):
-                    active_releases.append(release['branch'])
-        return list(set(active_releases))
-    return []
+        return rv_json['releases'], rv_json['pages']
+
+    releases, pages = get_page(1)
+    if pages > 1:
+        for page in range(2, pages + 1):
+            more_releases, _ = get_page(page)
+            releases.extend(more_releases)
+
+    return {
+        release['dist_tag']: release
+        for release in releases
+    }
+
 
 def get_project_branches(session, namespace, project_name):
     """
-    Returns list of branches for the repo from Pagure dist-git.
+    Returns set of branches for the repo from Pagure dist-git.
     :param logger: A logger object
     :param url: a string of the URL to Pagure
     :param namespace: a string determines a type of the repository
@@ -214,7 +151,7 @@ def get_project_branches(session, namespace, project_name):
         rv_json = rv.json()
 
         if rv.ok:
-            return rv_json.get("branches", ())
+            return set(rv_json.get("branches", []))
     except ValueError:
         print(f"Failing for namespace: {namespace}, project_name: {project_name}, url: {get_branches_url}")
     # When specific namespace has no branches, API returns error "Project not found".
@@ -224,7 +161,7 @@ def get_project_branches(session, namespace, project_name):
     return project_name, []
 
 
-def get_project_name_and_its_active_branches(session, namespace, active_releases,
+def get_project_name_and_its_active_branches(session, namespace, active_branches,
                                              lookaside, project_name, verbose=False):
     """
     Gets the branches on a project. This function is used for mapping.
@@ -238,17 +175,19 @@ def get_project_name_and_its_active_branches(session, namespace, active_releases
         print('- Querying pagure distgit for package branches')
     project_branches = get_project_branches(session, namespace, project_name)
     try:
-        active_package_branches = list(set(active_releases) & set(project_branches)) + ['rawhide']
+        active_package_branches = active_branches & project_branches
         for branch in active_package_branches:
-            if project_name in lookaside[branch]:
-                active_package_branches.remove(branch)
+            if branch in lookaside:
+                if project_name in lookaside[branch]:
+                    active_package_branches.remove(branch)
 
         return project_name, active_package_branches
 
     except TypeError:
-        print("One of the lists is probably empty: active_releases: {active_releases}, project_branches: {project_branches}")
+        print(f'One of the lists is probably empty: active_branches: {active_branches}, project_branches: {project_branches}')
         # Check if a package is not retired on any of the branches
     return project_name, []
+
 
 def get_pagure_project_names_from_page(session, namespace, page,
                                        package=None, verbose=False):
@@ -281,7 +220,7 @@ def get_pagure_project_names_from_page(session, namespace, page,
         return set()
 
 
-def get_pagure_project_branches(namespace, active_releases, lookaside, package=None, verbose=False):
+def get_pagure_project_branches(namespace, active_branches, lookaside, package=None, verbose=False):
     """
     Gets all the branches of all the Pagure projects in the desired namespace
     :param namespace: string of the namespace to query for projects
@@ -324,7 +263,7 @@ def get_pagure_project_branches(namespace, active_releases, lookaside, package=N
     # Since we are going to multi-thread, we need to make a partial function
     # call so that all the function needs is an iterable to run
     partial_get_project_name_and_branch = partial(
-        get_project_name_and_its_active_branches, session, namespace, active_releases, lookaside,
+        get_project_name_and_its_active_branches, session, namespace, active_branches, lookaside,
         verbose=verbose)
     # Get a list of tuples in the form of (project, [branch...]), then convert
     # that to a dictionary
@@ -455,35 +394,55 @@ if __name__ == '__main__':
     tags = args.tag
     package = args.package
 
+    # Let's start with getting release data and active branches from bodhi
+    bodhi_releases = get_active_releases_from_bodhi()
+    active_branches = {
+        release['branch']
+        for release in bodhi_releases.values()
+    }
+
     # Get all the info about the tags we are interested in
     unique_namespaces = set()
     tag_info = {}
     for tag in tags:
-        namespaces, version = get_namespaces_and_version_from_tag(tag)
-        branch, arches = get_branch_and_arches(tag, version)
+        try:
+            bodhi_release = bodhi_releases[tag]
+        except KeyError:
+            # if there isn't a corresponding bodhi release, predict the branch and
+            # and version based on patterns
+            branch = tag.split('-')[0]
+            if branch.startswith('epel'):
+                version = branch.split('epel')[1]
+            elif branch.startswith('f'):
+                version = branch.split('f')[1]
+            else:
+                raise SystemExit(f'unable to predict version of {tag} tag')
+        else:
+            branch = bodhi_release['branch']
+            version = bodhi_release['version']
+
+        if 'container' in tag:
+            namespaces = ['container']
+        elif 'flatpak' in tag:
+            namespaces = ['flatpaks']
+        else:
+            namespaces = ['rpms']
+
         tag_info[tag] = {
             'namespaces': namespaces,
             'version': version,
             'branch': branch,
-            'arches': arches
+            'arches': ['primary'],
         }
         unique_namespaces.update(namespaces)
 
-    # Let's start with getting the active releases from bodhi
-    active_releases = get_active_releases_from_bodhi()
-
     # Let's fetch the json files with retired packages per release from lookaside cache
-    # This is a bit ugly, but the idea is to have the latest release removed in favor of rawhide
-    rawhide_active_releases = active_releases[:]
-    rawhide_active_releases.remove(max(rawhide_active_releases))
-    rawhide_active_releases.append('rawhide')
-    # Let's store the json files with retired packages in lookaside
     lookaside = {}
-    for branch in rawhide_active_releases:
-        url = "https://src.fedoraproject.org/lookaside/retired_in_{0}.json".format(branch)
+    for branch in active_branches:
+        url = f'https://src.fedoraproject.org/lookaside/retired_in_{branch}.json'
         rv = requests.get(url)  # change to session
-        lookaside[branch] = rv.json()
-
+        if rv.ok:
+            lookaside.update(rv.json())
 
     # Get all the project to branch mappings for every namespace
     namespace_to_projects = {}
@@ -492,7 +451,7 @@ if __name__ == '__main__':
             print('Querying for all the projects with the namespace "{0}"'
                   .format(namespace))
         namespace_to_projects[namespace] = \
-            get_pagure_project_branches(namespace, active_releases, lookaside, package=package, verbose=verbose)
+            get_pagure_project_branches(namespace, active_branches, lookaside, package=package, verbose=verbose)
 
     for tag, info in list(tag_info.items()):
         if verbose:
@@ -505,16 +464,10 @@ if __name__ == '__main__':
                 if info['branch'] in branches or tag == ('f' + RAWHIDE):
                     # The tag and branch names are the same for "old-style" branches
                     pkgs.append(pkg)
-                elif namespace in ('modules', 'flatpaks'):
-                    # Add modules to f27-modular-updates even if their only branch is '2.4'
-                    # Similarly, flatpaks will be built into f29-flatpak-updates-candidate
+                elif namespace == 'flatpaks':
+                    # Flatpaks will be built into f29-flatpak-updates-candidate
                     # if they use the f29 runtime, even from rawhide or stream branches.
                     pkgs.append(pkg)
-
-            # This is a special project, not in dist-git, but which needs to be in
-            # the package list.
-            if namespace == 'rpms':
-                pkgs.append('module-build-macros')
 
         if verbose:
             print('Setting the Koji ownership and package list on packages in '
