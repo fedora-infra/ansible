@@ -648,6 +648,10 @@ f{{ FedoraRawhideNumber }}.pre_beta.critpath.stable_after_days_without_negative_
 eln.status = pre_beta
 eln.pre_beta.mandatory_days_in_testing = 0
 
+# EPEL bootstrap - During bootstrap updates don't require any days in testing.
+epel{{ EPELBootstrapNumber }}.status = pre_beta
+epel{{ EPELBootstrapNumber }}.pre_beta.mandatory_days_in_testing = 0
+
 
 ##
 ## Buildroot Override
