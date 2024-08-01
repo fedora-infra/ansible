@@ -1,0 +1,36 @@
+server-identifier cloud-noc-os01.rdu-cc.fedoraproject.org;
+ddns-update-style none;
+
+shared-network mgmt {
+    option domain-name "mgmt.rdu-cc.fedoraproject.org";
+    option domain-name-servers 8.8.8.8, 1.1.1.1;
+
+    subnet 172.23.1.0 netmask 255.255.255.0 {
+    	   allow booting;
+    	   allow bootp;
+           authoritative;
+
+           class "pxeclients" {
+                 match if substring (option vendor-class-identifier, 0, 9) = "PXEClient";
+                 next-server 172.23.1.3;
+                 filename "pxelinux/pxelinux.0";
+           }
+
+    	   option routers 172.23.1.254;
+	   range 172.23.1.100 172.23.1.249;
+	   }
+    subnet 172.23.5.0 netmask 255.255.255.0 {
+    	   allow booting;
+    	   allow bootp;
+           authoritative;
+
+           class "pxeclients" {
+                 match if substring (option vendor-class-identifier, 0, 9) = "PXEClient";
+                 next-server 172.23.5.3;
+                 filename "pxelinux/pxelinux.0";
+           }
+
+    	   #option routers 172.23.5.254;
+	   range 172.23.5.100 172.23.5.249;
+	   }
+}
