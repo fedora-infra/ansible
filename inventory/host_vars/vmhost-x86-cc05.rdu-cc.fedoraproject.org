@@ -9,9 +9,6 @@ br0_port0_mac: "{{ mac0 }}"
 br1_ipv4: 172.23.1.1
 br1_ipv4_nm: 24
 br1_port0_mac: "{{ mac1 }}"
-br2_ipv4: 172.23.5.1
-br2_ipv4_nm: 24
-br2_port0_mac: "{{ mac2 }}"
 datacenter: rdu-cc
 dns: 8.8.8.8
 freezes: false
@@ -58,19 +55,6 @@ network_connections:
   - mac: "{{ br1_port0_mac }}"
     master: br1
     name: br1-port0
-    state: up
-    type: ethernet
-  - autoconnect: yes
-    ip:
-      address:
-        - "{{ br2_ipv4 }}/{{ br2_ipv4_nm }}"
-      dhcp4: no
-    name: br2
-    state: up
-    type: bridge
-  - mac: "{{ br2_port0_mac }}"
-    master: br2
-    name: br2-port0
     state: up
     type: ethernet
 nrpe_procs_crit: 1000
