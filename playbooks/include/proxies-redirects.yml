@@ -458,6 +458,15 @@
     tags:
     - fedoraproject.org
 
+  # Flock
+  - role: httpd/redirectmatch
+    shortname: flock
+    website: flocktofedora.org
+    regex: ^.*
+    target: https://fedoraproject.org/flock/
+    tags:
+    - fedoraproject.org
+
   # Various sites that we are friends with
   - role: httpd/redirect
     shortname: port389
