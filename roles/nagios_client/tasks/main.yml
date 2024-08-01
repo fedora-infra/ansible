@@ -124,7 +124,7 @@
 # Set up our base config.
 - name: /etc/nagios/nrpe.cfg
   template: src=nrpe.cfg.j2 dest=/etc/nagios/nrpe.cfg
-  when: not inventory_hostname.startswith('noc')
+  when: not inventory_hostname.startswith('noc0')
   notify:
   - restart nrpe
   tags:
