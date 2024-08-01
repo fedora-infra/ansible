@@ -90,6 +90,12 @@
     host: "webhook2fedmsg{{ env_suffix }}.fedoraproject.org"
     serviceport: web
     servicename: web
+  - role: openshift/route
+    app: webhook2fedmsg
+    routename: web-alt
+    host: "webhook2fedmsg.apps.ocp{{env_suffix}}.fedoraproject.org"
+    serviceport: web
+    servicename: web
 
   - role: openshift/object
     app: webhook2fedmsg
