@@ -33,7 +33,7 @@ num_cpus: 4
 public_hostname: noc-cc01.rdu-cc.fedoraproject.org
 tcp_ports: ['67', '68']
 udp_ports: ['67', '68', '69']
-virt_install_command: virt-install -n {{ inventory_hostname }} --memory={{ mem_size }},maxmemory={{ max_mem_size }} --memballoon virtio --disk bus=virtio,path={{ volgroup }}/{{ inventory_hostname }} --vcpus={{ num_cpus }},maxvcpus={{ max_cpu }} -l {{ ks_repo }} -x 'net.ifnames=0 ksdevice=eth0 ks={{ ks_url }} console=tty0 console=ttyS0 hostname={{ inventory_hostname }} nameserver={{ dns1 }} ip={{ eth0_ipv4 }}::{{ eth0_ipv4_gw }}:{{ eth0_ipv4_nm }}:{{ inventory_hostname }}:eth0:none ip={{ eth1_ipv4 }}:::{{ eth1_ipv4_nm }}:{{ inventory_hostname_short }}-mgmt:eth1:none' --network bridge=br0,model=virtio,mac={{ mac_address }} --network=bridge=br1,model=virtio,mac={{ mac_address }} --autostart --noautoconsole --watchdog default --rng /dev/random
+virt_install_command: virt-install -n {{ inventory_hostname }} --memory={{ mem_size }},maxmemory={{ max_mem_size }} --memballoon virtio --disk bus=virtio,path={{ volgroup }}/{{ inventory_hostname }} --vcpus={{ num_cpus }},maxvcpus={{ max_cpu }} -l {{ ks_repo }} -x 'net.ifnames=0 inst.ksdevice=eth0 inst.ks={{ ks_url }} console=tty0 console=ttyS0 hostname={{ inventory_hostname }} nameserver={{ dns1 }} ip={{ eth0_ipv4 }}::{{ eth0_ipv4_gw }}:{{ eth0_ipv4_nm }}:{{ inventory_hostname }}:eth0:none ip={{ eth1_ipv4 }}:::{{ eth1_ipv4_nm }}:{{ inventory_hostname_short }}-mgmt:eth1:none' --network bridge=br0,model=virtio,mac={{ mac_address }} --network=bridge=br1,model=virtio,mac={{ mac_address }} --autostart --noautoconsole --watchdog default --rng /dev/random
 vmhost: vmhost-x86-cc03.rdu-cc.fedoraproject.org
 volgroup: /dev/vg_guests
 vpn: true
