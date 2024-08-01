@@ -20,9 +20,5 @@ spec:
       name: quay.io/factory2/waiverdb:latest
 {% else %}
       # This is 'prod' tag is maintained by hand.
-      # name: quay.io/factory2/waiverdb:prod-fedora
-      # Changing prod just for now to this image as the fix
-      # for https://github.com/release-engineering/waiverdb/issues/219
-      # is not yet in prod-fedora
-      name: quay.io/factory2/waiverdb:latest
+      name: quay.io/factory2/waiverdb:prod-fedora
 {% endif %}
