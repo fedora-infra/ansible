@@ -10,7 +10,8 @@ br1_port0_mac: '{{ mac2 }}'
 datacenter: rdu-cc
 dns1: 8.8.8.8
 dns2: 8.8.4.4
-dns_search1: fedoraproject.org
+dns_search1: vpn.fedoraproject.org
+dns_search2: fedoraproject.org
 mac0: C8:4B:D6:98:5D:74
 mac2: c8:4b:d6:98:5d:75
 network_connections:
@@ -24,6 +25,7 @@ network_connections:
       - '{{ dns2 }}'
       dns_search:
       - '{{ dns_search1 }}'
+      - '{{ dns_search2 }}'
       gateway4: '{{ br0_ipv4_gw }}'
     name: br0
     state: up

@@ -23,7 +23,7 @@ network_connections:
         - "{{ dns1 }}"
         - "{{ dns2 }}"
       dns_search:
-        - rdu-cc.fedoraproject.org
+        - vpn.fedoraproject.org
         - fedoraproject.org
       gateway4: "{{ eth0_ipv4_gw }}"
     mac: "{{ ansible_default_ipv4.macaddress }}"

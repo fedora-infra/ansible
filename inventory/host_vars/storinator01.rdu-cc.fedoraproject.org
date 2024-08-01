@@ -2,7 +2,8 @@
 # this box is not currently mission critical
 datacenter: rdu-cc
 dns1: 8.8.8.8
-dns_search1: fedoraproject.org
+dns_search1: vpn.fedoraproject.org
+dns_search2: fedoraproject.org
 eth0_ipv4: 8.43.85.62
 eth0_ipv4_gw: 8.43.85.254
 eth0_ipv4_nm: 23
@@ -23,6 +24,7 @@ network_connections:
       - '{{ dns1 }}'
       dns_search:
       - '{{ dns_search1 }}'
+      - '{{ dns_search2 }}'
       gateway4: '{{ eth0_ipv4_gw }}'
     mac: '{{ mac0 }}'
     name: eth0

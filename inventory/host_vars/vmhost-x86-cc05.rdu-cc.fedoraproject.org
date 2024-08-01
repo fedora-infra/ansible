@@ -34,8 +34,8 @@ network_connections:
         - 8.8.4.4
         - 2001:4860:4860::8888
       dns_search:
-        - fedoraproject.org
         - vpn.fedoraproject.org
+        - fedoraproject.org
         - rdu-cc.fedoraproject.org
       gateway4: "{{ br0_ipv4_gw }}"
       gateway6: "{{ br0_ipv6_gw }}"
