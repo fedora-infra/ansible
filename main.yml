@@ -68,24 +68,9 @@
 - import_playbook: /srv/web/infra/ansible/playbooks/groups/value.yml
 - import_playbook: /srv/web/infra/ansible/playbooks/groups/virthost.yml
 - import_playbook: /srv/web/infra/ansible/playbooks/groups/wiki.yml
-####
-#
-# Openshift apps
-#
-#- import_playbook: /srv/web/infra/ansible/playbooks/openshift-apps/bodhi.yml
-#- import_playbook: /srv/web/infra/ansible/playbooks/openshift-apps/fas.yml
-#- import_playbook: /srv/web/infra/ansible/playbooks/openshift-apps/greenwave.yml
-#- import_playbook: /srv/web/infra/ansible/playbooks/openshift-apps/ipsilon.yml
-#- import_playbook: /srv/web/infra/ansible/playbooks/openshift-apps/koschei.yml
-#- import_playbook: /srv/web/infra/ansible/playbooks/openshift-apps/release-monitoring.yml
-#- import_playbook: /srv/web/infra/ansible/playbooks/openshift-apps/the-new-hotness.yml
-#- import_playbook: /srv/web/infra/ansible/playbooks/openshift-apps/transtats.yml
-#- import_playbook: /srv/web/infra/ansible/playbooks/openshift-apps/waiverdb.yml
-# These need work to finish and complete and are all stg currently.
-#- import_playbook: /srv/web/infra/ansible/playbooks/openshift-apps/rats.yml
 
 #
 # host playbooks
 #
 
-- import_playbook: /srv/web/infra/ansible/playbooks/hosts/cloud-noc01.fedorainfracloud.org.yml
+- import_playbook: /srv/web/infra/ansible/playbooks/hosts/noc-cc01.rdu-cc.fedoraproject.org.yml
