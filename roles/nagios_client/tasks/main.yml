@@ -60,7 +60,7 @@
   - check_redis_queue.sh
   - check_timestamp_from_file
   - check_crl_next_update
-  when: not inventory_hostname.startswith('noc')
+  when: not inventory_hostname.startswith('noc0')
   tags:
   - nagios_client
 
