@@ -16,8 +16,6 @@
     - /srv/web/infra/ansible/vars/apps/mirrormanager.yml
   handlers:
     - import_tasks: "{{ handlers_path }}/restart_services.yml"
-  vars:
-    job_name: move-to-archive-{{ product|lower|replace(" ", "-") }}-{{ version|lower|replace(" ", "-") }}-{{ ansible_date_time.epoch }}
 
   pre_tasks:
     - name: Validate the product {{ product }}
@@ -33,16 +31,7 @@
         fail_msg: "The 'version' variable is not defined"
 
   roles:
-    - role: openshift/object
+    - role: openshift/job
       app: mirrormanager
-      template: cmd-move-to-archive.yml
-      objectname: cmd-move-to-archive.yml
-      always_apply: true
-
-  tasks:
-    - debug:
-        msg: "Job started. You can watch the logs with: oc -n mirrormanager logs -f job/{{job_name}}"
-    - debug:
-        msg: "You can cancel it with: oc -n mirrormanager delete job/{{job_name}}"
-    - debug:
-        msg: "When it's done, clean it up with: oc -n mirrormanager delete job/{{job_name}}"
+      name: move-to-archive-{{ product|lower|replace(" ", "-") }}-{{ version|lower|replace(" ", "-") }}
+      command: "/opt/app-root/bin/mm2_move-to-archive --product {{ product }} --version {{ version }}"

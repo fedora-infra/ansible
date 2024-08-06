@@ -1,10 +1,10 @@
 {% from "_macros.yml" import common_volume_mounts, common_volumes, common_env, security_context with context %}
-# Manual command: move-to-archive
+# A template for manual commands
 ---
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "{{ job_name }}"
+  name: "job-{{ name }}"
 spec:
   parallelism: 1
   completions: 1
@@ -16,12 +16,7 @@ spec:
       containers:
         - name: mirrormanager
           image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
-          command:
-            - "/opt/app-root/bin/mm2_move-to-archive"
-            - "--product"
-            - "{{ product }}"
-            - "--version"
-            - "{{ version }}"
+          command: ["/bin/bash", "-euxc", "{{command}}"]
           env:
             {{ common_env() }}
           volumeMounts:
