@@ -1,0 +1,35 @@
+# This playbook moves a branched version to a released version in MirrorManager's DB
+
+# Usage:
+#  --extra-vars="version='42'"
+# version => The version that must be expired and updated.
+
+- name: Run the move-devel-to-release script
+  hosts: os_control[0]:os_control_stg[0]
+  user: root
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - /srv/private/ansible/vars.yml
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/apps/mirrormanager.yml
+  handlers:
+    - import_tasks: "{{ handlers_path }}/restart_services.yml"
+
+  pre_tasks:
+    - name: Validate the version {{ version }}
+      assert:
+        that:
+        - version is defined
+        fail_msg: "The 'version' variable is not defined"
+
+  roles:
+
+    - role: openshift/job
+      app: mirrormanager
+      name: move-devel-to-release-fedora-linux-{{ version|lower|replace(" ", "-") }}
+      command: "/opt/app-root/bin/mm2_move-devel-to-release --version {{ version }} --category 'Fedora Linux'"
+
+    - role: openshift/job
+      app: mirrormanager
+      name: move-devel-to-release-fedora-secondary-{{ version|lower|replace(" ", "-") }}
+      command: "/opt/app-root/bin/mm2_move-devel-to-release --version {{ version }} --category 'Fedora Secondary Arches'"
