@@ -400,18 +400,23 @@
 #
 
 - name: Install geoip download databases script
-  copy: src=geoip-download-databases dest=/usr/local/bin/geoip-download-databases mode=0755
+  template:
+    src: geoip-download-databases
+    dest: /usr/local/bin/geoip-download-databases
+    mode: 0755
   tags:
   - batcave
   - config
-  when: inventory_hostname.startswith('batcave01.phx2')
 
 - name: Install geoip download cron
-  copy: src=geoip-download-databases.cron dest=/etc/cron.d/geoip-download-databases.cron mode=0644
+  copy:
+    src: geoip-download-databases.cron
+    dest: /etc/cron.d/geoip-download-databases.cron
+    mode: 0644
   tags:
   - batcave
   - config
-  when: inventory_hostname.startswith('batcave01.phx2')
+  when: inventory_hostname.startswith('batcave01')
 
 #
 # set selinux context for /srv/web/infra

@@ -1,0 +1,24 @@
+#!/bin/bash
+BASE_URL='https://download.maxmind.com/geoip/databases'
+
+if [ $# -eq 0 ]; then
+    echo "usage: geoip-download-databases <output_directory>" >&2
+    exit 1
+fi
+
+set -e
+
+outdir="$1"
+tmpdir=$(mktemp -d) || exit 1
+trap "rm -rf ${tmpdir}" EXIT QUIT HUP KILL TERM
+
+pushd $tmpdir
+wget --content-disposition --user={{ maxmind_account_id }} --password={{ maxmind_license_key }} "${BASE_URL}/GeoLite2-Country/download?suffix=tar.gz"
+wget --content-disposition --user={{ maxmind_account_id }} --password={{ maxmind_license_key }} "${BASE_URL}/GeoLite2-Country/download?suffix=tar.gz.sha256"
+wget --content-disposition --user={{ maxmind_account_id }} --password={{ maxmind_license_key }} "${BASE_URL}/GeoLite2-City/download?suffix=tar.gz"
+wget --content-disposition --user={{ maxmind_account_id }} --password={{ maxmind_license_key }} "${BASE_URL}/GeoLite2-City/download?suffix=tar.gz.sha256"
+
+sha256sum -c *.sha256
+
+for tarball in *.tar.gz; do tar -xf "$tarball"; done
+cp -a */*.mmdb "${outdir}"
