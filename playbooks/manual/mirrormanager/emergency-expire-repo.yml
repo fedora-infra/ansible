@@ -1,0 +1,37 @@
+# This playbook forces an update of the mirrorlist cache in MirrorManager
+
+# Usage:
+#  --extra-vars="product='EPEL' version='7'"
+# product => The product name in MirrorManager's DB. Currently one of:
+#            "Fedora", "EPEL" or "RHEL"
+# version => The version that must be expired and updated.
+
+- name: Run the emergency-expire-repo script
+  hosts: os_control[0]:os_control_stg[0]
+  user: root
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - /srv/private/ansible/vars.yml
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/apps/mirrormanager.yml
+  handlers:
+    - import_tasks: "{{ handlers_path }}/restart_services.yml"
+
+  pre_tasks:
+    - name: Validate the product {{ product }}
+      assert:
+        that:
+        - product is defined
+        - product in ["Fedora", "EPEL", "RHEL"]
+        fail_msg: "The 'product' variable is not set correctly"
+    - name: Validate the version {{ version }}
+      assert:
+        that:
+        - version is defined
+        fail_msg: "The 'version' variable is not defined"
+
+  roles:
+    - role: openshift/job
+      app: mirrormanager
+      name: emergency-expire-repo-{{ product|lower|replace(" ", "-") }}-{{ version|lower|replace(" ", "-") }}
+      command: "/opt/app-root/bin/mm2_emergency-expire-repo {{ product }} {{ version }} && bash /opt/scripts/update-mirrorlist-cache.sh"
