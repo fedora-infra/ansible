@@ -112,6 +112,15 @@ bugzilla_group = "fedora_contrib"
 # Base URL for the Koji build system
 koji_url = "https://koji{{ env_suffix }}.fedoraproject.org"
 
+# Credentials for koji session
+{% if env == 'staging' %}
+principal = "toddlers/os-control01.stg.iad2.fedoraproject.org@STG.FEDORAPROJECT.ORG"
+keytab = "/etc/keytabs/service.keytab"
+{% else %}
+principal = "toddlers/os-control01.iad2.fedoraproject.org@FEDORAPROJECT.ORG"
+keytab = "/etc/keytabs/service.keytab"
+{% endif %}
+
 # Base URL for the Koji package db
 kojipkgs_url = "https://kojipkgs{{ env_suffix }}.fedoraproject.org"
 
