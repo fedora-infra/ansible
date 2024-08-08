@@ -25,6 +25,7 @@ spec:
               - "--output-dir"
               - "/var/lib/mirrormanager/geoip"
               - "-O"
+              - "--fail"
               - "https://infrastructure.fedoraproject.org/infra/bigfiles/geoip/GeoLite2-City.mmdb"
             volumeMounts:
               - name: var-lib
