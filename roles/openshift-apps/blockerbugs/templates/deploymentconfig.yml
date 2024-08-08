@@ -77,7 +77,7 @@ spec:
         - name: PAGURE_REPO_WEBHOOK_KEY
           value: "{{ prod_blockerbugs_pagure_repo_webhook_key_secret }}"
         - name: BUGZILLA_API_KEY
-          value: "{{ prod_blockerbugs_bz_api_key }}"
+          value: "{{ oraculum_bz_api_key }}"
         - name: PAGURE_URL
           value: "https://pagure.io/"
         - name: PAGURE_API
