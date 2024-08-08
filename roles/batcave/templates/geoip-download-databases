@@ -21,4 +21,5 @@ wget --content-disposition --user={{ maxmind_account_id }} --password={{ maxmind
 sha256sum -c *.sha256
 
 for tarball in *.tar.gz; do tar -xf "$tarball"; done
-cp -a */*.mmdb "${outdir}"
+cp -a -v */*.mmdb "${outdir}"
+restorecon -v "${outdir}"/*.mmdb
