@@ -179,6 +179,13 @@ handlers = ["console"]
             keyid = "{{ (env == 'production')|ternary('e99d6ad1', 'd300e724') }}"
             file_signing_key = "fedora-41-ima"
 
+            [[consumer_config.koji_instances.primary.tags]]
+            from = "f41"
+            to = "f41"
+            key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('e99d6ad1', '105ef944') }}"
+            file_signing_key = "fedora-42-ima"
+
             # Branched
 
             [[consumer_config.koji_instances.primary.tags]]
