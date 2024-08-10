@@ -33,11 +33,8 @@ auto_delete = false
 exclusive = false
 arguments = {}
 
-# For now, just enable AWS support in staging.
-{% if env == "staging" %}
 [consumer_config.aws]
 base_region = "us-east-1"
-s3_bucket_name = "fedora-s3-bucket-fedimg-staging"
 ami_description = ""
 ami_volume_dev_name = "/dev/sda1"
 ami_volume_type = "gp3"
@@ -66,6 +63,11 @@ ami_regions = [
     "us-west-1",
     "us-west-2",
 ]
+{% if env == "staging" %}
+s3_bucket_name = "fedora-s3-bucket-fedimg-staging"
+publish_amqp_messages = true
+{% else %}
+s3_bucket_name = "fedora-s3-bucket-fedimg"
 publish_amqp_messages = false
 {% endif %}
 
