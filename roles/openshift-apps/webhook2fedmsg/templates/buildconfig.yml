@@ -23,8 +23,8 @@ spec:
         namespace: openshift
         name: python:3.11-ubi9
   triggers:
-  - type: ConfigChange
-  - type: ImageChange
-  - type: GitHub
-    github:
-      secret: "{{ (env == 'staging')|ternary(webhook2fedmsg_stg_webhook_secret, webhook2fedmsg_prod_webhook_secret) }}"
+    - type: ConfigChange
+    - type: ImageChange
+    - type: GitHub
+      github:
+        secret: "{{ (env == 'staging')|ternary(webhook2fedmsg_stg_webhook_secret, webhook2fedmsg_prod_webhook_secret) }}"

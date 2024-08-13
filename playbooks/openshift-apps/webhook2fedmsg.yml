@@ -34,84 +34,84 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
-  - role: rabbit/user
-    username: "webhook2fedmsg{{ env_suffix }}"
-    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(github|discourse)\..*
+    - role: rabbit/user
+      username: "webhook2fedmsg{{ env_suffix }}"
+      sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(github|discourse)\..*
 
-  - role: openshift/project
-    app: webhook2fedmsg
-    description: "Relay webhooks to Fedora Messaging"
-    appowners:
-    - ryanlerch
-    - abompard
-    - t0xic0der
-    - kevin
-    tags:
-      - apply-appowners
-  
-  - role: openshift/secret-file
-    app: webhook2fedmsg
-    secret_name: fedora-messaging-ca
-    key: cacert.pem
-    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
-  - role: openshift/secret-file
-    app: webhook2fedmsg
-    secret_name: fedora-messaging-crt
-    key: webhook2fedmsg-cert.pem
-    privatefile: "rabbitmq/{{env}}/pki/issued/webhook2fedmsg{{env_suffix}}.crt"
-  - role: openshift/secret-file
-    app: webhook2fedmsg
-    secret_name: fedora-messaging-key
-    key: webhook2fedmsg-key.pem
-    privatefile: "rabbitmq/{{env}}/pki/private/webhook2fedmsg{{env_suffix}}.key"
+    - role: openshift/project
+      app: webhook2fedmsg
+      description: "Relay webhooks to Fedora Messaging"
+      appowners:
+        - ryanlerch
+        - abompard
+        - t0xic0der
+        - kevin
+      tags:
+        - apply-appowners
 
-  - role: openshift/imagestream
-    app: webhook2fedmsg
-    imagename: webhook2fedmsg
+    - role: openshift/secret-file
+      app: webhook2fedmsg
+      secret_name: fedora-messaging-ca
+      key: cacert.pem
+      privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    - role: openshift/secret-file
+      app: webhook2fedmsg
+      secret_name: fedora-messaging-crt
+      key: webhook2fedmsg-cert.pem
+      privatefile: "rabbitmq/{{env}}/pki/issued/webhook2fedmsg{{env_suffix}}.crt"
+    - role: openshift/secret-file
+      app: webhook2fedmsg
+      secret_name: fedora-messaging-key
+      key: webhook2fedmsg-key.pem
+      privatefile: "rabbitmq/{{env}}/pki/private/webhook2fedmsg{{env_suffix}}.key"
 
-  - role: openshift/object
-    app: webhook2fedmsg
-    template: buildconfig.yml
-    objectname: buildconfig.yml
-  
-  - role: openshift/object
-    app: webhook2fedmsg
-    template: configmap.yml
-    objectname: configmap.yml
+    - role: openshift/imagestream
+      app: webhook2fedmsg
+      imagename: webhook2fedmsg
 
-  - role: openshift/object
-    app: webhook2fedmsg
-    file: service.yml
-    objectname: service.yml
+    - role: openshift/object
+      app: webhook2fedmsg
+      template: buildconfig.yml
+      objectname: buildconfig.yml
 
-  # Routes
-  - role: openshift/route
-    app: webhook2fedmsg
-    routename: web
-    host: "webhook2fedmsg{{ env_suffix }}.fedoraproject.org"
-    serviceport: web
-    servicename: web
-  - role: openshift/route
-    app: webhook2fedmsg
-    routename: web-alt
-    host: "webhook2fedmsg.apps.ocp{{env_suffix}}.fedoraproject.org"
-    serviceport: web
-    servicename: web
+    - role: openshift/object
+      app: webhook2fedmsg
+      template: configmap.yml
+      objectname: configmap.yml
 
-  # FASJSON access
-  - role: openshift/ipa-client
-    app: webhook2fedmsg
-  - role: openshift/keytab
-    app: webhook2fedmsg
-    key: service.keytab
-    secret_name: keytab
-    service: webhook2fedmsg
+    - role: openshift/object
+      app: webhook2fedmsg
+      file: service.yml
+      objectname: service.yml
 
-  # Deployment config
-  - role: openshift/object
-    app: webhook2fedmsg
-    template: deploymentconfig.yml
-    objectname: deploymentconfig.yml
+    # Routes
+    - role: openshift/route
+      app: webhook2fedmsg
+      routename: web
+      host: "webhook2fedmsg{{ env_suffix }}.fedoraproject.org"
+      serviceport: web
+      servicename: web
+    - role: openshift/route
+      app: webhook2fedmsg
+      routename: web-alt
+      host: "webhook2fedmsg.apps.ocp{{env_suffix}}.fedoraproject.org"
+      serviceport: web
+      servicename: web
+
+    # FASJSON access
+    - role: openshift/ipa-client
+      app: webhook2fedmsg
+    - role: openshift/keytab
+      app: webhook2fedmsg
+      key: service.keytab
+      secret_name: keytab
+      service: webhook2fedmsg
+
+    # Deployment config
+    - role: openshift/object
+      app: webhook2fedmsg
+      template: deploymentconfig.yml
+      objectname: deploymentconfig.yml
 
   # - role: openshift/start-build
   #   app: webhook2fedmsg
