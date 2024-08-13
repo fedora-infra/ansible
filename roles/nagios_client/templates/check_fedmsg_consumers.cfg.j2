@@ -10,7 +10,6 @@ command[check_fedmsg_cp_app]={{libdir}}/nagios/plugins/check_fedmsg_producers_co
 command[check_fedmsg_cp_value]={{libdir}}/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-irc IRCBotConsumer MonitoringProducer
 command[check_fedmsg_cp_badges_backend]={{libdir}}/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-hub FedoraBadgesConsumer MonitoringProducer
 command[check_fedmsg_cp_notifs_backend]={{libdir}}/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-hub FMNConsumer DigestProducer ConfirmationProducer MonitoringProducer
-command[check_fedmsg_cp_fedimg_backend]={{libdir}}/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-hub FedimgConsumer MonitoringProducer
 command[check_fedmsg_cp_hotness_backend]={{libdir}}/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-hub BugzillaTicketFiler MonitoringProducer
 command[check_fedmsg_cp_packages_backend]={{libdir}}/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-hub CacheInvalidator MonitoringProducer
 
@@ -25,7 +24,6 @@ command[check_fedmsg_cexceptions_app]={{libdir}}/nagios/plugins/check_fedmsg_con
 command[check_fedmsg_cexceptions_value]={{libdir}}/nagios/plugins/check_fedmsg_consumer_exceptions.py fedmsg-irc IRCBotConsumer 1 10
 command[check_fedmsg_cexceptions_badges_backend]={{libdir}}/nagios/plugins/check_fedmsg_consumer_exceptions.py fedmsg-hub FedoraBadgesConsumer 1 10
 command[check_fedmsg_cexceptions_notifs_backend]={{libdir}}/nagios/plugins/check_fedmsg_consumer_exceptions.py fedmsg-hub FMNConsumer 1 10
-command[check_fedmsg_cexceptions_fedimg_backend]={{libdir}}/nagios/plugins/check_fedmsg_consumer_exceptions.py fedmsg-hub FedimgConsumer 1 10
 command[check_fedmsg_cexceptions_hotness_backend]={{libdir}}/nagios/plugins/check_fedmsg_consumer_exceptions.py fedmsg-hub BugzillaTicketFiler 1 10
 command[check_fedmsg_cexceptions_packages_backend]={{libdir}}/nagios/plugins/check_fedmsg_consumer_exceptions.py fedmsg-hub CacheInvalidator 1 10
 
@@ -41,7 +39,6 @@ command[check_fedmsg_cbacklog_value]={{libdir}}/nagios/plugins/check_fedmsg_cons
 command[check_fedmsg_cbacklog_badges_backend]={{libdir}}/nagios/plugins/check_fedmsg_consumer_backlog.py fedmsg-hub FedoraBadgesConsumer 25000 35000
 command[check_fedmsg_cbacklog_notifs_backend]={{libdir}}/nagios/plugins/check_fedmsg_consumer_backlog.py fedmsg-hub FMNConsumer 15000 20000
 command[check_fedmsg_cbacklog_bugzilla2fedmsg]={{libdir}}/nagios/plugins/check_fedmsg_consumer_backlog.py moksha-hub BugzillaConsumer 10 100
-command[check_fedmsg_cbacklog_fedimg_backend]={{libdir}}/nagios/plugins/check_fedmsg_consumer_backlog.py fedmsg-hub FedimgConsumer 2000 5000
 command[check_fedmsg_cbacklog_hotness_backend]={{libdir}}/nagios/plugins/check_fedmsg_consumer_backlog.py fedmsg-hub BugzillaTicketFiler 1000 5000
 command[check_fedmsg_cbacklog_packages_backend]={{libdir}}/nagios/plugins/check_fedmsg_consumer_backlog.py fedmsg-hub CacheInvalidator 30000 40000
 

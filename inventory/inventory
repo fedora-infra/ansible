@@ -87,12 +87,6 @@ ibiblio05.fedoraproject.org
 [ibiblio_old_virt]
 ibiblio05.fedoraproject.org
 
-[fedimg]
-fedimg01.iad2.fedoraproject.org
-
-[fedimg_stg]
-# fedimg01.stg.iad2.fedoraproject.org
-
 [busgateway]
 busgateway01.iad2.fedoraproject.org
 
@@ -578,7 +572,6 @@ db03.stg.iad2.fedoraproject.org
 debuginfod01.stg.iad2.fedoraproject.org
 oci-candidate-registry01.stg.iad2.fedoraproject.org
 oci-registry01.stg.iad2.fedoraproject.org
-# fedimg01.stg.iad2.fedoraproject.org
 github2fedmsg01.stg.iad2.fedoraproject.org
 ipa01.stg.iad2.fedoraproject.org
 ipa02.stg.iad2.fedoraproject.org
@@ -697,12 +690,10 @@ wiki02.iad2.fedoraproject.org
 # assorted categories of fedmsg services, for convenience
 [fedmsg_hubs:children]
 busgateway
-fedimg
 pkgs
 
 [fedmsg_hubs_stg:children]
 busgateway_stg
-fedimg_stg
 pkgs_stg
 
 [fedmsg_ircs:children]
@@ -1041,7 +1032,6 @@ dbserver
 debuginfod
 dns_iad2
 download_iad2
-fedimg
 flatpak_cache
 github2fedmsg
 ipa
@@ -1079,7 +1069,6 @@ buildvm_aarch64_stg
 busgateway_stg
 dbserver_stg
 debuginfod_stg
-fedimg_stg
 github2fedmsg_stg
 ipa_stg
 ipsilon_stg
