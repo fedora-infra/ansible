@@ -31,10 +31,6 @@ spec:
         - image: webhook2fedmsg:latest
           name: app
           env:
-            - name: W2FM_CONFIG
-              value: "/etc/webhook-to-fedora-messaging/webhook-to-fedora-messaging.cfg"
-            - name: APP_SCRIPT
-              value: "/opt/app-root/bin/uvicorn --host 0.0.0.0 --port 8080 --log-config /etc/webhook-to-fedora-messaging/logging.yaml --factory webhook_to_fedora_messaging.main:create_app"
             - name: KRB5_CONFIG
               value: /etc/ipa/krb5.conf
             - name: KRB5_CLIENT_KTNAME
