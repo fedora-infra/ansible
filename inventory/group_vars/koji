@@ -1,8 +1,8 @@
 ---
 # Define resources for this group of hosts here.
 custom_rules: [
-  # Needed for keepalived
-  '-A INPUT -d 224.0.0.0/8 -j ACCEPT', '-A INPUT -p vrrp -j ACCEPT']
+  # block proxy01 / proxy10 for branching
+  '-A INPUT -s 10.3.163.74/32 -j REJECT', '-A INPUT -s 10.3.163.75/32 -j REJECT']
 docker_registry: "candidate-registry.fedoraproject.org"
 # These are consumed by a task in roles/fedmsg/base/main.yml
 fedmsg_certs:
