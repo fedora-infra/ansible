@@ -34,7 +34,7 @@ spec:
         - name: W2FM_CONFIG
           value: "/etc/webhook-to-fedora-messaging/webhook-to-fedora-messaging.cfg"
         - name: APP_SCRIPT
-          value: "uvicorn --host 0.0.0.0 --port 8080 --log-config /etc/webhook-to-fedora-messaging/logging.yaml --factory webhook_to_fedora_messaging.main:create_app"
+          value: "/opt/app-root/bin/uvicorn --host 0.0.0.0 --port 8080 --log-config /etc/webhook-to-fedora-messaging/logging.yaml --factory webhook_to_fedora_messaging.main:create_app"
         ports:
         - containerPort: 8080
           protocol: TCP
