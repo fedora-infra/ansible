@@ -84,6 +84,7 @@
     file: service.yml
     objectname: service.yml
 
+  # Routes
   - role: openshift/route
     app: webhook2fedmsg
     routename: web
@@ -97,6 +98,16 @@
     serviceport: web
     servicename: web
 
+  # FASJSON access
+  - role: openshift/ipa-client
+    app: webhook2fedmsg
+  - role: openshift/keytab
+    app: webhook2fedmsg
+    key: service.keytab
+    secret_name: keytab
+    service: webhook2fedmsg
+
+  # Deployment config
   - role: openshift/object
     app: webhook2fedmsg
     template: deploymentconfig.yml

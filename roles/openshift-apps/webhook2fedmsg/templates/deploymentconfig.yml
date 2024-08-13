@@ -35,12 +35,22 @@ spec:
           value: "/etc/webhook-to-fedora-messaging/webhook-to-fedora-messaging.cfg"
         - name: APP_SCRIPT
           value: "/opt/app-root/bin/uvicorn --host 0.0.0.0 --port 8080 --log-config /etc/webhook-to-fedora-messaging/logging.yaml --factory webhook_to_fedora_messaging.main:create_app"
+        - name: KRB5_CONFIG
+          value: /etc/ipa/krb5.conf
+        - name: KRB5_CLIENT_KTNAME
+          value: /etc/keytabs/service.keytab
         ports:
         - containerPort: 8080
           protocol: TCP
         volumeMounts:
         - name: config
           mountPath: "/etc/webhook-to-fedora-messaging"
+          readOnly: true
+        - name: ipa-config-volume
+          mountPath: /etc/ipa
+          readOnly: true
+        - name: keytab-volume
+          mountPath: /etc/keytabs
           readOnly: true
         - name: fedora-messaging-config
           mountPath: "/etc/fedora-messaging"
@@ -75,6 +85,12 @@ spec:
       - name: config
         configMap:
           name: config
+      - name: ipa-config-volume
+        configMap:
+          name: ipa-client-config
+      - name: keytab-volume
+        secret:
+          secretName: keytab
       - name: fedora-messaging-config
         configMap:
           name: fedora-messaging-config
