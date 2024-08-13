@@ -16,7 +16,7 @@ spec:
     recreateParams:
       mid:
         execNewPod:
-          command: [/opt/app-root/bin/flask, db, sync]
+          command: [/opt/app-root/bin/w2fm, setup]
           containerName: app
           volumes:
             - config
@@ -31,19 +31,16 @@ spec:
       - image: webhook2fedmsg:latest
         name: app
         env:
-        - name: APP_MODULE
-          value: "deploy.wsgi"
-        - name: W2FM_APPCONFIG
-          value: "/etc/webhook2fedmsg/config.toml"
+        - name: W2FM_CONFIG
+          value: "/etc/webhook-to-fedora-messaging/webhook-to-fedora-messaging.cfg"
+        - name: APP_SCRIPT
+          value: "uvicorn --host 0.0.0.0 --port 8080 --log-config /etc/webhook-to-fedora-messaging/logging.yaml --factory webhook_to_fedora_messaging.main:create_app"
         ports:
         - containerPort: 8080
           protocol: TCP
         volumeMounts:
         - name: config
-          mountPath: "/etc/webhook2fedmsg"
-          readOnly: true
-        - name: wsgi-script
-          mountPath: "/opt/app-root/src/deploy"
+          mountPath: "/etc/webhook-to-fedora-messaging"
           readOnly: true
         - name: fedora-messaging-config
           mountPath: "/etc/fedora-messaging"
@@ -65,22 +62,19 @@ spec:
         #   initialDelaySeconds: 5
         #   periodSeconds: 60
         #   httpGet:
-        #     path: "/healthz/ready"
+        #     path: "/api/v1/healthz/ready"
         #     port: 8080
         # livenessProbe:
         #   timeoutSeconds: 10
         #   initialDelaySeconds: 3
         #   periodSeconds: 60
         #   httpGet:
-        #     path: "/healthz/live"
+        #     path: "/api/v1/healthz/live"
         #     port: 8080
       volumes:
       - name: config
         configMap:
           name: config
-      - name: wsgi-script
-        configMap:
-          name: wsgi-script
       - name: fedora-messaging-config
         configMap:
           name: fedora-messaging-config
