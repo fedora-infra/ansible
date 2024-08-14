@@ -63,12 +63,11 @@ ami_regions = [
     "us-west-1",
     "us-west-2",
 ]
+publish_amqp_messages = true
 {% if env == "staging" %}
 s3_bucket_name = "fedora-s3-bucket-fedimg-staging"
-publish_amqp_messages = true
 {% else %}
 s3_bucket_name = "fedora-s3-bucket-fedimg"
-publish_amqp_messages = false
 {% endif %}
 
 [consumer_config.azure]
