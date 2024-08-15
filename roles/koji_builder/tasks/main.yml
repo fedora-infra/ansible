@@ -113,7 +113,10 @@
 
 - name: remove koji builder rpmautospec plugin
   package:
-    name: koji-builder-plugin-rpmautospec
+    name:
+      - koji-builder-plugin-rpmautospec
+      - python3-rpmautospec
+      - rpmautospec
     state: absent
   when: env == 'staging'
   tags:
