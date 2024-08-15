@@ -72,6 +72,7 @@
     - koji-containerbuild-builder
     - strace
     - mock
+    - mock-rpmautospec
     - kernel-firmware
     - kernel-modules
     - rsyslog
@@ -102,10 +103,19 @@
 
 - name: install koji builder rpmautospec plugin
   package:
-    name: "{{ item }}"
+    name: koji-builder-plugin-rpmautospec
     state: present
-  with_items:
-  - koji-builder-plugin-rpmautospec
+  when: env != 'staging'
+  tags:
+  - packages
+  - koji_builder
+  - rpmautospec
+
+- name: remove koji builder rpmautospec plugin
+  package:
+    name: koji-builder-plugin-rpmautospec
+    state: absent
+  when: env == 'staging'
   tags:
   - packages
   - koji_builder
