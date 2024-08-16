@@ -481,7 +481,7 @@ def update_epel_release_latest(releases):
     releases (dict): contains similar information of global variable RELEASES
     """
     for release in releases:
-        if 'epel' in release and 'Modular' not in RELEASES[release]['repos']['epel']['to'][0]['dest']:
+        if 'epel' in release and '10' not in RELEASES[release]['repos']['epel']['to'][0]['dest']:
             if 'next' in RELEASES[release]['repos']['epel']['to'][0]['dest']:
                 dest = '/pub/epel/epel-next-release-latest-' + release[4] + '.noarch.rpm'
                 # For next's epel release, use the subpackage rpm from epel repo instead of
