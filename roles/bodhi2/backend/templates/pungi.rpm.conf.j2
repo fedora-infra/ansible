@@ -5,7 +5,7 @@ from pungi_multilib import *
 
 # PRODUCT INFO
 skip_phases = ["buildinstall", "extra_files"]
-release_version = '[[ release.version_int ]]'
+release_version = '[[ release.version ]]'
 release_type = 'updates[% if request.name == 'testing' %]-testing[% endif %]'
 old_composes_per_release_type = True
 release_name = '[[ release.id_prefix.title() ]]'
@@ -21,23 +21,23 @@ comps_file = {
 }
 variants_file='variants.xml'
 sigkeys = [
-[% if release.version_int == 38 %]
+[% if release.version == '38' %]
     'eb10b464',
-[% elif release.version_int == 39 %]
+[% elif release.version == '39' %]
     '18B8e74c',
-[% elif release.version_int == 40 %]
+[% elif release.version == '40' %]
     'a15B79cc',
-[% elif release.version_int == 41 %]
+[% elif release.version == '41' %]
     'e99d6ad1',
-[% elif release.version_int == 42 %]
+[% elif release.version == '42' %]
     '105ef944',
-[% elif release.version_int == 6 %]
+[% elif release.version == '6' %]
     '0608b895',
-[% elif release.version_int == 7 %]
+[% elif release.version == '7' %]
     '352C64E5',
-[% elif release.version_int == 8 %]
+[% elif release.version == '8' %]
     '2f86d6a1'
-[% elif release.version_int == 9 %]
+[% elif release.version == '9' %]
     '3228467c',
 [% elif release.version.startswith("10.") %]
     'e37ed158',
@@ -51,7 +51,7 @@ comps_filter_environments = False
 # RUNROOT settings
 runroot = True
 runroot_channel = 'compose'
-runroot_tag = 'f[[ release.version_int ]]-build'
+runroot_tag = 'f[[ release.version ]]-build'
 
 # PKGSET
 pkgset_koji_tag = '[[ id ]]'
@@ -83,7 +83,7 @@ createrepo_database = False
 
 createrepo_extra_args = [
 [% if cr_config.zchunk %]
-    '--zck', '--zck-dict-dir=/usr/share/fedora-repo-zdicts/f[[ release.version_int ]]',
+    '--zck', '--zck-dict-dir=/usr/share/fedora-repo-zdicts/f[[ release.version ]]',
 [% endif %]
 [% if cr_config.repodata_comp %]
 [% if cr_config.general_comp %]
@@ -131,13 +131,13 @@ createiso_skip = [
 {% set repos = '[
                 [% if request.name == "testing" %]
                     [# In the case of testing, also inject the last stable updates #]
-                    "https://kojipkgs{env_suffix}.fedoraproject.org/compose/updates/f[[ release.version_int ]]-updates/compose/Everything/$basearch/os/",
+                    "https://kojipkgs{env_suffix}.fedoraproject.org/compose/updates/f[[ release.version ]]-updates/compose/Everything/$basearch/os/",
                 [% endif %]
-                [% if release.version_int == 41 %]
+                [% if release.version == '41' %]
                     [# For F41 the compose location is going to be under /compose/branched/ #]
-                    "https://kojipkgs{env_suffix}.fedoraproject.org/compose/branched/latest-Fedora-[[ release.version_int ]]/compose/Everything/$basearch/os/"
+                    "https://kojipkgs{env_suffix}.fedoraproject.org/compose/branched/latest-Fedora-[[ release.version ]]/compose/Everything/$basearch/os/"
                 [% else %]
-                    "https://kojipkgs{env_suffix}.fedoraproject.org/compose/[[ release.version_int ]]/latest-Fedora-[[ release.version_int ]]/compose/Everything/$basearch/os/"
+                    "https://kojipkgs{env_suffix}.fedoraproject.org/compose/[[ release.version ]]/latest-Fedora-[[ release.version ]]/compose/Everything/$basearch/os/"
                 [% endif %]
             ]'.format(env_suffix=env_suffix) %}
 
@@ -159,7 +159,7 @@ ostree = {
         "config_branch": "f[[ release.version ]]",
         "repo": {{ repos }},
         "ostree_repo": "/mnt/koji/compose/ostree/repo",
-        "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/[[ ostreeref ]]/silverblue",
+        "ostree_ref": "fedora/[[ release.version ]]/${basearch}/[[ ostreeref ]]/silverblue",
         "tag_ref": False,
         "arches": ["x86_64", "ppc64le", "aarch64" ],
         "failable": ["x86_64", "ppc64le", "aarch64" ]
@@ -173,7 +173,7 @@ ostree = {
         "config_branch": "f[[ release.version ]]",
         "repo": {{ repos }},
         "ostree_repo": "/mnt/koji/compose/ostree/repo",
-        "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/[[ ostreeref ]]/kinoite",
+        "ostree_ref": "fedora/[[ release.version ]]/${basearch}/[[ ostreeref ]]/kinoite",
         "tag_ref": False,
         "arches": ["x86_64", "ppc64le", "aarch64" ],
         "failable": ["x86_64", "ppc64le", "aarch64" ]
@@ -187,7 +187,7 @@ ostree = {
         "config_branch": "f[[ release.version ]]",
         "repo": {{ repos }},
         "ostree_repo": "/mnt/koji/compose/ostree/repo",
-        "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/[[ ostreeref ]]/sericea",
+        "ostree_ref": "fedora/[[ release.version ]]/${basearch}/[[ ostreeref ]]/sericea",
         "tag_ref": False,
         "arches": ["x86_64", "aarch64"],
         "failable": ["x86_64", "aarch64"]
@@ -201,7 +201,7 @@ ostree = {
         "config_branch": "f[[ release.version ]]",
         "repo": {{ repos }},
         "ostree_repo": "/mnt/koji/compose/ostree/repo",
-        "ostree_ref": "fedora/[[ release.version_int ]]/${basearch}/[[ ostreeref ]]/onyx",
+        "ostree_ref": "fedora/[[ release.version ]]/${basearch}/[[ ostreeref ]]/onyx",
         "tag_ref": False,
         "arches": ["x86_64"],
         "failable": ["x86_64"]
