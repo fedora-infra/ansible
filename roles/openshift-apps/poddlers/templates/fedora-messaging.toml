@@ -43,6 +43,7 @@ routing_keys = {{ toddler.topics|tojson }}
 # Or add more toddlers to the list (using their name) if you want to disable
 # more of them.
 blocked_toddlers = [
+    "clean_retired_packages",
     "debug",
     "distgit_commit_processor",
     "koji_block_retired",
