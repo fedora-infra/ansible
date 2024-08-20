@@ -7,7 +7,7 @@
 - name: prepare the patches directory
   file:
     path: /opt/ipsilon-patches
-    state: dir
+    state: directory
 
 - name: download patches
   ansible.builtin.get_url:
