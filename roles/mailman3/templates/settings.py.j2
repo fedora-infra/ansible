@@ -323,6 +323,9 @@ Q_CLUSTER = {
 #
 REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
     'DEFAULT_FILTER_BACKENDS': (
         'rest_framework.filters.OrderingFilter',
     ),
