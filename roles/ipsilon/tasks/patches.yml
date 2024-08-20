@@ -18,7 +18,13 @@
 - name: apply patches
   ansible.builtin.shell:
     chdir: "{{ ansible_facts['python3']['sitelib'] }}"
-    cmd: filterdiff --include '?/ipsilon/' /opt/ipsilon-patches/{{item}}.patch | patch -p1 --forward --batch
+    cmd: filterdiff --include '?/ipsilon/*' /opt/ipsilon-patches/{{item}}.patch | patch -p1 --forward --fuzz=0 --reject-file=- --batch
   loop: "{{ ipsilon_patches }}"
+  register: result
+  ignore_errors: true
+  changed_when:
+    - "'Reversed (or previously applied) patch detected!' not in result.stdout"
+    - result.rc = 0
+  failed_when: "'FAILED' in result.stdout"
   notify:
   - restart apache

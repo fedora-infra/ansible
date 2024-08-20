@@ -84,15 +84,15 @@
   tags:
   - ipsilon
 
-- include_tasks: patches.yml
-  tags:
-  - ipsilon
-  - patches
-
 - name: Destroy admin ticket
   command: kdestroy -A
   tags:
   - ipsilon
+
+- import_tasks: patches.yml
+  tags:
+  - ipsilon
+  - patches
 
 - name: make sure /etc/ipsilon/root is owned correctly
   file:
