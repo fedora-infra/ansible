@@ -84,6 +84,8 @@
   tags:
   - ipsilon
 
+- include_tasks: patches.yml
+
 - name: Destroy admin ticket
   command: kdestroy -A
   tags:

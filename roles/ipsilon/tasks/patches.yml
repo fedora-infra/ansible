@@ -1,0 +1,24 @@
+- name: install patch and filterdiff
+  dnf:
+    name:
+      - patch
+      - patchutils
+
+- name: prepare the patches directory
+  file:
+    path: /opt/ipsilon-patches
+    state: dir
+
+- name: download patches
+  ansible.builtin.get_url:
+    url: https://pagure.io/ipsilon/pull-request/{{item}}.patch
+    dest: /opt/ipsilon-patches/{{item}}.patch
+  loop: "{{ ipsilon_patches }}"
+
+- name: apply patches
+  ansible.builtin.shell:
+    chdir: "{{ ansible_facts['python3']['sitelib'] }}"
+    cmd: filterdiff --include '?/ipsilon/' /opt/ipsilon-patches/{{item}}.patch | patch -p1 --forward --batch
+  loop: "{{ ipsilon_patches }}"
+  notify:
+  - restart apache
