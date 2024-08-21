@@ -217,8 +217,8 @@ namespace = "modules"
 versions = []
 
 [consumer_config.distgit_bugzilla_sync.products."Fedora EPEL"]
-branch_regex = '^epel\d+$'
-versions = ["epel9", "epel8"]
+branch_regex = '^epel\d+(?:\.\d+)?$'
+versions = ["epel10", "epel9", "epel8"]
 
 # Configuration section for scm_request_processor
 [consumer_config.scm_request_processor]
