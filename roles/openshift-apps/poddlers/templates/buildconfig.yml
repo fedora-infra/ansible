@@ -41,13 +41,11 @@ spec:
   source:
     type: Git
     git:
-      # uri: https://pagure.io/fedora-infra/toddlers.git
-      uri: https://pagure.io/forks/abompard/fedora-infra/toddlers.git
-      ref: poddlers
+      uri: https://pagure.io/fedora-infra/toddlers.git
 {% if env == 'staging' %}
-      #ref: "staging"
+      ref: "staging"
 {% else %}
-      #ref: "production"
+      ref: "production"
 {% endif %}
   strategy:
     type: Source
