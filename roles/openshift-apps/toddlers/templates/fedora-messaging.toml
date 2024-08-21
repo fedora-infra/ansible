@@ -204,6 +204,7 @@ notify_admins = [
 [consumer_config.distgit_bugzilla_sync.products]
 
 [consumer_config.distgit_bugzilla_sync.products.Fedora]
+branch_regex = '^((f\d+)|rawhide)$'
 namespace = "rpms"
 versions = ["rawhide", "39", "38", "37", "36"]
 
