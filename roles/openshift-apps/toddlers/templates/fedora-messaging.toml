@@ -49,9 +49,6 @@ blocked_toddlers = [
     "pdc_import_compose",
     "pdc_unretire_packages",
     "pdc_update_critpath",
-{% if env == "staging" %}
-    "distgit_bugzilla_sync",
-{% endif %}
 ]
 
 [consumer_config.default]
