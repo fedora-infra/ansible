@@ -192,12 +192,6 @@ notify_admins = [
 ]
 {% endif %}
 
-# PDC types mapping for distgit_bugzilla_sync toddler
-[consumer_config.distgit_bugzilla_sync.pdc_types]
-"rpms" = "rpm"
-"modules" = "module"
-"container" = "container"
-
 # Bugzilla products informations for Fedora
 [consumer_config.distgit_bugzilla_sync.products]
 
@@ -207,12 +201,9 @@ namespace = "rpms"
 versions = ["rawhide", "41", "40", "39", "38"]
 
 [consumer_config.distgit_bugzilla_sync.products."Fedora Container Images"]
+branch_regex = '^((f\d+)|rawhide)$'
 namespace = "container"
 versions = ["rawhide", "41", "40", "39", "38"]
-
-[consumer_config.distgit_bugzilla_sync.products."Fedora Modules"]
-namespace = "modules"
-versions = []
 
 [consumer_config.distgit_bugzilla_sync.products."Fedora EPEL"]
 branch_regex = '^epel\d+(?:\.\d+)?$'
