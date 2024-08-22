@@ -207,6 +207,7 @@ versions = ["rawhide", "41", "40", "39", "38"]
 
 [consumer_config.distgit_bugzilla_sync.products."Fedora EPEL"]
 branch_regex = '^epel\d+(?:\.\d+)?$'
+namespace = "rpms"
 versions = ["epel10", "epel9", "epel8"]
 
 # Configuration section for scm_request_processor
