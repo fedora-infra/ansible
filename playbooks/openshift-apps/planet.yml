@@ -81,3 +81,21 @@
     app: planet
     template: cronjob.yml
     objectname: cronjob.yml
+
+  - role: openshift/secret-file
+    app: planet
+    secret_name: planet-fedora-messaging-ca
+    key: cacert.pem
+    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+  
+  - role: openshift/secret-file
+    app: planet
+    secret_name: planet-fedora-messaging-crt
+    key: planet-cert.pem
+    privatefile: "rabbitmq/{{env}}/pki/issued/planet{{env_suffix}}.crt"
+
+  - role: openshift/secret-file
+    app: planet
+    secret_name: planet-fedora-messaging-key
+    key: planet-key.pem
+    privatefile: "rabbitmq/{{env}}/pki/private/planet{{env_suffix}}.key"
