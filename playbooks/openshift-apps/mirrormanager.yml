@@ -140,10 +140,12 @@
       app: mirrormanager
       template: cron-crawler.yml
       objectname: cron-crawler.yml
+      when: env == "production"
     - role: openshift/object
       app: mirrormanager
       template: cron-propagation.yml
       objectname: cron-propagation.yml
+      when: env == "production"
     - role: openshift/object
       app: mirrormanager
       template: cron-accesses.yml
