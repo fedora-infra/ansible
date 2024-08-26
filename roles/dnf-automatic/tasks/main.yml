@@ -30,6 +30,16 @@
     tags:
     - config
 
+  - name: Set dnf-automatic to execute only on Mon-Fri
+    ini_file:
+      path: /usr/lib/systemd/system/dnf-automatic.timer
+      section: Timer
+      option: OnCalendar
+      value: Mon..Fri *-*-* 6:00:00
+    notify: Restart dnf-automatic.timer
+    tags:
+    - config
+
   - name: check if dnf-automatic.timer is active
     command: systemctl is-active dnf-automatic.timer
     register: automaticative
