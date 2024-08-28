@@ -1,0 +1,33 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: "{{firmitas_application_name}}"
+  namespace: "{{firmitas_namespace}}"
+spec:
+  schedule: "*/1 * * * *"
+  timeZone: Etc/UTC
+  concurrencyPolicy: "Replace"
+  startingDeadlineSeconds: 200
+  suspend: true
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            parent: "cronjob-certdownloader"
+        spec:
+          containers:
+          - image: "{{ firmitas_image }}"
+            name: "{{ firmitas_application_name }}"
+            command: ["sh", "download_certificates.sh"]
+          restartPolicy: OnFailure
+          volumeMounts:
+            - name: "{{ firmitas_application_name }}-configuration-secret-volume"
+              mountPath: "/etc/firmitas/"
+        volumes:
+          - name: "{{ firmitas_application_name }}-configuration-secret-volume"
+            secret:
+              secretName: "{{ firmitas_application_name }}-configuration-secret"

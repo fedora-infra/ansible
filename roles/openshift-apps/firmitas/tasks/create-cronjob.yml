@@ -1,0 +1,15 @@
+---
+# generate the templates for project to be created
+- name: create the cronjob template
+  template:
+    src: "cronjob.yml"
+    dest: "/root/ocp4/openshift-apps/firmitas/cronjob.yml"
+    mode: 0770
+
+# apply created openshift resources
+- name: oc apply resources
+  command: "/root/bin/oc apply -f /root/ocp4/openshift-apps/firmitas/cronjob.yml"
+  retries: 3
+  delay: 5
+  register: cronjob_result
+  until: cronjob_result.rc == 0
