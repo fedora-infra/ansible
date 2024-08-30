@@ -48,8 +48,12 @@
         - gcc-c++
 
   - name: Download and install cuda drivers repo
-    ansible.builtin.dnf:
-      name: https://developer.download.nvidia.com/compute/cuda/12.5.1/local_installers/cuda-repo-fedora39-12-5-local-12.5.1_555.42.06-1.x86_64.rpm
+    ansible.builtin.yum_repository:
+      baseurl: https://developer.download.nvidia.com/compute/cuda/repos/fedora39/x86_64
+      gpgcheck: false
+      name: cuda
+      description: cuda package repo
+      repo_gpgcheck: false
 
   - name: Install cuda drivers
     ansible.builtin.dnf:
