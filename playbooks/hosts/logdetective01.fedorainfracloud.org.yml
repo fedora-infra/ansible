@@ -70,49 +70,49 @@
   - name: Ensure state of secondary drive
     when: drive.stat.isblk and drive.stat.writeable
     block:
-    - name: Ensure filesystem and format
-      community.general.filesystem:
-        dev: "{{ drive_device }}"
-        fstype: ext4
-        force: false # Explicit better than implicit
+      - name: Ensure filesystem and format
+        community.general.filesystem:
+          dev: "{{ drive_device }}"
+          fstype: ext4
+          force: false # Explicit better than implicit
 
-    - name: Ensure mountpoint
-      ansible.builitin.file:
-        path: /mnt/srv
-        state: directory
+      - name: Ensure mountpoint
+        ansible.builitin.file:
+          path: /mnt/srv
+          state: directory
 
-    - name: Mount the drive on boot
-      ansible.posix.mount:
-        src: "{{ drive_device }}"
-        boot: true
-        state: mounted
-        fstype: ext4
+      - name: Mount the drive on boot
+        ansible.posix.mount:
+          src: "{{ drive_device }}"
+          boot: true
+          state: mounted
+          fstype: ext4
 
   # Split for better readability
   - name: Ensure cache directories on secondary drive
     when: drive.stat.isblk and drive.stat.writeable
     block:
-    - name: Create pip cache dir
-      ansible.builtin.file:
-        state: directory
-        path: /mnt/srv/.cache/pip
-        mode: "0777"
-        recurse: true
+      - name: Create pip cache dir
+        ansible.builtin.file:
+          state: directory
+          path: /mnt/srv/.cache/pip
+          mode: "0777"
+          recurse: true
 
-    - name: Set pip cache location to secondary drive
-      ansible.builtin.shell:
-        export PIP_CACHE_DIR=/mnt/srv/.cache/pip
+      - name: Set pip cache location to secondary drive
+        ansible.builtin.shell:
+          export PIP_CACHE_DIR=/mnt/srv/.cache/pip
 
-    - name: Create Hugging Face cache dir
-      ansible.bulitin.file:
-        state: directory
-        path: /mnt/srv/.cache/huggingface
-        mode: "0777"
-        recurse: true
+      - name: Create Hugging Face cache dir
+        ansible.bulitin.file:
+          state: directory
+          path: /mnt/srv/.cache/huggingface
+          mode: "0777"
+          recurse: true
 
-    - name: Set Hugging Face cache location to the secondary drive
-      ansible.builtin.shell:
-        export HUGGINGFACE_HUB_CACHE=/mnt/srv/.cache/huggingface
+      - name: Set Hugging Face cache location to the secondary drive
+        ansible.builtin.shell:
+          export HUGGINGFACE_HUB_CACHE=/mnt/srv/.cache/huggingface
 
 # this should be set to ansible_hostname
 #  - name: "set hostname (required by some services, at least postfix need it)"
