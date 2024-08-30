@@ -48,18 +48,12 @@
         - gcc-c++
 
   - name: Download and install cuda drivers repo
-    ansible.builtin.yum_repository:
-      baseurl: https://developer.download.nvidia.com/compute/cuda/repos/fedora39/x86_64
-      gpgcheck: false
-      name: cuda
-      description: cuda package repo
-      repo_gpgcheck: false
-
-  - name: Install cuda drivers
-    ansible.builtin.dnf:
-      name:
-        - cuda-toolkit-12-5
-        - "nvidia-driver:open-dkms"
+    ansible.builtin.shell:
+      cmd: |
+        dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/fedora39/x86_64/cuda-fedora39.repo
+        dnf clean all
+        dnf -y install cuda-toolkit-12-6
+        dnf -y module install nvidia-driver:open-dkms
     register: cuda_installation
 
   - name: Restart the system
