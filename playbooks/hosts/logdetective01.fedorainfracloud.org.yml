@@ -2,8 +2,6 @@
   hosts: logdetective
   user: root
   gather_facts: False
-  vars:
-    drive_device: /dev/nvme1n1
   vars_files:
    - /srv/web/infra/ansible/vars/global.yml
    - /srv/private/ansible/vars.yml
@@ -25,6 +23,8 @@
   become: True
   become_user: root
   gather_facts: True
+  vars:
+    drive_device: 38e6c8c2-5747-47bf-b3d2-9f0dea371edc
   vars_files:
    - /srv/web/infra/ansible/vars/global.yml
    - /srv/private/ansible/vars.yml
@@ -55,20 +55,15 @@
     ansible.builtin.dnf:
       name:
         - cuda-toolkit-12-5
-        - nvidia-driver:open-dkms
+        - "nvidia-driver:open-dkms"
     register: cuda_installation
 
   - name: Restart the system
     ansible.builtin.reboot:
     when: cuda_installation.changed
 
-  - name: Verify presence of secondary drive
-    ansible.builtin.stat:
-      path: "{{ drive_device }}"
-    register: drive
-
   - name: Ensure state of secondary drive
-    when: drive.stat.isblk and drive.stat.writeable
+    ignore_errors: true
     block:
       - name: Ensure filesystem and format
         community.general.filesystem:
@@ -84,14 +79,11 @@
       - name: Mount the drive on boot
         ansible.posix.mount:
           src: "{{ drive_device }}"
+          path: /mnt/srv
           boot: true
           state: mounted
           fstype: ext4
 
-  # Split for better readability
-  - name: Ensure cache directories on secondary drive
-    when: drive.stat.isblk and drive.stat.writeable
-    block:
       - name: Create pip cache dir
         ansible.builtin.file:
           state: directory
