@@ -6,7 +6,6 @@
 from __future__ import absolute_import, division, print_function
 
 import json
-import re
 import requests
 
 from ansible.module_utils.basic import AnsibleModule

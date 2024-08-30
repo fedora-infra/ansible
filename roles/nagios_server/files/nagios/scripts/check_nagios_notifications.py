@@ -86,7 +86,7 @@ def main():
         hard_states = [
             x
             for x in [int(x["last_hard_state"]) for x in host["services"]]
-            if not x in [0, 1]
+            if x not in [0, 1]
         ]
         need_newline = False
         if host["notifications_enabled"] == "0" and not hard_states:

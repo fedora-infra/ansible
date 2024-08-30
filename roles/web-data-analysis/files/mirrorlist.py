@@ -23,7 +23,6 @@ import sys
 import re
 import optparse
 import os
-import string
 
 
 '''

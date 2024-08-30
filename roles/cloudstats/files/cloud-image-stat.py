@@ -1,6 +1,6 @@
 from glob import glob
 from datetime import date
-from os import walk,listdir
+from os import listdir
 from os.path import exists
 from bz2 import BZ2File
 import smtplib

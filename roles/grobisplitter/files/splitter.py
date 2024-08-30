@@ -13,8 +13,6 @@ import tempfile
 import os
 import subprocess
 import sys
-import time
-import logging
 
 # Look for a specific version of modulemd. The 1.x series does not
 # have the tools we need.
@@ -116,7 +114,7 @@ def _parse_repository_modular(repo_info, package_sack):
     elif myfile.endswith(".xz"):
         openfunc=lzma.LZMAFile
     else:
-        print("This file type is not fixed in this hack. Please fix code. (2021-05-20)");
+        print("This file type is not fixed in this hack. Please fix code. (2021-05-20)")
         sys.exit(1)
     with openfunc(filename=myfile, mode='r') as gzf:
         mmdcts = gzf.read().decode('utf-8')
@@ -212,7 +210,7 @@ def get_default_modules(directory):
     elif myfile.endswith(".xz"):
         openfunc=lzma.LZMAFile
     else:
-        print("This file type is not fixed in this hack. Please fix code. (2021-05-20)");
+        print("This file type is not fixed in this hack. Please fix code. (2021-05-20)")
         sys.exit(1)
     with openfunc(filename=myfile, mode='r') as gzf:
         mmdcts = gzf.read().decode('utf-8')

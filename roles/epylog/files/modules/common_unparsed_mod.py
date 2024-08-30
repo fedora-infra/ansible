@@ -16,7 +16,6 @@ import difflib
 from operator import itemgetter
 import tempfile
 import os
-import shutil
 
 ##
 # This is for testing purposes, so you can invoke this from the
@@ -24,7 +23,7 @@ import shutil
 # file.
 #
 sys.path.insert(0, '../py/')
-from epylog import Result, InternalModule
+from epylog import InternalModule
 
 class common_unparsed_mod(InternalModule):
     def __init__(self, opts, logger):

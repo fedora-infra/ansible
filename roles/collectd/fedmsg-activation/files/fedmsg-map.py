@@ -73,7 +73,7 @@ def scan_all():
     info()
 
     if 'verbose' in sys.argv:
-        import pprint;
+        import pprint
         pprint.pprint(dict(active))
         pprint.pprint(dict(inactive))
 

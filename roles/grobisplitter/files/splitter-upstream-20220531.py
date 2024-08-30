@@ -13,7 +13,6 @@ import tempfile
 import os
 import subprocess
 import sys
-import time
 import logging
 
 # Look for a specific version of modulemd. The 1.x series does not
@@ -89,7 +88,7 @@ def _get_modulemd(directory=None, repo_info=None):
     elif myfile.endswith(".xz"):
         openfunc=lzma.LZMAFile
     else:
-        print("This file type is not fixed in this hack. Please fix code. (2021-05-20)");
+        print("This file type is not fixed in this hack. Please fix code. (2021-05-20)")
         sys.exit(1)
     with openfunc(filename=myfile, mode='r') as zipf:
         mmdcts = zipf.read().decode('utf-8')
@@ -270,7 +269,7 @@ def _get_recursive_dependencies(all_deps, idx, stream, ignore_missing_deps):
                     try:
                         _get_recursive_dependencies(
                             local_deps, idx, inner_stream, ignore_missing_deps)
-                    except FileNotFoundError as e:
+                    except FileNotFoundError:
                         # Could not find all of this stream's dependencies in
                         # the repo
                         continue

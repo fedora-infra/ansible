@@ -13,20 +13,18 @@ requires:
 
 # These two lines are needed to run on EL6
 __requires__ = ['SQLAlchemy >= 0.7']
-import pkg_resources
 
 
 import contextlib
 import json
 import os
 import shutil
-import sys
 import tempfile
 
 
 # Database related part
 
-from sqlalchemy import Column, ForeignKey, Integer, Text, create_engine
+from sqlalchemy import Column, Integer, Text, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 

@@ -4,15 +4,12 @@ hosted in pagure.io
 """
 from __future__ import print_function
 
-import datetime
 import logging
 import os
-import sched
 import subprocess
-import sys
 import time
 
-from fedora_messaging import api, config, message
+from fedora_messaging import config, message
 
 
 _log = logging.getLogger("mirror_from_pagure_bus")

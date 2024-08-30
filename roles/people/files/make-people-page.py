@@ -21,9 +21,7 @@
 import grp
 import hashlib
 import logging
-import os
 import pwd
-import stat
 from pathlib import Path
 
 from jinja2 import Template

@@ -32,7 +32,7 @@ import re
 # file.
 #
 sys.path.insert(0, '../py/')
-from epylog import Result, InternalModule
+from epylog import InternalModule
 
 class kojiload_mod(InternalModule):
     ##

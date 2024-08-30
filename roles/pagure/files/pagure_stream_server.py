@@ -212,7 +212,7 @@ def handle_client(client_reader, client_writer):
 
     except OSError:
         log.info("Client closed connection")
-    except ConnectionResetError as err:
+    except ConnectionResetError:
         log.exception("ERROR: ConnectionResetError in handle_client")
     except Exception as err:
         log.exception("ERROR: Exception in handle_client")
@@ -274,7 +274,7 @@ def main():
         loop.run_forever()
     except KeyboardInterrupt:
         pass
-    except ConnectionResetError as err:
+    except ConnectionResetError:
         log.exception("ERROR: ConnectionResetError in main")
     except Exception:
         log.exception("ERROR: Exception in main")

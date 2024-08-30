@@ -60,7 +60,7 @@ MSG_FORMAT = "%(now)s\t%(count)s\t%(category)s\t%(name)s\t%(data)s\n"
 def getlogin():
     try:
         user = os.getlogin()
-    except OSError as e:
+    except OSError:
         user = pwd.getpwuid(os.geteuid())[0]
     return user
 

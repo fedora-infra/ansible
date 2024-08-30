@@ -34,7 +34,7 @@ import time
 import os
 import sqlite3 as sqlite
 sys.path.insert(0, '../py/')
-from epylog import Result, InternalModule
+from epylog import InternalModule
 
 
 def executeSQL(cursor, query, params=None):
