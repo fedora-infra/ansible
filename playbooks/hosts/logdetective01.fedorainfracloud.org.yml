@@ -63,12 +63,6 @@
   - name: Ensure state of secondary drive
     ignore_errors: true
     block:
-      - name: Ensure filesystem and format
-        community.general.filesystem:
-          dev: "{{ drive_device }}"
-          fstype: ext4
-          force: false # Explicit better than implicit
-
       - name: Ensure mountpoint
         ansible.builtin.file:
           path: /mnt/srv
@@ -76,7 +70,7 @@
 
       - name: Mount the drive on boot
         ansible.posix.mount:
-          src: "{{ drive_device }}"
+          src: "UUID={{ drive_device }}"
           path: /mnt/srv
           boot: true
           state: mounted
