@@ -11,3 +11,6 @@ WORKER_CLASS = {{ openqa_tap }},tpm,qemu_aarch64,qemu_arm
 WORKER_CLASS = {{ openqa_tap }},tpm,qemu_x86_64,qemu_i686,qemu_i586
 {% endif %}
 {% endif %}
+{% if openqa_critical_threshold is defined %}
+CRITICAL_LOAD_AVG_THRESHOLD = {{ openqa_critical_threshold }}
+{% endif %}

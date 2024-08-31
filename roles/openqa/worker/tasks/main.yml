@@ -49,13 +49,17 @@
 # - openqa_worker_class
 ##      string - custom WORKER_CLASS value for workers.ini
 # - openqa_static_uid
-##       int - a static ID for the geekotest group if desired. this is useful
-##             for NFS mounting openQA data files. The _openqa_worker user,
-##             which os-autoinst runs as, will be added to this group. The
-##             idea is that the same group with the same GID exists on the
-##             NFS server and is the group of the shared asset directories,
-##             so os-autoinst can write to the shared asset directories,
-##             which it needs to do when uncompressing compressed disk assets
+##      int - a static ID for the geekotest group if desired. this is useful
+##            for NFS mounting openQA data files. The _openqa_worker user,
+##            which os-autoinst runs as, will be added to this group. The
+##            idea is that the same group with the same GID exists on the
+##            NFS server and is the group of the shared asset directories,
+##            so os-autoinst can write to the shared asset directories,
+##            which it needs to do when uncompressing compressed disk assets
+# - openqa_critical_threshold
+##      string - custom CRITICAL_LOAD_AVG_THRESHOLD value for workers.ini.
+##               If worker host is above this load average, it will not pick
+##               up new jobs
 
 - name: Remove old scratch repo directory
   file: path=/var/tmp/scratchrepo state=absent
