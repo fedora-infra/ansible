@@ -61,7 +61,7 @@ openqa_tap_iface: eth2
 # this is a powerful machine, can handle more openQA workers
 openqa_workers: 35
 # also means we need to bump the load average threshold
-openqa_critical_threshold: 60
+openqa_critical_threshold: 70
 sudoers: "{{ private }}/files/sudo/qavirt-sudoers"
 # firewall ports for server->worker websockets connections
 # this port is 'QEMUPORT plus 1'
