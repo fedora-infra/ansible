@@ -1195,7 +1195,7 @@
     sslonly: true
     certbot: true
     tags:
-      - epel.io
+    - epel.io
 
   - role: httpd/website
     site_name: "fedoraplanet.org"
@@ -1205,4 +1205,11 @@
     sslonly: true
     certbot: true
     tags:
-      - fedoraplanet.org
+    - fedoraplanet.org
+
+  - role: httpd/website
+    site_name: "webhook{{ env_suffix }}.fedoraproject.org"
+    sslonly: true
+    cert_name: "{{wildcard_cert_name}}"
+    tags:
+    - webhook2fedmsg

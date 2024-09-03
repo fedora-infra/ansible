@@ -18,10 +18,11 @@ databases:
   - notifications
   - odcs
   - pagure
-  - tahrir
-  - waiverdb
-  - transtats
   - resultsdb
+  - tahrir
+  - transtats
+  - waiverdb
+  - webhook2fedmsg
   - zezere
 datacenter: iad2
 db_backup_dir: ['/backups']
@@ -40,10 +41,11 @@ dbs_to_backup:
   - notifications
   - odcs
   - pagure
-  - tahrir
-  - waiverdb
-  - transtats
   - resultsdb
+  - tahrir
+  - transtats
+  - waiverdb
+  - webhook2fedmsg
   - zezere
 # Should be 0.80 of memory
 effective_cache_size: "50GB"

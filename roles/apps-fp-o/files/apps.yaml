@@ -457,24 +457,20 @@ children:
             then be responsible for filing bugs, attempting to
             automatically build packages, perform some preliminary QA
             checks, etc..
-    - name: github2fedmsg
+    - name: Webhook to Fedora Messaging
       data:
-        icon: github.png
-        url: https://apps.fedoraproject.org/github2fedmsg
-        source_url: https://github.com/fedora-infra/github2fedmsg
-        bugs_url: https://github.com/fedora-infra/github2fedmsg/issues
+        url: https://webhook.fedoraproject.org/
+        source_url: https://github.com/fedora-infra/webhook-to-fedora-messaging
+        bugs_url: https://github.com/fedora-infra/webhook-to-fedora-messaging/issues
         docs_url: >
-            https://github.com/fedora-infra/github2fedmsg/blob/develop/README.rst#github2fedmsg
+            https://github.com/fedora-infra/webhook-to-fedora-messaging/
         sops:
-        - https://infrastructure.fedoraproject.org/infra/docs/github2fedmsg.rst
-        status_mappings: ['fedmsg']
+        - https://docs.fedoraproject.org/en-US/infra/sysadmin_guide/webhook2fedmsg/
         description: >
-            github2fedmsg is a web service that bridges upstream
-            development activity from <a
-            href="https://github.com">GitHub</a> into the <a
-            href="https://fedmsg.readthedocs.io/">Fedora Infrastructure message
-            bus</a>.  Visit the self-service dashboard to toggle the
-            status of your repositories.
+            Webhook to Fedora Messaging is a web service that bridges upstream
+            activity into the <a href="https://fedora-messaging.readthedocs.io/"
+            >Fedora Infrastructure message bus</a>. Visit the self-service
+            dashboard to add your application.
     - name: Pagure
       data:
         icon: pagure.png

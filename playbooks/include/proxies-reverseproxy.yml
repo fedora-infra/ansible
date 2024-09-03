@@ -941,3 +941,14 @@
     ocp4: true
     tags:
     - fedoraplanet
+
+  - role: httpd/reverseproxy
+    website: "webhook{{ env_suffix }}.fedoraproject.org"
+    destname: webhook2fedmsg
+    balancer_name: apps-ocp
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    targettype: openshift
+    keephost: true
+    ocp4: true
+    tags:
+    - webhook2fedmsg
