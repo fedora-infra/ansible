@@ -133,6 +133,15 @@ regex="^pub/(archive/)?fedora(-secondary)?(/linux)?/updates/testing/[\\.\\d]+/Mo
 prefix="updates-testing-modular"
 version_prefix="f"
 
+# EPEL
+[[repository_mapping]]
+regex="pub/archive/epel/testing/[\\d]+/Modular/.*"
+prefix="testing-modular-epel"
+
+[[repository_aliases]]
+from="testing-modular-epel-debug-"
+to="testing-modular-debug-epel"
+
 # pre modular structure
 [[repository_mapping]]
 regex="^pub/archive/fedora(-secondary)?(/linux)?/updates/testing/([\\.\\d]+)/[^ME].*"
