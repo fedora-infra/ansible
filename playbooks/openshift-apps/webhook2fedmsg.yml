@@ -88,7 +88,7 @@
     - role: openshift/route
       app: webhook2fedmsg
       routename: web
-      host: "webhook2fedmsg{{ env_suffix }}.fedoraproject.org"
+      host: "webhook{{ env_suffix }}.fedoraproject.org"
       serviceport: web
       servicename: web
     - role: openshift/route
