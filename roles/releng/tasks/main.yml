@@ -223,6 +223,11 @@
   copy: src="epel10" dest=/etc/cron.d/epel10
   when: inventory_hostname.startswith('compose-rawhide01.iad2')
 
+# put cron job in for ELN compose
+- name: ELN compose cron
+  copy: src="eln" dest=/etc/cron.d/eln
+  when: inventory_hostname.startswith('compose-eln01.iad2')
+
 # put cron job in for enforcing FESCo SIG Policy
 # https://docs.fedoraproject.org/en-US/fesco/SIG_policy/
 - name: sig_policy cron
