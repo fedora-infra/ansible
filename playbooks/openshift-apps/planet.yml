@@ -87,7 +87,7 @@
     secret_name: planet-fedora-messaging-ca
     key: cacert.pem
     privatefile: "rabbitmq/{{env}}/pki/ca.crt"
-  
+
   - role: openshift/secret-file
     app: planet
     secret_name: planet-fedora-messaging-crt
