@@ -218,6 +218,11 @@
   copy: src="rawhide-iot" dest=/etc/cron.d/rawhide-iot
   when: inventory_hostname.startswith('compose-iot-01.iad2')
 
+# put cron job in for epel10 compose
+- name: epel10 compose cron
+  copy: src="epel10" dest=/etc/cron.d/epel10
+  when: inventory_hostname.startswith('compose-rawhide01.iad2')
+
 # put cron job in for enforcing FESCo SIG Policy
 # https://docs.fedoraproject.org/en-US/fesco/SIG_policy/
 - name: sig_policy cron
