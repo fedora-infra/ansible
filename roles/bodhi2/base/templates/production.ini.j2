@@ -249,6 +249,9 @@ fedora_stable_master_repomd = https://kojipkgs.stg.fedoraproject.org/compose/upd
 fedora_testing_master_repomd = https://kojipkgs.stg.fedoraproject.org/compose/updates/f%%s-updates-testing/compose/Everything/%%s/os/repodata/repomd.xml
 fedora_epel_stable_master_repomd = http://dl-iad05.fedoraproject.org/pub/epel/%%s/%%s/repodata/repomd.xml
 fedora_epel_testing_master_repomd = http://dl-iad05.fedoraproject.org/pub/epel/testing/%%s/%%s/repodata/repomd.xml
+# the latest EPEL 10 minor version needs an override to use 10 in the path instead of 10.x
+fedora_epel_10.0_stable_master_repomd = http://dl-iad05.fedoraproject.org/pub/epel/10/Everything/%%s/repodata/repomd.xml
+fedora_epel_10.0_testing_master_repomd = http://dl-iad05.fedoraproject.org/pub/epel/testing/10/Everything/%%s/repodata/repomd.xml
 fedora_modular_stable_master_repomd = https://kojipkgs.stg.fedoraproject.org/compose/updates/f%%s-modular-updates/compose/Everything/%%s/os/repodata/repomd.xml
 fedora_modular_testing_master_repomd = https://kojipkgs.stg.fedoraproject.org/compose/updates/f%%s-modular-updates-testing/compose/Everything/%%s/os/repodata/repomd.xml
 {% endif %}
