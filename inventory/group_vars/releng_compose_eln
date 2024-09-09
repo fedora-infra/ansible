@@ -27,3 +27,4 @@ nrpe_procs_warn: 900
 num_cpus: 16
 primary_auth_source: ipa
 virt_install_command: "{{ virt_install_command_one_nic_unsafe }}"
+zabbix_templates: "{{ [] }}" # Need to do some research on what exactly we're doing on this host before enabling any templates.
