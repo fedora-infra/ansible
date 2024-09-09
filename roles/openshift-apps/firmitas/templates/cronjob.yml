@@ -27,7 +27,7 @@ spec:
           volumeMounts:
             - name: "{{ firmitas_application_name }}-configuration-secret-volume"
               mountPath: "/etc/firmitas/"
-        volumes:
-          - name: "{{ firmitas_application_name }}-configuration-secret-volume"
-            secret:
-              secretName: "{{ firmitas_application_name }}-configuration-secret"
+          volumes:
+            - name: "{{ firmitas_application_name }}-configuration-secret-volume"
+              secret:
+                secretName: "{{ firmitas_application_name }}-configuration-secret"
