@@ -24,7 +24,6 @@ cmd=(
       --tag CoprPurpose=builder
       --tag CoprInstance={% if devel %}devel{% else %}production{% endif %}
       --tag arch={{ item }}
-      --additional-volume-size 160
       --playbook /var/lib/resallocserver/provision/builderpb-aws.yml
 )
 

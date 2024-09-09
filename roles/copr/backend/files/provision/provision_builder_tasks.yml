@@ -329,6 +329,8 @@
   loop:
     - mock-custom-build.cfg.j2
     - mock.cfg.j2
+    # this one is not hotfix though...
+    - copr-rpmbuild.yml
 
 - name: Check that we have successfully finished the subscription
   async_status:

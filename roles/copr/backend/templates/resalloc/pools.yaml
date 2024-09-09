@@ -58,11 +58,11 @@ aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot 
 {% endif %}
 
 {% if spot and on_demand == 'powerful' %}
-    cmd_new: copr-resalloc-aws-new-{{ arch }} --instance-type {{ itype }} --root-volume-size 18
+    cmd_new: copr-resalloc-aws-new-{{ arch }} --instance-type {{ itype }} --additional-volume-size 320 --root-volume-size 18
 {% elif spot %}
-    cmd_new: copr-resalloc-aws-new-{{ arch }} --instance-type {{ itype }} --spot-price 0.156
+    cmd_new: copr-resalloc-aws-new-{{ arch }} --instance-type {{ itype }} --additional-volume-size 160 --spot-price 0.156
 {% else %}
-    cmd_new: copr-resalloc-aws-new-{{ arch }} --instance-type {{ itype }}
+    cmd_new: copr-resalloc-aws-new-{{ arch }} --instance-type {{ itype }} --additional-volume-size 160
 {% endif %}
     cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
     cmd_livecheck: "resalloc-check-vm-ip"

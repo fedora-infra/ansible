@@ -17,9 +17,11 @@ case $RESALLOC_NAME in
         case $RESALLOC_NAME in
         *_hp_*)
             instance_type=bz2-16x64
+            additional_volume_size=320
             ;;
         *)
             instance_type=mz2-2x16
+            additional_volume_size=160
             ;;
         esac
         image_uuid="{{ copr_builder_images.ibm_cloud.s390x.us_east }}"
@@ -43,6 +45,7 @@ if [ "$1" == "create" ]; then
         --ssh-key-id "$ssh_key_id"
         --instance-type "$instance_type"
         --subnets-ids $subnets_ids
+        --additional-volume-size "$additional_volume_size"
         --
     )
 fi

@@ -1,0 +1,6 @@
+---
+tags_to_mock_snippet:
+  # requested in https://github.com/fedora-copr/copr/issues/3268
+  - tagset:
+      - on_demand_powerful
+    snippet: config_opts['plugin_conf']['tmpfs_opts']['max_fs_size'] = '280g'
