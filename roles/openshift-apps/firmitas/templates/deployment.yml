@@ -57,7 +57,7 @@ spec:
             memory: 256Mi
         volumeMounts:
           - name: "{{ firmitas_application_name }}-configuration-secret-volume"
-            mountPath: "/etc/firmitas/"
+            mountPath: "/tmp/firmitas/"
       volumes:
         - name: "{{ firmitas_application_name }}-configuration-secret-volume"
           secret:
