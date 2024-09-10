@@ -128,6 +128,26 @@
     template: service-resalloc-server.yml
     objectname: service-resalloc-server
 
+  # Configurations for Fedora messaging
+  - role: rabbit/user
+    username: "openscanhub{{ env_suffix }}"
+    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.openscanhub\..*
+  - role: openshift/secret-file
+    app: openscanhub
+    secret_name: openscanhub-fedora-messaging-ca
+    key: fedora-messaging-openscanhub-ca.crt
+    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+  - role: openshift/secret-file
+    app: openscanhub
+    secret_name: openscanhub-fedora-messaging-key
+    key: fedora-messaging-openscanhub.key
+    privatefile: "rabbitmq/{{env}}/pki/private/openscanhub{{env_suffix}}.key"
+  - role: openshift/secret-file
+    app: openscanhub
+    secret_name: openscanhub-fedora-messaging-cert
+    key: fedora-messaging-openscanhub.crt
+    privatefile: "rabbitmq/{{env}}/pki/issued/openscanhub{{env_suffix}}.crt"
+
     # sudo rbac-playbook -l staging -t delete openshift-apps/openscanhub.yml
   - role: openshift/object-delete
     app: openscanhub

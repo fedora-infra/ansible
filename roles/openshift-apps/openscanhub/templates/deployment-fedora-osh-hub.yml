@@ -40,6 +40,21 @@ spec:
           - mountPath: /etc/osh/worker-manager/id_rsa
             name: aws-openscanhub-key
             subPath: id_rsa
+
+          # Fedora messaging configurations
+          - name: fedora-messaging-config-volume
+            mountPath: /etc/fedora-messaging
+            readOnly: true
+          - name: fedora-messaging-ca-volume
+            mountPath: /etc/pki/rabbitmq/ca
+            readOnly: true
+          - name: fedora-messaging-key-volume
+            mountPath: /etc/pki/rabbitmq/key
+            readOnly: true
+          - name: fedora-messaging-cert-volume
+            mountPath: /etc/pki/rabbitmq/cert
+            readOnly: true
+
         livenessProbe:
           exec:
             command:
@@ -69,3 +84,17 @@ spec:
           secret:
             defaultMode: 400
             secretName: aws-openscanhub-key
+
+        # Fedora messaging configurations
+        - name: fedora-messaging-config-volume
+          configMap:
+            name: fedora-messaging-configmap
+        - name: fedora-messaging-ca-volume
+          secret:
+            secretName: openscanhub-fedora-messaging-ca
+        - name: fedora-messaging-key-volume
+          secret:
+            secretName: openscanhub-fedora-messaging-key
+        - name: fedora-messaging-cert-volume
+          secret:
+            secretName: openscanhub-fedora-messaging-cert

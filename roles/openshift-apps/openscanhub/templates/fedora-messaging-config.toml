@@ -1,0 +1,8 @@
+amqp_url = "amqps://openscanhub:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fpubsub"
+
+topic_prefix = "org.fedoraproject.{{ env_short }}.openscanhub"
+
+[tls]
+ca_cert = "/etc/pki/rabbitmq/ca/fedora-messaging-openscanhub-ca.crt"
+keyfile = "/etc/pki/rabbitmq/key/fedora-messaging-openscanhub.key"
+certfile = "/etc/pki/rabbitmq/cert/fedora-messaging-openscanhub.crt"
