@@ -14,7 +14,10 @@
   roles:
   - role: openshift/project
     description: Openvpn Client
-    appowners: []
+    appowners:
+    - kevin
+    tags:
+      - apply-appowners
 
   - role: openshift/object
     objectname: imagestream.yml
