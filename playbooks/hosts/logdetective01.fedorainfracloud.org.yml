@@ -83,10 +83,6 @@
           mode: "0777"
           recurse: true
 
-      - name: Set pip cache location to secondary drive
-        ansible.builtin.shell:
-          export PIP_CACHE_DIR=/mnt/srv/.cache/pip
-
       - name: Create Hugging Face cache dir
         ansible.builtin.file:
           state: directory
@@ -94,9 +90,18 @@
           mode: "0777"
           recurse: true
 
-      - name: Set Hugging Face cache location to the secondary drive
-        ansible.builtin.shell:
-          export HUGGINGFACE_HUB_CACHE=/mnt/srv/.cache/huggingface
+      - name: Set cache locations to the secondary drive
+        ansible.builtin.blockinfile:
+          create: true
+          path: /etc/profile.d/externalcaches.sh
+          block: |
+            export HUGGINGFACE_HUB_CACHE=/mnt/srv/.cache/huggingface
+            export PIP_CACHE_DIR=/mnt/srv/.cache/pip
+
+      - name: Set up CUDA binary paths
+        ansible.builtin.lineinfile:
+          path: /etc/profile.d/cudapath.sh
+          line: export PATH=/usr/local/cuda-12.6/bin${PATH:+:${PATH}}
 
 # this should be set to ansible_hostname
 #  - name: "set hostname (required by some services, at least postfix need it)"
