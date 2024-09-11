@@ -16,7 +16,7 @@ spec:
     dockerfile: |-
       FROM registry.fedoraproject.org/fedora:latest
       RUN dnf -y install \
-          openvpn-2.5.6-1.fc36 && \
+          openvpn && \
           dnf clean all
       WORKDIR /config
       CMD openvpn --config openvpn.conf
