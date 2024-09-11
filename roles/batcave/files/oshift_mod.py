@@ -53,8 +53,6 @@ def config_logger():
     formatter = logging.Formatter("%(levelname)s [%(asctime)s] %(message)s",
                                   "%H:%M:%S")
     logger = logging.getLogger("dump_logs")
-    log_formatter = logging.Formatter(
-        "%(name)s: %(asctime)s - %(levelname)s: %(message)s")
 
     stream_handler = logging.StreamHandler(sys.stdout)
     stream_handler.setFormatter(formatter)
