@@ -19,7 +19,7 @@ class TorrentObj(object):
         self.name = name
         self.downloaders = 0
         self.seeds = 0
-        self.size = 0L
+        self.size = 0
         self.completed = 0
     
     def __cmp__(self, other):
