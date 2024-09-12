@@ -397,11 +397,9 @@ def breakoutdate(givendate):
         'Dec' : '12', 
     }
 
-    date_part = givendate.split()
-    
     try:
         [day, month, year] = givendate.split(":")[0].split('/')
-    except:
+    except IndexError:
         # string out of index because date corrupted?
         [day, month, year ] = ['01', 'Jan', '1970'] # epoch
     ret_str = "%s-%s-%s" % (year, Apache_Months[month], day)
@@ -418,7 +416,7 @@ def breakoutrepo(request):
             if 'arch=' in i:
                 arch = i.split('=')[1]
         return (repo,arch)
-    except:
+    except IndexError:
         return ("unknown_repo","unknown_arch")
 
 
@@ -570,7 +568,7 @@ def parselog(our_file, out_file):
     output_file = out_file
     try:
         data = open(our_file, "r")
-    except:
+    except PermissionError or FileNotFoundError:
         sys.stderr.write("Unable to open %s\n" % our_file )
         sys.exit(-1)
 
@@ -589,7 +587,7 @@ def parselog(our_file, out_file):
     try:
         output = open(output_file,"a")
         sys.stdout.write("Outputting data: %s\n" % our_file)
-    except:
+    except PermissionError or FileNotFoundError:
         sys.stderr.write("Unable to open outputfile: %s\n" % our_file)
         sys.exit(-1)
 
