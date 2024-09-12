@@ -7,7 +7,6 @@ import os
 import sys
 import feedparser
 import re
-import sys
 
 feedparser.sanitizer._HTMLSanitizer.unacceptable_elements_with_end_tag.add('<div>')
 
