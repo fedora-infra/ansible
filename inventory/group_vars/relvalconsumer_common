@@ -21,4 +21,7 @@ relvalconsumer_amqp_cert: "{{ openqa_amqp_prod_certfile }}"
 relvalconsumer_amqp_key: "{{ openqa_amqp_prod_keyfile }}"
 relvalconsumer_amqp_routing_keys: ["org.fedoraproject.prod.pungi.compose.status.change"]
 
-relvalamiconsumer_amqp_routing_keys: ["org.fedoraproject.prod.fedimg.image.publish"]
+relvalamiconsumer_amqp_routing_keys: [
+    "org.fedoraproject.prod.fedora_image_uploader.published.v1.aws",
+    "org.fedoraproject.prod.fedora_image_uploader.published.v1.aws.#"
+]
