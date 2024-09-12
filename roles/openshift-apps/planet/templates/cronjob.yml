@@ -46,6 +46,21 @@ spec:
             - name: planet-build-storage
               mountPath: /var/www/html
               readOnly: false
+            - name: fedora-messaging-config-volume
+              mountPath: /etc/fedora-messaging
+              readOnly: true
+            - name: fedora-messaging-ca-volume
+              mountPath: /etc/pki/fedora-messaging/cacert.pem
+              subPath: cacert.pem
+              readOnly: true
+            - name: fedora-messaging-crt-volume
+              mountPath: /etc/pki/fedora-messaging/planet-cert.pem
+              subPath: planet-cert.pem
+              readOnly: true
+            - name: fedora-messaging-key-volume
+              mountPath: /etc/pki/fedora-messaging/planet-key.pem
+              subPath: planet-key.pem
+              readOnly: true
           volumes:
           - name: keytab-volume
             secret:
@@ -56,6 +71,18 @@ spec:
           - name: ipa-config-volume
             configMap:
               name: ipa-client-config
+          - name: fedora-messaging-config-volume
+            configMap:
+              name: fedora-messaging-configmap
+          - name: fedora-messaging-ca-volume
+            secret:
+              secretName: planet-fedora-messaging-ca
+          - name: fedora-messaging-crt-volume
+            secret:
+              secretName: planet-fedora-messaging-crt
+          - name: fedora-messaging-key-volume
+            secret:
+              secretName: planet-fedora-messaging-key
           - name: planet-build-storage
             persistentVolumeClaim:
               claimName: planet-http-storage
