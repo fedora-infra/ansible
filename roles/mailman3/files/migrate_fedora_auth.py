@@ -14,13 +14,13 @@ in hyperkitty DB from `http://<username>.id.fedoraproject.org/` to simple
 import psycopg2
 import re
 import sys
+import settings
 
 SOCIALACCOUNT_TABLE = "socialaccount_socialaccount"
 OPENID_REGEX = r"http://(.+).id.fedoraproject.org/"
 
 # Read the database information from mailman config
 sys.path.append('/etc/mailman3')
-import settings
 database_settings = settings.DATABASES.get("default")
 conn = psycopg2.connect(
         host=database_settings["HOST"],
