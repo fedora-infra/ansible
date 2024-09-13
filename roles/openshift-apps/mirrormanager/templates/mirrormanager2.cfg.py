@@ -234,7 +234,7 @@ UMDL_MASTER_DIRECTORIES = [
     },
     {
         "type": "directory",
-        "path": "/srv/pub/eln/",
+        "path": "/srv/pub/eln/1/",
         "category": "Fedora ELN"
     },
 #    {
