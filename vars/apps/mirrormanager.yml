@@ -24,6 +24,12 @@ mirrormanager_cron_crawler:
     threads: 40
     timeout: 300
     include_disabled: false
+  # ELN: run on active mirrors.
+  - category: "Fedora ELN"
+    schedule: "45 */6 * * *"
+    threads: 40
+    timeout: 300
+    include_disabled: false
   # Archived distros
   # This can be a veeery long crawl
   - category: "Fedora Archive"
