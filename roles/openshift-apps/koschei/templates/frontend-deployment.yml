@@ -35,13 +35,13 @@ spec:
             cpu: 3000m
             memory: 3072Mi
         readinessProbe:
-          timeoutSeconds: 2
+          timeoutSeconds: 5
           initialDelaySeconds: 5
           httpGet:
             path: /collections
             port: 8080
         livenessProbe:
-          timeoutSeconds: 2
+          timeoutSeconds: 5
           initialDelaySeconds: 30
           httpGet:
             path: /collections
