@@ -76,7 +76,11 @@ elif [ "${1}" ==  "codecs" ]; then
 	FFTL="${CATEGORY}"
 	FILEDATE=${CURDATE}
 else
-	FFTL="/srv/pub/${1}/fullfiletimelist-${1}"
+	if [ "${1}" ==  "eln" ]; then
+		FFTL="/srv/pub/${1}/1/fullfiletimelist-${1}"
+	else
+		FFTL="/srv/pub/${1}/fullfiletimelist-${1}"
+	fi
 	FILEDATE=`stat -c %Z ${FFTL} 2> /dev/null`
 
 	if [ "$?" -eq "1" ]; then
