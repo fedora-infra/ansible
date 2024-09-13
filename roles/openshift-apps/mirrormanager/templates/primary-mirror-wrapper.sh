@@ -34,6 +34,9 @@ elif [ "${1}" ==  "archive" ]; then
 elif [ "${1}" ==  "codecs" ]; then
 	CATEGORY="Fedora Codecs"
 	SCANNER="${BINDIR}/scan-primary-mirror"
+elif [ "${1}" ==  "eln" ]; then
+	CATEGORY="Fedora ELN"
+	SCANNER="${BINDIR}/scan-primary-mirror"
 elif [ "${1}" ==  "centos" ]; then
 	CATEGORY="CentOS"
 	SCANNER="${BINDIR}/scan-primary-mirror -c /etc/mirrormanager/scan-primary-mirror-centos.toml -d"

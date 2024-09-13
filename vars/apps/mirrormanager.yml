@@ -65,3 +65,6 @@ mirrormanager_cron_primary_mirror:
   # check if category CentOS needs updating every 15 minutes
   - category: "centos"
     schedule: "57,12,27,42 * * * *"
+  # check if category Fedora ELN needs updating every 30 minutes
+  - category: "eln"
+    schedule: "22,52 * * * *"

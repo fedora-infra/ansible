@@ -232,6 +232,11 @@ UMDL_MASTER_DIRECTORIES = [
         "path": "/srv/codecs.fedoraproject.org/",
         "category": "Fedora Codecs"
     },
+    {
+        "type": "directory",
+        "path": "/srv/pub/eln/",
+        "category": "Fedora ELN"
+    },
 #    {
 #        "type":"directory",
 #        "path":"../testdata/pub/fedora/linux/",
