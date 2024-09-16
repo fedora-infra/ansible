@@ -28,9 +28,9 @@ spec:
         name: "{{ firmitas_application_name }}"
         env:
           - name: FIRMITAS_CONFIG
-            value: "/etc/firmitas/myconfig.py"
+            value: "/tmp/firmitas/myconfig.py"
         command: ["firmitas"]
-        args: ["--conffile", "/etc/firmitas/myconfig.py"]
+        args: ["--conffile", "/tmp/firmitas/myconfig.py"]
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
