@@ -58,9 +58,9 @@ app_contacts_email = [
 exchange = "amq.topic"
 routing_keys = [
 {% if  env == "staging" %}
-    'stg.fedoraplanet.org.build'
+    'org.fedoraproject.stg.planet.build'
 {% else %}
-    'fedoraplanet.org.build'
+    'org.fedoraproject.prod.planet.build'
 {%- endif %}
     ]
 

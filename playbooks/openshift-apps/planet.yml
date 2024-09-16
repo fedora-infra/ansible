@@ -99,3 +99,7 @@
     secret_name: planet-fedora-messaging-key
     key: planet-key.pem
     privatefile: "rabbitmq/{{env}}/pki/private/planet{{env_suffix}}.key"
+
+  - role: rabbit/user
+    username: "planet{{ env_suffix }}"
+    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.planet\..*
