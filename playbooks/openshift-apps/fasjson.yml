@@ -61,6 +61,13 @@
     service: HTTP
     host: "fasjson{{ env_suffix }}.fedoraproject.org"
 
+  # Session secret key
+  - role: openshift/secret-file
+    app: fasjson
+    secret_name: session-key
+    key: session.key
+    privatefile: "fasjson/session.{{env}}.key"
+
   - role: openshift/imagestream
     app: fasjson
     imagename: fasjson
