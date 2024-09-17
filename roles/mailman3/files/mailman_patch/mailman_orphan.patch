@@ -1,0 +1,61 @@
+--- /mailman/runners/task.py    2023-10-02 21:08:39.000000000 +0000
++++ /mailman/runners/task.py     2024-09-17 14:10:59.337825840 +0000
+@@ -91,24 +91,47 @@
+                 self._delete_request(id)
+                 count += 1
+         tlog.info('Task runner deleted %d orphaned requests', count)
+-        # Also, delete any orphaned messages from the message store.
+-        mids = dict()
++        # Also, delete any orphaned messages and message files from the
++        # message store. The order of the next 3 steps is important to
++        # avoid premature deletion due to race conditions.
++        # First get a list of message files, but only do this infrequently.
++        message_files = []
++        if self.lastmsg + self.msgdelay <= datetime.now():
++            self.lastmsg = datetime.now()
++            for root, dirs, files in os.walk(config.MESSAGES_DIR):
++                if files:
++                    for f in files:
++                        message_files.append(os.path.join(root, f))
++        # Then a list of message-ids in the store and a dict of their hashes.
++        messages = getUtility(IMessageStore)
++        msgs = []
++        hashes = dict()
++        for msg in messages.messages:
++            if msg is not None:
++                msgs.append(msg.get('message-id'))
++                hashes[msg['message-id-hash']] = True
++        # Finally, a list of pending message-ids.
++        pmids = dict()
+         for token, pendable in pendings:
+             if not pendable:
+                 continue                                # pragma: nocover
+             mid = pendable.get('_mod_message_id')
+             if mid:
+-                mids[mid] = True
++                pmids[mid] = True
++        # Now delete the orphaned message store messages.
+         count = 0
+-        messages = getUtility(IMessageStore)
+-        for msg in messages.messages:
+-            # msg can be None if file is already removed.
+-            if msg is not None:
+-                mid = msg.get('message-id')
+-                if mid not in mids:
+-                    messages.delete_message(mid)
+-                    count += 1
++        for mmid in msgs:
++            if mmid not in pmids:
++                messages.delete_message(mmid)
++                count += 1
+         tlog.info('Task runner deleted %d orphaned messages', count)
++        # And finally the orphaned message files
++        count = 0
++        for message_file in message_files:
++            if os.path.basename(message_file) not in hashes:
++                os.remove(message_file)
++                count += 1
++        tlog.info('Task runner deleted %d orphaned message files', count)
+ 
+     def _evict_cache(self):
+         getUtility(ICacheManager).evict_expired()
