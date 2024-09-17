@@ -72,6 +72,20 @@ spec:
     path: /fedora_ftp_archive
   persistentVolumeReclaimPolicy: Retain
 ---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: codecs
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+  - ReadOnlyMany
+  nfs:
+    server: ntap-iad2-c02-fedora01-nfs01a
+    path: /openshift_prod_codecs
+  persistentVolumeReclaimPolicy: Retain
+---
 # Then, the PVCs
 apiVersion: v1
 kind: PersistentVolumeClaim
