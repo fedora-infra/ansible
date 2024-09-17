@@ -1,4 +1,4 @@
-#
+
 ### Primary mirror scanning cron jobs
 #
 {% from "_macros.yml" import common_volume_mounts, common_volumes, common_env, security_context with context %}
@@ -32,8 +32,10 @@ spec:
                   mountPath: "/srv/pub"
                 - name: mirror-archive
                   mountPath: "/srv/pub/archive"
+{% if env == 'production' %}
                 - name: codecs
                   mountPath: "/srv/codecs.fedoraproject.org"
+{% endif %}
           volumes:
             {{ common_volumes(with_ssh=True) | indent(4) }}
             - name: mirror
@@ -42,8 +44,10 @@ spec:
             - name: mirror-archive
               persistentVolumeClaim:
                 claimName: primary-mirror-archive
+{% if env == 'production' %}
             - name: codecs
               persistentVolumeClaim:
                 claimName: codecs
+{% endif %}
           {{ security_context() | indent(4) }}
 {% endfor %}
