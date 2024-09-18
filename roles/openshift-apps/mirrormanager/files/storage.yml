@@ -112,3 +112,16 @@ spec:
       storage: 1Gi
   storageClassName: ""
   volumeName: primary-mirror-archive
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: codecs
+spec:
+  accessModes:
+  - ReadOnlyMany
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ""
+  volumeName: codecs

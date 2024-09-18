@@ -25,6 +25,10 @@ spec:
               mountPath: "/srv/pub"
             - name: mirror-archive
               mountPath: "/srv/pub/archive"
+{% if env == 'production' %}
+            - name: codecs
+              mountPath: "/srv/codecs.fedoraproject.org"
+{% endif %}
       volumes:
         {{ common_volumes(with_ssh=True) }}
         - name: mirror
@@ -33,4 +37,9 @@ spec:
         - name: mirror-archive
           persistentVolumeClaim:
             claimName: primary-mirror-archive
+{% if env == 'production' %}
+        - name: codecs
+          persistentVolumeClaim:
+            claimName: codecs
+{% endif %}
       {{ security_context() }}
