@@ -24,7 +24,11 @@ spec:
       from:
         kind: ImageStreamTag
         namespace: openshift
+{% if env == 'staging' %}
         name: python:3.11-ubi9
+{% else %}
+        name: python:3.6
+{% endif %}
   triggers:
   - type: ConfigChange
   - type: ImageChange
