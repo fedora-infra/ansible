@@ -1066,7 +1066,22 @@ host buildhw-a64-13 {
      option routers 10.3.170.254;
      option subnet-mask 255.255.255.0;
 }
-
+host buildhw-a64-19 {
+     hardware ethernet f4:e9:d4:cc:2f:f4;
+     fixed-address 10.3.170.139;
+     filename "uefi/grubaa64.efi";
+     next-server 10.3.163.10;
+     option routers 10.3.170.254;
+     option subnet-mask 255.255.255.0;
+}
+host buildhw-a64-20 {
+     hardware ethernet f4:e9:d4:cc:32:b2;
+     fixed-address 10.3.170.140;
+     filename "uefi/grubaa64.efi";
+     next-server 10.3.163.10;
+     option routers 10.3.170.254;
+     option subnet-mask 255.255.255.0;
+}
 host qvmhost-x86-01 {
      hardware ethernet E4:43:4B:A8:C1:FE;
      fixed-address 10.3.174.11;
@@ -1750,5 +1765,14 @@ host bvmhost-p09-01-stg {
      option subnet-mask 255.255.255.0;
 }
 
-## End of file
+host bvmhost-x86-riscv01 {
+     hardware ethernet 20:3a:43:03:d0:4c;
+     fixed-address 10.3.168.11;
+     option host-name "bvmhost-x86-riscv01.iad2.fedoraproject.org";
+     filename "uefi/grubx64.efi";
+     next-server 10.3.163.10;
+     option routers 10.3.168.254;
+     option subnet-mask 255.255.255.0;
+}
 
+## End of file
