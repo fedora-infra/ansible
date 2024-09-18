@@ -20,6 +20,8 @@ spec:
       kind: DockerImage
       # docker.io should be okay as bitnami is verified publisher and doesn't undergo rate-limiting
       name: docker.io/bitnami/redis:latest
+    importPolicy:
+      scheduled: true
 ---
 apiVersion: image.openshift.io/v1
 kind: ImageStream
