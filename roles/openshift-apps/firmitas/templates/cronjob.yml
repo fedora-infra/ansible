@@ -22,7 +22,7 @@ spec:
           containers:
           - image: "{{ firmitas_image }}"
             name: "{{ firmitas_application_name }}"
-            command: ["sh", "download_certificates.sh"]
+            command: ["sh", "/tmp/firmitas/download_certificates.sh"]
           restartPolicy: OnFailure
           volumeMounts:
             - name: "{{ firmitas_application_name }}-configuration-secret-volume"
