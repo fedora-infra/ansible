@@ -14,11 +14,7 @@ spec:
     type: Git
     git:
       uri: https://pagure.io/fedora-qa/oraculum
-{% if env == 'staging' %}
-      ref: "oidc_joza"
-{% else %}
       ref: "master"
-{% endif %}
   strategy:
     type: Source
     sourceStrategy:
