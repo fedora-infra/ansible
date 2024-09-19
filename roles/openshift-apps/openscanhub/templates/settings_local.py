@@ -167,3 +167,5 @@ SINGLE_USE_WORKER_SSH_PRIVATE_KEY = "/etc/osh/worker-manager/id_rsa"
 NOTIFICATION_EMAIL_FOOTER = """You can reply to this e-mail to initiate a discussion on https://lists.fedoraproject.org/archives/list/openscanhub@lists.fedoraproject.org/"""
 
 ALLOWED_HOSTS = ['openscanhub{{ env_suffix }}.fedoraproject.org']
+
+CSRF_TRUSTED_ORIGINS = ['https://openscanhub{{ env_suffix }}.fedoraproject.org']
