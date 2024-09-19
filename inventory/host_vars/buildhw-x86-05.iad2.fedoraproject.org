@@ -17,6 +17,9 @@ network_connections:
       dhcp4: no
       dns:
         - "{{ dns1 }}"
+      dns_search:
+        - iad2.fedoraproject.org
+        - fedoraproject.org
       gateway4: "{{ eth0_ipv4_gw }}"
     mac: "{{ mac0 }}"
     name: eth0
