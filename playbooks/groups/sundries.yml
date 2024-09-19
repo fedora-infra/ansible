@@ -79,6 +79,11 @@
     nfs_src_dir: 'flatpak-indexer-storage'
     mount_stg: true
     when: master_sundries_node|bool and env != "staging"
+  - role: nfs/client
+    mnt_dir: '/srv/web/codecs.fedoraproject.org'
+    nfs_src_dir: 'openshift_prod_codecs'
+    mount_stg: false
+    when: master_sundries_node|bool and env != "staging"
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
