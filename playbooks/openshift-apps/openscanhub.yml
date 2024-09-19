@@ -147,6 +147,10 @@
     secret_name: openscanhub-fedora-messaging-cert
     key: fedora-messaging-openscanhub.crt
     privatefile: "rabbitmq/{{env}}/pki/issued/openscanhub{{env_suffix}}.crt"
+  - role: openshift/object
+    app: openscanhub
+    template: fedora-messaging-configmap.yml
+    objectname: fedora-messaging-configmap
 
     # sudo rbac-playbook -l staging -t delete openshift-apps/openscanhub.yml
   - role: openshift/object-delete
