@@ -10,6 +10,7 @@
 
   vars:
     - ocp4: true
+    - openscanhub_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.openscanhub\..*
 
   pre_tasks:
   - include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
@@ -131,7 +132,17 @@
   # Configurations for Fedora messaging
   - role: rabbit/user
     username: "openscanhub{{ env_suffix }}"
-    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.openscanhub\..*
+    sent_topics: "{{ openscanhub_sent_topics  }}"
+
+  - role: rabbit/queue
+    username: "openscanhub{{ env_suffix }}"
+    queue_name: "openscanhub{{ env_suffix }}"
+    routing_keys: "org.fedoraproject.*.openscanhub.scan.started"
+    thresholds:
+      warning: 10
+      critical: 100
+    sent_topics: "{{ openscanhub_sent_topics }}"
+
   - role: openshift/secret-file
     app: openscanhub
     secret_name: openscanhub-fedora-messaging-ca
