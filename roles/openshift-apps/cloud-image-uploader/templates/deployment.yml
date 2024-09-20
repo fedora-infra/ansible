@@ -65,26 +65,6 @@ spec:
                 secretKeyRef:
                   name: aws-credentials
                   key: secret_access_key
-            - name: FEDORA_REGISTRY_USER
-              valueFrom:
-                secretKeyRef:
-                  name: podman-credentials
-                  key: fedoraproject_registry_username
-            - name: FEDORA_REGISTRY_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: podman-credentials
-                  key: fedoraproject_registry_password
-            - name: QUAY_IO_USER
-              valueFrom:
-                secretKeyRef:
-                  name: podman-credentials
-                  key: quay_io_username
-            - name: QUAY_IO_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: podman-credentials
-                  key: quay_io_password
           volumeMounts:
             - name: config-volume
               mountPath: /etc/fedora-messaging
