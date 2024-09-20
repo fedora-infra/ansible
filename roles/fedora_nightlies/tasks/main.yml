@@ -97,7 +97,7 @@
   check_mode: no
 
 - name: Install fedora_nightlies
-  command: "python3 -m pip install /root/fedora_nightlies"
+  command: "python3 -m pip install --no-deps /root/fedora_nightlies"
   when: "gitfn is changed or instfn.rc != 0"
   notify:
   - restart fedora_nightlies

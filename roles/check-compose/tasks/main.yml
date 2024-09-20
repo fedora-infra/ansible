@@ -130,7 +130,7 @@
   check_mode: no
 
 - name: Install check-compose
-  command: "python3 -m pip install /root/check-compose"
+  command: "python3 -m pip install --no-deps /root/check-compose"
   when: "gitcc is changed or instcc.rc != 0"
   notify:
   - restart check-compose

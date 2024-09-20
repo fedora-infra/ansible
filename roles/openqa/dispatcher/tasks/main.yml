@@ -220,7 +220,7 @@
   check_mode: no
 
 - name: Install fedora_openqa
-  command: "python3 -m pip install /root/fedora_openqa"
+  command: "python3 -m pip install --no-deps /root/fedora_openqa"
   when: "gittools is changed or insttools.rc != 0"
   notify:
   - restart openqa consumers
