@@ -169,3 +169,6 @@ NOTIFICATION_EMAIL_FOOTER = """You can reply to this e-mail to initiate a discus
 ALLOWED_HOSTS = ['openscanhub{{ env_suffix }}.fedoraproject.org']
 
 CSRF_TRUSTED_ORIGINS = ['https://openscanhub{{ env_suffix }}.fedoraproject.org']
+
+# Enable sending messages to rabbitmq
+ENABLE_FEDORA_MESSAGING = True
