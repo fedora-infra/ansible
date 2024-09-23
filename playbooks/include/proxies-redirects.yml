@@ -894,3 +894,10 @@
     target: https://fedoraproject.org/wiki/Infrastructure/pdc-retirement
     tags:
       - pdc
+
+  - role: httpd/redirect
+    shortname: 00-old-odcs
+    website: odcs.fedoraproject.org
+    target: https://dl.fedoraproject.org/pub/eln/1/
+    tags:
+      - odcs

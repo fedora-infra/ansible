@@ -115,14 +115,6 @@ define service {
   use                   websitetemplate
 }
 
-define service {
-  hostgroup_name        proxies
-  service_description   http-odcs
-  check_command         check_website_ssl!odcs.fedoraproject.org!/api/1/composes/!result_repofile
-  max_check_attempts    8
-  use                   websitetemplate
-}
-
 # Some openshift apps
 define service {
   hostgroup_name        proxies

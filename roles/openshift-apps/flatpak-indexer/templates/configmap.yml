@@ -8,7 +8,6 @@ data:
     redis_url: ${REDIS_URL}
     redis_password: ${REDIS_PASSWORD}
     koji_config: fedora
-    odcs_uri: https://odcs{{ env_suffix }}.fedoraproject.org/
     deltas_dir: ${OUTPUT_DIR}/deltas/
     icons_dir: ${OUTPUT_DIR}/icons/
 {% if env == 'staging' %}

@@ -737,13 +737,6 @@
     - zezere
 
   - role: httpd/reverseproxy
-    website: odcs.fedoraproject.org
-    destname: odcs
-    proxyurl: http://localhost:10066
-    tags:
-    - odcs
-
-  - role: httpd/reverseproxy
     website: greenwave.fedoraproject.org
     destname: greenwave
     balancer_name: app-os

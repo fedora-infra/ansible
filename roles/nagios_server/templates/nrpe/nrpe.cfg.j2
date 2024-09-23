@@ -334,7 +334,6 @@ command[check_fedmsg_gateway_proc]=/usr/lib64/nagios/plugins/check_procs -c 1:1 
 command[check_fedmsg_irc_proc]=/usr/lib64/nagios/plugins/check_procs -c 1:1 -C 'fedmsg-irc' -u fedmsg
 command[check_fedmsg_tweet_proc]=/usr/lib64/nagios/plugins/check_procs -c 1:1 -C 'fedmsg-tweet' -u fedmsg
 command[check_fedmsg_composer_proc]=/usr/lib64/nagios/plugins/check_procs -c 1:1 -C 'fedmsg-hub-3' -u apache
-command[check_fedmsg_odcs_celery_proc]=/usr/lib64/nagios/plugins/check_procs -c 1:1 -C 'odcs-celery-backend  ' -u odcs
 command[check_haproxy_conns]=/usr/lib64/nagios/plugins/check_haproxy_conns.py
 command[check_redis_proc]=/usr/lib64/nagios/plugins/check_procs -c 1:1 -C 'redis-server' -u redis
 command[check_openvpn_link]=/usr/lib64/nagios/plugins/check_ping -H 192.168.1.41 -w 375.0,20% -c 500,60%

@@ -311,33 +311,6 @@ ns05.fedoraproject.org
 ns01.iad2.fedoraproject.org
 ns02.iad2.fedoraproject.org
 
-[odcs_frontend]
-odcs-frontend01.iad2.fedoraproject.org
-
-[odcs_frontend_stg]
-odcs-frontend01.stg.iad2.fedoraproject.org
-
-[odcs_backend:children]
-odcs_backend_general
-odcs_backend_releng
-
-[odcs_backend_general]
-odcs-backend01.iad2.fedoraproject.org
-
-[odcs_backend_releng]
-odcs-backend-releng01.iad2.fedoraproject.org
-
-[odcs_backend_stg]
-odcs-backend01.stg.iad2.fedoraproject.org
-
-[odcs_stg:children]
-odcs_frontend_stg
-odcs_backend_stg
-
-[odcs:children]
-odcs_frontend
-odcs_backend
-
 [openqa]
 openqa01.iad2.fedoraproject.org
 
@@ -582,8 +555,6 @@ ipsilon01.stg.iad2.fedoraproject.org
 koji01.stg.iad2.fedoraproject.org
 mailman01.stg.iad2.fedoraproject.org
 memcached01.stg.iad2.fedoraproject.org
-odcs-backend01.stg.iad2.fedoraproject.org
-odcs-frontend01.stg.iad2.fedoraproject.org
 os-control01.stg.iad2.fedoraproject.org
 pkgs01.stg.iad2.fedoraproject.org
 proxy01.stg.iad2.fedoraproject.org
@@ -1044,7 +1015,6 @@ mailman
 memcached
 nagios_iad2
 oci_registry
-odcs
 openqa
 openqa_lab
 openqa_lab_workers
@@ -1076,7 +1046,6 @@ ipsilon_stg
 koji_stg
 memcached_stg
 oci_registry_stg
-odcs_stg
 pkgs_stg
 proxies_stg
 rabbitmq_stg

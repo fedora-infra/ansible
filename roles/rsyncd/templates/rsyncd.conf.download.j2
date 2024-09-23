@@ -96,7 +96,7 @@ refuse options = checksum
 
 [ fedora-eln ]
 	comment = Fedora ELN composes
-	path = /./mnt/odcs
+	path = /srv/pub/eln/1/
 	{% if inventory_hostname in groups['download_tier1'] %}
        hosts allow = {% for host in vars['dl_tier1'] %}{{host}},{% endfor %}
         {% endif %}

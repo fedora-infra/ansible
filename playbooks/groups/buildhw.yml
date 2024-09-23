@@ -60,16 +60,6 @@
     when: env == 'staging' and 'runroot' in group_names
 
   - role: nfs/client
-    mnt_dir: '/srv/odcs'
-    nfs_src_dir: 'fedora_odcs'
-    when: env != 'staging' and 'runroot' in group_names
-
-  - role: nfs/client
-    mnt_dir: '/srv/odcs'
-    nfs_src_dir: 'fedora_odcs_stg'
-    when: env == 'staging' and 'runroot' in group_names
-
-  - role: nfs/client
     mnt_dir: '/mnt/koji/compose/ostree'
     nfs_src_dir: 'fedora_ostree_content_stg/compose/ostree'
     when: env == 'staging' and 'runroot' in group_names
@@ -84,13 +74,6 @@
   - role: keytab/service
     kt_location: /etc/kojid/kojid.keytab
     service: compile
-  - role: keytab/service
-    owner_user: root
-    owner_group: root
-    service: innercompose
-    host: "odcs{{ env_suffix }}.fedoraproject.org"
-    kt_location: /etc/kojid/secrets/odcs_inner.keytab
-    when: env == "staging"
     # push built Flatpaks to candidate registry
   - role: login-registry
     candidate_registry: "candidate-registry.fedoraproject.org"
