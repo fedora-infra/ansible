@@ -1,11 +1,11 @@
 [bugzilla]
 {% if env == "production" %}
 bugzilla=https://bugzilla.redhat.com/
-tracking=2231791
+tracking=2260875
 api_key={{ prod_releng_bz_api_key }}
 {% elif env == 'staging' %}
 bugzilla=https://bugzilla.stage.redhat.com/
 tracking=1732434
 api_key={{ stg_releng_bz_api_key }}
 {% endif %}
-fedora=f40
+fedora=f41
