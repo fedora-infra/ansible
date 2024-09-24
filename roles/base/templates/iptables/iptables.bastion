@@ -77,6 +77,9 @@
 -A INPUT -s 192.168.1.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
 -A INPUT -s 192.168.0.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
 -A INPUT -s 10.3.160.0/19 -m tcp -p tcp --dport 25 -j ACCEPT
+# redhat mxes
+-A INPUT -s 10.30.177.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
+-A INPUT -s 10.30.29.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
 # mimecast ips from
 # https://community.mimecast.com/s/article/email-security-cloud-gateway-data-centers-and-urls?r=297&ui-knowledge-components-aura-actions.KnowledgeArticleVersionCreateDraftFromOnlineAction.createDraftFromOnlineArticle=1
 -A INPUT -s 170.10.132.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
