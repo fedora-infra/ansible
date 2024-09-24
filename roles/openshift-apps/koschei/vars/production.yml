@@ -24,7 +24,7 @@ koschei_pgsql_admin_password: "{{ koscheiadmin_db_password }}"
 koschei_oidc_client_secret: "{{ koschei_oidc_client_secret_prod }}"
 koschei_oidc_crypto_secret: "{{ koschei_oidc_crypto_secret_prod }}"
 
-koschei_frontend_replicas: 5
+koschei_frontend_replicas: 3
 
 koschei_backend_services:
   - { name: polling,        cpu: [ 1000, 1500 ],  memory: [  512, 1024 ] }
