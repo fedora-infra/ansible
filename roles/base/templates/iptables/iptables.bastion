@@ -91,12 +91,7 @@
 -A INPUT -s 205.139.111.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
 -A INPUT -s 216.205.24.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
 -A INPUT -s 63.128.21.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
- 
-IP Addresses / Network Ranges for Non-SPF Email Traffic
-
-Where messages are being sent from accounts with envelope addresses not registered as internal domains, Mimecast routes through separate ranges. 
-Region		
- United States of America (US-Grid)	207.211.30.40	to	207.211.30.49	205.139.111.40	to	205.139.111.49
+-A INPUT -s 207.211.30.40/26 -m tcp -p tcp --dport 25 -j ACCEPT
 
 # if the host/group defines incoming tcp_ports - allow them
 {% if tcp_ports is defined %}
