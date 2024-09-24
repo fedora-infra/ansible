@@ -1,0 +1,153 @@
+# {{ ansible_managed }}
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+
+# allow ping and traceroute
+-A INPUT -p icmp -j ACCEPT
+
+# localhost is fine
+-A INPUT -i lo -j ACCEPT
+
+# Established connections allowed
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A OUTPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+# allow ssh - always
+-A INPUT -m conntrack --ctstate NEW -m tcp -p tcp --dport 22 -j ACCEPT
+
+# for nrpe - allow it from nocs
+-A INPUT -p tcp -m tcp --dport 5666 -s 192.168.1.10 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 5666 -s 192.168.1.166 -j ACCEPT
+# FIXME - this is the global nat-ip and we need the noc01-specific ip
+-A INPUT -p tcp -m tcp --dport 5666  -s 38.145.60.16 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 5666  -s 38.145.60.15 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 5666 -s 10.3.163.10 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 5666 -s 10.3.166.10 -j ACCEPT
+# zabbix01
+-A INPUT -p tcp -m tcp --dport 10051 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 10050 -s 10.3.163.198 -j ACCEPT
+
+{% if env != 'staging' and datacenter == 'iad2' and inventory_hostname not in groups['staging_friendly'] %}
+#
+# In the iad2 datacenter, both production and staging hosts are in different
+# vlans, and different subnets. However, just as a precaution, we want prod machines to
+# reject connections from any staging host just in case there's some globally enabled port.
+# There are however a few hosts in production we have marked 'staging-friendly'
+# that we do allow staging to talk to for mostly read-only data they need.
+#
+-A INPUT -s 10.3.166.0/24 -j REJECT --reject-with icmp-host-prohibited
+-A INPUT -s 10.3.167.0/24 -j REJECT --reject-with icmp-host-prohibited
+{% endif %}
+
+{% if vpn %}
+#
+# We want to have all vpn hosts reject most things from the 'less secure' vpn network
+#
+{% if inventory_hostname == 'log01.iad2.fedoraproject.org' %}
+# Allow all vpn hosts to talk to the log server for rsyslog
+-A INPUT -s 192.168.100.0/24 -m tcp -p tcp --dport 514 -j ACCEPT
+-A INPUT -s 192.168.100.0/24 -m udp -p udp --dport 25826 -j ACCEPT
+{% endif %}
+{% if inventory_hostname in groups['ipa'] %}
+# Allow all vpn hosts to talk to the ipa servers for auth
+-A INPUT -s 192.168.100.0/24 -m tcp -p tcp --dport 80 -j ACCEPT
+-A INPUT -s 192.168.100.0/24 -m tcp -p tcp --dport 88 -j ACCEPT
+-A INPUT -s 192.168.100.0/24 -m tcp -p tcp --dport 389 -j ACCEPT
+-A INPUT -s 192.168.100.0/24 -m tcp -p tcp --dport 443 -j ACCEPT
+-A INPUT -s 192.168.100.0/24 -m tcp -p tcp --dport 464 -j ACCEPT
+-A INPUT -s 192.168.100.0/24 -m tcp -p tcp --dport 636 -j ACCEPT
+
+-A INPUT -s 192.168.100.0/24 -m udp -p udp --dport 88 -j ACCEPT
+-A INPUT -s 192.168.100.0/24 -m udp -p udp --dport 464 -j ACCEPT
+{% endif %}
+# Reject all further connections from less secure vpn
+-A INPUT -s 192.168.100.0/24 -j REJECT --reject-with icmp-host-prohibited
+{% endif %}
+# if the host declares a fedmsg-enabled wsgi app, open ports for it
+{% if wsgi_fedmsg_service is defined %}
+{% for i in range(wsgi_procs * wsgi_threads) %}
+-A INPUT -p tcp -m tcp --dport 30{{ '%02d' % i }} -j ACCEPT
+{% endfor %}
+{% endif %}
+
+# smtp rules we want to allow vpn and out internal networks and mimecast
+-A INPUT -s 192.168.100.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
+-A INPUT -s 192.168.1.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
+-A INPUT -s 192.168.0.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
+-A INPUT -s 10.3.160.0/19 -m tcp -p tcp --dport 25 -j ACCEPT
+# mimecast ips from
+# https://community.mimecast.com/s/article/email-security-cloud-gateway-data-centers-and-urls?r=297&ui-knowledge-components-aura-actions.KnowledgeArticleVersionCreateDraftFromOnlineAction.createDraftFromOnlineArticle=1
+-A INPUT -s 170.10.132.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
+-A INPUT -s 170.10.133.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
+-A INPUT -s 170.10.128.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
+-A INPUT -s 170.10.129.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
+-A INPUT -s 170.10.130.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
+-A INPUT -s 170.10.131.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
+-A INPUT -s 207.211.31.0/25 -m tcp -p tcp --dport 25 -j ACCEPT
+-A INPUT -s 207.211.30.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
+-A INPUT -s 205.139.110.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
+-A INPUT -s 205.139.111.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
+-A INPUT -s 216.205.24.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
+-A INPUT -s 63.128.21.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
+ 
+IP Addresses / Network Ranges for Non-SPF Email Traffic
+
+Where messages are being sent from accounts with envelope addresses not registered as internal domains, Mimecast routes through separate ranges. 
+Region		
+ United States of America (US-Grid)	207.211.30.40	to	207.211.30.49	205.139.111.40	to	205.139.111.49
+
+# if the host/group defines incoming tcp_ports - allow them
+{% if tcp_ports is defined %}
+{% for port in tcp_ports %}
+-A INPUT -p tcp -m tcp --dport {{ port }} -j ACCEPT
+{% endfor %}
+{% endif %}
+
+# if the host/group defines incoming udp_ports - allow them
+{% if udp_ports is defined %}
+{% for port in udp_ports %}
+-A INPUT -p udp -m udp --dport {{ port }} -j ACCEPT
+{% endfor %}
+{% endif %}
+
+# if there are any proxy-only tcp_ports - allow them
+{% if proxy_tcp_ports is defined %}
+{% for port in proxy_tcp_ports %}
+{% for proxy in (groups['proxies'] + groups['proxies_internal']) %}
+{% if hostvars[proxy]['datacenter'] == "phx2" and 'ansible_eth0' in hostvars[proxy] %}
+-A INPUT -p tcp -m tcp --dport {{ port }} --src {{ hostvars[proxy]['ansible_eth0']['ipv4']['address'] }} -j ACCEPT
+{% else %}
+-A INPUT -p tcp -m tcp --dport {{ port }} --src {{ hostvars[proxy]['ansible_tun0']['ipv4']['address'] }} -j ACCEPT
+{% endif %}
+{% endfor %}
+# nagios
+-A INPUT -p tcp -m tcp --dport {{ port }} --src  10.3.163.10 -j ACCEPT
+{% endfor %}
+{% endif %}
+
+# if there are custom rules - put them in as-is
+{% if custom_rules is defined %}
+{% for rule in custom_rules %}
+{{ rule }}
+{% endfor %}
+{% endif %}
+
+# otherwise kick everything out
+-A INPUT -j REJECT --reject-with icmp-host-prohibited
+-A FORWARD -j REJECT --reject-with icmp-host-prohibited
+COMMIT
+
+{% if nat_rules %}
+*nat
+:PREROUTING ACCEPT [0:0]
+:INPUT ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+
+{% for rule in nat_rules %}
+{{ rule }}
+{% endfor %}
+COMMIT
+{% endif %}
