@@ -78,7 +78,7 @@
 -A INPUT -s 192.168.0.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
 -A INPUT -s 10.3.160.0/19 -m tcp -p tcp --dport 25 -j ACCEPT
 # s390x builders/virthost
--A INPUT -s 10.3.102.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
+-A INPUT -s 10.1.102.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
 # redhat mxes
 -A INPUT -s 10.30.177.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
 -A INPUT -s 10.30.29.0/24 -m tcp -p tcp --dport 25 -j ACCEPT
