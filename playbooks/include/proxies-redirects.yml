@@ -905,7 +905,7 @@
   - role: httpd/redirectmatch
     shortname: 00-old-odcs-repo
     website: odcs.fedoraproject.org
-    regex: ^/composes/production/latest-Fedora-ELN/compose/(.*)
+    regex: ^.*compose/(.*)
     target: https://dl.fedoraproject.org/pub/eln/1/$1
     tags:
      - odcs
