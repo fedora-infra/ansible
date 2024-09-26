@@ -24,7 +24,7 @@
 # - nagios outage stuff didn't seem to work as well as we would want last time.
 
 - name: preliminary tasks
-  hosts: koji:koji-stg
+  hosts: koji:koji_stg
   user: root
   vars_files: 
    - /srv/web/infra/ansible/vars/global.yml
@@ -79,7 +79,7 @@
     when: db_upgrade_file is defined
 
 - name: update and restart the koji hubs before we touch the builders
-  hosts: koji:koji-stg
+  hosts: koji:koji_stg
   user: root
   vars_files: 
    - /srv/web/infra/ansible/vars/global.yml
@@ -95,7 +95,7 @@
     ignore_errors: true
 
 - name: update and restart the koji builders, now that we're done with the hubs
-  hosts: builders:builders-stg
+  hosts: builders:builders_stg
   user: root
   vars_files: 
    - /srv/web/infra/ansible/vars/global.yml
