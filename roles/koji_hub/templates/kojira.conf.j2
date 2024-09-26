@@ -21,17 +21,21 @@ logfile=/var/log/kojira/kojira.log
 ; Include srpms in repos? (not needed for normal operation)
 with_src=no
 
+{% if env == "staging" %}
 ; We want a srpms repo for rawhide only
 separate_source_tags=f{{ FedoraRawhideNumber }}-build eln-build
+{% endif %}
 
 ; prevent repo cleanup from stalling repo regen
 ;prune_batch_size=1
 ;delete_batch_size=1
 max_delete_processes=20
 
+{% if env == "staging" %}
 ; prevent kojira from flooding the build system with newRepo tasks
 max_repo_tasks=30
 repo_tasks_limit=40
+{% endif %}
 
 ; Server certificate authority
 serverca = /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
@@ -52,9 +56,11 @@ dist_repo_lifetime = 7257600
 ; https://pagure.io/koji/issue/2159
 check_external_repos = True
 
+{% if env == "staging" %}
 ; Writable path could be set here. In such case, kojira will write a
 ; list of currently monitored tags there with simple statistics in
 ; every cycle. File would contain information about how long these
 ; tags are expired and what is the computed score for them. This can
 ; be used to debug and check in realtime the actual performance.
 queue_file = /mnt/koji/kojira/queue
+{% endif %}
