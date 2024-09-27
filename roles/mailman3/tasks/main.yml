@@ -562,8 +562,7 @@
 
 - name: Run the DMARC mitigation script
   ansible.builtin.command:
-    cmd: "enable_dmarc_mitigation.py"
-    chdir: "{{ mailman_webui_basedir }}/bin"
+    cmd: "python {{ mailman_webui_basedir }}/bin/enable_dmarc_mitigation.py"
   tags:
     - mailman
     - scripts
