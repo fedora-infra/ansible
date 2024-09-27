@@ -43,15 +43,12 @@ routing_keys = {{ toddler.topics|tojson }}
 # Or add more toddlers to the list (using their name) if you want to disable
 # more of them.
 blocked_toddlers = [
-    "clean_retired_packages",
     "debug",
     "distgit_commit_processor",
-    "koji_block_retired",
     # Block all the PDC related toddlers
     "pdc_import_compose",
     "pdc_unretire_packages",
-    "distgit_bugzilla_sync",
-    "pdc_update_critpath"
+    "pdc_update_critpath",
 ]
 
 [consumer_config.default]
@@ -195,30 +192,23 @@ notify_admins = [
 ]
 {% endif %}
 
-# PDC types mapping for distgit_bugzilla_sync toddler
-[consumer_config.distgit_bugzilla_sync.pdc_types]
-"rpms" = "rpm"
-"modules" = "module"
-"container" = "container"
-
 # Bugzilla products informations for Fedora
 [consumer_config.distgit_bugzilla_sync.products]
 
 [consumer_config.distgit_bugzilla_sync.products.Fedora]
+branch_regex = '^((f\d+)|rawhide)$'
 namespace = "rpms"
-versions = ["rawhide", "39", "38", "37", "36"]
+versions = ["rawhide", "41", "40", "39", "38"]
 
 [consumer_config.distgit_bugzilla_sync.products."Fedora Container Images"]
+branch_regex = '^((f\d+)|rawhide)$'
 namespace = "container"
-versions = ["rawhide", "39", "38", "37", "36"]
-
-[consumer_config.distgit_bugzilla_sync.products."Fedora Modules"]
-namespace = "modules"
-versions = []
+versions = ["rawhide", "41", "40", "39", "38"]
 
 [consumer_config.distgit_bugzilla_sync.products."Fedora EPEL"]
-branch_regex = '^epel\d+$'
-versions = ["epel9", "epel8"]
+branch_regex = '^epel\d+(?:\.\d+)?$'
+namespace = "rpms"
+versions = ["epel10", "epel9", "epel8"]
 
 # Configuration section for scm_request_processor
 [consumer_config.scm_request_processor]
@@ -257,6 +247,61 @@ rawhide = '2222-01-01'
 [consumer_config.scm_request_processor.branch_slas.eln]
 rawhide = '2222-01-01'
 
+[consumer_config.scm_request_processor.branch_slas.epel10]
+stable_api = '2035-05-31'
+security_fixes = '2035-05-31'
+bug_fixes = '2035-05-31'
+
+[consumer_config.scm_request_processor.branch_slas."epel10.9"]
+stable_api = '2030-05-31'
+security_fixes = '2030-05-31'
+bug_fixes = '2030-05-31'
+
+[consumer_config.scm_request_processor.branch_slas."epel10.8"]
+stable_api = '2029-11-31'
+security_fixes = '2029-11-31'
+bug_fixes = '2029-11-31'
+
+[consumer_config.scm_request_processor.branch_slas."epel10.7"]
+stable_api = '2029-05-31'
+security_fixes = '2029-05-31'
+bug_fixes = '2029-05-31'
+
+[consumer_config.scm_request_processor.branch_slas."epel10.6"]
+stable_api = '2028-11-31'
+security_fixes = '2028-11-31'
+bug_fixes = '2028-11-31'
+
+[consumer_config.scm_request_processor.branch_slas."epel10.5"]
+stable_api = '2028-05-31'
+security_fixes = '2028-05-31'
+bug_fixes = '2028-05-31'
+
+[consumer_config.scm_request_processor.branch_slas."epel10.4"]
+stable_api = '2027-11-31'
+security_fixes = '2027-11-31'
+bug_fixes = '2027-11-31'
+
+[consumer_config.scm_request_processor.branch_slas."epel10.3"]
+stable_api = '2027-05-31'
+security_fixes = '2027-05-31'
+bug_fixes = '2027-05-31'
+
+[consumer_config.scm_request_processor.branch_slas."epel10.2"]
+stable_api = '2026-11-31'
+security_fixes = '2026-11-31'
+bug_fixes = '2026-11-31'
+
+[consumer_config.scm_request_processor.branch_slas."epel10.1"]
+stable_api = '2026-05-31'
+security_fixes = '2026-05-31'
+bug_fixes = '2026-05-31'
+
+[consumer_config.scm_request_processor.branch_slas."epel10.0"]
+stable_api = '2025-11-31'
+security_fixes = '2025-11-31'
+bug_fixes = '2025-11-31'
+
 [consumer_config.scm_request_processor.branch_slas.epel9]
 stable_api = '2032-05-31'
 security_fixes = '2032-05-31'
@@ -276,6 +321,10 @@ bug_fixes = '2029-05-31'
 stable_api = '2024-05-31'
 security_fixes = '2024-05-31'
 bug_fixes = '2024-05-31'
+
+[consumer_config.scm_request_processor.branch_slas.f41]
+bug_fixes = '2025-11-11'
+security_fixes = '2025-11-11'
 
 [consumer_config.scm_request_processor.branch_slas.f40]
 bug_fixes = '2025-05-13'
@@ -347,6 +396,7 @@ pagure_api_key = "{{ toddlers_pagure_fas_groups_sync_token }}"
 [consumer_config.pagure_fas_groups_sync.group_map]
 #Mapping of FAS groups to Pagure groups
 infra-sig = 'fedora-infra'
+metrics-sig = 'metrics'
 
 [qos]
 prefetch_size = 0
@@ -365,12 +415,12 @@ formatter = "simple"
 stream = "ext://sys.stdout"
 
 [log_config.loggers.fedora_messaging]
-level = "INFO"
+level = "DEBUG"
 propagate = false
 handlers = ["console"]
 
 [log_config.loggers.twisted]
-level = "INFO"
+level = "DEBUG"
 propagate = false
 handlers = ["console"]
 

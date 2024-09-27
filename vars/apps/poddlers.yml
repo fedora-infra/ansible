@@ -15,10 +15,10 @@ poddlers_toddlers:
     topics:
       - "org.fedoraproject.*.toddlers.trigger.clean_retired_packages"
 
-  # - name: distgit-bugzilla-sync
-  #   callback: distgit_bugzilla_sync:DistgitBugzillaSync
-  #   topics:
-  #     - "org.fedoraproject.*.toddlers.trigger.distgit_bugzilla_sync"
+  - name: distgit-bugzilla-sync
+    callback: distgit_bugzilla_sync:DistgitBugzillaSync
+    topics:
+      - "org.fedoraproject.*.toddlers.trigger.distgit_bugzilla_sync"
 
   - name: distgit-commit-processor
     callback: distgit_commit_processor:DistGitCommitProcessor
@@ -37,10 +37,10 @@ poddlers_toddlers:
     topics:
       - "org.fedoraproject.*.buildsys.build.state.change"
 
-  # - name: koji-block-retired
-  #   callback: koji_block_retired:KojiBlockRetired
-  #   topics:
-  #     - "org.fedoraproject.*.git.receive"
+  - name: koji-block-retired
+    callback: koji_block_retired:KojiBlockRetired
+    topics:
+      - "org.fedoraproject.*.git.receive"
 
   - name: packager-bugzilla-sync
     callback: packager_bugzilla_sync:PackagerBugzillaSync
@@ -86,7 +86,7 @@ poddlers_cronjobs:
     schedule: "0 */6 * * *"
     only_env: production
     command: packager_bugzilla_sync
-  - name: packager-check-email-overrides
+  - name: check-email-overrides
     schedule: "0 6 * * *"
     only_env: production
     command: check_email_overrides
