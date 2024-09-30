@@ -79,7 +79,7 @@
   - name: shutdown vms
     virt: command=shutdown name={{ inventory_hostname }}
     ignore_errors: true
-    delegate_to: "target"
+    delegate_to: "{{ target[0] }}"
 
 - name: wait for the whole set to die.
   hosts: myvms_new
