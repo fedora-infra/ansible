@@ -16,6 +16,10 @@
 # TODO: Figure out how to compare virt info pre and post boot.
 
 - name: find instances
+  vars_prompt:
+   - name: target
+     prompt: What is the target vhost
+     private: false
   hosts: "{{ target }}"
   gather_facts: False
   user: root
@@ -32,6 +36,9 @@
   - name: add them to myvms_new group
     local_action: add_host hostname={{ item }} groupname=myvms_new
     with_items: "{{ vmlist.list_vms }}"
+
+  - name: add the vmhost to target group
+    local_action: add_host hostname={{ target }} groupname=target
 
 # Call out to another playbook.  Disable any proxies that may live here
 - name: update proxy dns if needed
@@ -72,7 +79,7 @@
   - name: shutdown vms
     virt: command=shutdown name={{ inventory_hostname }}
     ignore_errors: true
-    delegate_to: "{{ target }}"
+    delegate_to: "target"
 
 - name: wait for the whole set to die.
   hosts: myvms_new
@@ -84,7 +91,7 @@
     local_action: wait_for port=22 delay=30 timeout=300 state=stopped host={{ inventory_hostname }}
 
 - name: reboot vhost
-  hosts: "{{ target }}"
+  hosts: "target"
   gather_facts: False
   user: root
 
