@@ -28,9 +28,9 @@ spec:
         name: "{{ firmitas_application_name }}"
         env:
           - name: FIRMITAS_CONFIG
-            value: "/tmp/firmitas/myconfig.py"
+            value: "/tmp/firmitas/conf/myconfig.py"
         command: ["firmitas"]
-        args: ["--conffile", "/tmp/firmitas/myconfig.py"]
+        args: ["--conffile", "/tmp/firmitas/conf/myconfig.py"]
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
@@ -57,7 +57,7 @@ spec:
             memory: 256Mi
         volumeMounts:
           - name: "{{ firmitas_application_name }}-configuration-secret-volume"
-            mountPath: "/tmp/firmitas/"
+            mountPath: "/tmp/firmitas/conf/"
           - name: "{{ firmitas_application_name }}-volume"
             mountPath: "/tmp/firmitas/"
       volumes:

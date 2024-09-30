@@ -26,7 +26,7 @@ spec:
           restartPolicy: OnFailure
           volumeMounts:
             - name: "{{ firmitas_application_name }}-configuration-secret-volume"
-              mountPath: "/tmp/firmitas/"
+              mountPath: "/tmp/firmitas/conf/"
             - name: "{{ firmitas_application_name }}-volume"
               mountPath: "/tmp/firmitas/"
           volumes:
