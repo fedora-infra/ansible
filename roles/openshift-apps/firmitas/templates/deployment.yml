@@ -58,9 +58,15 @@ spec:
         volumeMounts:
           - name: "{{ firmitas_application_name }}-configuration-secret-volume"
             mountPath: "/tmp/firmitas/"
+          - name: "{{ firmitas_application_name }}-volume"
+            mountPath: "/tmp/firmitas/"
       volumes:
         - name: "{{ firmitas_application_name }}-configuration-secret-volume"
           secret:
             secretName: "{{ firmitas_application_name }}-configuration-secret"
+        - name: "{{ firmitas_application_name }}-volume"
+          persistentVolumeClaim:
+            claimName: "firmitas-volume"
+
       terminationGracePeriodSeconds: 10
 
