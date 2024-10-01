@@ -2,8 +2,6 @@
 ansible_become: yes
 ansible_become_user: root
 ansible_user: ec2-user
-# Copr vars
-copr_hostbase: copr-db-stg
 # This is a generic list, monitored by collectd
 databases:
   - coprdb
@@ -18,9 +16,9 @@ db_backup_dir: ['/backups']
 dbs_to_backup:
   - coprdb
 description: copr database - staging instance
-hostbase: copr-db-stg-
-inventory_hostname: "copr-db-stg.aws.fedoraproject.org"
-inventory_instance_name: copr-db-stg
+hostbase: db-stg-aws
+inventory_hostname: "db.stg.aws.fedoraproject.org"
+inventory_instance_name: db_stg_aws
 
 # This instance is stopped for now (not enough time to finish)
 nagios_Can_Connect: false
@@ -34,6 +32,6 @@ nagios_Check_Services:
    raid: false
    sshd: false
    swap: false
-public_ip: 52.200.82.86
+public_ip: 184.73.23.234
 swap_file_path: /swap
 swap_file_size_mb: 4096
