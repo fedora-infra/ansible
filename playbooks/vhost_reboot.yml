@@ -88,8 +88,9 @@
     ignore_errors: true
     when: nonagios is not defined or not nonagios
 
+  # With drive firmware and sometimes needed to poke things, make this 30m
   - name: reboot the virthost
-    reboot:
+    reboot: reboot_timeout=1800
 
   - name: wait for libvirtd to come back on the virthost
     wait_for: path=/run/libvirt/libvirt-sock state=present
