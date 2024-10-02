@@ -10,7 +10,7 @@
 - meta: flush_handlers
 # on builders re-up eth0 to make sure systemd-resolved has updated info
 - name: nmcli c up eth0 on buildvms
-  command: nmcli c up eth0 >/dev/null
+  command: nmcli c up eth0
   check_mode: no
   when: inventory_hostname.startswith('buildvm')
   tags:
