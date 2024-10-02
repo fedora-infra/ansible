@@ -217,6 +217,7 @@ network_connections:
     mac: "{{ ansible_default_ipv4.macaddress }}"
     name: eth0
     type: ethernet
+    state: up
 nfs_bridge: br1
 # nfs mount options, override at the group/host level
 nfs_mount_opts: "ro,hard,bg,intr,noatime,nodev,nosuid,nfsvers=3"
