@@ -1,9 +1,3 @@
-- name: install network-scripts package
-  package: name=network-scripts state=installed
-  when: ansible_distribution_major_version|int >= 29 and ansible_distribution == 'Fedora'
-  tags:
-  - nfs/client
-
 # Setup our idmapd.conf file. It should be loaded automagically.
 - name: idmapd.conf
   copy: src=idmapd.conf dest=/etc/idmapd.conf
@@ -14,21 +8,13 @@
 
 # if we need to reload nm, we should do it now, not after roles.
 - meta: flush_handlers
-
-- name: check for netapp route
-  command: ip route show
-  register: netapproute
+# on builders re-up eth0 to make sure systemd-resolved has updated info
+- name: nmcli c up eth0 on buildvms
+  command: nmcli c up eth0 >/dev/null
   check_mode: no
-  changed_when: "1 != 1"
+  when: inventory_hostname.startswith('buildvm')
   tags:
   - nfs/client
-
-- name: run netapp route if needed in rdu
-  command: /usr/bin/nmcli c up eth1
-  when: netapproute.stdout.find("172.31.1.0") == -1 and datacenter == 'rdu'
-  tags:
-  - nfs/client
-
 #
 # Install needed packages
 #
