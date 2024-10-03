@@ -105,6 +105,13 @@ storage_account_type = "Standard_ZRS"
 
 {% endif %}
 
+{% if env == "staging" %}
+[[consumer_config.container.registries]]
+url = "oci-registry01.stg.iad2.fedoraproject.org"
+credential_prefix = "FEDORA_REGISTRY_"
+{% endif %}
+
+
 [qos]
 prefetch_size = 0
 prefetch_count = 25

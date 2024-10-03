@@ -103,6 +103,11 @@
     template: aws-secrets.yml
     objectname: aws-secrets.yml
 
+  - role: openshift/object
+    app: cloud-image-uploader
+    template: container-secrets.yml
+    objectname: container-secrets.yml
+
   - role: openshift/start-build
     app: cloud-image-uploader
     buildname: cloud-image-uploader-build
