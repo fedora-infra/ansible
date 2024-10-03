@@ -64,6 +64,9 @@
     - db-sync-script
 
   - postgresql_user: name=koji password={{ kojiPassword }}
+    when: env != "staging"
+  - postgresql_user: name=koji password={{ kojiStgPassword }}
+    when: env == "staging"
   - postgresql_user: name=backup
   - postgresql_db: name=koji state=absent
 # buildroot_listing is excluded from the sync to save some time
