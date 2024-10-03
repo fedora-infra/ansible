@@ -303,10 +303,10 @@ virt_install_command_two_nic_unsafe: virt-install -n {{ inventory_hostname }} --
 vpn: False
 # This is the wildcard certname for our proxies.  It has a different name for
 # the staging group and is used in the proxies.yml playbook.
-wildcard_cert_name: wildcard-2023.fedoraproject.org
-wildcard_crt_file: wildcard-2023.fedoraproject.org.cert
-wildcard_int_file: wildcard-2023.fedoraproject.org.intermediate.cert
-wildcard_key_file: wildcard-2023.fedoraproject.org.key
+wildcard_cert_name: wildcard-2024.fedoraproject.org
+wildcard_crt_file: wildcard-2024.fedoraproject.org.cert
+wildcard_int_file: wildcard-2024.fedoraproject.org.intermediate.cert
+wildcard_key_file: wildcard-2024.fedoraproject.org.key
 #
 # say if we want the apache role dependency for mod_wsgi or not
 # In some cases we want mod_wsgi and no apache (for python3 httpaio stuff)
