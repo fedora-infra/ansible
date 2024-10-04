@@ -96,7 +96,7 @@
   - role: openshift/secret-file
     app: cloud-image-uploader
     secret_name: registry-fedoraproject-cert
-    key: registry-fedoraproject.crt
+    key: registry-fedoraproject.cert
     privatefile: "docker-registry/{{env}}/pki/issued/containerstable.crt"
 
   - role: openshift/secret-file
