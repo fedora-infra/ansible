@@ -1,4 +1,29 @@
 ---
+dns1: 140.211.166.130
+dns2: 140.211.166.131
+dns_search1: vpn.fedoraproject.org
+dns_search2: fedoraproject.org
+eth0_ipv4_gw: 140.211.11.1
+eth0_ipv4_ip: 140.211.11.244
+eth0_ipv4_nm: 24
+mac0: fa:16:3e:3e:db:69
+network_connections:
+  - autoconnect: yes
+    ip:
+      address:
+        - "{{ eth0_ipv4_ip }}/{{ eth0_ipv4_nm }}"
+      dhcp4: no
+      dns:
+        - "{{ dns1 }}"
+        - "{{ dns2 }}"
+      dns_search:
+        - "{{ dns_search1 }}"
+        - "{{ dns_search2 }}"
+      gateway4: "{{ eth0_ipv4_gw }}"
+    mac: "{{ mac0 }}"
+    name: eth0
+    type: ethernet
+    state: up
 nagios_Can_Connect: false
 nagios_Check_Services:
   nrpe: false
