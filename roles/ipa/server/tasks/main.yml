@@ -100,6 +100,18 @@
   ansible.builtin.stat:
     path: /var/log/ipainstall.log
   register: replica_check
+  tags:
+  - ipa/server
+  - config
+
+- name: ask admin if they are ok reinstalling this ipa server replica
+  ansible.builtin.pause:
+    prompt: "Looks like this replica should be reinstalled, are you sure you want to do that? (yes/no)"
+  when: not ipa_initial and (not replica_check.stat.exists)
+  register: confirm_replica
+  tags:
+  - ipa/server
+  - config
 
 - name: configure replication
   block:
@@ -130,7 +142,7 @@
              --server={{ipa_server}}
              --dirsrv-config-file=/root/ldif/replica-install.ldif
     when: ansible_distribution_major_version|int >= 8
-  when: not ipa_initial and replica_check.stat.exists
+  when: (confirm_replica is defined) and (confirm_replica.user_input | bool)
   tags:
   - ipa/server
   - config
