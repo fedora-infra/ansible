@@ -107,7 +107,7 @@ storage_account_type = "Standard_ZRS"
 
 {% if env == "staging" %}
 [[consumer_config.container.registries]]
-url = "oci-registry01.stg.iad2.fedoraproject.org"
+url = "registry.stg.fedoraproject.org"
 credential_prefix = "FEDORA_REGISTRY_"
 {% endif %}
 
