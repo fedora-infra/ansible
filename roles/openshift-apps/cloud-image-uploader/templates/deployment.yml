@@ -34,9 +34,9 @@ spec:
           projected:
             sources:
             - secret:
-                secretName: registry-fedoraproject-cert
+                name: registry-fedoraproject-cert
             - secret:
-                secretName: registry-fedoraproject-key
+                name: registry-fedoraproject-key
       containers:
         - name: cloud-image-uploader
           image: image-registry.openshift-image-registry.svc:5000/cloud-image-uploader/cloud-image-uploader:latest
