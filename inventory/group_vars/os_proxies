@@ -4,6 +4,12 @@ custom_rules: [
   '-A INPUT -d 224.0.0.0/8 -j ACCEPT', '-A INPUT -p vrrp -j ACCEPT',
   # machinectl api
   '-A INPUT -p tcp --dport 22623 --src 38.145.48.0/27 -j ACCEPT']
+nft_custom_rules:
+  # Needed for keepalived
+  - 'add rule ip filter INPUT ip daddr 224.0.0.0/8 counter accept'
+  - 'add rule ip filter INPUT ip protocol vrrp counter accept'
+  # machinectl api
+  - 'add rule ip filter INPUT ip saddr 38.145.48.0/27 tcp dport 22623 counter accept'
 datacenter: cloud
 host_group: cloud
 lvm_size: 20000

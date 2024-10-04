@@ -1,0 +1,87 @@
+# {{ ansible_managed }}
+#
+# NOTE: Chaging this template updates iptables on all releng hosts :)
+# Please check with sysadmin-main before pushing out an update here.
+#
+add table ip filter
+add chain ip filter   INPUT { type filter hook input priority 0; policy drop; }
+add chain ip filter FORWARD { type filter hook forward priority 0; policy accept; }
+add chain ip filter  OUTPUT { type filter hook output priority 0; policy accept; }
+
+# loopback allowed
+add rule ip filter INPUT iifname "lo" counter accept
+
+# Accept ping and traceroute (needs icmp)
+add rule ip filter INPUT ip protocol icmp counter accept
+
+# Established connections allowed
+add rule ip filter INPUT ct state related,established counter accept
+
+# Overwrite any global rules
+# for nrpe - allow it from nocs
+add rule ip filter INPUT ip saddr 192.168.1.10  tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 192.168.1.166 tcp dport 5666 counter accept
+# FIXME - this is the global nat-ip and we need the noc01-specific ip
+add rule ip filter INPUT ip saddr 38.145.60.16 tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 38.145.60.15 tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 10.3.163.10  tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 10.3.166.10  tcp dport 5666 counter accept
+# Zabbix
+add rule ip filter INPUT tcp dport 10051 counter accept
+add rule ip filter INPUT ip saddr 10.3.163.198 tcp dport 10050 counter accept
+
+# if the blocked_ips is defined - drop them
+{% if blocked_ips is defined %}
+{% for ip in blocked_ips %}
+add rule ip filter INPUT ip saddr {{ ip }} counter drop
+{% endfor %}
+{% endif %}
+
+# SSH
+#!# NOTE: Do we still need/wants these 13+ years later?
+# ssh block against uni in .cz where problem(s) have been cited
+# added by skvidal on jan 24 2011 - as per request from spot
+add rule ip filter INPUT ip saddr 147.251.0.0/16 tcp dport 22 counter reject
+# matches last rule for a service we want blocked
+add rule ip filter INPUT ip saddr 192.168.100.0/24 tcp dport 22 counter reject with tcp reset
+add rule ip filter INPUT tcp dport 22 counter accept
+
+# Allow all netapp traffic
+add rule ip filter INPUT ip saddr 10.3.162.0/24 counter accept
+
+
+# Custom Services
+
+# Services TCP
+add rule ip filter INPUT tcp dport  22 counter accept
+add rule ip filter INPUT tcp dport  80 counter accept
+add rule ip filter INPUT tcp dport 443 counter accept
+
+# Services UDP
+
+# more services we use - ports for random services and TG listeners.
+# if the host/group defines incoming tcp_ports - allow them
+{% if tcp_ports is defined %}
+{% for port in tcp_ports %}
+add rule ip filter INPUT tcp dport {{ port }} counter accept
+{% endfor %}
+{% endif %}
+
+# if the host/group defines incoming udp_ports - allow them
+{% if udp_ports is defined %}
+{% for port in udp_ports %}
+add rule ip filter INPUT udp dport {{ port }} counter accept
+{% endfor %}
+{% endif %}
+
+# if there are custom rules - put them in as-is
+{% if nft_custom_rules is defined %}
+{% for rule in nft_custom_rules %}
+{{ rule }}
+{% endfor %}
+{% endif %}
+
+# Extra protection for 192.168.100.x vpn hosts.
+add rule ip filter INPUT ip saddr 192.168.100.0/24 counter reject with icmp type host-prohibited
+
+add rule ip filter   INPUT counter reject with icmp type host-prohibited

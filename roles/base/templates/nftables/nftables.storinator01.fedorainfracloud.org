@@ -1,0 +1,89 @@
+# {{ ansible_managed }}
+add table ip filter
+add chain ip filter   INPUT { type filter hook input priority 0; policy accept; }
+add chain ip filter FORWARD { type filter hook forward priority 0; policy accept; }
+add chain ip filter  OUTPUT { type filter hook output priority 0; policy accept; }
+
+# allow ping and traceroute
+add rule ip filter INPUT ip protocol icmp counter accept
+
+# localhost is fine
+add rule ip filter INPUT iifname "lo" counter accept
+
+# Established connections allowed
+add rule ip filter  INPUT ct state related,established counter accept
+add rule ip filter OUTPUT ct state related,established counter accept
+
+# if the blocked_ips is defined - drop them
+{% if blocked_ips is defined %}
+{% for ip in blocked_ips %}
+add rule ip filter INPUT ip saddr {{ ip }} counter drop
+{% endfor %}
+{% endif %}
+
+# allow ssh - always
+add rule ip filter INPUT ct state new tcp dport 22 counter accept
+
+# for nrpe - allow it from nocs
+add rule ip filter INPUT ip saddr 192.168.1.10 tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 192.168.1.166 tcp dport 5666 counter accept
+# FIXME - this is the global nat-ip and we need the noc01-specific ip
+add rule ip filter INPUT ip saddr 38.145.60.16 tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 38.145.60.15 tcp dport 5666 counter accept
+# NOTE: we don't allow 10.3.163.10 / 10.3.166.10 or zabbix?
+
+# if the host/group defines incoming tcp_ports - allow them
+# NOTE: These are specific to eth0
+{% if tcp_ports_eth0 is defined %}
+{% for port in tcp_ports_eth0 %}
+add rule ip filter INPUT iifname "eth0" tcp dport {{ port }} counter accept
+{% endfor %}
+{% endif %}
+
+# if the host/group defines incoming udp_ports - allow them
+# NOTE: These are specific to eth0
+{% if udp_ports_eth0 is defined %}
+{% for port in udp_ports_eth0 %}
+add rule ip filter INPUT iifname "eth0" udp dport {{ port }} counter accept
+{% endfor %}
+{% endif %}
+
+# if the host/group defines incoming tcp_ports - allow them
+# NOTE: These are specific to eth1
+{% if tcp_ports_eth1 is defined %}
+{% for port in tcp_ports_eth1 %}
+add rule ip filter INPUT iifname "eth1" tcp dport {{ port }} counter accept
+{% endfor %}
+{% endif %}
+
+# if the host/group defines incoming udp_ports - allow them
+# NOTE: These are specific to eth1
+{% if udp_ports_eth1 is defined %}
+{% for port in udp_ports_eth1 %}
+add rule ip filter INPUT iifname "eth1" udp dport {{ port }} counter accept
+{% endfor %}
+{% endif %}
+
+# if there are custom rules - put them in as-is
+{% if nft_custom_rules is defined %}
+{% for rule in nft_custom_rules %}
+{{ rule }}
+{% endfor %}
+{% endif %}
+
+# otherwise kick everything out
+add rule ip filter   INPUT counter reject with icmp type host-prohibited
+add rule ip filter FORWARD counter reject with icmp type host-prohibited
+
+{% if nft_nat_rules %}
+#!# FIXME: These are different priority to iptables template...
+add table ip nat
+add chain ip nat  PREROUTING { type nat hook prerouting priority 0; policy accept; }
+add chain ip nat       INPUT { type nat hook input priority 0; policy accept; }
+add chain ip nat      OUTPUT { type nat hook output priority 0; policy accept; }
+add chain ip nat POSTROUTING { type nat hook postrouting priority 0; policy accept; }
+
+{% for rule in nft_nat_rules %}
+{{ rule }}
+{% endfor %}
+{% endif %}

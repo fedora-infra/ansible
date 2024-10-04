@@ -18,6 +18,7 @@ csi_security_category: High
 # Make connections from signing bridges stateless, they break sigul connections
 # https://bugzilla.redhat.com/show_bug.cgi?id=1283364
 custom_rules: ['-A INPUT --proto tcp --sport 44334 --source 10.3.169.120 -j ACCEPT']
+nft_custom_rules: ['add rule ip filter INPUT ip saddr 10.3.169.120 tcp sport 44334 counter accept']
 fedmsg_error_recipients: []
 host_group: autosign
 ipa_client_shell_groups:

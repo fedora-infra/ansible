@@ -5,6 +5,15 @@ csi_purpose: repospanner git syncing host
 # For the MOTD
 csi_security_category: Low
 custom_rules: ['-A INPUT -p tcp -m tcp -s 8.43.84.211 --dport 8443:8445 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 8.43.84.212 --dport 8443:8445 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 8.43.85.76 --dport 8443:8445 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 152.19.134.149 --dport 8443:8445 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 209.132.181.20 --dport 8443:8445 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 8.43.85.78 --dport 8443:8445 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 152.19.134.191 --dport 8443:8445 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 140.211.169.199 --dport 8443:8445 -j ACCEPT']
+nft_custom_rules:
+  - 'add rule ip filter INPUT ip saddr 8.43.84.211     tcp dport 8443-8445 counter accept'
+  - 'add rule ip filter INPUT ip saddr 8.43.84.212     tcp dport 8443-8445 counter accept'
+  - 'add rule ip filter INPUT ip saddr 8.43.85.76      tcp dport 8443-8445 counter accept'
+  - 'add rule ip filter INPUT ip saddr 152.19.134.149  tcp dport 8443-8445 counter accept'
+  - 'add rule ip filter INPUT ip saddr 209.132.181.20  tcp dport 8443-8445 counter accept'
+  - 'add rule ip filter INPUT ip saddr 8.43.85.78      tcp dport 8443-8445 counter accept'
+  - 'add rule ip filter INPUT ip saddr 152.19.134.191  tcp dport 8443-8445 counter accept'
+  - 'add rule ip filter INPUT ip saddr 140.211.169.199 tcp dport 8443-8445 counter accept'
 lvm_size: 50000
 max_mem_size: 16348
 mem_size: 8192

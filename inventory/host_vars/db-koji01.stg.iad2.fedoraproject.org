@@ -3,6 +3,7 @@
 # Only allow postgresql access from the frontend node.
 #
 custom_rules: ['-A INPUT -p tcp -m tcp -s 10.3.167.64 --dport 5432 -j ACCEPT']
+nft_custom_rules: ['add rule ip filter INPUT ip saddr 10.3.167.64 tcp dport 5432 counter accept']
 # This is a generic list, monitored by collectd
 databases:
   - koji

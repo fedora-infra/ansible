@@ -1,5 +1,6 @@
 ---
 custom_rules: ['-A INPUT -p tcp -m tcp -s 192.168.122.0/24 --dport 2049 -j ACCEPT']
+nft_custom_rules: ['add rule ip filter INPUT ip saddr 192.168.122.0/24 tcp dport 2049 counter accept']
 freezes: false
 ipa_client_shell_groups:
   - sysadmin-kernel

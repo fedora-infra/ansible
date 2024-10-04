@@ -1,6 +1,7 @@
 ---
 # Define resources for this group of hosts here.
 custom_rules: ['-A INPUT -p udp -m udp -s 10.3.0.0/16 --dport 53 -j ACCEPT']
+nft_custom_rules: ['add rule ip filter INPUT ip saddr 10.3.0.0/16 udp dport 53 counter accept']
 host_backup_targets: ['/var/lib/ipa/backup', '/var/log/dirsrv/slapd-FEDORAPROJECT-ORG']
 ipa_client_shell_groups:
   - sysadmin-accounts

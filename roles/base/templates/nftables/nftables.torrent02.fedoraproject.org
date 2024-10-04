@@ -1,0 +1,94 @@
+# {{ ansible_managed }}
+add table ip filter
+add chain ip filter   INPUT { type filter hook input priority 0; policy accept; }
+add chain ip filter FORWARD { type filter hook forward priority 0; policy accept; } 
+add chain ip filter  OUTPUT { type filter hook output priority 0; policy accept; }
+
+# allow ping and traceroute
+add rule ip filter INPUT ip protocol icmp counter accept
+
+# localhost is fine
+add rule ip filter INPUT iifname "lo" counter accept
+
+# Established connections allowed
+add rule ip filter  INPUT ct state related,established counter accept
+add rule ip filter OUTPUT ct state related,established counter accept
+
+# if the blocked_ips is defined - drop them
+{% if blocked_ips is defined %}
+{% for ip in blocked_ips %}
+add rule ip filter INPUT ip saddr {{ ip }} counter drop
+{% endfor %}
+{% endif %}
+
+# allow ssh - always
+add rule ip filter INPUT ct state new tcp dport 22 counter accept
+
+# for nrpe - allow it from nocs
+add rule ip filter INPUT ip saddr 192.168.1.10  tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 192.168.1.166 tcp dport 5666 counter accept
+# FIXME - this is the global nat-ip and we need the noc01-specific ip
+add rule ip filter INPUT ip saddr 38.145.60.16 tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 38.145.60.15 tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 10.3.163.10  tcp dport 5666 counter accept
+# NOTE: This doesn't include 10.3.166.10
+# NOTE: This doesn't include zabbix.
+
+{% if env != 'staging' and datacenter == 'phx2' and inventory_hostname not in groups['staging_friendly'] %}
+#
+# In the phx2 datacenter, both production and staging hosts are in the same 
+# subnet/vlan. We want production hosts to reject connectons from staging group hosts
+# to prevent them from interfering with production. There are however a few hosts in 
+# production we have marked 'staging-friendly' that we do allow staging to talk to for 
+# mostly read-only data they need.
+#
+{% for host in groups['staging']|sort %}
+{% if 'eth0_ip' in hostvars[host] %}# {{ host }}
+add rule ip filter INPUT ip saddr {{ hostvars[host]['eth0_ip'] }} counter reject with icmp type host-prohibited
+{% else %}# {{ host }} has no 'eth0_ip' listed
+{% endif %}
+{% endfor %}
+{% endif %}
+
+# if the host declares a fedmsg-enabled wsgi app, open ports for it
+{% if wsgi_fedmsg_service is defined %}
+{% for i in range(wsgi_procs * wsgi_threads) %}
+add rule ip filter INPUT tcp dport 30{{ '%02d' % i }} counter accept
+{% endfor %}
+{% endif %}
+
+
+# if the host/group defines incoming tcp_ports - allow them
+{% if tcp_ports is defined %}
+{% for port in tcp_ports %}
+add rule ip filter INPUT tcp dport {{ port }} counter accept
+{% endfor %}
+{% endif %}
+
+# if the host/group defines incoming udp_ports - allow them
+{% if udp_ports is defined %}
+{% for port in udp_ports %}
+add rule ip filter INPUT udp dport {{ port }} counter accept
+{% endfor %}
+{% endif %}
+
+# if there are custom rules - put them in as-is
+{% if nft_custom_rules is defined %}
+{% for rule in nft_custom_rules %}
+{{ rule }}
+{% endfor %}
+{% endif %}
+
+# otherwise kick everything out
+add rule ip filter INPUT   counter reject with icmp type host-prohibited
+add rule ip filter FORWARD counter reject with icmp type host-prohibited
+
+add table ip raw
+add chain ip raw PREROUTING { type filter hook prerouting priority -300; policy accept; }
+add chain ip raw     OUTPUT { type filter hook output priority -300; policy accept; }
+
+#
+# We don't want to track all the torrent tracker connections, there's too many.
+#
+add rule ip raw PREROUTING tcp dport 6969 counter notrack
+add rule ip raw     OUTPUT tcp sport 6969 counter notrack

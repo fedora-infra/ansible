@@ -24,6 +24,32 @@ custom_rules: [
   # Allow openqa01 to talk to the inbound fedmsg relay.
   '-A INPUT -p tcp -m tcp --dport 9941 -s 10.3.174.0/24 -j ACCEPT',
   '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.120 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.121 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.122 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.123 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.124 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.125 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.126 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.65 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.127 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.128 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.129 -j ACCEPT']
+nft_custom_rules:
+  # Need for rsync from log01 for logs.
+  - 'add rule ip filter INPUT ip saddr 10.3.163.39     tcp dport 873 counter accept'
+  - 'add rule ip filter INPUT ip saddr 192.168.1.59    tcp dport 873 counter accept'
+  - 'add rule ip filter INPUT ip saddr 209.132.181.102 tcp dport 873 counter accept'
+  # allow varnish from localhost
+  - 'add rule ip filter INPUT ip saddr 127.0.0.1 tcp dport 6081 counter accept'
+  - 'add rule ip filter INPUT ip saddr 127.0.0.1 tcp dport 6082 counter accept'
+  # also allow varnish from internal for purge requests
+  - 'add rule ip filter INPUT ip saddr 192.168.1.0/24 tcp dport 6081 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.3.163.0/24  tcp dport 6081 counter accept'
+  # Allow happinesspackets.fedorainfracloud.org to talk to inbound fedmsg relay.
+  - 'add rule ip filter INPUT ip saddr 209.132.184.58 tcp dport 9941 counter accept'
+  # Allow openqa01 to talk to the inbound fedmsg relay.
+  - 'add rule ip filter INPUT ip saddr 10.3.174.0/24 tcp dport 9941 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.3.163.120 tcp dport 22623 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.3.163.121 tcp dport 22623 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.3.163.122 tcp dport 22623 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.3.163.123 tcp dport 22623 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.3.163.124 tcp dport 22623 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.3.163.125 tcp dport 22623 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.3.163.126 tcp dport 22623 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.3.163.65  tcp dport 22623 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.3.163.127 tcp dport 22623 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.3.163.128 tcp dport 22623 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.3.163.129 tcp dport 22623 counter accept'
 external: true
 ipa_client_shell_groups:
   - fi-apprentice

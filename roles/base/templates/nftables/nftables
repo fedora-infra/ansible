@@ -1,0 +1,127 @@
+# {{ ansible_managed }}
+add table ip filter
+add chain ip filter   INPUT { type filter hook input priority 0; policy accept; }
+add chain ip filter FORWARD { type filter hook forward priority 0; policy accept; }
+add chain ip filter  OUTPUT { type filter hook output priority 0; policy accept; }
+
+# allow ping and traceroute
+add rule ip filter INPUT ip protocol icmp counter accept
+
+# localhost is fine
+add rule ip filter INPUT iifname "lo" counter accept
+
+# Established connections allowed
+add rule ip filter  INPUT ct state related,established counter accept
+add rule ip filter OUTPUT ct state related,established counter accept
+
+# allow ssh - always
+add rule ip filter INPUT ct state new tcp dport 22 counter accept
+
+# for nrpe - allow it from nocs
+add rule ip filter INPUT ip saddr 192.168.1.10  tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 192.168.1.166 tcp dport 5666 counter accept
+# FIXME - this is the global nat-ip and we need the noc01-specific ip
+add rule ip filter INPUT ip saddr 38.145.60.16  tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 38.145.60.15  tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 10.3.163.10   tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 10.3.166.10   tcp dport 5666 counter accept
+# zabbix01
+add rule ip filter INPUT                        tcp dport 10051 counter accept
+add rule ip filter INPUT ip saddr 10.3.163.198  tcp dport 10050 counter accept
+
+{% if env != 'staging' and datacenter == 'iad2' and inventory_hostname not in groups['staging_friendly'] %}
+#
+# In the iad2 datacenter, both production and staging hosts are in different
+# vlans, and different subnets. However, just as a precaution, we want prod machines to
+# reject connections from any staging host just in case there's some globally enabled port.
+# There are however a few hosts in production we have marked 'staging-friendly'
+# that we do allow staging to talk to for mostly read-only data they need.
+#
+add rule ip filter INPUT ip saddr 10.3.166.0/24 counter reject with icmp type host-prohibited
+add rule ip filter INPUT ip saddr 10.3.167.0/24 counter reject with icmp type host-prohibited
+{% endif %}
+
+{% if vpn %}
+#
+# We want to have all vpn hosts reject most things from the 'less secure' vpn network
+#
+{% if inventory_hostname == 'log01.iad2.fedoraproject.org' %}
+# Allow all vpn hosts to talk to the log server for rsyslog
+add rule ip filter INPUT ip saddr 192.168.100.0/24 tcp dport   514 counter accept
+add rule ip filter INPUT ip saddr 192.168.100.0/24 udp dport 25826 counter accept
+{% endif %}
+{% if inventory_hostname in groups['ipa'] %}
+# Allow all vpn hosts to talk to the ipa servers for auth
+add rule ip filter INPUT ip saddr 192.168.100.0/24 tcp dport  80 counter accept
+add rule ip filter INPUT ip saddr 192.168.100.0/24 tcp dport  88 counter accept
+add rule ip filter INPUT ip saddr 192.168.100.0/24 tcp dport 389 counter accept
+add rule ip filter INPUT ip saddr 192.168.100.0/24 tcp dport 443 counter accept
+add rule ip filter INPUT ip saddr 192.168.100.0/24 tcp dport 464 counter accept
+add rule ip filter INPUT ip saddr 192.168.100.0/24 tcp dport 636 counter accept
+
+add rule ip filter INPUT ip saddr 192.168.100.0/24 udp dport  88 counter accept
+add rule ip filter INPUT ip saddr 192.168.100.0/24 udp dport 464 counter accept
+{% endif %}
+# Reject all further connections from less secure vpn
+add rule ip filter INPUT ip saddr 192.168.100.0/24 counter reject with icmp type host-prohibited
+{% endif %}
+# if the host declares a fedmsg-enabled wsgi app, open ports for it
+{% if wsgi_fedmsg_service is defined %}
+{% for i in range(wsgi_procs * wsgi_threads) %}
+add rule ip filter INPUT tcp dport 30{{ '%02d' % i }} counter accept
+{% endfor %}
+{% endif %}
+
+
+# if the host/group defines incoming tcp_ports - allow them
+{% if tcp_ports is defined %}
+{% for port in tcp_ports %}
+add rule ip filter INPUT tcp dport {{ port }} counter accept
+{% endfor %}
+{% endif %}
+
+# if the host/group defines incoming udp_ports - allow them
+{% if udp_ports is defined %}
+{% for port in udp_ports %}
+add rule ip filter INPUT udp dport {{ port }} counter accept
+{% endfor %}
+{% endif %}
+
+# if there are any proxy-only tcp_ports - allow them
+{% if proxy_tcp_ports is defined %}
+{% for port in proxy_tcp_ports %}
+{% for proxy in (groups['proxies'] + groups['proxies_internal']) %}
+{% if hostvars[proxy]['datacenter'] == "phx2" and 'ansible_eth0' in hostvars[proxy] %}
+add rule ip filter INPUT ip saddr {{ hostvars[proxy]['ansible_eth0']['ipv4']['address'] }} tcp dport {{ port }} counter accept
+{% else %}
+add rule ip filter INPUT ip saddr {{ hostvars[proxy]['ansible_tun0']['ipv4']['address'] }} tcp dport {{ port }} counter accept
+{% endif %}
+{% endfor %}
+# nagios
+add rule ip filter INPUT ip saddr 10.3.163.10 tcp dport {{ port }} counter accept
+{% endfor %}
+{% endif %}
+
+# if there are custom rules - put them in as-is
+{% if nft_custom_rules is defined %}
+{% for rule in nft_custom_rules %}
+{{ rule }}
+{% endfor %}
+{% endif %}
+
+# otherwise kick everything out
+add rule ip filter INPUT   counter reject with icmp type host-prohibited
+add rule ip filter FORWARD counter reject with icmp type host-prohibited
+
+{% if nft_nat_rules %}
+
+add table ip nat
+add chain ip nat  PREROUTING { type nat hook prerouting priority -100; policy accept; }
+add chain ip nat       INPUT { type nat hook input priority 100; policy accept; }
+add chain ip nat      OUTPUT { type nat hook output priority -100; policy accept; }
+add chain ip nat POSTROUTING { type nat hook postrouting priority 100; policy accept; }
+
+{% for rule in nft_nat_rules %}
+{{ rule }}
+{% endfor %}
+{% endif %}

@@ -7,6 +7,11 @@ custom_rules: [
     '-A INPUT -s 47.76.209.138/32 -j REJECT',
     '-A INPUT -s 47.76.99.127/32 -j REJECT'
 ]
+nft_custom_rules:
+  - 'add rule ip filter INPUT ip saddr 81.69.171.38   counter reject'
+  - 'add rule ip filter INPUT ip saddr 175.24.248.206 counter reject'
+  - 'add rule ip filter INPUT ip saddr 47.76.209.138  counter reject'
+  - 'add rule ip filter INPUT ip saddr 47.76.99.127   counter reject'
 csi_primary_contact: Fedora admins - admin@fedoraproject.org
 csi_purpose: Run the pagure instances for fedora
 csi_relationship: |

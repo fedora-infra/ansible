@@ -1,0 +1,58 @@
+# {{ ansible_managed }}
+add table ip6 filter
+add chain ip6 filter INPUT { type filter hook input priority 0; policy accept; }
+add chain ip6 filter FORWARD { type filter hook forward priority 0; policy accept; }
+add chain ip6 filter OUTPUT { type filter hook output priority 0; policy accept; }
+
+# loopback allowed
+add rule ip6 filter INPUT iifname "lo" counter accept
+
+# Accept ping and traceroute (needs icmp)
+add rule ip6 filter INPUT meta l4proto ipv6-icmp counter accept
+
+# Established connections allowed
+add rule ip6 filter INPUT ct state related,established counter accept
+
+# Established connections allowed
+add rule ip6 filter OUTPUT ct state related,established counter accept
+
+# allow dhcp6d from aws
+add rule ip6 filter INPUT ip6 daddr fe80::/64 udp sport 547 udp dport 546 counter accept
+
+# if the blocked_ips is defined - drop them
+{% if blocked_ip_v6 is defined %}
+{% for ip in blocked_ip_v6 %}
+add rule ip6 filter INPUT ip6 saddr {{ ip }} counter drop
+{% endfor %}
+{% endif %}
+
+# allow ssh - always
+add rule ip6 filter INPUT ct state new tcp dport 22 counter accept
+
+# for nrpe (if we want noc02 to be able to get into remote systems)
+#add rule ip6 filter INPUT ip6 saddr 2600:2701:4000:5211:dead:beef:fe:fed9 tcp dport 5666 counter accept
+
+# if the host/group defines incoming tcp_ports - allow them
+{% if tcp_ports is defined %}
+{% for port in tcp_ports %}
+add rule ip6 filter INPUT tcp dport {{ port }} counter accept
+{% endfor %}
+{% endif %}
+
+# if the host/group defines incoming udp_ports - allow them
+{% if udp_ports is defined %}
+{% for port in udp_ports %}
+add rule ip6 filter INPUT udp dport {{ port }} counter accept
+{% endfor %}
+{% endif %}
+
+# if there are custom6 rules - put them in as-is
+{% if nft_custom6_rules is defined %}
+{% for rule in nft_custom6_rules %}
+{{ rule }}
+{% endfor %}
+{% endif %}
+
+# otherwise kick everything out
+add rule ip6 filter INPUT counter reject with icmpv6 type admin-prohibited
+add rule ip6 filter FORWARD counter reject with icmpv6 type admin-prohibited

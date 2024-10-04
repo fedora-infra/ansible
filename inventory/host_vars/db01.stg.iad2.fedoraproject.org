@@ -3,6 +3,7 @@
 # We should narrow this down at some point
 #
 custom_rules: ['-A INPUT -p tcp -m tcp --dport 5432 -j ACCEPT']
+nft_custom_rules: ['add rule ip filter INPUT tcp dport 5432 counter accept']
 # This is a generic list, monitored by collectd
 databases:
   - askfedora

@@ -28,6 +28,9 @@ csi_security_category: High
 # allow ntp from internal RH 10 nets
 #
 custom_rules: ['-A INPUT -s 192.168.100/24 -j REJECT --reject-with icmp-host-prohibited', '-A INPUT -s 10.0.0.0/8 -p udp -m udp --dport 123 -j ACCEPT']
+nft_custom_rules:
+ - 'add rule ip filter INPUT ip saddr 192.168.100.0/24 counter reject with icmp type host-prohibited'
+ - 'add rule ip filter INPUT ip saddr 10.0.0.0/8 udp dport 123 counter accept'
 #
 # Set this to get fasjson-client cron to make the aliases file
 #

@@ -7,6 +7,7 @@ bodhi_message_routing_keys:
 # Make connections from signing bridges stateless, they break sigul connections
 # https://bugzilla.redhat.com/show_bug.cgi?id=1283364
 custom_rules: ['-A INPUT --proto tcp --sport 44334 --source 10.5.125.71 -j ACCEPT']
+nft_custom_rules: ['add rule ip filter INPUT ip saddr 10.5.125.71 tcp sport 44334 counter accept']
 host_group: bodhi2
 ipa_client_shell_groups:
   - sysadmin-bodhi

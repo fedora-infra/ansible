@@ -13,6 +13,8 @@ custom_rules:
   # - '-A INPUT -p tcp -m tcp -s 10.5.128.107 --dport 5432 -j ACCEPT'
   # TODO: lock it down more
   - '-A INPUT -p tcp -m tcp -s 10.3.166.0/24 --dport 5432 -j ACCEPT'
+nft_custom_rules:
+  - 'add rule ip filter INPUT ip saddr 10.3.166.0/24 tcp dport 5432 counter accept'
 # This is a generic list, monitored by collectd
 databases:
   - fas2

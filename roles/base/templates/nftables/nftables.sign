@@ -1,0 +1,22 @@
+# {{ ansible_managed }}
+add table ip filter
+add chain ip filter   INPUT { type filter hook input priority 0; policy accept; }
+add chain ip filter FORWARD { type filter hook forward priority 0; policy accept; }
+add chain ip filter  OUTPUT { type filter hook output priority 0; policy accept; }
+
+# loopback allowed
+add rule ip filter INPUT iifname "lo" counter accept
+
+# Accept ping and traceroute (needs icmp)
+add rule ip filter INPUT ip protocol icmp counter accept
+
+# Established connections allowed
+add rule ip filter INPUT ct state related,established counter accept
+
+# Allow connections from client/server
+add rule ip filter INPUT tcp dport 44333-44334 counter accept
+
+# otherwise kick everything out
+add rule ip filter   INPUT counter reject with icmp type host-prohibited
+add rule ip filter FORWARD counter reject with icmp type host-prohibited
+

@@ -8,6 +8,11 @@ custom_rules:
     - '-A INPUT -p tcp -m tcp -s 172.30.2.173    --dport 5167 -j ACCEPT'
     - '-A INPUT -p tcp -m tcp -s 18.208.10.131   --dport   80 -j ACCEPT'
     - '-A INPUT -p tcp -m tcp -s 18.208.10.131   --dport 5167 -j ACCEPT'
+nft_custom_rules:
+    - 'add rule ip filter INPUT ip saddr 172.30.2.173  tcp dport   80 counter accept'
+    - 'add rule ip filter INPUT ip saddr 172.30.2.173  tcp dport 5167 counter accept'
+    - 'add rule ip filter INPUT ip saddr 18.208.10.131 tcp dport   80 counter accept'
+    - 'add rule ip filter INPUT ip saddr 18.208.10.131 tcp dport 5167 counter accept'
 freezes: false
 tcp_ports: [22,
     # node_exporter/prometheus
