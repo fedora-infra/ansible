@@ -29,6 +29,14 @@ spec:
         - name: fedora-messaging-cert-volume
           secret:
             secretName: cloud-image-uploader-fedora-messaging-crt
+        # skopeo wants the cert and key in the same directory
+        - name: registry-fedoraproject
+          projected:
+            sources:
+            - secret:
+                secretName: registry-fedoraproject-cert
+            - secret:
+                secretName: registry-fedoraproject-key
       containers:
         - name: cloud-image-uploader
           image: image-registry.openshift-image-registry.svc:5000/cloud-image-uploader/cloud-image-uploader:latest
@@ -75,6 +83,8 @@ spec:
                 secretKeyRef:
                   name: podman-credentials
                   key: fedoraproject_registry_password
+            - name: FEDORA_REGISTRY_CERT_DIR
+              value: "/etc/pki/registry-fedoraproject-org/"
             - name: QUAY_IO_USER
               valueFrom:
                 secretKeyRef:
@@ -97,4 +107,7 @@ spec:
               readOnly: true
             - name: fedora-messaging-cert-volume
               mountPath: /etc/pki/rabbitmq/cert
+              readOnly: true
+            - name: registry-fedoraproject
+              mountPath: /etc/pki/registry-fedoraproject-org/
               readOnly: true

@@ -93,6 +93,18 @@
     key: cloud-image-uploader.ca
     privatefile: "rabbitmq/{{env}}/pki/ca.crt"
 
+  - role: openshift/secret-file
+    app: cloud-image-uploader
+    secret_name: registry-fedoraproject-cert
+    key: registry-fedoraproject.crt
+    privatefile: "docker-registry/{{env}}/pki/issued/containerstable.crt"
+
+  - role: openshift/secret-file
+    app: cloud-image-uploader
+    secret_name: registry-fedoraproject-key
+    key: registry-fedoraproject.key
+    privatefile: "docker-registry/{{env}}/pki/private/containerstable.key"
+
   - role: openshift/object
     app: cloud-image-uploader
     template: secret.yml
