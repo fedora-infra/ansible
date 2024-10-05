@@ -12,6 +12,7 @@
 - name: nmcli c up eth0 on buildvms
   command: nmcli c up eth0
   check_mode: no
+  changed_when: false
   when: inventory_hostname.startswith('buildvm')
   tags:
   - nfs/client
