@@ -107,6 +107,9 @@
 - name: Saving /var/log/ipainstall.log check
   ansible.builtin.set_fact:
     replica_check: replica_log
+  tags:
+  - ipa/server
+  - config
 
 - name: ask admin if they are ok reinstalling this ipa server replica
   ansible.builtin.pause:
@@ -123,6 +126,9 @@
     confirm_replica: "{{ item.user_input }}"
   with_items: "{{ hostvars[play_hosts.0].input.results }}"
   when: item.item == inventory_hostname
+  tags:
+  - ipa/server
+  - config
 
 - name: configure replication
   block:
