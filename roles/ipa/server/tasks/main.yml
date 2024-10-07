@@ -106,7 +106,7 @@
 
 - name: Saving /var/log/ipainstall.log check
   ansible.builtin.set_fact:
-    replica_check: replica_log
+    replica_check: replica_log.stat.exists
   tags:
   - ipa/server
   - config
@@ -114,7 +114,7 @@
 - name: ask admin if they are ok reinstalling this ipa server replica
   ansible.builtin.pause:
     prompt: "Looks like replica for {{ item }} should be reinstalled, are you sure you want to do that? (yes/no)"
-  when: "not ipa_initial and (not {{ hostvars[item]['replica_check'].stat.exists }})"
+  when: "not ipa_initial and (not {{ hostvars[item]['replica_check'] }})"
   register: input
   with_items: "{{ play_hosts }}"
   tags:
