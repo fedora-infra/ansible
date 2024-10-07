@@ -142,7 +142,7 @@
              --server={{ipa_server}}
              --dirsrv-config-file=/root/ldif/replica-install.ldif
     when: ansible_distribution_major_version|int >= 8
-  when: (confirm_replica is defined) and (confirm_replica.user_input | bool)
+  when: not ipa_initial and (confirm_replica is defined) and (confirm_replica.user_input | bool)
   tags:
   - ipa/server
   - config
