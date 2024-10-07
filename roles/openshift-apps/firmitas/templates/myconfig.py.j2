@@ -59,7 +59,7 @@ Variables related to probing
 certloca = "/tmp/firmitas/{{ (env == 'staging')|ternary('certificates/staging', 'certificates/production') }}"  # noqa : S108
 
 # The location of the service hostnames and maintainers map
-hostloca = "/tmp/firmitas/{{ (env == 'staging')|ternary('certificates/staging/staging_certlist.txt', 'certificates/production/production_certlist.txt') }}"  # noqa: S108
+hostloca = "/tmp/firmitas/conf/certlist.yml"
 
 """
 Variables related to logging
