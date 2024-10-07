@@ -99,33 +99,15 @@
 - name: Check if /var/log/ipainstall.log is available
   ansible.builtin.stat:
     path: /var/log/ipainstall.log
-  register: replica_log
-  tags:
-  - ipa/server
-  - config
-
-- name: Saving /var/log/ipainstall.log check
-  ansible.builtin.set_fact:
-    replica_check: replica_log.stat.exists
+  register: check_replica
   tags:
   - ipa/server
   - config
 
 - name: ask admin if they are ok reinstalling this ipa server replica
   ansible.builtin.pause:
-    prompt: "Looks like replica for {{ item }} should be reinstalled, are you sure you want to do that? (yes/no)"
-  when: "not ipa_initial and (not {{ hostvars[item]['replica_check'] }})"
-  register: input
-  with_items: "{{ play_hosts }}"
-  tags:
-  - ipa/server
-  - config
-
-- name: Save the user input
-  ansible.builtin.set_fact:
-    confirm_replica: "{{ item.user_input }}"
-  with_items: "{{ hostvars[play_hosts.0].input.results }}"
-  when: item.item == inventory_hostname
+    prompt: "Do you want to reinstall replicas for all replica servers missing /var/log/ipainstall.log (this indicates that the ipa-replica-install wasn't run yet)? (yes/no)"
+  register: confirm_replica
   tags:
   - ipa/server
   - config
@@ -159,7 +141,10 @@
              --server={{ipa_server}}
              --dirsrv-config-file=/root/ldif/replica-install.ldif
     when: ansible_distribution_major_version|int >= 8
-  when: not ipa_initial and (confirm_replica | default('no') | bool)
+  when:
+    - not ipa_initial
+    - not check_replica.stat.exists
+    - confirm_replica.user_input | default('no') | bool
   tags:
   - ipa/server
   - config
