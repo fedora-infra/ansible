@@ -21,3 +21,5 @@ openqa_nfs_worker: true
 openqa_secret: "{{ prod_openqa_apisecret }}"
 openqa_workers: 4
 primary_auth_source: ipa
+# all worker hosts should be encrypted as of 2024-10 redeployment
+openqa_nbde: true

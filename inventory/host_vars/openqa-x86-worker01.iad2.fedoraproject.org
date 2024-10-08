@@ -4,18 +4,18 @@ dns1: 10.3.163.33
 dns2: 10.3.163.34
 dns_search1: "iad2.fedoraproject.org"
 dns_search2: "fedoraproject.org"
-em1_ipv4: 10.3.174.21
-em1_ipv4_gw: 10.3.174.254
-em1_ipv4_nm: 24
-em1_mac: "{{ mac1 }}"
-em2_mac: "{{ mac2 }}"
-em3_mac: "{{ mac3 }}"
-em4_mac: "{{ mac4 }}"
+eno1np0_ipv4: 10.3.174.21
+eno1np0_ipv4_gw: 10.3.174.254
+eno1np0_ipv4_nm: 24
+eno1np0_mac: "{{ mac1 }}"
+eno2np1_mac: "{{ mac2 }}"
+eno3_mac: "{{ mac3 }}"
+eno4_mac: "{{ mac4 }}"
 freezes: false
-# em1 is default network
-# em2 is disabled/nothing
-# em3 is disabled/nothing
-# em4 is disabled/nothing
+# eno1np0 is default network
+# eno2np1 is disabled/nothing
+# eno3 is disabled/nothing
+# eno4 is disabled/nothing
 # NOTE network configuration beyond the scope of linux-system-roles on
 # this host is performed by the openqa/worker role
 
@@ -28,7 +28,7 @@ network_connections:
   - autoconnect: yes
     ip:
       address:
-        - "{{ em1_ipv4 }}/{{ em1_ipv4_nm }}"
+        - "{{ eno1np0_ipv4 }}/{{ eno1np0_ipv4_nm }}"
       dhcp4: no
       dns:
         - "{{ dns1 }}"
@@ -36,31 +36,31 @@ network_connections:
       dns_search:
         - "{{ dns_search1 }}"
         - "{{ dns_search2 }}"
-      gateway4: "{{ em1_ipv4_gw }}"
-    mac: "{{ em1_mac }}"
-    name: em1
+      gateway4: "{{ eno1np0_ipv4_gw }}"
+    mac: "{{ eno1np0_mac }}"
+    name: eno1np0
     state: up
     type: ethernet
   - autoconnect: no
-    mac: "{{ em2_mac }}"
-    name: em2
+    mac: "{{ eno2np1_mac }}"
+    name: eno2np1
     state: down
     type: ethernet
   - autoconnect: no
-    mac: "{{ em3_mac }}"
-    name: em3
+    mac: "{{ eno3_mac }}"
+    name: eno3
     state: down
     type: ethernet
   - autoconnect: no
-    mac: "{{ em4_mac }}"
-    name: em4
+    mac: "{{ eno4_mac }}"
+    name: eno4
     state: down
     type: ethernet
 nrpe_procs_crit: 1600
 nrpe_procs_warn: 1400
 # Has a hardware RNG
 openqa_rngd: true
-openqa_tap_iface: em1
+openqa_tap_iface: eno1np0
 # this is a powerful machine, can handle more openQA workers
 openqa_workers: 30
 # also means we need to bump the load average threshold
@@ -72,5 +72,3 @@ sudoers: "{{ private }}/files/sudo/qavirt-sudoers"
 # $ENV{QEMUPORT} = ($options{instance}) * 10 + 20002;
 # so for worker 1 it's 20012, for worker 2 it's 20022, etc etc
 tcp_ports: ['20013', '20023', '20033', '20043', '20053', '20063', '20073', '20083', '20093', '20103', '20113', '20123', '20133', '20143', '20153', '20163', '20173', '20183', '20193', '20203', '20213', '20223', '20233', '20243', '20253', '20263', '20273', '20283', '20293', '20303']
-# this box is encrypted
-openqa_nbde: true

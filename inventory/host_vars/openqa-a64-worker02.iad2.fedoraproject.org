@@ -4,16 +4,16 @@ dns1: 10.3.163.33
 dns2: 10.3.163.34
 dns_search1: "iad2.fedoraproject.org"
 dns_search2: "fedoraproject.org"
-eth0_mac: "{{ mac1 }}"
-eth1_ipv4: 10.3.174.62
-eth1_ipv4_gw: 10.3.174.254
-eth1_ipv4_nm: 24
-eth1_mac: "{{ mac2 }}"
-eth2_mac: "{{ mac3 }}"
+enP2p1s0_mac: "{{ mac1 }}"
+enp1s0_ipv4: 10.3.174.62
+enp1s0_ipv4_gw: 10.3.174.254
+enp1s0_ipv4_nm: 24
+enp1s0_mac: "{{ mac2 }}"
+enp1s0d1_mac: "{{ mac3 }}"
 freezes: false
-# eth0 is disabled/nothing
-# eth1 is active network
-# eth2 is disabled/nothing
+# enP2p1s0 is disabled/nothing
+# enp1s0 is active network
+# enp1s0d1 is disabled/nothing
 # NOTE network configuration beyond the scope of linux-system-roles on
 # this host is performed by the openqa/worker role
 
@@ -23,14 +23,14 @@ mac2: 50:6b:4b:7f:a8:b0
 mac3: 50:6b:4b:7f:a8:b1
 network_connections:
   - autoconnect: no
-    mac: "{{ eth0_mac }}"
-    name: eth0
+    mac: "{{ enP2p1s0_mac }}"
+    name: enP2p1s0
     state: down
     type: ethernet
   - autoconnect: yes
     ip:
       address:
-        - "{{ eth1_ipv4 }}/{{ eth1_ipv4_nm }}"
+        - "{{ enp1s0_ipv4 }}/{{ enp1s0_ipv4_nm }}"
       dhcp4: no
       dns:
         - "{{ dns1 }}"
@@ -38,21 +38,21 @@ network_connections:
       dns_search:
         - "{{ dns_search1 }}"
         - "{{ dns_search2 }}"
-      gateway4: "{{ eth1_ipv4_gw }}"
-    mac: "{{ eth1_mac }}"
-    name: eth1
+      gateway4: "{{ enp1s0_ipv4_gw }}"
+    mac: "{{ enp1s0_mac }}"
+    name: enp1s0
     state: up
     type: ethernet
   - autoconnect: no
-    mac: "{{ eth2_mac }}"
-    name: eth2
+    mac: "{{ enp1s0d1_mac }}"
+    name: enp1s0d1
     state: down
     type: ethernet
 nrpe_procs_crit: 300
 nrpe_procs_warn: 250
 # has an HW RNG, so let's have rngd
 openqa_rngd: true
-openqa_tap_iface: eth1
+openqa_tap_iface: enp1s0
 # this is a powerful machine, can handle more openQA workers
 openqa_workers: 15
 sudoers: "{{ private }}/files/sudo/qavirt-sudoers"
@@ -62,5 +62,3 @@ sudoers: "{{ private }}/files/sudo/qavirt-sudoers"
 # $ENV{QEMUPORT} = ($options{instance}) * 10 + 20002;
 # so for worker 1 it's 20012, for worker 2 it's 20022, etc etc
 tcp_ports: ['20013', '20023', '20033', '20043', '20053', '20063', '20073', '20083', '20093', '20103', '20113', '20123', '20133', '20143', '20153']
-# this box is not encrypted
-openqa_nbde: false
