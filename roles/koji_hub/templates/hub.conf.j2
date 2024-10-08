@@ -187,6 +187,8 @@ package_list =
         tag f{{FedoraBranchedNumber}} && match action add unblock {{ 'block' if not Frozen or FedoraBranchedBodhi != 'postbeta' else '' }} :: allow
         # Stable releases: only adding and unblocking is allowed.
         tag f{{FedoraCycleNumber}} f{{FedoraPreviousCycleNumber}} && match action add unblock :: allow
+        # EPEL: adding, blocking, and unblocking are allowed 
+        tag epel8 epel9 epel9-next epel10.0 && match action add unblock block :: allow	
     }
     # Infra people can themselves add/block/unblock packages in their
     # tags without bothering admins.
