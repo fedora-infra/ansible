@@ -41,6 +41,15 @@ network_connections:
     name: enp1s0f1np1
     state: down
     type: ethernet
+nbde: true
+nbde_client_bindings:
+  - device: /dev/md0
+    encryption_password: "{{ nbde_password }}"
+    password_temporary: no
+    threshold: 1
+    servers:
+      - http://tang01.iad2.fedoraproject.org
+      - http://tang02.iad2.fedoraproject.org
 nrpe_procs_crit: 300
 nrpe_procs_warn: 250
 # has an HW RNG, so let's have rngd
