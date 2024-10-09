@@ -23,12 +23,10 @@ MemoryWarnThreshold = 10000
 MaxRequestLength = 167772160
 RLIMIT_AS = 10737418240
 CheckClientIP = False
-{% if env == "staging" %}
 # Max newrepo tasks at a time
 MaxRepoTasks = 30
 # We want a srpms repo for rawhide and eln only
 SeparateSourceTags = f{{ FedoraRawhideNumber }}-build eln-build
-{% endif %}
 
 # Kerb auth
 {% if env == "staging" %}
