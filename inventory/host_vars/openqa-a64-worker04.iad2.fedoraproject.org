@@ -62,7 +62,7 @@ nrpe_procs_warn: 250
 openqa_rngd: true
 openqa_tap_iface: enP1p1s0f0np0
 # this is a powerful machine, can handle more openQA workers
-openqa_workers: 20
+openqa_workers: 35
 # also means we need to bump the load average threshold
 openqa_critical_threshold: 70
 sudoers: "{{ private }}/files/sudo/qavirt-sudoers"
