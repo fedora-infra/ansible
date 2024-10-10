@@ -53,12 +53,26 @@ class Package(BASE):
 
 # Here below we tell the script where to look for the repodata, we could
 # point it to the top level, but then we would miss the differences between
-# el5, 6, 7, and 8.
+# el5, 6, 7, 8, and 9.
 # I tried to create some rhel5 and rhel6 folders in which I sym-linked the
 # respective el5/6 folder from the level above. The problem was that
 # os.path.walk() doesn't follow links, so it would not find any repodata.
 
 PATHS = {
+    'el9': [
+        '/mnt/fedora/app/fi-repo/rhel/rhel9/x86_64/codeready-builder-for-rhel-9-x86_64-rpms/',
+        '/mnt/fedora/app/fi-repo/rhel/rhel9/x86_64/rhel-9-for-x86_64-appstream-rpms/',
+        '/mnt/fedora/app/fi-repo/rhel/rhel9/x86_64/rhel-9-for-x86_64-baseos-rpms/',
+        '/mnt/fedora/app/fi-repo/rhel/rhel9/aarch64/codeready-builder-for-rhel-9-aarch64-rpms/',
+        '/mnt/fedora/app/fi-repo/rhel/rhel9/aarch64/rhel-9-for-aarch64-appstream-rpms/',
+        '/mnt/fedora/app/fi-repo/rhel/rhel9/aarch64/rhel-9-for-aarch64-baseos-rpms/',
+        '/mnt/fedora/app/fi-repo/rhel/rhel9/ppc64le/codeready-builder-for-rhel-9-ppc64le-rpms/',
+        '/mnt/fedora/app/fi-repo/rhel/rhel9/ppc64le/rhel-9-for-ppc64le-appstream-rpms/',
+        '/mnt/fedora/app/fi-repo/rhel/rhel9/ppc64le/rhel-9-for-ppc64le-baseos-rpms/',
+        '/mnt/fedora/app/fi-repo/rhel/rhel9/s390x/codeready-builder-for-rhel-9-s390x-rpms/',
+        '/mnt/fedora/app/fi-repo/rhel/rhel9/s390x/rhel-9-for-s390x-appstream-rpms/',
+        '/mnt/fedora/app/fi-repo/rhel/rhel9/s390x/rhel-9-for-s390x-baseos-rpms/',
+    ],
     'el8': [
         '/mnt/fedora/app/fi-repo/rhel/rhel8/x86_64/codeready-builder-for-rhel-8-x86_64-rpms/',
         '/mnt/fedora/app/fi-repo/rhel/rhel8/x86_64/rhel-8-for-x86_64-appstream-rpms/',
