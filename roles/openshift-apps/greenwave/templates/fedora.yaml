@@ -181,8 +181,11 @@ decision_contexts:
 subject_type: bodhi_update
 rules:
 # This list needs to stay synced with openQA if tests are added or renamed.
+  - !PassingTestCaseRule {test_case_name: update.container_build_kiwi, scenario: "fedora.updates-container.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.podman, scenario: "fedora.updates-container.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.podman, scenario: "fedora.updates-container.aarch64.aarch64"}
   - !PassingTestCaseRule {test_case_name: update.podman_client, scenario: "fedora.updates-container.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.podman_client, scenario: "fedora.updates-container.aarch64.aarch64"}
 
 --- !Policy
 id: "bodhiupdate_bodhipush_openqa_netinst"
@@ -445,12 +448,19 @@ subject_type: bodhi_update
 rules:
 # This list needs to stay synced with openQA if tests are added or renamed.
   - !PassingTestCaseRule {test_case_name: update.advisory_boot, scenario: "fedora.updates-server.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.advisory_boot, scenario: "fedora.updates-server.aarch64.aarch64"}
   - !PassingTestCaseRule {test_case_name: update.base_reboot_unmount, scenario: "fedora.updates-server.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.base_reboot_unmount, scenario: "fedora.updates-server.aarch64.aarch64"}
   - !PassingTestCaseRule {test_case_name: update.base_selinux, scenario: "fedora.updates-server.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.base_selinux, scenario: "fedora.updates-server.aarch64.aarch64"}
   - !PassingTestCaseRule {test_case_name: update.base_service_manipulation, scenario: "fedora.updates-server.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.base_service_manipulation, scenario: "fedora.updates-server.aarch64.aarch64"}
   - !PassingTestCaseRule {test_case_name: update.base_services_start, scenario: "fedora.updates-server.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.base_services_start, scenario: "fedora.updates-server.aarch64.aarch64"}
   - !PassingTestCaseRule {test_case_name: update.base_system_logging, scenario: "fedora.updates-server.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.base_system_logging, scenario: "fedora.updates-server.aarch64.aarch64"}
   - !PassingTestCaseRule {test_case_name: update.base_update_cli, scenario: "fedora.updates-server.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.base_update_cli, scenario: "fedora.updates-server.aarch64.aarch64"}
   - !PassingTestCaseRule {test_case_name: update.realmd_join_cockpit, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.realmd_join_cockpit_ad, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.realmd_join_sssd, scenario: "fedora.updates-server.x86_64.64bit"}
@@ -460,6 +470,7 @@ rules:
   - !PassingTestCaseRule {test_case_name: update.server_cockpit_updates, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.server_database_client, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.server_firewall_default, scenario: "fedora.updates-server.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.server_firewall_default, scenario: "fedora.updates-server.aarch64.aarch64"}
   - !PassingTestCaseRule {test_case_name: update.server_freeipa_replication_client, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.server_freeipa_replication_master, scenario: "fedora.updates-server.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.server_freeipa_replication_replica, scenario: "fedora.updates-server.x86_64.64bit"}
