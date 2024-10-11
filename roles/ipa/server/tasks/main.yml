@@ -147,7 +147,6 @@
   - name: deploy replica
     command: ipa-replica-install
              --setup-ca
-             --setup-kra
              --admin-password={{ipa_admin_password}}
              --no-host-dns
              --mkhomedir
