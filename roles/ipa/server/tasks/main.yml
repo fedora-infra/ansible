@@ -118,10 +118,9 @@
     confirm_replica: "{{ item.user_input }}"
   with_items: "{{ hostvars[play_hosts.0].confirm_replica.results }}"
   when: item.item == inventory_hostname
-
-- name: validate the variable is set
-  ansible.builtin.debug:
-    var: confirm_replica
+  tags:
+  - ipa/server
+  - config
 
 - name: configure replication
   block:
