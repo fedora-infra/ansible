@@ -140,12 +140,9 @@
 
     # Replication agreement needs to be removed from ipa cluster
     # before installing the replica
-  - debug:
-      msg: "ipa server-del --force {{ inventory_hostname }}"
+  - name: Remove the replication agreement for the replica
+    command: "ipa server-del --force {{ inventory_hostname }}"
     delegate_to: "{{ ipa_server }}"
-#  - name: Remove the replication agreement for the replica
-#    command: "ipa server-del --force {{ inventory_hostname }}"
-#    delegate_to: "{{ ipa_server }}"
 
   - name: deploy replica
     command: ipa-replica-install
