@@ -106,12 +106,22 @@
 
 - name: ask admin if they are ok reinstalling this ipa server replica
   ansible.builtin.pause:
-    prompt: "Do you want to reinstall replica for {{ item }}? (yes/no)"
+    prompt: "Do you want to reinstall replica for {{ item }} (ignored for master node)? (yes/no)"
   register: confirm_replica
   with_items: "{{ play_hosts }}"
   tags:
   - ipa/server
   - config
+
+- name: save the confirmation results to other hosts
+  ansible.builtin.set_fact:
+    confirm_replica: "{{ item.user_input }}"
+  with_items: "{{ hostvars[play_hosts.0].confirm_replica.results }}"
+  when: item.item == inventory_hostname
+
+- name: validate the variable is set
+  ansible.builtin.debug:
+    var: confirm_replica
 
 - name: configure replication
   block:
@@ -145,7 +155,7 @@
   when:
     - not ipa_initial
     - not check_replica.stat.exists
-    - confirm_replica.user_input | default('no') | bool
+    - confirm_replica | default('no') | bool
   tags:
   - ipa/server
   - config
