@@ -108,7 +108,6 @@
   ansible.builtin.pause:
     prompt: "Do you want to reinstall replica for {{ item }}? (yes/no)"
   register: confirm_replica
-  when: not check_replica.stat.exists
   with_items: "{{ play_hosts }}"
   tags:
   - ipa/server
@@ -146,7 +145,7 @@
   when:
     - not ipa_initial
     - not check_replica.stat.exists
-    - confirm_replica | default('no') | bool
+    - confirm_replica.user_input | default('no') | bool
   tags:
   - ipa/server
   - config
