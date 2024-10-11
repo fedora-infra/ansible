@@ -134,6 +134,10 @@
              --unattended
     when: ansible_distribution_major_version|int >= 9
 
+  - name: Get admin ticket on ipa master
+    shell: echo "{{ipa_admin_password}}" | kinit admin
+    delegate_to: "{{ ipa_server }}"
+
     # Replication agreement needs to be removed from ipa cluster
     # before installing the replica
   - name: Remove the replication agreement for the replica
