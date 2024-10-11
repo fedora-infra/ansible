@@ -112,6 +112,11 @@
   - ipa/server
   - config
 
+- name: save output for other hosts
+  ansible.builtin.set_fact:
+    run_once: true
+    confirm_replica: "{{ confirm_replica.user_input }}"
+
 - name: configure replication
   block:
     # The ipa-client-install makes the ipa-replica-install fail
@@ -144,7 +149,7 @@
   when:
     - not ipa_initial
     - not check_replica.stat.exists
-    - confirm_replica.user_input | default('no') | bool
+    - confirm_replica | default('no') | bool
   tags:
   - ipa/server
   - config
