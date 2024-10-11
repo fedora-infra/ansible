@@ -106,16 +106,13 @@
 
 - name: ask admin if they are ok reinstalling this ipa server replica
   ansible.builtin.pause:
-    prompt: "Do you want to reinstall replicas for all replica servers missing /var/log/ipainstall.log (this indicates that the ipa-replica-install wasn't run yet)? (yes/no)"
+    prompt: "Do you want to reinstall replica for {{ item }}? (yes/no)"
   register: confirm_replica
+  when: not check_replica.stat.exists
+  with_items: "{{ play_hosts }}"
   tags:
   - ipa/server
   - config
-
-- name: save output for other hosts
-  ansible.builtin.set_fact:
-    run_once: true
-    confirm_replica: "{{ confirm_replica.user_input }}"
 
 - name: configure replication
   block:
