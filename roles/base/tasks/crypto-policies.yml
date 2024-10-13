@@ -28,7 +28,7 @@
 
 - name: Set crypto-policy on RHEL9 dns servers to DEFAULT:SHA1
   command: "update-crypto-policies --set DEFAULT:SHA1"
-  when: inventory_hostname.startswith(('ns01.iad2','ns02.iad2'))
+  when: inventory_hostname.startswith('ns')
   check_mode: no
   tags:
   - crypto-policies
