@@ -167,6 +167,9 @@
   service: name=rngd enabled=yes state=started
   when: "openqa_rngd is defined and openqa_rngd"
 
+- name: Install cron job to kill stuck qemu processes
+  copy: src=kill-stuck-qemu.sh dest=/etc/cron.daily/kill-stuck-qemu owner=root group=root mode=0755
+
 - include_tasks: nfs-client.yml
   when: openqa_nfs_worker|bool
 
