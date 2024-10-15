@@ -2,7 +2,7 @@
 ansible_ssh_user: fedora
 ansible_python_interpreter: /usr/bin/python3
 csi_primary_contact: "msuchy (mirek), ttomecek"
-csi_purpose: Development machine for Logdetective
+csi_purpose: Development machine for Logdetective 02 - training
 csi_relationship: |
   - Training of models for Logdetective
 # These variables are pushed into /etc/system_identification by the base role.
@@ -10,8 +10,6 @@ csi_relationship: |
 # See http://infrastructure.fedoraproject.org/csi/security-policy/
 csi_security_category: Low
 description: Machine for developers of Logdetective
-
-drive_device: 38e6c8c2-5747-47bf-b3d2-9f0dea371edc
 
 datacenter: aws
 devel: false

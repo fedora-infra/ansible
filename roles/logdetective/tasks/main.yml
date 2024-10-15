@@ -1,0 +1,77 @@
+---
+- import_tasks: "{{ tasks_path }}/cloud_setup_basic.yml"
+
+- name: Install basic packages
+  ansible.builtin.dnf:
+    name:
+      - python3-pip
+      - python3-devel
+      - pciutils
+      - git
+      - podman
+      - podman-compose
+      - wget
+      - gcc-c++
+
+- name: Download and install cuda drivers repo
+  ansible.builtin.shell:
+    cmd: |
+      dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/fedora39/x86_64/cuda-fedora39.repo
+      dnf clean all
+      dnf -y install cuda-toolkit-12-6
+      dnf -y module install nvidia-driver:open-dkms
+  register: cuda_installation
+
+- name: Restart the system
+  ansible.builtin.reboot:
+  when: cuda_installation.changed
+
+- name: Ensure state of secondary drive
+  ignore_errors: true
+  when:
+    - drive_device is defined
+  block:
+    - name: Ensure mountpoint
+      ansible.builtin.file:
+        path: /mnt/srv
+        state: directory
+
+    - name: Mount the drive on boot
+      ansible.posix.mount:
+        src: "UUID={{ drive_device }}"
+        path: /mnt/srv
+        boot: true
+        state: mounted
+        fstype: ext4
+
+    - name: Create pip cache dir
+      ansible.builtin.file:
+        state: directory
+        path: /mnt/srv/.cache/pip
+        mode: "0777"
+        recurse: true
+
+    - name: Create Hugging Face cache dir
+      ansible.builtin.file:
+        state: directory
+        path: /mnt/srv/.cache/huggingface
+        mode: "0777"
+        recurse: true
+
+    - name: Set cache locations to the secondary drive
+      ansible.builtin.blockinfile:
+        create: true
+        path: /etc/profile.d/externalcaches.sh
+        block: |
+          export HUGGINGFACE_HUB_CACHE=/mnt/srv/.cache/huggingface
+          export PIP_CACHE_DIR=/mnt/srv/.cache/pip
+
+    - name: Set up CUDA binary paths
+      ansible.builtin.lineinfile:
+        path: /etc/profile.d/cudapath.sh
+        line: export PATH=/usr/local/cuda-12.6/bin${PATH:+:${PATH}}
+
+# this should be set to ansible_hostname
+#  - name: "set hostname (required by some services, at least postfix need it)"
+#    hostname: name="{{copr_hostbase}}.cloud.fedoraproject.org"
+#    when: env != 'production'
