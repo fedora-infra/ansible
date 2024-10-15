@@ -53,6 +53,8 @@ openqa_rngd: true
 openqa_tap_iface: enp1s0f0np0
 # this is a powerful machine, can handle more openQA workers
 openqa_workers: 15
+# also means we need to bump the load average threshold
+openqa_critical_threshold: 70
 sudoers: "{{ private }}/files/sudo/qavirt-sudoers"
 # firewall ports for server->worker websockets connections
 # this port is 'QEMUPORT plus 1'
