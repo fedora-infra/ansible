@@ -6,3 +6,11 @@ copr_builder_fedora_version: {{ copr_builder_fedora_version }}
 {% if copr_red_hat_subscription_password is defined %}
 copr_red_hat_subscription_password: "{{ copr_red_hat_subscription_password }}"
 {% endif %}
+
+{% if copr_rhsm_activation_key is defined %}
+copr_rhsm_activation_key: "{{ copr_rhsm_activation_key }}"
+{% endif %}
+
+{% if copr_rhsm_org_id is defined %}
+copr_rhsm_org_id: "{{ copr_rhsm_org_id }}"
+{% endif %}
