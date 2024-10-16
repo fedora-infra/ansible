@@ -17,9 +17,6 @@ rules:
   resources:
   - endpoints
   - persistentvolumeclaims
-  - pods
-  - pods/attach
-  - pods/exec
   - replicationcontrollers
   - serviceaccounts
   - services
@@ -28,6 +25,23 @@ rules:
   - list
   - watch
 {% if env == "staging" %}
+  - create
+  - delete
+  - update
+{% endif %}
+# Permissions for pods
+- apiGroups:
+  - "*"
+  attributeRestrictions: null
+  resources:
+  - pods
+  - pods/attach
+  - pods/exec
+  verbs:
+  - get
+  - list
+  - watch
+{% if env == "staging" or allow_pod_creation %}
   - create
   - delete
   - update
