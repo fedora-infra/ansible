@@ -102,27 +102,39 @@
   when:
     - preparing_image
 
-- name: install the subscription-manager script
-  copy:
-    src: copr-rh-subscribe.sh
-    dest: /usr/local/bin/copr-rh-subscribe.sh
-    mode: 0755
-  when:
-    - preparing_image
+- name: install copr-builder and other latest packages
+  dnf: state=latest pkg={{ packages }} disable_gpg_check=true
+  vars:
+    packages:
+      - copr-builder
+      - python3-copr-common
+      # A new version of rpmlint fixes the following issue
+      # https://pagure.io/FedoraReview/issue/461
+      - rpmlint
+      # Tito 0.6.23 supports transitive submodule resolution
+      # Requested on IRC by @abn
+      - tito
+      # We want fedora-review 0.10.0 which generates `review.json` file
+      # This is important for the fedora-review-service
+      # https://github.com/FrostyX/fedora-review-service/issues/30
+      - fedora-review
+      # Per report from @smooge, https://github.com/fedora-copr/copr/issues/2953
+      - bc
+      # Just for testing purposes, we need copr-rpmbuild from main
+      - https://download.copr.fedorainfracloud.org/results/@copr/copr-dev/fedora-39-x86_64/08143605-copr-rpmbuild/copr-rpmbuild-1.0-1.git.21.271b9fa.fc39.x86_64.rpm
+      - https://download.copr.fedorainfracloud.org/results/@copr/copr-dev/fedora-39-x86_64/08143605-copr-rpmbuild/copr-builder-1.0-1.git.21.271b9fa.fc39.x86_64.rpm
 
 - name: Activate Red Hat Subscription
   shell:
     cmd: >
-      /usr/local/bin/copr-rh-subscribe.sh
-      --pool-id 8a85f9a17c71102f017ce611251c770f
-      --user copr-team
-      --pass "{{ copr_red_hat_subscription_password }}"
-      --system "{{ lookup('env', 'RESALLOC_NAME', default='unknown-builder') | replace('_', '-')  }}"
+      echo "{{ copr_rhsm_activation_key }}"
+      | /usr/bin/copr-builder-rhsm-subscribe-daemon
+      "{{ copr_rhsm_org_id }}"
+      "{{ lookup('env', 'RESALLOC_NAME', default='unknown-builder') | replace('_', '-')  }}"
   no_log: true
   # run in the background, gather results later
   async: 300
   poll: 0
-  register: rh_subscribtion_task
   when: starting_builder
 
 - name: make sure the enable-swap service has already finished
@@ -187,26 +199,6 @@
     state: present
   when:
     - starting_builder
-
-- name: install copr-builder and other latest packages
-  dnf: state=latest pkg={{ packages }}
-  vars:
-    packages:
-      - copr-builder
-      - python3-copr-common
-      # A new version of rpmlint fixes the following issue
-      # https://pagure.io/FedoraReview/issue/461
-      - rpmlint
-      # Tito 0.6.23 supports transitive submodule resolution
-      # Requested on IRC by @abn
-      - tito
-      # We want fedora-review 0.10.0 which generates `review.json` file
-      # This is important for the fedora-review-service
-      # https://github.com/FrostyX/fedora-review-service/issues/30
-      - fedora-review
-      # Per report from @smooge, https://github.com/fedora-copr/copr/issues/2953
-      - bc
-
 
 - name: put updated mock configs into /etc/mock
   copy: src=files/mock/ dest=/etc/copr-rpmbuild/mock-config-overrides
@@ -332,16 +324,6 @@
     - mock.cfg.j2
     # this one is not hotfix though...
     - copr-rpmbuild.yml
-
-- name: Check that we have successfully finished the subscription
-  async_status:
-    jid: "{{ rh_subscribtion_task.ansible_job_id }}"
-  register: job_result
-  until: job_result.finished
-  retries: 100
-  delay: 2
-  when:
-    - starting_builder
 
 - name: Set up motd for builder
   shell: "copr-builder help > /etc/motd || :"
