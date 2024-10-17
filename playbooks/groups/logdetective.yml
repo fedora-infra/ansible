@@ -29,6 +29,9 @@
     - /srv/private/ansible/vars.yml
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
+  handlers:
+    - import_tasks: "{{ handlers_path }}/restart_services.yml"
+
   pre_tasks:
     - import_tasks: "{{ tasks_path }}/yumrepos.yml"
 
