@@ -411,18 +411,6 @@
   notify:
     - restart mailmanweb
 
-# HyperKitty hotfix
-- name: Disable search in hyperkitty
-  ansible.builtin.copy:
-    src: base.html
-    dest: /usr/lib/python3.9/site-packages/hyperkitty/templates/hyperkitty/base.html
-  tags:
-    - mailman
-    - hyperkitty
-    - patch
-  notify:
-    - restart mailmanweb
-
 # Fix for mailman
 # https://pagure.io/fedora-infrastructure/issue/12011
 # This should no longer be needed after update to mailman 3.3.10
