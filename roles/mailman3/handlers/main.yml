@@ -1,18 +1,37 @@
 ---
-- name: restart mailman3
-  service: name=mailman3 state=restarted
+- name: Restart mailman3
+  ansible.builtin.systemd_service:
+    name: mailman3
+    state: restarted
 
-- name: reload apache
-  service: name=httpd state=reloaded
+- name: Reload apache
+  ansible.builtin.systemd_service:
+    name: httpd
+    state: reloaded
 
-- name: restart apache
-  service: name=httpd state=restarted
+- name: Restart apache
+  ansible.builtin.systemd_service:
+    name: httpd
+    state: restarted
 
-- name: restart memcached
-  service: name=memcached state=restarted
+- name: Restart memcached
+  ansible.builtin.systemd_service:
+    name: memcached
+    state: restarted
 
-- name: systemctl daemon-reload
-  command: /usr/bin/systemctl daemon-reload
+- name: Systemctl daemon-reload
+  ansible.builtin.systemd_service:
+    daemon-reload: true
 
-- name: restart mailmanweb
-  service: name=mailmanweb state=restarted
+- name: Restart mailmanweb
+  ansible.builtin.systemd_service:
+    name: mailmanweb
+    state: restarted
+
+- name: Initialize authentication providers
+  ansible.builtin.command:
+    cmd: mailman-web loaddata "{{ mailman_webui_confdir }}/initial-data.json"
+    chdir: /etc/mailman3
+  become_user: mailman
+  become: true
+  changed_when: true

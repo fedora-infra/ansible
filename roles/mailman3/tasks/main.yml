@@ -4,7 +4,7 @@
 
 - name: Install needed packages
   ansible.builtin.package:
-    name: "{{item}}"
+    name: "{{ item }}"
     state: present
   with_items:
     - httpd
@@ -42,30 +42,31 @@
     dest: /etc/mailman.cfg
     owner: mailman
     group: mailman
-    mode: 0640
+    mode: "0640"
   tags:
     - config
     - mailman
   notify:
-    - restart mailman3
+    - Restart mailman3
 
 - name: Install configuration for fedmsg-plugin
   ansible.builtin.template:
     src: fedmsg-plugin.toml.j2
     dest: "/etc/fedora-messaging/config.toml"
+    mode: "0644"
   tags:
     - config
     - mailman
     - fedora-messaging
   notify:
-    - restart mailman3
+    - Restart mailman3
 
 - name: Create folder where we'll place the certs
   ansible.builtin.file:
     path: /etc/pki/rabbitmq/mailman/
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
     state: directory
   tags:
     - mailman
@@ -73,20 +74,20 @@
 
 - name: Deploy mailman/rabbitmq certificate
   ansible.builtin.copy:
-    src: "{{item.src}}"
-    dest: "/etc/pki/rabbitmq/mailman/{{item.dest}}"
+    src: "{{ item.src }}"
+    dest: "/etc/pki/rabbitmq/mailman/{{ item.dest }}"
     owner: root
     group: mailman
-    mode: "{{item.mode}}"
+    mode: "{{ item.mode }}"
   when: env == 'staging'
   with_items:
-    - src: "{{private}}/files/rabbitmq/staging/pki/issued/mailman.stg.crt"
+    - src: "{{ private }}/files/rabbitmq/staging/pki/issued/mailman.stg.crt"
       dest: mailman.crt
       mode: "444"
-    - src: "{{private}}/files/rabbitmq/staging/pki/private/mailman.stg.key"
+    - src: "{{ private }}/files/rabbitmq/staging/pki/private/mailman.stg.key"
       dest: mailman.key
       mode: "440"
-    - src: "{{private}}/files/rabbitmq/staging/pki/ca.crt"
+    - src: "{{ private }}/files/rabbitmq/staging/pki/ca.crt"
       dest: mailman.ca
       mode: "444"
   tags:
@@ -95,20 +96,20 @@
 
 - name: Deploy mailman/rabbitmq certificate
   ansible.builtin.copy:
-    src: "{{item.src}}"
-    dest: "/etc/pki/rabbitmq/mailman/{{item.dest}}"
+    src: "{{ item.src }}"
+    dest: "/etc/pki/rabbitmq/mailman/{{ item.dest }}"
     owner: root
     group: mailman
-    mode: "{{item.mode}}"
+    mode: "{{ item.mode }}"
   when: env != 'staging'
   with_items:
-    - src: "{{private}}/files/rabbitmq/production/pki/issued/mailman.crt"
+    - src: "{{ private }}/files/rabbitmq/production/pki/issued/mailman.crt"
       dest: mailman.crt
       mode: "444"
-    - src: "{{private}}/files/rabbitmq/production/pki/private/mailman.key"
+    - src: "{{ private }}/files/rabbitmq/production/pki/private/mailman.key"
       dest: mailman.key
       mode: "440"
-    - src: "{{private}}/files/rabbitmq/production/pki/ca.crt"
+    - src: "{{ private }}/files/rabbitmq/production/pki/ca.crt"
       dest: mailman.ca
       mode: "444"
   tags:
@@ -124,6 +125,7 @@
     state: directory
     owner: mailman
     group: mailman
+    mode: "0755"
   tags:
     - logging
     - mailman
@@ -132,6 +134,7 @@
   ansible.builtin.copy:
     src: mailman3.logrotate.conf
     dest: /etc/logrotate.d/mailman3
+    mode: "0644"
   tags:
     - logging
     - mailman
@@ -151,6 +154,7 @@
   ansible.builtin.file:
     state: directory
     path: /var/lib/mailman3/templates/site/en
+    mode: "0755"
   tags:
     - config
     - mailman
@@ -162,7 +166,7 @@
     dest: /var/lib/mailman3/templates/site/en/list:member:generic:footer.txt
     owner: mailman
     group: mailman
-    mode: 0644
+    mode: "0644"
   tags:
     - config
     - mailman
@@ -174,7 +178,7 @@
     dest: /var/lib/mailman3/templates/site/en/list:admin:action:post.txt
     owner: mailman
     group: mailman
-    mode: 0644
+    mode: "0644"
   tags:
     - config
     - mailman
@@ -184,6 +188,7 @@
   ansible.builtin.file:
     state: directory
     path: /var/lib/mailman3/templates/lists/users.lists.fedoraproject.org/en
+    mode: "0755"
   tags:
     - config
     - mailman
@@ -192,10 +197,11 @@
 - name: Set list:user:notice:hold template for users list
   ansible.builtin.copy:
     src: mailman-template-users-list-user-notice-hold.txt
-    dest: /var/lib/mailman3/templates/lists/users.lists.fedoraproject.org/en/list:user:notice:hold.txt
+    dest: |
+      /var/lib/mailman3/templates/lists/users.lists.fedoraproject.org/en/list:user:notice:hold.txt
     owner: mailman
     group: mailman
-    mode: 0644
+    mode: "0644"
   tags:
     - config
     - mailman
@@ -205,6 +211,7 @@
   ansible.builtin.template:
     src: "{{ item }}.j2"
     dest: "{{ mailman_webui_confdir }}/{{ item }}"
+    mode: "0644"
   with_items:
     - settings.py
     - settings_admin.py
@@ -213,18 +220,19 @@
     - mailman
     - hyperkitty
   notify:
-    - restart mailmanweb
+    - Restart mailmanweb
 
 - name: Install the hyperkitty/postorius urls file
   ansible.builtin.copy:
     src: urls.py
     dest: "{{ mailman_webui_confdir }}/urls.py"
+    mode: "0644"
   tags:
     - config
     - mailman
     - hyperkitty
   notify:
-    - restart mailmanweb
+    - Restart mailmanweb
 
 - name: Create the fulltext index dir
   ansible.builtin.file:
@@ -232,7 +240,7 @@
     state: directory
     owner: mailman
     group: mailman
-    mode: 0755
+    mode: "0755"
   tags:
     - mailman
     - hyperkitty
@@ -243,7 +251,7 @@
     state: directory
     owner: mailman
     group: mailman
-    mode: 0755
+    mode: "0755"
   with_items:
     - static
     - static-fedora
@@ -258,10 +266,11 @@
     state: directory
     owner: mailman
     group: mailman
-    mode: 0755
+    mode: "0755"
   tags:
     - mailman
     - hyperkitty
+  notify: handle static files
 
 - name: Create the hyperkitty templates override dirs
   ansible.builtin.file:
@@ -269,7 +278,7 @@
     state: directory
     owner: mailman
     group: mailman
-    mode: 0755
+    mode: "0755"
   with_items:
     - hyperkitty
     - django_mailman3
@@ -283,20 +292,13 @@
     dest: "{{ mailman_webui_confdir }}/initial-data.json"
     owner: root
     group: mailman
-    mode: 0640
+    mode: "0640"
+  register: initial_data
   tags:
     - mailman
     - hyperkitty
-
-- name: Initialize authentication providers
-  ansible.builtin.command:
-    cmd: mailman-web loaddata "{{ mailman_webui_confdir }}/initial-data.json"
-    chdir: /etc/mailman3
-  become_user: mailman
-  become: true
-  tags:
-    - mailman
-    - hyperkitty
+  notify:
+    - Initialize authentication providers
 
 # Add the Nest banner
 # See issue https://pagure.io/fedora-infrastructure/issue/10103
@@ -304,8 +306,9 @@
   ansible.builtin.copy:
     src: top.html
     dest: "{{ mailman_webui_basedir }}/templates/hyperkitty/top.html"
+    mode: "0644"
   notify:
-    - restart mailmanweb
+    - Restart mailmanweb
   tags:
     - mailman
     - banner
@@ -315,6 +318,7 @@
   ansible.builtin.copy:
     src: logo-hyperkitty-fedora.png
     dest: "{{ mailman_webui_basedir }}/static-fedora/logo-hyperkitty-fedora.png"
+    mode: "0644"
   tags:
     - mailman
     - hyperkitty
@@ -323,6 +327,7 @@
   ansible.builtin.copy:
     src: favicon.ico
     dest: "{{ mailman_webui_basedir }}/static-fedora/favicon.ico"
+    mode: "0644"
   tags:
     - mailman
     - hyperkitty
@@ -331,6 +336,7 @@
   ansible.builtin.copy:
     src: robots.txt
     dest: "{{ mailman_webui_basedir }}/static-fedora/robots.txt"
+    mode: "0644"
   tags:
     - mailman
     - hyperkitty
@@ -339,6 +345,7 @@
   ansible.builtin.copy:
     src: navbar-brand.html
     dest: "{{ mailman_webui_basedir }}/templates/hyperkitty/navbar-brand.html"
+    mode: "0644"
   tags:
     - mailman
     - hyperkitty
@@ -347,6 +354,7 @@
   ansible.builtin.copy:
     src: headers.html
     dest: "{{ mailman_webui_basedir }}/templates/hyperkitty/headers.html"
+    mode: "0644"
   tags:
     - mailman
     - hyperkitty
@@ -355,6 +363,7 @@
   ansible.builtin.copy:
     src: login_extra_top.html
     dest: "{{ mailman_webui_basedir }}/templates/django_mailman3/login_extra_top.html"
+    mode: "0644"
   tags:
     - mailman
     - hyperkitty
@@ -365,7 +374,7 @@
     state: directory
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
   tags:
     - mailman
     - hyperkitty
@@ -374,6 +383,7 @@
   ansible.builtin.copy:
     src: signup_closed.html
     dest: "{{ mailman_webui_basedir }}/templates/account/signup_closed.html"
+    mode: "0644"
   tags:
     - mailman
     - hyperkitty
@@ -381,7 +391,8 @@
 - name: Install our fedmenu js hook
   ansible.builtin.template:
     src: bottom.html
-    dest: "{{mailman_webui_basedir }}/templates/hyperkitty/bottom.html"
+    dest: "{{ mailman_webui_basedir }}/templates/hyperkitty/bottom.html"
+    mode: "0644"
   tags:
     - mailman
     - hyperkitty
@@ -389,10 +400,18 @@
 
 - name: Ensuring we have correct DB schema for django apps
   ansible.builtin.command:
-    cmd: mailman-web migrate --pythonpath {{ mailman_webui_confdir }} --settings settings_admin --no-input
+    cmd: |
+      mailman-web migrate
+      --pythonpath {{ mailman_webui_confdir }}
+      --settings settings_admin
+      --no-input
     chdir: /etc/mailman3
   become_user: mailman
   become: true
+  register: db_migration_output
+  vars:
+    pattern: "No migrations to apply"
+  changed_when: not "{{ db_migration_output.stdout | regex_search(pattern) }}"
   tags:
     - mailman
     - db
@@ -403,13 +422,13 @@
     dest: "{{ mailman_webui_confdir }}/django_fedora_nosignup.py"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   tags:
     - config
     - mailman
     - hyperkitty
   notify:
-    - restart mailmanweb
+    - Restart mailmanweb
 
 # Fix for mailman
 # https://pagure.io/fedora-infrastructure/issue/12011
@@ -422,15 +441,16 @@
     - mailman
     - patch
   notify:
-    - restart mailman3
+    - Restart mailman3
 
 # Memcached
 - name: Set the memcached sysconfig file
   ansible.builtin.copy:
     src: memcached.sysconfig
     dest: /etc/sysconfig/memcached
+    mode: "0644"
   notify:
-    - restart memcached
+    - Restart memcached
   tags:
     - mailman
     - memcached
@@ -454,13 +474,13 @@
     dest: "/etc/mailman3.d/hyperkitty.cfg"
     owner: mailman
     group: mailman
-    mode: 0640
+    mode: "0640"
   tags:
     - config
     - mailman
     - hyperkitty
   notify:
-    - restart mailman3
+    - Restart mailman3
 
 - name: Populating static_root dir with django files/css
   ansible.builtin.command:
@@ -468,6 +488,10 @@
     chdir: /etc/mailman3
   become_user: mailman
   become: true
+  register: collectstatic_output
+  vars:
+    pattern: "^[1-9]\\d* static files copied"
+  changed_when: "{{ collectstatic_output.stdout | regex_search(pattern) }}"
   tags:
     - mailman
     - hyperkitty
@@ -478,6 +502,10 @@
     chdir: /etc/mailman3
   become_user: mailman
   become: true
+  register: compress_output
+  vars:
+    pattern: "^Compressed [1-9]\\d* block"
+  changed_when: "{{ compress_output.stdout | regex_search(pattern) }}"
   tags:
     - mailman
     - hyperkitty
@@ -486,8 +514,9 @@
   ansible.builtin.template:
     src: mailmanweb.service.j2
     dest: /etc/systemd/system/mailmanweb.service
+    mode: "0644"
   register: mailmanweb_systemd
-  notify: restart mailmanweb
+  notify: Restart mailmanweb
   tags:
     - mailman
     - systemd
@@ -512,6 +541,7 @@
   ansible.builtin.template:
     src: "mailman.logrotate.j2"
     dest: /etc/logrotate.d/mailman
+    mode: "0644"
   tags:
   - logrotate
   - config
@@ -526,7 +556,7 @@
     state: directory
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
   tags:
     - mailman
     - scripts
@@ -537,7 +567,7 @@
     dest: "{{ mailman_webui_basedir }}/bin/{{ item }}"
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
   tags:
     - mailman
     - scripts
@@ -551,6 +581,10 @@
 - name: Run the DMARC mitigation script
   ansible.builtin.command:
     cmd: "python {{ mailman_webui_basedir }}/bin/enable_dmarc_mitigation.py"
+  register: dmarc_output
+  vars:
+    pattern: "^Updated rows: [1-9]\\d*"
+  changed_when: "{{ collectstatic_output.stdout | regex_search(pattern) }}"
   tags:
     - mailman
     - scripts
@@ -560,6 +594,7 @@
   ansible.builtin.copy:
     src: prod-to-stg.py
     dest: "{{ mailman_webui_basedir }}/bin/prod-to-stg.py"
+    mode: "0755"
   when: env == "staging"
   tags: mailman
 
@@ -570,6 +605,7 @@
   ansible.builtin.template:
     src: "{{ item }}.service.j2"
     dest: "/etc/systemd/system/{{ item }}.service"
+    mode: "0644"
   with_items:
     - webui-qcluster
     - webui-warm-up-cache
@@ -584,6 +620,7 @@
   ansible.builtin.copy:
     src: "systemd/hyperkitty.target"
     dest: "/etc/systemd/system/hyperkitty.target"
+    mode: "0644"
   notify:
     - systemctl daemon-reload
   tags:
@@ -595,6 +632,7 @@
   ansible.builtin.copy:
     src: "systemd/{{ item }}.service"
     dest: "/etc/systemd/system/{{ item }}.service"
+    mode: "0644"
   with_items:
     - hyperkitty-daily
     - hyperkitty-hourly
@@ -614,6 +652,7 @@
   ansible.builtin.copy:
     src: "systemd/{{ item }}.timer"
     dest: "/etc/systemd/system/{{ item }}.timer"
+    mode: "0644"
   with_items:
     - hyperkitty-daily
     - hyperkitty-hourly
@@ -632,8 +671,9 @@
 # Httpd
 - name: Import needed httpd configurations
   ansible.builtin.template:
-    src: "{{item}}.j2"
-    dest: "/etc/httpd/conf.d/{{item}}"
+    src: "{{ item }}.j2"
+    dest: "/etc/httpd/conf.d/{{ item }}"
+    mode: "0644"
   with_items:
     - mailmanweb.conf
   notify:
@@ -649,7 +689,7 @@
     state: yes
     persistent: yes
   notify:
-    - restart apache
+    - Restart apache
   tags:
     - mailman
     - selinux
@@ -660,7 +700,7 @@
     state: yes
     persistent: yes
   notify:
-    - restart apache
+    - Restart apache
   tags:
     - mailman
     - selinux
@@ -671,8 +711,8 @@
     setype: httpd_sys_content_t
     state: present
   tags:
-  - mailman
-  - selinux
+    - mailman
+    - selinux
 
 - name: Set the SELinux policy for the templates override directory
   community.general.sefcontext:
@@ -680,18 +720,23 @@
     setype: httpd_sys_content_t
     state: present
   tags:
-  - mailman
-  - selinux
+    - mailman
+    - selinux
 
 - name: Apply SELinux changes
-  command: restorecon -irv "{{ mailman_webui_basedir}}"
+  ansible.builtin.command: restorecon -irv "{{ mailman_webui_basedir }}"
+  register: restorecon_output
+  changed_when: restorecon_output.stdout is defined and restorecon_output.stdout | length > 0
+  tags:
+    - mailman
+    - selinux
 
 # Start services
 - name: Start services
   ansible.builtin.systemd:
     state: started
     enabled: yes
-    name: "{{item}}"
+    name: "{{ item }}"
   with_items:
     - httpd
     - hyperkitty-daily.timer
