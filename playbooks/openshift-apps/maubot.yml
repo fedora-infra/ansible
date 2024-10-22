@@ -112,6 +112,12 @@
     objectname: deploymentconfig.yml
     when: env == "production"
 
+  - role: openshift/object-delete
+    app: maubot
+    file: deploymentconfig.yml
+    objectname: deploymentconfig.yml
+    when: env != "production"
+
   - role: openshift/object
     app: maubot
     file: deployment.yml
