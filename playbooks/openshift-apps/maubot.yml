@@ -114,7 +114,7 @@
 
   - role: openshift/object
     app: maubot
-    file: deploymentconfig.yml
+    file: deployment.yml
     objectname: deployment.yml
     when: env != "production"
 
