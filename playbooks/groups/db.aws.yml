@@ -1,10 +1,40 @@
-# create a new database server system
+# database server system in AWS for machines hosted in AWS
 # NOTE: most of these vars_path come from group_vars/backup_server or from hostvars
 
 # Once the instance exists, configure it.
 
-- name: configure postgresql server system
-  hosts: copr-db-stg.aws.fedoraproject.org
+- name: check/create instance
+  hosts: db.stg.aws.fedoraproject.org
+  user: root
+  gather_facts: False
+
+  vars_files:
+   - /srv/web/infra/ansible/vars/global.yml
+   - /srv/private/ansible/vars.yml
+
+  handlers:
+  - import_tasks: "{{ handlers_path }}/restart_services.yml"
+
+  tasks:
+  - import_tasks: "{{ tasks_path }}/aws_cloud.yml"
+    when: datacenter == 'aws'
+
+  - import_tasks: "{{ tasks_path }}/swap.yml"
+    when:
+      - datacenter == 'aws'
+      - swap_file_size_mb is defined
+
+- name: cloud basic setup
+  hosts: db.stg.aws.fedoraproject.org
+  user: root
+  gather_facts: True
+  vars_files:
+   - /srv/web/infra/ansible/vars/global.yml
+   - /srv/private/ansible/vars.yml
+
+
+- name: configure server
+  hosts: db.stg.aws.fedoraproject.org
   user: root
   gather_facts: True
 
@@ -29,7 +59,7 @@
   - nagios_client
   - zabbix/zabbix_agent
   - hosts
-  #- postgresql_server
+  - postgresql_server
   #- collectd/base
   #- collectd/postgres  # This requires a 'databases' var to be set in host_vars
   - sudo
