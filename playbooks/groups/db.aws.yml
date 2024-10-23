@@ -32,6 +32,10 @@
    - /srv/web/infra/ansible/vars/global.yml
    - /srv/private/ansible/vars.yml
 
+  tasks:
+  - name: Restart daemon-reload to pick up config changes
+    ansible.builtin.systemd_service:
+      daemon_reload: true
 
 - name: configure server
   hosts: db.stg.aws.fedoraproject.org
