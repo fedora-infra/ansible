@@ -15,6 +15,9 @@
       with_items: "{{ communishift_package_list }}"
       loop_control:
         loop_var: communishift_package
+      apply:
+        tags:
+          - deploy-operators
 
     - name: Communishift Cluster Cleanup Tasks
       with_items: "{{ communishift_projects }}"
@@ -22,6 +25,10 @@
         name: communishift
         tasks_from: cleanup-administration-tasks
       loop: "{{ lookup('dict', communishift_projects) }}"
+      apply:
+        tags:
+          - deploy-operators
+
   vars:
     communishift_package_list:
       - kubernetes

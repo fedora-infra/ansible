@@ -1,4 +1,8 @@
 ---
+- name: Debug
+  debug:
+    msg: "{{ item }}"
+
 - name: Send Communishift Project Cleanup notifications emails to tenants
   community.general.mail:
     host: localhost
