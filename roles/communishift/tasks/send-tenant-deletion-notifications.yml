@@ -14,7 +14,7 @@
       - Reply-To=admin@fedoraproject.org
     charset: us-ascii
   delegate_to: localhost
-  when: {{ not item.value.do_not_delete | bool }}
+  when: "{{ not item.value.do_not_delete | bool }}"
   tags:
     - communishift_send_notifications
     - never # Only send notifications when the tag communishift_send_notifications is passed

@@ -2,7 +2,7 @@
 - name: "Offboard the Communishift tenant project: {{ item.value.name }}"
   debug:
     msg: "delete task for project: {{ item.value.name }}"
-  when: {{ not item.value.do_not_delete | bool }}
+  when: "{{ not item.value.do_not_delete | bool }}"
   tags:
     - communishift_cluster_cleanup
     - never # Only run this task when the communishift_cluster_cleanup tag is called
