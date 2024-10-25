@@ -133,8 +133,8 @@ createiso_skip = [
                     [# In the case of testing, also inject the last stable updates #]
                     "https://kojipkgs{env_suffix}.fedoraproject.org/compose/updates/f[[ release.version ]]-updates/compose/Everything/$basearch/os/",
                 [% endif %]
-                [% if release.version == "41" %]
-                    [# For F41 the compose location is going to be under /compose/branched/ #]
+                [% if release.version == "42" %]
+                    [# For F42 the compose location is going to be under /compose/branched/ #]
                     "https://kojipkgs{env_suffix}.fedoraproject.org/compose/branched/latest-Fedora-[[ release.version ]]/compose/Everything/$basearch/os/"
                 [% else %]
                     "https://kojipkgs{env_suffix}.fedoraproject.org/compose/[[ release.version ]]/latest-Fedora-[[ release.version ]]/compose/Everything/$basearch/os/"
