@@ -22,8 +22,6 @@ spec:
       updatePeriodSeconds: 1
   template:
     metadata:
-      annotations:
-        openshift.io/required-scc: "anyuid"
       creationTimestamp: null
       labels:
         app: mirrormanager
