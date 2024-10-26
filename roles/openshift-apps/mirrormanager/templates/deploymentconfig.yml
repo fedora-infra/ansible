@@ -59,8 +59,6 @@ spec:
             - name: secrets
               mountPath: "/etc/mirrormanager-secrets"
               readOnly: true
-      securityContext:
-        supplementalGroups: [263]
 
       volumes:
         {{ common_volumes() }}
