@@ -110,6 +110,9 @@ bugzilla_group = "fedora_contrib"
 # Base URL for the Koji build system
 koji_url = "https://koji{{ env_suffix }}.fedoraproject.org"
 
+# Base URL for lookaside cache (no staging here)
+lookaside_url = "https://src.fedoraproject.org/lookaside"
+
 # Credentials for koji session
 {% if env == 'staging' %}
 principal = "toddlers/os-control01.stg.iad2.fedoraproject.org@STG.FEDORAPROJECT.ORG"
