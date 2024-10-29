@@ -14,7 +14,7 @@
 
 - name: Install Pulp auth certificates
   copy:
-    src: "{{ private }}/files/copr/pulp/{{ name }}"
+    src: "{{ private }}/files/copr/pulp/{{ item }}"
     dest: "/home/copr/.config/pulp/"
     owner: copr
     group: copr
