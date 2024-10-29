@@ -5,6 +5,6 @@
 exec rsync -av --xattrs --acls \
     --delete --delete-excluded \
     --rsh=ssh \
-    -e 'ssh -o ConnectTimeout=3600' \
+    -e 'ssh -o ConnectTimeout=3600 -o ServerAliveInterval=20 -o ServerAliveCountMax=900' \
     {{ item.value.rsync_args }} \
     {{ item.value.user }}@{{ rsnapshot_push.server_host }}::push
