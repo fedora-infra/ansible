@@ -27,7 +27,7 @@
 - name: Install Pulp config file
   template:
     src: pulp-cli.toml
-    dest: "{{ item.homedir }}/.aws/config"
+    dest: "/home/copr/.config/pulp/cli.toml"
     owner: copr
     group: copr
     mode: 0600
