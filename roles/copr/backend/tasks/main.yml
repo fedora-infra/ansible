@@ -371,6 +371,12 @@
   - config
   - aws_config
 
+- name: setup Pulp
+  import_tasks: "pulp.yml"
+  tags:
+  - config
+  - pulp
+
 - name: copr-ping-account
   import_tasks: copr-ping.yml
   tags: copr_ping

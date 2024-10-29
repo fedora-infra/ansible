@@ -1,0 +1,33 @@
+---
+# We don't rely on the pulp-cli tool but it will be helpful for operations
+# The package is available only on F40+
+# - name: install pulp-cli
+#   dnf: state=present name=pulp-cli
+
+- name: Create pulp config directory
+  file:
+    state: directory
+    path: /home/copr/.config/pulp/
+    owner: copr
+    group: copr
+    mode: 0700
+
+- name: Install Pulp auth certificates
+  copy:
+    src: "{{ private }}/files/copr/pulp/{{ name }}"
+    dest: "/home/copr/.config/pulp/"
+    owner: copr
+    group: copr
+    mode: 0600
+  with_items:
+  - copr-pulp-prod.crt
+  - copr-pulp-prod.key
+  when: env == "production"
+
+- name: Install Pulp config file
+  template:
+    src: pulp-cli.toml
+    dest: "{{ item.homedir }}/.aws/config"
+    owner: copr
+    group: copr
+    mode: 0600

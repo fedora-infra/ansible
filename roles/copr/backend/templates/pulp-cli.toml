@@ -1,0 +1,29 @@
+{% if env == "production" %}
+[cli]
+base_url = "https://mtls.internal.console.redhat.com"
+api_root = "/api/pulp/"
+username = ""
+password = ""
+domain = "public-copr"
+cert = "/home/copr/.config/pulp/copr-pulp-prod.crt"
+key = "/home/copr/.config/pulp/copr-pulp-prod.key"
+verify_ssl = true
+format = "json"
+dry_run = false
+timeout = 0
+verbose = 0
+{% else %}
+[cli]
+base_url = "https://pulp.stage.devshift.net"
+api_root = "/api/pulp/"
+username = "copr"
+password = "TODO"
+domain = "copr"
+cert = ""
+key = ""
+verify_ssl = false
+format = "json"
+dry_run = false
+timeout = 0
+verbose = 0
+{% endif %}
