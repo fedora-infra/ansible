@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: maubot
-          image: maubot:latest
+          image: image-registry.openshift-image-registry.svc:5000/maubot/maubot
           ports:
             - containerPort: 8080
           volumeMounts:
