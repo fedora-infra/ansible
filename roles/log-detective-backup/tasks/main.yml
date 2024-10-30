@@ -1,11 +1,11 @@
 ---
-- name: Add the user 'log-detective-backup'
-  ansible.builtin.user:
-    name: "{{ ld_backup_user }}"
-    comment: User used for backing-up log-detective.com
-    uid: 15151
-  tags:
-    - log_detective_backup
+# - name: Add the user 'log-detective-backup'
+#   ansible.builtin.user:
+#     name: "{{ ld_backup_user }}"
+#     comment: User used for backing-up log-detective.com
+#     uid: 15151
+#   tags:
+#     - log_detective_backup
 
 - name: create the log-detective.com backup directory
   ansible.builtin.file:
@@ -13,7 +13,8 @@
     state: directory
     owner: "{{ ld_backup_user }}"
     group: "{{ ld_backup_user }}"
-    mode: '0700'
+    # public tarball -> public backups
+    mode: '0755'
   tags:
     - log_detective_backup
 
