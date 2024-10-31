@@ -108,21 +108,8 @@
 
   - role: openshift/object
     app: maubot
-    file: deploymentconfig.yml
-    objectname: deploymentconfig.yml
-    when: env == "production"
-
-  - role: openshift/object
-    app: maubot
     file: deployment.yml
     objectname: deployment.yml
-    when: env != "production"
-
-
-  - role: openshift/rollout
-    app: maubot
-    dcname: maubot
-    when: env == "production"
 
   ###############################################
   # actions to delete the project from OpenShift
