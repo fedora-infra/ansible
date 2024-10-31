@@ -43,6 +43,7 @@ spec:
               requests:
                 cpu: 10m
                 memory: 256Mi
+            restartPolicy: never
             volumeMounts:
               - name: "{{ firmitas_application_name }}-configuration-secret-volume"
                 mountPath: "/tmp/firmitas/conf/"
