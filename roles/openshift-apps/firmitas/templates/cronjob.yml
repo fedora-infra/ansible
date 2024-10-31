@@ -5,7 +5,7 @@ metadata:
   name: "{{firmitas_application_name}}"
   namespace: "{{firmitas_namespace}}"
 spec:
-  schedule: "*/1 * * * *"
+  schedule: "*/2 * * * *"
   timeZone: Etc/UTC
   concurrencyPolicy: "Replace"
   startingDeadlineSeconds: 200
@@ -19,16 +19,35 @@ spec:
           labels:
             parent: "cronjob-certdownloader"
         spec:
+          initContainers:
+          - name: init-container
+            image: "{{ firmitas_image }}"
+            command: ["sh", "/etc/firmitas/download_certificates.sh"]
           containers:
           - image: "{{ firmitas_image }}"
             name: "{{ firmitas_application_name }}"
-            command: ["sh", "/etc/firmitas/download_certificates.sh"]
-          restartPolicy: OnFailure
-          volumeMounts:
-            - name: "{{ firmitas_application_name }}-configuration-secret-volume"
-              mountPath: "/tmp/firmitas/conf/"
-            - name: "{{ firmitas_application_name }}-volume"
-              mountPath: "/tmp/firmitas/"
+            env:
+              - name: FIRMITAS_CONFIG
+                value: "/tmp/firmitas/conf/myconfig.py"
+            command: ["firmitas"]
+            args: ["--conffile", "/tmp/firmitas/conf/myconfig.py"]
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - "ALL"
+            resources:
+              limits:
+                cpu: 100m
+                memory: 1024Mi
+              requests:
+                cpu: 10m
+                memory: 256Mi
+            volumeMounts:
+              - name: "{{ firmitas_application_name }}-configuration-secret-volume"
+                mountPath: "/tmp/firmitas/conf/"
+              - name: "{{ firmitas_application_name }}-volume"
+                mountPath: "/tmp/firmitas/"
           volumes:
             - name: "{{ firmitas_application_name }}-configuration-secret-volume"
               secret:
@@ -36,3 +55,4 @@ spec:
             - name: "{{ firmitas_application_name }}-volume"
               persistentVolumeClaim:
                 claimName: "firmitas-volume"
+          terminationGracePeriodSeconds: 10
