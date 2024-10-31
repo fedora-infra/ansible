@@ -7,7 +7,7 @@ metadata:
 spec:
   schedule: "*/2 * * * *"
   timeZone: Etc/UTC
-  concurrencyPolicy: "Replace"
+  concurrencyPolicy: "Forbid"
   startingDeadlineSeconds: 200
   suspend: false
   successfulJobsHistoryLimit: 3
@@ -19,6 +19,7 @@ spec:
           labels:
             parent: "cronjob-certdownloader"
         spec:
+          restartPolicy: "Never"
           initContainers:
           - name: init-container
             image: "{{ firmitas_image }}"
@@ -43,7 +44,6 @@ spec:
               requests:
                 cpu: 10m
                 memory: 256Mi
-            restartPolicy: Never
             volumeMounts:
               - name: "{{ firmitas_application_name }}-configuration-secret-volume"
                 mountPath: "/tmp/firmitas/conf/"
