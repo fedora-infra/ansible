@@ -13,7 +13,7 @@
     state: directory
     owner: "{{ ld_backup_user }}"
     group: "{{ ld_backup_user }}"
-    mode: '0700'
+    mode: '0755'  # public tarball → public backup
   tags:
     - log_detective_backup
 
