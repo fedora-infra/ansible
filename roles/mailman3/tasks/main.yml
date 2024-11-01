@@ -410,8 +410,8 @@
   become: true
   register: db_migration_output
   vars:
-    pattern: "No migrations to apply"
-  changed_when: not "{{ db_migration_output.stdout | regex_search(pattern) }}"
+    pattern: "Applying"
+  changed_when: "{{ db_migration_output.stdout | regex_search(pattern) }}"
   tags:
     - mailman
     - db
