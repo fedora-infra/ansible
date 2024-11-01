@@ -7,7 +7,7 @@ ld_backup_path="{{ ld_backup_path }}"
 backup_path=$ld_backup_path/$basename
 
 # Find last modified
-recent=$(find "$ld_backup_path" -type f -name "*tar.gz" -mtime -1 | sort | tail -n 1)
+recent=$(find "$ld_backup_path" -type f -name "*tar.gz" | sort | tail -n 1)
 
 wget -O "$backup_path" "{{ ld_dump_url }}"
 
@@ -17,6 +17,6 @@ old=$(tar -xzf "$recent" -O | sha256sum)
 
 # Compare hashes
 if [ "$new" = "$old" ]; then
-  echo No changes since last backup, removing downloaded archive
+  echo No changes since last backup, removing previously downloaded archive
   rm "$recent"
 fi
