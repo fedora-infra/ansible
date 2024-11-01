@@ -2,12 +2,12 @@
 
 set -e
 
-basename=$(date +%s).tar.gz
+basename=ld-$(date +"%Y%m%d_%H%M%S").tar.gz
 ld_backup_path="{{ ld_backup_path }}"
 backup_path=$ld_backup_path/$basename
 
 # Find last modified
-recent=$(find "$ld_backup_path" -type f -name "*tar.gz" | sort | tail -n 1)
+recent=$(find "$ld_backup_path" -type f -name "ld-*tar.gz" | sort | tail -n 1)
 
 wget -O "$backup_path" "{{ ld_dump_url }}"
 
