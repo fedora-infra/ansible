@@ -56,6 +56,13 @@
     object_app: coreos-cincinnati
     object_template: deploymentconfig.yml
     object_objectname: deploymentconfig.yml
+    when: env == "production"
+
+  - role: openshift/object
+    object_app: coreos-cincinnati
+    object_template: deployment.yml.j2
+    object_objectname: deployment.yml
+    when: env == "staging"
 
   - role: openshift/rollout
     rollout_app: coreos-cincinnati

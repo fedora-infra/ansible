@@ -1,0 +1,63 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: coreos-cincinnati
+  name: coreos-cincinnati
+  annotations:
+    image.openshift.io/triggers: >-
+      [
+        {"from":{"kind":"ImageStreamTag","name":"coreos-cincinnati-img:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"fcos-graph-builder\")].image","paused":false},
+        {"from":{"kind":"ImageStreamTag","name":"coreos-cincinnati-img:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"fcos-policy-engine\")].image","paused":false}
+      ]
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: coreos-cincinnati
+  strategy:
+    activeDeadlineSeconds: 21600
+    recreateParams:
+      timeoutSeconds: 600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: coreos-cincinnati
+    name: coreos-cincinnati
+    spec:
+      containers:
+        - name: fcos-graph-builder
+          image: ""
+          args: [
+            "/usr/local/bin/fcos-graph-builder",
+            "-v",
+            "-c", "/etc/cincinnati/graph-builder.toml",
+          ]
+          volumeMounts:
+            - name: stub-config
+              mountPath: /etc/cincinnati/
+              readOnly: true
+        - name: fcos-policy-engine
+          image: ""
+          args: [
+            "/usr/local/bin/fcos-policy-engine",
+            "-v",
+            "-c", "/etc/cincinnati/policy-engine.toml",
+          ]
+          volumeMounts:
+            - name: stub-config
+              mountPath: /etc/cincinnati/
+              readOnly: true
+      volumes:
+        - name: stub-config
+          configMap:
+            name: coreos-cincinnati-config-stub
