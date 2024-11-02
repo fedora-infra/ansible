@@ -1,0 +1,70 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: coreos-ostree-importer
+  name: coreos-ostree-importer
+  annotations:
+    image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"coreos-ostree-importer-img:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"coreos-ostree-importer\")].image","paused":false}]'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: coreos-ostree-importer
+  strategy:
+    resources: {}
+  template:
+    metadata:
+      labels:
+        app: coreos-ostree-importer
+      name: coreos-ostree-importer
+    spec:
+      containers:
+        - name: coreos-ostree-importer
+          # sleep infinity is useful for debugging environment issues
+          # comment out when not debugging
+          # args: ['/usr/bin/sleep', 'infinity']
+          # command: ['/usr/bin/dumb-init']
+          volumeMounts:
+            - name: fedora-ostree-content-volume
+              mountPath: /mnt/koji
+            - name: fedora-messaging-config-volume
+              mountPath: /etc/fedora-messaging
+              readOnly: true
+            - name: fedora-messaging-ca-volume
+              mountPath: "/etc/pki/fedora-messaging/{{ fedora_messaging_ca_file }}"
+              subPath: "{{ fedora_messaging_ca_file }}"
+              readOnly: true
+            - name: fedora-messaging-crt-volume
+              mountPath: "/etc/pki/fedora-messaging/{{ fedora_messaging_cert_file }}"
+              subPath: "{{ fedora_messaging_cert_file }}"
+              readOnly: true
+            - name: fedora-messaging-key-volume
+              mountPath: "/etc/pki/fedora-messaging/{{ fedora_messaging_key_file }}"
+              subPath: "{{ fedora_messaging_key_file }}"
+              readOnly: true
+          image: ""
+          imagePullPolicy: IfNotPresent
+          resources: {}
+      # The files in the ostree volumes are created with group ownership of 263.
+      # We need to have 263 in our supplemental groups. See https://pagure.io/releng/issue/8811#comment-629051
+      securityContext:
+        supplementalGroups: [263]
+      volumes:
+        - name: fedora-ostree-content-volume
+          persistentVolumeClaim:
+            claimName: fedora-ostree-content-volume
+        - name: fedora-messaging-config-volume
+          configMap:
+            name: fedora-messaging-configmap
+        - name: fedora-messaging-ca-volume
+          secret:
+            secretName: fedora-messaging-ca
+        - name: fedora-messaging-crt-volume
+          secret:
+            secretName: fedora-messaging-crt
+        - name: fedora-messaging-key-volume
+          secret:
+            secretName: fedora-messaging-key
+      restartPolicy: Always

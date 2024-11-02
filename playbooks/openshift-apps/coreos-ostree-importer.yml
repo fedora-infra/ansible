@@ -10,11 +10,11 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   vars:
-    - fedora_messaging_username: "coreos-ostree-importer{{ env_suffix }}"
-    - fedora_messaging_queue_name: "coreos-ostree-importer{{ env_suffix }}"
-    - fedora_messaging_ca_file: "coreos-ostree-importer-fedora-messaging-cacert.pem"
-    - fedora_messaging_cert_file: "coreos-ostree-importer-fedora-messaging-cert.pem"
-    - fedora_messaging_key_file: "coreos-ostree-importer-fedora-messaging-key.pem"
+    fedora_messaging_username: "coreos-ostree-importer{{ env_suffix }}"
+    fedora_messaging_queue_name: "coreos-ostree-importer{{ env_suffix }}"
+    fedora_messaging_ca_file: "coreos-ostree-importer-fedora-messaging-cacert.pem"
+    fedora_messaging_cert_file: "coreos-ostree-importer-fedora-messaging-cert.pem"
+    fedora_messaging_key_file: "coreos-ostree-importer-fedora-messaging-key.pem"
 
   # Set the fedora_messaging_routing_keys var based on the environment
   pre_tasks:
@@ -91,6 +91,13 @@
     object_app: coreos-ostree-importer
     object_template: deploymentconfig.yml.j2
     object_objectname: deploymentconfig.yml
+    when: env == "production"
+
+  - role: openshift/object
+    object_app: coreos-ostree-importer
+    object_template: deployment.yml.j2
+    object_objectname: deployment.yml
+    when: env == "staging"
 
   - role: openshift/object
     object_app: coreos-ostree-importer
