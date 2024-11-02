@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: fedora-ostree-pruner
+  name: fedora-ostree-pruner
+  annotations:
+    image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"fedora-ostree-pruner-img:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"fedora-ostree-pruner\")].image","paused":false}]'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fedora-ostree-pruner
+  strategy:
+    resources: {}
+  template:
+    metadata:
+      labels:
+        app: fedora-ostree-pruner
+      name: fedora-ostree-pruner
+    spec:
+      containers:
+        - name: fedora-ostree-pruner
+          # sleep infinity is useful for debugging environment issues
+          # comment out when not debugging
+          # args: ['/usr/bin/sleep', 'infinity']
+          # command: ['/usr/bin/dumb-init']
+          volumeMounts:
+            - name: fedora-ostree-content-volume
+              mountPath: /mnt/koji
+          image: ""
+          imagePullPolicy: IfNotPresent
+          resources: {}
+      # The files in the ostree volumes are created with group ownership of 263.
+      # We need to have 263 in our supplemental groups. See https://pagure.io/releng/issue/8811#comment-629051
+      securityContext:
+        supplementalGroups: [263]
+      volumes:
+        - name: fedora-ostree-content-volume
+          persistentVolumeClaim:
+            claimName: fedora-ostree-content-volume
+      restartPolicy: Always
