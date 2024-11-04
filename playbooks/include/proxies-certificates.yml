@@ -26,6 +26,8 @@
   - role: httpd/certificate
     certname: wildcard-2024.id.fedoraproject.org
     SSLCertificateChainFile: wildcard-2024.id.fedoraproject.org.intermediate.cert
+    tags:
+    - id.fedoraproject.org
 
   - role: httpd/certificate
     certname: wildcard-2024.stg.fedoraproject.org
