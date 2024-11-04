@@ -22,4 +22,4 @@ sha256sum -c *.sha256
 
 for tarball in *.tar.gz; do tar -xf "$tarball"; done
 cp -a -v */*.mmdb "${outdir}"
-restorecon -v "${outdir}"/*.mmdb
+/usr/sbin/restorecon -v "${outdir}"/*.mmdb
