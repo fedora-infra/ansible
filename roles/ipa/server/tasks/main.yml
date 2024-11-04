@@ -613,6 +613,12 @@
   - config
   - krb5
 
+- name: Copy the new krb5 logrotate config
+  ansible.builtin.copy:
+    src: logrotate_krb5kdc
+    dest: /etc/logrotate.d/krb5kdc
+    mode: '0644'
+    backup: yes
 
 - import_tasks: scripts.yml
 

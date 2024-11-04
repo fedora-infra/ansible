@@ -1,0 +1,10 @@
+var/log/krb5kdc.log {
+    missingok
+    notifempty
+    monthly
+    rotate 12
+    compress
+    postrotate
+        systemctl reload krb5kdc.service || true
+    endscript
+}
