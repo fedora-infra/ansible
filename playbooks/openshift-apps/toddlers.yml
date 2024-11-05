@@ -33,9 +33,6 @@
       - "org.centos.*.ci.dist-git-pr.test.running"
       # flag_commit_build
       - "org.fedoraproject.*.buildsys.build.state.change"
-      # pdc_retired_packages
-      - "org.fedoraproject.*.toddlers.trigger.pdc_retired_packages"
-      - "org.fedoraproject.*.git.receive"
       # packager_bugzilla_sync
       - "org.fedoraproject.*.toddlers.trigger.packager_bugzilla_sync"
       # pdc_import_compose
@@ -47,6 +44,9 @@
       - "org.fedoraproject.*.toddlers.trigger.check_email_overrides"
       # clean_retired_packages
       - "org.fedoraproject.*.toddlers.trigger.clean_retired_packages"
+      # koji_block_retired
+      - "org.fedoraproject.*.toddlers.trigger.koji_block_retired"
+      - "org.fedoraproject.*.git.receive"
       # scm_request_processor
       - "org.fedoraproject.*.pagure.issue.new"
       - "org.fedoraproject.*.pagure.issue.edit"

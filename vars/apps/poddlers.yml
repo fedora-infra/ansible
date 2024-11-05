@@ -41,6 +41,7 @@ poddlers_toddlers:
     callback: koji_block_retired:KojiBlockRetired
     topics:
       - "org.fedoraproject.*.git.receive"
+      - "org.fedoraproject.*.toddlers.trigger.koji_block_retired"
 
   - name: packager-bugzilla-sync
     callback: packager_bugzilla_sync:PackagerBugzillaSync
