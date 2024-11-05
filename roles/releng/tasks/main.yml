@@ -346,14 +346,6 @@
     mode: "644"
   when: inventory_hostname.startswith('compose-iot01.iad2')
 
-# put cron job in for epel10 compose
-- name: EPEL 10 compose cron
-  ansible.builtin.copy:
-    src: epel10
-    dest: /etc/cron.d/epel10
-    mode: "644"
-  when: inventory_hostname.startswith('compose-rawhide01.iad2')
-
 # put cron job in for ELN compose
 - name: ELN compose cron
   ansible.builtin.copy:

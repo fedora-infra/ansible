@@ -1,3 +1,0 @@
-# epel10 compose
-MAILTO=releng-cron@lists.fedoraproject.org
-15 3 * * * root touch /tmp/fedora-compose-epel10 && TMPDIR=`mktemp -d /tmp/epel10.XXXXXX` && chmod 755 $TMPDIR && cd $TMPDIR && git clone --depth 1 --branch epel10 https://pagure.io/pungi-fedora.git && cd pungi-fedora && /usr/local/bin/lock-wrapper epel10-compose "LANG=en_US.UTF-8 ./nightly.sh" && sudo -u ftpsync /usr/local/bin/update-fullfiletimelist -l /pub/fedora-secondary/update-fullfiletimelist.lock -t /pub epel && rm /tmp/fedora-compose-epel10

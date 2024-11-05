@@ -8,8 +8,18 @@ skip_phases = ["buildinstall", "extra_files"]
 release_version = '[[ release.version ]]'
 release_type = 'updates[% if request.name == 'testing' %]-testing[% endif %]'
 old_composes_per_release_type = True
+[% if release.id_prefix == 'FEDORA-EPEL' %]
+[% if release.version == '8' or release.version == '9' %]
+release_name = 'Fedora-Epel'
+release_short = 'Fedora-Epel'
+[% else %]
+release_name = 'Fedora-EPEL'
+release_short = 'Fedora-EPEL'
+[% endif %]
+[% else %]
 release_name = '[[ release.id_prefix.title() ]]'
 release_short = '[[ release.id_prefix.title() ]]'
+[% endif %]
 
 # GENERAL SETTINGS
 comps_file = {
@@ -39,7 +49,7 @@ sigkeys = [
     '2f86d6a1'
 [% elif release.version == '9' %]
     '3228467c',
-[% elif release.version.startswith("10") %]
+[% elif release.version == '10' or release.version.startswith('10.') %]
     'e37ed158',
 [% endif %]
 {% if env == "staging" %}
