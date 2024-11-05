@@ -1,9 +1,10 @@
 ---
 # Configuration for IPA
-- name: on rhel8 hosts enable the correct idm module
-  copy:
-    src: "{{item}}"
-    dest: /etc/dnf/modules.d/{{item}}
+- name: On rhel8 hosts enable the correct idm module
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: /etc/dnf/modules.d/{{ item }}
+    mode: "0644"
   with_items:
     - 389-ds.module
     - idm.module
@@ -14,8 +15,10 @@
   - ipa/server
   - config
 
-- name: install needed packages
-  package: name={{ item }} state=present
+- name: Install needed packages
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
   with_items:
   - haveged
   - ipa-server
@@ -28,62 +31,75 @@
 
 # TODO: need pynag for monitoring, not yet in rhel9.
 
-- name: enable haveged
-  service: name=haveged state=started enabled=yes
+- name: Enable haveged
+  ansible.builtin.service:
+    name: haveged
+    state: started
+    enabled: yes
   tags:
   - ipa/server
   - config
 
 - name: Copy LDIF file for working around annoying IPA bug in initial sync
-  copy: src=fix_sasl.ldif dest=/usr/share/ipa/fix_sasl.ldif
+  ansible.builtin.copy:
+    src: fix_sasl.ldif
+    dest: /usr/share/ipa/fix_sasl.ldif
+    mode: "0644"
   tags:
   - ipa/server
   - config
 
-- name: install IPA
-  command: ipa-server-install
-           --realm={{ipa_realm}}
-           --domain={{ipa_realm}}
-           --ds-password={{ipa_dm_password}}
-           --admin-password={{ipa_admin_password}}
-           --mkhomedir
-           --no-ntp
-           --unattended
-           --no-ssh
-           --no-sshd
-           --log-file=/var/log/ipainstall.log
-           creates=/etc/ipa/default.conf
+- name: Install IPA
+  ansible.builtin.command:
+    argv:
+      - ipa-server-install
+      - --realm={{ ipa_realm }}
+      - --domain={{ ipa_realm }}
+      - --ds-password={{ ipa_dm_password }}
+      - --admin-password={{ ipa_admin_password }}
+      - --mkhomedir
+      - --no-ntp
+      - --unattended
+      - --no-ssh
+      - --no-sshd
+      - --log-file=/var/log/ipainstall.log
+    creates: /etc/ipa/default.conf
   tags:
   - ipa/server
   - config
-  when: ipa_initial and ansible_distribution_major_version|int > 8 and ansible_distribution == 'RedHat'
+  when: >
+    ipa_initial and ansible_distribution_major_version|int > 8 and
+    ansible_distribution == 'RedHat'
 
-- name: install IPA vault
-  command: ipa-kra-install
-           --password={{ipa_dm_password}}
-           --unattended
-           --log-file=/var/log/ipakrainstall.log
-           creates=/var/log/ipakrainstall.log
+- name: Install IPA vault
+  ansible.builtin.command:
+    argv:
+      - ipa-kra-install
+      - --password={{ ipa_dm_password }}
+      - --unattended
+      - --log-file=/var/log/ipakrainstall.log
+    creates: /var/log/ipakrainstall.log
   tags:
   - ipa/server
   - config
   when: ipa_initial
 
 - name: Create LDIF directory
-  file:
+  ansible.builtin.file:
     path: /root/ldif
     state: directory
     owner: root
     group: root
-    mode: 0750
+    mode: "0750"
   tags:
   - ipa/server
   - config
 
 - name: Copy LDIF files
-  copy:
-    src: "{{item}}"
-    dest: /root/ldif/{{item}}
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: /root/ldif/{{ item }}
+    mode: "0644"
   with_items:
   - grant_anonymous_replication_view.ldif
   - grant_fas_sync.ldif
@@ -104,16 +120,18 @@
   - ipa/server
   - config
 
-- name: ask admin if they are ok reinstalling this ipa server replica
+- name: Ask admin if they are OK reinstalling this ipa server replica
   ansible.builtin.pause:
-    prompt: "Do you want to reinstall replica for {{ item }} (ignored for master node and any node with /var/log/ipainstall.log)? (yes/no)"
+    prompt: |
+      "Do you want to reinstall replica for {{ item }} "
+      "(ignored for master node and any node with /var/log/ipainstall.log)? (yes/no)"
   register: confirm_replica
   with_items: "{{ play_hosts }}"
   tags:
   - ipa/server
   - config
 
-- name: save the confirmation results to other hosts
+- name: Save the confirmation results to other hosts
   ansible.builtin.set_fact:
     confirm_replica: "{{ item.user_input }}"
   with_items: "{{ hostvars[play_hosts.0].confirm_replica.results }}"
@@ -122,45 +140,7 @@
   - ipa/server
   - config
 
-- name: configure replication
-  block:
-    # The ipa-client-install makes the ipa-replica-install fail
-    # on RHEL 9 with: "Your system is partly configured."
-    # This will clean the previous installation and allows
-    # the replica to be deployed.
-  - name: clean client installation
-    command: ipa-server-install
-             --uninstall
-             --unattended
-    when: ansible_distribution_major_version|int >= 9
-
-  - name: Get admin ticket on ipa master
-    shell: echo "{{ipa_admin_password}}" | kinit admin
-    delegate_to: "{{ ipa_server }}"
-
-    # Replication agreement needs to be removed from ipa cluster
-    # before installing the replica
-  - name: Remove the replication agreement for the replica
-    command: "ipa server-del --force {{ inventory_hostname }}"
-    delegate_to: "{{ ipa_server }}"
-
-  - name: deploy replica
-    command: ipa-replica-install
-             --setup-ca
-             --admin-password={{ipa_admin_password}}
-             --no-host-dns
-             --mkhomedir
-             --no-ntp
-             --unattended
-             --no-ssh
-             --no-sshd
-             --skip-conncheck
-             --force-join
-             --log-file=/var/log/ipainstall.log
-             --domain={{ipa_realm}}
-             --server={{ipa_server}}
-             --dirsrv-config-file=/root/ldif/replica-install.ldif
-    when: ansible_distribution_major_version|int >= 8
+- name: Configure replication
   when:
     - not ipa_initial
     - not check_replica.stat.exists
@@ -168,9 +148,58 @@
   tags:
   - ipa/server
   - config
+  block:
+    # The ipa-client-install makes the ipa-replica-install fail
+    # on RHEL 9 with: "Your system is partly configured."
+    # This will clean the previous installation and allows
+    # the replica to be deployed.
+  - name: Clean client installation
+    ansible.builtin.command:
+      argv:
+        - ipa-server-install
+        - --uninstall
+        - --unattended
+    changed_when: true
+    when: ansible_distribution_major_version|int >= 9
+
+  - name: Get admin ticket on ipa master
+    ansible.builtin.shell: set -o pipefail && echo "{{ ipa_admin_password }}" | kinit admin
+    delegate_to: "{{ ipa_server }}"
+    changed_when: false
+
+    # Replication agreement needs to be removed from ipa cluster
+    # before installing the replica
+  - name: Remove the replication agreement for the replica
+    ansible.builtin.command: "ipa server-del --force {{ inventory_hostname }}"
+    delegate_to: "{{ ipa_server }}"
+    changed_when: true
+
+  - name: Deploy replica
+    ansible.builtin.command:
+      argv:
+        - ipa-replica-install
+        - --setup-ca
+        - --admin-password={{ ipa_admin_password }}
+        - --no-host-dns
+        - --mkhomedir
+        - --no-ntp
+        - --unattended
+        - --no-ssh
+        - --no-sshd
+        - --skip-conncheck
+        - --force-join
+        - --log-file=/var/log/ipainstall.log
+        - --domain={{ ipa_realm }}
+        - --server={{ ipa_server }}
+        - --dirsrv-config-file=/root/ldif/replica-install.ldif
+    when: ansible_distribution_major_version|int >= 8
+    changed_when: true
 
 - name: Disable rewrites
-  template: src=ipa-rewrite.conf dest=/etc/httpd/conf.d/ipa-rewrite.conf
+  ansible.builtin.template:
+    src: ipa-rewrite.conf
+    dest: /etc/httpd/conf.d/ipa-rewrite.conf
+    mode: "0644"
   notify:
   - reload httpd
   tags:
@@ -178,7 +207,9 @@
   - config
 
 - name: Disable the compat tree
-  shell: echo "{{ipa_dm_password}}" | ipa-compat-manage disable
+  ansible.builtin.shell: |
+    set -o pipefail
+    echo "{{ ipa_dm_password }}" | ipa-compat-manage disable
   tags:
   - ipa/server
   - config
@@ -189,7 +220,9 @@
   - restart ipa
 
 - name: Disable the nis tree
-  shell: echo "{{ipa_dm_password}}" | ipa-nis-manage disable
+  ansible.builtin.shell: |
+    set -o pipefail
+    echo "{{ ipa_dm_password }}" | ipa-nis-manage disable
   tags:
   - ipa/server
   - config
@@ -200,7 +233,7 @@
   - restart ipa
 
 - name: Set the expiration date for the admin user
-  ipauser:
+  community.general.ipauser:
     name: admin
     password: "{{ ipa_admin_password }}"
     # Password expiration date will be a Friday 13th in 30 years. I'm sure we'll remember that.
@@ -212,7 +245,10 @@
   - config
 
 - name: Get admin ticket
-  shell: echo "{{ipa_admin_password}}" | kinit admin
+  ansible.builtin.shell: |
+    set -o pipefail
+    echo "{{ ipa_admin_password }}" | kinit admin
+  changed_when: false
   tags:
   - ipa/server
   - config
@@ -257,7 +293,7 @@
 
 # Set the default value back
 - name: Restore the default permission on user addressbook attributes
-  command:
+  ansible.builtin.command:
     argv:
       - ipa
       - permission-mod
@@ -271,20 +307,20 @@
   failed_when: "'no modifications to be performed' not in output.stderr and output.rc != 0"
 
 - name: Configure password policy
-  ipapwpolicy:
-    minlife: 0
-    maxlife: 0
-    history: 0
+  community.general.ipa_pwpolicy:
+    minpwdlife: 0
+    maxpwdlife: 0
+    historylength: 0
     minclasses: 0
     minlength: 0
-    maxfail: 0
-    ipaadmin_password: "{{ ipa_admin_password }}"
+    maxfailcount: 0
+    ipa_pass: "{{ ipa_admin_password }}"
   tags:
   - ipa/server
   - config
 
 - name: Create fas_sync user
-  ipauser:
+  community.general.ipauser:
     name: fas_sync
     givenname: FAS
     sn: Sync
@@ -296,31 +332,35 @@
 
 # Certificate generation
 - name: Make a directory to store certificate profiles
-  file:
+  ansible.builtin.file:
     path: /etc/ipa/certprofiles
     state: directory
+    mode: "0755"
   tags:
   - ipa/server
   - config
 
 - name: Warn admins that this is not the canonical source
-  copy:
+  ansible.builtin.copy:
     dest: /etc/ipa/certprofiles/README
-    content: "This is just a dump of the server values, which are accessible with ipa certprofile-find"
+    content: >
+      "This is just a dump of the server values, which are accessible with ipa certprofile-find"
+    mode: "0644"
   tags:
   - ipa/server
   - config
 
 - name: Copy the certificate profile for users
-  template:
+  ansible.builtin.template:
     src: userCerts.conf
     dest: /etc/ipa/certprofiles/userCerts.conf
+    mode: "0644"
   tags:
   - ipa/server
   - config
 
 - name: Create the certificate profile
-  command:
+  ansible.builtin.command:
     argv:
       - ipa
       - certprofile-import
@@ -336,7 +376,7 @@
   failed_when: "'already exists' not in create_output.stderr and create_output.rc != 0"
 
 - name: Update the certificate profile
-  command:
+  ansible.builtin.command:
     argv:
       - ipa
       - certprofile-mod
@@ -347,27 +387,30 @@
   tags:
   - ipa/server
   - config
+  changed_when: true
   when: "ipa_initial and 'already exists' in create_output.stderr"
 
 # Create a new ACL linking the new profile and ipausers group (that all users are members of)
 - name: Create the CA ACL for the new certificate profile
-  command: ipa caacl-add userCerts
+  ansible.builtin.command: ipa caacl-add userCerts
   tags:
   - ipa/server
   - config
   register: output
   changed_when: "'already exists' not in output.stderr"
   failed_when: "'already exists' not in output.stderr and output.rc != 0"
+
 - name: Add the ipausers group to the CA ACL
-  command: ipa caacl-add-user userCerts --group ipausers
+  ansible.builtin.command: ipa caacl-add-user userCerts --group ipausers
   tags:
   - ipa/server
   - config
   register: output
   changed_when: "'is already a member' not in output.stdout"
   failed_when: "'is already a member' not in output.stdout and output.rc != 0"
+
 - name: Add the ipausers group to the CA ACL
-  command: ipa caacl-add-profile userCerts --certprofile userCerts
+  ansible.builtin.command: ipa caacl-add-profile userCerts --certprofile userCerts
   tags:
   - ipa/server
   - config
@@ -378,7 +421,8 @@
 # HBAC
 
 - name: Don't allow all users to log into all hosts
-  command: ipa hbacrule-disable allow_all
+  ansible.builtin.command: ipa hbacrule-disable allow_all
+  changed_when: true
   tags:
   - ipa/server
   - config
@@ -387,20 +431,23 @@
 # Noggin user setup
 
 - name: Register the proper noggin admin password
-  set_fact:
-    noggin_password: "{{ (env == 'production')|ternary(noggin_admin_password, noggin_stg_admin_password) }}"
+  ansible.builtin.set_fact:
+    noggin_password: >
+      "{{ (env == 'production') | ternary(noggin_admin_password, noggin_stg_admin_password) }}"
   tags:
   - ipa/server
   - config
 
 - name: Create noggin user
-  ipauser:
+  community.general.ipauser:
     name: noggin
     givenname: Noggin
     sn: User
-    password: "{{ (env == 'production')|ternary(noggin_admin_password, noggin_stg_admin_password) }}"
+    password: >
+      "{{ (env == 'production') | ternary(noggin_admin_password, noggin_stg_admin_password) }}"
     # Password expiration date will be a Friday 13th in 30 years. I'm sure we'll remember that.
-    # (if unset, IPA will assume the password is expired because it hasn't been set by the user themselves)
+    # (if unset, IPA will assume the password is expired because it hasn't been set by the user
+    # themselves)
     passwordexpiration: "2050-05-13 00:00:00"
     update_password: on_create
     userclass: system
@@ -410,7 +457,7 @@
   - config
 
 - name: Create the noggin privilege
-  command:
+  ansible.builtin.command:
     argv:
       - ipa
       - privilege-add
@@ -424,7 +471,7 @@
   failed_when: "'already exists' not in output.stderr and output.rc != 0"
 
 - name: Setup the noggin privilege
-  command:
+  ansible.builtin.command:
     argv:
       - ipa
       - privilege-add-permission
@@ -446,7 +493,7 @@
   failed_when: "'Number of permissions added 0' not in output.stdout and output.rc != 0"
 
 - name: Create the noggin role
-  ipa_role:
+  community.general.ipa_role:
     name: "Self-service Portal Administrator"
     description: "Noggin admin user"
     privilege:
@@ -455,7 +502,7 @@
     - noggin
     ipa_host: "{{ inventory_hostname }}"
     ipa_user: admin
-    ipa_pass: "{{ipa_admin_password}}"
+    ipa_pass: "{{ ipa_admin_password }}"
     validate_certs: no
   tags:
   - ipa/server
@@ -474,7 +521,7 @@
   #   - krbPrincipalKey
   #   - sambaLMPassword
   #   - sambaNTPassword
-  command:
+  ansible.builtin.command:
     argv:
       - ipa
       - selfservice-add
@@ -504,7 +551,7 @@
   #   - cn
   #   - displayname
   #   - gecos
-  command:
+  ansible.builtin.command:
     argv:
       - ipa
       - selfservice-add
@@ -527,7 +574,7 @@
 # through Noggin:
 
 - name: Create the stage users managers privilege
-  command:
+  ansible.builtin.command:
     argv:
       - ipa
       - privilege-add
@@ -541,7 +588,7 @@
   failed_when: "'already exists' not in output.stderr and output.rc != 0"
 
 - name: Setup the stage users managers privilege
-  command:
+  ansible.builtin.command:
     argv:
       - ipa
       - privilege-add-permission
@@ -557,7 +604,7 @@
   failed_when: "'Number of permissions added 0' not in output.stdout and output.rc != 0"
 
 - name: Create the stage users managers role
-  ipa_role:
+  community.general.ipa_role:
     name: "Stage User Managers"
     description: "Manage registering users in Noggin"
     privilege:
@@ -566,7 +613,7 @@
     - sysadmin-main
     ipa_host: "{{ inventory_hostname }}"
     ipa_user: admin
-    ipa_pass: "{{ipa_admin_password}}"
+    ipa_pass: "{{ ipa_admin_password }}"
     validate_certs: no
   tags:
   - ipa/server
@@ -575,7 +622,7 @@
   # Add the missing topology segments that are missed during replication
   # Ignore any failure as that means that segment is already in place
 - name: Add the missing segments for ca suffix
-  command:
+  ansible.builtin.command:
     argv:
       - ipa
       - topologysegment-add
@@ -583,8 +630,10 @@
       - "--rightnode={{ item }}"
       - "ca"
       - "{{ inventory_hostname + '-' + item }}"
-  with_items: "{{ (env == 'production')|ternary(groups['ipa'], groups['ipa_stg']) }}"
-  ignore_errors: true
+  with_items: "{{ (env == 'production') | ternary(groups['ipa'], groups['ipa_stg']) }}"
+  ignore_errors: true # noqa ignore-errors
+  register: output
+  changed_when: "'Segment already exists' not in output.stdout"
   tags:
   - ipa/server
   - config
@@ -592,7 +641,7 @@
   # Add the missing topology segments that are missed during replication
   # Ignore any failure as that means that segment is already in place
 - name: Add the missing segments for domain suffix
-  command:
+  ansible.builtin.command:
     argv:
       - ipa
       - topologysegment-add
@@ -600,14 +649,17 @@
       - "--rightnode={{ item }}"
       - "domain"
       - "{{ inventory_hostname + '-' + item }}"
-  with_items: "{{ (env == 'production')|ternary(groups['ipa'], groups['ipa_stg']) }}"
-  ignore_errors: true
+  with_items: "{{ (env == 'production') | ternary(groups['ipa'], groups['ipa_stg']) }}"
+  ignore_errors: true # noqa ignore-errors
+  register: output
+  changed_when: "'Segment already exists' not in output.stdout"
   tags:
   - ipa/server
   - config
 
 - name: Destroy admin ticket
-  command: kdestroy -A
+  ansible.builtin.command: kdestroy -A
+  changed_when: true
   tags:
   - ipa/server
   - config
@@ -620,13 +672,14 @@
     mode: '0644'
     backup: yes
 
-- import_tasks: scripts.yml
+- name: Include script.yml
+  ansible.builin.import_tasks: scripts.yml
 
 
 # User groups
 
 - name: Set the members of the admin group
-  ipa_group:
+  community.general.ipa_group:
     name: admins
     user:
     - admin
@@ -634,7 +687,7 @@
     - arrfab
     ipa_host: "{{ inventory_hostname }}"
     ipa_user: admin
-    ipa_pass: "{{ipa_admin_password}}"
+    ipa_pass: "{{ ipa_admin_password }}"
     validate_certs: no
   tags:
   - ipa/server
@@ -642,8 +695,8 @@
 
 
 - name: Create the sysadmin-main group
-  ipagroup:
-    ipaadmin_password: "{{ ipa_admin_password }}"
+  community.general.ipa_group:
+    ipa_pass: "{{ ipa_admin_password }}"
     name: sysadmin-main
     description: Fedora Main Sysadmin Group
   tags:
@@ -653,8 +706,12 @@
 
 # This is a special one, in that it needs to apply on each master since it's non-replicated.
 - name: Grant access to replication status
-  command: ldapmodify -Y EXTERNAL -H {{ ipa_ldap_socket }}
-           -f /root/ldif/{{item}}
+  ansible.builin.command:
+    argv:
+      - ldapmodify
+      - -Y EXTERNAL
+      - -H {{ ipa_ldap_socket }}
+      - -f /root/ldif/{{ item }}
   with_items:
   - grant_anonymous_replication_view.ldif
   - grant_fas_sync.ldif
@@ -664,12 +721,16 @@
   - config
   register: grant_repl_status_output
   changed_when: "'Type or value exists' not in grant_repl_status_output.stderr"
-  failed_when: "'Type or value exists' not in grant_repl_status_output.stderr and 'modifying entry' not in grant_repl_status_output.stdout"
+  failed_when: |
+    "'Type or value exists' not in grant_repl_status_output.stderr and
+    'modifying entry' not in grant_repl_status_output.stdout"
 
 # Make some httpd changes
 - name: Configure referer override
-  template: src=referer-override.conf
-            dest=/etc/httpd/conf.d/referer-override.conf
+  ansible.builtin.template:
+    src: referer-override.conf
+    dest: /etc/httpd/conf.d/referer-override.conf
+    mode: "0644"
   notify:
   - reload apache
   tags:
@@ -677,9 +738,10 @@
   - config
 
 - name: Update xmlrpc_uri
-  lineinfile: dest=/etc/ipa/default.conf
-              regexp='xmlrpc_uri ='
-              line='xmlrpc_uri = https://{{ inventory_hostname }}/ipa/xml'
+  ansible.builtin.lineinfile:
+    dest: /etc/ipa/default.conf
+    regexp: 'xmlrpc_uri ='
+    line: 'xmlrpc_uri = https://{{ inventory_hostname }}/ipa/xml'
   tags:
   - ipa/server
   - config
@@ -688,7 +750,7 @@
 # start it. If systemd starts it, it will run before IPA is available and
 # KdcProxy will be disabled because it can't reach LDAP.
 - name: Disable the httpd service
-  service:
+  ansible.builtin.service:
     name: httpd
     enabled: no
   tags:
@@ -696,25 +758,25 @@
   - config
 
 - name: Set cron for daily data only backups
-  copy:
+  ansible.builtin.copy:
     src: data-only-backup.sh
     dest: "/etc/cron.daily/data-only-backup.sh"
-    mode: 0755
+    mode: "0755"
   tags:
   - ipa/server
   - config
 
 - name: Copy sweeper script to /usr/local/bin/
-  copy:
+  ansible.builtin.copy:
     src: sweeper.py
     dest: /usr/local/bin/sweeper
-    mode: 0755
+    mode: "0755"
   tags:
     - ipa/server
     - config
 
 - name: Set sweeper script on a cron schedule
-  cron:
+  ansible.builtin.cron:
     name: "clean up mod_auth_gssapi tokens"
     hour: "3"
     minute: "0"

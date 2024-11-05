@@ -1,5 +1,6 @@
-- name: install needed packages for scripts
-  package:
+---
+- name: Install needed packages for scripts
+  ansible.builtin.package:
     name: "{{ item }}"
     state: present
   with_items:
@@ -14,20 +15,20 @@
 # Cleanup stage users
 #
 - name: Create the service for stage users
-  include_role:
-    name: keytab/service
+  ansible.builtin.include_role:
+    name: "keytab/service" # noqa role-name[path]
     apply:
       tags:
       - ipa/server
       - config
       - keytab
   vars:
-    host: "{{ ipa_server }}"
-    service: stage-users
+    host: "{{ ipa_server }}" # noqa: var-naming[no-role-prefix]
+    service: stage-users # noqa: var-naming[no-role-prefix]
 
 
 - name: Create the Stage User Administrator role
-  ipa_role:
+  community.general.ipa_role:
     name: "Stage User Administrator"
     description: "Role for users that need to perform admin tasks on stage users."
     privilege:
@@ -36,7 +37,7 @@
     - "stage-users/{{ ipa_server }}"
     ipa_host: "{{ inventory_hostname }}"
     ipa_user: admin
-    ipa_pass: "{{ipa_admin_password}}"
+    ipa_pass: "{{ ipa_admin_password }}"
     validate_certs: no
   run_once: yes
   delegate_to: "{{ ipa_server }}"
@@ -46,10 +47,10 @@
 
 
 - name: Deploy the stage users cleanup script
-  copy:
+  ansible.builtin.copy:
     src: cleanup-stage-users.py
     dest: /etc/cron.daily/cleanup-stage-users
-    mode: 0755
+    mode: "0755"
   # Only run the cron job on one server
   run_once: yes
   delegate_to: "{{ ipa_server }}"
@@ -62,11 +63,12 @@
 # OTP check for sysadmins
 #
 - name: Copy file for checking if sysadmins have otp set
-  template:
+  ansible.builtin.template:
     src: check_sysadmin_otp.py.j2
     dest: /root/check_sysadmin_otp.py
     owner: root
     group: root
+    mode: "0644"
   tags:
   - ipa/server
   - otp_script
@@ -79,34 +81,34 @@
 # a subrole of the collectd role.
 #
 - name: Install and setup collectd-ipa
+  # Only collect stats on one server
+  run_once: yes
+  delegate_to: "{{ ipa_server }}"
   block:
-  - name: install collectd-ipa
-    package:
+  - name: Install collectd-ipa
+    ansible.builtin.package:
       state: present
       name: python3-collectd-ipa
     tags:
     - packages
     - collectd
 
-  - name: install collectd ipa config
-    template:
+  - name: Install collectd ipa config
+    ansible.builtin.template:
       src: "ipa.collectd.conf.j2"
       dest: "/etc/collectd.d/ipa.conf"
       owner: root
       group: root
-      mode: 0640
+      mode: "0640"
     tags:
     - collectd
     - config
     notify: restart collectd
 
   - name: Let collectd talk to the RabbitMQ management interface
-    seboolean:
+    ansible.posix.seboolean:
       name: collectd_tcp_network_connect
       state: yes
       persistent: yes
     tags:
     - collectd
-  # Only collect stats on one server
-  run_once: yes
-  delegate_to: "{{ ipa_server }}"
