@@ -1123,14 +1123,6 @@ host openqa-x64-worker04 {
      option routers 10.3.174.254;
      option subnet-mask 255.255.255.0;
 }
-host openqa-a64-worker01-old {
-     hardware ethernet 50:6b:4b:7f:96:30 ;
-     fixed-address 10.3.174.61;
-     filename "uefi/grubaa64.efi";
-     next-server 10.3.163.10;
-     option routers 10.3.174.254;
-     option subnet-mask 255.255.255.0;
-}
 host openqa-a64-worker02 {
      hardware ethernet 50:6b:4b:7f:a8:b0 ;
      fixed-address 10.3.174.62;
@@ -1169,10 +1161,10 @@ host openqa-a64-worker01-mgmt {
 }
 host openqa-a64-worker01 {
      hardware ethernet 50:6b:4b:6a:b6:20 ;
-     fixed-address 10.3.170.151;
+     fixed-address 10.3.174.61;
      filename "uefi/grubaa64.efi";
      next-server 10.3.163.10;
-     option routers 10.3.170.254;
+     option routers 10.3.174.254;
      option subnet-mask 255.255.255.0;
 }
 host openqa-a64-worker05-mgmt {
