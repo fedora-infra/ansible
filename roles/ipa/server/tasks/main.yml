@@ -123,8 +123,7 @@
 - name: Ask admin if they are OK reinstalling this ipa server replica
   ansible.builtin.pause:
     prompt: |
-      "Do you want to reinstall replica for {{ item }} \
-      (ignored for master node and any node with /var/log/ipainstall.log)? (yes/no)"
+      "Do you want to reinstall replica for {{ item }} (ignored for master node and any node with /var/log/ipainstall.log)? (yes/no)" # no qa yaml-length
   register: confirm_replica
   with_items: "{{ play_hosts }}"
   tags:
@@ -240,6 +239,7 @@
     krbpasswordexpiration: "2050-05-13 00:00:00"
     update_password: on_create
     ipa_pass: "{{ ipa_admin_password }}"
+    ipa_host: "{{ inventory_hostname }}"
   tags:
   - ipa/server
   - config
@@ -315,6 +315,7 @@
     minlength: 0
     maxfailcount: 0
     ipa_pass: "{{ ipa_admin_password }}"
+    ipa_host: "{{ inventory_hostname }}"
   tags:
   - ipa/server
   - config
@@ -325,6 +326,7 @@
     givenname: FAS
     sn: Sync
     ipa_pass: "{{ ipa_admin_password }}"
+    ipa_host: "{{ inventory_hostname }}"
   tags:
   - ipa/server
   - config
@@ -450,6 +452,7 @@
     krbpasswordexpiration: "2050-05-13 00:00:00"
     update_password: on_create
     ipa_pass: "{{ ipa_admin_password }}"
+    ipa_host: "{{ inventory_hostname }}"
   tags:
   - ipa/server
   - config
@@ -697,6 +700,7 @@
     ipa_pass: "{{ ipa_admin_password }}"
     name: sysadmin-main
     description: Fedora Main Sysadmin Group
+    ipa_host: "{{ inventory_hostname }}"
   tags:
   - ipa/server
   - config
