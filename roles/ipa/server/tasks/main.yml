@@ -323,8 +323,7 @@
     name: fas_sync
     givenname: FAS
     sn: Sync
-    userclass: system
-    ipaadmin_password: "{{ ipa_admin_password }}"
+    ipa_pass: "{{ ipa_admin_password }}"
   tags:
   - ipa/server
   - config
@@ -447,10 +446,9 @@
     # Password expiration date will be a Friday 13th in 30 years. I'm sure we'll remember that.
     # (if unset, IPA will assume the password is expired because it hasn't been set by the user
     # themselves)
-    passwordexpiration: "2050-05-13 00:00:00"
+    krbpasswordexpiration: "2050-05-13 00:00:00"
     update_password: on_create
-    userclass: system
-    ipaadmin_password: "{{ ipa_admin_password }}"
+    ipa_pass: "{{ ipa_admin_password }}"
   tags:
   - ipa/server
   - config
