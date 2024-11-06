@@ -1,99 +1,196 @@
-- name: set root passwd
-  user: name=root password={{ builder_rootpw }} state=present
+---
+- name: Set root passwd
+  ansible.builtin.user:
+    name: root
+    password: "{{ builder_rootpw }}"
   tags:
   - rootpw
 
-- name: add mock user as 425
-  user: name=mock uid=425 state=present home=/var/lib/mock createhome=yes system=yes
-- name: make mock homedir 2775
-  file: state=directory path=/var/lib/mock mode=2775 owner=mock group=mock
-- name: add mock ssh dir
-  file: state=directory path=/var/lib/mock/.ssh mode=700 owner=mock group=mock
-- name: add mock ssh keys
-  copy: src="{{ files }}/../roles/koji_builder/files//mock_auth_keys" dest=/var/lib/mock/.ssh/authorized_keys mode=644 owner=mock group=mock
+- name: Add mock user as 425
+  ansible.builtin.user:
+    name: mock
+    uid: 425
+    home: /var/lib/mock
+    system: true
 
-- name: add ftpsync group
-  group: name=ftpsync gid=263 system=yes state=present
+- name: Make mock homedir 2775
+  ansible.builtin.file:
+    state: directory
+    path: /var/lib/mock
+    mode: "2775"
+    owner: mock
+    group: mock
 
-- name: add ftpsync user
-  user: name=ftpsync uid=263 group=ftpsync createhome=yes system=yes state=present
+- name: Add mock ssh dir
+  ansible.builtin.file:
+    state: directory
+    path: /var/lib/mock/.ssh
+    mode: "700"
+    owner: mock
+    group: mock
 
-- name: add create-filelist script from quick-fedora-mirror
-  copy: src="{{ files }}/scripts/create-filelist" dest=/usr/local/bin/create-filelist mode=0755 owner=ftpsync group=ftpsync
+- name: Add mock ssh keys
+  ansible.builtin.copy:
+    src: "{{ files }}/../roles/koji_builder/files/mock_auth_keys"
+    dest: /var/lib/mock/.ssh/authorized_keys
+    mode: "644"
+    owner: mock
+    group: mock
 
-- name: add the ftpsync update-fullfiletimelist script
-  copy: src="{{ files }}/scripts/update-fullfiletimelist" dest=/usr/local/bin/update-fullfiletimelist mode=0755
+- name: Add ftpsync group
+  ansible.builtin.group:
+    name: ftpsync
+    gid: 263
+    system: true
+
+- name: Add ftpsync user
+  ansible.builtin.user:
+    name: ftpsync
+    uid: 263
+    group: ftpsync
+    system: yes
+
+- name: Add create-filelist script from quick-fedora-mirror
+  ansible.builtin.copy:
+    src: "{{ files }}/scripts/create-filelist"
+    dest: /usr/local/bin/create-filelist
+    mode: "755"
+    owner: ftpsync
+    group: ftpsync
+
+- name: Add the ftpsync update-fullfiletimelist script
+  ansible.builtin.copy:
+    src: "{{ files }}/scripts/update-fullfiletimelist"
+    dest: /usr/local/bin/update-fullfiletimelist
+    mode: "755"
 
 # ftbfs user = 264
-- name: add ftbfs group
-  group: name=ftbfs gid=264 system=yes state=present
+- name: Add ftbfs group
+  ansible.builtin.group:
+    name: ftbfs
+    gid: 264
+    system: true
   when: inventory_hostname.startswith('compose-x86-01')
   tags:
     - ftbfs
 
-- name: add ftbfs user
-  user: name=ftbfs uid=264 group=ftbfs createhome=yes system=yes state=present local=yes
+- name: Add ftbfs user
+  ansible.builtin.user:
+    name: ftbfs
+    uid: 264
+    group: ftbfs
+    system: true
+    local: true
   when: inventory_hostname.startswith('compose-x86-01')
   tags:
     - ftbfs
 
-- name: add ftbfs script config file
-  template: src=ftbfs.cfg.j2 dest=/etc/ftbfs.cfg
+- name: Add ftbfs script config file
+  ansible.builtin.template:
+    src: ftbfs.cfg.j2
+    dest: /etc/ftbfs.cfg
+    mode: "644"
   when: inventory_hostname.startswith('compose-x86-01')
   tags:
     - ftbfs
 
-- name: add ftbfs cache dir
-  file: state=directory path=/home/ftbfs/.cache mode=2775 owner=ftbfs group=ftbfs
+- name: Add ftbfs cache dir
+  ansible.builtin.file:
+    state: directory
+    path: /home/ftbfs/.cache
+    mode: "2775"
+    owner: ftbfs
+    group: ftbfs
   when: inventory_hostname.startswith('compose-x86-01')
   tags:
     - ftbfs
 
-- name: copy ftbfs weekly script
-  copy: src="ftbfs.sh" dest=/usr/local/bin/ftbfs.sh mode=755
+- name: Copy ftbfs weekly script
+  ansible.builtin.copy:
+    src: ftbfs.sh
+    dest: /usr/local/bin/ftbfs.sh
+    mode: "755"
   when: inventory_hostname.startswith('compose-x86-01')
   tags:
     - ftbfs
 
-- name: add ftbfs weekly cron job
-  copy: src="ftbfs.cron" dest=/etc/cron.weekly/ mode=755
+- name: Add ftbfs weekly cron job
+  ansible.builtin.copy:
+    src: ftbfs.cron
+    dest: /etc/cron.weekly/
+    mode: "755"
   when: inventory_hostname.startswith('compose-x86-01')
   tags:
     - ftbfs
 
 # masher user 751
-- name: add masher group
-  group: name=masher gid=751 system=yes state=present
+- name: Add masher group
+  ansible.builtin.group:
+    name: masher
+    gid: 751
+    system: true
 
-- name: add masher user as 751 - and group
-  user: name=masher uid=751 group=masher home=/home/masher groups=mock,ftpsync local=true
+- name: Add masher user as 751 - and group
+  ansible.builtin.user:
+    name: masher
+    uid: 751
+    group: masher
+    home: /home/masher
+    groups: mock,ftpsync
+    local: true
+
 # masher ssh keys and config
-- name: add masher ssh dir
-  file: state=directory path=/home/masher/.ssh mode=700 owner=masher group=masher
-- name: add masher ssh keys
-  copy: src="mash/masher.{{ item }}" dest="/home/masher/.ssh/{{ item }}" mode=600 owner=masher group=masher
+- name: Add masher ssh dir
+  ansible.builtin.file:
+    state: directory
+    path: /home/masher/.ssh
+    mode: "700"
+    owner: masher
+    group: masher
+
+- name: Add masher ssh keys
+  ansible.builtin.copy:
+    src: "mash/masher.{{ item }}"
+    dest: "/home/masher/.ssh/{{ item }}"
+    mode: "600"
+    owner: masher
+    group: masher
   with_items:
     - id_rsa.pub
     - config
 
-- name: add masher ssh priv key
-  copy: src="{{ private }}/files/mash/masher.id_rsa" dest=/home/masher/.ssh/id_rsa mode=600 owner=masher group=masher
+- name: Add masher ssh priv key
+  ansible.builtin.copy:
+    src: "{{ private }}/files/mash/masher.id_rsa"
+    dest: /home/masher/.ssh/id_rsa
+    mode: "600"
+    owner: masher
+    group: masher
 
-- name: add masher koji cert/key
-  copy: src="{{ private }}/files/mash/masher.pem" dest=/home/masher/.fedora.cert mode=600 owner=masher group=masher
+- name: Add masher koji cert/key
+  ansible.builtin.copy:
+    src: "{{ private }}/files/mash/masher.pem"
+    dest: /home/masher/.fedora.cert
+    mode: "600"
+    owner: masher
+    group: masher
 
-- name: add releng koji cert/key
-  copy: src="{{ private }}/files/releng_key_and_cert.pem" dest=/root/.fedora.cert mode=600 owner=root group=root
+- name: Add releng koji cert/key
+  ansible.builtin.copy:
+    src: "{{ private }}/files/releng_key_and_cert.pem"
+    dest: /root/.fedora.cert
+    mode: "600"
+    owner: root
+    group: root
 
 # rawhide group
-- name: rawhide group
+- name: Rawhide group
   ansible.builtin.group:
     name: "rawhide"
     gid: 265
-    state: present
 
 # rawhide user 265
-- name: add rawhide user
+- name: Add rawhide user
   ansible.builtin.user:
     name: "rawhide"
     uid: 265
@@ -101,10 +198,12 @@
     home: "/tmp"
     create_home: false
     comment: "rawhide compose account"
-    state: present
 
-- name: make a bunch of dirs
-  file: state=directory path={{ item }}
+- name: Make a bunch of dirs
+  ansible.builtin.file:
+    state: directory
+    path: "{{ item }}"
+    mode: "755"
   with_items:
     - /pub
     - /pub/fedora-secondary
@@ -112,8 +211,8 @@
     - /mnt/fedora_koji
     - /var/spool/rsyslog
 
-- name: add pkgs
-  package:
+- name: Add pkgs
+  ansible.builtin.package:
     state: present
     name:
     - koji
@@ -150,8 +249,8 @@
   - releng
 
 # merge this into above after freeze
-- name: add packages to rawhide composer
-  package:
+- name: Add packages to rawhide composer
+  ansible.builtin.package:
     state: present
     name:
     - rpm-ostree
@@ -159,87 +258,125 @@
   - releng
   when: inventory_hostname.startswith('compose-rawhide01.iad2')
 
-- name: add pkgs from infrastructure testing repo
-  dnf: state=present pkg=python3-libpagure enablerepo=infrastructure-tags-stg
+- name: Add pkgs from infrastructure testing repo
+  ansible.builtin.dnf:
+    state: present
+    name: python3-libpagure
+    enablerepo: infrastructure-tags-stg
 
-- name: add pkgs
-  package:
+- name: Add pkgs
+  ansible.builtin.package:
     state: present
     name:
     - pungi-utils
   when: "'releng_compose' in group_names or 'eln_compose' in group_names"
 
 - name: Custom compose-koji
-  template: src=compose-koji.j2 dest=/usr/bin/compose-koji
-            mode=0755
+  ansible.builtin.template:
+    src: compose-koji.j2
+    dest: /usr/bin/compose-koji
+    mode: "755"
 
 - name: /etc/koji.conf
-  template: src=koji.conf.j2 dest=/etc/koji.conf.d/compose.conf
+  ansible.builtin.template:
+    src: koji.conf.j2
+    dest: /etc/koji.conf.d/compose.conf
+    mode: "644"
 
-- name: make a mnt/koji link
-  file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji
+- name: Make a mnt/koji link
+  ansible.builtin.file:
+    state: link
+    src: /mnt/fedora_koji/koji
+    dest: /mnt/koji
   when: "'releng_compose' in group_names or 'releng_compose_stg' in group_names"
 
 # Add skopeo for OCI Image management, only in stage first for testing
-- name: add pkgs for OCI Image management
-  package:
+- name: Add pkgs for OCI Image management
+  ansible.builtin.package:
     state: present
     name:
     - skopeo
   when: env == "staging"
 
 # put cron job in for branched compose
-- name: branched compose cron
-  copy: src="branched" dest=/etc/cron.d/branched
+- name: Branched compose cron
+  ansible.builtin.copy:
+    src: branched
+    dest: /etc/cron.d/branched
+    mode: "644"
   when: inventory_hostname.startswith('compose-branched01.iad2')
 
 # put cron job in for rawhide compose
-- name: rawhide compose cron
-  copy: src="rawhide" dest=/etc/cron.d/rawhide
+- name: Rawhide compose cron
+  ansible.builtin.copy:
+    src: rawhide
+    dest: /etc/cron.d/rawhide
+    mode: "644"
   when: inventory_hostname.startswith('compose-rawhide01.iad2')
 
 # put cron job in for cloud nightly compose
-- name: cloud updates compose cron
-  copy: src="cloud-updates" dest=/etc/cron.d/cloud-updates
+- name: Cloud updates compose cron
+  ansible.builtin.copy:
+    src: cloud-updates
+    dest: /etc/cron.d/cloud-updates
+    mode: "644"
   when: inventory_hostname.startswith('compose-x86-01.iad2')
 
 # put cron job in for docker nightly compose
-- name: docker compose cron
-  copy: src="container-updates" dest=/etc/cron.d/container-updates
+- name: Docker compose cron
+  ansible.builtin.copy:
+    src: container-updates
+    dest: /etc/cron.d/container-updates
+    mode: "644"
   when: inventory_hostname.startswith('compose-x86-01.iad2')
 
 # put cron job in for regular ami deletion
-- name: clean-amis cron
-  template: src=clean-amis.j2 dest=/etc/cron.d/clean-amis
+- name: Clean-amis cron
+  ansible.builtin.template:
+    src: clean-amis.j2
+    dest: /etc/cron.d/clean-amis
+    mode: "644"
   when: inventory_hostname.startswith('compose-x86-01.iad2')
 
 # put cron job in for IoT rawhide compose
 - name: IoT rawhide compose cron
-  copy: src="rawhide-iot" dest=/etc/cron.d/rawhide-iot
+  ansible.builtin.copy:
+    src: rawhide-iot
+    dest: /etc/cron.d/rawhide-iot
+    mode: "644"
   when: inventory_hostname.startswith('compose-iot01.iad2')
 
 # put cron job in for epel10 compose
-- name: epel10 compose cron
-  copy: src="epel10" dest=/etc/cron.d/epel10
+- name: EPEL 10 compose cron
+  ansible.builtin.copy:
+    src: epel10
+    dest: /etc/cron.d/epel10
+    mode: "644"
   when: inventory_hostname.startswith('compose-rawhide01.iad2')
 
 # put cron job in for ELN compose
 - name: ELN compose cron
-  copy: src="eln" dest=/etc/cron.d/eln
+  ansible.builtin.copy:
+    src: eln
+    dest: /etc/cron.d/eln
+    mode: "644"
   when: inventory_hostname.startswith('compose-eln01.iad2')
 
 # put cron job in for enforcing FESCo SIG Policy
 # https://docs.fedoraproject.org/en-US/fesco/SIG_policy/
-- name: sig_policy cron
-  template: src="sig_policy.j2" dest=/etc/cron.d/sig_policy
+- name: SIG policy cron
+  ansible.builtin.template:
+    src: sig_policy.j2
+    dest: /etc/cron.d/sig_policy
+    mode: "644"
   when: inventory_hostname.startswith('compose-x86-01.iad2')
   tags:
   - cronjob
 
 - name: Create /etc/pki/fedora-messaging
-  file:
+  ansible.builtin.file:
     dest: /etc/pki/fedora-messaging
-    mode: 0775
+    mode: "775"
     owner: root
     group: root
     state: directory
@@ -248,10 +385,10 @@
   - releng
 
 - name: Deploy the fedora-messaging CA
-  copy:
-    src: "{{ private }}/files/rabbitmq/{{env}}/pki/ca.crt"
+  ansible.builtin.copy:
+    src: "{{ private }}/files/rabbitmq/{{ env }}/pki/ca.crt"
     dest: /etc/pki/fedora-messaging/rabbitmq-ca.crt
-    mode: 0644
+    mode: "644"
     owner: apache
     group: apache
   tags:
@@ -259,10 +396,10 @@
   - releng
 
 - name: Deploy the fedora-messaging cert
-  copy:
-    src: "{{ private }}/files/rabbitmq/{{env}}/pki/issued/pungi{{env_suffix}}.crt"
+  ansible.builtin.copy:
+    src: "{{ private }}/files/rabbitmq/{{ env }}/pki/issued/pungi{{ env_suffix }}.crt"
     dest: /etc/pki/fedora-messaging/rabbitmq-pungi.crt
-    mode: 0644
+    mode: "644"
     owner: apache
     group: apache
   tags:
@@ -270,10 +407,10 @@
   - releng
 
 - name: Deploy the fedora-messaging key
-  copy:
-    src: "{{ private }}/files/rabbitmq/{{env}}/pki/private/pungi{{env_suffix}}.key"
+  ansible.builtin.copy:
+    src: "{{ private }}/files/rabbitmq/{{ env }}/pki/private/pungi{{ env_suffix }}.key"
     dest: /etc/pki/fedora-messaging/rabbitmq-pungi.key
-    mode: 0600
+    mode: "600"
     owner: apache
     group: apache
   tags:
@@ -281,23 +418,23 @@
   - releng
 
 - name: Install fedora-messaging config
-  template:
+  ansible.builtin.template:
     src: fedora-messaging.toml.j2
     dest: /etc/fedora-messaging/config.toml
     owner: apache
     group: apache
-    mode: 0600
+    mode: "600"
   tags:
   - config
   - releng
 
-- name: install compose /etc/httpd/conf.d/compose.conf file
-  copy: >
-    src="compose.conf"
-    dest="/etc/httpd/conf.d/compose.conf"
-    owner=root
-    group=root
-    mode=0644
+- name: Install compose /etc/httpd/conf.d/compose.conf file
+  ansible.builtin.copy:
+    src: compose.conf
+    dest: /etc/httpd/conf.d/compose.conf
+    owner: root
+    group: root
+    mode: "644"
   notify:
   - reload httpd
   tags:
