@@ -236,9 +236,9 @@
     name: admin
     password: "{{ ipa_admin_password }}"
     # Password expiration date will be a Friday 13th in 30 years. I'm sure we'll remember that.
-    passwordexpiration: "2050-05-13 00:00:00"
+    krbpasswordexpiration: "2050-05-13 00:00:00"
     update_password: on_create
-    ipaadmin_password: "{{ ipa_admin_password }}"
+    ipa_pass: "{{ ipa_admin_password }}"
   tags:
   - ipa/server
   - config
