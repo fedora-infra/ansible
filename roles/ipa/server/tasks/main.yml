@@ -706,7 +706,7 @@
 
 # This is a special one, in that it needs to apply on each master since it's non-replicated.
 - name: Grant access to replication status
-  ansible.builin.command:
+  ansible.builtin.command:
     argv:
       - ldapmodify
       - -Y EXTERNAL
