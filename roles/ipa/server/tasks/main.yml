@@ -233,7 +233,7 @@
   - restart ipa
 
 - name: Set the expiration date for the admin user
-  community.general.ipauser:
+  community.general.ipa_user:
     name: admin
     password: "{{ ipa_admin_password }}"
     # Password expiration date will be a Friday 13th in 30 years. I'm sure we'll remember that.
@@ -320,7 +320,7 @@
   - config
 
 - name: Create fas_sync user
-  community.general.ipauser:
+  community.general.ipa_user:
     name: fas_sync
     givenname: FAS
     sn: Sync
@@ -439,7 +439,7 @@
   - config
 
 - name: Create noggin user
-  community.general.ipauser:
+  community.general.ipa_user:
     name: noggin
     givenname: Noggin
     sn: User
