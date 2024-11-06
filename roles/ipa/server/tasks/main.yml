@@ -448,7 +448,7 @@
     # Password expiration date will be a Friday 13th in 30 years. I'm sure we'll remember that.
     # (if unset, IPA will assume the password is expired because it hasn't been set by the user
     # themselves)
-    krbpasswordexpiration: "2050-05-13 00:00:00"
+    krbpasswordexpiration: "20500513000000"
     update_password: on_create
     ipa_pass: "{{ ipa_admin_password }}"
     ipa_host: "{{ inventory_hostname }}"
