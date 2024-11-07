@@ -671,6 +671,10 @@
     dest: /etc/logrotate.d/krb5kdc
     mode: '0644'
     backup: yes
+  tags:
+  - ipa/server
+  - config
+  - krb5
 
 - name: Include script.yml
   ansible.builtin.import_tasks: scripts.yml
