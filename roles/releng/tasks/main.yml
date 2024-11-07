@@ -338,6 +338,14 @@
     mode: "644"
   when: inventory_hostname.startswith('compose-x86-01.iad2')
 
+# put cron job in for IoT stable compose
+- name: IoT stable compose cron
+  ansible.builtin.copy:
+    src: stable-iot
+    dest: /etc/cron.d/stable-iot
+    mode: "644"
+  when: inventory_hostname.startswith('compose-iot01.iad2')
+
 # put cron job in for IoT rawhide compose
 - name: IoT rawhide compose cron
   ansible.builtin.copy:
