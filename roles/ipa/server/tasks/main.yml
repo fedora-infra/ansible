@@ -725,9 +725,9 @@
   - config
   register: grant_repl_status_output
   changed_when: "'Type or value exists' not in grant_repl_status_output.stderr"
-  failed_when: |
-    "'Type or value exists' not in grant_repl_status_output.stderr and
-    'modifying entry' not in grant_repl_status_output.stdout"
+  failed_when:
+    - "'Type or value exists' not in grant_repl_status_output.stderr"
+    - "'modifying entry' not in grant_repl_status_output.stdout"
 
 # Make some httpd changes
 - name: Configure referer override
