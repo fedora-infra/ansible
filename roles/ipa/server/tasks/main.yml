@@ -709,10 +709,10 @@
 - name: Grant access to replication status
   ansible.builtin.command:
     argv:
-      - ldapmodify
+      - /usr/bin/ldapmodify
       - -Y EXTERNAL
       - -H {{ ipa_ldap_socket }}
-      - -f "/root/ldif/{{ item }}"
+      - -f /root/ldif/{{ item }}
   with_items:
   - grant_anonymous_replication_view.ldif
   - grant_fas_sync.ldif
