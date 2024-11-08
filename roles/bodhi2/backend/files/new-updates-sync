@@ -482,14 +482,15 @@ def update_epel_release_latest(releases):
     """
     for release in releases:
         if 'epel' in release:
+            major = RELEASES[release]['version'].split('.')[0]
             if 'next' in RELEASES[release]['repos']['epel']['to'][0]['dest']:
-                dest = '/pub/epel/epel-next-release-latest-' + release[4] + '.noarch.rpm'
+                dest = '/pub/epel/epel-next-release-latest-' + major + '.noarch.rpm'
                 # For next's epel release, use the subpackage rpm from epel repo instead of
                 # epel next repo
                 release = release[:-1]
                 path, pkg_relpath = get_epel_release_rel_path(release, True)
             else:
-                dest = '/pub/epel/epel-release-latest-' + release[4] + '.noarch.rpm'
+                dest = '/pub/epel/epel-release-latest-' + major + '.noarch.rpm'
                 path, pkg_relpath = get_epel_release_rel_path(release)
 
             if os.path.lexists(dest) and os.path.islink(dest):
