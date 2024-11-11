@@ -131,7 +131,11 @@ channel =
     method osbuildImage :: use osbuild
     method buildContainer :: use container
     method flatpakBuild :: use flatpak
-    has req_channel && has_perm customchannel :: req
+    has req_channel :: {
+       # require customchannel to override build channel
+       method build chainbuild !! req
+       has_perm customchannel :: req
+    }
 {% if env == 'staging' %}
     # kojid-cloud-scheduler tag setup for stg env only
     tag buildaws && fromtag buildaws && method build :: use buildaws
