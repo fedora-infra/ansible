@@ -1,5 +1,5 @@
 ---
-- name: "Offboard the Communishift tenant project: {{ item.value.name }}"
+- name: "Offboard the Communishift tenant project"
   debug:
     msg: "delete task for project: {{ item.value.name }}"
   when: "{{ not item.value.do_not_delete | bool }}"
