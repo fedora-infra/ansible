@@ -8,7 +8,7 @@
     host: localhost
     port: 25
     subject: "Fedora Communishift Notification: {{ item.value.name }}"
-    body: "This is a reminder that the Communishift project {{ item.value.name }} will be deleted during the Fedora post release process. Please ensure you have a backup of any important configuration or data from your project."
+    body: "Dear Administrator, \n\nThis is a reminder that the Communishift project {{ item.value.name }} will be deleted during the Fedora post release process. Please ensure you have a backup of any important configuration or data from your project.\n\nIf you need to request an exemption, please file a ticket here: https://pagure.io/fedora-infrastructure/issues"
     from: admin@fedoraproject.org
     to:
       - D Kirwan <dkirwan+communishift_notification_test_1@redhat.com>
