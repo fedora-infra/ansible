@@ -130,15 +130,6 @@
     - logging
     - mailman
 
-- name: Mailman logging -- rotation
-  ansible.builtin.copy:
-    src: mailman3.logrotate.conf
-    dest: /etc/logrotate.d/mailman3
-    mode: "0644"
-  tags:
-    - logging
-    - mailman
-
 - name: Ensuring mailman-core is started
   ansible.builtin.service:
     name: mailman3
@@ -532,19 +523,6 @@
     - mailman
     - systemd
     - hyperkitty
-
-#
-# Logrotate
-#
-
-- name: Setup logrotate
-  ansible.builtin.template:
-    src: "mailman.logrotate.j2"
-    dest: /etc/logrotate.d/mailman
-    mode: "0644"
-  tags:
-  - logrotate
-  - config
 
 #
 # Scripts
