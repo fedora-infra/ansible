@@ -1,4 +1,4 @@
-- name: setup the database
+- name: Setup the database
   hosts: db01.iad2.fedoraproject.org:db01.stg.iad2.fedoraproject.org
   gather_facts: no
   become: yes
@@ -9,24 +9,24 @@
   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
-  - name: waiverdb DB user - prod
+  - name: Waiverdb DB user - prod
     postgresql_user:
       name: "waiverdb"
       password: "{{ prod_waiverdb_db_password }}"
     when: env != 'staging'
-  - name: waiverdb DB user - staging
+  - name: Waiverdb DB user - staging
     postgresql_user:
       name: "waiverdb"
       password: "{{ stg_waiverdb_db_password }}"
     when: env == 'staging'
-  - name: waiverdb database creation
+  - name: Waiverdb database creation
     postgresql_db:
       name: "waiverdb"
       owner: "waiverdb"
       encoding: UTF-8
 
 
-- name: make the app be real
+- name: Make the app be real
   hosts: os_control[0]:os_control_stg[0]
   user: root
   gather_facts: False

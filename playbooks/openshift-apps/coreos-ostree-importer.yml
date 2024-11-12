@@ -1,5 +1,5 @@
 ---
-- name: make the app be real
+- name: Make the app be real
   hosts: os_control:os_control_stg
   user: root
   gather_facts: false
@@ -18,11 +18,13 @@
 
   # Set the fedora_messaging_routing_keys var based on the environment
   pre_tasks:
-    - set_fact:
+    - name: Set the fedora_messaging_routing_keys var
+      set_fact:
         fedora_messaging_routing_keys:
           - "org.fedoraproject.stg.coreos.build.request.ostree-import"
       when: env == 'staging'
-    - set_fact:
+    - name: Set the fedora_messaging_routing_keys var
+      set_fact:
         fedora_messaging_routing_keys:
           - "org.fedoraproject.prod.coreos.build.request.ostree-import"
       when: env != 'staging'

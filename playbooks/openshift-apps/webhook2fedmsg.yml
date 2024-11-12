@@ -2,7 +2,7 @@
 # Webhook to Fedora Messaging
 #
 
-- name: setup the database
+- name: Setup the database
   hosts: db01.iad2.fedoraproject.org:db01.stg.iad2.fedoraproject.org
   gather_facts: no
   become: yes
@@ -13,17 +13,17 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
-    - name: webhook2fedmsg DB user
+    - name: Webhook2fedmsg DB user
       postgresql_user:
         name: webhook2fedmsg
         password: "{{ (env == 'production')|ternary(webhook2fedmsg_prod_db_password, webhook2fedmsg_stg_db_password) }}"
-    - name: webhook2fedmsg database creation
+    - name: Webhook2fedmsg database creation
       postgresql_db:
         name: webhook2fedmsg
         owner: webhook2fedmsg
         encoding: UTF-8
 
-- name: make the app be real
+- name: Make the app be real
   hosts: os_control[0]:os_control_stg[0]
   user: root
   gather_facts: False

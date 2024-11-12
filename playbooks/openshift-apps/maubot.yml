@@ -1,4 +1,4 @@
-- name: setup the database
+- name: Setup the database
   hosts: db01.iad2.fedoraproject.org:db01.stg.iad2.fedoraproject.org
   gather_facts: no
   become: yes
@@ -9,17 +9,17 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
-    - name: maubot DB user
+    - name: Maubot DB user
       postgresql_user:
         name: maubot
         password: "{{ (env == 'production')|ternary(maubot_prod_db_password, maubot_stg_db_password) }}"
-    - name: maubot database creation
+    - name: Maubot database creation
       postgresql_db:
         name: maubot
         owner: maubot
         encoding: UTF-8
 
-- name: make the app be real
+- name: Make the app be real
   hosts: os_control_stg:os_control
   user: root
   gather_facts: False

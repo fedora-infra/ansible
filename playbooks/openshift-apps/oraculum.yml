@@ -1,15 +1,15 @@
-- name: prepare setting up the database
+- name: Prepare setting up the database
   hosts: db01.stg.iad2.fedoraproject.org:db01.iad2.fedoraproject.org
   gather_facts: no
   user: root
 
   tasks:
-  - name: install psycopg2 for the postgresql ansible modules
+  - name: Install psycopg2 for the postgresql ansible modules
     package: name=python3-psycopg2 state=present
     tags:
     - packages
 
-- name: setup the database
+- name: Setup the database
   hosts: db01.stg.iad2.fedoraproject.org:db01.iad2.fedoraproject.org
   gather_facts: no
   become: yes
@@ -35,7 +35,7 @@
       owner: "{{ oraculum_db_user }}"
       encoding: UTF-8
 
-- name: make the app be real
+- name: Make the app be real
   hosts: os_control_stg[0]:os_control[0]
   user: root
   gather_facts: False

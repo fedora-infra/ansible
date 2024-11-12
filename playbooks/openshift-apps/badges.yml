@@ -3,7 +3,7 @@
 #
 
 ---
-- name: setup the database
+- name: Setup the database
   hosts: db01.iad2.fedoraproject.org:db01.stg.iad2.fedoraproject.org
   gather_facts: no
   become: yes
@@ -25,7 +25,7 @@
         owner: "{{ tahrirDBUser }}"
         encoding: UTF-8
 
-- name: give access to the datanommer DB
+- name: Give access to the datanommer DB
   hosts: datanommer_dbserver:datanommer_dbserver_stg
   gather_facts: no
   become: yes
@@ -41,14 +41,14 @@
       postgresql_user:
         name: "{{ tahrirDBUser }}"
         password: "{{ (env == 'production')|ternary(tahrirDBPassword, tahrirstgDBPassword) }}"
-    - name: grant the db user read only access to datanommer2
+    - name: Grant the db user read only access to datanommer2
       postgresql_privs:
         database: datanommer2
         privs: SELECT
         objs: ALL_IN_SCHEMA
         roles: "{{ tahrirDBUser }}"
 
-- name: make the app be real
+- name: Make the app be real
   hosts: os_control_stg:os_control
   user: root
   gather_facts: false

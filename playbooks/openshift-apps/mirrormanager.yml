@@ -3,7 +3,7 @@
 #
 
 ---
-- name: setup the database
+- name: Setup the database
   hosts: db01.iad2.fedoraproject.org:db01.stg.iad2.fedoraproject.org
   gather_facts: no
   become: yes
@@ -25,7 +25,7 @@
         owner: "{{ (env == 'production')|ternary(mirrormanager_db_user, mirrormanager_stg_db_user) }}"
         encoding: UTF-8
 
-- name: make the app be real
+- name: Make the app be real
   hosts: os_control_stg:os_control
   user: root
   gather_facts: false

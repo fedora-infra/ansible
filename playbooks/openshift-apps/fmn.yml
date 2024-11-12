@@ -3,7 +3,7 @@
 #
 
 
-- name: setup the database
+- name: Setup the database
   hosts: db01.iad2.fedoraproject.org:db01.stg.iad2.fedoraproject.org
   gather_facts: no
   become: yes
@@ -24,7 +24,7 @@
         owner: fmn
         encoding: UTF-8
 
-- name: setup RabbitMQ
+- name: Setup RabbitMQ
   hosts: rabbitmq[0]:rabbitmq_stg[0]
   user: root
   gather_facts: False
@@ -100,7 +100,7 @@
         - fedora-messaging
         - rabbitmq_cluster
 
-- name: make the app be real
+- name: Make the app be real
   hosts: os_control_stg:os_control
   user: root
   gather_facts: False

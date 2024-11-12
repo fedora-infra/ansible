@@ -1,4 +1,4 @@
-- name: make the app be real
+- name: Make the app be real
   hosts: os_control[0]:os_control_stg[0]
   user: root
   gather_facts: False
@@ -70,28 +70,28 @@
     - delete
 
   post_tasks:
-  - name: run initial f.10 import
+  - name: Run initial f.10 import
     command: "oc -n languages create job stats-10-{{ lookup('pipe','date +%s') }}-init --from=cronjob/stats-10"
     tags:
     - never
     - init
     - f10
  
-  - name: run initial f.20 import
+  - name: Run initial f.20 import
     command: "oc -n languages create job stats-20-{{ lookup('pipe','date +%s') }}-init --from=cronjob/stats-20"
     tags:
     - never
     - init
     - f20
 
-  - name: run initial f.30 import
+  - name: Run initial f.30 import
     command: "oc -n languages create job stats-30-{{ lookup('pipe','date +%s') }}-init --from=cronjob/stats-30"
     tags:
     - never
     - init
     - f30
 
-  - name: run initial f.latest import
+  - name: Run initial f.latest import
     command: "oc -n languages create job stats-latest-{{ lookup('pipe','date +%s') }}-init --from=cronjob/stats-latest"
     tags:
     - never

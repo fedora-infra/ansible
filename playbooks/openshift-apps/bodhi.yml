@@ -1,4 +1,4 @@
-- name: make the app be real
+- name: Make the app be real
   hosts: os_control[0]:os_control_stg[0]
   user: root
   gather_facts: False
@@ -19,11 +19,14 @@
     - ocp4: true
 
   pre_tasks:
-  - include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
-  - include_vars: /srv/web/infra/ansible/vars/apps/bodhi.yml
-  - set_fact:
-    args:
-      bodhi_version: "{{ bodhi_version }}"
+  - name: Include Global Variables
+    include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
+  - name: Include Bodhi Variables
+    include_vars: /srv/web/infra/ansible/vars/apps/bodhi.yml
+  - name: Set bodhi_version fact
+    set_fact:
+      args:
+        bodhi_version: "{{ bodhi_version }}"
 
   roles:
   - role: rabbit/queue
@@ -172,7 +175,7 @@
     command: "oc -n bodhi annotate route bodhi-web --overwrite haproxy.router.openshift.io/timeout=180s"
     tags:
     - route-timeout
-  - name: trigger critpath cronjob
+  - name: Trigger critpath cronjob
     command: "oc -n bodhi create job critpathcron-manual-{{ lookup('pipe','date +%s') }} --from=cronjob/fedora-bodhi-critpathcron"
     tags:
     - never

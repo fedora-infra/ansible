@@ -1,5 +1,5 @@
 ---
-- name: provision CoreOS Cincinnati backend
+- name: Provision CoreOS Cincinnati backend
   hosts: os_control:os_control_stg
   user: root
   gather_facts: false
@@ -11,7 +11,8 @@
     - /srv/web/infra/ansible/roles/openshift-apps/coreos-cincinnati/vars/{{ env }}.yml
 
   pre_tasks:
-  - include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
+    - name: Include Global Variables
+      include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
 
   ############################################
   # actions to create the project in OpenShift

@@ -1,4 +1,4 @@
-- name: give access to the datanommer DB
+- name: Give access to the datanommer DB
   hosts: datanommer_dbserver:datanommer_dbserver_stg
   gather_facts: no
   become: yes
@@ -14,7 +14,7 @@
       postgresql_user:
         name: datagrepper
         password: "{{ (env == 'production')|ternary(datagrepper_prod_db_password, datagrepper_stg_db_password) }}"
-    - name: grant the db user read only access to datanommer2
+    - name: Grant the db user read only access to datanommer2
       postgresql_privs:
         database: datanommer2
         privs: SELECT
@@ -22,7 +22,7 @@
         roles: datagrepper
 
 
-- name: make the app be real
+- name: Make the app be real
   hosts: os_control_stg[0]:os_control[0]
   user: root
   gather_facts: False
