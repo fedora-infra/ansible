@@ -5,95 +5,45 @@
 # We want this on any public facing Fedora installs so we
 # can pick up security updates.
 #
-- block:
-  - name: install dnf-automatic
-    dnf:
-      name: dnf-automatic
-      state: present
-      disablerepo: updates
-    tags:
-    - packages
-
-  - name: install /etc/dnf/automatic.conf
-    template:
-      src: automatic.conf.j2
-      dest: /etc/dnf/automatic.conf
-      mode: 0644
-    tags:
-    - config
-
-  - name: enable and start dnf-automatic
-    command: systemctl enable dnf-automatic.timer
-    when: ansible_distribution_major_version|int < 8 and ansible_distribution == 'RedHat'
-    args:
-      creates: /etc/systemd/system/basic.target.wants/dnf-automatic.timer
-    tags:
-    - config
-
-  - name: Set dnf-automatic to execute only on Mon-Fri
-    ini_file:
-      path: /usr/lib/systemd/system/dnf-automatic.timer
-      section: Timer
-      option: OnCalendar
-      value: Mon..Fri *-*-* 6:00:00
-    notify: Restart dnf-automatic.timer
-    tags:
-    - config
-
-  - name: check if dnf-automatic.timer is active
-    command: systemctl is-active dnf-automatic.timer
-    register: automaticative
-    check_mode: no
-    changed_when: 1 != 1
-    ignore_errors: true
-    when: ansible_distribution_major_version|int < 8 and ansible_distribution == 'RedHat'
-
-  - name: start dnf-automatic.timer if it is not active
-    command: systemctl start dnf-automatic.timer
-    when: automaticative is failed and ansible_distribution_major_version|int < 8 and ansible_distribution == 'RedHat'
-
-  - name: enable and start dnf-automatic f26+
-    command: systemctl enable dnf-automatic-install.timer
-    when: ansible_distribution_major_version|int >= 29 and ansible_distribution == 'Fedora'
-    register: dnfautomaticenable
-    changed_when: dnfautomaticenable.rc != 0
-    tags:
-    - config
-
-  - name: enable and start dnf-automatic RHEL8+
-    command: systemctl enable dnf-automatic-install.timer
-    when: ansible_distribution_major_version|int >= 8 and ansible_distribution == 'RedHat'
-    register: dnfautomaticenable
-    changed_when: dnfautomaticenable.rc != 0
-    tags:
-    - config
-
-  - name: check if dnf-automatic-install.timer is active
-    command: systemctl is-active dnf-automatic-install.timer
-    register: automaticative
-    check_mode: no
-    changed_when: 1 != 1
-    ignore_errors: true
-    when: ansible_distribution_major_version|int >= 8 and ansible_distribution == 'RedHat'
-
-  - name: check if dnf-automatic-install.timer is active
-    command: systemctl is-active dnf-automatic-install.timer
-    register: automaticative
-    check_mode: no
-    changed_when: 1 != 1
-    ignore_errors: true
-    when: ansible_distribution_major_version|int >= 29 and ansible_distribution == 'Fedora'
-
-  - name: start dnf-automatic-install.timer if it is not active
-    command: systemctl start dnf-automatic-install.timer
-    when: automaticative is failed and ansible_distribution_major_version|int >= 8 and ansible_distribution == 'RedHat'
-
-  - name: start dnf-automatic-install.timer if it is not active
-    command: systemctl start dnf-automatic-install.timer
-    when: automaticative is failed and ansible_distribution_major_version|int >= 29 and ansible_distribution == 'Fedora'
-
-  - name: disable silly makecache timer
-    systemd: name=dnf-makecache.timer masked=yes
-    ignore_errors: true
-
+- name: Install and configure dnf-automatic
   when: ansible_pkg_mgr == 'dnf'
+  block:
+    - name: Install dnf-automatic
+      ansible.builtin.dnf:
+        name: "{{ 'dnf5-plugin-automatic' if (ansible_distribution_major_version | int >= 41 and ansible_distribution == 'Fedora') else 'dnf-automatic' }}"
+        state: present
+        disablerepo: updates
+      tags:
+      - packages
+
+    - name: Install /etc/dnf/automatic.conf
+      ansible.builtin.template:
+        src: automatic.conf.j2
+        dest: /etc/dnf/automatic.conf
+        mode: '644'
+      tags:
+      - config
+
+    - name: Set dnf-automatic to execute only on Mon-Fri
+      community.general.ini_file:
+        path: "{{ '/usr/lib/systemd/system/dnf5-automatic.timer' if (ansible_distribution_major_version | int >= 41 and ansible_distribution == 'Fedora') else '/usr/lib/systemd/system/dnf-automatic-install.timer' }}"
+        section: Timer
+        option: OnCalendar
+        value: Mon..Fri *-*-* 6:00:00
+      notify: Restart dnf-automatic timer
+      tags:
+      - config
+
+    - name: Enable and start dnf-automatic timer
+      ansible.builtin.service:
+        name: "{{ 'dnf5-automatic.timer' if (ansible_distribution_major_version | int >= 41 and ansible_distribution == 'Fedora') else 'dnf-automatic-install.timer' }}"
+        enabled: true
+        state: started
+      tags:
+      - config
+
+    - name: Disable silly makecache timer
+      ansible.builtin.systemd:
+        name: dnf-makecache.timer
+        masked: true
+      ignore_errors: true
