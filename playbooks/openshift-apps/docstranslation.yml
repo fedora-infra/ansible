@@ -12,7 +12,7 @@
 
   tasks:
   - name: Define Project
-    include_role:
+    ansible.builtin.include_role:
       name: openshift/project
     vars:
       description: Documentation translation
@@ -25,26 +25,26 @@
       - apply-appowners
 
   - name: Define imagestream
-    include_role:
+    ansible.builtin.include_role:
       name: openshift/imagestream
     vars:
       imagename: builder
 
   - name: Define buildconfig
-    include_role:
+    ansible.builtin.include_role:
       name: openshift/object
     vars:
       objectname: buildconfig.yml
       template: buildconfig.yml
 
   - name: Start build
-    include_role:
+    ansible.builtin.include_role:
       name: openshift/start-build
     vars:
       buildname: docstranslation-build
 
   - name: Define secrets
-    include_role:
+    ansible.builtin.include_role:
       name: openshift/object
     vars:
       objectname: secrets.yml
@@ -53,7 +53,7 @@
       - deploy-secrets
 
   - name: Define configMap
-    include_role:
+    ansible.builtin.include_role:
       name: openshift/object
     vars:
       objectname: configmap.yml
@@ -62,7 +62,7 @@
       - deploy-config
 
   - name: Define cron job
-    include_role:
+    ansible.builtin.include_role:
       name: openshift/object
     vars:
       template: cron.yml
@@ -75,7 +75,7 @@
 ###############################################
 # to run: sudo rbac-playbook -l os_masters_stg[0] -t delete openshift-apps/docstranslation.yml
   - name: Delete project
-    include_role:
+    ansible.builtin.include_role:
       name: openshift/object-delete
     vars:
       objecttype: project

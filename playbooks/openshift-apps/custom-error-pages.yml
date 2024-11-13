@@ -10,7 +10,7 @@
 
   pre_tasks:
   - name: Create project directory
-    file:
+    ansible.builtin.file:
       path: /etc/openshift_apps/openshift-config
       state: directory
       owner: root
@@ -25,4 +25,4 @@
 
   post_tasks:
   - name: Patch ingress controller with custom error pages
-    command: oc patch -n openshift-ingress-operator ingresscontroller/default --patch '{"spec":{"httpErrorCodePages":{"name":"fedora-error-code-pages"}}}' --type=merge
+    ansible.builtin.command: oc patch -n openshift-ingress-operator ingresscontroller/default --patch '{"spec":{"httpErrorCodePages":{"name":"fedora-error-code-pages"}}}' --type=merge

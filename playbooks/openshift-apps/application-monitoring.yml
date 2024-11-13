@@ -19,26 +19,26 @@
 
   post_tasks:
   - name: Apply node labels
-    command: oc label --overwrite namespace application-monitoring monitoring-key=cpe
+    ansible.builtin.command: oc label --overwrite namespace application-monitoring monitoring-key=cpe
 
   - name: Apply node labels for bodhi POC
-    command: oc label --overwrite namespace bodhi monitoring-key=cpe
+    ansible.builtin.command: oc label --overwrite namespace bodhi monitoring-key=cpe
 
   - name: Make other pods available to the application-monitoring project
-    command: oc adm pod-network make-projects-global application-monitoring
+    ansible.builtin.command: oc adm pod-network make-projects-global application-monitoring
 
   - name: Copy files
-    copy: src={{ roles_path }}/openshift-apps/application-monitoring/files/ dest=/etc/openshift_apps/application-monitoring/
+    ansible.builtin.copy: src={{ roles_path }}/openshift-apps/application-monitoring/files/ dest=/etc/openshift_apps/application-monitoring/
 
   - name: Prometheus CRDs
-    command: oc -n application-monitoring apply -f /etc/openshift_apps/application-monitoring/prometheus-operator/example/prometheus-operator-crd/
+    ansible.builtin.command: oc -n application-monitoring apply -f /etc/openshift_apps/application-monitoring/prometheus-operator/example/prometheus-operator-crd/
 
   - name: Prometheus CRD RBAC
-    command: oc -n application-monitoring apply -f /etc/openshift_apps/application-monitoring/prometheus-operator/example/rbac/prometheus-operator-crd/
+    ansible.builtin.command: oc -n application-monitoring apply -f /etc/openshift_apps/application-monitoring/prometheus-operator/example/rbac/prometheus-operator-crd/
 
   - name: Prometheus Operator RBAC
-    command: oc -n application-monitoring apply -f /etc/openshift_apps/application-monitoring/prometheus-operator/example/rbac/prometheus-operator/
+    ansible.builtin.command: oc -n application-monitoring apply -f /etc/openshift_apps/application-monitoring/prometheus-operator/example/rbac/prometheus-operator/
 
   - name: Prometheus RBAC
-    command: oc -n application-monitoring apply -f /etc/openshift_apps/application-monitoring/prometheus-operator/example/rbac/prometheus/
+    ansible.builtin.command: oc -n application-monitoring apply -f /etc/openshift_apps/application-monitoring/prometheus-operator/example/rbac/prometheus/
 

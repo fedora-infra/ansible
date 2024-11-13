@@ -12,14 +12,14 @@
 
   pre_tasks:
     - name: Setup Rabbit User
-      include_role:
+      ansible.builtin.include_role:
         name: rabbit/user
       vars:
         username: toddlers{{ env_suffix }}
         sent_topics: ^org\.fedoraproject\.{{ env_short }}\.toddlers\..*
 
     - name: Setup Rabbit Queue
-      include_role:
+      ansible.builtin.include_role:
         name: rabbit/queue
       vars:
         username: toddlers{{ env_suffix }}

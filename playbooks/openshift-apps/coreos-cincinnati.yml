@@ -12,7 +12,7 @@
 
   pre_tasks:
     - name: Include Global Variables
-      include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
+      ansible.builtin.include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
 
   ############################################
   # actions to create the project in OpenShift

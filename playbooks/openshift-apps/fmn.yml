@@ -15,11 +15,11 @@
 
   tasks:
     - name: FMN DB user
-      postgresql_user:
+      community.postgresql.postgresql_user:
         name: fmn
         password: "{{ (env == 'production') | ternary(fmn_prod_db_password, fmn_stg_db_password) }}"
     - name: FMN database creation
-      postgresql_db:
+      community.postgresql.postgresql_db:
         name: fmn
         owner: fmn
         encoding: UTF-8
@@ -64,7 +64,7 @@
 
   tasks:
     - name: Grant the fmn user access to the fmn vhost
-      rabbitmq_user:
+      community.rabbitmq.rabbitmq_user:
         user: "fmn{{ env_suffix }}"
         vhost: /fmn
         configure_priv: .*
@@ -82,7 +82,7 @@
         - rabbitmq_cluster
 
     - name: Create the sending queues in the fmn vhost
-      rabbitmq_queue:
+      community.rabbitmq.rabbitmq_queue:
         name: "{{ item }}"
         vhost: /fmn
         auto_delete: no

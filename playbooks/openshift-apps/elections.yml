@@ -10,11 +10,11 @@
 
   tasks:
   - name: Elections DB user
-    postgresql_user:
+    community.postgresql.postgresql_user:
       name: "{{ elections_db_user }}"
       password: "{{ elections_db_pass }}"
   - name: Elections database creation
-    postgresql_db:
+    community.postgresql.postgresql_db:
       name: "{{ elections_db_name }}"
       owner: "{{ elections_db_user }}"
       encoding: UTF-8

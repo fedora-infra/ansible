@@ -11,6 +11,6 @@
 
   tasks:
     - name: Firmitas Role
-      include_role:
+      ansible.builtin.include_role:
         name: openshift-apps/firmitas
         tasks_from: main

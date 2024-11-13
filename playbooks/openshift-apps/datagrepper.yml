@@ -11,11 +11,11 @@
 
   tasks:
     - name: DB user
-      postgresql_user:
+      community.postgresql.postgresql_user:
         name: datagrepper
         password: "{{ (env == 'production') | ternary(datagrepper_prod_db_password, datagrepper_stg_db_password) }}"
     - name: Grant the db user read only access to datanommer2
-      postgresql_privs:
+      community.postgresql.postgresql_privs:
         database: datanommer2
         privs: SELECT
         objs: ALL_IN_SCHEMA

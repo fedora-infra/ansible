@@ -12,7 +12,7 @@
 
   tasks:
   - name: Create the RabbitMQ user
-    rabbitmq_user:
+    community.rabbitmq.rabbitmq_user:
       user: "messaging-bridge{{ env_suffix }}.fedoraproject.org"
       vhost: /pubsub
       read_priv: "((a|z)mq\\.topic|amqp_to_zmq|amqp_bridge_verify_missing)"
@@ -23,7 +23,7 @@
     - rabbitmq_cluster
 
   - name: Create the RabbitMQ queue amqp_to_zmq
-    rabbitmq_queue:
+    community.rabbitmq.rabbitmq_queue:
       name: amqp_to_zmq
       vhost: /pubsub
       login_user: admin
@@ -33,7 +33,7 @@
     - rabbitmq_cluster
 
   - name: Create the RabbitMQ queue for verify-missing
-    rabbitmq_queue:
+    community.rabbitmq.rabbitmq_queue:
       name: amqp_bridge_verify_missing
       vhost: /pubsub
       durable: True
@@ -46,7 +46,7 @@
     - rabbitmq_cluster
 
   - name: Create the amqp-to-zmq bindings
-    rabbitmq_binding:
+    community.rabbitmq.rabbitmq_binding:
       name: amq.topic
       destination: amqp_to_zmq
       destination_type: queue
@@ -58,7 +58,7 @@
     - rabbitmq_cluster
 
   - name: Create the verify-missing bindings
-    rabbitmq_binding:
+    community.rabbitmq.rabbitmq_binding:
       name: "{{ item }}"
       destination: amqp_bridge_verify_missing
       destination_type: queue

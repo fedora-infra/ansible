@@ -71,28 +71,28 @@
 
   post_tasks:
   - name: Run initial f.10 import
-    command: "oc -n languages create job stats-10-{{ lookup('pipe', 'date +%s') }}-init --from=cronjob/stats-10"
+    ansible.builtin.command: "oc -n languages create job stats-10-{{ lookup('pipe', 'date +%s') }}-init --from=cronjob/stats-10"
     tags:
     - never
     - init
     - f10
  
   - name: Run initial f.20 import
-    command: "oc -n languages create job stats-20-{{ lookup('pipe', 'date +%s') }}-init --from=cronjob/stats-20"
+    ansible.builtin.command: "oc -n languages create job stats-20-{{ lookup('pipe', 'date +%s') }}-init --from=cronjob/stats-20"
     tags:
     - never
     - init
     - f20
 
   - name: Run initial f.30 import
-    command: "oc -n languages create job stats-30-{{ lookup('pipe', 'date +%s') }}-init --from=cronjob/stats-30"
+    ansible.builtin.command: "oc -n languages create job stats-30-{{ lookup('pipe', 'date +%s') }}-init --from=cronjob/stats-30"
     tags:
     - never
     - init
     - f30
 
   - name: Run initial f.latest import
-    command: "oc -n languages create job stats-latest-{{ lookup('pipe', 'date +%s') }}-init --from=cronjob/stats-latest"
+    ansible.builtin.command: "oc -n languages create job stats-latest-{{ lookup('pipe', 'date +%s') }}-init --from=cronjob/stats-latest"
     tags:
     - never
     - init

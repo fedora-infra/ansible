@@ -19,12 +19,12 @@
   # Set the fedora_messaging_routing_keys var based on the environment
   pre_tasks:
     - name: Set the fedora_messaging_routing_keys var
-      set_fact:
+      ansible.builtin.set_fact:
         fedora_messaging_routing_keys:
           - "org.fedoraproject.stg.coreos.build.request.ostree-import"
       when: env == 'staging'
     - name: Set the fedora_messaging_routing_keys var
-      set_fact:
+      ansible.builtin.set_fact:
         fedora_messaging_routing_keys:
           - "org.fedoraproject.prod.coreos.build.request.ostree-import"
       when: env != 'staging'

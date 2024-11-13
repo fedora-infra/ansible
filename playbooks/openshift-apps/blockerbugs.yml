@@ -5,7 +5,7 @@
 
   tasks:
   - name: Install psycopg2 for the postgresql ansible modules
-    package: name=python3-psycopg2 state=present
+    ansible.builtin.package: name=python3-psycopg2 state=present
     tags:
     - packages
 
@@ -21,16 +21,16 @@
 
   tasks:
   - name: Create the database user
-    postgresql_user:
+    community.postgresql.postgresql_user:
       name: "{{ stg_blockerbugs_db_user }}"
       password: "{{ stg_blockerbugs_db_password }}"
   - name: Create the database itself
-    postgresql_db:
+    community.postgresql.postgresql_db:
       name: "blockerbugs"
       owner: "{{ stg_blockerbugs_db_user }}"
       encoding: UTF-8
   - name: Test the database creation
-    postgresql_db:
+    community.postgresql.postgresql_db:
       name: "blockerbugs"
       owner: "{{ stg_blockerbugs_db_user }}"
       encoding: UTF-8
@@ -47,16 +47,16 @@
 
   tasks:
   - name: Create the database user
-    postgresql_user:
+    community.postgresql.postgresql_user:
       name: "{{ prod_blockerbugs_db_user }}"
       password: "{{ prod_blockerbugs_db_password }}"
   - name: Create the database itself
-    postgresql_db:
+    community.postgresql.postgresql_db:
       name: "blockerbugs"
       owner: "{{ prod_blockerbugs_db_user }}"
       encoding: UTF-8
   - name: Test the database creation
-    postgresql_db:
+    community.postgresql.postgresql_db:
       name: "blockerbugs"
       owner: "{{ prod_blockerbugs_db_user }}"
       encoding: UTF-8

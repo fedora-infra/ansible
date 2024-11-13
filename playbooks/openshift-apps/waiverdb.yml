@@ -10,17 +10,17 @@
 
   tasks:
   - name: Waiverdb DB user - prod
-    postgresql_user:
+    community.postgresql.postgresql_user:
       name: "waiverdb"
       password: "{{ prod_waiverdb_db_password }}"
     when: env != 'staging'
   - name: Waiverdb DB user - staging
-    postgresql_user:
+    community.postgresql.postgresql_user:
       name: "waiverdb"
       password: "{{ stg_waiverdb_db_password }}"
     when: env == 'staging'
   - name: Waiverdb database creation
-    postgresql_db:
+    community.postgresql.postgresql_db:
       name: "waiverdb"
       owner: "waiverdb"
       encoding: UTF-8

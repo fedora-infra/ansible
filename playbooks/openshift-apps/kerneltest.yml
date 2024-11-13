@@ -10,11 +10,11 @@
 
   tasks:
   - name: Kerneltest DB user
-    postgresql_user:
+    community.postgresql.postgresql_user:
       name: "{{ (env == 'production') | ternary(kerneltest_db_user, kerneltest_stg_db_user) }}"
       password: "{{ (env == 'production') | ternary(kerneltest_db_pass, kerneltest_stg_db_pass) }}"
   - name: Kerneltest database creation
-    postgresql_db:
+    community.postgresql.postgresql_db:
       name: "{{ kerneltest_db_name }}"
       owner: "{{ (env == 'production') | ternary(kerneltest_db_user, kerneltest_stg_db_user) }}"
       encoding: UTF-8
@@ -32,7 +32,7 @@
 
   pre_tasks:
   - name: Include Global Variables
-    include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
+    ansible.builtin.include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
 
 
   roles:
