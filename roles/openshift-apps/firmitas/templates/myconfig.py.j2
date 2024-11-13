@@ -34,7 +34,7 @@ gitforge = "pagure"
 repoloca = ""
 
 # The name of the ticketing repository with namespace
-reponame = ""
+reponame = "{{ (env == 'staging')|ternary(firmitas_stg_pagure_host, firmitas_pagure_host) }}"
 
 # The username to masquerade as in order to create notification tickets
 username = "{{ (env == 'staging')|ternary(firmitas_stg_pagure_user, firmitas_pagure_user) }}"
