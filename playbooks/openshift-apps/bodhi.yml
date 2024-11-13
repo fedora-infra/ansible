@@ -20,7 +20,9 @@
 
   pre_tasks:
   - name: Include Global Variables
-    ansible.builtin.include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
+    ansible.builtin.include_vars: 
+      dir: /srv/web/infra/ansible/vars/all/ 
+      ignore_files: README
   - name: Include Bodhi Variables
     ansible.builtin.include_vars: /srv/web/infra/ansible/vars/apps/bodhi.yml
   - name: Set bodhi_version fact
