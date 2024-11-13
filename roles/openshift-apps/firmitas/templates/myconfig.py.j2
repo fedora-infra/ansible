@@ -43,7 +43,7 @@ username = "{{ (env == 'staging')|ternary(firmitas_stg_pagure_user, firmitas_pag
 password = "{{ (env == 'staging')|ternary(firmitas_stg_pagure_apikey, firmitas_pagure_apikey) }}"
 
 # Number of days from validity expiry to make the notification for
-daysqant = 30
+daysqant = "{{ (env == 'staging')|ternary(firmitas_stg_expiry_days, firmitas_expiry_days) }}"
 
 # List of labels to tag the notification tickets with
 tagslist = ["firmitas", "automate", "notifier"]
