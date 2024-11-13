@@ -66,11 +66,11 @@
     app: fedora-packages-static
     objecttype: project
     objectname: fedora-packages-static
-    tags: [ never, delete ]
+    tags: [never, delete]
 
   # to run: sudo rbac-playbook -l staging -t deletesolr openshift-apps/fedora-packages-static.yml
   - role: openshift/object-delete
     app: solr
     objecttype: project
     objectname: solr
-    tags: [ never, deletesolr ]
+    tags: [never, deletesolr]

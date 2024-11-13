@@ -14,7 +14,7 @@
 
   pre_tasks:
   - name: Include Global Variables
-    ansible.builtin.include_vars: 
+    ansible.builtin.include_vars:
       dir: /srv/web/infra/ansible/vars/all/
       ignore_files: README
 

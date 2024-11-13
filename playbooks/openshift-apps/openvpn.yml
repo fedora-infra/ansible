@@ -3,7 +3,7 @@
   hosts: os_control[0]
   user: root
   gather_facts: False
-  
+
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml
     - "/srv/private/ansible/vars.yml"
@@ -70,4 +70,3 @@
     tags:
     - never
     - delete
-

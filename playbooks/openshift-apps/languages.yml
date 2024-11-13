@@ -2,7 +2,7 @@
   hosts: os_control[0]:os_control_stg[0]
   user: root
   gather_facts: False
-  
+
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml
     - "/srv/private/ansible/vars.yml"
@@ -76,7 +76,7 @@
     - never
     - init
     - f10
- 
+
   - name: Run initial f.20 import
     ansible.builtin.command: "oc -n languages create job stats-20-{{ lookup('pipe', 'date +%s') }}-init --from=cronjob/stats-20"
     tags:
@@ -97,4 +97,3 @@
     - never
     - init
     - latest
-

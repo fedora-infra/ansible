@@ -37,7 +37,7 @@
 
   tasks:
     - name: Apply objects
-      ansible.builtin.include_role: 
+      ansible.builtin.include_role:
         name: openshift/object
       vars:
         template: "{{ item }}.yml"
@@ -52,7 +52,7 @@
         - frontend-service
 
     - name: Apply Deployment
-      ansible.builtin.include_role: 
+      ansible.builtin.include_role:
         name: openshift/object
       vars:
         template: backend-deployment.yml
@@ -67,7 +67,7 @@
         label: "{{ item.name }}"
 
     - name: Apply CronJob
-      ansible.builtin.include_role: 
+      ansible.builtin.include_role:
         name: openshift/object
       vars:
         template: cronjob.yml

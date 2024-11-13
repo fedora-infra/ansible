@@ -22,7 +22,7 @@
     - kevin
     tags:
       - apply-appowners
-  
+
   - role: openshift/secret-file
     app: discourse2fedmsg
     secret_name: fedora-messaging-ca
@@ -47,7 +47,7 @@
     app: discourse2fedmsg
     template: buildconfig.yml
     objectname: buildconfig.yml
-  
+
   - role: openshift/object
     app: discourse2fedmsg
     template: configmap.yml
