@@ -17,7 +17,7 @@
     - name: FMN DB user
       postgresql_user:
         name: fmn
-        password: "{{ (env == 'production')|ternary(fmn_prod_db_password, fmn_stg_db_password) }}"
+        password: "{{ (env == 'production') | ternary(fmn_prod_db_password, fmn_stg_db_password) }}"
     - name: FMN database creation
       postgresql_db:
         name: fmn
@@ -90,7 +90,7 @@
         # message_ttl: 300000
         state: present
         login_user: admin
-        login_password: "{{ (env == 'production')|ternary(rabbitmq_admin_password_production, rabbitmq_admin_password_staging) }}"
+        login_password: "{{ (env == 'production') | ternary(rabbitmq_admin_password_production, rabbitmq_admin_password_staging) }}"
       with_items:
         - email
         - irc

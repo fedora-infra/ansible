@@ -12,7 +12,7 @@
     - name: Maubot DB user
       postgresql_user:
         name: maubot
-        password: "{{ (env == 'production')|ternary(maubot_prod_db_password, maubot_stg_db_password) }}"
+        password: "{{ (env == 'production') | ternary(maubot_prod_db_password, maubot_stg_db_password) }}"
     - name: Maubot database creation
       postgresql_db:
         name: maubot

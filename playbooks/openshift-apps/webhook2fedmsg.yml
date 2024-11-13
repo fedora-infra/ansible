@@ -16,7 +16,7 @@
     - name: Webhook2fedmsg DB user
       postgresql_user:
         name: webhook2fedmsg
-        password: "{{ (env == 'production')|ternary(webhook2fedmsg_prod_db_password, webhook2fedmsg_stg_db_password) }}"
+        password: "{{ (env == 'production') | ternary(webhook2fedmsg_prod_db_password, webhook2fedmsg_stg_db_password) }}"
     - name: Webhook2fedmsg database creation
       postgresql_db:
         name: webhook2fedmsg

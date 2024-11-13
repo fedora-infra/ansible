@@ -28,7 +28,7 @@
     command: oc adm pod-network make-projects-global application-monitoring
 
   - name: Copy files
-    copy: src={{roles_path}}/openshift-apps/application-monitoring/files/ dest=/etc/openshift_apps/application-monitoring/
+    copy: src={{ roles_path }}/openshift-apps/application-monitoring/files/ dest=/etc/openshift_apps/application-monitoring/
 
   - name: Prometheus CRDs
     command: oc -n application-monitoring apply -f /etc/openshift_apps/application-monitoring/prometheus-operator/example/prometheus-operator-crd/

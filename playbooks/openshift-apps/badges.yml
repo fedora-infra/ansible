@@ -18,7 +18,7 @@
     - name: DB user
       postgresql_user:
         name: "{{ tahrirDBUser }}"
-        password: "{{ (env == 'production')|ternary(tahrirDBPassword, tahrirstgDBPassword) }}"
+        password: "{{ (env == 'production') | ternary(tahrirDBPassword, tahrirstgDBPassword) }}"
     - name: Database creation
       postgresql_db:
         name: "{{ badges_db_name }}"
@@ -40,7 +40,7 @@
     - name: DB user
       postgresql_user:
         name: "{{ tahrirDBUser }}"
-        password: "{{ (env == 'production')|ternary(tahrirDBPassword, tahrirstgDBPassword) }}"
+        password: "{{ (env == 'production') | ternary(tahrirDBPassword, tahrirstgDBPassword) }}"
     - name: Grant the db user read only access to datanommer2
       postgresql_privs:
         database: datanommer2

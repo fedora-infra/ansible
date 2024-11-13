@@ -133,7 +133,7 @@
   # Configurations for Fedora messaging
   - role: rabbit/user
     username: "openscanhub{{ env_suffix }}"
-    sent_topics: "{{ openscanhub_sent_topics  }}"
+    sent_topics: "{{ openscanhub_sent_topics }}"
 
   - role: rabbit/queue
     username: "openscanhub{{ env_suffix }}"

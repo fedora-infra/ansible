@@ -26,12 +26,12 @@
       password: "{{ testdays_db_pass }}"
   - name: Create the database itself
     postgresql_db:
-      name: "{{ testdays_db_name  }}"
+      name: "{{ testdays_db_name }}"
       owner: "{{ testdays_db_user }}"
       encoding: UTF-8
   - name: Test the database creation
     postgresql_db:
-      name: "{{ testdays_db_name  }}"
+      name: "{{ testdays_db_name }}"
       owner: "{{ testdays_db_user }}"
       encoding: UTF-8
   - name: Create the database user (resultsdb)
@@ -40,12 +40,12 @@
       password: "{{ resultsdb_testdays_db_pass }}"
   - name: Create the database itself (resultsdb)
     postgresql_db:
-      name: "{{ resultsdb_testdays_db_name  }}"
+      name: "{{ resultsdb_testdays_db_name }}"
       owner: "{{ resultsdb_testdays_db_user }}"
       encoding: UTF-8
   - name: Test the database creation (resultsdb)
     postgresql_db:
-      name: "{{ resultsdb_testdays_db_name  }}"
+      name: "{{ resultsdb_testdays_db_name }}"
       owner: "{{ resultsdb_testdays_db_user }}"
       encoding: UTF-8
 

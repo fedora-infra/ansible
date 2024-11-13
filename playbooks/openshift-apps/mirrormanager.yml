@@ -17,12 +17,12 @@
   tasks:
     - name: DB user
       postgresql_user:
-        name: "{{ (env == 'production')|ternary(mirrormanager_db_user, mirrormanager_stg_db_user) }}"
-        password: "{{ (env == 'production')|ternary(mirrormanager_db_pass, mirrormanager_stg_db_pass) }}"
+        name: "{{ (env == 'production') | ternary(mirrormanager_db_user, mirrormanager_stg_db_user) }}"
+        password: "{{ (env == 'production') | ternary(mirrormanager_db_pass, mirrormanager_stg_db_pass) }}"
     - name: FMN database creation
       postgresql_db:
-        name: "{{ (env == 'production')|ternary(mirrormanager_db_name, mirrormanager_stg_db_name) }}"
-        owner: "{{ (env == 'production')|ternary(mirrormanager_db_user, mirrormanager_stg_db_user) }}"
+        name: "{{ (env == 'production') | ternary(mirrormanager_db_name, mirrormanager_stg_db_name) }}"
+        owner: "{{ (env == 'production') | ternary(mirrormanager_db_user, mirrormanager_stg_db_user) }}"
         encoding: UTF-8
 
 - name: Make the app be real

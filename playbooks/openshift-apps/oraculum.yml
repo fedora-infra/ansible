@@ -26,12 +26,12 @@
       password: "{{ oraculum_db_pass }}"
   - name: Create the database itself
     postgresql_db:
-      name: "{{ oraculum_db_name  }}"
+      name: "{{ oraculum_db_name }}"
       owner: "{{ oraculum_db_user }}"
       encoding: UTF-8
   - name: Test the database creation
     postgresql_db:
-      name: "{{ oraculum_db_name  }}"
+      name: "{{ oraculum_db_name }}"
       owner: "{{ oraculum_db_user }}"
       encoding: UTF-8
 

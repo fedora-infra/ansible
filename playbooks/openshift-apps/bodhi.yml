@@ -176,7 +176,7 @@
     tags:
     - route-timeout
   - name: Trigger critpath cronjob
-    command: "oc -n bodhi create job critpathcron-manual-{{ lookup('pipe','date +%s') }} --from=cronjob/fedora-bodhi-critpathcron"
+    command: "oc -n bodhi create job critpathcron-manual-{{ lookup('pipe', 'date +%s') }} --from=cronjob/fedora-bodhi-critpathcron"
     tags:
     - never
     - critpathcron
