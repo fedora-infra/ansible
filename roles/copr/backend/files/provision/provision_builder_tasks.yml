@@ -279,6 +279,7 @@
     name: dnf-makecache.timer
     state: stopped
     enabled: no
+  ignore_errors: true
   when:
     - preparing_image
 
@@ -287,6 +288,7 @@
     name: dnf-makecache.service
     state: stopped
     enabled: no
+  ignore_errors: true
   when:
     - preparing_image
 
