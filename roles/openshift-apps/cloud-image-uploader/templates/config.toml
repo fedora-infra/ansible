@@ -109,8 +109,6 @@ storage_account_type = "Standard_ZRS"
 [consumer_config.container]
 publish_amqp_messages = true
 
-{% if env == "staging" %}
-
 [consumer_config.container.repos]
 Container_Toolbox = "fedora-toolbox"
 Container_Minimal_Base = "fedora-minimal"
@@ -118,19 +116,19 @@ Container_Base = "fedora"
 BaseOS = "eln"
 Silverblue = "fedora-silverblue"
 Kinoite = "fedora-kinoite"
-Onyx = "fedora-onyx"
-Sericea = "fedora-sericea"
+Onyx = "fedora-budgie-atomic"
+Sericea = "fedora-sway-atomic"
 bootc = "fedora-bootc"
-IoT_bootc_base = "fedora-iot"
+# Depends on https://pagure.io/fedora-iot/pungi-iot/pull-request/102
+# IoT_bootc_base = "fedora-iot"
+
+{% if env == "staging" %}
 
 [[consumer_config.container.registries]]
 url = "registry.stg.fedoraproject.org"
 credential_prefix = "FEDORA_REGISTRY_"
 
 {% else %}
-
-[consumer_config.container.repos]
-BaseOS = "eln"
 
 [[consumer_config.container.registries]]
 url = "registry.fedoraproject.org"
