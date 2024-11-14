@@ -16,8 +16,8 @@
     ansible.builtin.include_role:
       name: openshift/project
     vars:
-      description: Documentation translation
-      appowners:
+      project_description: Documentation translation
+      project_appowners:
       - asamalik
       - darknao
       - jibecfed

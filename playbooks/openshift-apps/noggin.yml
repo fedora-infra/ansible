@@ -17,9 +17,9 @@
     sent_topics: ^org\.fedoraproject\.{{ env_short }}\.fas\..*
 
   - role: openshift/project
-    app: noggin
-    description: "Self-service account portal"
-    appowners:
+    project_app: noggin
+    project_description: "Self-service account portal"
+    project_appowners:
     - abompard
     - nils
     - ryanlerch
@@ -27,9 +27,9 @@
       - apply-appowners
     when: env == "production"
   - role: openshift/project
-    app: noggin
-    description: "Self-service account portal"
-    appowners:
+    project_app: noggin
+    project_description: "Self-service account portal"
+    project_appowners:
     - abompard
     - nils
     - ryanlerch

@@ -3,12 +3,12 @@ apiVersion: monitoring.coreos.com/v1beta1
 kind: AlertmanagerConfig
 metadata:
   name: appowners-alerts
-  namespace: "{{app}}"
+  namespace: "{{project_app}}"
 spec:
   receivers:
   - emailConfigs:
     - sendResolved: true
-      to: "{{ alert_users | default(appowners) | product(['fedoraproject.org']) | map('join', '@') | join(',') }}"
+      to: "{{ project_alert_users | default(project_appowners) | product(['fedoraproject.org']) | map('join', '@') | join(',') }}"
     name: default
   route:
     groupBy:

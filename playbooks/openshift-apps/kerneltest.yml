@@ -44,9 +44,9 @@
     sent_topics: ^org\.fedoraproject\.{{ env_short }}\.kerneltest\..*
 
   - role: openshift/project
-    app: kerneltest
-    description: kerneltest
-    appowners:
+    project_app: kerneltest
+    project_description: kerneltest
+    project_appowners:
     - pingou
     - ryanlerch
     tags:

@@ -1,14 +1,14 @@
 ---
 - name: Create project directory
   file:
-    path: /etc/openshift_apps/{{app}}
+    path: /etc/openshift_apps/{{project_app}}
     state: directory
     owner: root
     group: root
     mode: "0750"
 
 - name: Determine if project already exists
-  command: oc get project {{app}}
+  command: oc get project {{project_app}}
   register: project_exists
   failed_when: false
   changed_when: "'not found' in project_exists.stderr"
@@ -16,10 +16,10 @@
 - name: Copy project template
   template:
     src="{{roles_path}}/openshift/project/templates/project.yml"
-    dest=/etc/openshift_apps/{{app}}/project.yml
+    dest=/etc/openshift_apps/{{project_app}}/project.yml
 
 - name: Create project
-  shell: oc apply --validate=strict -f /etc/openshift_apps/{{app}}/project.yml
+  shell: oc apply --validate=strict -f /etc/openshift_apps/{{project_app}}/project.yml
   when: "'not found' in project_exists.stderr"
 
 - name: deployer.yml
@@ -70,4 +70,4 @@
   vars:
     objectname: prometheusRules.yml
     template_fullpath: "{{roles_path}}/openshift/project/templates/prometheusRules.yml"
-  when: alerting
+  when: project_alerting

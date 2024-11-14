@@ -15,9 +15,9 @@
     sent_topics: ^org\.fedoraproject\.{{ env_short }}\.discourse\..*
 
   - role: openshift/project
-    app: discourse2fedmsg
-    description: "Relay Discourse webhooks to Fedora Messaging"
-    appowners:
+    project_app: discourse2fedmsg
+    project_description: "Relay Discourse webhooks to Fedora Messaging"
+    project_appowners:
     - ryanlerch
     - abompard
     - kevin

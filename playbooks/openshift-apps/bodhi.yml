@@ -42,9 +42,9 @@
     sent_topics: "{{ bodhi_sent_topics }}"
 
   - role: openshift/project
-    app: bodhi
-    description: bodhi
-    appowners:
+    project_app: bodhi
+    project_description: bodhi
+    project_appowners:
     - abompard
     - mattia
     - patrikp
@@ -55,9 +55,9 @@
       - apply-appowners
     when: env == "production"
   - role: openshift/project
-    app: bodhi
-    description: bodhi
-    appowners:
+    project_app: bodhi
+    project_description: bodhi
+    project_appowners:
     - abompard
     - ryanlerch
     - mattia

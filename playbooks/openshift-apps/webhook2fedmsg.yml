@@ -39,9 +39,9 @@
       sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(github|discourse)\..*
 
     - role: openshift/project
-      app: webhook2fedmsg
-      description: "Relay webhooks to Fedora Messaging"
-      appowners:
+      project_app: webhook2fedmsg
+      project_description: "Relay webhooks to Fedora Messaging"
+      project_appowners:
         - ryanlerch
         - abompard
         - t0xic0der

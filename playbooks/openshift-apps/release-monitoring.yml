@@ -15,9 +15,9 @@
     username: "anitya{{ env_suffix }}"
     sent_topics: ^org\.release-monitoring\.{{ env_short }}\.anitya\..*
   - role: openshift/project
-    app: release-monitoring
-    description: release-monitoring
-    appowners:
+    project_app: release-monitoring
+    project_description: release-monitoring
+    project_appowners:
     - zlopez
   - role: openshift/secret-file
     app: release-monitoring

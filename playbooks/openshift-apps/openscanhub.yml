@@ -21,9 +21,9 @@
 
   roles:
   - role: openshift/project
-    app: openscanhub
-    description: openscanhub
-    appowners:
+    project_app: openscanhub
+    project_description: openscanhub
+    project_appowners:
     - praiskup
     - svashisht
     - kevin
@@ -32,9 +32,9 @@
       - apply-appowners
     when: env == "production"
   - role: openshift/project
-    app: openscanhub
-    description: openscanhub
-    appowners:
+    project_app: openscanhub
+    project_description: openscanhub
+    project_appowners:
     - praiskup
     - svashisht
     - kevin

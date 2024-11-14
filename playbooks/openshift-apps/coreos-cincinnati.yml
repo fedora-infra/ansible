@@ -22,9 +22,9 @@
   # to run: sudo rbac-playbook -l os_control_stg openshift-apps/coreos-cincinnati.yml
   roles:
   - role: openshift/project
-    app: coreos-cincinnati
-    description: Fedora CoreOS Cincinnati backend
-    appowners:
+    project_app: coreos-cincinnati
+    project_description: Fedora CoreOS Cincinnati backend
+    project_appowners:
     - jlebon
     - dustymabe
     - siosm

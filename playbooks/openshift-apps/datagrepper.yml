@@ -38,9 +38,9 @@
   roles:
 
   - role: openshift/project
-    app: datagrepper
-    description: "Query the message history"
-    appowners:
+    project_app: datagrepper
+    project_description: "Query the message history"
+    project_appowners:
     - abompard
     - ryanlerch
     - kevin
@@ -48,9 +48,9 @@
       - apply-appowners
     when: env == "production"
   - role: openshift/project
-    app: datagrepper
-    description: "Query the message history"
-    appowners:
+    project_app: datagrepper
+    project_description: "Query the message history"
+    project_appowners:
     - abompard
     - ryanlerch
     - james02135

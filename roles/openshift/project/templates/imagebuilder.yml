@@ -5,11 +5,11 @@ kind: RoleBinding
 metadata:
   creationTimestamp: null
   name: system:image-builders
-  namespace: "{{app}}"
+  namespace: "{{project_app}}"
 roleRef:
   name: system:image-builder
 subjects:
 - kind: ServiceAccount
   name: builder
 userNames:
-- system:serviceaccount:{{app}}:builder
+- system:serviceaccount:{{project_app}}:builder

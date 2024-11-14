@@ -5,7 +5,7 @@ metadata:
   annotations:
     openshift.io/description: An application owner. Can view everything but ConfigMaps.
   name: appowner
-  namespace: "{{ app }}"
+  namespace: "{{ project_app }}"
 rules:
 {% if env == "staging" %}
 - apiGroups: ["monitoring.coreos.com"]
@@ -42,7 +42,7 @@ rules:
   - get
   - list
   - watch
-{% if env == "staging" or allow_pod_creation %}
+{% if env == "staging" or project_allow_pod_creation %}
   - create
   - delete
   - update

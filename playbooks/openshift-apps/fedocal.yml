@@ -15,9 +15,9 @@
     sent_topics: ^org\.fedoraproject\.{{ env_short }}\.fedocal\..*
 
   - role: openshift/project
-    app: fedocal
-    description: Fedora calendar apps
-    appowners:
+    project_app: fedocal
+    project_description: Fedora calendar apps
+    project_appowners:
     - kevin
 
   - role: openshift/object

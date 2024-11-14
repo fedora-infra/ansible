@@ -16,9 +16,9 @@
     sent_topics: ^org\.fedoraproject\.{{ env_short }}\.bugzilla\..*
 
   - role: openshift/project
-    app: bugzilla2fedmsg
-    description: bugzilla2fedmsg
-    appowners:
+    project_app: bugzilla2fedmsg
+    project_description: bugzilla2fedmsg
+    project_appowners:
     - abompard
     - kevin
     tags:

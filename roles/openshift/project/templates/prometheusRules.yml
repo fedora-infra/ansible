@@ -6,7 +6,7 @@ metadata:
   name: alerts
 spec:
   groups:
-{% if 'cronjob' in alert_rules %}
+{% if 'cronjob' in project_alert_rules %}
   - name: CronjobFailed
     rules:
     - alert: CronjobFailed
@@ -18,7 +18,7 @@ spec:
       labels:
         severity: warning
 {% endif %}
-{% if 'buildconfig' in alert_rules %}
+{% if 'buildconfig' in project_alert_rules %}
   - name: BuildFailed
     rules:
     - alert: BuildFailed
@@ -32,7 +32,7 @@ spec:
       labels:
         severity: warning
 {% endif %}
-{% if 'pod' in alert_rules %}
+{% if 'pod' in project_alert_rules %}
   - name: PodFailing
     rules:
     - alert: PodPending

@@ -1,15 +1,15 @@
 ---
 apiVersion: authorization.openshift.io/v1
 groupNames:
-- system:serviceaccounts:{{app}}
+- system:serviceaccounts:{{project_app}}
 kind: RoleBinding
 metadata:
   creationTimestamp: null
   name: system:image-pullers
-  namespace: "{{app}}"
+  namespace: "{{project_app}}"
 roleRef:
   name: system:image-puller
 subjects:
 - kind: SystemGroup
-  name: system:serviceaccounts:{{app}}
+  name: system:serviceaccounts:{{project_app}}
 userNames: []

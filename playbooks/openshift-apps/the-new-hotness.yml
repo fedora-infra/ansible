@@ -24,9 +24,9 @@
     sent_topics: ^org\.fedoraproject\.{{ env_short }}\.hotness\..*
 
   - role: openshift/project
-    app: the-new-hotness
-    description: Fedora-messaging consumer that listens to the-new-hotness.org and files bugzilla bugs in response.
-    appowners:
+    project_app: the-new-hotness
+    project_description: Fedora-messaging consumer that listens to the-new-hotness.org and files bugzilla bugs in response.
+    project_appowners:
     - zlopez
 
   - role: openshift/keytab

@@ -5,11 +5,11 @@ kind: RoleBinding
 metadata:
   creationTimestamp: null
   name: system:deployers
-  namespace: "{{app}}"
+  namespace: "{{project_app}}"
 roleRef:
   name: system:deployer
 subjects:
 - kind: ServiceAccount
   name: deployer
 userNames:
-- system:serviceaccount:{{app}}:deployer
+- system:serviceaccount:{{project_app}}:deployer

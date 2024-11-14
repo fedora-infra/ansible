@@ -5,7 +5,7 @@ metadata:
   name: default
 spec:
   egress:
-{% if not allow_fas_db %}
+{% if not project_allow_fas_db %}
 {% if env == "staging" %}
   - type: Deny
     to:
@@ -16,7 +16,7 @@ spec:
       cidrSelector: "10.3.163.42/32"
 {% endif %}
 {% endif %}
-{% if not allow_iad2 %}
+{% if not project_allow_iad2 %}
   - type: Deny
     to:
       cidrSelector: "10.0.0.0/8"

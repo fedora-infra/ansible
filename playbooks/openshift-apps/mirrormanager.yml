@@ -46,13 +46,13 @@
         - rabbitmq_cluster
 
     - role: openshift/project
-      app: mirrormanager
-      description: "MirrorManager"
-      appowners:
+      project_app: mirrormanager
+      project_description: "MirrorManager"
+      project_appowners:
         - abompard
         - nphilipp
         - adrian
-      allow_pod_creation: true
+      project_allow_pod_creation: true
       tags:
         - apply-appowners
 

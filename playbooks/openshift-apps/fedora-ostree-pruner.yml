@@ -15,9 +15,9 @@
   # to run: sudo rbac-playbook -l os_control_stg openshift-apps/fedora-ostree-pruner.yml
   roles:
   - role: openshift/project
-    app: fedora-ostree-pruner
-    description: Prunes OSTree repositories based on policy
-    appowners:
+    project_app: fedora-ostree-pruner
+    project_description: Prunes OSTree repositories based on policy
+    project_appowners:
     - dustymabe
     - jlebon
     - kevin

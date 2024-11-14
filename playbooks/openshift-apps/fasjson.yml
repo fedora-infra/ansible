@@ -13,9 +13,9 @@
 
   roles:
   - role: openshift/project
-    app: fasjson
-    description: "Accounts API"
-    appowners:
+    project_app: fasjson
+    project_description: "Accounts API"
+    project_appowners:
     - abompard
     - nils
     - ryanlerch
@@ -24,9 +24,9 @@
       - apply-appowners
     when: env == "production"
   - role: openshift/project
-    app: fasjson
-    description: "Accounts API"
-    appowners:
+    project_app: fasjson
+    project_description: "Accounts API"
+    project_appowners:
     - abompard
     - nils
     - ryanlerch

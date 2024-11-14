@@ -35,9 +35,9 @@
   # to run: sudo rbac-playbook -l os_control_stg openshift-apps/coreos-ostree-importer.yml
   roles:
   - role: openshift/project
-    app: coreos-ostree-importer
-    description: Imports OSTree commits into Fedora from the Fedora CoreOS pipeline
-    appowners:
+    project_app: coreos-ostree-importer
+    project_description: Imports OSTree commits into Fedora from the Fedora CoreOS pipeline
+    project_appowners:
     - dustymabe
     - jlebon
     - kevin

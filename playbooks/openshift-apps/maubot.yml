@@ -36,9 +36,9 @@
     sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(meetbot|maubot)\..*
 
   - role: openshift/project
-    app: maubot
-    description: Maubot
-    appowners:
+    project_app: maubot
+    project_description: Maubot
+    project_appowners:
     - ryanlerch
     - kevin
 

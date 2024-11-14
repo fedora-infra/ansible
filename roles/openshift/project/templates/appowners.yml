@@ -2,12 +2,12 @@
 apiVersion: authorization.openshift.io/v1
 kind: RoleBinding
 metadata:
-  namespace: "{{app}}"
+  namespace: "{{project_app}}"
   name: appowners
 roleRef:
   name: appowner
-  namespace: "{{app}}"
+  namespace: "{{project_app}}"
 userNames:
-{% for owner in appowners %}
+{% for owner in project_appowners %}
 - {{ owner }}
 {% endfor %}

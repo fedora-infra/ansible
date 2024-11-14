@@ -37,9 +37,9 @@
     sent_topics: ^org\.fedoraproject\.{{ env_short }}\.fedora_elections\..*
 
   - role: openshift/project
-    app: elections
-    description: Fedora Elections apps
-    appowners:
+    project_app: elections
+    project_description: Fedora Elections apps
+    project_appowners:
     - bcotton
     tags:
     - appowners

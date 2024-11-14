@@ -45,9 +45,9 @@
     # The openshift/project role breaks if the project already exists:
     # https://pagure.io/fedora-infrastructure/issue/6404
     - role: openshift/project
-      app: resultsdb
-      description: resultsdb
-      appowners:
+      project_app: resultsdb
+      project_description: resultsdb
+      project_appowners:
         - lholecek
         - vmaljulin
         - lrossett

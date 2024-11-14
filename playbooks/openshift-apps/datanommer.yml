@@ -22,9 +22,9 @@
     sent_topics: ^$
 
   - role: openshift/project
-    app: datanommer
-    description: "Fedora messaging consumer"
-    appowners:
+    project_app: datanommer
+    project_description: "Fedora messaging consumer"
+    project_appowners:
     - abompard
     - ryanlerch
     - james02135
@@ -35,9 +35,9 @@
     when: env == "production"
 
   - role: openshift/project
-    app: datanommer
-    description: "Fedora messaging consumer"
-    appowners:
+    project_app: datanommer
+    project_description: "Fedora messaging consumer"
+    project_appowners:
     - abompard
     - ryanlerch
     - james02135
