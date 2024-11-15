@@ -30,6 +30,7 @@
         section: Timer
         option: OnCalendar
         value: Mon..Fri *-*-* 6:00:00
+        create: false
       notify: Restart dnf-automatic timer
       tags:
       - config
