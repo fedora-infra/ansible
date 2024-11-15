@@ -16,6 +16,7 @@
     ansible_python_interpreter: /usr/bin/python3
 
   tasks:
-  - import_tasks: "libdnf5.yml"
+  - include_tasks: "libdnf5.yml"
+    when: prepare_base_image is defined
   - import_tasks: "create_swap_file.yml"
   - import_tasks: "provision_builder_tasks.yml"
