@@ -164,7 +164,11 @@ ostree = {
         "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
         "unified_core": True,
         "runroot_packages": ["selinux-policy-targeted"],
+        [% if release.version_int >= 41 %]
+        "treefile": "silverblue-ostree.yaml",
+        [% else %]
         "treefile": "fedora-silverblue.yaml",
+        [% endif %]
         "config_url": "https://pagure.io/workstation-ostree-config.git",
         "config_branch": "f[[ release.version ]]",
         "repo": {{ repos }},
@@ -178,7 +182,11 @@ ostree = {
         "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
         "unified_core": True,
         "runroot_packages": ["selinux-policy-targeted"],
+        [% if release.version_int >= 41 %]
+        "treefile": "kinoite-ostree.yaml",
+        [% else %]
         "treefile": "fedora-kinoite.yaml",
+        [% endif %]
         "config_url": "https://pagure.io/workstation-ostree-config.git",
         "config_branch": "f[[ release.version ]]",
         "repo": {{ repos }},
@@ -192,7 +200,11 @@ ostree = {
         "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
         "unified_core": True,
         "runroot_packages": ["selinux-policy-targeted"],
+        [% if release.version_int >= 41 %]
+        "treefile": "sway-atomic-ostree.yaml",
+        [% else %]
         "treefile": "fedora-sericea.yaml",
+        [% endif %]
         "config_url": "https://pagure.io/workstation-ostree-config.git",
         "config_branch": "f[[ release.version ]]",
         "repo": {{ repos }},
@@ -206,7 +218,11 @@ ostree = {
         "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
         "unified_core": True,
         "runroot_packages": ["selinux-policy-targeted"],
+        [% if release.version_int >= 41 %]
+        "treefile": "budgie-atomic-ostree.yaml",
+        [% else %]
         "treefile": "fedora-onyx.yaml",
+        [% endif %]
         "config_url": "https://pagure.io/workstation-ostree-config.git",
         "config_branch": "f[[ release.version ]]",
         "repo": {{ repos }},
@@ -224,7 +240,11 @@ ostree_container = {
         "config_url": "https://pagure.io/workstation-ostree-config.git",
         "config_branch": "f[[ release.version ]]",
         "repo": {{ repos }},
+        [% if release.version_int >= 41 %]
+        "treefile": "silverblue.yaml",
+        [% else %]
         "treefile": "fedora-silverblue.yaml",
+        [% endif %]
         "arches": ["x86_64", "ppc64le", "aarch64"],
         "failable": ['*'],
     },
@@ -233,7 +253,11 @@ ostree_container = {
         "config_url": "https://pagure.io/workstation-ostree-config.git",
         "config_branch": "f[[ release.version ]]",
         "repo": {{ repos }},
+        [% if release.version_int >= 41 %]
+        "treefile": "kinoite.yaml",
+        [% else %]
         "treefile": "fedora-kinoite.yaml",
+        [% endif %]
         "arches": ["x86_64", "ppc64le", "aarch64"],
         "failable": ['*'],
     },
@@ -242,7 +266,11 @@ ostree_container = {
         "config_url": "https://pagure.io/workstation-ostree-config.git",
         "config_branch": "f[[ release.version ]]",
         "repo": {{ repos }},
+        [% if release.version_int >= 41 %]
+        "treefile": "sway-atomic.yaml",
+        [% else %]
         "treefile": "fedora-sericea.yaml",
+        [% endif %]
         "arches": ["x86_64", "aarch64"],
         "failable": ['*'],
     },
@@ -251,7 +279,11 @@ ostree_container = {
         "config_url": "https://pagure.io/workstation-ostree-config.git",
         "config_branch": "f[[ release.version ]]",
         "repo": {{ repos }},
+        [% if release.version_int >= 41 %]
+        "treefile": "budgie-atomic.yaml",
+        [% else %]
         "treefile": "fedora-onyx.yaml",
+        [% endif %]
         "arches": ["x86_64"],
         "failable": ['*'],
     },
