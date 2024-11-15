@@ -1,0 +1,10 @@
+---
+- name: "Work-around for https://github.com/ansible/ansible/issues/84206 #1 (install python3 libdnf5)"
+  shell: dnf -y install python3-libdnf5
+  when:
+    - prepare_base_image is defined
+
+- name: "Work-around for https://github.com/ansible/ansible/issues/84206 #2 (reload remote python modules)"
+  meta: reset_connection
+  when:
+    - prepare_base_image is defined
