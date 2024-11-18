@@ -33,5 +33,5 @@
   roles:
     - role: openshift/job
       app: mirrormanager
-      name: emergency-expire-repo-{{ product|lower|replace(" ", "-") }}-{{ version|lower|replace(" ", "-") }}
+      jobname: emergency-expire-repo-{{ product|lower|replace(" ", "-") }}-{{ version|lower|replace(" ", "-") }}
       command: "/opt/app-root/bin/mm2_emergency-expire-repo {{ product }} {{ version }} && bash /opt/scripts/update-mirrorlist-cache.sh"

@@ -1,8 +1,8 @@
-- name: Validate the job name {{ name }}
+- name: Validate the job name {{ jobname }}
   assert:
     that:
-    - name is defined
-    fail_msg: "The 'name' variable is not defined"
+    - jobname is defined
+    fail_msg: "The 'jobname' variable is not defined"
 
 - name: Validate the command {{ command }}
   assert:
@@ -13,18 +13,18 @@
 - name: Copy job template to a temporary file
   template:
     src: "{{roles_path}}/openshift-apps/{{app}}/templates/{{template}}"
-    dest: "/etc/openshift_apps/{{app}}/job-{{name}}.yml"
+    dest: "/etc/openshift_apps/{{app}}/job-{{jobname}}.yml"
 
 - name: Delete previous job (if any)
-  shell: oc -n {{os_app}} delete --ignore-not-found=true -f /etc/openshift_apps/{{app}}/job-{{name}}.yml
+  shell: oc -n {{os_app}} delete --ignore-not-found=true -f /etc/openshift_apps/{{app}}/job-{{jobname}}.yml
 
 - name: Start job
-  shell: oc -n {{os_app}} create -f /etc/openshift_apps/{{app}}/job-{{name}}.yml
+  shell: oc -n {{os_app}} create -f /etc/openshift_apps/{{app}}/job-{{jobname}}.yml
 
 - debug:
-    msg: "Job started. You can watch the logs with: oc -n {{os_app}} logs -f job/job-{{name}}"
+    msg: "Job started. You can watch the logs with: oc -n {{os_app}} logs -f job/job-{{jobname}}"
 - debug:
-    msg: "You can cancel it with: oc -n {{os_app}} delete job/job-{{name}}"
+    msg: "You can cancel it with: oc -n {{os_app}} delete job/job-{{jobname}}"
 
 - name: Wait for job to complete
-  shell: oc -n {{os_app}} wait job/job-{{name}} --for condition=complete
+  shell: oc -n {{os_app}} wait job/job-{{jobname}} --for condition=complete
