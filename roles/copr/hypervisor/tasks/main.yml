@@ -190,6 +190,7 @@
       EIMG_COPR_PLAYBOOK=local-image-update.yml
       EIMG_FINAL_SYSPREP_ARGS=(--ssh-inject "root:file:$HOME/.ssh/id_rsa.pub"
       --run-command "chcon -v -R -h system_u:object_r:ssh_home_t:s0 /root/.ssh" )
+      EIMG_ANSIBLE_IN_CONTAINER=:
   tags:
     provision_config
 
