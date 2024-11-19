@@ -146,8 +146,8 @@
     when: "'releng_compose' in group_names"
 
   - role: rabbit/user
-    username: "pungi{{ env_suffix }}"
-    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(pungi|compose|logger)\..*
+    user_username: "pungi{{ env_suffix }}"
+    user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(pungi|compose|logger)\..*
 
   - {
     role: "push-container-registry",

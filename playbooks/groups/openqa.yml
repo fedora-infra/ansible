@@ -52,18 +52,18 @@
   # user and impersonate prod openqa on the message bus, which is
   # not a huge deal. fixing it would be kinda tedious.
   - role: rabbit/user
-    username: "{{ openqa_amqp_prod_username }}"
-    publish_only: false
-    sent_topics: ^org\.fedoraproject\.prod\.(openqa|ci)\..*
+    user_username: "{{ openqa_amqp_prod_username }}"
+    user_publish_only: false
+    user_sent_topics: ^org\.fedoraproject\.prod\.(openqa|ci)\..*
     vars:
       env: "production"
       env_suffix: ""
     tags: ['rabbit']
 
   - role: rabbit/user
-    username: "{{ openqa_amqp_stg_username }}"
-    publish_only: false
-    sent_topics: ^org\.fedoraproject\.stg\.(openqa|ci)\..*
+    user_username: "{{ openqa_amqp_stg_username }}"
+    user_publish_only: false
+    user_sent_topics: ^org\.fedoraproject\.stg\.(openqa|ci)\..*
     vars:
       env: "staging"
       env_suffix: ".stg"

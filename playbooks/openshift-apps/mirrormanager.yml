@@ -38,8 +38,8 @@
 
   roles:
     - role: rabbit/user
-      username: "mirrormanager{{ env_suffix }}"
-      sent_topics: ^org\.fedoraproject\.{{ env_short }}\.mirrormanager\..*
+      user_username: "mirrormanager{{ env_suffix }}"
+      user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.mirrormanager\..*
       tags:
         - config
         - fedora-messaging

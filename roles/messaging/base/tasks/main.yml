@@ -56,8 +56,8 @@
 - name: "make sure the user exists on broker"
   include_role: name=rabbit/user
   vars:
-  - username: "{{ item.username }}{{ env_suffix }}"
-    sent_topics: "{{ item.sent_topics }}"
+  - user_username: "{{ item.username }}{{ env_suffix }}"
+    user_sent_topics: "{{ item.sent_topics }}"
   with_items: "{{ messaging.certificates }}"
   tags:
   - fedora-messaging

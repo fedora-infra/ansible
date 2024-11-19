@@ -61,8 +61,8 @@
 
   roles:
     - role: rabbit/user
-      username: "tahrir{{ env_suffix }}"
-      sent_topics: ^org\.fedoraproject\.{{ env_short }}\.badges\..*
+      user_username: "tahrir{{ env_suffix }}"
+      user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.badges\..*
       tags:
         - config
         - fedora-messaging

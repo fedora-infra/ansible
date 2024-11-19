@@ -17,13 +17,13 @@
 # See https://www.rabbitmq.com/access-control.html#permissions for details on
 # the RabbitMQ permissions configuration.
 
-- name: Validate username {{ username }}
+- name: Validate username {{ user_username }}
   assert:
     that:
-    - username is defined
-    - username != "admin"
-    - username != "guest"
-    - username != "nagios-monitoring"
+    - user_username is defined
+    - user_username != "admin"
+    - user_username != "guest"
+    - user_username != "nagios-monitoring"
     fail_msg: "This user name is reserved"
   tags:
     - config
@@ -31,7 +31,7 @@
     - rabbitmq_cluster
 
 - debug:
-    msg: "Topic permissions: {{ topic_permissions }}"
+    msg: "Topic permissions: {{ user_topic_permissions }}"
   tags:
     - config
     - fedora-messaging
@@ -39,15 +39,15 @@
 
 # See https://www.rabbitmq.com/access-control.html#permissions for details on
 # the RabbitMQ permissions configuration.
-- name: Create the {{ username }} user in RabbitMQ
-  delegate_to: "{{ rabbitmq_server }}"
+- name: Create the {{ user_username }} user in RabbitMQ
+  delegate_to: "{{ user_rabbitmq_server }}"
   community.rabbitmq.rabbitmq_user:
-    user: "{{ username }}"
-    vhost: "{{ vhost }}"
-    read_priv: "{{ read_priv }}"
-    write_priv: "{{ write_priv }}"
+    user: "{{ user_username }}"
+    vhost: "{{ user_vhost }}"
+    read_priv: "{{ user_read_priv }}"
+    write_priv: "{{ user_write_priv }}"
     configure_priv: "^$"  # No configuration permissions
-    topic_permissions: "{{ topic_permissions }}"
+    topic_permissions: "{{ user_topic_permissions }}"
     state: present
   tags:
     - config

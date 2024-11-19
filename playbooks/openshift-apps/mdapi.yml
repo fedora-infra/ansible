@@ -11,8 +11,8 @@
 
   roles:
   - role: rabbit/user
-    username: "mdapi{{ env_suffix }}"
-    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.mdapi\..*
+    user_username: "mdapi{{ env_suffix }}"
+    user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.mdapi\..*
 
   - role: openshift/project
     project_app: mdapi

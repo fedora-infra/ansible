@@ -31,8 +31,8 @@
     certname: "{{wildcard_cert_name}}"
     SSLCertificateChainFile: "{{wildcard_int_file}}"
   - role: rabbit/user
-    username: "batcave{{ env_suffix }}"
-    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(ansible|git|infragit|logger)\..*
+    user_username: "batcave{{ env_suffix }}"
+    user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(ansible|git|infragit|logger)\..*
   - role: rabbit/queue
     username: "mirror_pagure_ansible{{ env_suffix }}"
     queue_name: "mirror_pagure_ansible{{ env_suffix }}"

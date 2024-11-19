@@ -11,8 +11,8 @@
 
   roles:
   - role: rabbit/user
-    username: "fedocal{{ env_suffix }}"
-    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.fedocal\..*
+    user_username: "fedocal{{ env_suffix }}"
+    user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.fedocal\..*
 
   - role: openshift/project
     project_app: fedocal

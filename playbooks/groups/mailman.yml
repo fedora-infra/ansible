@@ -98,8 +98,8 @@
   - role: mailman3
   # Set up for fedora-messaging
   - role: rabbit/user
-    username: "mailman{{ env_suffix }}"
-    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.mailman\..*
+    user_username: "mailman{{ env_suffix }}"
+    user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.mailman\..*
 
   tasks:
   - name: install more needed packages

@@ -93,8 +93,8 @@
   - {role: hosts, when: env == "staging"}
   # Set up for fedora-messaging
   - role: rabbit/user
-    username: "pagure{{ env_suffix }}"
-    sent_topics:
+    user_username: "pagure{{ env_suffix }}"
+    user_sent_topics:
       ^(io\.pagure\.{{ env_short }}|org\.fedoraproject\.{{ env_short }}\.(pagure|git|logger))\..*
 
   handlers:

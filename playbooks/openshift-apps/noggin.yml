@@ -13,8 +13,8 @@
 
   roles:
   - role: rabbit/user
-    username: "noggin{{ env_suffix }}"
-    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.fas\..*
+    user_username: "noggin{{ env_suffix }}"
+    user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.fas\..*
 
   - role: openshift/project
     project_app: noggin

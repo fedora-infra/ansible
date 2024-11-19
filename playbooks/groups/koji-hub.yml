@@ -120,8 +120,8 @@
 
   - sudo
   - role: rabbit/user
-    username: "koji{{ env_suffix }}"
-    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.buildsys\..*
+    user_username: "koji{{ env_suffix }}"
+    user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.buildsys\..*
 
   tasks:
   - import_tasks: "{{ tasks_path }}/motd.yml"

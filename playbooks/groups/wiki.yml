@@ -34,8 +34,8 @@
   - apache
   # Set up for fedora-messaging
   - role: rabbit/user
-    username: "mediawiki{{ env_suffix }}"
-    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(wiki|logger)\..*
+    user_username: "mediawiki{{ env_suffix }}"
+    user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(wiki|logger)\..*
     when: inventory_hostname.startswith('wiki01')
   - { role: nfs/client, when: env == "staging", mnt_dir: '/mnt/web/attachments', nfs_src_dir: 'fedora_app_staging/app/attachments', mount_stg: true }
   - { role: nfs/client, when: env != "staging", mnt_dir: '/mnt/web/attachments', nfs_src_dir: 'fedora_app/app/attachments' }

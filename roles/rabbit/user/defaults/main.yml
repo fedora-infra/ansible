@@ -1,23 +1,23 @@
 ---
-rabbitmq_server: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
-vhost: /pubsub
-publish_only: true
+user_rabbitmq_server: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
+user_vhost: /pubsub
+user_publish_only: true
 
 # Read privileges:
 # If publish_only: no reading. Otherwise, read from queues prefixed
 # with their name and bind to the topic exchange
-read_priv: "{{ publish_only|ternary('^$', '^(zmq\\.topic)|^(amq\\.topic)|(' + username + '.*)$') }}"
+user_read_priv: "{{ user_publish_only|ternary('^$', '^(zmq\\.topic)|^(amq\\.topic)|(' + user_username + '.*)$') }}"
 
 # Write privileges:
 # If publish_only: only write to the exchange. Otherwise, write to
 # queues prefixed with their name and any prefixes in write_queues,
 # and publish to the topic exchange
-write_priv: "^(amq\\.topic){% if not publish_only %}|({{ username }}.*){% for queue in write_queues|default([]) %}|({{ queue }}.*){% endfor %}{% endif %}$"
+user_write_priv: "^(amq\\.topic){% if not user_publish_only %}|({{ username }}.*){% for queue in write_queues|default([]) %}|({{ queue }}.*){% endfor %}{% endif %}$"
 
 # Topic authorization:
 # Ref: https://www.rabbitmq.com/access-control.html#topic-authorisation
-sent_topics: .*
-topic_permissions:
+user_sent_topics: .*
+user_topic_permissions:
   - vhost: "{{ vhost }}"
     read_priv: .*
     write_priv: "{{ sent_topics }}"

@@ -34,8 +34,8 @@
     when: env == "production"
   # Set up for fedora-messaging
   - role: rabbit/user
-    username: "logging{{ env_suffix }}"
-    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.logging\.stats\..*
+    user_username: "logging{{ env_suffix }}"
+    user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.logging\.stats\..*
   - logging
 
   pre_tasks:
