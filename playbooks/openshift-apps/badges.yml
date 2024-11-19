@@ -125,20 +125,20 @@
 
     # Routes
     - role: openshift/route
-      app: badges
-      routename: frontend
-      host: "badges{{ env_suffix }}.fedoraproject.org"
-      servicename: frontend
-      serviceport: web
-      annotations:
+      route_app: badges
+      route_routename: frontend
+      route_host: "badges{{ env_suffix }}.fedoraproject.org"
+      route_servicename: frontend
+      route_serviceport: web
+      route_annotations:
         haproxy.router.openshift.io/timeout: 5m
     - role: openshift/route
-      app: badges
-      routename: frontend-openshift
-      host: "badges.apps.ocp{{ env_suffix }}.fedoraproject.org"
-      servicename: frontend
-      serviceport: web
-      annotations:
+      route_app: badges
+      route_routename: frontend-openshift
+      route_host: "badges.apps.ocp{{ env_suffix }}.fedoraproject.org"
+      route_servicename: frontend
+      route_serviceport: web
+      route_annotations:
         haproxy.router.openshift.io/timeout: 5m
 
     # Fedora Messaging

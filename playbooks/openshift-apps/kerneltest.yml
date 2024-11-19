@@ -97,12 +97,12 @@
     app: kerneltest
 
   - role: openshift/route
-    app: kerneltest
-    routename: kerneltest
-    host: "kerneltest{{ env_suffix }}.fedoraproject.org"
-    serviceport: web
-    servicename: kerneltest-web
-    annotations:
+    route_app: kerneltest
+    route_routename: kerneltest
+    route_host: "kerneltest{{ env_suffix }}.fedoraproject.org"
+    route_serviceport: web
+    route_servicename: kerneltest-web
+    route_annotations:
       haproxy.router.openshift.io/timeout: 5m
 
   - role: openshift/object

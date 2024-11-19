@@ -48,11 +48,11 @@
     object_objectname: service.yml
 
   - role: openshift/route
-    app: fedora-packages-static
-    routename: fedora-packages-static
-    host: "packages{{ env_suffix }}.fedoraproject.org"
-    serviceport: 8080-tcp
-    servicename: fedora-packages-static
+    route_app: fedora-packages-static
+    route_routename: fedora-packages-static
+    route_host: "packages{{ env_suffix }}.fedoraproject.org"
+    route_serviceport: 8080-tcp
+    route_servicename: fedora-packages-static
 
   - role: openshift/object
     object_app: fedora-packages-static

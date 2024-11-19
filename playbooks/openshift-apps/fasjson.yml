@@ -92,12 +92,12 @@
     object_objectname: service.yml
 
   - role: openshift/route
-    app: fasjson
-    routename: fasjson
-    host: "fasjson{{ env_suffix }}.fedoraproject.org"
-    serviceport: web
-    servicename: fasjson-web
-    annotations:
+    route_app: fasjson
+    route_routename: fasjson
+    route_host: "fasjson{{ env_suffix }}.fedoraproject.org"
+    route_serviceport: web
+    route_servicename: fasjson-web
+    route_annotations:
       haproxy.router.openshift.io/timeout: 5m
 
   - role: openshift/object

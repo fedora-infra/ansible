@@ -101,11 +101,11 @@
       object_objectname: service.yml
 
     - role: openshift/route
-      app: waiverdb
-      routename: web-pretty
-      host: "waiverdb{{ env_suffix }}.fedoraproject.org"
-      serviceport: web
-      servicename: waiverdb-web
+      route_app: waiverdb
+      route_routename: web-pretty
+      route_host: "waiverdb{{ env_suffix }}.fedoraproject.org"
+      route_serviceport: web
+      route_servicename: waiverdb-web
 
     # TODO -- someday retire this old route in favor of the pretty one above.
     - role: openshift/object

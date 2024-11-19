@@ -100,12 +100,12 @@
       object_objectname: backend-services.yml
 
     - role: openshift/route
-      app: resultsdb
-      routename: resultsdb-api
-      host: "resultsdb{{ env_suffix }}.fedoraproject.org"
-      serviceport: api
-      servicename: resultsdb-api
-      path: /api
+      route_app: resultsdb
+      route_routename: resultsdb-api
+      route_host: "resultsdb{{ env_suffix }}.fedoraproject.org"
+      route_serviceport: api
+      route_servicename: resultsdb-api
+      route_path: /api
 
     # frontend objects
     - role: openshift/object
@@ -129,12 +129,12 @@
       object_objectname: frontend-services.yml
 
     - role: openshift/route
-      app: resultsdb
-      routename: resultsdb-web
-      host: "resultsdb{{ env_suffix }}.fedoraproject.org"
-      serviceport: web
-      servicename: resultsdb-frontend
-      path: /
+      route_app: resultsdb
+      route_routename: resultsdb-web
+      route_host: "resultsdb{{ env_suffix }}.fedoraproject.org"
+      route_serviceport: web
+      route_servicename: resultsdb-frontend
+      route_path: /
 
     # rollouts
     - role: openshift/rollout

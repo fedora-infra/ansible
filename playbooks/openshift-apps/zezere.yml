@@ -30,12 +30,12 @@
     object_file: service.yml
     object_objectname: service.yml
   - role: openshift/route
-    app: zezere
-    routename: zezere
-    host: "provision{{ env_suffix }}.fedoraproject.org"
-    servicename: zezere
-    serviceport: 8080
-    annotations:
+    route_app: zezere
+    route_routename: zezere
+    route_host: "provision{{ env_suffix }}.fedoraproject.org"
+    route_servicename: zezere
+    route_serviceport: 8080
+    route_annotations:
       haproxy.router.openshift.io/set-forwarded-headers: append
   - role: openshift/object
     object_app: zezere

@@ -34,13 +34,12 @@
     object_file: service.yml
     object_objectname: service.yml
   - role: openshift/route
-    app: transtats
-    routename: transtats-web
-    host: transtats{{ env_suffix }}.fedoraproject.org
-    file: route.yml
-    serviceport: web
-    servicename: transtats-web
-    annotations:
+    route_app: transtats
+    route_routename: transtats-web
+    route_host: transtats{{ env_suffix }}.fedoraproject.org
+    route_serviceport: web
+    route_servicename: transtats-web
+    route_annotations:
       haproxy.router.openshift.io/timeout: 8m
   - role: openshift/object
     object_app: transtats

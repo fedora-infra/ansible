@@ -81,13 +81,13 @@
     object_objectname: service.yml
 
   - role: openshift/route
-    app: datagrepper
-    routename: datagrepper
-    host: "apps{{ env_suffix }}.fedoraproject.org"
-    path: "/datagrepper"
-    serviceport: web
-    servicename: datagrepper-web
-    annotations:
+    route_app: datagrepper
+    route_routename: datagrepper
+    route_host: "apps{{ env_suffix }}.fedoraproject.org"
+    route_path: "/datagrepper"
+    route_serviceport: web
+    route_servicename: datagrepper-web
+    route_annotations:
       haproxy.router.openshift.io/timeout: 5m
 
   - role: openshift/object

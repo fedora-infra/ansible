@@ -117,20 +117,20 @@
     object_objectname: cron.yml
 
   - role: openshift/route
-    app: blockerbugs
-    routename: blockerbugs
-    host: "qa{{ env_suffix }}.fedoraproject.org"
-    path: "/blockerbugs"
-    serviceport: 8080-tcp
-    servicename: blockerbugs
+    route_app: blockerbugs
+    route_routename: blockerbugs
+    route_host: "qa{{ env_suffix }}.fedoraproject.org"
+    route_path: "/blockerbugs"
+    route_serviceport: 8080-tcp
+    route_servicename: blockerbugs
 
   - role: openshift/route
-    app: blockerbugs
-    routename: qa-landing
-    host: "qa{{ env_suffix }}.fedoraproject.org"
-    serviceport: 8080-tcp
-    servicename: qa-landing
-    annotations:
+    route_app: blockerbugs
+    route_routename: qa-landing
+    route_host: "qa{{ env_suffix }}.fedoraproject.org"
+    route_serviceport: 8080-tcp
+    route_servicename: qa-landing
+    route_annotations:
       haproxy.router.openshift.io/set-forwarded-headers: append
 
   - role: openshift/start-build

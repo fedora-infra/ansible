@@ -35,21 +35,21 @@
       object_objectname: service.yml
 
     - role: openshift/route
-      app: ipsilon-website
-      routename: web-internal
-      host: "ipsilon-website.apps.ocp{{ env_suffix }}.fedoraproject.org"
-      serviceport: web
-      servicename: web
-      annotations:
+      route_app: ipsilon-website
+      route_routename: web-internal
+      route_host: "ipsilon-website.apps.ocp{{ env_suffix }}.fedoraproject.org"
+      route_serviceport: web
+      route_servicename: web
+      route_annotations:
         haproxy.router.openshift.io/timeout: 5m
 
     - role: openshift/route
-      app: ipsilon-website
-      routename: web
-      host: "ipsilon-project.org"
-      serviceport: web
-      servicename: web
-      annotations:
+      route_app: ipsilon-website
+      route_routename: web
+      route_host: "ipsilon-project.org"
+      route_serviceport: web
+      route_servicename: web
+      route_annotations:
         haproxy.router.openshift.io/timeout: 5m
 
     - role: openshift/object

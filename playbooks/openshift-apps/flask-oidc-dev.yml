@@ -43,22 +43,22 @@
       object_objectname: service.yml
 
     # - role: openshift/route
-    #   app: test-auth
-    #   routename: test-auth
-    #   host: "admin{{ env_suffix }}.fedoraproject.org"
-    #   path: "/test-auth"
-    #   serviceport: web
-    #   servicename: test-auth
-    #   annotations:
+    #   route_app: test-auth
+    #   route_routename: test-auth
+    #   route_host: "admin{{ env_suffix }}.fedoraproject.org"
+    #   route_path: "/test-auth"
+    #   route_serviceport: web
+    #   route_servicename: test-auth
+    #   route_annotations:
     #     haproxy.router.openshift.io/timeout: 5m
 
     - role: openshift/route
-      app: flask-oidc-dev
-      routename: flask-oidc-dev
-      host: "app-flask-oidc-dev.apps.ocp{{ env_suffix }}.fedoraproject.org"
-      serviceport: web
-      servicename: flask-oidc-dev
-      annotations:
+      route_app: flask-oidc-dev
+      route_routename: flask-oidc-dev
+      route_host: "app-flask-oidc-dev.apps.ocp{{ env_suffix }}.fedoraproject.org"
+      route_serviceport: web
+      route_servicename: flask-oidc-dev
+      route_annotations:
         haproxy.router.openshift.io/timeout: 5m
       when: ocp4
 

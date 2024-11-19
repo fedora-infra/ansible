@@ -51,12 +51,12 @@
 
     # Routes
     - role: openshift/route
-      app: easyfix
-      routename: web
-      host: "easyfix.apps.ocp{{ env_suffix }}.fedoraproject.org"
-      servicename: web
-      serviceport: web
-      annotations:
+      route_app: easyfix
+      route_routename: web
+      route_host: "easyfix.apps.ocp{{ env_suffix }}.fedoraproject.org"
+      route_servicename: web
+      route_serviceport: web
+      route_annotations:
         haproxy.router.openshift.io/timeout: 5m
 
     - role: openshift/object

@@ -77,12 +77,12 @@
     object_objectname: service.yml
 
   - role: openshift/route
-    app: noggin
-    routename: noggin
-    host: "accounts{{ env_suffix }}.fedoraproject.org"
-    serviceport: web
-    servicename: noggin-web
-    annotations:
+    route_app: noggin
+    route_routename: noggin
+    route_host: "accounts{{ env_suffix }}.fedoraproject.org"
+    route_serviceport: web
+    route_servicename: noggin-web
+    route_annotations:
       haproxy.router.openshift.io/timeout: 5m
       haproxy.router.openshift.io/set-forwarded-headers: append
 

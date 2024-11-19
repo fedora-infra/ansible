@@ -28,11 +28,11 @@
     host: "koschei-backend01{{ env_suffix }}.iad2.fedoraproject.org"
 
   - role: openshift/route
-    routename: frontend
-    host: "koschei{{ env_suffix }}.fedoraproject.org"
-    serviceport: web
-    servicename: frontend
-    annotations:
+    route_routename: frontend
+    route_host: "koschei{{ env_suffix }}.fedoraproject.org"
+    route_serviceport: web
+    route_servicename: frontend
+    route_annotations:
       haproxy.router.openshift.io/set-forwarded-headers: append
       haproxy.router.openshift.io/timeout: 180s
 

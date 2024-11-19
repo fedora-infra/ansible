@@ -127,12 +127,12 @@
     object_objectname: podmonitor.yml
     when: env != "production"
   - role: openshift/route
-    app: bodhi
-    routename: bodhi-web
-    host: "bodhi{{ env_suffix }}.fedoraproject.org"
-    serviceport: web
-    servicename: bodhi-web
-    annotations:
+    route_app: bodhi
+    route_routename: bodhi-web
+    route_host: "bodhi{{ env_suffix }}.fedoraproject.org"
+    route_serviceport: web
+    route_servicename: bodhi-web
+    route_annotations:
       haproxy.router.openshift.io/timeout: 180s
   - role: openshift/object
     object_app: bodhi

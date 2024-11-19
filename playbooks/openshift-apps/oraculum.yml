@@ -84,42 +84,42 @@
     object_objectname: secret.yml
 
   - role: openshift/route
-    app: oraculum
-    routename: oraculum-api
-    host: "packager-dashboard{{ env_suffix }}.fedoraproject.org"
-    path: "/api"
-    serviceport: 8080-tcp
-    servicename: oraculum-api-endpoint
-    annotations:
+    route_app: oraculum
+    route_routename: oraculum-api
+    route_host: "packager-dashboard{{ env_suffix }}.fedoraproject.org"
+    route_path: "/api"
+    route_serviceport: 8080-tcp
+    route_servicename: oraculum-api-endpoint
+    route_annotations:
       haproxy.router.openshift.io/set-forwarded-headers: append
 
   - role: openshift/route
-    app: oraculum
-    routename: oraculum-oidc-callback
-    host: "packager-dashboard{{ env_suffix }}.fedoraproject.org"
-    path: "/oidc_callback"
-    serviceport: 8080-tcp
-    servicename: oraculum-api-endpoint
-    annotations:
+    route_app: oraculum
+    route_routename: oraculum-oidc-callback
+    route_host: "packager-dashboard{{ env_suffix }}.fedoraproject.org"
+    route_path: "/oidc_callback"
+    route_serviceport: 8080-tcp
+    route_servicename: oraculum-api-endpoint
+    route_annotations:
       haproxy.router.openshift.io/set-forwarded-headers: append
 
   - role: openshift/route
-    app: oraculum
-    routename: oraculum-flower
-    host: "packager-dashboard{{ env_suffix }}.fedoraproject.org"
-    path: "/_flower"
-    serviceport: 8080-tcp
-    servicename: oraculum-flower
-    annotations:
+    route_app: oraculum
+    route_routename: oraculum-flower
+    route_host: "packager-dashboard{{ env_suffix }}.fedoraproject.org"
+    route_path: "/_flower"
+    route_serviceport: 8080-tcp
+    route_servicename: oraculum-flower
+    route_annotations:
       haproxy.router.openshift.io/set-forwarded-headers: append
 
   - role: openshift/route
-    app: oraculum
-    routename: oraculum-frontend
-    host: "packager-dashboard{{ env_suffix }}.fedoraproject.org"
-    serviceport: 8080-tcp
-    servicename: oraculum-frontend
-    annotations:
+    route_app: oraculum
+    route_routename: oraculum-frontend
+    route_host: "packager-dashboard{{ env_suffix }}.fedoraproject.org"
+    route_serviceport: 8080-tcp
+    route_servicename: oraculum-frontend
+    route_annotations:
       haproxy.router.openshift.io/set-forwarded-headers: append
 
   - role: openshift/start-build

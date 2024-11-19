@@ -2,32 +2,32 @@
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-{% if annotations is defined %}
+{% if route_annotations is defined %}
   annotations:
-    {{ annotations | to_nice_yaml | indent(4) }}
+    {{ route_annotations | to_nice_yaml | indent(4) }}
 {% endif %}
-  name: {{ routename }}
+  name: {{ route_routename }}
   labels:
-    app: {{ app }}
+    app: {{ route_app }}
 spec:
-{% if host is defined %}
-  host: {{ host }}
+{% if route_host is defined %}
+  host: {{ route_host }}
 {% endif %}
-{% if path is defined %}
-  path: {{ path }}
+{% if route_path is defined %}
+  path: {{ route_path }}
 {% endif %}
 {% if wildcardpolicy is defined %}
   wildcardPolicy: {{ wildcardpolicy }}
 {% endif %}
   port:
-    targetPort: {{ serviceport }}
+    targetPort: {{ route_serviceport }}
   to:
     kind: Service
-    name: {{ servicename }}
+    name: {{ route_servicename }}
   tls:
-{% if termination_passthrough is defined and termination_passthrough %}
+{% if route_termination_passthrough is defined and route_termination_passthrough %}
     termination: Passthrough
-{% elif termination_reencrypt is defined and termination_reencrypt %}
+{% elif route_termination_reencrypt is defined and route_termination_reencrypt %}
     termination: Reencrypt
 {% else %}
     termination: edge

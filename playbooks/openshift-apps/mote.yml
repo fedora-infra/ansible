@@ -72,11 +72,11 @@
     object_objectname: pvc.yml
 
   - role: openshift/route
-    routename: mote
-    serviceport: mote-tcp
-    servicename: mote
-    host: "meetbot{{ env_suffix }}.fedoraproject.org"
-    annotations:
+    route_routename: mote
+    route_serviceport: mote-tcp
+    route_servicename: mote
+    route_host: "meetbot{{ env_suffix }}.fedoraproject.org"
+    route_annotations:
       haproxy.router.openshift.io/set-forwarded-headers: append
 
   - role: openshift/start-build

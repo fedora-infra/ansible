@@ -77,11 +77,11 @@
     object_objectname: service.yml
 
   - role: openshift/route
-    app: mdapi
-    routename: mdapi
-    host: "mdapi{{env_suffix}}.fedoraproject.org"
-    serviceport: 8080-tcp
-    servicename: mdapi
+    route_app: mdapi
+    route_routename: mdapi
+    route_host: "mdapi{{env_suffix}}.fedoraproject.org"
+    route_serviceport: 8080-tcp
+    route_servicename: mdapi
 
   - role: openshift/object
     object_app: mdapi

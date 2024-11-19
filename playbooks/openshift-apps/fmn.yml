@@ -145,29 +145,29 @@
 
     # Routes
     - role: openshift/route
-      app: fmn
-      routename: frontend
-      host: "notifications{{ env_suffix }}.fedoraproject.org"
-      servicename: frontend
-      serviceport: web
-      annotations:
+      route_app: fmn
+      route_routename: frontend
+      route_host: "notifications{{ env_suffix }}.fedoraproject.org"
+      route_servicename: frontend
+      route_serviceport: web
+      route_annotations:
         haproxy.router.openshift.io/timeout: 5m
     - role: openshift/route
-      app: fmn
-      routename: api
-      host: "fmn-api.apps.ocp{{ env_suffix }}.fedoraproject.org"
-      servicename: api
-      serviceport: web
-      annotations:
+      route_app: fmn
+      route_routename: api
+      route_host: "fmn-api.apps.ocp{{ env_suffix }}.fedoraproject.org"
+      route_servicename: api
+      route_serviceport: web
+      route_annotations:
         haproxy.router.openshift.io/timeout: 5m
     # Sendria is an email sink for testing, to avoid sending actual emails.
     - role: openshift/route
-      app: fmn
-      routename: sendria
-      host: "fmn-email.apps.ocp{{ env_suffix }}.fedoraproject.org"
-      servicename: sendria
-      serviceport: web
-      annotations:
+      route_app: fmn
+      route_routename: sendria
+      route_host: "fmn-email.apps.ocp{{ env_suffix }}.fedoraproject.org"
+      route_servicename: sendria
+      route_serviceport: web
+      route_annotations:
         haproxy.router.openshift.io/timeout: 5m
       when: env == "staging"
 

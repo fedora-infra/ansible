@@ -67,11 +67,11 @@
     object_objectname: service.yml
 
   - role: openshift/route
-    app: greenwave
-    routename: web-pretty
-    host: "greenwave{{ env_suffix }}.fedoraproject.org"
-    serviceport: web
-    servicename: greenwave-web
+    route_app: greenwave
+    route_routename: web-pretty
+    route_host: "greenwave{{ env_suffix }}.fedoraproject.org"
+    route_serviceport: web
+    route_servicename: greenwave-web
 
   # TODO -- someday retire this old route in favor of the pretty one above.
   - role: openshift/object

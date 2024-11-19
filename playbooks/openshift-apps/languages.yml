@@ -37,11 +37,11 @@
     object_objectname: service.yml
 
   - role: openshift/route
-    app: languages
-    routename: languages
-    host: "languages{{ env_suffix }}.fedoraproject.org"
-    serviceport: web
-    servicename: web
+    route_app: languages
+    route_routename: languages
+    route_host: "languages{{ env_suffix }}.fedoraproject.org"
+    route_serviceport: web
+    route_servicename: web
 
   - role: openshift/object
     object_app: languages

@@ -101,11 +101,11 @@
     object_objectname: service.yml
 
   - role: openshift/route
-    app: maubot
-    routename: maubot
-    host: "maubot.apps.ocp{{ env_suffix }}.fedoraproject.org"
-    serviceport: maubot
-    servicename: maubot
+    route_app: maubot
+    route_routename: maubot
+    route_host: "maubot.apps.ocp{{ env_suffix }}.fedoraproject.org"
+    route_serviceport: maubot
+    route_servicename: maubot
 
   - role: openshift/object
     object_app: maubot

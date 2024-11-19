@@ -103,11 +103,11 @@
     object_objectname: service.yml
 
   - role: openshift/route
-    app: elections
-    routename: elections
-    host: "elections{{ env_suffix }}.fedoraproject.org"
-    serviceport: 8000-tcp
-    servicename: elections
+    route_app: elections
+    route_routename: elections
+    route_host: "elections{{ env_suffix }}.fedoraproject.org"
+    route_serviceport: 8000-tcp
+    route_servicename: elections
 
   - role: openshift/object
     object_app: elections

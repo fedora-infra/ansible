@@ -1,7 +1,7 @@
 ---
-- name: route-{{routename}}.yml
+- name: route-{{route_routename}}.yml
   include_role:
     name: openshift/object
   vars:
-    object_objectname: route-{{routename}}.yml
+    object_objectname: route-{{route_routename}}.yml
     object_template_fullpath: "{{roles_path}}/openshift/route/templates/route.yml"

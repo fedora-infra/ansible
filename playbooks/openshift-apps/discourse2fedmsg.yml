@@ -60,11 +60,11 @@
     object_objectname: service.yml
 
   - role: openshift/route
-    app: discourse2fedmsg
-    routename: discourse2fedmsg
-    host: "discourse2fedmsg{{ env_suffix }}.fedoraproject.org"
-    serviceport: web
-    servicename: discourse2fedmsg-web
+    route_app: discourse2fedmsg
+    route_routename: discourse2fedmsg
+    route_host: "discourse2fedmsg{{ env_suffix }}.fedoraproject.org"
+    route_serviceport: web
+    route_servicename: discourse2fedmsg-web
 
   - role: openshift/object
     object_app: discourse2fedmsg

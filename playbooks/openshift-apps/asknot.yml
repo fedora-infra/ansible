@@ -38,19 +38,19 @@
     object_objectname: service.yml
 
   - role: openshift/route
-    app: asknot
-    routename: asknot
-    host: "stg.whatcanidoforfedora.org"
-    serviceport: 8080-tcp
-    servicename: asknot
+    route_app: asknot
+    route_routename: asknot
+    route_host: "stg.whatcanidoforfedora.org"
+    route_serviceport: 8080-tcp
+    route_servicename: asknot
     when: env == "staging"
 
   - role: openshift/route
-    app: asknot
-    routename: asknot
-    host: "whatcanidoforfedora.org"
-    serviceport: 8080-tcp
-    servicename: asknot
+    route_app: asknot
+    route_routename: asknot
+    route_host: "whatcanidoforfedora.org"
+    route_serviceport: 8080-tcp
+    route_servicename: asknot
     when: env == "production"
 
   - role: openshift/object

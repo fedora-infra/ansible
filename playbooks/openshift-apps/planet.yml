@@ -55,21 +55,21 @@
     object_objectname: pvc.yml
 
   - role: openshift/route
-    app: planet
-    routename: planet
-    host: "planet.apps.ocp{{env_suffix}}.fedoraproject.org"
-    serviceport: web
-    servicename: planet
-    annotations:
+    route_app: planet
+    route_routename: planet
+    route_host: "planet.apps.ocp{{env_suffix}}.fedoraproject.org"
+    route_serviceport: web
+    route_servicename: planet
+    route_annotations:
       haproxy.router.openshift.io/timeout: 5m
 
   - role: openshift/route
-    app: planet
-    routename: planet
-    host: "{{env_prefix}}fedoraplanet.org"
-    serviceport: web
-    servicename: planet
-    annotations:
+    route_app: planet
+    route_routename: planet
+    route_host: "{{env_prefix}}fedoraplanet.org"
+    route_serviceport: web
+    route_servicename: planet
+    route_annotations:
       haproxy.router.openshift.io/timeout: 5m
 
   - role: openshift/object

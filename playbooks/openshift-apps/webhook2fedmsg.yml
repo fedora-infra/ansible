@@ -86,17 +86,17 @@
 
     # Routes
     - role: openshift/route
-      app: webhook2fedmsg
-      routename: web
-      host: "webhook{{ env_suffix }}.fedoraproject.org"
-      serviceport: web
-      servicename: web
+      route_app: webhook2fedmsg
+      route_routename: web
+      route_host: "webhook{{ env_suffix }}.fedoraproject.org"
+      route_serviceport: web
+      route_servicename: web
     - role: openshift/route
-      app: webhook2fedmsg
-      routename: web-alt
-      host: "webhook2fedmsg.apps.ocp{{env_suffix}}.fedoraproject.org"
-      serviceport: web
-      servicename: web
+      route_app: webhook2fedmsg
+      route_routename: web-alt
+      route_host: "webhook2fedmsg.apps.ocp{{env_suffix}}.fedoraproject.org"
+      route_serviceport: web
+      route_servicename: web
 
     # FASJSON access
     - role: openshift/ipa-client

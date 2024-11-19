@@ -80,12 +80,12 @@
     object_objectname: service.yml
 
   - role: openshift/route
-    app: noggin-centos
-    routename: noggin
-    host: "accounts{{ env_suffix }}.centos.org"
-    serviceport: web
-    servicename: noggin-web
-    annotations:
+    route_app: noggin-centos
+    route_routename: noggin
+    route_host: "accounts{{ env_suffix }}.centos.org"
+    route_serviceport: web
+    route_servicename: noggin-web
+    route_annotations:
       haproxy.router.openshift.io/timeout: 5m
 
   - role: openshift/object
