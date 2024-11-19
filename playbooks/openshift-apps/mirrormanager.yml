@@ -172,8 +172,8 @@
         - build
 
     - role: openshift/rollout
-      app: mirrormanager
-      dcname: frontend
+      rollout_app: mirrormanager
+      rollout_dcname: frontend
       tags:
         - never
         - rollout

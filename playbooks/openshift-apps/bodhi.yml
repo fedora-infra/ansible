@@ -146,14 +146,14 @@
     app: bodhi
     imagename: bodhi-critpathcron
   - role: openshift/rollout
-    app: bodhi
-    dcname: bodhi-web
+    rollout_app: bodhi
+    rollout_dcname: bodhi-web
   - role: openshift/rollout
-    app: bodhi
-    dcname: bodhi-consumer
+    rollout_app: bodhi
+    rollout_dcname: bodhi-consumer
   - role: openshift/rollout
-    app: bodhi
-    dcname: bodhi-celery
+    rollout_app: bodhi
+    rollout_dcname: bodhi-celery
 
   post_tasks:
   - name: Scale up pods

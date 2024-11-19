@@ -149,11 +149,11 @@
     object_objectname: deploymentconfig.yml
 
   - role: openshift/rollout
-    app: messaging-bridges
-    dcname: amqp-to-zmq
+    rollout_app: messaging-bridges
+    rollout_dcname: amqp-to-zmq
   - role: openshift/rollout
-    app: messaging-bridges
-    dcname: zmq-to-amqp
+    rollout_app: messaging-bridges
+    rollout_dcname: zmq-to-amqp
   - role: openshift/rollout
-    app: messaging-bridges
-    dcname: verify-missing
+    rollout_app: messaging-bridges
+    rollout_dcname: verify-missing

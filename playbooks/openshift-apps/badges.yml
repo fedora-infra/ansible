@@ -205,8 +205,8 @@
       - build
 
     - role: openshift/rollout
-      app: badges
-      dcname: "{{ item }}"
+      rollout_app: badges
+      rollout_dcname: "{{ item }}"
       loop:
         - fedbadges
         - tahrir

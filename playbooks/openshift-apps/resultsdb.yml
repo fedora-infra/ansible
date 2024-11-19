@@ -138,11 +138,11 @@
 
     # rollouts
     - role: openshift/rollout
-      app: resultsdb
-      dcname: "resultsdb-api"
+      rollout_app: resultsdb
+      rollout_dcname: "resultsdb-api"
       failed_when: false
 
     - role: openshift/rollout
-      app: resultsdb
-      dcname: "resultsdb-frontend"
+      rollout_app: resultsdb
+      rollout_dcname: "resultsdb-frontend"
       failed_when: false

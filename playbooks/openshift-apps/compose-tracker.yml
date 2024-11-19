@@ -46,8 +46,8 @@
     object_objectname: deploymentconfig.yml
 
   - role: openshift/rollout
-    app: compose-tracker
-    dcname: compose-tracker
+    rollout_app: compose-tracker
+    rollout_dcname: compose-tracker
 
   ###############################################
   # actions to delete the project from OpenShift

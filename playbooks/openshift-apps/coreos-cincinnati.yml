@@ -55,8 +55,8 @@
     object_objectname: deploymentconfig.yml
 
   - role: openshift/rollout
-    app: coreos-cincinnati
-    dcname: coreos-cincinnati
+    rollout_app: coreos-cincinnati
+    rollout_dcname: coreos-cincinnati
     tags: [never, rollout]
 
   - role: openshift/object
