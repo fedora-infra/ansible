@@ -13,28 +13,28 @@ dns_search2: vpn.fedoraproject.org
 has_ipv4: true
 has_ipv6: true
 mac0: ec:f4:bb:e1:58:22
-#network_connections:
-#  - autoconnect: true
-#    ip:
-#      address:
-#        - '{{ br0_ipv4 }}/{{ br0_ipv4_nm }}'
-#        - '{{ br0_ipv6 }}/{{ br0_ipv6_nm }}'
-#      dhcp4: false
-#      dns:
-#        - '{{ dns1 }}'
-#      dns_search:
-#        - '{{ dns_search1 }}'
-#        - '{{ dns_search2 }}'
-#      gateway4: '{{ br0_ipv4_gw }}'
-#      gateway6: '{{ br0_ipv6_gw }}'
-#    name: br0
-#    state: up
-#    type: bridge
-#  - mac: '{{ br0_port0_mac }}'
-#    master: br0
-#    name: br0-port0
-#    state: up
-#    type: ethernet
+network_connections:
+  - autoconnect: true
+    ip:
+      address:
+        - '{{ br0_ipv4 }}/{{ br0_ipv4_nm }}'
+        - '{{ br0_ipv6 }}/{{ br0_ipv6_nm }}'
+      dhcp4: false
+      dns:
+        - '{{ dns1 }}'
+      dns_search:
+        - '{{ dns_search1 }}'
+        - '{{ dns_search2 }}'
+      gateway4: '{{ br0_ipv4_gw }}'
+      gateway6: '{{ br0_ipv6_gw }}'
+    name: br0
+    state: up
+    type: bridge
+  - mac: '{{ br0_port0_mac }}'
+    master: br0
+    name: br0-port0
+    state: up
+    type: ethernet
 nrpe_procs_crit: 1000
 nrpe_procs_warn: 900
 postfix_group: vpn
