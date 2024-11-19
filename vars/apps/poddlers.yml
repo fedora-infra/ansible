@@ -111,6 +111,6 @@ poddlers_cronjobs:
     only_env: staging
     command: pagure_fas_groups_sync
   - name: koji-block-retired
-    schedule: "15 4 * * *"
+    schedule: "30 5 * * *"
     only_env: production
     command: koji_block_retired
