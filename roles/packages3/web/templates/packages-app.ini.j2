@@ -43,7 +43,7 @@ git_repo_path = /var/cache/fedoracommunity/git.fedoraproject.org
 # and fill in the user info here.  Never check this file into git  with
 # this information filled in
 fedoracommunity.connector.fas.minimal_user_name={{ fcommFasUser }}
-fedoracommunity.connector.fas.minimal_user_password={{ fcommFasPassword }} 
+fedoracommunity.connector.fas.minimal_user_password={{ fcommFasPassword }}
 
 # This is insecure, use only for testing
 fedora.clients.check_certs = True
@@ -146,7 +146,11 @@ beaker.session.key = fedoracommunity
 beaker.session.secret = {{ fcommBeakerSessionSecret }}
 
 beaker.cache.type = ext:memcached
+{% if env == 'staging' %}
+beaker.cache.url = memcached02:11211
+{% else %}
 beaker.cache.url = memcached01:11211
+{% endif %}
 beaker.cache.lock_dir = /var/cache/fedoracommunity/beaker
 
 # If you'd like to fine-tune the individual locations of the cache data dirs
