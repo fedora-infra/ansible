@@ -57,17 +57,25 @@ copr_builder_fedora_version: 39
 copr_builder_images:
   aws:
     # WARNING: when changing, always remove images N-2 and older
-    aarch64: ami-0f93da3f4f368afb4
-    x86_64: ami-062f0015f85924f2f
+    # n-1: aarch64: ami-0f93da3f4f368afb4
+    # n-1: x86_64: ami-062f0015f85924f2f
+    # n-0: aarch64: ami-0a2abb60d2e09f6fa
+    # n-0: x86_64: ami-0460b8805bf9781cf
+    aarch64: ami-0c3217e2af416bf2d
+    x86_64: ami-0c430e4bc139d93ec
   hypervisor:
-    ppc64le: copr-builder-ppc64le-20240201_144151
-    x86_64: copr-builder-x86_64-20240201_144216
+    # n-1: ppc64le: copr-builder-ppc64le-20240201_144151
+    # n-1: x86_64: copr-builder-x86_64-20240201_144216
+    ppc64le: copr-builder-ppc64le-20241119_171239
+    x86_64: copr-builder-x86_64-20241119_172236
   ibm_cloud:
     s390x:
       tokyo: r022-3bca519e-3cc7-432e-9280-8ff89738e3a5
-      us_east: r014-1469fafc-d906-44fa-b780-e4599ed56fde
+      # n-1: us_east: r014-1469fafc-d906-44fa-b780-e4599ed56fde
+      us_east: r014-9ba4feec-ce45-4401-acea-f123114685b5
   osuosl:
-    ppc64le: copr-builder-ppc64le-20240206_143009
+    # ppc64le: copr-builder-ppc64le-20240206_143009
+    ppc64le: copr-builder-ppc64le-20241119_171239
 
 copr_messaging: true
 datacenter: aws
