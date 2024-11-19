@@ -70,16 +70,16 @@
     imagename: bugzilla2fedmsg
 
   - role: openshift/object
-    app: bugzilla2fedmsg
-    template: buildconfig.yml
-    objectname: buildconfig.yml
+    object_app: bugzilla2fedmsg
+    object_template: buildconfig.yml
+    object_objectname: buildconfig.yml
 
   - role: openshift/object
-    app: bugzilla2fedmsg
-    template: configmap.yml
-    objectname: configmap.yml
+    object_app: bugzilla2fedmsg
+    object_template: configmap.yml
+    object_objectname: configmap.yml
 
   - role: openshift/object
-    app: bugzilla2fedmsg
-    template: deploymentconfig.yml
-    objectname: deploymentconfig.yml
+    object_app: bugzilla2fedmsg
+    object_template: deploymentconfig.yml
+    object_objectname: deploymentconfig.yml

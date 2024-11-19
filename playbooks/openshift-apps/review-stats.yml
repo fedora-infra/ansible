@@ -22,23 +22,23 @@
     app: review-stats
     imagename: builder
   - role: openshift/object
-    app: review-stats
-    objectname: buildconfig.yml
-    template: buildconfig.yml
+    object_app: review-stats
+    object_objectname: buildconfig.yml
+    object_template: buildconfig.yml
   - role: openshift/object
-    app: review-stats
-    template: configmap.yml
-    objectname: configmap.yml
+    object_app: review-stats
+    object_template: configmap.yml
+    object_objectname: configmap.yml
   - role: openshift/object
-    app: review-stats
-    template: pvc.yml
-    objectname: pvc.yml
+    object_app: review-stats
+    object_template: pvc.yml
+    object_objectname: pvc.yml
   - role: openshift/start-build
     app: review-stats
     buildname: builder-build
   - role: openshift/object
-    app: review-stats
-    template: cron.yml
-    objectname: cron.yml
+    object_app: review-stats
+    object_template: cron.yml
+    object_objectname: cron.yml
     tags:
       - deploy-cronjob

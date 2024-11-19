@@ -26,48 +26,48 @@
   include_role:
     name: openshift/object
   vars:
-    objectname: deployer.yml
-    template_fullpath: "{{roles_path}}/openshift/project/templates/deployer.yml"
+    object_objectname: deployer.yml
+    object_template_fullpath: "{{roles_path}}/openshift/project/templates/deployer.yml"
 
 - name: imagebuilder.yml
   include_role:
     name: openshift/object
   vars:
-    objectname: imagebuilder.yml
-    template_fullpath: "{{roles_path}}/openshift/project/templates/imagebuilder.yml"
+    object_objectname: imagebuilder.yml
+    object_template_fullpath: "{{roles_path}}/openshift/project/templates/imagebuilder.yml"
 
 - name: imagepuller.yml
   include_role:
     name: openshift/object
   vars:
-    objectname: imagepuller.yml
-    template_fullpath: "{{roles_path}}/openshift/project/templates/imagepuller.yml"
+    object_objectname: imagepuller.yml
+    object_template_fullpath: "{{roles_path}}/openshift/project/templates/imagepuller.yml"
 
 - name: role-appowners.yml
   include_role:
     name: openshift/object
   vars:
-    objectname: role-appowners.yml
-    template_fullpath: "{{roles_path}}/openshift/project/templates/role-appowners.yml"
+    object_objectname: role-appowners.yml
+    object_template_fullpath: "{{roles_path}}/openshift/project/templates/role-appowners.yml"
 
 - name: appowners.yml
   include_role:
     name: openshift/object
   vars:
-    objectname: appowners.yml
-    template_fullpath: "{{roles_path}}/openshift/project/templates/appowners.yml"
+    object_objectname: appowners.yml
+    object_template_fullpath: "{{roles_path}}/openshift/project/templates/appowners.yml"
 
 - name: alertmanager.yml
   include_role:
     name: openshift/object
   vars:
-    objectname: alertmanager.yml
-    template_fullpath: "{{roles_path}}/openshift/project/templates/alertmanager.yml"
+    object_objectname: alertmanager.yml
+    object_template_fullpath: "{{roles_path}}/openshift/project/templates/alertmanager.yml"
 
 - name: prometheusRules.yml
   include_role:
     name: openshift/object
   vars:
-    objectname: prometheusRules.yml
-    template_fullpath: "{{roles_path}}/openshift/project/templates/prometheusRules.yml"
+    object_objectname: prometheusRules.yml
+    object_template_fullpath: "{{roles_path}}/openshift/project/templates/prometheusRules.yml"
   when: project_alerting

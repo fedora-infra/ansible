@@ -2,21 +2,21 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: "cron-{{name}}"
+  name: "cron-{{object_name}}"
 spec:
   concurrencyPolicy: Forbid
-  schedule: "{{schedule}}"
+  schedule: "{{object_schedule}}"
   jobTemplate:
     spec:
       template:
         spec:
           containers:
-          - name: "cron-{{name}}"
+          - name: "cron-{{object_name}}"
             image: "image-registry.openshift-image-registry.svc:5000/koschei/koschei:latest"
-            command: ["/bin/bash", "-euxc", "{{command}}"]
+            command: ["/bin/bash", "-euxc", "{{object_command}}"]
             env:
               - name: SUDO_USER
-                value: "cron-{{name}}"
+                value: "cron-{{object_name}}"
             volumeMounts:
               - name: config
                 mountPath: /etc/koschei

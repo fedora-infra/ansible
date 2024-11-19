@@ -18,23 +18,23 @@
     - jibecfed
 
   - role: openshift/object
-    app: languages
-    objectname: imagestream.yml
-    template: imagestream.yml
+    object_app: languages
+    object_objectname: imagestream.yml
+    object_template: imagestream.yml
 
   - role: openshift/object
-    app: languages
-    objectname: buildconfig.yml
-    template: buildconfig.yml
+    object_app: languages
+    object_objectname: buildconfig.yml
+    object_template: buildconfig.yml
 
   - role: openshift/start-build
     app: languages
     buildname: build-latest
 
   - role: openshift/object
-    app: languages
-    template: service.yml
-    objectname: service.yml
+    object_app: languages
+    object_template: service.yml
+    object_objectname: service.yml
 
   - role: openshift/route
     app: languages
@@ -44,19 +44,19 @@
     servicename: web
 
   - role: openshift/object
-    app: languages
-    template: pvc.yml
-    objectname: pvc.yml
+    object_app: languages
+    object_template: pvc.yml
+    object_objectname: pvc.yml
 
   - role: openshift/object
-    app: languages
-    template: deployment.yml
-    objectname: deployment.yml
+    object_app: languages
+    object_template: deployment.yml
+    object_objectname: deployment.yml
 
   - role: openshift/object
-    app: languages
-    template: cron.yml
-    objectname: cron.yml
+    object_app: languages
+    object_template: cron.yml
+    object_objectname: cron.yml
 
 ###############################################
 # actions to delete the project from OpenShift

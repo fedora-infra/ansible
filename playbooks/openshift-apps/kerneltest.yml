@@ -69,29 +69,29 @@
     privatefile: "rabbitmq/{{env}}/pki/private/kerneltest{{env_suffix}}.key"
 
   - role: openshift/object
-    app: kerneltest
-    file: imagestream.yml
-    objectname: imagestream.yml
+    object_app: kerneltest
+    object_file: imagestream.yml
+    object_objectname: imagestream.yml
 
   - role: openshift/object
-    app: kerneltest
-    template: buildconfig.yml
-    objectname: buildconfig.yml
+    object_app: kerneltest
+    object_template: buildconfig.yml
+    object_objectname: buildconfig.yml
 
   - role: openshift/object
-    app: kerneltest
-    file: storage.yml
-    objectname: storage.yml
+    object_app: kerneltest
+    object_file: storage.yml
+    object_objectname: storage.yml
 
   - role: openshift/object
-    app: kerneltest
-    file: service.yml
-    objectname: service.yml
+    object_app: kerneltest
+    object_file: service.yml
+    object_objectname: service.yml
 
   - role: openshift/object
-    app: kerneltest
-    template: configmap.yml
-    objectname: configmap.yml
+    object_app: kerneltest
+    object_template: configmap.yml
+    object_objectname: configmap.yml
 
   - role: openshift/ipa-client
     app: kerneltest
@@ -106,6 +106,6 @@
       haproxy.router.openshift.io/timeout: 5m
 
   - role: openshift/object
-    app: kerneltest
-    file: deploymentconfig.yml
-    objectname: deploymentconfig.yml
+    object_app: kerneltest
+    object_file: deploymentconfig.yml
+    object_objectname: deploymentconfig.yml

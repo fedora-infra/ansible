@@ -32,27 +32,27 @@
     imagename: planet
 
   - role: openshift/object
-    app: planet
-    template: buildconfig.yml
-    objectname: buildconfig.yml
+    object_app: planet
+    object_template: buildconfig.yml
+    object_objectname: buildconfig.yml
 
   - role: openshift/object
-    app: planet
-    template: configmap.yml
-    objectname: configmap.yml
+    object_app: planet
+    object_template: configmap.yml
+    object_objectname: configmap.yml
 
   - role: openshift/ipa-client
     app: planet
 
   - role: openshift/object
-    app: planet
-    file: service.yml
-    objectname: service.yml
+    object_app: planet
+    object_file: service.yml
+    object_objectname: service.yml
 
   - role: openshift/object
-    app: planet
-    file: pvc.yml
-    objectname: pvc.yml
+    object_app: planet
+    object_file: pvc.yml
+    object_objectname: pvc.yml
 
   - role: openshift/route
     app: planet
@@ -73,14 +73,14 @@
       haproxy.router.openshift.io/timeout: 5m
 
   - role: openshift/object
-    app: planet
-    template: deployment.yml
-    objectname: deployment.yml
+    object_app: planet
+    object_template: deployment.yml
+    object_objectname: deployment.yml
 
   - role: openshift/object
-    app: planet
-    template: cronjob.yml
-    objectname: cronjob.yml
+    object_app: planet
+    object_template: cronjob.yml
+    object_objectname: cronjob.yml
 
   - role: openshift/secret-file
     app: planet

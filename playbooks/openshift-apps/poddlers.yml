@@ -56,9 +56,9 @@
       app: poddlers
 
     - role: openshift/object
-      app: poddlers
-      template: buildconfig.yml
-      objectname: buildconfig.yml
+      object_app: poddlers
+      object_template: buildconfig.yml
+      object_objectname: buildconfig.yml
 
     - role: openshift/secret-file
       app: poddlers
@@ -79,25 +79,23 @@
       privatefile: "rabbitmq/{{env}}/pki/ca.crt"
 
     - role: openshift/object
-      app: poddlers
-      service: poddlers
-      host: "koji{{env_suffix}}.fedoraproject.org"
-      template: secrets.yml
-      objectname: secrets.yml
+      object_app: poddlers
+      object_template: secrets.yml
+      object_objectname: secrets.yml
 
     - role: openshift/object
-      app: poddlers
-      template: cron-playtime.yml
-      objectname: cron-playtime.yml
+      object_app: poddlers
+      object_template: cron-playtime.yml
+      object_objectname: cron-playtime.yml
       tags:
         - cron-job
 
     - role: openshift/object
-      app: poddlers
-      template: deploymentconfig.yml
-      objectname: deploymentconfig.yml
+      object_app: poddlers
+      object_template: deploymentconfig.yml
+      object_objectname: deploymentconfig.yml
 
     - role: openshift/object
-      app: poddlers
-      file: imagestream.yml
-      objectname: imagestream.yml
+      object_app: poddlers
+      object_file: imagestream.yml
+      object_objectname: imagestream.yml

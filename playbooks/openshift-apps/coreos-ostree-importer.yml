@@ -71,29 +71,29 @@
 
   # Fedora Messaging config
   - role: openshift/object
-    app: coreos-ostree-importer
-    template: configmap.yml
-    objectname: configmap.yml
+    object_app: coreos-ostree-importer
+    object_template: configmap.yml
+    object_objectname: configmap.yml
 
   - role: openshift/object
-    app: coreos-ostree-importer
-    template: imagestream.yml
-    objectname: imagestream.yml
+    object_app: coreos-ostree-importer
+    object_template: imagestream.yml
+    object_objectname: imagestream.yml
 
   - role: openshift/object
-    app: coreos-ostree-importer
-    template: buildconfig.yml
-    objectname: buildconfig.yml
+    object_app: coreos-ostree-importer
+    object_template: buildconfig.yml
+    object_objectname: buildconfig.yml
 
   - role: openshift/object
-    app: coreos-ostree-importer
-    template: deploymentconfig.yml
-    objectname: deploymentconfig.yml
+    object_app: coreos-ostree-importer
+    object_template: deploymentconfig.yml
+    object_objectname: deploymentconfig.yml
 
   - role: openshift/object
-    app: coreos-ostree-importer
-    template: pvc.yml
-    objectname: pvc.yml
+    object_app: coreos-ostree-importer
+    object_template: pvc.yml
+    object_objectname: pvc.yml
 
   ###############################################
   # actions to delete the project from OpenShift

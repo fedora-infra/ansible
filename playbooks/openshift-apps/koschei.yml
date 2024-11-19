@@ -41,8 +41,8 @@
       ansible.builtin.include_role:
         name: openshift/object
       vars:
-        template: "{{ item }}.yml"
-        objectname: "{{ item }}.yml"
+        object_template: "{{ item }}.yml"
+        object_objectname: "{{ item }}.yml"
       with_items:
         - imagestream
         - frontend-config
@@ -56,13 +56,13 @@
       ansible.builtin.include_role:
         name: openshift/object
       vars:
-        template: backend-deployment.yml
-        objectname: "{{ item.name }}-deployment.yml"
-        service: "{{ item.name }}"
-        min_cpu: "{{ item.cpu[0] }}"
-        max_cpu: "{{ item.cpu[1] }}"
-        min_mem: "{{ item.memory[0] }}"
-        max_mem: "{{ item.memory[1] }}"
+        object_template: backend-deployment.yml
+        object_objectname: "{{ item.name }}-deployment.yml"
+        object_service: "{{ item.name }}"
+        object_min_cpu: "{{ item.cpu[0] }}"
+        object_max_cpu: "{{ item.cpu[1] }}"
+        object_min_mem: "{{ item.memory[0] }}"
+        object_max_mem: "{{ item.memory[1] }}"
       with_items: "{{ koschei_backend_services }}"
       loop_control:
         label: "{{ item.name }}"
@@ -71,11 +71,11 @@
       ansible.builtin.include_role:
         name: openshift/object
       vars:
-        template: cronjob.yml
-        objectname: "{{ item.name }}-cronjob.yml"
-        name: "{{ item.name }}"
-        schedule: "{{ item.schedule }}"
-        command: "{{ item.command }}"
+        object_template: cronjob.yml
+        object_objectname: "{{ item.name }}-cronjob.yml"
+        object_name: "{{ item.name }}"
+        object_schedule: "{{ item.schedule }}"
+        object_command: "{{ item.command }}"
       with_items: "{{ koschei_cron_jobs }}"
       loop_control:
         label: "{{ item.name }}"

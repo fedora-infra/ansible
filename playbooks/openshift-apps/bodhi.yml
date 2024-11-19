@@ -70,9 +70,9 @@
       - apply-appowners
     when: env == "staging"
   - role: openshift/object
-    app: bodhi
-    file: pvc.yml
-    objectname: pvc.yml
+    object_app: bodhi
+    object_file: pvc.yml
+    object_objectname: pvc.yml
   - role: openshift/keytab
     app: bodhi
     key: koji-keytab
@@ -95,36 +95,36 @@
     key: bodhi-key.pem
     privatefile: "rabbitmq/{{env}}/pki/private/bodhi{{env_suffix}}.key"
   - role: openshift/object
-    app: bodhi
-    template: imagestreams-tagged.yml
-    objectname: imagestreams.yml
+    object_app: bodhi
+    object_template: imagestreams-tagged.yml
+    object_objectname: imagestreams.yml
   - role: openshift/imagestream
     app: bodhi
     imagename: bodhi-base
   - role: openshift/object
-    app: bodhi
-    template: buildconfig.yml
-    objectname: buildconfig.yml
+    object_app: bodhi
+    object_template: buildconfig.yml
+    object_objectname: buildconfig.yml
   - role: openshift/start-build
     app: bodhi
     buildname: bodhi-base
   - role: openshift/object
-    app: bodhi
-    template_fullpath: "{{roles_path}}/bodhi2/base/templates/configmap.yml"
-    objectname: configmap.yml
+    object_app: bodhi
+    object_template_fullpath: "{{roles_path}}/bodhi2/base/templates/configmap.yml"
+    object_objectname: configmap.yml
   - role: openshift/object
-    app: bodhi
-    file: service.yml
-    objectname: service.yml
+    object_app: bodhi
+    object_file: service.yml
+    object_objectname: service.yml
   - role: openshift/object
-    app: bodhi
-    file: servicemonitor.yml
-    objectname: servicemonitor.yml
+    object_app: bodhi
+    object_file: servicemonitor.yml
+    object_objectname: servicemonitor.yml
     when: env != "production"
   - role: openshift/object
-    app: bodhi
-    file: podmonitor.yml
-    objectname: podmonitor.yml
+    object_app: bodhi
+    object_file: podmonitor.yml
+    object_objectname: podmonitor.yml
     when: env != "production"
   - role: openshift/route
     app: bodhi
@@ -135,13 +135,13 @@
     annotations:
       haproxy.router.openshift.io/timeout: 180s
   - role: openshift/object
-    app: bodhi
-    template: deploymentconfig.yml
-    objectname: deploymentconfig.yml
+    object_app: bodhi
+    object_template: deploymentconfig.yml
+    object_objectname: deploymentconfig.yml
   - role: openshift/object
-    app: bodhi
-    template: critpathcron.yml
-    objectname: critpathcron.yml
+    object_app: bodhi
+    object_template: critpathcron.yml
+    object_objectname: critpathcron.yml
   - role: openshift/imagestream
     app: bodhi
     imagename: bodhi-critpathcron

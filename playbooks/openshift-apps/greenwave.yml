@@ -52,19 +52,19 @@
     privatefile: "rabbitmq/{{env}}/pki/ca.crt"
 
   - role: openshift/object
-    app: greenwave
-    template: imagestream.yml
-    objectname: imagestream.yml
+    object_app: greenwave
+    object_template: imagestream.yml
+    object_objectname: imagestream.yml
 
   - role: openshift/object
-    app: greenwave
-    template: configmap.yml
-    objectname: configmap.yml
+    object_app: greenwave
+    object_template: configmap.yml
+    object_objectname: configmap.yml
 
   - role: openshift/object
-    app: greenwave
-    file: service.yml
-    objectname: service.yml
+    object_app: greenwave
+    object_file: service.yml
+    object_objectname: service.yml
 
   - role: openshift/route
     app: greenwave
@@ -75,14 +75,14 @@
 
   # TODO -- someday retire this old route in favor of the pretty one above.
   - role: openshift/object
-    app: greenwave
-    file: route.yml
-    objectname: route.yml
+    object_app: greenwave
+    object_file: route.yml
+    object_objectname: route.yml
 
   - role: openshift/object
-    app: greenwave
-    template: deploymentconfig.yml
-    objectname: deploymentconfig.yml
+    object_app: greenwave
+    object_template: deploymentconfig.yml
+    object_objectname: deploymentconfig.yml
     tags:
       - apply-deploymentconfig
 

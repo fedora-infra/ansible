@@ -24,52 +24,52 @@
     imagename: mote
 
   - role: openshift/object
-    template: buildconfig.yml
-    objectname: buildconfig.yml
+    object_template: buildconfig.yml
+    object_objectname: buildconfig.yml
 
   - role: openshift/object
-    template: mote-dc.yml
-    objectname: mote-dc.yml
+    object_template: mote-dc.yml
+    object_objectname: mote-dc.yml
 
   - role: openshift/object
-    template: mote-worker-dc.yml
-    objectname: mote-worker-dc.yml
+    object_template: mote-worker-dc.yml
+    object_objectname: mote-worker-dc.yml
 
   - role: openshift/object
-    template: fedmsg-dc.yml
-    objectname: fedmsg-dc.yml
+    object_template: fedmsg-dc.yml
+    object_objectname: fedmsg-dc.yml
 
   - role: openshift/object
-    template: redis-is.yml
-    objectname: redis-is.yml
+    object_template: redis-is.yml
+    object_objectname: redis-is.yml
 
   - role: openshift/object
-    template: redis-dc.yml
-    objectname: redis-dc.yml
+    object_template: redis-dc.yml
+    object_objectname: redis-dc.yml
 
   - role: openshift/object
-    template: redis-svc.yml
-    objectname: redis-svc.yml
+    object_template: redis-svc.yml
+    object_objectname: redis-svc.yml
 
   - role: openshift/object
-    template: mote-svc.yml
-    objectname: mote-svc.yml
+    object_template: mote-svc.yml
+    object_objectname: mote-svc.yml
 
   - role: openshift/object
-    template: mote-cm.yml
-    objectname: mote-cm.yml
+    object_template: mote-cm.yml
+    object_objectname: mote-cm.yml
 
   - role: openshift/object
-    template: secret.yml
-    objectname: secret.yml
+    object_template: secret.yml
+    object_objectname: secret.yml
 
   - role: openshift/object
-    template: fedmsg-cm.yml
-    objectname: fedmsg-cm.yml
+    object_template: fedmsg-cm.yml
+    object_objectname: fedmsg-cm.yml
 
   - role: openshift/object
-    template: pvc.yml
-    objectname: pvc.yml
+    object_template: pvc.yml
+    object_objectname: pvc.yml
 
   - role: openshift/route
     routename: mote

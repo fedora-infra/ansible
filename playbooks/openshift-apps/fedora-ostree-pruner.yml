@@ -23,24 +23,24 @@
     - kevin
 
   - role: openshift/object
-    app: fedora-ostree-pruner
-    template: imagestream.yml
-    objectname: imagestream.yml
+    object_app: fedora-ostree-pruner
+    object_template: imagestream.yml
+    object_objectname: imagestream.yml
 
   - role: openshift/object
-    app: fedora-ostree-pruner
-    template: buildconfig.yml
-    objectname: buildconfig.yml
+    object_app: fedora-ostree-pruner
+    object_template: buildconfig.yml
+    object_objectname: buildconfig.yml
 
   - role: openshift/object
-    app: fedora-ostree-pruner
-    template: deploymentconfig.yml
-    objectname: deploymentconfig.yml
+    object_app: fedora-ostree-pruner
+    object_template: deploymentconfig.yml
+    object_objectname: deploymentconfig.yml
 
   - role: openshift/object
-    app: fedora-ostree-pruner
-    template: pvc.yml
-    objectname: pvc.yml
+    object_app: fedora-ostree-pruner
+    object_template: pvc.yml
+    object_objectname: pvc.yml
 
   ###############################################
   # actions to delete the project from OpenShift

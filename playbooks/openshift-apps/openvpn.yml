@@ -21,42 +21,42 @@
       - apply-appowners
 
   - role: openshift/object
-    objectname: imagestream.yml
-    template: imagestream.yml
+    object_objectname: imagestream.yml
+    object_template: imagestream.yml
 
   - role: openshift/object
-    objectname: buildconfig.yml
-    template: buildconfig.yml
+    object_objectname: buildconfig.yml
+    object_template: buildconfig.yml
 
   - role: openshift/object
-    template: serviceaccount.yml
-    objectname: serviceaccount.yml
+    object_template: serviceaccount.yml
+    object_objectname: serviceaccount.yml
 
   - role: openshift/object
-    template: scc.yml
-    objectname: scc.yml
+    object_template: scc.yml
+    object_objectname: scc.yml
 
   - role: openshift/object
-    template: scc_role.yml
-    objectname: scc_role.yml
+    object_template: scc_role.yml
+    object_objectname: scc_role.yml
 
   - role: openshift/object
-    template: scc_rolebinding.yml
-    objectname: scc_rolebinding.yml
+    object_template: scc_rolebinding.yml
+    object_objectname: scc_rolebinding.yml
 
   # load openVPN client certs for each node in ocp_nodes into ocp secret
   # expect certs to be generated in {{private}}/files/vpn/pki/issued/
   - role: openshift/object
-    template: secrets.yml
-    objectname: secrets.yml
+    object_template: secrets.yml
+    object_objectname: secrets.yml
 
   - role: openshift/object
-    template: configmap.yml
-    objectname: configmap.yml
+    object_template: configmap.yml
+    object_objectname: configmap.yml
 
   - role: openshift/object
-    template: deployment.yml
-    objectname: deployment.yml
+    object_template: deployment.yml
+    object_objectname: deployment.yml
 
   - role: openshift/start-build
     buildname: openvpn

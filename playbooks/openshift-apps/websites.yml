@@ -22,18 +22,18 @@
 
   # legacy websites
   - role: openshift/object
-    app: websites
-    file: pvc.yml
-    objectname: pvc.yml
+    object_app: websites
+    object_file: pvc.yml
+    object_objectname: pvc.yml
 
   - role: openshift/imagestream
     app: websites
     imagename: fedora-websites
 
   - role: openshift/object
-    app: websites
-    template: fedora-websites-bc.yml
-    objectname: fedora-websites-bc.yml
+    object_app: websites
+    object_template: fedora-websites-bc.yml
+    object_objectname: fedora-websites-bc.yml
 
   - role: openshift/start-build
     app: websites
@@ -41,9 +41,9 @@
     objectname: fedora-websites
 
   - role: openshift/object
-    app: websites
-    template: fedora-websites-cron.yml
-    objectname: fedora-websites-cron.yml
+    object_app: websites
+    object_template: fedora-websites-cron.yml
+    object_objectname: fedora-websites-cron.yml
 
   # New websites 3.0
   - role: openshift/imagestream
@@ -51,9 +51,9 @@
     imagename: builder
 
   - role: openshift/object
-    app: websites
-    template: buildconfig.yml
-    objectname: buildconfig.yml
+    object_app: websites
+    object_template: buildconfig.yml
+    object_objectname: buildconfig.yml
 
   - role: openshift/start-build
     app: websites
@@ -61,11 +61,11 @@
     objectname: websites-build
 
   - role: openshift/object
-    app: websites
-    file: obc.yml
-    objectname: obc.yml
+    object_app: websites
+    object_file: obc.yml
+    object_objectname: obc.yml
 
   - role: openshift/object
-    app: websites
-    template: deployment.yml
-    objectname: deployment.yml
+    object_app: websites
+    object_template: deployment.yml
+    object_objectname: deployment.yml

@@ -49,24 +49,24 @@
     privatefile: "rabbitmq/{{env}}/pki/ca.crt"
 
   - role: openshift/object
-    app: monitor-gating
-    template: imagestream.yml
-    objectname: imagestream.yml
+    object_app: monitor-gating
+    object_template: imagestream.yml
+    object_objectname: imagestream.yml
 
   - role: openshift/object
-    app: monitor-gating
-    template: buildconfig.yml
-    objectname: buildconfig.yml
+    object_app: monitor-gating
+    object_template: buildconfig.yml
+    object_objectname: buildconfig.yml
 
   - role: openshift/object
-    app: monitor-gating
-    template: secret.yml
-    objectname: secret.yml
+    object_app: monitor-gating
+    object_template: secret.yml
+    object_objectname: secret.yml
 
   - role: openshift/object
-    app: monitor-gating
-    template: configmap.yml
-    objectname: configmap.yml
+    object_app: monitor-gating
+    object_template: configmap.yml
+    object_objectname: configmap.yml
 
   - role: openshift/secret-file
     app: monitor-gating
@@ -75,9 +75,9 @@
     privatefile: "git-ssh/monitor_gating"
 
   - role: openshift/object
-    app: monitor-gating
-    template: deploymentconfig.yml
-    objectname: deploymentconfig.yml
+    object_app: monitor-gating
+    object_template: deploymentconfig.yml
+    object_objectname: deploymentconfig.yml
 
   - role: openshift/start-build
     app: monitor-gating
@@ -87,31 +87,31 @@
       - build
 
   - role: openshift/object
-    app: monitor-gating
-    template: dashboard_config.yml
-    objectname: dashboard_config.yml
+    object_app: monitor-gating
+    object_template: dashboard_config.yml
+    object_objectname: dashboard_config.yml
 
   - role: openshift/object
-    app: monitor-gating
-    template: dashboard_configmap.yml
-    objectname: dashboard_configmap.yml
+    object_app: monitor-gating
+    object_template: dashboard_configmap.yml
+    object_objectname: dashboard_configmap.yml
 
   - role: openshift/object
-    app: monitor-gating
-    template: dashboard_configmap.yml
-    objectname: dashboard_configmap.yml
+    object_app: monitor-gating
+    object_template: dashboard_configmap.yml
+    object_objectname: dashboard_configmap.yml
 
   - role: openshift/object
-    app: monitor-gating
-    template: dashboard_route.yml
-    objectname: dashboard_route.yml
+    object_app: monitor-gating
+    object_template: dashboard_route.yml
+    object_objectname: dashboard_route.yml
 
   - role: openshift/object
-    app: monitor-gating
-    template: dashboard_serviceaccount.yml
-    objectname: dashboard_serviceaccount.yml
+    object_app: monitor-gating
+    object_template: dashboard_serviceaccount.yml
+    object_objectname: dashboard_serviceaccount.yml
 
   - role: openshift/object
-    app: monitor-gating
-    template: dashboard_deploymentconfig.yml
-    objectname: dashboard_deploymentconfig.yml
+    object_app: monitor-gating
+    object_template: dashboard_deploymentconfig.yml
+    object_objectname: dashboard_deploymentconfig.yml

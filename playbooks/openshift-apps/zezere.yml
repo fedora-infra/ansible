@@ -19,16 +19,16 @@
     app: zezere
     imagename: zezere
   - role: openshift/object
-    app: zezere
-    objectname: buildconfig.yml
-    file: buildconfig.yml
+    object_app: zezere
+    object_objectname: buildconfig.yml
+    object_file: buildconfig.yml
   - role: openshift/start-build
     app: zezere
     buildname: zezere-build
   - role: openshift/object
-    app: zezere
-    file: service.yml
-    objectname: service.yml
+    object_app: zezere
+    object_file: service.yml
+    object_objectname: service.yml
   - role: openshift/route
     app: zezere
     routename: zezere
@@ -38,13 +38,13 @@
     annotations:
       haproxy.router.openshift.io/set-forwarded-headers: append
   - role: openshift/object
-    app: zezere
-    template: secret.yml
-    objectname: secret.yml
+    object_app: zezere
+    object_template: secret.yml
+    object_objectname: secret.yml
   - role: openshift/object
-    app: zezere
-    template: deploymentconfig.yml
-    objectname: deploymentconfig.yml
+    object_app: zezere
+    object_template: deploymentconfig.yml
+    object_objectname: deploymentconfig.yml
   - role: openshift/rollout
     app: zezere
     dcname: zezere

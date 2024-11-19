@@ -94,34 +94,34 @@
         - apply-appowners
 
     - role: openshift/object
-      app: badges
-      file: imagestream.yml
-      objectname: imagestream.yml
+      object_app: badges
+      object_file: imagestream.yml
+      object_objectname: imagestream.yml
 
     - role: openshift/object
-      app: badges
-      template: buildconfig.yml
-      objectname: buildconfig.yml
+      object_app: badges
+      object_template: buildconfig.yml
+      object_objectname: buildconfig.yml
 
     - role: openshift/object
-      app: badges
-      template: secrets.yml
-      objectname: secrets.yml
+      object_app: badges
+      object_template: secrets.yml
+      object_objectname: secrets.yml
 
     - role: openshift/object
-      app: badges
-      template: configmap.yml
-      objectname: configmap.yml
+      object_app: badges
+      object_template: configmap.yml
+      object_objectname: configmap.yml
 
     - role: openshift/object
-      app: badges
-      file: service.yml
-      objectname: service.yml
+      object_app: badges
+      object_file: service.yml
+      object_objectname: service.yml
 
     - role: openshift/object
-      app: badges
-      file: storage.yml
-      objectname: storage.yml
+      object_app: badges
+      object_file: storage.yml
+      object_objectname: storage.yml
 
     # Routes
     - role: openshift/route
@@ -180,19 +180,19 @@
 
     # Deployment config
     - role: openshift/object
-      app: badges
-      template: deploymentconfig.yml
-      objectname: deploymentconfig.yml
+      object_app: badges
+      object_template: deploymentconfig.yml
+      object_objectname: deploymentconfig.yml
 
     # Cron jobs
     - role: openshift/object
-      app: badges
-      template: cron-award.yml
-      objectname: cron-award.yml
+      object_app: badges
+      object_template: cron-award.yml
+      object_objectname: cron-award.yml
     - role: openshift/object
-      app: badges
-      template: cron-update-rules.yml
-      objectname: cron-update-rules.yml
+      object_app: badges
+      object_template: cron-update-rules.yml
+      object_objectname: cron-update-rules.yml
 
     - role: openshift/start-build
       app: badges

@@ -25,14 +25,14 @@
       imagename: ipsilon-website
 
     - role: openshift/object
-      app: ipsilon-website
-      template: buildconfig.yml
-      objectname: buildconfig.yml
+      object_app: ipsilon-website
+      object_template: buildconfig.yml
+      object_objectname: buildconfig.yml
 
     - role: openshift/object
-      app: ipsilon-website
-      file: service.yml
-      objectname: service.yml
+      object_app: ipsilon-website
+      object_file: service.yml
+      object_objectname: service.yml
 
     - role: openshift/route
       app: ipsilon-website
@@ -53,6 +53,6 @@
         haproxy.router.openshift.io/timeout: 5m
 
     - role: openshift/object
-      app: ipsilon-website
-      template: deploymentconfig.yml
-      objectname: deploymentconfig.yml
+      object_app: ipsilon-website
+      object_template: deploymentconfig.yml
+      object_objectname: deploymentconfig.yml

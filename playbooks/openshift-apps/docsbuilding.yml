@@ -33,32 +33,32 @@
     imagename: builder
 
   - role: openshift/object
-    app: docsbuilding
-    objectname: buildconfig.yml
-    template: buildconfig.yml
+    object_app: docsbuilding
+    object_objectname: buildconfig.yml
+    object_template: buildconfig.yml
 
   - role: openshift/start-build
     app: docsbuilding
     buildname: builder-build
 
   - role: openshift/object
-    app: docsbuilding
-    template: cron.yml
-    objectname: cron.yml
+    object_app: docsbuilding
+    object_template: cron.yml
+    object_objectname: cron.yml
     tags:
       - deploy-cronjob
 
   - role: openshift/object
-    app: docsbuilding
-    template: cron-translated.yml
-    objectname: cron-translated.yml
+    object_app: docsbuilding
+    object_template: cron-translated.yml
+    object_objectname: cron-translated.yml
     tags:
       - deploy-cronjob
 
   - role: openshift/object
-    app: docsbuilding
-    file: pvc.yml
-    objectname: pvc.yml
+    object_app: docsbuilding
+    object_file: pvc.yml
+    object_objectname: pvc.yml
 
 
   ###############################################

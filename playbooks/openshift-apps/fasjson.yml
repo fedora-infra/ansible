@@ -74,22 +74,22 @@
     imagename: fasjson
 
   - role: openshift/object
-    app: fasjson
-    template: buildconfig.yml
-    objectname: buildconfig.yml
+    object_app: fasjson
+    object_template: buildconfig.yml
+    object_objectname: buildconfig.yml
 
   - role: openshift/object
-    app: fasjson
-    template: configmap.yml
-    objectname: configmap.yml
+    object_app: fasjson
+    object_template: configmap.yml
+    object_objectname: configmap.yml
 
   - role: openshift/ipa-client
     app: fasjson
 
   - role: openshift/object
-    app: fasjson
-    file: service.yml
-    objectname: service.yml
+    object_app: fasjson
+    object_file: service.yml
+    object_objectname: service.yml
 
   - role: openshift/route
     app: fasjson
@@ -101,14 +101,14 @@
       haproxy.router.openshift.io/timeout: 5m
 
   - role: openshift/object
-    app: fasjson
-    template: secret-webhook.yml
-    objectname: secret-webhook.yml
+    object_app: fasjson
+    object_template: secret-webhook.yml
+    object_objectname: secret-webhook.yml
 
   - role: openshift/object
-    app: fasjson
-    template: deploymentconfig.yml
-    objectname: deploymentconfig.yml
+    object_app: fasjson
+    object_template: deploymentconfig.yml
+    object_objectname: deploymentconfig.yml
 
   # - role: openshift/start-build
   #   app: fasjson

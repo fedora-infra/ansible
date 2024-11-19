@@ -20,105 +20,105 @@
     - asaleh
 
 #  - role: openshift/object
-#    app: monitor-dashboard
-#    template: configmap.yml
-#    objectname: configmap.yml
+#    object_app: monitor-dashboard
+#    object_template: configmap.yml
+#    object_objectname: configmap.yml
 
 #  - role: openshift/object
-#    app: monitor-dashboard
-#    file: notifiers.yaml
-#    objectname: notifiers.yml
+#    object_app: monitor-dashboard
+#    object_file: notifiers.yaml
+#    object_objectname: notifiers.yml
 
 #  - role: openshift/object
-#    app: monitor-dashboard
-#    file: dashboard_provision_config.yml
-#    objectname: dashboard_provision_config.yml
+#    object_app: monitor-dashboard
+#    object_file: dashboard_provision_config.yml
+#    object_objectname: dashboard_provision_config.yml
 
 #  - role: openshift/object
-#    app: monitor-dashboard
-#    template: dashboard_config.yml
-#    objectname: dashboard_config.yml
-
-
-#  - role: openshift/object
-#    app: monitor-dashboard
-#    template: buildconfig.yml
-#    objectname: buildconfig.yml
+#    object_app: monitor-dashboard
+#    object_template: dashboard_config.yml
+#    object_objectname: dashboard_config.yml
 
 
 #  - role: openshift/object
-#    app: monitor-dashboard
-#    file: imagestream.yml
-#    objectname: imagestream.yml
+#    object_app: monitor-dashboard
+#    object_template: buildconfig.yml
+#    object_objectname: buildconfig.yml
+
 
 #  - role: openshift/object
-#    app: monitor-dashboard
-#    template: datagrepper_configmap.yml
-#    objectname: datagrepper_configmap.yml
+#    object_app: monitor-dashboard
+#    object_file: imagestream.yml
+#    object_objectname: imagestream.yml
+
+#  - role: openshift/object
+#    object_app: monitor-dashboard
+#    object_template: datagrepper_configmap.yml
+#    object_objectname: datagrepper_configmap.yml
 
   - role: openshift/object
-    app: monitor-dashboard
-    file: service.yml
-    objectname: service.yml
+    object_app: monitor-dashboard
+    object_file: service.yml
+    object_objectname: service.yml
 
 #  - role: openshift/object
-#    app: monitor-dashboard
-#    file: datagrepper_service.yml
-#    objectname: datagrepper_service.yml
+#    object_app: monitor-dashboard
+#    object_file: datagrepper_service.yml
+#    object_objectname: datagrepper_service.yml
 
 #  - role: openshift/object
-#    app: monitor-dashboard
-#    file: postgrest_service.yml
-#    objectname: postgrest_service.yml
+#    object_app: monitor-dashboard
+#    object_file: postgrest_service.yml
+#    object_objectname: postgrest_service.yml
 
 #  - role: openshift/object
-#    app: monitor-dashboard
-#    file: prest_service.yml
-#    objectname: prest_service.yml
+#    object_app: monitor-dashboard
+#    object_file: prest_service.yml
+#    object_objectname: prest_service.yml
 
   - role: openshift/object
-    app: monitor-dashboard
-    file: route_serviceaccount.yml
-    objectname: route_serviceaccount.yml
+    object_app: monitor-dashboard
+    object_file: route_serviceaccount.yml
+    object_objectname: route_serviceaccount.yml
 
 # Route already present, will figure updating later
   - role: openshift/object
-    app: monitor-dashboard
-    file: route.yml
-    objectname: route.yml
+    object_app: monitor-dashboard
+    object_file: route.yml
+    object_objectname: route.yml
 
 #  - role: openshift/object
-#    app: monitor-dashboard
-#    file: datagrepper_route.yml
-#    objectname: datagrepper_route.yml
+#    object_app: monitor-dashboard
+#    object_file: datagrepper_route.yml
+#    object_objectname: datagrepper_route.yml
 
 #  - role: openshift/object
-#    app: monitor-dashboard
-#    file: postgrest_route.yml
-#    objectname: postgrest_route.yml
+#    object_app: monitor-dashboard
+#    object_file: postgrest_route.yml
+#    object_objectname: postgrest_route.yml
 
 #  - role: openshift/object
-#    app: monitor-dashboard
-#    file: prest_route.yml
-#    objectname: prest_route.yml
+#    object_app: monitor-dashboard
+#    object_file: prest_route.yml
+#    object_objectname: prest_route.yml
 
 #  - role: openshift/object
-#    app: monitor-dashboard
-#    template: postgrest_deploymentconfig.yml
-#    objectname: postgrest_deploymentconfig.yml
+#    object_app: monitor-dashboard
+#    object_template: postgrest_deploymentconfig.yml
+#    object_objectname: postgrest_deploymentconfig.yml
 
 #  - role: openshift/object
-#    app: monitor-dashboard
-#    template: prest_deploymentconfig.yml
-#    objectname: prest_deploymentconfig.yml
+#    object_app: monitor-dashboard
+#    object_template: prest_deploymentconfig.yml
+#    object_objectname: prest_deploymentconfig.yml
 
 
 #  - role: openshift/object
-#    app: monitor-dashboard
-#    template: datagrepper_deploymentconfig.yml
-#    objectname: datagrepper_deploymentconfig.yml
+#    object_app: monitor-dashboard
+#    object_template: datagrepper_deploymentconfig.yml
+#    object_objectname: datagrepper_deploymentconfig.yml
 
   - role: openshift/object
-    app: monitor-dashboard
-    template: deploymentconfig.yml
-    objectname: deploymentconfig.yml
+    object_app: monitor-dashboard
+    object_template: deploymentconfig.yml
+    object_objectname: deploymentconfig.yml

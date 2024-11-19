@@ -123,30 +123,30 @@
     privatefile: "rabbitmq/{{env}}/pki/issued/messaging-bridge{{env_suffix}}.fedoraproject.org.crt"
 
   - role: openshift/object
-    app: messaging-bridges
-    file: imagestream.yml
-    objectname: imagestream.yml
+    object_app: messaging-bridges
+    object_file: imagestream.yml
+    object_objectname: imagestream.yml
   - role: openshift/object
-    app: messaging-bridges
-    template: buildconfig.yml
-    objectname: buildconfig.yml
+    object_app: messaging-bridges
+    object_template: buildconfig.yml
+    object_objectname: buildconfig.yml
 
   - role: openshift/start-build
     app: messaging-bridges
     buildname: messaging-bridges-build
 
   - role: openshift/object
-    app: messaging-bridges
-    template: configmap.yml
-    objectname: configmap.yml
+    object_app: messaging-bridges
+    object_template: configmap.yml
+    object_objectname: configmap.yml
   - role: openshift/object
-    app: messaging-bridges
-    file: service.yml
-    objectname: service.yml
+    object_app: messaging-bridges
+    object_file: service.yml
+    object_objectname: service.yml
   - role: openshift/object
-    app: messaging-bridges
-    file: deploymentconfig.yml
-    objectname: deploymentconfig.yml
+    object_app: messaging-bridges
+    object_file: deploymentconfig.yml
+    object_objectname: deploymentconfig.yml
 
   - role: openshift/rollout
     app: messaging-bridges

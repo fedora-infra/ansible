@@ -21,14 +21,14 @@
     - kevin
 
   - role: openshift/object
-    app: fedocal
-    template: imagestream.yml
-    objectname: imagestream.yml
+    object_app: fedocal
+    object_template: imagestream.yml
+    object_objectname: imagestream.yml
 
   - role: openshift/object
-    app: fedocal
-    template: buildconfig.yml
-    objectname: buildconfig.yml
+    object_app: fedocal
+    object_template: buildconfig.yml
+    object_objectname: buildconfig.yml
 
   - role: openshift/secret-file
     app: fedocal
@@ -49,14 +49,14 @@
     privatefile: "rabbitmq/{{env}}/pki/ca.crt"
 
   - role: openshift/object
-    app: fedocal
-    template: secret.yml
-    objectname: secret.yml
+    object_app: fedocal
+    object_template: secret.yml
+    object_objectname: secret.yml
 
   - role: openshift/object
-    app: fedocal
-    template: configmap.yml
-    objectname: configmap.yml
+    object_app: fedocal
+    object_template: configmap.yml
+    object_objectname: configmap.yml
 
   - role: openshift/start-build
     app: fedocal
@@ -64,9 +64,9 @@
     objectname: fedocal-build
 
   - role: openshift/object
-    app: fedocal
-    file: service.yml
-    objectname: service.yml
+    object_app: fedocal
+    object_file: service.yml
+    object_objectname: service.yml
 
   - role: openshift/route
     app: fedocal
@@ -76,12 +76,12 @@
     servicename: fedocal
 
   - role: openshift/object
-    app: fedocal
-    file: deploymentconfig.yml
-    objectname: deploymentconfig.yml
+    object_app: fedocal
+    object_file: deploymentconfig.yml
+    object_objectname: deploymentconfig.yml
 
   - role: openshift/object
-    app: fedocal
-    file: cron.yml
-    objectname: cron.yml
+    object_app: fedocal
+    object_file: cron.yml
+    object_objectname: cron.yml
     when: env != 'staging'

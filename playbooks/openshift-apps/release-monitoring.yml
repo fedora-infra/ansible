@@ -35,32 +35,32 @@
     key: fedora-messaging-release-monitoring.crt
     privatefile: "rabbitmq/{{env}}/pki/issued/anitya{{env_suffix}}.crt"
   - role: openshift/object
-    app: release-monitoring
-    file: imagestream.yml
-    objectname: imagestream.yml
+    object_app: release-monitoring
+    object_file: imagestream.yml
+    object_objectname: imagestream.yml
   - role: openshift/object
-    app: release-monitoring
-    template: buildconfig.yml
-    objectname: buildconfig.yml
+    object_app: release-monitoring
+    object_template: buildconfig.yml
+    object_objectname: buildconfig.yml
   - role: openshift/start-build
     app: release-monitoring
     buildname: release-monitoring-web-build
   - role: openshift/object
-    app: release-monitoring
-    template: configmap.yml
-    objectname: configmap.yml
+    object_app: release-monitoring
+    object_template: configmap.yml
+    object_objectname: configmap.yml
   - role: openshift/object
-    app: release-monitoring
-    file: service.yml
-    objectname: service.yml
+    object_app: release-monitoring
+    object_file: service.yml
+    object_objectname: service.yml
   - role: openshift/object
-    app: release-monitoring
-    template: route.yml
-    objectname: route.yml
+    object_app: release-monitoring
+    object_template: route.yml
+    object_objectname: route.yml
   - role: openshift/object
-    app: release-monitoring
-    file: deploymentconfig.yml
-    objectname: deploymentconfig.yml
+    object_app: release-monitoring
+    object_file: deploymentconfig.yml
+    object_objectname: deploymentconfig.yml
   - role: openshift/rollout
     app: release-monitoring
     dcname: release-monitoring-web

@@ -43,17 +43,17 @@
       - apply-appowners
     when: env == "staging"
   - role: openshift/object
-    app: openscanhub
-    template: pvc-var-lib-osh.yml
-    objectname: pvc-var-lib-osh
+    object_app: openscanhub
+    object_template: pvc-var-lib-osh.yml
+    object_objectname: pvc-var-lib-osh
   - role: openshift/object
-    app: openscanhub
-    template: settings-local-configmap.yml
-    objectname: settings-local-configmap
+    object_app: openscanhub
+    object_template: settings-local-configmap.yml
+    object_objectname: settings-local-configmap
   - role: openshift/object
-    app: openscanhub
-    template: osh-hub-httpd-configmap.yml
-    objectname: osh-hub-httpd-configmap
+    object_app: openscanhub
+    object_template: osh-hub-httpd-configmap.yml
+    object_objectname: osh-hub-httpd-configmap
   - role: openshift/keytab
     app: openscanhub
     key: service.keytab
@@ -69,69 +69,69 @@
     host: "openscanhub.fedoraproject.org"
     when: env == "production"
   - role: openshift/object
-    app: openscanhub
-    template: deployment-fedora-osh-hub.yml
-    objectname: deployment-fedora-osh-hub
+    object_app: openscanhub
+    object_template: deployment-fedora-osh-hub.yml
+    object_objectname: deployment-fedora-osh-hub
   - role: openshift/object
-    app: openscanhub
-    template: route-fedora-osh-hub.yml
-    objectname: route-fedora-osh-hub
+    object_app: openscanhub
+    object_template: route-fedora-osh-hub.yml
+    object_objectname: route-fedora-osh-hub
   - role: openshift/object
-    app: openscanhub
-    file: service-fedora-osh-hub.yml
-    objectname: service-fedora-osh-hub
+    object_app: openscanhub
+    object_file: service-fedora-osh-hub.yml
+    object_objectname: service-fedora-osh-hub
 
   # Configurations for redis.
   - role: openshift/object
-    app: openscanhub
-    template: pvc-var-lib-redis-data.yml
-    objectname: pvc-var-lib-redis-data
+    object_app: openscanhub
+    object_template: pvc-var-lib-redis-data.yml
+    object_objectname: pvc-var-lib-redis-data
   - role: openshift/object
-    app: openscanhub
-    file: deployment-redis.yml
-    objectname: deployment-redis
+    object_app: openscanhub
+    object_file: deployment-redis.yml
+    object_objectname: deployment-redis
   - role: openshift/object
-    app: openscanhub
-    file: route-redis.yml
-    objectname: route-redis
+    object_app: openscanhub
+    object_file: route-redis.yml
+    object_objectname: route-redis
   - role: openshift/object
-    app: openscanhub
-    file: service-redis.yml
-    objectname: service-redis
+    object_app: openscanhub
+    object_file: service-redis.yml
+    object_objectname: service-redis
 
   # Configurations for resalloc-server.
   - role: openshift/object
-    app: openscanhub
-    template: etc-resallocserver-server-configmap.yml
-    objectname: etc-resallocserver-server-configmap
+    object_app: openscanhub
+    object_template: etc-resallocserver-server-configmap.yml
+    object_objectname: etc-resallocserver-server-configmap
   - role: openshift/object
-    app: openscanhub
-    template: etc-resallocserver-pools-configmap.yml
-    objectname: etc-resallocserver-pools-configmap
+    object_app: openscanhub
+    object_template: etc-resallocserver-pools-configmap.yml
+    object_objectname: etc-resallocserver-pools-configmap
   - role: openshift/object
-    app: openscanhub
-    template: vm-provisioning-configmap.yml
-    objectname: vm-provisioning-configmap
+    object_app: openscanhub
+    object_template: vm-provisioning-configmap.yml
+    object_objectname: vm-provisioning-configmap
   - role: openshift/object
-    app: openscanhub
-    template: aws-credentials-configmap.yml
-    objectname: aws-credentials-configmap
+    object_app: openscanhub
+    object_template: aws-credentials-configmap.yml
+    object_objectname: aws-credentials-configmap
   - role: openshift/object
-    app: openscanhub
-    template: aws-openscanhub-key.yml
-    objectname: aws-openscanhub-key
+    object_app: openscanhub
+    object_template: aws-openscanhub-key.yml
+    object_objectname: aws-openscanhub-key
   - role: openshift/object
-    app: openscanhub
-    template: deployment-resalloc-server.yml
-    objectname: deployment-resalloc-server
+    object_app: openscanhub
+    object_template: deployment-resalloc-server.yml
+    object_objectname: deployment-resalloc-server
   - role: openshift/object
-    app: openscanhub
-    template: route-resalloc-server.yml
-    objectname: route-resalloc-server
+    object_app: openscanhub
+    object_template: route-resalloc-server.yml
+    object_objectname: route-resalloc-server
   - role: openshift/object
-    app: openscanhub
-    template: service-resalloc-server.yml
-    objectname: service-resalloc-server
+    object_app: openscanhub
+    object_template: service-resalloc-server.yml
+    object_objectname: service-resalloc-server
 
   # Configurations for Fedora messaging
   - role: rabbit/user
@@ -163,9 +163,9 @@
     key: fedora-messaging-openscanhub.crt
     privatefile: "rabbitmq/{{env}}/pki/issued/openscanhub{{env_suffix}}.crt"
   - role: openshift/object
-    app: openscanhub
-    template: fedora-messaging-configmap.yml
-    objectname: fedora-messaging-configmap
+    object_app: openscanhub
+    object_template: fedora-messaging-configmap.yml
+    object_objectname: fedora-messaging-configmap
 
     # sudo rbac-playbook -l staging -t delete openshift-apps/openscanhub.yml
   - role: openshift/object-delete

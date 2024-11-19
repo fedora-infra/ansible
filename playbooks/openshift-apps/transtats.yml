@@ -16,23 +16,23 @@
     project_appowners:
     - suanand
   - role: openshift/object
-    app: transtats
-    objectname: secret.yml
-    template: secret.yml
+    object_app: transtats
+    object_objectname: secret.yml
+    object_template: secret.yml
   - role: openshift/imagestream
     app: transtats
     imagename: transtats
   - role: openshift/object
-    app: transtats
-    template: buildconfig.yml
-    objectname: buildconfig.yml
+    object_app: transtats
+    object_template: buildconfig.yml
+    object_objectname: buildconfig.yml
   - role: openshift/start-build
     app: transtats
     buildname: transtats-build
   - role: openshift/object
-    app: transtats
-    file: service.yml
-    objectname: service.yml
+    object_app: transtats
+    object_file: service.yml
+    object_objectname: service.yml
   - role: openshift/route
     app: transtats
     routename: transtats-web
@@ -43,9 +43,9 @@
     annotations:
       haproxy.router.openshift.io/timeout: 8m
   - role: openshift/object
-    app: transtats
-    file: deploymentconfig.yml
-    objectname: deploymentconfig.yml
+    object_app: transtats
+    object_file: deploymentconfig.yml
+    object_objectname: deploymentconfig.yml
   - role: openshift/rollout
     app: transtats
     dcname: transtats-web

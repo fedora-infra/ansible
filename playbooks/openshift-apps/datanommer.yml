@@ -64,21 +64,21 @@
     privatefile: "rabbitmq/{{env}}/pki/private/datanommer{{env_suffix}}.key"
 
   - role: openshift/object
-    app: datanommer
-    file: imagestream.yml
-    objectname: imagestream.yml
+    object_app: datanommer
+    object_file: imagestream.yml
+    object_objectname: imagestream.yml
 
   - role: openshift/object
-    app: datanommer
-    template: buildconfig.yml
-    objectname: buildconfig.yml
+    object_app: datanommer
+    object_template: buildconfig.yml
+    object_objectname: buildconfig.yml
 
   - role: openshift/object
-    app: datanommer
-    template: configmap.yml
-    objectname: configmap.yml
+    object_app: datanommer
+    object_template: configmap.yml
+    object_objectname: configmap.yml
 
   - role: openshift/object
-    app: datanommer
-    template: deploymentconfig.yml
-    objectname: deploymentconfig.yml
+    object_app: datanommer
+    object_template: deploymentconfig.yml
+    object_objectname: deploymentconfig.yml

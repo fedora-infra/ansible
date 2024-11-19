@@ -20,9 +20,9 @@
 
   roles:
   - role: openshift/object
-    app: openshift-config
-    objectname: error-code-pages.yml
-    template: error-code-pages.yml
+    object_app: openshift-config
+    object_objectname: error-code-pages.yml
+    object_template: error-code-pages.yml
 
   post_tasks:
   - name: Patch ingress controller with custom error pages

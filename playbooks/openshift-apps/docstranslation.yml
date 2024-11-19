@@ -35,8 +35,8 @@
     ansible.builtin.include_role:
       name: openshift/object
     vars:
-      objectname: buildconfig.yml
-      template: buildconfig.yml
+      object_objectname: buildconfig.yml
+      object_template: buildconfig.yml
 
   - name: Start build
     ansible.builtin.include_role:
@@ -48,8 +48,8 @@
     ansible.builtin.include_role:
       name: openshift/object
     vars:
-      objectname: secrets.yml
-      template: secrets.yml
+      object_objectname: secrets.yml
+      object_template: secrets.yml
     tags:
       - deploy-secrets
 
@@ -57,8 +57,8 @@
     ansible.builtin.include_role:
       name: openshift/object
     vars:
-      objectname: configmap.yml
-      template: configmap.yml
+      object_objectname: configmap.yml
+      object_template: configmap.yml
     tags:
       - deploy-config
 
@@ -66,8 +66,8 @@
     ansible.builtin.include_role:
       name: openshift/object
     vars:
-      template: cron.yml
-      objectname: cron.yml
+      object_template: cron.yml
+      object_objectname: cron.yml
     tags:
       - deploy-cronjob
 

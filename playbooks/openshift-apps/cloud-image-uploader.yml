@@ -30,19 +30,19 @@
     - jcline
 
   - role: openshift/object
-    app: cloud-image-uploader
-    file: imagestream.yml
-    objectname: imagestream.yml
+    object_app: cloud-image-uploader
+    object_file: imagestream.yml
+    object_objectname: imagestream.yml
 
   - role: openshift/object
-    app: cloud-image-uploader
-    template: buildconfig.yml
-    objectname: buildconfig.yml
+    object_app: cloud-image-uploader
+    object_template: buildconfig.yml
+    object_objectname: buildconfig.yml
 
   - role: openshift/object
-    app: cloud-image-uploader
-    template: configmap.yml
-    objectname: configmap.yml
+    object_app: cloud-image-uploader
+    object_template: configmap.yml
+    object_objectname: configmap.yml
     vars:
       azure_image_regions:
         - "australiaeast"
@@ -107,19 +107,19 @@
     privatefile: "docker-registry/{{env}}/pki/private/containerstable.key"
 
   - role: openshift/object
-    app: cloud-image-uploader
-    template: secret.yml
-    objectname: secret.yml
+    object_app: cloud-image-uploader
+    object_template: secret.yml
+    object_objectname: secret.yml
 
   - role: openshift/object
-    app: cloud-image-uploader
-    template: aws-secrets.yml
-    objectname: aws-secrets.yml
+    object_app: cloud-image-uploader
+    object_template: aws-secrets.yml
+    object_objectname: aws-secrets.yml
 
   - role: openshift/object
-    app: cloud-image-uploader
-    template: container-secrets.yml
-    objectname: container-secrets.yml
+    object_app: cloud-image-uploader
+    object_template: container-secrets.yml
+    object_objectname: container-secrets.yml
 
   - role: openshift/start-build
     app: cloud-image-uploader
@@ -127,6 +127,6 @@
     objectname: cloud-image-uploader-build
 
   - role: openshift/object
-    app: cloud-image-uploader
-    template: deployment.yml
-    objectname: deployment.yml
+    object_app: cloud-image-uploader
+    object_template: deployment.yml
+    object_objectname: deployment.yml

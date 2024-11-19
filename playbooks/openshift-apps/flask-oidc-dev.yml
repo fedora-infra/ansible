@@ -28,19 +28,19 @@
       imagename: flask-oidc-dev
 
     - role: openshift/object
-      app: flask-oidc-dev
-      template: buildconfig.yml
-      objectname: buildconfig.yml
+      object_app: flask-oidc-dev
+      object_template: buildconfig.yml
+      object_objectname: buildconfig.yml
 
     - role: openshift/object
-      app: flask-oidc-dev
-      template: configmap.yml
-      objectname: configmap.yml
+      object_app: flask-oidc-dev
+      object_template: configmap.yml
+      object_objectname: configmap.yml
 
     - role: openshift/object
-      app: flask-oidc-dev
-      file: service.yml
-      objectname: service.yml
+      object_app: flask-oidc-dev
+      object_file: service.yml
+      object_objectname: service.yml
 
     # - role: openshift/route
     #   app: test-auth
@@ -63,11 +63,11 @@
       when: ocp4
 
     - role: openshift/object
-      app: flask-oidc-dev
-      template: secret-webhook.yml
-      objectname: secret-webhook.yml
+      object_app: flask-oidc-dev
+      object_template: secret-webhook.yml
+      object_objectname: secret-webhook.yml
 
     - role: openshift/object
-      app: flask-oidc-dev
-      template: deploymentconfig.yml
-      objectname: deploymentconfig.yml
+      object_app: flask-oidc-dev
+      object_template: deploymentconfig.yml
+      object_objectname: deploymentconfig.yml

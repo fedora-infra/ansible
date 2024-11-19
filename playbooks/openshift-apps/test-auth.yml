@@ -25,19 +25,19 @@
       imagename: test-auth
 
     - role: openshift/object
-      app: test-auth
-      template: buildconfig.yml
-      objectname: buildconfig.yml
+      object_app: test-auth
+      object_template: buildconfig.yml
+      object_objectname: buildconfig.yml
 
     - role: openshift/object
-      app: test-auth
-      template: configmap.yml
-      objectname: configmap.yml
+      object_app: test-auth
+      object_template: configmap.yml
+      object_objectname: configmap.yml
 
     - role: openshift/object
-      app: test-auth
-      file: service.yml
-      objectname: service.yml
+      object_app: test-auth
+      object_file: service.yml
+      object_objectname: service.yml
 
     # - role: openshift/route
     #   app: test-auth
@@ -58,11 +58,11 @@
         haproxy.router.openshift.io/timeout: 5m
 
     - role: openshift/object
-      app: test-auth
-      template: secret-webhook.yml
-      objectname: secret-webhook.yml
+      object_app: test-auth
+      object_template: secret-webhook.yml
+      object_objectname: secret-webhook.yml
 
     - role: openshift/object
-      app: test-auth
-      template: deploymentconfig.yml
-      objectname: deploymentconfig.yml
+      object_app: test-auth
+      object_template: deploymentconfig.yml
+      object_objectname: deploymentconfig.yml

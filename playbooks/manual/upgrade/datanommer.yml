@@ -52,9 +52,9 @@
 
 - name: Upgrade the database
   role: openshift/object
-  app: datanommer
-  template: job.yml
-  objectname: job.yml
+  object_app: datanommer
+  object_template: job.yml
+  object_objectname: job.yml
 
 - name: Wait for the db-upgrade completion
   command: oc get jobs/db-upgrade -o jsonpath='{@.status.succeeded}'

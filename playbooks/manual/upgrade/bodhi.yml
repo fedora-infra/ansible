@@ -155,9 +155,9 @@
   - import_role:
       name: openshift/object
     vars:
-      app: bodhi
-      template: buildconfig.yml
-      objectname: buildconfig.yml
+      object_app: bodhi
+      object_template: buildconfig.yml
+      object_objectname: buildconfig.yml
     when: env != "staging"
   # Start a build with the new buildconfig
   # Only do it on prod because staging builds are triggered by Github's webhook

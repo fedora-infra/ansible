@@ -53,24 +53,24 @@
     app: maubot
 
   - role: openshift/object
-    app: maubot
-    file: imagestream.yml
-    objectname: imagestream.yml
+    object_app: maubot
+    object_file: imagestream.yml
+    object_objectname: imagestream.yml
 
   - role: openshift/object
-    app: maubot
-    template: buildconfig.yml
-    objectname: buildconfig.yml
+    object_app: maubot
+    object_template: buildconfig.yml
+    object_objectname: buildconfig.yml
 
   - role: openshift/object
-    app: maubot
-    template: meetbot-logs-volume.yml
-    objectname: meetbot-logs-volume.yml
+    object_app: maubot
+    object_template: meetbot-logs-volume.yml
+    object_objectname: meetbot-logs-volume.yml
 
   - role: openshift/object
-    app: maubot
-    template: configmap.yml
-    objectname: configmap.yml
+    object_app: maubot
+    object_template: configmap.yml
+    object_objectname: configmap.yml
 
   - role: openshift/secret-file
     app: maubot
@@ -96,9 +96,9 @@
     objectname: maubot-build
 
   - role: openshift/object
-    app: maubot
-    file: service.yml
-    objectname: service.yml
+    object_app: maubot
+    object_file: service.yml
+    object_objectname: service.yml
 
   - role: openshift/route
     app: maubot
@@ -108,9 +108,9 @@
     servicename: maubot
 
   - role: openshift/object
-    app: maubot
-    file: deployment.yml
-    objectname: deployment.yml
+    object_app: maubot
+    object_file: deployment.yml
+    object_objectname: deployment.yml
 
   ###############################################
   # actions to delete the project from OpenShift

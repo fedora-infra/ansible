@@ -30,29 +30,29 @@
     - siosm
 
   - role: openshift/object
-    app: coreos-cincinnati
-    template: imagestream.yml
-    objectname: imagestream.yml
+    object_app: coreos-cincinnati
+    object_template: imagestream.yml
+    object_objectname: imagestream.yml
 
   - role: openshift/object
-    app: coreos-cincinnati
-    template: buildconfig.yml
-    objectname: buildconfig.yml
+    object_app: coreos-cincinnati
+    object_template: buildconfig.yml
+    object_objectname: buildconfig.yml
 
   - role: openshift/start-build
-    app: coreos-cincinnati
-    buildname: coreos-cincinnati-build
-    objectname: coreos-cincinnati-build
+    object_app: coreos-cincinnati
+    object_buildname: coreos-cincinnati-build
+    object_objectname: coreos-cincinnati-build
 
   - role: openshift/object
-    app: coreos-cincinnati
-    template: config-stub.yml
-    objectname: config-stub.yml
+    object_app: coreos-cincinnati
+    object_template: config-stub.yml
+    object_objectname: config-stub.yml
 
   - role: openshift/object
-    app: coreos-cincinnati
-    template: deploymentconfig.yml
-    objectname: deploymentconfig.yml
+    object_app: coreos-cincinnati
+    object_template: deploymentconfig.yml
+    object_objectname: deploymentconfig.yml
 
   - role: openshift/rollout
     app: coreos-cincinnati
@@ -60,14 +60,14 @@
     tags: [never, rollout]
 
   - role: openshift/object
-    app: coreos-cincinnati
-    template: service.yml
-    objectname: service.yml
+    object_app: coreos-cincinnati
+    object_template: service.yml
+    object_objectname: service.yml
 
   - role: openshift/object
-    app: coreos-cincinnati
-    template: servicemonitor.yml
-    objectname: servicemonitor.yml
+    object_app: coreos-cincinnati
+    object_template: servicemonitor.yml
+    object_objectname: servicemonitor.yml
 
   - role: openshift/route
     app: coreos-cincinnati

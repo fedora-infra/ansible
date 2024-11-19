@@ -3,25 +3,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{service}}
+  name: {{object_service}}
   labels:
-    service: {{service}}
+    service: {{object_service}}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      service: {{service}}
+      service: {{object_service}}
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        service: {{service}}
+        service: {{object_service}}
     spec:
       containers:
-      - name: {{service}}
+      - name: {{object_service}}
         image: image-registry.openshift-image-registry.svc:5000/koschei/koschei:latest
-        command: ["/usr/bin/koschei-{{service}}"]
+        command: ["/usr/bin/koschei-{{object_service}}"]
         env:
           - name: SUDO_USER
             value: admin
@@ -43,11 +43,11 @@ spec:
           readOnly: true
         resources:
           requests:
-            cpu: "{{ min_cpu }}m"
-            memory: "{{ min_mem }}Mi"
+            cpu: "{{ object_min_cpu }}m"
+            memory: "{{ object_min_mem }}Mi"
           limits:
-            cpu: "{{ max_cpu }}m"
-            memory: "{{ max_mem }}Mi"
+            cpu: "{{ object_max_cpu }}m"
+            memory: "{{ object_max_mem }}Mi"
         readinessProbe:
           initialDelaySeconds: 5
           exec:

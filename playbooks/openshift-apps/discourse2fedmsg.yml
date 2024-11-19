@@ -45,19 +45,19 @@
     imagename: discourse2fedmsg
 
   - role: openshift/object
-    app: discourse2fedmsg
-    template: buildconfig.yml
-    objectname: buildconfig.yml
+    object_app: discourse2fedmsg
+    object_template: buildconfig.yml
+    object_objectname: buildconfig.yml
 
   - role: openshift/object
-    app: discourse2fedmsg
-    template: configmap.yml
-    objectname: configmap.yml
+    object_app: discourse2fedmsg
+    object_template: configmap.yml
+    object_objectname: configmap.yml
 
   - role: openshift/object
-    app: discourse2fedmsg
-    file: service.yml
-    objectname: service.yml
+    object_app: discourse2fedmsg
+    object_file: service.yml
+    object_objectname: service.yml
 
   - role: openshift/route
     app: discourse2fedmsg
@@ -67,9 +67,9 @@
     servicename: discourse2fedmsg-web
 
   - role: openshift/object
-    app: discourse2fedmsg
-    template: deploymentconfig.yml
-    objectname: deploymentconfig.yml
+    object_app: discourse2fedmsg
+    object_template: deploymentconfig.yml
+    object_objectname: deploymentconfig.yml
 
   # - role: openshift/start-build
   #   app: discourse2fedmsg

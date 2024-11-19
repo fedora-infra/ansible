@@ -22,24 +22,24 @@
     - kevin
 
   - role: openshift/object
-    app: mdapi
-    template: imagestream.yml
-    objectname: imagestream.yml
+    object_app: mdapi
+    object_template: imagestream.yml
+    object_objectname: imagestream.yml
 
   - role: openshift/object
-    app: mdapi
-    template: buildconfig.yml
-    objectname: buildconfig.yml
+    object_app: mdapi
+    object_template: buildconfig.yml
+    object_objectname: buildconfig.yml
 
   - role: openshift/object
-    app: mdapi
-    file: storage.yml
-    objectname: storage.yml
+    object_app: mdapi
+    object_file: storage.yml
+    object_objectname: storage.yml
 
   - role: openshift/object
-    app: mdapi
-    template: configmap.yml
-    objectname: configmap.yml
+    object_app: mdapi
+    object_template: configmap.yml
+    object_objectname: configmap.yml
 
   - role: openshift/secret-file
     app: mdapi
@@ -60,9 +60,9 @@
     privatefile: "rabbitmq/{{env}}/pki/ca.crt"
 
   - role: openshift/object
-    app: mdapi
-    file: cron.yml
-    objectname: cron.yml
+    object_app: mdapi
+    object_file: cron.yml
+    object_objectname: cron.yml
     tags:
       - cron-job
 
@@ -72,9 +72,9 @@
     objectname: mdapi-build
 
   - role: openshift/object
-    app: mdapi
-    file: service.yml
-    objectname: service.yml
+    object_app: mdapi
+    object_file: service.yml
+    object_objectname: service.yml
 
   - role: openshift/route
     app: mdapi
@@ -84,9 +84,9 @@
     servicename: mdapi
 
   - role: openshift/object
-    app: mdapi
-    file: deploymentconfig.yml
-    objectname: deploymentconfig.yml
+    object_app: mdapi
+    object_file: deploymentconfig.yml
+    object_objectname: deploymentconfig.yml
 
   - role: openshift/rollout
     app: mdapi
