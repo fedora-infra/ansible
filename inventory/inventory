@@ -322,6 +322,9 @@ openqa-x86-worker02.iad2.fedoraproject.org
 openqa-x86-worker06.iad2.fedoraproject.org
 # 2023 newer, more powerful box
 openqa-a64-worker04.iad2.fedoraproject.org
+# older emags. they're helping! they're helping!
+openqa-a64-worker05.iad2.fedoraproject.org
+openqa-a64-worker06.iad2.fedoraproject.org
 
 # openqa-lab and openqa-lab-workers are pseudo-stg, see group_vars/openqa-stg for more details
 [openqa_lab]
@@ -352,6 +355,7 @@ openqa-x86-worker03.iad2.fedoraproject.org
 [openqa_tap1_workers]
 # prod
 openqa-x86-worker01.iad2.fedoraproject.org
+openqa-a64-worker04.iad2.fedoraproject.org
 # lab
 openqa-x86-worker04.iad2.fedoraproject.org
 openqa-a64-worker03.iad2.fedoraproject.org
@@ -359,15 +363,11 @@ openqa-p09-worker01.iad2.fedoraproject.org
 [openqa_tap2_workers]
 # prod
 openqa-x86-worker02.iad2.fedoraproject.org
+openqa-a64-worker05.iad2.fedoraproject.org
 # lab
 openqa-x86-worker05.iad2.fedoraproject.org
 openqa-a64-worker02.iad2.fedoraproject.org
 openqa-p09-worker02.iad2.fedoraproject.org
-# these do both tap and tap2 - the shiny new a64 worker is way better
-# than the busted old ones, so for prod it does everything
-[openqa_tap12_workers]
-# prod
-openqa-a64-worker04.iad2.fedoraproject.org
 
 # the workers that run createhdds to create the base disk images. Again,
 # only one per arch per instance should be present.
