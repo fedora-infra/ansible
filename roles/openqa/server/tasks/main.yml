@@ -103,7 +103,7 @@
   file: path=/var/tmp/scratchrepo state=absent
 
 - name: Delete old scratch build repo config
-  file: path=/etc/yum.repos.d/scratchrepo.conf state=absent
+  file: path=/etc/yum.repos.d/scratchrepo.repo state=absent
 
 - name: Write lab side repo config
   copy: src=openqa-lab-repo.repo dest=/etc/yum.repos.d/openqa-lab-repo.repo owner=root group=root mode=0644
