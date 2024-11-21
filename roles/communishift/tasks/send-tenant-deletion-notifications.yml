@@ -3,6 +3,10 @@
   debug:
     msg: "{{ item }}"
 
+- name: Check if this project should be deleted
+  ansible.builtin.set_fact:
+    should_not_delete: "{{ item.value.do_not_delete | default(false) }}"
+
 - name: Send Communishift Project Cleanup notifications emails to tenants
   community.general.mail:
     host: localhost
@@ -12,9 +16,12 @@
       Dear Administrator,
 
       This is a reminder that the Communishift project {{ item.value.name }} will be deleted during the Fedora post
-      release process. Please ensure you have a backup of any important configuration or data from your project.
+      release process. At the same time the oldest fedora is retired (1 month after a new fedora release).
+      Please ensure you have a backup of any important configuration or data from your project. Consult Openshift docs.
 
       If you need to request an exemption, please file a ticket here: https://pagure.io/fedora-infrastructure/issues
+      Reference the project name and please provide a reason for the extention, and how long you wish the extention to be
+      in place for.
     from: admin@fedoraproject.org
     to:
       - D Kirwan <dkirwan+communishift_notification_test_1@redhat.com>
@@ -23,8 +30,6 @@
     headers:
       - Reply-To=admin@fedoraproject.org
     charset: us-ascii
-  delegate_to: localhost
-  when: "{{ not item.value.do_not_delete | bool }}"
+  when: "not should_not_delete"
   tags:
     - communishift_send_notifications
-    - never # Only send notifications when the tag communishift_send_notifications is passed
