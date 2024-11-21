@@ -548,3 +548,12 @@
   when: selinux_module2 is changed
   tags:
   - nagios_server
+
+# enable and run the nagios service
+- name: enable and run the nagios service
+  service: name=nagios.service state=started enabled=yes
+  check_mode: no
+  failed_when: false
+  tags:
+  - config
+  - nagios_server
