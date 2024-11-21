@@ -1,14 +1,14 @@
 ---
 # tasks file for CommunishiftAuthorization
 - name: Authorize with kinit
-  shell: kinit -k -t "communishift-keytab.kt" -l 3600 "communishift-authorization-operator/api.fedora.cj14.p1.openshiftapps.com@FEDORAPROJECT.ORG"
+  shell: kinit -k -t "{{ communishift_keytab_path }}" -l 3600 "{{ communishift_keytab_principal }}"
   run_once: true
 
 - name: Retrieve fasjson group/user data based on pattern supplied
   communishift_retrieve_fasjson_project_admin_emails:
-    keytab_path: "communishift-keytab.kt" #"{{ communishift_keytab }}"
-    principal: "communishift-authorization-operator/api.fedora.cj14.p1.openshiftapps.com@FEDORAPROJECT.ORG" #"{{ communishift_principal }}"
-    group_name_pattern: "^communishift-" #"{{ communishift_group_regex_pattern }}"
+    keytab_path: "{{ communishift_keytab_path }}"
+    principal: "{{ communishift_keytab_principal }}"
+    group_name_pattern: "^communishift-"
   register: communishift_project_emails_fasjson_response
   run_once: true
 
