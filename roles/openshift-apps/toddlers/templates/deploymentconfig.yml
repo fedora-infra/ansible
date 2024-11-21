@@ -7,7 +7,12 @@ metadata:
     service: toddlers
   name: toddlers
 spec:
+{% if env != 'staging' %}
   replicas: 3
+{% else %}
+  ## Replaced by Poddlers ##
+  replicas: 0
+{% endif %}
   selector:
     app: toddlers
     deploymentconfig: toddlers
