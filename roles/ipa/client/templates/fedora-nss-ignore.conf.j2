@@ -13,6 +13,6 @@ filter_groups = root,bin,daemon,sys,adm,tty,disk,lp,mem,kmem,wheel,cdrom,mail,ma
 ## creating restricted accounts but we want to make sure the id in
 ## /etc/passwd and /etc/group are used.
 [nss]
-filter_users = root,bin,daemon,adm,lp,sync,shutdown,halt,mail,operator,games,ftp,nobody,avahi-autoipd,dbus,polkitd,rpc,tss,ntp,rpcuser,nfsnobody,postfix,sshd,nagios,nrpe,openvpn,chrony,sssd,named,mock,apache,bodhi,ftpsync,blockerbugs,mirrormanager,rabbitmq,postgres,rawhide
-filter_groups = root,bin,daemon,sys,adm,tty,disk,lp,mem,kmem,wheel,cdrom,mail,man,dialout,floppy,games,tape,video,ftp,lock,audio,nobody,users,utmp,utempter,avahi-autoipd,ssh_keys,systemd-journal,dbus,rpc,tss,ntp,dip,rpcuser,nfsnobody,postdrop,postfix,sshd,screen,nagios,nrpe,openvpn,input,systemd-bus-proxy,systemd-network,cgred,chrony,printadmin,sssd,named,mock,apache,blockerbugs,mirrormanager,rabbitmq,postgres,rawhide
+filter_users = root,bin,daemon,adm,lp,sync,shutdown,halt,mail,operator,games,ftp,nobody,avahi-autoipd,dbus,polkitd,rpc,tss,ntp,rpcuser,nfsnobody,postfix,sshd,nagios,nrpe,openvpn,chrony,sssd,named,mock,apache,bodhi,ftpsync,blockerbugs,mirrormanager,rabbitmq,postgres,rawhide,mysql
+filter_groups = root,bin,daemon,sys,adm,tty,disk,lp,mem,kmem,wheel,cdrom,mail,man,dialout,floppy,games,tape,video,ftp,lock,audio,nobody,users,utmp,utempter,avahi-autoipd,ssh_keys,systemd-journal,dbus,rpc,tss,ntp,dip,rpcuser,nfsnobody,postdrop,postfix,sshd,screen,nagios,nrpe,openvpn,input,systemd-bus-proxy,systemd-network,cgred,chrony,printadmin,sssd,named,mock,apache,blockerbugs,mirrormanager,rabbitmq,postgres,rawhide,mysql
 {% endif %}
