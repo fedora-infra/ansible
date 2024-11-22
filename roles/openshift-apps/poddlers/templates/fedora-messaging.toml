@@ -49,6 +49,12 @@ blocked_toddlers = [
     "pdc_import_compose",
     "pdc_unretire_packages",
     "pdc_update_critpath",
+{% if env == "staging" %}
+    "flag_commit_build",
+    "distgit-bugzilla-sync",
+    "clean-retired-packages",
+    "koji-block-retired",
+{% endif %}
 ]
 
 [consumer_config.default]
