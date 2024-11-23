@@ -230,8 +230,6 @@
 
 - name: install libvirtd.conf
   copy: src="{{ files }}/virthost/libvirtd.conf" dest=/etc/libvirt/libvirtd.conf
-  notify:
-  - restart libvirtd
   tags:
   - koji_builder
   when: env != "staging"
@@ -248,7 +246,6 @@
   copy: src=network.conf dest=/etc/libvirt/network.conf
   notify:
   - restart virtnetworkd
-  - restart libvirtd
   tags:
   - koji_builder
   when: env != "staging"
