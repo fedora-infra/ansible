@@ -53,6 +53,9 @@
 - name: restart libvirtd
   action: service name=libvirtd state=restarted
 
+- name: restart virtnetworkd
+  action: service name=virtnetworkd state=restarted
+
 - name: restart libvirtd.socket
   action: service name=libvirtd.socket state=stopped
   notify: restart libvirtd
