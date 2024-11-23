@@ -236,6 +236,23 @@
   - koji_builder
   when: env != "staging"
 
+# install libvirt/network.conf
+#
+# The default in f41+ is to use nftables, but it's not compatible with the
+# iptables setup we are using on the builders for some reason. 
+# So, switch back to iptables until we switch to nftables, or move everying
+# away from oz/Imagefactory so we don't need virt instances for image builds
+# anymore.
+
+- name: install libvirt/network.conf
+  copy: src=network.conf dest=/etc/libvirt/network.conf
+  notify:
+  - restart virtnetworkd
+  - restart libvirtd
+  tags:
+  - koji_builder
+  when: env != "staging"
+
 #
 # On primary we want to make a /mnt/koji link to /mnt/fedora_koji/koji
 #
