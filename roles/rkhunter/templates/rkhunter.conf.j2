@@ -507,6 +507,13 @@ PASSWORD_FILE=/etc/shadow
 # usually need to be set.
 #
 #SYSLOG_CONFIG_FILE=/etc/syslog.conf
+{% if ansible_distribution_major_version|int >= 40 %}
+# On Fedora 41 /etc/systemd/journald.conf isn't shipped by default anymore.
+# Instead /usr/lib/systemd/journalc.conf is the default
+# Oh RHEL and older Fedora's we can just not set this and it will
+# find the default one.
+SYSLOG_CONFIG_FILE="/etc/rsyslog.conf /usr/lib/systemd/journald.conf"
+{% endif %}
 
 #
 # This option permits the use of syslog remote logging.
