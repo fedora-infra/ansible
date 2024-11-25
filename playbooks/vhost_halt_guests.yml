@@ -1,6 +1,6 @@
 # requires --extra-vars="vhost=somevhost fqdn"
 
-#General overview:
+# General overview:
 # talk to the vhost
 # get back list of instances
 # add each of their hostnames to an addhoc group
@@ -19,6 +19,7 @@
 # across multiple plays
 
 
+---
 - name: find instances
   hosts: "{{ vhost }}"
   user: root

@@ -1,8 +1,9 @@
 # requires --extra-vars="target=hostspec"
 
+---
 - name: reboot hosts
   hosts: "{{ target }}"
-  gather_facts: False
+  gather_facts: false
   user: root
   serial: 1
 

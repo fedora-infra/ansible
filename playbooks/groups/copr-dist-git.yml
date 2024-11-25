@@ -1,11 +1,12 @@
+---
 - name: check/create instance
   hosts: copr_dist_git_dev_aws:copr_dist_git_aws
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
+  - /srv/web/infra/ansible/vars/global.yml
+  - "/srv/private/ansible/vars.yml"
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
@@ -20,10 +21,10 @@
 - name: cloud basic setup
   hosts: copr_dist_git_dev_aws:copr_dist_git_aws
   user: root
-  gather_facts: True
+  gather_facts: true
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
+  - /srv/web/infra/ansible/vars/global.yml
+  - "/srv/private/ansible/vars.yml"
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
@@ -41,12 +42,12 @@
 - name: provision instance
   hosts: copr_dist_git_dev_aws:copr_dist_git_aws
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
   - base

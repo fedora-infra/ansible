@@ -24,7 +24,7 @@
       dest: /etc/koji.conf
       owner: root
       group: root
-      mode: 0644
+      mode: "0644"
 
   tasks:
   - name: create the main koji tag for {{release}}

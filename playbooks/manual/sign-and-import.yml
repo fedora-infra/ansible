@@ -14,6 +14,7 @@
 # TODO -- grab rpms from koji build/task ids beforehand?
 # TODO -- other arches than x86_64?
 
+---
 - name: batch sign and import a directory full of rpms
   user: root
   hosts: localhost
@@ -24,7 +25,7 @@
   # It would be nice to be able to toggle this from the command line.
   vars:
   - repodir: /mnt/fedora/app/fi-repo/{% if testing %}testing/{% endif %}{{ rhel }}
-  - testing: False
+  - testing: false
 
   tasks:
   - fail: msg="Please use the infra tags from now on"
@@ -48,29 +49,29 @@
   - name: copy the source rpms to the SRPMS dir of {{ repodir }}
     copy: src={{ item }} dest={{ repodir }}/SRPMS/
     with_fileglob:
-     - "{{ rpmdir }}/*.src.rpm"
+      - "{{ rpmdir }}/*.src.rpm"
 
   - name: move processed srpms out to {{ rpmdir }}-old
     command: /bin/mv {{ item }} {{ rpmdir }}-old/
     when: not testing
     with_fileglob:
-     - "{{ rpmdir }}/*.src.rpm"
+      - "{{ rpmdir }}/*.src.rpm"
 
   - name: copy the binary rpms to the x86_64 dir of {{ repodir }}
     copy: src={{ item }} dest={{ repodir }}/x86_64/
     with_fileglob:
-     - "{{ rpmdir }}/*.rpm"
+      - "{{ rpmdir }}/*.rpm"
 
   - name: copy the binary rpms to the i386 dir of {{ repodir }}
     copy: src={{ item }} dest={{ repodir }}/i386/
     with_fileglob:
-     - "{{ rpmdir }}/*.rpm"
+      - "{{ rpmdir }}/*.rpm"
 
   - name: move processed rpms out to {{ rpmdir }}-old
     command: /bin/mv {{ item }} {{ rpmdir }}-old/
     when: not testing
     with_fileglob:
-     - "{{ rpmdir }}/*.rpm"
+      - "{{ rpmdir }}/*.rpm"
 
   - name: Run createrepo on each repo
     command: createrepo --update {{ repodir }}/{{ item }}/

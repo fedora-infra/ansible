@@ -1,5 +1,6 @@
 # requires --extra-vars="target='host1:host2:group etc' yumcommand=update'"
 
+---
 - name: update all run rkhunter if installed
   hosts: "{{ target }}"
   user: root

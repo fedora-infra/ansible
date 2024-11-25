@@ -1,5 +1,6 @@
 # requires --extra-vars="target='host1:host2:group etc'"
 
+---
 - name: run rkhunter for times when rkhunter didn't seem to run.
   hosts: "{{ target }}"
   user: root

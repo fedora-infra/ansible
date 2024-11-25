@@ -3,6 +3,7 @@
 # These servers run mediawiki for the main fedora wiki instance.
 #
 
+---
 - import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
   vars:
     myhosts: "wiki:wiki_stg"
@@ -10,12 +11,12 @@
 - name: make the box be real
   hosts: wiki:wiki_stg
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
@@ -36,8 +37,8 @@
     username: "mediawiki{{ env_suffix }}"
     sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(wiki|logger)\..*
     when: inventory_hostname.startswith('wiki01')
-  - { role: nfs/client, when: env == "staging", mnt_dir: '/mnt/web/attachments',  nfs_src_dir: 'fedora_app_staging/app/attachments', mount_stg: true }
-  - { role: nfs/client, when: env != "staging", mnt_dir: '/mnt/web/attachments',  nfs_src_dir: 'fedora_app/app/attachments' }
+  - { role: nfs/client, when: env == "staging", mnt_dir: '/mnt/web/attachments', nfs_src_dir: 'fedora_app_staging/app/attachments', mount_stg: true }
+  - { role: nfs/client, when: env != "staging", mnt_dir: '/mnt/web/attachments', nfs_src_dir: 'fedora_app/app/attachments' }
   - mediawiki
   - sudo
 

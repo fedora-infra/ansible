@@ -6,15 +6,16 @@
 # Access is via management interface only. This playbook does initial setup.
 # Please check with rel-eng before doing anything here.
 
+---
 - name: make sign-vault server vm (secondary and stg only)
   hosts: sign-vault01.stg.iad2.fedoraproject.org
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
   - import_tasks: "{{ tasks_path }}/virt_instance_create.yml"
@@ -28,9 +29,9 @@
   gather_facts: true
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
   - base

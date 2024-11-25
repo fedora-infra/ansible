@@ -1,3 +1,4 @@
+---
 - import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
   vars:
     myhosts: "ipa:ipa_stg"
@@ -5,7 +6,7 @@
 - name: make the box be real
   hosts: ipa:ipa_stg
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
   - /srv/web/infra/ansible/vars/global.yml
@@ -37,7 +38,7 @@
 - name: deploy ipa itself
   hosts: ipa:ipa_stg
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
   - /srv/web/infra/ansible/vars/global.yml
@@ -73,7 +74,7 @@
     - krb5
     - ipa/server
   # original: /etc/httpd/conf/ipa.keytab
-  #- name: Make IPA HTTP use the combined keytab
+  # - name: Make IPA HTTP use the combined keytab
   #  lineinfile: dest=/etc/httpd/conf.d/ipa.conf
   #              regexp='GssapiCredStore keytab:'
   #              line='  GssapiCredStore keytab:/etc/krb5.HTTP_id{{env_suffix}}.fedoraproject.org.keytab.combined'
@@ -81,7 +82,7 @@
   #  - krb5
   #  - ipa/server
   #  - config
-  #- name: Make IPA HTTP use the id.fp.o client keytab
+  # - name: Make IPA HTTP use the id.fp.o client keytab
   #  lineinfile: dest=/etc/httpd/conf.d/ipa.conf
   #              regexp='GssapiCredStore client_keytab:'
   #              line='  GssapiCredStore client_keytab:/etc/krb5.HTTP_id{{env_suffix}}.fedoraproject.org.keytab'
@@ -93,7 +94,7 @@
 - name: do base role once more to revert any resolvconf changes
   hosts: ipa:ipa_stg
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
   - /srv/web/infra/ansible/vars/global.yml

@@ -5,25 +5,26 @@
 # to your ansible command.
 
 # Main task to upgrade pagure
+---
 - name: upgrade pagure
   hosts: pagure:pagure_stg
   user: root
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   vars:
-    testing: False
+    testing: false
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   pre_tasks:
   - name: tell nagios to shush w.r.t. the frontend
     nagios:
-        action=downtime
-        minutes=15
-        service=host
-        host={{ inventory_hostname_short }}{{ env_suffix }}
+      action=downtime
+      minutes=15
+      service=host
+      host={{ inventory_hostname_short }}{{ env_suffix }}
     delegate_to: noc01.iad2.fedoraproject.org
     ignore_errors: true
 
@@ -78,7 +79,7 @@
     args:
       chdir: /etc/pagure/
     environment:
-        PAGURE_CONFIG: /etc/pagure/pagure.cfg
+      PAGURE_CONFIG: /etc/pagure/pagure.cfg
 
   post_tasks:
 
@@ -111,13 +112,13 @@
 
 ##
 ## ToDo: Put in an include to pull in setting status back
-## 
+##
 
 
   - name: tell nagios to unshush w.r.t. the frontend
     nagios:
-        action=unsilence
-        service=host
-        host={{ inventory_hostname_short }}{{ env_suffix }}
+      action=unsilence
+      service=host
+      host={{ inventory_hostname_short }}{{ env_suffix }}
     delegate_to: noc01.iad2.fedoraproject.org
     ignore_errors: true

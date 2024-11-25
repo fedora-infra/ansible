@@ -1,5 +1,6 @@
 # Retrieve GDPR data from single openshift app.
 # Get the correct pod
+---
 - name: Retrieve the id of the running container/pod
   shell: "oc get -n {{ item.value.openshift_namespace }} -o name -l app={{ item.value.openshift_pod }} pods | cut -f 2 -d '/'"
   register: pod_id

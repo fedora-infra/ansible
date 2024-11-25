@@ -4,7 +4,7 @@
 # requires --extra-vars="target=somevhost fqdn"
 # Might add nodns=true or nonagios=true to the extra vars
 
-#General overview:
+# General overview:
 # talk to the vhost
 # get back list of instances
 # add each of their hostnames to an addhoc group
@@ -15,13 +15,14 @@
 
 # TODO: Figure out how to compare virt info pre and post boot.
 
+---
 - name: find instances
   vars_prompt:
-   - name: target
-     prompt: What is the target vhost
-     private: false
+  - name: target
+    prompt: What is the target vhost
+    private: false
   hosts: "{{ target }}"
-  gather_facts: False
+  gather_facts: false
   user: root
 
   tasks:
@@ -51,7 +52,7 @@
 - name: halt instances
   hosts: myvms_new
   user: root
-  gather_facts: False
+  gather_facts: false
   serial: 1
 
   tasks:
@@ -69,7 +70,7 @@
 
 - name: wait for the whole set to die.
   hosts: myvms_new
-  gather_facts: False
+  gather_facts: false
   user: root
 
   tasks:
@@ -78,7 +79,7 @@
 
 - name: reboot vhost
   hosts: "target"
-  gather_facts: False
+  gather_facts: false
   user: root
 
   tasks:
@@ -115,7 +116,7 @@
 - name: post reboot tasks
   hosts: myvms_postreboot
   user: root
-  gather_facts: False
+  gather_facts: false
   serial: 1
 
   tasks:
@@ -143,4 +144,3 @@
 #  - name: get info on guests (postreboot)
 #    virt: command=info
 #    register: vminfo_post
-

@@ -1,3 +1,4 @@
+---
 - import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
   vars:
     myhosts: "memcached:memcached_stg"
@@ -5,7 +6,7 @@
 - name: make the box be real
   hosts: memcached:memcached_stg
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
   - /srv/web/infra/ansible/vars/global.yml

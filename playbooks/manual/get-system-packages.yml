@@ -1,7 +1,8 @@
 #
-# A playbook to get all the rpms installed on a set of systems. 
-# 
+# A playbook to get all the rpms installed on a set of systems.
+#
 
+---
 - name: Get installed packages
   hosts: builders:releng-compose:data-analysis01.iad2.fedoraproject.org
   gather_facts: true
@@ -18,4 +19,3 @@
 
   - debug: var=rpm_output.stdout_lines
 #    when: rpm_output is defined and rpm_output.results|length > 0
-

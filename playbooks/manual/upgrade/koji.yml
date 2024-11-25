@@ -16,20 +16,21 @@
 #   5) upgrade database
 #   6) update hubs
 #   7) update all builders
-#   8) restart 
+#   8) restart
 #
 # TODO:
 # - stop and restart kojira on koji02
 # - kill any koji-gc processes
 # - nagios outage stuff didn't seem to work as well as we would want last time.
 
+---
 - name: preliminary tasks
   hosts: koji:koji_stg
   user: root
-  vars_files: 
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
   - name: ask admin if an outage ticket was created.
@@ -57,10 +58,10 @@
   # ... is anything special needed to upgrade pgbdr nodes?
   hosts: db-koji01.iad2.fedoraproject.org:db-koji01.stg.iad2.fedoraproject.org
   user: root
-  vars_files: 
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
   - name: Install the koji package, to get the upgrade script.
@@ -81,10 +82,10 @@
 - name: update and restart the koji hubs before we touch the builders
   hosts: koji:koji_stg
   user: root
-  vars_files: 
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   tasks:
   - package: name=koji-hub state=latest update_cache=yes
   - name: restart httpd on the koji-hubs.
@@ -97,10 +98,10 @@
 - name: update and restart the koji builders, now that we're done with the hubs
   hosts: builders:builders_stg
   user: root
-  vars_files: 
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   tasks:
   - package: name=koji-builder state=latest update_cache=yes
   - name: restart all the builders.  so many.

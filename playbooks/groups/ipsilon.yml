@@ -1,3 +1,4 @@
+---
 - import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
   vars:
     myhosts: "ipsilon:ipsilon_stg"
@@ -6,7 +7,7 @@
 - name: make the box be real
   hosts: ipsilon:ipsilon_stg
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
   - /srv/web/infra/ansible/vars/global.yml
@@ -46,7 +47,7 @@
 - name: deploy ipsilon itself
   hosts: ipsilon:ipsilon_stg
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
   - /srv/web/infra/ansible/vars/global.yml
@@ -68,7 +69,7 @@
 - name: setup IPA
   hosts: ipa[0]:ipa_stg[0]
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
   - /srv/web/infra/ansible/vars/global.yml

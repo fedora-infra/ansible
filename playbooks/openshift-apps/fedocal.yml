@@ -1,7 +1,8 @@
+---
 - name: Make the app be real
   hosts: os_control_stg[0],os_control[0]
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml

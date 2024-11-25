@@ -1,3 +1,4 @@
+---
 - import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
   vars:
     myhosts: "busgateway:busgateway_stg"
@@ -5,12 +6,12 @@
 - name: dole out the generic configuration
   hosts: busgateway:busgateway_stg
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
   - base
@@ -36,11 +37,11 @@
 - name: dole out the service-specific config
   hosts: busgateway:busgateway_stg
   user: root
-  gather_facts: True
+  gather_facts: true
 
   roles:
   - role: fedmsg/hub
-    enable_websocket_server: True
+    enable_websocket_server: true
   - role: fedmsg/relay
   - role: fedmsg/gateway
   - role: collectd/fedmsg-service
@@ -52,9 +53,9 @@
   - role: collectd/fedmsg-activation
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - "{{ vars_path }}/{{ ansible_distribution }}.yml"
+  - /srv/web/infra/ansible/vars/global.yml
+  - "/srv/private/ansible/vars.yml"
+  - "{{ vars_path }}/{{ ansible_distribution }}.yml"
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"

@@ -3,6 +3,7 @@
 # Please read http://fedora-infra-docs.readthedocs.io/en/latest/sysadmin-guide/sops/gdpr_delete.html
 # for information about how to use this playbook and how to integration applications with it.
 
+---
 - name: Delete user data
   hosts: gdpr_delete
   strategy: free

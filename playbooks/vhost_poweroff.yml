@@ -3,7 +3,7 @@
 #
 # requires --extra-vars="target=somevhost fqdn"
 
-#General overview:
+# General overview:
 # talk to the vhost
 # get back list of instances
 # add each of their hostnames to an addhoc group
@@ -14,9 +14,10 @@
 
 # TODO: Figure out how to compare virt info pre and post boot.
 
+---
 - name: find instances
   hosts: "{{ target }}"
-  gather_facts: False
+  gather_facts: false
   user: root
 
   tasks:
@@ -35,7 +36,7 @@
 - name: halt instances
   hosts: myvms_new
   user: root
-  gather_facts: False
+  gather_facts: false
   serial: 1
 
   tasks:
@@ -46,7 +47,7 @@
 
 - name: wait for the whole set to die.
   hosts: myvms_new
-  gather_facts: False
+  gather_facts: false
   user: root
 
   tasks:
@@ -55,7 +56,7 @@
 
 - name: reboot vhost
   hosts: "{{ target }}"
-  gather_facts: False
+  gather_facts: false
   user: root
 
   tasks:

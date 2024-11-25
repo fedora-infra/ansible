@@ -5,15 +5,16 @@
 # everywhere will be restarted.  As stuff changes over time, this playbook will
 # need to be periodically updated with new things.
 
+---
 - name: restart fedmsg-gateway instances
   hosts: fedmsg_gateways:fedmsg_gateways_stg
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
   - name: bounce the fedmsg-gateway service
@@ -22,12 +23,12 @@
 - name: restart fedmsg-relay instances
   hosts: fedmsg_relays:fedmsg_relays_stg
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
   - name: bounce the fedmsg-relay service
@@ -36,12 +37,12 @@
 - name: restart fedmsg-irc instances
   hosts: fedmsg_ircs:fedmsg_ircs_stg
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
   - name: bounce the fedmsg-irc service
@@ -50,12 +51,12 @@
 - name: tell nagios to be quiet about FMN for the moment
   hosts: notifs_backend:notifs_backend_stg
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
   - name: schedule a 25 minute downtime.  give notifs backend time to start up.
@@ -68,12 +69,12 @@
 - name: restart fedmsg-hub instances
   hosts: fedmsg_hubs:fedmsg_hubs_stg
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
   - name: bounce the fedmsg-hub service
@@ -82,12 +83,12 @@
 - name: restart moksha-hub instances
   hosts: moksha_hubs:moksha_hubs_stg
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
   - name: bounce the moksha-hub service

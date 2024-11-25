@@ -3,9 +3,9 @@
   hosts: db-fas01.iad2.fedoraproject.org:db-fas01.stg.iad2.fedoraproject.org
   user: root
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   tasks:
   - name: copy the sql script to file
     template: src=rollback.sql dest=/var/lib/pgsql/rollback.sql

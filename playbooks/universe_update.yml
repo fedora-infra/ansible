@@ -2,9 +2,10 @@
 # This playboook updates every host in inventory
 #
 
+---
 - name: set downtime
   hosts: all
-  gather_facts: False
+  gather_facts: false
   user: root
   serial: 1
 
@@ -19,39 +20,39 @@
 
 - name: update the world
   hosts: all
-  gather_facts: True
+  gather_facts: true
   user: root
 
   tasks:
 
   - name: Apply updates
     package:
-        state: latest
-        name: "*"
-        update_cache: true
+      state: latest
+      name: "*"
+      update_cache: true
     async: 7200
     poll: 30
     when: package_excludes is not defined
-  
+
   - debug:
-        msg: 
-        - '!!!!!!!!!!!!!!!!!!! host {{ inventory_hostname }} has EXCLUDES OF {{ package_excludes }} !!!!!!!!!!!!!'
-        - '!!!!!!!!!!!!!!!!!!! DANGER DANGER DANGER ^ CHECK THAT EXCLUDES ARE STILL NEEDED ^ !!!!!!!!!!!!!!!!!!!!'
+      msg:
+      - '!!!!!!!!!!!!!!!!!!! host {{ inventory_hostname }} has EXCLUDES OF {{ package_excludes }} !!!!!!!!!!!!!'
+      - '!!!!!!!!!!!!!!!!!!! DANGER DANGER DANGER ^ CHECK THAT EXCLUDES ARE STILL NEEDED ^ !!!!!!!!!!!!!!!!!!!!'
     when: package_excludes is defined
     changed_when: true
-  
+
   - name: Apply updates with excludes
     package:
-        state: latest
-        name: "*"
-        update_cache: true
-        exclude: "{{ package_excludes }}"
+      state: latest
+      name: "*"
+      update_cache: true
+      exclude: "{{ package_excludes }}"
     async: 7200
     poll: 30
     when: package_excludes is defined
 
 - name: run rkhunter if installed
-  hosts:  all
+  hosts: all
   user: root
 
   tasks:

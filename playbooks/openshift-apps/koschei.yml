@@ -1,7 +1,8 @@
+---
 - name: Provision koschei
   hosts: os_control[0]:os_control_stg[0]
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml
@@ -32,8 +33,8 @@
     serviceport: web
     servicename: frontend
     annotations:
-        haproxy.router.openshift.io/set-forwarded-headers: append
-        haproxy.router.openshift.io/timeout: 180s
+      haproxy.router.openshift.io/set-forwarded-headers: append
+      haproxy.router.openshift.io/timeout: 180s
 
   tasks:
     - name: Apply objects

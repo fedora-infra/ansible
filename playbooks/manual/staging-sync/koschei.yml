@@ -6,15 +6,16 @@
 # In future, this playbook may be extended to sync content from
 # production Koschei database dump, but this is not needed for now.
 
+---
 - name: sync staging Koschei with production
   hosts: os_control_stg[0]
   user: root
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - /srv/private/ansible/vars.yml
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
-   - /srv/web/infra/ansible/roles/openshift-apps/koschei/vars/main.yml
-   - /srv/web/infra/ansible/roles/openshift-apps/koschei/vars/{{ env }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - /srv/private/ansible/vars.yml
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/roles/openshift-apps/koschei/vars/main.yml
+    - /srv/web/infra/ansible/roles/openshift-apps/koschei/vars/{{ env }}.yml
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 

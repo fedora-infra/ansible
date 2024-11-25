@@ -3,6 +3,7 @@
 # NOTE: make sure there is room/space for this instance on the buildvmhost
 # NOTE: most of these vars_path come from group_vars/releng or from hostvars
 
+---
 - import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
   vars:
     myhosts: "releng_compose:releng_compose_stg:releng_compose_eln"
@@ -203,7 +204,7 @@
       dest: /etc/krb5.releng.keytab
       owner: root
       group: "releng-team"
-      mode: 0640
+      mode: "0640"
     tags:
     - containerrebuild
 
@@ -213,7 +214,7 @@
       dest: /etc/pki/releng
       owner: root
       group: "releng-team"
-      mode: 0600
+      mode: "0600"
     tags:
     - containerrebuild
 
@@ -223,7 +224,7 @@
       dest: "/usr/local/bin/relengpush"
       owner: root
       group: "releng-team"
-      mode: 0750
+      mode: "0750"
     tags:
     - containerrebuild
 
@@ -233,7 +234,7 @@
       dest: "/usr/local/bin/relengpush-int"
       owner: root
       group: "releng-team"
-      mode: 0750
+      mode: "0750"
     tags:
     - containerrebuild
 

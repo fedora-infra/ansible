@@ -1,12 +1,13 @@
-- name: Fedorahosted. No more on our servers, but still in our hearts... 
+---
+- name: Fedorahosted. No more on our servers, but still in our hearts...
   hosts: proxies_stg:proxies
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
@@ -26,4 +27,3 @@
 
   - name: install special git.fedorahosted-redirects.conf with git.fedorahosted redirects
     copy: src={{ files }}/httpd/git.fedorahosted-redirects.conf dest=/etc/httpd/conf.d/git.fedorahosted.org/fedorahosted-redirects.conf
-

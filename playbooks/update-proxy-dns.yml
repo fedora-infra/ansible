@@ -3,14 +3,15 @@
 #   - status  -- what to do. must be either 'enable' or 'disable'
 #   - userstring -- the git commit userstring for the dns repo
 
+---
 - name: Either take a proxy out of dns or put it back in
   hosts: "{{ proxies }}"
   user: root
   serial: 1
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   vars:
   - userstring: "Ansible update-proxy-dns.yml <root@fedoraproject.org>"

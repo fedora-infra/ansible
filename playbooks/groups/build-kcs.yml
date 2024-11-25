@@ -3,10 +3,11 @@
 # Creation of the system is done by a different process so is not
 # covered by this playbook.
 
+---
 - name: enable an ephemeral builder
   hosts: build_x86_kcs:build_x86_kcs_stg
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml

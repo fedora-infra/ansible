@@ -1,7 +1,8 @@
+---
 - name: Make the app be real
   hosts: os_control_stg[0]:os_control
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml
@@ -83,7 +84,7 @@
     buildname: monitor-gating-build
     objectname: monitor-gating-build
     tags:
-        - build
+      - build
 
   - role: openshift/object
     app: monitor-gating

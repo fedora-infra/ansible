@@ -1,7 +1,8 @@
+---
 - name: Make the app be real
   hosts: os_masters_stg[0] # only in staging for the ARC deployment
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml

@@ -1,3 +1,4 @@
+---
 - import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
   vars:
     myhosts: "batcave"
@@ -5,12 +6,12 @@
 - name: make the box be real
   hosts: batcave
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
   - base
@@ -54,8 +55,8 @@
   - batcave
   - role: grobisplitter
     when: datacenter == 'iad2'
-  - { role: nfs/client, when: inventory_hostname.startswith('batcave'), mnt_dir: '/srv/web/pub',  nfs_src_dir: 'fedora_ftp/fedora.redhat.com/pub' }
-  - { role: nfs/client, when: inventory_hostname.startswith('batcave01'), mnt_dir: '/mnt/fedora/app',  nfs_src_dir: 'fedora_app/app' }
+  - { role: nfs/client, when: inventory_hostname.startswith('batcave'), mnt_dir: '/srv/web/pub', nfs_src_dir: 'fedora_ftp/fedora.redhat.com/pub' }
+  - { role: nfs/client, when: inventory_hostname.startswith('batcave01'), mnt_dir: '/mnt/fedora/app', nfs_src_dir: 'fedora_app/app' }
   - { role: mirror_pagure_ansible, tags: ['mirror_pagure_ansible'] }
 
   pre_tasks:

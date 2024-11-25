@@ -6,6 +6,7 @@
 #
 # Use --extra-vars to define them.
 
+---
 - assert:
     that:
       - "queue_name is defined"
@@ -15,7 +16,7 @@
     that:
       - "vhost is defined"
     fail_msg: "You must define vhost"
- 
+
 - name: Create the queue in RabbitMQ
   hosts: rabbitmq_stg[0]:rabbitmq[0]
   rabbitmq_queue:

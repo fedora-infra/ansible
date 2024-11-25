@@ -1,3 +1,4 @@
+---
 - name: Prepare setting up the database
   hosts: db01.stg.iad2.fedoraproject.org:db01.iad2.fedoraproject.org
   gather_facts: no
@@ -54,7 +55,7 @@
 - name: Make the app be real
   hosts: os_control_stg[0]:os_control[0]
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml

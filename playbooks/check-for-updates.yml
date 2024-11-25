@@ -8,6 +8,7 @@
 # time ansible-playbook check-for-updates.yml | grep msg\": | awk -F: '{print $2}' | sort
 #
 
+---
 - name: check for updates
   hosts: distro_RedHat:distro_CentOS:!ocp*:!worker*
   gather_facts: false

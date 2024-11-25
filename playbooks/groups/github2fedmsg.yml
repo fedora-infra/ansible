@@ -3,6 +3,7 @@
 # NOTE: make sure there is room/space for this server on the vmhost
 # NOTE: most of these vars_path come from group_vars/github2fedmsg* or from hostvars
 
+---
 - import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
   vars:
     myhosts: "github2fedmsg:github2fedmsg_stg"
@@ -10,12 +11,12 @@
 - name: make the box be real
   hosts: github2fedmsg:github2fedmsg_stg
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
   - base
@@ -43,12 +44,12 @@
 - name: deploy service-specific config
   hosts: github2fedmsg:github2fedmsg_stg
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"

@@ -1,3 +1,4 @@
+---
 - import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
   vars:
     myhosts: "logging"
@@ -5,12 +6,12 @@
 - name: make the box be real
   hosts: logging
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
   - base
@@ -57,12 +58,12 @@
 - name: Cloud Image stats
   hosts: log01.iad2.fedoraproject.org
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
   - cloudstats
@@ -73,34 +74,34 @@
 - name: dole out the service-specific config
   hosts: log01.iad2.fedoraproject.org
   user: root
-  gather_facts: True
+  gather_facts: true
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   roles:
-   - role: nfs/client
-     mnt_dir: '/mnt/fedora_stats'
-     nfs_mount_opts: "rw,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3"
-     nfs_src_dir: 'fedora_stats'
-   - geoip
+    - role: nfs/client
+      mnt_dir: '/mnt/fedora_stats'
+      nfs_mount_opts: "rw,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3"
+      nfs_src_dir: 'fedora_stats'
+    - geoip
 
   tasks:
-   - name: install needed packages
-     package: name={{ item }} state=present
-     with_items:
-       - httpd
-       - httpd-tools
-       - mod_ssl
-       - rsync
-       - emacs-nox
-       - git
-       - bc
-       - gnuplot
-       - mod_auth_gssapi
+    - name: install needed packages
+      package: name={{ item }} state=present
+      with_items:
+        - httpd
+        - httpd-tools
+        - mod_ssl
+        - rsync
+        - emacs-nox
+        - git
+        - bc
+        - gnuplot
+        - mod_auth_gssapi
 
-   - name: set domain_can_mmap_files so collectd works
-     seboolean: name=domain_can_mmap_files state=yes persistent=yes
+    - name: set domain_can_mmap_files so collectd works
+      seboolean: name=domain_can_mmap_files state=yes persistent=yes

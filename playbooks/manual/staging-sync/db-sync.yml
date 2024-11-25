@@ -14,6 +14,7 @@
 #           emptry string (''), for example if the app is running in openshift.
 # db     => The database name on both database server (must be the same)
 
+---
 - name: dump the prod db out
   hosts: "{{ dbhost }}.iad2.fedoraproject.org"
   user: root
@@ -22,9 +23,9 @@
   become_method: sudo
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
@@ -32,21 +33,21 @@
   - name: Dumping the production db. This might take a minute. Go out to the lobby!
     shell: pg_dump -C {{ db }} |xz -c > /var/tmp/{{ db }}.dump.xz
 
-    # Get the dump from `from` in the batcave
+  # Get the dump from `from` in the batcave
   - name: Export the dump from the dbhost in prod to batcave
     fetch:
-     src: /var/tmp/{{ db }}.dump.xz
-     dest: /var/tmp/
-     flat: yes
+      src: /var/tmp/{{ db }}.dump.xz
+      dest: /var/tmp/
+      flat: yes
 
 - name: bring staging services down
   hosts: "{{ server or 'batcave01.iad2.fedoraproject.org' }}"
   user: root
   any_errors_fatal: false
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
@@ -63,18 +64,18 @@
   become_method: sudo
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   tasks:
-    # push dump to stg from batcave
+  # push dump to stg from batcave
   - name: push the DB dump from batcave to the dbhost in stg
     copy:
-       src: /var/tmp/{{ db }}.dump.xz
-       dest: /var/tmp/{{ db }}.dump.xz
+      src: /var/tmp/{{ db }}.dump.xz
+      dest: /var/tmp/{{ db }}.dump.xz
 
   - name: Unpack the archive
     command: unxz /var/tmp/{{ db }}.dump.xz
@@ -95,9 +96,9 @@
   user: root
   any_errors_fatal: false
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
@@ -114,9 +115,9 @@
   become_method: sudo
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
@@ -129,13 +130,12 @@
   user: root
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   tasks:
   - name: remove the DB dump from batcave
     command: rm -f /var/tmp/{{ db }}.dump.xz
-

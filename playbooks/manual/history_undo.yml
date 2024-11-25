@@ -8,6 +8,7 @@
 # all the virthosts.  If you run this once, it will undo those transactions.  If
 # you run it again, it will undo that previous *undo*.
 
+---
 - name: Find and undo the latest yum transaction involving a $PACKAGE
   hosts: "{{ target }}"
   user: root
@@ -30,7 +31,7 @@
   - debug: var=transaction_info.stdout_lines
     when: transaction_id.stderr == ""
 
-  #- pause: seconds=30 prompt="Undoing that yum transaction.  Abort if this is wrong."
+  # - pause: seconds=30 prompt="Undoing that yum transaction.  Abort if this is wrong."
   #  when: transaction_id.stderr == ""
 
   - name: Okay.. undo that transaction now

@@ -19,7 +19,7 @@
     copy:
       src: "{{ files }}/scripts/fix-home-fedora-ownerships.sh"
       dest: /usr/local/sbin/fix-home-fedora-ownerships.sh
-      mode: 0755
+      mode: "0755"
     changed_when: false
     when: home_fedora_res.stat.isdir
 

@@ -1,13 +1,14 @@
 # This playbook imports the cookies given on IRC to the Matrix Zodbot
 
+---
 - name: Import the cookies
   hosts: value02.iad2.fedoraproject.org:value02.stg.iad2.fedoraproject.org
   user: root
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
 
@@ -18,7 +19,7 @@
         dest: /root/.pgpass
         owner: root
         group: root
-        mode: 0400
+        mode: "0400"
 
     - name: install the required package
       dnf:
@@ -29,7 +30,7 @@
       copy:
         src: "{{ files }}/zodbot/karma-to-cookies-db.py"
         dest: /usr/local/bin/karma-to-cookies-db
-        mode: 0755
+        mode: "0755"
 
     - name: run the import script
       command:

@@ -1,49 +1,50 @@
+---
 - name: setup base openQA host
   hosts: openqa_onebox_test
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   pre_tasks:
   - include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
 
   roles:
-   - { role: base, tags: ['base'] }
-   - { role: rkhunter, tags: ['rkhunter'] }
-   - { role: nagios_client, tags: ['nagios_client'] }
-   - { role: hosts, tags: ['hosts']}
-   - ipa/client
-   - { role: collectd/base, tags: ['collectd_base'] }
-   - { role: sudo, tags: ['sudo'] }
-   - apache
+  - { role: base, tags: ['base'] }
+  - { role: rkhunter, tags: ['rkhunter'] }
+  - { role: nagios_client, tags: ['nagios_client'] }
+  - { role: hosts, tags: ['hosts']}
+  - ipa/client
+  - { role: collectd/base, tags: ['collectd_base'] }
+  - { role: sudo, tags: ['sudo'] }
+  - apache
 
   tasks:
   - import_tasks: "{{ tasks_path }}/motd.yml"
 
   handlers:
-   - import_tasks: "{{ handlers_path }}/restart_services.yml"
+  - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
 - name: configure openQA
   hosts: openqa_onebox_test
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
 # we need this box to be its own pgsql server...
   roles:
-   - { role: postgresql_server, tags: ['postgresql_server'] }
-   - { role: openqa/server, tags: ['openqa_server'] }
-   - { role: openqa/dispatcher, tags: ['openqa_dispatcher'] }
-   - { role: openqa/worker, tags: ['openqa_worker'] }
+  - { role: postgresql_server, tags: ['postgresql_server'] }
+  - { role: openqa/server, tags: ['openqa_server'] }
+  - { role: openqa/dispatcher, tags: ['openqa_dispatcher'] }
+  - { role: openqa/worker, tags: ['openqa_worker'] }
 
   handlers:
-   - import_tasks: "{{ handlers_path }}/restart_services.yml"
+  - import_tasks: "{{ handlers_path }}/restart_services.yml"

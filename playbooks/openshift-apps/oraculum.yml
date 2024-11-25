@@ -1,3 +1,4 @@
+---
 - name: Prepare setting up the database
   hosts: db01.stg.iad2.fedoraproject.org:db01.iad2.fedoraproject.org
   gather_facts: no
@@ -40,7 +41,7 @@
 - name: Make the app be real
   hosts: os_control_stg[0]:os_control[0]
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml
@@ -90,7 +91,7 @@
     serviceport: 8080-tcp
     servicename: oraculum-api-endpoint
     annotations:
-         haproxy.router.openshift.io/set-forwarded-headers: append
+      haproxy.router.openshift.io/set-forwarded-headers: append
 
   - role: openshift/route
     app: oraculum
@@ -100,7 +101,7 @@
     serviceport: 8080-tcp
     servicename: oraculum-api-endpoint
     annotations:
-         haproxy.router.openshift.io/set-forwarded-headers: append
+      haproxy.router.openshift.io/set-forwarded-headers: append
 
   - role: openshift/route
     app: oraculum
@@ -119,7 +120,7 @@
     serviceport: 8080-tcp
     servicename: oraculum-frontend
     annotations:
-         haproxy.router.openshift.io/set-forwarded-headers: append
+      haproxy.router.openshift.io/set-forwarded-headers: append
 
   - role: openshift/start-build
     app: oraculum

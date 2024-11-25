@@ -3,6 +3,7 @@
 # requires --extra-vars="target=somehostname yumcommand=update"
 
 
+---
 - name: update the system
   hosts: "{{ target }}"
   gather_facts: false
@@ -18,7 +19,7 @@
     poll: 30
 
 - name: run rkhunter if installed
-  hosts:  "{{ target }}"
+  hosts: "{{ target }}"
   user: root
 
   tasks:

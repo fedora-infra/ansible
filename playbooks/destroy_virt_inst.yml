@@ -9,6 +9,7 @@
 
 # requires --extra-vars="target=hostspec"
 
+---
 - name: destroy and undefine vm
   hosts: "{{ target }}"
   user: root

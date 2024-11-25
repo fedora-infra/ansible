@@ -1,8 +1,9 @@
+---
 - name: Make the app be real
   # We don't have any VPN set up on stg
   hosts: os_control[0]
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml

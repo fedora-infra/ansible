@@ -1,6 +1,6 @@
 # Synchronizes files in /tmp/staging between remote hosts
-# The following variables need to be supplied with the 
-# --extra-vars flag for the playbook to work: 
+# The following variables need to be supplied with the
+# --extra-vars flag for the playbook to work:
 # 'remote_src_host', 'remote_dest_host'
 #
 # Example:
@@ -10,20 +10,20 @@
 ---
 - hosts: localhost
   user: root
-  
+
   tasks:
-    
+
     - name: copy files from remote_src_host to control node
       run_once: yes
-      fetch: 
-        src: /tmp/staging 
-        dest: /tmp/staging 
+      fetch:
+        src: /tmp/staging
+        dest: /tmp/staging
         flat: yes
       validate_checksum: yes
       when: "{{ inventory_hostname == 'remote_src_host' }}"
-      
+
     - name: copy files from control node to remote_dest_host
-      copy: 
-        src: /tmp/staging 
+      copy:
+        src: /tmp/staging
         dest: /tmp/staging
       when: "{{ inventory_hostname == 'remote_dest_host' }}"

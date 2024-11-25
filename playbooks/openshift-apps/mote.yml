@@ -1,7 +1,8 @@
+---
 - name: Make the app be real
   hosts: os_control[0]:os_control_stg[0]
   user: root
-  gather_facts: False
+  gather_facts: false
   vars:
     app: mote
   vars_files:

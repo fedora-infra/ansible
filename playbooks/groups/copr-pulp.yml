@@ -53,7 +53,7 @@
     copy:
       content: "{{ copr_dev_pulp_default_admin_password }}"
       dest: /tmp/pulp_default_admin_password
-      mode: 000
+      mode: "000"
 
 - name: cloud basic setup
   hosts: copr_pulp_dev_aws:copr_pulp_aws

@@ -3,15 +3,16 @@
 # unlike koschei-rolling.yml, it works even in case when there are
 # database migrations to apply.
 
+---
 - name: Perform full Koschei update
   hosts: os_control[0]:os_control_stg[0]
   user: root
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - /srv/private/ansible/vars.yml
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
-   - /srv/web/infra/ansible/roles/openshift-apps/koschei/vars/main.yml
-   - /srv/web/infra/ansible/roles/openshift-apps/koschei/vars/{{ env }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - /srv/private/ansible/vars.yml
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/roles/openshift-apps/koschei/vars/main.yml
+    - /srv/web/infra/ansible/roles/openshift-apps/koschei/vars/{{ env }}.yml
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 

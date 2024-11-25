@@ -1,3 +1,4 @@
+---
 - import_playbook: "/srv/web/infra/ansible/playbooks/include/happy_birthday.yml"
   vars:
     myhosts: "buildhw:bkernel"
@@ -5,12 +6,12 @@
 - name: make koji builder(s) on raw hw
   hosts: buildhw:bkernel
   remote_user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
@@ -33,7 +34,7 @@
 
   roles:
   - base
-  - { role: nfs/client, mnt_dir: '/mnt/fedora_koji',  nfs_src_dir: "{{ koji_hub_nfs }}", when: koji_hub_nfs is defined }
+  - { role: nfs/client, mnt_dir: '/mnt/fedora_koji', nfs_src_dir: "{{ koji_hub_nfs }}", when: koji_hub_nfs is defined }
   - role: nfs/client
     mnt_dir: '/mnt/koji/ostree'
     nfs_src_dir: 'fedora_ostree_content/ostree'

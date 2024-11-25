@@ -9,13 +9,14 @@
 #   https://lists.fedoraproject.org/pipermail/buildsys/2015-June/004779.html
 
 
+---
 - name: bring staging services down
   hosts: koji_stg
   user: root
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
@@ -52,9 +53,9 @@
       cg_name: osbuild
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
@@ -89,9 +90,9 @@
   hosts: koji_stg
   user: root
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
   tags:
@@ -136,9 +137,9 @@
   hosts: builders_stg:releng_compose_stg:bodhi_backend_stg
   user: root
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
   tags:
@@ -155,9 +156,9 @@
   hosts: builders_stg
   user: root
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
   tags:

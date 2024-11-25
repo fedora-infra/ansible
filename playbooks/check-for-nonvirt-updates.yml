@@ -8,6 +8,7 @@
 # time ansible-playbook check-for-updates.yml | grep msg\": | awk -F: '{print $2}' | sort
 #
 
+---
 - name: check for updates (EL)
   hosts: virt_host:&distro_RedHat
   gather_facts: false

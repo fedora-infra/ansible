@@ -1,17 +1,18 @@
 # create an osbs server
-- import_playbook:  "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
+---
+- import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
   vars:
     myhosts: "oci_registry:oci_registry_stg"
 
 - name: make the box be real
   hosts: oci_registry:oci_registry_stg
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
   - base
@@ -42,7 +43,7 @@
       state: directory
       owner: root
       group: root
-      mode: 0755
+      mode: "0755"
     when: "env == 'staging'"
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
 
@@ -66,39 +67,39 @@
   roles:
     - {
       role: docker-distribution,
-        conf_path: "/etc/docker-distribution/registry/config.yml",
-        tls: {
-          enabled: False,
-        },
-        log: {
-          fields: {
-            service: "registry"
-          }
-        },
-        storage: {
-          filesystem: {
-            rootdirectory: "/srv/registry"
-          }
-        },
-        http: {
-          addr: ":5000"
+      conf_path: "/etc/docker-distribution/registry/config.yml",
+      tls: {
+        enabled: false,
+      },
+      log: {
+        fields: {
+          service: "registry"
         }
+      },
+      storage: {
+        filesystem: {
+          rootdirectory: "/srv/registry"
+        }
+      },
+      http: {
+        addr: ":5000"
       }
+    }
 
     # Setup compose-x86-01 push docker images to registry
     - {
       role: login-registry,
-        candidate_registry: "candidate-registry.stg.fedoraproject.org",
-        candidate_registry_osbs_username: "{{candidate_registry_osbs_stg_username}}",
-        candidate_registry_osbs_password: "{{candidate_registry_osbs_stg_password}}",
+      candidate_registry: "candidate-registry.stg.fedoraproject.org",
+      candidate_registry_osbs_username: "{{candidate_registry_osbs_stg_username}}",
+      candidate_registry_osbs_password: "{{candidate_registry_osbs_stg_password}}",
       when: env == "staging",
       delegate_to: "compose-x86-01.{{ datacenter }}.fedoraproject.org"
     }
     - {
       role: login-registry,
-        candidate_registry: "candidate-registry.fedoraproject.org",
-        candidate_registry_osbs_username: "{{candidate_registry_osbs_prod_username}}",
-        candidate_registry_osbs_password: "{{candidate_registry_osbs_prod_password}}",
+      candidate_registry: "candidate-registry.fedoraproject.org",
+      candidate_registry_osbs_username: "{{candidate_registry_osbs_prod_username}}",
+      candidate_registry_osbs_password: "{{candidate_registry_osbs_prod_password}}",
       when: env == "production",
       delegate_to: "compose-x86-01.{{ datacenter }}.fedoraproject.org"
     }

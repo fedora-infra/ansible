@@ -1,9 +1,9 @@
 # Create the RabbitMQ users
-
+---
 - name: Setup RabbitMQ
   hosts: rabbitmq[0]:rabbitmq_stg[0]:rabbitmq01.iad2.fedoraproject.org
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml
@@ -36,8 +36,8 @@
     community.rabbitmq.rabbitmq_queue:
       name: amqp_bridge_verify_missing
       vhost: /pubsub
-      durable: True
-      auto_delete: False
+      durable: true
+      auto_delete: false
       message_ttl: 60000
       login_user: admin
       login_password: "{{ (env == 'production') | ternary(rabbitmq_admin_password_production, rabbitmq_admin_password_staging) }}"
@@ -78,7 +78,7 @@
 - name: Make the app be real
   hosts: os_control[0]:os_control_stg[0]
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml

@@ -3,6 +3,7 @@
 # NOTE: make sure there is room/space for this builder on the buildvmhost
 # NOTE: most of these vars_path come from group_vars/buildvm or from hostvars
 
+---
 - import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
   vars:
     myhosts: "buildvm:buildvm_stg:buildvm_aarch64:buildvm_ppc64le:buildvm_ppc64le_stg:buildvm_aarch64_stg:buildvm_s390x_kvm"
@@ -10,7 +11,7 @@
 - name: make koji builder(s)
   hosts: buildvm:buildvm_stg:buildvm_aarch64:buildvm_ppc64le:buildvm_ppc64le_stg:buildvm_aarch64_stg:buildvm_s390x:buildvm_s390x_stg
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml
@@ -25,11 +26,11 @@
     - base
     - hosts
     - {
-        role: nfs/client,
-        mnt_dir: "/mnt/fedora_koji",
-        nfs_src_dir: "{{ koji_hub_nfs }}",
-        when: "env == 'staging' or createrepo or 'runroot' in group_names and not inventory_hostname.startswith('buildvm-s390x')",
-      }
+      role: nfs/client,
+      mnt_dir: "/mnt/fedora_koji",
+      nfs_src_dir: "{{ koji_hub_nfs }}",
+      when: "env == 'staging' or createrepo or 'runroot' in group_names and not inventory_hostname.startswith('buildvm-s390x')",
+    }
     - ipa/client
     - role: sudo
       when: not inventory_hostname.startswith('bkernel') and env == 'production'
@@ -86,7 +87,7 @@
   tags:
     - varnish
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml
@@ -104,7 +105,7 @@
   tags:
     - sshfs
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml

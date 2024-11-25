@@ -26,12 +26,12 @@
           file:
             path: "/var/www/html/rhcos"
             state: directory
-            mode: 0755
+            mode: "0755"
         - name: == OCP KVM provisioning == Importing generated Ignition files
           template:
             src: "/srv/web/infra/bigfiles/openshiftboot/{{ env }}/{{ item }}"
             dest: "/var/www/html/rhcos/{{ item }}"
-            mode: 0755
+            mode: "0755"
           with_items:
             - bootstrap.ign
             - controlplane.ign
@@ -40,7 +40,7 @@
           template:
             src: "/srv/web/infra/bigfiles/openshiftboot/ocp-treeinfo.j2"
             dest: "/var/www/html/rhcos/.treeinfo"
-            mode: 0644
+            mode: "0644"
         - name: == OCP KVM provisioning == Copy kubeadmin config files to bastion
           copy:
             src: "/srv/web/infra/bigfiles/openshiftboot/{{ env }}/auth/"
@@ -48,10 +48,10 @@
         - name: == OCP KVM provisioning == Downloading RHCOS deploy files
           get_url:
             dest: /var/www/html/rhcos/
-            mode: 0755
+            mode: "0755"
             url: "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/{{ rhcos_version }}/{{ item }}"
-#          run_once: True
-          ignore_errors: True
+#          run_once: true
+          ignore_errors: true
           with_items:
             - "rhcos-{{ rhcos_version }}-x86_64-live-initramfs.x86_64.img"
             - "rhcos-{{ rhcos_version }}-x86_64-live-rootfs.x86_64.img"
@@ -70,10 +70,10 @@
     - name: == OCP KVM provisioning == Downloading RHCOS deploy files
       get_url:
         dest: /srv/web/infra/bigfiles/tftpboot/rhcos/
-        mode: 0755
+        mode: "0755"
         url: "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/{{ rhcos_version }}/{{ item }}"
-      run_once: True
-      ignore_errors: True
+      run_once: true
+      ignore_errors: true
       with_items:
         - "rhcos-{{ rhcos_version }}-x86_64-live-initramfs.x86_64.img"
         - "rhcos-{{ rhcos_version }}-x86_64-live-kernel-x86_64"

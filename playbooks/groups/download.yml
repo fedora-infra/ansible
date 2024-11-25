@@ -1,3 +1,4 @@
+---
 - import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
   vars:
     myhosts: "download_ibiblio:download_cc_rdu:download_iad2"
@@ -5,12 +6,12 @@
 - name: Download servers
   hosts: download
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
 
@@ -21,12 +22,12 @@
 - name: post-initial-steps
   hosts: download
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - "/srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml"
+  - /srv/web/infra/ansible/vars/global.yml
+  - "/srv/private/ansible/vars.yml"
+  - "/srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml"
 
   roles:
   - base
@@ -39,9 +40,9 @@
   - apache
   - download
   - rsyncd
-  - { role: nfs/client, when: datacenter == "iad2" or datacenter == "rdu", mnt_dir: '/srv/pub',  nfs_src_dir: 'fedora_ftp/fedora.redhat.com/pub' }
-  - { role: nfs/client, when: datacenter == "iad2" or datacenter == "rdu", mnt_dir: '/srv/pub/archive',  nfs_src_dir: 'fedora_ftp_archive' }
-  - { role: nfs/client, when: datacenter == "iad2", mnt_dir: '/mnt/fedora_koji',  nfs_src_dir: 'fedora_koji' } # needed for internal sync
+  - { role: nfs/client, when: datacenter == "iad2" or datacenter == "rdu", mnt_dir: '/srv/pub', nfs_src_dir: 'fedora_ftp/fedora.redhat.com/pub' }
+  - { role: nfs/client, when: datacenter == "iad2" or datacenter == "rdu", mnt_dir: '/srv/pub/archive', nfs_src_dir: 'fedora_ftp_archive' }
+  - { role: nfs/client, when: datacenter == "iad2", mnt_dir: '/mnt/fedora_koji', nfs_src_dir: 'fedora_koji' } # needed for internal sync
   - sudo
 
   pre_tasks:
@@ -68,7 +69,7 @@
     when: inventory_hostname == 'download-ib01.fedoraproject.org'
   - name: install bc so last-sync works.
     package: name=bc state=present
-    when: inventory_hostname == 'download-ib01.fedoraproject.org' 
+    when: inventory_hostname == 'download-ib01.fedoraproject.org'
 
   - name: put in script for syncing on download-cc-rdu01
     copy: src="{{ files }}/download/sync-up-downloads.sh.cc-rdu01" dest=/usr/local/bin/sync-up-downloads owner=root group=root mode=755
@@ -86,7 +87,6 @@
   - name: make a mnt/koji link
     file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji
     when: datacenter == "iad2"
-    
+
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
-

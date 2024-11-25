@@ -1,3 +1,4 @@
+---
 - name: push packages out
   hosts:
   - fedmsg-hubs
@@ -19,12 +20,12 @@
   - datagrepper-stg
 
   user: root
-  vars_files: 
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   vars:
-    testing: False
+    testing: false
     packages:
     - fedmsg
     - python2-fedmsg-meta-fedora-infrastructure
@@ -46,16 +47,16 @@
     with_items: "{{packages}}"
 
   # Restart all the backend daemons
-  #- import_tasks: "{{tasks_path}}../restart-fedmsg-services.yml"
+  # - import_tasks: "{{tasks_path}}../restart-fedmsg-services.yml"
 
 # Also restart the frontend web services
 - name: bounce apache
   hosts: datagrepper:datagrepper_stg
   user: root
-  vars_files: 
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 

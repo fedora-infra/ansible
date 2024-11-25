@@ -2,7 +2,7 @@
 # Fedora Messaging Notifications (FMN)
 #
 
-
+---
 - name: Setup the database
   hosts: db01.iad2.fedoraproject.org:db01.stg.iad2.fedoraproject.org
   gather_facts: no
@@ -27,7 +27,7 @@
 - name: Setup RabbitMQ
   hosts: rabbitmq[0]:rabbitmq_stg[0]
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml
@@ -103,7 +103,7 @@
 - name: Make the app be real
   hosts: os_control_stg:os_control
   user: root
-  gather_facts: False
+  gather_facts: false
 
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml

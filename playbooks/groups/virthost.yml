@@ -2,6 +2,7 @@
 # NOTE: should be used with --limit most of the time
 # NOTE: most of these vars_path come from group_vars/backup_server or from hostvars
 
+---
 - import_playbook: "/srv/web/infra/ansible/playbooks/include/happy_birthday.yml"
   vars:
     myhosts: "virthost:bvirthost:buildvmhost:colo_virt"
@@ -9,12 +10,12 @@
 - name: make virthost server system
   hosts: virthost:bvirthost:buildvmhost:colo_virt
   user: root
-  gather_facts: True
+  gather_facts: true
 
   vars_files:
-   - /srv/web/infra/ansible/vars/global.yml
-   - "/srv/private/ansible/vars.yml"
-   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   pre_tasks:
   - include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
