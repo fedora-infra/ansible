@@ -35,6 +35,8 @@ br1_nm: 255.255.255.0
 collectd_apache: true
 # communishift project resource overrides
 communishift_projects:
+  communishift-admins:
+    do_not_delete: true                           # Marked do not delete 2024-11-25
   communishift-eventbot:
     name: communishift-eventbot
   communishift-fedora-review-service:

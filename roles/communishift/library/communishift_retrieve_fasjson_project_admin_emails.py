@@ -57,26 +57,28 @@ matched_groups:
     type: str
     returned: always
     sample:
-[
-  {
+{
+  "communishift-yyy": {
     "group_name": "communishift-yyy",
     "group_members": [
       {"username": "user1": {"emails": ["user1@gmail.com"]}},
       {"username": "user2": {"emails": ["user2@gmail.com"]}},
       {"username": "user3": {"emails": ["user3@gmail.com"]}},
       {"username": "user4": {"emails": ["user4@gmail.com"]}}
-    ]
+    ],
+    "email_list": ["user1@gmail.com", "user2@gmail.com", "user3@gmail.com", "user4@gmail.com"]
   },
-  {
+  "communishift-abc": {
     "group_name": "communishift-abc",
     "group_members": [
       {"username": "user1": {"emails": ["user1@gmail.com"]}},
       {"username": "user3": {"emails": ["user3@gmail.com"]}},
       {"username": "user7": {"emails": ["user7@gmail.com"]}},
       {"username": "user9": {"emails": ["user9@gmail.com"]}}
-    ]
+    ],
+    "email_list": ["user1@gmail.com", "user3@gmail.com", "user7@gmail.com", "user9@gmail.com"]
   }
-]
+}
 
 msg:
     description: The output message that the module generates.
@@ -159,28 +161,25 @@ def run_module():
         groups_response = get_groups(http_client)
         # print(json.dumps(groups_response))
 
-        communishift_groups = []
+        communishift_groups = {}
         regexp = re.compile(r"%s" % (group_name_pattern))
         for v in groups_response["result"]:
             if regexp.search(v["groupname"]):
-                group = {"groupname": v["groupname"], "groupmembers": []}
+                group = {"groupname": v["groupname"], "groupmembers": [], "email_list": []}
 
                 group_member_res = get_group_members(http_client, v["groupname"])
                 # print(json.dumps(group_member_res))
 
-                for v in group_member_res["result"]:
-                    user_data_res = get_group_member_data(http_client, v["username"])
-                    # user_data_res["result"]["emails"] contains {"user1": {"emails": ["user1@gmail.com"]}}
-                    u = {"username": v["username"], "emails": user_data_res["result"]["emails"]}
+                for val in group_member_res["result"]:
+                    user_data_res = get_group_member_data(http_client, val["username"])
+                    u = {"username": val["username"], "emails": user_data_res["result"]["emails"]}
                     group["groupmembers"].append(u)
-                communishift_groups.append(group)
-                # print(v["groupname"])
-
-        # print(json.dumps(communishift_groups))
+                    group["email_list"].extend(user_data_res["result"]["emails"])
+                communishift_groups[v["groupname"]] = group
 
         result["matched_groups"] = json.dumps(communishift_groups)
         result["changed"] = True
-        result["msg"] = "Successfully retrieved groups and their users from fasjson."
+        result["message"] = "Successfully retrieved groups and their users from fasjson."
     except Exception:
         raise
 

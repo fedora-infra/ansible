@@ -16,6 +16,11 @@
       loop_control:
         loop_var: communishift_package
 
+    - name: Communishift Retrieve FASJSON data
+      include_role:
+        name: communishift
+        tasks_from: retrieve-communishift-admin-data
+
     - name: Communishift Cluster Cleanup Tasks
       with_items: "{{ communishift_projects }}"
       include_role:

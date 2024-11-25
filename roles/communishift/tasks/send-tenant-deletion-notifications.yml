@@ -25,10 +25,7 @@
       Make sure to reference the project name and please provide a reason for the extention, also please include how long you wish the extention to be
       in place for.
     from: admin@fedoraproject.org
-    to:
-      - D Kirwan <dkirwan+communishift_notification_test_1@redhat.com>
-      - David K <dkirwan+communishift_notification_test_2@redhat.com>
-    cc: David Kirwan <dkirwan@redhat.com>
+    to: "{{ communishift_project_emails[item.value.name]['email_list'] }}"
     headers:
       - Reply-To=admin@fedoraproject.org
     charset: us-ascii

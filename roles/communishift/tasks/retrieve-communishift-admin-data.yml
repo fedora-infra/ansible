@@ -12,7 +12,11 @@
   register: communishift_project_emails_fasjson_response
   run_once: true
 
+- name: Check if this project should be deleted
+  ansible.builtin.set_fact:
+    communishift_project_emails: "{{ communishift_project_emails_fasjson_response['matched_groups'] | from_json }}"
+
 - name: Debug
   debug:
-    msg: "{{ communishift_project_emails_fasjson_response }}"
+    msg: "{{ communishift_project_emails }}"
   run_once: true
