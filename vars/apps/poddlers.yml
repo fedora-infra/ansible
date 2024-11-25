@@ -53,6 +53,12 @@ poddlers_toddlers:
     topics:
       - "org.fedoraproject.*.toddlers.trigger.packagers_without_bugzilla"
 
+  - name: pagure-fas-groups-sync
+    callback: pagure_fas_groups_sync:PagureFASGroupsSync
+    topics:
+      - "org.fedoraproject.*.fas.group.member.sponsor"
+      - "org.fedoraproject.*.toddlers.trigger.pagure_fas_groups_sync"
+
   # - name: pdc-import-compose
   #   callback: pdc_import_compose:PDCImportCompose
   #   topics:
@@ -75,12 +81,6 @@ poddlers_toddlers:
       - "org.fedoraproject.*.pagure.issue.new"
       - "org.fedoraproject.*.pagure.issue.edit"
       - "org.fedoraproject.*.pagure.issue.comment.added"
-
-  - name: pagure-fas-groups-sync
-    callback: pagure_fas_groups_sync:PagureFASGroupsSync
-    topics:
-      - "org.fedoraproject.*.fas.group.member.sponsor"
-      - "org.fedoraproject.*.toddlers.trigger.pagure_fas_groups_sync"
 
 poddlers_cronjobs:
   - name: packager-bugzilla-sync

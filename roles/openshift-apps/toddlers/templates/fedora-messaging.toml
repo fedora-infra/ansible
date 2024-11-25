@@ -64,11 +64,10 @@ blocked_toddlers = [
 
 
 # Configuration used when sending notifications:
+mail_server = "bastion.fedoraproject.org"
 {% if env == "staging" %}
-mail_server = "bastion.stg.fedoraproject.org"
 admin_email = "admin@stg.fedoraproject.org"
 {% else %}
-mail_server = "bastion.fedoraproject.org"
 admin_email = "admin@fedoraproject.org"
 {% endif %}
 
