@@ -26,6 +26,7 @@
       in place for.
     from: admin@fedoraproject.org
     to: "{{ communishift_project_emails[item.value.name]['email_list'] }}"
+    cc: admin@fedoraproject.org
     headers:
       - Reply-To=admin@fedoraproject.org
     charset: us-ascii
