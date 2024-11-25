@@ -543,8 +543,9 @@ critpath.jsonpath = /etc/bodhi/critpath
 # files. This is used if critpath.type is not defined.
 # critpath_pkgs =
 
-# The net karma required to submit a critial path update to a pending release.
-min_karma = 2
+# The net karma required to submit updates to a pending release.
+min_karma = 1
+critpath.min_karma = 2
 
 # Allow critpath to submit for stable after 2 weeks with no negative karma
 critpath.mandatory_days_in_testing = 14
@@ -574,16 +575,19 @@ fedora_modular.mandatory_days_in_testing = 7
 f{{ FedoraBranchedNumber }}.status = pre_beta
 f{{ FedoraBranchedNumber }}.pre_beta.mandatory_days_in_testing = 0
 f{{ FedoraBranchedNumber }}.pre_beta.min_karma = 0
+f{{ FedoraBranchedNumber }}.pre_beta.critpath.min_karma = 0
 f{{ FedoraBranchedNumber }}.pre_beta.critpath.mandatory_days_in_testing = 0
 {% elif FedoraBranchedBodhi is defined and FedoraBranchedBodhi == 'prebeta' %}
 f{{ FedoraBranchedNumber }}.status = pre_beta
 f{{ FedoraBranchedNumber }}.pre_beta.mandatory_days_in_testing = 3
 f{{ FedoraBranchedNumber }}.pre_beta.min_karma = 1
+f{{ FedoraBranchedNumber }}.pre_beta.critpath.min_karma = 1
 f{{ FedoraBranchedNumber }}.pre_beta.critpath.mandatory_days_in_testing = 3
 {% elif FedoraBranchedBodhi is defined and FedoraBranchedBodhi == 'postbeta' %}
 f{{ FedoraBranchedNumber }}.status = post_beta
 f{{ FedoraBranchedNumber }}.post_beta.mandatory_days_in_testing = 7
-f{{ FedoraBranchedNumber }}.post_beta.min_karma = 2
+f{{ FedoraBranchedNumber }}.post_beta.min_karma = 1
+f{{ FedoraBranchedNumber }}.post_beta.critpath.min_karma = 2
 f{{ FedoraBranchedNumber }}.post_beta.critpath.mandatory_days_in_testing = 14
 {% endif %}
 
@@ -595,6 +599,7 @@ f{{ FedoraRawhideNumber }}c.pre_beta.mandatory_days_in_testing = 0
 f{{ FedoraRawhideNumber }}.status = pre_beta
 f{{ FedoraRawhideNumber }}.pre_beta.mandatory_days_in_testing = 0
 f{{ FedoraRawhideNumber }}.pre_beta.min_karma = 0
+f{{ FedoraRawhideNumber }}.pre_beta.critpath.min_karma = 0
 f{{ FedoraRawhideNumber }}.pre_beta.critpath.mandatory_days_in_testing = 0
 
 # ELN gating - Updates in ELN don't require any days in testing.

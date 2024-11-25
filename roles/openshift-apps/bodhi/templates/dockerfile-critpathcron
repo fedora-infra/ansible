@@ -1,7 +1,7 @@
 {% if env == "staging" %}
 FROM fedora:41
 {% else %}
-FROM fedora:40
+FROM fedora:41
 {% endif %}
 LABEL \
     name="bodhi-critpathcron" \

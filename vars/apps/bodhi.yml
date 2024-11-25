@@ -1,5 +1,5 @@
 ---
 # Set the Bodhi variables
-bodhi_version: "{{ (env == 'production')|ternary('8.2.0', '8.2.0') }}"
+bodhi_version: "{{ (env == 'production')|ternary('8.3.0', '8.3.0') }}"
 bodhi_openshift_pods: 1
 bodhi_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(bodhi|pungi)\..*
