@@ -71,6 +71,10 @@
   copy: src=openqa-lab-repo.repo dest=/etc/yum.repos.d/openqa-lab-repo.repo owner=root group=root mode=0644
   when: "deployment_type is defined and deployment_type == 'stg'"
 
+- name: Write prod side repo config
+  copy: src=openqa-prod-repo.repo dest=/etc/yum.repos.d/openqa-prod-repo.repo owner=root group=root mode=0644
+  when: "deployment_type is defined and deployment_type == 'prod'"
+
 - name: Install required packages
   package:
     name: ['openqa-worker', 'os-autoinst']
