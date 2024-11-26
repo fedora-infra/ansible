@@ -166,7 +166,6 @@ product_versions:
   # here, possibly. however, right after branching, tests for Rawhide
   # tend not to pass right away, so it may be good that we have to
   # manually enable branching for it...
-  - fedora-39
   - fedora-40
   - fedora-41
   - fedora-42
@@ -192,7 +191,6 @@ id: "bodhiupdate_bodhipush_openqa_netinst"
 # the "build a netinst and test an install from it" tests are gating
 # for the core groups, plus the anaconda and compose groups
 product_versions:
-  - fedora-39
   - fedora-40
   - fedora-41
   - fedora-42
@@ -222,7 +220,6 @@ id: "bodhiupdate_bodhipush_openqa_apps"
 # thunderbird), and the tests listed here use firefox. We don't have
 # any update tests that cover evolution or thunderbird ATM
 product_versions:
-  - fedora-39
   - fedora-40
   - fedora-41
   - fedora-42
@@ -248,7 +245,6 @@ id: "bodhiupdate_bodhipush_openqa_workstation"
 # groups. workstation does not include standard, so these aren't gating
 # for that group
 product_versions:
-  - fedora-39
   - fedora-40
   - fedora-41
   - fedora-42
@@ -282,7 +278,6 @@ id: "bodhiupdate_bodhipush_openqa_workstation_background"
 # often, at branch time, we don't yet have new backgrounds for the branched
 # release, so the test will always fail, so we cannot gate on it
 product_versions:
-  - fedora-39
   - fedora-40
   - fedora-41
   - fedora-42
@@ -305,7 +300,6 @@ id: "bodhiupdate_bodhipush_openqa_workstation_live"
 # the workstation "build a live image and install from it" tests are
 # gating for the same groups, plus anaconda and compose
 product_versions:
-  - fedora-39
   - fedora-40
   - fedora-41
   - fedora-42
@@ -335,7 +329,6 @@ id: "bodhiupdate_bodhipush_openqa_kde"
 # these tests are gating for updates in core, base, standard and kde
 # critpath groups.
 product_versions:
-  - fedora-39
   - fedora-40
   - fedora-41
   - fedora-42
@@ -371,7 +364,6 @@ id: "bodhiupdate_bodhipush_openqa_kde_background"
 # often, at branch time, we don't yet have new backgrounds for the branched
 # release, so the test will always fail, so we cannot gate on it
 product_versions:
-  - fedora-39
   - fedora-40
   - fedora-41
   - fedora-42
@@ -396,7 +388,6 @@ id: "bodhiupdate_bodhipush_openqa_kde_live"
 # the kde "build a live image and install from it" tests are
 # gating for the same groups, plus anaconda and compose
 product_versions:
-  - fedora-39
   - fedora-40
   - fedora-41
   - fedora-42
@@ -428,7 +419,6 @@ id: "bodhiupdate_bodhipush_openqa_server"
 # these tests are gating for updates in core, base, standard and server
 # critpath groups.
 product_versions:
-  - fedora-39
   - fedora-40
   - fedora-41
   - fedora-42
@@ -486,7 +476,6 @@ rules:
 --- !Policy
 id: "bodhiupdate_bodhipush_openqa_upgrade_server"
 product_versions:
-  - fedora-40
   - fedora-41
   - fedora-42
   - fedora-rawhide
@@ -510,7 +499,6 @@ rules:
 --- !Policy
 id: "bodhiupdate_bodhipush_openqa_upgrade_workstation"
 product_versions:
-  - fedora-40
   - fedora-41
   - fedora-42
   - fedora-rawhide
