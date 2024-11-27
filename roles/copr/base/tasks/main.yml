@@ -49,8 +49,7 @@
       - bash-completion
       - cronie-anacron
       - ethtool
-      # TODO The package is dead. Do we still need this?
-      # - golang-github-prometheus-node-exporter
+      - node-exporter
       - screen
       - tmux
     state: present
@@ -82,10 +81,10 @@
   tags:
   - packages
 
-# - name: start node exporter
-#   service: state=started enabled=yes name=node_exporter
-#   when:
-#     - "'pulp' not in inventory_hostname"
+- name: start node exporter
+  service: state=started enabled=yes name=node_exporter
+  when:
+    - "'pulp' not in inventory_hostname"
 
 - name: check offloading
   shell: "ethtool -k ens5 | egrep -q 'tcp-segmentation-offload: on|generic-receive-offload: on|generic-segmentation-offload: on'"
