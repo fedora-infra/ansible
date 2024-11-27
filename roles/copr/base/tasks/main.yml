@@ -82,10 +82,10 @@
   tags:
   - packages
 
-- name: start node exporter
-  service: state=started enabled=yes name=node_exporter
-  when:
-    - "'pulp' not in inventory_hostname"
+# - name: start node exporter
+#   service: state=started enabled=yes name=node_exporter
+#   when:
+#     - "'pulp' not in inventory_hostname"
 
 - name: check offloading
   shell: "ethtool -k eth0 | egrep -q 'tcp-segmentation-offload: on|generic-receive-offload: on|generic-segmentation-offload: on'"
