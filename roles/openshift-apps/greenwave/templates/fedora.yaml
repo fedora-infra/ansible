@@ -1,3 +1,24 @@
+# rawhide and branched are controllable so we can flip them on and off
+# around branching manually if we need to, if we have issues with
+# failing tests
+{% macro product_versions(upgrade='false', rawhide='true', branched='true') -%}
+product_versions:
+{% if rawhide|bool -%}
+  - fedora-{{ FedoraRawhideNumber }}
+{%- endif %}
+{% if FedoraBranched and branched|bool -%}
+  - fedora-{{ FedoraBranchedNumber }}
+{%- endif %}
+  - fedora-{{ FedoraCycleNumber }}
+{% if FedoraPreviousPrevious or not upgrade|bool -%}
+  - fedora-{{ FedoraPreviousCycleNumber }}
+{%- endif %}
+{% if FedoraPreviousPrevious and not upgrade|bool -%}
+  - fedora-{{ FedoraPreviousPreviousCycleNumber }}
+{%- endif %}
+{% endmacro -%}
+
+
 # kojibuild_ policies are for koji_build subjects; Fedora CI runs tests at
 # at the Koji build level and report results which will be found by queries
 # against these policies.
@@ -124,19 +145,7 @@ rules: []
 # because Greenwave doesn't consider it to support remote rules.
 --- !Policy
 id: "kojibuild_bodhipush_remoterule"
-product_versions:
-  - fedora-rawhide
-  - fedora-42
-  - fedora-41
-  - fedora-40
-  - fedora-39
-  - fedora-38
-  - fedora-37
-  - fedora-36
-  - fedora-35
-  - fedora-34
-  - fedora-33
-  - fedora-32
+{{ product_versions() }}
 decision_contexts:
   - bodhi_update_push_testing
   - bodhi_update_push_testing_critpath
@@ -161,15 +170,7 @@ id: "bodhiupdate_bodhipush_openqa_core"
 # these tests are gating for updates in the central critpath groups:
 # core, base, standard. those are the kinds of updates that might
 # break this stuff
-product_versions:
-  # we could do something like fedora-3* , fedora-4*, fedora-5*...
-  # here, possibly. however, right after branching, tests for Rawhide
-  # tend not to pass right away, so it may be good that we have to
-  # manually enable branching for it...
-  - fedora-40
-  - fedora-41
-  - fedora-42
-  - fedora-rawhide
+{{ product_versions() }}
 decision_contexts:
   - bodhi_update_push_testing_critpath
   - bodhi_update_push_testing_core_critpath
@@ -190,11 +191,7 @@ rules:
 id: "bodhiupdate_bodhipush_openqa_netinst"
 # the "build a netinst and test an install from it" tests are gating
 # for the core groups, plus the anaconda and compose groups
-product_versions:
-  - fedora-40
-  - fedora-41
-  - fedora-42
-  - fedora-rawhide
+{{ product_versions() }}
 decision_contexts:
   - bodhi_update_push_testing_critpath
   - bodhi_update_push_testing_core_critpath
@@ -219,11 +216,7 @@ id: "bodhiupdate_bodhipush_openqa_apps"
 # 2023-01, three apps are in that group (evolution, firefox and
 # thunderbird), and the tests listed here use firefox. We don't have
 # any update tests that cover evolution or thunderbird ATM
-product_versions:
-  - fedora-40
-  - fedora-41
-  - fedora-42
-  - fedora-rawhide
+{{ product_versions() }}
 decision_contexts:
 # we don't list the 'generic' contexts here as all these tests are
 # pulled into those contexts via other policies
@@ -244,11 +237,7 @@ id: "bodhiupdate_bodhipush_openqa_workstation"
 # these tests are gating for updates in core, base, and gnome critpath
 # groups. workstation does not include standard, so these aren't gating
 # for that group
-product_versions:
-  - fedora-40
-  - fedora-41
-  - fedora-42
-  - fedora-rawhide
+{{ product_versions() }}
 decision_contexts:
   - bodhi_update_push_testing_critpath
   - bodhi_update_push_stable_critpath
@@ -277,11 +266,7 @@ id: "bodhiupdate_bodhipush_openqa_workstation_background"
 # this policy contains just the desktop background test; it's split out because
 # often, at branch time, we don't yet have new backgrounds for the branched
 # release, so the test will always fail, so we cannot gate on it
-product_versions:
-  - fedora-40
-  - fedora-41
-  - fedora-42
-  - fedora-rawhide
+{{ product_versions() }}
 decision_contexts:
   - bodhi_update_push_testing_critpath
   - bodhi_update_push_stable_critpath
@@ -299,11 +284,7 @@ rules:
 id: "bodhiupdate_bodhipush_openqa_workstation_live"
 # the workstation "build a live image and install from it" tests are
 # gating for the same groups, plus anaconda and compose
-product_versions:
-  - fedora-40
-  - fedora-41
-  - fedora-42
-  - fedora-rawhide
+{{ product_versions() }}
 decision_contexts:
   - bodhi_update_push_testing_critpath
   - bodhi_update_push_stable_critpath
@@ -328,11 +309,7 @@ rules:
 id: "bodhiupdate_bodhipush_openqa_kde"
 # these tests are gating for updates in core, base, standard and kde
 # critpath groups.
-product_versions:
-  - fedora-40
-  - fedora-41
-  - fedora-42
-  - fedora-rawhide
+{{ product_versions() }}
 decision_contexts:
   - bodhi_update_push_testing_critpath
   - bodhi_update_push_stable_critpath
@@ -363,11 +340,7 @@ id: "bodhiupdate_bodhipush_openqa_kde_background"
 # this policy contains just the desktop background test; it's split out because
 # often, at branch time, we don't yet have new backgrounds for the branched
 # release, so the test will always fail, so we cannot gate on it
-product_versions:
-  - fedora-40
-  - fedora-41
-  - fedora-42
-  - fedora-rawhide
+{{ product_versions() }}
 decision_contexts:
   - bodhi_update_push_testing_critpath
   - bodhi_update_push_stable_critpath
@@ -387,11 +360,7 @@ rules:
 id: "bodhiupdate_bodhipush_openqa_kde_live"
 # the kde "build a live image and install from it" tests are
 # gating for the same groups, plus anaconda and compose
-product_versions:
-  - fedora-40
-  - fedora-41
-  - fedora-42
-  - fedora-rawhide
+{{ product_versions() }}
 decision_contexts:
   - bodhi_update_push_testing_critpath
   - bodhi_update_push_stable_critpath
@@ -418,11 +387,7 @@ rules:
 id: "bodhiupdate_bodhipush_openqa_server"
 # these tests are gating for updates in core, base, standard and server
 # critpath groups.
-product_versions:
-  - fedora-40
-  - fedora-41
-  - fedora-42
-  - fedora-rawhide
+{{ product_versions() }}
 decision_contexts:
   - bodhi_update_push_testing_critpath
   - bodhi_update_push_stable_critpath
@@ -475,10 +440,7 @@ rules:
 # EOL release and we don't want to maintain that)
 --- !Policy
 id: "bodhiupdate_bodhipush_openqa_upgrade_server"
-product_versions:
-  - fedora-41
-  - fedora-42
-  - fedora-rawhide
+{{ product_versions(upgrade='true') }}
 decision_contexts:
   - bodhi_update_push_testing_critpath
   - bodhi_update_push_stable_critpath
@@ -498,10 +460,7 @@ rules:
 
 --- !Policy
 id: "bodhiupdate_bodhipush_openqa_upgrade_workstation"
-product_versions:
-  - fedora-41
-  - fedora-42
-  - fedora-rawhide
+{{ product_versions(upgrade='true') }}
 decision_contexts:
   - bodhi_update_push_testing_critpath
   - bodhi_update_push_stable_critpath
@@ -521,9 +480,11 @@ rules:
 --- !Policy
 id: "bodhiupdate_bodhipush_coreos"
 product_versions:
+  - fedora-{{ FedoraRawhideNumber }}
+{% if FedoraBranched -%}
+  - fedora-{{ FedoraBranchedNumber }}
+{%- endif %}
   - fedora-{{ FedoraCycleNumber }}
-  - fedora-{{ FedoraCycleNumber|int + 1 }}
-  - fedora-rawhide
 decision_contexts:
   - bodhi_update_push_testing_critical-path-coreos_critpath
   - bodhi_update_push_stable_critical-path-coreos_critpath
