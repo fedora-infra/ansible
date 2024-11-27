@@ -2,8 +2,8 @@
 copr_hostbase: copr-keygen-dev
 # http + signd dest ports
 custom_rules:
-    - '-A INPUT -p tcp -m tcp -s 172.30.2.104    --dport   80 -j ACCEPT'
-    - '-A INPUT -p tcp -m tcp -s 172.30.2.104    --dport 5167 -j ACCEPT'
+    - '-A INPUT -p tcp -m tcp -s 172.30.2.225    --dport   80 -j ACCEPT'
+    - '-A INPUT -p tcp -m tcp -s 172.30.2.225    --dport 5167 -j ACCEPT'
     - '-A INPUT -p tcp -m tcp -s 18.208.10.131   --dport   80 -j ACCEPT'
     - '-A INPUT -p tcp -m tcp -s 18.208.10.131   --dport 5167 -j ACCEPT'
 freezes: false
