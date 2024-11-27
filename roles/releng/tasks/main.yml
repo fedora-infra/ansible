@@ -300,7 +300,7 @@
 
 # put cron job in for branched compose
 - name: Branched compose cron
-  ansible.builtin.copy:
+  ansible.builtin.template:
     src: branched
     dest: /etc/cron.d/branched
     mode: "644"
