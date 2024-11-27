@@ -1,0 +1,13 @@
+# Fedora {{ FedoraCycleNumber }} Container Updates nightly compose
+MAILTO=releng-cron@lists.fedoraproject.org
+45 6 * * * root touch /tmp/fedora-compose-container-updates && TMPDIR=`mktemp -d /tmp/containerF{{ FedoraCycleNumber }}.XXXXXX` && chmod 755 $TMPDIR && pushd $TMPDIR && git clone -n https://pagure.io/pungi-fedora.git && cd pungi-fedora && git checkout f{{ FedoraCycleNumber }} && LANG=en_US.UTF-8 ./container-nightly.sh RC-$(date "+\%Y\%m\%d").0 && popd && rm -rf $TMPDIR && rm /tmp/fedora-compose-container-updates
+
+#Fedora {{ FedoraPreviousCycleNumber }} Container Updates nightly compose
+MAILTO=releng-cron@lists.fedoraproject.org
+45 5 * * * root TMPDIR=`mktemp -d /tmp/containerF{{ FedoraPreviousCycleNumber }}.XXXXXX` && chmod 755 $TMPDIR && pushd $TMPDIR && git clone -n https://pagure.io/pungi-fedora.git && cd pungi-fedora && git checkout f{{ FedoraPreviousCycleNumber }} && LANG=en_US.UTF-8 ./container-nightly.sh RC-$(date "+\%Y\%m\%d").0 && popd && rm -rf $TMPDIR
+
+{% if FedoraPreviousPrevious %}
+# Fedora {{ FedoraPreviousPreviousCycleNumber }} Container Updates nightly compose
+MAILTO=releng-cron@lists.fedoraproject.org
+45 7 * * * root touch /tmp/fedora-compose-container-updates &&  TMPDIR=`mktemp -d /tmp/containerF{{ FedoraPreviousPreviousCycleNumber }}.XXXXXX` && chmod 755 $TMPDIR && pushd $TMPDIR && git clone -n https://pagure.io/pungi-fedora.git && cd pungi-fedora && git checkout f{{ FedoraPreviousPreviousCycleNumber }} && LANG=en_US.UTF-8 ./container-nightly.sh RC-$(date "+\%Y\%m\%d").0 && popd && rm -rf $TMPDIR && rm /tmp/fedora-compose-container-updates
+{% endif %}

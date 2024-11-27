@@ -17,6 +17,11 @@
 
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/web/infra/ansible/vars/all/00-FedoraCycleNumber.yaml"
+    - "/srv/web/infra/ansible/vars/all/FedoraPreviousCycleNumber.yaml"
+    - "/srv/web/infra/ansible/vars/all/FedoraPreviousPrevious.yaml"
+    - "/srv/web/infra/ansible/vars/all/FedoraPreviousPreviousCycleNumber.yaml"
+
     - "/srv/private/ansible/vars.yml"
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
