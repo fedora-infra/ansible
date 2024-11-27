@@ -53,6 +53,7 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
-  - base
-  - nagios_client
-  - copr/keygen
+    - copr/pre
+    - base
+    - nagios_client
+    - copr/keygen

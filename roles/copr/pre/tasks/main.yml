@@ -1,0 +1,12 @@
+---
+- name: create copr-signer group
+  group: name="copr-signer" state=present gid=989
+  when: "'copr_keygen_aws' in group_names or 'copr_keygen_dev_aws' in group_names"
+
+- name: pre-create the apache group so it can be assigned to copr-signer
+  group: name="apache" state=present gid=48
+  when: "'copr_keygen_aws' in group_names or 'copr_keygen_dev_aws' in group_names"
+
+- name: create copr-signer user
+  user: name="copr-signer" group=copr-signer groups=apache uid=992
+  when: "'copr_keygen_aws' in group_names or 'copr_keygen_dev_aws' in group_names"
