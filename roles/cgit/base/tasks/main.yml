@@ -43,6 +43,6 @@
   when: inventory_hostname.startswith('batcave')
   tags: cgit
 
-#- name: install the libravatar filter
+# - name: install the libravatar filter
 #  copy: src=email-libravatar-korg.lua dest=/usr/libexec/cgit/filters/email-libravatar-korg.lua owner=root group=root mode=0755
 #  tags: cgit

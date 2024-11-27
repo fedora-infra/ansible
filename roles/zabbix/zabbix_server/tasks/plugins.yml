@@ -8,10 +8,9 @@
   copy:
     src: "{{ item }}"
     dest: /usr/lib/zabbix/
-    mode: 0755
+    mode: "0755"
   with_items:
     - alertscripts
     - externalscripts
   tags:
     - plugin-scripts
-

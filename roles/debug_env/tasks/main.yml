@@ -3,5 +3,6 @@
 # the env from ansible to see what variables and facts are.
 # Taken from https://coderwall.com/p/13lh6w
 #
+---
 - name: Dump all ansible vars
   template: src=dumpall.j2 dest=/tmp/debug_env.out

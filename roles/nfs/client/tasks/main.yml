@@ -1,4 +1,5 @@
 # Setup our idmapd.conf file. It should be loaded automagically.
+---
 - name: idmapd.conf
   copy: src=idmapd.conf dest=/etc/idmapd.conf
   tags:

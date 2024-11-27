@@ -5,7 +5,7 @@
     state: directory
     owner: root
     group: root
-    mode: 0770
+    mode: "0770"
     recurse: true
 
 # generate the templates for project to be created
@@ -13,7 +13,7 @@
   template:
     src: "{{ item }}"
     dest: "/root/ocp4/openshift-apps/{{project_name}}/{{ item }}"
-    mode: 0770
+    mode: "0770"
   with_items: "{{ project_templates }}"
 
 # apply created openshift resources

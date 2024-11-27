@@ -1,4 +1,5 @@
 # Restart handler for our fedora-messaging consumers
+---
 - name: Conditionally restart relvalconsumer consumer service
   command: /usr/local/bin/conditional-restart.sh fm-consumer@relvalconsumer
   listen:

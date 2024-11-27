@@ -1,3 +1,4 @@
+---
 - name: Copy some config files for {{website}}
   copy: >
     src={{item}} dest=/etc/httpd/conf.d/{{website}}/{{item}}

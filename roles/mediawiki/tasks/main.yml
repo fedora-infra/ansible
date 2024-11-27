@@ -75,7 +75,7 @@
 - name: Create /etc/pki/fedora-messaging
   file:
     dest: /etc/pki/fedora-messaging
-    mode: 0775
+    mode: "0775"
     owner: root
     group: root
     state: directory
@@ -88,7 +88,7 @@
   copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/ca.crt"
     dest: /etc/pki/fedora-messaging/cacert.pem
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
   tags:
@@ -100,7 +100,7 @@
   copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/issued/mediawiki{{env_suffix}}.crt"
     dest: /etc/pki/fedora-messaging/mediawiki{{env_suffix}}-cert.pem
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
   tags:
@@ -112,7 +112,7 @@
   copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/private/mediawiki{{env_suffix}}.key"
     dest: /etc/pki/fedora-messaging/mediawiki{{env_suffix}}-key.pem
-    mode: 0640
+    mode: "0640"
     owner: root
     group: apache
   tags:
@@ -126,7 +126,7 @@
     dest: /etc/fedora-messaging/config.toml
     owner: root
     group: apache
-    mode: 0640
+    mode: "0640"
   tags:
   - config
   - mediawiki
@@ -148,13 +148,13 @@
   tags:
   - mediawiki
 
-#- name: creating config dir
+# - name: creating config dir
 #  file: src=/usr/share/{{ wikiver }}/config dest=/srv/web/{{wikiname}}/config owner=apache group=apache mode=755 state=directory
 #  tags:
 #  - mediawiki
 
 # This doesn't seem to exist anymore in upstream....
-#- name: install utils
+# - name: install utils
 #  file: src=/usr/share/{{ wikiver }}/install-utils.inc dest=/srv/web/{{wikiname}}-wiki/install-utils.inc state=link
 #  tags:
 #  - mediawiki
@@ -207,7 +207,7 @@
   tags:
   - mediawiki
 
-#- name: linking serialized
+# - name: linking serialized
 #  file: dest=/srv/web/{{wikiname}}-wiki/serialized src=/usr/share/{{ wikiver }}/serialized state=link
 #  tags:
 #  - mediawiki
@@ -248,7 +248,7 @@
     path: /srv/web/fp-wiki/extensions/FedoraMessaging/vendor
     owner: apache
     group: apache
-    mode: 0755
+    mode: "0755"
     state: directory
   tags:
   - config

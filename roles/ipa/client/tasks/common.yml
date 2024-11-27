@@ -39,4 +39,3 @@
     host: "{{ item[2] | list | sort }}"
   loop: "{{ ipa_server_host_groups_hosts }}"
   when: ipa_server_host_groups_hosts is defined
-

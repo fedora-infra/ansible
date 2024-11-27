@@ -268,7 +268,7 @@
     dest: "/etc/nrpe.d/rabbitmq_args.ini"
     owner: root
     group: nrpe
-    mode: 0640
+    mode: "0640"
   when: inventory_hostname.startswith('rabbitmq')
   tags:
   - nagios_client
@@ -279,7 +279,7 @@
     dest: "/etc/nrpe.d/{{ item }}"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   with_items:
   - check_rabbitmq_server.cfg
   - check_rabbitmq_watermark.cfg

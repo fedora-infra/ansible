@@ -161,7 +161,7 @@
 # scheduler is no longer responsible for downloading assets.
 
 # just keeping this around for convenience as we often need it
-#- name: Install required packages (testing)
+# - name: Install required packages (testing)
 #  dnf:
 #    name: ['python2-fedfind', 'python2-wikitcms']
 #    state: present
@@ -172,6 +172,7 @@
 # fedora_openqa requires most of these, including the resultsdb and
 # wikitcms bits even when reporting is disabled; the consumer module
 # always imports the report module which imports those
+---
 - name: Install required packages
   package:
     name: ['fedora-messaging', 'python3-fedfind', 'python3-wikitcms', 'python3-openqa_client',
@@ -265,7 +266,7 @@
 - name: Create /etc/pki/fedora-messaging
   file:
     dest: /etc/pki/fedora-messaging
-    mode: 0775
+    mode: "0775"
     owner: root
     group: root
     state: directory
@@ -277,7 +278,7 @@
   copy:
     src: "{{ private }}/files/rabbitmq/{{ openqa_env }}/pki/issued/{{ openqa_amqp_this_username }}.crt"
     dest: "/etc/pki/fedora-messaging/{{ openqa_amqp_this_username }}-cert.pem"
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
   when: "deployment_type is defined"
@@ -288,7 +289,7 @@
   copy:
     src: "{{ private }}/files/rabbitmq/{{ openqa_env }}/pki/private/{{ openqa_amqp_this_username }}.key"
     dest: "/etc/pki/fedora-messaging/{{ openqa_amqp_this_username }}-key.pem"
-    mode: 0640
+    mode: "0640"
     owner: root
     group: geekotest
   when: "deployment_type is defined"
@@ -299,7 +300,7 @@
   copy:
     src: "{{ private }}/files/rabbitmq/production/pki/issued/{{ openqa_amqp_prod_username }}.crt"
     dest: "/etc/pki/fedora-messaging/{{ openqa_amqp_prod_username }}-cert.pem"
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
   when: "deployment_type is defined and deployment_type == 'stg'"
@@ -310,7 +311,7 @@
   copy:
     src: "{{ private }}/files/rabbitmq/production/pki/private/{{ openqa_amqp_prod_username }}.key"
     dest: "/etc/pki/fedora-messaging/{{ openqa_amqp_prod_username }}-key.pem"
-    mode: 0640
+    mode: "0640"
     owner: root
     group: geekotest
   when: "deployment_type is defined and deployment_type == 'stg'"

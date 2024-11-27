@@ -35,7 +35,7 @@
   template:
     src: "{{ roles_path }}/copr/backend/templates/provision/{{ item }}"
     dest: "{{ provision_directory }}/{{ item }}"
-    mode: 0755
+    mode: "0755"
   with_items:
   - upload-qcow2-images
   tags:
@@ -48,7 +48,7 @@
   template:
     src: "{{ roles_path }}/copr/backend/templates/provision/{{ item }}"
     dest: "{{ provision_directory }}/{{ item }}"
-    mode: 0755
+    mode: "0755"
   with_items:
   - libvirt-new
   tags:
@@ -93,6 +93,6 @@
     dest: "{{ provision_directory }}/.rc-osuosl.sh"
     owner: "{{ provision_user }}"
     group: "{{ provision_user }}"
-    mode: 0600
+    mode: "0600"
   tags:
   - provision_config

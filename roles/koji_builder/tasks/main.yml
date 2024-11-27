@@ -1,6 +1,7 @@
 #
 # This is a base koji_builder role.
 #
+---
 - name: set hostname
   hostname: name="{{inventory_hostname}}"
   tags:
@@ -237,7 +238,7 @@
 # install libvirt/network.conf
 #
 # The default in f41+ is to use nftables, but it's not compatible with the
-# iptables setup we are using on the builders for some reason. 
+# iptables setup we are using on the builders for some reason.
 # So, switch back to iptables until we switch to nftables, or move everying
 # away from oz/Imagefactory so we don't need virt instances for image builds
 # anymore.
@@ -336,7 +337,7 @@
     state: directory
     owner: root
     group: root
-    mode: 0660
+    mode: "0660"
   tags:
   - koji_builder
   when: env == "staging"
@@ -393,11 +394,11 @@
 
 - name: create override dir for systemd-nspawn containers config
   file:
-       state: directory
-       owner: root
-       group: root
-       mode: 0755
-       path: /etc/systemd/system/machine-.scope.d
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+    path: /etc/systemd/system/machine-.scope.d
   when: inventory_hostname.startswith(('buildhw-a64'))
   tags:
   - koji_builder

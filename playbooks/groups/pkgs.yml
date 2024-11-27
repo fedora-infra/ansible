@@ -76,8 +76,7 @@
     mnt_dir: '/srv/cache/lookaside',
     nfs_src_dir:
       'fedora_sourcecache',
-      # yamllint disable rule:commas
-      nfs_mount_opts='rw,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3'
+      nfs_mount_opts='rw,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3' # yamllint disable-line rule:commas rule:indentation
   }
   - {
     role: nfs/client,
@@ -86,8 +85,7 @@
     mnt_dir: '/srv/cache/lookaside_prod',
     nfs_src_dir:
       'fedora_sourcecache',
-      # yamllint disable rule:commas
-      nfs_mount_opts='ro,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3'
+      nfs_mount_opts='ro,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3' # yamllint disable-line rule:commas rule:indentation
   }
   - role: distgit/pagure
   - role: distgit

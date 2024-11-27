@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -39,7 +40,7 @@ spec:
       containers:
       - image: image-registry.openshift-image-registry.svc:5000/openvpn/openvpn:latest
         imagePullPolicy: IfNotPresent
-        securityContext: 
+        securityContext:
           capabilities:
             add: ["NET_ADMIN"]
         name: openvpn
@@ -62,7 +63,7 @@ spec:
       - name: all-certs
         secret:
           secretName: openvpn-certs
-          defaultMode: 0400
+          defaultMode: "0400"
       - configMap:
           name: openvpn-config
         name: openvpn-config
@@ -92,4 +93,3 @@ spec:
             topologyKey: "kubernetes.io/hostname"
             namespaces:
             - openshift-ingress
-

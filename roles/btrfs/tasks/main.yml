@@ -12,7 +12,7 @@
     path: /etc/systemd/system/btrfs-balance.timer.d
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
 
 
 - name: Configure btrfs-balance timer
@@ -21,7 +21,7 @@
     dest: /etc/systemd/system/btrfs-balance.timer.d/schedule.conf
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify:
   - reload systemd
   - restart btrfs-balance

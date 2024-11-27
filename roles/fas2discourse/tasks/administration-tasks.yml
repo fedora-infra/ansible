@@ -5,11 +5,10 @@
     state: directory
     owner: root
     group: root
-    mode: 0770
+    mode: "0770"
     recurse: yes
 
 - include_tasks: create-operator-namespace.yml
 - include_tasks: create-keytab-secret.yml
 - include_tasks: create-discourse-apikey-secret.yml
 - include_tasks: deploy-fas2discourse-operator.yml
-

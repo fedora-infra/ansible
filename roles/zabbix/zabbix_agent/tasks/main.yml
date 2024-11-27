@@ -1,3 +1,4 @@
+---
 - name: Importing specific distro variables
   include_vars: "{{ item }}"
   with_first_found:
@@ -69,9 +70,9 @@
     dest: /etc/zabbix/fedora.psk
     owner: zabbix
     group: zabbix
-    mode: 0600
+    mode: "0600"
   with_fileglob:
-   - "{{ private }}/files/zabbix/fedora{{env_suffix}}.psk"
+  - "{{ private }}/files/zabbix/fedora{{env_suffix}}.psk"
   tags:
     - zabbix_agent
 
@@ -79,7 +80,7 @@
   file:
     state: directory
     path: /usr/lib/zabbix
-    mode: 0770
+    mode: "0770"
     owner: zabbix
     group: zabbix
   tags:
@@ -89,7 +90,7 @@
   file:
     state: directory
     path: /var/log/zabbix
-    mode: 0770
+    mode: "0770"
     owner: zabbix
     group: zabbix
   tags:
@@ -100,7 +101,7 @@
     src: "{{ item }}.j2"
     dest: "{{ zabbix_agentd_dir }}/{{ item }}"
     owner: zabbix
-    mode: 0666
+    mode: "0666"
   notify: restart_zabbix_agent
   with_items:
     - interface-alias.conf

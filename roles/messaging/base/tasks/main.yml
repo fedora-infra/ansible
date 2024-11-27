@@ -1,3 +1,4 @@
+---
 - name: install the messaging packages
   package: name={{ item }} state=present
   with_items:

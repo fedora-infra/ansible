@@ -1,3 +1,4 @@
+---
 - name: Install packages
   package:
     name:
@@ -32,7 +33,7 @@
     dest: ~_update_web_trans/.gitconfig
     owner: _update_web_trans
     group: _update_web_trans
-    mode: 0644
+    mode: "0644"
   tags:
   - fedora-web-translation
 
@@ -41,16 +42,16 @@
     dest: ~_update_web_trans/.ssh/config
     owner: _update_web_trans
     group: _update_web_trans
-    mode: 0644
+    mode: "0644"
   tags:
   - fedora-web-translation
- 
+
 - copy:
     src: web-translation-update
     dest: /usr/local/bin/web-translation-update
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
   tags:
   - fedora-web-translation
 
@@ -59,7 +60,7 @@
     dest: /etc/cron.d/cron-web-translation-update
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   tags:
   - fedora-web-translation
   when: env == "production" and inventory_hostname.startswith('sundries01')

@@ -10,7 +10,7 @@
   ansible.builtin.file:
     path: "~{{ podman_user }}/.config/containers"
     state: directory
-    mode: 0700
+    mode: "0700"
     owner: "{{ podman_user }}"
     group: "{{ podman_group }}"
 
@@ -23,7 +23,7 @@
     dest: "~{{ podman_user }}/.config/containers/containers.conf"
     owner: "{{ podman_user }}"
     group: "{{ podman_group }}"
-    mode: 0600
+    mode: "0600"
 
 - name: Create empty mounts config file to avoid permissions error message
   ansible.builtin.copy:
@@ -32,17 +32,17 @@
     force: false
     owner: "{{ podman_user }}"
     group: "{{ podman_group }}"
-    mode: 0600
+    mode: "0600"
 
 - name: Ensure registries.conf.d exists
   ansible.builtin.file:
     path: /etc/containers/registries.conf.d/
     state: directory
-    mode: 0755
+    mode: "0755"
 
 - name: Force fully qualified image names to be provided to podman pull
   ansible.builtin.copy:
     content: |
       unqualified-search-registries = []
     dest: /etc/containers/registries.conf.d/force-fully-qualified-images.conf
-    mode: 0644
+    mode: "0644"

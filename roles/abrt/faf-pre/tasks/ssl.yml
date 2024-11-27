@@ -7,14 +7,14 @@
   - letsencrypt is defined
 
 - name: stop httpd when letsencrypt has not been run
-  service:                                                                                                               
+  service:
     name: httpd
     state: stopped
   when:
   - letsencrypt is defined
   - not item.stat.exists
   with_items: "{{ le_stat_checks.results }}"
-  
+
 
 - name: install letsencrypt ssl certificates for dev
   include_role: name=copr/certbot

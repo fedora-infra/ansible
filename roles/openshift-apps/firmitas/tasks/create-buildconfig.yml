@@ -4,7 +4,7 @@
   template:
     src: "buildconfig.yml"
     dest: "/root/ocp4/openshift-apps/firmitas/buildconfig.yml"
-    mode: 0770
+    mode: "0770"
 
 # apply created openshift resources
 - name: oc apply resources

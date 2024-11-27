@@ -96,7 +96,7 @@
           --run-command "chcon -v -R -h system_u:object_r:ssh_home_t:s0 /root/.ssh" )
           EIMG_DOUBLECHECK_WAITING_FOR_IPV4=true
         dest: /etc/eimg/eimg.sh
-        mode: 0644
+        mode: "0644"
 
     - stat: path={{ private_key_file }}
       register: key_stat

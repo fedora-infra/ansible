@@ -1,3 +1,4 @@
+---
 - name: install limnoria package
   package: name={{ item }} state=present enablerepo=epel-testing
   with_items:
@@ -50,7 +51,7 @@
   tags: supybot
 
 - name: teams cron job
-  cron: 
+  cron:
     name: archive
     hour: "23"
     minute: "30"
@@ -106,7 +107,7 @@
 - name: Create /etc/pki/fedora-messaging
   file:
     dest: /etc/pki/fedora-messaging
-    mode: 0775
+    mode: "0775"
     state: directory
   when:
   - inventory_hostname.startswith('value02')
@@ -117,7 +118,7 @@
   copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/ca.crt"
     dest: /etc/pki/fedora-messaging/rabbitmq-ca.crt
-    mode: 0644
+    mode: "0644"
     owner: daemon
     group: daemon
   when:
@@ -128,8 +129,8 @@
 - name: Deploy the fedora-messaging cert
   copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/issued/{{ botname }}.crt"
-    dest:  /etc/pki/fedora-messaging/{{ botname }}.crt
-    mode: 0644
+    dest: /etc/pki/fedora-messaging/{{ botname }}.crt
+    mode: "0644"
     owner: daemon
     group: daemon
   when:
@@ -141,7 +142,7 @@
   copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/private/{{ botname }}.key"
     dest: /etc/pki/fedora-messaging/{{ botname }}.key
-    mode: 0600
+    mode: "0600"
     owner: daemon
     group: daemon
   when:
@@ -155,13 +156,11 @@
     dest: /etc/fedora-messaging/{{ botname }}.toml
     owner: daemon
     group: daemon
-    mode: 0600
+    mode: "0600"
   when:
   - inventory_hostname.startswith('value02')
   tags:
   - config
-
-
 
 - name: setup zodbot systemd service file (prod)
   copy: src=zodbot.service dest=/etc/systemd/system/zodbot.service

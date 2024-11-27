@@ -7,7 +7,7 @@ conf_path: "/etc/docker-distribution/registry/config.yml"
 
 # Config directives
 tls:
-  enabled: False
+  enabled: false
   certificate: "PATH_TO_CERT"
   key: "PATH_TO_KEY"
 log:
@@ -28,4 +28,3 @@ cert:
   cert_dest: "ca.crt"
   key_src: "ca.key"
   key_dest: "ca.key"
-

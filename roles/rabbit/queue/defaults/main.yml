@@ -1,3 +1,4 @@
+---
 rabbitmq_server: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
 vhost: /pubsub
 default_exchange: amq.topic
@@ -5,6 +6,6 @@ routing_keys: []
 message_ttl: null
 max_priority: null
 thresholds:
-  warning:  10000
+  warning: 10000
   critical: 100000
 nagios_server: noc01.iad2.fedoraproject.org

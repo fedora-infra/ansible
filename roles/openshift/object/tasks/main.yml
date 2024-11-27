@@ -1,3 +1,4 @@
+---
 - name: Copy template {{template}} to temporary file ({{tmpfile.path}})
   template: src={{roles_path}}/openshift-apps/{{app}}/templates/{{template}} dest=/etc/openshift_apps/{{os_app}}/{{objectname}}
   when: template is defined

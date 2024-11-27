@@ -1,3 +1,4 @@
+---
 - name: Copy template {{template}}
   template: src={{roles_path}}/openshift-apps/{{app}}/templates/{{template}} dest=/etc/openshift_apps/{{os_app}}/{{key}}
   when: template is defined

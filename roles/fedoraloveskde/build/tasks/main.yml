@@ -1,10 +1,11 @@
+---
 - name: Create directories
   file:
     state: directory
     path: "/srv/web/{{item}}"
     owner: apache
     group: apache
-    mode: 0755
+    mode: "0755"
     setype: httpd_sys_content_t
     seuser: system_u
   with_items:
@@ -19,7 +20,7 @@
     dest: /usr/local/bin/sync{{item}}
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
   with_items:
   - fedoraloveskde
   tags:
@@ -32,7 +33,7 @@
     dest: "/usr/local/bin/{{item}}"
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
   with_items:
   - syncfedoraloveskde
   tags:
@@ -44,7 +45,7 @@
     dest: "/etc/cron.d/{{item}}.cron"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   with_items:
   - syncfedoraloveskde
   tags:

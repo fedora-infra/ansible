@@ -100,7 +100,7 @@
     owner: ipsilon
     group: ipsilon
     state: directory
-    mode: 0700
+    mode: "0700"
   tags:
   - ipsilon
   - config
@@ -111,7 +111,7 @@
     dest: "/etc/ipsilon/root/ipsilon.conf"
     owner: ipsilon
     group: ipsilon
-    mode: 0600
+    mode: "0600"
   tags:
   - ipsilon
   - config
@@ -134,7 +134,7 @@
     dest: "/etc/ipsilon/root/configuration.conf"
     owner: ipsilon
     group: ipsilon
-    mode: 0600
+    mode: "0600"
   tags:
   - ipsilon
   - config
@@ -147,7 +147,7 @@
     dest: /etc/ipsilon/root/openidc.static.cfg
     owner: ipsilon
     group: ipsilon
-    mode: 0600
+    mode: "0600"
   tags:
   - ipsilon
   - config
@@ -171,7 +171,7 @@
     dest: /etc/ipsilon/root/openidc.key
     owner: ipsilon
     group: ipsilon
-    mode: 0600
+    mode: "0600"
   tags:
   - ipsilon
 
@@ -179,7 +179,7 @@
   file:
     path: /etc/ipsilon/root/saml2
     state: directory
-    mode: 0700
+    mode: "0700"
     owner: ipsilon
     group: ipsilon
     setype: httpd_var_lib_t
@@ -192,7 +192,7 @@
     dest: /etc/ipsilon/root/saml2/idp.key
     owner: ipsilon
     group: ipsilon
-    mode: 0600
+    mode: "0600"
   tags:
   - ipsilon
 
@@ -202,7 +202,7 @@
     dest: /etc/ipsilon/root/saml2/idp.crt
     owner: ipsilon
     group: ipsilon
-    mode: 0644
+    mode: "0644"
   tags:
   - ipsilon
 
@@ -212,7 +212,7 @@
     dest: /usr/local/bin/prepare-saml2-metadata
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
   tags:
   - ipsilon
 
@@ -273,7 +273,7 @@
     dest: /etc/sssd/sssd.conf
     owner: root
     group: root
-    mode: 0600
+    mode: "0600"
   tags:
   - ipsilon
   - config

@@ -1,8 +1,7 @@
-
-
 # collectd client setup
 
 # install pkg
+---
 - name: install collectd
   package: name=collectd state=present
   tags:
@@ -106,7 +105,7 @@
   seboolean: name=collectd_tcp_network_connect state=yes persistent=yes
   tags:
   - collectd
-  ignore_errors: True
+  ignore_errors: true
   notify:
   - restart collectd
   when: ( collectd_apache is defined ) and ansible_selinux.status != "disabled"
@@ -181,8 +180,6 @@
   tags:
   - collectd
   - selinux
-
-
 
 # each of the below should move to a separate task list
 # since they are odd-balls and one-offs

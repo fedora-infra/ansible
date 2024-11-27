@@ -1,3 +1,4 @@
+---
 # Defaults variables for role zabbix-agent
 zabbix_server: "zabbix01{{env_suffix}}.iad2.fedoraproject.org"
 zabbix_agent_hostname: "{{ ansible_hostname }}"
@@ -7,4 +8,3 @@ zabbix_tls_connect: "psk"
 zabbix_tls_accept: "psk"
 zabbix_tls_psk_identity: "Fedora" # OVERRIDEME
 zabbix_tls_psk_file: "/etc/zabbix/fedora.psk" # `openssl rand -hex 32` Overridden in ansible private repo
-

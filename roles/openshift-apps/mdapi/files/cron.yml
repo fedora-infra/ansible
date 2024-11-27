@@ -1,3 +1,4 @@
+---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -43,24 +44,24 @@ spec:
           volumes:
           - name: myconfigpy-volume
             configMap:
-                defaultMode: 420
-                name: mdapi-myconfigpy-configmap
+              defaultMode: 420
+              name: mdapi-myconfigpy-configmap
           - name: config-volume
             configMap:
-                defaultMode: 420
-                name: mdapi-configmap
+              defaultMode: 420
+              name: mdapi-configmap
           - name: data-volume
             persistentVolumeClaim:
-                claimName: mdapi-storage
+              claimName: mdapi-storage
           - name: fedora-messaging-config-volume
             configMap:
               name: fedora-messaging-configmap
           - name: fedora-messaging-ca-volume
             secret:
-                secretName: mdapi-fedora-messaging-ca
+              secretName: mdapi-fedora-messaging-ca
           - name: fedora-messaging-key-volume
             secret:
-                secretName: mdapi-fedora-messaging-key
+              secretName: mdapi-fedora-messaging-key
           - name: fedora-messaging-crt-volume
             secret:
-                secretName: mdapi-fedora-messaging-crt
+              secretName: mdapi-fedora-messaging-crt

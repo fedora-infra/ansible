@@ -27,7 +27,7 @@
   when: (ansible_distribution_major_version|int >= 30 and ansible_distribution == 'Fedora') or (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int >= 8)
 
 
-#- name: Apply fixing patch
+# - name: Apply fixing patch
 #  patch: src=fixup.patch dest=/usr/lib/python2.7/site-packages/fedmsg/consumers/__init__.py
 #  tags:
 #  - packages
@@ -135,4 +135,3 @@
   ignore_errors: true
   tags:
   - fedmsgmonitor
-

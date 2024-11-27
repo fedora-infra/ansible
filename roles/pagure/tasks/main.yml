@@ -181,19 +181,19 @@
 
 - name: create the `paguremirroring` group
   group:
-      name: paguremirroring
-      state: present
+    name: paguremirroring
+    state: present
   tags:
   - pagure
   - mirror
 
 - name: create the `paguremirroring` user
   user:
-      name: paguremirroring
-      group: paguremirroring
-      groups: paguremirroring,git
-      shell: /bin/nologin
-      home: /srv/mirror
+    name: paguremirroring
+    group: paguremirroring
+    groups: paguremirroring,git
+    shell: /bin/nologin
+    home: /srv/mirror
   tags:
   - pagure
   - mirror
@@ -280,8 +280,8 @@
 
 - name: install the configuration file for fedora-messaging
   template:
-      src=fedora-messaging.toml
-      dest=/etc/fedora-messaging/config.toml
+    src=fedora-messaging.toml
+    dest=/etc/fedora-messaging/config.toml
   tags:
   - pagure
   - fedora-messaging

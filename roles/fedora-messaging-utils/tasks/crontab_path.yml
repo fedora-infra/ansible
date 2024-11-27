@@ -2,6 +2,7 @@
 # Ensure PATH in /etc/crontab contains /usr/local/bin
 #####################################################
 
+---
 - name: check if PATH is set in crontab
   lineinfile:
     path: /etc/crontab

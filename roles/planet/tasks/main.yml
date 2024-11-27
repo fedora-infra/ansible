@@ -18,7 +18,7 @@
     - planet_server
 
 - name: install the planet packages (and fedora-messaging)
-  package:  pkg={{item}} state=present
+  package: pkg={{item}} state=present
   with_items:
     - venus
     - fedora-messaging
@@ -293,7 +293,7 @@
 - name: Create /etc/pki/fedora-messaging
   file:
     dest: /etc/pki/fedora-messaging
-    mode: 0775
+    mode: "0775"
     owner: root
     group: root
     state: directory
@@ -305,7 +305,7 @@
   copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/ca.crt"
     dest: /etc/pki/fedora-messaging/rabbitmq-ca.crt
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
   tags:
@@ -316,7 +316,7 @@
   copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/issued/planet{{env_suffix}}.crt"
     dest: /etc/pki/fedora-messaging/planet.crt
-    mode: 0644
+    mode: "0644"
     owner: planet-user
     group: planet-user
   tags:
@@ -327,7 +327,7 @@
   copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/private/planet{{env_suffix}}.key"
     dest: /etc/pki/fedora-messaging/planet.key
-    mode: 0600
+    mode: "0600"
     owner: planet-user
     group: planet-user
   tags:
@@ -340,7 +340,7 @@
     dest: /etc/fedora-messaging/config.toml
     owner: planet-user
     group: planet-user
-    mode: 0600
+    mode: "0600"
   tags:
   - config
   - planet_server

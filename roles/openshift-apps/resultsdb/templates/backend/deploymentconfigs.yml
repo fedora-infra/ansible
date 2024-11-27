@@ -16,7 +16,7 @@ spec:
     rollingParams:
       pre:
         failurePolicy: Abort
-        execNewPod:  
+        execNewPod:
           containerName: api
           command:
             - /bin/sh

@@ -9,7 +9,7 @@
     state: directory
     owner: faf
     group: faf
-    mode: 0750
+    mode: "0750"
   when: env != 'staging'
 
 - import_tasks: cron.yml

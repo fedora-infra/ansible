@@ -3,7 +3,7 @@
   ansible.builtin.service:
     name: postgresql
     state: reloaded
-    enabled: True
+    enabled: true
   tags:
     - zabbix-services
 
@@ -11,7 +11,7 @@
   ansible.builtin.service:
     name: zabbix-server
     state: restarted
-    enabled: True
+    enabled: true
   tags:
     zabbix-services
 
@@ -19,7 +19,7 @@
   ansible.builtin.service:
     name: zabbix-agent
     state: restarted
-    enabled: True
+    enabled: true
   tags:
     zabbix-services
 
@@ -27,7 +27,7 @@
   ansible.builtin.service:
     name: nginx
     state: reloaded
-    enabled: True
+    enabled: true
   tags:
     zabbix-services
 
@@ -35,7 +35,6 @@
   ansible.builtin.service:
     name: php-fpm
     state: reloaded
-    enabled: True
+    enabled: true
   tags:
     zabbix-services
-

@@ -54,7 +54,7 @@
     dest: ~_update_docs_trans/.ssh/config
     owner: _update_docs_trans
     group: _update_docs_trans
-    mode: 0644
+    mode: "0644"
   tags:
   - fedora-docs-translation
 
@@ -63,7 +63,7 @@
     dest: /usr/local/bin/docs-translation-update
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
   tags:
   - fedora-docs-translation
 
@@ -72,7 +72,7 @@
     dest: /etc/cron.d/cron-docs-translation-update
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   tags:
   - fedora-docs-translation
   when: env == "production" and inventory_hostname.startswith('sundries01')

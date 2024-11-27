@@ -12,7 +12,7 @@
   notify:
   - restart openvpn
 
-#- name: /etc/openvpn/crl.pem from vpn/openvpn/keys/crl.pem
+# - name: /etc/openvpn/crl.pem from vpn/openvpn/keys/crl.pem
 #  copy: src="{{ private }}/vpn/openvpn/keys/crl.pem" dest=/etc/openvpn/crl.pem mode=0644 owner=root group=root
 #  tags:
 #  - config

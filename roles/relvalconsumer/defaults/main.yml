@@ -1,3 +1,4 @@
+---
 relvalconsumer_prod: false
 relvalconsumer_amqp_passive: false
 relvalconsumer_amqp_url: "amqps://fedora:@rabbitmq.fedoraproject.org/%2Fpublic_pubsub"
@@ -9,7 +10,7 @@ relvalconsumer_amqp_mailfrom: "root@{{ external_hostname }}"
 relvalconsumer_amqp_smtp: localhost
 relvalconsumer_disabled: false
 relvalamiconsumer_amqp_routing_keys: [
-    "org.fedoraproject.prod.fedora_image_uploader.published.v1.aws",
-    "org.fedoraproject.prod.fedora_image_uploader.published.v1.aws.#"
+  "org.fedoraproject.prod.fedora_image_uploader.published.v1.aws",
+  "org.fedoraproject.prod.fedora_image_uploader.published.v1.aws.#"
 ]
 relvalamiconsumer_disabled: false

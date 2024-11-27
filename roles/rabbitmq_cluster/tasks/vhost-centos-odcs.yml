@@ -1,3 +1,4 @@
+---
 - name: Configure the centos-odcs virtual host
   run_once: true
   delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
@@ -58,7 +59,7 @@
   copy:
     dest: /root/.centos-odcs-rabbitmqpass
     content: "{{ (env == 'production')|ternary(rabbitmq_centos_odcs_admin_password_production, rabbitmq_centos_odcs_admin_password_staging) }}"
-    mode: 0600
+    mode: "0600"
     owner: root
     group: root
   tags:
@@ -102,4 +103,3 @@
     state: present
   tags:
   - centos-odcs
-

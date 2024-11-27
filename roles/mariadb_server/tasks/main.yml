@@ -1,3 +1,4 @@
+---
 - name: ensure packages required for mariadb are installed
   package:
     state: present
@@ -29,8 +30,8 @@
   service: name=mariadb enabled=yes state=started
 
 - name: set mariaddb root user password
-  no_log: True
-  mysql_user: 
+  no_log: true
+  mysql_user:
     name: root
     login_user: root
     login_password: "{{ mariadb_root_password }}"

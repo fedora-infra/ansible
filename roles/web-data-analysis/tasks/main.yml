@@ -197,7 +197,7 @@
   copy:
     src: sync-http-logs.py
     dest: /usr/local/bin/sync-http-logs.py
-    mode: 0755
+    mode: "0755"
   when: inventory_hostname.startswith('log01')
   tags:
     - web-data
@@ -241,7 +241,7 @@
   copy:
     src: sync-http-logs-and-merge.sh
     dest: /etc/cron.daily
-    mode: 0755
+    mode: "0755"
   tags:
     - web-data
     - cron

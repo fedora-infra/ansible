@@ -1,3 +1,4 @@
+---
 apiVersion: image.openshift.io/v1
 kind: List
 items:
@@ -16,7 +17,7 @@ items:
       from:
         kind: DockerImage
         name: registry.fedoraproject.org/fedora:38
-      importPolicy: 
+      importPolicy:
         scheduled: true
       referencePolicy:
         type: Source

@@ -101,13 +101,14 @@
 # by openqa/dispatcher role; ideally we should factor this out into a
 # shared task or something.
 
-#- name: Install required packages (testing)
+# - name: Install required packages (testing)
 #  dnf: name={{ item }} state=present enablerepo="updates-testing"
 #  with_items:
 #  - python3-fedfind
 #  tags:
 #  - packages
 
+---
 - name: Install required packages
   package:
     name: ['fedora-messaging', 'python3-fedfind', 'python3-openqa_client', 'python3-pip',
@@ -138,7 +139,7 @@
 - name: Create /etc/pki/fedora-messaging
   file:
     dest: /etc/pki/fedora-messaging
-    mode: 0775
+    mode: "0775"
     owner: root
     group: root
     state: directory
@@ -153,7 +154,7 @@
   copy:
     src: "{{ private }}/files/rabbitmq/{{ checkcompose_env }}/pki/issued/{{ openqa_amqp_this_username }}.crt"
     dest: "/etc/pki/fedora-messaging/{{ openqa_amqp_this_username }}-cert.pem"
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
   when: "deployment_type is defined"
@@ -168,7 +169,7 @@
   copy:
     src: "{{ private }}/files/rabbitmq/{{ checkcompose_env }}/pki/private/{{ openqa_amqp_this_username }}.key"
     dest: "/etc/pki/fedora-messaging/{{ openqa_amqp_this_username }}-key.pem"
-    mode: 0640
+    mode: "0640"
     owner: root
     group: geekotest
   when: "deployment_type is defined"

@@ -25,8 +25,8 @@
   tags:
   - install
   - openvpn
-  #notify:
-  #- restart openvpn (Fedora)
+  # notify:
+  # - restart openvpn (Fedora)
 
 - name: Install certificate and key (rhel or fedora) for server
   copy: src={{ private }}/files/vpn/pki/ca.crt
@@ -35,8 +35,8 @@
   tags:
   - install
   - openvpn
-  #notify:
-  #- restart openvpn (Fedora)
+  # notify:
+  # - restart openvpn (Fedora)
   when: inventory_hostname.startswith('bastion0')
 
 - name: install fix-routes.sh script

@@ -1,4 +1,5 @@
-- name: Install packages                  
+---
+- name: Install packages
   package: state=present name={{ item }}
   with_items:
   - fedora-messaging
@@ -12,10 +13,10 @@
 
 - name: Setup pagure user
   user:
-     name: mirror_pagure_ansible
-     shell: /sbin/nologin
-     comment: "mirror_pagure_ansible User"
-  tags: 
+    name: mirror_pagure_ansible
+    shell: /sbin/nologin
+    comment: "mirror_pagure_ansible User"
+  tags:
   - mirror_pagure_ansible
   - mirror_pagure_ansible/user
 
@@ -33,7 +34,7 @@
 - name: Create /etc/pki/fedora-messaging
   file:
     dest: /etc/pki/fedora-messaging
-    mode: 0775
+    mode: "0775"
     owner: root
     group: root
     state: directory
@@ -59,7 +60,7 @@
     - src: "{{private}}/files/rabbitmq/production/pki/ca.crt"
       dest: cacert.pem
       owner: mirror_pagure_ansible
-      group: mirror_pagure_ansible                                          
+      group: mirror_pagure_ansible
       mode: "0644"
   tags:
   - pagure
@@ -71,7 +72,7 @@
     dest: /etc/fedora-messaging/mirror_pagure_ansible.toml
     owner: mirror_pagure_ansible
     group: mirror_pagure_ansible
-    mode: 0640
+    mode: "0640"
   tags:
   - config
   - mirror_pagure_ansible
@@ -82,7 +83,7 @@
 - name: Create /usr/local/libexec/mirror_pagure_ansible
   file:
     dest: /usr/local/libexec/mirror_pagure_ansible
-    mode: 0775
+    mode: "0775"
     owner: root
     group: root
     state: directory
@@ -107,7 +108,7 @@
     dest: /etc/systemd/system/mirror_pagure_ansible.service
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
   notify:
   - reload systemd
   tags:
@@ -122,4 +123,3 @@
   tags:
   - config
   - mirror_pagure_ansible
-

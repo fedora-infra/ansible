@@ -131,7 +131,7 @@ spec:
       volumes:
       - name: data-volume
         persistentVolumeClaim:
-            claimName: solr-storage{{ '-stg' if env == 'staging' else '' }}
+          claimName: solr-storage{{ '-stg' if env == 'staging' else '' }}
       - name: config-volume
         configMap:
           name: fedora-packages-static-solr-configmap

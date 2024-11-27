@@ -1,3 +1,4 @@
+---
 - name: install collectd-rabbitmq
   package:
     state: present
@@ -20,7 +21,7 @@
     dest: "/etc/collectd.d/rabbitmq.conf"
     owner: root
     group: root
-    mode: 0640
+    mode: "0640"
   tags:
   - collectd
   - config

@@ -3,6 +3,7 @@
 ##
 
 ## Setup the initial user and groups.
+---
 - name: Add nagios group as 420
   group: name=nagios gid=420 state=present system=yes
   tags:

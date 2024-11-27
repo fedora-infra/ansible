@@ -1,10 +1,11 @@
+---
 - name: Create the zabbix keytab path
   file:
     path: "/etc/openshift_apps/zabbix/"
     state: directory
     owner: root
     group: root
-    mode: 0750
+    mode: "0750"
   tags:
     - create-keytab
 

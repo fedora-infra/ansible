@@ -1,3 +1,4 @@
+---
 - name: Copy private tlscert {{privatefile}}
   copy: src={{private}}/files/{{ private_cert }} dest=/etc/openshift_apps/{{app}}/{{key}}.crt
   register: secret_privatecert

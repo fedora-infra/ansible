@@ -1,6 +1,7 @@
 #
 # Install needed packages
 #
+---
 - name: Install needed nfs server packages
   package: name={{ item }} state=present
   with_items:
@@ -45,4 +46,3 @@
   when: exports.changed
   tags:
   - nfs/server
-

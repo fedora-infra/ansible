@@ -1,76 +1,76 @@
-
+---
 database: postgresql://maubot:{{ (env == 'production')|ternary(maubot_prod_db_password, maubot_stg_db_password) }}@db01{{ env_suffix }}.iad2.fedoraproject.org/maubot
 
 crypto_database: default
 
 database_opts:
-    min_size: 1
-    max_size: 10
+  min_size: 1
+  max_size: 10
 
 plugin_directories:
-    upload: /maubot
-    load:
-    - /maubot
-    trash: delete
+  upload: /maubot
+  load:
+  - /maubot
+  trash: delete
 
 plugin_databases:
-    postgres: default
-    postgres_max_conns_per_plugin: 3
-    postgres_opts: {}
+  postgres: default
+  postgres_max_conns_per_plugin: 3
+  postgres_opts: {}
 
 server:
-    hostname: 0.0.0.0
-    port: 8080
-    public_url: http://maubot.apps.ocp{{env_suffix}}.fedoraproject.org/
-    ui_base_path: /
-    plugin_base_path: /plugin/
-    override_resource_path: false
-    unshared_secret: generate
+  hostname: 0.0.0.0
+  port: 8080
+  public_url: http://maubot.apps.ocp{{env_suffix}}.fedoraproject.org/
+  ui_base_path: /
+  plugin_base_path: /plugin/
+  override_resource_path: false
+  unshared_secret: generate
 
 homeservers:
-    fedora.im:
-        url: https://fedora.ems.host
-        secret: null
+  fedora.im:
+    url: https://fedora.ems.host
+    secret: null
 
 admins:
-    root: ""
+  root: ""
 {% if env == 'staging' %}
-    {{ maubot_stg_admin_user }}: "{{ maubot_stg_admin_password }}"
+  {{ maubot_stg_admin_user }}: "{{ maubot_stg_admin_password }}"
 {% else %}
-    {{ maubot_prod_admin_user }}: "{{ maubot_prod_admin_password }}"
+  {{ maubot_prod_admin_user }}: "{{ maubot_prod_admin_password }}"
 {% endif %}
 
 api_features:
-    login: true
-    plugin: true
-    plugin_upload: true
-    instance: true
-    instance_database: true
-    client: true
-    client_proxy: true
-    client_auth: true
-    dev_open: true
-    log: true
+  login: true
+  plugin: true
+  plugin_upload: true
+  instance: true
+  instance_database: true
+  client: true
+  client_proxy: true
+  client_auth: true
+  dev_open: true
+  log: true
 
 logging:
-    version: 1
-    formatters:
-        colored:
-            (): maubot.lib.color_log.ColorFormatter
-            format: "[%(asctime)s] [%(levelname)s@%(name)s] %(message)s"
-        normal:
-            format: "[%(asctime)s] [%(levelname)s@%(name)s] %(message)s"
-    handlers:
-        console:
-            class: logging.StreamHandler
-            formatter: colored
-    loggers:
-        maubot:
-            level: INFO
-        mau:
-            level: INFO
-        aiohttp:
-            level: WARN
-    root:
-        level: WARN
-        handlers: [console]
+  version: 1
+  formatters:
+    colored:
+      (): maubot.lib.color_log.ColorFormatter
+      format: "[%(asctime)s] [%(levelname)s@%(name)s] %(message)s"
+    normal:
+      format: "[%(asctime)s] [%(levelname)s@%(name)s] %(message)s"
+  handlers:
+    console:
+      class: logging.StreamHandler
+      formatter: colored
+  loggers:
+    maubot:
+      level: INFO
+    mau:
+      level: INFO
+    aiohttp:
+      level: WARN
+  root:
+    level: WARN
+    handlers: [console]

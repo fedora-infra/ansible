@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: Route
 metadata:
@@ -5,7 +6,7 @@ metadata:
   labels:
     app: prest
 spec:
-  #host: waiverdb.stg.fedoraproject.org
+  # host: waiverdb.stg.fedoraproject.org
   port:
     targetPort: prest
   to:

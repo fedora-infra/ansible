@@ -1,3 +1,4 @@
+---
 apiVersion: apps.openshift.io/v1
 items:
 - apiVersion: apps.openshift.io/v1
@@ -14,20 +15,20 @@ items:
     strategy:
       activeDeadlineSeconds: 21600
       recreateParams:
-       mid:
-        execNewPod:
-          command:
-            - /bin/sh
-            - '-c'
-            - >-
-              (/usr/bin/alembic-3 -c /etc/bodhi/alembic.ini current | grep -q
-              "(head)") || ( cd /etc/bodhi && /usr/bin/alembic-3 -c
-              /etc/bodhi/alembic.ini upgrade head)
-          containerName: bodhi-web
-          volumes:
-            - config-volume
-        failurePolicy: Abort
-       timeoutSeconds: 600
+        mid:
+          execNewPod:
+            command:
+              - /bin/sh
+              - '-c'
+              - >-
+                (/usr/bin/alembic-3 -c /etc/bodhi/alembic.ini current | grep -q
+                "(head)") || ( cd /etc/bodhi && /usr/bin/alembic-3 -c
+                /etc/bodhi/alembic.ini upgrade head)
+            containerName: bodhi-web
+            volumes:
+              - config-volume
+          failurePolicy: Abort
+        timeoutSeconds: 600
       resources: {}
       type: Recreate
     template:

@@ -12,7 +12,7 @@ status:
 apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
-   name: packager-dashboard-redis
+  name: packager-dashboard-redis
 spec:
   tags:
   - name: latest
@@ -26,7 +26,7 @@ spec:
 apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
-   name: oraculum-frontend
+  name: oraculum-frontend
 spec:
   lookupPolicy:
     local: false
@@ -41,7 +41,7 @@ status:
 apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
-   name: packager-dashboard-frontend
+  name: packager-dashboard-frontend
 spec:
   tags:
   - name: latest

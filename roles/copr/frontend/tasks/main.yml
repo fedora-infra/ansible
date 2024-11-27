@@ -4,7 +4,7 @@
 - name: register security context for pgsql directory
   command: "ls -dZ /var/lib/pgsql"
   register: pgsql_ls
-  changed_when: False  # `ls' command is not changing anything
+  changed_when: false  # `ls' command is not changing anything
 
 - name: update selinux context for postgress db dir if it's wrong
   command: "restorecon -vvRF /var/lib/pgsql"
@@ -47,7 +47,7 @@
   copy:
     src: copr-frontend-prometheus-monitoring.py
     dest: /usr/bin/copr-frontend-prometheus-monitoring.py
-    mode: 0750
+    mode: "0750"
     owner: root
     group: root
   tags:
@@ -70,7 +70,7 @@
   tags:
   - packages
 
-#- name: patch for issue XXX
+# - name: patch for issue XXX
 #  patch: src=patches/xxx.patch
 #         dest=/the/patched/file.py
 #  tags: patches
@@ -164,8 +164,8 @@
   become: yes
   become_user: copr-fe
   register: update_indexes_required_result
-  changed_when: False
-  failed_when: False
+  changed_when: false
+  failed_when: false
 
 - name: rebuild indexes
   command: ./manage.py update_indexes
@@ -229,7 +229,7 @@
     dest: "/usr/bin/copr-cdn-check.py"
     src: "copr-cdn-check.py.j2"
     group: "nagios"
-    mode: 0750
+    mode: "0750"
   vars:
     api_key: "{{ copr_uptimerobot_api_key_ro | default('not-configured') }}"
   tags: copr_cdn

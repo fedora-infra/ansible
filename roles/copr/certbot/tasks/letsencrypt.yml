@@ -133,7 +133,7 @@
   file:
     path: "{{ le_backup_path }}"
     # nobody, except for root, can step into this directory (on batcave)
-    mode: 0700
+    mode: "0700"
     owner: root
     group: root
     state: directory

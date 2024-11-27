@@ -1,3 +1,4 @@
+---
 - name: Install packages
   package: state=present name={{ item }}
   with_items:
@@ -40,7 +41,7 @@
     state: directory
     owner: robosignatory
     group: robosignatory
-    mode: 0750
+    mode: "0750"
   tags:
   - config
   - robosignatory
@@ -51,7 +52,7 @@
     state: directory
     owner: robosignatory
     group: robosignatory
-    mode: 0750
+    mode: "0750"
   tags:
   - config
   - robosignatory
@@ -62,7 +63,7 @@
     dest: /etc/sigul/client.conf
     owner: robosignatory
     group: robosignatory
-    mode: 0640
+    mode: "0640"
   notify:
   - restart robosignatory
   tags:
@@ -83,7 +84,7 @@
     dest: /etc/robosignatory/koji.config
     owner: robosignatory
     group: robosignatory
-    mode: 0640
+    mode: "0640"
   tags:
   - config
   - robosignatory
@@ -94,7 +95,7 @@
     dest: /etc/robosignatory/serverca.cert
     owner: robosignatory
     group: robosignatory
-    mode: 0640
+    mode: "0640"
   notify:
   - restart robosignatory
   tags:
@@ -106,7 +107,7 @@
 - name: Create /etc/pki/fedora-messaging
   file:
     dest: /etc/pki/fedora-messaging
-    mode: 0775
+    mode: "0775"
     owner: root
     group: root
     state: directory
@@ -118,7 +119,7 @@
   copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/ca.crt"
     dest: /etc/pki/fedora-messaging/cacert.pem
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
   tags:
@@ -129,7 +130,7 @@
   copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/issued/robosignatory{{env_suffix}}.crt"
     dest: /etc/pki/fedora-messaging/robosignatory-cert.pem
-    mode: 0644
+    mode: "0644"
     owner: robosignatory
     group: robosignatory
   notify:
@@ -142,7 +143,7 @@
   copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/private/robosignatory{{env_suffix}}.key"
     dest: /etc/pki/fedora-messaging/robosignatory-key.pem
-    mode: 0600
+    mode: "0600"
     owner: robosignatory
     group: robosignatory
   notify:
@@ -157,7 +158,7 @@
     dest: /etc/fedora-messaging/robosignatory.toml
     owner: robosignatory
     group: robosignatory
-    mode: 0640
+    mode: "0640"
   notify:
   - restart robosignatory
   tags:
@@ -171,7 +172,7 @@
     path: /etc/systemd/system/fm-consumer@.service.d
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
   when: env == 'staging'
   tags:
   - config
@@ -183,7 +184,7 @@
     dest: /etc/systemd/system/fm-consumer@.service.d/local.conf
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   when: env == 'staging'
   notify:
   - reload systemd
@@ -208,7 +209,7 @@
     dest: /usr/local/bin/sigul-add-key
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
   when: env != 'staging'
   notify:
   - reload systemd
@@ -222,7 +223,7 @@
     dest: /etc/systemd/system/robosignatory.service
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   when: env != 'staging'
   notify:
   - reload systemd
@@ -236,7 +237,7 @@
     dest: /etc/tmpfiles.d/ask-password-robosignatory.conf
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   tags:
   - config
   - robosignatory

@@ -95,13 +95,14 @@
 ##                 instance should have this set.
 
 # note: kept around for when we need packages from u-t
-#- name: Install required packages (testing)
+# - name: Install required packages (testing)
 #  dnf:
 #    name: ['python3-fedfind', 'python3-wikitcms']
 #    state: present
 #    enablerepo: "updates-testing"
 #  tags:
 #  - packages
+---
 - name: Install required packages
   package:
     # 'relval' itself is needed as we call it directly for size
@@ -128,7 +129,7 @@
 - name: Create /root/.openidc (token file location for manual runs as root)
   file: path=/root/.openidc state=directory owner=root group=root mode=0700
 
-#- name: Write wikitcms token file for root
+# - name: Write wikitcms token file for root
 #  copy: src={{ wikitcms_token }} dest=/root/.openidc/oidc_wikitcms.json owner=root group=root mode=0600
 #  when: "wikitcms_token is defined"
 #  tags:
@@ -156,7 +157,7 @@
 - name: Create /etc/pki/fedora-messaging
   file:
     dest: /etc/pki/fedora-messaging
-    mode: 0775
+    mode: "0775"
     owner: root
     group: root
     state: directory
@@ -171,7 +172,7 @@
   copy:
     src: "{{ private }}/files/rabbitmq/production/pki/issued/{{ openqa_amqp_prod_username }}.crt"
     dest: "/etc/pki/fedora-messaging/{{ openqa_amqp_prod_username }}-cert.pem"
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
   when: "deployment_type is defined"
@@ -186,7 +187,7 @@
   copy:
     src: "{{ private }}/files/rabbitmq/production/pki/private/{{ openqa_amqp_prod_username }}.key"
     dest: "/etc/pki/fedora-messaging/{{ openqa_amqp_prod_username }}-key.pem"
-    mode: 0640
+    mode: "0640"
     owner: root
     group: geekotest
   when: "deployment_type is defined"
@@ -196,7 +197,7 @@
 - name: Create python-bugzilla configuration directory
   file:
     dest: /root/.config/python-bugzilla
-    mode: 0700
+    mode: "0700"
     owner: root
     group: root
     state: directory

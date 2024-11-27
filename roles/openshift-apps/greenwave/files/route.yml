@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: Route
 metadata:
@@ -5,7 +6,7 @@ metadata:
   labels:
     app: greenwave
 spec:
-  #host: greenwave.stg.fedoraproject.org
+  # host: greenwave.stg.fedoraproject.org
   port:
     targetPort: web
   to:

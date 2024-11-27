@@ -1,3 +1,4 @@
+---
 - name: Copy in the sync-fedoraloveskde cronjob
   copy:
     src: "cron-sync-{{item}}"
@@ -13,7 +14,7 @@
     dest: "/etc/httpd/conf.d/{{website}}/{{item}}"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   with_items:
   - fedoraloveskde.conf
   notify:

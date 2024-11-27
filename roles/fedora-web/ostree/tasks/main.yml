@@ -1,3 +1,4 @@
+---
 - name: Copy ostree config file
   copy: src=ostree.conf dest=/etc/httpd/conf.d/ostree.fedoraproject.org/ostree.conf
   notify:

@@ -1,3 +1,4 @@
+---
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
@@ -17,7 +18,7 @@ spec:
         kind: "ImageStreamTag"
         name: "waiverdb-upstream:latest"
   triggers:
-      - type: ImageChange
+    - type: ImageChange
   output:
     to:
       kind: ImageStreamTag

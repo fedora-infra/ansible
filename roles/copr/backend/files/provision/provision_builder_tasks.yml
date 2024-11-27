@@ -209,7 +209,7 @@
 - name: run /bin/copr-update-builder from copr-builder package
   shell: /usr/bin/copr-update-builder
 
-#- name: install the latest mock and mock-core-configs from updates-testing
+# - name: install the latest mock and mock-core-configs from updates-testing
 #  package: state=latest name={{ packages }}
 #  register: mock_updated
 #  vars:
@@ -259,7 +259,7 @@
     dest: /etc/security/limits.d/50-copr-fds.conf
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   when:
     - preparing_image
 

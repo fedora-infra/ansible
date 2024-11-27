@@ -1,3 +1,4 @@
+---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -15,7 +16,7 @@ spec:
           containers:
           - name: translate
             image: image-registry.openshift-image-registry.svc:5000/docstranslation/builder:latest
-            args: 
+            args:
             - "--clone_sources"
             - "--commit_l10n"
             - "--commit_tsources"
@@ -23,7 +24,7 @@ spec:
             - "--nopush"
 {%          endif %}
             env: []
-            volumeMounts: 
+            volumeMounts:
             - name: ssh-config-volume
               mountPath: /workspace/.ssh
               readOnly: true
@@ -33,7 +34,7 @@ spec:
               readOnly: true
           restartPolicy: Never
           startingDeadlineSeconds: 600
-          volumes: 
+          volumes:
           - name: ssh-config-volume
             secret:
               secretName: ssh-config

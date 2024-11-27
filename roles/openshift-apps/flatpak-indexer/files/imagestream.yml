@@ -19,48 +19,48 @@ kind: ImageStream
 metadata:
   name: fedora
 spec:
-    lookupPolicy:
-      local: false
-    tags:
-    - name: latest
-      from:
-        kind: DockerImage
-        name: registry.fedoraproject.org/fedora:40
-      importPolicy:
-        scheduled: true
-      referencePolicy:
-        type: Source
+  lookupPolicy:
+    local: false
+  tags:
+  - name: latest
+    from:
+      kind: DockerImage
+      name: registry.fedoraproject.org/fedora:40
+    importPolicy:
+      scheduled: true
+    referencePolicy:
+      type: Source
 ---
 apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
   name: ubi8-go-toolset
 spec:
-    lookupPolicy:
-      local: false
-    tags:
-    - name: latest
-      from:
-        kind: DockerImage
-        name: registry.access.redhat.com/ubi8/go-toolset:latest
-      importPolicy:
-        scheduled: true
-      referencePolicy:
-        type: Source
+  lookupPolicy:
+    local: false
+  tags:
+  - name: latest
+    from:
+      kind: DockerImage
+      name: registry.access.redhat.com/ubi8/go-toolset:latest
+    importPolicy:
+      scheduled: true
+    referencePolicy:
+      type: Source
 ---
 apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
   name: ubi8-python-39
 spec:
-    lookupPolicy:
-      local: false
-    tags:
-    - name: latest
-      from:
-        kind: DockerImage
-        name: registry.access.redhat.com/ubi8/python-39:latest
-      importPolicy:
-        scheduled: true
-      referencePolicy:
-        type: Source
+  lookupPolicy:
+    local: false
+  tags:
+  - name: latest
+    from:
+      kind: DockerImage
+      name: registry.access.redhat.com/ubi8/python-39:latest
+    importPolicy:
+      scheduled: true
+    referencePolicy:
+      type: Source

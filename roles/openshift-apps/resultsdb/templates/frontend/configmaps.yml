@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -7,7 +8,7 @@ metadata:
     service: web
 data:
   settings.py: |-
-    import os    
+    import os
 {% if env == 'staging' %}
     RDB_URL = '{{ stg_resultsdb_frontend_api_url }}'
 {% else %}
@@ -33,12 +34,12 @@ data:
     WSGIDaemonProcess resultsdb_frontend user=apache group=apache threads=10
     WSGIScriptAlias / /usr/share/resultsdb_frontend/resultsdb_frontend.wsgi
     WSGISocketPrefix /tmp/wsgi
-    
+
     <Directory /usr/share/resultsdb_frontend>
-        WSGIProcessGroup resultsdb_frontend 
+        WSGIProcessGroup resultsdb_frontend
         WSGIApplicationGroup %{GLOBAL}
         WSGIScriptReloading On
-    
+
         Order deny,allow
         Allow from all
         <IfModule mod_authz_core.c>
@@ -49,4 +50,4 @@ data:
           Order allow,deny
           Allow from all
         </IfModule>
-    </Directory> 
+    </Directory>

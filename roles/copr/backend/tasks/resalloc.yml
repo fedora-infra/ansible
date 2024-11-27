@@ -33,7 +33,7 @@
     line: "{{ item }}"
     owner: postgres
     group: postgres
-    mode: 0600
+    mode: "0600"
   with_items:
     - "all postgres postgres"
     - "all resalloc resalloc"
@@ -101,7 +101,7 @@
   file:
     path: /var/lib/resallocserver/.ssh
     state: directory
-    mode: 0700
+    mode: "0700"
     owner: resalloc
     group: resalloc
 
@@ -111,7 +111,7 @@
     dest: /var/lib/resallocserver/.ssh/id_rsa
     owner: resalloc
     group: resalloc
-    mode: 0600
+    mode: "0600"
 
 - name: resalloc, ssh config file
   template:
@@ -119,7 +119,7 @@
     dest: /var/lib/resallocserver/.ssh/config
     owner: resalloc
     group: resalloc
-    mode: 0600
+    mode: "0600"
   tags:
     - backend_to_hv_ssh_config
     - provision_config
@@ -128,7 +128,7 @@
   template:
     src: "resalloc/{{ item }}"
     dest: "/etc/resallocserver/{{ item }}"
-    mode: 0640
+    mode: "0640"
     owner: resalloc
     group: resalloc
   with_items:
@@ -160,7 +160,7 @@
   copy:
     src: copr-prepare-s390x-image-builder
     dest: /usr/local/bin/copr-prepare-s390x-image-builder
-    mode: 0755
+    mode: "0755"
   tags:
     - images_s390x
 
@@ -173,6 +173,6 @@
     dest: "{{ ibmcloud_token_file }}"
     owner: resalloc
     group: resalloc
-    mode: 0600
+    mode: "0600"
   tags:
   - provision_config

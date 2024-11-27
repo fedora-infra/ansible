@@ -4,7 +4,7 @@
   template:
     src: "imagestream.yml"
     dest: "/root/ocp4/openshift-apps/firmitas/imagestream.yml"
-    mode: 0770
+    mode: "0770"
 
 # apply created openshift resources
 - name: oc apply resources

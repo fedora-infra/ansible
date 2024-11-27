@@ -35,7 +35,7 @@
     src: "{{ ping_script }}.j2"
     owner: "{{ ping_user }}"
     group: "{{ ping_user }}"
-    mode: 0700
+    mode: "0700"
   tags: copr_ping
 
 - name: install the check script
@@ -44,7 +44,7 @@
     src: "copr-ping-check.py.j2"
     owner: "{{ ping_user }}"
     group: "nagios"
-    mode: 0750
+    mode: "0750"
   tags: copr_ping
 
 - name: selinux - allow nrpe_t to read ping_log
@@ -65,7 +65,7 @@
     path: "{{ ping_homedir }}/.config"
     owner: "{{ ping_user }}"
     group: "{{ ping_user }}"
-    mode: 0755
+    mode: "0755"
     state: directory
   tags: copr_ping
 
@@ -78,7 +78,7 @@
       token = {{ copr_ping_bot_token }}
       copr_url = https://copr.fedorainfracloud.org
     dest: "{{ ping_homedir }}/.config/copr"
-    mode: 0600
+    mode: "0600"
     owner: "{{ ping_user }}"
     group: "{{ ping_user }}"
   tags: copr_ping

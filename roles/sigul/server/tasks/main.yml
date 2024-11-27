@@ -1,3 +1,4 @@
+---
 - name: put rhel AH repos on rhel systems
   copy: src="{{ files }}/common/rhel7ah.repo" dest="/etc/yum.repos.d/rhel7ah.repo"
   when: ansible_distribution == 'RedHat'
@@ -16,7 +17,7 @@
   - openssl-pkcs11
   - gnutls-utils
   - ykpers
-  #- yubico-piv-tool
+  # - yubico-piv-tool
   - pcsc-lite
   - opensc
   - tar

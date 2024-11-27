@@ -6,10 +6,10 @@
 # again to late to do it here
 # - import_tasks: "{{ tasks_path }}/cloud_setup_basic.yml"
 # already included into the `base` role
-#- import_tasks: "{{ tasks_path }}/postfix_basic.yml"
+# - import_tasks: "{{ tasks_path }}/postfix_basic.yml"
 
 # To late to do it here (
-#- name: setup correct hostname for copr machine
+# - name: setup correct hostname for copr machine
 #  hostname: name="{{ copr_hostbase }}.cloud.fedoraproject.org"
 #  #  hostname: name="{{ hostbase|regex_replace('.*-$', '')}}.cloud.fedoraproject.org"
 #  tags:

@@ -1,6 +1,6 @@
-
 # check web functionality
 #
+---
 - name: Set URL facts
   set_fact:
     main_url: "https://{{ ansible_default_ipv4.address }}{{ url_suffix }}"

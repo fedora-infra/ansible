@@ -1,4 +1,5 @@
 # https://docs.openshift.com/container-platform/4.15/rest_api/workloads_apis/deployment-apps-v1.html
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -20,7 +21,7 @@ spec:
       containers:
       - name: {{service}}
         image: image-registry.openshift-image-registry.svc:5000/koschei/koschei:latest
-        command: [/usr/bin/koschei-{{service}}]
+        command: ["/usr/bin/koschei-{{service}}"]
         env:
           - name: SUDO_USER
             value: admin

@@ -4,6 +4,7 @@
 #
 
 
+---
 - name: CoreOS user
   run_once: true
   include_role:
@@ -60,9 +61,9 @@
   include_role:
     name: rabbit/queue
   vars:
-     username: fedora-build-checks{{ env_suffix }}
-     queue_name: fedora-build-checks{{ env_suffix }}
-     routing_keys:
+    username: fedora-build-checks{{ env_suffix }}
+    queue_name: fedora-build-checks{{ env_suffix }}
+    routing_keys:
       - "org.centos.ci.#"
 
 - name: copr
@@ -168,7 +169,7 @@
 
 # ELN CS BEGIN
 #
-#- name: eln cs queue
+# - name: eln cs queue
 #  run_once: true
 #  include_role:
 #    name: rabbit/queue

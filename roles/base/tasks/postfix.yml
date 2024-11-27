@@ -1,3 +1,4 @@
+---
 - name: /etc/postfix/main.cf
   copy: src={{ item }} dest=/etc/postfix/main.cf
   with_first_found:
@@ -91,12 +92,12 @@
   - restart postfix
   tags:
   - postfix
-  
-# Install gateway tls cert as a pem file. 
+
+# Install gateway tls cert as a pem file.
 # This has: private key, then cert, then intermediate cert
 # This cert is a digicert one, renew it there.
 - name: install /etc/pki/tls/private/gateway-chain.pem
-  copy: 
+  copy:
     src="{{private}}/files/smtpd/gateway-chain.pem"
     dest=/etc/pki/tls/private/gateway-chain.pem
     owner=root

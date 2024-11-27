@@ -1,3 +1,4 @@
+---
 - name: install postresql
   package: state=present pkg={{ item }}
   with_items:
@@ -131,7 +132,7 @@
     dest: "{{ copr_fe_homedir }}/.psqlrc"
     owner: copr-fe
     group: copr-fe
-    mode: 0600
+    mode: "0600"
 
 - name: install pgpass file
   copy:
@@ -140,7 +141,7 @@
     dest: "{{ copr_fe_homedir }}/.pgpass"
     owner: copr-fe
     group: copr-fe
-    mode: 0400
+    mode: "0400"
 
 - stat: path="{{ copr_fe_homedir }}/.psql_history"
   register: history_file

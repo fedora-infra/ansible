@@ -8,6 +8,7 @@
 # - SSLCertificateChainFile: ""
 # - gzip: false
 
+---
 - name: Create site directory in httpd/conf.d/{{site_name}}
   file: >
     dest=/etc/httpd/conf.d/{{site_name}}

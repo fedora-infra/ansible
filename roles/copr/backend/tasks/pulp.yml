@@ -10,7 +10,7 @@
     path: /home/copr/.config/pulp/
     owner: copr
     group: copr
-    mode: 0700
+    mode: "0700"
 
 - name: Install Pulp auth certificates
   copy:
@@ -18,7 +18,7 @@
     dest: "/home/copr/.config/pulp/"
     owner: copr
     group: copr
-    mode: 0600
+    mode: "0600"
   with_items:
   - copr-pulp-prod.crt
   - copr-pulp-prod.key
@@ -30,4 +30,4 @@
     dest: "/home/copr/.config/pulp/cli.toml"
     owner: copr
     group: copr
-    mode: 0600
+    mode: "0600"

@@ -1,6 +1,6 @@
 ---
 
-#long running tasks - run them in background - we do not actually care about the results
+# long running tasks - run them in background - we do not actually care about the results
 - name: reposync for fedora
   shell: nohup retrace-server-reposync fedora {{ item[0] }} {{ item[1] }} </dev/null >$(mktemp /tmp/ansible.reposync_for_fedoraXXXXXX.log) &
   loop: "{{ rs_internal_fedora_vers | product(rs_internal_arch_list) | list }}"
@@ -20,20 +20,20 @@
 - file:
     path: /srv/retrace/repos
     state: directory
-    mode: 0755
+    mode: "0755"
     owner: retrace
     group: retrace
 
 - file:
     path: /srv/retrace/tasks
     state: directory
-    mode: 0755
+    mode: "0755"
     owner: retrace
     group: retrace
 
 - file:
     path: /srv/retrace/hardlink-local
     state: directory
-    mode: 0755
+    mode: "0755"
     owner: retrace
     group: retrace

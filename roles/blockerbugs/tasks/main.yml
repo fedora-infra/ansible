@@ -30,10 +30,10 @@
 
 - name: create the `blockerbugs` user
   user:
-      name: blockerbugs
-      group: blockerbugs
-      shell: /bin/nologin
-      home: /usr/share/blockerbugs
+    name: blockerbugs
+    group: blockerbugs
+    shell: /bin/nologin
+    home: /usr/share/blockerbugs
   tags:
   - blockerbugs
   - config

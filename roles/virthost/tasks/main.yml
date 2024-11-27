@@ -60,7 +60,7 @@
 
 #
 # On some hosts in the fedorainfracloud network we want to add some users to be able to manage
-# their own vms. 
+# their own vms.
 - name: add copr user to some virthosts that will run copr builders
   user: name=copr password_lock=true group=libvirt
   when: copr_build_virthost

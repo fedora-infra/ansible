@@ -28,18 +28,18 @@
     - { src: "{{private}}/files/rabbitmq/{{env}}/pki/ca.crt",
         dest: "ca.crt",
         owner: faf,
-        mode: 0644
-      }
+        mode: "0644"
+    }
     - { src: "{{private}}/files/rabbitmq/{{env}}/pki/private/faf{{env_suffix}}.key",
         dest: "faf.key",
         owner: faf,
         mode: "600"
-      }
+    }
     - { src: "{{private}}/files/rabbitmq/{{env}}/pki/issued/faf{{env_suffix}}.crt",
         dest: "faf.crt",
         owner: faf,
-        mode: 0644
-      }
+        mode: "0644"
+    }
 
 # landing page
 - name: install abrt-server-info-page

@@ -74,6 +74,7 @@
 ##               fedora_nightlies default will be used
 
 
+---
 - name: Install required packages
   package:
     # 'relval' itself is needed as we call it directly for size
@@ -105,7 +106,7 @@
 - name: Create /etc/pki/fedora-messaging
   file:
     dest: /etc/pki/fedora-messaging
-    mode: 0775
+    mode: "0775"
     owner: root
     group: root
     state: directory
@@ -119,7 +120,7 @@
   copy:
     src: "{{ private }}/files/rabbitmq/production/pki/issued/openqa.crt"
     dest: /etc/pki/fedora-messaging/openqa-cert.pem
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
   when: "deployment_type is defined"
@@ -134,7 +135,7 @@
   copy:
     src: "{{ private }}/files/rabbitmq/production/pki/private/openqa.key"
     dest: /etc/pki/fedora-messaging/openqa-key.pem
-    mode: 0640
+    mode: "0640"
     owner: root
     group: geekotest
   when: "deployment_type is defined"

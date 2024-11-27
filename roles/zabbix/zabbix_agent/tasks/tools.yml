@@ -1,8 +1,9 @@
+---
 - name: Some basic wrapper scripts for zabbix-sender
   copy:
     src: "scripts/{{ item }}"
     dest: "/usr/lib/zabbix/{{ item }}"
-    mode: 0755
+    mode: "0755"
   with_items:
     - zabbix-hw-raid-check.sh
     - zabbix-mdstat-check.sh
@@ -23,4 +24,3 @@
     - zabbix-check-eth-settings.sh
     - zabbix-check-iptables.sh
     - zabbix-check-ro.sh
-

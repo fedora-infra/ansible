@@ -23,7 +23,7 @@ spec:
           command: ["python", "/opt/app-root/src/blockerbugs/cli.py", "init_db"]
           # and then just the gunicorn for the frontend part
           volumes:
-           - blockerbugs-secret-volume
+          - blockerbugs-secret-volume
   template:
     metadata:
       labels:

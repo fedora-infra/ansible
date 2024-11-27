@@ -4,6 +4,7 @@
 # - cert:
 # - key:
 
+---
 - name: Copy over SSLCertificateChainFile if defined
   copy: >
     src={{private}}/files/httpd/{{SSLCertificateChainFile}}

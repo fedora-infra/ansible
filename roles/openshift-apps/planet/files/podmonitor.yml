@@ -1,3 +1,4 @@
+---
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
@@ -11,4 +12,3 @@ spec:
   podMetricsEndpoints:
   - port: web
     path: /metrics
-    

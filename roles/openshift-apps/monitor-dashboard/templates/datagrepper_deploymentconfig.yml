@@ -45,11 +45,11 @@ spec:
           value: "/srv/datanommer/apache/datagrepper.cfg"
         volumeMounts:
         - mountPath: /etc/fedmsg.d/datagrepper.py
-          subPath: datagrepper.py  
+          subPath: datagrepper.py
           name: datagrepper
         - mountPath: /srv/datanommer/fedmsg.d/datagrepper.cfg
-          subPath: datagrepper.cfg  
-          name: datagrepper  
+          subPath: datagrepper.cfg
+          name: datagrepper
   triggers:
   - type: ImageChange
     imageChangeParams:

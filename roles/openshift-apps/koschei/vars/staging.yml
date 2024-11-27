@@ -1,3 +1,4 @@
+---
 appowners:
   - mizdebsk
 
@@ -27,13 +28,13 @@ koschei_oidc_crypto_secret: "{{ koschei_oidc_crypto_secret_stg }}"
 koschei_frontend_replicas: 2
 
 koschei_backend_services:
-  - { name: polling,        cpu: [ 1000, 1500 ],  memory: [  512, 1024 ] }
-  - { name: scheduler,      cpu: [  200,  500 ],  memory: [  128,  256 ] }
-  - { name: build-resolver, cpu: [ 1000, 2000 ],  memory: [ 1536, 4096 ] }
-  - { name: repo-resolver,  cpu: [ 2000, 8000 ],  memory: [ 2048, 4096 ] }
-  - { name: watcher,        cpu: [  200, 1000 ],  memory: [  128,  512 ] }
-  - { name: copr-resolver,  cpu: [ 2000, 8000 ],  memory: [ 1024, 4096 ] }
-  - { name: copr-scheduler, cpu: [ 1000, 2000 ],  memory: [ 1024, 2048 ] }
+  - { name: polling,        cpu: [ 1000, 1500 ],  memory: [  512, 1024 ] } # yamllint disable-line rule:commas rule:brackets
+  - { name: scheduler,      cpu: [  200,  500 ],  memory: [  128,  256 ] } # yamllint disable-line rule:commas rule:brackets
+  - { name: build-resolver, cpu: [ 1000, 2000 ],  memory: [ 1536, 4096 ] } # yamllint disable-line rule:commas rule:brackets
+  - { name: repo-resolver,  cpu: [ 2000, 8000 ],  memory: [ 2048, 4096 ] } # yamllint disable-line rule:commas rule:brackets
+  - { name: watcher,        cpu: [  200, 1000 ],  memory: [  128,  512 ] } # yamllint disable-line rule:commas rule:brackets
+  - { name: copr-resolver,  cpu: [ 2000, 8000 ],  memory: [ 1024, 4096 ] } # yamllint disable-line rule:commas rule:brackets
+  - { name: copr-scheduler, cpu: [ 1000, 2000 ],  memory: [ 1024, 2048 ] } # yamllint disable-line rule:commas rule:brackets
 
 koschei_cron_jobs:
   - name: db-cleanup

@@ -83,6 +83,7 @@
 # If openqa_dbhost is not set, the server will use a local SQLite database
 # and the other openqa_db* values are ignored.
 
+---
 - name: Create geekotest group with static GID
   group: "name=geekotest gid={{ openqa_static_uid }} system=yes"
   when: "openqa_static_uid is defined"

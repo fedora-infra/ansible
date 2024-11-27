@@ -99,7 +99,7 @@
     dest: /etc/nrpe.d/check_rabbitmq_queue_{{ queue_name }}.cfg
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: restart nrpe on rabbitmq
   tags:
     - fedora-messaging

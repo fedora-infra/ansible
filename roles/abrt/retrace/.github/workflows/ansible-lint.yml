@@ -1,10 +1,11 @@
+---
 name: Check Ansible Role
 
-on:
+on: # yamllint disable-line rule:truthy
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   lint:
@@ -15,7 +16,7 @@ jobs:
     - name: Check out sources
       uses: actions/checkout@v2
 
-    - name: Lint 
+    - name: Lint
       uses: ansible/ansible-lint-action@master
       with:
         targets: ./

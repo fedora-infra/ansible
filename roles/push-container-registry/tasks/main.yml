@@ -27,7 +27,7 @@
     dest: "{{cert_dest_dir}}/client.cert"
     owner: root
     group: "{{ certs_group }}"
-    mode: 0640
+    mode: "0640"
   tags:
   - push-container-registry
 
@@ -36,6 +36,6 @@
     src: "{{key_src}}"
     dest: "{{cert_dest_dir}}/client.key"
     group: "{{ certs_group }}"
-    mode: 0640
+    mode: "0640"
   tags:
   - push-container-registry

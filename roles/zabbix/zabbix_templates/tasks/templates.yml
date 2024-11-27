@@ -1,12 +1,12 @@
 ---
-#- name: Get Zabbix template as JSON
+# - name: Get Zabbix template as JSON
 #  community.zabbix.zabbix_template_info:
 #    template_name: fedora releng compose cronjobs
 #    format: json
 #    omit_date: yes
 #  register: zabbix_template_json
 
-#- name: Write Zabbix templte to JSON file
+# - name: Write Zabbix templte to JSON file
 #  local_action:
 #    module: copy
 #    content: "{{ zabbix_template_json['template_json'] }}"

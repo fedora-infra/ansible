@@ -14,7 +14,7 @@
 - name: Install desired extra packages (dnf)
   dnf:
     state: present
-    pkg: 
+    pkg:
     - chrony
     - python3-libselinux
   when: ansible_distribution_major_version|int > 7 and ansible_distribution == 'RedHat' and ansible_cmdline.ostree is not defined
@@ -24,7 +24,7 @@
 - name: Include basessh
   include_role: name=basessh
 
-#- name: edit hostname to be instance name - prefix hostbase var if it exists
+# - name: edit hostname to be instance name - prefix hostbase var if it exists
 #  shell: hostname  {{ hostbase }}`curl -s http://169.254.169.254/latest/meta-data/instance-id`
 #  tags:
 #  - config
@@ -40,7 +40,7 @@
 - name: add root keys for sysadmin-main and other allowed users
   authorized_key: user=root key="{{ item }}"
   with_lines:
-   - "/srv/web/infra/ansible/scripts/auth-keys-from-fas @sysadmin-main {{ root_auth_users }}"
+    - "/srv/web/infra/ansible/scripts/auth-keys-from-fas @sysadmin-main {{ root_auth_users }}"
   tags:
   - config
   - sshkeys

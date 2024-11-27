@@ -4,7 +4,7 @@
   ansible.builtin.shell: postgresql-setup initdb
   args:
     executable: /bin/bash
-  ignore_errors: True
+  ignore_errors: true
   tags:
     - db-configure
 
@@ -12,7 +12,7 @@
   ansible.builtin.copy:
     src: postgresql.conf
     dest: /var/lib/pgsql/data/postgresql.conf
-    mode: 0600
+    mode: "0600"
     owner: postgres
     group: postgres
   tags:
@@ -23,7 +23,7 @@
   ansible.builtin.service:
     name: postgresql
     state: reloaded
-    enabled: True
+    enabled: true
   tags:
     - zabbix-services
 
@@ -39,7 +39,7 @@
 
 - name: Configure the zabbix db
   ansible.builtin.shell: "sudo -u postgres createdb -O {{ zabbix_db_user }} {{ zabbix_db_name }}"
-  ignore_errors: True
+  ignore_errors: true
   tags:
     - db-configure
 
@@ -47,7 +47,6 @@
   ansible.builtin.shell: "zcat /usr/share/zabbix-sql-scripts/postgresql/server.sql.gz | sudo -u zabbix psql zabbix"
   args:
     executable: /bin/bash
-  ignore_errors: True
+  ignore_errors: true
   tags:
     - db-configure
-

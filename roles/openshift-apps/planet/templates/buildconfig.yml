@@ -1,17 +1,18 @@
+---
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
   name: planet
   labels:
     app: planet
-    build: planet  
+    build: planet
 spec:
   runPolicy: Serial
   source:
     type: Git
     git:
       uri: https://github.com/fedora-infra/planet
-      ref: {{ (env == 'production')|ternary('stable', 'staging') }}
+      ref: "{{ (env == 'production')|ternary('stable', 'staging') }}"
   strategy:
     type: Docker
   output:

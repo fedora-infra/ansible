@@ -1,3 +1,4 @@
+---
 # Openstack has a newer version of rabbitmq
 - name: Install RHOSP13 repo file
   copy: src="{{ files }}/common/rhos13.repo" dest=/etc/yum.repos.d/rhos13.repo
@@ -227,7 +228,7 @@
   copy:
     dest: /root/.rabbitmqpass
     content: "{{ (env == 'production')|ternary(rabbitmq_admin_password_production, rabbitmq_admin_password_staging) }}"
-    mode: 0600
+    mode: "0600"
     owner: root
     group: root
   tags:
@@ -464,7 +465,7 @@
   copy:
     src: selinux-load.sh
     dest: /etc/nagios/selinux-load.sh
-    mode: 0755
+    mode: "0755"
 
 - name: copy over our custom selinux module
   copy:

@@ -12,11 +12,11 @@
 
 - name: Create some directories
   file:
-      path={{ item }}
-      state=directory
-      owner=apache
-      group=fedmsg
-      mode=775
+    path={{ item }}
+    state=directory
+    owner=apache
+    group=fedmsg
+    mode=775
   with_items:
   - /etc/fedoracommunity
   - /var/cache/fedoracommunity  # the gluster role usually creates this one

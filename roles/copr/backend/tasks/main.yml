@@ -34,7 +34,7 @@
   tags:
     - packages
 
-#- name: patch for prunerepo, issue 1090
+# - name: patch for prunerepo, issue 1090
 #  patch: src=patches/prunerepo-dataloss.patch
 #         dest=/usr/bin/prunerepo
 #  tags: patches
@@ -64,7 +64,7 @@
     dest: /home/copr/.ssh/config
     owner: copr
     group: copr
-    mode: 0600
+    mode: "0600"
   tags:
     - backend_to_hv_ssh_config
     - provision_config
@@ -85,7 +85,7 @@
 
 - name: auth_key so we can login to localhost as the copr user from the copr user
   authorized_key: user=copr key="{{ item }}"
-  no_log: True
+  no_log: true
   with_file:
   - "provision/files/buildsys.pub"
 
@@ -139,13 +139,13 @@
     src: cgi-resalloc
     dest: /var/www/
     setype: httpd_sys_script_exec_t
-    mode: 0755
+    mode: "0755"
 
 - name: install the helper scripts for lighttpd log rotation
   copy:
     src: "{{ item }}"
     dest: /usr/local/bin/{{ item }}
-    mode: 0755
+    mode: "0755"
     owner: root
     group: root
   with_items:
@@ -167,7 +167,7 @@
   service: state=started enabled=yes name=lighttpd
 
 # setup dirs for the ansible execution off of provisioning
-#- name: dirs from provision
+# - name: dirs from provision
 #  file: state=directory path="/home/copr/provision/{{ item }}" owner=copr group=copr
 #  with_items:
 #  - action_plugins
@@ -227,7 +227,7 @@
   copy: src="{{ item }}" dest=/usr/local/bin/
         owner=root mode=755
   with_fileglob:
-   - copr-builder-image-*.sh
+    - copr-builder-image-*.sh
   when: devel|bool
   tags:
   - provision_config
@@ -278,7 +278,7 @@
 - command: "ls -dZ /var/lib/copr/public_html/"
   register: public_html_ls
   check_mode: no
-  changed_when: False
+  changed_when: false
 
 - name: update selinux context for results if root folder does not have proper type
   command: "restorecon -vvRF /var/lib/copr/public_html/"
@@ -304,7 +304,7 @@
   copy:
     content: "{{ copr_red_hat_subscription_offline_token }}"
     dest: "{{ rhn_offline_token_file }}"
-    mode: 0600
+    mode: "0600"
     owner: resalloc
     group: resalloc
   tags:
@@ -314,7 +314,7 @@
   template:
     src: "{{ item }}"
     dest: /usr/local/bin/{{ item }}
-    mode: 0755
+    mode: "0755"
   loop:
     - cleanup-unused-vms-from-redis
     - cleanup-unused-redhat-subscriptions

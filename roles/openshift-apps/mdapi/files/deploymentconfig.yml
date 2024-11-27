@@ -47,15 +47,15 @@ spec:
             port: 8080
         resources:
       volumes:
-       - name: config-volume
-         configMap:
-           name: mdapi-configmap
-       - name: myconfigpy-volume
-         configMap:
-           name: mdapi-myconfigpy-configmap
-       - name: data-volume
-         persistentVolumeClaim:
-           claimName: mdapi-storage
+        - name: config-volume
+          configMap:
+            name: mdapi-configmap
+        - name: myconfigpy-volume
+          configMap:
+            name: mdapi-myconfigpy-configmap
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: mdapi-storage
   triggers:
   - type: ImageChange
     imageChangeParams:

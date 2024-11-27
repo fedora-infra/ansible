@@ -23,7 +23,7 @@ spec:
           command: ["python", "-m", "oraculum.cli", "init_db"]
           # and then just the gunicorn for the frontend part of the backend :)
           volumes:
-           - oraculum-secret-volume
+            - oraculum-secret-volume
   template:
     metadata:
       labels:

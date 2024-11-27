@@ -6,7 +6,7 @@
     state: directory
     owner: root
     group: root
-    mode: 0750
+    mode: "0750"
   tags:
     - create-keytab
 
@@ -21,4 +21,3 @@
     host: "{{ fas2discourse_hostname }}"
   tags:
     - create-keytab
-

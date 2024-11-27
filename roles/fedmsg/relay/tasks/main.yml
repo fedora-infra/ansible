@@ -1,6 +1,7 @@
 # This is a *very* simple role.  The config needed for fedmsg-relay to operate
 # correctly is actually included as part of the fedmsg/base role.
 
+---
 - name: install fedmsg-relay (yum)
   package: name=fedmsg-relay state=present
   tags:

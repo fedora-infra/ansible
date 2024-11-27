@@ -1,6 +1,7 @@
 #
 # This role sets up serial console on ttyS1
 #
+---
 - name: check for grub serial setup
   command: grub2-editenv list
   register: serial

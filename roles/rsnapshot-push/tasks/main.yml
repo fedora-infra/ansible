@@ -5,7 +5,7 @@
     dest: "/usr/local/bin/{{ item.value.command }}"
     owner: "{{ item.value.user }}"
     group: "{{ item.value.user }}"
-    mode: 0700
+    mode: "0700"
   with_dict:
   - "{{ rsnapshot_push.cases }}"
   tags: rsnapshot_push
@@ -23,7 +23,7 @@
     state: directory
     owner: "{{ item.value.user }}"
     group: "{{ item.value.user }}"
-    mode: 0700
+    mode: "0700"
   with_dict:
     - "{{ rsnapshot_push.cases }}"
   delegate_to: "{{ rsnapshot_push.server_host }}"
@@ -35,7 +35,7 @@
     dest: "{{ '/'.join([rsnapshot_push.backup_dir, item.key, 'sync-daemon']) }}"
     owner: "{{ item.value.user }}"
     group: "{{ item.value.user }}"
-    mode: 0700
+    mode: "0700"
   with_dict:
   - "{{ rsnapshot_push.cases }}"
   delegate_to: "{{ rsnapshot_push.server_host }}"
@@ -58,7 +58,7 @@
     dest: "{{ '/'.join([rsnapshot_push.backup_dir, item.key, 'rsnapshot']) }}"
     owner: "{{ item.value.user }}"
     group: "{{ item.value.user }}"
-    mode: 0700
+    mode: "0700"
   with_dict:
   - "{{ rsnapshot_push.cases }}"
   delegate_to: "{{ rsnapshot_push.server_host }}"

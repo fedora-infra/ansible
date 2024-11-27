@@ -1,4 +1,5 @@
 # Restart handler for our fedora-messaging consumers
+---
 - name: Conditionally restart openQA scheduler consumer
   command: /usr/local/bin/conditional-restart.sh fm-consumer@fedora_openqa_scheduler
   listen:
