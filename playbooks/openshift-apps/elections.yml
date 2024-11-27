@@ -13,7 +13,7 @@
   - name: Elections DB user
     community.postgresql.postgresql_user:
       name: "{{ elections_db_user }}"
-      password: "{{ elections_db_pass }}"
+      password: "{{ (env == 'production') | ternary(elections_db_pass, elections_stg_db_pass) }}"
   - name: Elections database creation
     community.postgresql.postgresql_db:
       name: "{{ elections_db_name }}"
