@@ -301,7 +301,7 @@
 # put cron job in for branched compose
 - name: Branched compose cron
   ansible.builtin.template:
-    src: branched
+    src: branched.j2
     dest: /etc/cron.d/branched
     mode: "644"
   when: inventory_hostname.startswith('compose-branched01.iad2')
