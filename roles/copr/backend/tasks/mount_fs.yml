@@ -34,9 +34,9 @@
       stat: path=/dev/disk/by-label/copr-repo
       register: stat_repo_fs
 
-    - name: scan the raid volumes
+    - name: scan and assemble raid volumes and activate volume groups
       when: not stat_repo_fs.stat.exists
-      shell: mdadm --assemble --scan && sleep 5
+      shell: mdadm --assemble --scan && sleep 5 && vgchange -a y && sleep 5
 
     - name: stat the ext4 filesystem
       stat: path=/dev/disk/by-label/copr-repo
