@@ -4,6 +4,6 @@ apiVersion: user.openshift.io/v1
 metadata:
   name: "sysadmin-openshift"
 users:
-{% for item in appowners %}
+{% for item in sysadmin_openshift_appowners %}
 - "{{ item }}"
 {% endfor %}
