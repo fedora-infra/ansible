@@ -19,8 +19,8 @@
     tags:
       - apply-appowners
   - role: openshift/imagestream
-    app: review-stats
-    imagename: builder
+    imagestream_app: review-stats
+    imagestream_imagename: builder
   - role: openshift/object
     object_app: review-stats
     object_objectname: buildconfig.yml

@@ -41,8 +41,8 @@
     privatefile: "rabbitmq/{{env}}/pki/private/discourse2fedmsg{{env_suffix}}.key"
 
   - role: openshift/imagestream
-    app: discourse2fedmsg
-    imagename: discourse2fedmsg
+    imagestream_app: discourse2fedmsg
+    imagestream_imagename: discourse2fedmsg
 
   - role: openshift/object
     object_app: discourse2fedmsg

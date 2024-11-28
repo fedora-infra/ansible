@@ -21,8 +21,8 @@
         - apply-appowners
 
     - role: openshift/imagestream
-      app: test-auth
-      imagename: test-auth
+      imagestream_app: test-auth
+      imagestream_imagename: test-auth
 
     - role: openshift/object
       object_app: test-auth

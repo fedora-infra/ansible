@@ -24,8 +24,8 @@
         - apply-appowners
 
     - role: openshift/imagestream
-      app: flask-oidc-dev
-      imagename: flask-oidc-dev
+      imagestream_app: flask-oidc-dev
+      imagestream_imagename: flask-oidc-dev
 
     - role: openshift/object
       object_app: flask-oidc-dev

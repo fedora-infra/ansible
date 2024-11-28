@@ -54,8 +54,8 @@
     privatefile: "rabbitmq/{{env}}/pki/private/noggin{{env_suffix}}.key"
 
   - role: openshift/imagestream
-    app: noggin
-    imagename: noggin
+    imagestream_app: noggin
+    imagestream_imagename: noggin
 
   - role: openshift/object
     object_app: noggin

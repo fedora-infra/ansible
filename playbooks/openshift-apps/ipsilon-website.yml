@@ -21,8 +21,8 @@
         - apply-appowners
 
     - role: openshift/imagestream
-      app: ipsilon-website
-      imagename: ipsilon-website
+      imagestream_app: ipsilon-website
+      imagestream_imagename: ipsilon-website
 
     - role: openshift/object
       object_app: ipsilon-website

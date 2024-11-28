@@ -66,8 +66,8 @@
       privatefile: "rabbitmq/{{env}}/pki/private/webhook2fedmsg{{env_suffix}}.key"
 
     - role: openshift/imagestream
-      app: webhook2fedmsg
-      imagename: webhook2fedmsg
+      imagestream_app: webhook2fedmsg
+      imagestream_imagename: webhook2fedmsg
 
     - role: openshift/object
       object_app: webhook2fedmsg

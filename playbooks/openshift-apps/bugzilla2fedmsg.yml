@@ -66,8 +66,8 @@
     keytab_service: bugzilla2fedmsg
 
   - role: openshift/imagestream
-    app: bugzilla2fedmsg
-    imagename: bugzilla2fedmsg
+    imagestream_app: bugzilla2fedmsg
+    imagestream_imagename: bugzilla2fedmsg
 
   - role: openshift/object
     object_app: bugzilla2fedmsg

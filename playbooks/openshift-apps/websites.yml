@@ -27,8 +27,8 @@
     object_objectname: pvc.yml
 
   - role: openshift/imagestream
-    app: websites
-    imagename: fedora-websites
+    imagestream_app: websites
+    imagestream_imagename: fedora-websites
 
   - role: openshift/object
     object_app: websites
@@ -47,8 +47,8 @@
 
   # New websites 3.0
   - role: openshift/imagestream
-    app: websites
-    imagename: builder
+    imagestream_app: websites
+    imagestream_imagename: builder
 
   - role: openshift/object
     object_app: websites

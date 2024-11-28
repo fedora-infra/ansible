@@ -29,8 +29,8 @@
       - appowners
 
   - role: openshift/imagestream
-    app: docsbuilding
-    imagename: builder
+    imagestream_app: docsbuilding
+    imagestream_imagename: builder
 
   - role: openshift/object
     object_app: docsbuilding

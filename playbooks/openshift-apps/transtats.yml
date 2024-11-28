@@ -20,8 +20,8 @@
     object_objectname: secret.yml
     object_template: secret.yml
   - role: openshift/imagestream
-    app: transtats
-    imagename: transtats
+    imagestream_app: transtats
+    imagestream_imagename: transtats
   - role: openshift/object
     object_app: transtats
     object_template: buildconfig.yml

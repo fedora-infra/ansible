@@ -70,8 +70,8 @@
     privatefile: "fasjson/session.{{env}}.key"
 
   - role: openshift/imagestream
-    app: fasjson
-    imagename: fasjson
+    imagestream_app: fasjson
+    imagestream_imagename: fasjson
 
   - role: openshift/object
     object_app: fasjson

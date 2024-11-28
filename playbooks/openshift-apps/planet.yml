@@ -28,8 +28,8 @@
     keytab_host: "planet.apps.ocp{{env_suffix}}.fedoraproject.org"
 
   - role: openshift/imagestream
-    app: planet
-    imagename: planet
+    imagestream_app: planet
+    imagestream_imagename: planet
 
   - role: openshift/object
     object_app: planet

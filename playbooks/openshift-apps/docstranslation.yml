@@ -29,7 +29,8 @@
     ansible.builtin.include_role:
       name: openshift/imagestream
     vars:
-      imagename: builder
+      imagestream_app: docstranslation
+      imagestream_imagename: builder
 
   - name: Define buildconfig
     ansible.builtin.include_role:
