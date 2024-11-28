@@ -64,14 +64,14 @@
 ###############################################
 # to run: sudo rbac-playbook -l staging -t delete openshift-apps/fedora-packages-static.yml
   - role: openshift/object-delete
-    app: fedora-packages-static
-    objecttype: project
-    objectname: fedora-packages-static
+    object_delete_app: fedora-packages-static
+    object_delete_objecttype: project
+    object_delete_objectname: fedora-packages-static
     tags: [never, delete]
 
   # to run: sudo rbac-playbook -l staging -t deletesolr openshift-apps/fedora-packages-static.yml
   - role: openshift/object-delete
-    app: solr
-    objecttype: project
-    objectname: solr
+    object_delete_app: solr
+    object_delete_objecttype: project
+    object_delete_objectname: solr
     tags: [never, deletesolr]

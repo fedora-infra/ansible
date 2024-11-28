@@ -63,9 +63,9 @@
 ###############################################
 # to run: sudo rbac-playbook -l os_masters_stg[0] -t delete openshift-apps/languages.yml
   - role: openshift/object-delete
-    app: languages
-    objecttype: project
-    objectname: languages
+    object_delete_app: languages
+    object_delete_objecttype: project
+    object_delete_objectname: languages
     tags:
     - never
     - delete

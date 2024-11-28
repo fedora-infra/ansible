@@ -66,12 +66,12 @@
   ###############################################
   # to run: sudo rbac-playbook -l os_masters_stg[0] -t delete openshift-apps/docsbuilding.yml
   - role: openshift/object-delete
-    app: docsbuilding
-    objecttype: cronjob
-    objectname: cron
+    object_delete_app: docsbuilding
+    object_delete_objecttype: cronjob
+    object_delete_objectname: cron
     tags: [never, delete]
   - role: openshift/object-delete
-    app: docsbuilding
-    objecttype: cronjob
-    objectname: cron-translated
+    object_delete_app: docsbuilding
+    object_delete_objecttype: cronjob
+    object_delete_objectname: cron-translated
     tags: [never, delete]

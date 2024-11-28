@@ -169,8 +169,8 @@
 
     # sudo rbac-playbook -l staging -t delete openshift-apps/openscanhub.yml
   - role: openshift/object-delete
-    app: openscanhub
-    objecttype: project
-    objectname: openscanhub
+    object_delete_app: openscanhub
+    object_delete_objecttype: project
+    object_delete_objectname: openscanhub
     tags: [never, delete]
     when: env == "staging"

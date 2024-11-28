@@ -102,7 +102,7 @@
   ###############################################
   # to run: sudo rbac-playbook -l os_control_stg -t delete openshift-apps/coreos-cincinnati.yml
   - role: openshift/object-delete
-    app: coreos-cincinnati
-    objecttype: project
-    objectname: coreos-cincinnati
+    object_delete_app: coreos-cincinnati
+    object_delete_objecttype: project
+    object_delete_objectname: coreos-cincinnati
     tags: [never, delete]

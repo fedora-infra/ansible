@@ -89,8 +89,9 @@
 ###############################################
 # to run: sudo rbac-playbook -l os_control_stg[0] -t delete openshift-apps/mote.yml
   - role: openshift/object-delete
-    objecttype: project
-    objectname: mote
+    object_delete_app: mote
+    object_delete_objecttype: project
+    object_delete_objectname: mote
     tags:
     - never
     - delete

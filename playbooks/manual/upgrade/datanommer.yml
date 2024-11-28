@@ -65,9 +65,9 @@
 
 - name: Delete the job in case it finished
   role: openshift/object-delete
-  app: datanommer
-  objecttype: job
-  objectname: db-upgrade
+  object_delete_app: datanommer
+  object_delete_objecttype: job
+  object_delete_objectname: db-upgrade
   when: status.stdout | int == 1
 
 - name: Start the datanommer again

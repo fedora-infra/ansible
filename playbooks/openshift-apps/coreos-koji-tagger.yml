@@ -64,7 +64,7 @@
   ###############################################
   # to run: sudo rbac-playbook -l os_control_stg -t delete openshift-apps/coreos-koji-tagger.yml
   - role: openshift/object-delete
-    app: coreos-koji-tagger
-    objecttype: project
-    objectname: coreos-koji-tagger
+    object_delete_app: coreos-koji-tagger
+    object_delete_objecttype: project
+    object_delete_objectname: coreos-koji-tagger
     tags: [never, delete]

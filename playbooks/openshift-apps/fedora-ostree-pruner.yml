@@ -47,7 +47,7 @@
   ###############################################
   # to run: sudo rbac-playbook -l os_control_stg -t delete openshift-apps/fedora-ostree-pruner.yml
   - role: openshift/object-delete
-    app: fedora-ostree-pruner
-    objecttype: project
-    objectname: fedora-ostree-pruner
+    object_delete_app: fedora-ostree-pruner
+    object_delete_objecttype: project
+    object_delete_objectname: fedora-ostree-pruner
     tags: [never, delete]

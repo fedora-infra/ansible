@@ -53,7 +53,7 @@
   ###############################################
   # to run: sudo rbac-playbook -l os_control_stg -t delete openshift-apps/fedora-coreos-pipeline.yml
   - role: openshift/object-delete
-    app: fedora-coreos-pipeline
-    objecttype: project
-    objectname: fedora-coreos-pipeline
+    object_delete_app: fedora-coreos-pipeline
+    object_delete_objecttype: project
+    object_delete_objectname: fedora-coreos-pipeline
     tags: [never, delete]

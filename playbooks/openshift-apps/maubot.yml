@@ -117,7 +117,7 @@
   ###############################################
   # to run: sudo rbac-playbook -l os_control_stg -t delete openshift-apps/maubot.yml
   - role: openshift/object-delete
-    app: maubot
-    objecttype: project
-    objectname: maubot
+    object_delete_app: maubot
+    object_delete_objecttype: project
+    object_delete_objectname: maubot
     tags: [never, delete]

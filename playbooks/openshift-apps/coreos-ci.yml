@@ -25,7 +25,7 @@
   ###############################################
   # to run: sudo rbac-playbook -l os_control_stg -t delete openshift-apps/coreos-ci.yml
   - role: openshift/object-delete
-    app: coreos-ci
-    objecttype: project
-    objectname: coreos-ci
+    object_delete_app: coreos-ci
+    object_delete_objecttype: project
+    object_delete_objectname: coreos-ci
     tags: [never, delete]

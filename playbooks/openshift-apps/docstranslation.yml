@@ -80,8 +80,9 @@
     ansible.builtin.include_role:
       name: openshift/object-delete
     vars:
-      objecttype: project
-      objectname: docstranslation
+      object_delete_app: docstranslation
+      object_delete_objecttype: project
+      object_delete_objectname: docstranslation
     tags:
     - never
     - delete

@@ -100,7 +100,7 @@
   ###############################################
   # to run: sudo rbac-playbook -l os_control_stg -t delete openshift-apps/coreos-ostree-importer.yml
   - role: openshift/object-delete
-    app: coreos-ostree-importer
-    objecttype: project
-    objectname: coreos-ostree-importer
+    object_delete_app: coreos-ostree-importer
+    object_delete_objecttype: project
+    object_delete_objectname: coreos-ostree-importer
     tags: [never, delete]

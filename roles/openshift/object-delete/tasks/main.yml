@@ -1,15 +1,15 @@
 ---
 - name: Delete object file ({{tmpfile.path}})
   file:
-    path=/etc/openshift_apps/{{app}}/{{objectname}}.yml
+    path=/etc/openshift_apps/{{object_delete_app}}/{{object_delete_objectname}}.yml
     state=absent
-  when: objecttype != 'project'
+  when: object_delete_objecttype != 'project'
 
 - name: Delete project files ({{tmpfile.path}})
   file:
-    path=/etc/openshift_apps/{{app}}
+    path=/etc/openshift_apps/{{object_delete_app}}
     state=absent
-  when: objecttype == 'project'
+  when: object_delete_objecttype == 'project'
 
 - name: Call `oc delete` on the object
-  shell: oc -n {{app}} delete {{objecttype}}/{{objectname}}
+  shell: oc -n {{object_delete_app}} delete {{object_delete_objecttype}}/{{object_delete_objectname}}
