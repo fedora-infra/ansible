@@ -32,7 +32,8 @@
   - name: Import upstream image into OpenShift
     include_role: name=openshift/import-image
     vars:
-      imagestreamname: koschei
+      import_image_app: "{{ app }}"
+      import_image_imagestreamname: koschei
 
   - name: Run database migrations
     include_role: name=openshift-apps/koschei/job

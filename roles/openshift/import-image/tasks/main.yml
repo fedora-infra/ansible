@@ -1,3 +1,3 @@
 ---
 - name: Run `oc import-image`
-  shell: oc -n {{app}} import-image {{imagestreamname}}
+  shell: oc -n {{import_image_app}} import-image {{import_image_imagestreamname}}
