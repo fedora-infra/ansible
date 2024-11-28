@@ -19,7 +19,9 @@
     message_ttl: 60000
     sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(koschei|ci)\..*
 
-  - openshift/project
+  - role: openshift/project
+    project_app: "{{ app }}"
+    project_description: "{{ description }}"
 
   - role: openshift/keytab
     keytab_app: "{{ app }}"
@@ -29,6 +31,7 @@
     keytab_host: "koschei-backend01{{ env_suffix }}.iad2.fedoraproject.org"
 
   - role: openshift/route
+    route_app: "{{ app }}"
     route_routename: frontend
     route_host: "koschei{{ env_suffix }}.fedoraproject.org"
     route_serviceport: web
@@ -42,6 +45,7 @@
       ansible.builtin.include_role:
         name: openshift/object
       vars:
+        object_app: "{{ app }}"
         object_template: "{{ item }}.yml"
         object_objectname: "{{ item }}.yml"
       with_items:
@@ -57,6 +61,7 @@
       ansible.builtin.include_role:
         name: openshift/object
       vars:
+        object_app: "{{ app }}"
         object_template: backend-deployment.yml
         object_objectname: "{{ item.name }}-deployment.yml"
         object_service: "{{ item.name }}"
@@ -72,6 +77,7 @@
       ansible.builtin.include_role:
         name: openshift/object
       vars:
+        object_app: "{{ app }}"
         object_template: cronjob.yml
         object_objectname: "{{ item.name }}-cronjob.yml"
         object_name: "{{ item.name }}"

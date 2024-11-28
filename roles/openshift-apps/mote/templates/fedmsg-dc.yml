@@ -27,7 +27,7 @@ spec:
         - mote.consume
         env:
         - name: REDIS_URL
-          value: "redis://redis.{{ app }}.svc.cluster.local"
+          value: "redis://redis.mote.svc.cluster.local"
         - name: REDIS_PASSWORD
           valueFrom:
             secretKeyRef:

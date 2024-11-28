@@ -27,7 +27,7 @@ spec:
         - mote.worker
         env:
         - name: REDIS_URL
-          value: "redis://redis.{{ app }}.svc.cluster.local"
+          value: "redis://redis.mote.svc.cluster.local"
         - name: LOGLEVEL
           value: "20"
         - name: REDIS_PASSWORD

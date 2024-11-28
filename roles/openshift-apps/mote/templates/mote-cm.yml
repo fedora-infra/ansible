@@ -11,5 +11,5 @@ data:
     DATAGREPPER_BASE_URL = "https://apps{{env_suffix}}.fedoraproject.org"
     RECOGNIITION_PATTERN = r"(.*)[\-\.]([0-9]{4}-[0-9]{2}-[0-9]{2})-([0-9]{2}\.[0-9]{2})"
     CACHE_TYPE = "RedisCache"
-    CACHE_REDIS_URL = "redis://redis.{{ app }}.svc.cluster.local"
+    CACHE_REDIS_URL = "redis://redis.mote.svc.cluster.local"
     CACHE_DEFAULT_TIMEOUT = 0

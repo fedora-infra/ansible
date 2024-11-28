@@ -4,7 +4,6 @@
   user: root
   gather_facts: false
   vars:
-    app: docstranslation
     ssh_key_path: "{{ private }}/files/docstranslation/id_rsa_docstrans_{{ env_short }}"
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml
@@ -16,6 +15,7 @@
     ansible.builtin.include_role:
       name: openshift/project
     vars:
+      project_app: docstranslation
       project_description: Documentation translation
       project_appowners:
       - asamalik
@@ -36,6 +36,7 @@
     ansible.builtin.include_role:
       name: openshift/object
     vars:
+      object_app: docstranslation
       object_objectname: buildconfig.yml
       object_template: buildconfig.yml
 
@@ -43,12 +44,14 @@
     ansible.builtin.include_role:
       name: openshift/start-build
     vars:
+      start_build_app: docstranslation
       start_build_buildname: docstranslation-build
 
   - name: Define secrets
     ansible.builtin.include_role:
       name: openshift/object
     vars:
+      object_app: docstranslation
       object_objectname: secrets.yml
       object_template: secrets.yml
     tags:
@@ -58,6 +61,7 @@
     ansible.builtin.include_role:
       name: openshift/object
     vars:
+      object_app: docstranslation
       object_objectname: configmap.yml
       object_template: configmap.yml
     tags:
@@ -67,6 +71,7 @@
     ansible.builtin.include_role:
       name: openshift/object
     vars:
+      object_app: docstranslation
       object_template: cron.yml
       object_objectname: cron.yml
     tags:
