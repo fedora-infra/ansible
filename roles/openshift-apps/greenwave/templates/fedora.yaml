@@ -4,19 +4,19 @@
 {% macro product_versions(upgrade='false', rawhide='true', branched='true') -%}
 product_versions:
 {% if rawhide|bool %}
-  - fedora-{{ FedoraRawhideNumber }}{{''}}
+  - fedora-{{ FedoraRawhideNumber }}
 {% endif %}
 {% if FedoraBranched and branched|bool %}
-  - fedora-{{ FedoraBranchedNumber }}{{''}}
+  - fedora-{{ FedoraBranchedNumber }}
 {% endif %}
   - fedora-{{ FedoraCycleNumber }}
 {% if FedoraPreviousPrevious or not upgrade|bool %}
-  - fedora-{{ FedoraPreviousCycleNumber }}{{''}}
+  - fedora-{{ FedoraPreviousCycleNumber }}
 {% endif %}
 {% if FedoraPreviousPrevious and not upgrade|bool %}
-  - fedora-{{ FedoraPreviousPreviousCycleNumber }}{{''}}
+  - fedora-{{ FedoraPreviousPreviousCycleNumber }}
 {% endif %}
-{%- endmacro -%}
+{% endmacro -%}
 
 
 # kojibuild_ policies are for koji_build subjects; Fedora CI runs tests at
