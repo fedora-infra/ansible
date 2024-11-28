@@ -4,7 +4,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "job-{{ jobname }}"
+  name: "job-{{ job_name }}"
 spec:
   parallelism: 1
   completions: 1

@@ -33,6 +33,6 @@
 
   roles:
     - role: openshift/job
-      app: mirrormanager
-      jobname: move-to-archive-{{ product|lower|replace(" ", "-") }}-{{ version|lower|replace(" ", "-") }}
-      command: "/opt/app-root/bin/mm2_move-to-archive --product {{ product }} --version {{ version }}"
+      job_app: mirrormanager
+      job_name: move-to-archive-{{ product|lower|replace(" ", "-") }}-{{ version|lower|replace(" ", "-") }}
+      job_command: "/opt/app-root/bin/mm2_move-to-archive --product {{ product }} --version {{ version }}"
