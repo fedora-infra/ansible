@@ -38,16 +38,18 @@
   - name: Run database migrations
     include_role: name=openshift-apps/koschei/job
     vars:
-      name: db-migrate
-      command: "koschei-admin alembic upgrade head"
+      job_app: "{{ app }}"
+      job_name: db-migrate
+      job_command: "koschei-admin alembic upgrade head"
 
   # Since everything is stopped and users are seeing downtime anyway,
   # we may as well want to vacuum the DB to improve performance.
   - name: Vacuum database
     include_role: name=openshift-apps/koschei/job
     vars:
-      name: db-vacuum
-      command: "koschei-admin psql <<<'VACUUM FULL ANALYZE'"
+      job_app: "{{ app }}"
+      job_name: db-vacuum
+      job_command: "koschei-admin psql <<<'VACUUM FULL ANALYZE'"
 
   - name: Resume all deployments
     shell: oc -n koschei rollout resume deploy

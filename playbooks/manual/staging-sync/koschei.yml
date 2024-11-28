@@ -47,8 +47,9 @@
   - name: Populate koschei database with schema and initial data
     include_role: name=openshift-apps/koschei/job
     vars:
-      name: db-create
-      command: "koschei-admin create-db && koschei-admin create-collection f41 --display-name 'Fedora Rawhide' --target f41 --bugzilla-product Fedora --bugzilla-version rawhide && koschei-admin create-group php"
+      job_app: "{{ app }}"
+      job_name: db-create
+      job_command: "koschei-admin create-db && koschei-admin create-collection f41 --display-name 'Fedora Rawhide' --target f41 --bugzilla-product Fedora --bugzilla-version rawhide && koschei-admin create-group php"
 
   - name: Resume all deployments
     shell: oc -n koschei rollout resume deploy
