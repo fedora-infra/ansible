@@ -16,7 +16,7 @@ product_versions:
 {% if FedoraPreviousPrevious and not upgrade|bool %}
   - fedora-{{ FedoraPreviousPreviousCycleNumber }}{{''}}
 {% endif %}
-{% endmacro -%}
+{%- endmacro -%}
 
 
 # kojibuild_ policies are for koji_build subjects; Fedora CI runs tests at
