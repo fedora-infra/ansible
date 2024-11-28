@@ -16,8 +16,8 @@ spec:
 {% if route_path is defined %}
   path: {{ route_path }}
 {% endif %}
-{% if wildcardpolicy is defined %}
-  wildcardPolicy: {{ wildcardpolicy }}
+{% if route_wildcardpolicy is defined %}
+  wildcardPolicy: {{ route_wildcardpolicy }}
 {% endif %}
   port:
     targetPort: {{ route_serviceport }}
