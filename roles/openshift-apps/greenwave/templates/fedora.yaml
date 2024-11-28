@@ -1,23 +1,21 @@
-#jinja2: trim_blocks:False
-
 # rawhide and branched are controllable so we can flip them on and off
 # around branching manually if we need to, if we have issues with
 # failing tests
 {% macro product_versions(upgrade='false', rawhide='true', branched='true') -%}
 product_versions:
-{% if rawhide|bool -%}
+{% if rawhide|bool %}
   - fedora-{{ FedoraRawhideNumber }}{{''}}
-{%- endif %}
-{% if FedoraBranched and branched|bool -%}
+{% endif %}
+{% if FedoraBranched and branched|bool %}
   - fedora-{{ FedoraBranchedNumber }}{{''}}
-{%- endif %}
+{% endif %}
   - fedora-{{ FedoraCycleNumber }}
-{% if FedoraPreviousPrevious or not upgrade|bool -%}
+{% if FedoraPreviousPrevious or not upgrade|bool %}
   - fedora-{{ FedoraPreviousCycleNumber }}{{''}}
-{%- endif %}
-{% if FedoraPreviousPrevious and not upgrade|bool -%}
+{% endif %}
+{% if FedoraPreviousPrevious and not upgrade|bool %}
   - fedora-{{ FedoraPreviousPreviousCycleNumber }}{{''}}
-{%- endif %}
+{% endif %}
 {% endmacro -%}
 
 
