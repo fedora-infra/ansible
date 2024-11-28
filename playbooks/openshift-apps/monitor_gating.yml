@@ -25,10 +25,10 @@
     user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.monitor-gating\..*
 
   - role: openshift/keytab
-    app: monitor-gating
-    key: monitor-gating-keytab
-    secret_name: monitor-gating-keytab
-    service: packagerbot
+    keytab_app: monitor-gating
+    keytab_key: monitor-gating-keytab
+    keytab_secret_name: monitor-gating-keytab
+    keytab_service: packagerbot
 
   - role: openshift/secret-file
     app: monitor-gating

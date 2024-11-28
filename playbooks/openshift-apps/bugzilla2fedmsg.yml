@@ -60,10 +60,10 @@
   - role: openshift/ipa-client
     app: bugzilla2fedmsg
   - role: openshift/keytab
-    app: bugzilla2fedmsg
-    key: service.keytab
-    secret_name: keytab
-    service: bugzilla2fedmsg
+    keytab_app: bugzilla2fedmsg
+    keytab_key: service.keytab
+    keytab_secret_name: keytab
+    keytab_service: bugzilla2fedmsg
 
   - role: openshift/imagestream
     app: bugzilla2fedmsg

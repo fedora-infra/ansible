@@ -21,11 +21,11 @@
 
   # Keytabs
   - role: openshift/keytab
-    app: planet
-    key: http
-    secret_name: planet-keytab-http
-    service: HTTP
-    host: "planet.apps.ocp{{env_suffix}}.fedoraproject.org"
+    keytab_app: planet
+    keytab_key: http
+    keytab_secret_name: planet-keytab-http
+    keytab_service: HTTP
+    keytab_host: "planet.apps.ocp{{env_suffix}}.fedoraproject.org"
 
   - role: openshift/imagestream
     app: planet

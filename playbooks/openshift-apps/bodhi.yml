@@ -74,11 +74,11 @@
     object_file: pvc.yml
     object_objectname: pvc.yml
   - role: openshift/keytab
-    app: bodhi
-    key: koji-keytab
-    secret_name: bodhi-keytab
-    service: bodhi
-    host: "bodhi{{ env_suffix }}.fedoraproject.org"
+    keytab_app: bodhi
+    keytab_key: koji-keytab
+    keytab_secret_name: bodhi-keytab
+    keytab_service: bodhi
+    keytab_host: "bodhi{{ env_suffix }}.fedoraproject.org"
   - role: openshift/secret-file
     app: bodhi
     secret_name: bodhi-fedora-messaging-ca

@@ -55,18 +55,18 @@
     object_template: osh-hub-httpd-configmap.yml
     object_objectname: osh-hub-httpd-configmap
   - role: openshift/keytab
-    app: openscanhub
-    key: service.keytab
-    secret_name: openscanhub-keytab
-    service: HTTP
-    host: "openscanhub.stg.fedoraproject.org"
+    keytab_app: openscanhub
+    keytab_key: service.keytab
+    keytab_secret_name: openscanhub-keytab
+    keytab_service: HTTP
+    keytab_host: "openscanhub.stg.fedoraproject.org"
     when: env == "staging"
   - role: openshift/keytab
-    app: openscanhub
-    key: service.keytab
-    secret_name: openscanhub-keytab
-    service: HTTP
-    host: "openscanhub.fedoraproject.org"
+    keytab_app: openscanhub
+    keytab_key: service.keytab
+    keytab_secret_name: openscanhub-keytab
+    keytab_service: HTTP
+    keytab_host: "openscanhub.fedoraproject.org"
     when: env == "production"
   - role: openshift/object
     object_app: openscanhub

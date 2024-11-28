@@ -56,11 +56,11 @@
 
   # Keytabs
   - role: openshift/keytab
-    app: fasjson
-    key: http
-    secret_name: fasjson-keytab-http
-    service: HTTP
-    host: "fasjson{{ env_suffix }}.fedoraproject.org"
+    keytab_app: fasjson
+    keytab_key: http
+    keytab_secret_name: fasjson-keytab-http
+    keytab_service: HTTP
+    keytab_host: "fasjson{{ env_suffix }}.fedoraproject.org"
 
   # Session secret key
   - role: openshift/secret-file

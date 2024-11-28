@@ -45,11 +45,11 @@
     - appowners
 
   - role: openshift/keytab
-    app: elections
-    key: service.keytab
-    secret_name: elections-keytab
-    service: HTTP
-    host: "elections{{ env_suffix }}.fedoraproject.org"
+    keytab_app: elections
+    keytab_key: service.keytab
+    keytab_secret_name: elections-keytab
+    keytab_service: HTTP
+    keytab_host: "elections{{ env_suffix }}.fedoraproject.org"
 
   - role: openshift/ipa-client
     app: elections

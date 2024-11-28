@@ -30,19 +30,19 @@
     - zlopez
 
   - role: openshift/keytab
-    app: the-new-hotness
-    key: koji-keytab
-    secret_name: the-new-hotness-keytab
-    service: the-new-hotness
-    host: "release-monitoring.org"
+    keytab_app: the-new-hotness
+    keytab_key: koji-keytab
+    keytab_secret_name: the-new-hotness-keytab
+    keytab_service: the-new-hotness
+    keytab_host: "release-monitoring.org"
     when: env == "production"
 
   - role: openshift/keytab
-    app: the-new-hotness
-    key: koji-keytab
-    secret_name: the-new-hotness-keytab
-    service: the-new-hotness
-    host: "stg.release-monitoring.org"
+    keytab_app: the-new-hotness
+    keytab_key: koji-keytab
+    keytab_secret_name: the-new-hotness-keytab
+    keytab_service: the-new-hotness
+    keytab_host: "stg.release-monitoring.org"
     when: env == "staging"
 
   - role: openshift/secret-file

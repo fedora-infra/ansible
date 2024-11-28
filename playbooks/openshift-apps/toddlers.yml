@@ -61,10 +61,10 @@
     sent_topics: ^org\.fedoraproject\.{{ env_short }}\.toddlers\..*
 
   - role: openshift/keytab
-    app: toddlers
-    key: service.keytab
-    secret_name: toddlers-keytab
-    service: toddlers
+    keytab_app: toddlers
+    keytab_key: service.keytab
+    keytab_secret_name: toddlers-keytab
+    keytab_service: toddlers
 
   - role: openshift/ipa-client
     app: toddlers

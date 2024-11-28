@@ -43,11 +43,11 @@
     - kevin
 
   - role: openshift/keytab
-    app: maubot
-    key: service.keytab
-    secret_name: maubot-keytab
-    service: HTTP
-    host: "maubot.apps.ocp{{env_suffix}}.fedoraproject.org"
+    keytab_app: maubot
+    keytab_key: service.keytab
+    keytab_secret_name: maubot-keytab
+    keytab_service: HTTP
+    keytab_host: "maubot.apps.ocp{{env_suffix}}.fedoraproject.org"
 
   - role: openshift/ipa-client
     app: maubot

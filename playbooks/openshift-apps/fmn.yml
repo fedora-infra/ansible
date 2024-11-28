@@ -209,10 +209,10 @@
     - role: openshift/ipa-client
       app: fmn
     - role: openshift/keytab
-      app: fmn
-      key: service.keytab
-      secret_name: keytab
-      service: fmn
+      keytab_app: fmn
+      keytab_key: service.keytab
+      keytab_secret_name: keytab
+      keytab_service: fmn
 
     # Cron jobs
     - role: openshift/object

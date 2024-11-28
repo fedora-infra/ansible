@@ -3,16 +3,16 @@
   include_role:
     name: keytab/service
   vars:
-    kt_location: "/etc/openshift_apps/{{app}}/{{key}}.kt"
+    kt_location: "/etc/openshift_apps/{{keytab_app}}/{{keytab_key}}.kt"
 
 - name: Call `oc secrets new` on the copied file
-  shell: oc -n {{app}} secrets new {{secret_name}} {{key}}=/etc/openshift_apps/{{app}}/{{key}}.kt
+  shell: oc -n {{keytab_app}} secrets new {{keytab_secret_name}} {{keytab_key}}=/etc/openshift_apps/{{keytab_app}}/{{keytab_key}}.kt
   register: create_out
   when: not ocp4
   failed_when: "create_out.rc != 0 and 'AlreadyExists' not in create_out.stderr"
 
 - name: Call `oc create secret generic` on the copied file
-  shell: oc -n {{app}} create secret generic {{secret_name}} --from-file={{key}}=/etc/openshift_apps/{{app}}/{{key}}.kt
+  shell: oc -n {{keytab_app}} create secret generic {{keytab_secret_name}} --from-file={{keytab_key}}=/etc/openshift_apps/{{keytab_app}}/{{keytab_key}}.kt
   register: create_out
   when: ocp4 and not keytab_status.stat.exists
   failed_when: "create_out.rc != 0 and 'AlreadyExists' not in create_out.stderr"

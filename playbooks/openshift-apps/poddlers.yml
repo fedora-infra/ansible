@@ -47,10 +47,10 @@
         - appowners
 
     - role: openshift/keytab
-      app: poddlers
-      key: service.keytab
-      secret_name: keytab
-      service: toddlers
+      keytab_app: poddlers
+      keytab_key: service.keytab
+      keytab_secret_name: keytab
+      keytab_service: toddlers
 
     - role: openshift/ipa-client
       app: poddlers
