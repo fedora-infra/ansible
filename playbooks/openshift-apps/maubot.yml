@@ -91,9 +91,9 @@
     secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
 
   - role: openshift/start-build
-    app: maubot
-    buildname: maubot-build
-    objectname: maubot-build
+    start_build_app: maubot
+    start_build_buildname: maubot-build
+    start_build_objectname: maubot-build
 
   - role: openshift/object
     object_app: maubot

@@ -122,9 +122,9 @@
     object_objectname: container-secrets.yml
 
   - role: openshift/start-build
-    app: cloud-image-uploader
-    buildname: cloud-image-uploader-build
-    objectname: cloud-image-uploader-build
+    start_build_app: cloud-image-uploader
+    start_build_buildname: cloud-image-uploader-build
+    start_build_objectname: cloud-image-uploader-build
 
   - role: openshift/object
     object_app: cloud-image-uploader

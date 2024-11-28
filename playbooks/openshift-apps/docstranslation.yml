@@ -43,7 +43,7 @@
     ansible.builtin.include_role:
       name: openshift/start-build
     vars:
-      buildname: docstranslation-build
+      start_build_buildname: docstranslation-build
 
   - name: Define secrets
     ansible.builtin.include_role:

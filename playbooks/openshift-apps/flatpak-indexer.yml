@@ -45,9 +45,9 @@
     object_objectname: configmap.yml
 
   - role: openshift/start-build
-    app: flatpak-indexer
+    start_build_app: flatpak-indexer
     # This will trigger the main build via a imageChange trigger
-    buildname: flatpak-indexer-tardiff-build
+    start_build_buildname: flatpak-indexer-tardiff-build
 
   - role: openshift/object
     object_app: flatpak-indexer

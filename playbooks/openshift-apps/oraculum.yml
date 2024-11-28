@@ -123,6 +123,6 @@
       haproxy.router.openshift.io/set-forwarded-headers: append
 
   - role: openshift/start-build
-    app: oraculum
-    buildname: packager-dashboard-build
-    objectname: packager-dashboard-build
+    start_build_app: oraculum
+    start_build_buildname: packager-dashboard-build
+    start_build_objectname: packager-dashboard-build

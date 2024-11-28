@@ -43,8 +43,8 @@
     object_template: buildconfig.yml
     object_objectname: buildconfig.yml
   - role: openshift/start-build
-    app: release-monitoring
-    buildname: release-monitoring-web-build
+    start_build_app: release-monitoring
+    start_build_buildname: release-monitoring-web-build
   - role: openshift/object
     object_app: release-monitoring
     object_template: configmap.yml

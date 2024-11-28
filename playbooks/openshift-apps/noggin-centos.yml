@@ -107,8 +107,8 @@
     object_objectname: deploymentconfig.yml
 
   - role: openshift/start-build
-    app: noggin-centos
-    buildname: noggin
+    start_build_app: noggin-centos
+    start_build_buildname: noggin
     tags:
     - never
     - build

@@ -67,9 +67,9 @@
       - cron-job
 
   - role: openshift/start-build
-    app: mdapi
-    buildname: mdapi-build
-    objectname: mdapi-build
+    start_build_app: mdapi
+    start_build_buildname: mdapi-build
+    start_build_objectname: mdapi-build
 
   - role: openshift/object
     object_app: mdapi

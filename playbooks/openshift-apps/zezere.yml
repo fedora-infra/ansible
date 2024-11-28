@@ -23,8 +23,8 @@
     object_objectname: buildconfig.yml
     object_file: buildconfig.yml
   - role: openshift/start-build
-    app: zezere
-    buildname: zezere-build
+    start_build_app: zezere
+    start_build_buildname: zezere-build
   - role: openshift/object
     object_app: zezere
     object_file: service.yml

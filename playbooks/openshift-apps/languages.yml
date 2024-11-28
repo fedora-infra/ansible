@@ -28,8 +28,8 @@
     object_template: buildconfig.yml
 
   - role: openshift/start-build
-    app: languages
-    buildname: build-latest
+    start_build_app: languages
+    start_build_buildname: build-latest
 
   - role: openshift/object
     object_app: languages

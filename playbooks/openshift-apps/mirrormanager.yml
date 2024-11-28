@@ -165,8 +165,8 @@
       object_objectname: cron-primary-mirror.yml
 
     - role: openshift/start-build
-      app: mirrormanager
-      buildname: mm
+      start_build_app: mirrormanager
+      start_build_buildname: mm
       tags:
         - never
         - build

@@ -132,8 +132,8 @@
     object_objectname: buildconfig.yml
 
   - role: openshift/start-build
-    app: messaging-bridges
-    buildname: messaging-bridges-build
+    start_build_app: messaging-bridges
+    start_build_buildname: messaging-bridges-build
 
   - role: openshift/object
     object_app: messaging-bridges

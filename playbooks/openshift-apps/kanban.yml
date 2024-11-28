@@ -124,6 +124,6 @@
     route_servicename: kanban-web
 
   - role: openshift/start-build
-    app: kanban
-    buildname: kanban-build
-    objectname: kanban-build
+    start_build_app: kanban
+    start_build_buildname: kanban-build
+    start_build_objectname: kanban-build

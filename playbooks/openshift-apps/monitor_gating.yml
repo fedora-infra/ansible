@@ -80,9 +80,9 @@
     object_objectname: deploymentconfig.yml
 
   - role: openshift/start-build
-    app: monitor-gating
-    buildname: monitor-gating-build
-    objectname: monitor-gating-build
+    start_build_app: monitor-gating
+    start_build_buildname: monitor-gating-build
+    start_build_objectname: monitor-gating-build
     tags:
       - build
 

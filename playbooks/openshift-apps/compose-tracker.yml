@@ -36,9 +36,9 @@
     object_objectname: buildconfig.yml
 
   - role: openshift/start-build
-    app: compose-tracker
-    buildname: compose-tracker-build
-    objectname: compose-tracker-build
+    start_build_app: compose-tracker
+    start_build_buildname: compose-tracker-build
+    start_build_objectname: compose-tracker-build
 
   - role: openshift/object
     object_app: compose-tracker

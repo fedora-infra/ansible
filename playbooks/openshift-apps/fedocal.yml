@@ -59,9 +59,9 @@
     object_objectname: configmap.yml
 
   - role: openshift/start-build
-    app: fedocal
-    buildname: fedocal-build
-    objectname: fedocal-build
+    start_build_app: fedocal
+    start_build_buildname: fedocal-build
+    start_build_objectname: fedocal-build
 
   - role: openshift/object
     object_app: fedocal

@@ -59,7 +59,8 @@
     object_objectname: deployment.yml
 
   - role: openshift/start-build
-    buildname: openvpn
+    start_build_app: openvpn
+    start_build_buildname: openvpn
 
 ###############################################
 # actions to delete the project from OpenShift

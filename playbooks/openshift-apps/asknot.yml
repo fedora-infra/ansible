@@ -28,9 +28,9 @@
     object_objectname: buildconfig.yml
 
   - role: openshift/start-build
-    app: asknot
-    buildname: asknot-build
-    objectname: asknot-build
+    start_build_app: asknot
+    start_build_buildname: asknot-build
+    start_build_objectname: asknot-build
 
   - role: openshift/object
     object_app: asknot

@@ -134,6 +134,6 @@
       haproxy.router.openshift.io/set-forwarded-headers: append
 
   - role: openshift/start-build
-    app: blockerbugs
-    buildname: blockerbugs-build
-    objectname: blockerbugs-build
+    start_build_app: blockerbugs
+    start_build_buildname: blockerbugs-build
+    start_build_objectname: blockerbugs-build

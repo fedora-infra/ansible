@@ -38,9 +38,9 @@
     object_objectname: configmap.yml
 
   - role: openshift/start-build
-    app: fedora-packages-static
-    buildname: fedora-packages-static-build
-    objectname: fedora-packages-static-build
+    start_build_app: fedora-packages-static
+    start_build_buildname: fedora-packages-static-build
+    start_build_objectname: fedora-packages-static-build
 
   - role: openshift/object
     object_app: fedora-packages-static

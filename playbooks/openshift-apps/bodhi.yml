@@ -106,8 +106,8 @@
     object_template: buildconfig.yml
     object_objectname: buildconfig.yml
   - role: openshift/start-build
-    app: bodhi
-    buildname: bodhi-base
+    start_build_app: bodhi
+    start_build_buildname: bodhi-base
   - role: openshift/object
     object_app: bodhi
     object_template_fullpath: "{{roles_path}}/bodhi2/base/templates/configmap.yml"

@@ -27,8 +27,8 @@
     object_template: buildconfig.yml
     object_objectname: buildconfig.yml
   - role: openshift/start-build
-    app: transtats
-    buildname: transtats-build
+    start_build_app: transtats
+    start_build_buildname: transtats-build
   - role: openshift/object
     object_app: transtats
     object_file: service.yml

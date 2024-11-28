@@ -50,9 +50,9 @@
     object_objectname: buildconfig.yml
 
   - role: openshift/start-build
-    app: coreos-koji-tagger
-    buildname: coreos-koji-tagger-build
-    objectname: coreos-koji-tagger-build
+    start_build_app: coreos-koji-tagger
+    start_build_buildname: coreos-koji-tagger-build
+    start_build_objectname: coreos-koji-tagger-build
 
   - role: openshift/object
     object_app: coreos-koji-tagger

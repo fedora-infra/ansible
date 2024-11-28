@@ -36,9 +36,9 @@
     object_objectname: fedora-websites-bc.yml
 
   - role: openshift/start-build
-    app: websites
-    buildname: fedora-websites
-    objectname: fedora-websites
+    start_build_app: websites
+    start_build_buildname: fedora-websites
+    start_build_objectname: fedora-websites
 
   - role: openshift/object
     object_app: websites
@@ -56,9 +56,9 @@
     object_objectname: buildconfig.yml
 
   - role: openshift/start-build
-    app: websites
-    buildname: websites-build
-    objectname: websites-build
+    start_build_app: websites
+    start_build_buildname: websites-build
+    start_build_objectname: websites-build
 
   - role: openshift/object
     object_app: websites

@@ -164,8 +164,8 @@
   - import_role:
       name: openshift/start-build
     vars:
-      app: bodhi
-      buildname: bodhi-base
+      start_build_app: bodhi
+      start_build_buildname: bodhi-base
     when: env != "staging"
 
   post_tasks:

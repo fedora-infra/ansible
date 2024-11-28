@@ -38,8 +38,8 @@
     object_template: buildconfig.yml
 
   - role: openshift/start-build
-    app: docsbuilding
-    buildname: builder-build
+    start_build_app: docsbuilding
+    start_build_buildname: builder-build
 
   - role: openshift/object
     object_app: docsbuilding

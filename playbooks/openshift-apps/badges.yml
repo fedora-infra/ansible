@@ -195,8 +195,8 @@
       object_objectname: cron-update-rules.yml
 
     - role: openshift/start-build
-      app: badges
-      buildname: "{{ item }}"
+      start_build_app: badges
+      start_build_buildname: "{{ item }}"
       loop:
         - fedbadges
         - tahrir

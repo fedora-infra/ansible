@@ -34,8 +34,8 @@
     object_template: pvc.yml
     object_objectname: pvc.yml
   - role: openshift/start-build
-    app: review-stats
-    buildname: builder-build
+    start_build_app: review-stats
+    start_build_buildname: builder-build
   - role: openshift/object
     object_app: review-stats
     object_template: cron.yml

@@ -80,8 +80,9 @@
       haproxy.router.openshift.io/set-forwarded-headers: append
 
   - role: openshift/start-build
-    buildname: mote
-    objectname: mote
+    start_build_app: mote
+    start_build_buildname: mote
+    start_build_objectname: mote
 
 #
 ###############################################

@@ -93,9 +93,9 @@
     object_objectname: configmap.yml
 
   - role: openshift/start-build
-    app: elections
-    buildname: elections-build
-    objectname: elections-build
+    start_build_app: elections
+    start_build_buildname: elections-build
+    start_build_objectname: elections-build
 
   - role: openshift/object
     object_app: elections
