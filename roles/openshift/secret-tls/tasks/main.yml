@@ -1,25 +1,25 @@
 ---
-- name: Copy private tlscert {{privatefile}}
-  copy: src={{private}}/files/{{ private_cert }} dest=/etc/openshift_apps/{{app}}/{{key}}.crt
+- name: Copy private tlscert {{secret_tls_privatefile}}
+  copy: src={{private}}/files/{{ secret_tls_private_cert }} dest=/etc/openshift_apps/{{secret_tls_app}}/{{secret_tls_key}}.crt
   register: secret_privatecert
 
-- name: Copy private tlskey {{privatefile}}
-  copy: src={{private}}/files/{{ private_key }} dest=/etc/openshift_apps/{{app}}/{{key}}.key
+- name: Copy private tlskey {{secret_tls_privatefile}}
+  copy: src={{private}}/files/{{ secret_tls_private_key }} dest=/etc/openshift_apps/{{secret_tls_app}}/{{secret_tls_key}}.key
   register: secret_privatekey
 
 - name: Delete existing secrets
-  shell: oc -n {{app}} delete secret/{{secret_name}}
+  shell: oc -n {{secret_tls_app}} delete secret/{{secret_tls_secret_name}}
   register: delete_out
   changed_when: "'NotFound' in delete_out.stderr"
   failed_when: "('NotFound' not in delete_out.stderr) and (delete_out.rc != 0)"
   when: secret_privatecert.changed or secret_privatekey.changed
 
 - name: Call `oc create secret tls` on the copied file
-  shell: oc -n {{app}} create secret tls {{secret_name}} --cert=/etc/openshift_apps/{{app}}/{{key}}.crt --key=/etc/openshift_apps/{{app}}/{{key}}.key
+  shell: oc -n {{secret_tls_app}} create secret tls {{secret_tls_secret_name}} --cert=/etc/openshift_apps/{{secret_tls_app}}/{{secret_tls_key}}.crt --key=/etc/openshift_apps/{{secret_tls_app}}/{{secret_tls_key}}.key
   register: create_out
   when: secret_privatecert.changed or secret_privatekey.changed
 
 - name: Call `oc create secret tls` on the copied file
-  shell: oc -n {{app}} create secret tls {{secret_name}} --cert=/etc/openshift_apps/{{app}}/{{key}}.crt --key=/etc/openshift_apps/{{app}}/{{key}}.key
+  shell: oc -n {{secret_tls_app}} create secret tls {{secret_tls_secret_name}} --cert=/etc/openshift_apps/{{secret_tls_app}}/{{secret_tls_key}}.crt --key=/etc/openshift_apps/{{secret_tls_app}}/{{secret_tls_key}}.key
   register: create_out
   when: secret_privatecert.changed or secret_privatekey.changed
