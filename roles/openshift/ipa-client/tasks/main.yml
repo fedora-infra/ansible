@@ -12,9 +12,9 @@
 - name: Copy ipa config template to temporary file
   template:
     src: "{{roles_path}}/openshift/ipa-client/templates/configmap.yml"
-    dest: "/etc/openshift_apps/{{app}}/configmap-ipa-client.yml"
+    dest: "/etc/openshift_apps/{{ipa_client_app}}/configmap-ipa-client.yml"
   register: object_template
 
 - name: Call `oc apply` on the copied file
-  shell: oc -n {{app}} apply -f /etc/openshift_apps/{{app}}/configmap-ipa-client.yml
+  shell: oc -n {{ipa_client_app}} apply -f /etc/openshift_apps/{{ipa_client_app}}/configmap-ipa-client.yml
   when: object_template.changed or object_template_fullpath.changed or object_file.changed

@@ -100,7 +100,7 @@
 
     # FASJSON access
     - role: openshift/ipa-client
-      app: webhook2fedmsg
+      ipa_client_app: webhook2fedmsg
     - role: openshift/keytab
       keytab_app: webhook2fedmsg
       keytab_key: service.keytab

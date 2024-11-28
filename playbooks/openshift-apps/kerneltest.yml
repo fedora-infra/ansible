@@ -94,7 +94,7 @@
     object_objectname: configmap.yml
 
   - role: openshift/ipa-client
-    app: kerneltest
+    ipa_client_app: kerneltest
 
   - role: openshift/route
     route_app: kerneltest

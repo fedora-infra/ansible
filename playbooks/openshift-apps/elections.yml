@@ -52,7 +52,7 @@
     keytab_host: "elections{{ env_suffix }}.fedoraproject.org"
 
   - role: openshift/ipa-client
-    app: elections
+    ipa_client_app: elections
 
   - role: openshift/object
     object_app: elections

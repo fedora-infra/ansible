@@ -50,7 +50,7 @@
     keytab_host: "maubot.apps.ocp{{env_suffix}}.fedoraproject.org"
 
   - role: openshift/ipa-client
-    app: maubot
+    ipa_client_app: maubot
 
   - role: openshift/object
     object_app: maubot
