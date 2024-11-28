@@ -56,22 +56,22 @@
         - apply-appowners
 
     - role: openshift/secret-file
-      app: resultsdb
-      secret_name: resultsdb-fedora-messaging-key
-      key: resultsdb.key
-      privatefile: "rabbitmq/{{env}}/pki/private/resultsdb{{env_suffix}}.key"
+      secret_file_app: resultsdb
+      secret_file_secret_name: resultsdb-fedora-messaging-key
+      secret_file_key: resultsdb.key
+      secret_file_privatefile: "rabbitmq/{{env}}/pki/private/resultsdb{{env_suffix}}.key"
 
     - role: openshift/secret-file
-      app: resultsdb
-      secret_name: resultsdb-fedora-messaging-crt
-      key: resultsdb.crt
-      privatefile: "rabbitmq/{{env}}/pki/issued/resultsdb{{env_suffix}}.crt"
+      secret_file_app: resultsdb
+      secret_file_secret_name: resultsdb-fedora-messaging-crt
+      secret_file_key: resultsdb.crt
+      secret_file_privatefile: "rabbitmq/{{env}}/pki/issued/resultsdb{{env_suffix}}.crt"
 
     - role: openshift/secret-file
-      app: resultsdb
-      secret_name: resultsdb-fedora-messaging-ca
-      key: resultsdb.ca
-      privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+      secret_file_app: resultsdb
+      secret_file_secret_name: resultsdb-fedora-messaging-ca
+      secret_file_key: resultsdb.ca
+      secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
 
     # backend objects
     - role: openshift/object

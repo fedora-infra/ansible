@@ -31,22 +31,22 @@
     object_objectname: buildconfig.yml
 
   - role: openshift/secret-file
-    app: fedocal
-    secret_name: fedocal-fedora-messaging-key
-    key: fedocal.key
-    privatefile: "rabbitmq/{{env}}/pki/private/fedocal{{env_suffix}}.key"
+    secret_file_app: fedocal
+    secret_file_secret_name: fedocal-fedora-messaging-key
+    secret_file_key: fedocal.key
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/private/fedocal{{env_suffix}}.key"
 
   - role: openshift/secret-file
-    app: fedocal
-    secret_name: fedocal-fedora-messaging-crt
-    key: fedocal.crt
-    privatefile: "rabbitmq/{{env}}/pki/issued/fedocal{{env_suffix}}.crt"
+    secret_file_app: fedocal
+    secret_file_secret_name: fedocal-fedora-messaging-crt
+    secret_file_key: fedocal.crt
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/issued/fedocal{{env_suffix}}.crt"
 
   - role: openshift/secret-file
-    app: fedocal
-    secret_name: fedocal-fedora-messaging-ca
-    key: fedocal.ca
-    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    secret_file_app: fedocal
+    secret_file_secret_name: fedocal-fedora-messaging-ca
+    secret_file_key: fedocal.ca
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
 
   - role: openshift/object
     object_app: fedocal

@@ -73,22 +73,22 @@
     object_objectname: configmap.yml
 
   - role: openshift/secret-file
-    app: maubot
-    secret_name: maubot-fedora-messaging-key
-    key: maubot.key
-    privatefile: "rabbitmq/{{env}}/pki/private/maubot{{env_suffix}}.key"
+    secret_file_app: maubot
+    secret_file_secret_name: maubot-fedora-messaging-key
+    secret_file_key: maubot.key
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/private/maubot{{env_suffix}}.key"
 
   - role: openshift/secret-file
-    app: maubot
-    secret_name: maubot-fedora-messaging-crt
-    key: maubot.crt
-    privatefile: "rabbitmq/{{env}}/pki/issued/maubot{{env_suffix}}.crt"
+    secret_file_app: maubot
+    secret_file_secret_name: maubot-fedora-messaging-crt
+    secret_file_key: maubot.crt
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/issued/maubot{{env_suffix}}.crt"
 
   - role: openshift/secret-file
-    app: maubot
-    secret_name: maubot-fedora-messaging-ca
-    key: maubot.ca
-    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    secret_file_app: maubot
+    secret_file_secret_name: maubot-fedora-messaging-ca
+    secret_file_key: maubot.ca
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
 
   - role: openshift/start-build
     app: maubot

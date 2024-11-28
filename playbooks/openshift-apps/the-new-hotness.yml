@@ -46,22 +46,22 @@
     when: env == "staging"
 
   - role: openshift/secret-file
-    app: the-new-hotness
-    secret_name: the-new-hotness-fedora-messaging-ca
-    key: fedora-messaging-the-new-hotness-ca.crt
-    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    secret_file_app: the-new-hotness
+    secret_file_secret_name: the-new-hotness-fedora-messaging-ca
+    secret_file_key: fedora-messaging-the-new-hotness-ca.crt
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
 
   - role: openshift/secret-file
-    app: the-new-hotness
-    secret_name: the-new-hotness-fedora-messaging-key
-    key: fedora-messaging-the-new-hotness.key
-    privatefile: "rabbitmq/{{env}}/pki/private/the-new-hotness{{env_suffix}}.key"
+    secret_file_app: the-new-hotness
+    secret_file_secret_name: the-new-hotness-fedora-messaging-key
+    secret_file_key: fedora-messaging-the-new-hotness.key
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/private/the-new-hotness{{env_suffix}}.key"
 
   - role: openshift/secret-file
-    app: the-new-hotness
-    secret_name: the-new-hotness-fedora-messaging-cert
-    key: fedora-messaging-the-new-hotness.crt
-    privatefile: "rabbitmq/{{env}}/pki/issued/the-new-hotness{{env_suffix}}.crt"
+    secret_file_app: the-new-hotness
+    secret_file_secret_name: the-new-hotness-fedora-messaging-cert
+    secret_file_key: fedora-messaging-the-new-hotness.crt
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/issued/the-new-hotness{{env_suffix}}.crt"
 
   - role: openshift/object
     object_app: the-new-hotness

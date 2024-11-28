@@ -148,20 +148,20 @@
     sent_topics: "{{ openscanhub_sent_topics }}"
 
   - role: openshift/secret-file
-    app: openscanhub
-    secret_name: openscanhub-fedora-messaging-ca
-    key: fedora-messaging-openscanhub-ca.crt
-    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    secret_file_app: openscanhub
+    secret_file_secret_name: openscanhub-fedora-messaging-ca
+    secret_file_key: fedora-messaging-openscanhub-ca.crt
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
   - role: openshift/secret-file
-    app: openscanhub
-    secret_name: openscanhub-fedora-messaging-key
-    key: fedora-messaging-openscanhub.key
-    privatefile: "rabbitmq/{{env}}/pki/private/openscanhub{{env_suffix}}.key"
+    secret_file_app: openscanhub
+    secret_file_secret_name: openscanhub-fedora-messaging-key
+    secret_file_key: fedora-messaging-openscanhub.key
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/private/openscanhub{{env_suffix}}.key"
   - role: openshift/secret-file
-    app: openscanhub
-    secret_name: openscanhub-fedora-messaging-cert
-    key: fedora-messaging-openscanhub.crt
-    privatefile: "rabbitmq/{{env}}/pki/issued/openscanhub{{env_suffix}}.crt"
+    secret_file_app: openscanhub
+    secret_file_secret_name: openscanhub-fedora-messaging-cert
+    secret_file_key: fedora-messaging-openscanhub.crt
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/issued/openscanhub{{env_suffix}}.crt"
   - role: openshift/object
     object_app: openscanhub
     object_template: fedora-messaging-configmap.yml

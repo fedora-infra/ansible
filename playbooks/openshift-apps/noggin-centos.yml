@@ -38,20 +38,20 @@
     when: env == "staging"
 
   - role: openshift/secret-file
-    app: noggin-centos
-    secret_name: fedora-messaging-ca
-    key: cacert.pem
-    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    secret_file_app: noggin-centos
+    secret_file_secret_name: fedora-messaging-ca
+    secret_file_key: cacert.pem
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
   - role: openshift/secret-file
-    app: noggin-centos
-    secret_name: fedora-messaging-crt
-    key: noggin-cert.pem
-    privatefile: "rabbitmq/{{env}}/pki/issued/noggin{{env_suffix}}.crt"
+    secret_file_app: noggin-centos
+    secret_file_secret_name: fedora-messaging-crt
+    secret_file_key: noggin-cert.pem
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/issued/noggin{{env_suffix}}.crt"
   - role: openshift/secret-file
-    app: noggin-centos
-    secret_name: fedora-messaging-key
-    key: noggin-key.pem
-    privatefile: "rabbitmq/{{env}}/pki/private/noggin{{env_suffix}}.key"
+    secret_file_app: noggin-centos
+    secret_file_secret_name: fedora-messaging-key
+    secret_file_key: noggin-key.pem
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/private/noggin{{env_suffix}}.key"
 
   - role: openshift/imagestream
     imagestream_app: noggin-centos

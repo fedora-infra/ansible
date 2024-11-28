@@ -31,22 +31,22 @@
     keytab_service: packagerbot
 
   - role: openshift/secret-file
-    app: monitor-gating
-    secret_name: monitor-gating-fedora-messaging-key
-    key: monitor-gating.key
-    privatefile: "rabbitmq/{{env}}/pki/private/monitor-gating{{env_suffix}}.key"
+    secret_file_app: monitor-gating
+    secret_file_secret_name: monitor-gating-fedora-messaging-key
+    secret_file_key: monitor-gating.key
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/private/monitor-gating{{env_suffix}}.key"
 
   - role: openshift/secret-file
-    app: monitor-gating
-    secret_name: monitor-gating-fedora-messaging-crt
-    key: monitor-gating.crt
-    privatefile: "rabbitmq/{{env}}/pki/issued/monitor-gating{{env_suffix}}.crt"
+    secret_file_app: monitor-gating
+    secret_file_secret_name: monitor-gating-fedora-messaging-crt
+    secret_file_key: monitor-gating.crt
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/issued/monitor-gating{{env_suffix}}.crt"
 
   - role: openshift/secret-file
-    app: monitor-gating
-    secret_name: monitor-gating-fedora-messaging-ca
-    key: monitor-gating.ca
-    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    secret_file_app: monitor-gating
+    secret_file_secret_name: monitor-gating-fedora-messaging-ca
+    secret_file_key: monitor-gating.ca
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
 
   - role: openshift/object
     object_app: monitor-gating
@@ -69,10 +69,10 @@
     object_objectname: configmap.yml
 
   - role: openshift/secret-file
-    app: monitor-gating
-    secret_name: monitor-gating-ssh
-    key: id_rsa
-    privatefile: "git-ssh/monitor_gating"
+    secret_file_app: monitor-gating
+    secret_file_secret_name: monitor-gating-ssh
+    secret_file_key: id_rsa
+    secret_file_privatefile: "git-ssh/monitor_gating"
 
   - role: openshift/object
     object_app: monitor-gating

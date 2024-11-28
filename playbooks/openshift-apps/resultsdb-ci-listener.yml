@@ -39,22 +39,22 @@
         - apply-appowners
 
     - role: openshift/secret-file
-      app: resultsdb-ci-listener
-      secret_name: resultsdb-ci-listener-fedora-messaging-key
-      key: resultsdb-ci-listener.key
-      privatefile: "rabbitmq/{{env}}/pki/private/resultsdb{{env_suffix}}_ci_listener.key"
+      secret_file_app: resultsdb-ci-listener
+      secret_file_secret_name: resultsdb-ci-listener-fedora-messaging-key
+      secret_file_key: resultsdb-ci-listener.key
+      secret_file_privatefile: "rabbitmq/{{env}}/pki/private/resultsdb{{env_suffix}}_ci_listener.key"
 
     - role: openshift/secret-file
-      app: resultsdb-ci-listener
-      secret_name: resultsdb-ci-listener-fedora-messaging-crt
-      key: resultsdb-ci-listener.crt
-      privatefile: "rabbitmq/{{env}}/pki/issued/resultsdb{{env_suffix}}_ci_listener.crt"
+      secret_file_app: resultsdb-ci-listener
+      secret_file_secret_name: resultsdb-ci-listener-fedora-messaging-crt
+      secret_file_key: resultsdb-ci-listener.crt
+      secret_file_privatefile: "rabbitmq/{{env}}/pki/issued/resultsdb{{env_suffix}}_ci_listener.crt"
 
     - role: openshift/secret-file
-      app: resultsdb-ci-listener
-      secret_name: resultsdb-ci-listener-fedora-messaging-ca
-      key: resultsdb-ci-listener.ca
-      privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+      secret_file_app: resultsdb-ci-listener
+      secret_file_secret_name: resultsdb-ci-listener-fedora-messaging-ca
+      secret_file_key: resultsdb-ci-listener.ca
+      secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
 
     - role: openshift/object
       object_app: resultsdb-ci-listener

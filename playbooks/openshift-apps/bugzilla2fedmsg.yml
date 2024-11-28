@@ -26,35 +26,35 @@
 
   # Fedora Messaging secrets
   - role: openshift/secret-file
-    app: bugzilla2fedmsg
-    secret_name: fedora-messaging-ca
-    key: cacert.pem
-    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    secret_file_app: bugzilla2fedmsg
+    secret_file_secret_name: fedora-messaging-ca
+    secret_file_key: cacert.pem
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
 
   - role: openshift/secret-file
-    app: bugzilla2fedmsg
-    secret_name: fedora-messaging-crt
-    key: bugzilla2fedmsg-cert.pem
-    privatefile: "rabbitmq/{{env}}/pki/issued/bugzilla2fedmsg{{env_suffix}}.crt"
+    secret_file_app: bugzilla2fedmsg
+    secret_file_secret_name: fedora-messaging-crt
+    secret_file_key: bugzilla2fedmsg-cert.pem
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/issued/bugzilla2fedmsg{{env_suffix}}.crt"
 
   - role: openshift/secret-file
-    app: bugzilla2fedmsg
-    secret_name: fedora-messaging-key
-    key: bugzilla2fedmsg-key.pem
-    privatefile: "rabbitmq/{{env}}/pki/private/bugzilla2fedmsg{{env_suffix}}.key"
+    secret_file_app: bugzilla2fedmsg
+    secret_file_secret_name: fedora-messaging-key
+    secret_file_key: bugzilla2fedmsg-key.pem
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/private/bugzilla2fedmsg{{env_suffix}}.key"
 
   # STOMP secrets
   - role: openshift/secret-file
-    app: bugzilla2fedmsg
-    secret_name: stomp-crt
-    key: msg-client-fedora-prod.crt
-    privatefile: "bugzilla2fedmsg/msg-client-fedora-prod.crt"
+    secret_file_app: bugzilla2fedmsg
+    secret_file_secret_name: stomp-crt
+    secret_file_key: msg-client-fedora-prod.crt
+    secret_file_privatefile: "bugzilla2fedmsg/msg-client-fedora-prod.crt"
 
   - role: openshift/secret-file
-    app: bugzilla2fedmsg
-    secret_name: stomp-key
-    key: msg-client-fedora-prod.key
-    privatefile: "bugzilla2fedmsg/msg-client-fedora-prod.key"
+    secret_file_app: bugzilla2fedmsg
+    secret_file_secret_name: stomp-key
+    secret_file_key: msg-client-fedora-prod.key
+    secret_file_privatefile: "bugzilla2fedmsg/msg-client-fedora-prod.key"
 
     # FASJSON access
   - role: openshift/ipa-client

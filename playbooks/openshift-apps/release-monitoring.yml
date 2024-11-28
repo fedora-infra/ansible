@@ -20,20 +20,20 @@
     project_appowners:
     - zlopez
   - role: openshift/secret-file
-    app: release-monitoring
-    secret_name: release-monitoring-fedora-messaging-ca
-    key: fedora-messaging-release-monitoring-ca.crt
-    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    secret_file_app: release-monitoring
+    secret_file_secret_name: release-monitoring-fedora-messaging-ca
+    secret_file_key: fedora-messaging-release-monitoring-ca.crt
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
   - role: openshift/secret-file
-    app: release-monitoring
-    secret_name: release-monitoring-fedora-messaging-key
-    key: fedora-messaging-release-monitoring.key
-    privatefile: "rabbitmq/{{env}}/pki/private/anitya{{env_suffix}}.key"
+    secret_file_app: release-monitoring
+    secret_file_secret_name: release-monitoring-fedora-messaging-key
+    secret_file_key: fedora-messaging-release-monitoring.key
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/private/anitya{{env_suffix}}.key"
   - role: openshift/secret-file
-    app: release-monitoring
-    secret_name: release-monitoring-fedora-messaging-cert
-    key: fedora-messaging-release-monitoring.crt
-    privatefile: "rabbitmq/{{env}}/pki/issued/anitya{{env_suffix}}.crt"
+    secret_file_app: release-monitoring
+    secret_file_secret_name: release-monitoring-fedora-messaging-cert
+    secret_file_key: fedora-messaging-release-monitoring.crt
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/issued/anitya{{env_suffix}}.crt"
   - role: openshift/object
     object_app: release-monitoring
     object_file: imagestream.yml

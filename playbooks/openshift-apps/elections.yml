@@ -65,22 +65,22 @@
     object_objectname: buildconfig.yml
 
   - role: openshift/secret-file
-    app: elections
-    secret_name: elections-fedora-messaging-key
-    key: elections.key
-    privatefile: "rabbitmq/{{env}}/pki/private/elections{{env_suffix}}.key"
+    secret_file_app: elections
+    secret_file_secret_name: elections-fedora-messaging-key
+    secret_file_key: elections.key
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/private/elections{{env_suffix}}.key"
 
   - role: openshift/secret-file
-    app: elections
-    secret_name: elections-fedora-messaging-crt
-    key: elections.crt
-    privatefile: "rabbitmq/{{env}}/pki/issued/elections{{env_suffix}}.crt"
+    secret_file_app: elections
+    secret_file_secret_name: elections-fedora-messaging-crt
+    secret_file_key: elections.crt
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/issued/elections{{env_suffix}}.crt"
 
   - role: openshift/secret-file
-    app: elections
-    secret_name: elections-fedora-messaging-ca
-    key: elections.ca
-    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    secret_file_app: elections
+    secret_file_secret_name: elections-fedora-messaging-ca
+    secret_file_key: elections.ca
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
 
   - role: openshift/object
     object_app: elections

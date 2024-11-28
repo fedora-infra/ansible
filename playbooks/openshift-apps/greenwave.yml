@@ -34,22 +34,22 @@
     user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.greenwave\..*
 
   - role: openshift/secret-file
-    app: greenwave
-    secret_name: greenwave-fedora-messaging-key
-    key: greenwave.key
-    privatefile: "rabbitmq/{{env}}/pki/private/greenwave{{env_suffix}}.key"
+    secret_file_app: greenwave
+    secret_file_secret_name: greenwave-fedora-messaging-key
+    secret_file_key: greenwave.key
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/private/greenwave{{env_suffix}}.key"
 
   - role: openshift/secret-file
-    app: greenwave
-    secret_name: greenwave-fedora-messaging-crt
-    key: greenwave.crt
-    privatefile: "rabbitmq/{{env}}/pki/issued/greenwave{{env_suffix}}.crt"
+    secret_file_app: greenwave
+    secret_file_secret_name: greenwave-fedora-messaging-crt
+    secret_file_key: greenwave.crt
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/issued/greenwave{{env_suffix}}.crt"
 
   - role: openshift/secret-file
-    app: greenwave
-    secret_name: greenwave-fedora-messaging-ca
-    key: greenwave.ca
-    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    secret_file_app: greenwave
+    secret_file_secret_name: greenwave-fedora-messaging-ca
+    secret_file_key: greenwave.ca
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
 
   - role: openshift/object
     object_app: greenwave

@@ -54,20 +54,20 @@
 
   # Fedora Messaging secrets
   - role: openshift/secret-file
-    app: coreos-ostree-importer
-    secret_name: fedora-messaging-ca
-    key: "{{ fedora_messaging_ca_file }}"
-    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    secret_file_app: coreos-ostree-importer
+    secret_file_secret_name: fedora-messaging-ca
+    secret_file_key: "{{ fedora_messaging_ca_file }}"
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
   - role: openshift/secret-file
-    app: coreos-ostree-importer
-    secret_name: fedora-messaging-crt
-    key: "{{ fedora_messaging_cert_file }}"
-    privatefile: "rabbitmq/{{env}}/pki/issued/coreos-ostree-importer{{env_suffix}}.crt"
+    secret_file_app: coreos-ostree-importer
+    secret_file_secret_name: fedora-messaging-crt
+    secret_file_key: "{{ fedora_messaging_cert_file }}"
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/issued/coreos-ostree-importer{{env_suffix}}.crt"
   - role: openshift/secret-file
-    app: coreos-ostree-importer
-    secret_name: fedora-messaging-key
-    key: "{{ fedora_messaging_key_file }}"
-    privatefile: "rabbitmq/{{env}}/pki/private/coreos-ostree-importer{{env_suffix}}.key"
+    secret_file_app: coreos-ostree-importer
+    secret_file_secret_name: fedora-messaging-key
+    secret_file_key: "{{ fedora_messaging_key_file }}"
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/private/coreos-ostree-importer{{env_suffix}}.key"
 
   # Fedora Messaging config
   - role: openshift/object

@@ -64,10 +64,10 @@
 
   # Session secret key
   - role: openshift/secret-file
-    app: fasjson
-    secret_name: session-key
-    key: session.key
-    privatefile: "fasjson/session.{{env}}.key"
+    secret_file_app: fasjson
+    secret_file_secret_name: session-key
+    secret_file_key: session.key
+    secret_file_privatefile: "fasjson/session.{{env}}.key"
 
   - role: openshift/imagestream
     imagestream_app: fasjson

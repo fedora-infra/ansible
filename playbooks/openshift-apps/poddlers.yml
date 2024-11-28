@@ -61,22 +61,22 @@
       object_objectname: buildconfig.yml
 
     - role: openshift/secret-file
-      app: poddlers
-      secret_name: toddlers-fedora-messaging-key
-      key: toddlers.key
-      privatefile: "rabbitmq/{{env}}/pki/private/toddlers{{env_suffix}}.key"
+      secret_file_app: poddlers
+      secret_file_secret_name: toddlers-fedora-messaging-key
+      secret_file_key: toddlers.key
+      secret_file_privatefile: "rabbitmq/{{env}}/pki/private/toddlers{{env_suffix}}.key"
 
     - role: openshift/secret-file
-      app: poddlers
-      secret_name: toddlers-fedora-messaging-crt
-      key: toddlers.crt
-      privatefile: "rabbitmq/{{env}}/pki/issued/toddlers{{env_suffix}}.crt"
+      secret_file_app: poddlers
+      secret_file_secret_name: toddlers-fedora-messaging-crt
+      secret_file_key: toddlers.crt
+      secret_file_privatefile: "rabbitmq/{{env}}/pki/issued/toddlers{{env_suffix}}.crt"
 
     - role: openshift/secret-file
-      app: poddlers
-      secret_name: toddlers-fedora-messaging-ca
-      key: toddlers.ca
-      privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+      secret_file_app: poddlers
+      secret_file_secret_name: toddlers-fedora-messaging-ca
+      secret_file_key: toddlers.ca
+      secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
 
     - role: openshift/object
       object_app: poddlers

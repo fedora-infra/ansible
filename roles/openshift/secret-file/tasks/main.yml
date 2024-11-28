@@ -1,32 +1,32 @@
 ---
-- name: Copy template {{template}}
-  template: src={{roles_path}}/openshift-apps/{{app}}/templates/{{template}} dest=/etc/openshift_apps/{{os_app}}/{{key}}
-  when: template is defined
+- name: Copy template {{secret_file_template}}
+  template: src={{roles_path}}/openshift-apps/{{secret_file_app}}/templates/{{secret_file_template}} dest=/etc/openshift_apps/{{os_app}}/{{secret_file_key}}
+  when: secret_file_template is defined
   register: secret_template
 
-- name: Copy file {{file}}
-  copy: src={{roles_path}}/openshift-apps/{{app}}/files/{{file}} dest=/etc/openshift_apps/{{os_app}}/{{key}}
-  when: file is defined
+- name: Copy file {{secret_file_file}}
+  copy: src={{roles_path}}/openshift-apps/{{secret_file_app}}/files/{{secret_file_file}} dest=/etc/openshift_apps/{{os_app}}/{{secret_file_key}}
+  when: secret_file_file is defined
   register: secret_file
 
-- name: Copy private file {{privatefile}}
-  copy: src={{private}}/files/{{privatefile}} dest=/etc/openshift_apps/{{os_app}}/{{key}}
-  when: privatefile is defined
+- name: Copy private file {{secret_file_privatefile}}
+  copy: src={{private}}/files/{{secret_file_privatefile}} dest=/etc/openshift_apps/{{os_app}}/{{secret_file_key}}
+  when: secret_file_privatefile is defined
   register: secret_privatefile
 
 - name: Delete existing secrets
-  shell: oc -n {{os_app}} delete secret/{{secret_name}}
+  shell: oc -n {{os_app}} delete secret/{{secret_file_secret_name}}
   register: delete_out
   changed_when: "'NotFound' in delete_out.stderr"
   failed_when: "('NotFound' not in delete_out.stderr) and (delete_out.rc != 0)"
   when: secret_template.changed or secret_file.changed or secret_privatefile.changed
 
 - name: Call `oc secrets new` on the copied file
-  shell: oc -n {{os_app}} secrets new {{secret_name}} {{key}}=/etc/openshift_apps/{{os_app}}/{{key}}
+  shell: oc -n {{os_app}} secrets new {{secret_file_secret_name}} {{secret_file_key}}=/etc/openshift_apps/{{os_app}}/{{secret_file_key}}
   register: create_out
   when: not ocp4 and (secret_template.changed or secret_file.changed or secret_privatefile.changed)
 
 - name: Call `oc create secret generic` on the copied file
-  shell: oc -n {{os_app}} create secret generic {{secret_name}} --from-file={{key}}=/etc/openshift_apps/{{os_app}}/{{key}}
+  shell: oc -n {{os_app}} create secret generic {{secret_file_secret_name}} --from-file={{secret_file_key}}=/etc/openshift_apps/{{os_app}}/{{secret_file_key}}
   register: create_out
   when: ocp4 and (secret_template.changed or secret_file.changed or secret_privatefile.changed)

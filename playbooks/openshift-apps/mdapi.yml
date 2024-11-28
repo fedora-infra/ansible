@@ -42,22 +42,22 @@
     object_objectname: configmap.yml
 
   - role: openshift/secret-file
-    app: mdapi
-    secret_name: mdapi-fedora-messaging-key
-    key: mdapi.key
-    privatefile: "rabbitmq/{{env}}/pki/private/mdapi{{env_suffix}}.key"
+    secret_file_app: mdapi
+    secret_file_secret_name: mdapi-fedora-messaging-key
+    secret_file_key: mdapi.key
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/private/mdapi{{env_suffix}}.key"
 
   - role: openshift/secret-file
-    app: mdapi
-    secret_name: mdapi-fedora-messaging-crt
-    key: mdapi.crt
-    privatefile: "rabbitmq/{{env}}/pki/issued/mdapi{{env_suffix}}.crt"
+    secret_file_app: mdapi
+    secret_file_secret_name: mdapi-fedora-messaging-crt
+    secret_file_key: mdapi.crt
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/issued/mdapi{{env_suffix}}.crt"
 
   - role: openshift/secret-file
-    app: mdapi
-    secret_name: mdapi-fedora-messaging-ca
-    key: mdapi.ca
-    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    secret_file_app: mdapi
+    secret_file_secret_name: mdapi-fedora-messaging-ca
+    secret_file_key: mdapi.ca
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
 
   - role: openshift/object
     object_app: mdapi

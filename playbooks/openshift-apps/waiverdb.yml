@@ -63,22 +63,22 @@
       object_objectname: secret.yml
 
     - role: openshift/secret-file
-      app: waiverdb
-      secret_name: waiverdb-fedora-messaging-key
-      key: waiverdb.key
-      privatefile: "rabbitmq/{{env}}/pki/private/waiverdb{{env_suffix}}.key"
+      secret_file_app: waiverdb
+      secret_file_secret_name: waiverdb-fedora-messaging-key
+      secret_file_key: waiverdb.key
+      secret_file_privatefile: "rabbitmq/{{env}}/pki/private/waiverdb{{env_suffix}}.key"
 
     - role: openshift/secret-file
-      app: waiverdb
-      secret_name: waiverdb-fedora-messaging-crt
-      key: waiverdb.crt
-      privatefile: "rabbitmq/{{env}}/pki/issued/waiverdb{{env_suffix}}.crt"
+      secret_file_app: waiverdb
+      secret_file_secret_name: waiverdb-fedora-messaging-crt
+      secret_file_key: waiverdb.crt
+      secret_file_privatefile: "rabbitmq/{{env}}/pki/issued/waiverdb{{env_suffix}}.crt"
 
     - role: openshift/secret-file
-      app: waiverdb
-      secret_name: waiverdb-fedora-messaging-ca
-      key: waiverdb.ca
-      privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+      secret_file_app: waiverdb
+      secret_file_secret_name: waiverdb-fedora-messaging-ca
+      secret_file_key: waiverdb.ca
+      secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
 
     - role: openshift/object
       object_app: waiverdb

@@ -48,20 +48,20 @@
     when: env == "staging"
 
   - role: openshift/secret-file
-    app: datanommer
-    secret_name: fedora-messaging-ca
-    key: cacert.pem
-    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    secret_file_app: datanommer
+    secret_file_secret_name: fedora-messaging-ca
+    secret_file_key: cacert.pem
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
   - role: openshift/secret-file
-    app: datanommer
-    secret_name: fedora-messaging-crt
-    key: datanommer-cert.pem
-    privatefile: "rabbitmq/{{env}}/pki/issued/datanommer{{env_suffix}}.crt"
+    secret_file_app: datanommer
+    secret_file_secret_name: fedora-messaging-crt
+    secret_file_key: datanommer-cert.pem
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/issued/datanommer{{env_suffix}}.crt"
   - role: openshift/secret-file
-    app: datanommer
-    secret_name: fedora-messaging-key
-    key: datanommer-key.pem
-    privatefile: "rabbitmq/{{env}}/pki/private/datanommer{{env_suffix}}.key"
+    secret_file_app: datanommer
+    secret_file_secret_name: fedora-messaging-key
+    secret_file_key: datanommer-key.pem
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/private/datanommer{{env_suffix}}.key"
 
   - role: openshift/object
     object_app: datanommer

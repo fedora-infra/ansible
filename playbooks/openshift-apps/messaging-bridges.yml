@@ -96,31 +96,31 @@
       - appowners
 
   - role: openshift/secret-file
-    app: messaging-bridges
-    secret_name: fedmsg-key
-    key: fedmsg-fedmsg-migration-tools.key
-    privatefile: "fedmsg-certs/keys/fedmsg-migration-tools{{env_suffix}}.fedoraproject.org.key"
+    secret_file_app: messaging-bridges
+    secret_file_secret_name: fedmsg-key
+    secret_file_key: fedmsg-fedmsg-migration-tools.key
+    secret_file_privatefile: "fedmsg-certs/keys/fedmsg-migration-tools{{env_suffix}}.fedoraproject.org.key"
   - role: openshift/secret-file
-    app: messaging-bridges
-    secret_name: fedmsg-cert
-    key: fedmsg-fedmsg-migration-tools.crt
-    privatefile: "fedmsg-certs/keys/fedmsg-migration-tools{{env_suffix}}.fedoraproject.org.crt"
+    secret_file_app: messaging-bridges
+    secret_file_secret_name: fedmsg-cert
+    secret_file_key: fedmsg-fedmsg-migration-tools.crt
+    secret_file_privatefile: "fedmsg-certs/keys/fedmsg-migration-tools{{env_suffix}}.fedoraproject.org.crt"
 
   - role: openshift/secret-file
-    app: messaging-bridges
-    secret_name: rabbitmq-ca
-    key: rabbitmq-ca.crt
-    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    secret_file_app: messaging-bridges
+    secret_file_secret_name: rabbitmq-ca
+    secret_file_key: rabbitmq-ca.crt
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
   - role: openshift/secret-file
-    app: messaging-bridges
-    secret_name: rabbitmq-key
-    key: rabbitmq-fedmsg-migration-tools.key
-    privatefile: "rabbitmq/{{env}}/pki/private/messaging-bridge{{env_suffix}}.fedoraproject.org.key"
+    secret_file_app: messaging-bridges
+    secret_file_secret_name: rabbitmq-key
+    secret_file_key: rabbitmq-fedmsg-migration-tools.key
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/private/messaging-bridge{{env_suffix}}.fedoraproject.org.key"
   - role: openshift/secret-file
-    app: messaging-bridges
-    secret_name: rabbitmq-cert
-    key: rabbitmq-fedmsg-migration-tools.crt
-    privatefile: "rabbitmq/{{env}}/pki/issued/messaging-bridge{{env_suffix}}.fedoraproject.org.crt"
+    secret_file_app: messaging-bridges
+    secret_file_secret_name: rabbitmq-cert
+    secret_file_key: rabbitmq-fedmsg-migration-tools.crt
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/issued/messaging-bridge{{env_suffix}}.fedoraproject.org.crt"
 
   - role: openshift/object
     object_app: messaging-bridges

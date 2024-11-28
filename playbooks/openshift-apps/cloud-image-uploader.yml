@@ -77,34 +77,34 @@
         - "westus3"
 
   - role: openshift/secret-file
-    app: cloud-image-uploader
-    secret_name: cloud-image-uploader-fedora-messaging-key
-    key: cloud-image-uploader.key
-    privatefile: "rabbitmq/{{env}}/pki/private/cloud-image-uploader{{env_suffix}}.key"
+    secret_file_app: cloud-image-uploader
+    secret_file_secret_name: cloud-image-uploader-fedora-messaging-key
+    secret_file_key: cloud-image-uploader.key
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/private/cloud-image-uploader{{env_suffix}}.key"
 
   - role: openshift/secret-file
-    app: cloud-image-uploader
-    secret_name: cloud-image-uploader-fedora-messaging-crt
-    key: cloud-image-uploader.crt
-    privatefile: "rabbitmq/{{env}}/pki/issued/cloud-image-uploader{{env_suffix}}.crt"
+    secret_file_app: cloud-image-uploader
+    secret_file_secret_name: cloud-image-uploader-fedora-messaging-crt
+    secret_file_key: cloud-image-uploader.crt
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/issued/cloud-image-uploader{{env_suffix}}.crt"
 
   - role: openshift/secret-file
-    app: cloud-image-uploader
-    secret_name: cloud-image-uploader-fedora-messaging-ca
-    key: cloud-image-uploader.ca
-    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    secret_file_app: cloud-image-uploader
+    secret_file_secret_name: cloud-image-uploader-fedora-messaging-ca
+    secret_file_key: cloud-image-uploader.ca
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
 
   - role: openshift/secret-file
-    app: cloud-image-uploader
-    secret_name: registry-fedoraproject-cert
-    key: registry-fedoraproject.cert
-    privatefile: "docker-registry/{{env}}/pki/issued/containerstable.crt"
+    secret_file_app: cloud-image-uploader
+    secret_file_secret_name: registry-fedoraproject-cert
+    secret_file_key: registry-fedoraproject.cert
+    secret_file_privatefile: "docker-registry/{{env}}/pki/issued/containerstable.crt"
 
   - role: openshift/secret-file
-    app: cloud-image-uploader
-    secret_name: registry-fedoraproject-key
-    key: registry-fedoraproject.key
-    privatefile: "docker-registry/{{env}}/pki/private/containerstable.key"
+    secret_file_app: cloud-image-uploader
+    secret_file_secret_name: registry-fedoraproject-key
+    secret_file_key: registry-fedoraproject.key
+    secret_file_privatefile: "docker-registry/{{env}}/pki/private/containerstable.key"
 
   - role: openshift/object
     object_app: cloud-image-uploader

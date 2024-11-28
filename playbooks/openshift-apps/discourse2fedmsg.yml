@@ -25,20 +25,20 @@
       - apply-appowners
 
   - role: openshift/secret-file
-    app: discourse2fedmsg
-    secret_name: fedora-messaging-ca
-    key: cacert.pem
-    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    secret_file_app: discourse2fedmsg
+    secret_file_secret_name: fedora-messaging-ca
+    secret_file_key: cacert.pem
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
   - role: openshift/secret-file
-    app: discourse2fedmsg
-    secret_name: fedora-messaging-crt
-    key: discourse2fedmsg-cert.pem
-    privatefile: "rabbitmq/{{env}}/pki/issued/discourse2fedmsg{{env_suffix}}.crt"
+    secret_file_app: discourse2fedmsg
+    secret_file_secret_name: fedora-messaging-crt
+    secret_file_key: discourse2fedmsg-cert.pem
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/issued/discourse2fedmsg{{env_suffix}}.crt"
   - role: openshift/secret-file
-    app: discourse2fedmsg
-    secret_name: fedora-messaging-key
-    key: discourse2fedmsg-key.pem
-    privatefile: "rabbitmq/{{env}}/pki/private/discourse2fedmsg{{env_suffix}}.key"
+    secret_file_app: discourse2fedmsg
+    secret_file_secret_name: fedora-messaging-key
+    secret_file_key: discourse2fedmsg-key.pem
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/private/discourse2fedmsg{{env_suffix}}.key"
 
   - role: openshift/imagestream
     imagestream_app: discourse2fedmsg

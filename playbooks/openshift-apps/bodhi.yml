@@ -80,20 +80,20 @@
     keytab_service: bodhi
     keytab_host: "bodhi{{ env_suffix }}.fedoraproject.org"
   - role: openshift/secret-file
-    app: bodhi
-    secret_name: bodhi-fedora-messaging-ca
-    key: cacert.pem
-    privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    secret_file_app: bodhi
+    secret_file_secret_name: bodhi-fedora-messaging-ca
+    secret_file_key: cacert.pem
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
   - role: openshift/secret-file
-    app: bodhi
-    secret_name: bodhi-fedora-messaging-crt
-    key: bodhi-cert.pem
-    privatefile: "rabbitmq/{{env}}/pki/issued/bodhi{{env_suffix}}.crt"
+    secret_file_app: bodhi
+    secret_file_secret_name: bodhi-fedora-messaging-crt
+    secret_file_key: bodhi-cert.pem
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/issued/bodhi{{env_suffix}}.crt"
   - role: openshift/secret-file
-    app: bodhi
-    secret_name: bodhi-fedora-messaging-key
-    key: bodhi-key.pem
-    privatefile: "rabbitmq/{{env}}/pki/private/bodhi{{env_suffix}}.key"
+    secret_file_app: bodhi
+    secret_file_secret_name: bodhi-fedora-messaging-key
+    secret_file_key: bodhi-key.pem
+    secret_file_privatefile: "rabbitmq/{{env}}/pki/private/bodhi{{env_suffix}}.key"
   - role: openshift/object
     object_app: bodhi
     object_template: imagestreams-tagged.yml
