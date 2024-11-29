@@ -1,4 +1,11 @@
 ---
+- name: setup the root password
+  ansible.builtin.user:
+    name: root
+    password: "{{ copr_root_passwords[deployment_type][copr_machine_type] }}"
+  tags:
+    - root_password
+
 - name: create copr-signer group
   group: name="copr-signer" state=present gid=989
   when: "'copr_keygen_aws' in group_names or 'copr_keygen_dev_aws' in group_names"

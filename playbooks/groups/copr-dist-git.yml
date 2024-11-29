@@ -50,9 +50,10 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
-  - base
-  - nagios_client
-  - copr/dist_git
+    - copr/pre
+    - base
+    - nagios_client
+    - copr/dist_git
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"

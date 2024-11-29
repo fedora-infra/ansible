@@ -84,9 +84,10 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
-  - base
-  - nagios_client
-  - copr/pulp
+    - copr/pre
+    - base
+    - nagios_client
+    - copr/pulp
 
 
 - name: Use pulp_installer collection
