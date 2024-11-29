@@ -86,44 +86,44 @@
   when:
     - "'pulp' not in inventory_hostname"
 
-- name: check offloading
-  shell: "ethtool -k ens5 | egrep -q 'tcp-segmentation-offload: on|generic-receive-offload: on|generic-segmentation-offload: on'"
-  register: offloading
-  failed_when: offloading.rc == 2
-  changed_when: "1 != 1"
-  check_mode: no
-
-- name: disable offloading
-  command: ethtool -K ens5 tso off gro off gso off
-  when:
-    - offloading.rc == 0
-    - ansible_distribution == 'Fedora'
-
-- name: disable offloading (persitently)
-  shell: "nmcli con modify '{{ aws_ipv6_con }}' ethtool.feature-tso off ethtool.feature-gro off ethtool.feature-gso off"
-  when:
-    - offloading.rc == 0
-    - ansible_distribution == 'Fedora'
-  tags:
-  - config
-
-- name: check we have the needed ipv6
-  shell: "nmcli con show '{{ aws_ipv6_con }}' | grep ipv6.addresses | grep {{ aws_ipv6_addr }}"
-  register: ipv6_config_check
-  failed_when: false
-  changed_when: ipv6_config_check.rc == 1
-  when:
-    - aws_ipv6_addr is defined
-  tags: ipv6_config
-
-- name: setup ipv6 networking
-  shell: |
-    nmcli con modify '{{ aws_ipv6_con }}' ipv6.method auto ipv6.may-fail yes ipv6.never-default no ipv6.addresses '{{ aws_ipv6_addr }}'
-    nmcli con up '{{ aws_ipv6_con }}'
-  when:
-    - aws_ipv6_addr is defined
-    - ipv6_config_check.changed
-  tags: ipv6_config
+# - name: check offloading
+#   shell: "ethtool -k ens5 | egrep -q 'tcp-segmentation-offload: on|generic-receive-offload: on|generic-segmentation-offload: on'"
+#   register: offloading
+#   failed_when: offloading.rc == 2
+#   changed_when: "1 != 1"
+#   check_mode: no
+#
+# - name: disable offloading
+#   command: ethtool -K ens5 tso off gro off gso off
+#   when:
+#     - offloading.rc == 0
+#     - ansible_distribution == 'Fedora'
+#
+# - name: disable offloading (persitently)
+#   shell: "nmcli con modify '{{ aws_ipv6_con }}' ethtool.feature-tso off ethtool.feature-gro off ethtool.feature-gso off"
+#   when:
+#     - offloading.rc == 0
+#     - ansible_distribution == 'Fedora'
+#   tags:
+#   - config
+#
+# - name: check we have the needed ipv6
+#   shell: "nmcli con show '{{ aws_ipv6_con }}' | grep ipv6.addresses | grep {{ aws_ipv6_addr }}"
+#   register: ipv6_config_check
+#   failed_when: false
+#   changed_when: ipv6_config_check.rc == 1
+#   when:
+#     - aws_ipv6_addr is defined
+#   tags: ipv6_config
+#
+# - name: setup ipv6 networking
+#   shell: |
+#     nmcli con modify '{{ aws_ipv6_con }}' ipv6.method auto ipv6.may-fail yes ipv6.never-default no ipv6.addresses '{{ aws_ipv6_addr }}'
+#     nmcli con up '{{ aws_ipv6_con }}'
+#   when:
+#     - aws_ipv6_addr is defined
+#     - ipv6_config_check.changed
+#   tags: ipv6_config
 
 - name: install nrpe checks
   template: src=copr_nrpe.cfg
