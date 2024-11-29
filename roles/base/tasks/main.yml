@@ -45,7 +45,9 @@
   tags:
   - rootpw
   - base
-  when: not inventory_hostname.startswith(('buildvm-','buildhw-','bkernel','koji','compose'))
+  when:
+    - not inventory_hostname.startswith(('buildvm-','buildhw-','bkernel','koji','compose'))
+    - not inventory_hostname.startswith('copr')
 
 - name: add ansible root key
   authorized_key: user=root key="{{ item }}"
