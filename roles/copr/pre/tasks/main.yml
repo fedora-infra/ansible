@@ -2,7 +2,7 @@
 - name: setup the root password
   ansible.builtin.user:
     name: root
-    password: "{{ copr_root_passwords[deployment_type][copr_machine_type] }}"
+    password: "{{ copr_root_passwords[deployment_type][copr_machine_type] | password_hash('sha512') }}"
   tags:
     - root_password
 
