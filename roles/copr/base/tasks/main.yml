@@ -137,3 +137,15 @@
 
 # - name: enable and run logrotate service
 #   service: name="logrotate" state=started
+
+# https://github.com/fedora-copr/copr/issues/3439
+- name: Install iptables-nft
+  package: name=iptables-nft state=present
+  register: iptables
+
+- name: Remove iptables-legacy
+  package: name=iptables-legacy state=absent
+
+- name: Restart iptables
+  service: name=iptables state=restarted
+  when: iptables.changed
