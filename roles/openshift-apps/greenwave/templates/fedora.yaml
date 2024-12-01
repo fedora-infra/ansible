@@ -181,7 +181,8 @@ decision_contexts:
 subject_type: bodhi_update
 rules:
 # This list needs to stay synced with openQA if tests are added or renamed.
-  - !PassingTestCaseRule {test_case_name: update.container_build_kiwi, scenario: "fedora.updates-container.x86_64.64bit"}
+# uncomment in ~Jan 2025
+#  - !PassingTestCaseRule {test_case_name: update.kiwi_build, scenario: "fedora.updates-container.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.podman, scenario: "fedora.updates-container.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.podman, scenario: "fedora.updates-container.aarch64.aarch64"}
   - !PassingTestCaseRule {test_case_name: update.podman_client, scenario: "fedora.updates-container.x86_64.64bit"}
