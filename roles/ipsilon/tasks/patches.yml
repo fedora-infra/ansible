@@ -11,9 +11,9 @@
     state: directory
 
 - name: download patches
-  ansible.builtin.get_url:
-    url: https://pagure.io/ipsilon/pull-request/{{item}}.patch
-    dest: /opt/ipsilon-patches/{{item}}.patch
+  copy: >
+     src=/srv/web/infra/bigfiles/hotfixes/ipsilon/{{ item }} dest=/opt/ipsilon-patches/{{item}}.patch
+     owner=root group=root mode=0644
   loop: "{{ ipsilon_patches }}"
 
 - name: apply patches
