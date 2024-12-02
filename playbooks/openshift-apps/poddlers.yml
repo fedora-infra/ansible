@@ -57,7 +57,7 @@
 
     - role: openshift/object
       object_app: poddlers
-      object_template: buildconfig.yml
+      object_template: buildconfig.yml.j2
       object_objectname: buildconfig.yml
 
     - role: openshift/secret-file
@@ -80,19 +80,19 @@
 
     - role: openshift/object
       object_app: poddlers
-      object_template: secrets.yml
+      object_template: secrets.yml.j2
       object_objectname: secrets.yml
 
     - role: openshift/object
       object_app: poddlers
-      object_template: cron-playtime.yml
+      object_template: cron-playtime.yml.j2
       object_objectname: cron-playtime.yml
       tags:
         - cron-job
 
     - role: openshift/object
       object_app: poddlers
-      object_template: deploymentconfig.yml
+      object_template: deploymentconfig.yml.j2
       object_objectname: deploymentconfig.yml
 
     - role: openshift/object
