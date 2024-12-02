@@ -118,16 +118,6 @@
   notify:
   - restart apache
 
-- name: load the AWX SAML2 metadata that will be included in the configuration.conf file
-  uri:
-    url: https://awx.fedoraproject.org/sso/metadata/saml/
-    return_content: yes
-  register: awx_metadata
-  when: env == "production"
-  tags:
-  - ipsilon
-  - config
-
 - name: copy ipsilon admin configuration
   template:
     src: "configuration.conf"
