@@ -24,6 +24,7 @@ items:
                 npm \
                 poetry \
                 python3-alembic \
+                python3-authlib \
                 python3-beautifulsoup4 \
                 python3-arrow \
                 python3-dateutil \
@@ -73,14 +74,11 @@ items:
                 pip-3 install dist/*.whl && \
                 popd && \
                 rm -rf anitya
-{% if env == 'staging' %}
-        # Let's use staging auth server in staging
-        RUN sed -i 's/id.fedoraproject.org/id.stg.fedoraproject.org/g' /usr/local/lib/python3.12/site-packages/social_core/backends/fedora.py
-{% endif %}
-
+{% if env == 'production' %}
         # Hotfix for social_auth-sqlalchemy
         # Could be removed when we switch to something else
         RUN sed -i 's/base64.encodestring/base64.encodebytes/g' /usr/local/lib/python3.12/site-packages/social_sqlalchemy/storage.py
+{% endif %}
         RUN mkdir /httpdir
         RUN chmod 777 /httpdir
         EXPOSE 8080
