@@ -32,7 +32,6 @@ spec:
               mountPath: /tmp
 {%          endif %}
           restartPolicy: Never
-          startingDeadlineSeconds: 600
           volumes:
           - name: build-output
             persistentVolumeClaim:

@@ -40,7 +40,6 @@ spec:
               mountPath: /output
               readOnly: false
           restartPolicy: Never
-          startingDeadlineSeconds: 600
           volumes:
           - name: build-output
             persistentVolumeClaim:

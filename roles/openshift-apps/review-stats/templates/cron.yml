@@ -33,7 +33,6 @@ spec:
               mountPath: /review-stats
               readOnly: false
           restartPolicy: Never
-          startingDeadlineSeconds: 600
           volumes:
           - name: review-stats-config
             configMap:
@@ -81,7 +80,6 @@ spec:
               mountPath: /review-stats
               readOnly: false
           restartPolicy: Never
-          startingDeadlineSeconds: 600
           volumes:
           - name: review-stats-config
             configMap:
