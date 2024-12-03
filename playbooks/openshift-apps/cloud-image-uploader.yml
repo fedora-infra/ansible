@@ -36,12 +36,12 @@
 
   - role: openshift/object
     object_app: cloud-image-uploader
-    object_template: buildconfig.yml
+    object_template: buildconfig.yml.j2
     object_objectname: buildconfig.yml
 
   - role: openshift/object
     object_app: cloud-image-uploader
-    object_template: configmap.yml
+    object_template: configmap.yml.j2
     object_objectname: configmap.yml
     vars:
       azure_image_regions:
@@ -108,17 +108,17 @@
 
   - role: openshift/object
     object_app: cloud-image-uploader
-    object_template: secret.yml
+    object_template: secret.yml.j2
     object_objectname: secret.yml
 
   - role: openshift/object
     object_app: cloud-image-uploader
-    object_template: aws-secrets.yml
+    object_template: aws-secrets.yml.j2
     object_objectname: aws-secrets.yml
 
   - role: openshift/object
     object_app: cloud-image-uploader
-    object_template: container-secrets.yml
+    object_template: container-secrets.yml.j2
     object_objectname: container-secrets.yml
 
   - role: openshift/start-build
@@ -131,5 +131,5 @@
 
   - role: openshift/object
     object_app: cloud-image-uploader
-    object_template: deployment.yml
+    object_template: deployment.yml.j2
     object_objectname: deployment.yml
