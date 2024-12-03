@@ -95,7 +95,7 @@
     - rabbitmq_cluster
 
 - name: Monitor the {{ queue_name }} queue in Nagios (NRPE)
-  when: thresholds and env == "production"
+  when: queue_thresholds and env == "production"
   delegate_to: "{{ queue_rabbitmq_server }}"
   template:
     src: nrpe.cfg.j2
@@ -109,7 +109,7 @@
     - rabbitmq_cluster
 
 - name: Monitor the {{ queue_name }} queue in Nagios
-  when: thresholds and env == "production"
+  when: queue_thresholds and env == "production"
   delegate_to: "{{ queue_nagios_server }}"
   template:
     src: nagios.cfg.j2
