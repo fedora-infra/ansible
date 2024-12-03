@@ -8,15 +8,15 @@ apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
   name: ubi8-python-311
-  spec:
-    lookupPolicy:
-      local: false
-    tags:
-    - name: latest
-      from:
-        kind: DockerImage
-        name: registry.access.redhat.com/ubi8/python-311:latest
-      importPolicy:
-        scheduled: true
-      referencePolicy:
-        type: Source
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+  - name: latest
+    from:
+      kind: DockerImage
+      name: registry.access.redhat.com/ubi8/python-311:latest
+    importPolicy:
+      scheduled: true
+    referencePolicy:
+      type: Source
