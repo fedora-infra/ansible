@@ -78,7 +78,7 @@
 # actions to delete the project from OpenShift
 ###############################################
 # to run: sudo rbac-playbook -l os_masters_stg[0] -t delete openshift-apps/openvpn.yml
-  - object_delete_role: openshift/object-delete
+  - role: openshift/object-delete
     object_delete_app: openvpn
     object_delete_objecttype: project
     object_delete_objectname: openvpn
