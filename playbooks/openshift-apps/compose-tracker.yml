@@ -48,6 +48,9 @@
   - role: openshift/rollout
     rollout_app: compose-tracker
     rollout_dcname: compose-tracker
+    tags:
+    - never
+    - rollout
 
   ###############################################
   # actions to delete the project from OpenShift

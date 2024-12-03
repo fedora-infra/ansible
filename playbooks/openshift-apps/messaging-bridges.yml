@@ -151,9 +151,18 @@
   - role: openshift/rollout
     rollout_app: messaging-bridges
     rollout_dcname: amqp-to-zmq
+    tags:
+    - never
+    - rollout
   - role: openshift/rollout
     rollout_app: messaging-bridges
     rollout_dcname: zmq-to-amqp
+    tags:
+    - never
+    - rollout
   - role: openshift/rollout
     rollout_app: messaging-bridges
     rollout_dcname: verify-missing
+    tags:
+    - never
+    - rollout

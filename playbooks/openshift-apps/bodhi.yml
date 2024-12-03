@@ -148,12 +148,21 @@
   - role: openshift/rollout
     rollout_app: bodhi
     rollout_dcname: bodhi-web
+    tags:
+    - never
+    - rollout
   - role: openshift/rollout
     rollout_app: bodhi
     rollout_dcname: bodhi-consumer
+    tags:
+    - never
+    - rollout
   - role: openshift/rollout
     rollout_app: bodhi
     rollout_dcname: bodhi-celery
+    tags:
+    - never
+    - rollout
 
   post_tasks:
   - name: Scale up pods

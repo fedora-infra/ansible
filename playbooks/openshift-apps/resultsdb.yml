@@ -141,8 +141,14 @@
       rollout_app: resultsdb
       rollout_dcname: "resultsdb-api"
       failed_when: false
+      tags:
+      - never
+      - rollout
 
     - role: openshift/rollout
       rollout_app: resultsdb
       rollout_dcname: "resultsdb-frontend"
       failed_when: false
+      tags:
+      - never
+      - rollout
