@@ -3,5 +3,6 @@
   include_role:
     name: openshift/object
   vars:
+    object_app: "{{imagestream_app}}"
     object_objectname: imagestream-{{imagestream_imagename}}.yml
     template_fullpath: "{{roles_path}}/openshift/imagestream/templates/imagestream.yml"

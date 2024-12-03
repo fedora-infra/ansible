@@ -3,5 +3,6 @@
   include_role:
     name: openshift/object
   vars:
+    object_app: "{{route_app}}"
     object_objectname: route-{{route_routename}}.yml
     object_template_fullpath: "{{roles_path}}/openshift/route/templates/route.yml"

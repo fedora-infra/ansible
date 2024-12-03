@@ -26,6 +26,7 @@
   include_role:
     name: openshift/object
   vars:
+    object_app: "{{project_app}}"
     object_objectname: deployer.yml
     object_template_fullpath: "{{roles_path}}/openshift/project/templates/deployer.yml"
 
@@ -33,6 +34,7 @@
   include_role:
     name: openshift/object
   vars:
+    object_app: "{{project_app}}"
     object_objectname: imagebuilder.yml
     object_template_fullpath: "{{roles_path}}/openshift/project/templates/imagebuilder.yml"
 
@@ -40,6 +42,7 @@
   include_role:
     name: openshift/object
   vars:
+    object_app: "{{project_app}}"
     object_objectname: imagepuller.yml
     object_template_fullpath: "{{roles_path}}/openshift/project/templates/imagepuller.yml"
 
@@ -47,6 +50,7 @@
   include_role:
     name: openshift/object
   vars:
+    object_app: "{{project_app}}"
     object_objectname: role-appowners.yml
     object_template_fullpath: "{{roles_path}}/openshift/project/templates/role-appowners.yml"
 
@@ -54,6 +58,7 @@
   include_role:
     name: openshift/object
   vars:
+    object_app: "{{project_app}}"
     object_objectname: appowners.yml
     object_template_fullpath: "{{roles_path}}/openshift/project/templates/appowners.yml"
 
@@ -61,6 +66,7 @@
   include_role:
     name: openshift/object
   vars:
+    object_app: "{{project_app}}"
     object_objectname: alertmanager.yml
     object_template_fullpath: "{{roles_path}}/openshift/project/templates/alertmanager.yml"
 
@@ -68,6 +74,7 @@
   include_role:
     name: openshift/object
   vars:
+    object_app: "{{project_app}}"
     object_objectname: prometheusRules.yml
     object_template_fullpath: "{{roles_path}}/openshift/project/templates/prometheusRules.yml"
   when: project_alerting

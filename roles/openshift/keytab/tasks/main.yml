@@ -3,6 +3,7 @@
   include_role:
     name: keytab/service
   vars:
+    object_app: "{{keytab_app}}"
     kt_location: "/etc/openshift_apps/{{keytab_app}}/{{keytab_key}}.kt"
 
 - name: Call `oc secrets new` on the copied file
