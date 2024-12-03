@@ -6,6 +6,7 @@ metadata:
 spec:
   concurrencyPolicy: Forbid
   schedule: "0 21 * * *"
+  startingDeadlineSeconds: 600
   jobTemplate:
     spec:
       template:
@@ -33,7 +34,6 @@ spec:
               subPath: config.ini
               readOnly: true
           restartPolicy: Never
-          startingDeadlineSeconds: 600
           volumes:
           - name: ssh-config-volume
             secret:
