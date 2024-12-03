@@ -18,6 +18,6 @@ user_write_priv: "^(amq\\.topic){% if not user_publish_only %}|({{ username }}.*
 # Ref: https://www.rabbitmq.com/access-control.html#topic-authorisation
 user_sent_topics: .*
 user_topic_permissions:
-  - vhost: "{{ vhost }}"
+  - vhost: "{{ user_vhost }}"
     read_priv: .*
-    write_priv: "{{ sent_topics }}"
+    write_priv: "{{ user_sent_topics }}"

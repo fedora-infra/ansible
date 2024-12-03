@@ -60,7 +60,7 @@ num_cpus: 1
 tcp_ports: [80]
 # for fedora-messaging
 username: "github2fedmsg{{ env_suffix }}"
-sent_topics: ^org\.fedoraproject\.{{ env_short }}\.github\..*
+user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.github\..*
 # Definining these vars has a number of effects
 # 1) mod_wsgi is configured to use the vars for its own setup
 # 2) iptables opens enough ports for all threads for fedmsg

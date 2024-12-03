@@ -6,13 +6,13 @@
 #
 # Required parameters:
 #
-#   - username (str): the username to create in RabbitMQ, which should match the
-#                     CN of the certificate.
+#   - user_name (str): the username to create in RabbitMQ, which should match the
+#                      CN of the certificate.
 #
 # Optional parameters:
 #
-#   - sent_topics (str): A regular expression that must match the topic when a
-#                        message is published by this user.
+#   - user_sent_topics (str): A regular expression that must match the topic when a
+#                             message is published by this user.
 
 # See https://www.rabbitmq.com/access-control.html#permissions for details on
 # the RabbitMQ permissions configuration.

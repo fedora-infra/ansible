@@ -21,7 +21,7 @@
     thresholds:
       warning: 10
       critical: 100
-    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.hotness\..*
+    user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.hotness\..*
 
   - role: openshift/project
     project_app: the-new-hotness

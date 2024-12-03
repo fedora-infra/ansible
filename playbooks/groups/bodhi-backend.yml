@@ -101,7 +101,7 @@
     thresholds:
       warning: 10
       critical: 100
-    sent_topics: "{{ bodhi_sent_topics }}"
+    user_sent_topics: "{{ bodhi_sent_topics }}"
 
   - role: rabbit/queue
     username: "bodhi{{ env_suffix }}"
@@ -112,7 +112,7 @@
       warning: 10
       critical: 100
     # We have to repeat this line for now (only the last one counts)
-    sent_topics: "{{ bodhi_sent_topics }}"
+    user_sent_topics: "{{ bodhi_sent_topics }}"
 
   tasks:
   - name: create secondary volume dir for stg bodhi

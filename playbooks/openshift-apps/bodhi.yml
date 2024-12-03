@@ -39,7 +39,7 @@
     thresholds:
       warning: 10
       critical: 100
-    sent_topics: "{{ bodhi_sent_topics }}"
+    user_sent_topics: "{{ bodhi_sent_topics }}"
 
   - role: openshift/project
     project_app: bodhi

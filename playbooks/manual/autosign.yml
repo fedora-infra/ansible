@@ -72,7 +72,7 @@
     - "org.fedoraproject.*.coreos.build.request.artifacts-sign"
     - "org.fedoraproject.*.coreos.build.request.ostree-sign"
     - "org.fedoraproject.*.buildsys.tag"
-    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(robosignatory|coreos)\..*\.finished$
+    user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(robosignatory|coreos)\..*\.finished$
   - robosignatory
   - role: keytab/service
     service: autosign

@@ -145,7 +145,7 @@
     thresholds:
       warning: 10
       critical: 100
-    sent_topics: "{{ openscanhub_sent_topics }}"
+    user_sent_topics: "{{ openscanhub_sent_topics }}"
 
   - role: openshift/secret-file
     secret_file_app: openscanhub

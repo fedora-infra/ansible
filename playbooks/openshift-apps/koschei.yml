@@ -17,7 +17,7 @@
     queue_name: "{{ app }}{{ env_suffix }}"
     routing_keys: []
     message_ttl: 60000
-    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(koschei|ci)\..*
+    user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(koschei|ci)\..*
 
   - role: openshift/project
     project_app: "{{ app }}"

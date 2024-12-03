@@ -77,7 +77,7 @@
         warning: 20000
         critical: 25000
       # It sends a message when a badge is awarded
-      sent_topics: ^org\.fedoraproject\.{{ env_short }}\.badges\..*
+      user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.badges\..*
       tags:
         - config
         - fedora-messaging

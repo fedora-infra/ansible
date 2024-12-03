@@ -47,7 +47,7 @@
       - "org.fedoraproject.*.faf.problem.threshold10000"
       - "org.fedoraproject.*.faf.problem.threshold100000"
       - "org.fedoraproject.*.faf.problem.threshold1000000"
-    sent_topics: ^org\.fedoraproject\.{{ env_short }}\.faf\..*
+    user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.faf\..*
 
 - name: Setup retrace hosts
   hosts: retrace,retrace_stg

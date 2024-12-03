@@ -45,7 +45,7 @@
         warning: 20000
         critical: 25000
       # FMN sends messages when a rule is changed, to invalidate its cache
-      sent_topics: ^org\.fedoraproject\.{{ env_short }}\.fmn\..*
+      user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.fmn\..*
       tags:
         - config
         - fedora-messaging
