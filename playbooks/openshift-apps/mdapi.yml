@@ -70,6 +70,9 @@
     start_build_app: mdapi
     start_build_buildname: mdapi-build
     start_build_objectname: mdapi-build
+    tags:
+    - never
+    - build
 
   - role: openshift/object
     object_app: mdapi

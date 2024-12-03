@@ -45,6 +45,9 @@
   - role: openshift/start-build
     start_build_app: release-monitoring
     start_build_buildname: release-monitoring-web-build
+    tags:
+    - never
+    - build
   - role: openshift/object
     object_app: release-monitoring
     object_template: configmap.yml

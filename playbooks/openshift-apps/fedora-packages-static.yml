@@ -41,6 +41,9 @@
     start_build_app: fedora-packages-static
     start_build_buildname: fedora-packages-static-build
     start_build_objectname: fedora-packages-static-build
+    tags:
+    - never
+    - build
 
   - role: openshift/object
     object_app: fedora-packages-static

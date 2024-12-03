@@ -94,6 +94,9 @@
     start_build_app: maubot
     start_build_buildname: maubot-build
     start_build_objectname: maubot-build
+    tags:
+    - never
+    - build
 
   - role: openshift/object
     object_app: maubot

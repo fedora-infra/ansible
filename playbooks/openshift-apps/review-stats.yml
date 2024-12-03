@@ -36,6 +36,9 @@
   - role: openshift/start-build
     start_build_app: review-stats
     start_build_buildname: builder-build
+    tags:
+    - never
+    - build
   - role: openshift/object
     object_app: review-stats
     object_template: cron.yml

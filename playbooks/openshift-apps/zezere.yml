@@ -25,6 +25,9 @@
   - role: openshift/start-build
     start_build_app: zezere
     start_build_buildname: zezere-build
+    tags:
+    - never
+    - build
   - role: openshift/object
     object_app: zezere
     object_file: service.yml

@@ -29,6 +29,9 @@
   - role: openshift/start-build
     start_build_app: transtats
     start_build_buildname: transtats-build
+    tags:
+    - never
+    - build
   - role: openshift/object
     object_app: transtats
     object_file: service.yml

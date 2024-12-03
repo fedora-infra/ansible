@@ -96,6 +96,9 @@
     start_build_app: elections
     start_build_buildname: elections-build
     start_build_objectname: elections-build
+    tags:
+    - never
+    - build
 
   - role: openshift/object
     object_app: elections

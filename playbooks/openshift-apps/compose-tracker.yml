@@ -39,6 +39,9 @@
     start_build_app: compose-tracker
     start_build_buildname: compose-tracker-build
     start_build_objectname: compose-tracker-build
+    tags:
+    - never
+    - build
 
   - role: openshift/object
     object_app: compose-tracker

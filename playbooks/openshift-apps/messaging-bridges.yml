@@ -134,6 +134,9 @@
   - role: openshift/start-build
     start_build_app: messaging-bridges
     start_build_buildname: messaging-bridges-build
+    tags:
+    - never
+    - build
 
   - role: openshift/object
     object_app: messaging-bridges

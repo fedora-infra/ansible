@@ -70,6 +70,9 @@
   - role: openshift/start-build
     start_build_app: openvpn
     start_build_buildname: openvpn
+    tags:
+    - never
+    - build
 
 ###############################################
 # actions to delete the project from OpenShift

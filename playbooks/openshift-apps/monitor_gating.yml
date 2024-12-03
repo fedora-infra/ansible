@@ -84,7 +84,8 @@
     start_build_buildname: monitor-gating-build
     start_build_objectname: monitor-gating-build
     tags:
-      - build
+    - never
+    - build
 
   - role: openshift/object
     object_app: monitor-gating

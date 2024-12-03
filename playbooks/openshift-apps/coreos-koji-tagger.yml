@@ -53,6 +53,9 @@
     start_build_app: coreos-koji-tagger
     start_build_buildname: coreos-koji-tagger-build
     start_build_objectname: coreos-koji-tagger-build
+    tags:
+    - never
+    - build
 
   - role: openshift/object
     object_app: coreos-koji-tagger

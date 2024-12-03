@@ -46,6 +46,9 @@
     vars:
       start_build_app: docstranslation
       start_build_buildname: docstranslation-build
+    tags:
+    - never
+    - build
 
   - name: Define secrets
     ansible.builtin.include_role:

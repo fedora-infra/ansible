@@ -40,6 +40,9 @@
   - role: openshift/start-build
     start_build_app: docsbuilding
     start_build_buildname: builder-build
+    tags:
+    - never
+    - build
 
   - role: openshift/object
     object_app: docsbuilding
