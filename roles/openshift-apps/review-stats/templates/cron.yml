@@ -7,11 +7,11 @@ spec:
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
-  activeDeadlineSeconds: 900
   startingDeadlineSeconds: 180
   schedule: "0 * * * *"
   jobTemplate:
     spec:
+      activeDeadlineSeconds: 900
       template:
         metadata:
           labels:
@@ -49,11 +49,11 @@ spec:
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
-  activeDeadlineSeconds: 900
   startingDeadlineSeconds: 180
   schedule: "45 0 * * *"
   jobTemplate:
     spec:
+      activeDeadlineSeconds: 900
       template:
         metadata:
           labels:

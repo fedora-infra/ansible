@@ -8,10 +8,10 @@ spec:
   schedule: "10 * * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
-  activeDeadlineSeconds: 900
   startingDeadlineSeconds: 300
   jobTemplate:
     spec:
+      activeDeadlineSeconds: 900
       backoffLimit: 0
       template:
         metadata:
