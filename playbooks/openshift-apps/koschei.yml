@@ -13,10 +13,10 @@
 
   roles:
   - role: rabbit/queue
-    username: "{{ app }}{{ env_suffix }}"
+    queue_username: "{{ app }}{{ env_suffix }}"
     queue_name: "{{ app }}{{ env_suffix }}"
-    routing_keys: []
-    message_ttl: 60000
+    queue_routing_keys: []
+    queue_message_ttl: 60000
     user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(koschei|ci)\..*
 
   - role: openshift/project

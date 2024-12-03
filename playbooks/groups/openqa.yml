@@ -72,7 +72,7 @@
 
   - role: rabbit/queue
     queue_name: "{{ openqa_amqp_scheduler_queue }}"
-    routing_keys: "{{ openqa_amqp_scheduler_routing_keys }}"
+    queue_routing_keys: "{{ openqa_amqp_scheduler_routing_keys }}"
     vars:
       # yes, even the staging scheduler listens to production, it
       # has to or else it wouldn't schedule any jobs
@@ -82,7 +82,7 @@
 
   - role: rabbit/queue
     queue_name: "{{ openqa_amqp_resultsdb_reporter_queue }}"
-    routing_keys: "{{ openqa_amqp_resultsdb_reporter_routing_keys }}"
+    queue_routing_keys: "{{ openqa_amqp_resultsdb_reporter_routing_keys }}"
     vars:
       # this role does listen on stg, as it listens out for jobs
       # from openqa stg
@@ -92,7 +92,7 @@
 
   - role: rabbit/queue
     queue_name: "{{ openqa_amqp_wiki_reporter_queue }}"
-    routing_keys: "{{ openqa_amqp_wiki_reporter_routing_keys }}"
+    queue_routing_keys: "{{ openqa_amqp_wiki_reporter_routing_keys }}"
     vars:
       # this role does listen on stg, as it listens out for jobs
       # from openqa stg
@@ -114,7 +114,7 @@
     # relvalamiconsumer queue
   - role: rabbit/queue
     queue_name: "{{ relvalamiconsumer_amqp_queue }}"
-    routing_keys: "{{ relvalamiconsumer_amqp_routing_keys }}"
+    queue_routing_keys: "{{ relvalamiconsumer_amqp_routing_keys }}"
     vars:
       # yes, even the staging updater listens to production, it
       # has to as we never publish fedimg.image.publish on stg
@@ -126,7 +126,7 @@
     # check-compose queue
   - role: rabbit/queue
     queue_name: "{{ checkcompose_amqp_queue }}"
-    routing_keys: "{{ checkcompose_amqp_routing_keys }}"
+    queue_routing_keys: "{{ checkcompose_amqp_routing_keys }}"
     vars:
       # this role does listen on stg, as it listens out for jobs
       # from openqa stg
@@ -138,7 +138,7 @@
     # fedora_nightlies queue
   - role: rabbit/queue
     queue_name: "{{ fedora_nightlies_amqp_queue }}"
-    routing_keys: "{{ fedora_nightlies_amqp_routing_keys }}"
+    queue_routing_keys: "{{ fedora_nightlies_amqp_routing_keys }}"
     vars:
       # this role listens on prod as it listens for composes
       env: "production"

@@ -68,12 +68,12 @@
         - fedora-messaging
         - rabbitmq_cluster
     - role: rabbit/queue
-      username: "fedbadges{{ env_suffix }}"
+      queue_username: "fedbadges{{ env_suffix }}"
       queue_name: "fedbadges{{ env_suffix }}"
-      routing_keys:
+      queue_routing_keys:
       # The badges queue is subscribed to everything
         - "#"
-      thresholds:
+      queue_thresholds:
         warning: 20000
         critical: 25000
       # It sends a message when a badge is awarded

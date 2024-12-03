@@ -33,10 +33,10 @@
 
   roles:
   - role: rabbit/queue
-    username: "bodhi{{ env_suffix }}"
+    queue_username: "bodhi{{ env_suffix }}"
     queue_name: "{{ bodhi_message_queue_name }}"
-    routing_keys: "{{ bodhi_message_routing_keys }}"
-    thresholds:
+    queue_routing_keys: "{{ bodhi_message_routing_keys }}"
+    queue_thresholds:
       warning: 10
       critical: 100
     user_sent_topics: "{{ bodhi_sent_topics }}"

@@ -23,10 +23,10 @@
       ansible.builtin.include_role:
         name: rabbit/queue
       vars:
-        username: toddlers{{ env_suffix }}
+        queue_username: toddlers{{ env_suffix }}
         queue_name: toddlers{{ env_suffix }}-{{ item.name }}
-        routing_keys: "{{ item.topics }}"
-        thresholds:
+        queue_routing_keys: "{{ item.topics }}"
+        queue_thresholds:
           warning: 10
           critical: 100
       loop: "{{ poddlers_toddlers }}"

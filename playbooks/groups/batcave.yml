@@ -34,20 +34,20 @@
     user_name: "batcave{{ env_suffix }}"
     user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(ansible|git|infragit|logger)\..*
   - role: rabbit/queue
-    username: "mirror_pagure_ansible{{ env_suffix }}"
+    queue_username: "mirror_pagure_ansible{{ env_suffix }}"
     queue_name: "mirror_pagure_ansible{{ env_suffix }}"
-    routing_keys:
+    queue_routing_keys:
     - "io.pagure.*.pagure.git.receive"
-    thresholds:
+    queue_thresholds:
       warning: 10
       critical: 100
     user_sent_topics: ^$
   - role: rabbit/queue
-    username: "mirror_pagure_ansible{{ env_suffix }}"
+    queue_username: "mirror_pagure_ansible{{ env_suffix }}"
     queue_name: "mirror_pagure_ansible{{ env_suffix }}_13"
-    routing_keys:
+    queue_routing_keys:
     - "io.pagure.*.pagure.git.receive"
-    thresholds:
+    queue_thresholds:
       warning: 10
       critical: 100
     user_sent_topics: ^$

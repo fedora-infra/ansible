@@ -11,11 +11,11 @@
 
   roles:
   - role: rabbit/queue
-    username: "datanommer{{ env_suffix }}"
+    queue_username: "datanommer{{ env_suffix }}"
     queue_name: "datanommer{{ env_suffix }}"
-    routing_keys:
+    queue_routing_keys:
       - "#"
-    thresholds:
+    queue_thresholds:
       warning: 50
       critical: 500
     # Datanommer does not publish messages

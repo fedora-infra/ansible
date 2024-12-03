@@ -11,9 +11,9 @@
 
   roles:
     - role: rabbit/queue
-      username: "resultsdb{{ env_suffix }}_ci_listener"
+      queue_username: "resultsdb{{ env_suffix }}_ci_listener"
       queue_name: "resultsdb{{ env_suffix }}_ci_listener"
-      routing_keys:
+      queue_routing_keys:
         - 'org.centos.*.ci.pipeline.allpackages-build.complete'
         - 'org.centos.*.ci.pipeline.allpackages-build.image.complete'
         - 'org.centos.*.ci.pipeline.allpackages-build.package.test.functional.complete'

@@ -15,11 +15,11 @@
     user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.fedora_image_uploader\..*
 
   - role: rabbit/queue
-    username: "cloud-image-uploader{{ env_suffix }}"
+    queue_username: "cloud-image-uploader{{ env_suffix }}"
     queue_name: "cloud-image-uploader{{ env_suffix }}"
-    routing_keys:
+    queue_routing_keys:
       - "org.fedoraproject.*.pungi.compose.status.change"
-    thresholds:
+    queue_thresholds:
       warning: 10
       critical: 50
 

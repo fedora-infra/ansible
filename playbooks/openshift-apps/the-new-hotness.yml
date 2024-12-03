@@ -11,14 +11,14 @@
 
   roles:
   - role: rabbit/queue
-    username: the-new-hotness{{ env_suffix }}
+    queue_username: the-new-hotness{{ env_suffix }}
     queue_name: the-new-hotness{{ env_suffix }}
-    routing_keys:
+    queue_routing_keys:
       - "org.release-monitoring.*.anitya.project.version.update.v2"
       - "org.release-monitoring.*.anitya.project.version.update"
       - "org.release-monitoring.*.anitya.project.map.new"
       - "org.fedoraproject.*.buildsys.task.state.change"
-    thresholds:
+    queue_thresholds:
       warning: 10
       critical: 100
     user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.hotness\..*

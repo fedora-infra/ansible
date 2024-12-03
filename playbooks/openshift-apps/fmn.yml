@@ -36,12 +36,12 @@
 
   roles:
     - role: rabbit/queue
-      username: "fmn{{ env_suffix }}"
+      queue_username: "fmn{{ env_suffix }}"
       queue_name: "fmn{{ env_suffix }}"
-      routing_keys:
+      queue_routing_keys:
       # The FMN queue is subscribed to everything
         - "#"
-      thresholds:
+      queue_thresholds:
         warning: 20000
         critical: 25000
       # FMN sends messages when a rule is changed, to invalidate its cache

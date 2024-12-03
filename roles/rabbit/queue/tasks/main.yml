@@ -6,27 +6,27 @@
 #
 # Required parameters:
 #
-#   - username (str): the username to create in RabbitMQ, which should match the
-#                     CN of the certificate.
+#   - queue_username (str): the username to create in RabbitMQ, which should match the
+#                           CN of the certificate.
 #   - queue_name (str): The name of the queue to create. This must be prefixed
 #                       with your username. For example, with a username of
 #                       "bodhi", your queue could be named "bodhi_masher".
-#   - routing_keys (list): A list of strings to use as routing keys.
+#   - queue_routing_keys (list): A list of strings to use as routing keys.
 #
 # Optional parameters:
 #
 #   - user_sent_topics (str): A regular expression that must match the topic when a
 #                        message is published by this user.
-#   - thresholds (dict): A dictionary with two keys: "warning" and "critical".
+#   - queue_thresholds (dict): A dictionary with two keys: "warning" and "critical".
 #                        The values are numbers. Generate an alert in Nagios if
 #                        the number of messages go above these values.
 
 - name: Validate queue name {{ queue_name }}
   assert:
     that:
-    - "queue_name.startswith(username)"
+    - "queue_name.startswith(queue_username)"
     fail_msg: "Your queue name must be prefixed with your username"
-  when: username is defined
+  when: queue_username is defined
   tags:
     - fedora-messaging
     - rabbitmq_cluster
@@ -34,21 +34,24 @@
 - include_role:
     name: rabbit/user
   vars:
-    publish_only: false
-  when: username is defined
+    user_rabbitmq_server: "{{ queue_rabbitmq_server }}"
+    user_vhost: "{{ queue_vhost }}"
+    user_name: "{{ queue_username }}"
+    user_publish_only: false
+  when: queue_username is defined
   tags:
     - fedora-messaging
     - rabbitmq_cluster
 
 - name: Create the {{ queue_name }} queue in RabbitMQ
-  delegate_to: "{{ rabbitmq_server }}"
+  delegate_to: "{{ queue_rabbitmq_server }}"
   rabbitmq_queue:
     name: "{{ queue_name }}"
-    vhost: "{{ vhost }}"
+    vhost: "{{ queue_vhost }}"
     auto_delete: no
     durable: yes
-    message_ttl: "{{ message_ttl }}"
-    max_priority: "{{ max_priority }}"
+    message_ttl: "{{ queue_message_ttl }}"
+    max_priority: "{{ queue_max_priority }}"
     state: present
     login_user: admin
     login_password: "{{ (env == 'production')|ternary(rabbitmq_admin_password_production, rabbitmq_admin_password_staging) }}"
@@ -57,43 +60,43 @@
     - rabbitmq_cluster
 
 - name: Bind the {{ queue_name }} queue to the amq.topic exchange
-  delegate_to: "{{ rabbitmq_server }}"
+  delegate_to: "{{ queue_rabbitmq_server }}"
   rabbitmq_binding:
     name: "amq.topic"
     destination: "{{ queue_name }}"
     destination_type: queue
     routing_key: "{{ item }}"
-    vhost: "{{ vhost }}"
+    vhost: "{{ queue_vhost }}"
     state: present
     login_user: admin
     login_password: "{{ (env == 'production')|ternary(rabbitmq_admin_password_production, rabbitmq_admin_password_staging) }}"
-  loop: "{{ routing_keys }}"
-  when: routing_keys is defined
+  loop: "{{ queue_routing_keys }}"
+  when: queue_routing_keys is defined
   tags:
     - fedora-messaging
     - rabbitmq_cluster
 
 # This can be removed when we're done with fedmsg and the bridges are retired.
 - name: Bind the {{ queue_name }} queue to the zmq.topic exchange
-  delegate_to: "{{ rabbitmq_server }}"
+  delegate_to: "{{ queue_rabbitmq_server }}"
   rabbitmq_binding:
     name: "zmq.topic"
     destination: "{{ queue_name }}"
     destination_type: queue
     routing_key: "{{ item }}"
-    vhost: "{{ vhost }}"
+    vhost: "{{ queue_vhost }}"
     state: present
     login_user: admin
     login_password: "{{ (env == 'production')|ternary(rabbitmq_admin_password_production, rabbitmq_admin_password_staging) }}"
-  loop: "{{ routing_keys }}"
-  when: routing_keys is defined
+  loop: "{{ queue_routing_keys }}"
+  when: queue_routing_keys is defined
   tags:
     - fedora-messaging
     - rabbitmq_cluster
 
 - name: Monitor the {{ queue_name }} queue in Nagios (NRPE)
   when: thresholds and env == "production"
-  delegate_to: "{{ rabbitmq_server }}"
+  delegate_to: "{{ queue_rabbitmq_server }}"
   template:
     src: nrpe.cfg.j2
     dest: /etc/nrpe.d/check_rabbitmq_queue_{{ queue_name }}.cfg
@@ -107,7 +110,7 @@
 
 - name: Monitor the {{ queue_name }} queue in Nagios
   when: thresholds and env == "production"
-  delegate_to: "{{ nagios_server }}"
+  delegate_to: "{{ queue_nagios_server }}"
   template:
     src: nagios.cfg.j2
     dest: /etc/nagios/services/rabbitmq-queue-{{ queue_name }}.cfg

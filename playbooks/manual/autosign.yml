@@ -64,10 +64,10 @@
 #    when: env == 'staging'
 
   - role: rabbit/queue
-    username: "robosignatory{{ env_suffix }}"
+    queue_username: "robosignatory{{ env_suffix }}"
     queue_name: "robosignatory{{ env_suffix }}"
-    max_priority: 5
-    routing_keys:
+    queue_max_priority: 5
+    queue_routing_keys:
     - "org.fedoraproject.*.pungi.compose.ostree"
     - "org.fedoraproject.*.coreos.build.request.artifacts-sign"
     - "org.fedoraproject.*.coreos.build.request.ostree-sign"

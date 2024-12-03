@@ -25,9 +25,9 @@
       - appowners
 
   - role: rabbit/queue
-    username: toddlers{{ env_suffix }}
+    queue_username: toddlers{{ env_suffix }}
     queue_name: toddlers{{ env_suffix }}
-    routing_keys:
+    queue_routing_keys:
       # flag_ci_pr
       - "org.centos.*.ci.dist-git-pr.test.error"
       - "org.centos.*.ci.dist-git-pr.test.complete"
@@ -55,7 +55,7 @@
       # pagure_fas_groups_sync
       - "org.fedoraproject.*.toddlers.trigger.pagure_fas_groups_sync"
       - "org.fedoraproject.*.fas.group.member.sponsor"
-    thresholds:
+    queue_thresholds:
       warning: 10
       critical: 100
     user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.toddlers\..*

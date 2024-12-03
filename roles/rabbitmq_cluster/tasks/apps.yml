@@ -18,11 +18,11 @@
   include_role:
     name: rabbit/queue
   vars:
-    username: centos-ci{{ env_suffix }}
+    queue_username: centos-ci{{ env_suffix }}
     queue_name: centos-ci{{ env_suffix }}
     # TTL: 10 days (in miliseconds)
-    message_ttl: 864000000
-    routing_keys:
+    queue_message_ttl: 864000000
+    queue_routing_keys:
       # This routing key is for testing purposes only
       - "org.centos.ci.#"
 
@@ -31,9 +31,9 @@
   include_role:
     name: rabbit/queue
   vars:
-    username: osci-pipelines{{ env_suffix }}
+    queue_username: osci-pipelines{{ env_suffix }}
     queue_name: "{{ osci_pipeline_queue }}{{ env_suffix }}"
-    message_ttl: 864000000
+    queue_message_ttl: 864000000
     user_sent_topics: ^org\.(fedoraproject|centos)\.{{ env_short }}\.ci\..*
   loop:
     - "osci-pipelines{{ env_suffix }}-queue-0"
@@ -61,9 +61,9 @@
   include_role:
     name: rabbit/queue
   vars:
-    username: fedora-build-checks{{ env_suffix }}
+    queue_username: fedora-build-checks{{ env_suffix }}
     queue_name: fedora-build-checks{{ env_suffix }}
-    routing_keys:
+    queue_routing_keys:
       - "org.centos.ci.#"
 
 - name: copr
@@ -79,14 +79,14 @@
   include_role:
     name: rabbit/queue
   vars:
-    username: alt-src{{ env_suffix }}
+    queue_username: alt-src{{ env_suffix }}
     queue_name: alt-src{{ env_suffix }}
     # TTL: 10 days (in miliseconds)
-    message_ttl: 864000000
-    routing_keys:
+    queue_message_ttl: 864000000
+    queue_routing_keys:
       # This routing key is for testing purposes only
       - "org.centos.stream.#"
-    thresholds:
+    queue_thresholds:
       warning: 1000
       critical: 10000
 
@@ -133,12 +133,12 @@
   include_role:
     name: rabbit/queue
   vars:
-    username: centos-stream-robosignatory
+    queue_username: centos-stream-robosignatory
     user_sent_topics: ^org\.centos\.{{ env_short }}\.(robosignatory|coreos)\..*\.finished$
     queue_name: centos-stream-robosignatory
     # TTL: 10 days (in miliseconds)
-    message_ttl: 864000000
-    routing_keys:
+    queue_message_ttl: 864000000
+    queue_routing_keys:
       - "org.centos.*.pungi.compose.ostree"
       - "org.centos.*.coreos.build.request.artifacts-sign"
       - "org.centos.*.coreos.build.request.ostree-sign"
@@ -153,12 +153,12 @@
   include_role:
     name: rabbit/queue
   vars:
-    username: distrobuildsync-eln
+    queue_username: distrobuildsync-eln
     user_sent_topics: ^$
     queue_name: distrobuildsync-eln
     # TTL: 10 days (in miliseconds)
-    message_ttl: 864000000
-    routing_keys:
+    queue_message_ttl: 864000000
+    queue_routing_keys:
       - "#.buildsys.repo.init"
       - "#.buildsys.repo.done"
       - "#.buildsys.tag"
@@ -174,12 +174,12 @@
 #  include_role:
 #    name: rabbit/queue
 #  vars:
-#    username: distrobuildsync-cs
+#    queue_username: distrobuildsync-cs
 #    user_sent_topics: ^$
 #    queue_name: distrobuildsync-cs
 #    # TTL: 10 days (in miliseconds)
-#    message_ttl: 864000000
-#    routing_keys:
+#    queue_message_ttl: 864000000
+#    queue_routing_keys:
 #      - "#.buildsys.repo.init"
 #      - "#.buildsys.repo.done"
 #      - "#.buildsys.tag"

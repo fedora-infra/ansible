@@ -95,20 +95,20 @@
     certs_group: apache
 
   - role: rabbit/queue
-    username: "bodhi{{ env_suffix }}"
+    queue_username: "bodhi{{ env_suffix }}"
     queue_name: "bodhi{{ env_suffix }}_composer"
-    routing_keys: "{{ bodhi_message_routing_keys }}"
-    thresholds:
+    queue_routing_keys: "{{ bodhi_message_routing_keys }}"
+    queue_thresholds:
       warning: 10
       critical: 100
     user_sent_topics: "{{ bodhi_sent_topics }}"
 
   - role: rabbit/queue
-    username: "bodhi{{ env_suffix }}"
+    queue_username: "bodhi{{ env_suffix }}"
     queue_name: "bodhi{{ env_suffix }}_koji_sync_listener{{ env_suffix }}"
-    routing_keys:
+    queue_routing_keys:
       - "io.pagure.*.pagure.issue.edit"
-    thresholds:
+    queue_thresholds:
       warning: 10
       critical: 100
     # We have to repeat this line for now (only the last one counts)

@@ -44,10 +44,10 @@
 
   # Fedora Messaging User/Queue information
   - role: rabbit/queue
-    username: "{{ fedora_messaging_username }}"
+    queue_username: "{{ fedora_messaging_username }}"
     queue_name: "{{ fedora_messaging_queue_name }}"
-    routing_keys: "{{ fedora_messaging_routing_keys }}"
-    thresholds:
+    queue_routing_keys: "{{ fedora_messaging_routing_keys }}"
+    queue_thresholds:
       warning: 10
       critical: 100
     user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.coreos\..*
