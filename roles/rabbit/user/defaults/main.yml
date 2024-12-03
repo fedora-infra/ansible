@@ -10,9 +10,9 @@ user_read_priv: "{{ user_publish_only|ternary('^$', '^(zmq\\.topic)|^(amq\\.topi
 
 # Write privileges:
 # If publish_only: only write to the exchange. Otherwise, write to
-# queues prefixed with their name and any prefixes in write_queues,
+# queues prefixed with their name and any prefixes in user_write_queues,
 # and publish to the topic exchange
-user_write_priv: "^(amq\\.topic){% if not user_publish_only %}|({{ username }}.*){% for queue in write_queues|default([]) %}|({{ queue }}.*){% endfor %}{% endif %}$"
+user_write_priv: "^(amq\\.topic){% if not user_publish_only %}|({{ user_name }}.*){% for queue in user_write_queues|default([]) %}|({{ queue }}.*){% endfor %}{% endif %}$"
 
 # Topic authorization:
 # Ref: https://www.rabbitmq.com/access-control.html#topic-authorisation
