@@ -40,9 +40,9 @@
     object_objectname: buildconfig.yml
 
   - role: openshift/start-build
-    object_app: coreos-cincinnati
-    object_buildname: coreos-cincinnati-build
-    object_objectname: coreos-cincinnati-build
+    start_build_app: coreos-cincinnati
+    start_build_buildname: coreos-cincinnati-build
+    start_build_objectname: coreos-cincinnati-build
 
   - role: openshift/object
     object_app: coreos-cincinnati
