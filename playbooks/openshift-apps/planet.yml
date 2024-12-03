@@ -101,5 +101,5 @@
     secret_file_privatefile: "rabbitmq/{{env}}/pki/private/planet{{env_suffix}}.key"
 
   - role: rabbit/user
-    user_username: "planet{{ env_suffix }}"
+    user_name: "planet{{ env_suffix }}"
     user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.planet\..*

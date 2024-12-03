@@ -33,7 +33,7 @@
 
   roles:
   - role: rabbit/user
-    user_username: "elections{{ env_suffix }}"
+    user_name: "elections{{ env_suffix }}"
     user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.fedora_elections\..*
 
   - role: openshift/project

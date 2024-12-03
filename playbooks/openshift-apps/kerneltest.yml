@@ -40,7 +40,7 @@
 
   roles:
   - role: rabbit/user
-    user_username: "kerneltest{{ env_suffix }}"
+    user_name: "kerneltest{{ env_suffix }}"
     user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.kerneltest\..*
 
   - role: openshift/project

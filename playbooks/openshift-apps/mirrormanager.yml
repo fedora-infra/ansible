@@ -38,7 +38,7 @@
 
   roles:
     - role: rabbit/user
-      user_username: "mirrormanager{{ env_suffix }}"
+      user_name: "mirrormanager{{ env_suffix }}"
       user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.mirrormanager\..*
       tags:
         - config

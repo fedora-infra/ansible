@@ -12,7 +12,7 @@
   roles:
 
   - role: rabbit/user
-    user_username: "bugzilla2fedmsg{{ env_suffix }}"
+    user_name: "bugzilla2fedmsg{{ env_suffix }}"
     user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.bugzilla\..*
 
   - role: openshift/project

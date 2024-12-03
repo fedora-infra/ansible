@@ -32,7 +32,7 @@
 
   roles:
   - role: rabbit/user
-    user_username: "maubot{{ env_suffix }}"
+    user_name: "maubot{{ env_suffix }}"
     user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(meetbot|maubot)\..*
 
   - role: openshift/project

@@ -11,7 +11,7 @@
 
   roles:
   - role: rabbit/user
-    user_username: "cloud-image-uploader{{ env_suffix }}"
+    user_name: "cloud-image-uploader{{ env_suffix }}"
     user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.fedora_image_uploader\..*
 
   - role: rabbit/queue

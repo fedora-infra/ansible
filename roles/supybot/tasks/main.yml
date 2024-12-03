@@ -99,7 +99,7 @@
   import_role:
     name: rabbit/user
   vars:
-    user_username: "{{ botnames[env] }}"
+    user_name: "{{ botnames[env] }}"
     user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.meetbot\..*
   when:
   - inventory_hostname.startswith('value02')

@@ -17,13 +17,13 @@
 # See https://www.rabbitmq.com/access-control.html#permissions for details on
 # the RabbitMQ permissions configuration.
 
-- name: Validate username {{ user_username }}
+- name: Validate username {{ user_name }}
   assert:
     that:
-    - user_username is defined
-    - user_username != "admin"
-    - user_username != "guest"
-    - user_username != "nagios-monitoring"
+    - user_name is defined
+    - user_name != "admin"
+    - user_name != "guest"
+    - user_name != "nagios-monitoring"
     fail_msg: "This user name is reserved"
   tags:
     - config
@@ -39,10 +39,10 @@
 
 # See https://www.rabbitmq.com/access-control.html#permissions for details on
 # the RabbitMQ permissions configuration.
-- name: Create the {{ user_username }} user in RabbitMQ
+- name: Create the {{ user_name }} user in RabbitMQ
   delegate_to: "{{ user_rabbitmq_server }}"
   community.rabbitmq.rabbitmq_user:
-    user: "{{ user_username }}"
+    user: "{{ user_name }}"
     vhost: "{{ user_vhost }}"
     read_priv: "{{ user_read_priv }}"
     write_priv: "{{ user_write_priv }}"

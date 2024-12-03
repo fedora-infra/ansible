@@ -16,7 +16,7 @@
       ansible.builtin.include_role:
         name: rabbit/user
       vars:
-        user_username: toddlers{{ env_suffix }}
+        user_name: toddlers{{ env_suffix }}
         user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.toddlers\..*
 
     - name: Setup Rabbit Queue

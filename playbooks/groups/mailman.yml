@@ -98,7 +98,7 @@
   - role: mailman3
   # Set up for fedora-messaging
   - role: rabbit/user
-    user_username: "mailman{{ env_suffix }}"
+    user_name: "mailman{{ env_suffix }}"
     user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.mailman\..*
 
   tasks:

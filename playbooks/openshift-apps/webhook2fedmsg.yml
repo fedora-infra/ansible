@@ -35,7 +35,7 @@
 
   roles:
     - role: rabbit/user
-      user_username: "webhook2fedmsg{{ env_suffix }}"
+      user_name: "webhook2fedmsg{{ env_suffix }}"
       user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(github|discourse)\..*
 
     - role: openshift/project

@@ -120,7 +120,7 @@
 
   - sudo
   - role: rabbit/user
-    user_username: "koji{{ env_suffix }}"
+    user_name: "koji{{ env_suffix }}"
     user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.buildsys\..*
 
   tasks:

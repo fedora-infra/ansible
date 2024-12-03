@@ -21,7 +21,7 @@
     - patrikp
 
   - role: rabbit/user
-    user_username: "monitor-gating{{ env_suffix }}"
+    user_name: "monitor-gating{{ env_suffix }}"
     user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.monitor-gating\..*
 
   - role: openshift/keytab

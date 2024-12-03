@@ -54,7 +54,7 @@
   - role: fedoraloveskde/build
     when: master_sundries_node|bool
   - role: rabbit/user
-    user_username: "sundries{{ env_suffix }}"
+    user_name: "sundries{{ env_suffix }}"
     user_sent_topics: ^$
     when: master_sundries_node|bool and deployment_type == "stg"
   - role: nfs/client

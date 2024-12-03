@@ -12,7 +12,7 @@
 
   roles:
   - role: rabbit/user
-    user_username: "anitya{{ env_suffix }}"
+    user_name: "anitya{{ env_suffix }}"
     user_sent_topics: ^org\.release-monitoring\.{{ env_short }}\.anitya\..*
   - role: openshift/project
     project_app: release-monitoring

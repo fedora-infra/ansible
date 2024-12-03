@@ -42,7 +42,7 @@
 
   roles:
     - role: rabbit/user
-      user_username: "waiverdb{{ env_suffix }}"
+      user_name: "waiverdb{{ env_suffix }}"
       user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.waiverdb\..*
 
     # The openshift/project role breaks if the project already exists:
