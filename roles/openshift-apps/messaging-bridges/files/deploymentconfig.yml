@@ -1,9 +1,9 @@
 ---
-apiVersion: v1
+apiVersion: apps.openshift.io/v1
 kind: List
 metadata: {}
 items:
-- apiVersion: v1
+- apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
     labels:
@@ -85,11 +85,11 @@ items:
           kind: ImageStreamTag
           name: fedmsg-migration-tools:latest
 ---
-apiVersion: v1
+apiVersion: apps.openshift.io/v1
 kind: List
 metadata: {}
 items:
-- apiVersion: v1
+- apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
     labels:
@@ -159,11 +159,11 @@ items:
           kind: ImageStreamTag
           name: fedmsg-migration-tools:latest
 ---
-apiVersion: v1
+apiVersion: apps.openshift.io/v1
 kind: List
 metadata: {}
 items:
-- apiVersion: v1
+- apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
     labels:
