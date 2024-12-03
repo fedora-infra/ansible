@@ -89,7 +89,7 @@
     # Routes
     - role: openshift/route
       route_app: mirrormanager
-      route_routename: frontend
+      route_name: frontend
       route_host: "{{ mirrormanager_hostname }}"
       route_servicename: frontend
       route_serviceport: web
@@ -98,7 +98,7 @@
 
     - role: openshift/route
       route_app: mirrormanager
-      route_routename: frontend-openshift
+      route_name: frontend-openshift
       route_host: "mirrormanager.apps.ocp{{ env_suffix }}.fedoraproject.org"
       route_servicename: frontend
       route_serviceport: web

@@ -35,7 +35,7 @@
     object_objectname: service.yml
   - role: openshift/route
     route_app: transtats
-    route_routename: transtats-web
+    route_name: transtats-web
     route_host: transtats{{ env_suffix }}.fedoraproject.org
     route_serviceport: web
     route_servicename: transtats-web

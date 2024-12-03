@@ -101,7 +101,7 @@
 
     - role: openshift/route
       route_app: resultsdb
-      route_routename: resultsdb-api
+      route_name: resultsdb-api
       route_host: "resultsdb{{ env_suffix }}.fedoraproject.org"
       route_serviceport: api
       route_servicename: resultsdb-api
@@ -130,7 +130,7 @@
 
     - role: openshift/route
       route_app: resultsdb
-      route_routename: resultsdb-web
+      route_name: resultsdb-web
       route_host: "resultsdb{{ env_suffix }}.fedoraproject.org"
       route_serviceport: web
       route_servicename: resultsdb-frontend

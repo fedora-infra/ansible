@@ -118,7 +118,7 @@
 
   - role: openshift/route
     route_app: blockerbugs
-    route_routename: blockerbugs
+    route_name: blockerbugs
     route_host: "qa{{ env_suffix }}.fedoraproject.org"
     route_path: "/blockerbugs"
     route_serviceport: 8080-tcp
@@ -126,7 +126,7 @@
 
   - role: openshift/route
     route_app: blockerbugs
-    route_routename: qa-landing
+    route_name: qa-landing
     route_host: "qa{{ env_suffix }}.fedoraproject.org"
     route_serviceport: 8080-tcp
     route_servicename: qa-landing

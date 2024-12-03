@@ -102,7 +102,7 @@
 
     - role: openshift/route
       route_app: waiverdb
-      route_routename: web-pretty
+      route_name: web-pretty
       route_host: "waiverdb{{ env_suffix }}.fedoraproject.org"
       route_serviceport: web
       route_servicename: waiverdb-web

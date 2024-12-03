@@ -52,7 +52,7 @@
     # Routes
     - role: openshift/route
       route_app: easyfix
-      route_routename: web
+      route_name: web
       route_host: "easyfix.apps.ocp{{ env_suffix }}.fedoraproject.org"
       route_servicename: web
       route_serviceport: web

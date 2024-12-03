@@ -146,7 +146,7 @@
     # Routes
     - role: openshift/route
       route_app: fmn
-      route_routename: frontend
+      route_name: frontend
       route_host: "notifications{{ env_suffix }}.fedoraproject.org"
       route_servicename: frontend
       route_serviceport: web
@@ -154,7 +154,7 @@
         haproxy.router.openshift.io/timeout: 5m
     - role: openshift/route
       route_app: fmn
-      route_routename: api
+      route_name: api
       route_host: "fmn-api.apps.ocp{{ env_suffix }}.fedoraproject.org"
       route_servicename: api
       route_serviceport: web
@@ -163,7 +163,7 @@
     # Sendria is an email sink for testing, to avoid sending actual emails.
     - role: openshift/route
       route_app: fmn
-      route_routename: sendria
+      route_name: sendria
       route_host: "fmn-email.apps.ocp{{ env_suffix }}.fedoraproject.org"
       route_servicename: sendria
       route_serviceport: web

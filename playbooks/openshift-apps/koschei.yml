@@ -32,7 +32,7 @@
 
   - role: openshift/route
     route_app: "{{ app }}"
-    route_routename: frontend
+    route_name: frontend
     route_host: "koschei{{ env_suffix }}.fedoraproject.org"
     route_serviceport: web
     route_servicename: frontend

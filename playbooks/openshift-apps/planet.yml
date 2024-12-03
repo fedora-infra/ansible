@@ -56,7 +56,7 @@
 
   - role: openshift/route
     route_app: planet
-    route_routename: planet
+    route_name: planet
     route_host: "planet.apps.ocp{{env_suffix}}.fedoraproject.org"
     route_serviceport: web
     route_servicename: planet
@@ -65,7 +65,7 @@
 
   - role: openshift/route
     route_app: planet
-    route_routename: planet
+    route_name: planet
     route_host: "{{env_prefix}}fedoraplanet.org"
     route_serviceport: web
     route_servicename: planet

@@ -104,7 +104,7 @@
 
   - role: openshift/route
     route_app: elections
-    route_routename: elections
+    route_name: elections
     route_host: "elections{{ env_suffix }}.fedoraproject.org"
     route_serviceport: 8000-tcp
     route_servicename: elections

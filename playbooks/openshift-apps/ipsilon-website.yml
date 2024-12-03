@@ -36,7 +36,7 @@
 
     - role: openshift/route
       route_app: ipsilon-website
-      route_routename: web-internal
+      route_name: web-internal
       route_host: "ipsilon-website.apps.ocp{{ env_suffix }}.fedoraproject.org"
       route_serviceport: web
       route_servicename: web
@@ -45,7 +45,7 @@
 
     - role: openshift/route
       route_app: ipsilon-website
-      route_routename: web
+      route_name: web
       route_host: "ipsilon-project.org"
       route_serviceport: web
       route_servicename: web

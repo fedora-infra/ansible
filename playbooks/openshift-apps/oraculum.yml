@@ -85,7 +85,7 @@
 
   - role: openshift/route
     route_app: oraculum
-    route_routename: oraculum-api
+    route_name: oraculum-api
     route_host: "packager-dashboard{{ env_suffix }}.fedoraproject.org"
     route_path: "/api"
     route_serviceport: 8080-tcp
@@ -95,7 +95,7 @@
 
   - role: openshift/route
     route_app: oraculum
-    route_routename: oraculum-oidc-callback
+    route_name: oraculum-oidc-callback
     route_host: "packager-dashboard{{ env_suffix }}.fedoraproject.org"
     route_path: "/oidc_callback"
     route_serviceport: 8080-tcp
@@ -105,7 +105,7 @@
 
   - role: openshift/route
     route_app: oraculum
-    route_routename: oraculum-flower
+    route_name: oraculum-flower
     route_host: "packager-dashboard{{ env_suffix }}.fedoraproject.org"
     route_path: "/_flower"
     route_serviceport: 8080-tcp
@@ -115,7 +115,7 @@
 
   - role: openshift/route
     route_app: oraculum
-    route_routename: oraculum-frontend
+    route_name: oraculum-frontend
     route_host: "packager-dashboard{{ env_suffix }}.fedoraproject.org"
     route_serviceport: 8080-tcp
     route_servicename: oraculum-frontend

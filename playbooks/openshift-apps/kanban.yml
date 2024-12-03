@@ -118,7 +118,7 @@
 
   - role: openshift/route
     route_app: kanban
-    route_routename: kanban
+    route_name: kanban
     route_host: "kanban.qa{{ env_suffix }}.fedoraproject.org"
     route_serviceport: 8080-tcp
     route_servicename: kanban-web

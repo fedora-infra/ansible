@@ -44,7 +44,7 @@
 
     # - role: openshift/route
     #   route_app: test-auth
-    #   route_routename: test-auth
+    #   route_name: test-auth
     #   route_host: "admin{{ env_suffix }}.fedoraproject.org"
     #   route_path: "/test-auth"
     #   route_serviceport: web
@@ -54,7 +54,7 @@
 
     - role: openshift/route
       route_app: flask-oidc-dev
-      route_routename: flask-oidc-dev
+      route_name: flask-oidc-dev
       route_host: "app-flask-oidc-dev.apps.ocp{{ env_suffix }}.fedoraproject.org"
       route_serviceport: web
       route_servicename: flask-oidc-dev

@@ -78,7 +78,7 @@
 
   - role: openshift/route
     route_app: mdapi
-    route_routename: mdapi
+    route_name: mdapi
     route_host: "mdapi{{env_suffix}}.fedoraproject.org"
     route_serviceport: 8080-tcp
     route_servicename: mdapi

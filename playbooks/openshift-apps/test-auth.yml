@@ -41,7 +41,7 @@
 
     # - role: openshift/route
     #   route_app: test-auth
-    #   route_routename: test-auth
+    #   route_name: test-auth
     #   route_host: "admin{{ env_suffix }}.fedoraproject.org"
     #   route_path: "/test-auth"
     #   route_serviceport: web
@@ -50,7 +50,7 @@
     #     haproxy.router.openshift.io/timeout: 5m
     - role: openshift/route
       route_app: test-auth
-      route_routename: test-auth
+      route_name: test-auth
       route_host: "test-auth.apps.ocp{{ env_suffix }}.fedoraproject.org"
       route_serviceport: web
       route_servicename: test-auth

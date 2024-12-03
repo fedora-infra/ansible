@@ -71,28 +71,28 @@
 
   - role: openshift/route
     route_app: coreos-cincinnati
-    route_routename: coreos-updates
+    route_name: coreos-updates
     route_host: "updates.coreos{{ env_suffix }}.fedoraproject.org"
     route_serviceport: coreos-cincinnati-updates
     route_servicename: coreos-cincinnati
 
   - role: openshift/route
     route_app: coreos-cincinnati
-    route_routename: coreos-updates-status
+    route_name: coreos-updates-status
     route_host: "status.updates.coreos{{ env_suffix }}.fedoraproject.org"
     route_serviceport: coreos-cincinnati-updates-status
     route_servicename: coreos-cincinnati
 
   - role: openshift/route
     route_app: coreos-cincinnati
-    route_routename: coreos-updates-raw
+    route_name: coreos-updates-raw
     route_host: "raw-updates.coreos{{ env_suffix }}.fedoraproject.org"
     route_serviceport: coreos-cincinnati-raw-updates
     route_servicename: coreos-cincinnati
 
   - role: openshift/route
     route_app: coreos-cincinnati
-    route_routename: coreos-updates-raw-status
+    route_name: coreos-updates-raw-status
     route_host: "status.raw-updates.coreos{{ env_suffix }}.fedoraproject.org"
     route_serviceport: coreos-cincinnati-raw-updates-status
     route_servicename: coreos-cincinnati

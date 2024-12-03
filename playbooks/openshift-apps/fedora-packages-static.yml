@@ -49,7 +49,7 @@
 
   - role: openshift/route
     route_app: fedora-packages-static
-    route_routename: fedora-packages-static
+    route_name: fedora-packages-static
     route_host: "packages{{ env_suffix }}.fedoraproject.org"
     route_serviceport: 8080-tcp
     route_servicename: fedora-packages-static

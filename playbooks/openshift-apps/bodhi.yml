@@ -128,7 +128,7 @@
     when: env != "production"
   - role: openshift/route
     route_app: bodhi
-    route_routename: bodhi-web
+    route_name: bodhi-web
     route_host: "bodhi{{ env_suffix }}.fedoraproject.org"
     route_serviceport: web
     route_servicename: bodhi-web
