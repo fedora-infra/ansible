@@ -7,6 +7,9 @@ secret_key = '{{ stg_anitya_secrect_key }}'
 secret_key = '{{ anitya_secret_key }}'
 {% endif %}
 
+# Preferred HTTP scheme
+preferred_url_scheme = "https"
+
 # The lifetime of the session, in seconds.
 permanent_session_lifetime = 604800
 
@@ -70,10 +73,7 @@ fedora_client_secret = "{{ anitya_stg_fedora_client_secret }}"
 # Fedora OAuth authentication endpoint
 fedora_server_metadata_url = "https://id.stg.fedoraproject.org/.well-known/openid-configuration"
 # Additional arguments for Fedora authentication
-fedora_client_kwargs = {
-  scope = "openid profile email",
-  token_endpoint_auth_method = "client_secret_post"
-}
+fedora_client_kwargs = { scope = "openid profile email", token_endpoint_auth_method = "client_secret_post" }
 
 # Google OAuth backend variables
 # Google OAuth client id
