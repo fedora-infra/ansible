@@ -7,18 +7,18 @@
   register: stat_repo_fs_early
   tags: mdadm
 
+- name: install LVM and RAID utilities
+  package:
+    name:
+      - lvm2
+      - mdadm
+  tags:
+    - mdadm
+
 - name: VG on two RAIDs
   tags: mdadm
   when: not stat_repo_fs_early.stat.exists
   block:
-    - name: install LVM and RAID utilities
-      package:
-        name:
-          - lvm2
-          - mdadm
-      tags:
-        - mdadm
-
     - name: stat the raid volumes
       stat:
         path: "/dev/disk/by-id/{{ item }}"
