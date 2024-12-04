@@ -65,6 +65,9 @@
 
 - name: letsencrypt for copr-dist-git
   include_role: name=copr/certbot
+  tags:
+    - config
+    - certbot
 
 - name: install copr-dist-git httpd config
   copy: src="httpd/{{ item }}" dest="/etc/httpd/conf.d/{{ item }}"
