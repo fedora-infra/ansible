@@ -60,7 +60,7 @@
   lineinfile:
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^shared_buffers ='
-    line: 'shared_buffers = 1024MB'
+    line: 'shared_buffers = 8096MB'
   notify: restart postgresql
   tags:
   - config
