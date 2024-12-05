@@ -233,9 +233,6 @@
     - ostree
     - python3-libmodulemd
     - python3-koji-cli-plugins
-    - python3-fedfind # needed by clean-amis.py script
-    - python3-boto3 # needed by clean-amis.py script
-    - python3-requests # needed by clean-amis.py script
     - make
     - nosync
     - python3-gobject
@@ -327,14 +324,6 @@
   ansible.builtin.template:
     src: container-updates.j2
     dest: /etc/cron.d/container-updates
-    mode: "644"
-  when: inventory_hostname.startswith('compose-x86-01.iad2')
-
-# put cron job in for regular ami deletion
-- name: Clean-amis cron
-  ansible.builtin.template:
-    src: clean-amis.j2
-    dest: /etc/cron.d/clean-amis
     mode: "644"
   when: inventory_hostname.startswith('compose-x86-01.iad2')
 
