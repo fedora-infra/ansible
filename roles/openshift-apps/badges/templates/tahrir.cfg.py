@@ -51,11 +51,7 @@ CACHE = {
     "backend": "dogpile.cache.null",
     "expiration_time": 100,
     "arguments": {
-        {% if env == 'staging' %}
         "url": "memcached02{{env_suffix}}:11211",
-        {% else %}
-        "url": "memcached01{{env_suffix}}:11211",
-        {% endif %}
     "distributed_lock": True,
     "lock_timeout": 5,
     },

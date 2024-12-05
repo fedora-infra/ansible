@@ -159,11 +159,7 @@ config = {
             "backend": "dogpile.cache.memcached",
             "expiration_time": None,
             "arguments": {
-                {% if env == 'staging' %}
                 "url": "memcached02",
-                {% else %}
-                "url": "memcached01",
-                {% endif %}
             },
         },
     },
