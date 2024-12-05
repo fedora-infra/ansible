@@ -44,15 +44,15 @@
     when: env == "staging"
   - role: openshift/object
     object_app: openscanhub
-    object_template: pvc-var-lib-osh.yml
+    object_template: pvc-var-lib-osh.yml.j2
     object_objectname: pvc-var-lib-osh
   - role: openshift/object
     object_app: openscanhub
-    object_template: settings-local-configmap.yml
+    object_template: settings-local-configmap.yml.j2
     object_objectname: settings-local-configmap
   - role: openshift/object
     object_app: openscanhub
-    object_template: osh-hub-httpd-configmap.yml
+    object_template: osh-hub-httpd-configmap.yml.j2
     object_objectname: osh-hub-httpd-configmap
   - role: openshift/keytab
     keytab_app: openscanhub
@@ -70,11 +70,11 @@
     when: env == "production"
   - role: openshift/object
     object_app: openscanhub
-    object_template: deployment-fedora-osh-hub.yml
+    object_template: deployment-fedora-osh-hub.yml.j2
     object_objectname: deployment-fedora-osh-hub
   - role: openshift/object
     object_app: openscanhub
-    object_template: route-fedora-osh-hub.yml
+    object_template: route-fedora-osh-hub.yml.j2
     object_objectname: route-fedora-osh-hub
   - role: openshift/object
     object_app: openscanhub
@@ -84,7 +84,7 @@
   # Configurations for redis.
   - role: openshift/object
     object_app: openscanhub
-    object_template: pvc-var-lib-redis-data.yml
+    object_template: pvc-var-lib-redis-data.yml.j2
     object_objectname: pvc-var-lib-redis-data
   - role: openshift/object
     object_app: openscanhub
@@ -102,35 +102,35 @@
   # Configurations for resalloc-server.
   - role: openshift/object
     object_app: openscanhub
-    object_template: etc-resallocserver-server-configmap.yml
+    object_template: etc-resallocserver-server-configmap.yml.j2
     object_objectname: etc-resallocserver-server-configmap
   - role: openshift/object
     object_app: openscanhub
-    object_template: etc-resallocserver-pools-configmap.yml
+    object_template: etc-resallocserver-pools-configmap.yml.j2
     object_objectname: etc-resallocserver-pools-configmap
   - role: openshift/object
     object_app: openscanhub
-    object_template: vm-provisioning-configmap.yml
+    object_template: vm-provisioning-configmap.yml.j2
     object_objectname: vm-provisioning-configmap
   - role: openshift/object
     object_app: openscanhub
-    object_template: aws-credentials-configmap.yml
+    object_template: aws-credentials-configmap.yml.j2
     object_objectname: aws-credentials-configmap
   - role: openshift/object
     object_app: openscanhub
-    object_template: aws-openscanhub-key.yml
+    object_template: aws-openscanhub-key.yml.j2
     object_objectname: aws-openscanhub-key
   - role: openshift/object
     object_app: openscanhub
-    object_template: deployment-resalloc-server.yml
+    object_template: deployment-resalloc-server.yml.j2
     object_objectname: deployment-resalloc-server
   - role: openshift/object
     object_app: openscanhub
-    object_template: route-resalloc-server.yml
+    object_template: route-resalloc-server.yml.j2
     object_objectname: route-resalloc-server
   - role: openshift/object
     object_app: openscanhub
-    object_template: service-resalloc-server.yml
+    object_template: service-resalloc-server.yml.j2
     object_objectname: service-resalloc-server
 
   # Configurations for Fedora messaging
@@ -164,7 +164,7 @@
     secret_file_privatefile: "rabbitmq/{{env}}/pki/issued/openscanhub{{env_suffix}}.crt"
   - role: openshift/object
     object_app: openscanhub
-    object_template: fedora-messaging-configmap.yml
+    object_template: fedora-messaging-configmap.yml.j2
     object_objectname: fedora-messaging-configmap
 
     # sudo rbac-playbook -l staging -t delete openshift-apps/openscanhub.yml

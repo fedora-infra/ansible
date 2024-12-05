@@ -12,4 +12,4 @@ items:
       app: openscanhub
   data:
     pools.yaml: |-
-      {{ load_file('etc-resallocserver-pools.yaml') | indent(6) }}
+      {{ load_file('etc-resallocserver-pools.yaml.j2') | indent(6) }}
