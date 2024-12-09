@@ -455,12 +455,14 @@ def get_epel_release_rel_path(release, epel_next=False):
     if epel_next:
         for path in Path(RELEASES[release]['repos']['epel']['to'][0]['dest']).rglob('epel-next-release*noarch*'):
             if 'Packages' in str(path) and 'x86_64' in str(path):
+                abs_path = path
                 pkg_relpath = os.path.relpath(path,EPELDEST)
     else:
         for path in sorted(Path(RELEASES[release]['repos']['epel']['to'][0]['dest']).rglob('epel-release*noarch*')):
             if 'Packages' in str(path) and 'x86_64' in str(path):
+                abs_path = path
                 pkg_relpath = os.path.relpath(path,EPELDEST)
-    return path, pkg_relpath
+    return abs_path, pkg_relpath
 
 def update_epel_release_latest(releases):
     """
