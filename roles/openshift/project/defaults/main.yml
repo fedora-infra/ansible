@@ -3,7 +3,7 @@ project_allow_fas_db: false
 project_allow_iad2: true
 project_allow_pod_creation: false
 
-egress_policy_template: "{{roles_path}}/openshift/project/templates/egresspolicy.yml"
+egress_policy_template: "{{roles_path}}/openshift/project/templates/egresspolicy.yml.j2"
 
 project_alerting: true
 project_alert_rules:

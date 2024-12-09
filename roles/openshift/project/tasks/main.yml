@@ -15,7 +15,7 @@
 
 - name: Copy project template
   template:
-    src="{{roles_path}}/openshift/project/templates/project.yml"
+    src="{{roles_path}}/openshift/project/templates/project.yml.j2"
     dest=/etc/openshift_apps/{{project_app}}/project.yml
 
 - name: Create project
@@ -28,7 +28,7 @@
   vars:
     object_app: "{{project_app}}"
     object_objectname: deployer.yml
-    object_template_fullpath: "{{roles_path}}/openshift/project/templates/deployer.yml"
+    object_template_fullpath: "{{roles_path}}/openshift/project/templates/deployer.yml.j2"
 
 - name: imagebuilder.yml
   include_role:
@@ -36,7 +36,7 @@
   vars:
     object_app: "{{project_app}}"
     object_objectname: imagebuilder.yml
-    object_template_fullpath: "{{roles_path}}/openshift/project/templates/imagebuilder.yml"
+    object_template_fullpath: "{{roles_path}}/openshift/project/templates/imagebuilder.yml.j2"
 
 - name: imagepuller.yml
   include_role:
@@ -44,7 +44,7 @@
   vars:
     object_app: "{{project_app}}"
     object_objectname: imagepuller.yml
-    object_template_fullpath: "{{roles_path}}/openshift/project/templates/imagepuller.yml"
+    object_template_fullpath: "{{roles_path}}/openshift/project/templates/imagepuller.yml.j2"
 
 - name: role-appowners.yml
   include_role:
@@ -52,7 +52,7 @@
   vars:
     object_app: "{{project_app}}"
     object_objectname: role-appowners.yml
-    object_template_fullpath: "{{roles_path}}/openshift/project/templates/role-appowners.yml"
+    object_template_fullpath: "{{roles_path}}/openshift/project/templates/role-appowners.yml.j2"
 
 - name: appowners.yml
   include_role:
@@ -60,7 +60,7 @@
   vars:
     object_app: "{{project_app}}"
     object_objectname: appowners.yml
-    object_template_fullpath: "{{roles_path}}/openshift/project/templates/appowners.yml"
+    object_template_fullpath: "{{roles_path}}/openshift/project/templates/appowners.yml.j2"
 
 - name: alertmanager.yml
   include_role:
@@ -68,7 +68,7 @@
   vars:
     object_app: "{{project_app}}"
     object_objectname: alertmanager.yml
-    object_template_fullpath: "{{roles_path}}/openshift/project/templates/alertmanager.yml"
+    object_template_fullpath: "{{roles_path}}/openshift/project/templates/alertmanager.yml.j2"
 
 - name: prometheusRules.yml
   include_role:
@@ -76,5 +76,5 @@
   vars:
     object_app: "{{project_app}}"
     object_objectname: prometheusRules.yml
-    object_template_fullpath: "{{roles_path}}/openshift/project/templates/prometheusRules.yml"
+    object_template_fullpath: "{{roles_path}}/openshift/project/templates/prometheusRules.yml.j2"
   when: project_alerting
