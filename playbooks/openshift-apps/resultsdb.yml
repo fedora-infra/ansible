@@ -76,27 +76,27 @@
     # backend objects
     - role: openshift/object
       object_app: resultsdb
-      object_template: backend/secrets.yml
+      object_template: backend/secrets.yml.j2
       object_objectname: backend-secrets.yml
 
     - role: openshift/object
       object_app: resultsdb
-      object_template: backend/configmaps.yml
+      object_template: backend/configmaps.yml.j2
       object_objectname: backend-configmaps.yml
 
     - role: openshift/object
       object_app: resultsdb
-      object_template: backend/imagestream.yml
+      object_template: backend/imagestream.yml.j2
       object_objectname: backend-imagestream.yml
 
     - role: openshift/object
       object_app: resultsdb
-      object_template: backend/deploymentconfigs.yml
+      object_template: backend/deploymentconfigs.yml.j2
       object_objectname: backend-deploymentconfigs.yml
 
     - role: openshift/object
       object_app: resultsdb
-      object_template: backend/services.yml
+      object_template: backend/services.yml.j2
       object_objectname: backend-services.yml
 
     - role: openshift/route
@@ -110,22 +110,22 @@
     # frontend objects
     - role: openshift/object
       object_app: resultsdb
-      object_template: frontend/secrets.yml
+      object_template: frontend/secrets.yml.j2
       object_objectname: frontend-secrets.yml
 
     - role: openshift/object
       object_app: resultsdb
-      object_template: frontend/configmaps.yml
+      object_template: frontend/configmaps.yml.j2
       object_objectname: frontend-configmaps.yml
 
     - role: openshift/object
       object_app: resultsdb
-      object_template: frontend/deploymentconfigs.yml
+      object_template: frontend/deploymentconfigs.yml.j2
       object_objectname: frontend-deploymentconfigs.yml
 
     - role: openshift/object
       object_app: resultsdb
-      object_template: frontend/services.yml
+      object_template: frontend/services.yml.j2
       object_objectname: frontend-services.yml
 
     - role: openshift/route
