@@ -100,17 +100,17 @@
 
     - role: openshift/object
       object_app: badges
-      object_template: buildconfig.yml
+      object_template: buildconfig.yml.j2
       object_objectname: buildconfig.yml
 
     - role: openshift/object
       object_app: badges
-      object_template: secrets.yml
+      object_template: secrets.yml.j2
       object_objectname: secrets.yml
 
     - role: openshift/object
       object_app: badges
-      object_template: configmap.yml
+      object_template: configmap.yml.j2
       object_objectname: configmap.yml
 
     - role: openshift/object
@@ -181,17 +181,17 @@
     # Deployment config
     - role: openshift/object
       object_app: badges
-      object_template: deploymentconfig.yml
+      object_template: deploymentconfig.yml.j2
       object_objectname: deploymentconfig.yml
 
     # Cron jobs
     - role: openshift/object
       object_app: badges
-      object_template: cron-award.yml
+      object_template: cron-award.yml.j2
       object_objectname: cron-award.yml
     - role: openshift/object
       object_app: badges
-      object_template: cron-update-rules.yml
+      object_template: cron-update-rules.yml.j2
       object_objectname: cron-update-rules.yml
 
     - role: openshift/start-build
