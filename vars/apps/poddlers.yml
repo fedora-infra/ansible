@@ -1,4 +1,13 @@
 ---
+#
+# Toddlers
+#
+# List of running toddlers. Each has its own pod.
+# The format is a list of dicts, with each dict having the following schema:
+#   name: toddler name, needs to be unique
+#   callback: python path to the toddler class
+#   topics: list of topics to subscribe to, wildcards allowed.
+#
 poddlers_toddlers:
   - name: check-commit-rights
     callback: check_commit_rights:CheckCommitRights
@@ -82,6 +91,15 @@ poddlers_toddlers:
       - "org.fedoraproject.*.pagure.issue.edit"
       - "org.fedoraproject.*.pagure.issue.comment.added"
 
+#
+# Cronjobs
+#
+# List of cronjobs. It's a list of dicts in which each dict has the following schema:
+#   name: cronjob name, needs to be unique
+#   schedule: cron-like schedule
+#   only_env: only run this cronjob in the specified environment ("production" or "staging")
+#   command: the command to run
+#
 poddlers_cronjobs:
   - name: packager-bugzilla-sync
     schedule: "0 */6 * * *"
