@@ -1,7 +1,7 @@
 #
 ### Crawler cron jobs
 #
-{% from "_macros.yml" import common_volume_mounts, common_volumes, common_env, security_context with context %}
+{% from "_macros.yml.j2" import common_volume_mounts, common_volumes, common_env, security_context with context %}
 {% for cronjob in mirrormanager_cron_crawler %}
 ---
 # Category: {{ cronjob.category }}

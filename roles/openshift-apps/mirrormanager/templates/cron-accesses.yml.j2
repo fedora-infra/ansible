@@ -1,4 +1,4 @@
-{% from "_macros.yml" import common_volume_mounts, common_volumes, common_env %}
+{% from "_macros.yml.j2" import common_volume_mounts, common_volumes, common_env %}
 ---
 apiVersion: batch/v1
 kind: CronJob

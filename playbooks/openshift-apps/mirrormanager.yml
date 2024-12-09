@@ -63,7 +63,7 @@
 
     - role: openshift/object
       object_app: mirrormanager
-      object_template: buildconfig.yml
+      object_template: buildconfig.yml.j2
       object_objectname: buildconfig.yml
 
     - role: openshift/object
@@ -73,12 +73,12 @@
 
     - role: openshift/object
       object_app: mirrormanager
-      object_template: secrets.yml
+      object_template: secrets.yml.j2
       object_objectname: secrets.yml
 
     - role: openshift/object
       object_app: mirrormanager
-      object_template: configmap.yml
+      object_template: configmap.yml.j2
       object_objectname: configmap.yml
 
     - role: openshift/object
@@ -133,35 +133,35 @@
     # Deployment config
     - role: openshift/object
       object_app: mirrormanager
-      object_template: deploymentconfig.yml
+      object_template: deploymentconfig.yml.j2
       object_objectname: deploymentconfig.yml
 
     # Cron jobs
     - role: openshift/object
       object_app: mirrormanager
-      object_template: cron-crawler.yml
+      object_template: cron-crawler.yml.j2
       object_objectname: cron-crawler.yml
       when: env == "production"
     - role: openshift/object
       object_app: mirrormanager
-      object_template: cron-propagation.yml
+      object_template: cron-propagation.yml.j2
       object_objectname: cron-propagation.yml
       when: env == "production"
     - role: openshift/object
       object_app: mirrormanager
-      object_template: cron-accesses.yml
+      object_template: cron-accesses.yml.j2
       object_objectname: cron-accesses.yml
     - role: openshift/object
       object_app: mirrormanager
-      object_template: cron-mirrorlist-cache.yml
+      object_template: cron-mirrorlist-cache.yml.j2
       object_objectname: cron-mirrorlist-cache.yml
     - role: openshift/object
       object_app: mirrormanager
-      object_template: cron-geoip.yml
+      object_template: cron-geoip.yml.j2
       object_objectname: cron-geoip.yml
     - role: openshift/object
       object_app: mirrormanager
-      object_template: cron-primary-mirror.yml
+      object_template: cron-primary-mirror.yml.j2
       object_objectname: cron-primary-mirror.yml
 
     - role: openshift/start-build
