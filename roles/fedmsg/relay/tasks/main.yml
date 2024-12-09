@@ -34,3 +34,13 @@
   - fedmsg/relay
   notify:
   - restart fedmsg-relay
+  when: env != "staging"
+
+- name: enable on boot and start fedmsg-relay
+  service: name=fedmsg-relay state=stopped enabled=false
+  tags:
+  - services
+  - fedmsg/relay
+  notify:
+  - restart fedmsg-relay
+  when: env == "staging"

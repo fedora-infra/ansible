@@ -42,7 +42,21 @@
   - restart fedmsg-gateway
 
 - name: enable on boot and start fedmsg-gateway
-  service: name=fedmsg-gateway state=started enabled=true
+  service:
+    name: fedmsg-gateway
+    state: started
+    enabled: true
   tags:
   - services
   - fedmsg/gateway
+  when: env != "staging"
+
+- name: disable fedmsg-gateway on staging
+  service:
+    name: fedmsg-gateway
+    state: stopped
+    enabled: false
+  tags:
+  - services
+  - fedmsg/gateway
+  when: env == "staging"

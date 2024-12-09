@@ -148,7 +148,7 @@
     object_objectname: service.yml
   - role: openshift/object
     object_app: messaging-bridges
-    object_file: deploymentconfig.yml
+    object_template: deploymentconfig.yml
     object_objectname: deploymentconfig.yml
 
   - role: openshift/rollout

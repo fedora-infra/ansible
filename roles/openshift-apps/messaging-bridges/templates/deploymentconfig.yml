@@ -10,7 +10,7 @@ items:
       app: messaging-bridges
     name: amqp-to-zmq
   spec:
-    replicas: 1
+    replicas: {{ (env == 'production') | ternary(1, 0) }}
     selector:
       deploymentconfig: amqp-to-zmq
     strategy:
@@ -96,7 +96,7 @@ items:
       app: messaging-bridges
     name: zmq-to-amqp
   spec:
-    replicas: 1
+    replicas: {{ (env == 'production') | ternary(1, 0) }}
     selector:
       deploymentconfig: zmq-to-amqp
     strategy:
@@ -170,7 +170,7 @@ items:
       app: messaging-bridges
     name: verify-missing
   spec:
-    replicas: 1
+    replicas: {{ (env == 'production') | ternary(1, 0) }}
     selector:
       deploymentconfig: verify-missing
     strategy:

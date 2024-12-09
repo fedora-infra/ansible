@@ -19,7 +19,11 @@
 
 - name: fedmsg-hub service
   service: name=fedmsg-hub state=started enabled=yes
-  when: "'python34_fedmsg' not in group_names"
+  when: "'python34_fedmsg' not in group_names and env == 'production'"
+
+- name: fedmsg-hub service
+  service: name=fedmsg-hub state=stopped enabled=no
+  when: "'python34_fedmsg' not in group_names and env == 'staging'"
 
 - name: fedmsg-hub-3 service
   service: name=fedmsg-hub-3 state=started enabled=yes
