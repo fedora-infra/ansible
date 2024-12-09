@@ -131,8 +131,8 @@ channel =
     method osbuildImage :: use osbuild
     method buildContainer :: use container
     method flatpakBuild :: use flatpak
-    user bpeck/jenkins-continuous-infra.apps.ci.centos.org && use ci
-    user zuul && use ci
+    user bpeck/jenkins-continuous-infra.apps.ci.centos.org :: use ci
+    user zuul :: use ci
     has req_channel :: {
        # require customchannel to override build channel
        method build chainbuild !! req
