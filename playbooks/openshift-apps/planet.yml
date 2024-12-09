@@ -33,12 +33,12 @@
 
   - role: openshift/object
     object_app: planet
-    object_template: buildconfig.yml
+    object_template: buildconfig.yml.j2
     object_objectname: buildconfig.yml
 
   - role: openshift/object
     object_app: planet
-    object_template: configmap.yml
+    object_template: configmap.yml.j2
     object_objectname: configmap.yml
 
   - role: openshift/ipa-client
@@ -74,12 +74,12 @@
 
   - role: openshift/object
     object_app: planet
-    object_template: deployment.yml
+    object_template: deployment.yml.j2
     object_objectname: deployment.yml
 
   - role: openshift/object
     object_app: planet
-    object_template: cronjob.yml
+    object_template: cronjob.yml.j2
     object_objectname: cronjob.yml
 
   - role: openshift/secret-file
