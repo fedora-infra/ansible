@@ -2,7 +2,7 @@
 # generate the templates for project to be created
 - name: create the imagestream template
   template:
-    src: "imagestream.yml"
+    src: "imagestream.yml.j2"
     dest: "/root/ocp4/openshift-apps/firmitas/imagestream.yml"
     mode: "0770"
 

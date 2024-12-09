@@ -2,7 +2,7 @@
 # generate the templates for project to be created
 - name: create the cronjob template
   template:
-    src: "cronjob.yml"
+    src: "cronjob.yml.j2"
     dest: "/root/ocp4/openshift-apps/firmitas/cronjob.yml"
     mode: "0770"
 

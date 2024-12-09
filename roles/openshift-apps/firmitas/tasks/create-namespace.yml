@@ -2,7 +2,7 @@
 # generate the templates for project to be created
 - name: create the namespace template
   template:
-    src: "namespace.yml"
+    src: "namespace.yml.j2"
     dest: "/root/ocp4/openshift-apps/firmitas/namespace.yml"
     mode: "0770"
 
