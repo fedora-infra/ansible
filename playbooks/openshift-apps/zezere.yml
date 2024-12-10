@@ -42,11 +42,11 @@
       haproxy.router.openshift.io/set-forwarded-headers: append
   - role: openshift/object
     object_app: zezere
-    object_template: secret.yml
+    object_template: secret.yml.j2
     object_objectname: secret.yml
   - role: openshift/object
     object_app: zezere
-    object_template: deploymentconfig.yml
+    object_template: deploymentconfig.yml.j2
     object_objectname: deploymentconfig.yml
   - role: openshift/rollout
     rollout_app: zezere
