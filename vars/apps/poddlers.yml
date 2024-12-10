@@ -7,6 +7,7 @@
 #   name: toddler name, needs to be unique
 #   callback: python path to the toddler class
 #   topics: list of topics to subscribe to, wildcards allowed.
+#   replicas: number of pods (optional, defaults to 1)
 #
 poddlers_toddlers:
   - name: check-commit-rights
@@ -33,6 +34,7 @@ poddlers_toddlers:
     callback: distgit_commit_processor:DistGitCommitProcessor
     topics:
       - "org.fedoraproject.*.git.receive"
+    replicas: 0
 
   - name: flag-ci-pr
     callback: flag_ci_pr:FlagCIPR
