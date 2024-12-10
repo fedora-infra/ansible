@@ -3,7 +3,7 @@
 #
 ---
 - name: check for grub serial setup
-  command: grub2-editenv list
+  command: grep options /boot/loader/entries/*
   register: serial
   check_mode: no
   changed_when: '1 != 1'
