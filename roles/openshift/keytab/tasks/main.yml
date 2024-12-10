@@ -4,7 +4,7 @@
     name: keytab/service
   vars:
     service: "{{ keytab_service }}"
-    host: "{{ keytab_host }}"
+    host: "{{ keytab_host|default(inventory_hostname) }}"
     kt_location: "/etc/openshift_apps/{{keytab_app}}/{{keytab_key}}.kt"
 
 - name: Call `oc secrets new` on the copied file
