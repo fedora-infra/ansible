@@ -32,7 +32,7 @@
 
   - role: openshift/object
     object_app: websites
-    object_template: fedora-websites-bc.yml
+    object_template: fedora-websites-bc.yml.j2
     object_objectname: fedora-websites-bc.yml
 
   - role: openshift/start-build
@@ -45,7 +45,7 @@
 
   - role: openshift/object
     object_app: websites
-    object_template: fedora-websites-cron.yml
+    object_template: fedora-websites-cron.yml.j2
     object_objectname: fedora-websites-cron.yml
 
   # New websites 3.0
@@ -55,7 +55,7 @@
 
   - role: openshift/object
     object_app: websites
-    object_template: buildconfig.yml
+    object_template: buildconfig.yml.j2
     object_objectname: buildconfig.yml
 
   - role: openshift/start-build
@@ -70,5 +70,5 @@
 
   - role: openshift/object
     object_app: websites
-    object_template: deployment.yml
+    object_template: deployment.yml.j2
     object_objectname: deployment.yml
