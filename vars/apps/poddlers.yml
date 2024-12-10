@@ -89,9 +89,10 @@ poddlers_toddlers:
   - name: scm-request-processor
     callback: scm_request_processor:SCMRequestProcessor
     topics:
-      - "org.fedoraproject.*.pagure.issue.new"
-      - "org.fedoraproject.*.pagure.issue.edit"
-      - "org.fedoraproject.*.pagure.issue.comment.added"
+      - "io.pagure.*.pagure.issue.new"
+      - "io.pagure.*.pagure.issue.edit"
+      - "io.pagure.*.pagure.issue.comment.added"
+
 
 #
 # Cronjobs
