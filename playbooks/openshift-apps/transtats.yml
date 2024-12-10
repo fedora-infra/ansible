@@ -18,13 +18,13 @@
   - role: openshift/object
     object_app: transtats
     object_objectname: secret.yml
-    object_template: secret.yml
+    object_template: secret.yml.j2
   - role: openshift/imagestream
     imagestream_app: transtats
     imagestream_imagename: transtats
   - role: openshift/object
     object_app: transtats
-    object_template: buildconfig.yml
+    object_template: buildconfig.yml.j2
     object_objectname: buildconfig.yml
   - role: openshift/start-build
     start_build_app: transtats
