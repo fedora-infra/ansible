@@ -562,7 +562,7 @@
   register: dmarc_output
   vars:
     pattern: "^Updated rows: [1-9]\\d*"
-  changed_when: "{{ collectstatic_output.stdout | regex_search(pattern) }}"
+  changed_when: "{{ dmarc_output.stdout | regex_search(pattern) }}"
   tags:
     - mailman
     - scripts
