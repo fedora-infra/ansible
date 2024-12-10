@@ -75,12 +75,12 @@
 
   - role: openshift/object
     object_app: the-new-hotness
-    object_template: buildconfig.yml
+    object_template: buildconfig.yml.j2
     object_objectname: buildconfig.yml
 
   - role: openshift/object
     object_app: the-new-hotness
-    object_template: configmap.yml
+    object_template: configmap.yml.j2
     object_objectname: configmap.yml
 
   - role: openshift/start-build
@@ -93,7 +93,7 @@
 
   - role: openshift/object
     object_app: the-new-hotness
-    object_template: deploymentconfig.yml
+    object_template: deploymentconfig.yml.j2
     object_objectname: deploymentconfig.yml
 
   - role: openshift/rollout
