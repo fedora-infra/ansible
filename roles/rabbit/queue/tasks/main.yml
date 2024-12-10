@@ -65,12 +65,14 @@
     name: "amq.topic"
     destination: "{{ queue_name }}"
     destination_type: queue
-    routing_key: "{{ item }}"
+    routing_key: "{{ routing_key }}"
     vhost: "{{ queue_vhost }}"
     state: present
     login_user: admin
     login_password: "{{ (env == 'production')|ternary(rabbitmq_admin_password_production, rabbitmq_admin_password_staging) }}"
   loop: "{{ queue_routing_keys }}"
+  loop_control:
+    loop_var: routing_key
   when: queue_routing_keys is defined
   tags:
     - fedora-messaging
@@ -83,12 +85,14 @@
     name: "zmq.topic"
     destination: "{{ queue_name }}"
     destination_type: queue
-    routing_key: "{{ item }}"
+    routing_key: "{{ routing_key }}"
     vhost: "{{ queue_vhost }}"
     state: present
     login_user: admin
     login_password: "{{ (env == 'production')|ternary(rabbitmq_admin_password_production, rabbitmq_admin_password_staging) }}"
   loop: "{{ queue_routing_keys }}"
+  loop_control:
+    loop_var: routing_key
   when: queue_routing_keys is defined
   tags:
     - fedora-messaging
