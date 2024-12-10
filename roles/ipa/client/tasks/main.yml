@@ -73,7 +73,7 @@
     - config
   run_once: yes
 
-- name: Ensure that nss knows to skip certain users
+- name: Ensure that nss knows to skip certain users (f41/rhel)
   template: src=fedora-nss-ignore.conf.j2 dest=/etc/sssd/conf.d/fedora-nss-ignore.conf mode=600 owner=sssd group=sssd
   tags:
   - ipa/client
@@ -82,5 +82,17 @@
   notify:
     - restart sssd
     - clean sss caches
+  when: ansible_distribution_major_version|int >= 41 or ansible_distribution == 'RedHat'
+
+- name: Ensure that nss knows to skip certain users (f40)
+  template: src=fedora-nss-ignore.conf.j2 dest=/etc/sssd/conf.d/fedora-nss-ignore.conf mode=600 owner=root group=root
+  tags:
+  - ipa/client
+  - config
+  - fedora-nss-ignore
+  notify:
+    - restart sssd
+    - clean sss caches
+  when: ansible_distribution_major_version|int == 40
 
 - meta: flush_handlers
