@@ -58,15 +58,15 @@
 
     - role: openshift/object
       object_app: resultsdb-ci-listener
-      object_template: secrets.yml
+      object_template: secrets.yml.j2
       object_objectname: secrets.yml
 
     - role: openshift/object
       object_app: resultsdb-ci-listener
-      object_template: configmaps.yml
+      object_template: configmaps.yml.j2
       object_objectname: configmaps.yml
 
     - role: openshift/object
       object_app: resultsdb-ci-listener
-      object_template: deploymentconfigs.yml
+      object_template: deploymentconfigs.yml.j2
       object_objectname: deploymentconfigs.yml
