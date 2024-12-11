@@ -19,7 +19,7 @@ spec:
             parent: "cron_stats"
         spec:
 {% filter indent(width=10, first=True) %}
-{%     include "cron_template.yml" %}
+{%     include "cron_template.yml.j2" %}
 {% endfilter %}
 ---
 {%   endfor %}
@@ -44,7 +44,7 @@ spec:
             parent: "cron_stats"
         spec:
 {% filter indent(width=10, first=True) %}
-{%     include "cron_template.yml" %}
+{%     include "cron_template.yml.j2" %}
 {% endfilter %}
 ---
 apiVersion: batch/v1
