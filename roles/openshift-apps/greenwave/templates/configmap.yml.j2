@@ -10,7 +10,7 @@ data:
   settings.py: |-
     {{ load_file('settings.py') | indent }}
   fedora.yaml: |-
-    {{ load_file('fedora.yaml') | indent }}
+    {{ load_file('fedora.yaml.j2') | indent }}
 ---
 apiVersion: v1
 kind: ConfigMap

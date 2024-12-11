@@ -53,12 +53,12 @@
 
   - role: openshift/object
     object_app: greenwave
-    object_template: imagestream.yml
+    object_template: imagestream.yml.j2
     object_objectname: imagestream.yml
 
   - role: openshift/object
     object_app: greenwave
-    object_template: configmap.yml
+    object_template: configmap.yml.j2
     object_objectname: configmap.yml
 
   - role: openshift/object
@@ -81,7 +81,7 @@
 
   - role: openshift/object
     object_app: greenwave
-    object_template: deploymentconfig.yml
+    object_template: deploymentconfig.yml.j2
     object_objectname: deploymentconfig.yml
     tags:
       - apply-deploymentconfig
