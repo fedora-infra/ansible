@@ -4,6 +4,6 @@ project_description: Fedora CoreOS Pipeline
 appowners: []
 ocp_service_account: root
 project_templates:
-  - project.yaml
-  - group.yaml
-  - rolebinding.yaml
+  - project.yaml.j2
+  - group.yaml.j2
+  - rolebinding.yaml.j2
