@@ -59,12 +59,12 @@
 
   - role: openshift/object
     object_app: elections
-    object_template: imagestream.yml
+    object_template: imagestream.yml.j2
     object_objectname: imagestream.yml
 
   - role: openshift/object
     object_app: elections
-    object_template: buildconfig.yml
+    object_template: buildconfig.yml.j2
     object_objectname: buildconfig.yml
 
   - role: openshift/secret-file
@@ -87,12 +87,12 @@
 
   - role: openshift/object
     object_app: elections
-    object_template: secret.yml
+    object_template: secret.yml.j2
     object_objectname: secret.yml
 
   - role: openshift/object
     object_app: elections
-    object_template: configmap.yml
+    object_template: configmap.yml.j2
     object_objectname: configmap.yml
 
   - role: openshift/start-build
