@@ -40,7 +40,7 @@
     object_objectname: imagestream.yml
   - role: openshift/object
     object_app: release-monitoring
-    object_template: buildconfig.yml
+    object_template: buildconfig.yml.j2
     object_objectname: buildconfig.yml
   - role: openshift/start-build
     start_build_app: release-monitoring
@@ -50,7 +50,7 @@
     - build
   - role: openshift/object
     object_app: release-monitoring
-    object_template: configmap.yml
+    object_template: configmap.yml.j2
     object_objectname: configmap.yml
   - role: openshift/object
     object_app: release-monitoring
@@ -58,7 +58,7 @@
     object_objectname: service.yml
   - role: openshift/object
     object_app: release-monitoring
-    object_template: route.yml
+    object_template: route.yml.j2
     object_objectname: route.yml
   - role: openshift/object
     object_app: release-monitoring
