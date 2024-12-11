@@ -21,7 +21,7 @@
 
 #  - role: openshift/object
 #    object_app: monitor-dashboard
-#    object_template: configmap.yml
+#    object_template: configmap.yml.j2
 #    object_objectname: configmap.yml
 
 #  - role: openshift/object
@@ -36,13 +36,13 @@
 
 #  - role: openshift/object
 #    object_app: monitor-dashboard
-#    object_template: dashboard_config.yml
+#    object_template: dashboard_config.yml.j2
 #    object_objectname: dashboard_config.yml
 
 
 #  - role: openshift/object
 #    object_app: monitor-dashboard
-#    object_template: buildconfig.yml
+#    object_template: buildconfig.yml.j2
 #    object_objectname: buildconfig.yml
 
 
@@ -53,7 +53,7 @@
 
 #  - role: openshift/object
 #    object_app: monitor-dashboard
-#    object_template: datagrepper_configmap.yml
+#    object_template: datagrepper_configmap.yml.j2
 #    object_objectname: datagrepper_configmap.yml
 
   - role: openshift/object
@@ -104,21 +104,21 @@
 
 #  - role: openshift/object
 #    object_app: monitor-dashboard
-#    object_template: postgrest_deploymentconfig.yml
+#    object_template: postgrest_deploymentconfig.yml.j2
 #    object_objectname: postgrest_deploymentconfig.yml
 
 #  - role: openshift/object
 #    object_app: monitor-dashboard
-#    object_template: prest_deploymentconfig.yml
+#    object_template: prest_deploymentconfig.yml.j2
 #    object_objectname: prest_deploymentconfig.yml
 
 
 #  - role: openshift/object
 #    object_app: monitor-dashboard
-#    object_template: datagrepper_deploymentconfig.yml
+#    object_template: datagrepper_deploymentconfig.yml.j2
 #    object_objectname: datagrepper_deploymentconfig.yml
 
   - role: openshift/object
     object_app: monitor-dashboard
-    object_template: deploymentconfig.yml
+    object_template: deploymentconfig.yml.j2
     object_objectname: deploymentconfig.yml
