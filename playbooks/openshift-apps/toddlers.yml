@@ -27,34 +27,34 @@
   - role: rabbit/queue
     queue_username: toddlers{{ env_suffix }}
     queue_name: toddlers{{ env_suffix }}
-    queue_routing_keys:
-      # flag_ci_pr
-      - "org.centos.*.ci.dist-git-pr.test.error"
-      - "org.centos.*.ci.dist-git-pr.test.complete"
-      - "org.centos.*.ci.dist-git-pr.test.running"
-      # flag_commit_build
-      - "org.fedoraproject.*.buildsys.build.state.change"
-      # packager_bugzilla_sync
-      - "org.fedoraproject.*.toddlers.trigger.packager_bugzilla_sync"
-      # pdc_import_compose
-      - "org.fedoraproject.*.toddlers.trigger.pdc_import_compose"
-      - "org.fedoraproject.*.pungi.compose.status.change"
-      # pdc_modules
-      - "org.fedoraproject.*.mbs.module.state.change"
-      # check_email_overrides
-      - "org.fedoraproject.*.toddlers.trigger.check_email_overrides"
-      # clean_retired_packages
-      - "org.fedoraproject.*.toddlers.trigger.clean_retired_packages"
-      # koji_block_retired
-      - "org.fedoraproject.*.toddlers.trigger.koji_block_retired"
-      - "org.fedoraproject.*.git.receive"
-      # scm_request_processor
-      - "org.fedoraproject.*.pagure.issue.new"
-      - "org.fedoraproject.*.pagure.issue.edit"
-      - "org.fedoraproject.*.pagure.issue.comment.added"
-      # pagure_fas_groups_sync
-      - "org.fedoraproject.*.toddlers.trigger.pagure_fas_groups_sync"
-      - "org.fedoraproject.*.fas.group.member.sponsor"
+    # queue_routing_keys:
+    #   # flag_ci_pr
+    #   - "org.centos.*.ci.dist-git-pr.test.error"
+    #   - "org.centos.*.ci.dist-git-pr.test.complete"
+    #   - "org.centos.*.ci.dist-git-pr.test.running"
+    #   # flag_commit_build
+    #   - "org.fedoraproject.*.buildsys.build.state.change"
+    #   # packager_bugzilla_sync
+    #   - "org.fedoraproject.*.toddlers.trigger.packager_bugzilla_sync"
+    #   # pdc_import_compose
+    #   - "org.fedoraproject.*.toddlers.trigger.pdc_import_compose"
+    #   - "org.fedoraproject.*.pungi.compose.status.change"
+    #   # pdc_modules
+    #   - "org.fedoraproject.*.mbs.module.state.change"
+    #   # check_email_overrides
+    #   - "org.fedoraproject.*.toddlers.trigger.check_email_overrides"
+    #   # clean_retired_packages
+    #   - "org.fedoraproject.*.toddlers.trigger.clean_retired_packages"
+    #   # koji_block_retired
+    #   - "org.fedoraproject.*.toddlers.trigger.koji_block_retired"
+    #   - "org.fedoraproject.*.git.receive"
+    #   # scm_request_processor
+    #   - "io.pagure.*.pagure.issue.new"
+    #   - "io.pagure.*.pagure.issue.edit"
+    #   - "io.pagure.*.pagure.issue.comment.added"
+    #   # pagure_fas_groups_sync
+    #   - "org.fedoraproject.*.toddlers.trigger.pagure_fas_groups_sync"
+    #   - "org.fedoraproject.*.fas.group.member.sponsor"
     queue_thresholds:
       warning: 10
       critical: 100
