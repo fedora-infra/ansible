@@ -24,14 +24,14 @@
   - role: openshift/object
     object_app: review-stats
     object_objectname: buildconfig.yml
-    object_template: buildconfig.yml
+    object_template: buildconfig.yml.j2
   - role: openshift/object
     object_app: review-stats
-    object_template: configmap.yml
+    object_template: configmap.yml.j2
     object_objectname: configmap.yml
   - role: openshift/object
     object_app: review-stats
-    object_template: pvc.yml
+    object_template: pvc.yml.j2
     object_objectname: pvc.yml
   - role: openshift/start-build
     start_build_app: review-stats
@@ -41,7 +41,7 @@
     - build
   - role: openshift/object
     object_app: review-stats
-    object_template: cron.yml
+    object_template: cron.yml.j2
     object_objectname: cron.yml
     tags:
       - deploy-cronjob
