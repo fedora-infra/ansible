@@ -50,22 +50,22 @@
 
   - role: openshift/object
     object_app: monitor-gating
-    object_template: imagestream.yml
+    object_template: imagestream.yml.j2
     object_objectname: imagestream.yml
 
   - role: openshift/object
     object_app: monitor-gating
-    object_template: buildconfig.yml
+    object_template: buildconfig.yml.j2
     object_objectname: buildconfig.yml
 
   - role: openshift/object
     object_app: monitor-gating
-    object_template: secret.yml
+    object_template: secret.yml.j2
     object_objectname: secret.yml
 
   - role: openshift/object
     object_app: monitor-gating
-    object_template: configmap.yml
+    object_template: configmap.yml.j2
     object_objectname: configmap.yml
 
   - role: openshift/secret-file
@@ -76,7 +76,7 @@
 
   - role: openshift/object
     object_app: monitor-gating
-    object_template: deploymentconfig.yml
+    object_template: deploymentconfig.yml.j2
     object_objectname: deploymentconfig.yml
 
   - role: openshift/start-build
@@ -89,30 +89,25 @@
 
   - role: openshift/object
     object_app: monitor-gating
-    object_template: dashboard_config.yml
+    object_template: dashboard_config.yml.j2
     object_objectname: dashboard_config.yml
 
   - role: openshift/object
     object_app: monitor-gating
-    object_template: dashboard_configmap.yml
+    object_template: dashboard_configmap.yml.j2
     object_objectname: dashboard_configmap.yml
 
   - role: openshift/object
     object_app: monitor-gating
-    object_template: dashboard_configmap.yml
-    object_objectname: dashboard_configmap.yml
-
-  - role: openshift/object
-    object_app: monitor-gating
-    object_template: dashboard_route.yml
+    object_template: dashboard_route.yml.j2
     object_objectname: dashboard_route.yml
 
   - role: openshift/object
     object_app: monitor-gating
-    object_template: dashboard_serviceaccount.yml
+    object_template: dashboard_serviceaccount.yml.j2
     object_objectname: dashboard_serviceaccount.yml
 
   - role: openshift/object
     object_app: monitor-gating
-    object_template: dashboard_deploymentconfig.yml
+    object_template: dashboard_deploymentconfig.yml.j2
     object_objectname: dashboard_deploymentconfig.yml
