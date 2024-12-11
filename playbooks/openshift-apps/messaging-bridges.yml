@@ -128,7 +128,7 @@
     object_objectname: imagestream.yml
   - role: openshift/object
     object_app: messaging-bridges
-    object_template: buildconfig.yml
+    object_template: buildconfig.yml.j2
     object_objectname: buildconfig.yml
 
   - role: openshift/start-build
@@ -140,7 +140,7 @@
 
   - role: openshift/object
     object_app: messaging-bridges
-    object_template: configmap.yml
+    object_template: configmap.yml.j2
     object_objectname: configmap.yml
   - role: openshift/object
     object_app: messaging-bridges
