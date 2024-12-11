@@ -130,12 +130,12 @@
 
     - role: openshift/object
       object_app: fmn
-      object_template: buildconfig.yml
+      object_template: buildconfig.yml.j2
       object_objectname: buildconfig.yml
 
     - role: openshift/object
       object_app: fmn
-      object_template: configmap.yml
+      object_template: configmap.yml.j2
       object_objectname: configmap.yml
 
     - role: openshift/object
@@ -174,12 +174,12 @@
     # Secrets
     - role: openshift/object
       object_app: fmn
-      object_template: secrets.yml
+      object_template: secrets.yml.j2
       object_objectname: secrets.yml
 
     - role: openshift/object
       object_app: fmn
-      object_template: secret-webhook.yml
+      object_template: secret-webhook.yml.j2
       object_objectname: secret-webhook.yml
 
     # Fedora Messaging
@@ -202,7 +202,7 @@
     # Deployment config
     - role: openshift/object
       object_app: fmn
-      object_template: deploymentconfig.yml
+      object_template: deploymentconfig.yml.j2
       object_objectname: deploymentconfig.yml
 
     # FASJSON access
@@ -217,5 +217,5 @@
     # Cron jobs
     - role: openshift/object
       object_app: fmn
-      object_template: cron.yml
+      object_template: cron.yml.j2
       object_objectname: cron.yml
