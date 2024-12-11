@@ -37,17 +37,17 @@
   # Copy in a kerberos config that is unique to fedora infra
   - role: openshift/object
     object_app: coreos-koji-tagger
-    object_template: configmap.yml
+    object_template: configmap.yml.j2
     object_objectname: configmap.yml
 
   - role: openshift/object
     object_app: coreos-koji-tagger
-    object_template: imagestream.yml
+    object_template: imagestream.yml.j2
     object_objectname: imagestream.yml
 
   - role: openshift/object
     object_app: coreos-koji-tagger
-    object_template: buildconfig.yml
+    object_template: buildconfig.yml.j2
     object_objectname: buildconfig.yml
 
   - role: openshift/start-build
@@ -60,7 +60,7 @@
 
   - role: openshift/object
     object_app: coreos-koji-tagger
-    object_template: deploymentconfig.yml
+    object_template: deploymentconfig.yml.j2
     object_objectname: deploymentconfig.yml
 
   ###############################################

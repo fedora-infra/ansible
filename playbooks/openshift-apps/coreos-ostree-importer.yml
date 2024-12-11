@@ -73,27 +73,27 @@
   # Fedora Messaging config
   - role: openshift/object
     object_app: coreos-ostree-importer
-    object_template: configmap.yml
+    object_template: configmap.yml.j2
     object_objectname: configmap.yml
 
   - role: openshift/object
     object_app: coreos-ostree-importer
-    object_template: imagestream.yml
+    object_template: imagestream.yml.j2
     object_objectname: imagestream.yml
 
   - role: openshift/object
     object_app: coreos-ostree-importer
-    object_template: buildconfig.yml
+    object_template: buildconfig.yml.j2
     object_objectname: buildconfig.yml
 
   - role: openshift/object
     object_app: coreos-ostree-importer
-    object_template: deploymentconfig.yml
+    object_template: deploymentconfig.yml.j2
     object_objectname: deploymentconfig.yml
 
   - role: openshift/object
     object_app: coreos-ostree-importer
-    object_template: pvc.yml
+    object_template: pvc.yml.j2
     object_objectname: pvc.yml
 
   ###############################################

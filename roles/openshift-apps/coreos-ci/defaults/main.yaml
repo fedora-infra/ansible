@@ -5,7 +5,7 @@ project_service_account: coreos-ci-sa
 appowners: []
 ocp_service_account: root
 project_templates:
-  - project.yaml
-  - group.yaml
-  - rolebinding.yaml
-  - securitycontextconstraints.yaml
+  - project.yaml.j2
+  - group.yaml.j2
+  - rolebinding.yaml.j2
+  - securitycontextconstraints.yaml.j2
