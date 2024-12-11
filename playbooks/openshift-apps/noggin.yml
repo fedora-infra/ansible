@@ -59,12 +59,12 @@
 
   - role: openshift/object
     object_app: noggin
-    object_template: buildconfig.yml
+    object_template: buildconfig.yml.j2
     object_objectname: buildconfig.yml
 
   - role: openshift/object
     object_app: noggin
-    object_template: configmap.yml
+    object_template: configmap.yml.j2
     object_objectname: configmap.yml
     noggin_theme: fas
 
@@ -73,7 +73,7 @@
 
   - role: openshift/object
     object_app: noggin
-    object_template: service.yml
+    object_template: service.yml.j2
     object_objectname: service.yml
 
   - role: openshift/route
@@ -88,17 +88,17 @@
 
   - role: openshift/object
     object_app: noggin
-    object_template: secrets.yml
+    object_template: secrets.yml.j2
     object_objectname: secrets.yml
 
   - role: openshift/object
     object_app: noggin
-    object_template: secret-webhook.yml
+    object_template: secret-webhook.yml.j2
     object_objectname: secret-webhook.yml
 
   - role: openshift/object
     object_app: noggin
-    object_template: deploymentconfig.yml
+    object_template: deploymentconfig.yml.j2
     object_objectname: deploymentconfig.yml
 
   - role: openshift/start-build
