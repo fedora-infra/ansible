@@ -96,14 +96,14 @@
     secret_file_privatefile: "rabbitmq/{{env}}/pki/private/bodhi{{env_suffix}}.key"
   - role: openshift/object
     object_app: bodhi
-    object_template: imagestreams-tagged.yml
+    object_template: imagestreams-tagged.yml.j2
     object_objectname: imagestreams.yml
   - role: openshift/imagestream
     imagestream_app: bodhi
     imagestream_imagename: bodhi-base
   - role: openshift/object
     object_app: bodhi
-    object_template: buildconfig.yml
+    object_template: buildconfig.yml.j2
     object_objectname: buildconfig.yml
   - role: openshift/start-build
     start_build_app: bodhi
@@ -113,7 +113,7 @@
     - build
   - role: openshift/object
     object_app: bodhi
-    object_template_fullpath: "{{roles_path}}/bodhi2/base/templates/configmap.yml"
+    object_template_fullpath: "{{roles_path}}/bodhi2/base/templates/configmap.yml.j2"
     object_objectname: configmap.yml
   - role: openshift/object
     object_app: bodhi
@@ -139,11 +139,11 @@
       haproxy.router.openshift.io/timeout: 180s
   - role: openshift/object
     object_app: bodhi
-    object_template: deploymentconfig.yml
+    object_template: deploymentconfig.yml.j2
     object_objectname: deploymentconfig.yml
   - role: openshift/object
     object_app: bodhi
-    object_template: critpathcron.yml
+    object_template: critpathcron.yml.j2
     object_objectname: critpathcron.yml
   - role: openshift/imagestream
     imagestream_app: bodhi

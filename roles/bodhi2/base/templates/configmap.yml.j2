@@ -42,7 +42,7 @@ data:
   httpd.conf: |-
     {{ load_file('httpd.conf.j2') | indent }}
   logging.yaml: |-
-    {{ load_file('logging.yaml') | indent }}
+    {{ load_file('logging.yaml.j2') | indent }}
   production.ini: |-
     {{ load_file('production.ini.j2') | indent }}
   celeryconfig.py: |-
