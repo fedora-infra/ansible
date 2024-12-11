@@ -75,12 +75,12 @@
 
   - role: openshift/object
     object_app: fasjson
-    object_template: buildconfig.yml
+    object_template: buildconfig.yml.j2
     object_objectname: buildconfig.yml
 
   - role: openshift/object
     object_app: fasjson
-    object_template: configmap.yml
+    object_template: configmap.yml.j2
     object_objectname: configmap.yml
 
   - role: openshift/ipa-client
@@ -102,12 +102,12 @@
 
   - role: openshift/object
     object_app: fasjson
-    object_template: secret-webhook.yml
+    object_template: secret-webhook.yml.j2
     object_objectname: secret-webhook.yml
 
   - role: openshift/object
     object_app: fasjson
-    object_template: deploymentconfig.yml
+    object_template: deploymentconfig.yml.j2
     object_objectname: deploymentconfig.yml
 
   # - role: openshift/start-build
