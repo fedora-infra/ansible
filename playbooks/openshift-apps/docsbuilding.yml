@@ -35,7 +35,7 @@
   - role: openshift/object
     object_app: docsbuilding
     object_objectname: buildconfig.yml
-    object_template: buildconfig.yml
+    object_template: buildconfig.yml.j2
 
   - role: openshift/start-build
     start_build_app: docsbuilding
@@ -46,14 +46,14 @@
 
   - role: openshift/object
     object_app: docsbuilding
-    object_template: cron.yml
+    object_template: cron.yml.j2
     object_objectname: cron.yml
     tags:
       - deploy-cronjob
 
   - role: openshift/object
     object_app: docsbuilding
-    object_template: cron-translated.yml
+    object_template: cron-translated.yml.j2
     object_objectname: cron-translated.yml
     tags:
       - deploy-cronjob
