@@ -29,7 +29,7 @@
           warning: 10
           critical: 100
       loop: "{{ poddlers_toddlers }}"
-      when: "{{ item.replicas|default(1) > 0 }}"
+      when: "item.replicas|default(1) > 0"
 
   roles:
     - role: openshift/project
