@@ -59,17 +59,17 @@
 
   - role: openshift/object
     object_app: maubot
-    object_template: buildconfig.yml
+    object_template: buildconfig.yml.j2
     object_objectname: buildconfig.yml
 
   - role: openshift/object
     object_app: maubot
-    object_template: meetbot-logs-volume.yml
+    object_template: meetbot-logs-volume.yml.j2
     object_objectname: meetbot-logs-volume.yml
 
   - role: openshift/object
     object_app: maubot
-    object_template: configmap.yml
+    object_template: configmap.yml.j2
     object_objectname: configmap.yml
 
   - role: openshift/secret-file
