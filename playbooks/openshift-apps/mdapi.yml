@@ -23,12 +23,12 @@
 
   - role: openshift/object
     object_app: mdapi
-    object_template: imagestream.yml
+    object_template: imagestream.yml.j2
     object_objectname: imagestream.yml
 
   - role: openshift/object
     object_app: mdapi
-    object_template: buildconfig.yml
+    object_template: buildconfig.yml.j2
     object_objectname: buildconfig.yml
 
   - role: openshift/object
@@ -38,7 +38,7 @@
 
   - role: openshift/object
     object_app: mdapi
-    object_template: configmap.yml
+    object_template: configmap.yml.j2
     object_objectname: configmap.yml
 
   - role: openshift/secret-file
