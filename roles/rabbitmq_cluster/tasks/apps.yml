@@ -10,7 +10,7 @@
   include_role:
     name: rabbit/user
   vars:
-    username: coreos{{ env_suffix }}
+    user_name: coreos{{ env_suffix }}
 
 
 - name: CentOS CI
