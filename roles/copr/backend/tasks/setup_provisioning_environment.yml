@@ -61,7 +61,7 @@
     src: "{{ roles_path }}/copr/backend/templates/provision/{{ item }}"
     dest: "{{ provision_directory }}/{{ item }}"
   with_items:
-  - aws_cloud_vars.yml
+  - aws_cloud_vars.yml.j2
   tags:
   - provision_config
   when:

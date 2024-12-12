@@ -165,8 +165,8 @@
     owner: resalloc
     group: resalloc
   with_items:
-  - server.yaml
-  - pools.yaml
+  - server.yaml.j2
+  - pools.yaml.j2
   tags:
   - provision_config
   - resalloc_config
