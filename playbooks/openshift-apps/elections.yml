@@ -25,6 +25,9 @@
   hosts: os_control_stg[0]:os_control[0]
   user: root
   gather_facts: false
+  vars:
+    elections_oidc_overwrite_redirect_uri: >-
+      https://elections{{ env_suffix }}.fedoraproject.org/oidc_callback
 
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml
