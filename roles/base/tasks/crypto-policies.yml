@@ -21,7 +21,7 @@
 
 - name: Set crypto-policy on fedora 33 and higher hosts back to default
   command: "update-crypto-policies --set DEFAULT"
-  when: "ansible_distribution_major_version|int >= 33 and (currentcryptopolicy.stdout.find('DEFAULT') == -1 or cryptopolicyapplied.rc != 0)"
+  when: "ansible_distribution_major_version|int >= 33 and (currentcryptopolicy.stdout.find('DEFAULT') == -1 or cryptopolicyapplied.rc != 0) and not inventory_hostname.startswith('ipsilon') "
   check_mode: no
   tags:
   - crypto-policies
@@ -30,6 +30,16 @@
 - name: Set crypto-policy on RHEL9 dns servers to DEFAULT:SHA1
   command: "update-crypto-policies --set DEFAULT:SHA1"
   when: "inventory_hostname.startswith('ns') and (currentcryptopolicy.stdout.find('DEFAULT:SHA1') == -1 or cryptopolicyapplied.rc != 0)"
+  check_mode: no
+  tags:
+  - crypto-policies
+  - base/crypto-policies
+
+# see https://pagure.io/fedora-infrastructure/issue/12321
+# This is needed to get SAML2 auth working with bugzilla.redhat.com
+- name: Set crypto-policy on ipsilon servers to FEDORA40
+  command: "update-crypto-policies --set FEDORA40"
+  when: "inventory_hostname.startswith('ns') and (currentcryptopolicy.stdout.find('FEDORA40') == -1 or cryptopolicyapplied.rc != 0)"
   check_mode: no
   tags:
   - crypto-policies
