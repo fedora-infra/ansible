@@ -12,8 +12,8 @@ but this is the working repository where changes are made.
 
 If you would like to help out with Fedora Infrastructure, see:
 
-* https://fedoraproject.org/wiki/Infrastructure/GettingStarted
-* https://fedoraproject.org/wiki/Infrastructure_Apprentice
+* https://docs.fedoraproject.org/en-US/infra/gettingstarted/
+* https://docs.fedoraproject.org/en-US/infra/apprentice/
 
 Ansible repository/structure
 ----------------------------
@@ -100,7 +100,7 @@ Contributing and Licensing
 Contributions to this repository are subject to the Fedora Project
 Contributor Agreement. If no license is specified, the MIT license is used, otherwise
 the contribution is under the specified acceptable Fedora License.
-See https://fedoraproject.org/wiki/Legal:Fedora_Project_Contributor_Agreement
+See https://docs.fedoraproject.org/en-US/legal/fpca/
 for more information.
 
 Contributing Pull Requests
@@ -133,7 +133,7 @@ work closely with other to ensure that the downtime is properly scheduled:
 
 - there is an issue in https://pagure.io/fedora-infrastructure/issues specifying the downtime
 - there is an email sent to the devel-list
-- https://status.fedoraproject.org is updated (see https://fedora-infra-docs.readthedocs.io/en/latest/sysadmin-guide/sops/status-fedora.html)
+- https://status.fedoraproject.org is updated (see https://docs.fedoraproject.org/en-US/infra/sysadmin_guide/status-fedora/)
 
 Applications on critical path: pagure, mirrormanager, toddlers, bodhi, noggin, mdapi, rpmautospec, 
 pagure-dist-git, monitor-gating, mirror_from_pagure, fedora-messaging, dist-git, PDC/FPDC, FMN, sigul
