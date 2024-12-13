@@ -1,2 +1,7 @@
 ---
 eth0_ipv4_ip: 10.1.102.24
+tcp_ports: [
+  # allow incoming varnish requests to varnish cache
+  80
+]
+varnish_group: s390kojipkgs
