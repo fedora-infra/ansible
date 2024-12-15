@@ -23,7 +23,7 @@
     name: serial-getty@ttyS0
     state: started
     enabled: true
-  when: ansible_architecture != 'ppc64le'
+  when: ansible_architecture == 'x86_64'
   tags:
   - serial-console
 
@@ -32,6 +32,6 @@
     name: serial-getty@ttyS1
     state: started
     enabled: true
-  when: ansible_architecture != 'ppc64le'
+  when: ansible_architecture == 'x86_64'
   tags:
   - serial-console
