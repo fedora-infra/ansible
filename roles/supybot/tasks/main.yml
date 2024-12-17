@@ -14,7 +14,7 @@
 - set_fact: botname={{ botnames[env] }}
 
 - name: Creating zodbot log dir
-  file: path={{ item }} state=directory owner=daemon
+  ansible.builtin.file: path={{ item }} state=directory owner=daemon
   with_items:
   - /var/lib/{{ botname }}
   - /var/lib/{{ botname }}/conf
@@ -25,11 +25,11 @@
   tags: supybot
 
 - name: Create teams directory
-  file: path=/srv/web/meetbot/teams state=directory owner=apache group=apache mode=0755
+  ansible.builtin.file: path=/srv/web/meetbot/teams state=directory owner=apache group=apache mode=0755
   tags: supybot
 
 - name: Create archives directory
-  file: path=/srv/web/meetbot/archives state=directory owner=apache group=apache mode=0755
+  ansible.builtin.file: path=/srv/web/meetbot/archives state=directory owner=apache group=apache mode=0755
   tags: supybot
 
 - name: Setup meetings_by_team script
@@ -105,7 +105,7 @@
   - inventory_hostname.startswith('value02')
 
 - name: Create /etc/pki/fedora-messaging
-  file:
+  ansible.builtin.file:
     dest: /etc/pki/fedora-messaging
     mode: "0775"
     state: directory

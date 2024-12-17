@@ -79,7 +79,7 @@
 # These following four tasks are used for copying over our custom selinux
 # module.
 - name: Ensure a directory exists for our custom selinux module
-  file: dest=/usr/share/haproxy state=directory
+  ansible.builtin.file: dest=/usr/share/haproxy state=directory
   tags:
   - haproxy
   - selinux

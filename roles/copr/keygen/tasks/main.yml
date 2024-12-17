@@ -1,6 +1,6 @@
 ---
 - name: Prepare mount point
-  file: state=directory path=/var/lib/copr-keygen
+  ansible.builtin.file: state=directory path=/var/lib/copr-keygen
 
 - name: Mount up disk of copr repo
   mount: name=/var/lib/copr-keygen src='LABEL=copr-keygen' fstype=ext4 state=mounted
@@ -12,8 +12,7 @@
   - restart haveged
 
 - name: Change owner of data to copr-signer
-  file: path=/var/lib/copr-keygen owner=copr-signer group=copr-signer recurse=yes
-  when: keychain_mounted.changed
+  ansible.builtin.file: path=/var/lib/copr-keygen owner=copr-signer group=copr-signer recurse=yes
 
 - name: Put keygen vhost for httpd
   copy: src="httpd/copr-keygen.conf" dest="/etc/httpd/conf.d/copr-keygen.conf"
@@ -46,7 +45,7 @@
 
 # Three tasks for handling our custom selinux module
 - name: Ensure a directory exists for our custom selinux module
-  file: dest=/usr/local/share/copr state=directory
+  ansible.builtin.file: dest=/usr/local/share/copr state=directory
 
 - name: Copy over our custom selinux module
   copy: src=selinux/copr_rules.pp dest=/usr/local/share/copr/copr_rules.pp

@@ -13,7 +13,7 @@
   when: (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int >= 8)
 
 - name: Make sure the /usr/share/GeoIP/ directory exists
-  file:
+  ansible.builtin.file:
     path: /usr/share/GeoIP/
     state: directory
     owner: root

@@ -191,7 +191,7 @@
   - packages
 
 - name: Check tools directory exists with correct ownership
-  file: path=/root/fedora_openqa state=directory owner=root group=root
+  ansible.builtin.file: path=/root/fedora_openqa state=directory owner=root group=root
 
 # we don't want to run the checkout if the tests are on a non-standard
 # branch, as that usually means we're messing around on staging and
@@ -236,7 +236,7 @@
   - config
 
 - name: Create fedora_openqa config directory
-  file: path=/etc/fedora-openqa state=directory owner=root group=root mode=0755
+  ansible.builtin.file: path=/etc/fedora-openqa state=directory owner=root group=root mode=0755
 
 - name: Write schedule.conf
   template: src=schedule.conf.j2 dest=/etc/fedora-openqa/schedule.conf owner=root group=root mode=0600
@@ -246,7 +246,7 @@
   - config
 
 - name: Remove old wikitcms credentials file
-  file: path=/etc/fedora/credentials state=absent
+  ansible.builtin.file: path=/etc/fedora/credentials state=absent
   tags:
   - config
 
@@ -255,7 +255,7 @@
 # them, as we used to have for the fedmsg user. But for now they run
 # as root and use this one.
 - name: Create /root/.openidc (wiki access token file location)
-  file: path=/root/.openidc state=directory owner=root group=root mode=0700
+  ansible.builtin.file: path=/root/.openidc state=directory owner=root group=root mode=0700
 
 - name: Write wikitcms token file for root
   copy: src={{ wikitcms_token }} dest=/root/.openidc/oidc_wikitcms.json owner=root group=root mode=0600
@@ -264,7 +264,7 @@
   - config
 
 - name: Create /etc/pki/fedora-messaging
-  file:
+  ansible.builtin.file:
     dest: /etc/pki/fedora-messaging
     mode: "0775"
     owner: root
@@ -355,7 +355,7 @@
   when: "openqa_amqp_resultsdb_reporter_queue is defined and openqa_amqp_resultsdb_reporter_queue"
 
 - name: Create directory for consumer service config drop-in
-  file: path=/etc/systemd/system/fm-consumer@.service.d state=directory owner=root group=root mode=0755
+  ansible.builtin.file: path=/etc/systemd/system/fm-consumer@.service.d state=directory owner=root group=root mode=0755
 
 # This slows restarts of fm-consumer@ to every 60 seconds, instead of
 # near-instantly; this avoids huge floods of errors when resultsdb

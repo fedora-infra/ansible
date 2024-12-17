@@ -7,7 +7,7 @@
 
 # setup fedora-messaging
 - name: Create the config folder for fedora-messaging
-  file:
+  ansible.builtin.file:
     path: /etc/fedora-messaging/
     owner: root
     group: root

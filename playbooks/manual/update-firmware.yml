@@ -52,7 +52,7 @@
   - name: Create drop place for upgrades
     check_mode: no
     when: ansible_virtualization_role == "host"
-    file: path=/root/firmware-upgrades state=directory
+    ansible.builtin.file: path=/root/firmware-upgrades state=directory
 
   - name: Check which updates to copy
     check_mode: no
@@ -98,7 +98,7 @@
 
   # Generic stuff continues here
   - name: Mark updates as done
-    file: path=/root/firmware-upgrades/{{ item.item.1 }}.applied
+    ansible.builtin.file: path=/root/firmware-upgrades/{{ item.item.1 }}.applied
           state=touch owner=root mode=644
     when: "'stat' in item and not item.stat.exists"
     with_items: "{{is_applied_results.results}}"
@@ -106,7 +106,7 @@
   # We are cleaning up all files we copied, regardless of update result
   - name: Delete update files
     check_mode: no
-    file: path=/root/firmware-upgrades/{{ item.item.1 }}
+    ansible.builtin.file: path=/root/firmware-upgrades/{{ item.item.1 }}
           state=absent
     when: "'stat' in item and not item.stat.exists"
     with_items: "{{is_applied_results.results}}"

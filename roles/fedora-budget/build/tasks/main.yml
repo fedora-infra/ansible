@@ -1,5 +1,5 @@
 ---
-- file: dest=/srv/web/budget.fedoraproject.org state=directory
+- ansible.builtin.file: dest=/srv/web/budget.fedoraproject.org state=directory
 
 - template: >
     src=budget-sync.j2 dest=/usr/local/bin/budget-sync

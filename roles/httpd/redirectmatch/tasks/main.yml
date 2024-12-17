@@ -9,7 +9,7 @@
 
 ---
 - name: Ensure directory exists for redirect
-  file:
+  ansible.builtin.file:
     path: /etc/httpd/conf.d/{{website}}
     state: directory
     mode: '0755'

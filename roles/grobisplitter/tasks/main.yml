@@ -11,7 +11,7 @@
     - grobi
 
 - name: Make sure that /usr/local/bin exists
-  file: path=/usr/local/bin state=directory
+  ansible.builtin.file: path=/usr/local/bin state=directory
   tags:
     - grobi
 

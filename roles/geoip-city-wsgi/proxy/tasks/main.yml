@@ -11,7 +11,7 @@
   - geoip-city-wsgi/proxy
 
 - name: Make a dir for our fancy about page.  So chic!
-  file: dest=/srv/web/geoip state=directory mode=0775 owner=root group=root
+  ansible.builtin.file: dest=/srv/web/geoip state=directory mode=0775 owner=root group=root
   tags:
   - geoip-city-wsgi
   - geoip-city-wsgi/proxy

@@ -30,7 +30,7 @@
   - kojipkgs
 
 - name: Make a mnt/koji link
-  file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji
+  ansible.builtin.file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji
   tags:
   - kojipkgs
 
@@ -40,7 +40,7 @@
   - kojipkgs
 
 - name: Make systemd drop-in override dir
-  file: name=/etc/systemd/system/varnish.service.d
+  ansible.builtin.file: name=/etc/systemd/system/varnish.service.d
         state=directory
         recurse=yes
         owner=root group=root

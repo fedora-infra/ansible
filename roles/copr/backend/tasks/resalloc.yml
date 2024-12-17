@@ -131,7 +131,7 @@
   - provision_config
 
 - name: Resalloc, ssh directory
-  file:
+  ansible.builtin.file:
     path: /var/lib/resallocserver/.ssh
     state: directory
     mode: "0700"

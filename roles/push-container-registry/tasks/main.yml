@@ -15,7 +15,7 @@
   - push-container-registry
 
 - name: Ensure cert dir exists
-  file:
+  ansible.builtin.file:
     path: "{{cert_dest_dir}}"
     state: directory
   tags:

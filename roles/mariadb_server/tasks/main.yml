@@ -44,7 +44,7 @@
   template: src=dotmy.cnf.j2 dest=/root/.my.cnf owner=root group=root mode=0700
 
 - name: Ensure mariadb has a place to backup to
-  file: dest=/backups state=directory owner=mysql
+  ansible.builtin.file: dest=/backups state=directory owner=mysql
   tags:
   - mariadb-server
 

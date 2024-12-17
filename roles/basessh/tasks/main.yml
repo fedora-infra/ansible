@@ -156,7 +156,7 @@
   - base
 
 - name: Create directory for storing pubkeys
-  file: path="{{pubkeydir}}"
+  ansible.builtin.file: path="{{pubkeydir}}"
         owner=root
         group=root
         mode=0600

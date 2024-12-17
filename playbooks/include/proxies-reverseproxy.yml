@@ -18,7 +18,7 @@
   pre_tasks:
 
   - name: Remove some crusty files from bygone eras
-    file: dest=/etc/httpd/conf.d/{{item}} state=absent
+    ansible.builtin.file: dest=/etc/httpd/conf.d/{{item}} state=absent
     with_items:
     - meetbot.fedoraproject.org/reversepassproxy.conf
     - meetbot.fedoraproject.org/meetbot.conf

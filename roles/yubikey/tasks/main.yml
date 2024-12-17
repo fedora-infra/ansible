@@ -19,7 +19,7 @@
   - { file: ykval-config.php, dest: /etc/ykval/ykval-config.php }
 
 - name: Symlink the configuration files to /usr/share/...
-  file: src={{item.file}} dest={{ item.dest }} state=link
+  ansible.builtin.file: src={{item.file}} dest={{ item.dest }} state=link
   with_items:
   - {file: /etc/ykval/ykval-config.php, dest: /usr/share/ykval/ykval-config.php }
   - {file: /etc/ykksm/ykksm-config.php, dest: /usr/share/ykksm/ykksm-config.php }

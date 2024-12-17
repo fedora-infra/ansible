@@ -1,6 +1,6 @@
 ---
 - name: Ensures /root/ocp4/openshift-apps/firmitas/ dir exists
-  file:
+  ansible.builtin.file:
     path: "/root/ocp4/openshift-apps/firmitas/"
     state: directory
 

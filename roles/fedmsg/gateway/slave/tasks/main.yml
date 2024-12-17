@@ -61,7 +61,7 @@
 # Stunnel specific bits
 
 - name: Create directories
-  file: path=/etc/{{ item }} state=directory
+  ansible.builtin.file: path=/etc/{{ item }} state=directory
   with_items:
   - stunnel
   tags:
@@ -80,7 +80,7 @@
   - fedmsg/gateway/slave
 
 - name: Ensure old stunnel init file is gone
-  file: dest=/etc/init.d/stunnel/stunnel.init state=absent
+  ansible.builtin.file: dest=/etc/init.d/stunnel/stunnel.init state=absent
   tags:
   - fedmsg/gateway
   - fedmsg/gateway/slave

@@ -10,6 +10,6 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   tasks:
-  - file: dest=/var/cache/httpd/mote/cache.json state=absent
+  - ansible.builtin.file: dest=/var/cache/httpd/mote/cache.json state=absent
   - service: name="httpd" state=restarted
   - service: name="mote-updater" state=restarted

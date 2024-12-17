@@ -330,7 +330,7 @@
   - bodhi
 
 - name: Create /etc/pki/fedora-messaging
-  file:
+  ansible.builtin.file:
     dest: /etc/pki/fedora-messaging
     mode: "0775"
     owner: root
@@ -382,12 +382,12 @@
   - bodhi
 
 - name: Make a mnt/koji link
-  file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji force=yes
+  ansible.builtin.file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji force=yes
   tags:
   - bodhi
 
 - name: Create /etc/systemd/system/fm-consumer@.service.d
-  file:
+  ansible.builtin.file:
     state: directory
     path: /etc/systemd/system/fm-consumer@.service.d
     owner: root

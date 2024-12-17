@@ -7,12 +7,12 @@
   - fedora-messaging
 
 - name: Create rabitmq directory
-  file: path=/etc/pki/rabbitmq/ owner=root group=root mode=0755 state=directory
+  ansible.builtin.file: path=/etc/pki/rabbitmq/ owner=root group=root mode=0755 state=directory
   tags:
   - fedora-messaging
 
-- name: "Create key/cert directory"
-  file: path=/etc/pki/rabbitmq/{{ item.username }}/
+- name: "create key/cert directory"
+  ansible.builtin.file: path=/etc/pki/rabbitmq/{{ item.username }}/
         owner={{ item.username }} group={{ item.username }}
         mode=0700 state=directory
   with_items: "{{ messaging.certificates }}"

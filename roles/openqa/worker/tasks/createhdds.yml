@@ -34,7 +34,7 @@
   when: "smtcheck.stdout is defined and smtcheck.stdout.find('is off') == -1"
 
 - name: Check createhdds directory exists with correct ownership
-  file: path=/root/createhdds state=directory owner=root group=root
+  ansible.builtin.file: path=/root/createhdds state=directory owner=root group=root
 
 # we don't want to run the checkout if createhdds is on a non-standard
 # branch, as that usually means we're messing around on staging and

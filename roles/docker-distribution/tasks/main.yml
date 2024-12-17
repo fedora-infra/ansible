@@ -20,7 +20,7 @@
   - docker-distribution
 
 - name: Ensure docker certs dir exists
-  file:
+  ansible.builtin.file:
     path: "{{ cert.dest_dir }}"
     state: directory
   when: tls.enabled

@@ -35,12 +35,12 @@
     - starting_builder
 
 - name: work-around for wrongly generated ami
-  file:
+  ansible.builtin.file:
     path: /etc/yum.repos.d/pr.repo
     state: absent
 
 - name: disable updates-testing
-  file:
+  ansible.builtin.file:
     path: /etc/yum.repos.d/fedora-updates-testing.repo
     state: absent
   when:
@@ -55,7 +55,7 @@
   register: system_updated
 
 - name: disable updates-testing, could be restored after update
-  file:
+  ansible.builtin.file:
     path: /etc/yum.repos.d/fedora-updates-testing.repo
     state: absent
   when: system_updated.changed
@@ -174,7 +174,7 @@
 
 - name: check disk space
   include_tasks:
-    file: check_path_free_space.yml
+    ansible.builtin.file: check_path_free_space.yml
   vars:
     path: "{{ item.path }}"
     size: "{{ item.size|int }}"
@@ -241,7 +241,7 @@
     - preparing_image
 
 - name: mockbuilder .ssh
-  file: state=directory path=/home/mockbuilder/.ssh mode=0700 owner=mockbuilder group=mockbuilder
+  ansible.builtin.file: state=directory path=/home/mockbuilder/.ssh mode=0700 owner=mockbuilder group=mockbuilder
   when:
     - preparing_image
 

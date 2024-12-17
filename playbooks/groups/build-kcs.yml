@@ -20,7 +20,7 @@
 
   tasks:
     - name: Make a keytab dir
-      file: dest="/etc/kojid-cloud-scheduler/" state=directory
+      ansible.builtin.file: dest="/etc/kojid-cloud-scheduler/" state=directory
 
   roles:
     - role: keytab/service

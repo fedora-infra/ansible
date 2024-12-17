@@ -49,7 +49,7 @@
 #   - stunnel
 
 # - name: Ensure old stunnel init file is gone
-#   file: dest=/etc/init.d/stunnel/stunnel.init state=absent
+#   ansible.builtin.file: dest=/etc/init.d/stunnel/stunnel.init state=absent
 #   tags:
 #   - pagure
 #   - stunnel
@@ -93,7 +93,7 @@
   - pagure
 
 - name: Create the /var/log/pagure folder where to store the logs
-  file: state=directory
+  ansible.builtin.file: state=directory
                path=/var/log/pagure
                owner=pagure group=packager mode=u+rwx,g+rwxs,o+rx
   tags:
@@ -113,7 +113,7 @@
   - fix_log
 
 - name: Create the /srv/tmp folder where to clone repos
-  file: state=directory
+  ansible.builtin.file: state=directory
                path=/srv/tmp
                owner=pagure group=pagure mode=0775
   tags:
@@ -163,7 +163,7 @@
   - pagure
 
 - name: Create all the directories where we store the git repos
-  file: state=directory
+  ansible.builtin.file: state=directory
                path={{ item }}
                owner=root group=packager mode=2775
   with_items:
@@ -176,7 +176,7 @@
   - pagure
 
 - name: Create the remotes folder so pagure can clone remote repos
-  file: state=directory
+  ansible.builtin.file: state=directory
                path={{ item }}
                owner=root group=packager mode=2775
   with_items:
@@ -271,7 +271,7 @@
   - restart apache
 
 - name: Create the /srv/cache/extras folder for the crons
-  file: state=directory
+  ansible.builtin.file: state=directory
                path=/srv/cache/extras
                owner=apache group=apache mode=0775
   tags:
@@ -321,7 +321,7 @@
   - fedora-messaging
 
 - name: Create the config folder for fedora-messaging
-  file: path=/etc/fedora-messaging/ owner=root group=root mode=0755 state=directory
+  ansible.builtin.file: path=/etc/fedora-messaging/ owner=root group=root mode=0755 state=directory
   tags:
   - pagure
   - fedora-messaging
@@ -335,7 +335,7 @@
   - fedora-messaging
 
 - name: Create folder where we'll place the certs
-  file: path=/etc/pki/rabbitmq/pagurecert/ owner=root group=root mode=0755 state=directory
+  ansible.builtin.file: path=/etc/pki/rabbitmq/pagurecert/ owner=root group=root mode=0755 state=directory
   tags:
   - pagure
   - fedora-messaging

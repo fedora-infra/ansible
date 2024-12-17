@@ -133,7 +133,7 @@
   - yumrepos
 
 - name: Make sure older infrastructure tags repos no longer exist
-  file: path="/etc/yum.repos.d/{{item}}" state=absent
+  ansible.builtin.file: path="/etc/yum.repos.d/{{item}}" state=absent
   with_items:
   - fedora-modular.repo
   - fedora-updates-modular.repo

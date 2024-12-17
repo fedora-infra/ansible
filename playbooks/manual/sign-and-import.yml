@@ -44,7 +44,7 @@
     shell: /bin/rpm --resign {{ rpmdir }}/*.rpm
 
   - name: Make a directory where we store the rpms afterwards
-    file: path={{ rpmdir }}-old state=directory
+    ansible.builtin.file: path={{ rpmdir }}-old state=directory
 
   - name: Copy the source rpms to the SRPMS dir of {{ repodir }}
     copy: src={{ item }} dest={{ repodir }}/SRPMS/

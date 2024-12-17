@@ -33,7 +33,7 @@
     when: home_fedora_res.stat.isdir
 
   - name: Delete the script from the host
-    file:
+    ansible.builtin.file:
       path: /usr/local/sbin/fix-home-fedora-ownerships.sh
       state: absent
     changed_when: false

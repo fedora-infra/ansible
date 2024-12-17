@@ -1,6 +1,6 @@
 ---
 - name: Make /srv/web/fedora.im dir
-  file: state=directory
+  ansible.builtin.file: state=directory
         path=/srv/web/fedora.im
         owner=apache
         group=apache

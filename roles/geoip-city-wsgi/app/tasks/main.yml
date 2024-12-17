@@ -41,7 +41,7 @@
   - geoip-city-wsgi/app
 
 - name: Setup /usr/share/geoip-city-wsgi directory
-  file: >
+  ansible.builtin.file: >
         path=/usr/share/geoip-city-wsgi
         owner=root
         group=root

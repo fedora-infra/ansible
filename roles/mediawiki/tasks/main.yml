@@ -73,7 +73,7 @@
   - mediawiki
 
 - name: Create /etc/pki/fedora-messaging
-  file:
+  ansible.builtin.file:
     dest: /etc/pki/fedora-messaging
     mode: "0775"
     owner: root
@@ -144,18 +144,18 @@
   - mediawiki
 
 - name: Creating wiki dir
-  file: path=/srv/web/{{wikiname}}-wiki owner=root group=root mode=755 state=directory
+  ansible.builtin.file: path=/srv/web/{{wikiname}}-wiki owner=root group=root mode=755 state=directory
   tags:
   - mediawiki
 
 # - name: Creating config dir
-#  file: src=/usr/share/{{ wikiver }}/config dest=/srv/web/{{wikiname}}/config owner=apache group=apache mode=755 state=directory
+#  ansible.builtin.file: src=/usr/share/{{ wikiver }}/config dest=/srv/web/{{wikiname}}/config owner=apache group=apache mode=755 state=directory
 #  tags:
 #  - mediawiki
 
 # This doesn't seem to exist anymore in upstream....
 # - name: Install utils
-#  file: src=/usr/share/{{ wikiver }}/install-utils.inc dest=/srv/web/{{wikiname}}-wiki/install-utils.inc state=link
+#  ansible.builtin.file: src=/usr/share/{{ wikiver }}/install-utils.inc dest=/srv/web/{{wikiname}}-wiki/install-utils.inc state=link
 #  tags:
 #  - mediawiki
 
@@ -173,62 +173,62 @@
   - mediawiki
 
 - name: Linking index.php
-  file: dest=/srv/web/{{wikiname}}-wiki/index.php src=/usr/share/{{ wikiver }}/index.php state=link
+  ansible.builtin.file: dest=/srv/web/{{wikiname}}-wiki/index.php src=/usr/share/{{ wikiver }}/index.php state=link
   tags:
   - mediawiki
 
 - name: Linkng api.php
-  file: dest=/srv/web/{{wikiname}}-wiki/api.php src=/usr/share/{{ wikiver }}/api.php state=link
+  ansible.builtin.file: dest=/srv/web/{{wikiname}}-wiki/api.php src=/usr/share/{{ wikiver }}/api.php state=link
   tags:
   - mediawiki
 
 - name: Linking opensearch
-  file: dest=/srv/web/{{wikiname}}-wiki/opensearch_desc.php src=/usr/share/{{ wikiver }}/opensearch_desc.php state=link
+  ansible.builtin.file: dest=/srv/web/{{wikiname}}-wiki/opensearch_desc.php src=/usr/share/{{ wikiver }}/opensearch_desc.php state=link
   tags:
   - mediawiki
 
 - name: Linking extensions
-  file: dest=/srv/web/{{wikiname}}-wiki/extensions src=/usr/share/{{ wikiver }}/extensions state=link
+  ansible.builtin.file: dest=/srv/web/{{wikiname}}-wiki/extensions src=/usr/share/{{ wikiver }}/extensions state=link
   tags:
   - mediawiki
 
 - name: Linking includes
-  file: dest=/srv/web/{{wikiname}}-wiki/includes src=/usr/share/{{ wikiver }}/includes state=link
+  ansible.builtin.file: dest=/srv/web/{{wikiname}}-wiki/includes src=/usr/share/{{ wikiver }}/includes state=link
   tags:
   - mediawiki
 
 - name: Linking languages
-  file: dest=/srv/web/{{wikiname}}-wiki/languages src=/usr/share/{{ wikiver }}/languages state=link
+  ansible.builtin.file: dest=/srv/web/{{wikiname}}-wiki/languages src=/usr/share/{{ wikiver }}/languages state=link
   tags:
   - mediawiki
 
 - name: Linking maintenance
-  file: dest=/srv/web/{{wikiname}}-wiki/maintenance src=/usr/share/{{ wikiver }}/maintenance state=link
+  ansible.builtin.file: dest=/srv/web/{{wikiname}}-wiki/maintenance src=/usr/share/{{ wikiver }}/maintenance state=link
   tags:
   - mediawiki
 
 # - name: Linking serialized
-#  file: dest=/srv/web/{{wikiname}}-wiki/serialized src=/usr/share/{{ wikiver }}/serialized state=link
+#  ansible.builtin.file: dest=/srv/web/{{wikiname}}-wiki/serialized src=/usr/share/{{ wikiver }}/serialized state=link
 #  tags:
 #  - mediawiki
 
 - name: Linking skins
-  file: dest=/srv/web/{{wikiname}}-wiki/skins src=/usr/share/{{ wikiver }}/skins state=link
+  ansible.builtin.file: dest=/srv/web/{{wikiname}}-wiki/skins src=/usr/share/{{ wikiver }}/skins state=link
   tags:
   - mediawiki
 
 - name: Linking load
-  file: dest=/srv/web/{{wikiname}}-wiki/load.php src=/usr/share/{{ wikiver }}/load.php state=link
+  ansible.builtin.file: dest=/srv/web/{{wikiname}}-wiki/load.php src=/usr/share/{{ wikiver }}/load.php state=link
   tags:
   - mediawiki
 
 - name: Linking resources
-  file: dest=/srv/web/{{wikiname}}-wiki/resources src=/usr/share/{{ wikiver }}/resources state=link
+  ansible.builtin.file: dest=/srv/web/{{wikiname}}-wiki/resources src=/usr/share/{{ wikiver }}/resources state=link
   tags:
   - mediawiki
 
 - name: Linking vendor
-  file: dest=/srv/web/{{wikiname}}-wiki/vendor src=/usr/share/{{ wikiver }}/vendor state=link
+  ansible.builtin.file: dest=/srv/web/{{wikiname}}-wiki/vendor src=/usr/share/{{ wikiver }}/vendor state=link
   tags:
   - mediawiki
 
@@ -244,7 +244,7 @@
   - fedora-messaging
 
 - name: Create a directory for the php dependencies
-  file:
+  ansible.builtin.file:
     path: /srv/web/fp-wiki/extensions/FedoraMessaging/vendor
     owner: apache
     group: apache
@@ -268,7 +268,7 @@
   - fedora-messaging
 
 - name: Ensure a directory exists for our SELinux policy
-  file: dest=/usr/local/share/selinux/ state=directory
+  ansible.builtin.file: dest=/usr/local/share/selinux/ state=directory
   tags: selinux
 
 - name: Copy over our custom selinux policy

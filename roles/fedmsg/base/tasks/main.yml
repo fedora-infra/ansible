@@ -43,13 +43,13 @@
   when: ansible_distribution_major_version|int < 31 and ansible_distribution == 'Fedora'
 
 - name: Setup /etc/fedmsg.d directory
-  file: path=/etc/fedmsg.d owner=root group=root mode=0755 state=directory
+  ansible.builtin.file: path=/etc/fedmsg.d owner=root group=root mode=0755 state=directory
   tags:
   - config
   - fedmsg/base
 
 - name: Remove any old static endpoints files
-  file: dest="/etc/fedmsg.d/{{item}}" state=absent
+  ansible.builtin.file: dest="/etc/fedmsg.d/{{item}}" state=absent
   with_items:
   - endpoints-bodhi.py
   - endpoints-elections.py
@@ -172,7 +172,7 @@
   - restart fedmsg-relay
 
 - name: Destroy standard config to make way for debug loopback.
-  file: dest=/etc/fedmsg.d/{{item}} state=absent
+  ansible.builtin.file: dest=/etc/fedmsg.d/{{item}} state=absent
   with_items:
   - relay.py
   - policy.py
@@ -208,7 +208,7 @@
   - fedmsg/base
 
 - name: Setup /etc/pki/fedmsg directory
-  file: path=/etc/pki/fedmsg owner=root group=root mode=0755 state=directory
+  ansible.builtin.file: path=/etc/pki/fedmsg owner=root group=root mode=0755 state=directory
   tags:
   - config
   - fedmsg/base
@@ -254,7 +254,7 @@
 
 # Three tasks for handling our custom selinux module
 - name: Ensure a directory exists for our custom selinux module
-  file: dest=/usr/local/share/fedmsg state=directory
+  ansible.builtin.file: dest=/usr/local/share/fedmsg state=directory
   tags:
   - fedmsg/base
 

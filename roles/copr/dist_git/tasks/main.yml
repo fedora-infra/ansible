@@ -36,7 +36,7 @@
   selinux: policy=targeted state=enforcing
 
 - name: Make sure directories are owned by copr-dist-git user
-  file: path={{ item }} owner=copr-dist-git group=copr-dist-git state=directory recurse=yes
+  ansible.builtin.file: path={{ item }} owner=copr-dist-git group=copr-dist-git state=directory recurse=yes
   with_items:
   - /var/log/copr-dist-git/
 
@@ -114,7 +114,7 @@
   when: not services_disabled|bool
 
 - name: Create place for our custom SELinux policy
-  file: path=/usr/local/share/selinux state=directory
+  ansible.builtin.file: path=/usr/local/share/selinux state=directory
 
 - name: Copy over our custom selinux policy for cgit
   copy: src=git_script_t.pp dest=/usr/local/share/selinux/git_script_t.pp
@@ -132,7 +132,7 @@
   command: /usr/bin/copr-dist-git-refresh-cgit creates=/var/cache/cgit/repo-configuration.rc
 
 - name: Ensure that .config directory exists
-  file: path=/home/copr-dist-git/.config state=directory
+  ansible.builtin.file: path=/home/copr-dist-git/.config state=directory
 
 - name: Install .config/copr for copr-dist-git user (required for pruning)
   template: src="copr.conf" dest="/home/copr-dist-git/.config/copr" owner=copr-dist-git group=copr-dist-git
@@ -161,7 +161,7 @@
     - cron
 
 - name: Drop monthly cron job
-  file:
+  ansible.builtin.file:
     path: /etc/cron.monthly/copr-dist-git
     state: absent
   tags:

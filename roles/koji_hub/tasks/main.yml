@@ -35,10 +35,10 @@
   - koji_hub_osbuild
 
 - name: Make koji pki directory
-  file: state=directory path=/etc/pki/koji/ owner=root group=root
+  ansible.builtin.file: state=directory path=/etc/pki/koji/ owner=root group=root
 
 - name: Make koji pki subdirectories
-  file: state=directory path=/etc/pki/koji/{{ item }} owner=root group=root
+  ansible.builtin.file: state=directory path=/etc/pki/koji/{{ item }} owner=root group=root
   with_items:
   - certs
   - private
@@ -104,7 +104,7 @@
   when: ansible_distribution == "Fedora"
 
 - name: Create the config folder for fedora-messaging
-  file: path=/etc/fedora-messaging/ owner=root group=root mode=0755 state=directory
+  ansible.builtin.file: path=/etc/fedora-messaging/ owner=root group=root mode=0755 state=directory
   tags:
   - koji_hub
   - fedora-messaging
@@ -119,7 +119,7 @@
   - fedora-messaging
 
 - name: Create folder where we'll place the certs
-  file: path=/etc/pki/rabbitmq/kojicert/ owner=root group=root mode=0755 state=directory
+  ansible.builtin.file: path=/etc/pki/rabbitmq/kojicert/ owner=root group=root mode=0755 state=directory
   tags:
   - config
   - koji_hub
@@ -183,7 +183,7 @@
   - rpmautospec
 
 - name: Remove obsolete configuration for rpmautospec
-  file:
+  ansible.builtin.file:
     path: "/etc/koji-hub/plugins/{{ item }}"
     state: absent
   loop:
@@ -306,7 +306,7 @@
   notify: reload httpd
 
 - name: Kojira log dir
-  file: dest=/var/log/kojira owner=root group=root mode=0750 state=directory
+  ansible.builtin.file: dest=/var/log/kojira owner=root group=root mode=0750 state=directory
   tags:
   - config
   - koji_hub
@@ -321,13 +321,13 @@
   - restart kojira
 
 - name: Make an empty /mnt/fedora_koji for stg.
-  file: state=directory path=/mnt/fedora_koji/koji owner=root group=root
+  ansible.builtin.file: state=directory path=/mnt/fedora_koji/koji owner=root group=root
   tags:
   - koji_hub
   when: env == "staging" and ansible_hostname.startswith('koji')
 
 - name: Make mnt/koji directory
-  file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji owner=root group=root
+  ansible.builtin.file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji owner=root group=root
   tags:
   - koji_hub
   when: ansible_hostname.startswith('koji')
@@ -370,7 +370,7 @@
   when: ansible_distribution == "RedHat" and ansible_distribution_major_version|int == 7
 
 - name: Make httpd override directory
-  file:
+  ansible.builtin.file:
     state: directory
     path: /etc/systemd/system/httpd.service.d
     owner: root

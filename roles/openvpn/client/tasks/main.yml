@@ -51,7 +51,7 @@
   - openvpn
 
 - name: Create directories for post-vpn service configs
-  file: path="/etc/systemd/system/{{item}}.service.d" state=directory
+  ansible.builtin.file: path="/etc/systemd/system/{{item}}.service.d" state=directory
   with_items: "{{postvpnservices}}"
   when: is_fedora is defined or (ansible_distribution_major_version|int >= 8 and ansible_distribution == 'RedHat')
   tags:

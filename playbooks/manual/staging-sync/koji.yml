@@ -112,7 +112,7 @@
   - name: Mount newly-created empty koji filesystem
     mount: name=/mnt/fedora_koji src=/dev/GuestVolGroup00/fedora_koji fstype=xfs state=mounted
   - name: Recreate koji directory structure
-    file: name={{item}} state=directory owner=apache group=apache setype=httpd_sys_rw_content_t
+    ansible.builtin.file: name={{item}} state=directory owner=apache group=apache setype=httpd_sys_rw_content_t
     with_items:
     - /mnt/fedora_koji/koji
     - /mnt/koji/compose
@@ -125,7 +125,7 @@
     - /mnt/koji/work
 # TODO recreate directories under /mnt/koji/compose (which ones?) that composer expects to exist
   - name: Symlink production volume
-    file: src=/mnt/fedora_koji_prod/koji dest=/mnt/koji/vol/prod state=link
+    ansible.builtin.file: src=/mnt/fedora_koji_prod/koji dest=/mnt/koji/vol/prod state=link
   - name: Restart nfs-server
     service: name=nfs-server state=started
   - name: Restart httpd

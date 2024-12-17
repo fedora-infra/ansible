@@ -63,10 +63,10 @@
 
 ---
 - name: Remove old scratch repo directory
-  file: path=/var/tmp/scratchrepo state=absent
+  ansible.builtin.file: path=/var/tmp/scratchrepo state=absent
 
 - name: Delete old scratch build repo config
-  file: path=/etc/yum.repos.d/scratchrepo.conf state=absent
+  ansible.builtin.file: path=/etc/yum.repos.d/scratchrepo.conf state=absent
 
 - name: Write lab side repo config
   copy: src=openqa-lab-repo.repo dest=/etc/yum.repos.d/openqa-lab-repo.repo owner=root group=root mode=0644
@@ -219,7 +219,7 @@
   when: "deployment_type is defined"
 
 - name: Remove wrongly-named kernel scheduler config file
-  file: path=/etc/udev/rules.d/60-block-scheduler-override.rules state=absent
+  ansible.builtin.file: path=/etc/udev/rules.d/60-block-scheduler-override.rules state=absent
 
 - name: Enable and start worker services
   service: name=openqa-worker@{{ item }} enabled=yes state=started

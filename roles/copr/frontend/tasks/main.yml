@@ -76,11 +76,11 @@
 #  tags: patches
 
 - name: Directory for postgresql dumps
-  file: state=directory path=/var/www/html/db_dumps/
+  ansible.builtin.file: state=directory path=/var/www/html/db_dumps/
         owner=copr-fe mode=755
 
 - name: Directory for usage graphs
-  file: state=directory path=/var/www/html/usage/
+  ansible.builtin.file: state=directory path=/var/www/html/usage/
         owner=copr-fe mode=755
 
 - name: Install copr configs
@@ -176,7 +176,7 @@
   when: update_indexes_required_result.rc != 0
 
 - name: Make sure /etc/fedora-messaging directory exists
-  file: path=/etc/fedora-messaging state=directory
+  ansible.builtin.file: path=/etc/fedora-messaging state=directory
 
 - name: Install fedora messaging config for Copr
   template: src="fedora-messaging/copr_messaging.toml" dest="/etc/fedora-messaging/copr_messaging.toml"

@@ -11,14 +11,14 @@
 - import_tasks: services.yml
 
 - name: Create a directory /srv/faf
-  file:
+  ansible.builtin.file:
     path: /srv/faf
     state: directory
     owner: faf
     group: faf
 
 - name: Create folders where we place certs for fedora-messaging
-  file: path=/etc/fedora-messaging/faf owner=root group=root mode=0755 state=directory
+  ansible.builtin.file: path=/etc/fedora-messaging/faf owner=root group=root mode=0755 state=directory
 
 - name: Install certs for fedora-messaging
   copy: src={{ item.src }}

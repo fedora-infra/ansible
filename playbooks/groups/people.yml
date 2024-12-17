@@ -45,7 +45,7 @@
     - mount
 
   - name: create /srv/home directory
-    file: path=/srv/home state=directory owner=root group=root
+    ansible.builtin.file: path=/srv/home state=directory owner=root group=root
 
   - name: bind mount home volume
     mount: >

@@ -8,7 +8,7 @@
   - python2
 
 - name: Create the destination directory
-  file: dest=/srv/git_seed owner=root group=root mode=0755 state=directory
+  ansible.builtin.file: dest=/srv/git_seed owner=root group=root mode=0755 state=directory
   when: env != 'staging'
 
 - name: Install the production version of the script and schedule its execution

@@ -15,7 +15,7 @@
   tags: copr_ping
 
 - name: Pre-create ping log file
-  file:
+  ansible.builtin.file:
     path: "{{ ping_log }}"
     owner: "{{ ping_user }}"
     group: nagios
@@ -61,7 +61,7 @@
   tags: copr_ping
 
 - name: Create home/.config dir
-  file:
+  ansible.builtin.file:
     path: "{{ ping_homedir }}/.config"
     owner: "{{ ping_user }}"
     group: "{{ ping_user }}"

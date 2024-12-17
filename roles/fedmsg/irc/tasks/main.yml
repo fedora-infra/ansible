@@ -11,7 +11,7 @@
   - fedmsg/irc
 
 - name: Ensure that nrpe has rights to monitor us
-  file: >
+  ansible.builtin.file: >
     dest=/var/run/fedmsg/monitoring-fedmsg-irc.socket
     mode=0775
     owner=fedmsg

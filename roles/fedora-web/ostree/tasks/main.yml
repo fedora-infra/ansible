@@ -8,7 +8,7 @@
   - ostree
 
 - name: Make ostree dir
-  file: state=directory
+  ansible.builtin.file: state=directory
         path=/srv/web/ostree
         owner=apache
         group=sysadmin-releng
@@ -21,7 +21,7 @@
   when: env != 'staging'
 
 - name: Make ostree dir
-  file: state=directory
+  ansible.builtin.file: state=directory
         path=/srv/web/ostree
         owner=apache
         group=apache
@@ -43,7 +43,7 @@
   - ostree
 
 - name: Make IoT ostree dir
-  file: state=directory
+  ansible.builtin.file: state=directory
         path=/srv/web/ostree/iot
         owner=apache
         group=sysadmin-releng
@@ -56,7 +56,7 @@
   when: env != 'staging'
 
 - name: Make IoT ostree dir
-  file: state=directory
+  ansible.builtin.file: state=directory
         path=/srv/web/ostree/iot
         owner=apache
         group=apache

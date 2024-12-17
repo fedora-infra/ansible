@@ -12,12 +12,12 @@
   user: name=grokmirror local=true
 
 - name: Create directory to mirror repos to
-  file: dest={{grokmirror_topdir}} mode=0755 state=directory owner=grokmirror
+  ansible.builtin.file: dest={{grokmirror_topdir}} mode=0755 state=directory owner=grokmirror
   tags:
   - grokmirror-mirror
 
 - name: Create directory to mirror site to
-  file: dest={{grokmirror_topdir}}/src.fedoraproject.org mode=0755 state=directory owner=grokmirror
+  ansible.builtin.file: dest={{grokmirror_topdir}}/src.fedoraproject.org mode=0755 state=directory owner=grokmirror
   tags:
   - grokmirror-mirror
 

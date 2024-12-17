@@ -130,7 +130,7 @@
 
 - name: Prepare the certbot backup directory on batcave
   delegate_to: localhost
-  file:
+  ansible.builtin.file:
     path: "{{ le_backup_path }}"
     # nobody, except for root, can step into this directory (on batcave)
     mode: "0700"

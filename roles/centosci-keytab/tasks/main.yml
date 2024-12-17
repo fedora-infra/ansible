@@ -1,6 +1,6 @@
 ---
 - name: Create the CentosCIAuthorization operator keytab path
-  file:
+  ansible.builtin.file:
     path: "/etc/openshift_apps/centos-ci-authorization/"
     state: directory
     owner: root

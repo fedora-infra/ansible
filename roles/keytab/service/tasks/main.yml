@@ -108,7 +108,7 @@
 
 - name: Destroy stored keytab
   delegate_to: "{{ ipa_server }}"
-  file: path=/tmp/{{service}}_{{host}}.kt state=absent
+  ansible.builtin.file: path=/tmp/{{service}}_{{host}}.kt state=absent
   tags:
   - keytab
   - config
@@ -134,14 +134,14 @@
   when: not keytab_status.stat.exists
 
 - name: Destroy encoded keytab
-  file: path={{kt_location}}.b64 state=absent
+  ansible.builtin.file: path={{kt_location}}.b64 state=absent
   tags:
   - keytab
   - config
   - krb5
 
 - name: Set keytab permissions
-  file: path={{kt_location}} owner={{owner_user}} group={{owner_group}} mode=0640 state=file
+  ansible.builtin.file: path={{kt_location}} owner={{owner_user}} group={{owner_group}} mode=0640 state=file
   tags:
   - keytab
   - config

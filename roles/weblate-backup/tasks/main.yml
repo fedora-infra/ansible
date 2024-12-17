@@ -14,7 +14,7 @@
   - weblate_backup
 
 - name: Create a .ssh dir for that user
-  file:
+  ansible.builtin.file:
     dest: "/home/_backup_weblate/.ssh"
     mode: "0700"
     state: directory
@@ -64,7 +64,7 @@
   - weblate_backup
 
 - name: Create directory to mirror backups to
-  file:
+  ansible.builtin.file:
     dest: "{{ weblate_backup_topdir }}"
     mode: "0755"
     state: directory

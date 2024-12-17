@@ -95,7 +95,7 @@
   - patches
 
 - name: Make sure /etc/ipsilon/root is owned correctly
-  file:
+  ansible.builtin.file:
     path: "/etc/ipsilon/root"
     owner: ipsilon
     group: ipsilon
@@ -166,7 +166,7 @@
   - ipsilon
 
 - name: Create SAML2 dir
-  file:
+  ansible.builtin.file:
     path: /etc/ipsilon/root/saml2
     state: directory
     mode: "0700"
@@ -251,7 +251,7 @@
   - ipsilon
 
 - name: Apply selinux type to the wsgi file
-  file:
+  ansible.builtin.file:
     dest: /usr/libexec/ipsilon
     setype: httpd_sys_content_t
   tags:

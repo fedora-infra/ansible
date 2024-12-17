@@ -7,7 +7,7 @@
 
 
 - name: Create /etc/systemd/system/btrfs-balance.timer.d
-  file:
+  ansible.builtin.file:
     state: directory
     path: /etc/systemd/system/btrfs-balance.timer.d
     owner: root

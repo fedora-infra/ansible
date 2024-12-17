@@ -11,7 +11,7 @@
   - certbot
 
 - name: Drop old and now unused coprs_ssl.conf
-  file: path=/etc/httpd/conf.d/coprs_ssl.conf state=absent
+  ansible.builtin.file: path=/etc/httpd/conf.d/coprs_ssl.conf state=absent
   notify:
   - reload httpd
   tags:

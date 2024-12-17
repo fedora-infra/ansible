@@ -5,7 +5,7 @@
 
 ---
 - name: Ensure dir for content exists
-  file: dest=/srv/web/fedmsg owner=apache group=apache mode=0755 state=directory
+  ansible.builtin.file: dest=/srv/web/fedmsg owner=apache group=apache mode=0755 state=directory
   tags:
   - fedmsg
   - fedmsg/crl

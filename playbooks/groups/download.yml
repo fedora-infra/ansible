@@ -85,7 +85,7 @@
     when: inventory_hostname == 'download-cc-rdu01.fedoraproject.org'
 
   - name: make a mnt/koji link
-    file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji
+    ansible.builtin.file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji
     when: datacenter == "iad2"
 
   handlers:

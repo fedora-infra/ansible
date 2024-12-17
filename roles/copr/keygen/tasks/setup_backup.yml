@@ -1,6 +1,6 @@
 ---
 - name: Ensure /backup dir
-  file: path=/backup state=directory
+  ansible.builtin.file: path=/backup state=directory
 
 - name: Copy pubkey for backup encryption
   copy: src="{{ private }}/files/copr/keygen/backup_key.asc" dest="/root/backup_key.asc"

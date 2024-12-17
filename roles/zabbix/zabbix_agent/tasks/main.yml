@@ -50,7 +50,7 @@
     - zabbix_agent
 
 - name: Ensures config directory
-  file:
+  ansible.builtin.file:
     path: "{{ zabbix_agentd_dir }}"
     state: directory
   tags:
@@ -77,7 +77,7 @@
     - zabbix_agent
 
 - name: Ensuring we have a directory to put zabbix scripts
-  file:
+  ansible.builtin.file:
     state: directory
     path: /usr/lib/zabbix
     mode: "0770"
@@ -87,7 +87,7 @@
     - zabbix_agent
 
 - name: Ensuring we have a directory to put zabbix logs
-  file:
+  ansible.builtin.file:
     state: directory
     path: /var/log/zabbix
     mode: "0770"

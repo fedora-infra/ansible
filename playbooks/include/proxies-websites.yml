@@ -14,7 +14,7 @@
 
   tasks:
   - name: Create /srv/web/ for all the goodies.
-    file: dest=/srv/web state=directory owner=root group=root mode=0755
+    ansible.builtin.file: dest=/srv/web state=directory owner=root group=root mode=0755
     tags:
     - httpd
     - httpd/website

@@ -22,7 +22,7 @@
   - bugzilla2fedmsg
 
 - name: Make sure a few directories exist.
-  file:
+  ansible.builtin.file:
     dest="{{ item }}"
     owner=fedmsg
     group=fedmsg

@@ -11,7 +11,7 @@
     - deploy-operators
 
 - name: Create the CommunishiftAuthorization operator keytab path
-  file:
+  ansible.builtin.file:
     path: "/etc/openshift_apps/communishift-authorization/"
     state: directory
     owner: root

@@ -127,7 +127,7 @@
 # really want openqa-stg creating stuff in the staging wiki all the
 # time. So in that case install the role but leave it disabled
 - name: Create /root/.openidc (token file location for manual runs as root)
-  file: path=/root/.openidc state=directory owner=root group=root mode=0700
+  ansible.builtin.file: path=/root/.openidc state=directory owner=root group=root mode=0700
 
 # - name: Write wikitcms token file for root
 #  copy: src={{ wikitcms_token }} dest=/root/.openidc/oidc_wikitcms.json owner=root group=root mode=0600
@@ -155,7 +155,7 @@
   - restart relvalconsumer
 
 - name: Create /etc/pki/fedora-messaging
-  file:
+  ansible.builtin.file:
     dest: /etc/pki/fedora-messaging
     mode: "0775"
     owner: root
@@ -195,7 +195,7 @@
   - config
 
 - name: Create python-bugzilla configuration directory
-  file:
+  ansible.builtin.file:
     dest: /root/.config/python-bugzilla
     mode: "0700"
     owner: root

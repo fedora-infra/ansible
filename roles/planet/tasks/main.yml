@@ -26,7 +26,7 @@
     - planet_server
 
 - name: Add base planet config directory
-  file: path=/etc/planet state=directory owner=root group=root mode=0775
+  ansible.builtin.file: path=/etc/planet state=directory owner=root group=root mode=0775
   tags:
     - planet_server
 
@@ -47,7 +47,7 @@
     - planet_server
 
 - name: Create planet directory
-  file: path={{ item }} state=directory owner=planet-user group=web mode=0775
+  ansible.builtin.file: path={{ item }} state=directory owner=planet-user group=web mode=0775
   with_items:
     - /srv/planet
     - /srv/planet/site
@@ -81,7 +81,7 @@
 #
 
 - name: Create planet directory (people)
-  file: path={{ item }} state=directory owner=planet-user group=web mode=0775
+  ansible.builtin.file: path={{ item }} state=directory owner=planet-user group=web mode=0775
   with_items:
     - /etc/planet/people
     - /srv/planet/config/people
@@ -101,7 +101,7 @@
 #
 
 - name: Create planet directory (design)
-  file: path={{ item }} state=directory owner=planet-user group=web mode=0775
+  ansible.builtin.file: path={{ item }} state=directory owner=planet-user group=web mode=0775
   with_items:
     - /etc/planet/design
     - /srv/planet/config/design
@@ -128,7 +128,7 @@
 #
 
 - name: Create planet directory (desktop)
-  file: path={{ item }} state=directory owner=planet-user group=web mode=0775
+  ansible.builtin.file: path={{ item }} state=directory owner=planet-user group=web mode=0775
   with_items:
     - /etc/planet/desktop
     - /srv/planet/config/desktop
@@ -155,7 +155,7 @@
 #
 
 - name: Create planet directory (edited)
-  file: path={{ item }} state=directory owner=planet-user group=web mode=0775
+  ansible.builtin.file: path={{ item }} state=directory owner=planet-user group=web mode=0775
   with_items:
     - /etc/planet/edited
     - /srv/planet/config/edited
@@ -182,7 +182,7 @@
 #
 
 - name: Create planet directory (people)
-  file: path={{ item }} state=directory owner=planet-user group=web mode=0775
+  ansible.builtin.file: path={{ item }} state=directory owner=planet-user group=web mode=0775
   with_items:
     - /etc/planet/people
     - /srv/planet/config/people
@@ -214,7 +214,7 @@
 #
 
 - name: Create planet directory (security)
-  file: path={{ item }} state=directory owner=planet-user group=web mode=0775
+  ansible.builtin.file: path={{ item }} state=directory owner=planet-user group=web mode=0775
   with_items:
     - /etc/planet/security
     - /srv/planet/config/security
@@ -241,7 +241,7 @@
 #
 
 - name: Create planet directory (summer-coding)
-  file: path={{ item }} state=directory owner=planet-user group=web mode=0775
+  ansible.builtin.file: path={{ item }} state=directory owner=planet-user group=web mode=0775
   with_items:
     - /etc/planet/summer-coding
     - /srv/planet/config/summer-coding
@@ -268,7 +268,7 @@
 #
 
 - name: Create planet directory (quality)
-  file: path={{ item }} state=directory owner=planet-user group=web mode=0775
+  ansible.builtin.file: path={{ item }} state=directory owner=planet-user group=web mode=0775
   with_items:
     - /etc/planet/quality
     - /srv/planet/config/quality
@@ -291,7 +291,7 @@
     - planet_server
 
 - name: Create /etc/pki/fedora-messaging
-  file:
+  ansible.builtin.file:
     dest: /etc/pki/fedora-messaging
     mode: "0775"
     owner: root

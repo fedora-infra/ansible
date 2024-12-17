@@ -1,6 +1,6 @@
 ---
 - name: Create the directories to hold the templates
-  file:
+  ansible.builtin.file:
     path: "/root/ocp4/openshift-apps/fas2discourse-operator"
     state: directory
     owner: root

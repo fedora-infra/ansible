@@ -17,7 +17,7 @@
   when: ansible_distribution_major_version|int > 21
 
 - name: Ensure that nrpe has rights to monitor us
-  file: >
+  ansible.builtin.file: >
     dest=/var/run/fedmsg/monitoring-fedmsg-relay.socket
     mode=0775
     owner=fedmsg

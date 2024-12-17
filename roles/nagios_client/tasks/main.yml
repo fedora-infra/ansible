@@ -83,7 +83,7 @@
 
 # Three tasks for handling our custom selinux module
 - name: Ensure a directory exists for our custom selinux module
-  file: dest=/usr/share/nrpe state=directory
+  ansible.builtin.file: dest=/usr/share/nrpe state=directory
   tags:
   - config
   - nagios_client

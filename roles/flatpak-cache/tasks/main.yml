@@ -11,7 +11,7 @@
   - config
 
 - name: Ensure /var/spool/squid directory exists
-  file:
+  ansible.builtin.file:
     path: /var/spool/squid
     state: directory
     owner: squid
@@ -22,7 +22,7 @@
   - config
 
 - name: Ensure /etc/pki/squid directory exists
-  file:
+  ansible.builtin.file:
     path: /etc/pki/squid
     state: directory
     owner: squid

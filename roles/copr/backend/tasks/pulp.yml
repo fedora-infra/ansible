@@ -5,7 +5,7 @@
 #   dnf: state=present name=pulp-cli
 
 - name: Create pulp config directory
-  file:
+  ansible.builtin.file:
     state: directory
     path: /home/copr/.config/pulp/
     owner: copr

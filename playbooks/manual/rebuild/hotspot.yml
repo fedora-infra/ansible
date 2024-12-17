@@ -8,5 +8,5 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
-  - file: dest=/srv/web/fedoraproject.org/static/ state=directory
+  - ansible.builtin.file: dest=/srv/web/fedoraproject.org/static/ state=directory
   - copy: src=hotspot.txt dest=/srv/web/fedoraproject.org/static/hotspot.txt

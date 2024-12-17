@@ -236,17 +236,17 @@
   - peoplequotas
 
 - name: Create repos directory
-  file: path=/project/repos state=directory owner=root group=fedora-contributor mode=0775
+  ansible.builtin.file: path=/project/repos state=directory owner=root group=fedora-contributor mode=0775
   tags:
   - people
 
 - name: Create repos link
-  file: state=link src=/project/repos dest=/srv/repos
+  ansible.builtin.file: state=link src=/project/repos dest=/srv/repos
   tags:
   - people
 
 - name: Create groups link
-  file: state=link src=/project dest=/srv/groups
+  ansible.builtin.file: state=link src=/project dest=/srv/groups
   tags:
   - people
 

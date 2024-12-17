@@ -59,7 +59,7 @@
     - additional_known_hosts_cleanup[inventory_hostname] is defined
 
 - name: Remove old signed certificates
-  file:
+  ansible.builtin.file:
     path: "{{ item.path }}"
     state: absent
   loop: "{{ found_ssh_certs.files }}"

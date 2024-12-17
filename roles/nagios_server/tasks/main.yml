@@ -87,7 +87,7 @@
 
 ## Setup directories for files to be copied
 - name: Create or confirm directories to be made
-  file: dest={{item}} mode=2755 owner=root group=sysadmin-main state=directory
+  ansible.builtin.file: dest={{item}} mode=2755 owner=root group=sysadmin-main state=directory
   with_items:
   - /etc/nagios/commands
   - /etc/nagios/contacts
@@ -102,12 +102,12 @@
 
 ## Remove the items we don't want
 - name: Nuke default nagios passwd
-  file: dest=/etc/nagios/passwd state=absent
+  ansible.builtin.file: dest=/etc/nagios/passwd state=absent
   tags:
   - nagios_server
 
 - name: Nuke default nagios objects
-  file: dest=/etc/nagios/objects state=absent
+  ansible.builtin.file: dest=/etc/nagios/objects state=absent
   tags:
   - nagios_server
 
@@ -266,7 +266,7 @@
 
 ## Drop services we don't need
 - name: Nuke unneded services from /etc/nagios/services (External)
-  file: dest=/etc/nagios/services/{{ item }} state=absent
+  ansible.builtin.file: dest=/etc/nagios/services/{{ item }} state=absent
   with_items:
     - copr_external.cfg
   tags:
@@ -334,7 +334,7 @@
   - nagios_server
 
 - name: Configure perms on nrpe correctly
-  file: dest=/etc/nagios/nrpe.cfg mode=0644 group=root owner=root
+  ansible.builtin.file: dest=/etc/nagios/nrpe.cfg mode=0644 group=root owner=root
   tags:
   - config
   - nagios_server
@@ -522,7 +522,7 @@
 
 ## Handle selinux annoyances - roughly copied from fedmsg role
 - name: Ensure a directory exists for our custom selinux module
-  file: dest=/usr/local/share/nagios-policy state=directory
+  ansible.builtin.file: dest=/usr/local/share/nagios-policy state=directory
   tags:
   - nagios_server
 

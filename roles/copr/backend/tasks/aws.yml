@@ -3,7 +3,7 @@
   dnf: state=present name=awscli
 
 - name: Create aws HOME config directory
-  file: state=directory
+  ansible.builtin.file: state=directory
         path="{{ item.homedir }}/.aws"
         owner={{ item.user }}
         group={{ item.user }}

@@ -8,7 +8,7 @@
 
 ---
 - name: Create /srv/web/pub for nfs mounts
-  file: dest=/srv/web/pub state=directory mode=0755
+  ansible.builtin.file: dest=/srv/web/pub state=directory mode=0755
   tags:
   - batcave
   - config
@@ -129,7 +129,7 @@
   - fedora-messaging
 
 - name: Create folder where we'll place the certs
-  file: path=/etc/pki/rabbitmq/ owner=root group=root mode=0755 state=directory
+  ansible.builtin.file: path=/etc/pki/rabbitmq/ owner=root group=root mode=0755 state=directory
   tags:
   - batcave
   - config
@@ -372,7 +372,7 @@
 #
 
 - name: Create repo2json directory
-  file: dest=/srv/web/repo/json mode=0755 state=directory owner=apache group=apache
+  ansible.builtin.file: dest=/srv/web/repo/json mode=0755 state=directory owner=apache group=apache
   tags:
   - batcave
   - config
@@ -557,14 +557,14 @@
   - batcave
 
 - name: Create some tmp dirs
-  file: path=/tmp-inst mode=000 owner=root group=root state=directory
+  ansible.builtin.file: path=/tmp-inst mode=000 owner=root group=root state=directory
   tags:
   - config
   - batcave
   - selinux
 
 - name: Create some tmp dirs
-  file: path=/var/tmp-inst mode=000 owner=root group=root state=directory
+  ansible.builtin.file: path=/var/tmp-inst mode=000 owner=root group=root state=directory
   tags:
   - config
   - batcave
@@ -578,7 +578,7 @@
   - selinux
 
 - name: Create the /var/tmux folder for shared tmux session
-  file: path=/var/tmux mode=2774 owner=root group=sysadmin state=directory
+  ansible.builtin.file: path=/var/tmux mode=2774 owner=root group=sysadmin state=directory
   tags:
   - batcave
   - tmux
@@ -590,7 +590,7 @@
   - tmux
 
 - name: Create dir for openshift pxe boot files
-  file: path=/srv/web/infra/bigfiles/{{item}} mode=2660 owner=root group=sysadmin-openshift state=directory
+  ansible.builtin.file: path=/srv/web/infra/bigfiles/{{item}} mode=2660 owner=root group=sysadmin-openshift state=directory
   with_items:
   - openshiftboot
   - tftpboot/rhcos

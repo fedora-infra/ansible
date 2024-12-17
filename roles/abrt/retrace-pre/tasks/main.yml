@@ -44,7 +44,7 @@
       state: started
 
 - name: Create directory for repositories
-  file:
+  ansible.builtin.file:
     path: /srv/retrace/repos
     state: directory
     mode: "0755"
@@ -52,14 +52,14 @@
     group: retrace
 
 - name: Create directory for retrace tasks
-  file:
+  ansible.builtin.file:
     path: /srv/retrace/tasks
     state: directory
     mode: "0755"
     owner: retrace
     group: retrace
 
-- file:
+- ansible.builtin.file:
     path: /srv/retrace/hardlink-local
     state: directory
     mode: "0755"

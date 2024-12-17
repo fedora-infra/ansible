@@ -11,7 +11,7 @@
   - packages/web
 
 - name: Create some directories
-  file:
+  ansible.builtin.file:
     path={{ item }}
     state=directory
     owner=apache
@@ -26,7 +26,7 @@
   - packages/web
 
 - name: Create some more locked down directories
-  file: path={{ item }} state=directory owner=apache group=apache mode=700
+  ansible.builtin.file: path={{ item }} state=directory owner=apache group=apache mode=700
   with_items:
   - /etc/pki/fedoracommunity
   tags:
@@ -96,7 +96,7 @@
 
 # Here's the indexer stuff
 - name: Create cache structure
-  file: >
+  ansible.builtin.file: >
     dest="/var/cache/fedoracommunity/{{item}}"
     state=directory
     owner=apache

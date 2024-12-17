@@ -35,12 +35,12 @@
   notify: restart fedmsg-hub
 
 - name: Disable the websocket server if we should..
-  file: dest=/etc/fedmsg.d/websockets.py state=absent
+  ansible.builtin.file: dest=/etc/fedmsg.d/websockets.py state=absent
   when: not enable_websocket_server
   notify: restart fedmsg-hub
 
 - name: Set fedmsg ownership on /var/run/fedmsg
-  file: >
+  ansible.builtin.file: >
     dest=/var/run/fedmsg/
     mode=2775
     owner=fedmsg
@@ -50,7 +50,7 @@
   - fedmsgmonitor
 
 - name: Ensure that nrpe has rights to monitor us
-  file: >
+  ansible.builtin.file: >
     dest=/var/run/fedmsg/monitoring-fedmsg-hub.socket
     mode=0775
     owner=fedmsg
@@ -63,7 +63,7 @@
   - fedmsgmonitor
 
 - name: Create systemd config directoryies
-  file: path="/etc/systemd/system/{{ item }}.service.d" state=directory
+  ansible.builtin.file: path="/etc/systemd/system/{{ item }}.service.d" state=directory
   with_items:
   - fedmsg-hub
   - fedmsg-hub-3

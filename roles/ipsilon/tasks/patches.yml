@@ -6,7 +6,7 @@
       - patchutils
 
 - name: Prepare the patches directory
-  file:
+  ansible.builtin.file:
     path: /opt/ipsilon-patches
     state: directory
 

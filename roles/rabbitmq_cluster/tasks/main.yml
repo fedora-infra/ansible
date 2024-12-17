@@ -37,7 +37,7 @@
   - config
 
 - name: Create node cert directory
-  file: path=/etc/rabbitmq/nodecert/ owner=root group=root mode=0755 state=directory
+  ansible.builtin.file: path=/etc/rabbitmq/nodecert/ owner=root group=root mode=0755 state=directory
   tags:
   - rabbitmq_cluster
   - config
@@ -97,7 +97,7 @@
   - config
 
 - name: Create RabbitMQ systemd override directory
-  file:
+  ansible.builtin.file:
     path: /etc/systemd/system/rabbitmq-server.service.d/
     state: directory
   tags:
@@ -399,7 +399,7 @@
   - config
 
 - name: Create pubsub_federation cert directory
-  file: path=/etc/rabbitmq/pubsub_federation/ owner=root group=root mode=0755 state=directory
+  ansible.builtin.file: path=/etc/rabbitmq/pubsub_federation/ owner=root group=root mode=0755 state=directory
   tags:
   - rabbitmq_cluster
   - config

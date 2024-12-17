@@ -13,7 +13,7 @@
     - swap
 
 - name: On BTRFS we need NoCOW
-  file:
+  ansible.builtin.file:
     path: "{{ swap_file_path }}"
     attr: +C
   when:
@@ -31,7 +31,7 @@
     - swap
 
 - name: Change swap file permissions
-  file: path="{{ swap_file_path }}"
+  ansible.builtin.file: path="{{ swap_file_path }}"
         owner=root
         group=root
         mode=0600

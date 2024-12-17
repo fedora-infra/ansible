@@ -6,7 +6,7 @@
   - fedmsg/gateway
 
 - name: Ensure that nrpe has rights to monitor us
-  file: >
+  ansible.builtin.file: >
     dest=/var/run/fedmsg/monitoring-fedmsg-gateway.socket
     mode=0775
     owner=fedmsg
@@ -25,7 +25,7 @@
   - restart fedmsg-gateway
 
 - name: Create systemd drop-in directory
-  file: >
+  ansible.builtin.file: >
     dest=/etc/systemd/system/fedmsg-gateway.service.d
     state=directory
   tags:

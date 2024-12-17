@@ -16,7 +16,7 @@
   - httpd/proxy
 
 - name: Make sure certain files are gone
-  file: dest=/etc/httpd/conf.d/{{item}} state=absent
+  ansible.builtin.file: dest=/etc/httpd/conf.d/{{item}} state=absent
   with_items:
   - welcome.conf
   tags:
@@ -38,7 +38,7 @@
   - httpd/proxy
 
 - name: Remove the keepalives configuration
-  file: path=/etc/httpd/conf.d/01-keepalives.conf state=absent
+  ansible.builtin.file: path=/etc/httpd/conf.d/01-keepalives.conf state=absent
   notify:
   - reload proxyhttpd
   tags:
@@ -86,7 +86,7 @@
   - selinux
 
 - name: Create pki/httpd
-  file: path=/etc/pki/httpd state=directory
+  ansible.builtin.file: path=/etc/pki/httpd state=directory
         owner=root group=root mode=0600
   tags:
   - httpd
@@ -100,7 +100,7 @@
   - disablesystemdoomd
 
 - name: Create systemd drop in dir for httpd
-  file: path=/etc/systemd/system/httpd.service.d/ state=directory
+  ansible.builtin.file: path=/etc/systemd/system/httpd.service.d/ state=directory
   tags:
   - httpd
   - httpd/proxy

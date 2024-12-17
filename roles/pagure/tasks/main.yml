@@ -114,14 +114,14 @@
   - pagure
 
 - name: Create the /attachments folder
-  file: state=directory
+  ansible.builtin.file: state=directory
          path=/srv/attachments
          owner=git group=git mode=0775
   tags:
   - pagure
 
 - name: Create the /var/log/pagure folder where to store the logs
-  file: state=directory
+  ansible.builtin.file: state=directory
                path=/var/log/pagure
                owner=git group=git mode=0775
   tags:
@@ -143,12 +143,12 @@
 
 # This now fails when there are broken symlinks. Lets figure out a better way to do this - kevin
 # - name: Adjust owner of /srv/git
-#   file: name=/srv/git state=directory recurse=yes owner=git group=git
+#   ansible.builtin.file: name=/srv/git state=directory recurse=yes owner=git group=git
 #   tags:
 #   - gitolite
 
 - name: Create all the directories where we store the git repos
-  file: state=directory
+  ansible.builtin.file: state=directory
                path={{ item }}
                owner=git group=git mode=0775
   with_items:
@@ -162,7 +162,7 @@
   - pagure
 
 - name: Create the /srv/tmp folder where to clone repos
-  file: state=directory
+  ansible.builtin.file: state=directory
                path=/srv/tmp
                owner=git group=git mode=0775
   tags:
@@ -273,7 +273,7 @@
   - fedora-messaging
 
 - name: Create the config folder for fedora-messaging
-  file: path=/etc/fedora-messaging/ owner=root group=root mode=0755 state=directory
+  ansible.builtin.file: path=/etc/fedora-messaging/ owner=root group=root mode=0755 state=directory
   tags:
   - pagure
   - fedora-messaging
@@ -287,7 +287,7 @@
   - fedora-messaging
 
 - name: Create folder where we'll place the certs
-  file: path=/etc/pki/rabbitmq/pagurecert/ owner=root group=root mode=0755 state=directory
+  ansible.builtin.file: path=/etc/pki/rabbitmq/pagurecert/ owner=root group=root mode=0755 state=directory
   tags:
   - pagure
   - fedora-messaging
@@ -346,7 +346,7 @@
 # Set-up Pagure
 
 - name: Create the folders used for releases and archives
-  file: state=directory
+  ansible.builtin.file: state=directory
                path={{ item }}
                owner=git group=git mode=0775
   with_items:

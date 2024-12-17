@@ -31,7 +31,7 @@
   - packager_alias
 
 - name: Remove the old <pkg>-owner email alias script
-  file:
+  ansible.builtin.file:
     path: /etc/cron.hourly/package-owner-aliases.sh
     state: absent
   tags:

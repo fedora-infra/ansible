@@ -1,15 +1,15 @@
 ---
 - name: Prepare mount point
-  file: state=directory path=/var/lib/dist-git
+  ansible.builtin.file: state=directory path=/var/lib/dist-git
 
 - name: Mount up disk of copr repo
   mount: name=/var/lib/dist-git src='LABEL=copr-dist-git' fstype=ext4 state=mounted
 
 - name: Prepare mount point
-  file: state=directory path=/var/lib/copr-dist-git
+  ansible.builtin.file: state=directory path=/var/lib/copr-dist-git
 
 - name: Create symlink for per-task-logs
-  file:
+  ansible.builtin.file:
     state: link
     src: /var/lib/dist-git/per-task-logs
     path: /var/lib/copr-dist-git/per-task-logs

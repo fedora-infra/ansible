@@ -22,7 +22,7 @@
   - config
 
 - name: Ensure postgres has a place to backup to
-  file: dest=/backups state=directory owner=postgres
+  ansible.builtin.file: dest=/backups state=directory owner=postgres
   tags:
   - config
 
@@ -147,6 +147,6 @@
   register: history_file
 
 - name: Install pghistory file
-  file: path="{{ copr_fe_homedir }}/.psql_history" state=touch
+  ansible.builtin.file: path="{{ copr_fe_homedir }}/.psql_history" state=touch
         owner=copr-fe group=copr-fe mode=0600
   when: not history_file.stat.exists

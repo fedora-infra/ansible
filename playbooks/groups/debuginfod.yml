@@ -60,7 +60,7 @@
       - restart debuginfod
 
   - name: ensure systemd drop-in directory exists
-    file: >
+    ansible.builtin.file: >
       dest=/etc/systemd/system/debuginfod.service.d
       state=directory
     tags: debuginfod

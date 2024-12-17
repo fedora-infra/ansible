@@ -1,6 +1,6 @@
 ---
 - name: Create the zabbix keytab path
-  file:
+  ansible.builtin.file:
     path: "/etc/openshift_apps/zabbix/"
     state: directory
     owner: root

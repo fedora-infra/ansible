@@ -19,12 +19,12 @@
   - koji_builder
 
 - name: Make mock homedir perms
-  file: state=directory path=/var/lib/mock mode=2775 owner=root group=mock
+  ansible.builtin.file: state=directory path=/var/lib/mock mode=2775 owner=root group=mock
   tags:
   - koji_builder
 
 - name: Add mock ssh dir
-  file: state=directory path=/var/lib/mock/.ssh mode=700 owner=mock group=mock
+  ansible.builtin.file: state=directory path=/var/lib/mock/.ssh mode=700 owner=mock group=mock
   tags:
   - koji_builder
 
@@ -44,7 +44,7 @@
   - koji_builder
 
 - name: Mockbuilder .ssh dir
-  file: state=directory path=/home/mockbuilder/.ssh mode=700 owner=mockbuilder group=mockbuilder
+  ansible.builtin.file: state=directory path=/home/mockbuilder/.ssh mode=700 owner=mockbuilder group=mockbuilder
   tags:
   - koji_builder
 
@@ -54,7 +54,7 @@
   - koji_builder
 
 - name: Make a bunch of dirs
-  file: state=directory path={{ item }}
+  ansible.builtin.file: state=directory path={{ item }}
   with_items:
     - /pub
     - /mnt/fedora_koji
@@ -115,7 +115,7 @@
   - rpmautospec
 
 - name: Remove obsolete configuration of rpmautospec
-  file:
+  ansible.builtin.file:
     path: "/etc/kojid/plugins/{{ item }}"
     state: absent
   loop:
@@ -161,7 +161,7 @@
   - rpmautospec
 
 - name: Create osbuild builder config directory
-  file: path=/etc/koji-osbuild state=directory mode=0755
+  ansible.builtin.file: path=/etc/koji-osbuild state=directory mode=0755
   tags:
   - koji_builder
   - koji_builder_osbuild
@@ -197,12 +197,12 @@
 
 # setup for oz/imagefactory
 - name: Make .psphere dir
-  file: state=directory path=/root/.psphere mode=775 owner=root group=root
+  ansible.builtin.file: state=directory path=/root/.psphere mode=775 owner=root group=root
   tags:
   - koji_builder
 
 - name: Make .psphere/templates dir
-  file: state=directory path=/root/.psphere/templates mode=775 owner=root group=root
+  ansible.builtin.file: state=directory path=/root/.psphere/templates mode=775 owner=root group=root
   tags:
   - koji_builder
 
@@ -256,13 +256,13 @@
 #
 
 - name: Make a mnt/koji link
-  file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji
+  ansible.builtin.file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji
   when: koji_hub_nfs is defined and koji_hub_nfs == "fedora_koji" and createrepo == True
   tags:
   - koji_builder
 
 - name: Make a mnt/koji link
-  file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji force=yes
+  ansible.builtin.file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji force=yes
   when: inventory_hostname.startswith(('buildvm-s390x-11', 'buildvm-s390x-12', 'buildvm-s390x-13'))
   tags:
   - koji_builder
@@ -272,7 +272,7 @@
 #
 
 - name: Make a mnt/koji link
-  file: state=link src=/mnt/fedora_koji dest=/mnt/koji
+  ansible.builtin.file: state=link src=/mnt/fedora_koji dest=/mnt/koji
   when: koji_hub_nfs is defined and koji_hub_nfs != "fedora_koji" and createrepo == True
   tags:
   - koji_builder
@@ -332,7 +332,7 @@
   - selinux
 
 - name: Create directory for shared secrets
-  file:
+  ansible.builtin.file:
     path: /etc/kojid/secrets
     state: directory
     owner: root
@@ -394,7 +394,7 @@
   - koji_builder/osbuildapi
 
 - name: Create override dir for systemd-nspawn containers config
-  file:
+  ansible.builtin.file:
     state: directory
     owner: root
     group: root

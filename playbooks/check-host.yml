@@ -274,11 +274,11 @@
 # clean up: can also be put as handlers
 
   - name: Clean remote temp dir
-    file: path={{temp_dir.stdout}} state=absent
+    ansible.builtin.file: path={{temp_dir.stdout}} state=absent
     changed_when: false
 
   - name: Clean rpm temp file
-    file: path={{localchanges.stdout}} state=absent
+    ansible.builtin.file: path={{localchanges.stdout}} state=absent
     changed_when: false
 
 

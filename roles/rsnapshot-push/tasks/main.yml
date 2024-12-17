@@ -18,7 +18,7 @@
   tags: rsnapshot_push
 
 - name: Server-side case-specific backup dir
-  file:
+  ansible.builtin.file:
     path: "{{ '/'.join([rsnapshot_push.backup_dir, item.key]) }}"
     state: directory
     owner: "{{ item.value.user }}"

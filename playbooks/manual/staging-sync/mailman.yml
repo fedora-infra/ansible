@@ -77,7 +77,7 @@
 
   tasks:
   - name: Nuke the prod db dump that we cached on batcave
-    file: path=/var/tmp/prod-mailman-dump/ state=absent
+    ansible.builtin.file: path=/var/tmp/prod-mailman-dump/ state=absent
 
 
 - name: Convert the data to staging and bring services back up.  This will take a while too.

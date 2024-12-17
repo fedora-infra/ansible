@@ -36,7 +36,7 @@
   - robosignatory
 
 - name: Create config directory
-  file:
+  ansible.builtin.file:
     path: /etc/robosignatory
     state: directory
     owner: robosignatory
@@ -47,7 +47,7 @@
   - robosignatory
 
 - name: Create robosignatory sigul directory
-  file:
+  ansible.builtin.file:
     path: /etc/robosignatory/sigul
     state: directory
     owner: robosignatory
@@ -71,7 +71,7 @@
   - robosignatory
 
 - name: Make sure every file in the sigul conf dir has proper ownership
-  file:
+  ansible.builtin.file:
     path: /etc/sigul
     state: directory
     group: robosignatory
@@ -105,7 +105,7 @@
 # Fedora Messaging
 
 - name: Create /etc/pki/fedora-messaging
-  file:
+  ansible.builtin.file:
     dest: /etc/pki/fedora-messaging
     mode: "0775"
     owner: root
@@ -167,7 +167,7 @@
   - robosignatory-config
 
 - name: Create /etc/systemd/system/fm-consumer@.service.d (staging)
-  file:
+  ansible.builtin.file:
     state: directory
     path: /etc/systemd/system/fm-consumer@.service.d
     owner: root

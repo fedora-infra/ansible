@@ -34,7 +34,7 @@
     - config
 
 - name: Remove ipa sshd config since we do not need it
-  file:
+  ansible.builtin.file:
     state: absent
     path: /etc/ssh/sshd_config.d/04-ipa.conf
   tags:

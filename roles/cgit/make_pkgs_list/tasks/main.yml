@@ -6,7 +6,7 @@
   tags: cgit
 
 - name: Create the git root directory (/srv/git)
-  file: dest=/srv/git state=directory mode=0755
+  ansible.builtin.file: dest=/srv/git state=directory mode=0755
   tags: cgit
 
 - name: Ensure the repo list file exists

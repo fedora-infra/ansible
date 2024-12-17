@@ -1,6 +1,6 @@
 ---
 - name: Create project directory
-  file:
+  ansible.builtin.file:
     path: /etc/openshift_apps/{{project_app}}
     state: directory
     owner: root

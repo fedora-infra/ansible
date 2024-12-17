@@ -12,7 +12,7 @@
 
 - name: Ensure no old facts exist
   delegate_to: localhost
-  file: path=/root/.ansible_facts_cache/{{ inventory_hostname }} state=absent
+  ansible.builtin.file: path=/root/.ansible_facts_cache/{{ inventory_hostname }} state=absent
   when: inventory_hostname not in result.list_vms
 
 - name: Ensure the lv for the guest is made

@@ -8,4 +8,4 @@
   - perl-Sys-Syslog
 
 - name: Ensure the /etc/gitolite directory
-  file: path=/etc/gitolite owner=root group=root mode=0755 state=directory
+  ansible.builtin.file: path=/etc/gitolite owner=root group=root mode=0755 state=directory

@@ -238,7 +238,7 @@
   when: baseiptables|bool
 
 - name: Enable journald persistence
-  file: path=/var/log/journal state=directory
+  ansible.builtin.file: path=/var/log/journal state=directory
         owner=root group=systemd-journal mode=2755
   when: ansible_distribution_major_version|int >= 7 and ansible_distribution == 'RedHat'
   tags:
@@ -249,7 +249,7 @@
   - flush journald tmpfiles to persistent store
 
 - name: Enable journald persistence
-  file: path=/var/log/journal state=directory
+  ansible.builtin.file: path=/var/log/journal state=directory
         owner=root group=systemd-journal mode=2755
   when: ansible_distribution_major_version|int >= 29 and ansible_distribution == 'Fedora'
   tags:
@@ -341,7 +341,7 @@
   - base
 
 - name: Rsyslogd make systemd limits directory for file handles
-  file: dest=/etc/systemd/system/rsyslog.service.d/ mode=0755 owner=root group=root state=directory
+  ansible.builtin.file: dest=/etc/systemd/system/rsyslog.service.d/ mode=0755 owner=root group=root state=directory
   when: inventory_hostname.startswith('log') or inventory_hostname.startswith('people')
   tags:
   - rsyslogd
@@ -357,7 +357,7 @@
 
 # Custom selinux policy to allow rsyslog to read and send audit to log01
 - name: Ensure a directory exists for our custom selinux module
-  file: dest=/usr/local/share/rsyslog state=directory
+  ansible.builtin.file: dest=/usr/local/share/rsyslog state=directory
   tags:
   - rsyslogd
   - config
@@ -504,7 +504,7 @@
 # is actually expired, and kinit's still not refreshing them and such alike.
 # Let's just nuke it for now.
 - name: We do NOT use sssd-kcm
-  file: path=/etc/krb5.conf.d/kcm_default_ccache state=absent
+  ansible.builtin.file: path=/etc/krb5.conf.d/kcm_default_ccache state=absent
   tags:
   - base
   - config

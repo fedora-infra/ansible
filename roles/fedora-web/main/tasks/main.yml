@@ -10,7 +10,7 @@
 
 - name: Load s3 credentials
   ansible.builtin.include_vars:
-    file: "{{ private }}/files/websites/s3_fedoraproject_{{ env_short }}.yml"
+    ansible.builtin.file: "{{ private }}/files/websites/s3_fedoraproject_{{ env_short }}.yml"
   ignore_errors: true
   tags:
   - fedora-web
@@ -38,7 +38,7 @@
   - fedoraproject_s3_bucket_name is defined
 
 - name: Make directory for the config files for {{website}} we are about to copy
-  file: path=/etc/httpd/conf.d/{{website}} state=directory owner=root group=root mode=0755
+  ansible.builtin.file: path=/etc/httpd/conf.d/{{website}} state=directory owner=root group=root mode=0755
   tags:
   - fedora-web
   - fedora-web/main
@@ -80,7 +80,7 @@
   - fedora-web/main
 
 - name: Create a directory for hotspot
-  file: path=/srv/web state=directory owner=root group=root mode=0755
+  ansible.builtin.file: path=/srv/web state=directory owner=root group=root mode=0755
   tags:
   - fedora-web
   - fedora-web/main

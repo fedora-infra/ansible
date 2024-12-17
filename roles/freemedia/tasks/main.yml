@@ -12,7 +12,7 @@
   - packages
 
 - name: Setup /srv/web/freemedia directory
-  file: path=/srv/web/freemedia owner=root group=root mode=0755 state=directory
+  ansible.builtin.file: path=/srv/web/freemedia owner=root group=root mode=0755 state=directory
   tags:
   - config
 

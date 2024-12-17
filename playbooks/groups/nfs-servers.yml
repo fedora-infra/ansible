@@ -44,7 +44,7 @@
 
   tasks:
     - name: Create top level directory
-      file: path=/srv/nfs state=directory owner=root group=root
+      ansible.builtin.file: path=/srv/nfs state=directory owner=root group=root
       tags:
         - drives
         - copr
@@ -62,7 +62,7 @@
         - copr
 
     - name: Create copr-be tree directory
-      file: path=/srv/nfs/copr-be state=directory owner=root group=root
+      ansible.builtin.file: path=/srv/nfs/copr-be state=directory owner=root group=root
       tags:
         - drives
         - copr

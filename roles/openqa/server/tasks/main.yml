@@ -101,10 +101,10 @@
   when: "openqa_static_uid is defined"
 
 - name: Remove old scratch repo directory
-  file: path=/var/tmp/scratchrepo state=absent
+  ansible.builtin.file: path=/var/tmp/scratchrepo state=absent
 
 - name: Delete old scratch build repo config
-  file: path=/etc/yum.repos.d/scratchrepo.repo state=absent
+  ansible.builtin.file: path=/etc/yum.repos.d/scratchrepo.repo state=absent
 
 - name: Write lab side repo config
   copy: src=openqa-lab-repo.repo dest=/etc/yum.repos.d/openqa-lab-repo.repo owner=root group=root mode=0644
@@ -151,7 +151,7 @@
   - packages
 
 - name: Check test directory exists with correct ownership
-  file: path=/var/lib/openqa/share/tests/fedora state=directory owner=geekotest group=geekotest recurse=yes
+  ansible.builtin.file: path=/var/lib/openqa/share/tests/fedora state=directory owner=geekotest group=geekotest recurse=yes
 
 # we don't want to run the checkout if the tests are on a non-standard
 # branch, as that usually means we're messing around on staging and
@@ -178,10 +178,10 @@
     testsbranch.stdout.find('Changes not staged') == -1)
 
 - name: Remove old openqa_fedora_tools checkout
-  file: path=/root/openqa_fedora_tools state=absent
+  ansible.builtin.file: path=/root/openqa_fedora_tools state=absent
 
 - name: Create asset directories
-  file: path={{ item }} state=directory owner=geekotest group=geekotest mode=0775
+  ansible.builtin.file: path={{ item }} state=directory owner=geekotest group=geekotest mode=0775
   with_items:
   - /var/lib/openqa/share/factory/iso
   - /var/lib/openqa/share/factory/iso/fixed
@@ -266,7 +266,7 @@
   - openqa-gru
 
 - name: Create somewhere to stick our custom SELinux module
-  file:
+  ansible.builtin.file:
     path: /usr/local/share/selinux
     state: directory
     mode: '0755'

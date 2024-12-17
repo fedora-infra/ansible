@@ -10,7 +10,7 @@
 
 ---
 - name: Create site directory in httpd/conf.d/{{site_name}}
-  file: >
+  ansible.builtin.file: >
     dest=/etc/httpd/conf.d/{{site_name}}
     state=directory
     owner=root
@@ -63,7 +63,7 @@
   - robots
 
 - name: Create /srv/web
-  file: >
+  ansible.builtin.file: >
     dest=/srv/web
     state=directory
     owner=root

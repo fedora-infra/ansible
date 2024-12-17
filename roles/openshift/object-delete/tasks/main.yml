@@ -1,12 +1,12 @@
 ---
 - name: Delete object file ({{tmpfile.path}})
-  file:
+  ansible.builtin.file:
     path=/etc/openshift_apps/{{object_delete_app}}/{{object_delete_objectname}}.yml
     state=absent
   when: object_delete_objecttype != 'project'
 
 - name: Delete project files ({{tmpfile.path}})
-  file:
+  ansible.builtin.file:
     path=/etc/openshift_apps/{{object_delete_app}}
     state=absent
   when: object_delete_objecttype == 'project'

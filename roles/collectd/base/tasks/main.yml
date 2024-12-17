@@ -119,7 +119,7 @@
 
 # Three tasks for handling our (two) custom selinux modules.
 - name: Ensure a directory exists for our custom selinux module
-  file: dest=/usr/share/collectd state=directory
+  ansible.builtin.file: dest=/usr/share/collectd state=directory
   tags:
   - collectd
   - selinux

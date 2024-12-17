@@ -21,7 +21,7 @@
   - memcached
 
 - name: Make systemd override dir
-  file: state=directory path=/etc/systemd/system/memcached.service.d mode=0755 owner=root group=root
+  ansible.builtin.file: state=directory path=/etc/systemd/system/memcached.service.d mode=0755 owner=root group=root
   tags:
   - memcached
   when: ansible_distribution == 'RedHat' and ansible_distribution_major_version|int == 7

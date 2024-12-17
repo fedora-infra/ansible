@@ -10,7 +10,7 @@
   - openvpn
 
 - name: Create the /etc/openvpn/server/ccd/ directory
-  file: >
+  ansible.builtin.file: >
     dest=/etc/openvpn/server/ccd/
     mode=2755
     owner=root

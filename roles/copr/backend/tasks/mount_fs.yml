@@ -70,7 +70,7 @@
       notify: systemctl daemon-reload
 
 - name: Prepare mount point
-  file: state=directory path=/var/lib/copr/public_html
+  ansible.builtin.file: state=directory path=/var/lib/copr/public_html
 
 - name: Mount up disk of copr repo
   mount: name=/var/lib/copr/public_html src='LABEL=copr-repo' fstype=ext4 state=mounted opts=nofail

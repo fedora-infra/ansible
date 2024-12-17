@@ -4,7 +4,7 @@
 - import_tasks: repositories.yml
 
 - name: Ensure directory for FAF database backups exists
-  file:
+  ansible.builtin.file:
     path: "{{ faf_backup_dir }}"
     state: directory
     owner: faf

@@ -13,7 +13,7 @@
   - github2fedmsg
 
 - name: Make some directories
-  file: dest="{{item}}" mode=0755 state=directory
+  ansible.builtin.file: dest="{{item}}" mode=0755 state=directory
   with_items:
   - /etc/github2fedmsg
   - /usr/share/github2fedmsg

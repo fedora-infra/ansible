@@ -1,6 +1,6 @@
 ---
 - name: Create directories
-  file:
+  ansible.builtin.file:
     state: directory
     path: "/srv/web/{{item}}"
     owner: apache

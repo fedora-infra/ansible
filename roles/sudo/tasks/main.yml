@@ -26,7 +26,7 @@
   - sudoers
 
 - name: Remove old sysadmin-main file if its still around
-  file: dest=/etc/sudoers.d/sysadmin-main state=absent
+  ansible.builtin.file: dest=/etc/sudoers.d/sysadmin-main state=absent
   tags:
   - config
   - sudo

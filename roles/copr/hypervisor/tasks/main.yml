@@ -57,7 +57,7 @@
   tags: libvirtd
 
 - name: Create libvirt image directory
-  file: path={{ image_pool_dir }}
+  ansible.builtin.file: path={{ image_pool_dir }}
         owner=qemu group=qemu mode=ug=rwx,g+s
         state=directory
   tags: libvirtd

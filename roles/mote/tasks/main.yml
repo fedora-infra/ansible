@@ -20,7 +20,7 @@
   - restart memcached
 
 - name: Make systemd override dir
-  file:
+  ansible.builtin.file:
     state: directory
     path: /etc/systemd/system/memcached.service.d
     mode: "0755"
@@ -67,7 +67,7 @@
   - restart apache
 
 - name: Create /usr/share/httpd/.local for mote-updater to store the fedmsg CRL
-  file: dest=/usr/share/httpd/.local owner=apache group=apache state=directory
+  ansible.builtin.file: dest=/usr/share/httpd/.local owner=apache group=apache state=directory
   tags:
   - mote
 
@@ -78,7 +78,7 @@
   - mote
 
 - name: Apply selinux type to static files
-  file: >
+  ansible.builtin.file: >
     dest=/usr/lib/python2.7/site-packages/mote/static/
     setype=httpd_sys_content_t
     state=directory
@@ -88,7 +88,7 @@
   - selinux
 
 - name: Apply selinux type to meetbot files
-  file: >
+  ansible.builtin.file: >
     dest=/srv/web/meetbot/
     setype=httpd_sys_content_t
     state=directory
@@ -114,7 +114,7 @@
   - selinux
 
 - name: Apply selinux type to the wsgi file
-  file: >
+  ansible.builtin.file: >
     dest=/usr/share/mote/mote.wsgi
     setype=httpd_sys_content_t
   tags:
@@ -122,7 +122,7 @@
   - selinux
 
 - name: Apply selinux type to the name mappings file
-  file: >
+  ansible.builtin.file: >
     dest=/usr/share/mote/name_mappings.json
     setype=httpd_sys_content_t
   notify:
@@ -132,7 +132,7 @@
   - selinux
 
 - name: Apply selinux type to the category mappings file
-  file: >
+  ansible.builtin.file: >
     dest=/usr/share/mote/category_mappings.json
     setype=httpd_sys_content_t
   notify:

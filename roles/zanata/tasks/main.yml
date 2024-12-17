@@ -8,7 +8,7 @@
   - zanata
 
 - name: Create directories
-  file: state=directory
+  ansible.builtin.file: state=directory
         path={{item}}
         owner=apache group=apache mode=0550
   with_items:

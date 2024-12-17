@@ -42,7 +42,7 @@
   - distgit
 
 - name: Create suexec wrapper directory
-  file: path=/var/www/bin state=directory owner=pagure group=packager
+  ansible.builtin.file: path=/var/www/bin state=directory owner=pagure group=packager
   tags:
   - distgit
 
@@ -168,13 +168,13 @@
   when: inventory_hostname.startswith('batcave')
 
 - name: Create the distgit root directory (/srv/git)
-  file: dest=/srv/git state=directory mode=0755
+  ansible.builtin.file: dest=/srv/git state=directory mode=0755
   tags:
   - distgit
 
 # These should all map to pkgdb namespaces
 - name: Create our namespace directories inside there..
-  file: dest=/srv/git/repositories/{{item}} state=directory mode=2775 group=packager
+  ansible.builtin.file: dest=/srv/git/repositories/{{item}} state=directory mode=2775 group=packager
   with_items:
   - rpms
   - docker
@@ -247,7 +247,7 @@
   - sslciphers
 
 - name: Create the Lookaside Cache root directory
-  file: dest=/srv/cache/lookaside/pkgs state=directory
+  ansible.builtin.file: dest=/srv/cache/lookaside/pkgs state=directory
         owner=apache group=apache
   tags:
   - distgit
@@ -310,7 +310,7 @@
 
 # Three tasks for handling our selinux policy for upload.cgi
 - name: Ensure a directory exists for our SELinux policy
-  file: dest=/usr/local/share/selinux/ state=directory
+  ansible.builtin.file: dest=/usr/local/share/selinux/ state=directory
   tags: selinux
 
 - name: Copy over our custom selinux policy
@@ -349,7 +349,7 @@
   - pkgs
 
 - name: Make dir for grokmirror manifest
-  file: path=/srv/git/grokmirror state=directory owner=root group=packager mode=2775
+  ansible.builtin.file: path=/srv/git/grokmirror state=directory owner=root group=packager mode=2775
   tags:
   - grokmirror
   - pkgs

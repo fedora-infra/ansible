@@ -82,7 +82,7 @@
   - provision_config
 
 - name: Remove currently unused and broken os_nova filter
-  file: state=absent
+  ansible.builtin.file: state=absent
         path="{{ provision_directory }}/filter_plugins/os_nova.py"
   tags:
   - provision_config

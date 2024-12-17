@@ -1,7 +1,7 @@
 ---
 
 - name: Create the fas2discourse keytab path on the batcave01
-  file:
+  ansible.builtin.file:
     path: "/etc/openshift_apps/fas2discourse/"
     state: directory
     owner: root

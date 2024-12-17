@@ -1,6 +1,6 @@
 ---
 - name: Create directories
-  file: state=directory
+  ansible.builtin.file: state=directory
         path=/srv/web/{{item}}
         owner=apache group=apache mode=0755
         setype=httpd_sys_content_t seuser=system_u

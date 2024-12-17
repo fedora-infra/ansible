@@ -44,13 +44,13 @@
   when: devel|bool
 
 - name: Make copr dirs
-  file: state=directory path={{ item }}
+  ansible.builtin.file: state=directory path={{ item }}
   with_items:
   - /var/lib/copr/jobs
   - /var/lib/copr/public_html/results
 
 - name: Setup dirs there
-  file: state=directory path="/home/copr/{{ item }}" owner=copr group=copr mode=0700
+  ansible.builtin.file: state=directory path="/home/copr/{{ item }}" owner=copr group=copr mode=0700
   with_items:
   - cloud
   - .ssh
@@ -77,7 +77,7 @@
   ignore_errors: yes
 
 - name: Create empty known_hosts
-  file: state=touch dest=/home/copr/.ssh/known_hosts owner=copr group=copr mode=600
+  ansible.builtin.file: state=touch dest=/home/copr/.ssh/known_hosts owner=copr group=copr mode=600
   when: hostsstat.rc == 1
 
 - name: Replace bashrc for copr user
@@ -118,7 +118,7 @@
   seboolean: name=httpd_setrlimit state=yes persistent=yes
 
 - name: Create directory for compress module of lighttpd
-  file: path=/var/cache/lighttpd/compress owner=lighttpd group=lighttpd mode=0644 state=directory
+  ansible.builtin.file: path=/var/cache/lighttpd/compress owner=lighttpd group=lighttpd mode=0644 state=directory
 
 # mime default to text/plain and enable dirlisting for indexes
 - name: Update lighttpd configs
@@ -168,7 +168,7 @@
 
 # setup dirs for the ansible execution off of provisioning
 # - name: Dirs from provision
-#  file: state=directory path="/home/copr/provision/{{ item }}" owner=copr group=copr
+#  ansible.builtin.file: state=directory path="/home/copr/provision/{{ item }}" owner=copr group=copr
 #  with_items:
 #  - action_plugins
 #  - library
@@ -248,7 +248,7 @@
   - provision_config
 
 - name: Create messaging config directory
-  file: dest=/etc/copr/msgbuses state=directory owner=copr group=copr mode=0700
+  ansible.builtin.file: dest=/etc/copr/msgbuses state=directory owner=copr group=copr mode=0700
   when: copr_messaging
   tags:
   - config
@@ -357,7 +357,7 @@
 
 # Three tasks for handling our custom selinux module
 - name: Ensure a directory exists for our custom selinux module
-  file: dest=/usr/local/share/copr state=directory
+  ansible.builtin.file: dest=/usr/local/share/copr state=directory
 
 - name: Copy over our custom selinux module
   copy: src=selinux/copr_rules.pp dest=/usr/local/share/copr/copr_rules.pp

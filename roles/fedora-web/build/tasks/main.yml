@@ -57,7 +57,7 @@
   - fedora-web
 
 - name: Create directories
-  file:
+  ansible.builtin.file:
     state: directory
     path: /srv/web/{{ item }}
     owner: apache
@@ -75,7 +75,7 @@
   - fedora-web
 
 - name: Make fmw dir
-  file:
+  ansible.builtin.file:
     state: directory
     path: /srv/web/fmw
     owner: apache
@@ -88,7 +88,7 @@
   when: env != 'staging'
 
 - name: Make fmw dir
-  file:
+  ansible.builtin.file:
     state: directory
     path: /srv/web/fmw
     owner: apache
@@ -101,14 +101,14 @@
   when: env == 'staging'
 
 - name: Remove the syncTranslations cronjob
-  file:
+  ansible.builtin.file:
     path: /etc/cron.d/syncTranslations.cron
     state: absent
   tags:
   - cron
 
 - name: Remove the syncStatic cronjob
-  file:
+  ansible.builtin.file:
     path: /etc/cron.d/syncStatic.cron
     state: absent
   tags:

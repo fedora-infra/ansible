@@ -23,7 +23,7 @@
   tasks:
     - block:
         - name: == OCP KVM provisioning == Ensuring we have needed httpd dir
-          file:
+          ansible.builtin.file:
             path: "/var/www/html/rhcos"
             state: directory
             mode: "0755"
@@ -58,7 +58,7 @@
             - "rhcos-{{ rhcos_version }}-x86_64-metal.x86_64.raw.gz"
             - "rhcos-{{ rhcos_version }}-x86_64-live-kernel-x86_64"
         - name: == OCP KVM provisioning == Ensuring symlink for correct version {{ rhcos_version }}
-          file:
+          ansible.builtin.file:
             state: link
             src: "/var/www/html/rhcos/rhcos-{{ rhcos_version }}-x86_64-metal.x86_64.raw.gz"
             dest: "/var/www/html/rhcos/rhcos-metal.raw"

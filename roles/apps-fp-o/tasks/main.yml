@@ -14,7 +14,7 @@
   - apps-fp-o
 
 - name: Ensure directory exixts
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     mode: '2755'

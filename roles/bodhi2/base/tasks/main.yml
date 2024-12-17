@@ -3,7 +3,7 @@
 # This is the base set of files needed for bodhi
 
 - name: Create the bodhi configuration directory
-  file:
+  ansible.builtin.file:
     path: /etc/bodhi
     state: directory
     owner: root

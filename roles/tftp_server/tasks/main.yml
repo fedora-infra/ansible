@@ -12,7 +12,7 @@
   - tftp_server
 
 - name: Setup pxelinux.cfg dir
-  file: path=/var/lib/tftpboot/pxelinux.cfg mode=755 state=directory
+  ansible.builtin.file: path=/var/lib/tftpboot/pxelinux.cfg mode=755 state=directory
   tags:
   - config
   - tftp_server
@@ -37,7 +37,7 @@
   - tftp_server
 
 - name: Set permissions on the rhcos tftpboot folder
-  file:
+  ansible.builtin.file:
     path: /var/lib/tftpboot/rhcos
     mode: '0755'
   tags:

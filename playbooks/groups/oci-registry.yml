@@ -38,7 +38,7 @@
 
   pre_tasks:
   - name: Create /srv/registry on staging since it does not use NFS
-    file:
+    ansible.builtin.file:
       path: /srv/registry
       state: directory
       owner: root

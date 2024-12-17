@@ -6,17 +6,17 @@
     - web-data
 
 - name: Make sure the /usr/local/share/web-data-analysis directory exists
-  file: path=/usr/local/share/web-data-analysis state=directory
+  ansible.builtin.file: path=/usr/local/share/web-data-analysis state=directory
   tags:
     - web-data
 
 - name: Make the data directory
-  file: path=/mnt/fedora_stats/data state=directory mode=0755
+  ansible.builtin.file: path=/mnt/fedora_stats/data state=directory mode=0755
   tags:
     - web-data
 
 - name: Make the data subdirs
-  file: path=/mnt/fedora_stats/data/{{item}} state=directory mode=0755
+  ansible.builtin.file: path=/mnt/fedora_stats/data/{{item}} state=directory mode=0755
   with_items: [mirrors]
   tags:
     - web-data
@@ -27,7 +27,7 @@
     - web-data
 
 - name: Make a css tree
-  file: path=/var/www/html/css/  state=directory mode=0755
+  ansible.builtin.file: path=/var/www/html/css/  state=directory mode=0755
   tags:
     - web-data
 
@@ -39,12 +39,12 @@
     - web-data
 
 - name: Make the web directory exists
-  file: path=/var/www/html/csv-reports/  state=directory mode=0755
+  ansible.builtin.file: path=/var/www/html/csv-reports/  state=directory mode=0755
   tags:
     - web-data
 
 - name: Make the web subdirs
-  file: path=/var/www/html/csv-reports/{{item}} state=directory mode=0755
+  ansible.builtin.file: path=/var/www/html/csv-reports/{{item}} state=directory mode=0755
   with_items: [images, mirrors]
   tags:
     - web-data
@@ -144,12 +144,12 @@
     - web-data
 
 - name: Make countme web subdir
-  file: path=/var/www/html/csv-reports/countme state=directory mode=0775 owner=countme group=countme
+  ansible.builtin.file: path=/var/www/html/csv-reports/countme state=directory mode=0775 owner=countme group=countme
   tags:
     - web-data
 
 - name: Make countme local data dir
-  file: path=/var/lib/countme state=directory mode=0775 owner=countme group=countme
+  ansible.builtin.file: path=/var/lib/countme state=directory mode=0775 owner=countme group=countme
   tags:
     - web-data
 
@@ -176,7 +176,7 @@
     - cron
 
 - name: Remove old syncHttpLogs.sh cron script only on log01
-  file:
+  ansible.builtin.file:
     path: /etc/cron.daily/syncHttpLogs.sh
     state: absent
   when: inventory_hostname.startswith('log01')
@@ -204,7 +204,7 @@
     - cron
 
 - name: Remove sync-http-logs.py from cron.daily directory
-  file:
+  ansible.builtin.file:
     path: /etc/cron.daily/sync-http-logs.py
     state: absent
   when: inventory_hostname.startswith('log01')
@@ -219,7 +219,7 @@
     - web-data
 
 - name: Make the awstats directory
-  file: path=/var/www/html/awstats-reports state=directory
+  ansible.builtin.file: path=/var/www/html/awstats-reports state=directory
   tags:
     - web-data
 
@@ -230,7 +230,7 @@
     - web-data
 
 - name: Remove separate daily cron job to merge old logs
-  file:
+  ansible.builtin.file:
     path: /etc/cron.d/combineHttp.cron
     state: absent
   tags:
