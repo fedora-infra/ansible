@@ -116,7 +116,7 @@
   when: not keytab_status.stat.exists
 
 - name: Deploy base64 keytab
-  copy: dest={{kt_location}}.b64
+  ansible.builtin.copy: dest={{kt_location}}.b64
         content={{keytab.stdout}}
         owner={{owner_user}} group={{owner_group}} mode=0600
   tags:

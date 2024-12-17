@@ -1,6 +1,6 @@
 ---
 - name: Copy .pem
-  copy: src=../../files/fedora-cloud/fed-cloud09.pem  dest=/etc/pki/ca-trust/source/anchors/
+  ansible.builtin.copy: src=../../files/fedora-cloud/fed-cloud09.pem  dest=/etc/pki/ca-trust/source/anchors/
   register: cloud_pem_copied
 
 - name: Update certificates

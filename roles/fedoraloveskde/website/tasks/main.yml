@@ -1,6 +1,6 @@
 ---
 - name: Copy in the sync-fedoraloveskde cronjob
-  copy:
+  ansible.builtin.copy:
     src: "cron-sync-{{item}}"
     dest: "/etc/cron.d/sync-{{item}}"
   with_items:
@@ -9,7 +9,7 @@
   - fedoraloveskde
 
 - name: Copy some config files for {{website}}
-  copy:
+  ansible.builtin.copy:
     src: "{{item}}"
     dest: "/etc/httpd/conf.d/{{website}}/{{item}}"
     owner: root

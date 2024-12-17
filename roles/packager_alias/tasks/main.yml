@@ -1,7 +1,7 @@
 ---
 # Email alias set-up
 - name: Install the Python script to get the <pkg>-owner email alias
-  copy:
+  ansible.builtin.copy:
     src: owner-email-from-pagure.py
     dest: /usr/local/bin/owner-email.py
     owner: root
@@ -12,7 +12,7 @@
   - packager_alias
 
 - name: Install the script to generate the <pkg>-owner email alias
-  copy:
+  ansible.builtin.copy:
     src: package-owner-aliases.sh
     dest: /usr/local/bin/package-owner-aliases.sh
     owner: root
@@ -42,7 +42,7 @@
 #
 
 - name: Install modified logrotate syslog script to compress maillog on mailhub
-  copy: src=syslog dest=/etc/logrotate.d/syslog owner=root group=root
+  ansible.builtin.copy: src=syslog dest=/etc/logrotate.d/syslog owner=root group=root
   tags:
   - install
   - packager_alias

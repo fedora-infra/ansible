@@ -1,13 +1,13 @@
 ---
 
 - name: Enable Copr repo for RHEL
-  copy:
+  ansible.builtin.copy:
     src: group_abrt-faf-el8-epel-8.repo
     dest: /etc/yum.repos.d/
   when: ansible_distribution == 'RedHat'
 
 - name: Enable Copr repo for Fedora
-  copy:
+  ansible.builtin.copy:
     src: group_abrt-faf-el8-fedora.repo
     dest: /etc/yum.repos.d/
   when: ansible_distribution == 'Fedora'

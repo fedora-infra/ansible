@@ -11,7 +11,7 @@
   - packages
 
 - name: Install ca for client
-  copy: src={{ private }}/files/vpn/pki/ca.crt
+  ansible.builtin.copy: src={{ private }}/files/vpn/pki/ca.crt
         dest=/etc/openvpn/client/ca.crt
         owner=root group=root mode=0600
   tags:
@@ -19,7 +19,7 @@
   - openvpn
 
 - name: Install ca for server
-  copy: src={{ private }}/files/vpn/pki/ca.crt
+  ansible.builtin.copy: src={{ private }}/files/vpn/pki/ca.crt
         dest=/etc/openvpn/server/ca.crt
         owner=root group=root mode=0600
   tags:
@@ -29,7 +29,7 @@
   # - restart openvpn (Fedora)
 
 - name: Install certificate and key (rhel or fedora) for server
-  copy: src={{ private }}/files/vpn/pki/ca.crt
+  ansible.builtin.copy: src={{ private }}/files/vpn/pki/ca.crt
         dest=/etc/openvpn/server/ca.crt
         owner=root group=root mode=0600
   tags:
@@ -40,7 +40,7 @@
   when: inventory_hostname.startswith('bastion0')
 
 - name: Install fix-routes.sh script
-  copy: src=fix-routes.sh
+  ansible.builtin.copy: src=fix-routes.sh
         dest=/etc/openvpn/fix-routes.sh
         owner=root group=root mode=0755
   tags:

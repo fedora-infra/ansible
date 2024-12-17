@@ -13,7 +13,7 @@
     mode: "0700"
 
 - name: Install Pulp auth certificates
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/copr/pulp/{{ item }}"
     dest: "/home/copr/.config/pulp/"
     owner: copr

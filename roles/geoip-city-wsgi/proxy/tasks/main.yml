@@ -17,7 +17,7 @@
   - geoip-city-wsgi/proxy
 
 - name: "Copy in the fancy about page stuff.  It's like wsgi with geoip aioli"
-  copy: src={{item}} dest=/srv/web/geoip/{{item}} mode=0644 owner=root group=root
+  ansible.builtin.copy: src={{item}} dest=/srv/web/geoip/{{item}} mode=0644 owner=root group=root
   with_items:
   - index.html
   - globe.png

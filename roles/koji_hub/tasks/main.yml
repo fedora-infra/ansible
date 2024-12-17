@@ -57,7 +57,7 @@
   when: env == 'staging'
 
 - name: Set the apache mpm to use event MPM
-  copy: src=00-mpm.conf dest=/etc/httpd/conf.modules.d/00-mpm.conf
+  ansible.builtin.copy: src=00-mpm.conf dest=/etc/httpd/conf.modules.d/00-mpm.conf
   notify:
   - reload proxyhttpd
   tags:
@@ -126,7 +126,7 @@
   - fedora-messaging
 
 - name: Deploy koji/rabbitmq certificate
-  copy: src={{ item.src }}
+  ansible.builtin.copy: src={{ item.src }}
         dest=/etc/pki/rabbitmq/kojicert/{{ item.dest }}
         owner={{ item.owner }} group=root mode={{ item.mode }}
   with_items:
@@ -163,7 +163,7 @@
 
 
 - name: Install the configuration file for the sidetag plugin
-  copy:
+  ansible.builtin.copy:
     src: sidetag.conf
     dest: /etc/koji-hub/plugins/sidetag.conf
   tags:
@@ -205,7 +205,7 @@
 #
 
 - name: Install koji-hub keytab
-  copy: src={{ private }}/files/keytabs/{{ env }}/koji-hub-{{ fedmsg_koji_instance }} dest=/etc/koji-hub/koji-hub.keytab
+  ansible.builtin.copy: src={{ private }}/files/keytabs/{{ env }}/koji-hub-{{ fedmsg_koji_instance }} dest=/etc/koji-hub/koji-hub.keytab
         owner=apache group=apache mode=0600
   notify:
   - reload httpd
@@ -214,7 +214,7 @@
   - koji_hub
 
 - name: Install GSSAPI keytab
-  copy: src={{ private }}/files/keytabs/{{ env }}/koji-gssapi dest=/etc/koji-hub/gssapi.keytab
+  ansible.builtin.copy: src={{ private }}/files/keytabs/{{ env }}/koji-gssapi dest=/etc/koji-hub/gssapi.keytab
         owner=apache group=apache mode=0600
   notify:
   - reload httpd
@@ -226,7 +226,7 @@
 # install production certs and keys
 #
 - name: Install kojiweb_cert_key.pem
-  copy: src={{ private }}/files/koji/kojiweb_cert_key.pem dest=/etc/pki/tls/private/kojiweb_cert_key.pem owner=apache mode=600
+  ansible.builtin.copy: src={{ private }}/files/koji/kojiweb_cert_key.pem dest=/etc/pki/tls/private/kojiweb_cert_key.pem owner=apache mode=600
   notify:
   - reload httpd
   tags:
@@ -235,7 +235,7 @@
   when: env != 'staging' and ansible_hostname.startswith('koji')
 
 - name: Install production koji_cert.pem
-  copy: src={{ private }}/files/koji/koji_cert.pem dest=/etc/pki/tls/certs/koji_cert.pem owner=apache mode=600
+  ansible.builtin.copy: src={{ private }}/files/koji/koji_cert.pem dest=/etc/pki/tls/certs/koji_cert.pem owner=apache mode=600
   notify:
   - reload httpd
   tags:
@@ -244,7 +244,7 @@
   when: env != 'staging' and ansible_hostname.startswith('koji')
 
 - name: Install production koji_key.pem
-  copy: src={{ private }}/files/koji/koji_key.pem dest=/etc/pki/tls/private/koji_key.pem owner=apache mode=600
+  ansible.builtin.copy: src={{ private }}/files/koji/koji_key.pem dest=/etc/pki/tls/private/koji_key.pem owner=apache mode=600
   notify:
   - reload httpd
   tags:
@@ -253,7 +253,7 @@
   when: env != 'staging' and ansible_hostname.startswith('koji')
 
 - name: Instaall fedora-ca.cert in various places
-  copy: src={{ private }}/files/fedora-ca.cert dest={{ item }} owner=apache
+  ansible.builtin.copy: src={{ private }}/files/fedora-ca.cert dest={{ item }} owner=apache
   with_items:
   - /etc/kojira/extras_cacert.pem
   - /etc/pki/tls/certs/extras_cacert.pem
@@ -264,13 +264,13 @@
   - koji_hub
 
 - name: Install kojira_cert_key
-  copy: src={{ private }}/files/koji/kojira_cert_key.pem dest=/etc/kojira/kojira_cert_key.pem owner=apache mode=600
+  ansible.builtin.copy: src={{ private }}/files/koji/kojira_cert_key.pem dest=/etc/kojira/kojira_cert_key.pem owner=apache mode=600
   tags:
   - config
   - koji_hub
 
 - name: Koji web common config files
-  copy: src={{ item }} dest=/etc/httpd/conf.d/{{ item }} owner=root group=root
+  ansible.builtin.copy: src={{ item }} dest=/etc/httpd/conf.d/{{ item }} owner=root group=root
   with_items:
   - mash.conf
   - rel-eng.conf
@@ -291,7 +291,7 @@
   notify: reload httpd
 
 - name: Koji web staging config files
-  copy: src=kojiweb.conf.stg dest=/etc/httpd/conf.d/kojiweb-stg.conf owner=root group=root
+  ansible.builtin.copy: src=kojiweb.conf.stg dest=/etc/httpd/conf.d/kojiweb-stg.conf owner=root group=root
   tags:
   - config
   - koji_hub
@@ -299,7 +299,7 @@
   when: env == "staging"
 
 - name: Koji robots.txt config
-  copy: src=robots.txt dest=/var/www/html/robots.txt
+  ansible.builtin.copy: src=robots.txt dest=/var/www/html/robots.txt
   tags:
   - config
   - koji_hub
@@ -381,7 +381,7 @@
   - koji_hub
 
 - name: Set httpd service override for fedora-messaging to work
-  copy: src=httpd-override.conf dest=/etc/systemd/system/httpd.service.d/override.conf
+  ansible.builtin.copy: src=httpd-override.conf dest=/etc/systemd/system/httpd.service.d/override.conf
   notify:
   - reload httpd
   tags:
@@ -416,7 +416,7 @@
   - koji_hub
 
 - name: Install cron jobs in /usr/local/etc/
-  copy: src={{ item }} dest=/usr/local/etc/{{ item }}
+  ansible.builtin.copy: src={{ item }} dest=/usr/local/etc/{{ item }}
   with_items:
   - koji-directory-cleanup
   - koji-gc
@@ -427,7 +427,7 @@
   - koji_hub
 
 - name: Enable crons on koji02 normally.
-  copy: src={{ item }} dest=/etc/cron.d/{{ item }}
+  ansible.builtin.copy: src={{ item }} dest=/etc/cron.d/{{ item }}
   with_items:
   - koji-directory-cleanup
   - koji-gc

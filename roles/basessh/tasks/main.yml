@@ -212,7 +212,7 @@
   - base
 
 - name: Copy the certificates
-  copy: src="{{pubkeydir}}/{{inventory_hostname}}{{item}}-cert.pub"
+  ansible.builtin.copy: src="{{pubkeydir}}/{{inventory_hostname}}{{item}}-cert.pub"
         dest="{{item}}-cert.pub"
   with_items: "{{certs_to_sign}}"
   register: certcopy

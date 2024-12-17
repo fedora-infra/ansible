@@ -114,7 +114,7 @@
 
   tasks:
     - name: Put sshfs key in place
-      copy:
+      ansible.builtin.copy:
         src="{{ private }}/files/releng/sshkeys/primary-s390x-sshfs{{ '-staging' if env == 'staging' else '' }}"
         dest="/etc/primary-s390x-sshfs"
         owner=root group=root mode=0600

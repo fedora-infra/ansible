@@ -1,12 +1,12 @@
 ---
 - name: Copy in the sync-iot cronjob
-  copy: src=cron-sync-iot dest=/etc/cron.d/sync-iot
+  ansible.builtin.copy: src=cron-sync-iot dest=/etc/cron.d/sync-iot
   tags:
   - fedora-web
   - fedora-web/iot
 
 - name: Copy some config files for {{website}}
-  copy: >
+  ansible.builtin.copy: >
     src={{item}} dest=/etc/httpd/conf.d/{{website}}/{{item}}
     owner=root group=root mode=0644
   with_items:

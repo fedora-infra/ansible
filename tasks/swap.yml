@@ -4,7 +4,7 @@
 
 ---
 - name: Touch an empty file that we will use for swap
-  copy:
+  ansible.builtin.copy:
     content: ""
     dest: "{{ swap_file_path }}"
     force: no

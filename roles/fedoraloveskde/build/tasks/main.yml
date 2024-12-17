@@ -15,7 +15,7 @@
 
 - name: Copy syncfedoraloveskde script (stg)
   when: env == "staging"
-  copy:
+  ansible.builtin.copy:
     src: sync{{item}}.stg.sh
     dest: /usr/local/bin/sync{{item}}
     owner: root
@@ -28,7 +28,7 @@
 
 - name: Copy syncfedoraloveskde script (prod)
   when: env == "production"
-  copy:
+  ansible.builtin.copy:
     src: "{{item}}.sh"
     dest: "/usr/local/bin/{{item}}"
     owner: root
@@ -40,7 +40,7 @@
   - fedoraloveskde
 
 - name: Install the syncfedoraloveskde cron job
-  copy:
+  ansible.builtin.copy:
     src: "{{item}}.cron"
     dest: "/etc/cron.d/{{item}}.cron"
     owner: root

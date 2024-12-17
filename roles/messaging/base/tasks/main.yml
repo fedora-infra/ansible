@@ -19,24 +19,24 @@
   tags:
   - fedora-messaging
 
-- name: "Copy fedora messaging key"
-  copy: src={{ private }}/files/rabbitmq/{{ env }}/pki/private/{{ item.key }}{% if env == 'staging' %}.stg{% endif %}.key
+- name: "copy fedora messaging key"
+  ansible.builtin.copy: src={{ private }}/files/rabbitmq/{{ env }}/pki/private/{{ item.key }}{% if env == 'staging' %}.stg{% endif %}.key
         dest=/etc/pki/rabbitmq/{{ item.username }}/{{ item.key }}.key
         owner={{ item.username }} group=root mode=0600
   with_items: "{{ messaging.certificates }}"
   tags:
   - fedora-messaging
 
-- name: "Copy fedora messaging certificate"
-  copy: src={{ private }}/files/rabbitmq/{{ env }}/pki/issued/{{ item.key }}{% if env == 'staging' %}.stg{% endif %}.crt
+- name: "copy fedora messaging certificate"
+  ansible.builtin.copy: src={{ private }}/files/rabbitmq/{{ env }}/pki/issued/{{ item.key }}{% if env == 'staging' %}.stg{% endif %}.crt
         dest=/etc/pki/rabbitmq/{{ item.username }}/{{ item.key }}.crt
         owner={{ item.username }} group=root mode=0644
   with_items: "{{ messaging.certificates }}"
   tags:
   - fedora-messaging
 
-- name: "Copy fedora messaging ca.crt for readers"
-  copy: src={{ private }}/files/rabbitmq/{{ env }}/pki/ca.crt
+- name: "copy fedora messaging ca.crt for readers"
+  ansible.builtin.copy: src={{ private }}/files/rabbitmq/{{ env }}/pki/ca.crt
         dest=/etc/pki/rabbitmq/{{ item.username }}/ca.crt
         owner={{ item.username }} group=root mode=0644
   with_items: "{{ messaging.certificates }}"

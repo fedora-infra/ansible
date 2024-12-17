@@ -36,7 +36,7 @@
   - config
 
 - name: Install the files for the tracker
-  copy: src={{ item.file }} dest={{ item.dest }} mode={{ item.mode }}
+  ansible.builtin.copy: src={{ item.file }} dest={{ item.dest }} mode={{ item.mode }}
   with_items:
   - { file: torrent_generator.conf, dest: /etc/torrent_generator.conf, mode: 644 }
   - { file: spins_generator.conf, dest: /etc/spins_generator.conf, mode: 644 }

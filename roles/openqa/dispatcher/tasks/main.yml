@@ -258,7 +258,7 @@
   ansible.builtin.file: path=/root/.openidc state=directory owner=root group=root mode=0700
 
 - name: Write wikitcms token file for root
-  copy: src={{ wikitcms_token }} dest=/root/.openidc/oidc_wikitcms.json owner=root group=root mode=0600
+  ansible.builtin.copy: src={{ wikitcms_token }} dest=/root/.openidc/oidc_wikitcms.json owner=root group=root mode=0600
   when: "wikitcms_token is defined"
   tags:
   - config
@@ -275,7 +275,7 @@
   - config
 
 - name: Deploy the Fedora infra fedora-messaging cert
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/{{ openqa_env }}/pki/issued/{{ openqa_amqp_this_username }}.crt"
     dest: "/etc/pki/fedora-messaging/{{ openqa_amqp_this_username }}-cert.pem"
     mode: "0644"
@@ -286,7 +286,7 @@
   - config
 
 - name: Deploy the Fedora infra fedora-messaging key
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/{{ openqa_env }}/pki/private/{{ openqa_amqp_this_username }}.key"
     dest: "/etc/pki/fedora-messaging/{{ openqa_amqp_this_username }}-key.pem"
     mode: "0640"
@@ -297,7 +297,7 @@
   - config
 
 - name: Deploy the Fedora infra fedora-messaging prod cert on stg (for stg consumers that listen on prod)
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/production/pki/issued/{{ openqa_amqp_prod_username }}.crt"
     dest: "/etc/pki/fedora-messaging/{{ openqa_amqp_prod_username }}-cert.pem"
     mode: "0644"
@@ -308,7 +308,7 @@
   - config
 
 - name: Deploy the Fedora infra fedora-messaging prod key on stg (for stg consumers that listen on prod)
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/production/pki/private/{{ openqa_amqp_prod_username }}.key"
     dest: "/etc/pki/fedora-messaging/{{ openqa_amqp_prod_username }}-key.pem"
     mode: "0640"
@@ -361,10 +361,10 @@
 # near-instantly; this avoids huge floods of errors when resultsdb
 # or the wiki go down for a bit
 - name: Consumer service config drop-in to slow down restarts
-  copy: src=fmconsumer.restartsec.conf dest=/etc/systemd/system/fm-consumer@.service.d/10-restartsec.conf owner=root group=root mode=0644
+  ansible.builtin.copy: src=fmconsumer.restartsec.conf dest=/etc/systemd/system/fm-consumer@.service.d/10-restartsec.conf owner=root group=root mode=0644
 
 - name: Set up cron job to schedule live-respins jobs
-  copy: src=schedule-live-respins.cron dest=/etc/cron.hourly/schedule-live-respins owner=root group=root mode=0755
+  ansible.builtin.copy: src=schedule-live-respins.cron dest=/etc/cron.hourly/schedule-live-respins owner=root group=root mode=0755
   tags:
   - config
 
@@ -375,7 +375,7 @@
 # really be tied to the dispatcher role, but separating it out would
 # be a pain, it's easier just to stuff it here
 - name: Set up cron job to restart all running fm-consumer services
-  copy: src=restart-consumers.cron dest=/etc/cron.daily/restart-consumers owner=root group=root mode=0755
+  ansible.builtin.copy: src=restart-consumers.cron dest=/etc/cron.daily/restart-consumers owner=root group=root mode=0755
   tags:
   - config
 
@@ -384,4 +384,4 @@
 # to get blocked. the subcommand tries to find such cases and send
 # the missing reports
 - name: Set up cron job to find and submit missing results to resultsdb
-  copy: src=report-blocked.cron dest=/etc/cron.daily/report-blocked owner=root group=root mode=0755
+  ansible.builtin.copy: src=report-blocked.cron dest=/etc/cron.daily/report-blocked owner=root group=root mode=0755

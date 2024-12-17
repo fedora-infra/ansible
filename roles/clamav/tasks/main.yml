@@ -22,13 +22,13 @@
   - cronie-anacron
 
 - name: Setup the freshclam configuration
-  copy: src=freshclam.conf dest=/etc/freshclam.conf
+  ansible.builtin.copy: src=freshclam.conf dest=/etc/freshclam.conf
 
 - name: Enable freshclam by fixing the stupid default sysconfig
-  copy: src=freshclam-sysconfig dest=/etc/sysconfig/freshclam
+  ansible.builtin.copy: src=freshclam-sysconfig dest=/etc/sysconfig/freshclam
 
 - name: Setup the freshclam cron job
-  copy: src=freshclam-cron dest=/etc/cron.daily/freshclam
+  ansible.builtin.copy: src=freshclam-cron dest=/etc/cron.daily/freshclam
 
 - name: Setup the periodic clam scan script
   template: >

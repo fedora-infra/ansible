@@ -1,10 +1,10 @@
 ---
 - name: Copy private tlscert {{secret_tls_privatefile}}
-  copy: src={{private}}/files/{{ secret_tls_private_cert }} dest=/etc/openshift_apps/{{secret_tls_app}}/{{secret_tls_key}}.crt
+  ansible.builtin.copy: src={{private}}/files/{{ secret_tls_private_cert }} dest=/etc/openshift_apps/{{secret_tls_app}}/{{secret_tls_key}}.crt
   register: secret_privatecert
 
 - name: Copy private tlskey {{secret_tls_privatefile}}
-  copy: src={{private}}/files/{{ secret_tls_private_key }} dest=/etc/openshift_apps/{{secret_tls_app}}/{{secret_tls_key}}.key
+  ansible.builtin.copy: src={{private}}/files/{{ secret_tls_private_key }} dest=/etc/openshift_apps/{{secret_tls_app}}/{{secret_tls_key}}.key
   register: secret_privatekey
 
 - name: Delete existing secrets

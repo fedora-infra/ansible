@@ -1,6 +1,6 @@
 ---
 - name: Make sure the ticketkey is deployed
-  copy: src=/root/ticketkey_{{env}}.tkey dest=/etc/httpd/ticketkey_{{env}}.tkey
+  ansible.builtin.copy: src=/root/ticketkey_{{env}}.tkey dest=/etc/httpd/ticketkey_{{env}}.tkey
         owner=root group=root mode=0600
   notify:
   - reload proxyhttpd
@@ -46,7 +46,7 @@
   - httpd/proxy
 
 - name: Set the apache mpm to use event MPM
-  copy: src=00-mpm.conf dest=/etc/httpd/conf.modules.d/00-mpm.conf
+  ansible.builtin.copy: src=00-mpm.conf dest=/etc/httpd/conf.modules.d/00-mpm.conf
   notify:
   - reload proxyhttpd
   tags:
@@ -107,7 +107,7 @@
   - httpdoverride
 
 - name: Create systemd drop in dir for httpd
-  copy: src=httpdoverride.conf dest=/etc/systemd/system/httpd.service.d/httpdoverride.conf
+  ansible.builtin.copy: src=httpdoverride.conf dest=/etc/systemd/system/httpd.service.d/httpdoverride.conf
   tags:
   - httpd
   - httpd/proxy

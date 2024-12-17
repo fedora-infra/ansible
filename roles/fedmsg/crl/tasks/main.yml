@@ -12,7 +12,7 @@
   - fedmsg/proxy
 
 - name: Copy over our crl from the private repo
-  copy: >
+  ansible.builtin.copy: >
     src={{private}}/files/fedmsg-certs/keys/crl.pem dest=/srv/web/fedmsg/crl.pem
     owner=root group=root mode=0644
   tags:
@@ -24,7 +24,7 @@
 # End users (fedmsg-notify) need it to be able to validate our outbound
 # messages.
 - name: Copy over our CA cert from the private repo
-  copy: >
+  ansible.builtin.copy: >
     src={{private}}/files/fedmsg-certs/keys/ca.crt dest=/srv/web/fedmsg/ca.crt
     owner=root group=root mode=0644
   tags:

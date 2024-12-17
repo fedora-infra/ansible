@@ -25,7 +25,7 @@
   when: ansible_distribution == 'Fedora'
 
 - name: Wsgi.conf
-  copy: src="wsgi.conf" dest=/etc/httpd/conf.d/wsgi.conf
+  ansible.builtin.copy: src="wsgi.conf" dest=/etc/httpd/conf.d/wsgi.conf
   notify:
   - restart apache
   tags:

@@ -56,8 +56,10 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   tasks:
-  - copy: src=/srv/web/infra/db-dumps/bodhi2.dump.xz dest=/var/tmp/bodhi2.dump.xz
-      owner=postgres group=postgres
+  - ansible.builtin.copy:
+      src: /srv/web/infra/db-dumps/bodhi2.dump.xz
+      dest: /var/tmp/bodhi2.dump.xz
+      owner: postgres group=postgres
   - command: unxz /var/tmp/bodhi2.dump.xz
              creates=/var/tmp/bodhi2.dump
   - command: dropdb bodhi2

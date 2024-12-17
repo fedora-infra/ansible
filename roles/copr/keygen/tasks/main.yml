@@ -15,7 +15,7 @@
   ansible.builtin.file: path=/var/lib/copr-keygen owner=copr-signer group=copr-signer recurse=yes
 
 - name: Put keygen vhost for httpd
-  copy: src="httpd/copr-keygen.conf" dest="/etc/httpd/conf.d/copr-keygen.conf"
+  ansible.builtin.copy: src="httpd/copr-keygen.conf" dest="/etc/httpd/conf.d/copr-keygen.conf"
   notify:
   - reload httpd
   tags:
@@ -48,7 +48,7 @@
   ansible.builtin.file: dest=/usr/local/share/copr state=directory
 
 - name: Copy over our custom selinux module
-  copy: src=selinux/copr_rules.pp dest=/usr/local/share/copr/copr_rules.pp
+  ansible.builtin.copy: src=selinux/copr_rules.pp dest=/usr/local/share/copr/copr_rules.pp
   register: selinux_module
 
 - name: Install our custom selinux module

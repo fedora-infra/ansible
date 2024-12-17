@@ -6,7 +6,7 @@
   - collectd
 
 - name: Copy in /usr/local/bin/fcomm-queue-collectd
-  copy: >
+  ansible.builtin.copy: >
     src=fcomm-queue-collectd.py
     dest=/usr/local/bin/fcomm-queue-collectd
     mode=0755
@@ -15,7 +15,7 @@
   notify: restart collectd
 
 - name: Copy in /etc/collectd.d/fcomm-queue.conf
-  copy: >
+  ansible.builtin.copy: >
     src=fcomm-queue.conf
     dest=/etc/collectd.d/fcomm-queue-conf
   tags:
@@ -30,7 +30,7 @@
   - selinux
 
 - name: Copy over our fcomm collectd selinux module
-  copy: src=selinux/fi-collectd-fcomm.pp dest=/usr/share/collectd/fi-collectd-fcomm.pp
+  ansible.builtin.copy: src=selinux/fi-collectd-fcomm.pp dest=/usr/share/collectd/fi-collectd-fcomm.pp
   register: ficfcomm_module
   tags:
   - collectd

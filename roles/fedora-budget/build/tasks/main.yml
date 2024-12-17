@@ -8,17 +8,23 @@
   - fedora-budget
   - fedora-budget/build
 
-- copy: >
-    src=cron-budget-sync dest=/etc/cron.d/budget-sync
-    owner=root group=root mode=0644
+- ansible.builtin.copy:
+    src: cron-budget-sync
+    dest: /etc/cron.d/budget-sync
+    owner: root
+    group: root
+    mode: "0644"
   tags:
   - fedora-budget
   - fedora-budget/build
   when: env == "production"
 
-- copy: >
-    src=cron-budget-sync.stg dest=/etc/cron.d/budget-sync
-    owner=root group=root mode=0644
+- ansible.builtin.copy:
+    src: cron-budget-sync.stg
+    dest: /etc/cron.d/budget-sync
+    owner: root
+    group: root
+    mode: "0644"
   tags:
   - fedora-budget
   - fedora-budget/build

@@ -1,7 +1,7 @@
 ---
 
 - name: Copy in the memcached collectd config
-  copy: src=memcached.conf dest=/etc/collectd.d/memcached.conf
+  ansible.builtin.copy: src=memcached.conf dest=/etc/collectd.d/memcached.conf
   tags:
   - collectd/memcached
   - collectd

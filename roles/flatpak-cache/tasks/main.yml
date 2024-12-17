@@ -39,7 +39,7 @@
   - config
 
 - name: Install SSL Certificates
-  copy:
+  ansible.builtin.copy:
     src: "{{ item }}"
     dest: /etc/pki/squid/
     owner: squid

@@ -132,7 +132,7 @@
   - restart apache
 
 - name: Copy ipsilon OIDC client config
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/ipsilon/openidc.{{env}}.static"
     dest: /etc/ipsilon/root/openidc.static.cfg
     owner: ipsilon
@@ -156,7 +156,7 @@
   - restart apache
 
 - name: Copy OIDC private key
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/ipsilon/openidc{{ env_suffix }}.key"
     dest: /etc/ipsilon/root/openidc.key
     owner: ipsilon
@@ -177,7 +177,7 @@
   - ipsilon
 
 - name: Copy SAML2 private key
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/saml2/{{ env }}/keys/idp.key"
     dest: /etc/ipsilon/root/saml2/idp.key
     owner: ipsilon
@@ -187,7 +187,7 @@
   - ipsilon
 
 - name: Copy SAML2 public key
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/saml2/{{ env }}/keys/idp.crt"
     dest: /etc/ipsilon/root/saml2/idp.crt
     owner: ipsilon

@@ -38,7 +38,7 @@
   when: "'mailman' in group_names or 'mirrorlist_proxies' in group_names"
 
 - name: Install local nrpe check scripts that are not packaged
-  copy: src="scripts/{{ item }}" dest="{{ libdir }}/nagios/plugins/{{ item }}" mode=0755 owner=nagios group=nagios
+  ansible.builtin.copy: src="scripts/{{ item }}" dest="{{ libdir }}/nagios/plugins/{{ item }}" mode=0755 owner=nagios group=nagios
   with_items:
   - check_haproxy_conns.py
   - check_postfix_queue
@@ -65,7 +65,7 @@
   - nagios_client
 
 - name: Install nrpe check for systemd unit
-  copy: src="scripts/{{ item }}" dest="{{ libdir }}/nagios/plugins/{{ item }}" mode=0775 owner=nagios group=nagios
+  ansible.builtin.copy: src="scripts/{{ item }}" dest="{{ libdir }}/nagios/plugins/{{ item }}" mode=0775 owner=nagios group=nagios
   with_items:
     - check_systemd_units
   when: inventory_hostname.startswith('pagure')
@@ -89,7 +89,7 @@
   - nagios_client
 
 - name: Copy over our custom selinux module
-  copy: src=selinux/fi-nrpe.pp dest=/usr/share/nrpe/fi-nrpe.pp
+  ansible.builtin.copy: src=selinux/fi-nrpe.pp dest=/usr/share/nrpe/fi-nrpe.pp
   register: selinux_module
   tags:
   - config
@@ -105,7 +105,7 @@
   - selinux
 
 - name: Copy over our custom selinux module for mirrorlist
-  copy: src=selinux/fi-nrpe.pp dest=/usr/share/nrpe/mirrormanager_container.pp
+  ansible.builtin.copy: src=selinux/fi-nrpe.pp dest=/usr/share/nrpe/mirrormanager_container.pp
   register: selinux_module_mirrorlist
   when: "'proxy' in inventory_hostname"
   tags:

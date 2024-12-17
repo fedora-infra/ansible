@@ -10,7 +10,7 @@
   - fedora-web
 
 - name: Copy over the Fedora Server CA cert
-  copy: src="{{ private }}/files/fedora-ca.cert" dest=/etc/pki/httpd/fedora-server-ca.cert
+  ansible.builtin.copy: src="{{ private }}/files/fedora-ca.cert" dest=/etc/pki/httpd/fedora-server-ca.cert
         owner=root group=root mode=0644
   notify:
   - reload proxyhttpd
@@ -25,7 +25,7 @@
   - fedora-web/registry
 
 - name: Copy over the registry CA
-  copy: src="{{private}}/files/docker-registry/{{env}}/pki/ca.crt"
+  ansible.builtin.copy: src="{{private}}/files/docker-registry/{{env}}/pki/ca.crt"
         dest="/etc/pki/httpd/registry-ca-{{env}}.cert"
         owner=root group=root mode=0644
   notify:
@@ -35,7 +35,7 @@
   - fedora-web/registry
 
 - name: Copy over the registry passwd
-  copy: src="passwd-{{env}}" dest=/etc/httpd/conf.d/registry.fedoraproject.org/passwd
+  ansible.builtin.copy: src="passwd-{{env}}" dest=/etc/httpd/conf.d/registry.fedoraproject.org/passwd
         owner=root group=root mode=0644
   notify:
   - reload proxyhttpd

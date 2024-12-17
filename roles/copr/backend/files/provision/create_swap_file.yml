@@ -1,12 +1,12 @@
 ---
 - name: install enable-swap.service
-  copy:
+  ansible.builtin.copy:
     src: files/enable-swap.service
     dest: /etc/systemd/system/
   register: enable_swap_service
 
 - name: install enable-swap.sh
-  copy:
+  ansible.builtin.copy:
     src: files/enable-swap.sh
     dest: /usr/local/sbin/
     mode: '0755'

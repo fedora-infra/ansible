@@ -33,7 +33,7 @@
   tags: supybot
 
 - name: Setup meetings_by_team script
-  copy: src=meetings_by_team.sh dest=/usr/local/bin/meetings_by_team.sh mode=755
+  ansible.builtin.copy: src=meetings_by_team.sh dest=/usr/local/bin/meetings_by_team.sh mode=755
   tags: supybot
 
 - name: Teams cron job
@@ -47,7 +47,7 @@
   tags: supybot
 
 - name: Setup archive script
-  copy: src=archive.sh dest=/usr/local/bin/archive.sh mode=755
+  ansible.builtin.copy: src=archive.sh dest=/usr/local/bin/archive.sh mode=755
   tags: supybot
 
 - name: Teams cron job
@@ -62,7 +62,7 @@
   when: inventory_hostname.startswith('value02')
 
 - name: Setup meetbot.conf apache config
-  copy: src=meetbot.conf dest=/etc/httpd/conf.d/meetbot.conf mode=644
+  ansible.builtin.copy: src=meetbot.conf dest=/etc/httpd/conf.d/meetbot.conf mode=644
   tags: supybot
 
 - name: Check the selinux context of the /srv/web/meetbot dir
@@ -115,7 +115,7 @@
   - config
 
 - name: Deploy the fedora-messaging CA
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/ca.crt"
     dest: /etc/pki/fedora-messaging/rabbitmq-ca.crt
     mode: "0644"
@@ -127,7 +127,7 @@
   - config
 
 - name: Deploy the fedora-messaging cert
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/issued/{{ botname }}.crt"
     dest: /etc/pki/fedora-messaging/{{ botname }}.crt
     mode: "0644"
@@ -139,7 +139,7 @@
   - config
 
 - name: Deploy the fedora-messaging key
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/private/{{ botname }}.key"
     dest: /etc/pki/fedora-messaging/{{ botname }}.key
     mode: "0600"
@@ -163,7 +163,7 @@
   - config
 
 - name: Setup zodbot systemd service file (prod)
-  copy: src=zodbot.service dest=/etc/systemd/system/zodbot.service
+  ansible.builtin.copy: src=zodbot.service dest=/etc/systemd/system/zodbot.service
   when: env == "production"
   notify:
   - reload systemd
@@ -179,7 +179,7 @@
   - supybot
 
 - name: Setup ursabot systemd service file (stg)
-  copy: src=ursabot.service dest=/etc/systemd/system/ursabot.service
+  ansible.builtin.copy: src=ursabot.service dest=/etc/systemd/system/ursabot.service
   when: env == "staging"
   notify:
   - reload systemd
@@ -195,7 +195,7 @@
   - supybot
 
 - name: Setup the SAR script for the meetbot logs
-  copy: src=meetbot_sar.py dest=/usr/local/bin/meetbot_sar.py
+  ansible.builtin.copy: src=meetbot_sar.py dest=/usr/local/bin/meetbot_sar.py
         owner=root group=root mode=0700
   tags:
   - config

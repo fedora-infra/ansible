@@ -16,7 +16,7 @@
   - repo2json
 
 - name: Install the rhel_to_json script and cron
-  copy: src={{ item.file }} dest={{ item.dest }}
+  ansible.builtin.copy: src={{ item.file }} dest={{ item.dest }}
         owner=root group=root mode={{ item.mode }}
   with_items:
   - { file: rhel_to_json.py, dest: /usr/bin/local/rhel_to_json.py, mode: 755 }

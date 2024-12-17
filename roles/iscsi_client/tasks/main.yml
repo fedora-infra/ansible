@@ -44,7 +44,7 @@
   - services
 
 - name: Setup multipath.conf file
-  copy: src=multipath.conf dest=/etc/multipath.conf
+  ansible.builtin.copy: src=multipath.conf dest=/etc/multipath.conf
   tags:
   - config
 

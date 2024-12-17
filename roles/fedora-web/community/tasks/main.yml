@@ -1,12 +1,12 @@
 ---
 - name: Copy in the sync-community cronjob
-  copy: src=cron-sync-community dest=/etc/cron.d/sync-community
+  ansible.builtin.copy: src=cron-sync-community dest=/etc/cron.d/sync-community
   tags:
   - fedora-web
   - fedora-web/community
 
 - name: Copy some config files for {{website}}
-  copy: >
+  ansible.builtin.copy: >
     src={{item}} dest=/etc/httpd/conf.d/{{website}}/{{item}}
     owner=root group=root mode=0644
   with_items:

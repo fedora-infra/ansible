@@ -1,6 +1,6 @@
 ---
 - name: Install the confine-ssh script
-  copy: >
+  ansible.builtin.copy: >
     src={{files}}/scripts/confine-ssh.sh
     dest=/usr/local/bin/confine-ssh.sh
     mode=0755

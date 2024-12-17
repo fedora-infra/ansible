@@ -17,7 +17,7 @@
   - fedmsgmonitor
 
 - name: Setup fedmsg-gateway config file
-  copy: src=gateway.py dest=/etc/fedmsg.d/gateway.py
+  ansible.builtin.copy: src=gateway.py dest=/etc/fedmsg.d/gateway.py
   tags:
   - config
   - fedmsg/gateway
@@ -32,7 +32,7 @@
   - fedmsg/gateway
 
 - name: Bump fs limits by installing a drop-in systemd config
-  copy: >
+  ansible.builtin.copy: >
     src=fs-limits.conf
     dest=/etc/systemd/system/fedmsg-gateway.service.d/fs-limits.conf
   tags:

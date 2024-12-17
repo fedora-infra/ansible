@@ -7,7 +7,7 @@
   - dhcp_server
 
 - name: Setup dhcpd.conf
-  copy: src=dhcpd.conf.{{ inventory_hostname }} dest=/etc/dhcp/dhcpd.conf mode=644
+  ansible.builtin.copy: src=dhcpd.conf.{{ inventory_hostname }} dest=/etc/dhcp/dhcpd.conf mode=644
   notify:
   - restart dhcpd
   tags:

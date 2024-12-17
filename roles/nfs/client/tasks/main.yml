@@ -1,7 +1,7 @@
 # Setup our idmapd.conf file. It should be loaded automagically.
 ---
 - name: Idmapd.conf
-  copy: src=idmapd.conf dest=/etc/idmapd.conf
+  ansible.builtin.copy: src=idmapd.conf dest=/etc/idmapd.conf
   tags:
   - nfs/client
 

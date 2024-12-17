@@ -65,7 +65,7 @@
 
   - name: Copy updates
     check_mode: no
-    copy: src={{ bigfiles }}/firmware/{{ item.item.0.dirname }}/{{ item.item.1}}
+    ansible.builtin.copy: src={{ bigfiles }}/firmware/{{ item.item.0.dirname }}/{{ item.item.1}}
           dest=/root/firmware-upgrades/
           mode=0700
     register: copy_results

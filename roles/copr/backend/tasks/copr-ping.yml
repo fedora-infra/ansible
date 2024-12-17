@@ -70,7 +70,7 @@
   tags: copr_ping
 
 - name: Install the Copr API token
-  copy:
+  ansible.builtin.copy:
     content: |
       [copr-cli]
       login = {{ copr_ping_bot_login }}

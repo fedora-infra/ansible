@@ -14,7 +14,7 @@
   when: ansible_distribution_major_version|int >= 8
 
 - name: Copy my.cnf
-  copy: src={{ item }} dest=/etc/my.cnf owner=root group=root mode=0644
+  ansible.builtin.copy: src={{ item }} dest=/etc/my.cnf owner=root group=root mode=0644
   with_first_found:
     - "{{ mariadb_config }}"
     - my.cnf.{{ inventory_hostname }}
@@ -49,7 +49,7 @@
   - mariadb-server
 
 - name: Copy over backup scriplet
-  copy: src=backup-database dest=/usr/local/bin/backup-database mode=0755
+  ansible.builtin.copy: src=backup-database dest=/usr/local/bin/backup-database mode=0755
   tags:
   - mariadb-server
 

@@ -6,7 +6,7 @@
   - packages
 
 - name: /etc/postfix/main.cf
-  copy: src={{ item }} dest=/etc/postfix/main.cf
+  ansible.builtin.copy: src={{ item }} dest=/etc/postfix/main.cf
   with_first_found:
     - "{{ postfix_maincf }}"
     - "{{ roles_path }}/base/files/postfix/main.cf/main.cf.{{ ansible_fqdn }}"

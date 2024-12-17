@@ -1,12 +1,12 @@
 ---
 - name: Copy in the sync-mirrors cronjob
-  copy: src=cron-sync-mirrors dest=/etc/cron.d/sync-mirrors
+  ansible.builtin.copy: src=cron-sync-mirrors dest=/etc/cron.d/sync-mirrors
   tags:
   - fedora-web
   - fedora-web/mirrors
 
 - name: Copy some config files for {{website}}
-  copy: >
+  ansible.builtin.copy: >
     src={{item}} dest=/etc/httpd/conf.d/{{website}}/{{item}}
     owner=root group=root mode=0644
   with_items:

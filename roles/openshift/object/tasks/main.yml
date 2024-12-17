@@ -10,7 +10,7 @@
   register: object_template_fullpath_result
 
 - name: Copy file {{object_file}} to temporary file ({{tmpfile.path}})
-  copy: src={{roles_path}}/openshift-apps/{{object_app}}/files/{{object_file}} dest=/etc/openshift_apps/{{object_os_app}}/{{object_objectname}}
+  ansible.builtin.copy: src={{roles_path}}/openshift-apps/{{object_app}}/files/{{object_file}} dest=/etc/openshift_apps/{{object_os_app}}/{{object_objectname}}
   when: object_file is defined and object_template is not defined and object_template_fullpath is not defined
   register: object_file_result
 

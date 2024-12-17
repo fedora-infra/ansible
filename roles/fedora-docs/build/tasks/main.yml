@@ -6,17 +6,23 @@
   - fedora-docs
   - fedora-docs/build
 
-- copy: >
-    src=cron-docs-sync dest=/etc/cron.d/docs-sync
-    owner=root group=root mode=0644
+- ansible.builtin.copy:
+    src: cron-docs-sync
+    dest: /etc/cron.d/docs-sync
+    owner: root
+    group: root
+    mode: "0644"
   tags:
   - fedora-docs
   - fedora-docs/build
   when: env == "production"
 
-- copy: >
-    src=cron-docs-sync.stg dest=/etc/cron.d/docs-sync
-    owner=root group=root mode=0644
+- ansible.builtin.copy:
+    src: cron-docs-sync.stg
+    dest: /etc/cron.d/docs-sync
+    owner: root
+    group: root
+    mode: "0644"
   tags:
   - fedora-docs
   - fedora-docs/build

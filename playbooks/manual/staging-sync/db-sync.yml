@@ -73,7 +73,7 @@
   tasks:
   # push dump to stg from batcave
   - name: Push the DB dump from batcave to the dbhost in stg
-    copy:
+    ansible.builtin.copy:
       src: /var/tmp/{{ db }}.dump.xz
       dest: /var/tmp/{{ db }}.dump.xz
 

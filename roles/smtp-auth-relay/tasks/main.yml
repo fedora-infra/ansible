@@ -9,7 +9,7 @@
     - smtp_auth_relay
 
 - name: Create the password file
-  copy:
+  ansible.builtin.copy:
     dest: /etc/postfix/sasl_passwd
     content: "{{ smtp_auth_relay_host }} {{ smtp_auth_relay_user }}:{{ smtp_auth_relay_password }}"
     mode: "0600"

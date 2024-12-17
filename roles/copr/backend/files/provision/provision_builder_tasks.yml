@@ -24,12 +24,12 @@
   when: starting_builder
 
 - name: put infra repos into yum.repos.d
-  copy: src=files/dnf/infra-tags.repo dest=/etc/yum.repos.d
+  ansible.builtin.copy: src=files/dnf/infra-tags.repo dest=/etc/yum.repos.d
   when:
     - preparing_image
 
 - name: put infra stg repos into yum.repos.d if staging
-  copy: src=files/dnf/infra-tags-stg.repo dest=/etc/yum.repos.d
+  ansible.builtin.copy: src=files/dnf/infra-tags-stg.repo dest=/etc/yum.repos.d
   when:
     - devel
     - starting_builder
@@ -200,7 +200,7 @@
     - starting_builder
 
 - name: put updated mock configs into /etc/mock
-  copy: src=files/mock/ dest=/etc/copr-rpmbuild/mock-config-overrides
+  ansible.builtin.copy: src=files/mock/ dest=/etc/copr-rpmbuild/mock-config-overrides
   # conditional, per https://pagure.io/copr/copr/issue/1189 - as we don't want
   # to bake broken mock configuration into the image.
   when:
@@ -230,7 +230,7 @@
   ignore_errors: true
 
 - name: put copr-rpmbuild configuration file in the right place
-  copy: src=files/main.ini dest=/etc/copr-rpmbuild/main.ini
+  ansible.builtin.copy: src=files/main.ini dest=/etc/copr-rpmbuild/main.ini
   when:
     # TODO: use the default main.ini provided by copr-rpmbuild
     - starting_builder
@@ -252,7 +252,7 @@
   authorized_key: user=root key='{{ lookup('file', 'files/buildsys.pub') }}'
 
 - name: setup 10x more fds in limits.conf
-  copy:
+  ansible.builtin.copy:
     content: |
       * soft nofile 10240
       * hard nofile 10240
@@ -315,7 +315,7 @@
 # Hotfix for https://github.com/fedora-copr/copr/issues/3140
 # Hotfix for https://github.com/fedora-copr/copr/issues/3146
 - name: Install custom copr-rpmbuild configs
-  copy:
+  ansible.builtin.copy:
     src: "files/{{ item }}"
     dest: "/etc/copr-rpmbuild/{{ item }}"
   when:

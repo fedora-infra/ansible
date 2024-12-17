@@ -33,7 +33,7 @@
   - restart apache
 
 - name: Copy github2fedmsg wsgi script
-  copy: >
+  ansible.builtin.copy: >
     src={{ item }} dest="/usr/share/github2fedmsg/{{ item }}"
     owner=apache group=apache mode=0644
   with_items:
@@ -57,7 +57,7 @@
   - restart apache
 
 - name: Hotfix - allow velruse to do stateless openid
-  copy: >
+  ansible.builtin.copy: >
     src=openid.py
     dest=/usr/lib/python2.7/site-packages/velruse/providers/openid.py
     owner=root group=root mode=0644

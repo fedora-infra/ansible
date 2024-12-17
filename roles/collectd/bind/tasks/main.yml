@@ -7,7 +7,7 @@
   - collectd
 
 - name: Copy in /etc/collectd.d/bind.conf
-  copy: >
+  ansible.builtin.copy: >
     src=bind.conf
     dest=/etc/collectd.d/bind.conf
   tags:

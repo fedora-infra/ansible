@@ -18,7 +18,7 @@
 
 
 - name: Install the git hooks
-  copy: src={{item}} dest=/usr/share/git-core/ mode=0755
+  ansible.builtin.copy: src={{item}} dest=/usr/share/git-core/ mode=0755
   with_items:
   - post-receive-chained
   - post-receive-chained-forks
@@ -29,7 +29,7 @@
   - git/hooks
 
 - name: Install the git mail hooks
-  copy: src={{item}} dest=/usr/share/git-core/mail-hooks/ mode=0755
+  ansible.builtin.copy: src={{item}} dest=/usr/share/git-core/mail-hooks/ mode=0755
   with_items:
   - util.py
   - git.py

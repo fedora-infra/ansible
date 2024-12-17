@@ -117,7 +117,7 @@
 # We always use the openQA production cert and key here for now; we
 # don't really need a separate identity for fedora_nightlies.
 - name: Deploy the Fedora infra fedora-messaging cert (openQA production)
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/production/pki/issued/openqa.crt"
     dest: /etc/pki/fedora-messaging/openqa-cert.pem
     mode: "0644"
@@ -132,7 +132,7 @@
 # on the same box as openQA, in fact we need to keep the ownership in
 # line. This needs making cleaner somehow.
 - name: Deploy the Fedora infra fedora-messaging key
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/production/pki/private/openqa.key"
     dest: /etc/pki/fedora-messaging/openqa-key.pem
     mode: "0640"

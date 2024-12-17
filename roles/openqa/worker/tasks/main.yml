@@ -69,11 +69,11 @@
   ansible.builtin.file: path=/etc/yum.repos.d/scratchrepo.conf state=absent
 
 - name: Write lab side repo config
-  copy: src=openqa-lab-repo.repo dest=/etc/yum.repos.d/openqa-lab-repo.repo owner=root group=root mode=0644
+  ansible.builtin.copy: src=openqa-lab-repo.repo dest=/etc/yum.repos.d/openqa-lab-repo.repo owner=root group=root mode=0644
   when: "deployment_type is defined and deployment_type == 'stg'"
 
 - name: Write prod side repo config
-  copy: src=openqa-prod-repo.repo dest=/etc/yum.repos.d/openqa-prod-repo.repo owner=root group=root mode=0644
+  ansible.builtin.copy: src=openqa-prod-repo.repo dest=/etc/yum.repos.d/openqa-prod-repo.repo owner=root group=root mode=0644
   when: "deployment_type is defined and deployment_type == 'prod'"
 
 - name: Install required packages
@@ -151,11 +151,11 @@
   when: "openqa_rngd is defined and openqa_rngd"
 
 - name: Install script to set /dev/kvm perms and disable SMT (ppc64 only)
-  copy: src=openqa-ppc64-prep.sh dest=/etc/cron.hourly/openqa-ppc64-prep owner=root group=root mode=0755
+  ansible.builtin.copy: src=openqa-ppc64-prep.sh dest=/etc/cron.hourly/openqa-ppc64-prep owner=root group=root mode=0755
   when: "ansible_architecture is defined and ansible_architecture == 'ppc64le'"
 
 - name: Install systemd service to run boot script (ppc64 only)
-  copy: src=openqa-ppc64-prep.service dest=/etc/systemd/system/openqa-ppc64-prep.service
+  ansible.builtin.copy: src=openqa-ppc64-prep.service dest=/etc/systemd/system/openqa-ppc64-prep.service
   when: "ansible_architecture is defined and ansible_architecture == 'ppc64le'"
   register: prepservice
 
@@ -173,7 +173,7 @@
   when: "openqa_rngd is defined and openqa_rngd"
 
 - name: Install cron job to kill stuck qemu processes
-  copy: src=kill-stuck-qemu.sh dest=/etc/cron.daily/kill-stuck-qemu owner=root group=root mode=0755
+  ansible.builtin.copy: src=kill-stuck-qemu.sh dest=/etc/cron.daily/kill-stuck-qemu owner=root group=root mode=0755
 
 - include_tasks: nfs-client.yml
   when: openqa_nfs_worker|bool
@@ -182,7 +182,7 @@
   when: openqa_tap
 
 - name: Tell git it's OK for _openqa-worker to run 'git' on the test dir
-  copy: src=gitconfig dest=/etc/gitconfig owner=root group=root mode=0644
+  ansible.builtin.copy: src=gitconfig dest=/etc/gitconfig owner=root group=root mode=0644
 
 # this is kinda lazy - we could have a separate openqa_swtpm var so we
 # we could potentially separate tap worker hosts from swtpm ones - but
@@ -215,7 +215,7 @@
   when: openqa_hdds_worker|bool
 
 - name: Override kernel scheduler configuration - rhbz#2009585
-  copy: src=60-block-scheduler.rules dest=/etc/udev/rules.d/60-block-scheduler.rules owner=root group=root mode=0644
+  ansible.builtin.copy: src=60-block-scheduler.rules dest=/etc/udev/rules.d/60-block-scheduler.rules owner=root group=root mode=0644
   when: "deployment_type is defined"
 
 - name: Remove wrongly-named kernel scheduler config file

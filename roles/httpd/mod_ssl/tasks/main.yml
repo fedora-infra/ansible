@@ -8,7 +8,7 @@
   - httpd/mod_ssl
 
 - name: Copy over SSLCertificateChainFile if defined
-  copy: >
+  ansible.builtin.copy: >
     src=ssl.conf
     dest=/etc/httpd/conf.d/ssl.conf
     owner=root

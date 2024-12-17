@@ -54,7 +54,7 @@
   when: datacenter == 'aws'
   block:
     - name: Install the drop-in raid-check.timer override
-      copy:
+      ansible.builtin.copy:
         dest: /etc/systemd/system/raid-check.timer
         content: |
           [Unit]

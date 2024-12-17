@@ -21,7 +21,7 @@
   ansible.builtin.file: path=/etc/fedora-messaging/faf owner=root group=root mode=0755 state=directory
 
 - name: Install certs for fedora-messaging
-  copy: src={{ item.src }}
+  ansible.builtin.copy: src={{ item.src }}
         dest=/etc/fedora-messaging/faf/{{ item.dest }}
         owner={{ item.owner }} group=root mode={{ item.mode }}
   loop:

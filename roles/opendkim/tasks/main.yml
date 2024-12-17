@@ -6,49 +6,49 @@
   - package
 
 - name: Install opendkim.conf
-  copy: src=opendkim.conf dest=/etc/opendkim.conf
+  ansible.builtin.copy: src=opendkim.conf dest=/etc/opendkim.conf
   tags:
   - opendkim
   - config
   - base
 
 - name: Install opendkim KeyTable file
-  copy: src=KeyTable dest=/etc/opendkim/KeyTable mode=644 owner=opendkim group=opendkim
+  ansible.builtin.copy: src=KeyTable dest=/etc/opendkim/KeyTable mode=644 owner=opendkim group=opendkim
   tags:
   - opendkim
   - config
   - base
 
 - name: Install opendkim SigningTable file
-  copy: src=SigningTable dest=/etc/opendkim/SigningTable mode=644 owner=opendkim group=opendkim
+  ansible.builtin.copy: src=SigningTable dest=/etc/opendkim/SigningTable mode=644 owner=opendkim group=opendkim
   tags:
   - opendkim
   - config
   - base
 
 - name: Install opendkim trusted hosts file
-  copy: src=TrustedHosts dest=/etc/opendkim/TrustedHosts
+  ansible.builtin.copy: src=TrustedHosts dest=/etc/opendkim/TrustedHosts
   tags:
   - opendkim
   - config
   - base
 
 - name: Install bastion opendkim key from private
-  copy: src={{ private }}/files/opendkim/bastion.key dest=/etc/opendkim/keys/bastion.key mode=0600 owner=opendkim group=opendkim
+  ansible.builtin.copy: src={{ private }}/files/opendkim/bastion.key dest=/etc/opendkim/keys/bastion.key mode=0600 owner=opendkim group=opendkim
   tags:
   - opendkim
   - config
   - base
 
 - name: Install bastion-iad opendkim key from private
-  copy: src={{ private }}/files/opendkim/bastion-iad.key dest=/etc/opendkim/keys/bastion-iad.key mode=0600 owner=opendkim group=opendkim
+  ansible.builtin.copy: src={{ private }}/files/opendkim/bastion-iad.key dest=/etc/opendkim/keys/bastion-iad.key mode=0600 owner=opendkim group=opendkim
   tags:
   - opendkim
   - config
   - base
 
 - name: Install pagure opendkim key from private
-  copy: src={{ private }}/files/opendkim/pagure.key dest=/etc/opendkim/keys/pagure.key mode=0600 owner=opendkim group=opendkim
+  ansible.builtin.copy: src={{ private }}/files/opendkim/pagure.key dest=/etc/opendkim/keys/pagure.key mode=0600 owner=opendkim group=opendkim
   tags:
   - opendkim
   - config

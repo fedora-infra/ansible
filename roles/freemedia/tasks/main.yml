@@ -17,7 +17,7 @@
   - config
 
 - name: Install /etc/httpd/conf.d/freemedia-app.conf file
-  copy: >
+  ansible.builtin.copy: >
     src="freemedia-app.conf"
     dest="/etc/httpd/conf.d/freemedia-app.conf"
     owner=root
@@ -29,7 +29,7 @@
   - config
 
 - name: Install /srv/web/freemedia/FreeMedia-form.html file
-  copy: >
+  ansible.builtin.copy: >
     src="FreeMedia-close.html"
     dest="/srv/web/freemedia/FreeMedia-form.html"
     owner=root
@@ -39,7 +39,7 @@
   - config
 
 - name: Install /srv/web/freemedia/process.php file
-  copy: >
+  ansible.builtin.copy: >
     src="process.php"
     dest="/srv/web/freemedia/process.php"
     owner=root
@@ -49,7 +49,7 @@
   - config
 
 - name: Install /srv/web/freemedia/FreeMedia-error.html file
-  copy: >
+  ansible.builtin.copy: >
     src="FreeMedia-error.html"
     dest="/srv/web/freemedia/FreeMedia-error.html"
     owner=root
@@ -59,7 +59,7 @@
   - config
 
 - name: Install /srv/web/freemedia/FreeMedia-error-embargoed-destination.html file
-  copy: >
+  ansible.builtin.copy: >
     src="FreeMedia-error-embargoed-destination.html"
     dest="/srv/web/freemedia/FreeMedia-error-embargoed-destination.html"
     owner=root

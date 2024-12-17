@@ -50,7 +50,7 @@
       when: helpers_installed.changed
 
     - name: set direct backend for guestfish
-      copy:
+      ansible.builtin.copy:
         content: "export LIBGUESTFS_BACKEND=direct"
         dest: /etc/profile.d/guestfish-copr.sh
 
@@ -70,7 +70,7 @@
         - "{{ eimg_configdir }}/files/copr-distgit-client"
         - "{{ eimg_configdir }}/files/copr-rpmbuild"
 
-    - copy:
+    - ansible.builtin.copy:
         src: "{{ item }}"
         dest: "{{ eimg_configdir }}/{{ item }}"
       loop:
@@ -88,7 +88,7 @@
         - files/copr-rpmbuild/rpkg.conf.j2
 
     - name: eimg.sh config
-      copy:
+      ansible.builtin.copy:
         content: |
           EIMG_COPR_PLAYBOOK_DIR={{ eimg_configdir }}
           EIMG_COPR_PLAYBOOK=local-image-update.yml

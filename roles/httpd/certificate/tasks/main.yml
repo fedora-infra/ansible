@@ -6,7 +6,7 @@
 
 ---
 - name: Copy over SSLCertificateChainFile if defined
-  copy: >
+  ansible.builtin.copy: >
     src={{private}}/files/httpd/{{SSLCertificateChainFile}}
     dest=/etc/pki/tls/certs/{{SSLCertificateChainFile}}
     owner=root
@@ -20,7 +20,7 @@
   - httpd/certificate
 
 - name: Copy {{certname}}.cert
-  copy: >
+  ansible.builtin.copy: >
     src={{item}}
     dest=/etc/pki/tls/certs/{{item | basename}}
     owner=root
@@ -36,7 +36,7 @@
   - httpd/certificate
 
 - name: Copy {{certname}}.key
-  copy: >
+  ansible.builtin.copy: >
     src={{item}}
     dest=/etc/pki/tls/private/{{item | basename}}
     owner=root

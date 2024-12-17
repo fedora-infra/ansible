@@ -12,7 +12,7 @@
   - git/checks
 
 - name: Install the script
-  copy: >
+  ansible.builtin.copy: >
     src=check-perms.py dest=/usr/local/bin/git-check-perms
     owner=root group=root mode=0755
   tags:
@@ -20,7 +20,7 @@
   - git/checks
 
 - name: Install post-receive check script
-  copy: >
+  ansible.builtin.copy: >
     src=distgit_check_hook.py dest=/usr/local/bin/distgit_check_hook.py
     owner=root group=root mode=0755
   tags:

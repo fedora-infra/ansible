@@ -3,4 +3,4 @@
   package: name=mod_limitipconn state=present
 
 - name: Configuration file
-  copy: src=limitipconn.conf dest=/etc/httpd/conf.d/limitipconn.conf
+  ansible.builtin.copy: src=limitipconn.conf dest=/etc/httpd/conf.d/limitipconn.conf

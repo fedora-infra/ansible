@@ -16,7 +16,7 @@
     - grobi
 
 - name: Copy local/bin files
-  copy: src={{item}} dest=/usr/local/bin/ mode=0755
+  ansible.builtin.copy: src={{item}} dest=/usr/local/bin/ mode=0755
   with_items:
     - splitter.py
     - rhel8-split.sh
@@ -24,7 +24,7 @@
     - grobi
 
 - name: Daily cron job to split and merge repos
-  copy: src={{item}} dest=/etc/cron.d/ mode=0644
+  ansible.builtin.copy: src={{item}} dest=/etc/cron.d/ mode=0644
   with_items:
     - rhel8-split.cron
   tags:

@@ -32,7 +32,7 @@
 
 ## Install all files
 - name: Install the easyfix js/css files
-  copy: >
+  ansible.builtin.copy: >
     src={{ item }} dest=/srv/web/easyfix/{{ item }}
     owner=root group=root mode=0644
   with_items:
@@ -45,7 +45,7 @@
   - easyfix
 
 - name: Install the easyfix template
-  copy: >
+  ansible.builtin.copy: >
     src=template.html dest=/etc/fedora-gather-easyfix/template.html
     owner=root group=root mode=0644
   tags:
@@ -63,7 +63,7 @@
 
 ## Install the cron job
 - name: Install the easyfix cronjob
-  copy: >
+  ansible.builtin.copy: >
     src=easyfix.cron dest=/etc/cron.d/easyfix.cron
     owner=root group=root mode=0644
   tags:

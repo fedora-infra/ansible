@@ -26,7 +26,7 @@
 
   tasks:
   - name: Copy keytab
-    copy: src={{private}}/files/keytabs/{{env}}/pkgs
+    ansible.builtin.copy: src={{private}}/files/keytabs/{{env}}/pkgs
           dest=/etc/httpd.keytab
           owner=apache group=apache mode=0600
     tags:

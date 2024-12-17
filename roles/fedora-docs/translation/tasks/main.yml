@@ -49,7 +49,7 @@
   debug:
     var: user_result.ssh_public_key
 
-- copy:
+- ansible.builtin.copy:
     src: ssh_config
     dest: ~_update_docs_trans/.ssh/config
     owner: _update_docs_trans
@@ -58,7 +58,7 @@
   tags:
   - fedora-docs-translation
 
-- copy:
+- ansible.builtin.copy:
     src: docs-translation-update
     dest: /usr/local/bin/docs-translation-update
     owner: root
@@ -67,7 +67,7 @@
   tags:
   - fedora-docs-translation
 
-- copy:
+- ansible.builtin.copy:
     src: cron-docs-translation-update
     dest: /etc/cron.d/cron-docs-translation-update
     owner: root

@@ -23,7 +23,7 @@
       - '/etc/httpd/conf.d/git.fedorahosted.org'
 
   - name: Install special fedorahosted-redirects.conf with fedorahosted redirects
-    copy: src={{ files }}/httpd/fedorahosted-redirects.conf dest=/etc/httpd/conf.d/fedorahosted.org/fedorahosted-redirects.conf
+    ansible.builtin.copy: src={{ files }}/httpd/fedorahosted-redirects.conf dest=/etc/httpd/conf.d/fedorahosted.org/fedorahosted-redirects.conf
 
   - name: Install special git.fedorahosted-redirects.conf with git.fedorahosted redirects
-    copy: src={{ files }}/httpd/git.fedorahosted-redirects.conf dest=/etc/httpd/conf.d/git.fedorahosted.org/fedorahosted-redirects.conf
+    ansible.builtin.copy: src={{ files }}/httpd/git.fedorahosted-redirects.conf dest=/etc/httpd/conf.d/git.fedorahosted.org/fedorahosted-redirects.conf

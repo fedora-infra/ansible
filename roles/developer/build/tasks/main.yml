@@ -11,7 +11,7 @@
 
 - name: Copy syncDeveloper script (stg)
   when: env == "staging"
-  copy: >
+  ansible.builtin.copy: >
     src=syncDeveloper.stg.sh dest=/usr/local/bin/syncDeveloper owner=root group=root
     mode=0755
   tags:
@@ -19,19 +19,19 @@
 
 - name: Copy syncDeveloper script (prod)
   when: env == "production"
-  copy: >
+  ansible.builtin.copy: >
     src=syncDeveloper.sh dest=/usr/local/bin/syncDeveloper owner=root group=root
     mode=0755
   tags:
   - developer.fedoraproject.org
 
 - name: Install rss.py script
-  copy: src=rss.py dest=/usr/local/bin/rss.py mode=0755 owner=root group=root
+  ansible.builtin.copy: src=rss.py dest=/usr/local/bin/rss.py mode=0755 owner=root group=root
   tags:
   - developer.fedoraproject.org
 
 - name: Install the syncDeveloper cron job
-  copy: >
+  ansible.builtin.copy: >
     src={{item}}.cron dest=/etc/cron.d/{{item}}.cron
     owner=root group=root mode=0644
   with_items:

@@ -108,7 +108,7 @@
     provision_user: resalloc
 
 - name: Install .ansible.cfg for {{ provision_user }} user
-  copy: src=ansible.cfg dest=/var/lib/resallocserver/.ansible.cfg
+  ansible.builtin.copy: src=ansible.cfg dest=/var/lib/resallocserver/.ansible.cfg
         owner=resalloc group=resalloc mode=600
   tags:
   - provision_config
@@ -139,7 +139,7 @@
     group: resalloc
 
 - name: Resalloc, copy backend ssh identity
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/copr/buildsys.priv"
     dest: /var/lib/resallocserver/.ssh/id_rsa
     owner: resalloc
@@ -190,7 +190,7 @@
   - provision_config_resalloc_aws
 
 - name: Shortcut for creating s390x images in cloud
-  copy:
+  ansible.builtin.copy:
     src: copr-prepare-s390x-image-builder
     dest: /usr/local/bin/copr-prepare-s390x-image-builder
     mode: "0755"
@@ -201,7 +201,7 @@
   package: name=ansible-collection-community-general state=latest
 
 - name: Install IBM Cloud token file
-  copy:
+  ansible.builtin.copy:
     content: "IBMCLOUD_API_KEY={{ copr_cloud_ibm_token | default('unset') }}"
     dest: "{{ ibmcloud_token_file }}"
     owner: resalloc

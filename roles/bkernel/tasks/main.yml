@@ -25,7 +25,7 @@
   - bkernel
 
 - name: Setup pesign users config
-  copy: src=pesign-users dest=/etc/pesign/users mode=0600 owner=root group=root
+  ansible.builtin.copy: src=pesign-users dest=/etc/pesign/users mode=0600 owner=root group=root
   tags:
   - bkernel
 
@@ -55,7 +55,7 @@
   - bkernel
 
 - name: When you awake you will remember nothing
-  copy: src=history_off.sh dest=/etc/profile.d/history_off.sh mode=0644
+  ansible.builtin.copy: src=history_off.sh dest=/etc/profile.d/history_off.sh mode=0644
   tags:
   - bkernel
 

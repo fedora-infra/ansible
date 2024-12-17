@@ -23,7 +23,7 @@
   - restart keepalived
 
 - name: Install keepalived failover script for host (or default)
-  copy: src={{ item }} dest=/usr/local/bin/keepalived-notify.sh mode=755
+  ansible.builtin.copy: src={{ item }} dest=/usr/local/bin/keepalived-notify.sh mode=755
   with_first_found:
     - keepalived-notify.sh.{{ inventory_hostname }}
     - keepalived-notify.sh

@@ -6,7 +6,7 @@
 # -- Common ----------------------------------------------
 # This is very basic stuff that is needed by multiple of the next sections.
 - name: Enable the mod_auth_openidc module on rhel8
-  copy:
+  ansible.builtin.copy:
     dest: /etc/dnf/modules.d/mod_auth_openidc.module
     content: |
       [mod_auth_openidc]
@@ -47,7 +47,7 @@
   - distgit
 
 - name: Install suexec wrappers
-  copy:
+  ansible.builtin.copy:
     src=suexec-{{item}}.sh
     dest=/var/www/bin/suexec-{{item}}.sh
     owner=pagure
@@ -60,12 +60,12 @@
   - distgit
 
 - name: Put in git service config
-  copy: src=git@.service dest=/etc/systemd/system/git@.service
+  ansible.builtin.copy: src=git@.service dest=/etc/systemd/system/git@.service
   tags:
   - distgit
 
 - name: Install the mod_ssl configuration
-  copy: src=ssl.conf dest=/etc/httpd/conf.d/ssl.conf
+  ansible.builtin.copy: src=ssl.conf dest=/etc/httpd/conf.d/ssl.conf
   notify:
   - reload httpd
   tags:
@@ -81,7 +81,7 @@
   - letsencrypt
 
 - name: Install the keytab
-  copy: src="{{ private }}/files/keytabs/{{env}}/pkgs"
+  ansible.builtin.copy: src="{{ private }}/files/keytabs/{{env}}/pkgs"
         dest=/etc/httpd.keytab
         owner=apache
         group=apache
@@ -111,7 +111,7 @@
 # do, this installs that wrapper (which is otherwise configured in sshd_config)
 
 - name: Install the ssh_wrapper wrapper script
-  copy: src=ssh_wrapper dest=/usr/local/bin/ssh_wrapper mode=0755
+  ansible.builtin.copy: src=ssh_wrapper dest=/usr/local/bin/ssh_wrapper mode=0755
   tags:
     - config
     - distgit
@@ -129,7 +129,7 @@
   - distgit
 
 - name: Install the dist-git config
-  copy: src=dist-git.conf dest=/etc/dist-git/dist-git.conf
+  ansible.builtin.copy: src=dist-git.conf dest=/etc/dist-git/dist-git.conf
   tags:
   - config
   - distgit
@@ -188,7 +188,7 @@
   - distgit
 
 - name: Install robots.txt files
-  copy: src={{item}} dest=/var/www/{{item}}
+  ansible.builtin.copy: src={{item}} dest=/var/www/{{item}}
   with_items:
   - robots-pkgs.txt
   - robots-src.txt
@@ -196,14 +196,14 @@
   - distgit
 
 - name: Install the DistGit related httpd config
-  copy: src=git-smart-http.conf dest=/etc/httpd/conf.d/dist-git/git-smart-http.conf
+  ansible.builtin.copy: src=git-smart-http.conf dest=/etc/httpd/conf.d/dist-git/git-smart-http.conf
   notify:
   - reload httpd
   tags:
   - distgit
 
 - name: Symlink pkgs-git-repos-list
-  copy: src=repolist.conf dest=/etc/httpd/conf.d/dist-git/repolist.conf
+  ansible.builtin.copy: src=repolist.conf dest=/etc/httpd/conf.d/dist-git/repolist.conf
   notify:
   - reload httpd
   tags:
@@ -219,12 +219,12 @@
   - distgit
 
 - name: Schedule the script to get retired packages
-  copy: src="retired-packages.cron" dest="/etc/cron.d/retired-packages.cron" mode=644 owner=root group=root
+  ansible.builtin.copy: src="retired-packages.cron" dest="/etc/cron.d/retired-packages.cron" mode=644 owner=root group=root
   tags:
   - distgit
 
 - name: Install the two scripts needed for mass-branching
-  copy: src={{item}} dest=/usr/local/bin/{{item}} owner=root group=root mode=0755
+  ansible.builtin.copy: src={{item}} dest=/usr/local/bin/{{item}} owner=root group=root mode=0755
   with_items:
     - mass-branching-git.py
     - mass-branching-gitolite.py
@@ -288,12 +288,12 @@
   - distgit
 
 - name: Install the fedora-ca.cert
-  copy: src={{private}}/files/fedora-ca.cert dest=/etc/httpd/conf/cacert.pem
+  ansible.builtin.copy: src={{private}}/files/fedora-ca.cert dest=/etc/httpd/conf/cacert.pem
   tags:
   - distgit
 
 - name: Install the pkgs cert
-  copy: src={{private}}/files/pkgs.fedoraproject.org_key_and_cert.pem
+  ansible.builtin.copy: src={{private}}/files/pkgs.fedoraproject.org_key_and_cert.pem
         dest=/etc/httpd/conf/pkgs.fedoraproject.org_key_and_cert.pem
         owner=apache mode=0400
   when: env != "staging"
@@ -301,7 +301,7 @@
   - distgit
 
 - name: Install the pkgs.stg cert
-  copy: src={{private}}/files/pkgs.stg.fedoraproject.org_key_and_cert.pem
+  ansible.builtin.copy: src={{private}}/files/pkgs.stg.fedoraproject.org_key_and_cert.pem
         dest=/etc/httpd/conf/pkgs.fedoraproject.org_key_and_cert.pem
         owner=apache mode=0400
   when: env == "staging"
@@ -314,7 +314,7 @@
   tags: selinux
 
 - name: Copy over our custom selinux policy
-  copy: src=upload_cgi.pp dest=/usr/local/share/selinux/upload_cgi.pp
+  ansible.builtin.copy: src=upload_cgi.pp dest=/usr/local/share/selinux/upload_cgi.pp
   register: selinux_module
   tags: selinux
 
@@ -324,7 +324,7 @@
   tags: selinux
 
 - name: Copy over our custom nfs selinux policy
-  copy: src=cgi-nfs.pp dest=/usr/local/share/selinux/cgi-nfs.pp
+  ansible.builtin.copy: src=cgi-nfs.pp dest=/usr/local/share/selinux/cgi-nfs.pp
   register: nfs_selinux_module
   tags: selinux
 

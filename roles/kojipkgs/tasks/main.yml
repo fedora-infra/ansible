@@ -5,7 +5,7 @@
   - kojipkgs
 
 - name: Install apache config files for local apache
-  copy: src={{ item }} dest=/etc/httpd/conf.d/{{ item }} owner=root group=root mode=644
+  ansible.builtin.copy: src={{ item }} dest=/etc/httpd/conf.d/{{ item }} owner=root group=root mode=644
   with_items:
   - infrastructure.conf
   notify:
@@ -35,7 +35,7 @@
   - kojipkgs
 
 - name: Disable welcome.conf giving a 403 on / (needed for monitoring)
-  copy: content="# welcome.conf disabled" dest=/etc/httpd/conf.d/welcome.conf
+  ansible.builtin.copy: content="# welcome.conf disabled" dest=/etc/httpd/conf.d/welcome.conf
   tags:
   - kojipkgs
 
@@ -48,7 +48,7 @@
   - kojipkgs
 
 - name: Override varnish service to restart on failure
-  copy: dest=/etc/systemd/system/varnish.service.d/restart-on-fail.conf
+  ansible.builtin.copy: dest=/etc/systemd/system/varnish.service.d/restart-on-fail.conf
         src=restart-on-fail.conf
   notify:
     - reload systemd

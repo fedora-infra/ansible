@@ -37,12 +37,12 @@
     - sslciphers
 
 - name: Copy the run planet-config script into /usr/local/bin
-  copy: src=pull-run-planet-config.sh dest=/usr/local/bin/pull-run-planet-config.sh mode=755
+  ansible.builtin.copy: src=pull-run-planet-config.sh dest=/usr/local/bin/pull-run-planet-config.sh mode=755
   tags:
     - planet_server
 
 - name: Copy the planetconfigbuilder.py script into /usr/local/bin
-  copy: src=planetconfigbuilder.py dest=/usr/local/bin/planetconfigbuilder.py mode=755
+  ansible.builtin.copy: src=planetconfigbuilder.py dest=/usr/local/bin/planetconfigbuilder.py mode=755
   tags:
     - planet_server
 
@@ -72,7 +72,7 @@
     - planet_server
 
 - name: Copy the run-planet script
-  copy: src=run-planet dest=/srv/planet/config/run-planet
+  ansible.builtin.copy: src=run-planet dest=/srv/planet/config/run-planet
   tags:
     - planet_server
 
@@ -87,12 +87,12 @@
     - /srv/planet/config/people
 
 - name: Base planet config files
-  copy: src=people_base_config dest=/etc/planet/people_base_config mode=0644 owner=root group=root
+  ansible.builtin.copy: src=people_base_config dest=/etc/planet/people_base_config mode=0644 owner=root group=root
   tags:
     - planet_server
 
 - name: Copy the planet cron job (people)
-  copy: src=planet-cron dest=/etc/cron.d/planet-cron
+  ansible.builtin.copy: src=planet-cron dest=/etc/cron.d/planet-cron
   tags:
     - planet_server
 
@@ -109,17 +109,17 @@
     - /srv/planet/site/design
 
 - name: Copy the planet cron job (design)
-  copy: src=sub-planets/design/planet-group.cron dest=/etc/cron.d/planet-design.cron
+  ansible.builtin.copy: src=sub-planets/design/planet-group.cron dest=/etc/cron.d/planet-design.cron
   tags:
     - planet_server
 
 - name: Copy the planet fpbulder.conf (design)
-  copy: src=sub-planets/design/fpbuilder.conf dest=/etc/planet/design/fpbuilder.conf
+  ansible.builtin.copy: src=sub-planets/design/fpbuilder.conf dest=/etc/planet/design/fpbuilder.conf
   tags:
     - planet_server
 
 - name: Copy the planet base_config (design)
-  copy: src=sub-planets/design/base_config dest=/etc/planet/design/base_config mode=0644 owner=root group=root
+  ansible.builtin.copy: src=sub-planets/design/base_config dest=/etc/planet/design/base_config mode=0644 owner=root group=root
   tags:
     - planet_server
 
@@ -136,17 +136,17 @@
     - /srv/planet/site/desktop
 
 - name: Copy the planet cron job (desktop)
-  copy: src=sub-planets/desktop/planet-group.cron dest=/etc/cron.d/planet-desktop.cron
+  ansible.builtin.copy: src=sub-planets/desktop/planet-group.cron dest=/etc/cron.d/planet-desktop.cron
   tags:
     - planet_server
 
 - name: Copy the planet fpbulder.conf (desktop)
-  copy: src=sub-planets/desktop/fpbuilder.conf dest=/etc/planet/desktop/fpbuilder.conf
+  ansible.builtin.copy: src=sub-planets/desktop/fpbuilder.conf dest=/etc/planet/desktop/fpbuilder.conf
   tags:
     - planet_server
 
 - name: Copy the planet base_config (desktop)
-  copy: src=sub-planets/desktop/base_config dest=/etc/planet/desktop/base_config mode=0644 owner=root group=root
+  ansible.builtin.copy: src=sub-planets/desktop/base_config dest=/etc/planet/desktop/base_config mode=0644 owner=root group=root
   tags:
     - planet_server
 
@@ -163,17 +163,17 @@
     - /srv/planet/site/edited
 
 - name: Copy the planet cron job (edited)
-  copy: src=sub-planets/edited/planet-group.cron dest=/etc/cron.d/planet-edited.cron
+  ansible.builtin.copy: src=sub-planets/edited/planet-group.cron dest=/etc/cron.d/planet-edited.cron
   tags:
     - planet_server
 
 - name: Copy the planet fpbulder.conf (edited)
-  copy: src=sub-planets/edited/fpbuilder.conf dest=/etc/planet/edited/fpbuilder.conf
+  ansible.builtin.copy: src=sub-planets/edited/fpbuilder.conf dest=/etc/planet/edited/fpbuilder.conf
   tags:
     - planet_server
 
 - name: Copy the planet base_config (edited)
-  copy: src=sub-planets/edited/base_config dest=/etc/planet/edited/base_config mode=0644 owner=root group=root
+  ansible.builtin.copy: src=sub-planets/edited/base_config dest=/etc/planet/edited/base_config mode=0644 owner=root group=root
   tags:
     - planet_server
 
@@ -190,7 +190,7 @@
     - /srv/planet/site/people
 
 - name: Copy templates (people)
-  copy: src=sub-planets/people/{{ item }} dest=/srv/planet/config/people/ owner=planet-user group=planet-user
+  ansible.builtin.copy: src=sub-planets/people/{{ item }} dest=/srv/planet/config/people/ owner=planet-user group=planet-user
   with_items:
   - templates
   tags:
@@ -205,7 +205,7 @@
     - planet_server
 
 - name: Copy the planet fpbulder.conf (people)
-  copy: src=fpbuilder.conf dest=/etc/planet/fpbuilder.conf
+  ansible.builtin.copy: src=fpbuilder.conf dest=/etc/planet/fpbuilder.conf
   tags:
     - planet_server
 
@@ -222,17 +222,17 @@
     - /srv/planet/site/security
 
 - name: Copy the planet cron job (security)
-  copy: src=sub-planets/security/planet-group.cron dest=/etc/cron.d/planet-security.cron
+  ansible.builtin.copy: src=sub-planets/security/planet-group.cron dest=/etc/cron.d/planet-security.cron
   tags:
     - planet_server
 
 - name: Copy the planet fpbulder.conf (security)
-  copy: src=sub-planets/security/fpbuilder.conf dest=/etc/planet/security/fpbuilder.conf
+  ansible.builtin.copy: src=sub-planets/security/fpbuilder.conf dest=/etc/planet/security/fpbuilder.conf
   tags:
     - planet_server
 
 - name: Copy the planet base_config (security)
-  copy: src=sub-planets/security/base_config dest=/etc/planet/security/base_config mode=0644 owner=root group=root
+  ansible.builtin.copy: src=sub-planets/security/base_config dest=/etc/planet/security/base_config mode=0644 owner=root group=root
   tags:
     - planet_server
 
@@ -249,17 +249,17 @@
     - /srv/planet/site/summer-coding
 
 - name: Copy the planet cron job (summer-coding)
-  copy: src=sub-planets/summer-coding/planet-group.cron dest=/etc/cron.d/planet-summer-coding.cron
+  ansible.builtin.copy: src=sub-planets/summer-coding/planet-group.cron dest=/etc/cron.d/planet-summer-coding.cron
   tags:
     - planet_server
 
 - name: Copy the planet fpbulder.conf (summer-coding)
-  copy: src=sub-planets/summer-coding/fpbuilder.conf dest=/etc/planet/summer-coding/fpbuilder.conf
+  ansible.builtin.copy: src=sub-planets/summer-coding/fpbuilder.conf dest=/etc/planet/summer-coding/fpbuilder.conf
   tags:
     - planet_server
 
 - name: Copy the planet base_config (summer-coding)
-  copy: src=sub-planets/summer-coding/base_config dest=/etc/planet/summer-coding/base_config mode=0644 owner=root group=root
+  ansible.builtin.copy: src=sub-planets/summer-coding/base_config dest=/etc/planet/summer-coding/base_config mode=0644 owner=root group=root
   tags:
     - planet_server
 #
@@ -276,17 +276,17 @@
     - /srv/planet/site/quality
 
 - name: Copy the planet cron job (quality)
-  copy: src=sub-planets/quality/planet-group.cron dest=/etc/cron.d/planet-quality.cron
+  ansible.builtin.copy: src=sub-planets/quality/planet-group.cron dest=/etc/cron.d/planet-quality.cron
   tags:
     - planet_server
 
 - name: Copy the planet fpbulder.conf (quality)
-  copy: src=sub-planets/quality/fpbuilder.conf dest=/etc/planet/quality/fpbuilder.conf
+  ansible.builtin.copy: src=sub-planets/quality/fpbuilder.conf dest=/etc/planet/quality/fpbuilder.conf
   tags:
     - planet_server
 
 - name: Copy the planet base_config (quality)
-  copy: src=sub-planets/quality/base_config dest=/etc/planet/quality/base_config mode=0644 owner=root group=root
+  ansible.builtin.copy: src=sub-planets/quality/base_config dest=/etc/planet/quality/base_config mode=0644 owner=root group=root
   tags:
     - planet_server
 
@@ -302,7 +302,7 @@
   - planet_server
 
 - name: Deploy the fedora-messaging CA
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/ca.crt"
     dest: /etc/pki/fedora-messaging/rabbitmq-ca.crt
     mode: "0644"
@@ -313,7 +313,7 @@
   - planet_server
 
 - name: Deploy the fedora-messaging cert
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/issued/planet{{env_suffix}}.crt"
     dest: /etc/pki/fedora-messaging/planet.crt
     mode: "0644"
@@ -324,7 +324,7 @@
   - planet_server
 
 - name: Deploy the fedora-messaging key
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/private/planet{{env_suffix}}.key"
     dest: /etc/pki/fedora-messaging/planet.key
     mode: "0600"

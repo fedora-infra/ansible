@@ -54,7 +54,7 @@
     tags: debuginfod
 
   - name: install debuginfod configuration
-    copy: src="{{ files }}/debuginfod/sysconfig.debuginfod" dest=/etc/sysconfig/debuginfod owner=root group=root mode=644
+    ansible.builtin.copy: src="{{ files }}/debuginfod/sysconfig.debuginfod" dest=/etc/sysconfig/debuginfod owner=root group=root mode=644
     tags: debuginfod
     notify:
       - restart debuginfod
@@ -67,7 +67,7 @@
 
   - name: install debuginfod systemd drop-in
     tags: debuginfod
-    copy: src="{{ files }}/debuginfod/debuginfod.service.d" dest=/etc/systemd/system/debuginfod.service.d/override.conf owner=root group=root mode=644
+    ansible.builtin.copy: src="{{ files }}/debuginfod/debuginfod.service.d" dest=/etc/systemd/system/debuginfod.service.d/override.conf owner=root group=root mode=644
     notify:
       - restart debuginfod
 

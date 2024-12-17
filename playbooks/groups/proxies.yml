@@ -46,7 +46,7 @@
   # - import_tasks: "{{ tasks_path }}/mod_wsgi.yml"
 
   - name: Ensure nf_conntrack module is loaded before tuning ip_conntrack_max
-    copy:
+    ansible.builtin.copy:
       content: |
         nf_conntrack
       dest: /etc/modules-load.d/nf_conntrack.conf
@@ -138,7 +138,7 @@
   # If it's not, doesn't hurt to copy it over again
   #
   - name: deploy ticket key
-    copy: src=/root/ticketkey_{{env}}.tkey dest=/etc/httpd/ticketkey_{{env}}.tkey
+    ansible.builtin.copy: src=/root/ticketkey_{{env}}.tkey dest=/etc/httpd/ticketkey_{{env}}.tkey
           owner=root group=root mode=0600
     notify:
     - reload proxyhttpd

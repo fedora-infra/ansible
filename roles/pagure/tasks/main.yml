@@ -201,7 +201,7 @@
 # Set-up postfix and the milter for postfix
 
 - name: Add the /etc/aliases file
-  copy: src=aliases dest=/etc/aliases owner=root mode=644
+  ansible.builtin.copy: src=aliases dest=/etc/aliases owner=root mode=644
   tags:
   - config
   - pagure
@@ -213,7 +213,7 @@
 # Override pagure_ev systemd service file
 
 - name: Install pagure_ev service definition
-  copy: src=pagure_ev.service
+  ansible.builtin.copy: src=pagure_ev.service
         dest=/usr/lib/systemd/system/pagure_ev.service
         owner=root group=root mode=0644
   notify:
@@ -226,7 +226,7 @@
 # Set-up stunnel for the event source server
 
 - name: Install stunnel service definition
-  copy: src=stunnel.service
+  ansible.builtin.copy: src=stunnel.service
         dest=/usr/lib/systemd/system/stunnel.service
         owner=root group=root mode=0644
   notify:
@@ -249,7 +249,7 @@
   - config
 
 - name: Add the different service files for the different services
-  copy: src={{ item }}.service
+  ansible.builtin.copy: src={{ item }}.service
         dest=/etc/systemd/system/{{ item }}.service
         owner=root group=root mode=0755
   with_items:
@@ -293,7 +293,7 @@
   - fedora-messaging
 
 - name: Deploy pagure/rabbitmq certificate
-  copy: src={{ item.src }}
+  ansible.builtin.copy: src={{ item.src }}
         dest=/etc/pki/rabbitmq/pagurecert/{{ item.dest }}
         owner={{ item.owner }} group={{ item.group}} mode={{ item.mode }}
   when: env == 'pagure-staging'
@@ -318,7 +318,7 @@
   - fedora-messaging
 
 - name: Deploy pagure/rabbitmq certificate
-  copy: src={{ item.src }}
+  ansible.builtin.copy: src={{ item.src }}
         dest=/etc/pki/rabbitmq/pagurecert/{{ item.dest }}
         owner={{ item.owner }} group={{ item.group}} mode={{ item.mode }}
   when: env != 'pagure-staging'
@@ -449,7 +449,7 @@
 # Hotfix(es)
 
 - name: Install the python3-only version of the stream_server so it works
-  copy: src=pagure_stream_server.py
+  ansible.builtin.copy: src=pagure_stream_server.py
         dest=/usr/libexec/pagure-ev/pagure_stream_server.py
         owner=root mode=0755
   tags:
@@ -492,20 +492,20 @@
   - postfix
 
 - name: Setup logrotate to our needs
-  copy: src="{{ files }}/httpd/httpd.logrotate" dest=/etc/logrotate.d/httpd
+  ansible.builtin.copy: src="{{ files }}/httpd/httpd.logrotate" dest=/etc/logrotate.d/httpd
   tags:
   - config
   - apache
 
 - name: Add SAR script for pagure
-  copy: src=pagure_sar.py dest=/usr/local/bin/pagure_sar.py owner=git mode=0700
+  ansible.builtin.copy: src=pagure_sar.py dest=/usr/local/bin/pagure_sar.py owner=git mode=0700
   tags:
   - SAR
   - GDPR
   - pagure
 
 - name: Override the default syslog logrotate file
-  copy: src=syslog-logrotate dest=/etc/logrotate.d/syslog
+  ansible.builtin.copy: src=syslog-logrotate dest=/etc/logrotate.d/syslog
   tags:
   - pagure
   - logrotate

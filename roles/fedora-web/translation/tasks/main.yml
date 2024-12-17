@@ -23,7 +23,7 @@
     var: user_result.ssh_public_key
 
 - name: Create gitconfig for user
-  copy:
+  ansible.builtin.copy:
     content: |
       [user]
         name = ♪ I'm a bot, bot, bot ♪
@@ -37,7 +37,7 @@
   tags:
   - fedora-web-translation
 
-- copy:
+- ansible.builtin.copy:
     src: ssh_config
     dest: ~_update_web_trans/.ssh/config
     owner: _update_web_trans
@@ -46,7 +46,7 @@
   tags:
   - fedora-web-translation
 
-- copy:
+- ansible.builtin.copy:
     src: web-translation-update
     dest: /usr/local/bin/web-translation-update
     owner: root
@@ -55,7 +55,7 @@
   tags:
   - fedora-web-translation
 
-- copy:
+- ansible.builtin.copy:
     src: cron-web-translation-update
     dest: /etc/cron.d/cron-web-translation-update
     owner: root

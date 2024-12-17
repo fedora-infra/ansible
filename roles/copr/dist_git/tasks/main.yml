@@ -49,13 +49,13 @@
   - restart copr-dist-git
 
 - name: Set git variables for copr-dist-git user
-  copy: src=".gitconfig" dest="/home/copr-dist-git/.gitconfig"
+  ansible.builtin.copy: src=".gitconfig" dest="/home/copr-dist-git/.gitconfig"
 
 - name: Set git config username
   git_config: name=user.name scope=global value="Copr dist git"
 
 - name: Install httpd config needed for COPR lookaside cache
-  copy: src="httpd/dist-git/{{ item }}" dest="/etc/httpd/conf.d/dist-git/{{ item }}"
+  ansible.builtin.copy: src="httpd/dist-git/{{ item }}" dest="/etc/httpd/conf.d/dist-git/{{ item }}"
   with_items:
   - lookaside-copr.conf
   tags:
@@ -70,7 +70,7 @@
     - certbot
 
 - name: Install copr-dist-git httpd config
-  copy: src="httpd/{{ item }}" dest="/etc/httpd/conf.d/{{ item }}"
+  ansible.builtin.copy: src="httpd/{{ item }}" dest="/etc/httpd/conf.d/{{ item }}"
   with_items:
   - copr-dist-git.conf
   tags:
@@ -84,10 +84,10 @@
   - reload httpd
 
 - name: Temporary logrotation fix until copr-dist-git 0.26 is released & deployed
-  copy: src="logrotate.d/copr-dist-git" dest="/etc/logrotate.d/copr-dist-git"
+  ansible.builtin.copy: src="logrotate.d/copr-dist-git" dest="/etc/logrotate.d/copr-dist-git"
 
 - name: Install /etc/dist-git/dist-git.conf file
-  copy: src="dist-git.conf" dest="/etc/dist-git/dist-git.conf" mode=0644
+  ansible.builtin.copy: src="dist-git.conf" dest="/etc/dist-git/dist-git.conf" mode=0644
   tags:
   - config
 
@@ -98,7 +98,7 @@
   seboolean: name=httpd_enable_cgi state=true persistent=true
 
 - name: Install robots.txt
-  copy: src="robots.txt" dest="/var/www/html/" mode=0644
+  ansible.builtin.copy: src="robots.txt" dest="/var/www/html/" mode=0644
   tags:
   - config
 
@@ -117,7 +117,7 @@
   ansible.builtin.file: path=/usr/local/share/selinux state=directory
 
 - name: Copy over our custom selinux policy for cgit
-  copy: src=git_script_t.pp dest=/usr/local/share/selinux/git_script_t.pp
+  ansible.builtin.copy: src=git_script_t.pp dest=/usr/local/share/selinux/git_script_t.pp
   register: cgit_selinux_module
   tags:
   - selinux
@@ -138,7 +138,7 @@
   template: src="copr.conf" dest="/home/copr-dist-git/.config/copr" owner=copr-dist-git group=copr-dist-git
 
 - name: Install the helper cron scripts
-  copy:
+  ansible.builtin.copy:
     src: "{{ item }}"
     dest: "/usr/local/bin/{{ item }}"
     mode: '0755'
@@ -149,13 +149,13 @@
     - test-too-soon
 
 - name: Install copr-dist-git.daily cron file
-  copy: src="copr-dist-git.daily" dest="/etc/cron.daily/copr-dist-git" mode=755
+  ansible.builtin.copy: src="copr-dist-git.daily" dest="/etc/cron.daily/copr-dist-git" mode=755
   tags:
     - config
     - cron
 
 - name: Install copr-dist-git.weekly cron file
-  copy: src="copr-dist-git.weekly" dest="/etc/cron.weekly/copr-dist-git" mode=755
+  ansible.builtin.copy: src="copr-dist-git.weekly" dest="/etc/cron.weekly/copr-dist-git" mode=755
   tags:
     - config
     - cron
@@ -169,4 +169,4 @@
     - cron
 
 - name: Install /etc/gitconfig file
-  copy: src="gitconfig" dest="/etc/gitconfig"
+  ansible.builtin.copy: src="gitconfig" dest="/etc/gitconfig"

@@ -27,7 +27,7 @@
   - yumrepos
 
 - name: Put rhel repos on rhel systems
-  copy: src="{{ files }}/common/rhel{{ ansible_distribution_major_version|int }}.repo" dest="/etc/yum.repos.d/rhel{{ ansible_distribution_major_version|int }}.repo"
+  ansible.builtin.copy: src="{{ files }}/common/rhel{{ ansible_distribution_major_version|int }}.repo" dest="/etc/yum.repos.d/rhel{{ ansible_distribution_major_version|int }}.repo"
   when: ansible_distribution == 'RedHat' and not inventory_hostname.startswith('ppc9') and datacenter != "aws"
   tags:
   - config
@@ -35,7 +35,7 @@
   - yumrepos
 
 - name: Put rhel repos on rhel systems (power9)
-  copy: src="{{ files }}/common/rhel{{ ansible_distribution_major_version|int }}-power9.repo" dest="/etc/yum.repos.d/rhel{{ ansible_distribution_major_version|int }}.repo"
+  ansible.builtin.copy: src="{{ files }}/common/rhel{{ ansible_distribution_major_version|int }}-power9.repo" dest="/etc/yum.repos.d/rhel{{ ansible_distribution_major_version|int }}.repo"
   when: ansible_distribution == 'RedHat' and inventory_hostname.startswith('ppc9') and datacenter != "aws"
   tags:
   - config
@@ -43,7 +43,7 @@
   - yumrepos
 
 - name: Put epel repos on el systems
-  copy: src="{{ files }}/common/epel{{ ansible_distribution_major_version|int }}.repo" dest="/etc/yum.repos.d/epel{{ ansible_distribution_major_version|int }}.repo"
+  ansible.builtin.copy: src="{{ files }}/common/epel{{ ansible_distribution_major_version|int }}.repo" dest="/etc/yum.repos.d/epel{{ ansible_distribution_major_version|int }}.repo"
   when: ((ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS') and use_default_epel) and datacenter != "aws"
   tags:
   - config
@@ -51,7 +51,7 @@
   - yumrepos
 
 - name: Put epel repos on el systems (aws)
-  copy: src="{{ files }}/common/original-epel{{ ansible_distribution_major_version|int }}.repo" dest="/etc/yum.repos.d/epel{{ ansible_distribution_major_version|int }}.repo"
+  ansible.builtin.copy: src="{{ files }}/common/original-epel{{ ansible_distribution_major_version|int }}.repo" dest="/etc/yum.repos.d/epel{{ ansible_distribution_major_version|int }}.repo"
   when: ((ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS') and use_default_epel) and datacenter == "aws"
   tags:
   - config
@@ -59,7 +59,7 @@
   - yumrepos
 
 - name: Put epel gpg key on el systems (aws)
-  copy: src="{{ files }}/common/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version|int }}" dest="/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version|int }}"
+  ansible.builtin.copy: src="{{ files }}/common/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version|int }}" dest="/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version|int }}"
   when: ((ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS') and use_default_epel) and datacenter == "aws"
   tags:
   - config
@@ -101,7 +101,7 @@
   - yumrepos
 
 - name: Add infrastructure tags repo - RHEL
-  copy: src="{{ files }}/common/rhel-infra-tags.repo" dest="/etc/yum.repos.d/infra-tags.repo"
+  ansible.builtin.copy: src="{{ files }}/common/rhel-infra-tags.repo" dest="/etc/yum.repos.d/infra-tags.repo"
   when: ((ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'))
   tags:
   - config
@@ -109,7 +109,7 @@
   - yumrepos
 
 - name: Add infrastructure STAGING tags repo - RHEL
-  copy: src="{{ files }}/common/rhel-infra-tags-stg.repo" dest="/etc/yum.repos.d/infra-tags-stg.repo"
+  ansible.builtin.copy: src="{{ files }}/common/rhel-infra-tags-stg.repo" dest="/etc/yum.repos.d/infra-tags-stg.repo"
   when: (ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS') and env in ['staging', 'pagure-staging']
   tags:
   - config
@@ -117,7 +117,7 @@
   - yumrepos
 
 - name: Add infrastructure tags repo - Fedora
-  copy: src="{{ files }}/common/fedora-infra-tags.repo" dest="/etc/yum.repos.d/infra-tags.repo"
+  ansible.builtin.copy: src="{{ files }}/common/fedora-infra-tags.repo" dest="/etc/yum.repos.d/infra-tags.repo"
   when: ansible_distribution == 'Fedora'
   tags:
   - config
@@ -125,7 +125,7 @@
   - yumrepos
 
 - name: Add infrastructure STAGING tags repo - Fedora
-  copy: src="{{ files }}/common/fedora-infra-tags-stg.repo" dest="/etc/yum.repos.d/infra-tags-stg.repo"
+  ansible.builtin.copy: src="{{ files }}/common/fedora-infra-tags-stg.repo" dest="/etc/yum.repos.d/infra-tags-stg.repo"
   when: ansible_distribution == 'Fedora' and env in ['staging', 'pagure-staging']
   tags:
   - config

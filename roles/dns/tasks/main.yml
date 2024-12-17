@@ -10,7 +10,7 @@
   - dns
 
 - name: Copy rndc config
-  copy: src=rndc.conf dest=/etc/rndc.conf
+  ansible.builtin.copy: src=rndc.conf dest=/etc/rndc.conf
   notify:
   - restart named
   tags:
@@ -18,7 +18,7 @@
   - dns
 
 - name: Copy rndc key
-  copy: src={{ private }}/files/dns/rndc.key dest=/etc/rndc.key
+  ansible.builtin.copy: src={{ private }}/files/dns/rndc.key dest=/etc/rndc.key
   notify:
   - restart named
   tags:
@@ -26,7 +26,7 @@
   - dns
 
 - name: Copy named cache
-  copy: src=named.ca dest=/var/named/named.ca
+  ansible.builtin.copy: src=named.ca dest=/var/named/named.ca
   notify:
   - restart named
   tags:
@@ -34,7 +34,7 @@
   - dns
 
 - name: Copy geoip.py
-  copy: src=geoip.py dest=/usr/local/bin/geoip.py mode=0755
+  ansible.builtin.copy: src=geoip.py dest=/usr/local/bin/geoip.py mode=0755
   notify:
   - restart named
   tags:
@@ -42,7 +42,7 @@
   - dns
 
 - name: Copy GeoIP.sh
-  copy: src=GeoIP.sh dest=/var/named/GeoIP.sh mode=0755
+  ansible.builtin.copy: src=GeoIP.sh dest=/var/named/GeoIP.sh mode=0755
   notify:
   - restart named
   tags:
@@ -58,7 +58,7 @@
 #  - dns
 
 - name: Copy update-dns
-  copy: src=update-dns dest=/usr/local/bin/update-dns mode=0755
+  ansible.builtin.copy: src=update-dns dest=/usr/local/bin/update-dns mode=0755
   notify:
   - restart named
   tags:
@@ -66,7 +66,7 @@
   - dns
 
 - name: Copy zones
-  copy: src=zones.conf dest=/etc/named/zones.conf owner=root group=root mode=0644
+  ansible.builtin.copy: src=zones.conf dest=/etc/named/zones.conf owner=root group=root mode=0644
   notify:
   - restart named
   tags:
@@ -74,7 +74,7 @@
   - dns
 
 - name: Copy named config
-  copy: src=named.conf dest=/etc/named.conf mode=0644 owner=root group=root
+  ansible.builtin.copy: src=named.conf dest=/etc/named.conf mode=0644 owner=root group=root
   notify:
   - restart named
   tags:

@@ -8,7 +8,7 @@
   - packages
 
 - name: Install the configuration
-  copy: src={{item}} dest=/etc/rabbitmq/{{item}} owner=root group=root mode=0644
+  ansible.builtin.copy: src={{item}} dest=/etc/rabbitmq/{{item}} owner=root group=root mode=0644
   with_items:
   - rabbitmq.config
   - enabled_plugins

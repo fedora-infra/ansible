@@ -21,7 +21,7 @@
 #  - restart openvpn (Fedora)
 
 - name: Install configuration files (rhel and fedora)
-  copy: src={{ item.file }}
+  ansible.builtin.copy: src={{ item.file }}
         dest={{ item.dest }}
         owner=root group=root mode={{ item.mode }}
   with_items:
@@ -59,7 +59,7 @@
   - openvpn
 
 - name: Deploy postvpn.conf for post-vpn services
-  copy: src=postvpn.conf dest="/etc/systemd/system/{{item}}.service.d/postvpn.conf"
+  ansible.builtin.copy: src=postvpn.conf dest="/etc/systemd/system/{{item}}.service.d/postvpn.conf"
   with_items: "{{postvpnservices}}"
   when: is_fedora is defined or (ansible_distribution_major_version|int >= 8 and ansible_distribution == 'RedHat')
   tags:

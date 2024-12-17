@@ -42,7 +42,7 @@
             dest: "/var/www/html/rhcos/.treeinfo"
             mode: "0644"
         - name: == OCP KVM provisioning == Copy kubeadmin config files to bastion
-          copy:
+          ansible.builtin.copy:
             src: "/srv/web/infra/bigfiles/openshiftboot/{{ env }}/auth/"
             dest: "/root/ocp4/ocp-{{env}}/"
         - name: == OCP KVM provisioning == Downloading RHCOS deploy files

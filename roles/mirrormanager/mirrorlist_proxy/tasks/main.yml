@@ -37,7 +37,7 @@
   - mirrorlist_proxy
 
 - name: Push over the newer geoip db
-  copy: src={{ item }} dest=/usr/share/GeoIP/
+  ansible.builtin.copy: src={{ item }} dest=/usr/share/GeoIP/
   with_fileglob:
     - "{{ bigfiles }}/geoip/*.mmdb"
   tags:
@@ -81,7 +81,7 @@
   - mirrorlist_proxy
 
 - name: Setup logrotate log for mirrormanager log files
-  copy: src=logrotate-mirrormanager dest=/etc/logrotate.d/mirrormanager
+  ansible.builtin.copy: src=logrotate-mirrormanager dest=/etc/logrotate.d/mirrormanager
   tags:
   - mirrorlist_proxy
 
@@ -118,7 +118,7 @@
 
 # install our cron script to handle hourly new protbuf cache changes.
 - name: Install script to restart mirrorlist processes on protobuf cache changes
-  copy: src=restart-mirrorlist-processes dest=/usr/local/bin/restart-mirrorlist-processes mode=0755
+  ansible.builtin.copy: src=restart-mirrorlist-processes dest=/usr/local/bin/restart-mirrorlist-processes mode=0755
   tags:
   - mirrorlist_proxy
 
@@ -145,7 +145,7 @@
   - mirrorlist_proxy
 
 - name: Copy over our custom selinux module
-  copy: src=selinux/mirrorlist-logrotate.pp dest=/usr/local/share/mirrorlist-logrotate/mirrorlist-logrotate.pp
+  ansible.builtin.copy: src=selinux/mirrorlist-logrotate.pp dest=/usr/local/share/mirrorlist-logrotate/mirrorlist-logrotate.pp
   register: selinux_module
   tags:
   - selinux

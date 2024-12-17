@@ -58,7 +58,7 @@
   - robosignatory
 
 - name: Install sigul configuration
-  copy:
+  ansible.builtin.copy:
     src: sigul.{{env}}.conf
     dest: /etc/sigul/client.conf
     owner: robosignatory
@@ -90,7 +90,7 @@
   - robosignatory
 
 - name: Install koji CA certificate
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/fedora-ca.cert"
     dest: /etc/robosignatory/serverca.cert
     owner: robosignatory
@@ -116,7 +116,7 @@
   - robosignatory
 
 - name: Deploy the fedora-messaging CA
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/ca.crt"
     dest: /etc/pki/fedora-messaging/cacert.pem
     mode: "0644"
@@ -127,7 +127,7 @@
   - robosignatory
 
 - name: Deploy the fedora-messaging cert
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/issued/robosignatory{{env_suffix}}.crt"
     dest: /etc/pki/fedora-messaging/robosignatory-cert.pem
     mode: "0644"
@@ -140,7 +140,7 @@
   - robosignatory
 
 - name: Deploy the fedora-messaging key
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/private/robosignatory{{env_suffix}}.key"
     dest: /etc/pki/fedora-messaging/robosignatory-key.pem
     mode: "0600"
@@ -179,7 +179,7 @@
   - robosignatory
 
 - name: Configure fm-consumer@.service to run as robosignatory (staging)
-  copy:
+  ansible.builtin.copy:
     src: fm-consumer@.service
     dest: /etc/systemd/system/fm-consumer@.service.d/local.conf
     owner: root
@@ -204,7 +204,7 @@
   - robosignatory
 
 - name: Configure key add script
-  copy:
+  ansible.builtin.copy:
     src: sigul-add-key
     dest: /usr/local/bin/sigul-add-key
     owner: root
@@ -218,7 +218,7 @@
   - robosignatory
 
 - name: Configure robosignatory.service
-  copy:
+  ansible.builtin.copy:
     src: robosignatory.service
     dest: /etc/systemd/system/robosignatory.service
     owner: root
@@ -232,7 +232,7 @@
   - robosignatory
 
 - name: Allow robosignatory to use systemd-ask-password
-  copy:
+  ansible.builtin.copy:
     src: ask-password-robosignatory.conf
     dest: /etc/tmpfiles.d/ask-password-robosignatory.conf
     owner: root

@@ -85,7 +85,7 @@
   - fedora-messaging
 
 - name: Deploy the fedora-messaging CA
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/ca.crt"
     dest: /etc/pki/fedora-messaging/cacert.pem
     mode: "0644"
@@ -97,7 +97,7 @@
   - fedora-messaging
 
 - name: Deploy the Fedora wiki fedora-messaging cert
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/issued/mediawiki{{env_suffix}}.crt"
     dest: /etc/pki/fedora-messaging/mediawiki{{env_suffix}}-cert.pem
     mode: "0644"
@@ -109,7 +109,7 @@
   - fedora-messaging
 
 - name: Deploy the Fedora wiki fedora-messaging key
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/private/mediawiki{{env_suffix}}.key"
     dest: /etc/pki/fedora-messaging/mediawiki{{env_suffix}}-key.pem
     mode: "0640"
@@ -138,7 +138,7 @@
   - mediawiki
 
 - name: Fedora branding
-  copy: src=skins/ dest=/usr/share/{{ wikiver }}/skins owner=root group=root mode=775
+  ansible.builtin.copy: src=skins/ dest=/usr/share/{{ wikiver }}/skins owner=root group=root mode=775
   tags:
   - config
   - mediawiki
@@ -272,7 +272,7 @@
   tags: selinux
 
 - name: Copy over our custom selinux policy
-  copy: src=selinux/mediawiki.pp dest=/usr/local/share/selinux/mediawiki.pp
+  ansible.builtin.copy: src=selinux/mediawiki.pp dest=/usr/local/share/selinux/mediawiki.pp
   register: selinux_module
   tags:
   - selinux

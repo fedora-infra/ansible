@@ -23,7 +23,7 @@
   changed_when: false
 
 - name: Cpf
-  copy:
+  ansible.builtin.copy:
     src: ureport_sample
     dest: "{{ faf_spool_dir }}/reports/incoming"
     owner: faf

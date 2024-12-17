@@ -26,7 +26,7 @@
 
 
 - name: Install geoip-city-wsgi.conf file
-  copy: >
+  ansible.builtin.copy: >
         src="geoip-city-wsgi.conf"
         dest="/etc/httpd/conf.d/geoip-city-wsgi.conf"
         owner=root
@@ -54,7 +54,7 @@
   - geoip-city-wsgi/app
 
 - name: Install geoip-city.wsgi file
-  copy: >
+  ansible.builtin.copy: >
         src="geoip-city.wsgi"
         dest="/usr/share/geoip-city-wsgi/geoip-city.wsgi"
         owner=root

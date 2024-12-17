@@ -46,7 +46,7 @@
   - packages/web
 
 - name: Copy over the httpd config
-  copy: >
+  ansible.builtin.copy: >
     src=packages-httpd.conf
     dest=/etc/httpd/conf.d/fedora-packages.conf
     owner=root group=root mode=644
@@ -68,7 +68,7 @@
   - packages/web
 
 - name: Copy over certs/public-keys, probably for talking with koji.
-  copy: >
+  ansible.builtin.copy: >
     src="{{private}}/files/packages/fedora-ca.cert"
     dest="/etc/pki/fedoracommunity/{{item}}"
     owner=apache
@@ -82,7 +82,7 @@
   - packages/web
 
 - name: Permanently hotfix the distmappings file
-  copy: >
+  ansible.builtin.copy: >
     src=distmappings.py
     dest="{{pythonsitelib}}/fedoracommunity/search/distmappings.py"
     owner=root group=root mode=0644
@@ -119,7 +119,7 @@
   - packages/web
 
 - name: Copy over the default icon
-  copy: >
+  ansible.builtin.copy: >
     src=package_128x128.png
     dest=/var/cache/fedoracommunity/packages/icons/package_128x128.png
     owner=root mode=644 setype=fusefs_t
@@ -130,7 +130,7 @@
   - icon
 
 - name: Hotfix the fedmsg-hub executable to pick up forward compat packages
-  copy: src=fedmsg-hub-forward-compat dest=/usr/bin/fedmsg-hub
+  ansible.builtin.copy: src=fedmsg-hub-forward-compat dest=/usr/bin/fedmsg-hub
   tags:
   - packages
   - packages/web

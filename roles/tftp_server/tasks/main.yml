@@ -18,7 +18,7 @@
   - tftp_server
 
 - name: Setup pxelinux.cfg default file
-  copy: src=default.{{ inventory_hostname }} dest=/var/lib/tftpboot/pxelinux.cfg/default mode=644
+  ansible.builtin.copy: src=default.{{ inventory_hostname }} dest=/var/lib/tftpboot/pxelinux.cfg/default mode=644
   tags:
   - config
   - tftp_server
@@ -45,7 +45,7 @@
   when: datacenter == 'iad2'
 
 - name: Copy rhcos files to images folder
-  copy:
+  ansible.builtin.copy:
     src: "/var/lib/tftpboot/rhcos/"
     dest: "/var/lib/tftpboot/images/RHCOS/4.8/x86_64/"
     remote_src: yes

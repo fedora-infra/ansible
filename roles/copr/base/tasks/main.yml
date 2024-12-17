@@ -20,12 +20,12 @@
   when: ansible_distribution != 'Fedora'
 
 - name: Copy .forward file
-  copy: src="{{ _forward_src }}" dest="/root/.forward" owner=root group=root
+  ansible.builtin.copy: src="{{ _forward_src }}" dest="/root/.forward" owner=root group=root
   tags:
   - config
 
 - name: Deploy /etc/hosts file
-  copy: src="hosts" dest=/etc/ owner=root group=root mode=644
+  ansible.builtin.copy: src="hosts" dest=/etc/ owner=root group=root mode=644
   tags:
   - config
 
@@ -39,7 +39,7 @@
   when: ansible_distribution == 'Fedora'
 
 - name: Configure crond
-  copy: src=sysconfig.crond dest=/etc/sysconfig/crond
+  ansible.builtin.copy: src=sysconfig.crond dest=/etc/sysconfig/crond
   notify: restart crond
 
 - name: Install base copr packages
@@ -69,7 +69,7 @@
   notify: restart crond
 
 - name: Override the default rsyslog logrotate file
-  copy: src=syslog-logrotate dest=/etc/logrotate.d/rsyslog
+  ansible.builtin.copy: src=syslog-logrotate dest=/etc/logrotate.d/rsyslog
   tags:
   - logrotate
   when: ansible_distribution == 'Fedora'

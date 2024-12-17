@@ -1,6 +1,6 @@
 ---
 - name: Copy some config files for {{website}}
-  copy: >
+  ansible.builtin.copy: >
     src={{item}} dest=/etc/httpd/conf.d/{{website}}/{{item}}
     owner=root group=root mode=0644
   with_items:

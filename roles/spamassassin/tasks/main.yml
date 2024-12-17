@@ -20,21 +20,21 @@
   - config
 
 - name: Setup the sysconfig file
-  copy: src=sysconfig dest=/etc/sysconfig/spamassassin
+  ansible.builtin.copy: src=sysconfig dest=/etc/sysconfig/spamassassin
   notify:
   - restart spamassassin
   tags:
   - config
 
 - name: Setup the config file
-  copy: src=local.cf dest=/etc/mail/spamassassin/local.cf
+  ansible.builtin.copy: src=local.cf dest=/etc/mail/spamassassin/local.cf
   notify:
   - restart spamassassin
   tags:
   - config
 
 - name: Setup the cron job
-  copy: src=sa-update dest=/etc/cron.d/sa-update
+  ansible.builtin.copy: src=sa-update dest=/etc/cron.d/sa-update
   tags:
   - config
 
@@ -44,6 +44,6 @@
   - service
 
 - name: Setup logrotate to our needs
-  copy: src="spamassassin.logrotate" dest=/etc/logrotate.d/spamassassin
+  ansible.builtin.copy: src="spamassassin.logrotate" dest=/etc/logrotate.d/spamassassin
   tags:
   - config

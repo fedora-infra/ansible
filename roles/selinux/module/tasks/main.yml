@@ -12,7 +12,7 @@
 #                        install.
 
 - name: Copy over our custom selinux module for {{ policy_name }}
-  copy: src="{{ policy_file }}" dest="/usr/local/share/{{ policy_name }}.te"
+  ansible.builtin.copy: src="{{ policy_file }}" dest="/usr/local/share/{{ policy_name }}.te"
   register: selinux_module
   tags:
     - selinux

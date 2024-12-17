@@ -29,7 +29,7 @@
   - koji_builder
 
 - name: Add mock ssh keys
-  copy: src=mock_auth_keys dest=/var/lib/mock/.ssh/authorized_keys mode=640 owner=mock group=mock
+  ansible.builtin.copy: src=mock_auth_keys dest=/var/lib/mock/.ssh/authorized_keys mode=640 owner=mock group=mock
   tags:
   - koji_builder
 
@@ -49,7 +49,7 @@
   - koji_builder
 
 - name: Mockbuilder ssh key
-  copy: src=ftbfs_auth_keys dest=/home/mockbuilder/.ssh/authorized_keys mode=644 owner=mockbuilder group=mockbuilder
+  ansible.builtin.copy: src=ftbfs_auth_keys dest=/home/mockbuilder/.ssh/authorized_keys mode=644 owner=mockbuilder group=mockbuilder
   tags:
   - koji_builder
 
@@ -188,7 +188,7 @@
   - koji_builder
 
 - name: Override kojid.service file to set TasksMax to unlimited
-  copy: src=kojid.service dest=/etc/systemd/system/kojid.service
+  ansible.builtin.copy: src=kojid.service dest=/etc/systemd/system/kojid.service
   notify:
   - reload systemd
   - restart kojid
@@ -207,13 +207,13 @@
   - koji_builder
 
 - name: Copy over /root/.psphere/config.yaml
-  copy: src={{ private }}/files/koji/config.yaml dest=/root/.psphere/config.yaml
+  ansible.builtin.copy: src={{ private }}/files/koji/config.yaml dest=/root/.psphere/config.yaml
   tags:
   - koji_builder
 # done oz/imagefactory
 
 - name: Copy over /etc/security/limits.conf
-  copy: src=limits.conf dest=/etc/security/limits.conf
+  ansible.builtin.copy: src=limits.conf dest=/etc/security/limits.conf
   tags:
   - koji_builder
 
@@ -230,7 +230,7 @@
 # This is useful in the oz/imagefactory context for debugging
 
 - name: Install libvirtd.conf
-  copy: src="{{ files }}/virthost/libvirtd.conf" dest=/etc/libvirt/libvirtd.conf
+  ansible.builtin.copy: src="{{ files }}/virthost/libvirtd.conf" dest=/etc/libvirt/libvirtd.conf
   tags:
   - koji_builder
   when: env != "staging"
@@ -244,7 +244,7 @@
 # anymore.
 
 - name: Install libvirt/network.conf
-  copy: src=network.conf dest=/etc/libvirt/network.conf
+  ansible.builtin.copy: src=network.conf dest=/etc/libvirt/network.conf
   notify:
   - restart virtnetworkd
   tags:

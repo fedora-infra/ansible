@@ -158,7 +158,7 @@
     - iptables
 
 - name: Install blocklist update script
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/blocklist/blocklist-update.sh"
     dest: /usr/local/bin/blocklist-update.sh
     owner: root
@@ -260,7 +260,7 @@
   - flush journald tmpfiles to persistent store
 
 - name: Install rh ca for splunk
-  copy: src={{ private }}/files/splunk-certs/2022-IT-Root-CA.pem
+  ansible.builtin.copy: src={{ private }}/files/splunk-certs/2022-IT-Root-CA.pem
         dest=/etc/pki/tls/certs/2022-IT-Root-CA.pem
   tags:
   - rsyslogd
@@ -279,7 +279,7 @@
   when: inventory_hostname.startswith('log01')
 
 - name: Rsyslog.conf
-  copy: src={{ item }} dest=/etc/rsyslog.conf mode=0644
+  ansible.builtin.copy: src={{ item }} dest=/etc/rsyslog.conf mode=0644
   with_first_found:
     - rsyslog/rsyslog.conf.{{ inventory_hostname }}
     - rsyslog/rsyslog.conf.{{ dist_tag }}
@@ -292,7 +292,7 @@
   - base
 
 - name: Rsyslog log rotate for rsyslog servers
-  copy: src=rsyslog/merged-rsyslog dest=/etc/logrotate.d/merged-rsyslog mode=0644
+  ansible.builtin.copy: src=rsyslog/merged-rsyslog dest=/etc/logrotate.d/merged-rsyslog mode=0644
   when: inventory_hostname.startswith('log')
   notify:
   - restart rsyslog
@@ -302,7 +302,7 @@
   - base
 
 - name: Add rsyslog config to /etc/rsyslog.d
-  copy: src={{ item }} dest=/etc/rsyslog.d/ owner=root group=root mode=0644
+  ansible.builtin.copy: src={{ item }} dest=/etc/rsyslog.d/ owner=root group=root mode=0644
   with_fileglob:
     - rsyslog/*.conf
   notify:
@@ -313,7 +313,7 @@
   - base
 
 - name: Rsyslog-audit.conf
-  copy: src={{ item }} dest=/etc/rsyslog.d/rsyslog-audit.conf owner=root group=root mode=0644
+  ansible.builtin.copy: src={{ item }} dest=/etc/rsyslog.d/rsyslog-audit.conf owner=root group=root mode=0644
   with_first_found:
     - rsyslog/rsyslog-audit.conf.{{ datacenter }}
     - rsyslog/rsyslog-audit.conf.default
@@ -325,7 +325,7 @@
   - base
 
 - name: Log everything to log01 except on mirrorlist, do not log local4 there.
-  copy: src=rsyslog/rsyslog-log01 dest=/etc/rsyslog.d/rsyslog-log01.conf mode=0644
+  ansible.builtin.copy: src=rsyslog/rsyslog-log01 dest=/etc/rsyslog.d/rsyslog-log01.conf mode=0644
   when: not inventory_hostname.startswith(('mirrorlist','copr'))
   tags:
   - rsyslogd
@@ -333,7 +333,7 @@
   - base
 
 - name: Log everything to log01 except on mirrorlist, do log local4 there.
-  copy: src=rsyslog/rsyslog-log01-nolocal4 dest=/etc/rsyslog.d/rsyslog-log01.conf mode=0644
+  ansible.builtin.copy: src=rsyslog/rsyslog-log01-nolocal4 dest=/etc/rsyslog.d/rsyslog-log01.conf mode=0644
   when: inventory_hostname.startswith('mirrorlist')
   tags:
   - rsyslogd
@@ -348,7 +348,7 @@
   - config
 
 - name: Rsyslogd put systemd limits directory for file handles
-  copy: src=rsyslog/rsyslog-limits-systemd
+  ansible.builtin.copy: src=rsyslog/rsyslog-limits-systemd
         dest=/etc/systemd/system/rsyslog.service.d/limits.conf mode=0644
   when: inventory_hostname.startswith('log') or inventory_hostname.startswith('people')
   tags:
@@ -364,7 +364,7 @@
   - rsyslog-audit
 
 - name: Copy over our custom selinux module
-  copy: src=selinux/rsyslog-audit.pp dest=/usr/local/share/rsyslog/rsyslog-audit.pp
+  ansible.builtin.copy: src=selinux/rsyslog-audit.pp dest=/usr/local/share/rsyslog/rsyslog-audit.pp
   register: selinux_module
   tags:
   - rsyslogd
@@ -381,7 +381,7 @@
 
 # Custom selinux policy to allow unix_chkpwd to map PAM database
 - name: Copy over our custom selinux module
-  copy: src=selinux/mapchkpwd.pp dest=/usr/local/share/mapchkpwd.pp
+  ansible.builtin.copy: src=selinux/mapchkpwd.pp dest=/usr/local/share/mapchkpwd.pp
   register: selinux_module
   when: ansible_distribution_major_version|int >= 29 and ansible_distribution == 'Fedora'
   tags:
@@ -390,7 +390,7 @@
 
 # Custom selinux policy to allow unix_chkpwd to map PAM database
 - name: Copy over our custom selinux module
-  copy: src=selinux/mapchkpwd.pp dest=/usr/local/share/mapchkpwd.pp
+  ansible.builtin.copy: src=selinux/mapchkpwd.pp dest=/usr/local/share/mapchkpwd.pp
   register: selinux_module
   when: ansible_distribution_major_version|int >= 8 and ansible_distribution == 'RedHat'
   tags:
@@ -413,7 +413,7 @@
 #
 
 - name: Install common scripts
-  copy: src={{ item }} dest=/usr/local/bin/ owner=root group=root mode=0755
+  ansible.builtin.copy: src={{ item }} dest=/usr/local/bin/ owner=root group=root mode=0755
   with_fileglob:
     - common-scripts/*
   tags:
@@ -437,7 +437,7 @@
 # Set PS1 to show stage environment at PS1
 #
 - name: Set PS1 for stage in /etc/profile.d
-  copy: >
+  ansible.builtin.copy: >
     src=setstgps1.sh
     dest="/etc/profile.d/setstgps1.sh"
     owner=root
@@ -452,7 +452,7 @@
 # Set PS1 to show prod environment at PS1
 #
 - name: Set PS1 for prod in /etc/profile.d
-  copy: >
+  ansible.builtin.copy: >
     src=setprodps1.sh
     dest="/etc/profile.d/setprodps1.sh"
     owner=root
@@ -467,7 +467,7 @@
 # Set PS1 to show prod-iad2 environment at PS1
 #
 - name: Set PS1 for prod in /etc/profile.d
-  copy: >
+  ansible.builtin.copy: >
     src=setprodiad2ps1.sh
     dest="/etc/profile.d/setprodiad2ps1.sh"
     owner=root
@@ -536,7 +536,7 @@
   - python3alternative
 
 - name: Cron jobs to compress logs under /var/log/hosts and /mnt/fedora_stats
-  copy: src=compress-log.cron dest=/etc/cron.d/ mode=0644
+  ansible.builtin.copy: src=compress-log.cron dest=/etc/cron.d/ mode=0644
   tags:
   - compress
   when: inventory_hostname.startswith('log0')
@@ -545,7 +545,7 @@
   import_tasks: crypto-policies.yml
 
 - name: Proxy log rotate for proxy servers
-  copy: src="{{ files }}/common/rsyslog-logrotate" dest=/etc/logrotate.d/rsyslog mode=0644
+  ansible.builtin.copy: src="{{ files }}/common/rsyslog-logrotate" dest=/etc/logrotate.d/rsyslog mode=0644
   when: inventory_hostname.startswith('proxy')
   notify:
   - restart rsyslog

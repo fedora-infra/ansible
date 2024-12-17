@@ -56,7 +56,7 @@
   - .ssh
 
 - name: Setup privkey for copr user
-  copy: src="{{ private }}/files/copr/buildsys.priv" dest=/home/copr/.ssh/id_rsa owner=copr group=copr mode=600
+  ansible.builtin.copy: src="{{ private }}/files/copr/buildsys.priv" dest=/home/copr/.ssh/id_rsa owner=copr group=copr mode=600
 
 - name: Setup copr user ssh config file
   template:
@@ -81,7 +81,7 @@
   when: hostsstat.rc == 1
 
 - name: Replace bashrc for copr user
-  copy: src="copr_bashrc" dest=/home/copr/.bashrc owner=copr group=copr mode=600
+  ansible.builtin.copy: src="copr_bashrc" dest=/home/copr/.bashrc owner=copr group=copr mode=600
 
 - name: Auth_key so we can login to localhost as the copr user from the copr user
   authorized_key: user=copr key="{{ item }}"
@@ -90,7 +90,7 @@
   - "provision/files/buildsys.pub"
 
 - name: Copy .boto file
-  copy: src="boto" dest=/home/copr/.boto owner=copr group=copr
+  ansible.builtin.copy: src="boto" dest=/home/copr/.boto owner=copr group=copr
 
 # setup webserver
 - name: Install lighttpd.conf
@@ -122,7 +122,7 @@
 
 # mime default to text/plain and enable dirlisting for indexes
 - name: Update lighttpd configs
-  copy: src="lighttpd/{{ item }}" dest="/etc/lighttpd/conf.d/{{ item }}" owner=root group=root mode=0644
+  ansible.builtin.copy: src="lighttpd/{{ item }}" dest="/etc/lighttpd/conf.d/{{ item }}" owner=root group=root mode=0644
   with_items:
   - dirlisting.conf
   - mime.conf
@@ -135,14 +135,14 @@
   template: src="lighttpd/dir-generator.php.j2" dest="/var/lib/copr/public_html/dir-generator.php" owner=copr group=copr mode=0755
 
 - name: Install resalloc CGI script
-  copy:
+  ansible.builtin.copy:
     src: cgi-resalloc
     dest: /var/www/
     setype: httpd_sys_script_exec_t
     mode: "0755"
 
 - name: Install the helper scripts for lighttpd log rotation
-  copy:
+  ansible.builtin.copy:
     src: "{{ item }}"
     dest: /usr/local/bin/{{ item }}
     mode: "0755"
@@ -206,12 +206,12 @@
   - resalloc
 
 - name: Put ansible.cfg for all this into /etc/ansible/ on the system
-  copy: src="provision/ansible.cfg" dest=/etc/ansible/ansible.cfg
+  ansible.builtin.copy: src="provision/ansible.cfg" dest=/etc/ansible/ansible.cfg
   tags:
   - provision_config
 
 - name: Install .ansible.cfg for copr user
-  copy: src=ansible.cfg dest=/home/copr/.ansible.cfg
+  ansible.builtin.copy: src=ansible.cfg dest=/home/copr/.ansible.cfg
         owner=copr group=copr mode=600
   tags:
   - provision_config
@@ -226,7 +226,7 @@
   - always
 
 - name: Copy image preparation scripts
-  copy: src="{{ item }}" dest=/usr/local/bin/
+  ansible.builtin.copy: src="{{ item }}" dest=/usr/local/bin/
         owner=root mode=755
   with_fileglob:
     - copr-builder-image-*.sh
@@ -235,7 +235,7 @@
   - provision_config
 
 - name: Testing fixture
-  copy: dest="/home/copr/cloud/ec2rc.variable" content=""
+  ansible.builtin.copy: dest="/home/copr/cloud/ec2rc.variable" content=""
   when: devel|bool
 
 - name: Copy copr-be.conf
@@ -303,7 +303,7 @@
     - clean_rh_subscriptions
 
 - name: Install offline token for copr-team in RHSM
-  copy:
+  ansible.builtin.copy:
     content: "{{ copr_red_hat_subscription_offline_token }}"
     dest: "{{ rhn_offline_token_file }}"
     mode: "0600"
@@ -360,7 +360,7 @@
   ansible.builtin.file: dest=/usr/local/share/copr state=directory
 
 - name: Copy over our custom selinux module
-  copy: src=selinux/copr_rules.pp dest=/usr/local/share/copr/copr_rules.pp
+  ansible.builtin.copy: src=selinux/copr_rules.pp dest=/usr/local/share/copr/copr_rules.pp
   register: selinux_module
 
 - name: Install our custom selinux module
@@ -390,7 +390,7 @@
     append: yes
 
 - name: Install daily custom copr-backend crontab
-  copy: src=cron.daily/copr-backend dest=/etc/cron.daily/
+  ansible.builtin.copy: src=cron.daily/copr-backend dest=/etc/cron.daily/
         mode=0755
   tags: [cron_tasks]
 

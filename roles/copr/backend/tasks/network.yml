@@ -1,6 +1,6 @@
 ---
 - name: Copy ifcfg-eth1
-  copy: src="ifcfg-eth1" dest=/etc/sysconfig/network-scripts/  owner=root group=root mode=644
+  ansible.builtin.copy: src="ifcfg-eth1" dest=/etc/sysconfig/network-scripts/  owner=root group=root mode=644
 
 - name: Enable network-manager to use the /etc/sysconfig/network-scripts
   ini_file:

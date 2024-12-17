@@ -17,7 +17,7 @@
   - review-stats/proxy
 
 - name: Install the sync-review-stats cronjob to pull content from builder
-  copy: >
+  ansible.builtin.copy: >
     src=sync-review-stats.cron dest=/etc/cron.d/sync-review-stats.cron
     owner=root group=root mode=0644
   tags:

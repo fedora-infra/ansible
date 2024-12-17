@@ -25,7 +25,7 @@
   - {file: /etc/ykksm/ykksm-config.php, dest: /usr/share/ykksm/ykksm-config.php }
 
 - name: Install the apache configuration files
-  copy: src={{ item.file }}
+  ansible.builtin.copy: src={{ item.file }}
         dest={{ item.dest}}
   with_items:
   - { file: yk-ksm.conf, dest: /etc/httpd/conf.d/yk-ksm.conf }

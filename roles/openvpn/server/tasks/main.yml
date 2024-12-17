@@ -19,7 +19,7 @@
   - openvpn
 
 - name: Install configuration files
-  copy: src={{ item.file }}
+  ansible.builtin.copy: src={{ item.file }}
         dest={{ item.dest }}
         owner=root group=root mode={{ item.mode }}
   with_items:

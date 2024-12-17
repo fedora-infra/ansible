@@ -50,7 +50,7 @@
     become: true
 
   - name: Temporarily dump keys so we can add them to bitwarden
-    copy:
+    ansible.builtin.copy:
       content: "{{ copr_dev_pulp_default_admin_password }}"
       dest: /tmp/pulp_default_admin_password
       mode: "000"

@@ -10,7 +10,7 @@
   - fedora-web/src
 
 - name: Install the pkgs keytab
-  copy: src="{{ private }}/files/keytabs/{{env}}/pkgs"
+  ansible.builtin.copy: src="{{ private }}/files/keytabs/{{env}}/pkgs"
         dest=/etc/pkgs.keytab
         owner=apache
         group=apache
@@ -22,7 +22,7 @@
   - fedora-web/src
 
 - name: Copy some config files for {{website}}
-  copy: >
+  ansible.builtin.copy: >
     src={{item}} dest=/etc/httpd/conf.d/{{website}}/{{item}}
     owner=root group=root mode=0644
   with_items:

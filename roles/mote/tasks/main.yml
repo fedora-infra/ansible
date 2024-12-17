@@ -11,7 +11,7 @@
   - mote
 
 - name: Set the memcached sysconfig file
-  copy:
+  ansible.builtin.copy:
     src: memcached.sysconfig
     dest: /etc/sysconfig/memcached
   tags:
@@ -30,7 +30,7 @@
   - mote
 
 - name: Make systemd override config
-  copy:
+  ansible.builtin.copy:
     src: memcached.override
     dest: /etc/systemd/system/memcached.service.d/override.conf
   tags:

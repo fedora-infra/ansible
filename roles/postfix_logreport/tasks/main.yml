@@ -9,7 +9,7 @@
   - packages
 
 - name: Install /usr/sbin/pflogsumm
-  copy: src={{ item }} dest="/usr/sbin/{{ item }}" mode=0755
+  ansible.builtin.copy: src={{ item }} dest="/usr/sbin/{{ item }}" mode=0755
   with_item:
     - pflogsumm
   tags:
@@ -17,7 +17,7 @@
   - config
 
 - name: Install /etc/cron.d/postfix-log.cron
-  copy: src={{ item }} dest="/etc/cron.d/{{ item }}"
+  ansible.builtin.copy: src={{ item }} dest="/etc/cron.d/{{ item }}"
   with_item:
     - postfix-log.cron
   tags:

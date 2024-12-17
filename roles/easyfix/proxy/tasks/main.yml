@@ -17,7 +17,7 @@
   - easyfix/proxy
 
 - name: Install the sync-easyfix cronjob to pull content from gatherer
-  copy: >
+  ansible.builtin.copy: >
     src=sync-easyfix.cron dest=/etc/cron.d/sync-easyfix.cron
     owner=root group=root mode=0644
   tags:

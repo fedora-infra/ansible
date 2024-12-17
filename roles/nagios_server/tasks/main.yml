@@ -72,7 +72,7 @@
 
 # ## Copy over the httpd SSL certs for external
 # - name: Install the SSL cert so that we can use https
-#   copy: >
+#   ansible.builtin.copy: >
 #       src={{ private}}/files/httpd/{{ item }} dest=/etc/pki/tls/certs/{{ item }}
 #       owner=root group=root mode=0600
 #   when: env == "production" and nagios_location == "external"
@@ -113,7 +113,7 @@
 
 ## Copy over the nagios configs
 - name: Copy /etc/nagios/conf.d/cfg files
-  copy: src=nagios/configs/{{ item }} dest=/etc/nagios/conf.d/{{ item }}
+  ansible.builtin.copy: src=nagios/configs/{{ item }} dest=/etc/nagios/conf.d/{{ item }}
   with_items:
     - escalations.cfg
     - timeperiods.cfg
@@ -122,7 +122,7 @@
   - nagios_server
 
 - name: Copy over the main conf file
-  copy: src=nagios/configs/nagios.cfg dest=/etc/nagios mode=0644 group=root owner=root
+  ansible.builtin.copy: src=nagios/configs/nagios.cfg dest=/etc/nagios mode=0644 group=root owner=root
   tags:
   - config
   - nagios_server
@@ -130,7 +130,7 @@
 
 ## Copy over the command scripts
 - name: Copy /etc/nagios/commands
-  copy: src=nagios/commands/{{ item }} dest=/etc/nagios/commands/{{ item }}
+  ansible.builtin.copy: src=nagios/commands/{{ item }} dest=/etc/nagios/commands/{{ item }}
   with_items:
     - disk.cfg
     - dns.cfg
@@ -173,7 +173,7 @@
 
 ## Copy over the hosts
 - name: Copy /etc/nagios/hosts
-  copy: src=nagios/hosts/ dest=/etc/nagios/hosts/
+  ansible.builtin.copy: src=nagios/hosts/ dest=/etc/nagios/hosts/
   tags:
   - nagios_config
   - nagios_server
@@ -181,7 +181,7 @@
 
 ## Copy over the services
 - name: Copy /etc/nagios/services (PHX2 specific files)
-  copy: src=nagios/services/iad2_internal/{{ item }} dest=/etc/nagios/services/{{ item }}
+  ansible.builtin.copy: src=nagios/services/iad2_internal/{{ item }} dest=/etc/nagios/services/{{ item }}
   with_items:
     - basset.cfg
     - certgetter.cfg
@@ -202,7 +202,7 @@
   notify: restart nagios
 
 - name: Copy /etc/nagios/services (IAD2 specific files)
-  copy: src=nagios/services/iad2_internal/{{ item }} dest=/etc/nagios/services/{{ item }}
+  ansible.builtin.copy: src=nagios/services/iad2_internal/{{ item }} dest=/etc/nagios/services/{{ item }}
   with_items:
     - basset.cfg
     - certgetter.cfg
@@ -224,7 +224,7 @@
   notify: restart nagios
 
 - name: Copy /etc/nagios/services (internal files)
-  copy: src=nagios/services/{{ item }} dest=/etc/nagios/services/{{ item }}
+  ansible.builtin.copy: src=nagios/services/{{ item }} dest=/etc/nagios/services/{{ item }}
   with_items:
     - copr.cfg
     - dns.cfg
@@ -252,7 +252,7 @@
 
 ## Copy over the services
 - name: Copy /etc/nagios/services (External)
-  copy: src=nagios/services/{{ item }} dest=/etc/nagios/services/{{ item }}
+  ansible.builtin.copy: src=nagios/services/{{ item }} dest=/etc/nagios/services/{{ item }}
   with_items:
     - dns.cfg
     - smtp-mm.cfg
@@ -286,7 +286,7 @@
 
 ## Copy over the servicegroups
 - name: Copy /etc/nagios/servicegroups
-  copy: src=nagios/servicegroups/{{item}} dest=/etc/nagios/servicegroups/{{item}}
+  ansible.builtin.copy: src=nagios/servicegroups/{{item}} dest=/etc/nagios/servicegroups/{{item}}
   with_items:
     - bodhi.cfg
     - fas.cfg
@@ -301,24 +301,24 @@
 
 ## Copy over the plugins
 - name: Copy plugins
-  copy: src=nagios/plugins/ dest=/usr/lib64/nagios/plugins/ mode=0755 owner=root group=root
+  ansible.builtin.copy: src=nagios/plugins/ dest=/usr/lib64/nagios/plugins/ mode=0755 owner=root group=root
   tags:
   - nagios_server
 
 ## Copy over the programs
 - name: Copy irc-colorize.py
-  copy: src=nagios/scripts/irc-colorize.py dest=/usr/local/bin/irc-colorize.py mode=0755 group=root owner=root
+  ansible.builtin.copy: src=nagios/scripts/irc-colorize.py dest=/usr/local/bin/irc-colorize.py mode=0755 group=root owner=root
   tags:
   - nagios_server
 
 - name: Copy check_nagios_notifications.py
-  copy: src=nagios/scripts/check_nagios_notifications.py dest=/usr/local/bin/check_nagios_notifications.py mode=0755 group=root owner=root
+  ansible.builtin.copy: src=nagios/scripts/check_nagios_notifications.py dest=/usr/local/bin/check_nagios_notifications.py mode=0755 group=root owner=root
   tags:
   - nagios_server
 
 
 - name: Copy robots.txt
-  copy: src=httpd/robots.txt dest=/var/www/robots.txt
+  ansible.builtin.copy: src=httpd/robots.txt dest=/var/www/robots.txt
   tags:
   - nagios_server
 
@@ -527,7 +527,7 @@
   - nagios_server
 
 - name: Copy over our custom selinux module
-  copy: src=selinux/nagios_hostname.pp dest=/usr/local/share/nagios-policy/nagios_hostname.pp
+  ansible.builtin.copy: src=selinux/nagios_hostname.pp dest=/usr/local/share/nagios-policy/nagios_hostname.pp
   register: selinux_module
   tags:
   - nagios_server
@@ -539,7 +539,7 @@
   - nagios_server
 
 - name: Copy over our custom selinux module
-  copy: src=selinux/nagios_nrpe.pp dest=/usr/local/share/nagios-policy/nagios_nrpe.pp
+  ansible.builtin.copy: src=selinux/nagios_nrpe.pp dest=/usr/local/share/nagios-policy/nagios_nrpe.pp
   register: selinux_module2
   tags:
   - nagios_server

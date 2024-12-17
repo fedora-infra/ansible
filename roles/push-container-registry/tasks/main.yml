@@ -22,7 +22,7 @@
   - push-container-registry
 
 - name: Install client cert for registry
-  copy:
+  ansible.builtin.copy:
     src: "{{cert_src}}"
     dest: "{{cert_dest_dir}}/client.cert"
     owner: root
@@ -32,7 +32,7 @@
   - push-container-registry
 
 - name: Install client key for registry
-  copy:
+  ansible.builtin.copy:
     src: "{{key_src}}"
     dest: "{{cert_dest_dir}}/client.key"
     group: "{{ certs_group }}"

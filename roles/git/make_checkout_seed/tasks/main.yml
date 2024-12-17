@@ -12,11 +12,11 @@
   when: env != 'staging'
 
 - name: Install the production version of the script and schedule its execution
-  copy: src=make-git-checkout-seed.sh dest=/usr/local/bin/make-git-checkout-seed.sh mode=0755
+  ansible.builtin.copy: src=make-git-checkout-seed.sh dest=/usr/local/bin/make-git-checkout-seed.sh mode=0755
   when: env != 'staging'
 
 - name: Install the alternative arch report script
-  copy: src=alternative_arch_report.py dest=/usr/local/bin/alternative_arch_report.py mode=0755
+  ansible.builtin.copy: src=alternative_arch_report.py dest=/usr/local/bin/alternative_arch_report.py mode=0755
   when: env != 'staging'
 
 - name: Install cron job.

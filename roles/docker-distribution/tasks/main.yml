@@ -32,7 +32,7 @@
   - docker-distribution
 
 - name: Install tls cert for docker
-  copy:
+  ansible.builtin.copy:
     src: "{{ cert.cert_src }}"
     dest: "{{ cert.dest_dir}}/{{ cert.cert_dest }}"
   when: tls.enabled
@@ -40,7 +40,7 @@
   - docker-distribution
 
 - name: Install tls key for docker
-  copy:
+  ansible.builtin.copy:
     src: "{{ cert.key_src }}"
     dest: "{{ cert.dest_dir}}/{{ cert.key_dest }}"
   when: tls.enabled
@@ -48,7 +48,7 @@
   - docker-distribution
 
 - name: Override the default syslog logrotate file
-  copy:
+  ansible.builtin.copy:
     src=syslog-logrotate
     dest=/etc/logrotate.d/rsyslog
   tags:

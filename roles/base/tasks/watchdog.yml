@@ -18,7 +18,7 @@
       - base
 
     - name: Watchdog device configuration
-      copy: src=watchdog.conf dest=/etc/watchdog.conf owner=root group=root mode=0644
+      ansible.builtin.copy: src=watchdog.conf dest=/etc/watchdog.conf owner=root group=root mode=0644
       tags:
       - config
       - watchdog

@@ -39,7 +39,7 @@
   when: ansible_distribution == 'Fedora' or (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int > 8)
 
 - name: Rsyncd.conf file for non download servers
-  copy: src={{ item }} dest=/etc/rsyncd.conf mode=0644
+  ansible.builtin.copy: src={{ item }} dest=/etc/rsyncd.conf mode=0644
   with_first_found:
     - "{{ rsyncd_conf }}"
     - rsyncd.conf.{{ inventory_hostname }}
@@ -64,7 +64,7 @@
   - rsyncd
 
 - name: Xinetd rsync file for rhel8
-  copy: src={{ item }} dest=/etc/xinetd.d/rsync mode=0644
+  ansible.builtin.copy: src={{ item }} dest=/etc/xinetd.d/rsync mode=0644
   with_first_found:
     - "{{ rsync }}"
     - rsync.{{ inventory_hostname }}
@@ -79,7 +79,7 @@
   - rsyncd
 
 - name: Systemd rsync file for fedora and rhel9
-  copy: src=rsyncd.service dest=/usr/lib/systemd/system/rsyncd.service mode=0644
+  ansible.builtin.copy: src=rsyncd.service dest=/usr/lib/systemd/system/rsyncd.service mode=0644
   when: ansible_distribution == 'Fedora' or (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int > 8)
   notify:
     - restart daemon

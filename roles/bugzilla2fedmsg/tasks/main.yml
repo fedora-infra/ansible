@@ -13,7 +13,7 @@
   - bugzilla2fedmsg
 
 - name: Copy a custom moksha systemd service file
-  copy: >
+  ansible.builtin.copy: >
      src=moksha-hub.service
      dest=/usr/lib/systemd/system/moksha-hub.service
   notify:
@@ -47,7 +47,7 @@
   - bugzilla2fedmsg
 
 - name: Copy in the certs and keys.
-  copy: >
+  ansible.builtin.copy: >
     src="{{ private }}/files/bugzilla2fedmsg/{{ item }}"
     dest="/etc/pki/fedmsg/{{ item }}"
     mode=0640 owner=fedmsg group=fedmsg

@@ -5,12 +5,12 @@
   register: secret_template
 
 - name: Copy file {{secret_file_file}}
-  copy: src={{roles_path}}/openshift-apps/{{secret_file_app}}/files/{{secret_file_file}} dest=/etc/openshift_apps/{{os_app}}/{{secret_file_key}}
+  ansible.builtin.copy: src={{roles_path}}/openshift-apps/{{secret_file_app}}/files/{{secret_file_file}} dest=/etc/openshift_apps/{{os_app}}/{{secret_file_key}}
   when: secret_file_file is defined
   register: secret_file
 
 - name: Copy private file {{secret_file_privatefile}}
-  copy: src={{private}}/files/{{secret_file_privatefile}} dest=/etc/openshift_apps/{{os_app}}/{{secret_file_key}}
+  ansible.builtin.copy: src={{private}}/files/{{secret_file_privatefile}} dest=/etc/openshift_apps/{{os_app}}/{{secret_file_key}}
   when: secret_file_privatefile is defined
   register: secret_privatefile
 

@@ -50,7 +50,7 @@
   when: ansible_distribution_major_version|int >= 9
 
 - name: Create file to indicate we want live fedimg data
-  copy:
+  ansible.builtin.copy:
     dest: /var/fedora_websites_live_fedimg
     content: "Indicator file"
   tags:

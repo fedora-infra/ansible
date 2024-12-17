@@ -47,7 +47,7 @@
     ansible.builtin.file: path={{ rpmdir }}-old state=directory
 
   - name: Copy the source rpms to the SRPMS dir of {{ repodir }}
-    copy: src={{ item }} dest={{ repodir }}/SRPMS/
+    ansible.builtin.copy: src={{ item }} dest={{ repodir }}/SRPMS/
     with_fileglob:
       - "{{ rpmdir }}/*.src.rpm"
 
@@ -58,12 +58,12 @@
       - "{{ rpmdir }}/*.src.rpm"
 
   - name: Copy the binary rpms to the x86_64 dir of {{ repodir }}
-    copy: src={{ item }} dest={{ repodir }}/x86_64/
+    ansible.builtin.copy: src={{ item }} dest={{ repodir }}/x86_64/
     with_fileglob:
       - "{{ rpmdir }}/*.rpm"
 
   - name: Copy the binary rpms to the i386 dir of {{ repodir }}
-    copy: src={{ item }} dest={{ repodir }}/i386/
+    ansible.builtin.copy: src={{ item }} dest={{ repodir }}/i386/
     with_fileglob:
       - "{{ rpmdir }}/*.rpm"
 

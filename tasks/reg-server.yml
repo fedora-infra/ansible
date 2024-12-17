@@ -6,21 +6,21 @@
   - regserver
 
 - name: Copy reg-server repositories html template
-  copy:
+  ansible.builtin.copy:
     src: "{{files}}/reg-server/repositories.html"
     dest: "/var/lib/reg-server/templates/repositories.html"
   tags:
   - regserver
 
 - name: Copy reg-server tags html template
-  copy:
+  ansible.builtin.copy:
     src: "{{files}}/reg-server/tags.html"
     dest: "/var/lib/reg-server/templates/tags.html"
   tags:
   - regserver
 
 - name: Install cronjob file
-  copy:
+  ansible.builtin.copy:
     src: "{{files}}/reg-server/cron-prod"
     dest: "/etc/cron.d/reg-server"
   when: env == "production"
@@ -28,7 +28,7 @@
   - regserver
 
 - name: Install cronjob file - stg
-  copy:
+  ansible.builtin.copy:
     src: "{{files}}/reg-server/cron-stg"
     dest: "/etc/cron.d/reg-server"
   when: env == "staging"
@@ -36,14 +36,14 @@
   - regserver
 
 - name: Copy fedora icon
-  copy:
+  ansible.builtin.copy:
     src: "{{files}}/reg-server/fedora.png"
     dest: "/var/lib/reg-server/static/fedora.png"
   tags:
   - regserver
 
 - name: Copy custom styles.css
-  copy:
+  ansible.builtin.copy:
     src: "{{files}}/reg-server/styles.css"
     dest: "/var/lib/reg-server/static/css/styles.css"
   tags:

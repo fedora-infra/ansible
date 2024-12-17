@@ -21,14 +21,14 @@
   when: fasjson_aliases is defined
 
 - name: Fasjson-aliases cron job
-  copy: src=fasjson-aliases.cron dest=/etc/cron.d/fasjson-aliases owner=root mode=0644
+  ansible.builtin.copy: src=fasjson-aliases.cron dest=/etc/cron.d/fasjson-aliases owner=root mode=0644
   tags:
   - config
   - fasjson
   when: fasjson_aliases is defined
 
 - name: Fasjson-aliases base static file
-  copy: src=aliases.static dest=/etc/aliases.static owner=root mode=0644
+  ansible.builtin.copy: src=aliases.static dest=/etc/aliases.static owner=root mode=0644
   tags:
   - config
   - fasjson

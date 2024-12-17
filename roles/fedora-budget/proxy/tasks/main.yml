@@ -1,20 +1,20 @@
 ---
 - name: Copy in the sync-budget cronjob
-  copy: src=cron-sync-budget dest=/etc/cron.d/sync-budget
+  ansible.builtin.copy: src=cron-sync-budget dest=/etc/cron.d/sync-budget
   tags:
   - fedora-web
   - fedora-web/budget
   when: env != "staging"
 
 - name: Copy in the sync-budget cronjob (stg)
-  copy: src=cron-sync-budget.stg dest=/etc/cron.d/sync-budget
+  ansible.builtin.copy: src=cron-sync-budget.stg dest=/etc/cron.d/sync-budget
   tags:
   - fedora-web
   - fedora-web/budget
   when: env == "staging"
 
 - name: Copy some config files for {{website}}
-  copy: >
+  ansible.builtin.copy: >
     src={{item}} dest=/etc/httpd/conf.d/{{website}}/{{item}}
     owner=root group=root mode=0644
   with_items:

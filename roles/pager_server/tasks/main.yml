@@ -1,6 +1,6 @@
 ---
 - name: Setup pager app config
-  copy: src=pager-app.conf dest=/etc/httpd/conf.d/pager-app.conf mode=644
+  ansible.builtin.copy: src=pager-app.conf dest=/etc/httpd/conf.d/pager-app.conf mode=644
   notify:
   - reload httpd
   tags:
@@ -8,7 +8,7 @@
   - pager_server
 
 - name: Install pager app
-  copy: src={{ private}}/pager/pager.py dest=/srv/web/pager.py mode=755 setype=httpd_sys_script_exec_t
+  ansible.builtin.copy: src={{ private}}/pager/pager.py dest=/srv/web/pager.py mode=755 setype=httpd_sys_script_exec_t
   tags:
   - config
   - pager_server

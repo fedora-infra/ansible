@@ -9,4 +9,6 @@
 
   tasks:
   - ansible.builtin.file: dest=/srv/web/fedoraproject.org/static/ state=directory
-  - copy: src=hotspot.txt dest=/srv/web/fedoraproject.org/static/hotspot.txt
+  - ansible.builtin.copy:
+      src: hotspot.txt
+      dest: /srv/web/fedoraproject.org/static/hotspot.txt

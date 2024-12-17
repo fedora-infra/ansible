@@ -12,7 +12,7 @@
   - fedora-web/fedora.im
 
 - name: Copy some config files for {{website}}
-  copy: >
+  ansible.builtin.copy: >
     src={{item}} dest=/etc/httpd/conf.d/{{website}}/{{item}}
     owner=root group=root mode=0644
   with_items:
@@ -24,7 +24,7 @@
   - fedora-web/fedora.im
 
 - name: Copy in some matrix files
-  copy: >
+  ansible.builtin.copy: >
     src={{item}} dest=/srv/web/fedora.im/{{item}}
     owner=root group=root mode=0644
   with_items:
@@ -35,7 +35,7 @@
   - fedora-web/fedora.im
 
 - name: Grab some images from design
-  copy: >
+  ansible.builtin.copy: >
     src={{item.src_name}} dest=/srv/web/fedora.im/{{item.dest}}
     owner=root group=root mode=0644
   with_items:

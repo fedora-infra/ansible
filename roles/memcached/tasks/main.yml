@@ -27,7 +27,7 @@
   when: ansible_distribution == 'RedHat' and ansible_distribution_major_version|int == 7
 
 - name: Make systemd override config
-  copy: src=memcached-systemdoverride.conf dest=/etc/systemd/system/memcached.service.d/
+  ansible.builtin.copy: src=memcached-systemdoverride.conf dest=/etc/systemd/system/memcached.service.d/
   tags:
   - memcached
   notify:

@@ -1,6 +1,6 @@
 ---
 - name: Some basic wrapper scripts for zabbix-sender
-  copy:
+  ansible.builtin.copy:
     src: "scripts/{{ item }}"
     dest: "/usr/lib/zabbix/{{ item }}"
     mode: "0755"

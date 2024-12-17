@@ -24,7 +24,7 @@
   - weblate_backup
 
 - name: Copy private key
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/weblate/id_rsa"
     dest: ~_backup_weblate/.ssh/id_rsa
     owner: _backup_weblate
@@ -34,7 +34,7 @@
   - weblate_backup
 
 - name: Copy passphrase file
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/weblate/borg_passphrase"
     dest: ~_backup_weblate/.borgpass
     owner: _backup_weblate

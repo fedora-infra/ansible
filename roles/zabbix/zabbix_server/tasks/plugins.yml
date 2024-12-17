@@ -5,7 +5,7 @@
 
 # Custom zabbix scripts
 - name: Importing zabbix scripts
-  copy:
+  ansible.builtin.copy:
     src: "{{ item }}"
     dest: /usr/lib/zabbix/
     mode: "0755"

@@ -6,7 +6,7 @@
 
 # enable the advanced virt module
 - name: Enable the advanced virt module
-  copy:
+  ansible.builtin.copy:
     dest: /etc/dnf/modules.d/virt.module
     content: |
       [virt]
@@ -51,11 +51,11 @@
 # We need this module option set and then need to tweak the libvirt xml to enable it
 #
 - name: Setup nested virt on virthosts with nested=true variable (x86_64)
-  copy: src=kvm_intel.conf dest=/etc/modprobe.d/kvm_intel.conf
+  ansible.builtin.copy: src=kvm_intel.conf dest=/etc/modprobe.d/kvm_intel.conf
   when: nested == true and ansible_architecture == 'x86_64'
 
 - name: Setup nested virt on virthosts with nested=true variable (s390x)
-  copy: src=kvm.conf dest=/etc/modprobe.d/kvm.conf
+  ansible.builtin.copy: src=kvm.conf dest=/etc/modprobe.d/kvm.conf
   when: nested == true and ansible_architecture == 's390x'
 
 #

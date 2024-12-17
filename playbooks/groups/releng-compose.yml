@@ -206,7 +206,7 @@
     - containerrebuild
 
   - name: set releng user keytab
-    copy:
+    ansible.builtin.copy:
       src: "{{private}}/files/keytabs/{{env}}/releng"
       dest: /etc/krb5.releng.keytab
       owner: root
@@ -216,7 +216,7 @@
     - containerrebuild
 
   - name: copy releng ssh key for rebuild fedpkg/distgit pushes
-    copy:
+    ansible.builtin.copy:
       src: "{{private}}/files/releng/sshkeys/container-rebuild-{{env}}"
       dest: /etc/pki/releng
       owner: root
@@ -226,7 +226,7 @@
     - containerrebuild
 
   - name: place relengpush script for automatic rebuilds
-    copy:
+    ansible.builtin.copy:
       src: "{{files}}/releng/relengpush"
       dest: "/usr/local/bin/relengpush"
       owner: root
@@ -236,7 +236,7 @@
     - containerrebuild
 
   - name: place relengpush int script for automatic rebuilds
-    copy:
+    ansible.builtin.copy:
       src: "{{files}}/releng/relengpush-int"
       dest: "/usr/local/bin/relengpush-int"
       owner: root

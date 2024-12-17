@@ -23,7 +23,7 @@
       when: "{{ inventory_hostname == 'remote_src_host' }}"
 
     - name: copy files from control node to remote_dest_host
-      copy:
+      ansible.builtin.copy:
         src: /tmp/staging
         dest: /tmp/staging
       when: "{{ inventory_hostname == 'remote_dest_host' }}"

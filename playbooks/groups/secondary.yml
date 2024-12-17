@@ -66,13 +66,13 @@
         - python3-productmd
 
   - name: add create-filelist script from quick-fedora-mirror
-    copy: src="{{ files }}/scripts/create-filelist.py2" dest=/usr/local/bin/create-filelist mode=0755
+    ansible.builtin.copy: src="{{ files }}/scripts/create-filelist.py2" dest=/usr/local/bin/create-filelist mode=0755
 
   - name: add cron script to update fullfiletimelist
-    copy: src="{{ files }}/scripts/update-fullfiletimelist" dest=/usr/local/bin/update-fullfiletimelist mode=0755
+    ansible.builtin.copy: src="{{ files }}/scripts/update-fullfiletimelist" dest=/usr/local/bin/update-fullfiletimelist mode=0755
 
   - name: add cron script to prune old logs at /srv/pub/alt/linuxsystemroles/logs
-    copy: src="{{ files }}/scripts/linuxsystemroles-logs-clean" dest=/usr/local/bin/linuxsystemroles-logs-clean mode=0755
+    ansible.builtin.copy: src="{{ files }}/scripts/linuxsystemroles-logs-clean" dest=/usr/local/bin/linuxsystemroles-logs-clean mode=0755
 
   - name: Update fullfiletimelist job
     cron: name="update-fullfiletimelist" hour="*/2" minute="55" user="root"

@@ -11,7 +11,7 @@
     state: directory
 
 - name: Download patches
-  copy: >
+  ansible.builtin.copy: >
      src=/srv/web/infra/bigfiles/hotfixes/ipsilon/{{ item }} dest=/opt/ipsilon-patches/{{item}}.patch
      owner=root group=root mode=0644
   loop: "{{ ipsilon_patches }}"

@@ -12,7 +12,7 @@
   - fedora-messaging
 
 - name: Deploy the fedora-messaging CA
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/{{ env }}/pki/ca.crt"
     dest: /etc/pki/fedora-messaging/rabbitmq-ca.crt
     mode: "0644"
@@ -24,7 +24,7 @@
   - fedora-messaging
 
 - name: Deploy the fedora-messaging cert
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/{{ env }}/pki/issued/logging{{ env_suffix }}.crt"
     dest: /etc/pki/fedora-messaging/logging.crt
     mode: "0644"
@@ -36,7 +36,7 @@
   - fedora-messaging
 
 - name: Deploy the fedora-messaging key
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/{{ env }}/pki/private/logging{{ env_suffix }}.key"
     dest: /etc/pki/fedora-messaging/logging.key
     mode: "0640"

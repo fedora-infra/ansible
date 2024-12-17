@@ -23,14 +23,14 @@
   - geoip
 
 - name: Push over the older geoip db
-  copy: src={{ item }} dest=/usr/share/GeoIP/
+  ansible.builtin.copy: src={{ item }} dest=/usr/share/GeoIP/
   with_fileglob:
     - "{{ bigfiles }}/geoip/*.dat"
   tags:
   - geoip
 
 - name: Push over the newer geoip db
-  copy: src={{ item }} dest=/usr/share/GeoIP/
+  ansible.builtin.copy: src={{ item }} dest=/usr/share/GeoIP/
   with_fileglob:
     - "{{ bigfiles }}/geoip/*.mmdb"
   tags:
@@ -38,4 +38,4 @@
 
 # comment out 2022-05-19. Script does not work since 2018.
 # - name: Geoip syncing script via cron
-#  copy: src=geoip_sync dest=/etc/cron.d/geoip_sync mode=0644
+#  ansible.builtin.copy: src=geoip_sync dest=/etc/cron.d/geoip_sync mode=0644

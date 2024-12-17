@@ -48,7 +48,7 @@
   when: inventory_hostname.startswith('batcave01')
 
 - name: Setup ssh_known_hosts file
-  copy: src=ssh_known_hosts dest=/etc/ssh/ssh_known_hosts mode=0644
+  ansible.builtin.copy: src=ssh_known_hosts dest=/etc/ssh/ssh_known_hosts mode=0644
   tags:
   - batcave
   - config
@@ -59,40 +59,40 @@
 #
 
 - name: Setup roots bashrc to note about agents
-  copy: src=root_bashrc dest=/root/.bashrc
+  ansible.builtin.copy: src=root_bashrc dest=/root/.bashrc
   tags:
   - batcave
   - config
 
 - name: Run daily logview report for ansible actions.
-  copy: src=logview.cron dest=/etc/cron.daily/logview.cron mode=0755
+  ansible.builtin.copy: src=logview.cron dest=/etc/cron.daily/logview.cron mode=0755
   tags:
   - batcave
   - config
   when: inventory_hostname.startswith('batcave01')
 
 - name: Install program for generating ticket key
-  copy: src=generate_ticketkey dest=/usr/local/bin/generate_ticketkey mode=0755
+  ansible.builtin.copy: src=generate_ticketkey dest=/usr/local/bin/generate_ticketkey mode=0755
   tags:
   - batcave
   - config
 
 - name: Setup cron for daily ticketkey reollover
-  copy: src=ticketkey.cron dest=/etc/cron.hourly/ticketkey.cron mode=0755
+  ansible.builtin.copy: src=ticketkey.cron dest=/etc/cron.hourly/ticketkey.cron mode=0755
   tags:
   - batcave
   - config
   when: inventory_hostname.startswith('batcave01')
 
 - name: Setup cron for removing old pdr requests
-  copy: src=pdr.cron dest=/etc/cron.d/pdr.cron mode=0644
+  ansible.builtin.copy: src=pdr.cron dest=/etc/cron.d/pdr.cron mode=0644
   tags:
   - batcave
   - config
   when: inventory_hostname.startswith('batcave01')
 
 - name: Setup cron to expose the rabbitmq certs
-  copy:
+  ansible.builtin.copy:
     src: make-rabbitmq-certs-public.sh
     dest: /etc/cron.daily/make-rabbitmq-certs-public
     mode: "0755"
@@ -136,7 +136,7 @@
   - fedora-messaging
 
 - name: Install the rabbitmq certificates for batcave
-  copy: src={{ item.src }}
+  ansible.builtin.copy: src={{ item.src }}
       dest=/etc/pki/rabbitmq/{{ item.dest }}
       owner={{ item.owner }} group={{ item.group}} mode={{ item.mode }}
   with_items:
@@ -169,7 +169,7 @@
 #
 
 - name: Setup git-notifier script
-  copy: src=git-notifier dest=/usr/local/bin/git-notifier mode=0755
+  ansible.builtin.copy: src=git-notifier dest=/usr/local/bin/git-notifier mode=0755
   tags:
   - batcave
   - config
@@ -177,7 +177,7 @@
 
 # Hook to republish our bare repos for web viewing.
 - name: Setup syncgittree.sh script
-  copy: src=syncgittree.sh dest=/usr/local/bin/syncgittree.sh mode=0755
+  ansible.builtin.copy: src=syncgittree.sh dest=/usr/local/bin/syncgittree.sh mode=0755
   tags:
   - batcave
   - config
@@ -194,7 +194,7 @@
 # python $reposource/hooks/zodbot-announce-commits.py $reposource $zodbot_channel $oldrev $newrev ${1#refs/heads/}
 
 - name: Install zodbot-announce-commits script
-  copy: src=zodbot-announce-commits.py dest=/usr/local/bin/zodbot-announce-commits.py mode=0755
+  ansible.builtin.copy: src=zodbot-announce-commits.py dest=/usr/local/bin/zodbot-announce-commits.py mode=0755
   tags:
   - batcave
   - config
@@ -217,14 +217,14 @@
 #
 
 - name: Install vmdiff.sh cron
-  copy: src=vmdiff.sh dest=/etc/cron.hourly/vmdiff.sh mode=0755
+  ansible.builtin.copy: src=vmdiff.sh dest=/etc/cron.hourly/vmdiff.sh mode=0755
   tags:
   - batcave
   - config
   when: inventory_hostname.startswith('batcave01')
 
 - name: Install infradocs.sh cron
-  copy: src=infradocs.sh dest=/etc/cron.hourly/infradocs.sh mode=0755
+  ansible.builtin.copy: src=infradocs.sh dest=/etc/cron.hourly/infradocs.sh mode=0755
   tags:
   - batcave
   - config
@@ -236,7 +236,7 @@
 #
 
 - name: Setup public db copy script
-  copy: src=public-db-copy.sh dest=/usr/local/bin/public-db-copy.sh mode=0755
+  ansible.builtin.copy: src=public-db-copy.sh dest=/usr/local/bin/public-db-copy.sh mode=0755
   tags:
   - batcave
   - config
@@ -245,7 +245,7 @@
 #
 
 - name: Setup public db copy script
-  copy: src=public-db-copy.cron dest=/etc/cron.d/public-db-copy.cron mode=0644
+  ansible.builtin.copy: src=public-db-copy.cron dest=/etc/cron.d/public-db-copy.cron mode=0644
   tags:
   - batcave
   - config
@@ -256,7 +256,7 @@
 #
 
 - name: Setup checkdiff ansible job
-  copy: src=ansible-playbook-check-diff.cron dest=/etc/cron.daily/ansible-playbook-check-diff.cron mode=0755
+  ansible.builtin.copy: src=ansible-playbook-check-diff.cron dest=/etc/cron.daily/ansible-playbook-check-diff.cron mode=0755
   tags:
   - batcave
   - config
@@ -267,7 +267,7 @@
 #
 
 - name: Setup letsencrypt run for proxies
-  copy: src=proxy-certs-check-renew.cron dest=/etc/cron.weekly/proxy-certs-check-renew.cron mode=0755
+  ansible.builtin.copy: src=proxy-certs-check-renew.cron dest=/etc/cron.weekly/proxy-certs-check-renew.cron mode=0755
   tags:
   - batcave
   - config
@@ -278,7 +278,7 @@
 #
 
 - name: Setup rhel8 sync copy script
-  copy: src=rhel8-sync dest=/mnt/fedora/app/fi-repo/rhel/rhel8/rhel8-sync mode=0775
+  ansible.builtin.copy: src=rhel8-sync dest=/mnt/fedora/app/fi-repo/rhel/rhel8/rhel8-sync mode=0775
   tags:
   - batcave
   - config
@@ -288,7 +288,7 @@
 #
 
 - name: Setup rhel9 sync copy script
-  copy: src=rhel9-sync dest=/mnt/fedora/app/fi-repo/rhel/rhel9/rhel9-sync mode=0775
+  ansible.builtin.copy: src=rhel9-sync dest=/mnt/fedora/app/fi-repo/rhel/rhel9/rhel9-sync mode=0775
   tags:
   - batcave
   - config
@@ -298,7 +298,7 @@
 # sync-rhn cron job
 #
 - name: Setup sync-rhn cron
-  copy: src=sync-rhn dest=/etc/cron.d/sync-rhn mode=0644
+  ansible.builtin.copy: src=sync-rhn dest=/etc/cron.d/sync-rhn mode=0644
   tags:
   - batcave
   - config
@@ -309,7 +309,7 @@
 # sync-centos cron job
 #
 - name: Setup sync-rhn cron
-  copy: src=sync-centos dest=/etc/cron.d/sync-centos mode=0644
+  ansible.builtin.copy: src=sync-centos dest=/etc/cron.d/sync-centos mode=0644
   tags:
   - batcave
   - config
@@ -320,7 +320,7 @@
 #
 
 - name: Setup centos 9s sync script
-  copy: src=centos-9s-sync dest=/mnt/fedora/app/fi-repo/centos/centos-9s-sync mode=0775
+  ansible.builtin.copy: src=centos-9s-sync dest=/mnt/fedora/app/fi-repo/centos/centos-9s-sync mode=0775
   tags:
   - batcave
   - config
@@ -330,7 +330,7 @@
 #
 
 - name: Setup centos 10 sync script
-  copy: src=centos-10-sync dest=/mnt/fedora/app/fi-repo/centos/centos-10-sync mode=0775
+  ansible.builtin.copy: src=centos-10-sync dest=/mnt/fedora/app/fi-repo/centos/centos-10-sync mode=0775
   tags:
   - batcave
   - config
@@ -340,7 +340,7 @@
 # Setup web server config
 #
 - name: Install web server config for batcave (mimetypes)
-  copy: src=mime-types.conf dest=/etc/httpd/conf.d/mime-types.conf mode=0644
+  ansible.builtin.copy: src=mime-types.conf dest=/etc/httpd/conf.d/mime-types.conf mode=0644
   notify:
   - reload httpd
   tags:
@@ -349,7 +349,7 @@
   - httpd
 
 - name: Install web server config for batcave (access rules)
-  copy: src=allows dest=/etc/httpd/conf.d/allows mode=0644
+  ansible.builtin.copy: src=allows dest=/etc/httpd/conf.d/allows mode=0644
   notify:
   - reload httpd
   tags:
@@ -379,7 +379,7 @@
   when: inventory_hostname.startswith('batcave01')
 
 - name: Create repo2json cron job
-  copy: src=repo2json.cron dest=/etc/cron.d/repo2json.cron mode=0644
+  ansible.builtin.copy: src=repo2json.cron dest=/etc/cron.d/repo2json.cron mode=0644
   tags:
   - batcave
   - config
@@ -390,7 +390,7 @@
 #
 
 - name: Install the ansible_utils/rbac config
-  copy: src={{ private }}/files/rbac/rbac.yaml dest=/etc/ansible_utils/rbac.yaml mode=0540 group=sysadmin
+  ansible.builtin.copy: src={{ private }}/files/rbac/rbac.yaml dest=/etc/ansible_utils/rbac.yaml mode=0540 group=sysadmin
   tags:
   - rbac
   - batcave
@@ -411,7 +411,7 @@
   - config
 
 - name: Install geoip download cron
-  copy:
+  ansible.builtin.copy:
     src: geoip-download-databases.cron
     dest: /etc/cron.d/geoip-download-databases.cron
     mode: "0644"
@@ -549,7 +549,7 @@
   - batcave
 
 - name: Add SAR script for koji
-  copy: src=koji_sar.py dest=/usr/local/bin/koji_sar.py owner=root mode=0700
+  ansible.builtin.copy: src=koji_sar.py dest=/usr/local/bin/koji_sar.py owner=root mode=0700
   tags:
   - SAR
   - GDPR
@@ -571,7 +571,7 @@
   - selinux
 
 - name: Put in place namespace.conf file
-  copy: src=namespace.conf dest=/etc/security/namespace.conf mode=644 owner=root group=root
+  ansible.builtin.copy: src=namespace.conf dest=/etc/security/namespace.conf mode=644 owner=root group=root
   tags:
   - config
   - batcave
@@ -613,7 +613,7 @@
 #
 
 - name: Enable the postgresql 12 module for psql on batcave
-  copy:
+  ansible.builtin.copy:
     dest: /etc/dnf/modules.d/postgresql.module
     content: |
       [postgresql]
@@ -651,7 +651,7 @@
   - hotfix
 
 - name: Empty default welcome.conf
-  copy: dest=/etc/httpd/conf.d/welcome.conf content=""
+  ansible.builtin.copy: dest=/etc/httpd/conf.d/welcome.conf content=""
   tags:
   - batcave
   - config

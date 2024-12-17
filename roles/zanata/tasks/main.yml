@@ -25,7 +25,7 @@
   - zanata
 
 - name: Zanata default config
-  copy: >
+  ansible.builtin.copy: >
     src=sample.xml dest=/var/lib/zanata/sample.xml owner=apache group=apache
     mode=0600
   tags:

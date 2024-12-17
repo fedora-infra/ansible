@@ -21,7 +21,7 @@
   tags: cgit
 
 - name: Copy cgit them into place.
-  copy: src={{item}} dest=/usr/share/cgit/{{item}} owner=root group=root mode=0644
+  ansible.builtin.copy: src={{item}} dest=/usr/share/cgit/{{item}} owner=root group=root mode=0644
   with_items:
   - cgit.css
   - cgit.png
@@ -34,15 +34,15 @@
   tags: cgit
 
 - name: Put cgitrc in place for people
-  copy: src=cgitrc.people dest=/etc/cgitrc owner=root mode=0644
+  ansible.builtin.copy: src=cgitrc.people dest=/etc/cgitrc owner=root mode=0644
   when: inventory_hostname.startswith('people')
   tags: cgit
 
 - name: Put cgitrc in place for batcave
-  copy: src=cgitrc.batcave dest=/etc/cgitrc owner=root mode=0644
+  ansible.builtin.copy: src=cgitrc.batcave dest=/etc/cgitrc owner=root mode=0644
   when: inventory_hostname.startswith('batcave')
   tags: cgit
 
 # - name: Install the libravatar filter
-#  copy: src=email-libravatar-korg.lua dest=/usr/libexec/cgit/filters/email-libravatar-korg.lua owner=root group=root mode=0755
+#  ansible.builtin.copy: src=email-libravatar-korg.lua dest=/usr/libexec/cgit/filters/email-libravatar-korg.lua owner=root group=root mode=0755
 #  tags: cgit

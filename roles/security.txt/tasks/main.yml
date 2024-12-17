@@ -1,12 +1,12 @@
 ---
 # Install static security.txt file on proxies.
 - name: Copy static security.txt file into place
-  copy: src=security.txt dest=/srv/web/security.txt owner=root group=root mode=755
+  ansible.builtin.copy: src=security.txt dest=/srv/web/security.txt owner=root group=root mode=755
   tags:
   - security.txt
 
 - name: Copy httpd config
-  copy: src=security-txt.conf dest=/etc/httpd/conf.d/admin.fedoraproject.org/security-txt.conf owner=root group=root mode=755
+  ansible.builtin.copy: src=security-txt.conf dest=/etc/httpd/conf.d/admin.fedoraproject.org/security-txt.conf owner=root group=root mode=755
   notify:
   - reload apache
   tags:

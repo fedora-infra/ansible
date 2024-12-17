@@ -17,7 +17,7 @@
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
 
   - name: override nbde_client-network-flush to work around bug
-    copy:
+    ansible.builtin.copy:
       src: "{{ files }}/common/nbde_client-network-flush"
       dest: /usr/bin/nbde_client-network-flush
       owner: root
@@ -25,7 +25,7 @@
       mode: 755
 
   - name: tell NetworkManager we don't want any auto connections
-    copy:
+    ansible.builtin.copy:
       src: "{{ files }}/common/noautodefault.conf"
       dest: /etc/NetworkManager/conf.d/noautodefault.conf
       owner: root

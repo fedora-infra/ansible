@@ -1,5 +1,5 @@
 ---
-- copy: src=fingerprints.html dest=/srv/web/fingerprints.html
+- ansible.builtin.copy: src=fingerprints.html dest=/srv/web/fingerprints.html
   notify:
   - reload proxyhttpd
   tags:
@@ -7,7 +7,7 @@
   - httpd
   - httpd/fingerprints
 
-- copy: src=fingerprints.conf dest=/etc/httpd/conf.d/{{website}}/fingerprints.conf
+- ansible.builtin.copy: src=fingerprints.conf dest=/etc/httpd/conf.d/{{website}}/fingerprints.conf
   notify:
   - reload proxyhttpd
   tags:
@@ -15,6 +15,6 @@
   - httpd
   - httpd/fingerprints
 
-- copy: src=/etc/ssh/ssh_known_hosts dest=/etc/ssh/ssh_known_hosts
+- ansible.builtin.copy: src=/etc/ssh/ssh_known_hosts dest=/etc/ssh/ssh_known_hosts
   tags:
   - fingerprints

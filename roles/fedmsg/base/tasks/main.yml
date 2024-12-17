@@ -188,7 +188,7 @@
   - restart fedmsg-relay
 
 - name: Overwrite standard config with local fedmsg debugging loopback
-  copy: src=relay-debug-loopback.py dest=/etc/fedmsg.d/relay.py
+  ansible.builtin.copy: src=relay-debug-loopback.py dest=/etc/fedmsg.d/relay.py
   when: fedmsg_debug_loopback == true
   tags:
   - fedmsg_loopback
@@ -214,7 +214,7 @@
   - fedmsg/base
 
 - name: Install fedmsg ca.cert
-  copy: >
+  ansible.builtin.copy: >
     src="{{ private }}/files/fedmsg-certs/keys/ca.crt"
     dest=/etc/pki/fedmsg/ca.crt
     owner=root
@@ -225,7 +225,7 @@
   - fedmsg/base
 
 - name: Fedmsg certs
-  copy: >
+  ansible.builtin.copy: >
     src="{{ private }}/files/fedmsg-certs/keys/{{item['service']}}-{{fedmsg_fqdn | default(inventory_hostname)}}.crt"
     dest=/etc/pki/fedmsg/
     mode=644
@@ -239,7 +239,7 @@
   - fedmsg/base
 
 - name: Fedmsg keys
-  copy: >
+  ansible.builtin.copy: >
     src="{{ private }}/files/fedmsg-certs/keys/{{item['service']}}-{{fedmsg_fqdn | default(inventory_hostname)}}.key"
     dest=/etc/pki/fedmsg/
     mode=0640
@@ -259,7 +259,7 @@
   - fedmsg/base
 
 - name: Copy over our custom selinux module
-  copy: src=selinux/fedmsg.pp dest=/usr/local/share/fedmsg/fedmsg.pp
+  ansible.builtin.copy: src=selinux/fedmsg.pp dest=/usr/local/share/fedmsg/fedmsg.pp
   register: selinux_module
   tags:
   - fedmsg/base

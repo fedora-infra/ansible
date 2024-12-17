@@ -10,7 +10,7 @@
 # Note that if it's not set it will just skip this play and do nothing.
 #
 - name: Setup /etc/hosts for some clients that are not on the vpn or are and in iad2
-  copy: src={{ item }} dest=/etc/hosts
+  ansible.builtin.copy: src={{ item }} dest=/etc/hosts
   with_first_found:
   - "{{ inventory_hostname }}-hosts"
   - "{{ ansible_hostname }}-hosts"
@@ -24,7 +24,7 @@
   - hosts
 
 - name: Setup /etc/hosts for some clients on the vpn, that are not in iad2
-  copy: src={{ item }} dest=/etc/hosts
+  ansible.builtin.copy: src={{ item }} dest=/etc/hosts
   with_first_found:
   - "{{ inventory_hostname }}-hosts"
   - "{{ ansible_hostname }}-hosts"

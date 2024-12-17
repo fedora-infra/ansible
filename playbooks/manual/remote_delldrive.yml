@@ -10,7 +10,7 @@
 
   tasks:
   - name: Copy script over to {{target}}
-    copy: src={{private}}/scripts/drivestatus.py dest=/root/drivestatus.py
+    ansible.builtin.copy: src={{private}}/scripts/drivestatus.py dest=/root/drivestatus.py
 
   - name: Run it for {{mgmt}}
     shell: python /root/drivestatus.py {{mgmt}}

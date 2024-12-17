@@ -107,11 +107,11 @@
   ansible.builtin.file: path=/etc/yum.repos.d/scratchrepo.repo state=absent
 
 - name: Write lab side repo config
-  copy: src=openqa-lab-repo.repo dest=/etc/yum.repos.d/openqa-lab-repo.repo owner=root group=root mode=0644
+  ansible.builtin.copy: src=openqa-lab-repo.repo dest=/etc/yum.repos.d/openqa-lab-repo.repo owner=root group=root mode=0644
   when: "deployment_type is defined and deployment_type == 'stg'"
 
 - name: Write prod side repo config
-  copy: src=openqa-prod-repo.repo dest=/etc/yum.repos.d/openqa-prod-repo.repo owner=root group=root mode=0644
+  ansible.builtin.copy: src=openqa-prod-repo.repo dest=/etc/yum.repos.d/openqa-prod-repo.repo owner=root group=root mode=0644
   when: "deployment_type is defined and deployment_type == 'prod'"
 
 # this is separate from the step below so we can use openqa_repo just
@@ -191,10 +191,10 @@
   - /var/lib/openqa/share/factory/other
 
 - name: Copy in meta-data for cloud-init ISO creation
-  copy: src=meta-data dest=/var/tmp/meta-data owner=root group=root mode=0644
+  ansible.builtin.copy: src=meta-data dest=/var/tmp/meta-data owner=root group=root mode=0644
 
 - name: Copy in user-data for cloud-init ISO creation
-  copy: src=user-data dest=/var/tmp/user-data owner=root group=root mode=0644
+  ansible.builtin.copy: src=user-data dest=/var/tmp/user-data owner=root group=root mode=0644
 
 - name: Create cloud-init ISO
   command: genisoimage -output cloudinit.iso -volid cidata -joliet -rock /var/tmp/user-data /var/tmp/meta-data
@@ -272,7 +272,7 @@
     mode: '0755'
 
 - name: Copy over custom SELinux module allowing httpd to connect to openQA
-  copy: src=httpd-openqa.pp dest=/usr/local/share/selinux/httpd-openqa.pp owner=root group=root mode=0644
+  ansible.builtin.copy: src=httpd-openqa.pp dest=/usr/local/share/selinux/httpd-openqa.pp owner=root group=root mode=0644
   register: selinux_module
 
 - name: Load our custom SELinux module

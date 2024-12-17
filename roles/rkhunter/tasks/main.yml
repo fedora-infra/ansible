@@ -16,7 +16,7 @@
   - config
 
 - name: Rkhunter sysconfig
-  copy: src=rkhunter.sysconfig dest=/etc/sysconfig/rkhunter mode=0640
+  ansible.builtin.copy: src=rkhunter.sysconfig dest=/etc/sysconfig/rkhunter mode=0640
   notify:
   - run rkhunter
   tags:

@@ -34,7 +34,7 @@
       mode: "0770"
 
   - name: copy oc rpm
-    copy:
+    ansible.builtin.copy:
       src: /srv/web/infra/bigfiles/openshiftboot/oc-client/oc-client.rpm
       dest: /root/oc-client.rpm
 
@@ -44,7 +44,7 @@
       state: installed
 
   - name: copy the jobs-summary script
-    copy:
+    ansible.builtin.copy:
       src: "{{ files }}/scripts/jobs-summary"
       dest: /usr/local/bin/jobs-summary
       mode: "0755"

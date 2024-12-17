@@ -11,17 +11,17 @@
   when: pgsql_ls.stdout is defined and 'postgresql_db_t' not in  pgsql_ls.stdout
 
 - name: Install weekly custom copr-frontend-crontab
-  copy: src=cron.weekly/copr-frontend-optional dest=/etc/cron.weekly/
+  ansible.builtin.copy: src=cron.weekly/copr-frontend-optional dest=/etc/cron.weekly/
         mode=0755
   tags: [cron_tasks]
 
 - name: Install daily custom copr-frontend-crontab
-  copy: src=cron.daily/copr-frontend-optional dest=/etc/cron.daily/
+  ansible.builtin.copy: src=cron.daily/copr-frontend-optional dest=/etc/cron.daily/
         mode=0755
   tags: [cron_tasks]
 
 - name: Install hourly custom copr-frontend-crontab
-  copy: src=cron.hourly/copr-frontend-optional dest=/etc/cron.hourly/
+  ansible.builtin.copy: src=cron.hourly/copr-frontend-optional dest=/etc/cron.hourly/
         mode=0755
   tags: [cron_tasks]
 
@@ -44,7 +44,7 @@
   - cron_tasks
 
 - name: Deploy the prometheus monitoring script
-  copy:
+  ansible.builtin.copy:
     src: copr-frontend-prometheus-monitoring.py
     dest: /usr/bin/copr-frontend-prometheus-monitoring.py
     mode: "0750"
@@ -93,7 +93,7 @@
   - copr_infrastructure_password
 
 - name: Install config for 'copr-frontend chroots-template'
-  copy: src="chroots.conf" dest=/etc/copr/chroots.conf mode=600
+  ansible.builtin.copy: src="chroots.conf" dest=/etc/copr/chroots.conf mode=600
         owner=copr-fe group=copr-fe
   register: chroots_conf_installed
   tags:
@@ -152,11 +152,11 @@
 
 - name: Set dev banner for dev instance
   when: devel|bool
-  copy: src=banner-include.html dest=/var/lib/copr/
+  ansible.builtin.copy: src=banner-include.html dest=/var/lib/copr/
 
 - name: Disallow robots on dev instance
   when: devel|bool
-  copy: src=robots.txt dest=/var/www/html/
+  ansible.builtin.copy: src=robots.txt dest=/var/www/html/
 
 
 - name: Register whether indexes rebuild is required
@@ -189,12 +189,12 @@
   package_facts: manager=auto
 
 - name: Install custom systemd service files
-  copy: src=systemd dest=/etc
+  ansible.builtin.copy: src=systemd dest=/etc
   notify:
   - reload httpd
 
 - name: Compress rotated httpd logs
-  copy: src="httpd.logrotate" dest="/etc/logrotate.d/httpd"
+  ansible.builtin.copy: src="httpd.logrotate" dest="/etc/logrotate.d/httpd"
   tags: [logrotate_tasks]
 
 - name: Start logrotate service
@@ -207,7 +207,7 @@
   - not services_disabled|bool
 
 - name: Install bash_profile file to ease some admin tasks
-  copy:
+  ansible.builtin.copy:
     content: |
       export PGUSER=copr-fe
       export PGDATABASE=coprdb
@@ -235,6 +235,6 @@
   tags: copr_cdn
 
 - name: Install gai.conf
-  copy: src=gai.conf dest=/etc
+  ansible.builtin.copy: src=gai.conf dest=/etc
   notify:
   - reload httpd

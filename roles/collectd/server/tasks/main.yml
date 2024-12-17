@@ -31,7 +31,7 @@
 
 # install collectd types
 - name: Install collectd types
-  copy:
+  ansible.builtin.copy:
     src: "{{ item }}"
     dest: /usr/share/collectd/{{ item }}
   loop:
@@ -44,7 +44,7 @@
 
 # install collectd configs
 - name: Install collectd config
-  copy:
+  ansible.builtin.copy:
     src: "{{ item }}"
     dest: /etc/collectd.d/{{ item }}
   loop:
@@ -59,14 +59,14 @@
 
 # install apache config
 - name: Install collectd apache config
-  copy: src=collectd.conf dest=/etc/httpd/conf.d/collectd.conf
+  ansible.builtin.copy: src=collectd.conf dest=/etc/httpd/conf.d/collectd.conf
   tags:
   - config
   - collectd/server
 
 # install upgrade target
 - name: Install collect upgrade target to handle v4 clients
-  copy: src=vfive-upgrade.conf dest=/etc/collectd.d/vfive-upgrade.conf
+  ansible.builtin.copy: src=vfive-upgrade.conf dest=/etc/collectd.d/vfive-upgrade.conf
   tags:
   - config
   - collectd/server
@@ -80,7 +80,7 @@
 
 # push our custom config file for the graph CGIs
 - name: Push the collection.conf file
-  copy:
+  ansible.builtin.copy:
     src: collection.conf
     dest: /etc/collection.conf
   tags:
@@ -96,7 +96,7 @@
   - collectd/server
 
 - name: Override the timeout for stopping collectd
-  copy:
+  ansible.builtin.copy:
     src: service.timeout.conf
     dest: /etc/systemd/system/collectd.service.d/timeout.conf
   notify:

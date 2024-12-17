@@ -38,7 +38,7 @@
 # Set-up stunnel for the event source server
 
 # - name: Install stunnel service definition
-#   copy: src=stunnel.service
+#   ansible.builtin.copy: src=stunnel.service
 #         dest=/usr/lib/systemd/system/stunnel.service
 #         owner=root group=root mode=0755
 #   notify:
@@ -238,7 +238,7 @@
   - pagure
 
 - name: Override the default pagure_worker.service file to change the user it is run under
-  copy: src={{ item }}.service
+  ansible.builtin.copy: src={{ item }}.service
         dest=/etc/systemd/system/{{ item }}.service
         owner=root group=root mode=0755
   with_items:
@@ -259,7 +259,7 @@
 
 # Cron job to export extras information from the pagure DB
 - name: Install the apache configuration file for /extras
-  copy: src={{ item }} dest=/etc/httpd/conf.d/{{ item }}
+  ansible.builtin.copy: src={{ item }} dest=/etc/httpd/conf.d/{{ item }}
              owner=root group=root mode=0644
   with_items:
   - pagure_cron.conf
@@ -341,7 +341,7 @@
   - fedora-messaging
 
 - name: Deploy pagure/rabbitmq certificate
-  copy: src={{ item.src }}
+  ansible.builtin.copy: src={{ item.src }}
         dest=/etc/pki/rabbitmq/pagurecert/{{ item.dest }}
         owner={{ item.owner }} group={{ item.group}} mode={{ item.mode }}
   with_items:
@@ -387,7 +387,7 @@
   - postfix
 
 - name: Add SAR script for pagure
-  copy: src={{ roles_path }}/pagure/files/pagure_sar.py
+  ansible.builtin.copy: src={{ roles_path }}/pagure/files/pagure_sar.py
         dest=/usr/local/bin/pagure_sar.py
         owner=root mode=0700
   tags:
@@ -396,7 +396,7 @@
   - pagure
 
 - name: Override the default syslog logrotate file
-  copy: src=syslog-logrotate dest=/etc/logrotate.d/syslog
+  ansible.builtin.copy: src=syslog-logrotate dest=/etc/logrotate.d/syslog
   tags:
   - pagure
   - logrotate

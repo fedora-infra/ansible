@@ -13,7 +13,7 @@
   tasks:
 
     - name: Add the pgpass file
-      copy:
+      ansible.builtin.copy:
         content: |
           db01{{ env_suffix }}.iad2.fedoraproject.org:*:maubot:maubot:{{ (env == 'production')|ternary(maubot_prod_db_password, maubot_stg_db_password) }}
         dest: /root/.pgpass
@@ -27,7 +27,7 @@
         name: python3-psycopg2
 
     - name: Install the import script
-      copy:
+      ansible.builtin.copy:
         src: "{{ files }}/zodbot/karma-to-cookies-db.py"
         dest: /usr/local/bin/karma-to-cookies-db
         mode: "0755"

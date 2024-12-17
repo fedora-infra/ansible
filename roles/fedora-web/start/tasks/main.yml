@@ -1,12 +1,12 @@
 ---
 - name: Copy in the sync-start cronjob
-  copy: src=cron-sync-start dest=/etc/cron.d/sync-start
+  ansible.builtin.copy: src=cron-sync-start dest=/etc/cron.d/sync-start
   tags:
   - fedora-web
   - fedora-web/start
 
 - name: Copy some config files for {{website}}
-  copy: >
+  ansible.builtin.copy: >
     src={{item}} dest=/etc/httpd/conf.d/{{website}}/{{item}}
     owner=root group=root mode=0644
   with_items:

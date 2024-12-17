@@ -30,7 +30,7 @@
   when: "'python34_fedmsg' in group_names"
 
 - name: Enable the websocket server if we should
-  copy: src=websockets.py dest=/etc/fedmsg.d/websockets.py
+  ansible.builtin.copy: src=websockets.py dest=/etc/fedmsg.d/websockets.py
   when: enable_websocket_server
   notify: restart fedmsg-hub
 

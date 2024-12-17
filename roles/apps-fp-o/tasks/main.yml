@@ -5,7 +5,7 @@
   - apps-fp-o
 
 - name: Copy in the proxy config
-  copy: >
+  ansible.builtin.copy: >
     src=apps.fp.o.conf dest=/etc/httpd/conf.d/{{website}}/apps.fp.o.conf
     owner=root group=root mode=0644
   notify:
@@ -48,7 +48,7 @@
   - apps-fp-o
 
 - name: Copy in our app data yaml
-  copy: >
+  ansible.builtin.copy: >
     src=apps.yaml dest=/usr/share/apps-fp-o/apps.yaml
     owner=root group=root mode=0644
   notify:

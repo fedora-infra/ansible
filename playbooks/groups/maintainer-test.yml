@@ -35,7 +35,7 @@
     - packages
 
   - name: Allow packagers to use mock
-    copy: dest=/etc/pam.d/mock src="{{ files }}/common/mock"
+    ansible.builtin.copy: dest=/etc/pam.d/mock src="{{ files }}/common/mock"
     tags:
     - config
 

@@ -1,6 +1,6 @@
 ---
 - name: /etc/postfix/main.cf
-  copy: src={{ item }} dest=/etc/postfix/main.cf
+  ansible.builtin.copy: src={{ item }} dest=/etc/postfix/main.cf
   with_first_found:
     - "{{ postfix_maincf }}"
     - "postfix/main.cf/main.cf.{{ ansible_fqdn }}"
@@ -18,7 +18,7 @@
   - smtp_auth_relay
 
 - name: Install /etc/postfix/master.cf file
-  copy: src={{ item }} dest=/etc/postfix/master.cf mode=0644
+  ansible.builtin.copy: src={{ item }} dest=/etc/postfix/master.cf mode=0644
   with_first_found:
     - "postfix/master.cf/master.cf.{{ inventory_hostname }}"
     - "postfix/master.cf/master.cf.{{ host_group }}"
@@ -33,7 +33,7 @@
   - base
 
 - name: Deploy sender_access file
-  copy: src="{{private}}/files/smtpd/sender_access.{{postfix_group}}" dest="/etc/postfix/sender_access"
+  ansible.builtin.copy: src="{{private}}/files/smtpd/sender_access.{{postfix_group}}" dest="/etc/postfix/sender_access"
   when: postfix_group == "smtp-mm" or postfix_group == "mailman" or postfix_group == "gateway"
   notify:
   - restart postfix
@@ -63,7 +63,7 @@
   - base
 
 - name: Install /etc/postfix/transport file
-  copy: src="postfix/{{ postfix_transport_filename }}" dest=/etc/postfix/transport
+  ansible.builtin.copy: src="postfix/{{ postfix_transport_filename }}" dest=/etc/postfix/transport
   when: inventory_hostname.startswith(('smtp-mm','bastion','noc02')) and env != 'staging'
   notify:
   - rebuild postfix transport
@@ -74,7 +74,7 @@
   - config
 
 - name: Install /etc/postfix/bysender file
-  copy: src="postfix/bysender" dest=/etc/postfix/bysender
+  ansible.builtin.copy: src="postfix/bysender" dest=/etc/postfix/bysender
   when: inventory_hostname.startswith(('bastion')) and env != 'staging'
   notify:
   - rebuild postfix bysender
@@ -85,7 +85,7 @@
   - config
 
 - name: Create /etc/postfix/tls_policy
-  copy: src="postfix/tls_policy" dest=/etc/postfix/tls_policy
+  ansible.builtin.copy: src="postfix/tls_policy" dest=/etc/postfix/tls_policy
   when: inventory_hostname.startswith(('bastion','smtp-mm','pagure')) and env != 'staging'
   notify:
   - rebuild postfix tls_policy
@@ -97,7 +97,7 @@
 # This has: private key, then cert, then intermediate cert
 # This cert is a digicert one, renew it there.
 - name: Install /etc/pki/tls/private/gateway-chain.pem
-  copy:
+  ansible.builtin.copy:
     src="{{private}}/files/smtpd/gateway-chain.pem"
     dest=/etc/pki/tls/private/gateway-chain.pem
     owner=root

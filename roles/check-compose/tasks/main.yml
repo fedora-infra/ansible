@@ -151,7 +151,7 @@
 # convenience while the roles are all run on the same system, and
 # stg uses the prod account and credentials to listen on prod
 - name: Deploy the Fedora infra fedora-messaging cert
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/{{ checkcompose_env }}/pki/issued/{{ openqa_amqp_this_username }}.crt"
     dest: "/etc/pki/fedora-messaging/{{ openqa_amqp_this_username }}-cert.pem"
     mode: "0644"
@@ -166,7 +166,7 @@
 # on the same box as openQA, in fact we need to keep the ownership in
 # line. This needs making cleaner somehow.
 - name: Deploy the Fedora infra fedora-messaging key
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/{{ checkcompose_env }}/pki/private/{{ openqa_amqp_this_username }}.key"
     dest: "/etc/pki/fedora-messaging/{{ openqa_amqp_this_username }}-key.pem"
     mode: "0640"

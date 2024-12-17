@@ -59,7 +59,7 @@
     createhddsbranch.stdout.find('Changes not staged') == -1)
 
 - name: Set up createhdds cron job
-  copy: src=createhdds dest=/etc/cron.daily/createhdds owner=root group=root mode=0755
+  ansible.builtin.copy: src=createhdds dest=/etc/cron.daily/createhdds owner=root group=root mode=0755
 
 - name: Check if any hard disk images need (re)building
   command: "/root/createhdds/createhdds.py check"

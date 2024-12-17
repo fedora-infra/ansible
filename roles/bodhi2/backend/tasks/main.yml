@@ -72,7 +72,7 @@
   - config
 
 - name: Put pungi multilib configuration in place
-  copy:
+  ansible.builtin.copy:
     src: pungi_multilib.conf
     dest: /etc/bodhi/pungi_multilib.conf
   tags:
@@ -81,7 +81,7 @@
   - config
 
 - name: Put pungi general configuration in place
-  copy:
+  ansible.builtin.copy:
     src: pungi_general.conf
     dest: /etc/bodhi/pungi_general.conf
   tags:
@@ -90,7 +90,7 @@
   - config
 
 - name: Put createrepo_c configuration in place
-  copy:
+  ansible.builtin.copy:
     src: createrepo_c.ini
     dest: /etc/bodhi/createrepo_c.ini
   tags:
@@ -138,7 +138,7 @@
     py3ver: "{{ _python3_version_result.stdout | trim }}"
 
 - name: Put the koji sync listener script in place
-  copy:
+  ansible.builtin.copy:
     src: koji_sync_listener.py
     dest: /usr/lib/python{{ py3ver }}/site-packages/koji_sync_listener.py
     mode: "0644"
@@ -170,7 +170,7 @@
 #
 
 - name: Put new-updates-sync in place
-  copy: src=new-updates-sync dest=/usr/local/bin/new-updates-sync mode="0755"
+  ansible.builtin.copy: src=new-updates-sync dest=/usr/local/bin/new-updates-sync mode="0755"
   when: env == "production"
   tags:
   - config
@@ -178,7 +178,7 @@
   - cron
 
 - name: Put bodhi-automated-pushes.py in place
-  copy: src=bodhi-automated-pushes.py dest=/usr/local/bin/bodhi-automated-pushes.py mode="0755"
+  ansible.builtin.copy: src=bodhi-automated-pushes.py dest=/usr/local/bin/bodhi-automated-pushes.py mode="0755"
   when: env == "production"
   tags:
   - config
@@ -187,14 +187,14 @@
 
 # These next two are used by quick-fedora-mirror
 - name: Put update-fullfiletimelist in place
-  copy: src="{{ files }}/scripts/update-fullfiletimelist" dest=/usr/local/bin/update-fullfiletimelist mode="0755"
+  ansible.builtin.copy: src="{{ files }}/scripts/update-fullfiletimelist" dest=/usr/local/bin/update-fullfiletimelist mode="0755"
   when: env == "production"
   tags:
   - config
   - bodhi
   - cron
 - name: Add create-filelist script from quick-fedora-mirror
-  copy: src="{{ files }}/scripts/create-filelist" dest=/usr/local/bin/create-filelist mode="0755"
+  ansible.builtin.copy: src="{{ files }}/scripts/create-filelist" dest=/usr/local/bin/create-filelist mode="0755"
   when: env == "production"
   tags:
   - config
@@ -202,7 +202,7 @@
   - cron
 
 - name: Set the updates sync cron job
-  copy: src=new-updates-sync.cron dest=/etc/cron.d/updates-sync
+  ansible.builtin.copy: src=new-updates-sync.cron dest=/etc/cron.d/updates-sync
   when: env == "production"
   tags:
   - config
@@ -210,7 +210,7 @@
   - cron
 
 - name: Set the bodhi-automated-pushes cron job
-  copy: src=bodhi-automated-pushes.cron dest=/etc/cron.d/bodhi-automated-pushes
+  ansible.builtin.copy: src=bodhi-automated-pushes.cron dest=/etc/cron.d/bodhi-automated-pushes
   when: env == "production"
   tags:
   - config
@@ -340,7 +340,7 @@
   - bodhi
 
 - name: Deploy the fedora-messaging CA
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/ca.crt"
     dest: /etc/pki/fedora-messaging/cacert.pem
     mode: "0644"
@@ -350,7 +350,7 @@
   - bodhi
 
 - name: Deploy the fedora-messaging cert
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/issued/bodhi{{env_suffix}}.crt"
     dest: /etc/pki/fedora-messaging/bodhi-cert.pem
     mode: "0644"
@@ -360,7 +360,7 @@
   - bodhi
 
 - name: Deploy the fedora-messaging key
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/rabbitmq/{{env}}/pki/private/bodhi{{env_suffix}}.key"
     dest: /etc/pki/fedora-messaging/bodhi-key.pem
     mode: "0600"
@@ -398,7 +398,7 @@
   - config
 
 - name: Configure fm-consumer@.service to run as apache
-  copy:
+  ansible.builtin.copy:
     src: fm-consumer@.service
     dest: /etc/systemd/system/fm-consumer@.service.d/local.conf
     owner: root
@@ -411,7 +411,7 @@
   - config
 
 - name: Setup the Celery service
-  copy:
+  ansible.builtin.copy:
     src: bodhi-celery.service
     dest: /etc/systemd/system/bodhi-celery.service
     owner: root

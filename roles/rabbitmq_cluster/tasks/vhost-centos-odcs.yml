@@ -56,7 +56,7 @@
 - name: Dump the admin password in a file for administrative operations
   run_once: true
   delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
-  copy:
+  ansible.builtin.copy:
     dest: /root/.centos-odcs-rabbitmqpass
     content: "{{ (env == 'production')|ternary(rabbitmq_centos_odcs_admin_password_production, rabbitmq_centos_odcs_admin_password_staging) }}"
     mode: "0600"

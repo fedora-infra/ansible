@@ -10,16 +10,16 @@
   tags: cgit
 
 - name: Ensure the repo list file exists
-  copy: content="" dest=/srv/git/pkgs-git-repos-list force=no owner=apache group=apache mode=0644
+  ansible.builtin.copy: content="" dest=/srv/git/pkgs-git-repos-list force=no owner=apache group=apache mode=0644
   tags: cgit
 
 - name: Install the script
-  copy: src=make-cgit-pkgs-list.sh dest=/usr/local/bin/make-cgit-pkgs-list.sh mode=0755
+  ansible.builtin.copy: src=make-cgit-pkgs-list.sh dest=/usr/local/bin/make-cgit-pkgs-list.sh mode=0755
   when: inventory_hostname.startswith('pkgs')
   tags: cgit
 
 - name: Install the script for fedorapeople
-  copy: src=make-people-git.sh dest=/usr/local/bin/make-people-git.sh mode=0755
+  ansible.builtin.copy: src=make-people-git.sh dest=/usr/local/bin/make-people-git.sh mode=0755
   when: inventory_hostname.startswith('people')
   tags: cgit
 
@@ -27,7 +27,7 @@
 # For the batcave we just have a small static list
 #
 - name: Install the file for batcave
-  copy: src=cgit-projects-batcave dest=/etc/cgit-projects-batcave mode=0644
+  ansible.builtin.copy: src=cgit-projects-batcave dest=/etc/cgit-projects-batcave mode=0644
   when: inventory_hostname.startswith('batcave')
   tags: cgit
 

@@ -1,6 +1,6 @@
 ---
 - name: OpenStack package repository for RHEL8, noarch only
-  copy:
+  ansible.builtin.copy:
     content: |
       [openstack-for-rhel8]
       name = RHEL OpenStack RPMs
@@ -27,7 +27,7 @@
 #   tags: swap
 
 - name: Install the default profile script
-  copy: src=profile.sh dest=/etc/profile.d/copr-hypervisor.sh
+  ansible.builtin.copy: src=profile.sh dest=/etc/profile.d/copr-hypervisor.sh
   tags: profile_scripts
 
 - name: Install libvirt packages
@@ -46,7 +46,7 @@
     - libvirtd
 
 - name: Install libvirtd.conf
-  copy: src="{{ files }}/virthost/libvirtd.conf" dest=/etc/libvirt/libvirtd.conf
+  ansible.builtin.copy: src="{{ files }}/virthost/libvirtd.conf" dest=/etc/libvirt/libvirtd.conf
   notify:
   - restart libvirtd
   tags:
@@ -88,7 +88,7 @@
   tags: libvirtd
 
 - name: Copy host-bridge config file to host
-  copy: src=libvirt-net-bridge.xml
+  ansible.builtin.copy: src=libvirt-net-bridge.xml
         dest=/root/.tmp-ansible-file.xml
   when: libvirt_bridge_exists.changed
   tags: libvirtd
@@ -155,14 +155,14 @@
 
 # todo: generate it's own key
 - name: Make sure hostA can ssh to hostB
-  copy:
+  ansible.builtin.copy:
     src: "{{ private }}/files/copr/buildsys.priv"
     dest: /home/copr/.ssh/id_rsa
     owner: copr
     mode: "0600"
 
 - name: Provide pub key, too, so we can install them to generated builder images
-  copy: src=buildsys.pub dest=/home/copr/.ssh/id_rsa.pub
+  ansible.builtin.copy: src=buildsys.pub dest=/home/copr/.ssh/id_rsa.pub
         owner=copr mode=0600
 
 - name: Enable praiskup-helpers repo
@@ -183,7 +183,7 @@
     - packages
 
 - name: Install configuration for /bin/copr-image
-  copy:
+  ansible.builtin.copy:
     dest: /etc/eimg/eimg.sh
     content: |
       EIMG_COPR_PLAYBOOK_DIR=/home/copr/provision
