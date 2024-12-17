@@ -51,6 +51,15 @@ blocked_toddlers = [
     "pdc_update_critpath",
 ]
 
+# Caching. The default is in-memory caching, here is an example for memcached.
+[consumer_config.cache]
+backend = "dogpile.cache.pylibmc"
+expiration_time = 3600
+[consumer_config.cache.arguments]
+url = ["memcached02{{ env_suffix }}", "memcached01{{ env_suffix }}"]
+binary = true
+behaviors = {"tcp_nodelay": true, "ketama": true}
+
 [consumer_config.default]
 # Configuration common to all toddlers.
 #

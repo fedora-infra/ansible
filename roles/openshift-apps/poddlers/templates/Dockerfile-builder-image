@@ -10,6 +10,7 @@ RUN dnf install -y \
         cairo-gobject-devel \
         gobject-introspection-devel \
         libmodulemd \
+        libmemcached-devel \
     && dnf clean all
 
 USER 1001
