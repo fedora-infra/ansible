@@ -58,8 +58,7 @@ network_connections:
     type: ethernet
 nrpe_procs_crit: 300
 nrpe_procs_warn: 250
-# has an HW RNG, so let's have rngd
-openqa_rngd: true
+openqa_rngd: false
 openqa_tap_iface: enP1p1s0f0np0
 # this is a powerful machine, but storage kinda limits how many workers
 # we can safely run at once
