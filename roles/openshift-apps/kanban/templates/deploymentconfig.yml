@@ -1,0 +1,48 @@
+{% macro load_file(filename) %}{% include filename %}{%- endmacro -%}
+---
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: kanban
+    service: kanban-web
+  name: kanban-web
+spec:
+  replicas: 0
+  selector:
+    app: kanban
+    deploymentconfig: kanban
+  template:
+    metadata:
+      labels:
+        app: kanban
+        deploymentconfig: kanban
+    spec:
+      containers:
+      - name: kanban-web
+        image: kanban:latest
+        ports:
+        - containerPort: 8080
+        resources: {}
+        env:
+        {{ load_file('envvars.jinja') | indent(8) }}
+        volumeMounts:
+        - name: kanban-secret-volume
+          mountPath: /opt/app-root/secret/
+          readOnly: true
+        readinessProbe:
+          timeoutSeconds: 15
+          initialDelaySeconds: 5
+          httpGet:
+            path: /api/0/probe
+            port: 8080
+        livenessProbe:
+          timeoutSeconds: 25
+          initialDelaySeconds: 60
+          httpGet:
+            path: /api/0/probe
+            port: 8080
+      volumes:
+      - name: kanban-secret-volume
+        secret:
+          secretName: kanban-secret
