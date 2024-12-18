@@ -110,7 +110,7 @@
     - role: openshift/rollout
       rollout_app: poddlers
       rollout_dcname: "{{ item.name }}"
-      loop: poddlers_toddlers
+      loop: "{{ poddlers_toddlers }}"
       tags:
       - never
       - rollout
