@@ -22,7 +22,7 @@ spec:
       - name: kanban-web
         image: kanban:latest
         ports:
-        - containerPort: 8080
+        - containerPort: 8081
         resources: {}
         env:
         {{ load_file('envvars.jinja') | indent(8) }}
@@ -35,13 +35,13 @@ spec:
           initialDelaySeconds: 5
           httpGet:
             path: /api/0/probe
-            port: 8080
+            port: 8081
         livenessProbe:
           timeoutSeconds: 25
           initialDelaySeconds: 60
           httpGet:
             path: /api/0/probe
-            port: 8080
+            port: 8081
       volumes:
       - name: kanban-secret-volume
         secret:
