@@ -13,19 +13,6 @@ spec:
     matchLabels:
       app: kanban
       service: kanban-web
-  strategy:
-    type: Recreate
-    recreateParams:
-      mid:
-        failurePolicy: Abort
-        execNewPod:
-          containerName: kanban-web
-          # kanban would automatically proceed with upgrade_db if necessary
-          # init_db isn't dropping anything, so it's safe to call every time the pod starts
-          command: ["python", "-m", "kanban.cli", "init_db"]
-          # and then just the gunicorn for the frontend part of the backend :)
-          volumes:
-           - kanban-secret-volume
   template:
     metadata:
       labels:
