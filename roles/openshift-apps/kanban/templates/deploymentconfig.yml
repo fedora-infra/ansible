@@ -5,8 +5,8 @@ kind: DeploymentConfig
 metadata:
   labels:
     app: kanban
-    service: kanban-web
-  name: kanban-web
+    service: kanban-web-old
+  name: kanban-web-old
 spec:
   replicas: 0
   selector:
@@ -19,7 +19,7 @@ spec:
         deploymentconfig: kanban
     spec:
       containers:
-      - name: kanban-web
+      - name: kanban-web-old
         image: kanban:latest
         ports:
         - containerPort: 8081
