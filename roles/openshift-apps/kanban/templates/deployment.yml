@@ -1,0 +1,62 @@
+{% macro load_file(filename) %}{% include filename %}{%- endmacro -%}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: kanban
+    service: kanban-web
+  name: kanban-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kanban
+      service: kanban-web
+  strategy:
+    type: Recreate
+    recreateParams:
+      mid:
+        failurePolicy: Abort
+        execNewPod:
+          containerName: kanban-web
+          # kanban would automatically proceed with upgrade_db if necessary
+          # init_db isn't dropping anything, so it's safe to call every time the pod starts
+          command: ["python", "-m", "kanban.cli", "init_db"]
+          # and then just the gunicorn for the frontend part of the backend :)
+          volumes:
+           - kanban-secret-volume
+  template:
+    metadata:
+      labels:
+        app: kanban
+        service: kanban-web
+    spec:
+      containers:
+      - name: kanban-web
+        image: image-registry.openshift-image-registry.svc:5000/kanban/kanban:latest
+        ports:
+        - containerPort: 8080
+        resources: {}
+        env:
+        {{ load_file('envvars.jinja') | indent(8) }}
+        volumeMounts:
+        - name: kanban-secret-volume
+          mountPath: /opt/app-root/secret/
+          readOnly: true
+        readinessProbe:
+          timeoutSeconds: 15
+          initialDelaySeconds: 5
+          httpGet:
+            path: /api/0/probe
+            port: 8080
+        livenessProbe:
+          timeoutSeconds: 25
+          initialDelaySeconds: 60
+          httpGet:
+            path: /api/0/probe
+            port: 8080
+      volumes:
+      - name: kanban-secret-volume
+        secret:
+          secretName: kanban-secret
