@@ -7,6 +7,9 @@ metadata:
     app: kanban
     service: kanban-web
   name: kanban-web
+  annotations:
+    image.openshift.io/triggers: >-
+      [{"from":{"kind":"ImageStreamTag","name":"kanban:latest","namespace":"kanban"},"fieldPath":"spec.template.spec.containers[?(@.name==\"kanban-web\")].image","pause":"false"}]
 spec:
   replicas: 1
   selector:
