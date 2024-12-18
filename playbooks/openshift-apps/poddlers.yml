@@ -100,17 +100,17 @@
       object_file: imagestream.yml
       object_objectname: imagestream.yml
 
-  - role: openshift/start-build
-    start_build_app: poddlers
-    start_build_buildname: toddlers
-    tags:
-    - never
-    - build
+    - role: openshift/start-build
+      start_build_app: poddlers
+      start_build_buildname: toddlers
+      tags:
+      - never
+      - build
 
-  - role: openshift/rollout
-    rollout_app: poddlers
-    rollout_dcname: "{{ item.name }}"
-    loop: poddlers_toddlers
-    tags:
-    - never
-    - rollout
+    - role: openshift/rollout
+      rollout_app: poddlers
+      rollout_dcname: "{{ item.name }}"
+      loop: poddlers_toddlers
+      tags:
+      - never
+      - rollout
