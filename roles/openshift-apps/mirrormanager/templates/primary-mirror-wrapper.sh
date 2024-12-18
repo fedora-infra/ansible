@@ -14,6 +14,7 @@ fi
 
 BINDIR="/opt/app-root/bin"
 SPOOLDIR="/var/lib/mirrormanager/spool"
+CENTOS_STREAM_VERSIONS="9 10"
 
 CURDATE=`date +%s`
 SCANNER="${BINDIR}/mm2_update-master-directory-list"
@@ -52,26 +53,29 @@ fi
 
 if [ "${1}" ==  "centos" ]; then
 	CENTOS_PRIMARY="mref1-priv.iad2.centos.org"
-	# check if a sync is currently in process
-	CODE=$( curl -s -o /dev/null -I -w "%{http_code}" http://${CENTOS_PRIMARY}/9-stream/.sync_in_progress )
-	if [ "${CODE}" -eq "200" ]; then
-		echo -n "CentOS primary mirror sync in progress. Skipping scan at "
-		date
-		exit 0
-	fi
-	if [ "${CODE}" -eq "000" ]; then
-		echo -n "CentOS primary mirror is unreachable. Skipping scan at "
-		date
-		exit 1
-	fi
-	FFTL="http://${CENTOS_PRIMARY}/9-stream/COMPOSE_ID"
-	FILEDATE=`date +%s -d"$( curl -s --head ${FFTL} | awk 'BEGIN {FS=": "}/^Last-Modified/{print $2}' )"`
-	FFTL_SIGS="http://${CENTOS_PRIMARY}/SIGs/9-stream/COMPOSE_ID"
-	FILEDATE_SIGS=`date +%s -d"$( curl -s --head ${FFTL_SIGS} | awk 'BEGIN {FS=": "}/^Last-Modified/{print $2}' )"`
-	if [ "$FILEDATE_SIGS" -gt "$FILEDATE" ]; then
-		FILEDATE=$FILEDATE_SIGS
-		FFTL=$FFTL_SIGS
-	fi
+	# Find the most recent COMPOSE_ID
+	for version in ${CENTOS_STREAM_VERSIONS}; do
+		# check if a sync is currently in process
+		CODE=$( curl -s -o /dev/null -I -w "%{http_code}" http://${CENTOS_PRIMARY}/${version}-stream/.sync_in_progress )
+		if [ "${CODE}" -eq "200" ]; then
+			echo -n "CentOS primary mirror sync in progress. Skipping scan at "
+			date
+			exit 0
+		fi
+		if [ "${CODE}" -eq "000" ]; then
+			echo -n "CentOS primary mirror is unreachable. Skipping scan at "
+			date
+			exit 1
+		fi
+		for compose_id_path in /${version}-stream/COMPOSE_ID /SIGs/${version}-stream/COMPOSE_ID; do
+			compose_id_url="http://${CENTOS_PRIMARY}/${compose_id_path}"
+			compose_id_date=`date +%s -d"$( curl -s --head ${compose_id_url} | awk 'BEGIN {FS=": "}/^Last-Modified/{print $2}' )"`
+			if [ "${compose_id_date}" -gt "${FILEDATE:-0}" ]; then
+				FFTL="${compose_id_url}"
+				FILEDATE="${compose_id_date}"
+			fi
+		done
+	done
 elif [ "${1}" ==  "codecs" ]; then
 	FFTL="${CATEGORY}"
 	FILEDATE=${CURDATE}
