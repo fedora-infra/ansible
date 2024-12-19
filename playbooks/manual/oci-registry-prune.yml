@@ -29,7 +29,7 @@
   - debug: var=prod_output.stdout_lines
 
   - name: Run registry garbage collection to reclaim disk space
-    command: "registry garbage-collect /etc/docker-distribution/registry/config.yml"
+    ansible.builtin.command: "registry garbage-collect /etc/docker-distribution/registry/config.yml"
     when: env == "production"
 
   - name: Find and Delete 30 days old OCI images (stg)
@@ -45,5 +45,5 @@
   - debug: var=stg_output.stdout_lines
 
   - name: Run registry garbage collection to reclaim disk space (stg)
-    command: "registry garbage-collect /etc/docker-distribution/registry/config.yml"
+    ansible.builtin.command: "registry garbage-collect /etc/docker-distribution/registry/config.yml"
     when: env == "staging"

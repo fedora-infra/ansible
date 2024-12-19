@@ -70,7 +70,7 @@
     - provision_config
 
 - name: Check known_hosts file
-  command: stat /home/copr/.ssh/known_hosts
+  ansible.builtin.command: stat /home/copr/.ssh/known_hosts
   register: hostsstat
   check_mode: no
   changed_when: "1 != 1"
@@ -155,7 +155,7 @@
   tags: logrotate
 
 - name: Fix selinux context on helper scripts
-  command: restorecon -irv /usr/local/bin/copr-lighty*
+  ansible.builtin.command: restorecon -irv /usr/local/bin/copr-lighty*
   when: logrotate_scripts.changed
   tags: logrotate
 
@@ -277,13 +277,13 @@
   shell: "chown -R copr:copr /var/lib/copr/public_html"
   when: '"copr" not in copr_results_dir_st.stat.pw_name'
 
-- command: "ls -dZ /var/lib/copr/public_html/"
+- ansible.builtin.command: "ls -dZ /var/lib/copr/public_html/"
   register: public_html_ls
   check_mode: no
   changed_when: false
 
 - name: Update selinux context for results if root folder does not have proper type
-  command: "restorecon -vvRF /var/lib/copr/public_html/"
+  ansible.builtin.command: "restorecon -vvRF /var/lib/copr/public_html/"
   when: "public_html_ls is defined and 'copr_data_t' not in  public_html_ls.stdout"
 
 # - name: Install cert to access fed-cloud09
@@ -364,7 +364,7 @@
   register: selinux_module
 
 - name: Install our custom selinux module
-  command: semodule -i /usr/local/share/copr/copr_rules.pp
+  ansible.builtin.command: semodule -i /usr/local/share/copr/copr_rules.pp
   when: selinux_module is changed
 
 - name: Setup AWS access

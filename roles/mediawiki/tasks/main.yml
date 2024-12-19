@@ -258,7 +258,7 @@
 - name: Install the php dependencies
   become: yes
   become_user: apache
-  command:
+  ansible.builtin.command:
     cmd: composer install
     chdir: /srv/web/fp-wiki/extensions/FedoraMessaging
   when: result_git is changed
@@ -279,7 +279,7 @@
   - mediawiki
 
 - name: Install our custom selinux policy
-  command: semodule -i /usr/local/share/selinux/mediawiki.pp
+  ansible.builtin.command: semodule -i /usr/local/share/selinux/mediawiki.pp
   when: selinux_module is changed
   tags:
   - selinux

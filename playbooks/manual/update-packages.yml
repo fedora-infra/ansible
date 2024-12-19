@@ -25,7 +25,7 @@
     when: testing and ansible_distribution_major_version|int < 8 and ansible_distribution == 'RedHat'
 
   - name: Dnf clean all (since we can't do it when updating)
-    command: dnf clean all
+    ansible.builtin.command: dnf clean all
     when: not testing and ansible_distribution_major_version|int > 21 and ansible_distribution == 'Fedora'
 
   - name: Dnf update {{ package }} from main repo
@@ -33,7 +33,7 @@
     when: not testing and ansible_distribution_major_version|int > 21 and ansible_distribution == 'Fedora'
 
   - name: Dnf clean all (since we can't do it when updating)
-    command: dnf clean all --enablerepo=infrastructure-tags-stg
+    ansible.builtin.command: dnf clean all --enablerepo=infrastructure-tags-stg
     when: testing and ansible_distribution_major_version|int > 21 and ansible_distribution == 'Fedora'
 
   - name: Dnf update {{ package }} from testing repo

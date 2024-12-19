@@ -3,13 +3,13 @@
 # check backend functionality
 
 - name: Add dummy Fedora 42 release
-  command: faf releaseadd -o fedora --opsys-release 42
+  ansible.builtin.command: faf releaseadd -o fedora --opsys-release 42
   become: yes
   become_user: faf
   changed_when: false
 
 - name: Get releases from FAF
-  command: faf releaselist
+  ansible.builtin.command: faf releaselist
   become: yes
   become_user: faf
   register: release_list
@@ -17,7 +17,7 @@
   changed_when: false
 
 - name: Add dummy meta_faf component to Fedora 42 release
-  command: faf compadd -o fedora --opsys-release 42 meta_faf
+  ansible.builtin.command: faf compadd -o fedora --opsys-release 42 meta_faf
   become: yes
   become_user: faf
   changed_when: false
@@ -30,7 +30,7 @@
     group: faf
 
 - name: Faf
-  command: faf {{ item }}
+  ansible.builtin.command: faf {{ item }}
   become: yes
   become_user: faf
   loop:

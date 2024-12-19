@@ -197,7 +197,7 @@
 # branch, as that usually means we're messing around on staging and
 # don't want the checkout reset to HEAD.
 - name: Check if tests are checked out and on a non-standard branch
-  command: "git status" # noqa 303
+  ansible.builtin.command: "git status" # noqa 303
   args:
     chdir: /root/fedora_openqa
   register: toolsbranch
@@ -214,14 +214,14 @@
   when: "(toolsbranch.stderr.find('ot a git repository') != -1) or (toolsbranch.stdout.find('On branch main') != -1)"
 
 - name: Check if fedora_openqa is installed for current Python
-  command: "pip show fedora_openqa"
+  ansible.builtin.command: "pip show fedora_openqa"
   register: insttools
   changed_when: "1 != 1"
   failed_when: "1 != 1"
   check_mode: no
 
 - name: Install fedora_openqa
-  command: "python3 -m pip install --no-deps /root/fedora_openqa"
+  ansible.builtin.command: "python3 -m pip install --no-deps /root/fedora_openqa"
   when: "gittools is changed or insttools.rc != 0"
   notify:
   - restart openqa consumers

@@ -18,7 +18,7 @@
   seboolean: name=httpd_use_nfs state=yes persistent=yes
 
 - name: Check the selinux context rsyncd log
-  command: matchpathcon /var/log/rsyncd-fedora.log
+  ansible.builtin.command: matchpathcon /var/log/rsyncd-fedora.log
   register: rsyncdlog
   check_mode: no
   changed_when: "1 != 1"
@@ -27,7 +27,7 @@
   - selinux
 
 - name: /var/log/rsyncd-fedora.log file context
-  command: semanage fcontext -a -t rsync_log_t /var/log/rsyncd-fedora.log
+  ansible.builtin.command: semanage fcontext -a -t rsync_log_t /var/log/rsyncd-fedora.log
   when: rsyncdlog.stdout.find('rsync_log_t') == -1
   tags:
   - config
@@ -40,7 +40,7 @@
   ansible.builtin.copy: src=logrotate-rsync-fedora dest=/etc/logrotate.d/rsync-fedora
 
 - name: Check the selinux context pubdir
-  command: matchpathcon /srv/pub
+  ansible.builtin.command: matchpathcon /srv/pub
   register: pubdir
   check_mode: no
   changed_when: "1 != 1"
@@ -49,7 +49,7 @@
   - selinux
 
 - name: /srv/pub file contexts
-  command: semanage fcontext -a -t httpd_sys_content_t "/srv/pub(/.*)?"
+  ansible.builtin.command: semanage fcontext -a -t httpd_sys_content_t "/srv/pub(/.*)?"
   when: pubdir.stdout.find('httpd_sys_content_t') == -1
   tags:
   - config

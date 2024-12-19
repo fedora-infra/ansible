@@ -1,6 +1,6 @@
 ---
 - name: Apply interface-changes
-  command: nmcli con up {{ item.split()[1] }}
+  ansible.builtin.command: nmcli con up {{ item.split()[1] }}
   async: 1
   poll: 0
   with_items:
@@ -16,7 +16,7 @@
   service: name=NetworkManager state=restarted
 
 - name: Reload NetworkManager-connections
-  command: nmcli c reload
+  ansible.builtin.command: nmcli c reload
 
 - name: Restart postfix
   service: name=postfix state=restarted

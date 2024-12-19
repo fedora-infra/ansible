@@ -4,5 +4,5 @@
   register: cloud_pem_copied
 
 - name: Update certificates
-  command: /usr/bin/update-ca-trust
+  ansible.builtin.command: /usr/bin/update-ca-trust
   when: cloud_pem_copied.changed

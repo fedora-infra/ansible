@@ -42,7 +42,7 @@
   - nfs/server
 
 - name: Kick exportfs if /etc/exports changed
-  command: /usr/sbin/exportfs -ra
+  ansible.builtin.command: /usr/sbin/exportfs -ra
   when: exports.changed
   tags:
   - nfs/server

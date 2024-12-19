@@ -425,7 +425,7 @@
 #
 
 - name: Check the selinux context of webdir
-  command: matchpathcon /srv/web
+  ansible.builtin.command: matchpathcon /srv/web
   register: webdir
   check_mode: no
   changed_when: "1 != 1"
@@ -437,7 +437,7 @@
   - httpd/website
 
 - name: /srv/web file contexts
-  command: semanage fcontext -a -t httpd_sys_content_t "/srv/web(/.*)?"
+  ansible.builtin.command: semanage fcontext -a -t httpd_sys_content_t "/srv/web(/.*)?"
   when: webdir.stdout.find('httpd_sys_content_t') == -1
   tags:
   - config
@@ -451,7 +451,7 @@
 #
 
 - name: Check the selinux context of ansible
-  command: matchpathcon /srv/git/ansible.git
+  ansible.builtin.command: matchpathcon /srv/git/ansible.git
   register: webdir
   check_mode: no
   changed_when: "1 != 1"
@@ -463,7 +463,7 @@
   - httpd/website
 
 - name: /srv/git/ansible file contexts
-  command: semanage fcontext -a -t git_content_t "/srv/git/ansible.git(/.*)?"
+  ansible.builtin.command: semanage fcontext -a -t git_content_t "/srv/git/ansible.git(/.*)?"
   when: webdir.stdout.find('git_content_t') == -1
   tags:
   - config
@@ -473,7 +473,7 @@
   - httpd/website
 
 - name: Check the selinux context of badges
-  command: matchpathcon /srv/git/badges
+  ansible.builtin.command: matchpathcon /srv/git/badges
   register: webdir
   check_mode: no
   changed_when: "1 != 1"
@@ -485,7 +485,7 @@
   - httpd/website
 
 - name: /srv/git/badges file contexts
-  command: semanage fcontext -a -t git_content_t "/srv/git/badges(/.*)?"
+  ansible.builtin.command: semanage fcontext -a -t git_content_t "/srv/git/badges(/.*)?"
   when: webdir.stdout.find('git_content_t') == -1
   tags:
   - config
@@ -495,7 +495,7 @@
   - httpd/website
 
 - name: Check the selinux context of dns
-  command: matchpathcon /srv/git/dns
+  ansible.builtin.command: matchpathcon /srv/git/dns
   register: webdir
   check_mode: no
   changed_when: "1 != 1"
@@ -507,7 +507,7 @@
   - httpd/website
 
 - name: /srv/git/dns file contexts
-  command: semanage fcontext -a -t git_content_t "/srv/git/dns(/.*)?"
+  ansible.builtin.command: semanage fcontext -a -t git_content_t "/srv/git/dns(/.*)?"
   when: webdir.stdout.find('git_content_t') == -1
   tags:
   - config
@@ -517,7 +517,7 @@
   - httpd/website
 
 - name: Check the selinux context of infra-docs
-  command: matchpathcon /srv/git/infra-docs
+  ansible.builtin.command: matchpathcon /srv/git/infra-docs
   register: webdir
   check_mode: no
   changed_when: "1 != 1"
@@ -529,7 +529,7 @@
   - httpd/website
 
 - name: /srv/git/infra-docs file contexts
-  command: semanage fcontext -a -t git_content_t "/srv/git/infra-docs(/.*)?"
+  ansible.builtin.command: semanage fcontext -a -t git_content_t "/srv/git/infra-docs(/.*)?"
   when: webdir.stdout.find('git_content_t') == -1
   tags:
   - config
@@ -584,7 +584,7 @@
   - tmux
 
 - name: Let the /var/tmux folder be writable to fi-apprentice as well
-  command: setfacl -R -m d:g:fi-apprentice:rwx -m g:fi-apprentice:rwx /var/tmux
+  ansible.builtin.command: setfacl -R -m d:g:fi-apprentice:rwx -m g:fi-apprentice:rwx /var/tmux
   tags:
   - batcave
   - tmux
@@ -599,7 +599,7 @@
   - openshiftboot
 
 - name: Let the openshift dir be writeable by sysadmin-openshift
-  command: setfacl -R -m d:g:sysadmin-openshift:rwx -m g:sysadmin-openshift:rwx /srv/web/infra/bigfiles/{{item}}
+  ansible.builtin.command: setfacl -R -m d:g:sysadmin-openshift:rwx -m g:sysadmin-openshift:rwx /srv/web/infra/bigfiles/{{item}}
   with_items:
   - openshiftboot
   - tftpboot/rhcos

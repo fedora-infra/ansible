@@ -33,7 +33,7 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
   tasks:
   - name: Scale down datagrepper to 0 pods
-    command: oc -n datagrepper scale dc/datagrepper --replicas=0
+    ansible.builtin.command: oc -n datagrepper scale dc/datagrepper --replicas=0
 
 - name: Stop datanommer
   hosts:
@@ -48,7 +48,7 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
   tasks:
   - name: Scale down datanommer to 0 pods
-    command: oc -n datanommer scale dc/datanommer --replicas=0
+    ansible.builtin.command: oc -n datanommer scale dc/datanommer --replicas=0
 
 - name: Upgrade the database
   role: openshift/object
@@ -57,7 +57,7 @@
   object_objectname: job.yml
 
 - name: Wait for the db-upgrade completion
-  command: oc get jobs/db-upgrade -o jsonpath='{@.status.succeeded}'
+  ansible.builtin.command: oc get jobs/db-upgrade -o jsonpath='{@.status.succeeded}'
   register: status
   until: status.stdout | int == 1
   retries: 5
@@ -81,7 +81,7 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   tasks:
   - name: Scale up datanommer pods
-    command: oc -n datanommer scale dc/db-datanommer --replicas=1
+    ansible.builtin.command: oc -n datanommer scale dc/db-datanommer --replicas=1
 
 - name: Start the datagrepper again
   hosts:
@@ -94,7 +94,7 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   tasks:
   - name: Scale up datagrepper pods
-    command: oc -n datagrepper scale dc/datagrepper --replicas=1
+    ansible.builtin.command: oc -n datagrepper scale dc/datagrepper --replicas=1
 
 - name: Restart the last backend piece (badges)
   hosts:

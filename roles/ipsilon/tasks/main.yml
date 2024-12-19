@@ -41,7 +41,7 @@
   - ipsilon
 
 - name: Install Fedora-specific code if it changed
-  command:
+  ansible.builtin.command:
     cmd: ./install.sh
     chdir: /opt/ipsilon-fedora
   when: git_update is changed
@@ -51,7 +51,7 @@
   - ipsilon
 
 - name: Install Fedora-specific code on initial run
-  command:
+  ansible.builtin.command:
     cmd: ./install.sh
     chdir: /opt/ipsilon-fedora
     creates: "{{ ansible_facts['python3']['sitelib'] }}/ipsilon/providers/openidc/plugins/account-scopes.py"
@@ -70,7 +70,7 @@
   - ipsilon
 
 - name: Install ipsilon
-  command:
+  ansible.builtin.command:
     cmd: ipsilon-server-install
          --root-instance
          --admin-user=admin
@@ -85,7 +85,7 @@
   - ipsilon
 
 - name: Destroy admin ticket
-  command: kdestroy -A
+  ansible.builtin.command: kdestroy -A
   tags:
   - ipsilon
 
@@ -209,7 +209,7 @@
 - name: Generate the saml2 metadata
   become_user: ipsilon
   become: yes
-  command:
+  ansible.builtin.command:
     cmd: /usr/local/bin/prepare-saml2-metadata
     creates: /etc/ipsilon/root/saml2/metadata.xml
   tags:

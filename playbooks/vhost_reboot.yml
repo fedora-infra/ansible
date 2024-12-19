@@ -105,7 +105,7 @@
     with_items: "{{ newvmlist.list_vms }}"
 
 #  - name: sync time
-#    command: ntpdate -u 1.rhel.pool.ntp.org
+#    ansible.builtin.command: ntpdate -u 1.rhel.pool.ntp.org
 
   - name: tell nagios to unshush
     nagios: action=unsilence service=host host={{ inventory_hostname_short }}{{ env_suffix }}

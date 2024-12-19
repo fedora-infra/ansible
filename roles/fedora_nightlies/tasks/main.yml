@@ -91,14 +91,14 @@
   register: gitfn
 
 - name: Check if fedora_nightlies is installed for current Python
-  command: "pip show fedora_nightlies"
+  ansible.builtin.command: "pip show fedora_nightlies"
   register: instfn
   changed_when: "1 != 1"
   failed_when: "1 != 1"
   check_mode: no
 
 - name: Install fedora_nightlies
-  command: "python3 -m pip install --no-deps /root/fedora_nightlies"
+  ansible.builtin.command: "python3 -m pip install --no-deps /root/fedora_nightlies"
   when: "gitfn is changed or instfn.rc != 0"
   notify:
   - restart fedora_nightlies

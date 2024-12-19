@@ -12,7 +12,7 @@
 
 - name: Generate (or renew) the certificate
   delegate_to: "certgetter01.iad2.fedoraproject.org"
-  command: certbot certonly --expand --keep -n --webroot --webroot-path /var/www/html/ -d {{','.join([site_name] + server_aliases)}}
+  ansible.builtin.command: certbot certonly --expand --keep -n --webroot --webroot-path /var/www/html/ -d {{','.join([site_name] + server_aliases)}}
   run_once: true
   register: certbot_output
   check_mode: no
@@ -34,7 +34,7 @@
 # And once we do that, we need to copy some things.
 - name: Obtain the certificate
   delegate_to: "certgetter01.iad2.fedoraproject.org"
-  command: "cat {{certbot_dir.stdout}}/cert.pem"
+  ansible.builtin.command: "cat {{certbot_dir.stdout}}/cert.pem"
   register: certbot_certificate
   changed_when: 'false'
   check_mode: no
@@ -43,7 +43,7 @@
 
 - name: Obtain the intermediate certificate
   delegate_to: "certgetter01.iad2.fedoraproject.org"
-  command: cat {{certbot_dir.stdout}}/chain.pem
+  ansible.builtin.command: cat {{certbot_dir.stdout}}/chain.pem
   register: certbot_chain
   changed_when: 'false'
   check_mode: no
@@ -52,7 +52,7 @@
 
 - name: Obtain the key
   delegate_to: "certgetter01.iad2.fedoraproject.org"
-  command: cat {{certbot_dir.stdout}}/privkey.pem
+  ansible.builtin.command: cat {{certbot_dir.stdout}}/privkey.pem
   register: certbot_key
   changed_when: 'false'
   check_mode: no

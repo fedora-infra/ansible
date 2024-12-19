@@ -8,7 +8,7 @@
 
 - name: Check that sysadmin-main and referenced groups exist on IPA server(s)
   delegate_to: "{{ item[0] }}"
-  command: "getent group {{ item[1] }}"
+  ansible.builtin.command: "getent group {{ item[1] }}"
   changed_when: false
   loop: >-
     {{

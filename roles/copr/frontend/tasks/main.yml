@@ -2,12 +2,12 @@
 - import_tasks: "mount_fs.yml"
 
 - name: Register security context for pgsql directory
-  command: "ls -dZ /var/lib/pgsql"
+  ansible.builtin.command: "ls -dZ /var/lib/pgsql"
   register: pgsql_ls
   changed_when: false  # `ls' command is not changing anything
 
 - name: Update selinux context for postgress db dir if it's wrong
-  command: "restorecon -vvRF /var/lib/pgsql"
+  ansible.builtin.command: "restorecon -vvRF /var/lib/pgsql"
   when: pgsql_ls.stdout is defined and 'postgresql_db_t' not in  pgsql_ls.stdout
 
 - name: Install weekly custom copr-frontend-crontab
@@ -103,7 +103,7 @@
 - import_tasks: "psql_setup.yml"
 
 - name: Upgrade db to head
-  command: alembic-3 upgrade head
+  ansible.builtin.command: alembic-3 upgrade head
   become: yes
   become_user: copr-fe
   args:
@@ -112,7 +112,7 @@
   changed_when: alembic_result.stdout is search("Running upgrade")
 
 - name: Apply the config comments
-  command: copr-frontend chroots-template
+  ansible.builtin.command: copr-frontend chroots-template
   become: yes
   become_user: copr-fe
   args:
@@ -160,7 +160,7 @@
 
 
 - name: Register whether indexes rebuild is required
-  command: copr-frontend update_indexes_required
+  ansible.builtin.command: copr-frontend update_indexes_required
   become: yes
   become_user: copr-fe
   register: update_indexes_required_result
@@ -168,7 +168,7 @@
   failed_when: false
 
 - name: Rebuild indexes
-  command: ./manage.py update_indexes
+  ansible.builtin.command: ./manage.py update_indexes
   become: yes
   become_user: copr-fe
   args:

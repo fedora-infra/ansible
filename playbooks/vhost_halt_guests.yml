@@ -45,7 +45,7 @@
     delegate_to: noc01.iad2.fedoraproject.org
 
   - name: Echo-y
-    command: /sbin/halt -p
+    ansible.builtin.command: /sbin/halt -p
     ignore_errors: true
     # if one of them is down we don't care
 

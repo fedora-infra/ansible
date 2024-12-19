@@ -13,7 +13,7 @@
 
   tasks:
   - name: Clean all metadata {%if testing%}(with infrastructure-testing on){%endif%}
-    command: yum clean all {%if testing%} --enablerepo=infrastructure-tags-stg {%endif%}
+    ansible.builtin.command: yum clean all {%if testing%} --enablerepo=infrastructure-tags-stg {%endif%}
     check_mode: no
   - name: Update mote packages from main repo
     package: name="mote" state=latest

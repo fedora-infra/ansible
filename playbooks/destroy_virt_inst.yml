@@ -42,5 +42,5 @@
     delegate_to: "{{ vmhost }}"
 
   - name: Destroy the lv
-    command: /sbin/lvremove -f {{volgroup}}/{{inventory_hostname}}
+    ansible.builtin.command: /sbin/lvremove -f {{volgroup}}/{{inventory_hostname}}
     delegate_to: "{{ vmhost }}"

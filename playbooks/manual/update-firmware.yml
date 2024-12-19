@@ -76,7 +76,7 @@
   # Dell updates here
   - name: Check Dell updates
     check_mode: no
-    command: /root/firmware-upgrades/{{ item.item.1}} -qc
+    ansible.builtin.command: /root/firmware-upgrades/{{ item.item.1}} -qc
     register: check_results
     failed_when: "'System(s) supported by this package' in check_results.stdout"
     changed_when: "'is the same' not in check_results.stdout"
@@ -84,7 +84,7 @@
     with_items: "{{is_applied_results.results}}"
 
   - name: Apply Dell updates
-    command: /root/firmware-upgrades/{{ item.item.item.1}} -q
+    ansible.builtin.command: /root/firmware-upgrades/{{ item.item.item.1}} -q
     register: update_results
     failed_when: "'System(s) supported by this package:' in update_results.stdout"
     changed_when: "'should be restarted' in update_results.stdout or 'completed successfully' in update_results.stdout"

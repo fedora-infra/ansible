@@ -5,4 +5,4 @@
 
   tasks:
   - name: Clear memcache
-    command: echo flush_all | nc localhost 11211
+    ansible.builtin.command: echo flush_all | nc localhost 11211

@@ -58,7 +58,7 @@
 
   tasks:
   - name: Find out what the current migration version is
-    command: /usr/bin/alembic-3 -c /etc/bodhi/alembic.ini current
+    ansible.builtin.command: /usr/bin/alembic-3 -c /etc/bodhi/alembic.ini current
     register: current_migration_version
 
 - name: Stop the front end if there are migrations to run
@@ -82,7 +82,7 @@
       # This will be a bool that indicates whether we need to run migrations or not.
       migrations: "'(head)' not in hostvars['bodhi-backend01{{ env_suffix }}.iad2.fedoraproject.org']['current_migration_version'].stdout"
   - name: Scale down to 0 pods
-    command: oc -n bodhi scale dc/bodhi-web --replicas=0
+    ansible.builtin.command: oc -n bodhi scale dc/bodhi-web --replicas=0
     when: migrations
 
 - name: Verify the backends, stop them, and then upgrade the db
@@ -114,7 +114,7 @@
     - bodhi-celery
 
   - name: Upgrade the database
-    command: /usr/bin/alembic-3 -c /etc/bodhi/alembic.ini upgrade head
+    ansible.builtin.command: /usr/bin/alembic-3 -c /etc/bodhi/alembic.ini upgrade head
     args:
       chdir: /usr/share/bodhi/
 
@@ -145,10 +145,10 @@
   tasks:
   - include_vars: /srv/web/infra/ansible/vars/apps/bodhi.yml
   - name: Scale up pods
-    command: oc -n bodhi scale dc/bodhi-web --replicas={{ bodhi_openshift_pods }}
+    ansible.builtin.command: oc -n bodhi scale dc/bodhi-web --replicas={{ bodhi_openshift_pods }}
     when: env != "staging"
   - name: Scale up pods
-    command: oc -n bodhi scale dc/bodhi-web --replicas={{ bodhi_openshift_pods }}
+    ansible.builtin.command: oc -n bodhi scale dc/bodhi-web --replicas={{ bodhi_openshift_pods }}
     when: env == "staging"
   # Redeploy the build config as it may request a newer version in the Dockerfile
   # Only do it on prod because staging tracks a branch

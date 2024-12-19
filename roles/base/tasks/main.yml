@@ -372,7 +372,7 @@
   - rsyslog-audit
 
 - name: Install our custom selinux module
-  command: semodule -i /usr/local/share/rsyslog/rsyslog-audit.pp
+  ansible.builtin.command: semodule -i /usr/local/share/rsyslog/rsyslog-audit.pp
   when: selinux_module is changed and ansible_distribution_major_version|int > 6
   tags:
   - rsyslogd
@@ -398,7 +398,7 @@
   - selinux
 
 - name: Install our custom selinux module
-  command: semodule -i /usr/local/share/mapchkpwd.pp
+  ansible.builtin.command: semodule -i /usr/local/share/mapchkpwd.pp
   when: selinux_module is changed
   tags:
   - selinux

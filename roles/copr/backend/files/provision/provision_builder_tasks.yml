@@ -83,7 +83,7 @@
 
 # https://fedoraproject.org/wiki/Changes/StrongCryptoSettings
 - name: fallback to the legacy crypto policies
-  command: update-crypto-policies --set DEFAULT:SHA1
+  ansible.builtin.command: update-crypto-policies --set DEFAULT:SHA1
   when:
     - preparing_image
 

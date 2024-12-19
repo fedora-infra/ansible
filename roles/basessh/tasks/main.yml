@@ -60,7 +60,7 @@
   - base
 
 - name: Allow alternate sshd port
-  command: semanage port -a -t ssh_port_t -p tcp {{ sshd_port }}
+  ansible.builtin.command: semanage port -a -t ssh_port_t -p tcp {{ sshd_port }}
   when: sshd_port in sshd_selinux_port
   failed_when: false
   tags:

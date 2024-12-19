@@ -24,7 +24,7 @@
     when: transaction_id.stderr == ""
 
   - name: Get info on that transaction
-    command: yum history info {{ transaction_id.stdout }}
+    ansible.builtin.command: yum history info {{ transaction_id.stdout }}
     register: transaction_info
     when: transaction_id.stderr == ""
 
@@ -35,5 +35,5 @@
   #  when: transaction_id.stderr == ""
 
   - name: Okay.. undo that transaction now
-    command: yum -y history undo {{ transaction_id.stdout }}
+    ansible.builtin.command: yum -y history undo {{ transaction_id.stdout }}
     when: transaction_id.stderr == ""

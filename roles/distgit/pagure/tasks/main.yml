@@ -80,7 +80,7 @@
   - pagure
 
 - name: Create the "git" user
-  command: useradd --create-home --home-dir=/srv/git/  git
+  ansible.builtin.command: useradd --create-home --home-dir=/srv/git/  git
            creates=/srv/git/
   when: env == 'staging'
   tags:
@@ -154,7 +154,7 @@
   - restart apache
 
 - name: Create the database scheme
-  command: /usr/bin/python3 /usr/share/pagure/pagure_createdb.py
+  ansible.builtin.command: /usr/bin/python3 /usr/share/pagure/pagure_createdb.py
   changed_when: "1 != 1"
   environment:
     PAGURE_CONFIG: /etc/pagure/pagure.cfg
@@ -227,13 +227,13 @@
 
 - name: Manually fix current default ACLs since Ansible doesnt know recursive acls
   when: acl_updates.changed
-  command: /usr/bin/setfacl -Rdm user:apache:rx /srv/git
+  ansible.builtin.command: /usr/bin/setfacl -Rdm user:apache:rx /srv/git
   tags:
   - pagure
 
 - name: Manually fix current ACLs since Ansible doesnt know recursive acls
   when: acl_updates.changed
-  command: /usr/bin/setfacl -Rm user:apache:rx /srv/git
+  ansible.builtin.command: /usr/bin/setfacl -Rm user:apache:rx /srv/git
   tags:
   - pagure
 

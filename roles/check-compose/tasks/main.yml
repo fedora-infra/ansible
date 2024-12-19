@@ -124,14 +124,14 @@
   register: gitcc
 
 - name: Check if check-compose is installed for current Python
-  command: "pip show check_compose"
+  ansible.builtin.command: "pip show check_compose"
   register: instcc
   changed_when: "1 != 1"
   failed_when: "1 != 1"
   check_mode: no
 
 - name: Install check-compose
-  command: "python3 -m pip install --no-deps /root/check-compose"
+  ansible.builtin.command: "python3 -m pip install --no-deps /root/check-compose"
   when: "gitcc is changed or instcc.rc != 0"
   notify:
   - restart check-compose

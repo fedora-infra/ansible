@@ -9,7 +9,7 @@
   strategy: free
   tasks:
     # Non-huge SAR retrieval
-    - command: "{{ gdpr_delete_script }}"
+    - ansible.builtin.command: "{{ gdpr_delete_script }}"
       environment:
         SAR_USERNAME: "{{ gdpr_delete_fas_user }}"
         SAR_EMAIL: "{{ gdpr_delete_email }}"

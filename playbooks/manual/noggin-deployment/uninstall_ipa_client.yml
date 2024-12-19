@@ -9,7 +9,7 @@
 
   tasks:
   - name: Uninstall IPA client
-    command: ipa-client-install --uninstall --unattended
+    ansible.builtin.command: ipa-client-install --uninstall --unattended
     ignore_errors: yes
 
 - import_playbook: "/srv/web/infra/ansible/playbooks/groups/bodhi-backend.yml"
@@ -67,7 +67,7 @@
     loop: "{{keytabs}}"
 
   - name: Remove keytab secret
-    command: oc -n {{item.app}} delete secret {{item.secret_name}}
+    ansible.builtin.command: oc -n {{item.app}} delete secret {{item.secret_name}}
     register: delete_out
     failed_when: "delete_out.rc != 0 and 'NotFound' not in delete_out.stderr"
     changed_when: "delete_out.rc == 0 and 'secret \"{{item.secret_name}}\" deleted' in delete_out.stdout"

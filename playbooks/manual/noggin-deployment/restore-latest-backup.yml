@@ -7,4 +7,4 @@
     # - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   tasks:
     - name: Restore latest backup of FreeIPA server data
-      command: ipa-restore /var/lib/ipa/backup/ipa-full-latest -p {{ ipa_admin_password }}
+      ansible.builtin.command: ipa-restore /var/lib/ipa/backup/ipa-full-latest -p {{ ipa_admin_password }}

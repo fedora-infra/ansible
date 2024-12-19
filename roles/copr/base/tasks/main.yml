@@ -94,7 +94,7 @@
 #   check_mode: no
 #
 # - name: Disable offloading
-#   command: ethtool -K ens5 tso off gro off gso off
+#   ansible.builtin.command: ethtool -K ens5 tso off gro off gso off
 #   when:
 #     - offloading.rc == 0
 #     - ansible_distribution == 'Fedora'

@@ -10,7 +10,7 @@
     state: stopped
 
 - name: Check if subuid is set for retrace user
-  command: cat /etc/subuid
+  ansible.builtin.command: cat /etc/subuid
   changed_when: false
   register: retrace_subuid
 
@@ -30,12 +30,12 @@
       rs_subuid_max: "{{ t_subuid.stdout | default(100000) | int + 2 * 65536 - 1 }}"
 
   - name: Set subuid for retrace user.
-    command: usermod retrace --add-subuids "{{ rs_subuid_min }}-{{ rs_subuid_max }}"
+    ansible.builtin.command: usermod retrace --add-subuids "{{ rs_subuid_min }}-{{ rs_subuid_max }}"
 
   when: '"retrace" not in retrace_subuid.stdout'
 
 - name: Check if subgid is set for retrace user
-  command: cat /etc/subgid
+  ansible.builtin.command: cat /etc/subgid
   changed_when: false
   register: retrace_subgid
 
@@ -55,7 +55,7 @@
       rs_subgid_max: "{{ t_subgid.stdout | default(100000) | int + 2 * 65536 - 1 }}"
 
   - name: Set subgid for retrace user
-    command: usermod retrace --add-subgids "{{ rs_subgid_min }}-{{ rs_subgid_max }}"
+    ansible.builtin.command: usermod retrace --add-subgids "{{ rs_subgid_min }}-{{ rs_subgid_max }}"
 
   when: '"retrace" not in retrace_subgid.stdout'
 

@@ -8,7 +8,7 @@
 
 # apply created openshift resources
 - name: Oc apply resources
-  command: "/root/bin/oc apply -f /root/ocp4/openshift-apps/firmitas/cronjob.yml"
+  ansible.builtin.command: "/root/bin/oc apply -f /root/ocp4/openshift-apps/firmitas/cronjob.yml"
   retries: 3
   delay: 5
   register: cronjob_result

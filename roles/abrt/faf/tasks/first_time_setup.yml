@@ -11,17 +11,17 @@
 # Skip whole block if faf owns atleast 1 table in db
 - block:
   - name: Create faf's database schema
-    command: faf-migrate-db --create-all
+    ansible.builtin.command: faf-migrate-db --create-all
     become: yes
     become_user: faf
 
   - name: Stamp database as migrated to latest version
-    command: faf-migrate-db --stamp-only
+    ansible.builtin.command: faf-migrate-db --stamp-only
     become: yes
     become_user: faf
 
   - name: Init faf
-    command: faf init
+    ansible.builtin.command: faf init
     become: yes
     become_user: faf
   when: ( count_tables.stdout_lines[2]|int ) == 0

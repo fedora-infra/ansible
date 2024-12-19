@@ -9,7 +9,7 @@
     - name: "Create the archive"
       block:
         # Create a safe place to store the files.
-        - command: "mktemp -d"
+        - ansible.builtin.command: "mktemp -d"
           register: sar_tmp_dir
         # Let's make this a more conveniently expressed variable.
         - set_fact:
@@ -20,7 +20,7 @@
   strategy: free
   tasks:
     # Non-huge SAR retrieval
-    - command: "{{ sar_script }}"
+    - ansible.builtin.command: "{{ sar_script }}"
       environment:
         SAR_USERNAME: "{{ sar_fas_user }}"
         SAR_EMAIL: "{{ sar_email }}"
@@ -36,7 +36,7 @@
       delegate_facts: false
       when: "sar_huge is not defined or not sar_huge"
     # Remove the variable from memory
-    - command: "/bin/true"
+    - ansible.builtin.command: "/bin/true"
       register: sar_data
       when: "sar_huge is not defined or not sar_huge"
 
@@ -61,7 +61,7 @@
           args:
             chdir: "{{ sar_tmp_dir }}"
         # Move the tarball into the desired pick up location.
-        - command: "mv {{ sar_tmp_dir }}/{{ sar_fas_user }}_{{ sar_email }}.tar.gz {{ sar_tar_output_path }}"
+        - ansible.builtin.command: "mv {{ sar_tmp_dir }}/{{ sar_fas_user }}_{{ sar_email }}.tar.gz {{ sar_tar_output_path }}"
       always:
         # Let's clean up our temporary directory.
-        - command: "rm -r {{ sar_tmp_dir }}"
+        - ansible.builtin.command: "rm -r {{ sar_tmp_dir }}"

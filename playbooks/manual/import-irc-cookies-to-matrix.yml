@@ -33,7 +33,7 @@
         mode: "0755"
 
     - name: Run the import script
-      command:
+      ansible.builtin.command:
         argv:
           - /usr/local/bin/karma-to-cookies-db
           - -i

@@ -101,7 +101,7 @@
   - selinux
 
 - name: Install our general haproxy selinux module
-  command: semodule -i /usr/share/haproxy/fi-haproxy.pp
+  ansible.builtin.command: semodule -i /usr/share/haproxy/fi-haproxy.pp
   when: fi_haproxy_module is changed or fi_haproxy_grep is changed
   tags:
   - haproxy
@@ -109,7 +109,7 @@
 
 
 - name: Check haproxy cfg to make sure it is valid
-  command: haproxy -c -f /etc/haproxy/haproxy.cfg
+  ansible.builtin.command: haproxy -c -f /etc/haproxy/haproxy.cfg
   check_mode: no
   register: haproxyconfigcheck
   changed_when: haproxyconfigcheck.rc != 0

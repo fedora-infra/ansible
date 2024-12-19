@@ -12,7 +12,7 @@
   - serial-console
 
 - name: Set grub to use serial console
-  command: /sbin/grubby --update-kernel=ALL --args="console=tty0 console=ttyS0,115200 console=ttyS1,115200"
+  ansible.builtin.command: /sbin/grubby --update-kernel=ALL --args="console=tty0 console=ttyS0,115200 console=ttyS1,115200"
   when: serial is defined and serial.stdout.find("console=tty0 console=ttyS0,115200 console=ttyS1,115200") == -1
   failed_when: '1 != 1'
   tags:

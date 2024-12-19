@@ -142,14 +142,14 @@
   register: gitrvc
 
 - name: Check if relvalconsumer is installed for current Python
-  command: "pip show relvalconsumer"
+  ansible.builtin.command: "pip show relvalconsumer"
   register: instrvc
   changed_when: "1 != 1"
   failed_when: "1 != 1"
   check_mode: no
 
 - name: Install relvalconsumer
-  command: "python3 -m pip install --no-deps /root/relvalconsumer"
+  ansible.builtin.command: "python3 -m pip install --no-deps /root/relvalconsumer"
   when: "gitrvc is changed or instrvc.rc != 0"
   notify:
   - restart relvalconsumer

@@ -37,7 +37,7 @@
 
 - name: Create the database scheme
   when: inventory_hostname.startswith('kerneltest01')
-  command: /usr/bin/python2 /usr/share/kerneltest/kerneltest_createdb.py
+  ansible.builtin.command: /usr/bin/python2 /usr/share/kerneltest/kerneltest_createdb.py
   environment:
     KERNELTEST_CONFIG: /etc/kerneltest/kerneltest.cfg
   tags:

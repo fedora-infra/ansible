@@ -152,7 +152,7 @@
   - mirrorlist_proxy
 
 - name: Install our custom selinux module
-  command: semodule -i /usr/local/share/mirrorlist-logrotate/mirrorlist-logrotate.pp
+  ansible.builtin.command: semodule -i /usr/local/share/mirrorlist-logrotate/mirrorlist-logrotate.pp
   when: selinux_module is changed
   tags:
   - selinux
@@ -165,7 +165,7 @@
   - mirrorlist_proxy
 
 - name: Deploy mirrorlist data files (if this is a initial install)
-  command: "rsync -az --delete-delay --delay-updates --delete /var/lib/mirrormanager/mirrorlist_cache.proto /usr/share/mirrormanager2/country_continent.csv /var/lib/mirrormanager/global_netblocks.txt /var/lib/mirrormanager/i2_netblocks.txt {{ inventory_hostname }}:/srv/mirrorlist/data/mirrorlist1/"
+  ansible.builtin.command: "rsync -az --delete-delay --delay-updates --delete /var/lib/mirrormanager/mirrorlist_cache.proto /usr/share/mirrormanager2/country_continent.csv /var/lib/mirrormanager/global_netblocks.txt /var/lib/mirrormanager/i2_netblocks.txt {{ inventory_hostname }}:/srv/mirrorlist/data/mirrorlist1/"
   become: yes
   become_user: mirrormanager
   delegate_to: "mm-backend01.iad2.fedoraproject.org"

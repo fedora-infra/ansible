@@ -260,7 +260,7 @@
 # can't choose to let other users see their info or not.
 #
 # - name: Disable default permissions so we don't break our privacy policy
-#   command:
+#   ansible.builtin.command:
 #     argv:
 #       - ipa
 #       - permission-mod
@@ -275,7 +275,7 @@
 #
 # # Because of the previous task, we must explicitely allow users to read their own data
 # - name: Allow users to read their own data
-#   command:
+#   ansible.builtin.command:
 #     argv:
 #       - ipa
 #       - selfservice-add

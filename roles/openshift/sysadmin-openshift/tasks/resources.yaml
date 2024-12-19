@@ -22,7 +22,7 @@
 
 # apply created openshift resources
 - name: Oc apply resources
-  command: "/root/bin/oc apply -f /root/ocp4/openshift-apps/{{sysadmin_openshift_project_name}}/{{ item }}"
+  ansible.builtin.command: "/root/bin/oc apply -f /root/ocp4/openshift-apps/{{sysadmin_openshift_project_name}}/{{ item }}"
   with_items: "{{ sysadmin_openshift_project_templates }}"
   tags:
     - create-resources

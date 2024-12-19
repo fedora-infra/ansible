@@ -11,7 +11,7 @@
 
   tasks:
   - name: Run syncStatic (this takes a while)...
-    command: /usr/local/bin/lock-wrapper syncStatic /usr/local/bin/syncStatic
+    ansible.builtin.command: /usr/local/bin/lock-wrapper syncStatic /usr/local/bin/syncStatic
 
 - name: Tell the proxies to sync that freshness
   hosts: proxies:proxies_stg
@@ -23,7 +23,7 @@
 
   tasks:
   - name: Rsync each site in to place
-    command: /usr/bin/rsync --delete -a --no-owner --no-group sundries01::{{item}}/ /srv/web/{{item}}/
+    ansible.builtin.command: /usr/bin/rsync --delete -a --no-owner --no-group sundries01::{{item}}/ /srv/web/{{item}}/
     with_items:
     - getfedora.org
     - fedoracommunity.org

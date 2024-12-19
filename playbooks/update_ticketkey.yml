@@ -13,10 +13,10 @@
 
   tasks:
   - name: create new production ticket key
-    command: /usr/local/bin/generate_ticketkey /root/ticketkey_production.tkey fpprod
+    ansible.builtin.command: /usr/local/bin/generate_ticketkey /root/ticketkey_production.tkey fpprod
 
   - name: create new staging ticket key
-    command: /usr/local/bin/generate_ticketkey /root/ticketkey_staging.tkey fpstag
+    ansible.builtin.command: /usr/local/bin/generate_ticketkey /root/ticketkey_staging.tkey fpstag
 
 - name: Push out new ticket key
   hosts: proxies:proxies_stg

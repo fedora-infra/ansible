@@ -474,11 +474,11 @@
   register: selinux_module
 
 - name: Compile and install our custom selinux module
-  command: /etc/nagios/selinux-load.sh
+  ansible.builtin.command: /etc/nagios/selinux-load.sh
   when: selinux_module is changed
 
 - name: /var/log/rabbitmq selinux file context
-  command: semanage fcontext -a -t var_log_t "/var/log/rabbitmq(/.*)?"
+  ansible.builtin.command: semanage fcontext -a -t var_log_t "/var/log/rabbitmq(/.*)?"
   register: semanage_rabbit
   changed_when: "'already defined' not in semanage_rabbit.stdout"
   tags:

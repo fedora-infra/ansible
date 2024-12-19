@@ -19,7 +19,7 @@
 
 - name: Create host entry
   delegate_to: "{{ ipa_server }}"
-  command: ipa host-add --force {{inventory_hostname}}
+  ansible.builtin.command: ipa host-add --force {{inventory_hostname}}
   register: host_add_result
   changed_when: "'Added host' in host_add_result.stdout"
   failed_when: "not ('Added host' in host_add_result.stdout or 'already exists' in host_add_result.stderr)"
@@ -31,7 +31,7 @@
 
 - name: Create additional host entries
   delegate_to: "{{ ipa_server }}"
-  command: ipa host-add --force {{item}}
+  ansible.builtin.command: ipa host-add --force {{item}}
   with_items: "{{ additional_host_keytabs }}"
   register: hosts_add_result
   changed_when: "'Added host' in hosts_add_result.stdout"
@@ -44,7 +44,7 @@
 
 - name: Generate host keytab
   delegate_to: "{{ ipa_server }}"
-  command: ipa-getkeytab -s {{ipa_server}} -p host/{{inventory_hostname}} -k /tmp/{{inventory_hostname}}.kt
+  ansible.builtin.command: ipa-getkeytab -s {{ipa_server}} -p host/{{inventory_hostname}} -k /tmp/{{inventory_hostname}}.kt
   register: getkeytab_result
   changed_when: false
   failed_when: "'successfully retrieved' not in getkeytab_result.stderr"
@@ -56,7 +56,7 @@
 
 - name: Add additional host keytabs
   delegate_to: "{{ ipa_server }}"
-  command: ipa-getkeytab -s {{ipa_server}} -p host/{{item}} -k /tmp/{{inventory_hostname}}.kt
+  ansible.builtin.command: ipa-getkeytab -s {{ipa_server}} -p host/{{item}} -k /tmp/{{inventory_hostname}}.kt
   with_items: "{{ additional_host_keytabs }}"
   register: getkeytabs_result
   changed_when: false
@@ -69,7 +69,7 @@
 
 - name: Destroy kerberos ticket
   delegate_to: "{{ ipa_server }}"
-  command: kdestroy -A
+  ansible.builtin.command: kdestroy -A
   tags:
   - base
   - config
@@ -78,7 +78,7 @@
 
 - name: Get keytab
   delegate_to: "{{ ipa_server }}"
-  command: base64 /tmp/{{inventory_hostname}}.kt
+  ansible.builtin.command: base64 /tmp/{{inventory_hostname}}.kt
   register: keytab
   tags:
   - base

@@ -54,7 +54,7 @@
     - /srv/planet/config
 
 - name: Check the selinux context of the planet dir
-  command: matchpathcon "/srv/planet"
+  ansible.builtin.command: matchpathcon "/srv/planet"
   register: gitcontext
   check_mode: no
   changed_when: false
@@ -64,7 +64,7 @@
     - planet_server
 
 - name: Set the SELinux policy for the planet dir
-  command: semanage fcontext -a -t httpd_sys_content_t "/srv/planet(/.*)?"
+  ansible.builtin.command: semanage fcontext -a -t httpd_sys_content_t "/srv/planet(/.*)?"
   when: gitcontext.stdout.find('httpd_sys_content_t') == -1
   tags:
     - config

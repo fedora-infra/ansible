@@ -1,6 +1,6 @@
 ---
 - name: Clean sss caches
-  command: sss_cache -E
+  ansible.builtin.command: sss_cache -E
 
 - name: Restart sssd
   shell: systemctl restart sssd

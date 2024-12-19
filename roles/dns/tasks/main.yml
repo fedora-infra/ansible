@@ -50,7 +50,7 @@
   - dns
 
 # - name: Create GeoIP acl
-#  command: /var/named/GeoIP.sh
+#  ansible.builtin.command: /var/named/GeoIP.sh
 #  changed_when: "1 != 1"
 #  notify:
 #  - restart named
@@ -82,7 +82,7 @@
   - dns
 
 - name: Update dns
-  command: /usr/local/bin/update-dns
+  ansible.builtin.command: /usr/local/bin/update-dns
   changed_when: "1 != 1"
   notify:
   - restart named
@@ -96,14 +96,14 @@
   - dns
 
 - name: Check configuration
-  command: named-checkconf -zj
+  ansible.builtin.command: named-checkconf -zj
   changed_when: false
   tags:
   - config
   - dns
 
 - name: Check semanage ports
-  command: semanage port -l
+  ansible.builtin.command: semanage port -l
   register: semanageoutput
   check_mode: no
   changed_when: "1 != 1"
@@ -111,7 +111,7 @@
   - dns
 
 - name: Set ports so bind statistics-channel can bind to 8053
-  command: semanage port -a -t dns_port_t -p tcp 8053
+  ansible.builtin.command: semanage port -a -t dns_port_t -p tcp 8053
   when: semanageoutput.stdout.find("8053") == -1
   notify:
   - restart named

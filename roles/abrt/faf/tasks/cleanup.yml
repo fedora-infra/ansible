@@ -1,6 +1,6 @@
 ---
 - name: Remove EOLed opsys
-  command: faf releasemod -o "{{ item.opsys | lower }}" --opsys-release "{{ item.release }}" -s EOL
+  ansible.builtin.command: faf releasemod -o "{{ item.opsys | lower }}" --opsys-release "{{ item.release }}" -s EOL
   loop: "{{ eol_opsys }}"
   become: yes
   become_user: faf
@@ -8,7 +8,7 @@
   changed_when: false
 
 - name: Remove EOLed packages
-  command: faf cleanup-packages "{{ item.opsys }}" "{{ item.release }}"
+  ansible.builtin.command: faf cleanup-packages "{{ item.opsys }}" "{{ item.release }}"
   loop: "{{ eol_opsys }}"
   become: yes
   become_user: faf
@@ -16,7 +16,7 @@
   changed_when: false
 
 - name: Remove unassigned packages
-  command: faf cleanup-unassigned -f
+  ansible.builtin.command: faf cleanup-unassigned -f
   become: yes
   become_user: faf
   failed_when: false

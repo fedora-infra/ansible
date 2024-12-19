@@ -123,13 +123,13 @@
   - selinux
 
 - name: Install our custom selinux policy for cgit
-  command: semodule -i /usr/local/share/selinux/git_script_t.pp
+  ansible.builtin.command: semodule -i /usr/local/share/selinux/git_script_t.pp
   when: cgit_selinux_module is changed
   tags:
   - selinux
 
 - name: Create CGIT config file if it does not exist (takes almost an hour)
-  command: /usr/bin/copr-dist-git-refresh-cgit creates=/var/cache/cgit/repo-configuration.rc
+  ansible.builtin.command: /usr/bin/copr-dist-git-refresh-cgit creates=/var/cache/cgit/repo-configuration.rc
 
 - name: Ensure that .config directory exists
   ansible.builtin.file: path=/home/copr-dist-git/.config state=directory

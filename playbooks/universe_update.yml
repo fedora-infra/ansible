@@ -57,10 +57,10 @@
 
   tasks:
   - name: Check for rkhunter
-    command: /usr/bin/test -f /usr/bin/rkhunter
+    ansible.builtin.command: /usr/bin/test -f /usr/bin/rkhunter
     register: rkhunter
     ignore_errors: true
 
   - name: Run rkhunter --propupd
-    command: /usr/bin/rkhunter --propupd
+    ansible.builtin.command: /usr/bin/rkhunter --propupd
     when: rkhunter is success

@@ -55,7 +55,7 @@
     when: nodns is not defined or not "true" in nodns
 
   - name: Run update-dns on each nameserver
-    command: /usr/local/bin/update-dns
+    ansible.builtin.command: /usr/local/bin/update-dns
     delegate_to: "{{item}}"
     with_items: "{{groups.dns}}"
     when: nodns is not defined or not "true" in nodns

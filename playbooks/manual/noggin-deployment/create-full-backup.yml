@@ -7,7 +7,7 @@
   #  - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   tasks:
     - name: Create backup of FreeIPA server data
-      command: ipa-backup
+      ansible.builtin.command: ipa-backup
 
     - name: Make the latest backup available under a fixed name
       shell:

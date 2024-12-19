@@ -40,12 +40,12 @@
       dest: /var/tmp/mailman.dump.xz
       owner: postgres
       group: postgres
-  - command: unxz /var/tmp/mailman.dump.xz
+  - ansible.builtin.command: unxz /var/tmp/mailman.dump.xz
              creates=/var/tmp/mailman.dump
-  - command: dropdb mailman
-  - command: createdb -O mailmanadmin mailman
+  - ansible.builtin.command: dropdb mailman
+  - ansible.builtin.command: createdb -O mailmanadmin mailman
   - name: Import the prod db.  This will take quite a while.  Go get a snack!
-    command: psql -f /var/tmp/mailman.dump mailman
+    ansible.builtin.command: psql -f /var/tmp/mailman.dump mailman
   # - name: Fix the database
   #  shell: psql -f /var/lib/pgsql/mailman-reset-staging.sql mailman
 
@@ -55,12 +55,12 @@
       dest: /var/tmp/hyperkitty.dump.xz
       owner: postgres
       group: postgres
-  - command: unxz /var/tmp/hyperkitty.dump.xz
+  - ansible.builtin.command: unxz /var/tmp/hyperkitty.dump.xz
              creates=/var/tmp/hyperkitty.dump
-  - command: dropdb hyperkitty
-  - command: createdb -O hyperkittyadmin hyperkitty
+  - ansible.builtin.command: dropdb hyperkitty
+  - ansible.builtin.command: createdb -O hyperkittyadmin hyperkitty
   - name: Import the prod db.  This will take quite a while.  Go get a snack!
-    command: psql -f /var/tmp/hyperkitty.dump hyperkitty
+    ansible.builtin.command: psql -f /var/tmp/hyperkitty.dump hyperkitty
   # - name: Fix the database
   #  shell: psql -f /var/lib/pgsql/hyperkitty-reset-staging.sql hyperkitty
 
@@ -91,4 +91,4 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   tasks:
-  - command: /srv/webui/bin/prod-to-stg.py
+  - ansible.builtin.command: /srv/webui/bin/prod-to-stg.py

@@ -52,7 +52,7 @@
       - "{{ rpmdir }}/*.src.rpm"
 
   - name: Move processed srpms out to {{ rpmdir }}-old
-    command: /bin/mv {{ item }} {{ rpmdir }}-old/
+    ansible.builtin.command: /bin/mv {{ item }} {{ rpmdir }}-old/
     when: not testing
     with_fileglob:
       - "{{ rpmdir }}/*.src.rpm"
@@ -68,13 +68,13 @@
       - "{{ rpmdir }}/*.rpm"
 
   - name: Move processed rpms out to {{ rpmdir }}-old
-    command: /bin/mv {{ item }} {{ rpmdir }}-old/
+    ansible.builtin.command: /bin/mv {{ item }} {{ rpmdir }}-old/
     when: not testing
     with_fileglob:
       - "{{ rpmdir }}/*.rpm"
 
   - name: Run createrepo on each repo
-    command: createrepo --update {{ repodir }}/{{ item }}/
+    ansible.builtin.command: createrepo --update {{ repodir }}/{{ item }}/
     with_items:
     - SRPMS
     - x86_64

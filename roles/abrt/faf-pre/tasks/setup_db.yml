@@ -1,6 +1,6 @@
 ---
 - name: Ensure PostgreSQL database is initialized.
-  command: "postgresql-setup --initdb --unit postgresql"
+  ansible.builtin.command: "postgresql-setup --initdb --unit postgresql"
   args:
     creates: "/var/lib/pgsql/data/PG_VERSION"
 

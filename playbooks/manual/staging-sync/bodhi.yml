@@ -20,9 +20,9 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
-  - command: oc -n bodhi scale dc/bodhi-web --replicas=0
-  - command: oc -n bodhi scale dc/bodhi-consumer --replicas=0
-  - command: oc -n bodhi scale dc/bodhi-celery --replicas=0
+  - ansible.builtin.command: oc -n bodhi scale dc/bodhi-web --replicas=0
+  - ansible.builtin.command: oc -n bodhi scale dc/bodhi-consumer --replicas=0
+  - ansible.builtin.command: oc -n bodhi scale dc/bodhi-celery --replicas=0
 
 - name: Bring staging services down (messaging)
   hosts: bodhi_backend_stg
@@ -60,10 +60,10 @@
       src: /srv/web/infra/db-dumps/bodhi2.dump.xz
       dest: /var/tmp/bodhi2.dump.xz
       owner: postgres group=postgres
-  - command: unxz /var/tmp/bodhi2.dump.xz
+  - ansible.builtin.command: unxz /var/tmp/bodhi2.dump.xz
              creates=/var/tmp/bodhi2.dump
-  - command: dropdb bodhi2
-  - command: createdb -O bodhi2 bodhi2
+  - ansible.builtin.command: dropdb bodhi2
+  - ansible.builtin.command: createdb -O bodhi2 bodhi2
   - name: Import the prod db.
     shell: cat /var/tmp/bodhi2.dump | psql bodhi2
   - ansible.builtin.file: path=/var/tmp/bodhi2.dump state=absent
@@ -77,9 +77,9 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
-  - command: oc -n bodhi scale dc/bodhi-web --replicas=1
-  - command: oc -n bodhi scale dc/bodhi-consumer --replicas=1
-  - command: oc -n bodhi scale dc/bodhi-celery --replicas=1
+  - ansible.builtin.command: oc -n bodhi scale dc/bodhi-web --replicas=1
+  - ansible.builtin.command: oc -n bodhi scale dc/bodhi-consumer --replicas=1
+  - ansible.builtin.command: oc -n bodhi scale dc/bodhi-celery --replicas=1
 
 - name: Bring staging services up (httpd)
   hosts: bodhi2_stg

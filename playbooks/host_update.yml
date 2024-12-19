@@ -11,10 +11,10 @@
 
   tasks:
   - name: Expire-caches
-    command: yum clean expire-cache
+    ansible.builtin.command: yum clean expire-cache
 
   - name: Yum -y {{ yumcommand }}
-    command: yum -y {{ yumcommand }}
+    ansible.builtin.command: yum -y {{ yumcommand }}
     async: 7200
     poll: 30
 
@@ -24,10 +24,10 @@
 
   tasks:
   - name: Check for rkhunter
-    command: /usr/bin/test -f /usr/bin/rkhunter
+    ansible.builtin.command: /usr/bin/test -f /usr/bin/rkhunter
     register: rkhunter
     ignore_errors: true
 
   - name: Run rkhunter --propupd
-    command: /usr/bin/rkhunter --propupd
+    ansible.builtin.command: /usr/bin/rkhunter --propupd
     when: rkhunter is success

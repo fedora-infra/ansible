@@ -52,7 +52,7 @@
     - selinux
 
   - name: allow alternate ntpd port
-    command: semanage port -a -t ntp_port_t -p tcp 124
+    ansible.builtin.command: semanage port -a -t ntp_port_t -p tcp 124
     when: '"124" not in ntp_selinux_port'
     failed_when: false
     tags:
@@ -60,7 +60,7 @@
     - selinux
 
   - name: allow alternate ntpd port
-    command: semanage port -a -t ntp_port_t -p udp 124
+    ansible.builtin.command: semanage port -a -t ntp_port_t -p udp 124
     when: '"124" not in ntp_selinux_port'
     failed_when: false
     tags:

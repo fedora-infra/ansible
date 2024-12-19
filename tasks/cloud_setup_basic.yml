@@ -58,21 +58,21 @@
   - config
 
 - name: Update all
-  command: yum -y update creates=/etc/sysconfig/global-update-applied
+  ansible.builtin.command: yum -y update creates=/etc/sysconfig/global-update-applied
   register: updated
   when: ansible_distribution_major_version|int < 8 and ansible_distribution == 'RedHat'
   tags:
   - packages
 
 - name: Update all
-  command: dnf -y update creates=/etc/sysconfig/global-update-applied
+  ansible.builtin.command: dnf -y update creates=/etc/sysconfig/global-update-applied
   register: updated
   when: ansible_distribution_major_version|int > 7 and ansible_distribution == 'RedHat' and ansible_cmdline.ostree is not defined
   tags:
   - packages
 
 - name: Update all
-  command: dnf -y update creates=/etc/sysconfig/global-update-applied
+  ansible.builtin.command: dnf -y update creates=/etc/sysconfig/global-update-applied
   register: updated
   when: ansible_distribution_major_version|int >= 29 and ansible_distribution == 'Fedora' and ansible_cmdline.ostree is not defined
   tags:

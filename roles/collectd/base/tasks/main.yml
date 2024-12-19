@@ -152,7 +152,7 @@
   - selinux
 
 - name: Install our general collectd selinux module
-  command: semodule -i /usr/share/collectd/fi-collectd.pp
+  ansible.builtin.command: semodule -i /usr/share/collectd/fi-collectd.pp
   when: ficgeneral_module is changed or ficgeneral_installed_version != ficgeneral_local_version
   tags:
   - collectd
@@ -175,7 +175,7 @@
   - selinux
 
 - name: Install our pstorefs/collectd selinux module
-  command: semodule -i /usr/share/collectd/fi-pstorefs.pp
+  ansible.builtin.command: semodule -i /usr/share/collectd/fi-pstorefs.pp
   when: (ficpstorefs_module is changed or ficpstorefs_grep is changed)
   tags:
   - collectd

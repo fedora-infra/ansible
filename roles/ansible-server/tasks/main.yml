@@ -30,6 +30,6 @@
   - ansible-server
 
 - name: Install required collections
-  command: ansible-galaxy install -r {{ ansible_base }}/ansible/roles/ansible-server/files/requirements.yml
+  ansible.builtin.command: ansible-galaxy install -r {{ ansible_base }}/ansible/roles/ansible-server/files/requirements.yml
   tags:
   - ansible-server

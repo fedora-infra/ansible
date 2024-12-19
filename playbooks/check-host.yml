@@ -144,7 +144,7 @@
       - fileverify
 
   - name: Get locally changed files (excluding config files)
-    command: "egrep -v '  c /' {{ localchanges.stdout }}"
+    ansible.builtin.command: "egrep -v '  c /' {{ localchanges.stdout }}"
     register: rpm_va_nc
     changed_when: false
     when: localchanges is defined and localchanges.stdout != ""
@@ -161,7 +161,7 @@
       - fileverify
 
   - name: 'Whitelist - Get locally changed files (config files)'
-    command: "egrep '  c /' {{ localchanges.stdout }}"
+    ansible.builtin.command: "egrep '  c /' {{ localchanges.stdout }}"
     register: rpm_va_c
     when: localchanges is defined and localchanges.stdout != ""
     changed_when: false

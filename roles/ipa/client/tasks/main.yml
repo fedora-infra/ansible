@@ -15,7 +15,7 @@
     - vpn-client-enablement
 
 - name: Enroll system as IPA client
-  command:
+  ansible.builtin.command:
     cmd: ipa-client-install
          {% if (vpn | default(false)) %}{% for node in ipa_server_nodes | default([]) %}
          --server={{ node }}

@@ -78,15 +78,15 @@
       dest: /var/tmp/{{ db }}.dump.xz
 
   - name: Unpack the archive
-    command: unxz /var/tmp/{{ db }}.dump.xz
+    ansible.builtin.command: unxz /var/tmp/{{ db }}.dump.xz
              creates=/var/tmp/{{ db }}.dump
 
   - name: Drop the postgresql database in staging
-    command: dropdb {{ db }}
+    ansible.builtin.command: dropdb {{ db }}
     ignore_errors: yes
 
   - name: Create the postgresql database in staging
-    command: createdb {{ db }}
+    ansible.builtin.command: createdb {{ db }}
 
   - name: Import the prod db.  This will take quite a while.  Go get a snack!
     shell: cat /var/tmp/{{ db }}.dump | psql {{ db }}
@@ -123,7 +123,7 @@
 
   tasks:
   - name: Remove the db dump on the prod server
-    command: rm -f /var/tmp/{{ db }}.dump.xz
+    ansible.builtin.command: rm -f /var/tmp/{{ db }}.dump.xz
 
 - name: Remove the prod db dump on batcave
   hosts: batcave01.iad2.fedoraproject.org
@@ -138,4 +138,4 @@
 
   tasks:
   - name: Remove the DB dump from batcave
-    command: rm -f /var/tmp/{{ db }}.dump.xz
+    ansible.builtin.command: rm -f /var/tmp/{{ db }}.dump.xz

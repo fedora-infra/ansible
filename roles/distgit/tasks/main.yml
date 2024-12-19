@@ -268,7 +268,7 @@
   - selinux
 
 - name: Check the selinux context of the Lookaside Cache root directory
-  command: matchpathcon /srv/cache
+  ansible.builtin.command: matchpathcon /srv/cache
   register: lcachecontext
   check_mode: no
   changed_when: false
@@ -279,7 +279,7 @@
   - distgit
 
 - name: Set the SELinux policy for the Lookaside Cache root directory
-  command: semanage fcontext -a -t nfs_t "/srv/cache(/.*)?"
+  ansible.builtin.command: semanage fcontext -a -t nfs_t "/srv/cache(/.*)?"
   when: lcachecontext.stdout.find('nfs_t') == -1 and env != "staging"
   tags:
   - config
@@ -319,7 +319,7 @@
   tags: selinux
 
 - name: Install our custom selinux policy
-  command: semodule -i /usr/local/share/selinux/upload_cgi.pp
+  ansible.builtin.command: semodule -i /usr/local/share/selinux/upload_cgi.pp
   when: selinux_module is changed
   tags: selinux
 
@@ -329,7 +329,7 @@
   tags: selinux
 
 - name: Install our custom nfs selinux policy
-  command: semodule -i /usr/local/share/selinux/cgi-nfs.pp
+  ansible.builtin.command: semodule -i /usr/local/share/selinux/cgi-nfs.pp
   when: nfs_selinux_module is changed
   tags: selinux
 
@@ -365,7 +365,7 @@
   - pkgs
 
 - name: Run initial grokmirror run
-  command: /usr/bin/grok-manifest -m /srv/git/grokmirror/manifest.js.gz -t /srv/git/repositories/ creates=/srv/git/grokmirror/manifest.js.gz
+  ansible.builtin.command: /usr/bin/grok-manifest -m /srv/git/grokmirror/manifest.js.gz -t /srv/git/repositories/ creates=/srv/git/grokmirror/manifest.js.gz
   when: env != "staging"
   tags:
   - grokmirror

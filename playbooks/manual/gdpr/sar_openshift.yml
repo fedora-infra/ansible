@@ -6,7 +6,7 @@
   register: pod_id
 # Run the SAR script
 - name: Run oc exec in container to extract the data
-  command: "oc -n {{ item.value.openshift_namespace }} rsh {{ pod_id.stdout }} bash -c 'SAR_USERNAME={{ sar_fas_user }} SAR_EMAIL={{ sar_email }} {{ item.value.sar_script }}'"
+  ansible.builtin.command: "oc -n {{ item.value.openshift_namespace }} rsh {{ pod_id.stdout }} bash -c 'SAR_USERNAME={{ sar_fas_user }} SAR_EMAIL={{ sar_email }} {{ item.value.sar_script }}'"
   register: sar_data
 # Store the result on disk
 - name: Copy the output data locally

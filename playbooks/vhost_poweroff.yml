@@ -41,7 +41,7 @@
 
   tasks:
   - name: Halt the vm instances - to poweroff
-    command: /sbin/shutdown -h 1
+    ansible.builtin.command: /sbin/shutdown -h 1
     ignore_errors: true
     # if one of them is down we don't care
 
@@ -61,4 +61,4 @@
 
   tasks:
   - name: Halt the virthost
-    command: /sbin/shutdown -h 1
+    ansible.builtin.command: /sbin/shutdown -h 1

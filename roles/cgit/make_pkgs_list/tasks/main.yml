@@ -50,7 +50,7 @@
   tags: cgit
 
 - name: Check the selinux context of the repo list
-  command: matchpathcon /srv/git/pkgs-git-repos-list
+  ansible.builtin.command: matchpathcon /srv/git/pkgs-git-repos-list
   register: gitlistcontext
   check_mode: no
   changed_when: false
@@ -60,7 +60,7 @@
   - selinux
 
 - name: Set the SELinux policy for the repo list
-  command: semanage fcontext -a -t git_content_t "/srv/git/pkgs-git-repos-list"
+  ansible.builtin.command: semanage fcontext -a -t git_content_t "/srv/git/pkgs-git-repos-list"
   when: gitlistcontext.stdout.find('git_content_t') == -1
   tags:
   - config

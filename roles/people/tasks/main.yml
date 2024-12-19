@@ -76,7 +76,7 @@
   - people
 
 - name: Check the selinux context of the users home git dirs
-  command: matchpathcon "/home/fedora/someone/public_git"
+  ansible.builtin.command: matchpathcon "/home/fedora/someone/public_git"
   register: gitcontext
   check_mode: no
   changed_when: false
@@ -85,14 +85,14 @@
   - selinux
 
 - name: Set the SELinux policy for the users home git dirs
-  command: semanage fcontext -a -t git_user_content_t "/home/fedora/(.*)/public_git(.*)"
+  ansible.builtin.command: semanage fcontext -a -t git_user_content_t "/home/fedora/(.*)/public_git(.*)"
   when: gitcontext.stdout.find('git_user_content_t') == -1
   tags:
   - config
   - selinux
 
 - name: Check the selinux context of the project dirs
-  command: matchpathcon "/project"
+  ansible.builtin.command: matchpathcon "/project"
   register: gitcontext
   check_mode: no
   changed_when: false
@@ -101,14 +101,14 @@
   - selinux
 
 - name: Set the SELinux policy for the project dirs
-  command: semanage fcontext -a -t httpd_sys_content_t "/project(.*)"
+  ansible.builtin.command: semanage fcontext -a -t httpd_sys_content_t "/project(.*)"
   when: gitcontext.stdout.find('httpd_sys_content_t') == -1
   tags:
   - config
   - selinux
 
 - name: Check the selinux context of the web dir
-  command: matchpathcon "/srv/web"
+  ansible.builtin.command: matchpathcon "/srv/web"
   register: gitcontext
   check_mode: no
   changed_when: false
@@ -117,14 +117,14 @@
   - selinux
 
 - name: Set the SELinux policy for the web dir
-  command: semanage fcontext -a -t httpd_sys_content_t "/srv/web(/.*)?"
+  ansible.builtin.command: semanage fcontext -a -t httpd_sys_content_t "/srv/web(/.*)?"
   when: gitcontext.stdout.find('httpd_sys_content_t') == -1
   tags:
   - config
   - selinux
 
 - name: Check the selinux context of the people dir
-  command: matchpathcon "/srv/people"
+  ansible.builtin.command: matchpathcon "/srv/people"
   register: gitcontext
   check_mode: no
   changed_when: false
@@ -133,7 +133,7 @@
   - selinux
 
 - name: Set the SELinux policy for the web dir
-  command: semanage fcontext -a -t httpd_sys_content_t "/srv/people(/.*)?"
+  ansible.builtin.command: semanage fcontext -a -t httpd_sys_content_t "/srv/people(/.*)?"
   when: gitcontext.stdout.find('httpd_sys_content_t') == -1
   tags:
   - config
@@ -142,7 +142,7 @@
 # This is a file context alias, to let ansible know that /home and /srv/home
 # are equal as far as contexts are concerned.
 - name: Check the selinux context alias of the home dir
-  command: matchpathcon "/srv/home"
+  ansible.builtin.command: matchpathcon "/srv/home"
   register: gitcontext
   check_mode: no
   changed_when: false
@@ -151,7 +151,7 @@
   - selinux
 
 - name: Set the SELinux policy alias for the home dir
-  command: semanage fcontext -a -e /home /srv/home
+  ansible.builtin.command: semanage fcontext -a -e /home /srv/home
   when: gitcontext.stdout.find('home_root_t') == -1
   tags:
   - config
@@ -172,7 +172,7 @@
 # Default quota for users is 2gb
 #
 - name: Set default xfs quotas on /srv
-  command: xfs_quota -x -c 'limit bsoft=2g bhard=2g -d' /srv
+  ansible.builtin.command: xfs_quota -x -c 'limit bsoft=2g bhard=2g -d' /srv
   check_mode: no
   register: xfs_quotaoutput
   changed_when: "xfs_quotaoutput.rc != 0"
@@ -185,7 +185,7 @@
 # It's also safe to aways run.
 #
 - name: Set quotas for people who have more set
-  command: >-
+  ansible.builtin.command: >-
     xfs_quota -x -c 'limit bsoft={{ item.quota }} bhard={{ item.quota }} {{ item.user }}' /srv
   with_items:
   - {user: adamwill, quota: 8g}

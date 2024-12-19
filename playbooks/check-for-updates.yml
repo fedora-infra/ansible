@@ -33,7 +33,7 @@
 #
 
   - name: Make dnf recheck for new metadata from repos
-    command: dnf clean expire-cache
+    ansible.builtin.command: dnf clean expire-cache
 
   - name: Check for updates (dnf)
     dnf: list=updates

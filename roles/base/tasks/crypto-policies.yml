@@ -1,6 +1,6 @@
 ---
 - name: Check current crypto-policy
-  command: "update-crypto-policies --show"
+  ansible.builtin.command: "update-crypto-policies --show"
   register: currentcryptopolicy
   failed_when: "1 != 1"
   changed_when: "1 != 1"
@@ -10,7 +10,7 @@
   - base/crypto-policies
 
 - name: Check if policy is applied
-  command: "update-crypto-policies --is-applied"
+  ansible.builtin.command: "update-crypto-policies --is-applied"
   register: cryptopolicyapplied
   failed_when: "1 != 1"
   changed_when: "1 != 1"
@@ -20,7 +20,7 @@
   - base/crypto-policies
 
 - name: Set crypto-policy on fedora 33 and higher hosts back to default
-  command: "update-crypto-policies --set DEFAULT"
+  ansible.builtin.command: "update-crypto-policies --set DEFAULT"
   when: "ansible_distribution_major_version|int >= 33 and (currentcryptopolicy.stdout.find('DEFAULT') == -1 or cryptopolicyapplied.rc != 0) and not inventory_hostname.startswith('ipsilon') "
   check_mode: no
   tags:
@@ -28,7 +28,7 @@
   - base/crypto-policies
 
 - name: Set crypto-policy on RHEL9 dns servers to DEFAULT:SHA1
-  command: "update-crypto-policies --set DEFAULT:SHA1"
+  ansible.builtin.command: "update-crypto-policies --set DEFAULT:SHA1"
   when: "inventory_hostname.startswith('ns') and (currentcryptopolicy.stdout.find('DEFAULT:SHA1') == -1 or cryptopolicyapplied.rc != 0)"
   check_mode: no
   tags:

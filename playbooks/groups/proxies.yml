@@ -153,5 +153,5 @@
     ignore_errors: true
 
   - name: make sure selinux contexts are right on srv
-    command: restorecon -R /srv
+    ansible.builtin.command: restorecon -R /srv
     changed_when: false

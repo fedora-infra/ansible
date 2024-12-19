@@ -533,7 +533,7 @@
   - nagios_server
 
 - name: Install our custom selinux module
-  command: semodule -i /usr/local/share/nagios-policy/nagios_hostname.pp
+  ansible.builtin.command: semodule -i /usr/local/share/nagios-policy/nagios_hostname.pp
   when: selinux_module is changed
   tags:
   - nagios_server
@@ -545,7 +545,7 @@
   - nagios_server
 
 - name: Install our custom selinux module
-  command: semodule -i /usr/local/share/nagios-policy/nagios_nrpe.pp
+  ansible.builtin.command: semodule -i /usr/local/share/nagios-policy/nagios_nrpe.pp
   when: selinux_module2 is changed
   tags:
   - nagios_server

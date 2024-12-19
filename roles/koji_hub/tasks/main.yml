@@ -333,7 +333,7 @@
   when: ansible_hostname.startswith('koji')
 
 - name: Check selinux default context for /mnt/fedora_koji in staging
-  command: matchpathcon /mnt/fedora_koji
+  ansible.builtin.command: matchpathcon /mnt/fedora_koji
   register: mnt_fedora_koji_context
   when: env == "staging"
   check_mode: no
@@ -343,7 +343,7 @@
   - selinux
 
 - name: /mnt/fedora_koji selinux file context
-  command: semanage fcontext -a -t httpd_sys_rw_content_t "/mnt/fedora_koji(/.*)?"
+  ansible.builtin.command: semanage fcontext -a -t httpd_sys_rw_content_t "/mnt/fedora_koji(/.*)?"
   when: env == "staging" and
         mnt_fedora_koji_context.stdout.find('httpd_sys_rw_content_t') == -1
   tags:

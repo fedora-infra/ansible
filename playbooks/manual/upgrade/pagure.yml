@@ -75,7 +75,7 @@
     when: inventory_hostname.startswith('pagure')
 
   - name: Upgrade the database
-    command: /usr/bin/alembic -c /etc/pagure/alembic.ini upgrade head
+    ansible.builtin.command: /usr/bin/alembic -c /etc/pagure/alembic.ini upgrade head
     args:
       chdir: /etc/pagure/
     environment:

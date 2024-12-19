@@ -1,6 +1,6 @@
 ---
 - name: Check if faf is installed
-  command: rpm -q faf
+  ansible.builtin.command: rpm -q faf
   changed_when: false
 
 - name: Add user retrace to faf db

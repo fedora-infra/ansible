@@ -100,7 +100,7 @@
           - kvm_deploy
         when: inventory_hostname in groups['ocp_vms_stg'] or inventory_hostname in groups['ocp_vms']
       - name: == OCP KVM provisioning == Deploying the OCP Virtual Guest[s]
-        command: "{{ virt_install_command }}"
+        ansible.builtin.command: "{{ virt_install_command }}"
         delegate_to: "{{ vmhost }}"
         tags:
           - kvm_deploy

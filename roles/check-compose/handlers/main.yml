@@ -1,6 +1,6 @@
 # Restart handler for our fedora-messaging consumer
 ---
 - name: Conditionally restart check-compose consumer service
-  command: /usr/local/bin/conditional-restart.sh fm-consumer@check-compose
+  ansible.builtin.command: /usr/local/bin/conditional-restart.sh fm-consumer@check-compose
   listen:
   - restart check-compose

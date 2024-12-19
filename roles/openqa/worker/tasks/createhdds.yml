@@ -22,7 +22,7 @@
   seboolean: name=virt_use_nfs state=yes persistent=yes
 
 - name: Check if SMT setting needs changing
-  command: "ppc64_cpu --smt"
+  ansible.builtin.command: "ppc64_cpu --smt"
   register: smtcheck
   failed_when: "1 != 1"
   changed_when: "1 != 1"
@@ -30,7 +30,7 @@
   when: ansible_architecture == 'ppc64' or ansible_architecture == 'ppc64le'
 
 - name: Change SMT setting if necessary
-  command: "ppc64_cpu --smt=off"
+  ansible.builtin.command: "ppc64_cpu --smt=off"
   when: "smtcheck.stdout is defined and smtcheck.stdout.find('is off') == -1"
 
 - name: Check createhdds directory exists with correct ownership
@@ -40,7 +40,7 @@
 # branch, as that usually means we're messing around on staging and
 # don't want the checkout reset to HEAD.
 - name: Check if tests are checked out and on a non-standard branch
-  command: "git status" # noqa 303
+  ansible.builtin.command: "git status" # noqa 303
   args:
     chdir: /root/createhdds
   register: createhddsbranch
@@ -62,7 +62,7 @@
   ansible.builtin.copy: src=createhdds dest=/etc/cron.daily/createhdds owner=root group=root mode=0755
 
 - name: Check if any hard disk images need (re)building
-  command: "/root/createhdds/createhdds.py check"
+  ansible.builtin.command: "/root/createhdds/createhdds.py check"
   args:
     chdir: /var/lib/openqa/share/factory/hdd/fixed
   register: diskcheck
@@ -79,6 +79,6 @@
 # outright *missing* images here in the playbook (to handle the case of
 # first deployment). Outdated images are handled by the daily cron run.
 - name: Create hard disk images (this may take a long time!)
-  command: "/etc/cron.daily/createhdds"
+  ansible.builtin.command: "/etc/cron.daily/createhdds"
   when: "diskcheck.rc > 1"
   ignore_errors: yes

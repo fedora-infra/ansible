@@ -3,10 +3,10 @@
 #
 ---
 - name: reload systemd
-  command: systemctl daemon-reload
+  ansible.builtin.command: systemctl daemon-reload
 
 - name: restart apache
-  command: /usr/local/bin/conditional-restart.sh httpd httpd
+  ansible.builtin.command: /usr/local/bin/conditional-restart.sh httpd httpd
 
 - name: reload apache
   action: service name=httpd state=reloaded
@@ -18,31 +18,31 @@
   action: service name=crond state=restarted
 
 - name: restart fedmsg-gateway
-  command: /usr/local/bin/conditional-restart.sh fedmsg-gateway
+  ansible.builtin.command: /usr/local/bin/conditional-restart.sh fedmsg-gateway
 
 - name: restart fedmsg-hub
-  command: /usr/local/bin/conditional-restart.sh {{ item }}
+  ansible.builtin.command: /usr/local/bin/conditional-restart.sh {{ item }}
   with_items:
   - fedmsg-hub
   - fedmsg-hub-3
 
 - name: restart fedmsg-hub-3
-  command: /usr/local/bin/conditional-restart.sh {{ item }}
+  ansible.builtin.command: /usr/local/bin/conditional-restart.sh {{ item }}
   with_items:
   - fedmsg-hub
   - fedmsg-hub-3
 
 - name: restart fedmsg-irc
-  command: /usr/local/bin/conditional-restart.sh fedmsg-irc
+  ansible.builtin.command: /usr/local/bin/conditional-restart.sh fedmsg-irc
 
 - name: restart fedmsg-relay
-  command: /usr/local/bin/conditional-restart.sh fedmsg-relay
+  ansible.builtin.command: /usr/local/bin/conditional-restart.sh fedmsg-relay
 
 - name: restart fm-consumer@koji_sync_listener
   action: service name=fm-consumer@koji_sync_listener state=restarted enabled=yes
 
 - name: reload httpd
-  command: /usr/local/bin/conditional-reload.sh httpd httpd
+  ansible.builtin.command: /usr/local/bin/conditional-reload.sh httpd httpd
 
 - name: restart iptables
   action: service name=iptables state=restarted
@@ -98,22 +98,22 @@
   action: service name=network state=restarted
 
 - name: rebuild postfix transport
-  command: /usr/sbin/postmap /etc/postfix/transport
+  ansible.builtin.command: /usr/sbin/postmap /etc/postfix/transport
 
 - name: rebuild postfix bysender
-  command: /usr/sbin/postmap /etc/postfix/bysender
+  ansible.builtin.command: /usr/sbin/postmap /etc/postfix/bysender
 
 - name: rebuild postfix tls_policy
-  command: /usr/sbin/postmap /etc/postfix/tls_policy
+  ansible.builtin.command: /usr/sbin/postmap /etc/postfix/tls_policy
 
 - name: restart postfix
   service: name=postfix state=restarted
 
 - name: reload proxyhttpd
-  command: /usr/local/bin/proxy-conditional-reload.sh httpd httpd
+  ansible.builtin.command: /usr/local/bin/proxy-conditional-reload.sh httpd httpd
 
 - name: run rkhunter
-  command: rkhunter --propupd
+  ansible.builtin.command: rkhunter --propupd
 
 - name: restart moksha-hub
   service: name=moksha-hub state=restarted
@@ -139,7 +139,7 @@
   service: name=pagure_ev state=restarted
 
 - name: "update ca-trust"
-  command: /usr/bin/update-ca-trust
+  ansible.builtin.command: /usr/bin/update-ca-trust
 
 - name: restart stunnel
   service: name=stunnel state=restarted
@@ -151,20 +151,20 @@
   service: name=NetworkManager state=restarted
 
 - name: reload NetworkManager-connections
-  command: nmcli c reload
+  ansible.builtin.command: nmcli c reload
 
 - name: restart basset-worker
   service: name=basset-worker state=restarted
 
 - name: apply interface-changes
-  command: nmcli con up {{ item.split()[1] }}
+  ansible.builtin.command: nmcli con up {{ item.split()[1] }}
   async: 1
   poll: 0
   loop: "{{ if_uuid.stdout_lines|flatten(levels=1) }}"
   when: item.split()[1] not in ansible_ifcfg_disabled
 
 - name: flush journald tmpfiles to persistent store
-  command: pkill -f -USR1 systemd-journald
+  ansible.builtin.command: pkill -f -USR1 systemd-journald
 
 - name: restart idmapd
   service: name=nfs-idmapd state=restarted

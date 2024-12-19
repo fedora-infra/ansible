@@ -125,7 +125,7 @@
   - cron
 
 - name: Determine Python version
-  command:
+  ansible.builtin.command:
     argv:
       - python3
       - -c
@@ -376,7 +376,7 @@
   - bodhi
 
 - name: Let the ftpsync user also read the fedora-messaging key
-  command: /usr/bin/setfacl -m user:ftpsync:rx /etc/pki/fedora-messaging/bodhi-key.pem
+  ansible.builtin.command: /usr/bin/setfacl -m user:ftpsync:rx /etc/pki/fedora-messaging/bodhi-key.pem
   tags:
   - config
   - bodhi

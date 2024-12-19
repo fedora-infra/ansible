@@ -1,6 +1,6 @@
 ---
 - name: Check the selinux context of the git repo directory
-  command: matchpathcon /srv/git
+  ansible.builtin.command: matchpathcon /srv/git
   register: distgitcontext
   check_mode: no
   changed_when: false
@@ -22,7 +22,7 @@
     - selinux
 
 - name: Set the SELinux policy for the distgit root directory
-  command: semanage fcontext -a -t gitosis_var_lib_t "/srv/git(/.*)?"
+  ansible.builtin.command: semanage fcontext -a -t gitosis_var_lib_t "/srv/git(/.*)?"
   when: distgitcontext.stdout.find('gitosis_var_lib_t') == -1
   tags:
   - config
@@ -30,7 +30,7 @@
   - selinux
 
 - name: Check the selinux context of the releases directory
-  command: matchpathcon /var/www/releases
+  ansible.builtin.command: matchpathcon /var/www/releases
   register: distgitcontext
   check_mode: no
   changed_when: false
@@ -41,7 +41,7 @@
 
 # Note: On Fedora its httpd_sys_content_rw_t - Don't we love confusions?
 - name: Set the SELinux policy for the releases directory
-  command: semanage fcontext -a -t httpd_sys_rw_content_t "/var/www/releases(/.*)?"
+  ansible.builtin.command: semanage fcontext -a -t httpd_sys_rw_content_t "/var/www/releases(/.*)?"
   when: distgitcontext.stdout.find('httpd_sys_rw_content_t') == -1
   tags:
   - config
