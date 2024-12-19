@@ -58,7 +58,7 @@
   - import_tasks: "{{ tasks_path }}/motd.yml"
 
   - name: Install some misc packages needed for various tasks
-    package:
+    ansible.builtin.package:
       state: present
       name:
         - createrepo

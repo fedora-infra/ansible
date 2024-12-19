@@ -198,7 +198,7 @@
     - images_s390x
 
 - name: Sometimes it is worth having the copr.py ansible plugin
-  package: name=ansible-collection-community-general state=latest
+  ansible.builtin.package: name=ansible-collection-community-general state=latest
 
 - name: Install IBM Cloud token file
   ansible.builtin.copy:

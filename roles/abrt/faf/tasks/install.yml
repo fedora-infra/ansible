@@ -13,51 +13,51 @@
   when: ansible_distribution == 'Fedora'
 
 - name: Erase faf packages
-  package:
+  ansible.builtin.package:
     name: "faf-*"
     state: absent
   when: faf_force_reinstall|bool
 
 - name: Install core faf packages
-  package:
+  ansible.builtin.package:
     name: "{{ faf_packages }}"
     state: present
 
 - name: Install faf problem packages
-  package:
+  ansible.builtin.package:
     name: "{{ faf_problem_packages }}"
     state: present
 
 - name: Install faf opsys packages
-  package:
+  ansible.builtin.package:
     name: "{{ faf_opsys_packages }}"
     state: present
 
 - name: Install faf action packages
-  package:
+  ansible.builtin.package:
     name: "{{ faf_action_packages }}"
     state: present
 
 - name: Install faf bugtracker packages
-  package:
+  ansible.builtin.package:
     name: "{{ faf_bugtracker_packages }}"
     state: present
   when: faf_with_bugtrackers|bool
 
 - name: Install faf celery packages
-  package:
+  ansible.builtin.package:
     name: "{{ faf_celery_packages }}"
     state: present
   when: faf_with_celery|bool
 
 - name: Install faf fedmsg packages
-  package:
+  ansible.builtin.package:
     name: "{{ faf_fedmsg_packages }}"
     state: present
   when: faf_with_fedmsg|bool
 
 - name: Install faf solutionfinder packages
-  package:
+  ansible.builtin.package:
     name: "{{ faf_solutionfinder_packages }}"
     state: present
   when: faf_with_solutionfinders|bool

@@ -54,7 +54,7 @@
   - httpd/proxy
 
 - name: Install libsemanage
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - libsemanage-python
@@ -65,7 +65,7 @@
   when: (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int < 8) or (ansible_distribution_major_version|int < 30 and ansible_distribution == 'Fedora')
 
 - name: Install libsemanage in a python3 manner
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - python3-libsemanage

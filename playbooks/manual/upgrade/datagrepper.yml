@@ -16,10 +16,10 @@
     ansible.builtin.command: yum clean all {%if testing%} --enablerepo=infrastructure-tags-stg {%endif%}
     check_mode: no
   - name: Yum update datagrepper packages from main repo
-    package: name="datagrepper" state=latest
+    ansible.builtin.package: name="datagrepper" state=latest
     when: not testing
   - name: Yum update datagrepper packages from testing repo
-    package: name="datagrepper" state=latest enablerepo=infrastructure-tags-stg
+    ansible.builtin.package: name="datagrepper" state=latest enablerepo=infrastructure-tags-stg
     when: testing
 
 - name: Verify the config and restart it

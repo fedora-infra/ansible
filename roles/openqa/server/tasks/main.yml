@@ -117,7 +117,7 @@
 # this is separate from the step below so we can use openqa_repo just
 # for these packages
 - name: Install openQA packages
-  package:
+  ansible.builtin.package:
     name:
       - openqa
       - openqa-httpd
@@ -128,7 +128,7 @@
   - packages
 
 - name: Install various other required packages
-  package:
+  ansible.builtin.package:
     name:
       - python3-libselinux # for using seboolean module
       - git # for checking out tests/tools
@@ -142,7 +142,7 @@
   - packages
 
 - name: Install various other required packages
-  package:
+  ansible.builtin.package:
     name:
       - nfs-utils # for configuring/running NFS server
     state: present

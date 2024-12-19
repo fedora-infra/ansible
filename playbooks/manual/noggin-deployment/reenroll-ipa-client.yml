@@ -23,7 +23,7 @@
   # Preparation
 
   - name: Install packages
-    package:
+    ansible.builtin.package:
       name:
         - freeipa-client
         - krb5-workstation

@@ -2,7 +2,7 @@
 # tasklist for setting up git mail hooks
 
 - name: Install needed packages
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - git

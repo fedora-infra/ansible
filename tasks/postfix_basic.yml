@@ -1,6 +1,6 @@
 ---
 - name: Install postfix
-  package: name=postfix state=present
+  ansible.builtin.package: name=postfix state=present
   tags:
   - postfix
   - packages

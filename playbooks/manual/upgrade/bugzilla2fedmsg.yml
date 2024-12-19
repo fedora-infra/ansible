@@ -16,7 +16,7 @@
     ansible.builtin.command: yum clean all {%if testing%} --enablerepo=infrastructure-tags-stg {%endif%}
     check_mode: no
   - name: Update bugzilla2fedmsg packages from main repo
-    package: name="python-bugzilla2fedmsg" state=latest
+    ansible.builtin.package: name="python-bugzilla2fedmsg" state=latest
     when: not testing
   - name: Update bugzilla2fedmsg packages from testing repo
     yum: name="python-bugzilla2fedmsg" state=latest enablerepo=infrastructure-tags-stg

@@ -23,7 +23,7 @@
   when: "deployment_type is defined"
 
 - name: Install required packages
-  package:
+  ansible.builtin.package:
     name: relval
     state: present
   tags:

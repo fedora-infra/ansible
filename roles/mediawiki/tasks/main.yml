@@ -35,7 +35,7 @@
   - mediawiki
 
 - name: Install needed packages
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - "{{ wikiver }}"
@@ -59,7 +59,7 @@
 # the FPCA check, and returns the message to the user:
 # "You need to have signed the FPCA to log into the wiki"
 - name: Install needed packages (fedora only)
-  package: name={{ item }} state=present
+  ansible.builtin.package: name={{ item }} state=present
   with_items:
   - "{{ wikiver }}-skin-fedora"
   - php-mysqlnd

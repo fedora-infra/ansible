@@ -1,7 +1,7 @@
 ---
 
 - name: Install python-retask
-  package: name=python-retask state=present
+  ansible.builtin.package: name=python-retask state=present
   tags:
   - collectd
 

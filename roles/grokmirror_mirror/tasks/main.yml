@@ -4,7 +4,7 @@
 #
 
 - name: Install grokmirror
-  package: name=python3-grokmirror state=installed
+  ansible.builtin.package: name=python3-grokmirror state=installed
   tags:
   - grokmirror-mirror
 

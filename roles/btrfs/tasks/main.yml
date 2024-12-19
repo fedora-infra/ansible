@@ -1,6 +1,6 @@
 ---
 - name: Install btrfsmaintenance package
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - btrfsmaintenance

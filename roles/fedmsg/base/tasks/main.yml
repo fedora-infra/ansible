@@ -3,7 +3,7 @@
 # This is the base set of files needed for fedmsg
 
 - name: Install needed packages
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - libsemanage-python
@@ -14,7 +14,7 @@
   when: ansible_distribution_major_version|int < 8
 
 - name: Install python2 fedmsg package
-  package: name=fedmsg state=present
+  ansible.builtin.package: name=fedmsg state=present
   when: "'python34_fedmsg' not in group_names and ansible_distribution_major_version|int < 22"
   tags: fedmsg/base
 
@@ -24,7 +24,7 @@
   tags: fedmsg/base
 
 - name: Install the python34 fedmsg package (yum)
-  package: name=python34-fedmsg-core state=present
+  ansible.builtin.package: name=python34-fedmsg-core state=present
   when: "'python34_fedmsg' in group_names and ansible_distribution_major_version|int < 22"
   tags: fedmsg/base
 
@@ -146,7 +146,7 @@
   - restart fedmsg-relay
 
 - name: Install fedmsg-relay in case we're in debug mode.
-  package: name=fedmsg-relay state=present
+  ansible.builtin.package: name=fedmsg-relay state=present
   when: fedmsg_debug_loopback == true and ansible_distribution_major_version|int < 22
   tags:
   - fedmsg_loopback

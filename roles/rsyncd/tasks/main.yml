@@ -4,7 +4,7 @@
 #
 
 - name: Install necessary packages
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - rsync
@@ -16,7 +16,7 @@
   when: ansible_distribution == 'RedHat' and ansible_distribution_major_version|int < 8
 
 - name: Install necessary packages
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - rsync
@@ -28,7 +28,7 @@
   when: ansible_distribution == 'RedHat' and ansible_distribution_major_version|int == 8
 
 - name: Install necessary packages for fedora or rhel9
-  package:
+  ansible.builtin.package:
     state: present
     name:
       - rsync-daemon

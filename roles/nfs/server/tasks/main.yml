@@ -3,7 +3,7 @@
 #
 ---
 - name: Install needed nfs server packages
-  package: name={{ item }} state=present
+  ansible.builtin.package: name={{ item }} state=present
   with_items:
   - nfs-utils
   - rpcbind

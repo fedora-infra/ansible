@@ -3,7 +3,7 @@
 # Install packages needed for fedora people
 #
 - name: Install packages needed for fedora people
-  package: name={{ item }} state=present
+  ansible.builtin.package: name={{ item }} state=present
   with_items:
   - cvs
   - git
@@ -42,7 +42,7 @@
 
 
 - name: Install haveged for entropy
-  package: name=haveged state=present
+  ansible.builtin.package: name=haveged state=present
   tags:
   - httpd
   - httpd/proxy

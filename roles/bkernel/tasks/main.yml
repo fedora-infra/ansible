@@ -1,6 +1,6 @@
 ---
 - name: Add pkgs for bkernel boxes
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - pesign

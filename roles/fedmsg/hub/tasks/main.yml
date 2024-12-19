@@ -2,13 +2,13 @@
 # Setup a fedmsg-hub
 
 - name: Install needed packages - py2
-  package: name=fedmsg-hub state=present
+  ansible.builtin.package: name=fedmsg-hub state=present
   tags:
   - packages
   when: "'python34_fedmsg' not in group_names"
 
 - name: Install the python34 fedmsg package (yum)
-  package: name=python34-fedmsg-core state=present
+  ansible.builtin.package: name=python34-fedmsg-core state=present
   when: "'python34_fedmsg' in group_names and ansible_distribution_major_version|int < 22"
   tags: fedmsg/base
 

@@ -10,7 +10,7 @@
 # which in turn pulls in python3-policycoreutils
 #
 - name: Ensure packages required for semanage are installed (fedora/rhel8)
-  package: name=policycoreutils-python-utils state=present
+  ansible.builtin.package: name=policycoreutils-python-utils state=present
   when: ansible_distribution_major_version|int > 7
   tags:
   - selinux
@@ -58,7 +58,7 @@
   - base
 
 - name: Dist pkgs to remove (yum)
-  package: state=absent name={{ item }}
+  ansible.builtin.package: state=absent name={{ item }}
   with_items:
     - "{{ base_pkgs_erase }}"
   tags:
@@ -67,7 +67,7 @@
   when: ansible_distribution_major_version|int < 8 and ansible_distribution == 'RedHat'
 
 - name: Dist pkgs to install (yum)
-  package: state=present name={{ item }}
+  ansible.builtin.package: state=present name={{ item }}
   with_items:
     - "{{ base_pkgs_inst }}"
   tags:
@@ -137,13 +137,13 @@
     ansible_distribution == 'RedHat'
 
 - name: Ensure iptables is installed
-  package: state=present name=iptables
+  ansible.builtin.package: state=present name=iptables
   tags:
   - packages
   - base
 
 - name: Ensure ipset is installed
-  package: state=present name=ipset
+  ansible.builtin.package: state=present name=ipset
   tags:
   - packages
   - base
@@ -269,7 +269,7 @@
   when: inventory_hostname.startswith('log01')
 
 - name: Ensure packages required for rsyslog are installed
-  package: name={{ item }} state=present
+  ansible.builtin.package: name={{ item }} state=present
   with_items:
   - rsyslog-gnutls
   tags:
@@ -514,7 +514,7 @@
 # with that because they also run the same on python2 hosts.
 # So, we set python3 to /usr/bin/python on those hosts:
 - name: Ensure that platform-python is installed on EL8 boxes
-  package: name={{ item }} state=present
+  ansible.builtin.package: name={{ item }} state=present
   with_items:
   - platform-python
   when: ansible_distribution == 'RedHat' and ansible_distribution_major_version|int == 8

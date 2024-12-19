@@ -3,7 +3,7 @@
 # install pkg
 ---
 - name: Install collectd
-  package: name=collectd state=present
+  ansible.builtin.package: name=collectd state=present
   tags:
   - collectd
   when: ansible_distribution_major_version|int <= 7 and ansible_distribution == 'RedHat'
@@ -64,7 +64,7 @@
 
 # apache - localhost only - pretty much any apache server
 - name: Install collectd-apache (yum)
-  package: state=present name=collectd-apache
+  ansible.builtin.package: state=present name=collectd-apache
   tags:
   - collectd
   notify:
@@ -96,7 +96,7 @@
   when: collectd_apache
 
 - name: Install libsemanage-python so we can set an sebool below
-  package: name=libsemanage-python state=present
+  ansible.builtin.package: name=libsemanage-python state=present
   tags:
   - collectd
   when: collectd_apache is defined and ansible_distribution_major_version|int <= 7 and ansible_distribution == 'RedHat'

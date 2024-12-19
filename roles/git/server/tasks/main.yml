@@ -2,7 +2,7 @@
 # tasklist for setting up a git server (git:// access)
 
 - name: Install the git-daemon package
-  package: name=git-daemon state=present
+  ansible.builtin.package: name=git-daemon state=present
   tags: git/server
 
 # If NOT using xinetd
@@ -34,7 +34,7 @@
 
 # If using xinetd
 - name: Install xinetd
-  package: name=xinetd state=present
+  ansible.builtin.package: name=xinetd state=present
   when: ansible_distribution_major_version|int == 6 and ansible_distribution == 'RedHat'
   tags: git/server
 

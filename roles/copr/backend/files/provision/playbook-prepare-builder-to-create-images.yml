@@ -13,7 +13,7 @@
 
   tasks:
     - name: install guestfish & friends
-      package:
+      ansible.builtin.package:
         name: "{{ packages }}"
       vars:
         packages:
@@ -42,7 +42,7 @@
         name: praiskup/helpers
 
     - name: install helpers
-      package: name=praiskup-helpers state=present
+      ansible.builtin.package: name=praiskup-helpers state=present
       register: helpers_installed
 
     - name: remount with larger TMP
@@ -106,7 +106,7 @@
       when: not key_stat.stat.exists
 
 #    - name: install composer packages
-#      package: name={{ packages }}
+#      ansible.builtin.package: name={{ packages }}
 #      vars:
 #        - packages:
 #            - osbuild-composer

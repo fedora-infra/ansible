@@ -38,11 +38,11 @@
     ansible.builtin.command: yum clean all {%if testing%} --enablerepo=infrastructure-tags-stg {%endif%}
     check_mode: no
   - name: Yum update fedmsg packages from the main repo
-    package: name={{item}} state=latest
+    ansible.builtin.package: name={{item}} state=latest
     when: not testing
     with_items: "{{packages}}"
   - name: Yum update fedmsg packages from testing repo
-    package: name={{item}} state=latest enablerepo=infrastructure-tags-stg
+    ansible.builtin.package: name={{item}} state=latest enablerepo=infrastructure-tags-stg
     when: testing
     with_items: "{{packages}}"
 

@@ -1,13 +1,13 @@
 ---
 - name: Ensure packages required for mariadb are installed
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - mariadb-server
   when: ansible_cmdline.ostree is not defined
 
 - name: Ensure packages required for mariadb are installed (el8)
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - python3-PyMySQL

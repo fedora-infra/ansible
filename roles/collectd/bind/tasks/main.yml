@@ -1,7 +1,7 @@
 ---
 
 - name: Install collectd-bind
-  package: name=collectd-bind state=present
+  ansible.builtin.package: name=collectd-bind state=present
   tags:
   - packages
   - collectd

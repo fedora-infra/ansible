@@ -2,7 +2,7 @@
 # tasklist for setting up the CGit file list
 
 - name: Install semanage
-  package: name=/usr/sbin/semanage state=present
+  ansible.builtin.package: name=/usr/sbin/semanage state=present
   tags: cgit
 
 - name: Create the git root directory (/srv/git)

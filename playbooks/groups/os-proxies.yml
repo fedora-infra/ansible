@@ -31,7 +31,7 @@
   - import_tasks: "{{ tasks_path }}/motd.yml"
 
   - name: install haproxy
-    package: name=haproxy state=present
+    ansible.builtin.package: name=haproxy state=present
 
   - name: install haproxy config
     ansible.builtin.copy: src="{{ files }}/communishift/haproxy.cfg" dest=/etc/haproxy/haproxy.cfg

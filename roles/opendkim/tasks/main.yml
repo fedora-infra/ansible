@@ -1,6 +1,6 @@
 ---
 - name: Install opendkim
-  package: name=opendkim state=present
+  ansible.builtin.package: name=opendkim state=present
   tags:
   - opendkim
   - package

@@ -2,7 +2,7 @@
 # Configuration for the ipsilon webapp
 
 - name: Install needed packages
-  package:
+  ansible.builtin.package:
     state: present
     update_cache: yes
     name:

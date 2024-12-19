@@ -34,7 +34,7 @@
   - import_tasks: "{{ tasks_path }}/motd.yml"
 
   - name: install some packages which arent in playbooks
-    package:
+    ansible.builtin.package:
       state: present
       name:
         - nmap

@@ -3,7 +3,7 @@
 # Setup ansible-server instance
 #
 - name: Install needed packages
-  package:
+  ansible.builtin.package:
     name:
       - ansible-core
       - git-core

@@ -1,13 +1,13 @@
 ---
 - name: Install faf web celery packages
-  package:
+  ansible.builtin.package:
     name: "{{ faf_web_celery_packages }}"
     state: present
   tags:
   - packages
 
 - name: Install redis package
-  package:
+  ansible.builtin.package:
     name:
       - redis
       - python3-redis

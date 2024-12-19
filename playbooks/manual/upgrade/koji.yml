@@ -68,7 +68,7 @@
     # Note that "latest" here might as well be "present".  The package shouldn't
     # be present in the first place.  In any case, if it is erroneously present,
     # then we really do want the latest version.
-    package: name=koji state=latest update_cache=yes
+    ansible.builtin.package: name=koji state=latest update_cache=yes
     when: db_upgrade_file is defined
   - name: Execute the db upgrade script
     shell: psql koji  < {{db_upgrade_file}}
@@ -76,7 +76,7 @@
     become_user: postgres
     when: db_upgrade_file is defined
   - name: Remove the package, since we no longer need the script.
-    package: name=koji state=absent
+    ansible.builtin.package: name=koji state=absent
     when: db_upgrade_file is defined
 
 - name: Update and restart the koji hubs before we touch the builders
@@ -87,7 +87,7 @@
     - "/srv/private/ansible/vars.yml"
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   tasks:
-  - package: name=koji-hub state=latest update_cache=yes
+  - ansible.builtin.package: name=koji-hub state=latest update_cache=yes
   - name: Restart httpd on the koji-hubs.
     service: name="httpd" state=started
   - name: Unsilence nagios
@@ -103,6 +103,6 @@
     - "/srv/private/ansible/vars.yml"
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   tasks:
-  - package: name=koji-builder state=latest update_cache=yes
+  - ansible.builtin.package: name=koji-builder state=latest update_cache=yes
   - name: Restart all the builders.  so many.
     service: name="kojid" state=restarted

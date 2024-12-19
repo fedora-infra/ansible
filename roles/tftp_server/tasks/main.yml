@@ -1,12 +1,12 @@
 ---
 - name: Install tftp server package
-  package: state=present name=tftp-server
+  ansible.builtin.package: state=present name=tftp-server
   tags:
   - packages
   - tftp_server
 
 - name: Install syslinux package
-  package: state=present name=syslinux
+  ansible.builtin.package: state=present name=syslinux
   tags:
   - packages
   - tftp_server

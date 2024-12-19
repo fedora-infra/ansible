@@ -25,7 +25,7 @@
   when: inventory_hostname.startswith(('db-koji01','db-riscv-koji01','db01.stg','db-fas01','db01','db-openqa01'))
 
 - name: Install postgresql server packages (EL < 8)
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - postgresql-server
@@ -39,7 +39,7 @@
   - postgresql
 
 - name: Install postgresql server packages (Fedora)
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - postgresql-server
@@ -53,7 +53,7 @@
   - postgresql
 
 - name: Install postgresql server packages (EL >= 8)
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - postgresql-server

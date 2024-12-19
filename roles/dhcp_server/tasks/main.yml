@@ -1,6 +1,6 @@
 ---
 - name: Install dhcp server package
-  package: state=present name=dhcp-server
+  ansible.builtin.package: state=present name=dhcp-server
   tags:
   - packages
   - base

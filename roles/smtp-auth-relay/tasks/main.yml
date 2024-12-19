@@ -1,6 +1,6 @@
 ---
 - name: Install the needed packages
-  package:
+  ansible.builtin.package:
     name:
       - postfix
       - cyrus-sasl

@@ -5,7 +5,7 @@
 #
 # install necessary packages
 - name: Install python-paste-deploy geolite2-city python2-iso3166 python2-geoip2
-  package:
+  ansible.builtin.package:
     name:
       - python-paste-deploy
       - geolite2-city
@@ -15,7 +15,7 @@
   when: ansible_distribution_major_version|int < 8 and ansible_distribution == 'RedHat'
 
 - name: Install python3-paste-deploy geolite2-city python3-iso3166 python3-geoip2
-  package:
+  ansible.builtin.package:
     name:
       - python3-paste-deploy
       - geolite2-city

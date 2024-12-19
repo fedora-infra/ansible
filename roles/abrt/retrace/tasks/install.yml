@@ -1,11 +1,11 @@
 ---
 - name: Erase retrace-server packages
-  package:
+  ansible.builtin.package:
     name: retrace-server
     state: absent
   when: rs_force_reinstall|bool
 
 - name: Install retrace-server package
-  package:
+  ansible.builtin.package:
     name: retrace-server
     state: present

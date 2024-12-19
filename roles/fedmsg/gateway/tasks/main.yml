@@ -1,6 +1,6 @@
 ---
 - name: Install fedmsg-gateway
-  package: name=fedmsg-gateway state=present
+  ansible.builtin.package: name=fedmsg-gateway state=present
   tags:
   - packages
   - fedmsg/gateway

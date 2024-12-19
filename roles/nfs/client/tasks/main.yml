@@ -19,7 +19,7 @@
 # Install needed packages
 #
 - name: Install needed nfs packages
-  package:
+  ansible.builtin.package:
     name: "{{ item }}"
     state: present
   with_items:

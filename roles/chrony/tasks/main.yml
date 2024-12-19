@@ -1,6 +1,6 @@
 ---
 - name: Install chrony
-  package: name=chrony state=present
+  ansible.builtin.package: name=chrony state=present
   tags:
   - chrony
   - package

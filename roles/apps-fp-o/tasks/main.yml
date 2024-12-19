@@ -1,6 +1,6 @@
 ---
 - name: Install that apps-fp-o rpm package
-  package: name=apps-fp-o state=present
+  ansible.builtin.package: name=apps-fp-o state=present
   tags:
   - apps-fp-o
 

@@ -6,7 +6,7 @@
   tags: always
 
 - name: disable zram SWAP on builders, it is too small, issue 2077
-  package: name=zram-generator-defaults state=absent
+  ansible.builtin.package: name=zram-generator-defaults state=absent
   when:
     - preparing_image
 
@@ -98,7 +98,7 @@
   when: preparing_image
 
 - name: install subscription-manager
-  package: name=subscription-manager state=present
+  ansible.builtin.package: name=subscription-manager state=present
   when:
     - preparing_image
 
@@ -210,7 +210,7 @@
   shell: /usr/bin/copr-update-builder
 
 # - name: install the latest mock and mock-core-configs from updates-testing
-#  package: state=latest name={{ packages }}
+#  ansible.builtin.package: state=latest name={{ packages }}
 #  register: mock_updated
 #  vars:
 #    packages:

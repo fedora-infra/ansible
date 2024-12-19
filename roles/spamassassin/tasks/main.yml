@@ -2,7 +2,7 @@
 # tasklist for setting up a SpamAssassin server
 
 - name: Install the package
-  package: name={{ item }} state=present
+  ansible.builtin.package: name={{ item }} state=present
   with_items:
   - spamassassin
   - perl-Razor-Agent

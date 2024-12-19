@@ -15,7 +15,7 @@
 
 # install pkgs:
 - name: Install nagios client pkgs
-  package: name={{ item }} state=present
+  ansible.builtin.package: name={{ item }} state=present
   with_items:
   - nrpe
   - nagios-plugins
@@ -31,7 +31,7 @@
   - nagios_client
 
 - name: Install nagios tcp check for mirrorlist proxies
-  package: name=nagios-plugins-tcp state=present
+  ansible.builtin.package: name=nagios-plugins-tcp state=present
   tags:
   - packages
   - nagios_client

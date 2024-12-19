@@ -76,7 +76,7 @@
 
 ---
 - name: Install required packages
-  package:
+  ansible.builtin.package:
     # 'relval' itself is needed as we call it directly for size
     # checking
     name: ['python3-fedfind', 'fedora-messaging', 'python3-pip', 'python3-pip', 'python3-openqa_client']

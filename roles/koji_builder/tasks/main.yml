@@ -64,7 +64,7 @@
   - koji_builder
 
 - name: Install packages needed by koji_builders
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - koji-builder
@@ -103,7 +103,7 @@
 #
 
 - name: Remove koji builder rpmautospec plugin
-  package:
+  ansible.builtin.package:
     name:
       - koji-builder-plugin-rpmautospec
       - python3-rpmautospec
@@ -128,7 +128,7 @@
   - rpmautospec
 
 - name: Install Flatpak builder plugin
-  package: name=koji-flatpak-builder state=present
+  ansible.builtin.package: name=koji-flatpak-builder state=present
   tags:
   - koji_builder
 
@@ -142,7 +142,7 @@
   - koji_builder
 
 - name: Install arm UEFI firmware package (aarch64 only)
-  package: name=edk2-arm state=present
+  ansible.builtin.package: name=edk2-arm state=present
   tags:
   - koji_builder
   when: "ansible_architecture is defined and ansible_architecture == 'aarch64'"
@@ -287,7 +287,7 @@
 # x86_64 builders run both x86_64 and i686 builds, that requires multilib
 # version of nosync installed to fully take advantage of nosync
 - name: Special pkgs for the x86_64 builders
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - nosync.i686
@@ -297,7 +297,7 @@
 
 # Before, the builders had the "apache" role. This is a temporary play to remove the httpd daemon everywhere
 - name: Uninstall httpd
-  package: name=httpd
+  ansible.builtin.package: name=httpd
            state=absent
   tags:
   - koji_builder
@@ -362,7 +362,7 @@
 # Add rngd so that virtual maachines have enough randomness to boot in our lifetimes
 #
 - name: Install rng-tools for entropy
-  package: name=rng-tools state=present
+  ansible.builtin.package: name=rng-tools state=present
   tags:
   - koji_builder
   - koji_builder/rngd

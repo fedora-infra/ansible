@@ -2,7 +2,7 @@
 # Configuration for the kerneltest webapp
 
 - name: Install needed packages
-  package: name={{ item }} state=present update_cache=yes
+  ansible.builtin.package: name={{ item }} state=present update_cache=yes
   with_items:
   - kerneltest
   - python-psycopg2

@@ -77,7 +77,7 @@
   when: "deployment_type is defined and deployment_type == 'prod'"
 
 - name: Install required packages
-  package:
+  ansible.builtin.package:
     name: ['openqa-worker', 'os-autoinst']
     state: latest
     enablerepo: "{{ openqa_repo }}"
@@ -87,14 +87,14 @@
   - packages
 
 - name: Install packages used by tests
-  package:
+  ansible.builtin.package:
     name: ['perl-JSON', 'perl-REST-Client']
     state: latest
   tags:
   - packages
 
 - name: Install packages used by ansible plays
-  package:
+  ansible.builtin.package:
     name: ['python3-libselinux', 'git']
     state: present
   tags:
@@ -109,26 +109,26 @@
   when: "openqa_static_uid is defined"
 
 - name: Install ffmpeg-free (not on aarch64)
-  package: name=ffmpeg-free state=present
+  ansible.builtin.package: name=ffmpeg-free state=present
   tags:
   - packages
   when: "ansible_architecture is defined and ansible_architecture != 'aarch64'"
 
 
 - name: Install UEFI firmware package (x86_64 only)
-  package: name=edk2-ovmf state=present
+  ansible.builtin.package: name=edk2-ovmf state=present
   tags:
   - packages
   when: "ansible_architecture is defined and ansible_architecture == 'x86_64'"
 
 - name: Install UEFI firmware package (aarch64 only)
-  package: name=edk2-aarch64 state=present
+  ansible.builtin.package: name=edk2-aarch64 state=present
   tags:
   - packages
   when: "ansible_architecture is defined and ansible_architecture == 'aarch64'"
 
 - name: Install arm UEFI firmware package (aarch64 only)
-  package: name=edk2-arm state=present
+  ansible.builtin.package: name=edk2-arm state=present
   tags:
   - packages
   when: "ansible_architecture is defined and ansible_architecture == 'aarch64'"
@@ -145,7 +145,7 @@
   when: "ansible_architecture is defined and ansible_architecture == 'aarch64'"
 
 - name: Install rng-tools (if specified by openqa_rngd var)
-  package: name=rng-tools state=present
+  ansible.builtin.package: name=rng-tools state=present
   tags:
   - packages
   when: "openqa_rngd is defined and openqa_rngd"
@@ -191,7 +191,7 @@
 # for now it's fine to just assume the tap host(s) is/are also the
 # swtpm host(s)
 - name: Install swtpm packages
-  package:
+  ansible.builtin.package:
     name: ['swtpm', 'swtpm-tools']
     state: latest
     enablerepo: "{{ openqa_repo }}"

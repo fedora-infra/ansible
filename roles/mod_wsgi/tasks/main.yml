@@ -1,7 +1,7 @@
 ---
 # install mod_wsgi
 - name: Install mod_wsgi
-  package:
+  ansible.builtin.package:
     name: mod_wsgi
     state: present
   tags:
@@ -9,7 +9,7 @@
   when: ansible_distribution_major_version|int < 8 and ansible_distribution == 'RedHat'
 
 - name: Install mod_wsgi
-  package:
+  ansible.builtin.package:
     name: python3-mod_wsgi
     state: present
   tags:
@@ -17,7 +17,7 @@
   when: ansible_distribution_major_version|int >= 8 and ansible_distribution == 'RedHat'
 
 - name: Install mod_wsgi
-  package:
+  ansible.builtin.package:
     name: mod_wsgi
     state: present
   tags:

@@ -190,7 +190,7 @@
   - import_tasks: "{{ tasks_path }}/motd.yml"
 
   - name: install skopeo and buildah for container management
-    package:
+    ansible.builtin.package:
       name:
         - skopeo
         - buildah
@@ -198,7 +198,7 @@
     - containerrebuild
 
   - name: install ansible for container automated rebuilds
-    package:
+    ansible.builtin.package:
       name:
         - ansible
         - python3-dockerfile-parse

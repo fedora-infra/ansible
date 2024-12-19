@@ -1,6 +1,6 @@
 ---
 - name: Install package for fedmsg-irc
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - python2-fedmsg-meta-fedora-infrastructure

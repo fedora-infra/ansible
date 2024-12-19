@@ -2,7 +2,7 @@
 # Tasks to set up yubikey_verifier
 
 - name: Install needed packages
-  package: name={{ item }} state=present
+  ansible.builtin.package: name={{ item }} state=present
   with_items:
   - yubikey-ksm
   - yubikey-val

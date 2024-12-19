@@ -1,6 +1,6 @@
 ---
 - name: Install needed packages for blockerbugs
-  package: state=present name={{ item }}
+  ansible.builtin.package: state=present name={{ item }}
   with_items:
   - libselinux-python3
   - python3-mod_wsgi

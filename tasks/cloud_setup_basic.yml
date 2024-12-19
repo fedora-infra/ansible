@@ -1,6 +1,6 @@
 ---
 - name: Install desired extra packages (yum)
-  package: state=present pkg={{ item }}
+  ansible.builtin.package: state=present pkg={{ item }}
   with_items:
   - ntpdate
   - ntp

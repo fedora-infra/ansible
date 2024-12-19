@@ -34,23 +34,23 @@
   - import_tasks: "{{ tasks_path }}/motd.yml"
 
   - name: install debuginfod
-    package: name=elfutils-debuginfod state=present
+    ansible.builtin.package: name=elfutils-debuginfod state=present
     tags: debuginfod
 
   - name: install sqlite for diagnostics
-    package: name=sqlite state=present
+    ansible.builtin.package: name=sqlite state=present
     tags: debuginfod
 
   - name: install sqlite-analyzer for diagnostics
-    package: name=sqlite-analyzer state=present
+    ansible.builtin.package: name=sqlite-analyzer state=present
     tags: debuginfod
 
   - name: install sqlite for diagnostics
-    package: name=sqlite state=present
+    ansible.builtin.package: name=sqlite state=present
     tags: debuginfod
 
   - name: install rsync for data backups
-    package: name=rsync state=present
+    ansible.builtin.package: name=rsync state=present
     tags: debuginfod
 
   - name: install debuginfod configuration

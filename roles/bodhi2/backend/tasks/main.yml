@@ -13,7 +13,7 @@
   - bodhi
 
 - name: Install needed packages
-  package:
+  ansible.builtin.package:
     name:
       - bodhi-composer
       - python3-pyramid_sawing
@@ -45,7 +45,7 @@
 
 - name: Update bodhi composer
   when: env == 'staging'
-  package:
+  ansible.builtin.package:
     name:
       - bodhi-composer
     state: latest

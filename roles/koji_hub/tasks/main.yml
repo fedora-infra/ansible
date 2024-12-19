@@ -3,7 +3,7 @@
 # Setup koji hub server.
 #
 - name: Install koji hub server packages
-  package: name={{ item }} state=present
+  ansible.builtin.package: name={{ item }} state=present
   with_items:
   - koji-hub
   - koji-hub-plugins
@@ -24,7 +24,7 @@
 # Setup koji hub osbuild plugin.
 #
 - name: Install image builder server packages
-  package: name={{ item }} state=present
+  ansible.builtin.package: name={{ item }} state=present
   with_items:
   - koji-osbuild-hub
   notify:
@@ -94,7 +94,7 @@
   - koji_hub
 
 - name: Install fedora-messaging as a dependency for the plugin (fedora)
-  package: name={{ item }} state=present
+  ansible.builtin.package: name={{ item }} state=present
   with_items:
   - python3-fedora-messaging
   tags:
@@ -149,7 +149,7 @@
 
 # install the plugin with the rpm from infra repo on stg
 - name: Install fedora-messaging schemas and plugin
-  package: name={{ item }} state=present
+  ansible.builtin.package: name={{ item }} state=present
   with_items:
   - koji-fedoramessaging
   - python3-koji-fedoramessaging-messages
@@ -174,7 +174,7 @@
 #
 
 - name: Uninstall koji hub rpmautospec plugin
-  package: name={{ item }} state=absent
+  ansible.builtin.package: name={{ item }} state=absent
   with_items:
   - koji-hub-plugin-rpmautospec
   tags:
@@ -196,7 +196,7 @@
   - rpmautospec
 
 - name: Install Flatpak hub plugin
-  package: name=koji-flatpak-hub state=present
+  ansible.builtin.package: name=koji-flatpak-hub state=present
   tags:
   - koji_hub
 

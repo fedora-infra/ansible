@@ -1,13 +1,13 @@
 ---
 # install python-geoIP
 - name: Install python-GeoIP
-  package: name=python-GeoIP state=present
+  ansible.builtin.package: name=python-GeoIP state=present
   tags:
   - packages
   when: (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int < 8) or (ansible_distribution_major_version|int < 30 and ansible_distribution == 'Fedora')
 
 - name: Install python3-geoip2 (RHEL8)
-  package: name=python3-geoip2 state=present
+  ansible.builtin.package: name=python3-geoip2 state=present
   tags:
   - packages
   when: (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int >= 8)

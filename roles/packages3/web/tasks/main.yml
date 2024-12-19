@@ -2,7 +2,7 @@
 #
 # Configuration for the fedora-packages webapp
 - name: Install needed packages
-  package: name={{ item }} state=present
+  ansible.builtin.package: name={{ item }} state=present
   with_items:
   - fedora-packages
   - python-memcached

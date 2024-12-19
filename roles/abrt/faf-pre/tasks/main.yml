@@ -43,7 +43,7 @@
 
 # landing page
 - name: Install abrt-server-info-page
-  package:
+  ansible.builtin.package:
     name: abrt-server-info-page
     state: latest
 

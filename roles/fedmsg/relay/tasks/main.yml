@@ -3,7 +3,7 @@
 
 ---
 - name: Install fedmsg-relay (yum)
-  package: name=fedmsg-relay state=present
+  ansible.builtin.package: name=fedmsg-relay state=present
   tags:
   - packages
   - fedmsg/relay

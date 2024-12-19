@@ -18,7 +18,7 @@
     - planet_server
 
 - name: Install the planet packages (and fedora-messaging)
-  package: pkg={{item}} state=present
+  ansible.builtin.package: pkg={{item}} state=present
   with_items:
     - venus
     - fedora-messaging

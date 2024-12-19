@@ -3,7 +3,7 @@
 
 
 - name: Install needed packages
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - fedmsg-gateway
@@ -15,7 +15,7 @@
   when: (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int < 8) or (ansible_distribution_major_version|int < 30 and ansible_distribution == 'Fedora')
 
 - name: Install needed packages in a python 3 manner
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - python3-fedmsg

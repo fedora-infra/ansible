@@ -69,7 +69,7 @@
 
   tasks:
   - name: install some packages which arent in playbooks
-    package:
+    ansible.builtin.package:
       state: present
       name:
         - nmap

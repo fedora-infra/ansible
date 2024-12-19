@@ -25,7 +25,7 @@
 
   # TODO Remove in favor of base/tasks/main.yml
   - name: Install platform-python
-    package: name={{ item }} state=present
+    ansible.builtin.package: name={{ item }} state=present
     with_items:
     - platform-python
     become: true
@@ -40,13 +40,13 @@
 
   # TODO Move this to base/tasks/main.yml
   - name: Install iptables-services
-    package: name=iptables-services state=present
+    ansible.builtin.package: name=iptables-services state=present
     become: true
 
   # TODO Postfix should have probably been installed by base/tasks/main.yml
   # but it wasn't for this instance
   - name: Install postfix
-    package: name=postfix state=present
+    ansible.builtin.package: name=postfix state=present
     become: true
 
   - name: Temporarily dump keys so we can add them to bitwarden

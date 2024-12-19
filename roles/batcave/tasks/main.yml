@@ -14,7 +14,7 @@
   - config
 
 - name: Install packages needed
-  package: name={{ item }} state=present
+  ansible.builtin.package: name={{ item }} state=present
   with_items:
   - srm                       # secure rm to delete sensitive files.
   - ansible-core              # This is our ansible master, needs ansible installed.
@@ -205,7 +205,7 @@
 #
 
 - name: Install packages needed
-  package:
+  ansible.builtin.package:
     name: fedora-messaging-git-hook
     state: present
   tags:
@@ -626,7 +626,7 @@
   - postgres
 
 - name: Install psql client
-  package: name=postgresql state=present
+  ansible.builtin.package: name=postgresql state=present
   tags:
   - batcave
   - postgres

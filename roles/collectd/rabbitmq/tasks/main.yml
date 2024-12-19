@@ -1,6 +1,6 @@
 ---
 - name: Install collectd-rabbitmq
-  package:
+  ansible.builtin.package:
     state: present
     name: python3-collectd-rabbitmq-monitoring
   tags:
@@ -8,7 +8,7 @@
   - collectd
 
 - name: Install collectd-python
-  package:
+  ansible.builtin.package:
     state: present
     name: collectd-python
   tags:

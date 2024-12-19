@@ -1,6 +1,6 @@
 ---
 - name: Install memcached server package
-  package: state=present name=memcached
+  ansible.builtin.package: state=present name=memcached
   tags:
   - packages
   - memcached

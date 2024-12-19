@@ -3,7 +3,7 @@
 # This is the base set of files needed for postfix/logreport
 
 - name: Install postfix-perl-scripts package
-  package: name=postfix-perl-scripts state=present
+  ansible.builtin.package: name=postfix-perl-scripts state=present
   tags:
   - postfix
   - packages

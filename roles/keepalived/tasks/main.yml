@@ -9,7 +9,7 @@
 
 ---
 - name: Install keepalived package
-  package: state=present name=keepalived
+  ansible.builtin.package: state=present name=keepalived
   tags:
   - packages
   - keepalived

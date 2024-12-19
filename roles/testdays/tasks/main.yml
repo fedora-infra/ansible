@@ -1,6 +1,6 @@
 ---
 - name: Ensure packages required for testdays  are installed
-  package: name={{ item }} state=present
+  ansible.builtin.package: name={{ item }} state=present
   with_items:
     - testdays
     - mod_wsgi

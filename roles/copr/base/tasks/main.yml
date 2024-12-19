@@ -16,7 +16,7 @@
 #  - config
 
 - name: Enable epel for non-fedora hosts
-  package: state=present pkg="epel-release"
+  ansible.builtin.package: state=present pkg="epel-release"
   when: ansible_distribution != 'Fedora'
 
 - name: Copy .forward file
@@ -43,7 +43,7 @@
   notify: restart crond
 
 - name: Install base copr packages
-  package:
+  ansible.builtin.package:
     name:
       - acl  # useful for ansible acl module
       - bash-completion
@@ -57,7 +57,7 @@
     packages
 
 - name: Install rsyslog-logrotate
-  package: name=rsyslog-logrotate state=present
+  ansible.builtin.package: name=rsyslog-logrotate state=present
   when: ansible_distribution == 'Fedora'
 
 - name: Configure anacrond to not send mails to root user
@@ -75,7 +75,7 @@
   when: ansible_distribution == 'Fedora'
 
 - name: Install copr-selinux
-  package:
+  ansible.builtin.package:
     state: latest
     name: copr-selinux
   tags:
@@ -140,11 +140,11 @@
 
 # https://github.com/fedora-copr/copr/issues/3439
 - name: Install iptables-nft
-  package: name=iptables-nft state=present
+  ansible.builtin.package: name=iptables-nft state=present
   register: iptables
 
 - name: Remove iptables-legacy
-  package: name=iptables-legacy state=absent
+  ansible.builtin.package: name=iptables-legacy state=absent
 
 - name: Restart iptables
   service: name=iptables state=restarted

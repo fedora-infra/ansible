@@ -1,6 +1,6 @@
 ---
 - name: Install limnoria package
-  package: name={{ item }} state=present enablerepo=epel-testing
+  ansible.builtin.package: name={{ item }} state=present enablerepo=epel-testing
   with_items:
   - limnoria
   - supybot-fedora

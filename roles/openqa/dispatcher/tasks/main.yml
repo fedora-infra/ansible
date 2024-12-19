@@ -174,7 +174,7 @@
 # always imports the report module which imports those
 ---
 - name: Install required packages
-  package:
+  ansible.builtin.package:
     name: ['fedora-messaging', 'python3-fedfind', 'python3-wikitcms', 'python3-openqa_client',
            'python3-requests', 'python3-resultsdb_api', 'python3-resultsdb_conventions-fedora',
            'python3-six', 'python3-pip']
@@ -183,7 +183,7 @@
   - packages
 
 - name: Install required packages (wiki oidc auth)
-  package:
+  ansible.builtin.package:
     name: python3-openidc-client
     state: present
   when: "wikitcms_token is defined"

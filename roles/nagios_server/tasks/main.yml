@@ -23,7 +23,7 @@
 
 ## Install the initial packages for the group.
 - name: Install nagios packages
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - php
@@ -56,7 +56,7 @@
   - nagios_server
 
 - name: Install the SSL apache module
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - mod_ssl

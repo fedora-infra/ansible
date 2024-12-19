@@ -110,7 +110,7 @@
 
 ---
 - name: Install required packages
-  package:
+  ansible.builtin.package:
     name: ['fedora-messaging', 'python3-fedfind', 'python3-openqa_client', 'python3-pip',
            'python3-pip']
     state: present

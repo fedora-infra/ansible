@@ -1,6 +1,6 @@
 ---
 - name: Install postresql
-  package: state=present pkg={{ item }}
+  ansible.builtin.package: state=present pkg={{ item }}
   with_items:
   - "postgresql-server"
   - "postgresql-contrib"

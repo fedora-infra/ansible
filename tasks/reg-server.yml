@@ -1,6 +1,6 @@
 ---
 - name: Install reg-server
-  package:
+  ansible.builtin.package:
     name: reg
   tags:
   - regserver

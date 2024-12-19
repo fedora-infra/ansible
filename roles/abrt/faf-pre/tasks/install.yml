@@ -1,6 +1,6 @@
 ---
 - name: Install postgresql packages
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - python3-psycopg2
@@ -9,14 +9,14 @@
     - pg-semver
 
 - name: Install ssl packages for https
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - openssl
     - mod_ssl
 
 - name: Memcached rhel
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - memcached
@@ -24,7 +24,7 @@
   when: ansible_distribution == "RedHat" and faf_web_cache_type == "memcached"
 
 - name: Memcached fedora
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - libmemcached

@@ -4,7 +4,7 @@
 #
 #
 - name: Install packages needed for iscsi_client (yum)
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - iscsi-initiator-utils
@@ -14,7 +14,7 @@
   when: ansible_distribution_major_version|int < 8 and ansible_distribution == "RedHat"
 
 - name: Install packages needed for iscsi_client (dnf)
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - iscsi-initiator-utils
@@ -24,7 +24,7 @@
   when: ansible_distribution_major_version|int >= 29 and ansible_distribution == "Fedora" and ansible_cmdline.ostree is not defined
 
 - name: Install packages needed for iscsi_client (dnf)
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - iscsi-initiator-utils

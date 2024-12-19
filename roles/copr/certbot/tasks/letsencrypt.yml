@@ -7,7 +7,7 @@
     - certbot
 
 - name: Install certbot package
-  package: name=certbot state=present
+  ansible.builtin.package: name=certbot state=present
   tags:
     - certbot
 

@@ -8,7 +8,7 @@
   tags: mdadm
 
 - name: Install LVM and RAID utilities
-  package:
+  ansible.builtin.package:
     name:
       - lvm2
       - mdadm

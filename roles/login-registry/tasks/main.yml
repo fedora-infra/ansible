@@ -4,7 +4,7 @@
 # podman client.
 
 - name: Install podman
-  package:
+  ansible.builtin.package:
     name: podman
     state: present
 

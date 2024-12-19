@@ -79,7 +79,7 @@
   notify: restart swap.swap
 
 - name: Remove zram-generator-defaults
-  package:
+  ansible.builtin.package:
     name: zram-generator-defaults
     state: absent
   register: remove_zram_generator

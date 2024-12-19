@@ -2,7 +2,7 @@
 # Configuration for the torrent tracker
 
 - name: Install needed packages
-  package: name={{ item }} state=present
+  ansible.builtin.package: name={{ item }} state=present
   with_items:
   - httpd
   - opentracker-common

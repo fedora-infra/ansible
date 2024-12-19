@@ -1,7 +1,7 @@
 ---
 # install apache(httpd)
 - name: Install apache (package)
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - httpd
@@ -12,7 +12,7 @@
   when: ansible_cmdline.ostree is not defined
 
 - name: Install mod_http2 on rhel8 hosts
-  package:
+  ansible.builtin.package:
     state: present
     name:
       - mod_http2

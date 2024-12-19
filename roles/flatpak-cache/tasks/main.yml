@@ -1,6 +1,6 @@
 ---
 - name: Install packages needed
-  package: name={{ item }} state=present
+  ansible.builtin.package: name={{ item }} state=present
   with_items:
   - squid
   - gettext

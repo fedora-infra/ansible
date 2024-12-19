@@ -6,7 +6,7 @@
 # see the login-registry role.
 
 - name: Install necessary packages
-  package:
+  ansible.builtin.package:
     name: "{{item}}"
     state: present
   with_items:

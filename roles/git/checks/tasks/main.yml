@@ -6,7 +6,7 @@
 # jobs, triggered by fedmsg, etc...
 
 - name: Install the needed packages
-  package: name=git state=present
+  ansible.builtin.package: name=git state=present
   tags:
   - git
   - git/checks

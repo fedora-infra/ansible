@@ -18,7 +18,7 @@
     - log_detective_backup
 
 - name: Install the log-detective-backup package dependencies
-  package:
+  ansible.builtin.package:
     name:
       - wget
     state: present

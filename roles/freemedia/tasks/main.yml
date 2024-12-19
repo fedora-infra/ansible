@@ -2,7 +2,7 @@
 # Tasklist for setting up freemedia cgi.
 
 - name: Install needed php packages
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - php

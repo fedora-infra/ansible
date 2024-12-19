@@ -16,7 +16,7 @@
     ansible.builtin.command: yum clean all {%if testing%} --enablerepo=infrastructure-tags-stg {%endif%}
     check_mode: no
   - name: Update mote packages from main repo
-    package: name="mote" state=latest
+    ansible.builtin.package: name="mote" state=latest
     when: not testing
   - name: Update mote packages from testing repo
     yum: name="mote" state=latest enablerepo=infrastructure-tags-stg

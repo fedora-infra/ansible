@@ -1,6 +1,6 @@
 ---
 - name: Install sigul bridge
-  package: state=present name=sigul-bridge
+  ansible.builtin.package: state=present name=sigul-bridge
   tags:
   - packages
   - sigul

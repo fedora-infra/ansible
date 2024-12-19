@@ -2,7 +2,7 @@
 # tasklist for setting up a basic gitolite
 
 - name: Install the needed packages
-  package: name={{item}} state=present
+  ansible.builtin.package: name={{item}} state=present
   with_items:
   - gitolite3
   - perl-Sys-Syslog

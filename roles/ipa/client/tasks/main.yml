@@ -1,6 +1,6 @@
 ---
 - name: Install IPA client packages
-  package:
+  ansible.builtin.package:
     name:
       - freeipa-client
     state: present

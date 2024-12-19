@@ -68,7 +68,7 @@
     ansible.builtin.copy: src="{{ files}}/download/last-sync" dest=/usr/local/bin/last-sync mode=0755
     when: inventory_hostname == 'download-ib01.fedoraproject.org'
   - name: install bc so last-sync works.
-    package: name=bc state=present
+    ansible.builtin.package: name=bc state=present
     when: inventory_hostname == 'download-ib01.fedoraproject.org'
 
   - name: put in script for syncing on download-cc-rdu01

@@ -31,7 +31,7 @@
   tags: profile_scripts
 
 - name: Install libvirt packages
-  package: name={{ item }} state=present
+  ansible.builtin.package: name={{ item }} state=present
   with_items:
   - qemu-kvm
   - libguestfs-tools-c
@@ -177,7 +177,7 @@
     - packages
 
 - name: Install the latest helper package
-  package: name=praiskup-helpers state=latest
+  ansible.builtin.package: name=praiskup-helpers state=latest
   tags:
     - update_helpers
     - packages

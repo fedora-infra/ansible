@@ -2,7 +2,7 @@
 # OpenVpn server
 
 - name: Install needed packages
-  package:
+  ansible.builtin.package:
     state: present
     name:
     - openvpn
