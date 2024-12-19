@@ -21,7 +21,7 @@
   when: inventory_hostname not in result.list_vms
 
 - name: Run the virt-install
-  shell: "{{ virt_install_command }}"
+  ansible.builtin.shell: "{{ virt_install_command }}"
   delegate_to: "{{ vmhost }}"
   when: inventory_hostname not in result.list_vms
 

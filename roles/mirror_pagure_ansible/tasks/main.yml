@@ -14,7 +14,7 @@
 - name: Setup pagure user
   user:
     name: mirror_pagure_ansible
-    shell: /sbin/nologin
+    ansible.builtin.shell: /sbin/nologin
     comment: "mirror_pagure_ansible User"
   tags:
   - mirror_pagure_ansible

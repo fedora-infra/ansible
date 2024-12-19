@@ -10,12 +10,12 @@
   tasks:
 
   - name: Create temp dir for collecting info
-    shell: mktemp -d
+    ansible.builtin.shell: mktemp -d
     register: temp_dir
     changed_when: false
 
   - name: Get list of active loaded services with systemctl
-    shell: '/bin/systemctl -t service --no-legend | egrep "loaded active" | tr -s " " | cut -d " " -f1'
+    ansible.builtin.shell: '/bin/systemctl -t service --no-legend | egrep "loaded active" | tr -s " " | cut -d " " -f1'
     changed_when: false
     when: ansible_distribution_major_version|int >= 29 and ansible_distribution == 'Fedora'
     register: loaded_active_services_systemctl
@@ -24,7 +24,7 @@
       - services
 
   - name: Get list of active loaded services with systemctl
-    shell: '/bin/systemctl -t service --no-legend | egrep "loaded active" | tr -s " " | cut -d " " -f1'
+    ansible.builtin.shell: '/bin/systemctl -t service --no-legend | egrep "loaded active" | tr -s " " | cut -d " " -f1'
     changed_when: false
     when: ansible_distribution_major_version|int > 6 and ansible_distribution == 'RedHat'
     register: loaded_active_services_systemctl
@@ -33,7 +33,7 @@
       - services
 
   - name: Get list of inactive loaded services with systemctl
-    shell: '/bin/systemctl -t service --no-legend | egrep -v "loaded active" | tr -s " " | cut -d " " -f1'
+    ansible.builtin.shell: '/bin/systemctl -t service --no-legend | egrep -v "loaded active" | tr -s " " | cut -d " " -f1'
     changed_when: false
     when: ansible_distribution_major_version|int >= 29 and ansible_distribution == 'Fedora'
     register: loaded_inactive_services_systemctl
@@ -42,7 +42,7 @@
       - services
 
   - name: Get list of inactive loaded services with systemctl
-    shell: '/bin/systemctl -t service --no-legend | egrep -v "loaded active" | tr -s " " | cut -d " " -f1'
+    ansible.builtin.shell: '/bin/systemctl -t service --no-legend | egrep -v "loaded active" | tr -s " " | cut -d " " -f1'
     changed_when: false
     when: ansible_distribution_major_version|int > 6 and ansible_distribution == 'RedHat'
     register: loaded_inactive_services_systemctl
@@ -52,7 +52,7 @@
 
 
   - name: Get list of enabled services with chkconfig at current runlevel
-    shell: "chkconfig | grep \"`runlevel | cut -d ' ' -f 2`:on\" | awk '{print $1}'"
+    ansible.builtin.shell: "chkconfig | grep \"`runlevel | cut -d ' ' -f 2`:on\" | awk '{print $1}'"
     changed_when: false
     when: ansible_distribution_major_version|int <= 6 and ansible_distribution == 'RedHat'
     register: enabled_services_chkconfig
@@ -61,7 +61,7 @@
       - services
 
   - name: Get list of disabled services with chkconfig at current runlevel
-    shell: "chkconfig | grep \"`runlevel | cut -d ' ' -f 2`:off\" | awk '{print $1}'"
+    ansible.builtin.shell: "chkconfig | grep \"`runlevel | cut -d ' ' -f 2`:off\" | awk '{print $1}'"
     changed_when: false
     when: ansible_distribution_major_version|int <= 6 and ansible_distribution == 'RedHat'
     register: disabled_services_chkconfig
@@ -71,7 +71,7 @@
 
 
   - name: Output enabled service list chkconfig
-    shell: echo {{enabled_services_chkconfig.stdout_lines}} >> {{temp_dir.stdout}}/eservices
+    ansible.builtin.shell: echo {{enabled_services_chkconfig.stdout_lines}} >> {{temp_dir.stdout}}/eservices
     when: enabled_services_chkconfig is defined and enabled_services_chkconfig.rc == 0
     changed_when: false
     tags:
@@ -79,7 +79,7 @@
       - services
 
   - name: Output disabled loaded service list chkconfig
-    shell: echo {{disabled_services_chkconfig.stdout_lines}} >> {{temp_dir.stdout}}/dservices
+    ansible.builtin.shell: echo {{disabled_services_chkconfig.stdout_lines}} >> {{temp_dir.stdout}}/dservices
     when: disabled_services_chkconfig is defined and disabled_services_chkconfig.rc == 0
     changed_when: false
     tags:
@@ -88,7 +88,7 @@
 
 
   - name: Output loaded active service list systemctl
-    shell: echo {{loaded_active_services_systemctl.stdout_lines}} >> {{temp_dir.stdout}}/laservices
+    ansible.builtin.shell: echo {{loaded_active_services_systemctl.stdout_lines}} >> {{temp_dir.stdout}}/laservices
     when: loaded_active_services_systemctl is defined and loaded_active_services_systemctl.rc == 0
     changed_when: false
     tags:
@@ -96,7 +96,7 @@
       - services
 
   - name: Output loaded inactive service list systemctl
-    shell: echo {{loaded_inactive_services_systemctl.stdout_lines}} >> {{temp_dir.stdout}}/liservices
+    ansible.builtin.shell: echo {{loaded_inactive_services_systemctl.stdout_lines}} >> {{temp_dir.stdout}}/liservices
     when: loaded_inactive_services_systemctl is defined and loaded_inactive_services_systemctl.rc == 0
     changed_when: false
     tags:
@@ -114,14 +114,14 @@
       - updates
 
   - name: Show pending updates
-    shell: echo {{list_update.stdout_lines}} >> {{temp_dir.stdout}}/pending_updates
+    ansible.builtin.shell: echo {{list_update.stdout_lines}} >> {{temp_dir.stdout}}/pending_updates
     changed_when: false
     tags:
       - check
       - updates
 
   - name: Get processes that need restarting
-    shell: needs-restarting
+    ansible.builtin.shell: needs-restarting
     register: needs_restarting
     changed_when: false
     tags:
@@ -129,14 +129,14 @@
       - restart
 
   - name: Show processes that need restarting
-    shell: echo {{needs_restarting.stdout_lines}} >> {{temp_dir.stdout}}/needing_restart
+    ansible.builtin.shell: echo {{needs_restarting.stdout_lines}} >> {{temp_dir.stdout}}/needing_restart
     changed_when: false
     tags:
       - check
       - restart
 
   - name: Get locally changed files from the rpm package
-    shell: rpm_tmp_var=`mktemp` && ! rpm -Va 2>/dev/null > $rpm_tmp_var && [[ -s $rpm_tmp_var ]] && echo $rpm_tmp_var warn=no
+    ansible.builtin.shell: rpm_tmp_var=`mktemp` && ! rpm -Va 2>/dev/null > $rpm_tmp_var && [[ -s $rpm_tmp_var ]] && echo $rpm_tmp_var warn=no
     register: localchanges
     changed_when: false
     tags:
@@ -153,7 +153,7 @@
       - fileverify
 
   - name: Show locally changed files (excluding config files)
-    shell: echo {{rpm_va_nc.stdout_lines}} >> {{temp_dir.stdout}}/local_changed
+    ansible.builtin.shell: echo {{rpm_va_nc.stdout_lines}} >> {{temp_dir.stdout}}/local_changed
     when: rpm_va_nc.stdout != ""
     changed_when: false
     tags:
@@ -170,7 +170,7 @@
       - fileverify
 
   - name: 'Whitelist - Show locally changed files (config files)'
-    shell: echo {{rpm_va_c.stdout_lines}} >> {{temp_dir.stdout}}/local_config_changed
+    ansible.builtin.shell: echo {{rpm_va_c.stdout_lines}} >> {{temp_dir.stdout}}/local_config_changed
     changed_when: false
     when: rpm_va_c.stdout != ""
     tags:
@@ -178,7 +178,7 @@
       - fileverify
 
   - name: Check if using iptables
-    shell: /sbin/iptables -S
+    ansible.builtin.shell: /sbin/iptables -S
     register: iptablesn
     changed_when: false
     tags:
@@ -186,21 +186,21 @@
       - iptables
 
   - name: Show iptables rules
-    shell: echo "{{iptablesn.stdout_lines}}" >> {{ temp_dir.stdout }}/iptables
+    ansible.builtin.shell: echo "{{iptablesn.stdout_lines}}" >> {{ temp_dir.stdout }}/iptables
     changed_when: false
     tags:
       - check
       - iptables
 
   - name: Show current SELinux status
-    shell: echo "SELinux is {{ ansible_selinux.status }} for this System" >> {{temp_dir.stdout}}/selinux
+    ansible.builtin.shell: echo "SELinux is {{ ansible_selinux.status }} for this System" >> {{temp_dir.stdout}}/selinux
     changed_when: false
     tags:
       - check
       - selinux
 
   - name: Show Boot SELinux mode
-    shell: echo "SELinux boots to {{ ansible_selinux.config_mode }} mode " >> {{temp_dir.stdout}}/selinux
+    ansible.builtin.shell: echo "SELinux boots to {{ ansible_selinux.config_mode }} mode " >> {{temp_dir.stdout}}/selinux
     when: ansible_selinux.status != "disabled"
     changed_when: false
     tags:
@@ -208,7 +208,7 @@
       - selinux
 
   - name: Show Current SELinux mode
-    shell: echo "SELinux currently is in {{ ansible_selinux.mode }} mode" >> {{temp_dir.stdout}}/selinux
+    ansible.builtin.shell: echo "SELinux currently is in {{ ansible_selinux.mode }} mode" >> {{temp_dir.stdout}}/selinux
     when: ansible_selinux.status != "disabled"
     changed_when: false
     tags:
@@ -216,7 +216,7 @@
       - selinux
 
   - name: Match current SELinux status with boot status
-    shell: echo "SElinux Current and Boot modes are in sync" >> {{temp_dir.stdout}}/selinux
+    ansible.builtin.shell: echo "SElinux Current and Boot modes are in sync" >> {{temp_dir.stdout}}/selinux
     when: ansible_selinux.status != "disabled" and ansible_selinux.config_mode == ansible_selinux.mode
     changed_when: false
     tags:
@@ -225,7 +225,7 @@
 
 
   - name: MisMatch current SELinux status with boot status
-    shell: echo "SElinux Current and Boot modes are NOT in sync" >> {{temp_dir.stdout}}/selinux
+    ansible.builtin.shell: echo "SElinux Current and Boot modes are NOT in sync" >> {{temp_dir.stdout}}/selinux
     when: ansible_selinux.status != "disabled" and ansible_selinux.config_mode != ansible_selinux.mode
     changed_when: false
     tags:
@@ -239,12 +239,12 @@
     ignore_errors: true
 
   - name: Get file list
-    shell: ls -1 {{temp_dir.stdout}}/*
+    ansible.builtin.shell: ls -1 {{temp_dir.stdout}}/*
     register: file_list
     changed_when: false
 
   - name: Get timestamp
-    shell: "date +%Y-%m-%d-%H-%M-%S"
+    ansible.builtin.shell: "date +%Y-%m-%d-%H-%M-%S"
     register: timestamp
     changed_when: false
 

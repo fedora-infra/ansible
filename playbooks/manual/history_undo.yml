@@ -15,7 +15,7 @@
 
   tasks:
   - name: Find the ID of the last yum transaction
-    shell: yum history package {{ package }} | sed -n 3p | awk -F "|" '{ print $1 }' | tr -d ' '
+    ansible.builtin.shell: yum history package {{ package }} | sed -n 3p | awk -F "|" '{ print $1 }' | tr -d ' '
     register: transaction_id
 
   # If transaction_id.stderr == "", then that means that the $PACKAGE we're

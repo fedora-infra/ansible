@@ -149,7 +149,7 @@
   - base
 
 - name: Setup builder ipset if this is a new install
-  shell: "/usr/sbin/ipset create osbuildapi hash:ip; touch /etc/sysconfig/ipset-osbuildapi"
+  ansible.builtin.shell: "/usr/sbin/ipset create osbuildapi hash:ip; touch /etc/sysconfig/ipset-osbuildapi"
   args:
     creates: /etc/sysconfig/ipset-osbuildapi
   when: "'osbuild' in group_names"

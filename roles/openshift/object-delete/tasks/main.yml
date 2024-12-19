@@ -12,4 +12,4 @@
   when: object_delete_objecttype == 'project'
 
 - name: Call `oc delete` on the object
-  shell: oc -n {{object_delete_app}} delete {{object_delete_objecttype}}/{{object_delete_objectname}}
+  ansible.builtin.shell: oc -n {{object_delete_app}} delete {{object_delete_objecttype}}/{{object_delete_objectname}}

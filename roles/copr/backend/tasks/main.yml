@@ -274,7 +274,7 @@
   register: copr_results_dir_st
 
 - name: Change owner for results dir if it isn't copr
-  shell: "chown -R copr:copr /var/lib/copr/public_html"
+  ansible.builtin.shell: "chown -R copr:copr /var/lib/copr/public_html"
   when: '"copr" not in copr_results_dir_st.stat.pw_name'
 
 - ansible.builtin.command: "ls -dZ /var/lib/copr/public_html/"

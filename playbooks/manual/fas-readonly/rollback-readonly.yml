@@ -11,7 +11,7 @@
     template: src=rollback.sql dest=/var/lib/pgsql/rollback.sql
 
   - name: Rollback permissions for relevant tables in the fas db
-    shell: psql -1 -v ON_ERROR_STOP=1 fas2 </var/lib/pgsql/rollback.sql
+    ansible.builtin.shell: psql -1 -v ON_ERROR_STOP=1 fas2 </var/lib/pgsql/rollback.sql
     become: yes
     become_user: postgres
     become_method: su

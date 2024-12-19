@@ -17,10 +17,10 @@
     dest: "/etc/openshift_apps/{{job_app}}/job-{{job_name}}.yml"
 
 - name: Delete previous job (if any)
-  shell: oc -n {{os_app}} delete --ignore-not-found=true -f /etc/openshift_apps/{{job_app}}/job-{{job_name}}.yml
+  ansible.builtin.shell: oc -n {{os_app}} delete --ignore-not-found=true -f /etc/openshift_apps/{{job_app}}/job-{{job_name}}.yml
 
 - name: Start job
-  shell: oc -n {{os_app}} create -f /etc/openshift_apps/{{job_app}}/job-{{job_name}}.yml
+  ansible.builtin.shell: oc -n {{os_app}} create -f /etc/openshift_apps/{{job_app}}/job-{{job_name}}.yml
 
 - debug:
     msg: "Job started. You can watch the logs with: oc -n {{os_app}} logs -f job/job-{{job_name}}"
@@ -28,4 +28,4 @@
     msg: "You can cancel it with: oc -n {{os_app}} delete job/job-{{job_name}}"
 
 - name: Wait for job to complete
-  shell: oc -n {{os_app}} wait job/job-{{job_name}} --for condition=complete
+  ansible.builtin.shell: oc -n {{os_app}} wait job/job-{{job_name}} --for condition=complete

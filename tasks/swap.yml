@@ -88,7 +88,7 @@
     - swap
 
 - name: Disable zram0
-  shell: swapoff /dev/zram0
+  ansible.builtin.shell: swapoff /dev/zram0
   tags:
     - swap
     - swap.file.swapoffzram

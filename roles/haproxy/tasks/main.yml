@@ -92,7 +92,7 @@
   - selinux
 
 - name: Check to see if its even installed yet
-  shell: semodule -l | grep fi-haproxy | wc -l
+  ansible.builtin.shell: semodule -l | grep fi-haproxy | wc -l
   register: fi_haproxy_grep
   check_mode: no
   changed_when: "'0' in fi_haproxy_grep.stdout"

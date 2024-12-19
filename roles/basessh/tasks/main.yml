@@ -46,7 +46,7 @@
   when: ( ansible_distribution == 'Fedora' and ansible_distribution_major_version|int >= 30 ) or ( ansible_distribution == 'RedHat' and ansible_distribution_major_version|int >= 8 )
 
 - name: Check if sshd port is already known by selinux
-  shell: semanage port -l | grep ssh
+  ansible.builtin.shell: semanage port -l | grep ssh
   register: sshd_selinux_port
   check_mode: no
   changed_when: false
@@ -199,7 +199,7 @@
 
 # Currently, we use the epoch as serial. That's unique enough for now
 - name: Sign the certificates
-  shell: "ssh-keygen -s {{private}}/files/ssh/{{env}}_ca_host_key -t rsa-sha2-256 -I {{inventory_hostname}} -h -n {{ sign_hostnames|join(',') }} -V {{sign_validity}} -z `date +%s` {{pubkeydir}}/{{inventory_hostname}}{{item}}.pub"
+  ansible.builtin.shell: "ssh-keygen -s {{private}}/files/ssh/{{env}}_ca_host_key -t rsa-sha2-256 -I {{inventory_hostname}} -h -n {{ sign_hostnames|join(',') }} -V {{sign_validity}} -z `date +%s` {{pubkeydir}}/{{inventory_hostname}}{{item}}.pub"
   delegate_to: localhost
   with_items: "{{certs_to_sign}}"
   check_mode: no

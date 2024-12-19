@@ -15,5 +15,5 @@
   register: object_file_result
 
 - name: Call `oc apply` on the copied file
-  shell: oc -n {{object_os_app}} apply --validate=strict -f /etc/openshift_apps/{{object_os_app}}/{{object_objectname}}
+  ansible.builtin.shell: oc -n {{object_os_app}} apply --validate=strict -f /etc/openshift_apps/{{object_os_app}}/{{object_objectname}}
   when: object_template_result.changed or object_template_fullpath_result.changed or object_file_result.changed or object_always_apply

@@ -3,7 +3,7 @@
 #
 ---
 - name: Check for grub serial setup
-  shell: grep options /boot/loader/entries/*
+  ansible.builtin.shell: grep options /boot/loader/entries/*
   register: serial
   check_mode: no
   changed_when: '1 != 1'

@@ -16,7 +16,7 @@
 
 - block:
   - name: Get last subuid entry
-    shell: |
+    ansible.builtin.shell: |
       set -o pipefail
       sort -nrt: -k2 /etc/subuid | awk -F: 'NR == 1 { print $2 }'
     changed_when: false
@@ -41,7 +41,7 @@
 
 - block:
   - name: Get last subgid entry
-    shell: |
+    ansible.builtin.shell: |
       set -o pipefail
       cut -d ':' -f2 /etc/subgid | sort | tail -1
     changed_when: false

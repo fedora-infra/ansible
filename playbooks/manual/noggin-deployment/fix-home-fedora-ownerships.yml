@@ -25,7 +25,7 @@
 
   - name: Fix ownership of home directories in /home/fedora
     # assumes that directory name == user name
-    shell:
+    ansible.builtin.shell:
       chdir: /home/fedora
       cmd: /usr/local/sbin/fix-home-fedora-ownerships.sh
     register: chown_res

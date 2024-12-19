@@ -41,7 +41,7 @@
   # TODO -- I'd also like to fail if there are no *.rpm files in there.
 
   - name: Sign all the rpms with our gpg key
-    shell: /bin/rpm --resign {{ rpmdir }}/*.rpm
+    ansible.builtin.shell: /bin/rpm --resign {{ rpmdir }}/*.rpm
 
   - name: Make a directory where we store the rpms afterwards
     ansible.builtin.file: path={{ rpmdir }}-old state=directory

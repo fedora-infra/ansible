@@ -8,7 +8,7 @@
     uid: "{{nrpe_client_uid|default(omit)}}"
     comment: NRPE user for the NRPE service
     home: /var/run/nrpe
-    shell: /sbin/nologin
+    ansible.builtin.shell: /sbin/nologin
     system: true
   tags:
   - nagios_client
@@ -323,7 +323,7 @@
     - pagure
 
 - name: Check if the fedmsg group exists
-  shell: /usr/bin/getent group fedmsg | /usr/bin/wc -l | tr -d ' '
+  ansible.builtin.shell: /usr/bin/getent group fedmsg | /usr/bin/wc -l | tr -d ' '
   register: fedmsg_exists
   check_mode: no
   changed_when: "1 != 1"

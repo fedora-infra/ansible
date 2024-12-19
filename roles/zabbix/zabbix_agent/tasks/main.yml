@@ -35,7 +35,7 @@
     - zabbix_agent
 
 - name: Reload custom selinux files
-  shell: /usr/sbin/semodule -u "/etc/selinux/centos/centos-zabbix-agent.pp"
+  ansible.builtin.shell: /usr/sbin/semodule -u "/etc/selinux/centos/centos-zabbix-agent.pp"
   when: ansible_distribution == "Centos" and ansible_selinux.status == "enabled" and sepolicy.changed
   tags:
     - zabbix_agent

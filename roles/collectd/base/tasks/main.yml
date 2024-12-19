@@ -133,7 +133,7 @@
 
 # TODO: consider using selinux_modules from https://galaxy.ansible.com/linux-system-roles/selinux instead
 - name: Check to see what version is installed (if any)
-  shell: "semodule -l -m | grep fi-collectd | cut -d: -f2"
+  ansible.builtin.shell: "semodule -l -m | grep fi-collectd | cut -d: -f2"
   register: ficgeneral_installed_version
   check_mode: no
   changed_when: false
@@ -143,7 +143,7 @@
 
 # This cmd comes from the last example of the semodule man page
 - name: Check to see what version we have
-  shell: /usr/libexec/selinux/hll/pp /usr/share/collectd/fi-collectd.pp | sha256sum | cut -d ' ' -f1
+  ansible.builtin.shell: /usr/libexec/selinux/hll/pp /usr/share/collectd/fi-collectd.pp | sha256sum | cut -d ' ' -f1
   register: ficgeneral_local_version
   check_mode: no
   changed_when: false
@@ -166,7 +166,7 @@
   - selinux
 
 - name: Check to see if its even installed yet
-  shell: semodule -l | grep fi-pstorefs | wc -l
+  ansible.builtin.shell: semodule -l | grep fi-pstorefs | wc -l
   register: ficpstorefs_grep
   check_mode: no
   changed_when: "'0' in ficpstorefs_grep.stdout"

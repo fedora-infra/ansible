@@ -71,7 +71,7 @@
     ansible.builtin.package: name=koji state=latest update_cache=yes
     when: db_upgrade_file is defined
   - name: Execute the db upgrade script
-    shell: psql koji  < {{db_upgrade_file}}
+    ansible.builtin.shell: psql koji  < {{db_upgrade_file}}
     become: true
     become_user: postgres
     when: db_upgrade_file is defined

@@ -11,7 +11,7 @@
     template: src=fas-readonly.sql dest=/var/lib/pgsql/fas-readonly.sql
 
   - name: Change permissions for relevant tables in the fas db
-    shell: psql -1 -v ON_ERROR_STOP=1 fas2 </var/lib/pgsql/fas-readonly.sql
+    ansible.builtin.shell: psql -1 -v ON_ERROR_STOP=1 fas2 </var/lib/pgsql/fas-readonly.sql
     become: yes
     become_user: postgres
     become_method: su

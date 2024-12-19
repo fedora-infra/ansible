@@ -47,7 +47,7 @@
   - name: Import the prod db.  This will take quite a while.  Go get a snack!
     ansible.builtin.command: psql -f /var/tmp/mailman.dump mailman
   # - name: Fix the database
-  #  shell: psql -f /var/lib/pgsql/mailman-reset-staging.sql mailman
+  #  ansible.builtin.shell: psql -f /var/lib/pgsql/mailman-reset-staging.sql mailman
 
   # - template: src=templates/hyperkitty-reset-staging.sql dest=/var/lib/pgsql/hyperkitty-reset-staging.sql
   - ansible.builtin.copy:
@@ -62,7 +62,7 @@
   - name: Import the prod db.  This will take quite a while.  Go get a snack!
     ansible.builtin.command: psql -f /var/tmp/hyperkitty.dump hyperkitty
   # - name: Fix the database
-  #  shell: psql -f /var/lib/pgsql/hyperkitty-reset-staging.sql hyperkitty
+  #  ansible.builtin.shell: psql -f /var/lib/pgsql/hyperkitty-reset-staging.sql hyperkitty
 
   # TODO: reindex emails (fulltext)? Not a full-reindex, it may take days.
 

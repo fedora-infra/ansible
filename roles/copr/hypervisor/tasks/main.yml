@@ -22,7 +22,7 @@
 #   tags: swap
 
 # - name: Mount the swap
-#   shell: swapon -a
+#   ansible.builtin.shell: swapon -a
 #   when: fstab_swap_entry.changed
 #   tags: swap
 
@@ -76,12 +76,12 @@
   tags: libvirtd
 
 - name: Restorecon
-  shell: restorecon -irv "{{ image_pool_dir }}"
+  ansible.builtin.shell: restorecon -irv "{{ image_pool_dir }}"
   when: semanage_run.changed
   tags: libvirtd
 
 - name: Check host-bridge in libvirt
-  shell: virsh net-info host-bridge
+  ansible.builtin.shell: virsh net-info host-bridge
   register: libvirt_bridge_exists
   failed_when: false
   changed_when: libvirt_bridge_exists.rc != 0
@@ -94,7 +94,7 @@
   tags: libvirtd
 
 - name: Define host-bridge in libvirt
-  shell: |
+  ansible.builtin.shell: |
     virsh net-define /root/.tmp-ansible-file.xml
     virsh net-start host-bridge
     virsh net-autostart host-bridge
@@ -103,7 +103,7 @@
   tags: libvirtd
 
 - name: Check if image pool exists
-  shell: virsh pool-info "{{ image_pool_name }}"
+  ansible.builtin.shell: virsh pool-info "{{ image_pool_name }}"
   register: libvirt_pool_exists
   failed_when: false
   changed_when: libvirt_pool_exists.rc != 0
@@ -116,7 +116,7 @@
   tags: libvirtd
 
 - name: Define image pool in libvirt
-  shell: |
+  ansible.builtin.shell: |
     virsh pool-define /root/.tmp-ansible-file.xml
     virsh pool-start "{{ image_pool_name }}"
     virsh pool-autostart "{{ image_pool_name }}"

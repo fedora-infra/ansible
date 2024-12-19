@@ -18,7 +18,7 @@
   - bkernel
 
 - name: Setup opensc in pcscd
-  shell: modutil -dbdir /etc/pki/pesign -list | grep -q OpenSC ||  modutil -force -dbdir /etc/pki/pesign -add opensc -libfile /usr/lib64/pkcs11/opensc-pkcs11.so
+  ansible.builtin.shell: modutil -dbdir /etc/pki/pesign -list | grep -q OpenSC ||  modutil -force -dbdir /etc/pki/pesign -add opensc -libfile /usr/lib64/pkcs11/opensc-pkcs11.so
   check_mode: no
   changed_when: "1 != 1"
   tags:

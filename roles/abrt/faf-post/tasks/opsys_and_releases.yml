@@ -1,7 +1,7 @@
 ---
 - name: Add CentOS opsys releases
   loop: "{{ rs_internal_centos_vers }}"
-  shell: >
+  ansible.builtin.shell: >
     faf releaseadd -o centos --opsys-release {{ item }} -s ACTIVE
   become: yes
   become_user: faf
@@ -10,7 +10,7 @@
 
 - name: Add Fedora opsys releases
   loop: "{{ rs_internal_fedora_vers }}"
-  shell: >
+  ansible.builtin.shell: >
     faf releaseadd -o fedora --opsys-release {{ item }} -s ACTIVE
   become: yes
   become_user: faf

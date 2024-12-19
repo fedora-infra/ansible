@@ -32,7 +32,7 @@
   - import_tasks: "{{ tasks_path }}/motd.yml"
 
   - name: check if ntpd port is already known by selinux
-    shell: semanage port -l | grep ntp
+    ansible.builtin.shell: semanage port -l | grep ntp
     register: ntp_selinux_port
     check_mode: no
     changed_when: false

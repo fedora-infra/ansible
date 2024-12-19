@@ -125,10 +125,10 @@
   service: name=memcached state=restarted
 
 - name: restart nagios
-  shell: nagios -v /etc/nagios/nagios.cfg && systemctl restart nagios
+  ansible.builtin.shell: nagios -v /etc/nagios/nagios.cfg && systemctl restart nagios
 
 - name: restart bridge
-  shell: /usr/lib/systemd/systemd-sysctl --prefix=/proc/sys/net/bridge
+  ansible.builtin.shell: /usr/lib/systemd/systemd-sysctl --prefix=/proc/sys/net/bridge
 
 - name: reload libvirtd
   service: name=libvirtd state=reloaded

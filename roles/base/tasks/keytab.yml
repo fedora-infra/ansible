@@ -10,7 +10,7 @@
 
 - name: Get admin keytab
   delegate_to: "{{ ipa_server }}"
-  shell: echo "{{ipa_admin_password}}" | kinit admin
+  ansible.builtin.shell: echo "{{ipa_admin_password}}" | kinit admin
   tags:
   - base
   - config
@@ -106,7 +106,7 @@
   when: not host_keytab_status.stat.exists
 
 - name: Base64-decode keytab
-  shell: "umask 077; base64 -d /etc/krb5.keytab.b64 >/etc/krb5.keytab"
+  ansible.builtin.shell: "umask 077; base64 -d /etc/krb5.keytab.b64 >/etc/krb5.keytab"
   tags:
   - base
   - config

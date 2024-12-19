@@ -64,7 +64,7 @@
     name: ipa/client
 
 - name: Get admin ticket
-  shell: echo "{{ipa_admin_password}}" | kinit admin
+  ansible.builtin.shell: echo "{{ipa_admin_password}}" | kinit admin
   check_mode: no
   tags:
   - ipsilon

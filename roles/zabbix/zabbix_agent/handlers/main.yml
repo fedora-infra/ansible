@@ -3,5 +3,5 @@
   service: name=zabbix-agent state=restarted
 
 - name: reload custom selinux files
-  shell: /usr/sbin/semodule -u "/etc/selinux/centos/centos-zabbix-agent.pp"
+  ansible.builtin.shell: /usr/sbin/semodule -u "/etc/selinux/centos/centos-zabbix-agent.pp"
   when: ansible_selinux.mode == "enforcing"

@@ -11,7 +11,7 @@
   - include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
   - include_vars: /srv/web/infra/ansible/vars/apps/bodhi.yml
   - name: Check for running composes
-    shell: "curl https://bodhi{{env_suffix}}.fedoraproject.org/composes/"
+    ansible.builtin.shell: "curl https://bodhi{{env_suffix}}.fedoraproject.org/composes/"
     register: composes
 
   - name: Fail if we found that a compose was in progress

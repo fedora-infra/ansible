@@ -5,10 +5,10 @@
     dest: "/etc/openshift_apps/{{job_app}}/job-{{job_name}}.yml"
 
 - name: Delete previous job (if any)
-  shell: oc -n {{ job_app }} delete --ignore-not-found=true -f /etc/openshift_apps/{{job_app}}/job-{{job_name}}.yml
+  ansible.builtin.shell: oc -n {{ job_app }} delete --ignore-not-found=true -f /etc/openshift_apps/{{job_app}}/job-{{job_name}}.yml
 
 - name: Start job
-  shell: oc -n {{ job_app }} create -f /etc/openshift_apps/{{job_app}}/job-{{job_name}}.yml
+  ansible.builtin.shell: oc -n {{ job_app }} create -f /etc/openshift_apps/{{job_app}}/job-{{job_name}}.yml
 
 - name: Wait for job to complete
-  shell: oc -n {{ job_app }} wait job/job-{{job_name}} --for condition=complete
+  ansible.builtin.shell: oc -n {{ job_app }} wait job/job-{{job_name}} --for condition=complete

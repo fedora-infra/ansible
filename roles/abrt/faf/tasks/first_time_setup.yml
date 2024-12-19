@@ -1,7 +1,7 @@
 ---
 
 - name: Check for count of faf tables
-  shell: psql -c "SELECT COUNT(*) FROM pg_stat_user_tables"
+  ansible.builtin.shell: psql -c "SELECT COUNT(*) FROM pg_stat_user_tables"
   register: count_tables
   changed_when: "( count_tables.stdout_lines[2]|int ) == 0"
   check_mode: no

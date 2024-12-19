@@ -1,6 +1,6 @@
 ---
 - name: "Work-around for https://github.com/ansible/ansible/issues/84206 #1 (install python3 libdnf5)"
-  shell: dnf -y install python3-libdnf5
+  ansible.builtin.shell: dnf -y install python3-libdnf5
 
 - name: "Work-around for https://github.com/ansible/ansible/issues/84206 #2 (reload remote python modules)"
   meta: reset_connection

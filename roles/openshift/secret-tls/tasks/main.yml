@@ -8,18 +8,18 @@
   register: secret_privatekey
 
 - name: Delete existing secrets
-  shell: oc -n {{secret_tls_app}} delete secret/{{secret_tls_secret_name}}
+  ansible.builtin.shell: oc -n {{secret_tls_app}} delete secret/{{secret_tls_secret_name}}
   register: delete_out
   changed_when: "'NotFound' in delete_out.stderr"
   failed_when: "('NotFound' not in delete_out.stderr) and (delete_out.rc != 0)"
   when: secret_privatecert.changed or secret_privatekey.changed
 
 - name: Call `oc create secret tls` on the copied file
-  shell: oc -n {{secret_tls_app}} create secret tls {{secret_tls_secret_name}} --cert=/etc/openshift_apps/{{secret_tls_app}}/{{secret_tls_key}}.crt --key=/etc/openshift_apps/{{secret_tls_app}}/{{secret_tls_key}}.key
+  ansible.builtin.shell: oc -n {{secret_tls_app}} create secret tls {{secret_tls_secret_name}} --cert=/etc/openshift_apps/{{secret_tls_app}}/{{secret_tls_key}}.crt --key=/etc/openshift_apps/{{secret_tls_app}}/{{secret_tls_key}}.key
   register: create_out
   when: secret_privatecert.changed or secret_privatekey.changed
 
 - name: Call `oc create secret tls` on the copied file
-  shell: oc -n {{secret_tls_app}} create secret tls {{secret_tls_secret_name}} --cert=/etc/openshift_apps/{{secret_tls_app}}/{{secret_tls_key}}.crt --key=/etc/openshift_apps/{{secret_tls_app}}/{{secret_tls_key}}.key
+  ansible.builtin.shell: oc -n {{secret_tls_app}} create secret tls {{secret_tls_secret_name}} --cert=/etc/openshift_apps/{{secret_tls_app}}/{{secret_tls_key}}.crt --key=/etc/openshift_apps/{{secret_tls_app}}/{{secret_tls_key}}.key
   register: create_out
   when: secret_privatecert.changed or secret_privatekey.changed

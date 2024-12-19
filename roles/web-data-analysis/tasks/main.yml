@@ -108,7 +108,7 @@
   user:
     name: countme
     group: countme
-    shell: /sbin/nologin
+    ansible.builtin.shell: /sbin/nologin
     home: /srv/countme
     comment: "DNF countme counter"
   tags:
@@ -125,7 +125,7 @@
 
 - name: Remove local mirrors-countme git repo, scripts and Python package
   # Using `shell` here because `file` doesn't know wild cards
-  shell: >-
+  ansible.builtin.shell: >-
     shopt -s nullglob;
     rm -rfv \
         /srv/countme/mirrors-countme \

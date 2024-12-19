@@ -29,7 +29,7 @@
 
 - name: Get admin ticket
   delegate_to: "{{ ipa_server }}"
-  shell: echo "{{ipa_admin_password}}" | kinit admin
+  ansible.builtin.shell: echo "{{ipa_admin_password}}" | kinit admin
   check_mode: no
   changed_when: "1 != 1"
   tags:
@@ -126,7 +126,7 @@
   when: not keytab_status.stat.exists
 
 - name: Base64-decode keytab
-  shell: "umask 077 && base64 -d {{kt_location}}.b64 >{{kt_location}}"
+  ansible.builtin.shell: "umask 077 && base64 -d {{kt_location}}.b64 >{{kt_location}}"
   tags:
   - keytab
   - config

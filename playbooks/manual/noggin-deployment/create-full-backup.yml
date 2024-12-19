@@ -10,6 +10,6 @@
       ansible.builtin.command: ipa-backup
 
     - name: Make the latest backup available under a fixed name
-      shell:
+      ansible.builtin.shell:
         cmd: ln -snf $(ls -1t ipa-full* | head -n 1) ipa-full-latest
         chdir: /var/lib/ipa/backup

@@ -19,7 +19,7 @@
     dest=/etc/openshift_apps/{{project_app}}/project.yml
 
 - name: Create project
-  shell: oc apply --validate=strict -f /etc/openshift_apps/{{project_app}}/project.yml
+  ansible.builtin.shell: oc apply --validate=strict -f /etc/openshift_apps/{{project_app}}/project.yml
   when: "'not found' in project_exists.stderr"
 
 - name: Deployer.yml

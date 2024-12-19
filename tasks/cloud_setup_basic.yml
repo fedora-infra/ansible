@@ -25,7 +25,7 @@
   include_role: name=basessh
 
 # - name: Edit hostname to be instance name - prefix hostbase var if it exists
-#  shell: hostname  {{ hostbase }}`curl -s http://169.254.169.254/latest/meta-data/instance-id`
+#  ansible.builtin.shell: hostname  {{ hostbase }}`curl -s http://169.254.169.254/latest/meta-data/instance-id`
 #  tags:
 #  - config
 

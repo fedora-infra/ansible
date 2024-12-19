@@ -22,7 +22,7 @@
 # Load the initial schema and create a file to note that it's loaded now.
 #
 - name: Load initial schema
-  shell: creates=/var/lib/pgql/koji-schema psql koji koji < /usr/share/doc/koji*/docs/schema.sql
+  ansible.builtin.shell: creates=/var/lib/pgql/koji-schema psql koji koji < /usr/share/doc/koji*/docs/schema.sql
   tags:
   - db
   when: is_kojidb == "True"

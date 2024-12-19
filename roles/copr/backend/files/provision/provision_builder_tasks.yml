@@ -72,7 +72,7 @@
 #     - starting_builder
 
 - name: clean dnf cache before checking for updated packages
-  shell: dnf clean all
+  ansible.builtin.shell: dnf clean all
   when:
     - preparing_image
 
@@ -124,7 +124,7 @@
       - pyp2spec
 
 - name: Activate Red Hat Subscription
-  shell:
+  ansible.builtin.shell:
     cmd: >
       echo "{{ copr_rhsm_activation_key }}"
       | /usr/bin/copr-builder-rhsm-subscribe-daemon
@@ -137,7 +137,7 @@
   when: starting_builder
 
 - name: make sure the enable-swap service has already finished
-  shell: "systemctl is-active enable-swap || :"
+  ansible.builtin.shell: "systemctl is-active enable-swap || :"
   register: enable_swap_active
   until: "'inactive' in enable_swap_active.stdout or 'failed' in enable_swap_active.stdout"
   retries: 20
@@ -145,7 +145,7 @@
   when: starting_builder
 
 - name: debug the swap failure
-  shell: journalctl -u enable-swap
+  ansible.builtin.shell: journalctl -u enable-swap
   register: journalctl_output
   when:
     - starting_builder
@@ -207,7 +207,7 @@
     - starting_builder
 
 - name: run /bin/copr-update-builder from copr-builder package
-  shell: /usr/bin/copr-update-builder
+  ansible.builtin.shell: /usr/bin/copr-update-builder
 
 # - name: install the latest mock and mock-core-configs from updates-testing
 #  ansible.builtin.package: state=latest name={{ packages }}
@@ -218,7 +218,7 @@
 #    - https://kojipkgs.fedoraproject.org/packages/mock-core-configs/32.6/1.fc31/noarch/mock-core-configs-32.6-1.fc31.noarch.rpm
 #
 # - name: re-run copr-update builder when mock/mock-core-configs are updated
-#   shell: /usr/bin/copr-update-builder
+#   ansible.builtin.shell: /usr/bin/copr-update-builder
 #   when: mock_updated.changed
 
 - name: patch from https://github.com/rpm-software-management/mock/pull/1341
@@ -327,4 +327,4 @@
     - copr-rpmbuild.yml
 
 - name: Set up motd for builder
-  shell: "copr-builder help > /etc/motd || :"
+  ansible.builtin.shell: "copr-builder help > /etc/motd || :"

@@ -60,7 +60,7 @@
 
   tasks:
   - name: Combine IPA keytabs
-    shell: printf "%b" "read_kt /etc/httpd/conf/ipa.keytab\nread_kt /etc/krb5.HTTP_id{{env_suffix}}.fedoraproject.org.keytab\nwrite_kt /etc/krb5.HTTP_id{{env_suffix}}.fedoraproject.org.keytab.combined" | ktutil
+    ansible.builtin.shell: printf "%b" "read_kt /etc/httpd/conf/ipa.keytab\nread_kt /etc/krb5.HTTP_id{{env_suffix}}.fedoraproject.org.keytab\nwrite_kt /etc/krb5.HTTP_id{{env_suffix}}.fedoraproject.org.keytab.combined" | ktutil
     changed_when: false
     tags:
     - krb5

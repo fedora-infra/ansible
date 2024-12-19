@@ -17,7 +17,7 @@
     import_tasks: _generic_tasks.yml
 
   - name: Check for copr-frontend update
-    shell: dnf clean expire-cache ; dnf check-update copr-frontend
+    ansible.builtin.shell: dnf clean expire-cache ; dnf check-update copr-frontend
     register: frontend_has_update
     changed_when: "frontend_has_update.rc != 0"
     failed_when: false
@@ -37,7 +37,7 @@
       - python3-copr-common
 
   - name: Upgrade db to head, logs in /var/log/copr-frontend/migrations.log
-    shell: alembic-3 upgrade head &> /var/log/copr-frontend/migrations.log
+    ansible.builtin.shell: alembic-3 upgrade head &> /var/log/copr-frontend/migrations.log
     become: yes
     become_user: copr-fe
     args:

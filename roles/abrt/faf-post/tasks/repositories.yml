@@ -1,7 +1,7 @@
 ---
 - name: Add Fedora package repositories
   loop: "{{ faf_repos }}"
-  shell: >
+  ansible.builtin.shell: >
     faf repoadd --nogpgcheck "{{ item.name }}" dnf "{{ item.url | join('" "') }}"
   become: yes
   become_user: faf
@@ -18,7 +18,7 @@
 
 - name: List repositories of EOL Fedora releases
   loop: "{{ rs_internal_fedora_vers_removed }}"
-  shell: "faf repolist | grep fedora-{{ item }} || true"
+  ansible.builtin.shell: "faf repolist | grep fedora-{{ item }} || true"
   become: yes
   become_user: faf
   register: eol_repolist

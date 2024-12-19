@@ -37,7 +37,7 @@
   - selinux
 
 - name: Check to see if its even installed yet
-  shell: semodule -l | grep fi-collectd-fcomm | wc -l
+  ansible.builtin.shell: semodule -l | grep fi-collectd-fcomm | wc -l
   register: ficfcomm_grep
   check_mode: no
   changed_when: "'0' in ficfcomm_grep.stdout"

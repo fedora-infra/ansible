@@ -1,7 +1,7 @@
 ---
 # tasks file for CommunishiftAuthorization
 - name: Authorize with kinit
-  shell: kinit -k -t "{{ communishift_keytab_path }}" -l 3600 "{{ communishift_keytab_principal }}"
+  ansible.builtin.shell: kinit -k -t "{{ communishift_keytab_path }}" -l 3600 "{{ communishift_keytab_principal }}"
   run_once: true
 
 - name: Retrieve fasjson group/user data based on pattern supplied

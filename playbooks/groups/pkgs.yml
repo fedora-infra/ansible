@@ -49,7 +49,7 @@
     user:
       name: pagure
       uid: "{{ pagure_static_uid }}"
-      shell: /sbin/nologin
+      ansible.builtin.shell: /sbin/nologin
       comment: "Pagure User"
     when: env == "staging"
     ## The above should be deleted when we rebuild pkgs02 in future.

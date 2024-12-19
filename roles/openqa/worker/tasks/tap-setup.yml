@@ -56,13 +56,13 @@
 
 # nmcli collection does not support tun type
 - name: Check whether tap device interface connection profiles exist
-  shell: "(for i in {0..{{ openqa_workers | int }}}; do ip addr show tap$i || exit 1; done)"
+  ansible.builtin.shell: "(for i in {0..{{ openqa_workers | int }}}; do ip addr show tap$i || exit 1; done)"
   register: tapsexist
   changed_when: "1 != 1"
   failed_when: "1 != 1"
 
 - name: Create openvswitch interfaces for tap devices
-  shell: "nmcli con add type tun mode tap owner $(id -u _openqa-worker) group $(getent group nogroup | cut -f3 -d:) con.int tap{{ item }} master tap{{ item }}"
+  ansible.builtin.shell: "nmcli con add type tun mode tap owner $(id -u _openqa-worker) group $(getent group nogroup | cut -f3 -d:) con.int tap{{ item }} master tap{{ item }}"
   with_sequence: start=0 end={{ openqa_workers | int }}
   when: tapsexist.rc > 0
 

@@ -18,16 +18,16 @@
 
   tasks:
   - name: Delete all jobs
-    shell: oc -n koschei delete job --all
+    ansible.builtin.shell: oc -n koschei delete job --all
 
   - name: Pause all deployments
-    shell: oc -n koschei rollout pause deploy
+    ansible.builtin.shell: oc -n koschei rollout pause deploy
 
   - name: Delete all replica sets
-    shell: oc -n koschei delete rs --all
+    ansible.builtin.shell: oc -n koschei delete rs --all
 
   - name: Delete all pods
-    shell: oc -n koschei delete pod --all
+    ansible.builtin.shell: oc -n koschei delete pod --all
 
   - name: Import upstream image into OpenShift
     include_role: name=openshift/import-image
@@ -52,4 +52,4 @@
       job_command: "koschei-admin psql <<<'VACUUM FULL ANALYZE'"
 
   - name: Resume all deployments
-    shell: oc -n koschei rollout resume deploy
+    ansible.builtin.shell: oc -n koschei rollout resume deploy

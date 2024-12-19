@@ -13,7 +13,7 @@
     ansible.builtin.copy: src={{private}}/scripts/drivestatus.py dest=/root/drivestatus.py
 
   - name: Run it for {{mgmt}}
-    shell: python /root/drivestatus.py {{mgmt}}
+    ansible.builtin.shell: python /root/drivestatus.py {{mgmt}}
     register: out
 
   - name: Remove it

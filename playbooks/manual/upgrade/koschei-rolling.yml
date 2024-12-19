@@ -23,4 +23,4 @@
       import_image_imagestreamname: koschei
 
   - name: Restart all deployments
-    shell: oc -n koschei rollout restart deploy
+    ansible.builtin.shell: oc -n koschei rollout restart deploy

@@ -31,7 +31,7 @@
 
   tasks:
   - name: Dumping the production db. This might take a minute. Go out to the lobby!
-    shell: pg_dump -C {{ db }} |xz -c > /var/tmp/{{ db }}.dump.xz
+    ansible.builtin.shell: pg_dump -C {{ db }} |xz -c > /var/tmp/{{ db }}.dump.xz
 
   # Get the dump from `from` in the batcave
   - name: Export the dump from the dbhost in prod to batcave
@@ -89,7 +89,7 @@
     ansible.builtin.command: createdb {{ db }}
 
   - name: Import the prod db.  This will take quite a while.  Go get a snack!
-    shell: cat /var/tmp/{{ db }}.dump | psql {{ db }}
+    ansible.builtin.shell: cat /var/tmp/{{ db }}.dump | psql {{ db }}
 
 - name: Bring staging services up
   hosts: "{{ server or 'batcave01.iad2.fedoraproject.org' }}"

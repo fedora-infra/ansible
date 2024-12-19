@@ -65,7 +65,7 @@
   - ansible.builtin.command: dropdb bodhi2
   - ansible.builtin.command: createdb -O bodhi2 bodhi2
   - name: Import the prod db.
-    shell: cat /var/tmp/bodhi2.dump | psql bodhi2
+    ansible.builtin.shell: cat /var/tmp/bodhi2.dump | psql bodhi2
   - ansible.builtin.file: path=/var/tmp/bodhi2.dump state=absent
 
 - name: Bring staging services up (OpenShift web services)

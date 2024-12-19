@@ -1,6 +1,6 @@
 ---
 - name: "call dnf on {{ path }}"
-  shell: "df '{{ path }}' --output=avail | tail -1"
+  ansible.builtin.shell: "df '{{ path }}' --output=avail | tail -1"
   register: df
   changed_when: false
 

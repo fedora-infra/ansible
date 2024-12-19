@@ -1,6 +1,6 @@
 ---
 - name: Rebuild apps-fp-o html
-  shell: /usr/bin/apps-fp-o-yaml2html.py > /srv/web/apps-fp-o/apps-yaml.html
+  ansible.builtin.shell: /usr/bin/apps-fp-o-yaml2html.py > /srv/web/apps-fp-o/apps-yaml.html
 
 - name: Rebuild apps-fp-o json
-  shell: /usr/bin/apps-fp-o-yaml2json.py > /srv/web/apps-fp-o/js/data.js
+  ansible.builtin.shell: /usr/bin/apps-fp-o-yaml2json.py > /srv/web/apps-fp-o/js/data.js

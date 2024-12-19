@@ -97,7 +97,7 @@
     home: "/var/lib/openqa"
     createhome: no
     system: yes
-    shell: /sbin/nologin
+    ansible.builtin.shell: /sbin/nologin
   when: "openqa_static_uid is defined"
 
 - name: Remove old scratch repo directory
@@ -250,7 +250,7 @@
   - config
 
 - name: Initialize database
-  shell: "/usr/share/openqa/script/initdb --user geekotest --init_database" # noqa 305
+  ansible.builtin.shell: "/usr/share/openqa/script/initdb --user geekotest --init_database" # noqa 305
   register: initdb
   changed_when: "initdb.rc == 0"
   failed_when: "(initdb.rc > 0) and (initdb.stdout is not defined or initdb.stdout.find('already exists') == -1)"
@@ -316,7 +316,7 @@
   register: templatesfif
 
 - name: Dump existing config for checking changes
-  shell: "/usr/share/openqa/script/dump_templates --json > /tmp/tmpl-old.json || :"
+  ansible.builtin.shell: "/usr/share/openqa/script/dump_templates --json > /tmp/tmpl-old.json || :"
   when: "(gittests is defined) and (gittests is changed)"
   changed_when: "1 != 1"
 
@@ -342,7 +342,7 @@
   changed_when: "1 != 1"
 
 - name: Check if the tests changed in previous step
-  shell: "/usr/share/openqa/script/dump_templates --json > /tmp/tmpl-new.json && diff <(jq -S . /tmp/tmpl-old.json) <(jq -S . /tmp/tmpl-new.json)"
+  ansible.builtin.shell: "/usr/share/openqa/script/dump_templates --json > /tmp/tmpl-new.json && diff <(jq -S . /tmp/tmpl-old.json) <(jq -S . /tmp/tmpl-new.json)"
   when: "(gittests is defined) and (gittests is changed)"
   register: testsdiff
   changed_when: "testsdiff.rc > 0"

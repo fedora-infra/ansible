@@ -18,7 +18,7 @@
     - smtp_auth_relay
 
 - name: Regenerate the password db file
-  shell: postmap /etc/postfix/sasl_passwd
+  ansible.builtin.shell: postmap /etc/postfix/sasl_passwd
   when: smtp_relay_password_file.changed
   notify: restart postfix
   tags:

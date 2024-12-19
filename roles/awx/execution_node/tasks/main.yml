@@ -2,7 +2,7 @@
 - name: Create the awx user
   user:
     name: awx
-    shell: /bin/bash
+    ansible.builtin.shell: /bin/bash
 
 - name: Enable Copr repo for Ansible Receptor (Fedora)
   community.general.copr:

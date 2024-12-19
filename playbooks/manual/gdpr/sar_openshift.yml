@@ -2,7 +2,7 @@
 # Get the correct pod
 ---
 - name: Retrieve the id of the running container/pod
-  shell: "oc get -n {{ item.value.openshift_namespace }} -o name -l app={{ item.value.openshift_pod }} pods | cut -f 2 -d '/'"
+  ansible.builtin.shell: "oc get -n {{ item.value.openshift_namespace }} -o name -l app={{ item.value.openshift_pod }} pods | cut -f 2 -d '/'"
   register: pod_id
 # Run the SAR script
 - name: Run oc exec in container to extract the data

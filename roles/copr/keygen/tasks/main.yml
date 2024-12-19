@@ -61,4 +61,4 @@
 # Sorry for writting this as `shell`. We will drop this task once it
 # is in stable repos.
 - name: Install gnupg2 with required bugfixes
-  shell: "dnf -y upgrade --enablerepo=updates-testing --advisory=FEDORA-2021-45c44b31a2"
+  ansible.builtin.shell: "dnf -y upgrade --enablerepo=updates-testing --advisory=FEDORA-2021-45c44b31a2"

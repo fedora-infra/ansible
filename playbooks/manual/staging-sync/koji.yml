@@ -73,7 +73,7 @@
 # buildroot_listing is excluded from the sync to save some time
 # TODO: install mbuffer on db-koji.stg
   - name: Import the prod db.  This will take quite a while.  Go get a snack!
-    shell: >
+    ansible.builtin.shell: >
       curl -s -S https://infrastructure.fedoraproject.org/infra/db-dumps/koji.dump.xz |
       mbuffer -q -s 8M -m 128M -l /tmp/mbuffer-curl-to-xz.log |
       xzcat |
@@ -82,9 +82,9 @@
       mbuffer -q -s 16M -m 512M -l /tmp/mbuffer-sed-to-psql.log |
       psql -v ON_ERROR_STOP=1
   - name: Repoint all the prod rpm entries at the secondary volume (and other stuff)
-    shell: psql -1 -v ON_ERROR_STOP=1 koji </var/lib/pgsql/koji-reset-staging.sql
+    ansible.builtin.shell: psql -1 -v ON_ERROR_STOP=1 koji </var/lib/pgsql/koji-reset-staging.sql
   - name: Vacuum database
-    shell: psql -v ON_ERROR_STOP=1 koji <<<"VACUUM ANALYZE"
+    ansible.builtin.shell: psql -v ON_ERROR_STOP=1 koji <<<"VACUUM ANALYZE"
 
 - name: Bring staging services up
   hosts: koji_stg
@@ -147,7 +147,7 @@
 
   tasks:
   - name: Remount koji nfs
-    shell: umount /mnt/fedora_koji && mount /mnt/fedora_koji
+    ansible.builtin.shell: umount /mnt/fedora_koji && mount /mnt/fedora_koji
     args:
       warn: false
     when: "'.s390.' not in inventory_hostname"

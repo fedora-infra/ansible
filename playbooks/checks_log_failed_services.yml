@@ -7,11 +7,11 @@
 
   tasks:
     - name: Listing failed units
-      shell: systemctl list-units --state failed --no-legend | awk  '{ print $1 }'
+      ansible.builtin.shell: systemctl list-units --state failed --no-legend | awk  '{ print $1 }'
       register: listing_failed
 
     - name: Check log with journalctl
-      shell: journalctl -lru {{ item }} -n 50
+      ansible.builtin.shell: journalctl -lru {{ item }} -n 50
       register: display_log
       with_items: "{{ listing_failed.stdout_lines[0:] }}"
 

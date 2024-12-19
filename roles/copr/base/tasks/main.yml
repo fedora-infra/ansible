@@ -87,7 +87,7 @@
     - "'pulp' not in inventory_hostname"
 
 # - name: Check offloading
-#   shell: "ethtool -k ens5 | egrep -q 'tcp-segmentation-offload: on|generic-receive-offload: on|generic-segmentation-offload: on'"
+#   ansible.builtin.shell: "ethtool -k ens5 | egrep -q 'tcp-segmentation-offload: on|generic-receive-offload: on|generic-segmentation-offload: on'"
 #   register: offloading
 #   failed_when: offloading.rc == 2
 #   changed_when: "1 != 1"
@@ -100,7 +100,7 @@
 #     - ansible_distribution == 'Fedora'
 #
 # - name: Disable offloading (persitently)
-#   shell: "nmcli con modify '{{ aws_ipv6_con }}' ethtool.feature-tso off ethtool.feature-gro off ethtool.feature-gso off"
+#   ansible.builtin.shell: "nmcli con modify '{{ aws_ipv6_con }}' ethtool.feature-tso off ethtool.feature-gro off ethtool.feature-gso off"
 #   when:
 #     - offloading.rc == 0
 #     - ansible_distribution == 'Fedora'
@@ -108,7 +108,7 @@
 #   - config
 #
 # - name: Check we have the needed ipv6
-#   shell: "nmcli con show '{{ aws_ipv6_con }}' | grep ipv6.addresses | grep {{ aws_ipv6_addr }}"
+#   ansible.builtin.shell: "nmcli con show '{{ aws_ipv6_con }}' | grep ipv6.addresses | grep {{ aws_ipv6_addr }}"
 #   register: ipv6_config_check
 #   failed_when: false
 #   changed_when: ipv6_config_check.rc == 1
@@ -117,7 +117,7 @@
 #   tags: ipv6_config
 #
 # - name: Setup ipv6 networking
-#   shell: |
+#   ansible.builtin.shell: |
 #     nmcli con modify '{{ aws_ipv6_con }}' ipv6.method auto ipv6.may-fail yes ipv6.never-default no ipv6.addresses '{{ aws_ipv6_addr }}'
 #     nmcli con up '{{ aws_ipv6_con }}'
 #   when:

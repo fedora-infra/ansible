@@ -2,7 +2,7 @@
 
 # long running tasks - run them in background - we do not actually care about the results
 - name: Reposync for fedora
-  shell: nohup retrace-server-reposync fedora {{ item[0] }} {{ item[1] }} </dev/null >$(mktemp /tmp/ansible.reposync_for_fedoraXXXXXX.log) &
+  ansible.builtin.shell: nohup retrace-server-reposync fedora {{ item[0] }} {{ item[1] }} </dev/null >$(mktemp /tmp/ansible.reposync_for_fedoraXXXXXX.log) &
   loop: "{{ rs_internal_fedora_vers | product(rs_internal_arch_list) | list }}"
   become: yes
   become_user: retrace
@@ -10,7 +10,7 @@
   when: env != 'staging'
 
 - name: Reposync for centos
-  shell: nohup retrace-server-reposync centos {{ item }} x86_64 </dev/null >$(mktemp /tmp/ansible.reposync_for_centosXXXXXX.log) &
+  ansible.builtin.shell: nohup retrace-server-reposync centos {{ item }} x86_64 </dev/null >$(mktemp /tmp/ansible.reposync_for_centosXXXXXX.log) &
   loop: "{{ rs_internal_centos_vers }}"
   become: yes
   become_user: retrace

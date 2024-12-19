@@ -56,7 +56,7 @@
   register: postgres_initialized
 
 - name: Init postgresql
-  shell: "postgresql-setup initdb"
+  ansible.builtin.shell: "postgresql-setup initdb"
   when: not postgres_initialized.stat.exists
 
 - name: Enable PostgreSQL service

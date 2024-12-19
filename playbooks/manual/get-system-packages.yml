@@ -11,7 +11,7 @@
   tasks:
 
   - name: RPM_output
-    shell: "/usr/bin/rpm -qa"
+    ansible.builtin.shell: "/usr/bin/rpm -qa"
     register: rpm_output
     args:
       warn: false # set warn=false to prevent warning

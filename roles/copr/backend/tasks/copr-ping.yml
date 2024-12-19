@@ -56,7 +56,7 @@
   tags: copr_ping
 
 - name: Restorecon ping_log
-  shell: restorecon -irv "{{ ping_log }}"
+  ansible.builtin.shell: restorecon -irv "{{ ping_log }}"
   when: semanage_run.changed or ping_log_created.changed
   tags: copr_ping
 
