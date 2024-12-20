@@ -4,7 +4,7 @@ kind: DeploymentConfig
 metadata:
   labels:
     app: testdays
-    service: testdays
+    service: testdays-old
   name: testdays
 spec:
   replicas: 1
@@ -79,7 +79,7 @@ kind: DeploymentConfig
 metadata:
   labels:
     app: resultsdb
-    service: resultsdb
+    service: resultsdb-old
   name: resultsdb
 spec:
   replicas: 1
