@@ -55,7 +55,7 @@ builds_max_workers_arch=
     ppc64le={{ max_ppc64le_workers }}
 
 # Do not let one user waste the whole architecture capacity
-build_max_workers_arch_per_owner=s390x=2
+builds_max_workers_arch_per_owner=s390x=2
 
 # Maximum number of concurrently running tasks per project owner.
 {% if env == 'production' %}
