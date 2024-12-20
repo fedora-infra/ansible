@@ -7,6 +7,12 @@ case $RESALLOC_POOL_ID in
     *s390x*us_east*)
         zone=us-east
         ;;
+    *s390x*sao*)
+        zone=br-sao
+        ;;
+    *s390x*madrid*)
+        zone=eu-es
+        ;;
     *)
         echo "Can't decide what location to assign from pool id: '$RESALLOC_POOL_ID'"
         exit 1

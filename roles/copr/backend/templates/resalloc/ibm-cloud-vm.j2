@@ -20,6 +20,16 @@ case $RESALLOC_NAME in
         subnets_ids="br-sao-1:02t7-1c0b186a-ca5e-44ea-bf2c-ca2f3122a9ff br-sao-2:02u7-75fa6c55-b65a-4d38-a011-15559c7171ce br-sao-3:02v7-439195e6-2df0-4720-9696-76d0a63c352d"
         zone=br-sao
         ;;
+    *s390x*madrid*)
+        vpc_id=r050-190b8bac-3bae-47cf-9be7-ac70fc54ccb9
+        security_group_id=r050-cfc3db07-8cde-4807-9756-db91b242092a
+        ssh_key_id=r050-cbd10ece-a28f-45c8-bc3a-15ecb9ff66d5
+        instance_type=mz2-2x16
+        additional_volume_size=160
+        image_uuid="{{ copr_builder_images.ibm_cloud.s390x.madrid }}"
+        subnets_ids="eu-es-1:02w7-84eded83-3077-44c3-a84c-90c7afb7ff4f eu-es-2:02x7-05de0643-b257-4500-9a14-648421b16738 eu-es-3:02y7-e32873a0-ad98-44d5-b49d-da49f731a914"
+        zone=eu-es
+        ;;
     *s390x*us_east*)
         vpc_id=r014-e90f14b0-a9c0-4c0b-bc81-207904b2d19e
         security_group_id=r014-941706bd-062c-4d4c-9512-9a31b8f257d7

@@ -47,6 +47,8 @@ builders:
     s390x: [0, 6, 6]
   ibm_cloud_spaulo:
     s390x: [9, 3, 3]
+  ibm_cloud_madrid:
+    s390x: [9, 3, 3]
 copr_aws_region: us-east-1
 # don't forget to update ip in ./copr-keygen, due to custom firewall rules
 
@@ -74,6 +76,7 @@ copr_builder_images:
       # n-1: us_east: r014-1469fafc-d906-44fa-b780-e4599ed56fde
       us_east: r014-9ba4feec-ce45-4401-acea-f123114685b5
       sao: r042-5e105a96-4a84-4c07-950b-9fd12d58c8a2
+      madrid: r050-053cfdb8-52eb-486d-b8b3-bc9cba2fbe56
   osuosl:
     # ppc64le: copr-builder-ppc64le-20240206_143009
     ppc64le: copr-builder-ppc64le-20241119_171239
