@@ -256,9 +256,9 @@ copr_ic_s390x_{{ t + '_' if t or '' }}us_east_{% if devel %}dev{% else %}prod{% 
 copr_ic_s390x_br_sao_{% if devel %}dev{% else %}prod{% endif %}:
   max: {{ builders.ibm_cloud_spaulo.s390x[0] }}
 {% if not devel %}
-  max_prealloc: {{ builders.ibm_cloud_us_east.s390x[1] }}
+  max_prealloc: {{ builders.ibm_cloud_spaulo.s390x[1] }}
 {% endif %}
-  max_starting: {{ builders.ibm_cloud_us_east.s390x[2] }}
+  max_starting: {{ builders.ibm_cloud_spaulo.s390x[2] }}
   tags:
     - copr_builder
     - name: arch_noarch
