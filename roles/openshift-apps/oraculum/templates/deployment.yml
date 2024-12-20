@@ -1,38 +1,29 @@
 ---
-apiVersion: apps.openshift.io/v1
-kind: DeploymentConfig
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   labels:
     app: oraculum
-    service: oraculum-api-endpoint
+    service: oraculum-api-endpointN
   name: oraculum-api-endpoint
+  annotations:
+    image.openshift.io/triggers: >-
+      [{"from":{"kind":"ImageStreamTag","name":"packager-dashboard:latest","namespace":"oraculum"},"fieldPath":"spec.template.spec.containers[?(@.name==\"oraculum-api-endpoint\")].image","pause":"false"}]
 spec:
-  replicas: 0
+  replicas: 1
   selector:
-    app: oraculum
-    deploymentconfig: oraculum
-  strategy:
-    type: Recreate
-    recreateParams:
-      mid:
-        failurePolicy: Abort
-        execNewPod:
-          containerName: oraculum-api-endpoint
-          # Oraculum would automatically proceed with upgrade_db if necessary
-          # init_db isn't dropping anything, so it's safe to call every time the pod starts
-          command: ["python", "-m", "oraculum.cli", "init_db"]
-          # and then just the gunicorn for the frontend part of the backend :)
-          volumes:
-            - oraculum-secret-volume
+    matchLabels:
+      app: oraculum
+      service: oraculum-api-endpointN
   template:
     metadata:
       labels:
         app: oraculum
-        deploymentconfig: oraculum
+        service: oraculum-api-endpointN
     spec:
       containers:
       - name: oraculum-api-endpoint
-        image: packager-dashboard:latest
+        image: image-registry.openshift-image-registry.svc:5000/oraculum/packager-dashboard:latest
         ports:
         - containerPort: 8080
         resources: {}
@@ -95,42 +86,36 @@ spec:
       - name: oraculum-secret-volume
         secret:
           secretName: oraculum-secret
-
-  triggers:
-  - type: ConfigChange
-  - type: ImageChange
-    imageChangeParams:
-      automatic: true
-      containerNames:
-      - oraculum-api-endpoint
-      from:
-        kind: ImageStreamTag
-        name: packager-dashboard:latest
 ---
-apiVersion: apps.openshift.io/v1
-kind: DeploymentConfig
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   labels:
     app: oraculum
+    service: oraculum-workerN
   name: oraculum-worker
+  annotations:
+    image.openshift.io/triggers: >-
+      [{"from":{"kind":"ImageStreamTag","name":"packager-dashboard:latest","namespace":"oraculum"},"fieldPath":"spec.template.spec.containers[?(@.name==\"oraculum-worker\")].image","pause":"false"}]
 spec:
 {% if env == 'staging' %}
-  replicas: 0
+  replicas: 2
 {% else %}
-  replicas: 0 # Change me to some biiig numba after you got me working
+  replicas: 4 # Change me to some biiig numba after you got me working
 {% endif %}
   selector:
-    app: oraculum
-    deploymentconfig: oraculum
+    matchLabels:
+      app: oraculum
+      service: oraculum-workerN
   template:
     metadata:
       labels:
         app: oraculum
-        deploymentconfig: oraculum
+        service: oraculum-workerN
     spec:
       containers:
       - name: oraculum-worker
-        image: packager-dashboard:latest
+        image: image-registry.openshift-image-registry.svc:5000/oraculum/packager-dashboard:latest
         command: ["celery", "-A", "oraculum.celery_app", "worker", "-c", "4", "--loglevel=INFO"]
         resources: {}
         env:
@@ -180,38 +165,32 @@ spec:
       - name: oraculum-secret-volume
         secret:
           secretName: oraculum-secret
-
-  triggers:
-  - type: ConfigChange
-  - type: ImageChange
-    imageChangeParams:
-      automatic: true
-      containerNames:
-      - oraculum-worker
-      from:
-        kind: ImageStreamTag
-        name: packager-dashboard:latest
 ---
-apiVersion: apps.openshift.io/v1
-kind: DeploymentConfig
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   labels:
     app: oraculum
+    service: oraculum-beatN
   name: oraculum-beat
+  annotations:
+    image.openshift.io/triggers: >-
+      [{"from":{"kind":"ImageStreamTag","name":"packager-dashboard:latest","namespace":"oraculum"},"fieldPath":"spec.template.spec.containers[?(@.name==\"oraculum-beat\")].image","pause":"false"}]
 spec:
-  replicas: 0 # Never change this to more or less than ONE!
+  replicas: 1 # Never change this to more or less than ONE!
   selector:
-    app: oraculum
-    deploymentconfig: oraculum
+    matchLabels:
+      app: oraculum
+      service: oraculum-beatN
   template:
     metadata:
       labels:
         app: oraculum
-        deploymentconfig: oraculum
+        service: oraculum-beatN
     spec:
       containers:
       - name: oraculum-beat
-        image: packager-dashboard:latest
+        image: image-registry.openshift-image-registry.svc:5000/oraculum/packager-dashboard:latest
         command: ["celery", "-A", "oraculum.celery_app", "beat", "--loglevel=INFO"]
         resources: {}
         env:
@@ -261,38 +240,32 @@ spec:
       - name: oraculum-secret-volume
         secret:
           secretName: oraculum-secret
-
-  triggers:
-  - type: ConfigChange
-  - type: ImageChange
-    imageChangeParams:
-      automatic: true
-      containerNames:
-      - oraculum-beat
-      from:
-        kind: ImageStreamTag
-        name: packager-dashboard:latest
 ---
-apiVersion: apps.openshift.io/v1
-kind: DeploymentConfig
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   labels:
     app: oraculum
+    service: oraculum-flowerN
   name: oraculum-flower
+  annotations:
+    image.openshift.io/triggers: >-
+      [{"from":{"kind":"ImageStreamTag","name":"packager-dashboard:latest","namespace":"oraculum"},"fieldPath":"spec.template.spec.containers[?(@.name==\"oraculum-flower\")].image","pause":"false"}]
 spec:
-  replicas: 0 # Never change this to more or less than ONE!
+  replicas: 1 # Never change this to more or less than ONE!
   selector:
-    app: oraculum
-    deploymentconfig: oraculum
+    matchLabels:
+      app: oraculum
+      service: oraculum-flowerN
   template:
     metadata:
       labels:
         app: oraculum
-        deploymentconfig: oraculum
+        service: oraculum-flowerN
     spec:
       containers:
       - name: oraculum-flower
-        image: packager-dashboard:latest
+        image: image-registry.openshift-image-registry.svc:5000/oraculum/packager-dashboard:latest
         ports:
         - containerPort: 8080
         command: ["celery", "-A", "oraculum.celery_app", "flower", "--url_prefix=_flower", "--port=8080", "--address=0.0.0.0", "--basic_auth=frantisekz:{{ oraculum_flower_password }}"]
@@ -344,74 +317,62 @@ spec:
       - name: oraculum-secret-volume
         secret:
           secretName: oraculum-secret
-  triggers:
-  - type: ConfigChange
-  - type: ImageChange
-    imageChangeParams:
-      automatic: true
-      containerNames:
-      - oraculum-flower
-      from:
-        kind: ImageStreamTag
-        name: packager-dashboard:latest
 ---
-apiVersion: apps.openshift.io/v1
-kind: DeploymentConfig
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   labels:
     app: oraculum
-    service: oraculum-redis
+    service: oraculum-redisN
   name: oraculum-redis
+  annotations:
+    image.openshift.io/triggers: >-
+      [{"from":{"kind":"ImageStreamTag","name":"packager-dashboard-redis:latest","namespace":"oraculum"},"fieldPath":"spec.template.spec.containers[?(@.name==\"oraculum-redis\")].image","pause":"false"}]
 spec:
-  replicas: 0 # Never change this to more or less than ONE!
+  replicas: 1 # Never change this to more or less than ONE!
   selector:
-    app: oraculum
-    deploymentconfig: oraculum-redis
+    matchLabels:
+      app: oraculum
+      service: oraculum-redisN
   template:
     metadata:
       labels:
         app: oraculum
-        deploymentconfig: oraculum-redis
+        service: oraculum-redisN
     spec:
       containers:
       - name: oraculum-redis
-        image: packager-dashboard-redis:latest
+        image: image-registry.openshift-image-registry.svc:5000/oraculum/packager-dashboard-redis:latest
         resources: {}
         env:
         - name: REDIS_PASSWORD
           value: "{{ oraculum_redis_pass }}"
-  triggers:
-  - type: ConfigChange
-  - type: ImageChange
-    imageChangeParams:
-      automatic: true
-      containerNames:
-      - oraculum-redis
-      from:
-        kind: ImageStreamTag
-        name: packager-dashboard-redis:latest
 ---
-apiVersion: apps.openshift.io/v1
-kind: DeploymentConfig
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   labels:
     app: oraculum
-    service: oraculum-frontend
+    service: oraculum-frontendN
   name: oraculum-frontend
+  annotations:
+    image.openshift.io/triggers: >-
+      [{"from":{"kind":"ImageStreamTag","name":"oraculum-frontend:latest","namespace":"oraculum"},"fieldPath":"spec.template.spec.containers[?(@.name==\"oraculum-frontend\")].image","pause":"false"}]
 spec:
-  replicas: 0 # Never change this to more or less than ONE!
+  replicas: 1 # Never change this to more or less than ONE!
   selector:
-    app: oraculum
-    deploymentconfig: oraculum-frontend
+    matchLabels:
+      app: oraculum
+      service: oraculum-frontendN
   template:
     metadata:
       labels:
         app: oraculum
-        deploymentconfig: oraculum-frontend
+        service: oraculum-frontendN
     spec:
       containers:
       - name: oraculum-frontend
-        image: oraculum-frontend:latest
+        image: image-registry.openshift-image-registry.svc:5000/oraculum/oraculum-frontend:latest
         resources: {}
         env:
         - name: SUBDIR
@@ -420,13 +381,3 @@ spec:
           value: "https://packager-dashboard{{ env_suffix }}.fedoraproject.org/api/v1/"
         - name: "APIv2"
           value: "https://packager-dashboard{{ env_suffix }}.fedoraproject.org/api/v2/"
-  triggers:
-  - type: ConfigChange
-  - type: ImageChange
-    imageChangeParams:
-      automatic: true
-      containerNames:
-      - oraculum-frontend
-      from:
-        kind: ImageStreamTag
-        name: oraculum-frontend:latest

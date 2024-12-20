@@ -13,7 +13,7 @@ spec:
     targetPort: 8080
   selector:
     app: oraculum
-    deploymentconfig: oraculum-api-endpoint
+    service: oraculum-api-endpointN
 ---
 apiVersion: v1
 kind: Service
@@ -29,7 +29,7 @@ spec:
     targetPort: 8080
   selector:
     app: oraculum
-    deploymentconfig: oraculum-flower
+    service: oraculum-flowerN
 ---
 apiVersion: v1
 kind: Service
@@ -45,7 +45,7 @@ spec:
     targetPort: 6379
   selector:
     app: oraculum
-    deploymentconfig: oraculum-redis
+    service: oraculum-redisN
 ---
 apiVersion: v1
 kind: Service
@@ -61,4 +61,4 @@ spec:
     targetPort: 8080
   selector:
     app: oraculum
-    deploymentconfig: oraculum-frontend
+    service: oraculum-frontendN
