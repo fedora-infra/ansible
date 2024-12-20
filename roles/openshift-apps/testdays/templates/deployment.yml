@@ -1,37 +1,31 @@
 ---
-apiVersion: apps.openshift.io/v1
-kind: DeploymentConfig
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   labels:
     app: testdays
     service: testdays
   name: testdays
+  annotations:
+    image.openshift.io/triggers: >-
+      [{"from":{"kind":"ImageStreamTag","name":"testdays:latest","namespace":"testdays"},"fieldPath":"spec.template.spec.containers[?(@.name==\"testdays\")].image","pause":"false"}]
 spec:
-  replicas: 0
+  replicas: 1
   selector:
-    app: testdays
-    deploymentconfig: testdays
-  strategy:
-    type: Recreate
-    recreateParams:
-      mid:
-        failurePolicy: Abort
-        execNewPod:
-          containerName: testdays
-          # We only need to init the database the first time, after we just need to check
-          # for DB upgrades
-          command: ["python", "/opt/app-root/src/testdays/cli.py", "init_db"]
+    matchLabels:
+      app: testdays
+      service: testdays
   template:
     metadata:
       labels:
         app: testdays
-        deploymentconfig: testdays
+        service: testdays
     spec:
       containers:
       - name: testdays
-        image: testdays:latest
+        image: image-registry.openshift-image-registry.svc:5000/testdays/testdays:latest
         ports:
-        - containerPort: 8081
+        - containerPort: 8080
         resources: {}
         env:
         - name: POSTGRESQL_USER
@@ -47,7 +41,7 @@ spec:
         - name: SECRET_KEY
           value: "{{ testdays_secret_key }}"
         - name: RESULTSDB_URL
-          value: "http://resultsdb.testdays.svc.cluster.local:8081/api/v2.0"
+          value: "http://resultsdb.testdays.svc.cluster.local:8080/api/v2.0"
         - name: OPENSHIFT_PROD
           value: "1"
         readinessProbe:
@@ -55,58 +49,41 @@ spec:
           initialDelaySeconds: 5
           httpGet:
             path: /
-            port: 8081
+            port: 8080
         livenessProbe:
           timeoutSeconds: 1
           initialDelaySeconds: 30
           httpGet:
             path: /
-            port: 8081
-
-  triggers:
-  - type: ConfigChange
-  - type: ImageChange
-    imageChangeParams:
-      automatic: true
-      containerNames:
-      - testdays
-      from:
-        kind: ImageStreamTag
-        name: testdays:latest
+            port: 8080
 ---
-apiVersion: apps.openshift.io/v1
-kind: DeploymentConfig
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   labels:
     app: resultsdb
     service: resultsdb
   name: resultsdb
+  annotations:
+    image.openshift.io/triggers: >-
+      [{"from":{"kind":"ImageStreamTag","name":"resultsdb:latest","namespace":"resultsdb"},"fieldPath":"spec.template.spec.containers[?(@.name==\"resultsdb\")].image","pause":"false"}]
 spec:
-  replicas: 0
+  replicas: 1
   selector:
-    app: resultsdb
-    deploymentconfig: resultsdb
-  strategy:
-    type: Recreate
-    recreateParams:
-      mid:
-        failurePolicy: Abort
-        execNewPod:
-          containerName: resultsdb
-          # We only need to init the database the first time, after we just need to check
-          # for DB upgrades
-          command: ["python", "/opt/app-root/src/resultsdb/cli.py", "init_db"]
+    matchLabels:
+      app: resultsdb
+      service: resultsdb
   template:
     metadata:
       labels:
         app: resultsdb
-        deploymentconfig: resultsdb
+        service: resultsdb
     spec:
       containers:
       - name: resultsdb
-        image: resultsdb:latest
+        image: image-registry.openshift-image-registry.svc:5000/resultsdb/resultsdb:latest
         ports:
-        - containerPort: 8081
+        - containerPort: 8080
         resources: {}
         env:
         - name: POSTGRESQL_USER
@@ -128,21 +105,10 @@ spec:
           initialDelaySeconds: 5
           httpGet:
             path: /
-            port: 8081
+            port: 8080
         livenessProbe:
           timeoutSeconds: 1
           initialDelaySeconds: 30
           httpGet:
             path: /
-            port: 8081
-
-  triggers:
-  - type: ConfigChange
-  - type: ImageChange
-    imageChangeParams:
-      automatic: true
-      containerNames:
-      - resultsdb
-      from:
-        kind: ImageStreamTag
-        name: resultsdb:latest
+            port: 8080
