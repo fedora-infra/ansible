@@ -253,6 +253,33 @@ copr_ic_s390x_{{ t + '_' if t or '' }}us_east_{% if devel %}dev{% else %}prod{% 
 
 {% endfor %}
 
+copr_ic_s390x_br_sao_{% if devel %}dev{% else %}prod{% endif %}:
+  max: {{ builders.ibm_cloud_spaulo.s390x[0] }}
+{% if not devel %}
+  max_prealloc: 0 # {{ builders.ibm_cloud_us_east.s390x[1] }}
+{% endif %}
+  max_starting: {{ builders.ibm_cloud_us_east.s390x[2] }}
+  tags:
+    - copr_builder
+    - name: arch_noarch
+      priority: -30
+    - ibm_cloud
+    - us_east
+{% if devel %}
+  tags_on_demand:
+{% endif %}
+    - name: arch_s390x_native
+    - name: arch_s390x
+  cmd_new: '/var/lib/resallocserver/resalloc_provision/ibm-cloud-vm create "$RESALLOC_NAME"'
+  cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
+  cmd_livecheck: "resalloc-check-vm-ip"
+  cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
+  cmd_list: "/var/lib/resallocserver/resalloc_provision/ibm-cloud-list-vms"
+  livecheck_period: 180
+  reuse_opportunity_time: 45
+  reuse_max_count: 8
+  reuse_max_time: 1800
+
 # Power9 VMs in openpower-controller.osuosl.org
 copr_osuosl_p09_{% if devel %}dev{% else %}prod{% endif %}:
 {% if devel %}
