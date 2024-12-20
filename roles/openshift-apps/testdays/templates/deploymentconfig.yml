@@ -3,7 +3,7 @@ apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
   labels:
-    app: testdays
+    app: testdays-old
     service: testdays-old
   name: testdays
 spec:
@@ -24,14 +24,14 @@ spec:
   template:
     metadata:
       labels:
-        app: testdays
+        app: testdays-old
         deploymentconfig: testdays
     spec:
       containers:
       - name: testdays
         image: testdays:latest
         ports:
-        - containerPort: 8081
+        - containerPort: 8080
         resources: {}
         env:
         - name: POSTGRESQL_USER
@@ -50,18 +50,6 @@ spec:
           value: "http://resultsdb.testdays.svc.cluster.local:8081/api/v2.0"
         - name: OPENSHIFT_PROD
           value: "1"
-        readinessProbe:
-          timeoutSeconds: 1
-          initialDelaySeconds: 5
-          httpGet:
-            path: /
-            port: 8081
-        livenessProbe:
-          timeoutSeconds: 1
-          initialDelaySeconds: 30
-          httpGet:
-            path: /
-            port: 8081
 
   triggers:
   - type: ConfigChange
@@ -78,13 +66,13 @@ apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
   labels:
-    app: resultsdb
+    app: resultsdb-old
     service: resultsdb-old
   name: resultsdb
 spec:
   replicas: 1
   selector:
-    app: resultsdb
+    app: resultsdb-old
     deploymentconfig: resultsdb
   strategy:
     type: Recreate
@@ -99,14 +87,14 @@ spec:
   template:
     metadata:
       labels:
-        app: resultsdb
+        app: resultsdb-old
         deploymentconfig: resultsdb
     spec:
       containers:
       - name: resultsdb
         image: resultsdb:latest
         ports:
-        - containerPort: 8081
+        - containerPort: 8080
         resources: {}
         env:
         - name: POSTGRESQL_USER
@@ -123,18 +111,6 @@ spec:
           value: "{{ resultsdb_testdays_secret_key }}"
         - name: OPENSHIFT_PROD
           value: "1"
-        readinessProbe:
-          timeoutSeconds: 1
-          initialDelaySeconds: 5
-          httpGet:
-            path: /
-            port: 8081
-        livenessProbe:
-          timeoutSeconds: 1
-          initialDelaySeconds: 30
-          httpGet:
-            path: /
-            port: 8081
 
   triggers:
   - type: ConfigChange
