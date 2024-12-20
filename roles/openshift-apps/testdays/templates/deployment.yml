@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   labels:
     app: testdays
-    service: testdays
+    service: testdaysN
   name: testdays
   annotations:
     image.openshift.io/triggers: >-
@@ -14,12 +14,12 @@ spec:
   selector:
     matchLabels:
       app: testdays
-      service: testdays
+      service: testdaysN
   template:
     metadata:
       labels:
         app: testdays
-        service: testdays
+        service: testdaysN
     spec:
       containers:
       - name: testdays
@@ -62,7 +62,7 @@ kind: Deployment
 metadata:
   labels:
     app: resultsdb
-    service: resultsdb
+    service: resultsdbN
   name: resultsdb
   annotations:
     image.openshift.io/triggers: >-
@@ -72,12 +72,12 @@ spec:
   selector:
     matchLabels:
       app: resultsdb
-      service: resultsdb
+      service: resultsdbN
   template:
     metadata:
       labels:
         app: resultsdb
-        service: resultsdb
+        service: resultsdbN
     spec:
       containers:
       - name: resultsdb
