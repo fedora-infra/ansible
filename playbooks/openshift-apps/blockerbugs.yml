@@ -99,6 +99,11 @@
 
   - role: openshift/object
     object_app: blockerbugs
+    object_template: deployment.yml
+    object_objectname: deployment.yml
+
+  - role: openshift/object
+    object_app: blockerbugs
     object_template: imagestream.yml
     object_objectname: imagestream.yml
 
