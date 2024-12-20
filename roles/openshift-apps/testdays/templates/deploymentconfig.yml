@@ -7,7 +7,7 @@ metadata:
     service: testdays
   name: testdays
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     app: testdays
     deploymentconfig: testdays
@@ -82,7 +82,7 @@ metadata:
     service: resultsdb
   name: resultsdb
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     app: resultsdb
     deploymentconfig: resultsdb
