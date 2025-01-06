@@ -344,7 +344,7 @@ copr_osuosl_p09_{% if devel %}dev{% else %}prod{% endif %}:
 
 # reserved instances
 {% if not devel %}
-{{ aws('x86_64', 9, 9, 9, priority=20, reserved=True) }}
+{{ aws('x86_64', 11, 11, 11, priority=20, reserved=True) }}
 {% endif %}
 
 {{ aws('x86_64', builders.aws_spot.x86_64[0], builders.aws_spot.x86_64[1],
