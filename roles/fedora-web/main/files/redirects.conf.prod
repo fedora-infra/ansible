@@ -27,3 +27,7 @@ RewriteRule ^/([^/]+/)?(keys|verify)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,
 
 RewriteCond %{HTTP_REFERER} .*fedorproject.*
 RewriteRule .* http://mmcgrath.fedorapeople.org/spam.html [R=301,L]
+
+# registry.fedoraproject.org web interface previously served by reg-server
+RewriteCond %{HTTP_HOST} ^registry\.fedoraproject\.org$
+RewriteRule ^(index\.html|repo(.)*)?$ https://quay.io/organization/fedora/ [R=301,L]

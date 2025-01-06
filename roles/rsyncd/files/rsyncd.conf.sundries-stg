@@ -158,14 +158,6 @@ gid = root
 read only = yes
 hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0
 
-[registry-index]
-comment = registry-index
-path = /var/lib/reg-server/static/
-uid = root
-gid = root
-read only = yes
-hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0
-
 [flatpak-index]
 comment = flatpak-indexer output
 path = /srv/web/registry-index

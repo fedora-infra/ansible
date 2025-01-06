@@ -91,7 +91,6 @@
 
   tasks:
   - import_tasks: "{{ tasks_path }}/motd.yml"
-  - import_tasks: "{{ tasks_path }}/reg-server.yml"
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
