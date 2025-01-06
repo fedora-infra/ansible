@@ -20,11 +20,9 @@ Listen 443
   # 
   # redirect everyone to use https
   #
-  # We can't do this until virt-install can handle https 
-
-#  RewriteEngine on
-#  RewriteCond %{SERVER_PORT} !^443$
-#  RewriteRule ^/(.*) https://%{HTTP_HOST}/$1 [L,R]
+  RewriteEngine on
+  RewriteCond %{SERVER_PORT} !^443$
+  RewriteRule ^/(.*) https://%{HTTP_HOST}/$1 [L,R]
 
 # robots location
 Alias /robots.txt /srv/web/robots.txt.lockbox01
