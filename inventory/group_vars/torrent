@@ -1,19 +1,5 @@
 ---
 # Define resources for this group of hosts here.
-csi_primary_contact: Fedora Admins - admin@fedoraproject.org
-csi_purpose: Torrent master server for Fedora distribution
-csi_relationship: |
-  torrent01 is the master torrent server for Fedora releases
-  This host relies on:
-  - The virthost it's hosted on (ibiblio05.fedoraproject.org)
-  - FAS to authenticate users
-  - VPN connectivity
-
-  Things that rely on this host:
-  - If this host is down, Fedora will lose a release distribution channel
-  - The Apache that displays the torrent website
-  - This server also has opentracker+ running to gather statistics for our torrent
-csi_security_category: Low
 ipa_client_shell_groups:
   - fi-apprentice
   - sysadmin-noc
@@ -34,3 +20,16 @@ num_cpus: 2
 primary_auth_source: ipa
 tcp_ports: [53, 80, 443, 873, "6881:6999"]
 udp_ports: [53]
+
+notes: |
+  Torrent master server for Fedora distribution
+  torrent01 is the master torrent server for Fedora releases
+  This host relies on:
+    * The virthost it's hosted on (ibiblio05.fedoraproject.org)
+    * FAS to authenticate users
+    * VPN connectivity
+
+  Things that rely on this host:
+    * If this host is down, Fedora will lose a release distribution channel
+    * The Apache that displays the torrent website
+    * This server also has opentracker+ running to gather statistics for our torrent

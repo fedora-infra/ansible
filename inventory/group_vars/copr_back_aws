@@ -6,15 +6,8 @@ copr_backend_target: copr-backend.target
 
 # Copr vars
 copr_hostbase: copr-be
-csi_primary_contact: "msuchy (mirek), frostyx, praiskup IRC #fedora-admin, #fedora-buildsys"
-csi_purpose: Provide the backend for copr (3rd party packages)
-csi_relationship: |
-  - Backend: Management of copr cloud infrastructure (OpenStack).
-  - Small frontend with copr's public stats
 # These variables are pushed into /etc/system_identification by the base role.
 # Groups and individual hosts should override them with specific info.
-# See http://infrastructure.fedoraproject.org/csi/security-policy/
-csi_security_category: High
 description: copr dispatcher and repo server
 do_sign: "true"
 host_backup_targets: ['/var/lib/copr/public_html/results']
@@ -59,3 +52,8 @@ copr_backend_data_raid10_volumes:
 copr_backend_data_2_raid1_volumes:
   - nvme-Amazon_Elastic_Block_Store_vol0f226a7163d28d8fd-part1
   - nvme-Amazon_Elastic_Block_Store_vol07293869d85a750b8-part1
+
+notes: |
+  Provide the backend for copr (3rd party packages)
+  * Backend: Management of copr cloud infrastructure (OpenStack).
+  * Small frontend with copr's public stats

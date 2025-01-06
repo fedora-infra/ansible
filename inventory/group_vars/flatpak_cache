@@ -1,20 +1,5 @@
 ---
-csi_primary_contact: admin@fedoraproject.org / sysadmin-main-members
-csi_purpose: Centralized cache for any Flatpak requests from OpenQA
-csi_relationship: |
-  This is to avoid slamming Flathub with requests during automated testing.
-  
-  It hosts squid to cache anything under the flathub.org domain.
-  It is locked down to only allow requests from OpenQA.
-
-  * This host relies on:
-  The virthost it's hosted on (qvmhost-x86-02)
-
-  * Things that rely on this host:
-  Any requests using Flatpak from OpenQA.
-  If this host is down, OpenQA hosts might fail.
 # For the MOTD
-csi_security_category: Low
 freezes: false
 ipa_client_shell_groups:
   - sysadmin-noc
@@ -31,3 +16,18 @@ mem_size: 2048
 num_cpus: 2
 primary_auth_source: ipa
 tcp_ports: [3128]
+
+notes: |
+  Centralized cache for any Flatpak requests from OpenQA
+
+  This is to avoid slamming Flathub with requests during automated testing.
+  It hosts squid to cache anything under the flathub.org domain.
+  It is locked down to only allow requests from OpenQA.
+
+  * This host relies on:
+    The virthost it's hosted on (qvmhost-x86-02)
+
+  * Things that rely on this host:
+    Any requests using Flatpak from OpenQA.
+
+  If this host is down, OpenQA hosts might fail.

@@ -1,13 +1,5 @@
 ---
 createrepo: False
-csi_primary_contact: Fedora Admins - admin@fedoraproject.org
-csi_purpose: Koji service employs a set of machines to build packages for the Fedora project. This playbook builds vm builders.
-csi_relationship: |
-  * VMs built on top of a s390x LPAR
-  * Relies on koji-hub, Packages, PkgDB, apache, fedmsg, fas, virthost, and is monitored by nagios
-  * Several services rely on the builders, including koschei, Bodhi, Tagger, SCM, Darkserver.
-  * Produces automated builds of packages for the architecture listed. Builders can be scaled by adding new
-csi_security_category: High
 dns1: 10.3.163.33
 dns2: 10.3.163.34
 dns_search1: "iad2.fedoraproject.org"
@@ -30,3 +22,10 @@ varnish_group: s390kojipkgs
 virt_install_command: "{{ virt_install_command_s390x_one_nic }}"
 vmhost: bvmhost-s390x-01.s390.fedoraproject.org
 volgroup: /dev/vg_guests
+
+notes: |
+  Koji service employs a set of machines to build packages for the Fedora project. This playbook builds vm builders.
+  * VMs built on top of a s390x LPAR
+  * Relies on koji-hub, Packages, PkgDB, apache, fedmsg, fas, virthost, and is monitored by nagios
+  * Several services rely on the builders, including koschei, Bodhi, Tagger, SCM, Darkserver.
+  * Produces automated builds of packages for the architecture listed. Builders can be scaled by adding new

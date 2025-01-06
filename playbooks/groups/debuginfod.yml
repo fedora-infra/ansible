@@ -31,9 +31,7 @@
     nfs_src_dir: "fedora_koji"
 
   tasks:
-  - import_tasks: "{{ tasks_path }}/motd.yml"
-
-  - name: Install debuginfod
+  - name: install debuginfod
     ansible.builtin.package: name=elfutils-debuginfod state=present
     tags: debuginfod
 

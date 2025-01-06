@@ -8,15 +8,8 @@ copr_messaging_queue: "a9b74258-21c6-4e79-ba65-9e858dc84a2b"
 copr_pagure_events:
   io.pagure.prod.pagure: "https://pagure.io/"
   org.fedoraproject.prod.pagure: "https://src.fedoraproject.org/"
-csi_primary_contact: "msuchy (mirek), frostyx, praiskup IRC #fedora-admin, #fedora-buildsys"
-csi_purpose: Provide a publicly accessible frontend for 3rd party packages (copr)
-csi_relationship: |
-  - This host provides the frontend part of copr only.
-  - It's the point of contact between end users and the copr build system (backend, package singer)
 # These variables are pushed into /etc/system_identification by the base role.
 # Groups and individual hosts should override them with specific info.
-# See http://infrastructure.fedoraproject.org/csi/security-policy/
-csi_security_category: Moderate
 # consumed by roles/copr/certbot
 letsencrypt:
   certificates:
@@ -33,3 +26,8 @@ tcp_ports: [22, 80, 443,
 services_disabled: false
 
 aws_ipv6_addr: "2600:1f18:8ee:ae00:9d1f:4737:93ce:6db/128"
+
+notes: |
+  Provide a publicly accessible frontend for 3rd party packages (copr)
+  This host provides the frontend part of copr only.
+  It's the point of contact between end users and the copr build system (backend, package singer)

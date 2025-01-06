@@ -3,15 +3,7 @@
 ansible_ifcfg_allowlist:
   - eth0
   - eth1
-csi_primary_contact: Release Engineering - rel-eng@lists.fedoraproject.org
-csi_purpose: Automatically sign Rawhide and Branched packages
-csi_relationship: |
-  This host will run the robosignatory application which should automatically sign
-  builds.  It listens to koji over fedora-messaging for notifications of new builds,
-  and then asks sigul, the signing server, to sign the rpms and store the new rpm
-  header back in Koji.
 # For the MOTD
-csi_security_category: High
 # for systems that do not match the above - specify the same parameter in
 # the host_vars/$hostname file
 
@@ -31,3 +23,11 @@ lvm_size: 30000
 mem_size: 2048
 nfs_mount_opts: "rw,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3"
 num_cpus: 2
+
+notes: |
+  Automatically sign Rawhide and Branched packages
+
+  This host will run the robosignatory application which should automatically sign
+  builds.  It listens to koji over fedora-messaging for notifications of new builds,
+  and then asks sigul, the signing server, to sign the rpms and store the new rpm
+  header back in Koji.

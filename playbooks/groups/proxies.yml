@@ -37,7 +37,6 @@
 # when: env == "staging"
 
   tasks:
-  - import_tasks: "{{ tasks_path }}/motd.yml"
 
   # You might think we would want these tasks_path on the proxy nodes, but they
   # actually deliver a configuration that our proxy-specific roles below then go

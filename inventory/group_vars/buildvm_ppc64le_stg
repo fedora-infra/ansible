@@ -1,14 +1,6 @@
 ---
 # common items for the buildvm-* koji builders
 createrepo: True
-csi_primary_contact: Fedora Admins - admin@fedoraproject.org
-csi_purpose: Koji service employs a set of machines to build packages for the Fedora project. This playbook builds vm builders (staging).
-csi_relationship: |
-  * VMs built on top of buildvmhost
-  * Relies on koji-hub, Packages, PkgDB, apache, fedmsg, fas, virthost, and is monitored by nagios
-  * Several services rely on the builders, including koschei, Bodhi, Tagger, SCM, Darkserver.
-  * Produces automated builds of packages for the architecture listed. Builders can be scaled by adding new
-csi_security_category: High
 datacenter: staging
 dns: 10.3.163.33
 docker_registry: "candidate-registry.stg.fedoraproject.org"
@@ -23,7 +15,6 @@ koji_server_url: "https://koji.stg.fedoraproject.org/kojihub"
 koji_topurl: "https://kojipkgs.stg.fedoraproject.org/"
 # These variables are pushed into /etc/system_identification by the base role.
 # Groups and individual hosts should ovveride them with specific info.
-# See http://infrastructure.fedoraproject.org/csi/security-policy/
 
 koji_weburl: "https://koji.stg.fedoraproject.org/koji"
 ks_repo: https://infrastructure.fedoraproject.org/pub/fedora-secondary/releases/41/Server/ppc64le/os/
@@ -37,3 +28,10 @@ num_cpus: 4
 source_registry: "registry.stg.fedoraproject.org"
 virt_install_command: "{{ virt_install_command_ppc64le_one_nic_unsafe }}"
 volgroup: /dev/vg_guests
+
+notes: |
+  Koji service employs a set of machines to build packages for the Fedora project. This playbook builds vm builders (staging).
+  * VMs built on top of buildvmhost
+  * Relies on koji-hub, Packages, PkgDB, apache, fedmsg, fas, virthost, and is monitored by nagios
+  * Several services rely on the builders, including koschei, Bodhi, Tagger, SCM, Darkserver.
+  * Produces automated builds of packages for the architecture listed. Builders can be scaled by adding new

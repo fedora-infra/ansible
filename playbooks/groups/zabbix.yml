@@ -27,8 +27,6 @@
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
 
   tasks:
-  - import_tasks: "{{ tasks_path }}/motd.yml"
-
   - name: Sync sysadmin-noc membership to the zabbix server
     include_role:
       name: zabbix/zabbix_server

@@ -1,9 +1,6 @@
 ---
 # Define resources for this group of hosts here.
-csi_primary_contact: admin@fedoraproject.org / sysadmin-main-members
-csi_purpose: repospanner git syncing host
 # For the MOTD
-csi_security_category: Low
 custom_rules: ['-A INPUT -p tcp -m tcp -s 8.43.84.211 --dport 8443:8445 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 8.43.84.212 --dport 8443:8445 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 8.43.85.76 --dport 8443:8445 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 152.19.134.149 --dport 8443:8445 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 209.132.181.20 --dport 8443:8445 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 8.43.85.78 --dport 8443:8445 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 152.19.134.191 --dport 8443:8445 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 140.211.169.199 --dport 8443:8445 -j ACCEPT']
 nft_custom_rules:
   - 'add rule ip filter INPUT ip saddr 8.43.84.211     tcp dport 8443-8445 counter accept'
@@ -24,3 +21,5 @@ nagios_Check_Services:
   sshd: false
   swap: false
 num_cpus: 8
+
+notes: repospanner git syncing host

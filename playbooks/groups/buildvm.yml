@@ -72,13 +72,6 @@
       candidate_registry_osbs_password: "{{candidate_registry_osbs_stg_password}}"
       when: env == "staging"
 
-  tasks:
-    - import_tasks: "{{ tasks_path }}/motd.yml"
-      when: not inventory_hostname.startswith('bkernel') and env == 'production'
-
-#    - name: Make sure kojid is running
-#      service: name=kojid state=started enabled=yes
-
   handlers:
     - import_tasks: "{{ handlers_path }}/restart_services.yml"
 

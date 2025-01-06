@@ -123,7 +123,6 @@
     ansible.builtin.file: src=/mnt/fedora_koji_prod/koji dest=/mnt/koji/vol/prod state=link
     tags: bodhi
     when: env == 'staging'
-  - import_tasks: "{{ tasks_path }}/motd.yml"
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"

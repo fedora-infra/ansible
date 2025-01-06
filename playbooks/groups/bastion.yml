@@ -30,8 +30,5 @@
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
 
-  tasks:
-  - import_tasks: "{{ tasks_path }}/motd.yml"
-
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"

@@ -50,9 +50,7 @@
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
 
   tasks:
-  - import_tasks: "{{ tasks_path }}/motd.yml"
-
-  - name: Put in script for syncing fedora on download-ib01
+  - name: put in script for syncing fedora on download-ib01
     ansible.builtin.copy: src="{{ files }}/download/sync-up-downloads.sh.ib01" dest=/usr/local/bin/sync-up-downloads owner=root group=root mode=755
     when: inventory_hostname == 'download-ib01.fedoraproject.org'
   - name: Put in script for syncing fedora-alt on download-ib01

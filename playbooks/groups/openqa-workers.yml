@@ -25,8 +25,5 @@
   - { role: linux-system-roles.nbde_client, tags: ['nbde_client'], when: openqa_nbde|bool }
   - apache
 
-  tasks:
-  - import_tasks: "{{ tasks_path }}/motd.yml"
-
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"

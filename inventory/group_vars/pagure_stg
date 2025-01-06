@@ -1,19 +1,6 @@
 ---
 # Define resources for this group of hosts here.
-csi_primary_contact: Fedora admins - admin@fedoraproject.org
-csi_purpose: Run the pagure instances for fedora
-csi_relationship: |
-  There are a few things running here:
-
-  - The apache/mod_wsgi app for pagure
-
-  - This host relies on:
-    - A postgres db server running locally
-
-  - Things that rely on this host:
-    - nothing currently
 # For the MOTD
-csi_security_category: Low
 env: pagure-staging
 # These are consumed by a task in roles/fedmsg/base/main.yml
 fedmsg_certs:
@@ -88,3 +75,13 @@ tcp_ports: [22, 25, 80, 443, 9418,
   # This is for the pagure public fedmsg relay
   9940]
 vpn: true
+
+notes: |
+  Run the pagure instances for fedora
+
+  There are a few things running here:
+    * The apache/mod_wsgi app for pagure
+    * This host relies on:
+      * A postgres db server running locally
+    * Things that rely on this host:
+      * nothing currently

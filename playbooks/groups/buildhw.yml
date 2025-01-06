@@ -88,9 +88,6 @@
     when: env == "staging"
 
   tasks:
-  - import_tasks: "{{ tasks_path }}/motd.yml"
-    when: not inventory_hostname.startswith('bkernel')
-
   - name: make sure kojid is running
     service: name=kojid state=started enabled=yes
 

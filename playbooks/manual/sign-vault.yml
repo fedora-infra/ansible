@@ -44,8 +44,5 @@
   - include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
 
-  tasks:
-  - import_tasks: "{{ tasks_path }}/motd.yml"
-
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"

@@ -28,9 +28,7 @@
   - keepalived
 
   tasks:
-  - import_tasks: "{{ tasks_path }}/motd.yml"
-
-  - name: Install haproxy
+  - name: install haproxy
     ansible.builtin.package: name=haproxy state=present
 
   - name: Install haproxy config

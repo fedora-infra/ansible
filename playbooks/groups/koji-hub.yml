@@ -152,9 +152,6 @@
     user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.buildsys\..*
     when: koji_instance == 'secondary'
 
-  tasks:
-  - import_tasks: "{{ tasks_path }}/motd.yml"
-
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 

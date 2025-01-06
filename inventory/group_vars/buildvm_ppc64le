@@ -1,15 +1,6 @@
 # common items for the buildvm-* koji builders
-csi_primary_contact: Fedora Admins - admin@fedoraproject.org
-csi_purpose: Koji service employs a set of virtual machines to build packages for the Fedora project. This group builds packages for ppcle architecture.
-csi_relationship: |
-  * Relies on koji-hub, Packages, PkgDB, apache, fedmsg, fas, virthost, and is monitored by nagios
-  * Several services rely on the builders, including koschei, Bodhi, Tagger, SCM, Darkserver.
-  * Produces automated builds of packages for the architecture listed. Builders can be scaled by adding new
-  * virtual instances
 # These variables are pushed into /etc/system_identification by the base role.
 # Groups and individual hosts should ovveride them with specific info.
-# See http://infrastructure.fedoraproject.org/csi/security-policy/
-csi_security_category: High
 datacenter: iad2
 dns: 10.3.163.33
 eth0_ipv4_gw: 10.3.171.254
@@ -32,4 +23,13 @@ max_mem_size: 20480
 mem_size: 20480
 num_cpus: 8
 virt_install_command: "{{ virt_install_command_ppc64le_one_nic_unsafe }}"
-volgroup: /dev/vg_virt_buildvm_ppc64le_iscsi
+
+volgroup: /dev/vg_guests
+
+notes: |
+  Koji service employs a set of virtual machines to build packages for the Fedora project. This group builds packages for ppcle architecture.
+
+  * Relies on koji-hub, Packages, PkgDB, apache, fedmsg, fas, virthost, and is monitored by nagios
+  * Several services rely on the builders, including koschei, Bodhi, Tagger, SCM, Darkserver.
+  * Produces automated builds of packages for the architecture listed. Builders can be scaled by adding new
+  * virtual instances

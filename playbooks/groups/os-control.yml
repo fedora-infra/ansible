@@ -62,7 +62,6 @@
       mode: "0755"
 
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
-  - import_tasks: "{{ tasks_path }}/motd.yml"
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"

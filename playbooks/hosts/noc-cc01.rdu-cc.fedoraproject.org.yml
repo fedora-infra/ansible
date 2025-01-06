@@ -31,9 +31,7 @@
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
 
   tasks:
-  - import_tasks: "{{ tasks_path }}/motd.yml"
-
-  - name: Install some packages which arent in playbooks
+  - name: install some packages which arent in playbooks
     ansible.builtin.package:
       state: present
       name:

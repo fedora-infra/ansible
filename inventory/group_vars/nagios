@@ -1,7 +1,4 @@
 ---
-csi_primary_contact: Fedora Admins - admin@fedoraproject.org
-csi_purpose: Monitoring system
-csi_security_category: High
 deployment_type: prod
 dns_external:
   - ns-iad01.fedoraproject.org
@@ -169,3 +166,5 @@ primary_auth_source: ipa
 # for systems that do not match the above - specify the same parameter in
 # the host_vars/$hostname file
 tcp_ports: [80, 443]
+
+notes: Monitoring system

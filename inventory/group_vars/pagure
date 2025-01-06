@@ -12,20 +12,7 @@ nft_custom_rules:
   - 'add rule ip filter INPUT ip saddr 175.24.248.206 counter reject'
   - 'add rule ip filter INPUT ip saddr 47.76.209.138  counter reject'
   - 'add rule ip filter INPUT ip saddr 47.76.99.127   counter reject'
-csi_primary_contact: Fedora admins - admin@fedoraproject.org
-csi_purpose: Run the pagure instances for fedora
-csi_relationship: |
-  There are a few things running here:
-
-  - The apache/mod_wsgi app for pagure
-
-  - This host relies on:
-    - A postgres db server running locally
-
-  - Things that rely on this host:
-    - nothing currently
 # For the MOTD
-csi_security_category: Low
 db_backup_dir: ['/backups']
 dbs_to_backup: ['pagure']
 env: pagure
@@ -98,3 +85,14 @@ tcp_ports: [22, 25, 80, 443, 8442, 8443, 8444, 8445,
   # This is for the pagure public fedmsg relay
   9940]
 vpn: true
+
+notes: |
+  Run the pagure instances for fedora
+
+  There are a few things running here:
+    * The apache/mod_wsgi app for pagure
+    * This host relies on:
+      * A postgres db server running locally
+
+  Things that rely on this host:
+    * nothing currently

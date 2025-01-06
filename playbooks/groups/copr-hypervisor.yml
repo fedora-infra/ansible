@@ -23,7 +23,5 @@
     - import_role: name=ipa/client
     - import_role: name=copr/hypervisor
 
-    - import_tasks: "{{ tasks_path }}/motd.yml"
-
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"

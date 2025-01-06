@@ -1,15 +1,7 @@
 ---
 # Define resources for this group of hosts here.
 collectd_apache: true
-csi_primary_contact: Fedora Admins - admin@fedoraproject.org
-csi_purpose: Provides frontend (reverse) proxy for most web applications
-csi_relationship: |
-  Using Apache -> haproxy, these hosts contact app servers and
-      other various hosts to provide web applications at sites like
-      fedoraproject.org and admin.fedoraproject.org.  The proxy servers are
-      balanced via dns and geoIP and are spread all over the place.
 # For the MOTD
-csi_security_category: Moderate
 custom_rules: [
   # Need for rsync from log01 for logs.
   '-A INPUT -p tcp -m tcp -s 10.3.163.39 --dport 873 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT',
@@ -97,3 +89,9 @@ tcp_ports: [
 ]
 varnish_group: proxies
 zabbix_templates: "{{ [] }}" # For the moment we have no proxies external to IAD2, if this changes, put in the changes in the production group.
+
+notes: |
+  * Provides frontend (reverse) proxy for most web applications
+  * Using Apache -> haproxy, these hosts contact app servers and other various hosts to provide web applications
+    at sites like fedoraproject.org and admin.fedoraproject.org.
+  * The proxy servers are balanced via dns and geoIP and are spread all over the place.

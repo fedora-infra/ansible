@@ -1,8 +1,5 @@
 ---
 # Define resources for this group of hosts here.
-csi_primary_contact: Fedora Admins - admin@fedoraproject.org
-csi_purpose: Domain Name Service
-csi_security_category: High
 external: true
 ipa_client_shell_groups:
   - sysadmin-dns
@@ -22,3 +19,5 @@ tcp_ports: [53]
 # for systems that do not match the above - specify the same parameter in
 # the host_vars/$hostname file
 udp_ports: [53]
+
+notes: Domain Name Service

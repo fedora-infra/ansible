@@ -83,18 +83,8 @@ communishift_projects:
 copr_build_virthost: false
 # assume createrepo is true and this builder has the koji nfs mount to do that
 createrepo: True
-csi_primary_contact: Fedora Admins - admin@fedoraproject.org
-csi_purpose: Unspecified
-csi_relationship: |
-  Unspecified.
-  * What hosts/services does this rely on?
-  * What hosts/services rely on this?
-
-  To update this text, add the csi_* vars to group_vars/ in ansible.
 # This vars get shoved into /etc/system_identification by the base role.
 # Groups and individual hosts should override them with specific info.
-# See http://infrastructure.fedoraproject.org/csi/security-policy/
-csi_security_category: Unspecified
 custom6_rules: []
 custom_rules: []
 nft_custom6_rules: []
@@ -323,3 +313,8 @@ wsgi_wants_apache: true
 # set no x-forward header by default
 x_forward: false
 #
+
+notes: |
+  Unspecified.
+    * What hosts/services does this rely on?
+    * What hosts/services rely on this?

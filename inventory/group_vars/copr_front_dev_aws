@@ -14,10 +14,6 @@ copr_pagure_events:
   io.pagure.prod.pagure: "https://pagure.io/"
   io.pagure.stg.pagure: "https://stg.pagure.io"
   org.fedoraproject.prod.pagure: "https://src.fedoraproject.org/"
-csi_primary_contact: "msuchy (mirek), frostyx,  praiskup IRC #fedora-admin, #fedora-buildsys"
-csi_purpose: Provide the testing environment of copr's frontend
-csi_relationship: This host is the testing environment for copr's web interface
-csi_security_category: Low
 # consumed by roles/copr/certbot
 letsencrypt:
   certificates:
@@ -38,3 +34,7 @@ tcp_ports: [22, 80, 443,
 services_disabled: false
 
 aws_ipv6_addr: "2600:1f18:8ee:ae00:66a:fd15:3f16:4092/128"
+
+notes: |
+  Provide the testing environment of copr's frontend
+  This host is the testing environment for copr's web interface

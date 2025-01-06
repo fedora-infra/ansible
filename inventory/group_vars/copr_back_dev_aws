@@ -7,13 +7,8 @@ copr_backend_target: copr-backend.target
 
 # Copr vars
 copr_hostbase: copr-be-dev
-csi_primary_contact: "msuchy (mirek), frostyx, praiskup IRC #fedora-admin, #fedora-buildsys"
-csi_purpose: Provide the testing environment of copr's backend
-csi_relationship: This host is the testing environment for the cloud infrastructure of copr's backend
 # These variables are pushed into /etc/system_identification by the base role.
 # Groups and individual hosts should override them with specific info.
-# See http://infrastructure.fedoraproject.org/csi/security-policy/
-csi_security_category: Moderate
 description: copr dispatcher and repo server - dev instance
 do_sign: "true"
 # consumed by roles/copr/certbot
@@ -53,3 +48,7 @@ copr_backend_data_raid10_volumes:
 copr_backend_data_2_raid1_volumes:
   - nvme-Amazon_Elastic_Block_Store_vol0ce8220e998e2e32a-part1
   - nvme-Amazon_Elastic_Block_Store_vol0038e042c49987b82-part1
+
+notes: |
+  Provide the testing environment of copr's backend
+  This host is the testing environment for the cloud infrastructure of copr's backend

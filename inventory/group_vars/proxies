@@ -3,15 +3,7 @@
 blocked_ip_v6: []
 blocked_ips: ['14.102.69.78', '104.219.54.236', '103.38.177.2', '110.172.140.98', '183.80.131.253', '113.190.178.137', '115.76.39.108', '116.109.31.204', '209.64.155.56']
 collectd_apache: true
-csi_primary_contact: Fedora Admins - admin@fedoraproject.org
-csi_purpose: Provides frontend (reverse) proxy for most web applications
-csi_relationship: |
-  Using Apache -> haproxy, these hosts contact app servers and
-      other various hosts to provide web applications at sites like
-      fedoraproject.org and admin.fedoraproject.org.  The proxy servers are
-      balanced via dns and geoIP and are spread all over the place.
 # For the MOTD
-csi_security_category: Moderate
 custom_rules: [
   # Need for rsync from log01 for logs.
   '-A INPUT -p tcp -m tcp -s 10.3.163.39 --dport 873 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 209.132.181.102 --dport 873 -j ACCEPT',
@@ -113,3 +105,9 @@ zabbix_templates:
     template: "external_hosts_http.json" # Template name in roles/zabbix/zabbix_templates/files/templatename.json
     custom_template: true # Is the template official template bundled with Zabbix or one of our custom templates
     hostgroup: "fedora external hosts" # Zabbix hostgroup
+
+notes: |
+  * Provides frontend (reverse) proxy for most web applications
+  * Using Apache -> haproxy, these hosts contact app servers and other various hosts to provide web applications at sites like
+    fedoraproject.org and admin.fedoraproject.org.
+  * The proxy servers are balanced via dns and geoIP and are spread all over the place.

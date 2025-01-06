@@ -1,10 +1,6 @@
 ---
 # Define resources for this group of hosts here.
-csi_primary_contact: "#fedora-admin"
-csi_purpose: Provides debuginfod services
-csi_relationship: |
-  - This server provides a debuginfod server to allow downloading debuginfod
-csi_security_category: Low
+
 deployment_type: prod
 ipa_client_shell_groups:
   - fi-apprentice
@@ -21,3 +17,7 @@ mem_size: 24576
 num_cpus: 4
 primary_auth_source: ipa
 tcp_ports: [8002]
+
+notes: |
+  Provides debuginfod services
+  This server provides a debuginfod server to allow downloading debuginfod

@@ -1,23 +1,6 @@
 ---
 ansible_base: /srv/web/infra
-csi_primary_contact: admin@fedoraproject.org / sysadmin-main-members
-csi_purpose: Central management host for ansible
-csi_relationship: |
-  From the batcave batman ventures out to fight crime and protect gotham city!
-
-  batcave is the central management host for ansible.
-  It also is the infrastructure.fedoraproject.org website with various content.
-  It houses a number of infrastructure git repos.
-
-  * This host relies on:
-  The virthost it's hosted on (virthost22)
-
-  * Things that rely on this host:
-  Things that access rhel/fedora/infra rpm repos, including builders and infra hosts.
-  If this host is down, ansible runs cannot be made to update other hosts.
-  If this host is down, crime may go up in gotham city.
 # For the MOTD
-csi_security_category: High
 # Neeed for rsync from log01 for logs.
 custom_rules: ['-A INPUT -p tcp -m tcp -s 10.3.163.39 --dport 873 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT']
 nft_custom_rules:
@@ -80,3 +63,20 @@ tcp_ports: [80, 443, 8442, 8443]
 vpn: true
 nagios_Check_Services:
     swap: false
+
+notes: |
+  Central management host for ansible
+
+  From the batcave batman ventures out to fight crime and protect gotham city!
+
+  batcave is the central management host for ansible.
+  It also is the infrastructure.fedoraproject.org website with various content.
+  It houses a number of infrastructure git repos.
+
+  This host relies on:
+    * The virthost it's hosted on (virthost22)
+
+  Things that rely on this host:
+    * Things that access rhel/fedora/infra rpm repos, including builders and infra hosts.
+    * If this host is down, ansible runs cannot be made to update other hosts.
+    * If this host is down, crime may go up in gotham city.

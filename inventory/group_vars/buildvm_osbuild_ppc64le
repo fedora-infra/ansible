@@ -1,11 +1,4 @@
 # common variables for osbuild workers
-csi_primary_contact: Image Builder team - osbuilders@redhat.com
-csi_purpose: This group of VMs builds OS images via Koji using image builder for ppc64le architecture.
-csi_relationship: |
-  * Relies on koji-hub and image-builder-api (external).
-  * Produces automated builds of OS images for the architecture listed. Wokers can be scaled by adding new
-    virtual instances
-
 datacenter: iad2
 dns: 10.3.163.33
 dns_search1: iad2.fedoraproject.org
@@ -45,3 +38,9 @@ osbuild_worker_koji_instances:
   - koji_host: "koji.fedoraproject.org"
     krb_principal: "osbuild-automation-bot@FEDORAPROJECT.ORG"
     krb_keytab_file: "{{ private }}/files/osbuild/worker_koji.keytab"
+
+notes: |
+  This group of VMs builds OS images via Koji using image builder for ppc64le architecture.
+  * Relies on koji-hub and image-builder-api (external).
+  * Produces automated builds of OS images for the architecture listed. Wokers can be scaled by adding new
+    virtual instances

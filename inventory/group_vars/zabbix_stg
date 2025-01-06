@@ -1,11 +1,6 @@
 ---
 # Define resources for this group of hosts here.
-csi_primary_contact: []
-csi_purpose: []
-csi_relationship: |
-  Test instance for zabbix server
 # For the MOTD
-csi_security_category: []
 deployment_type: stg
 ipa_client_shell_groups:
   - fi-apprentice
@@ -25,3 +20,4 @@ num_cpus: 2
 # for systems that do not match the above - specify the same parameter in
 # the host_vars/$hostname file
 tcp_ports: [80, 443]
+notes: Test instance for zabbix server

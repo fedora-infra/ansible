@@ -1,15 +1,6 @@
 ---
 # Define resources for this group of hosts here.
-csi_primary_contact: mote admins - sysadmin-mote-members@fedoraproject.org
-csi_purpose: Hosts services which help facilitate communication over IRC and related mediums.
-csi_relationship: |
-  There are a couple things running here.
-
-  * zodbot, a supybot instance.  See the zodbot SOP for more info.
-  * fedmsg-irc, our fedmsg to IRC relay.  'journalctl -u fedmsg-irc'
-  * mote, a webapp running behind httpd that serves meetbot log files.
 # For the MOTD
-csi_security_category: Moderate
 custom_rules: [
   # Needed for rsync from log01 for logs.
   '-A INPUT -p tcp -m tcp -s 10.3.163.39 --dport 873 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT',
@@ -73,3 +64,10 @@ primary_auth_source: ipa
 tcp_ports: [80, 443,
   # These 16 ports are used by fedmsg.  One for each wsgi thread.
   3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009, 3010, 3011, 3012, 3013, 3014, 3015]
+
+notes: |
+  Hosts services which help facilitate communication over IRC and related mediums.
+  There are a couple things running here.
+    * zodbot, a supybot instance.  See the zodbot SOP for more info.
+    * fedmsg-irc, our fedmsg to IRC relay.  'journalctl -u fedmsg-irc'
+    * mote, a webapp running behind httpd that serves meetbot log files.

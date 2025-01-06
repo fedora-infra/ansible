@@ -35,9 +35,6 @@
   - collectd/postgres  # This requires a 'databases' var to be set in host_vars
   - sudo
 
-  tasks:
-  - import_tasks: "{{ tasks_path }}/motd.yml"
-
 # TODO: add iscsi task
 
   handlers:

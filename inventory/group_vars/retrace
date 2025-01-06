@@ -1,16 +1,4 @@
 ---
-csi_primary_contact: "msrb, abrt-devel-list@redhat.com, Libera.chat #abrt"
-csi_purpose: Provide a web interface and backend for ABRT Analytics and Retrace Server.
-csi_relationship: |
-  Three services run on this server:
-  - An Apache httpd serves the web interface and backed functionality for
-    ABRT Analytics.
-  - The same server provides the HTTP endpoints for Retrace Server to allow
-    remote retracing of crashes in Fedora.
-  - PostgreSQL server for ABRT Analytics.
-
-  The retracing functionality relies on the debuginfod server
-  (debuginfod.fedoraproject.org).
 custom_rules:
   - '-A INPUT -p tcp -m tcp -s 10.5.78.11 --dport 2049 -j ACCEPT'
   - '-A INPUT -p tcp -m tcp -s 10.5.78.11 --dport 5432 -j ACCEPT'
@@ -62,3 +50,12 @@ nrpe_procs_warn: 1800
 primary_auth_source: ipa
 tcp_ports: [80, 443]
 vpn: true
+
+notes: |
+  Provide a web interface and backend for ABRT Analytics and Retrace Server.
+  Three services run on this server:
+    * An Apache httpd serves the web interface and backed functionality for ABRT Analytics.
+    * The same server provides the HTTP endpoints for Retrace Server to allow remote retracing of crashes in Fedora.
+    * PostgreSQL server for ABRT Analytics.
+
+  The retracing functionality relies on the debuginfod server (debuginfod.fedoraproject.org).

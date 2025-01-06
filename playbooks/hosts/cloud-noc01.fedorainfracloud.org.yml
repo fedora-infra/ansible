@@ -29,7 +29,6 @@
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
 
   tasks:
-  - import_tasks: "{{ tasks_path }}/motd.yml"
 
   - name: Check if ntpd port is already known by selinux
     ansible.builtin.shell: semanage port -l | grep ntp
