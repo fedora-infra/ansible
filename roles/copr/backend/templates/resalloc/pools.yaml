@@ -264,7 +264,7 @@ copr_ic_s390x_br_sao_{% if devel %}dev{% else %}prod{% endif %}:
     - name: arch_noarch
       priority: -30
     - ibm_cloud
-    - us_east
+    - sao_paolo
 {% if devel %}
   tags_on_demand:
 {% endif %}
@@ -291,7 +291,7 @@ copr_ic_s390x_madrid_{% if devel %}dev{% else %}prod{% endif %}:
     - name: arch_noarch
       priority: -30
     - ibm_cloud
-    - us_east
+    - madrid
 {% if devel %}
   tags_on_demand:
 {% endif %}
