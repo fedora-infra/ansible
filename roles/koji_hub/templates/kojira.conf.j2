@@ -34,9 +34,7 @@ serverca = /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
 deleted_repo_lifetime = 259200
 
 ;how soon (in seconds) to clean up dist repositories.
-;we want this super long so we don't delete latest repos
-;just set this to 6 months for now.
-dist_repo_lifetime = 7257600
+dist_repo_lifetime = 604800
 
 ; If True, monitor external repos and trigger the appropriate Koji repo
 ; regenerations when they change.
