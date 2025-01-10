@@ -4,8 +4,6 @@
   copy: src=idmapd.conf dest=/etc/idmapd.conf
   tags:
   - nfs/client
-  notify:
-  - restart idmapd
 
 # if we need to reload nm, we should do it now, not after roles.
 - meta: flush_handlers
