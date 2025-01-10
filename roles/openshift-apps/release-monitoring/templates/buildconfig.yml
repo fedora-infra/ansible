@@ -74,11 +74,6 @@ items:
                 pip-3 install dist/*.whl && \
                 popd && \
                 rm -rf anitya
-{% if env == 'production' %}
-        # Hotfix for social_auth-sqlalchemy
-        # Could be removed when we switch to something else
-        RUN sed -i 's/base64.encodestring/base64.encodebytes/g' /usr/local/lib/python3.12/site-packages/social_sqlalchemy/storage.py
-{% endif %}
         RUN mkdir /httpdir
         RUN chmod 777 /httpdir
         EXPOSE 8080
