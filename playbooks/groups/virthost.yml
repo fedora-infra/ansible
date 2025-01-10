@@ -46,7 +46,7 @@
   - {role: openvpn/client, when: vpn|bool}
   - ipa/client
   - {role: collectd/base}
-  - {role: iscsi_client, when: "inventory_hostname.startswith(('bvmhost-x86-06', 'bvmhost-x86-07', 'bvmhost-p09-03')) and datacenter == 'iad2'"}
+  - {role: iscsi_client, when: "inventory_hostname.startswith(('bvmhost-x86-06', 'bvmhost-x86-07', 'bvmhost-p09')) and datacenter == 'iad2'"}
   - sudo
   - virthost
   - {role: linux-system-roles.nbde_client, tags: ['nbde_client'], when: datacenter == 'iad2' and nbde|bool}
