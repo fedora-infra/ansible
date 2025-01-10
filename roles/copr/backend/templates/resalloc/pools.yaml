@@ -1,13 +1,27 @@
 ---
-
-# You do NOT need to restart resalloc after change
-# daemon will fetch it automatically after an update.
 #
-# Note: higher priority pools are used first
-# default priority is 0
-# reserved instances in cloud has > 0
-# on-premise instance < 0
-# high performance instances <= 40
+# Notes for Resalloc configuration file:
+#
+# - You do NOT need to restart resalloc server after changing this file, it
+#   automatically reloads this configuration file.
+#
+{% if False %}
+# - This is rather a complex Jinja template.  Feel free to use the helper
+#   script to expand locally before you commit any change to this file:
+#   ./roles/copr/backend/templates/resalloc/pools.yaml.expand.sh
+{% endif %}
+# - higher priority pools are used first
+#   default priority is 0
+#   reserved instances in cloud has > 0
+#   on-premise instance < 0
+#   high performance instances <= 40
+#
+# - if you need to drop a pool, it requires you to do a few steps:
+#   a) first evacutate the pool by setting `max: 0`,
+#   b) wait till all machines are deallocated (the cmd_delete is still defined
+#   for this pool!)
+#   c) you may remove the pool configuration in this file, and finally
+#   d) remove the pool in PostgreSQL database.
 
 {% macro aws(arch, max, max_starting, max_prealloc, spot=False, on_demand=none, priority=0, reserved=False) %}
 aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot %}spot{% else %}normal{% endif %}{% if reserved %}reserved{% endif %}_{% if devel %}dev{% else %}prod{% endif %}:
@@ -190,52 +204,18 @@ copr_p09_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
 {% endif %}
 {% endfor %}
 
-{% if False %}
-# Z Cloud instances Tokyo
-copr_ibm_cloud_s390x_tokyo_{% if devel %}dev{% else %}prod{% endif %}:
-  max: {{ builders.ibm_cloud_tokyo.s390x[0] }}
-{% if not devel %}
-  max_prealloc: {{ builders.ibm_cloud_tokyo.s390x[1] }}
-{% endif %}
-  max_starting: {{ builders.ibm_cloud_tokyo.s390x[2] }}
-  tags:
-    - copr_builder
-    - name: arch_noarch
-      priority: -30
-    - ibm_cloud
-    - tokyo
-{% if devel %}
-  tags_on_demand:
-{% endif %}
-    - arch_s390x
-    - arch_s390x_native
-  cmd_new: '/var/lib/resallocserver/resalloc_provision/ibm-cloud-vm create "$RESALLOC_NAME"'
-  cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
-  cmd_livecheck: "resalloc-check-vm-ip"
-  cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
-  cmd_list: "/var/lib/resallocserver/resalloc_provision/ibm-cloud-list-vms"
-  livecheck_period: 180
-  reuse_opportunity_time: 90
-  reuse_max_count: 8
-  reuse_max_time: 1800
-  description: >
-    A pool of s390x instances in the IBM cloud. They are located in Tokyo.
-    Thank you IBM for sponsoring these builders.
-{% endif %}
-
-
 # Z Cloud instances in Washington (hp == high performance)
 {% for t in ['', 'hp'] %}
 copr_ic_s390x_{{ t + '_' if t or '' }}us_east_{% if devel %}dev{% else %}prod{% endif %}:
 {% if not t %}
-  max: {{ builders.ibm_cloud_us_east.s390x[0] }}
+  max: 0
 {% if not devel %}
-  max_prealloc: {{ builders.ibm_cloud_us_east.s390x[1] }}
+  max_prealloc: 0
 {% endif %}
-  max_starting: {{ builders.ibm_cloud_us_east.s390x[2] }}
+  max_starting: 0
 {% else %}
-  max: 2
-  max_starting: 2
+  max: {{ builders.ibm_cloud_us_east_hp.s390x[0] }}
+  max_starting: {{ builders.ibm_cloud_us_east_hp.s390x[1] }}
 {% endif %}
   tags:
     - copr_builder
@@ -250,34 +230,51 @@ copr_ic_s390x_{{ t + '_' if t or '' }}us_east_{% if devel %}dev{% else %}prod{% 
     - name: arch_s390x
 {% if t == 'hp' %}
 {% if devel %}
-      priority: -30
+      priority: -300
 {% else %}
   tags_on_demand:
 {% endif %}
     - on_demand_powerful
 {% endif %}
-  cmd_new: '/var/lib/resallocserver/resalloc_provision/ibm-cloud-vm create "$RESALLOC_NAME"'
-  cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
+{% set pool_config = resalloc_pools.ibm_us_east %}
+  cmd_new: |
+    resalloc-ibm-cloud-vm \
+        --token-file "{{ ibmcloud_token_file }}" \
+        --region us-east \
+        --log-level debug \
+      create "$RESALLOC_NAME" \
+        --playbook "{{ provision_directory }}/libvirt-provision.yml" \
+        --image-uuid "{{ pool_config.images.s390x }}" \
+        --vpc-id "{{ pool_config.vpc }}" \
+        --security-group-id "{{ pool_config.security_group }}" \
+        --ssh-key-id "{{ pool_config.ssh_key }}" \
+        --instance-type "{{ cloud_instance_types.ibm_cloud.s390x_hp }}" \
+        --subnets-ids "{{ '" "'.join(pool_config.subnets) }}" \
+        --additional-volume-size "320"
+  cmd_delete: |
+    /var/lib/resallocserver/resalloc_provision/vm-delete
+    resalloc-ibm-cloud-vm --token-file "{{ ibmcloud_token_file }}" \
+        --region us-east --log-level debug delete "$RESALLOC_NAME"
   cmd_livecheck: "resalloc-check-vm-ip"
   cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
-  cmd_list: "/var/lib/resallocserver/resalloc_provision/ibm-cloud-list-vms"
+  cmd_list: resalloc-ibm-cloud-list-vms --token-file "{{ ibmcloud_token_file }}" --region us-east
+
   livecheck_period: 180
   reuse_opportunity_time: 45
   reuse_max_count: 8
   reuse_max_time: 1800
   description: >
-    A pool of s390x instances in the IBM cloud.
-    They are located in Washington, D.C.
-    Thank you IBM for sponsoring these builders.
+    A pool of high-performance s390x instances in the IBM Cloud, Washington, D.C. (us-east).
+    Thanks to IBM for sponsoring these builders.
 
 {% endfor %}
 
 copr_ic_s390x_br_sao_{% if devel %}dev{% else %}prod{% endif %}:
-  max: {{ builders.ibm_cloud_spaulo.s390x[0] }}
+  max: 0
 {% if not devel %}
-  max_prealloc: {{ builders.ibm_cloud_spaulo.s390x[1] }}
+  max_prealloc: 0
 {% endif %}
-  max_starting: {{ builders.ibm_cloud_spaulo.s390x[2] }}
+  max_starting: 0
   tags:
     - copr_builder
     - name: arch_noarch
@@ -289,22 +286,76 @@ copr_ic_s390x_br_sao_{% if devel %}dev{% else %}prod{% endif %}:
 {% endif %}
     - name: arch_s390x_native
     - name: arch_s390x
-  cmd_new: '/var/lib/resallocserver/resalloc_provision/ibm-cloud-vm create "$RESALLOC_NAME"'
-  cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
+  cmd_new: /bin/true no new machines
+  cmd_delete: |
+    /var/lib/resallocserver/resalloc_provision/vm-delete
+    resalloc-ibm-cloud-vm --token-file "{{ ibmcloud_token_file }}" \
+        --region us-east --log-level debug delete "$RESALLOC_NAME"
   cmd_livecheck: "resalloc-check-vm-ip"
   cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
-  cmd_list: "/var/lib/resallocserver/resalloc_provision/ibm-cloud-list-vms"
+  cmd_list: resalloc-ibm-cloud-list-vms --token-file "{{ ibmcloud_token_file }}" --region br-sao
   livecheck_period: 180
   reuse_opportunity_time: 45
   reuse_max_count: 8
   reuse_max_time: 1800
 
-copr_ic_s390x_madrid_{% if devel %}dev{% else %}prod{% endif %}:
-  max: {{ builders.ibm_cloud_madrid.s390x[0] }}
+{% for zone in ['br_sao_1', 'br_sao_2', 'br_sao_3', 'eu_es_1', 'eu_es_2', 'eu_es_3'] %}
+copr_ic_s390x_{{ zone }}_{% if devel %}dev{% else %}prod{% endif %}:
+  max: {{ builders['ibm_cloud_' + zone].s390x[0] }}
+  max_starting: {{ builders['ibm_cloud_' + zone].s390x[1] }}
 {% if not devel %}
-  max_prealloc: {{ builders.ibm_cloud_madrid.s390x[1] }}
+  max_prealloc: {{ builders['ibm_cloud_' + zone].s390x[2] }}
 {% endif %}
-  max_starting: {{ builders.ibm_cloud_madrid.s390x[2] }}
+  tags:
+    - copr_builder
+    - name: arch_noarch
+      priority: -30
+    - ibm_cloud
+    - {{ zone }}
+{% if devel %}
+  tags_on_demand:
+{% endif %}
+    - name: arch_s390x_native
+    - name: arch_s390x
+  cmd_new: |
+{% set pool_config = resalloc_pools["ibm_" + zone] %}
+    resalloc-ibm-cloud-vm \
+        --token-file "{{ ibmcloud_token_file }}" \
+        --region {{ pool_config.region_config.name }} \
+        --log-level debug \
+      create "$RESALLOC_NAME" \
+        --playbook "{{ provision_directory }}/libvirt-provision.yml" \
+        --image-uuid "{{ pool_config.region_config.images.s390x }}" \
+        --vpc-id "{{ pool_config.region_config.vpc }}" \
+        --security-group-id "{{ pool_config.region_config.security_group }}" \
+        --ssh-key-id "{{ pool_config.region_config.ssh_key }}" \
+        --instance-type "{{ cloud_instance_types.ibm_cloud.s390x }}" \
+        --subnets-ids "{{ pool_config.zone }}:{{ pool_config.subnet }}" \
+{% for ip in pool_config.floating_ips %}
+        --floating-ip-uuid-in-subnet {{ pool_config.subnet }} {{ ip }} \
+{% endfor %}
+        --additional-volume-size "160"
+  cmd_delete: |
+    /var/lib/resallocserver/resalloc_provision/vm-delete
+    resalloc-ibm-cloud-vm --token-file "{{ ibmcloud_token_file }}" \
+        --region us-east --log-level debug delete "$RESALLOC_NAME"
+  cmd_livecheck: "resalloc-check-vm-ip"
+  cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
+  cmd_list: resalloc-ibm-cloud-list-vms --token-file "{{ ibmcloud_token_file }}" --region {{ pool_config.region_config.name }}
+  livecheck_period: 180
+  reuse_opportunity_time: 45
+  reuse_max_count: 8
+  reuse_max_time: 1800
+  description: >
+    A pool of s390x instances in the IBM Cloud, {{ pool_config.region_config.name_humans }} ({{ pool_config.zone }}).
+    Thank to IBM for sponsoring these builders.
+
+{% endfor %}
+
+copr_ic_s390x_madrid_{% if devel %}dev{% else %}prod{% endif %}:
+  max: 0
+  max_prealloc: 0
+  max_starting: 0
   tags:
     - copr_builder
     - name: arch_noarch
@@ -316,11 +367,14 @@ copr_ic_s390x_madrid_{% if devel %}dev{% else %}prod{% endif %}:
 {% endif %}
     - name: arch_s390x_native
     - name: arch_s390x
-  cmd_new: '/var/lib/resallocserver/resalloc_provision/ibm-cloud-vm create "$RESALLOC_NAME"'
-  cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
+  cmd_new: /bin/true no new machines
+  cmd_delete: |
+    /var/lib/resallocserver/resalloc_provision/vm-delete
+    resalloc-ibm-cloud-vm --token-file "{{ ibmcloud_token_file }}" \
+        --region us-east --log-level debug delete "$RESALLOC_NAME"
   cmd_livecheck: "resalloc-check-vm-ip"
   cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
-  cmd_list: "/var/lib/resallocserver/resalloc_provision/ibm-cloud-list-vms"
+  cmd_list: resalloc-ibm-cloud-list-vms --token-file "{{ ibmcloud_token_file }}" --region eu-es
   livecheck_period: 180
   reuse_opportunity_time: 45
   reuse_max_count: 8

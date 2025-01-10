@@ -1,0 +1,45 @@
+#! /bin/bash
+
+# Example script for allocating Floaging IPs
+# export iam_token=$(curl -X POST 'https://iam.cloud.ibm.com/identity/token' -H 'Content-Type: application/x-www-form-urlencoded' -d "grant_type=urn:ibm:params:oauth:grant-type:apikey&apikey=$( pass rh/ibm.cloud.com/fedora-token )" | jq .access_token -r)
+# execute as: ./reserve-ibm-cloud-ips br-sao br-sao-3 dev
+
+region=$1
+zone=$2
+deployment=$3
+name_pfx=copr-$zone-$3-
+
+ips=()
+
+for i in 01; do
+
+out=$(curl -X POST \
+  "https://$region.iaas.cloud.ibm.com/v1/floating_ips?version=2025-01-02&generation=2" \
+  -H "Authorization: Bearer $iam_token" \
+  -H "Content-Type: application/json" \
+  -H "accept: application/json" \
+  -d '{
+  "name": "'$name_pfx$i'",
+  "zone": {
+    "name": "'$zone'"
+  }
+}')
+
+
+echo "$out"
+ips+=( $(echo "$out" | jq .id -r) )
+
+address_crn=$(echo "$out" | jq .crn -r)
+
+curl -X POST --header "Authorization: Bearer $iam_token" \
+    --header "Accept: application/json" \
+    --header "Content-Type: application/json" \
+    -d '{ "resources": [{ "resource_id": "'$address_crn'" }], "tag_names": ["fedoragroup:copr"] }' \
+    "https://tags.global-search-tagging.cloud.ibm.com/v3/tags/attach?tag_type=user"
+
+done
+
+echo
+for i in "${ips[@]}"; do
+    echo "$i"
+done

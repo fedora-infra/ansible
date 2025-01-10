@@ -26,9 +26,7 @@ copr_osuosl_p09_*)
     exit 1
     ;;
 *s390x*)
-    # Delegate the rest of the task to the IBM Cloud specific script.
-    exec /var/lib/resallocserver/resalloc_provision/ibm-cloud-vm delete "$RESALLOC_NAME"
-    exit 1
+    exit 0
     ;;
 *copr_hv_x86_64_*)
     pool_id=${RESALLOC_POOL_ID//copr_hv_x86_64_/}

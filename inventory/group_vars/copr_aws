@@ -39,16 +39,111 @@ builders:
     x86_64: [20, 4, 20]
   x86_hypervisor_04:
     x86_64: [20, 4, 20]
-  ibm_cloud_us_east:
-    # s390x is on-demand
-    s390x: [0, 0, 0]
-  ibm_cloud_tokyo:
-    # tokyo is evacuated
-    s390x: [0, 6, 6]
-  ibm_cloud_spaulo:
-    s390x: [9, 3, 3]
-  ibm_cloud_madrid:
-    s390x: [9, 3, 3]
+
+  ibm_cloud_us_east_hp:
+    s390x: [2, 1, 0]
+
+  ibm_cloud_br_sao_1:
+    s390x: [3, 1, 1]
+  ibm_cloud_br_sao_2:
+    s390x: [3, 1, 1]
+  ibm_cloud_br_sao_3:
+    s390x: [3, 1, 1]
+
+  ibm_cloud_eu_es_1:
+    s390x: [3, 1, 1]
+  ibm_cloud_eu_es_2:
+    s390x: [3, 1, 1]
+  ibm_cloud_eu_es_3:
+    s390x: [3, 1, 1]
+
+cloud_instance_types:
+  ibm_cloud:
+    s390x: mz2-2x16
+    s390x_hp: bz2-16x64
+
+ibm_cloud_regions:
+  eu_es:
+    name: eu-es
+    name_humans: Madrid, Spain
+    ssh_key: r050-cbd10ece-a28f-45c8-bc3a-15ecb9ff66d5
+    vpc: r050-190b8bac-3bae-47cf-9be7-ac70fc54ccb9
+    security_group: r050-cfc3db07-8cde-4807-9756-db91b242092a
+    images: "{{ copr_builder_images.ibm_cloud.eu_es }}"
+  br_sao:
+    name: br-sao
+    name_humans: Sao Paulo, Brazil
+    ssh_key: r042-4fb65a23-e7bd-440f-8d71-ff57b83a4152
+    vpc: r042-c902f12d-556f-4334-95cb-d181ebb3d8ba
+    security_group: r042-22ef3881-fa20-4caa-9873-c8dc41c5dcb7
+    images: "{{ copr_builder_images.ibm_cloud.br_sao }}"
+
+resalloc_pools:
+
+  ibm_us_east:
+    images: "{{ copr_builder_images.ibm_cloud.us_east }}"
+    subnets:
+      - us-east-1:0757-df8209fd-e4e4-4659-bcca-b60c9eddfb35
+      - us-east-2:0767-4cb7e11d-14db-48a8-9d1d-c59679112cd5
+      - us-east-3:0777-bc697f15-4f13-4843-b338-d8950e3d23c0
+    ssh_key: r014-fc1c1b90-5a7f-4cc6-a6d4-b273bd19be99
+    vpc: r014-e90f14b0-a9c0-4c0b-bc81-207904b2d19e
+    security_group: r014-941706bd-062c-4d4c-9512-9a31b8f257d7
+
+  ibm_eu_es_1:
+    zone: eu-es-1
+    subnet: 02w7-84eded83-3077-44c3-a84c-90c7afb7ff4f
+    region_config: "{{ ibm_cloud_regions.eu_es }}"
+    floating_ips:
+      - r050-957fb229-4001-426c-b03b-9ec73fbcfc01
+      - r050-b395c059-8407-4b7a-bc31-332f1de0a8c7
+      - r050-2e71b2bd-66a5-4c76-a158-cce17471dadd
+
+  ibm_eu_es_2:
+    zone: eu-es-2
+    subnet: 02x7-05de0643-b257-4500-9a14-648421b16738
+    region_config: "{{ ibm_cloud_regions.eu_es }}"
+    floating_ips:
+      - r050-f0791af4-128d-48bb-8a3d-fad718003062
+      - r050-350e120d-b91f-41aa-b600-66c63182fc66
+      - r050-633ebce4-4e3b-4367-8c15-2c014ff39869
+
+  ibm_eu_es_3:
+    zone: eu-es-3
+    subnet: 02y7-e32873a0-ad98-44d5-b49d-da49f731a914
+    region_config: "{{ ibm_cloud_regions.eu_es }}"
+    floating_ips:
+      - r050-6390c1bf-a057-4c9c-b0ae-ac2b0ed591a7
+      - r050-dca6a5f9-6fe0-4d1c-9217-3fd4357bf55d
+      - r050-5d7d0f7e-5fc0-4a45-8efd-09cf819ee00a
+
+  ibm_br_sao_1:
+    zone: br-sao-1
+    subnet: 02t7-1c0b186a-ca5e-44ea-bf2c-ca2f3122a9ff
+    region_config: "{{ ibm_cloud_regions.br_sao }}"
+    floating_ips:
+      - r042-c409079e-f2a2-44ff-a993-b09f21148296
+      - r042-4196a36b-5fb5-462f-8f98-46d1320fb1d1
+      - r042-f2724485-478e-4059-bf57-cc485aade9f5
+
+  ibm_br_sao_2:
+    zone: br-sao-2
+    subnet: 02u7-75fa6c55-b65a-4d38-a011-15559c7171ce
+    region_config: "{{ ibm_cloud_regions.br_sao }}"
+    floating_ips:
+      - r042-b66c2a71-71e0-4120-a05b-662b02ebb357
+      - r042-9e75ba4e-8005-4f36-9e4f-462ab0c93f7c
+      - r042-54f648f6-a5f8-4535-8b16-ef76743e7937
+
+  ibm_br_sao_3:
+    zone: br-sao-3
+    subnet: 02v7-439195e6-2df0-4720-9696-76d0a63c352d
+    region_config: "{{ ibm_cloud_regions.br_sao }}"
+    floating_ips:
+      - r042-03e04fbd-04f4-48ad-826e-48c0c41beeff
+      - r042-0ebc5298-857c-4832-9ece-016baf74cdd0
+      - r042-082eba49-2952-43a3-be23-ac202ad847fc
+
 copr_aws_region: us-east-1
 # don't forget to update ip in ./copr-keygen, due to custom firewall rules
 
@@ -70,13 +165,13 @@ copr_builder_images:
     ppc64le: copr-builder-ppc64le-20241119_171239
     x86_64: copr-builder-x86_64-20241119_172236
   ibm_cloud:
-    s390x:
-      # tokyo is not used right now
-      tokyo: r022-3bca519e-3cc7-432e-9280-8ff89738e3a5
+    br_sao:  # São Paulo
+      s390x: r042-5e105a96-4a84-4c07-950b-9fd12d58c8a2
+    eu_es:  # Madrid
+      s390x: r050-053cfdb8-52eb-486d-b8b3-bc9cba2fbe56
+    us_east:  # Washington
       # n-1: us_east: r014-1469fafc-d906-44fa-b780-e4599ed56fde
-      us_east: r014-9ba4feec-ce45-4401-acea-f123114685b5
-      sao: r042-5e105a96-4a84-4c07-950b-9fd12d58c8a2
-      madrid: r050-053cfdb8-52eb-486d-b8b3-bc9cba2fbe56
+      s390x: r014-9ba4feec-ce45-4401-acea-f123114685b5
   osuosl:
     # ppc64le: copr-builder-ppc64le-20240206_143009
     ppc64le: copr-builder-ppc64le-20241119_171239
