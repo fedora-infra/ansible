@@ -106,6 +106,10 @@ copr_hv_x86_64_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     reuse_opportunity_time: 90
     reuse_max_count: 8
     reuse_max_time: 1800
+    description: >
+      A pool of x86_64 instances in the Amazon AWS Fedora organization.
+      They are located in us-east-1 (N. Virginia).
+      Thank you Amazon Web Services, Inc. for sponsoring these builders.
 {% else %}
 #
 # x86_hypervisor_{{ hv }} not configured in group_vars
@@ -140,6 +144,10 @@ copr_hv_ppc64le_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     reuse_opportunity_time: 90
     reuse_max_count: 8
     reuse_max_time: 1800
+    description: >
+      A pool of ppc64le instances in Fedora Community Cage.
+      These machines have POWER8 processors and are located in RDU (N Carolina).
+      Thank you Fedora Infrastructure team for maintaining the hypervisors.
 
 {% endif %}
 {% endfor %}
@@ -174,6 +182,10 @@ copr_p09_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     reuse_opportunity_time: 90
     reuse_max_count: 8
     reuse_max_time: 1800
+    description: >
+      A pool of ppc64le instances.
+      These machines have POWER9 processors.
+      Thank you IBM for sponsoring these builders.
 
 {% endif %}
 {% endfor %}
@@ -206,6 +218,9 @@ copr_ibm_cloud_s390x_tokyo_{% if devel %}dev{% else %}prod{% endif %}:
   reuse_opportunity_time: 90
   reuse_max_count: 8
   reuse_max_time: 1800
+  description: >
+    A pool of s390x instances in the IBM cloud. They are located in Tokyo.
+    Thank you IBM for sponsoring these builders.
 {% endif %}
 
 
@@ -250,6 +265,10 @@ copr_ic_s390x_{{ t + '_' if t or '' }}us_east_{% if devel %}dev{% else %}prod{% 
   reuse_opportunity_time: 45
   reuse_max_count: 8
   reuse_max_time: 1800
+  description: >
+    A pool of s390x instances in the IBM cloud.
+    They are located in Washington, D.C.
+    Thank you IBM for sponsoring these builders.
 
 {% endfor %}
 
@@ -337,6 +356,10 @@ copr_osuosl_p09_{% if devel %}dev{% else %}prod{% endif %}:
   reuse_opportunity_time: 90
   reuse_max_count: 8
   reuse_max_time: 1800
+  description: >
+    A pool of ppc64le instances on hypervisors in the OSU Open Source Lab.
+    These machines have POWER9 processors.
+    Thank you Oregon State University for sponsoring these builders.
 
 #### AWS x86_64
 # on-premise HV has priority 0 and above
