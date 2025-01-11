@@ -28,6 +28,27 @@
     dest: /usr/local/bin/copr-resalloc-vm-ip-to-yaml
   tags: provision_config
 
+- name: install a copr specific IP checker
+  copy:
+    content: |
+      #!/usr/bin/sh
+      die() { echo "$*" >&2 ; exit 1; }
+      set -x
+      set -e
+      test -n "$RESALLOC_NAME"
+      test -n "$RESALLOC_RESOURCE_DATA"
+      decoded=$(echo "$RESALLOC_RESOURCE_DATA" | base64 --decode)
+      IP=$(echo "$decoded" | yq .host) || {
+        set -- $(echo "$decoded")
+        IP=$1
+      }
+      ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=10 "${SSH_USER-root}@$IP" true
+    mode: "0755"
+    dest: /usr/local/bin/resalloc-check-vm-ip
+  tags:
+    - provision_config
+    - ip_checking_script
+
 - name: See if postgreSQL is initialized
   stat: path=/var/lib/pgsql/data/PG_VERSION
   register: postgres_initialized
