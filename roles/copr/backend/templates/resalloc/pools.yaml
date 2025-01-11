@@ -290,7 +290,7 @@ copr_ic_s390x_br_sao_{% if devel %}dev{% else %}prod{% endif %}:
   cmd_delete: |
     /var/lib/resallocserver/resalloc_provision/vm-delete
     resalloc-ibm-cloud-vm --token-file "{{ ibmcloud_token_file }}" \
-        --region us-east --log-level debug delete "$RESALLOC_NAME"
+        --region br-sao --log-level debug delete "$RESALLOC_NAME"
   cmd_livecheck: "resalloc-check-vm-ip"
   cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
   cmd_list: resalloc-ibm-cloud-list-vms --token-file "{{ ibmcloud_token_file }}" --region br-sao
@@ -338,7 +338,7 @@ copr_ic_s390x_{{ zone }}_{% if devel %}dev{% else %}prod{% endif %}:
   cmd_delete: |
     /var/lib/resallocserver/resalloc_provision/vm-delete
     resalloc-ibm-cloud-vm --token-file "{{ ibmcloud_token_file }}" \
-        --region us-east --log-level debug delete "$RESALLOC_NAME"
+        --region {{ pool_config.region_config.name }} --log-level debug delete "$RESALLOC_NAME"
   cmd_livecheck: "resalloc-check-vm-ip"
   cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
   cmd_list: resalloc-ibm-cloud-list-vms --token-file "{{ ibmcloud_token_file }}" --region {{ pool_config.region_config.name }}
@@ -371,7 +371,7 @@ copr_ic_s390x_madrid_{% if devel %}dev{% else %}prod{% endif %}:
   cmd_delete: |
     /var/lib/resallocserver/resalloc_provision/vm-delete
     resalloc-ibm-cloud-vm --token-file "{{ ibmcloud_token_file }}" \
-        --region us-east --log-level debug delete "$RESALLOC_NAME"
+        --region eu-es --log-level debug delete "$RESALLOC_NAME"
   cmd_livecheck: "resalloc-check-vm-ip"
   cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
   cmd_list: resalloc-ibm-cloud-list-vms --token-file "{{ ibmcloud_token_file }}" --region eu-es
