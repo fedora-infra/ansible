@@ -72,11 +72,11 @@ aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot 
 {% endif %}
 
 {% if spot and on_demand == 'powerful' %}
-    cmd_new: copr-resalloc-aws-new-{{ arch }} --instance-type {{ itype }} --additional-volume-size 320 --root-volume-size 18
+    cmd_new: copr-resalloc-vm-ip-to-yaml copr-resalloc-aws-new-{{ arch }} --instance-type {{ itype }} --additional-volume-size 320 --root-volume-size 18
 {% elif spot %}
-    cmd_new: copr-resalloc-aws-new-{{ arch }} --instance-type {{ itype }} --additional-volume-size 160 --spot-price 0.156
+    cmd_new: copr-resalloc-vm-ip-to-yaml copr-resalloc-aws-new-{{ arch }} --instance-type {{ itype }} --additional-volume-size 160 --spot-price 0.156
 {% else %}
-    cmd_new: copr-resalloc-aws-new-{{ arch }} --instance-type {{ itype }} --additional-volume-size 160
+    cmd_new: copr-resalloc-vm-ip-to-yaml copr-resalloc-aws-new-{{ arch }} --instance-type {{ itype }} --additional-volume-size 160
 {% endif %}
     cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
     cmd_livecheck: "resalloc-check-vm-ip"
@@ -111,7 +111,7 @@ copr_hv_x86_64_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     - hypervisor
     - hypervisor_x86_64
     - hypervisor_x86_64_{{ hv }}
-    cmd_new: "/var/lib/resallocserver/provision/libvirt-new --ram-size 16384 --swap-vol-size 168"
+    cmd_new: "copr-resalloc-vm-ip-to-yaml /var/lib/resallocserver/provision/libvirt-new --ram-size 16384 --swap-vol-size 168"
     cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
     cmd_livecheck: "resalloc-check-vm-ip"
     cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
@@ -149,7 +149,7 @@ copr_hv_ppc64le_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     - hypervisor_ppc64le
     - hypervisor_ppc64le_{{ hv }}
     - arch_power8
-    cmd_new: "/var/lib/resallocserver/provision/libvirt-new --swap-vol-size 168"
+    cmd_new: "copr-resalloc-vm-ip-to-yaml /var/lib/resallocserver/provision/libvirt-new --swap-vol-size 168"
     cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
     cmd_livecheck: "resalloc-check-vm-ip"
     cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
@@ -187,7 +187,7 @@ copr_p09_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     - arch_power9
     # The Power9 machine has 160 threads.  The bottleneck is certainly small
     # disk, so try to waste the CPUs appropriately.
-    cmd_new: "/var/lib/resallocserver/provision/libvirt-new --cpu-count 5 --ram-size 16384 --swap-vol-size 168"
+    cmd_new: "copr-resalloc-vm-ip-to-yaml /var/lib/resallocserver/provision/libvirt-new --cpu-count 5 --ram-size 16384 --swap-vol-size 168"
     cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
     cmd_livecheck: "resalloc-check-vm-ip"
     cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
@@ -238,6 +238,7 @@ copr_ic_s390x_{{ t + '_' if t or '' }}us_east_{% if devel %}dev{% else %}prod{% 
 {% endif %}
 {% set pool_config = resalloc_pools.ibm_us_east %}
   cmd_new: |
+    copr-resalloc-vm-ip-to-yaml \
     resalloc-ibm-cloud-vm \
         --token-file "{{ ibmcloud_token_file }}" \
         --region us-east \
@@ -318,6 +319,7 @@ copr_ic_s390x_{{ zone }}_{% if devel %}dev{% else %}prod{% endif %}:
     - name: arch_s390x_native
     - name: arch_s390x
   cmd_new: |
+    copr-resalloc-vm-ip-to-yaml \
 {% set pool_config = resalloc_pools["ibm_" + zone] %}
     resalloc-ibm-cloud-vm \
         --token-file "{{ ibmcloud_token_file }}" \
@@ -401,7 +403,7 @@ copr_osuosl_p09_{% if devel %}dev{% else %}prod{% endif %}:
     - in_osuosl
     - name: arch_power9
       priority: -10
-  cmd_new: '/var/lib/resallocserver/resalloc_provision/osuosl-vm'
+  cmd_new: 'copr-resalloc-vm-ip-to-yaml /var/lib/resallocserver/resalloc_provision/osuosl-vm'
   cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
   cmd_livecheck: "resalloc-check-vm-ip"
   cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"

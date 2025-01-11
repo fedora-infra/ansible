@@ -16,6 +16,17 @@
     - resalloc-ibm-cloud
     - virt-install
 
+- name: install IP to YAML spawner script
+  copy:
+    content: |
+      echo ---
+      echo name: "$RESALLOC_NAME"
+      hostname=$( "$@" )
+      echo host: "$hostname"
+    mode: "0755"
+    dest: /usr/local/bin/copr-resalloc-vm-ip-to-yaml
+  tags: provision_config
+
 - name: See if postgreSQL is initialized
   stat: path=/var/lib/pgsql/data/PG_VERSION
   register: postgres_initialized
