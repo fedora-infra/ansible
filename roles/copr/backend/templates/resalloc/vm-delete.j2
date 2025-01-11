@@ -5,11 +5,16 @@ die(){ echo >&2 "!! $*"; exit 1; }
 test -z "$RESALLOC_NAME" && die "no vm specified, empty \$RESALLOC_NAME variable"
 
 # Try to, best effort, remove the entitlement.
-set -- $(echo "$RESALLOC_RESOURCE_DATA" | base64 --decode)
+decoded=$(echo "$RESALLOC_RESOURCE_DATA" | base64 --decode)
+IP=$(echo "$decoded" | yq .host || :)
+if test -z "$IP"; then
+    set -- $(echo "$decoded")
+    IP=$1
+fi
 
 # Don't give-up unregistering after the first attempt
 for _ in a b c; do
-    timeout 180 ssh root@"$1" "subscription-manager unregister" && break
+    timeout 180 ssh root@"$IP" "subscription-manager unregister" && break
     sleep 5
 done
 

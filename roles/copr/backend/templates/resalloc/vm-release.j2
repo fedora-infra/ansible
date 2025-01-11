@@ -8,6 +8,11 @@ test -n "$RESALLOC_NAME"
 test -n "$RESALLOC_RESOURCE_DATA"
 
 # we only put IP out in spawning script, nothing else
-set -- $(echo "$RESALLOC_RESOURCE_DATA" | base64 --decode)
-IP=$1
+decoded=$(echo "$RESALLOC_RESOURCE_DATA" | base64 --decode)
+IP=$(echo "$decoded" | yq .host || :)
+if test -z "$IP"; then
+    set -- $(echo "$decoded")
+    IP=$1
+fi
+
 ssh -o ConnectTimeout=10 "root@$IP" copr-builder-cleanup
