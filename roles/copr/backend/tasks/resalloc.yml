@@ -19,6 +19,7 @@
 - name: install IP to YAML spawner script
   copy:
     content: |
+      #! /bin/sh
       echo ---
       echo name: "$RESALLOC_NAME"
       hostname=$( "$@" )
