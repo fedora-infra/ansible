@@ -38,10 +38,11 @@
       test -n "$RESALLOC_NAME"
       test -n "$RESALLOC_RESOURCE_DATA"
       decoded=$(echo "$RESALLOC_RESOURCE_DATA" | base64 --decode)
-      IP=$(echo "$decoded" | yq .host) || {
+      IP=$(echo "$decoded" | yq .host || :)
+      if test -z "$IP"; then
         set -- $(echo "$decoded")
         IP=$1
-      }
+      fi
       ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=10 "${SSH_USER-root}@$IP" true
     mode: "0755"
     dest: /usr/local/bin/resalloc-check-vm-ip
