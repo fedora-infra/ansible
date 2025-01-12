@@ -89,22 +89,22 @@
 
   - role: openshift/object
     object_app: blockerbugs
-    object_template: buildconfig.yml
+    object_template: buildconfig.yml.j2
     object_objectname: buildconfig.yml
 
   - role: openshift/object
     object_app: blockerbugs
-    object_template: deploymentconfig.yml
+    object_template: deploymentconfig.yml.j2
     object_objectname: deploymentconfig.yml
 
   - role: openshift/object
     object_app: blockerbugs
-    object_template: deployment.yml
+    object_template: deployment.yml.j2
     object_objectname: deployment.yml
 
   - role: openshift/object
     object_app: blockerbugs
-    object_template: imagestream.yml
+    object_template: imagestream.yml.j2
     object_objectname: imagestream.yml
 
   - role: openshift/object
@@ -114,12 +114,12 @@
 
   - role: openshift/object
     object_app: blockerbugs
-    object_template: secret.yml
+    object_template: secret.yml.j2
     object_objectname: secret.yml
 
   - role: openshift/object
     object_app: blockerbugs
-    object_template: cron.yml
+    object_template: cron.yml.j2
     object_objectname: cron.yml
 
   - role: openshift/route
