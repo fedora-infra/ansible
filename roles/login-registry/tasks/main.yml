@@ -11,4 +11,4 @@
 - name: login into a registry
   command: podman login {{candidate_registry}} -u {{candidate_registry_osbs_username}} -p {{candidate_registry_osbs_password}} --authfile .docker/config.json
   args:
-     creates: .docker/config.json
+    creates: .docker/config.json
