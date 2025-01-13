@@ -31,13 +31,13 @@
     - id.fedoraproject.org
 
   - role: httpd/certificate
-    certname: wildcard-2024.stg.fedoraproject.org
-    SSLCertificateChainFile: wildcard-2024.stg.fedoraproject.org.intermediate.cert
+    certname: wildcard-2025.stg.fedoraproject.org
+    SSLCertificateChainFile: wildcard-2025.stg.fedoraproject.org.intermediate.cert
     when: env == "staging"
 
   - role: httpd/certificate
-    certname: wildcard-2024.stg.fedoraproject.org
-    SSLCertificateChainFile: wildcard-2024.stg.fedoraproject.org.intermediate.cert
+    certname: wildcard-2025.stg.fedoraproject.org
+    SSLCertificateChainFile: wildcard-2025.stg.fedoraproject.org.intermediate.cert
     when: env == "staging"
 
   - role: httpd/certificate
