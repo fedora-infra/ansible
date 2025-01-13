@@ -4,6 +4,7 @@
 
 - name: mount up disk of copr repo
   mount: name=/var/lib/copr-keygen src='LABEL=copr-keygen' fstype=ext4 state=mounted
+  register: keychain_mounted
 
 - name: install copr-keygen
   dnf: state=present name=copr-keygen
@@ -12,6 +13,7 @@
 
 - name: change owner of data to copr-signer
   file: path=/var/lib/copr-keygen owner=copr-signer group=copr-signer recurse=yes
+  when: keychain_mounted.changed
 
 - name: put keygen vhost for httpd
   copy: src="httpd/copr-keygen.conf" dest="/etc/httpd/conf.d/copr-keygen.conf"
