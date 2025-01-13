@@ -95,6 +95,24 @@ aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot 
       {% elif on_demand == 'powerful' %}powerful
       {% endif %}
       {{ arch }} instances in the Amazon AWS Fedora organization.
+
+      {% if spot %}
+      Spot instances are cheaper, but the trade-off is that AWS can
+      kill them at any point during the build. A user will not notice
+      because the build will automatically be taken by another
+      builder.
+      {% endif %}
+
+      {% if on_demand == 'powerful' %}
+      Powerful builders have more computing power and more storage
+      than regular builders but there is a longer queue for them.
+      {% endif %}
+
+      {% if reserved %}
+      Reserved builders don't have any special properties. They are
+      just paid in advance so they are cheaper.
+      {% endif %}
+
       They are located in us-east-1 (N. Virginia).
       Thank you Amazon Web Services, Inc. for sponsoring these builders.
 {% endmacro %}
