@@ -105,7 +105,7 @@
   - postgresql
 
 - name: Postgresql config template (el7 / postgresql 9.2)
-  template: dest=/var/lib/pgsql/data/postgresql.conf src=postgresql.conf
+  ansible.builtin.template: dest=/var/lib/pgsql/data/postgresql.conf src=postgresql.conf
   when: ansible_distribution_major_version|int < 8 and ansible_distribution == 'RedHat'
   notify:
   - restart postgresql
@@ -114,7 +114,7 @@
   - postgresql
 
 - name: Postgresql config template (Fedora / el8 / postgresql 12)
-  template: dest=/var/lib/pgsql/data/postgresql.conf src=postgresql.conf-12
+  ansible.builtin.template: dest=/var/lib/pgsql/data/postgresql.conf src=postgresql.conf-12
   when: (ansible_distribution_major_version|int == 8 and ansible_distribution == 'RedHat') or ansible_distribution != 'RedHat'
   notify:
   - restart postgresql
@@ -123,7 +123,7 @@
   - postgresql
 
 - name: Postgresql config template (el9 / postgresql 15)
-  template: dest=/var/lib/pgsql/data/postgresql.conf src=postgresql.conf-15
+  ansible.builtin.template: dest=/var/lib/pgsql/data/postgresql.conf src=postgresql.conf-15
   when: (ansible_distribution_major_version|int == 9 and ansible_distribution == 'RedHat')
   notify:
   - restart postgresql
@@ -167,7 +167,7 @@
   when: inventory_hostname.startswith('db01.iad2')
 
 - name: Set up some cronjobs to backup databases as configured
-  template: >
+  ansible.builtin.template: >
     src=cron-backup-database
     dest=/etc/cron.d/cron-backup-database-{{ item }}
   with_items:

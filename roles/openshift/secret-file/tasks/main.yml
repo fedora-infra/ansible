@@ -1,6 +1,6 @@
 ---
 - name: Copy template {{secret_file_template}}
-  template: src={{roles_path}}/openshift-apps/{{secret_file_app}}/templates/{{secret_file_template}} dest=/etc/openshift_apps/{{os_app}}/{{secret_file_key}}
+  ansible.builtin.template: src={{roles_path}}/openshift-apps/{{secret_file_app}}/templates/{{secret_file_template}} dest=/etc/openshift_apps/{{os_app}}/{{secret_file_key}}
   when: secret_file_template is defined
   register: secret_template
 

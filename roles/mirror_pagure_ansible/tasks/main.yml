@@ -67,7 +67,7 @@
   - fedora-messaging
 
 - name: Setup mirror_pagure_ansible fedora-messaging config
-  template:
+  ansible.builtin.template:
     src: mirror_pagure_ansible.cfg
     dest: /etc/fedora-messaging/mirror_pagure_ansible.toml
     owner: mirror_pagure_ansible
@@ -92,7 +92,7 @@
   - mirror_pagure_ansible
 
 - name: Install the consumer
-  template:
+  ansible.builtin.template:
     src: mirror_from_pagure_bus.py
     dest: /usr/local/libexec/mirror_pagure_ansible/mirror_from_pagure_bus.py
   tags:
@@ -103,7 +103,7 @@
 # Install and start the service
 
 - name: Install the dedicated service file for mirror_pagure_ansible
-  template:
+  ansible.builtin.template:
     src: mirror_pagure_ansible.service
     dest: /etc/systemd/system/mirror_pagure_ansible.service
     owner: root

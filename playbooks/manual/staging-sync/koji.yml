@@ -60,7 +60,7 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   tasks:
-  - template: src=templates/koji-reset-staging.sql dest=/var/lib/pgsql/koji-reset-staging.sql
+  - ansible.builtin.template: src=templates/koji-reset-staging.sql dest=/var/lib/pgsql/koji-reset-staging.sql
     tags:
     - db-sync-script
 

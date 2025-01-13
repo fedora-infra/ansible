@@ -1,5 +1,5 @@
 ---
-- template: >
+- ansible.builtin.template: >
     src=docs-sync.j2 dest=/usr/local/bin/docs-sync
     owner=root group=root mode=0755
   tags:

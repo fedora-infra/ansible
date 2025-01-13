@@ -52,7 +52,7 @@
   - packages
 
 - name: Setup sigul server.conf
-  template: src=server.conf.j2 dest=/etc/sigul/server.conf
+  ansible.builtin.template: src=server.conf.j2 dest=/etc/sigul/server.conf
             owner=sigul group=sigul mode=0640
   tags:
   - config

@@ -185,7 +185,7 @@
     - cron
 
 - name: Write configuration file for script to sync httpd logs
-  template:
+  ansible.builtin.template:
     src: sync-http-logs.yaml.j2
     dest: /etc/sync-http-logs.yaml
   when: inventory_hostname.startswith('log01')

@@ -11,7 +11,7 @@
   - packages
 
 - name: Install /etc/ykksm/ykksm-config.php and /etc/ykval/ykval-config.php
-  template: src={{ item.file }}
+  ansible.builtin.template: src={{ item.file }}
             dest={{ item.dest }}
             owner=apache group=apache mode=0640
   with_items:

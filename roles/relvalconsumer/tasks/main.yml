@@ -206,20 +206,20 @@
   - config
 
 - name: Write python-bugzilla configuration file
-  template: src=bugzillarc.j2 dest=/root/.config/python-bugzilla/bugzillarc owner=root group=root mode=0600
+  ansible.builtin.template: src=bugzillarc.j2 dest=/root/.config/python-bugzilla/bugzillarc owner=root group=root mode=0600
   when: "relvalconsumer_bugzilla_api_key is defined"
   tags:
   - config
 
 - name: Configure fedora-messaging relvalconsumer
-  template: src=relvalconsumer.toml.j2 dest=/etc/fedora-messaging/relvalconsumer.toml owner=root group=root mode=0640
+  ansible.builtin.template: src=relvalconsumer.toml.j2 dest=/etc/fedora-messaging/relvalconsumer.toml owner=root group=root mode=0640
   notify:
   - restart relvalconsumer
   tags:
   - config
 
 - name: Configure fedora-messaging relvalamiconsumer
-  template: src=relvalamiconsumer.toml.j2 dest=/etc/fedora-messaging/relvalamiconsumer.toml owner=root group=root mode=0640
+  ansible.builtin.template: src=relvalamiconsumer.toml.j2 dest=/etc/fedora-messaging/relvalamiconsumer.toml owner=root group=root mode=0640
   notify:
   - restart relvalamiconsumer
   tags:

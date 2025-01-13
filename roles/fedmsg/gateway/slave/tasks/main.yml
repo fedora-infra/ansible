@@ -46,7 +46,7 @@
   - fedmsg/gateway/slave
 
 - name: Install /etc/fedmsg.d/fedmsg-gateway-slave.py
-  template: src={{ item.file }}
+  ansible.builtin.template: src={{ item.file }}
             dest={{ item.dest }}
             owner=root group=root mode=0644
   with_items:
@@ -86,7 +86,7 @@
   - fedmsg/gateway/slave
 
 - name: Install stunnel.conf
-  template: src={{ item.file }}
+  ansible.builtin.template: src={{ item.file }}
             dest={{ item.dest }}
             owner=root group=root mode=0600
   with_items:

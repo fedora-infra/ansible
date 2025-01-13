@@ -20,7 +20,7 @@
   - ansible-server
 
 - name: Generate default ansible config
-  template: src=ansible.cfg.j2 dest=/etc/ansible/ansible.cfg owner=root group=root mode=0644
+  ansible.builtin.template: src=ansible.cfg.j2 dest=/etc/ansible/ansible.cfg owner=root group=root mode=0644
   tags:
   - ansible-server
 

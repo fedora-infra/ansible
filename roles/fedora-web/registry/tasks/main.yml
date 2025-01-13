@@ -19,7 +19,7 @@
   - fedora-web/registry
 
 - name: Copy in the sync-registry-index cronjob
-  template: src=cron-sync-registry-index dest=/etc/cron.d/sync-registry-index
+  ansible.builtin.template: src=cron-sync-registry-index dest=/etc/cron.d/sync-registry-index
   tags:
   - fedora-web
   - fedora-web/registry

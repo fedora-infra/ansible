@@ -22,16 +22,16 @@
   - grokmirror-mirror
 
 - name: Install grokmirror config file from template
-  template: src=grokmirror.conf dest={{grokmirror_topdir}}/grokmirror.conf owner=root group=root mode=644
+  ansible.builtin.template: src=grokmirror.conf dest={{grokmirror_topdir}}/grokmirror.conf owner=root group=root mode=644
   tags:
   - grokmirror-mirror
 
 - name: Install grokmirror repos cron job
-  template: src=grokmirror.cron dest=/etc/cron.d/grokmirror.cron owner=root group=root mode=644
+  ansible.builtin.template: src=grokmirror.cron dest=/etc/cron.d/grokmirror.cron owner=root group=root mode=644
   tags:
   - grokmirror-mirror
 
 - name: Install grokmirror fsck cron job
-  template: src=grokfsck.cron dest=/etc/cron.d/grokfsck.cron owner=root group=root mode=644
+  ansible.builtin.template: src=grokfsck.cron dest=/etc/cron.d/grokfsck.cron owner=root group=root mode=644
   tags:
   - grokmirror-mirror

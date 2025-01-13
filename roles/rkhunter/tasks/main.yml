@@ -8,7 +8,7 @@
   - packages
 
 - name: Rkhunter.conf
-  template: src=rkhunter.conf.j2 dest=/etc/rkhunter.conf mode=0640
+  ansible.builtin.template: src=rkhunter.conf.j2 dest=/etc/rkhunter.conf mode=0640
   notify:
   - run rkhunter
   tags:

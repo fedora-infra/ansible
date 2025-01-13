@@ -16,5 +16,5 @@
   - virt: command=info
     register: virt_info
 
-  - template: src={{files}}/virthost-lists.j2 dest=/tmp/virthost-lists.out
+  - ansible.builtin.template: src={{files}}/virthost-lists.j2 dest=/tmp/virthost-lists.out
     delegate_to: localhost

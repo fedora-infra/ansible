@@ -48,7 +48,7 @@
   - fedora-messaging
 
 - name: Install fedora-messaging config
-  template:
+  ansible.builtin.template:
     src: fedora-messaging.toml.j2
     dest: /etc/fedora-messaging/config.toml
     owner: countme

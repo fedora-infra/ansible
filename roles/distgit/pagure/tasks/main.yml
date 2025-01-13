@@ -56,7 +56,7 @@
 #   - config
 
 # - name: Install stunnel.conf
-#   template: src={{ item.file }}
+#   ansible.builtin.template: src={{ item.file }}
 #             dest={{ item.dest }}
 #             owner=root group=root mode=0600
 #   with_items:
@@ -120,7 +120,7 @@
   - pagure
 
 - name: Copy sundry pagure configuration
-  template: src={{ item.file }}
+  ansible.builtin.template: src={{ item.file }}
             dest={{ item.location }}/{{ item.file }}
             owner=pagure group=postfix mode=0640
   with_items:
@@ -140,7 +140,7 @@
   - restart apache
 
 - name: Pagure configuration for the hooks
-  template: src={{ item.file }}
+  ansible.builtin.template: src={{ item.file }}
             dest={{ item.location }}/{{ item.file }}
             owner=pagure group=packager mode=0640
   with_items:
@@ -195,7 +195,7 @@
   - pagure
 
 - name: Install the apache configuration file
-  template: src={{ item }} dest=/etc/httpd/conf.d/{{ item }}
+  ansible.builtin.template: src={{ item }} dest=/etc/httpd/conf.d/{{ item }}
             owner=root group=root mode=0644
   with_items:
   - z_pagure.conf
@@ -207,7 +207,7 @@
   - restart apache
 
 - name: Install the wsgi file
-  template: src={{ item }}
+  ansible.builtin.template: src={{ item }}
             dest=/var/www/{{ item }}
             owner=pagure group=pagure mode=0644
   with_items:
@@ -327,7 +327,7 @@
   - fedora-messaging
 
 - name: Install the configuration file for fedora-messaging
-  template:
+  ansible.builtin.template:
     src=fedora-messaging.toml
     dest=/etc/fedora-messaging/config.toml
   tags:

@@ -5,7 +5,7 @@
   - haproxy
   - haproxy/rewrite
 
-- template: src=rewrite.conf dest=/etc/httpd/conf.d/{{website}}/haproxy.conf
+- ansible.builtin.template: src=rewrite.conf dest=/etc/httpd/conf.d/{{website}}/haproxy.conf
   notify:
   - reload httpd
   tags:
@@ -13,7 +13,7 @@
   - haproxy/rewrite
   when: not inventory_hostname.startswith('proxy')
 
-- template: src=rewrite.conf dest=/etc/httpd/conf.d/{{website}}/haproxy.conf
+- ansible.builtin.template: src=rewrite.conf dest=/etc/httpd/conf.d/{{website}}/haproxy.conf
   notify:
   - reload proxyhttpd
   tags:

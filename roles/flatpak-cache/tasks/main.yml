@@ -33,7 +33,7 @@
   - config
 
 - name: Install squid configuration file
-  template: src=squid.conf dest=/etc/squid/squid.conf owner=squid group=squid
+  ansible.builtin.template: src=squid.conf dest=/etc/squid/squid.conf owner=squid group=squid
   tags:
   - flatpak-cache
   - config

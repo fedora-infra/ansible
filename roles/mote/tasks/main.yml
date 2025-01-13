@@ -50,7 +50,7 @@
   - mote
 
 - name: Replace the mote configuration file by the one with the normal user
-  template: src={{ item.file }}
+  ansible.builtin.template: src={{ item.file }}
             dest="{{ item.location }}/{{ item.file }}"
             owner=apache group=apache mode=0600
   with_items:

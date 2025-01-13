@@ -15,7 +15,7 @@
     mode: '0755'
 
 - name: Copy over httpd redirectmatch file for {{shortname}}
-  template: >
+  ansible.builtin.template: >
     src=redirectmatch.conf
     dest=/etc/httpd/conf.d/{{website}}/{{shortname}}-redirectmatch.conf
     mode=0644

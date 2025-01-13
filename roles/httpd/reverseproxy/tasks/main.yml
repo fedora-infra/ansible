@@ -9,7 +9,7 @@
 
 ---
 - name: Copy in ProxyPassReverse for {{destname}} ({{website}}{{remotepath}})
-  template: >
+  ansible.builtin.template: >
     src={{item}}
     dest=/etc/httpd/conf.d/{{website}}/{{destname}}.conf
     owner=root

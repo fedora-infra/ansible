@@ -41,7 +41,7 @@
   - /var/log/copr-dist-git/
 
 - name: Install config for copr-dist-git
-  template: src=copr-dist-git.conf.j2 dest=/etc/copr/copr-dist-git.conf mode=0644
+  ansible.builtin.template: src=copr-dist-git.conf.j2 dest=/etc/copr/copr-dist-git.conf mode=0644
   tags:
   - config
   - copr_infrastructure_password
@@ -79,7 +79,7 @@
   - reload httpd
 
 - name: Install /etc/httpd/conf.d/ssl.conf
-  template: src="ssl.conf.j2" dest="/etc/httpd/conf.d/ssl.conf" owner=root group=root mode=0644
+  ansible.builtin.template: src="ssl.conf.j2" dest="/etc/httpd/conf.d/ssl.conf" owner=root group=root mode=0644
   notify:
   - reload httpd
 
@@ -92,7 +92,7 @@
   - config
 
 - name: Install cgitrc
-  template: src="cgitrc" dest="/etc/cgitrc" owner=root group=root mode=0644
+  ansible.builtin.template: src="cgitrc" dest="/etc/cgitrc" owner=root group=root mode=0644
 
 - name: Allow httpd to run cgit
   seboolean: name=httpd_enable_cgi state=true persistent=true
@@ -135,7 +135,7 @@
   ansible.builtin.file: path=/home/copr-dist-git/.config state=directory
 
 - name: Install .config/copr for copr-dist-git user (required for pruning)
-  template: src="copr.conf" dest="/home/copr-dist-git/.config/copr" owner=copr-dist-git group=copr-dist-git
+  ansible.builtin.template: src="copr.conf" dest="/home/copr-dist-git/.config/copr" owner=copr-dist-git group=copr-dist-git
 
 - name: Install the helper cron scripts
   ansible.builtin.copy:

@@ -18,7 +18,7 @@
   - people
 
 - name: Install main httpd config
-  template: src=people.conf dest=/etc/httpd/conf.d/people.conf
+  ansible.builtin.template: src=people.conf dest=/etc/httpd/conf.d/people.conf
   tags:
   - people
   - sslciphers
@@ -296,7 +296,7 @@
   - people
 
 - name: Copy SSSd configuration
-  template:
+  ansible.builtin.template:
     src: sssd.conf
     dest: /etc/sssd/sssd.conf
     owner: root

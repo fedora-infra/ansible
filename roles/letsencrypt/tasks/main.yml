@@ -141,7 +141,7 @@
     - certbot_addhost is defined
 
 - name: Install certificate bundle
-  template: >
+  ansible.builtin.template: >
     dest=/etc/pki/tls/certs/{{site_name}}.bundle.cert
     src=combined.j2
     owner=root

@@ -96,7 +96,7 @@
 # We deploy two service files. Both listen on a different port, so that we can switch
 # them out as part of the protobuf cache deployment without having any local downtime.
 - name: Deploy service files
-  template: src=mirrorlist.service.j2 dest=/etc/systemd/system/mirrorlist{{ item }}.service
+  ansible.builtin.template: src=mirrorlist.service.j2 dest=/etc/systemd/system/mirrorlist{{ item }}.service
   with_items:
   - 1
   - 2

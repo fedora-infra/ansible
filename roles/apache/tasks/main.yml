@@ -55,7 +55,7 @@
   - apache
 
 - name: Add appserver headers.conf
-  template: src="{{ files }}/httpd/headers.conf.j2" dest=/etc/httpd/conf.d/headers.conf
+  ansible.builtin.template: src="{{ files }}/httpd/headers.conf.j2" dest=/etc/httpd/conf.d/headers.conf
   notify:
   - reload apache
   tags:
@@ -64,7 +64,7 @@
   - apache/headers
 
 - name: Add appserver h2.conf
-  template: src="{{ files }}/httpd/h2.conf.j2" dest=/etc/httpd/conf.d/h2.conf
+  ansible.builtin.template: src="{{ files }}/httpd/h2.conf.j2" dest=/etc/httpd/conf.d/h2.conf
   when: ansible_distribution == 'Fedora'
   notify:
   - reload apache
@@ -74,7 +74,7 @@
   - h2
 
 - name: Add apache_status location for collectd
-  template: src="{{ files }}/httpd/apachestatus.conf" dest=/etc/httpd/conf.d/apachestatus.conf
+  ansible.builtin.template: src="{{ files }}/httpd/apachestatus.conf" dest=/etc/httpd/conf.d/apachestatus.conf
   notify:
   - reload apache
   tags:

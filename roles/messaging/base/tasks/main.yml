@@ -43,8 +43,8 @@
   tags:
   - fedora-messaging
 
-- name: "Install the toml configuration file"
-  template: src="messaging.toml.j2" dest="/etc/fedora-messaging/{{ item.username }}.toml"
+- name: "install the toml configuration file"
+  ansible.builtin.template: src="messaging.toml.j2" dest="/etc/fedora-messaging/{{ item.username }}.toml"
             owner=root group=root mode=644
   vars:
   - msg_username: "{{ item.username }}"

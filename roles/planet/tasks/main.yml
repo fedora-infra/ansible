@@ -31,7 +31,7 @@
     - planet_server
 
 - name: Copy the planet http config file
-  template: src=planet.conf dest=/etc/httpd/conf.d/planet.conf
+  ansible.builtin.template: src=planet.conf dest=/etc/httpd/conf.d/planet.conf
   tags:
     - planet_server
     - sslciphers
@@ -335,7 +335,7 @@
   - planet_server
 
 - name: Install fedora-messaging config
-  template:
+  ansible.builtin.template:
     src: fedora-messaging.toml.j2
     dest: /etc/fedora-messaging/config.toml
     owner: planet-user

@@ -22,7 +22,7 @@
   - config
 
 - name: Put config for signd
-  template: src="sign.conf" dest="/etc/sign.conf"
+  ansible.builtin.template: src="sign.conf" dest="/etc/sign.conf"
   notify:
   - restart obs-signd
   tags:

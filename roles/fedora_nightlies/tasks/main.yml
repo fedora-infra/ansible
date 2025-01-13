@@ -143,7 +143,7 @@
   - config
 
 - name: Configure fedora-messaging fedora_nightlies
-  template: src=fedora_nightlies.toml.j2 dest=/etc/fedora-messaging/fedora_nightlies.toml owner=root group=root mode=0640
+  ansible.builtin.template: src=fedora_nightlies.toml.j2 dest=/etc/fedora-messaging/fedora_nightlies.toml owner=root group=root mode=0640
   notify:
   - restart fedora_nightlies
   tags:

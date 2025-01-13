@@ -121,7 +121,7 @@
   - fedora-messaging
 
 - name: Install fedora-messaging config
-  template:
+  ansible.builtin.template:
     src: "fedora-messaging.toml"
     dest: /etc/fedora-messaging/config.toml
     owner: root
@@ -160,14 +160,14 @@
 #  - mediawiki
 
 - name: Install localsettings
-  template: src=LocalSettings.php.{{wikiname}}.j2 dest=/srv/web/{{wikiname}}-wiki/LocalSettings.php owner=apache group=apache mode=600 setype=httpd_sys_content_t
+  ansible.builtin.template: src=LocalSettings.php.{{wikiname}}.j2 dest=/srv/web/{{wikiname}}-wiki/LocalSettings.php owner=apache group=apache mode=600 setype=httpd_sys_content_t
   notify: reload httpd
   tags:
   - mediawiki
   - localsettings
 
 - name: Httpd conf
-  template: src=mediawiki-app.conf.j2 dest=/etc/httpd/conf.d/{{wikiname}}.conf
+  ansible.builtin.template: src=mediawiki-app.conf.j2 dest=/etc/httpd/conf.d/{{wikiname}}.conf
   notify: reload httpd
   tags:
   - mediawiki

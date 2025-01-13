@@ -79,7 +79,7 @@
     recurse: yes
 
 - name: Install koji config
-  template:
+  ansible.builtin.template:
     src: koji.conf
     dest: /etc/robosignatory/koji.config
     owner: robosignatory
@@ -153,7 +153,7 @@
   - robosignatory
 
 - name: Setup robosignatory config
-  template:
+  ansible.builtin.template:
     src: robosignatory.toml.j2
     dest: /etc/fedora-messaging/robosignatory.toml
     owner: robosignatory

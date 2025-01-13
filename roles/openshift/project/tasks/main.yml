@@ -14,8 +14,8 @@
   changed_when: "'not found' in project_exists.stderr"
 
 - name: Copy project template
-  template:
-    src="{{roles_path}}/openshift/project/templates/project.yml.j2"
+  ansible.builtin.template:
+    src="{{roles_path}}/openshift/project/templates/project.yml"
     dest=/etc/openshift_apps/{{project_app}}/project.yml
 
 - name: Create project

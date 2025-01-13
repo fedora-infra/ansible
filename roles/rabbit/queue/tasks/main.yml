@@ -101,7 +101,7 @@
 - name: Monitor the {{ queue_name }} queue in Nagios (NRPE)
   when: queue_thresholds and env == "production"
   delegate_to: "{{ queue_rabbitmq_server }}"
-  template:
+  ansible.builtin.template:
     src: nrpe.cfg.j2
     dest: /etc/nrpe.d/check_rabbitmq_queue_{{ queue_name }}.cfg
     owner: root
@@ -115,7 +115,7 @@
 - name: Monitor the {{ queue_name }} queue in Nagios
   when: queue_thresholds and env == "production"
   delegate_to: "{{ queue_nagios_server }}"
-  template:
+  ansible.builtin.template:
     src: nagios.cfg.j2
     dest: /etc/nagios/services/rabbitmq-queue-{{ queue_name }}.cfg
 #  notify: restart nagios on noc

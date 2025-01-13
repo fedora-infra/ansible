@@ -55,7 +55,7 @@
   - rsyncd
 
 - name: Rsyncd.conf file for download servers
-  template: src=rsyncd.conf.download.j2 dest=/etc/rsyncd.conf mode=0644
+  ansible.builtin.template: src=rsyncd.conf.download.j2 dest=/etc/rsyncd.conf mode=0644
   notify:
   - restart daemon
   when: "'download' in group_names"

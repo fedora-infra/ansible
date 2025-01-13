@@ -123,7 +123,7 @@
 
 # Set up our base config.
 - name: /etc/nagios/nrpe.cfg
-  template: src=nrpe.cfg.j2 dest=/etc/nagios/nrpe.cfg
+  ansible.builtin.template: src=nrpe.cfg.j2 dest=/etc/nagios/nrpe.cfg
   when: not inventory_hostname.startswith('noc0')
   notify:
   - restart nrpe
@@ -136,7 +136,7 @@
 # So when adding or modifying them change the .j2 version in git.
 #
 - name: Install nrpe client configs
-  template: src={{ item }}.j2 dest=/etc/nrpe.d/{{ item }} owner=root group=root mode=0644
+  ansible.builtin.template: src={{ item }}.j2 dest=/etc/nrpe.d/{{ item }} owner=root group=root mode=0644
   with_items:
   - check_raid.cfg
   - check_ipa.cfg
@@ -176,7 +176,7 @@
 # So when adding or modifying them change the .j2 version in git.
 #
 - name: Install nrpe openvpn check config
-  template: src=check_openvpn_link.cfg.j2 dest=/etc/nrpe.d/check_openvpn_link.cfg owner=root group=root mode=0644
+  ansible.builtin.template: src=check_openvpn_link.cfg.j2 dest=/etc/nrpe.d/check_openvpn_link.cfg owner=root group=root mode=0644
   when: vpn == true
   notify:
   - restart nrpe
@@ -187,7 +187,7 @@
 # So when adding or modifying them change the .j2 version in git.
 #
 - name: Install nrpe merged log check script on log01
-  template: src=check_merged_file_age.cfg.j2 dest=/etc/nrpe.d/check_merged_file_age.cfg owner=root group=root mode=0644
+  ansible.builtin.template: src=check_merged_file_age.cfg.j2 dest=/etc/nrpe.d/check_merged_file_age.cfg owner=root group=root mode=0644
   when: inventory_hostname.startswith('log0')
   notify:
   - restart nrpe
@@ -198,7 +198,7 @@
 # So when adding or modifying them change the .j2 version in git.
 #
 - name: Install nrpe check_mysql config for mariadb servers
-  template: src=check_mysql.cfg.j2 dest=/etc/nrpe.d/check_mysql.cfg owner=root group=root mode=0644
+  ansible.builtin.template: src=check_mysql.cfg.j2 dest=/etc/nrpe.d/check_mysql.cfg owner=root group=root mode=0644
   when: inventory_hostname.startswith('db03')
   notify:
   - restart nrpe
@@ -206,7 +206,7 @@
   - nagios_client
 
 - name: Install nrpe checks for mailman01
-  template: src={{ item }}.j2 dest=/etc/nrpe.d/{{ item }} owner=root group=root mode=0644
+  ansible.builtin.template: src={{ item }}.j2 dest=/etc/nrpe.d/{{ item }} owner=root group=root mode=0644
   with_items:
   - check_mailman_api.cfg
   when: inventory_hostname.startswith('mailman01')
@@ -216,7 +216,7 @@
   - nagios_client
 
 - name: Install nrpe checks for proxies
-  template: src={{ item }}.j2 dest=/etc/nrpe.d/{{ item }} owner=root group=root mode=0644
+  ansible.builtin.template: src={{ item }}.j2 dest=/etc/nrpe.d/{{ item }} owner=root group=root mode=0644
   with_items:
   - check_happroxy_conns.cfg
   - check_varnish_proc.cfg
@@ -227,7 +227,7 @@
   - nagios_client
 
 - name: Install nrpe checks for sigul_bridge
-  template: src={{ item }}.j2 dest=/etc/nrpe.d/{{ item }} owner=root group=root mode=0644
+  ansible.builtin.template: src={{ item }}.j2 dest=/etc/nrpe.d/{{ item }} owner=root group=root mode=0644
   with_items:
   - check_sigul_bridge_proc.cfg
   when: inventory_hostname.startswith('sign-bridge')
@@ -237,7 +237,7 @@
   - nagios_client
 
 - name: Install nrpe checks for sundries/websites
-  template: src={{ item }}.j2 dest=/etc/nrpe.d/{{ item }} owner=root group=root mode=0644
+  ansible.builtin.template: src={{ item }}.j2 dest=/etc/nrpe.d/{{ item }} owner=root group=root mode=0644
   with_items:
   - check_websites_buildtime.cfg
   when: inventory_hostname.startswith('sundries')
@@ -252,7 +252,7 @@
   - nagios_client
   block:
   - name: Install the nrpe template
-    template: src=check_crl_next_update.cfg.j2 dest=/etc/nrpe.d/check_crl_next_update.cfg owner=root group=root mode=0644
+    ansible.builtin.template: src=check_crl_next_update.cfg.j2 dest=/etc/nrpe.d/check_crl_next_update.cfg owner=root group=root mode=0644
     notify:
     - restart nrpe
 
@@ -263,7 +263,7 @@
     acl: default=no etype=user entity=nrpe permissions="r" name=/etc/openvpn/server/crl.pem state=present
 
 - name: Install nrpe config for the RabbitMQ checks
-  template:
+  ansible.builtin.template:
     src: "rabbitmq_args.ini.j2"
     dest: "/etc/nrpe.d/rabbitmq_args.ini"
     owner: root
@@ -274,7 +274,7 @@
   - nagios_client
 
 - name: Install nrpe checks for the RabbitMQ cluster
-  template:
+  ansible.builtin.template:
     src: "{{ item }}.j2"
     dest: "/etc/nrpe.d/{{ item }}"
     owner: root
@@ -301,7 +301,7 @@
   - nagios_client
 
 - name: Install nrpe check for rsyslogd
-  template:
+  ansible.builtin.template:
     src={{ item }}.j2 dest=/etc/nrpe.d/{{ item }} owner=root group=root mode=0644
   with_items:
     - check_rsyslogd_proc.cfg
@@ -311,7 +311,7 @@
     - nagios_client
 
 - name: Install nrpe check for systemd units
-  template:
+  ansible.builtin.template:
     src={{ item }}.j2 dest=/etc/nrpe.d/{{ item }} owner=root group=root mode=0644
   with_items:
     - check_systemd_units.cfg

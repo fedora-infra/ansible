@@ -27,7 +27,7 @@
   - fedoraproject_s3_bucket_name is defined
 
 - name: Create fedoraproject-sync script
-  template:
+  ansible.builtin.template:
     src: fedoraproject-sync
     dest: /usr/local/sbin/fedoraproject-sync
     mode: "0700"
@@ -68,7 +68,7 @@
   - fedora-web/google-site-verification
 
 - name: And one template (for {{website}})
-  template: >
+  ansible.builtin.template: >
     src={{item}} dest=/etc/httpd/conf.d/{{website}}/{{item}}
     owner=root group=root mode=0644
   with_items:
@@ -107,7 +107,7 @@
   - fedora-web/google-site-verification
 
 - name: And, copy over a template for browserid
-  template: >
+  ansible.builtin.template: >
     src=browserid.fedoraproject.org dest=/srv/web/browserid.fedoraproject.org
     owner=root group=root mode=0644
   notify:

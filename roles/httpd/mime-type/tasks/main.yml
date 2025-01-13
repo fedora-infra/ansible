@@ -1,5 +1,5 @@
 ---
-- template: >
+- ansible.builtin.template: >
     src=mime-types.conf dest=/etc/httpd/conf.d/{{website}}/mime-types.conf
     owner=root group=root mode=0644
   notify:

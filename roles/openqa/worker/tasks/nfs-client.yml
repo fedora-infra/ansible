@@ -13,7 +13,7 @@
   ansible.builtin.file: path=/var/lib/openqa/share state=directory mode=0755
 
 - name: Create mount unit
-  template: src=var-lib-openqa-share.mount.j2 dest=/etc/systemd/system/var-lib-openqa-share.mount owner=root group=root mode=0644
+  ansible.builtin.template: src=var-lib-openqa-share.mount.j2 dest=/etc/systemd/system/var-lib-openqa-share.mount owner=root group=root mode=0644
   register: sharemount
   tags:
   - config

@@ -22,7 +22,7 @@
   - kerneltest
 
 - name: Install all the configuration file of kerneltest
-  template: src={{ item.file }}
+  ansible.builtin.template: src={{ item.file }}
             dest={{ item.location }}/{{ item.file }}
             owner=apache group=apache mode=0600
   with_items:

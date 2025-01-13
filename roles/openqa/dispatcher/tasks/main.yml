@@ -231,7 +231,7 @@
 # them, as we used to have for the fedmsg user. But for now they run
 # as root and use this one.
 - name: OpenQA client config
-  template: src=client.conf.j2 dest=/etc/openqa/client.conf owner=root group=root mode=0640
+  ansible.builtin.template: src=client.conf.j2 dest=/etc/openqa/client.conf owner=root group=root mode=0640
   tags:
   - config
 
@@ -239,7 +239,7 @@
   ansible.builtin.file: path=/etc/fedora-openqa state=directory owner=root group=root mode=0755
 
 - name: Write schedule.conf
-  template: src=schedule.conf.j2 dest=/etc/fedora-openqa/schedule.conf owner=root group=root mode=0600
+  ansible.builtin.template: src=schedule.conf.j2 dest=/etc/fedora-openqa/schedule.conf owner=root group=root mode=0600
   notify:
   - restart openqa consumers
   tags:
@@ -319,7 +319,7 @@
   - config
 
 - name: Configure fedora-messaging scheduler
-  template: src=fedora_openqa_scheduler.toml.j2 dest=/etc/fedora-messaging/fedora_openqa_scheduler.toml owner=root group=root mode=0640
+  ansible.builtin.template: src=fedora_openqa_scheduler.toml.j2 dest=/etc/fedora-messaging/fedora_openqa_scheduler.toml owner=root group=root mode=0640
   notify:
   - restart openqa scheduler consumer
   when: "openqa_amqp_scheduler_queue is defined and openqa_amqp_scheduler_queue"
@@ -327,7 +327,7 @@
   - config
 
 - name: Configure fedora-messaging wiki reporter
-  template: src=fedora_openqa_wiki_reporter.toml.j2 dest=/etc/fedora-messaging/fedora_openqa_wiki_reporter.toml owner=root group=root mode=0640
+  ansible.builtin.template: src=fedora_openqa_wiki_reporter.toml.j2 dest=/etc/fedora-messaging/fedora_openqa_wiki_reporter.toml owner=root group=root mode=0640
   notify:
   - restart openqa wiki consumer
   when: "openqa_amqp_wiki_reporter_queue is defined and openqa_amqp_wiki_reporter_queue"
@@ -335,7 +335,7 @@
   - config
 
 - name: Configure fedora-messaging ResultsDB reporter
-  template: src=fedora_openqa_resultsdb_reporter.toml.j2 dest=/etc/fedora-messaging/fedora_openqa_resultsdb_reporter.toml owner=root group=root mode=0640
+  ansible.builtin.template: src=fedora_openqa_resultsdb_reporter.toml.j2 dest=/etc/fedora-messaging/fedora_openqa_resultsdb_reporter.toml owner=root group=root mode=0640
   notify:
   - restart openqa resultsdb consumer
   when: "openqa_amqp_resultsdb_reporter_queue is defined and openqa_amqp_resultsdb_reporter_queue"

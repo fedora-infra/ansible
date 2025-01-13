@@ -103,7 +103,7 @@
   when: env == 'pagure-staging'
 
 - name: Put in robots.txt
-  template: src=robots.txt.j2 dest=/var/www/html/robots.txt
+  ansible.builtin.template: src=robots.txt.j2 dest=/var/www/html/robots.txt
   tags:
   - pagure
 
@@ -237,7 +237,7 @@
   - stunnel
 
 - name: Install stunnel.conf
-  template: src={{ item.file }}
+  ansible.builtin.template: src={{ item.file }}
             dest={{ item.dest }}
             owner=root group=root mode=0600
   with_items:
@@ -279,7 +279,7 @@
   - fedora-messaging
 
 - name: Install the configuration file for fedora-messaging
-  template:
+  ansible.builtin.template:
     src=fedora-messaging.toml
     dest=/etc/fedora-messaging/config.toml
   tags:
@@ -357,7 +357,7 @@
   - web
 
 - name: Copy sundry pagure configuration
-  template: src={{ item.file }}
+  ansible.builtin.template: src={{ item.file }}
             dest={{ item.location }}/{{ item.file }}
             owner=git group=postfix mode=0640
   with_items:
@@ -371,7 +371,7 @@
   - restart apache
 
 - name: Install client_secrets for ipsilon
-  template: src=client_secrets.json
+  ansible.builtin.template: src=client_secrets.json
             dest=/etc/pagure
             owner=git group=postfix mode=0640
   tags:
@@ -390,7 +390,7 @@
   - pagure
 
 - name: Install the configuration file to activate https
-  template: src={{ item }} dest=/etc/httpd/conf.d/{{ item }}
+  ansible.builtin.template: src={{ item }} dest=/etc/httpd/conf.d/{{ item }}
             owner=root group=root mode=0644
   with_items:
   - 0_pagure.conf
@@ -404,7 +404,7 @@
   - restart apache
 
 - name: Install the wsgi file
-  template: src={{ item }}
+  ansible.builtin.template: src={{ item }}
             dest=/var/www/{{ item }}
             owner=git group=git mode=0644
   with_items:

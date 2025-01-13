@@ -8,7 +8,7 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   tasks:
   - name: Copy the sql script to file
-    template: src=fas-readonly.sql dest=/var/lib/pgsql/fas-readonly.sql
+    ansible.builtin.template: src=fas-readonly.sql dest=/var/lib/pgsql/fas-readonly.sql
 
   - name: Change permissions for relevant tables in the fas db
     ansible.builtin.shell: psql -1 -v ON_ERROR_STOP=1 fas2 </var/lib/pgsql/fas-readonly.sql

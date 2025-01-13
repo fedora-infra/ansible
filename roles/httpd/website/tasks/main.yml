@@ -30,7 +30,7 @@
   - letsencrypt
 
 - name: Copy over primary template for {{site_name}}
-  template: >
+  ansible.builtin.template: >
     src=website.conf
     dest=/etc/httpd/conf.d/{{site_name}}.conf
     owner=root
@@ -45,7 +45,7 @@
   - sslciphers
 
 - name: Copy over some subordinate templates for {{site_name}}
-  template: >
+  ansible.builtin.template: >
     src={{item}}.conf
     dest=/etc/httpd/conf.d/{{site_name}}/{{item}}.conf
     owner=root
@@ -77,7 +77,7 @@
   - robots
 
 - name: And lastly, the robots.txt file
-  template: >
+  ansible.builtin.template: >
     src={{item}}
     dest=/srv/web/{{site_name}}-robots.txt
     mode=0644

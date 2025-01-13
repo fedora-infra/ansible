@@ -13,7 +13,7 @@
   - {user: resalloc, homedir: /var/lib/resallocserver}
 
 - name: Install aws credentials file
-  template: src=aws-credentials
+  ansible.builtin.template: src=aws-credentials
             dest="{{ item.homedir }}/.aws/credentials"
             owner={{ item.user }}
             group={{ item.user }}
@@ -23,7 +23,7 @@
   - {user: resalloc, homedir: /var/lib/resallocserver}
 
 - name: Install aws config file
-  template: src=aws-config
+  ansible.builtin.template: src=aws-config
             dest="{{ item.homedir }}/.aws/config"
             owner={{ item.user }}
             group={{ item.user }}

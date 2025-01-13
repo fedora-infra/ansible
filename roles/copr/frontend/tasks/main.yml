@@ -84,7 +84,7 @@
         owner=copr-fe mode=755
 
 - name: Install copr configs
-  template: src="copr.conf" dest=/etc/copr/copr.conf mode=600
+  ansible.builtin.template: src="copr.conf" dest=/etc/copr/copr.conf mode=600
   notify:
   - reload httpd
   - restart copr-fe-fedora-messaging-reader
@@ -179,7 +179,7 @@
   ansible.builtin.file: path=/etc/fedora-messaging state=directory
 
 - name: Install fedora messaging config for Copr
-  template: src="fedora-messaging/copr_messaging.toml" dest="/etc/fedora-messaging/copr_messaging.toml"
+  ansible.builtin.template: src="fedora-messaging/copr_messaging.toml" dest="/etc/fedora-messaging/copr_messaging.toml"
   notify:
   - restart copr-fe-fedora-messaging-reader
   tags:
@@ -225,7 +225,7 @@
   dnf: name=nrpe state=present
 
 - name: Install the check script
-  template:
+  ansible.builtin.template:
     dest: "/usr/bin/copr-cdn-check.py"
     src: "copr-cdn-check.py.j2"
     group: "nagios"

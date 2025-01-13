@@ -1,6 +1,6 @@
 ---
 - name: Backup script
-  template:
+  ansible.builtin.template:
     src: client-backup-script.sh.j2
     dest: "/usr/local/bin/{{ item.value.command }}"
     owner: "{{ item.value.user }}"
@@ -30,7 +30,7 @@
   tags: rsnapshot_push
 
 - name: Server-side custom rsnapshot daemon script
-  template:
+  ansible.builtin.template:
     src: server-daemon.sh.j2
     dest: "{{ '/'.join([rsnapshot_push.backup_dir, item.key, 'sync-daemon']) }}"
     owner: "{{ item.value.user }}"
@@ -53,7 +53,7 @@
   tags: rsnapshot_push
 
 - name: Rsnapshot call wrapper
-  template:
+  ansible.builtin.template:
     src: server-rsnapshot.py.j2
     dest: "{{ '/'.join([rsnapshot_push.backup_dir, item.key, 'rsnapshot']) }}"
     owner: "{{ item.value.user }}"

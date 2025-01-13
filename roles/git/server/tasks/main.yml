@@ -17,7 +17,7 @@
   tags: git/server
 
 - name: Configure git daemon
-  template: >
+  ansible.builtin.template: >
     src="git@.service.j2"
     dest="/usr/lib/systemd/system/git@.service"
     mode=0644
@@ -25,7 +25,7 @@
   tags: git/server
 
 - name: Configure git daemon
-  template: >
+  ansible.builtin.template: >
     src="git@.service.j2"
     dest="/usr/lib/systemd/system/git@.service"
     mode=0644
@@ -39,7 +39,7 @@
   tags: git/server
 
 - name: Install the xinetd config file
-  template: >
+  ansible.builtin.template: >
     src="git.j2"
     dest="/etc/xinetd.d/git"
     mode=0644

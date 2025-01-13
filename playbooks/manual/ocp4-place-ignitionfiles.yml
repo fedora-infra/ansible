@@ -28,7 +28,7 @@
             state: directory
             mode: "0755"
         - name: == OCP KVM provisioning == Importing generated Ignition files
-          template:
+          ansible.builtin.template:
             src: "/srv/web/infra/bigfiles/openshiftboot/{{ env }}/{{ item }}"
             dest: "/var/www/html/rhcos/{{ item }}"
             mode: "0755"
@@ -37,7 +37,7 @@
             - controlplane.ign
             - worker.ign
         - name: == OCP KVM provisioning == Creating treeinfo for virt-install --location
-          template:
+          ansible.builtin.template:
             src: "/srv/web/infra/bigfiles/openshiftboot/ocp-treeinfo.j2"
             dest: "/var/www/html/rhcos/.treeinfo"
             mode: "0644"

@@ -133,7 +133,7 @@
   - koji_builder
 
 - name: Configure flatpak-builder plugin
-  template: src=flatpak.conf dest=/etc/kojid/plugins/flatpak.conf
+  ansible.builtin.template: src=flatpak.conf dest=/etc/kojid/plugins/flatpak.conf
   vars:
     candidate_registry: "candidate-registry{{ env_suffix }}.fedoraproject.org"
   notify:
@@ -153,7 +153,7 @@
   - koji_builder
 
 - name: Build /etc/kojid/kojid.conf from group vars
-  template: src=kojid.conf dest=/etc/kojid/kojid.conf
+  ansible.builtin.template: src=kojid.conf dest=/etc/kojid/kojid.conf
   notify:
   - restart kojid
   tags:
@@ -167,7 +167,7 @@
   - koji_builder_osbuild
 
 - name: Build /etc/koji-osbuild/builder.conf
-  template: src=builder.conf{{env_suffix}} dest=/etc/koji-osbuild/builder.conf
+  ansible.builtin.template: src=builder.conf{{env_suffix}} dest=/etc/koji-osbuild/builder.conf
   notify:
   - restart kojid
   tags:
@@ -175,12 +175,12 @@
   - koji_builder_osbuild
 
 - name: Build /etc/koji/koji.conf from group vars
-  template: src=koji.conf dest=/etc/koji.conf
+  ansible.builtin.template: src=koji.conf dest=/etc/koji.conf
   tags:
   - koji_builder
 
 - name: Config for the kojid runroot plugin (only some builders)
-  template: src=runroot.conf.j2 dest=/etc/kojid/plugins/runroot.conf
+  ansible.builtin.template: src=runroot.conf.j2 dest=/etc/kojid/plugins/runroot.conf
   when: "'runroot' in group_names"
   notify:
   - restart kojid
@@ -219,7 +219,7 @@
 
 # oz.cfg  upstream ram and cpu definitions are not enough
 - name: Oz.cfg
-  template: src=oz.cfg.j2 dest=/etc/oz/oz.cfg
+  ansible.builtin.template: src=oz.cfg.j2 dest=/etc/oz/oz.cfg
   tags:
   - koji_builder
   - koji_builder/oz.cfg
@@ -278,7 +278,7 @@
   - koji_builder
 
 - name: Mock site-defaults.cfg
-  template: src=builders/site-defaults.cfg dest=/etc/mock/site-defaults.cfg mode=0644 owner=root group=mock
+  ansible.builtin.template: src=builders/site-defaults.cfg dest=/etc/mock/site-defaults.cfg mode=0644 owner=root group=mock
   when: not inventory_hostname.startswith(('bkernel'))
   tags:
   - koji_builder
@@ -382,13 +382,13 @@
   - koji_builder/oomd
 
 - name: Install script to update osbuild api ip in the firewall
-  template: src=osbuildapi-update.sh dest=/usr/local/bin/osbuildapi-update.sh mode=755
+  ansible.builtin.template: src=osbuildapi-update.sh dest=/usr/local/bin/osbuildapi-update.sh mode=755
   tags:
   - koji_builder
   - koji_builder/osbuildapi
 
 - name: Install cron job to run osbuild api ip update script every minute.
-  template: src=osbuildapi-update.cron dest=/etc/cron.d/osbuildapi-update.cron mode=644
+  ansible.builtin.template: src=osbuildapi-update.cron dest=/etc/cron.d/osbuildapi-update.cron mode=644
   tags:
   - koji_builder
   - koji_builder/osbuildapi
@@ -406,7 +406,7 @@
   - koji_builder/nspawn
 
 - name: Create override config for systemd-nspawn containers to allow coredumps
-  template: src=nspawn-override.conf dest=/etc/systemd/system/machine-.scope.d/80-infra.conf mode=0644
+  ansible.builtin.template: src=nspawn-override.conf dest=/etc/systemd/system/machine-.scope.d/80-infra.conf mode=0644
   when: inventory_hostname.startswith(('buildhw-a64'))
   tags:
   - koji_builder

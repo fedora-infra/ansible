@@ -10,8 +10,8 @@
     ipa_ca_cert: "{{ ipa_ca_cert_var.content | b64decode }}"
 
 - name: Copy ipa config template to temporary file
-  template:
-    src: "{{roles_path}}/openshift/ipa-client/templates/configmap.yml.j2"
+  ansible.builtin.template:
+    src: "{{roles_path}}/openshift/ipa-client/templates/configmap.yml"
     dest: "/etc/openshift_apps/{{ipa_client_app}}/configmap-ipa-client.yml"
   register: ipa_config_result
 

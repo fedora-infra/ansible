@@ -203,7 +203,7 @@
     creates: /var/lib/openqa/share/factory/iso/fixed/cloudinit.iso
 
 - name: Create exports file
-  template: src=exports.j2 dest=/etc/exports.d/openqa.exports owner=root group=root mode=0644
+  ansible.builtin.template: src=exports.j2 dest=/etc/exports.d/openqa.exports owner=root group=root mode=0644
   register: exportsfile
   when: openqa_nfs_workers is defined
   tags:
@@ -218,14 +218,14 @@
   when: exportsfile is changed
 
 - name: Set up Apache config
-  template: src=openqa.conf.httpd.j2 dest=/etc/httpd/conf.d/openqa.conf owner=root group=root mode=0644
+  ansible.builtin.template: src=openqa.conf.httpd.j2 dest=/etc/httpd/conf.d/openqa.conf owner=root group=root mode=0644
   notify:
   - reload httpd
   tags:
   - config
 
 - name: OpenQA config
-  template: src=openqa.ini.j2 dest=/etc/openqa/openqa.ini owner=geekotest group=root mode=0644
+  ansible.builtin.template: src=openqa.ini.j2 dest=/etc/openqa/openqa.ini owner=geekotest group=root mode=0644
   tags:
   - config
 
@@ -244,7 +244,7 @@
   when: "openqa_dbhost is defined"
 
 - name: Database config
-  template: src=database.ini.pgsql.j2 dest=/etc/openqa/database.ini owner=geekotest group=root mode=0640
+  ansible.builtin.template: src=database.ini.pgsql.j2 dest=/etc/openqa/database.ini owner=geekotest group=root mode=0640
   when: "openqa_dbhost is defined"
   tags:
   - config
@@ -297,7 +297,7 @@
 # 0640 so we don't wind up ping-ponging it between server and
 # dispatcher roles.
 - name: OpenQA client config
-  template: src=client.conf.j2 dest=/etc/openqa/client.conf mode=0640
+  ansible.builtin.template: src=client.conf.j2 dest=/etc/openqa/client.conf mode=0640
   tags:
   - config
 

@@ -1,11 +1,11 @@
 ---
 - name: Copy template {{object_template}} to temporary file ({{tmpfile.path}})
-  template: src={{roles_path}}/openshift-apps/{{object_app}}/templates/{{object_template}} dest=/etc/openshift_apps/{{object_os_app}}/{{object_objectname}}
+  ansible.builtin.template: src={{roles_path}}/openshift-apps/{{object_app}}/templates/{{object_template}} dest=/etc/openshift_apps/{{object_os_app}}/{{object_objectname}}
   when: object_template is defined
   register: object_template_result
 
 - name: Copy template {{object_template_fullpath}} to temporary file ({{tmpfile.path}})
-  template: src={{object_template_fullpath}} dest=/etc/openshift_apps/{{object_os_app}}/{{object_objectname}}
+  ansible.builtin.template: src={{object_template_fullpath}} dest=/etc/openshift_apps/{{object_os_app}}/{{object_objectname}}
   when: object_template_fullpath is defined and object_template is not defined
   register: object_template_fullpath_result
 

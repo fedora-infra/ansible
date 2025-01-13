@@ -1,7 +1,7 @@
 ---
 
 - name: Copy apache files to conf.d (templates)
-  template: src="httpd/{{ item }}" dest="/etc/httpd/conf.d/{{ item }}"
+  ansible.builtin.template: src="httpd/{{ item }}" dest="/etc/httpd/conf.d/{{ item }}"
   with_items:
   - "coprs.conf"
   notify:

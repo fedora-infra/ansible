@@ -5,4 +5,4 @@
 #
 ---
 - name: Dump all ansible vars
-  template: src=dumpall.j2 dest=/tmp/debug_env.out
+  ansible.builtin.template: src=dumpall.j2 dest=/tmp/debug_env.out

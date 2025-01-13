@@ -21,7 +21,7 @@
   - github2fedmsg
 
 - name: Copy github2fedmsg app configuration
-  template: >
+  ansible.builtin.template: >
     src={{ item }} dest="/etc/github2fedmsg/{{ item }}"
     owner=apache group=apache mode=0600
   with_items:
@@ -45,7 +45,7 @@
   - restart apache
 
 - name: Copy github2fedmsg httpd config
-  template: >
+  ansible.builtin.template: >
     src={{ item }} dest="/etc/httpd/conf.d/{{ item }}"
     owner=apache group=apache mode=0644
   with_items:

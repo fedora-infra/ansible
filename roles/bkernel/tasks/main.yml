@@ -60,7 +60,7 @@
   - bkernel
 
 - name: Mock site-defaults.cfg
-  template:
+  ansible.builtin.template:
     src: bkernel-site-defaults.cfg
     dest: /etc/mock/site-defaults.cfg
     mode: "0644"

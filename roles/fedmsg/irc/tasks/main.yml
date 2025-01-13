@@ -22,7 +22,7 @@
   - fedmsgmonitor
 
 - name: Setup fedmsg-irc config file
-  template: src=ircbot.py dest=/etc/fedmsg.d/ircbot.py
+  ansible.builtin.template: src=ircbot.py dest=/etc/fedmsg.d/ircbot.py
   tags:
   - config
   - fedmsg/irc
@@ -30,7 +30,7 @@
   - restart fedmsg-irc
 
 - name: Setup fas credentials config file
-  template: >
+  ansible.builtin.template: >
     src=fas-credentials.py
     dest=/etc/fedmsg.d/fas-credentials.py
     mode=0640

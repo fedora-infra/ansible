@@ -28,14 +28,14 @@
   - distgit
 
 - name: Install the mod_auth_openidc configuration
-  template: src=auth_openidc.conf dest=/etc/httpd/conf.d/auth_openidc.conf
+  ansible.builtin.template: src=auth_openidc.conf dest=/etc/httpd/conf.d/auth_openidc.conf
   notify:
   - reload httpd
   tags:
   - distgit
 
 - name: Install the http push configuration
-  template: src=httppush.conf dest=/etc/httpd/conf.d/httpush.conf
+  ansible.builtin.template: src=httppush.conf dest=/etc/httpd/conf.d/httpush.conf
   notify:
   - reload httpd
   tags:
@@ -236,7 +236,7 @@
 # -- Lookaside Cache -------------------------------------
 # This is the annex to Dist Git, where we host source tarballs.
 - name: Install the Lookaside Cache httpd configs
-  template: src={{item}} dest=/etc/httpd/conf.d/dist-git/{{item}}
+  ansible.builtin.template: src={{item}} dest=/etc/httpd/conf.d/dist-git/{{item}}
   with_items:
   - lookaside.conf
   - lookaside-upload.conf

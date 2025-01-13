@@ -26,7 +26,7 @@
     - log_detective_backup
 
 - name: Install the backup script
-  template:
+  ansible.builtin.template:
     src: backup.sh.j2
     dest: "{{ ld_backup_script }}"
     mode: '0755'

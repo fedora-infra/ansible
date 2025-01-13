@@ -326,7 +326,7 @@
 # This one may go to being just a regular config file if we can make remote monitoring work
 ## Copy over system configs
 - name: Copy specialized nrpe.cfg for nagios server
-  template: src=nrpe/nrpe.cfg.j2 dest=/etc/nagios/nrpe.cfg
+  ansible.builtin.template: src=nrpe/nrpe.cfg.j2 dest=/etc/nagios/nrpe.cfg
   notify:
   - restart nrpe
   tags:
@@ -340,14 +340,14 @@
   - nagios_server
 
 - name: Template out the nagios httpd conf
-  template: src=httpd/{{item}}.j2 dest=/etc/httpd/conf.d/{{item}}
+  ansible.builtin.template: src=httpd/{{item}}.j2 dest=/etc/httpd/conf.d/{{item}}
   with_items:
   - nagios.conf
   tags:
   - nagios_server
 
 - name: Template out the nagios httpd conf
-  template: src=httpd/{{item}}.j2 dest=/etc/httpd/conf.d/{{item}}
+  ansible.builtin.template: src=httpd/{{item}}.j2 dest=/etc/httpd/conf.d/{{item}}
   with_items:
   - 0_nagios-external.conf
   tags:
@@ -356,21 +356,21 @@
   when: env == "production" and nagios_location == "external"
 
 - name: Template out the cgi.cfg
-  template: src=nagios/configs/cgi.cfg.j2 dest=/etc/nagios/cgi.cfg mode=0644 owner=root group=root
+  ansible.builtin.template: src=nagios/configs/cgi.cfg.j2 dest=/etc/nagios/cgi.cfg mode=0644 owner=root group=root
   tags:
   - nagios_server
   - nagios_config
   notify: restart nagios
 
 - name: Override config.inc.php for the given environment
-  template: src=nagios/config.inc.php.j2 dest=/usr/share/nagios/html/config.inc.php mode=0640 owner=root group=apache
+  ansible.builtin.template: src=nagios/config.inc.php.j2 dest=/usr/share/nagios/html/config.inc.php mode=0640 owner=root group=apache
   tags:
   - nagios_server
   - nagios_config
   notify: restart nagios
 
 - name: Template over plugins
-  template: src=nagios/plugins/{{item}}.j2 dest=/usr/lib64/nagios/plugins/{{item}} mode=0755 owner=root group=root
+  ansible.builtin.template: src=nagios/plugins/{{item}}.j2 dest=/usr/lib64/nagios/plugins/{{item}} mode=0755 owner=root group=root
   with_items:
     - check_koji
   tags:
@@ -378,7 +378,7 @@
 
 
 - name: Template over commands
-  template: src=nagios/commands/{{item}}.j2 dest=/etc/nagios/commands/{{item}} mode=0644 owner=root group=root
+  ansible.builtin.template: src=nagios/commands/{{item}}.j2 dest=/etc/nagios/commands/{{item}} mode=0644 owner=root group=root
   with_items:
     - postgres.cfg
   tags:
@@ -387,7 +387,7 @@
   notify: restart nagios
 
 - name: Template over services (internal)
-  template: src=nagios/services/{{item}}.j2 dest=/etc/nagios/services/{{item}} mode=0644 owner=root group=root
+  ansible.builtin.template: src=nagios/services/{{item}}.j2 dest=/etc/nagios/services/{{item}} mode=0644 owner=root group=root
   with_items:
     - ipa.cfg
     - mirrorlist-proxies.cfg
@@ -398,7 +398,7 @@
   notify: restart nagios
 
 - name: Template over services (both)
-  template: src=nagios/services/{{item}}.j2 dest=/etc/nagios/services/{{item}} mode=0644 owner=root group=root
+  ansible.builtin.template: src=nagios/services/{{item}}.j2 dest=/etc/nagios/services/{{item}} mode=0644 owner=root group=root
   with_items:
     - websites.cfg
   when: env == "production"
@@ -409,7 +409,7 @@
   notify: restart nagios
 
 - name: Build out nagios host templates (production)
-  template: src=nagios/hosts/{{item}}.j2 dest=/etc/nagios/hosts/{{item}} mode=0644 owner=root group=root
+  ansible.builtin.template: src=nagios/hosts/{{item}}.j2 dest=/etc/nagios/hosts/{{item}} mode=0644 owner=root group=root
   with_items:
     - dedicatedsolutions-hosts.cfg
     - host1plus-hosts.cfg
@@ -431,7 +431,7 @@
 
 ## These are only available to the internal server
 - name: Build out nagios host templates (production)
-  template: src=nagios/hosts/{{item}}.j2 dest=/etc/nagios/hosts/{{item}} mode=0644 owner=root group=root
+  ansible.builtin.template: src=nagios/hosts/{{item}}.j2 dest=/etc/nagios/hosts/{{item}} mode=0644 owner=root group=root
   with_items:
     - iad2-hosts.cfg
     - iad2-mgmt-hosts.cfg
@@ -444,7 +444,7 @@
   notify: restart nagios
 
 - name: Copy Matrix-Notify script
-  template: src=nagios/scripts/matrix-notify.sh.j2 dest=/usr/local/bin/matrix-notify.sh mode=0750 owner=root group=nagios
+  ansible.builtin.template: src=nagios/scripts/matrix-notify.sh.j2 dest=/usr/local/bin/matrix-notify.sh mode=0750 owner=root group=nagios
   tags:
   - nagios_config
   - nagios_server
@@ -452,7 +452,7 @@
 
 ## These are only available to the internal server
 - name: Build out nagios host templates (production)
-  template: src=nagios/hosts/{{item}}.j2 dest=/etc/nagios/hosts/{{item}} mode=0644 owner=root group=root
+  ansible.builtin.template: src=nagios/hosts/{{item}}.j2 dest=/etc/nagios/hosts/{{item}} mode=0644 owner=root group=root
   with_items:
     - iad2-hosts.cfg
   when: env == "production" and nagios_location == 'iad2_internal'
@@ -463,7 +463,7 @@
   notify: restart nagios
 
 - name: Build out nagios host templates (production)
-  template: src=nagios/hosts/{{item}}.j2 dest=/etc/nagios/hosts/{{item}} mode=0644 owner=root group=root
+  ansible.builtin.template: src=nagios/hosts/{{item}}.j2 dest=/etc/nagios/hosts/{{item}} mode=0644 owner=root group=root
   with_items:
     - iad2-external.cfg
     - ibiblio-hosts-ipv6.cfg
@@ -474,7 +474,7 @@
   notify: restart nagios
 
 - name: Build out nagios hostgroup templates (iad2)
-  template: src=nagios/hostgroups/{{item}}.j2 dest=/etc/nagios/hostgroups/{{item}} mode=0644 owner=root group=root
+  ansible.builtin.template: src=nagios/hostgroups/{{item}}.j2 dest=/etc/nagios/hostgroups/{{item}} mode=0644 owner=root group=root
   with_items:
     - all.cfg
     - vpnclients.cfg
@@ -490,7 +490,7 @@
   notify: restart nagios
 
 - name: Build out nagios hostgroup templates (external)
-  template: src=nagios/hostgroups/{{item}}.j2 dest=/etc/nagios/hostgroups/{{item}} mode=0644 owner=root group=root
+  ansible.builtin.template: src=nagios/hostgroups/{{item}}.j2 dest=/etc/nagios/hostgroups/{{item}} mode=0644 owner=root group=root
   with_items:
     - all-external.cfg
   when: nagios_location == "external"
@@ -501,7 +501,7 @@
   notify: restart nagios
 
 - name: Build out nagios services templates
-  template: src=nagios/services/{{item}}.j2 dest=/etc/nagios/services/{{item}} mode=0644 owner=root group=root
+  ansible.builtin.template: src=nagios/services/{{item}}.j2 dest=/etc/nagios/services/{{item}} mode=0644 owner=root group=root
   with_items:
     - iad2-mgmt.cfg
   when: nagios_location == 'iad2_internal'

@@ -44,7 +44,7 @@
   - weblate_backup
 
 - name: Install backup script
-  template:
+  ansible.builtin.template:
     src: weblate-backup
     dest: /usr/local/bin/weblate-backup
     owner: root
@@ -54,7 +54,7 @@
   - weblate_backup
 
 - name: Setup cron job
-  template:
+  ansible.builtin.template:
     src: cron-weblate-backup
     dest: /etc/cron.d/cron-weblate-backup
     owner: root

@@ -34,7 +34,7 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   tasks:
-  # - template: src=templates/mailman-reset-staging.sql dest=/var/lib/pgsql/mailman-reset-staging.sql
+  # - ansible.builtin.template: src=templates/mailman-reset-staging.sql dest=/var/lib/pgsql/mailman-reset-staging.sql
   - ansible.builtin.copy:
       src: /srv/web/infra/db-dumps/mailman.dump.xz
       dest: /var/tmp/mailman.dump.xz
@@ -49,7 +49,7 @@
   # - name: Fix the database
   #  ansible.builtin.shell: psql -f /var/lib/pgsql/mailman-reset-staging.sql mailman
 
-  # - template: src=templates/hyperkitty-reset-staging.sql dest=/var/lib/pgsql/hyperkitty-reset-staging.sql
+  # - ansible.builtin.template: src=templates/hyperkitty-reset-staging.sql dest=/var/lib/pgsql/hyperkitty-reset-staging.sql
   - ansible.builtin.copy:
       src: /srv/web/infra/db-dumps/hyperkitty.dump.xz
       dest: /var/tmp/hyperkitty.dump.xz

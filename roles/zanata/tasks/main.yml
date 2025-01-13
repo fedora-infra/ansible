@@ -18,7 +18,7 @@
   - zanata
 
 - name: Zanata auth config
-  template: >
+  ansible.builtin.template: >
     src=zanata.ini dest=/var/lib/zanata/.config/zanata.ini owner=apache group=apache
     mode=0600
   tags:

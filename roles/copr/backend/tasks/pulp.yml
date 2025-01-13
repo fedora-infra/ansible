@@ -25,7 +25,7 @@
   when: env == "production"
 
 - name: Install Pulp config file
-  template:
+  ansible.builtin.template:
     src: pulp-cli.toml
     dest: "/home/copr/.config/pulp/cli.toml"
     owner: copr

@@ -11,7 +11,7 @@
   - openvpn
 
 - name: Install main config file
-  template: src=client.conf
+  ansible.builtin.template: src=client.conf
             dest=/etc/openvpn/client/openvpn.conf
             owner=root group=root mode=0644
   tags:

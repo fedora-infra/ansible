@@ -49,7 +49,7 @@
   - config
 
 - name: Setup initiatorname.iscsi
-  template: src=initiatorname.iscsi.j2 dest=/etc/iscsi/initiatorname.iscsi
+  ansible.builtin.template: src=initiatorname.iscsi.j2 dest=/etc/iscsi/initiatorname.iscsi
   tags:
   - config
 

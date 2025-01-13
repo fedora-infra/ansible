@@ -39,7 +39,7 @@
   - config
 
 - name: Setup blockerbugs app settings file
-  template: src=blockerbugs-settings.py.j2 dest=/etc/blockerbugs/settings.py mode=640
+  ansible.builtin.template: src=blockerbugs-settings.py.j2 dest=/etc/blockerbugs/settings.py mode=640
   notify:
   - reload httpd
   tags:

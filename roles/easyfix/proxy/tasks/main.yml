@@ -6,7 +6,7 @@
   - easyfix/proxy
 
 - name: Put the proxy config in place
-  template: >
+  ansible.builtin.template: >
     src=gather-easyfix.conf
     dest=/etc/httpd/conf.d/{{website}}/gather-easyfix.conf
     owner=root group=root mode=0644

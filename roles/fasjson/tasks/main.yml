@@ -14,7 +14,7 @@
   - fasjson
 
 - name: Fasjson-aliases script
-  template: src=fasjson-aliases.j2 dest=/usr/local/bin/fasjson-aliases owner=root mode=0755
+  ansible.builtin.template: src=fasjson-aliases.j2 dest=/usr/local/bin/fasjson-aliases owner=root mode=0755
   tags:
   - config
   - fasjson

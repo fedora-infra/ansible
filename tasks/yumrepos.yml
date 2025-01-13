@@ -77,7 +77,7 @@
   - yumrepos
 
 - name: Put fedora repos on primary architecture systems
-  template: src="{{ files }}/common/{{ item }}" dest="/etc/yum.repos.d/{{ item }}"
+  ansible.builtin.template: src="{{ files }}/common/{{ item }}" dest="/etc/yum.repos.d/{{ item }}"
   with_items:
   - fedora.repo
   - fedora-updates.repo
@@ -89,7 +89,7 @@
   - yumrepos
 
 - name: Put fedora repos on secondary architecture systems
-  template: src="{{ files }}/common/{{ item }}-secondary" dest="/etc/yum.repos.d/{{ item }}"
+  ansible.builtin.template: src="{{ files }}/common/{{ item }}-secondary" dest="/etc/yum.repos.d/{{ item }}"
   with_items:
   - fedora.repo
   - fedora-updates.repo

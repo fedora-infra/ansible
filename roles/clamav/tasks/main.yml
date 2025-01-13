@@ -31,7 +31,7 @@
   ansible.builtin.copy: src=freshclam-cron dest=/etc/cron.daily/freshclam
 
 - name: Setup the periodic clam scan script
-  template: >
+  ansible.builtin.template: >
     src=clamscan.sh.j2
     dest=/usr/local/bin/clamscan.sh
     mode=0755

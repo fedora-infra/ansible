@@ -19,7 +19,7 @@
 
   pre_tasks:
   - name: copy the koji.conf file with the correct variables
-    template:
+    ansible.builtin.template:
       src: koji.conf.j2
       dest: /etc/koji.conf
       owner: root

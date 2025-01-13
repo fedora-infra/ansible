@@ -111,7 +111,7 @@
     - packages
 
 #  - name: easy access to the postgresql databases
-#    template: src=$files/mailman/pgpass.j2 dest=/root/.pgpass
+#    ansible.builtin.template: src=$files/mailman/pgpass.j2 dest=/root/.pgpass
 #              owner=root group=root mode=0600
 
   - name: start services

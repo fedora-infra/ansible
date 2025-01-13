@@ -6,7 +6,7 @@
   - review-stats/proxy
 
 - name: Put the proxy config in place
-  template: >
+  ansible.builtin.template: >
     src=review-stats.conf
     dest=/etc/httpd/conf.d/{{website}}/review-stats.conf
     owner=root group=root mode=0644

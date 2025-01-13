@@ -47,7 +47,7 @@
   - koji_hub
 
 - name: Fedmenu shim
-  template: src=fedmenu-extra-footer.html dest=/usr/share/koji-web/static/extra-footer.html
+  ansible.builtin.template: src=fedmenu-extra-footer.html dest=/usr/share/koji-web/static/extra-footer.html
   tags: koji_hub
   notify: reload httpd
   # XXX - we only want to do this in staging for now because it requires a patch
@@ -65,7 +65,7 @@
   - koji_hub
 
 - name: Hub config
-  template: src=hub.conf.j2 dest=/etc/koji-hub/hub.conf owner=apache group=apache mode=600
+  ansible.builtin.template: src=hub.conf.j2 dest=/etc/koji-hub/hub.conf owner=apache group=apache mode=600
   tags:
   - config
   - koji_hub
@@ -73,7 +73,7 @@
   notify: reload httpd
 
 - name: Kojiweb config
-  template: src=web.conf.j2 dest=/etc/kojiweb/web.conf owner=apache group=apache mode=600
+  ansible.builtin.template: src=web.conf.j2 dest=/etc/kojiweb/web.conf owner=apache group=apache mode=600
   tags:
   - config
   - koji_hub
@@ -110,7 +110,7 @@
   - fedora-messaging
 
 - name: Install the configuration file for fedora-messaging
-  template:
+  ansible.builtin.template:
     src=fedora-messaging.toml
     dest=/etc/fedora-messaging/config.toml
   tags:
@@ -281,7 +281,7 @@
   notify: reload httpd
 
 - name: Koji web hub specific config files
-  template: src={{ item }}.j2 dest=/etc/httpd/conf.d/{{ item }} owner=root group=root
+  ansible.builtin.template: src={{ item }}.j2 dest=/etc/httpd/conf.d/{{ item }} owner=root group=root
   with_items:
   - kojiweb.conf
   - kojihub.conf
@@ -313,7 +313,7 @@
   - kojira
 
 - name: Kojira config
-  template: src=kojira.conf.j2 dest=/etc/kojira/kojira.conf
+  ansible.builtin.template: src=kojira.conf.j2 dest=/etc/kojira/kojira.conf
   tags:
   - config
   - koji_hub
@@ -406,12 +406,12 @@
   when: ansible_hostname.startswith('koji02')
 
 - name: Install koji-gc.conf
-  template: src=koji-gc.conf.j2 dest=/etc/koji-gc/koji-gc.conf
+  ansible.builtin.template: src=koji-gc.conf.j2 dest=/etc/koji-gc/koji-gc.conf
   tags:
   - koji_hub
 
 - name: Install prune-signed-copies-protected-tags config for prunesigs
-  template: src=prune-signed-copies-protected-tags.j2 dest=/etc/prune-signed-copies-protected-tags
+  ansible.builtin.template: src=prune-signed-copies-protected-tags.j2 dest=/etc/prune-signed-copies-protected-tags
   tags:
   - koji_hub
 

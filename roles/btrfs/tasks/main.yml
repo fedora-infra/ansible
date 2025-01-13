@@ -16,7 +16,7 @@
 
 
 - name: Configure btrfs-balance timer
-  template:
+  ansible.builtin.template:
     src: schedule.conf.j2
     dest: /etc/systemd/system/btrfs-balance.timer.d/schedule.conf
     owner: root

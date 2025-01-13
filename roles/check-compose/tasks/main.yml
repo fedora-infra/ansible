@@ -177,14 +177,14 @@
   - config
 
 - name: Configure fedora-messaging check-compose consumer
-  template: src=check-compose.toml.j2 dest=/etc/fedora-messaging/check-compose.toml owner=root group=root mode=0640
+  ansible.builtin.template: src=check-compose.toml.j2 dest=/etc/fedora-messaging/check-compose.toml owner=root group=root mode=0640
   notify:
   - restart check-compose
   tags:
   - config
 
 - name: Install config file
-  template: src=check-compose.conf.j2 dest=/etc/check-compose.conf mode=0644
+  ansible.builtin.template: src=check-compose.conf.j2 dest=/etc/check-compose.conf mode=0644
   tags:
   - config
 

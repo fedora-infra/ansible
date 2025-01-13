@@ -14,7 +14,7 @@
   - kojipkgs
 
 - name: Install apache config templates for local apache
-  template: src={{ item }} dest=/etc/httpd/conf.d/{{ item }} owner=root group=root mode=644
+  ansible.builtin.template: src={{ item }} dest=/etc/httpd/conf.d/{{ item }} owner=root group=root mode=644
   with_items:
   - kojipkgs.conf
   notify:

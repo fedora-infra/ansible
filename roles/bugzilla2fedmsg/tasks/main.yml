@@ -35,7 +35,7 @@
   - bugzilla2fedmsg
 
 - name: Copy the configuration for bugzilla2fedmsg over
-  template: >
+  ansible.builtin.template: >
     src=bugzilla2fedmsg.ini
     dest=/etc/moksha/production.ini
     owner=fedmsg

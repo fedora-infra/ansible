@@ -6,7 +6,7 @@
   - memcached
 
 - name: Setup memcached sysconfig
-  template: src=memcached dest=/etc/sysconfig/memcached mode=644
+  ansible.builtin.template: src=memcached dest=/etc/sysconfig/memcached mode=644
   notify:
   - restart memcached
   tags:

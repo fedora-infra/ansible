@@ -72,7 +72,7 @@
   - base
 
 - name: Sshd_config
-  template: src=sshd_config dest=/etc/ssh/sshd_config mode=0600
+  ansible.builtin.template: src=sshd_config dest=/etc/ssh/sshd_config mode=0600
   notify:
   - restart sshd
   tags:

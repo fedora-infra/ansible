@@ -1,6 +1,6 @@
 ---
 - name: Copy in the proxy conf
-  template: >
+  ansible.builtin.template: >
     src=geoip-city-wsgi-proxy.conf
     dest=/etc/httpd/conf.d/{{website}}/geoip-city-wsgi-proxy.conf
     owner=root group=root mode=0644

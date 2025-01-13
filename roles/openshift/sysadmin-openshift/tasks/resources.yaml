@@ -12,7 +12,7 @@
 
 # generate the templates for project to be created
 - name: Create the templates
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "/root/ocp4/openshift-apps/{{sysadmin_openshift_project_name}}/{{ item }}"
     mode: "0770"

@@ -126,7 +126,7 @@
 #   tags: ipv6_config
 
 - name: Install nrpe checks
-  template: src=copr_nrpe.cfg
+  ansible.builtin.template: src=copr_nrpe.cfg
             dest=/etc/nrpe.d/copr_nrpe.cfg
   notify:
   - restart nrpe

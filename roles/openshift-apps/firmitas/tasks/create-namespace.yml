@@ -1,8 +1,8 @@
 ---
 # generate the templates for project to be created
 - name: Create the namespace template
-  template:
-    src: "namespace.yml.j2"
+  ansible.builtin.template:
+    src: "namespace.yml"
     dest: "/root/ocp4/openshift-apps/firmitas/namespace.yml"
     mode: "0770"
 

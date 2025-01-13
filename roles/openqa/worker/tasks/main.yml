@@ -200,12 +200,12 @@
   when: openqa_tap
 
 - name: OpenQA client config
-  template: src=client.conf.j2 dest=/etc/openqa/client.conf owner=_openqa-worker group=root mode=0600
+  ansible.builtin.template: src=client.conf.j2 dest=/etc/openqa/client.conf owner=_openqa-worker group=root mode=0600
   tags:
   - config
 
 - name: OpenQA worker config
-  template: src=workers.ini.j2 dest=/etc/openqa/workers.ini owner=_openqa-worker group=root mode=0644
+  ansible.builtin.template: src=workers.ini.j2 dest=/etc/openqa/workers.ini owner=_openqa-worker group=root mode=0644
   notify:
   - restart openqa workers
   tags:

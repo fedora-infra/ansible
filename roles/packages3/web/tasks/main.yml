@@ -34,7 +34,7 @@
   - packages/web
 
 - name: Copy over the app config
-  template: >
+  ansible.builtin.template: >
     src=packages-app.ini.j2
     dest=/etc/fedoracommunity/production.ini
     owner=apache group=fedmsg mode=0440
@@ -57,7 +57,7 @@
   - packages/web
 
 - name: Copy over the fedmsg consumer config
-  template: >
+  ansible.builtin.template: >
     src=fedoracommunity.py
     dest=/etc/fedmsg.d/fedoracommunity.py
     owner=root group=root mode=644

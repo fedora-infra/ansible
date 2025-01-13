@@ -1,7 +1,7 @@
 ---
 
 - name: Provide /etc/faf/faf.conf
-  template:
+  ansible.builtin.template:
     src: etc-faf-faf.conf.j2
     dest: /etc/faf/faf.conf
 
@@ -16,7 +16,7 @@
   when: faf_with_fedmsg|bool
 
 - name: Provide configuration for fedora-messaging
-  template:
+  ansible.builtin.template:
     src: etc-fedora-messaging-config.toml.j2
     dest: /etc/fedora-messaging/config.toml
   when: faf_with_fedmsg|bool

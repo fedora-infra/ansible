@@ -23,7 +23,7 @@
   - provision_config
 
 - name: Resalloc, generate vars.yml file
-  template:
+  ansible.builtin.template:
     src: "{{ roles_path }}/copr/backend/templates/provision/{{ item }}"
     dest: "{{ provision_directory }}/{{ item }}"
   with_items:
@@ -32,7 +32,7 @@
   - provision_config
 
 - name: Templated provision scripts
-  template:
+  ansible.builtin.template:
     src: "{{ roles_path }}/copr/backend/templates/provision/{{ item }}"
     dest: "{{ provision_directory }}/{{ item }}"
     mode: "0755"
@@ -45,7 +45,7 @@
   - cloud_vars is not defined
 
 - name: Templated provision scripts
-  template:
+  ansible.builtin.template:
     src: "{{ roles_path }}/copr/backend/templates/provision/{{ item }}"
     dest: "{{ provision_directory }}/{{ item }}"
     mode: "0755"
@@ -57,7 +57,7 @@
   - cloud_vars is defined and cloud_vars
 
 - name: Generate cloud-oriented vars files
-  template:
+  ansible.builtin.template:
     src: "{{ roles_path }}/copr/backend/templates/provision/{{ item }}"
     dest: "{{ provision_directory }}/{{ item }}"
   with_items:
@@ -68,7 +68,7 @@
   - cloud_vars is defined and cloud_vars
 
 - name: Put copr-rpmbuild configuration file into the provision subdir
-  template: src="{{ roles_path }}/copr/backend/templates/provision/copr-rpmbuild/main.ini.j2"
+  ansible.builtin.template: src="{{ roles_path }}/copr/backend/templates/provision/copr-rpmbuild/main.ini.j2"
             dest="{{ provision_directory }}/files/main.ini"
   tags:
   - provision_config
@@ -76,7 +76,7 @@
   when: "'copr_hypervisor' not in group_names"
 
 - name: Put rpkg configuration file into the provision subdir
-  template: src="{{ roles_path }}/copr/backend/templates/provision/rpkg.conf.j2"
+  ansible.builtin.template: src="{{ roles_path }}/copr/backend/templates/provision/rpkg.conf.j2"
             dest="{{ provision_directory }}/files/rpkg.conf"
   tags:
   - provision_config
@@ -88,7 +88,7 @@
   - provision_config
 
 - name: Install the Oregon State University OpenStack token file on BE/HV
-  template:
+  ansible.builtin.template:
     src: "{{ roles_path }}/copr/backend/templates/provision/rc-osuosl.sh.j2"
     dest: "{{ provision_directory }}/.rc-osuosl.sh"
     owner: "{{ provision_user }}"

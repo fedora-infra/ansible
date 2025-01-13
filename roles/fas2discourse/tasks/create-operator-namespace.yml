@@ -1,7 +1,7 @@
 ---
 # generate the templates for project to be created
 - name: Create the templates
-  template:
+  ansible.builtin.template:
     src: "namespace.yml"
     dest: "/root/ocp4/openshift-apps/fas2discourse-operator/namespace.yml"
     mode: "0770"

@@ -30,7 +30,7 @@
   tags: copr_ping
 
 - name: Install the ping script
-  template:
+  ansible.builtin.template:
     dest: "{{ ping_homedir }}/{{ ping_script }}"
     src: "{{ ping_script }}.j2"
     owner: "{{ ping_user }}"
@@ -39,7 +39,7 @@
   tags: copr_ping
 
 - name: Install the check script
-  template:
+  ansible.builtin.template:
     dest: "/usr/bin/copr-ping-check.py"
     src: "copr-ping-check.py.j2"
     owner: "{{ ping_user }}"

@@ -122,7 +122,7 @@
 #
 
 - name: Install the fedora-messaging configuration file
-  template: src=batcave-messaging.toml dest=/etc/fedora-messaging/batcave-messaging.toml
+  ansible.builtin.template: src=batcave-messaging.toml dest=/etc/fedora-messaging/batcave-messaging.toml
   tags:
   - batcave
   - config
@@ -358,7 +358,7 @@
   - httpd
 
 - name: Install web server config for batcave (main config)
-  template: src=infrastructure.fedoraproject.org.conf.j2 dest=/etc/httpd/conf.d/infrastructure.fedoraproject.org.conf mode=0644
+  ansible.builtin.template: src=infrastructure.fedoraproject.org.conf.j2 dest=/etc/httpd/conf.d/infrastructure.fedoraproject.org.conf mode=0644
   notify:
   - reload httpd
   tags:
@@ -402,7 +402,7 @@
 #
 
 - name: Install geoip download databases script
-  template:
+  ansible.builtin.template:
     src: geoip-download-databases
     dest: /usr/local/bin/geoip-download-databases
     mode: "0700"

@@ -34,7 +34,7 @@
   - config
 
 - name: Set up some cronjobs to backup databases as configured
-  template: >
+  ansible.builtin.template: >
     src="{{ files }}/../roles/postgresql_server/templates/cron-backup-database"
     dest="/etc/cron.d/cron-backup-database-{{ item }}"
   with_items:

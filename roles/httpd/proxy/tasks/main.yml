@@ -6,7 +6,7 @@
   - reload proxyhttpd
 
 - name: Copy in the main httpd.conf file for proxy nodes
-  template: >
+  ansible.builtin.template: >
     src=httpd.conf.j2 dest=/etc/httpd/conf/httpd.conf
     owner=root group=root mode=0644
   notify:
@@ -24,7 +24,7 @@
   - httpd/proxy
 
 - name: Copy over some basic configs into /etc/httpd/conf.d/
-  template: >
+  ansible.builtin.template: >
     src={{item}} dest=/etc/httpd/conf.d/{{item}}
     owner=root group=root mode=0644
   with_items:

@@ -1,6 +1,6 @@
 ---
 - name: Copy job template to a temporary file
-  template:
+  ansible.builtin.template:
     src: "{{roles_path}}/openshift-apps/{{job_app}}/templates/job.yml"
     dest: "/etc/openshift_apps/{{job_app}}/job-{{job_name}}.yml"
 

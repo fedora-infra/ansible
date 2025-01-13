@@ -7,7 +7,7 @@
 
 ---
 - name: Copy in domain rewrite for {{destname}} ({{website}}{{path}})
-  template: >
+  ansible.builtin.template: >
     src={{item}}
     dest=/etc/httpd/conf.d/{{website}}/{{destname}}-rewrite.conf
     owner=root
