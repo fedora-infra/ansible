@@ -87,7 +87,14 @@ aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot 
     reuse_max_count: 8
     reuse_max_time: 1800
     description: >
-      A pool of {{ arch }} instances in the Amazon AWS Fedora organization.
+      A pool of
+      {% if spot and on_demand == 'powerful' %}powerful spot
+      {% elif spot %}spot
+      {% elif reserved and on_demand == 'powerful' %}reserved powerful
+      {% elif reserved %}reserved
+      {% elif on_demand == 'powerful' %}powerful
+      {% endif %}
+      {{ arch }} instances in the Amazon AWS Fedora organization.
       They are located in us-east-1 (N. Virginia).
       Thank you Amazon Web Services, Inc. for sponsoring these builders.
 {% endmacro %}
