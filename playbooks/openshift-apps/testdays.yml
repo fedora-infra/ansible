@@ -74,17 +74,17 @@
 
   - role: openshift/object
     object_app: testdays
-    object_template: buildconfig.yml
+    object_template: buildconfig.yml.j2
     object_objectname: buildconfig.yml
 
   - role: openshift/object
     object_app: testdays
-    object_template: deployment.yml
+    object_template: deployment.yml.j2
     object_objectname: deployment.yml
 
   - role: openshift/object
     object_app: testdays
-    object_template: imagestream.yml
+    object_template: imagestream.yml.j2
     object_objectname: imagestream.yml
 
   - role: openshift/object
