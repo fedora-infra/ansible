@@ -208,9 +208,9 @@ copr_p09_{{ hv }}_{% if devel %}dev{% else %}prod{% endif %}:
     reuse_max_count: 8
     reuse_max_time: 1800
     description: >
-      A pool of ppc64le instances.
-      These machines have POWER9 processors.
-      Thank you IBM for sponsoring these builders.
+      A pool of ppc64le instances in the Fedora Community Cage.
+      These machines have POWER9 processors and are located in RDU (N Carolina).
+      Thank you Fedora Infrastructure team for maintaining the hypervisors.
 
 {% endif %}
 {% endfor %}
