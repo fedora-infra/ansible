@@ -175,7 +175,11 @@ ostree = {
         "ostree_repo": "/mnt/koji/compose/ostree/repo",
         "ostree_ref": "fedora/[[ release.version ]]/${basearch}/[[ ostreeref ]]/silverblue",
         "tag_ref": False,
-        "arches": ["x86_64", "ppc64le", "aarch64" ],
+        [% if release.version_int > 41 %]
+        "arches": ["x86_64", "aarch64"],
+        [% else %]
+        "arches": ["x86_64", "ppc64le", "aarch64"],
+        [% endif %]
         "failable": ['*']
     },
     "^Kinoite$": {
@@ -193,7 +197,11 @@ ostree = {
         "ostree_repo": "/mnt/koji/compose/ostree/repo",
         "ostree_ref": "fedora/[[ release.version ]]/${basearch}/[[ ostreeref ]]/kinoite",
         "tag_ref": False,
-        "arches": ["x86_64", "ppc64le", "aarch64" ],
+        [% if release.version_int > 41 %]
+        "arches": ["x86_64", "aarch64"],
+        [% else %]
+        "arches": ["x86_64", "ppc64le", "aarch64"],
+        [% endif %]
         "failable": ['*']
     },
     "^Sericea$": {
@@ -244,7 +252,11 @@ ostree_container = {
         [% else %]
         "treefile": "fedora-silverblue.yaml",
         [% endif %]
+        [% if release.version_int > 41 %]
+        "arches": ["x86_64", "aarch64"],
+        [% else %]
         "arches": ["x86_64", "ppc64le", "aarch64"],
+        [% endif %]
         "failable": ['*']
     },
     "^Kinoite$": {
@@ -257,7 +269,11 @@ ostree_container = {
         [% else %]
         "treefile": "fedora-kinoite.yaml",
         [% endif %]
+        [% if release.version_int > 41 %]
+        "arches": ["x86_64", "aarch64"],
+        [% else %]
         "arches": ["x86_64", "ppc64le", "aarch64"],
+        [% endif %]
         "failable": ['*']
     },
     "^Sericea$": {
