@@ -4,10 +4,6 @@ LABEL \
     vendor="Fedora Infrastructure" \
     license="MIT"
 USER root
-# Add RPM-only modules
-RUN dnf install -y python3-pyrpmmd
-# Add Rust
-RUN dnf install -y cargo
-# Add Logrotate
-RUN dnf install -y logrotate
+# Add RPM-only modules, Rust, protoc and logrotate
+RUN dnf install -y python3-pyrpmmd cargo protobuf-compiler logrotate
 USER 1001
