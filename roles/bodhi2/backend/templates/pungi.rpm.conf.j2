@@ -176,7 +176,7 @@ ostree = {
         "ostree_ref": "fedora/[[ release.version ]]/${basearch}/[[ ostreeref ]]/silverblue",
         "tag_ref": False,
         "arches": ["x86_64", "ppc64le", "aarch64" ],
-        "failable": ["x86_64", "ppc64le", "aarch64" ]
+        "failable": ['*']
     },
     "^Kinoite$": {
         "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
@@ -194,7 +194,7 @@ ostree = {
         "ostree_ref": "fedora/[[ release.version ]]/${basearch}/[[ ostreeref ]]/kinoite",
         "tag_ref": False,
         "arches": ["x86_64", "ppc64le", "aarch64" ],
-        "failable": ["x86_64", "ppc64le", "aarch64" ]
+        "failable": ['*']
     },
     "^Sericea$": {
         "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
@@ -212,7 +212,7 @@ ostree = {
         "ostree_ref": "fedora/[[ release.version ]]/${basearch}/[[ ostreeref ]]/sericea",
         "tag_ref": False,
         "arches": ["x86_64", "aarch64"],
-        "failable": ["x86_64", "aarch64"]
+        "failable": ['*']
     },
     "^Onyx$": {
         "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
@@ -230,7 +230,7 @@ ostree = {
         "ostree_ref": "fedora/[[ release.version ]]/${basearch}/[[ ostreeref ]]/onyx",
         "tag_ref": False,
         "arches": ["x86_64"],
-        "failable": ["x86_64"]
+        "failable": ['*']
     },
 }
 ostree_container = {
@@ -245,7 +245,7 @@ ostree_container = {
         "treefile": "fedora-silverblue.yaml",
         [% endif %]
         "arches": ["x86_64", "ppc64le", "aarch64"],
-        "failable": ['*'],
+        "failable": ['*']
     },
     "^Kinoite$": {
         "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
@@ -258,7 +258,7 @@ ostree_container = {
         "treefile": "fedora-kinoite.yaml",
         [% endif %]
         "arches": ["x86_64", "ppc64le", "aarch64"],
-        "failable": ['*'],
+        "failable": ['*']
     },
     "^Sericea$": {
         "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
@@ -271,7 +271,7 @@ ostree_container = {
         "treefile": "fedora-sericea.yaml",
         [% endif %]
         "arches": ["x86_64", "aarch64"],
-        "failable": ['*'],
+        "failable": ['*']
     },
     "^Onyx$": {
         "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
