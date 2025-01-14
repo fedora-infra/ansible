@@ -1,9 +1,9 @@
 ---
-- name: install nrpe
+- name: Install nrpe
   dnf: name=nrpe state=present
 
-- name: set acl for nrpe on /etc/copr
+- name: Set acl for nrpe on /etc/copr
   acl: name=/etc/copr entity=nrpe etype=user permissions=rx state=present
 
-- name: set acl for nrpe on /etc/copr/copr-be.conf
+- name: Set acl for nrpe on /etc/copr/copr-be.conf
   acl: name=/etc/copr/copr-be.conf entity=nrpe etype=user permissions=r state=present

@@ -3,7 +3,7 @@
 # This task sets up iscsid and mpathd on a machine.
 #
 #
-- name: install packages needed for iscsi_client (yum)
+- name: Install packages needed for iscsi_client (yum)
   package:
     state: present
     name:
@@ -13,7 +13,7 @@
   - packages
   when: ansible_distribution_major_version|int < 8 and ansible_distribution == "RedHat"
 
-- name: install packages needed for iscsi_client (dnf)
+- name: Install packages needed for iscsi_client (dnf)
   package:
     state: present
     name:
@@ -23,7 +23,7 @@
   - packages
   when: ansible_distribution_major_version|int >= 29 and ansible_distribution == "Fedora" and ansible_cmdline.ostree is not defined
 
-- name: install packages needed for iscsi_client (dnf)
+- name: Install packages needed for iscsi_client (dnf)
   package:
     state: present
     name:
@@ -33,44 +33,44 @@
   - packages
   when: ansible_distribution_major_version|int >= 8 and ansible_distribution == "RedHat" and ansible_cmdline.ostree is not defined
 
-- name: enable iscsi service
+- name: Enable iscsi service
   service: state=started enabled=yes name=iscsi
   tags:
   - services
 
-- name: enable multipathd service
+- name: Enable multipathd service
   service: state=started enabled=yes name=multipathd
   tags:
   - services
 
-- name: setup multipath.conf file
+- name: Setup multipath.conf file
   copy: src=multipath.conf dest=/etc/multipath.conf
   tags:
   - config
 
-- name: setup initiatorname.iscsi
+- name: Setup initiatorname.iscsi
   template: src=initiatorname.iscsi.j2 dest=/etc/iscsi/initiatorname.iscsi
   tags:
   - config
 
-- name: set up iscsi interface for EL8
+- name: Set up iscsi interface for EL8
   command: creates=/var/lib/iscsi/ifaces/{{ netapp_iscsi_interface_iad2 }} iscsiadm -m iface -I {{ netapp_iscsi_interface_iad2 }} --op=new
   when: ansible_distribution_major_version|int >= 8 and ansible_distribution == "RedHat" and datacenter == 'iad2'
   tags:
   - config
 
-- name: run iscsiadm command for initial connect to PHX2 vtap-fedora-iscsi01
+- name: Run iscsiadm command for initial connect to PHX2 vtap-fedora-iscsi01
   command: creates=/var/lib/iscsi/nodes/{{ netapp_iscsi_name }}/{{ netapp_iscsi_portal }},3260 /sbin/iscsiadm --mode node --targetname  --portal {{ netapp_iscsi_portal }} -o new ; /sbin/iscsiadm --mode node --targetname {{ netapp_iscsi_name }} --portal {{ netapp_iscsi_portal }} --login
   tags:
   - config
 
-- name: run iscsiadm command for initial connect to IAD2 vtap-fedora-iscsi01
+- name: Run iscsiadm command for initial connect to IAD2 vtap-fedora-iscsi01
   command: creates=/var/lib/iscsi/nodes/{{ netapp_iscsi_name_iad2 }}/{{ netapp_iscsi_portal_iad2 }},3260 /sbin/iscsiadm --mode node --targetname  --portal {{ netapp_iscsi_portal_iad2 }} -o new ; /sbin/iscsiadm --mode node --targetname {{ netapp_iscsi_name_iad2 }} --portal {{ netapp_iscsi_portal_iad2 }} --login
   when: ansible_distribution_major_version|int >= 8 and ansible_distribution == "RedHat" and datacenter == 'iad2'
   tags:
   - config
 
-# - name: run iscsiadm command for initial connect to vtap-fedora-nfs01
+# - name: Run iscsiadm command for initial connect to vtap-fedora-nfs01
 #  command: creates=/var/lib/iscsi/nodes/{{ netapp_nfs01_iscsi_name }}/{{ netapp_nfs01_iscsi_portal }},3260 /sbin/iscsiadm --mode node --targetname  --portal {{ netapp_nfs01_iscsi_portal }} -o new ; /sbin/iscsiadm --mode node --targetname {{ netapp_nfs01_iscsi_name }} --portal {{ netapp_nfs01_iscsi_portal }} --login
 #  tags:
 #  - config

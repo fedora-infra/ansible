@@ -1,15 +1,15 @@
 ---
-- name: backup IPA data for testing
+- name: Backup IPA data for testing
   hosts: ipa_stg
   # vars_files:
   #  - /srv/web/infra/ansible/vars/global.yml
   #  - "/srv/private/ansible/vars.yml"
   #  - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   tasks:
-    - name: create backup of FreeIPA server data
+    - name: Create backup of FreeIPA server data
       command: ipa-backup
 
-    - name: make the latest backup available under a fixed name
+    - name: Make the latest backup available under a fixed name
       shell:
         cmd: ln -snf $(ls -1t ipa-full* | head -n 1) ipa-full-latest
         chdir: /var/lib/ipa/backup

@@ -1,11 +1,11 @@
 ---
-- name: install memcached server package
+- name: Install memcached server package
   package: state=present name=memcached
   tags:
   - packages
   - memcached
 
-- name: setup memcached sysconfig
+- name: Setup memcached sysconfig
   template: src=memcached dest=/etc/sysconfig/memcached mode=644
   notify:
   - restart memcached
@@ -13,20 +13,20 @@
   - config
   - memcached
 
-- name: enable memcached service
+- name: Enable memcached service
   service: state=started enabled=true name=memcached
   tags:
   - service
   - config
   - memcached
 
-- name: make systemd override dir
+- name: Make systemd override dir
   file: state=directory path=/etc/systemd/system/memcached.service.d mode=0755 owner=root group=root
   tags:
   - memcached
   when: ansible_distribution == 'RedHat' and ansible_distribution_major_version|int == 7
 
-- name: make systemd override config
+- name: Make systemd override config
   copy: src=memcached-systemdoverride.conf dest=/etc/systemd/system/memcached.service.d/
   tags:
   - memcached

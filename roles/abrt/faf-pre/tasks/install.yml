@@ -1,5 +1,5 @@
 ---
-- name: install postgresql packages
+- name: Install postgresql packages
   package:
     state: present
     name:
@@ -8,14 +8,14 @@
     - postgresql
     - pg-semver
 
-- name: install ssl packages for https
+- name: Install ssl packages for https
   package:
     state: present
     name:
     - openssl
     - mod_ssl
 
-- name: memcached rhel
+- name: Memcached rhel
   package:
     state: present
     name:
@@ -23,7 +23,7 @@
     - python3-memcached
   when: ansible_distribution == "RedHat" and faf_web_cache_type == "memcached"
 
-- name: memcached fedora
+- name: Memcached fedora
   package:
     state: present
     name:

@@ -26,7 +26,7 @@
   # this is how you include other task lists
   - import_tasks: "{{ tasks_path }}/motd.yml"
 
-  - name: install packager tools (dnf)
+  - name: Install packager tools (dnf)
     dnf: state=present pkg={{ item }}
     with_items:
     - fedora-packager
@@ -34,7 +34,7 @@
     tags:
     - packages
 
-  - name: allow packagers to use mock
+  - name: Allow packagers to use mock
     copy: dest=/etc/pam.d/mock src="{{ files }}/common/mock"
     tags:
     - config

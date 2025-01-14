@@ -9,28 +9,28 @@
 # - import_tasks: "{{ tasks_path }}/postfix_basic.yml"
 
 # To late to do it here (
-# - name: setup correct hostname for copr machine
+# - name: Setup correct hostname for copr machine
 #  hostname: name="{{ copr_hostbase }}.cloud.fedoraproject.org"
 #  #  hostname: name="{{ hostbase|regex_replace('.*-$', '')}}.cloud.fedoraproject.org"
 #  tags:
 #  - config
 
-- name: enable epel for non-fedora hosts
+- name: Enable epel for non-fedora hosts
   package: state=present pkg="epel-release"
   when: ansible_distribution != 'Fedora'
 
-- name: copy .forward file
+- name: Copy .forward file
   copy: src="{{ _forward_src }}" dest="/root/.forward" owner=root group=root
   tags:
   - config
 
-- name: deploy /etc/hosts file
+- name: Deploy /etc/hosts file
   copy: src="hosts" dest=/etc/ owner=root group=root mode=644
   tags:
   - config
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1941170
-- name: mask the systemd-oomd service
+- name: Mask the systemd-oomd service
   systemd:
     name: systemd-oomd
     state: stopped
@@ -38,11 +38,11 @@
     masked: yes
   when: ansible_distribution == 'Fedora'
 
-- name: configure crond
+- name: Configure crond
   copy: src=sysconfig.crond dest=/etc/sysconfig/crond
   notify: restart crond
 
-- name: install base copr packages
+- name: Install base copr packages
   package:
     name:
       - acl  # useful for ansible acl module
@@ -56,11 +56,11 @@
   tags:
     packages
 
-- name: install rsyslog-logrotate
+- name: Install rsyslog-logrotate
   package: name=rsyslog-logrotate state=present
   when: ansible_distribution == 'Fedora'
 
-- name: configure anacrond to not send mails to root user
+- name: Configure anacrond to not send mails to root user
   lineinfile: dest=/etc/anacrontab
               backup=yes
               state=present
@@ -68,38 +68,38 @@
               regexp="^MAILTO"
   notify: restart crond
 
-- name: override the default rsyslog logrotate file
+- name: Override the default rsyslog logrotate file
   copy: src=syslog-logrotate dest=/etc/logrotate.d/rsyslog
   tags:
   - logrotate
   when: ansible_distribution == 'Fedora'
 
-- name: install copr-selinux
+- name: Install copr-selinux
   package:
     state: latest
     name: copr-selinux
   tags:
   - packages
 
-- name: start node exporter
+- name: Start node exporter
   service: state=started enabled=yes name=node_exporter
   when:
     - "'pulp' not in inventory_hostname"
 
-# - name: check offloading
+# - name: Check offloading
 #   shell: "ethtool -k ens5 | egrep -q 'tcp-segmentation-offload: on|generic-receive-offload: on|generic-segmentation-offload: on'"
 #   register: offloading
 #   failed_when: offloading.rc == 2
 #   changed_when: "1 != 1"
 #   check_mode: no
 #
-# - name: disable offloading
+# - name: Disable offloading
 #   command: ethtool -K ens5 tso off gro off gso off
 #   when:
 #     - offloading.rc == 0
 #     - ansible_distribution == 'Fedora'
 #
-# - name: disable offloading (persitently)
+# - name: Disable offloading (persitently)
 #   shell: "nmcli con modify '{{ aws_ipv6_con }}' ethtool.feature-tso off ethtool.feature-gro off ethtool.feature-gso off"
 #   when:
 #     - offloading.rc == 0
@@ -107,7 +107,7 @@
 #   tags:
 #   - config
 #
-# - name: check we have the needed ipv6
+# - name: Check we have the needed ipv6
 #   shell: "nmcli con show '{{ aws_ipv6_con }}' | grep ipv6.addresses | grep {{ aws_ipv6_addr }}"
 #   register: ipv6_config_check
 #   failed_when: false
@@ -116,7 +116,7 @@
 #     - aws_ipv6_addr is defined
 #   tags: ipv6_config
 #
-# - name: setup ipv6 networking
+# - name: Setup ipv6 networking
 #   shell: |
 #     nmcli con modify '{{ aws_ipv6_con }}' ipv6.method auto ipv6.may-fail yes ipv6.never-default no ipv6.addresses '{{ aws_ipv6_addr }}'
 #     nmcli con up '{{ aws_ipv6_con }}'
@@ -125,7 +125,7 @@
 #     - ipv6_config_check.changed
 #   tags: ipv6_config
 
-- name: install nrpe checks
+- name: Install nrpe checks
   template: src=copr_nrpe.cfg
             dest=/etc/nrpe.d/copr_nrpe.cfg
   notify:
@@ -135,7 +135,7 @@
   - copr_cdn
   - copr_ping
 
-# - name: enable and run logrotate service
+# - name: Enable and run logrotate service
 #   service: name="logrotate" state=started
 
 # https://github.com/fedora-copr/copr/issues/3439

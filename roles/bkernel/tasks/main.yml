@@ -1,5 +1,5 @@
 ---
-- name: add pkgs for bkernel boxes
+- name: Add pkgs for bkernel boxes
   package:
     state: present
     name:
@@ -12,24 +12,24 @@
   tags:
   - bkernel
 
-- name: enable pcscd
+- name: Enable pcscd
   service: name=pcscd state=started enabled=true
   tags:
   - bkernel
 
-- name: setup opensc in pcscd
+- name: Setup opensc in pcscd
   shell: modutil -dbdir /etc/pki/pesign -list | grep -q OpenSC ||  modutil -force -dbdir /etc/pki/pesign -add opensc -libfile /usr/lib64/pkcs11/opensc-pkcs11.so
   check_mode: no
   changed_when: "1 != 1"
   tags:
   - bkernel
 
-- name: setup pesign users config
+- name: Setup pesign users config
   copy: src=pesign-users dest=/etc/pesign/users mode=0600 owner=root group=root
   tags:
   - bkernel
 
-- name: enable pesign
+- name: Enable pesign
   service: name=pesign state=started enabled=true
   tags:
   - bkernel
@@ -54,12 +54,12 @@
   tags:
   - bkernel
 
-- name: when you awake you will remember nothing
+- name: When you awake you will remember nothing
   copy: src=history_off.sh dest=/etc/profile.d/history_off.sh mode=0644
   tags:
   - bkernel
 
-- name: mock site-defaults.cfg
+- name: Mock site-defaults.cfg
   template:
     src: bkernel-site-defaults.cfg
     dest: /etc/mock/site-defaults.cfg

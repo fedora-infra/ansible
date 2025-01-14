@@ -1,10 +1,10 @@
 ---
-- name: set seboolean for nfs httpd
+- name: Set seboolean for nfs httpd
   seboolean: name=httpd_use_nfs state=true persistent=true
   tags:
   - kojipkgs
 
-- name: install apache config files for local apache
+- name: Install apache config files for local apache
   copy: src={{ item }} dest=/etc/httpd/conf.d/{{ item }} owner=root group=root mode=644
   with_items:
   - infrastructure.conf
@@ -13,7 +13,7 @@
   tags:
   - kojipkgs
 
-- name: install apache config templates for local apache
+- name: Install apache config templates for local apache
   template: src={{ item }} dest=/etc/httpd/conf.d/{{ item }} owner=root group=root mode=644
   with_items:
   - kojipkgs.conf
@@ -22,24 +22,24 @@
   tags:
   - kojipkgs
 
-- name: make sure httpd listens on port 8080
+- name: Make sure httpd listens on port 8080
   lineinfile: dest=/etc/httpd/conf/httpd.conf state=present regexp="^Listen 80" line="Listen 8080"
   notify:
   - reload httpd
   tags:
   - kojipkgs
 
-- name: make a mnt/koji link
+- name: Make a mnt/koji link
   file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji
   tags:
   - kojipkgs
 
-- name: disable welcome.conf giving a 403 on / (needed for monitoring)
+- name: Disable welcome.conf giving a 403 on / (needed for monitoring)
   copy: content="# welcome.conf disabled" dest=/etc/httpd/conf.d/welcome.conf
   tags:
   - kojipkgs
 
-- name: make systemd drop-in override dir
+- name: Make systemd drop-in override dir
   file: name=/etc/systemd/system/varnish.service.d
         state=directory
         recurse=yes
@@ -47,7 +47,7 @@
   tags:
   - kojipkgs
 
-- name: override varnish service to restart on failure
+- name: Override varnish service to restart on failure
   copy: dest=/etc/systemd/system/varnish.service.d/restart-on-fail.conf
         src=restart-on-fail.conf
   notify:

@@ -9,20 +9,20 @@
 #
 
 ---
-- name: check for updates
+- name: Check for updates
   hosts: distro_RedHat:distro_CentOS:!ocp*:!worker*
   gather_facts: false
 
   tasks:
 
-  - name: check for updates (yum)
+  - name: Check for updates (yum)
     yum: list=updates update_cache=true
     register: yumoutput
 
   - debug: msg="{{ inventory_hostname}} {{ yumoutput.results|length }}"
     when: yumoutput.results|length > 0
 
-- name: check for updates
+- name: Check for updates
   hosts: distro_Fedora:!ocp*:!worker*
   gather_facts: false
 
@@ -32,10 +32,10 @@
 # We use the command module here because the real module can't expire
 #
 
-  - name: make dnf recheck for new metadata from repos
+  - name: Make dnf recheck for new metadata from repos
     command: dnf clean expire-cache
 
-  - name: check for updates (dnf)
+  - name: Check for updates (dnf)
     dnf: list=updates
     register: dnfoutput
 

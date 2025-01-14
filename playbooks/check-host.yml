@@ -9,7 +9,7 @@
 
   tasks:
 
-  - name: create temp dir for collecting info
+  - name: Create temp dir for collecting info
     shell: mktemp -d
     register: temp_dir
     changed_when: false
@@ -70,7 +70,7 @@
       - services
 
 
-  - name: output enabled service list chkconfig
+  - name: Output enabled service list chkconfig
     shell: echo {{enabled_services_chkconfig.stdout_lines}} >> {{temp_dir.stdout}}/eservices
     when: enabled_services_chkconfig is defined and enabled_services_chkconfig.rc == 0
     changed_when: false
@@ -78,7 +78,7 @@
       - check
       - services
 
-  - name: output disabled loaded service list chkconfig
+  - name: Output disabled loaded service list chkconfig
     shell: echo {{disabled_services_chkconfig.stdout_lines}} >> {{temp_dir.stdout}}/dservices
     when: disabled_services_chkconfig is defined and disabled_services_chkconfig.rc == 0
     changed_when: false
@@ -87,7 +87,7 @@
       - services
 
 
-  - name: output loaded active service list systemctl
+  - name: Output loaded active service list systemctl
     shell: echo {{loaded_active_services_systemctl.stdout_lines}} >> {{temp_dir.stdout}}/laservices
     when: loaded_active_services_systemctl is defined and loaded_active_services_systemctl.rc == 0
     changed_when: false
@@ -95,7 +95,7 @@
       - check
       - services
 
-  - name: output loaded inactive service list systemctl
+  - name: Output loaded inactive service list systemctl
     shell: echo {{loaded_inactive_services_systemctl.stdout_lines}} >> {{temp_dir.stdout}}/liservices
     when: loaded_inactive_services_systemctl is defined and loaded_inactive_services_systemctl.rc == 0
     changed_when: false
@@ -224,7 +224,7 @@
       - selinux
 
 
-  - name: misMatch current SELinux status with boot status
+  - name: MisMatch current SELinux status with boot status
     shell: echo "SElinux Current and Boot modes are NOT in sync" >> {{temp_dir.stdout}}/selinux
     when: ansible_selinux.status != "disabled" and ansible_selinux.config_mode != ansible_selinux.mode
     changed_when: false
@@ -232,40 +232,40 @@
       - check
       - selinux
 
-  - name: resolve last persisted dir - if one is present
+  - name: Resolve last persisted dir - if one is present
     local_action: shell ls -d -1 {{datadir_prfx_path}}/{{inventory_hostname}}-* 2>/dev/null | sort -r | head -1
     register: last_dir
     changed_when: false
     ignore_errors: true
 
-  - name: get file list
+  - name: Get file list
     shell: ls -1 {{temp_dir.stdout}}/*
     register: file_list
     changed_when: false
 
-  - name: get timestamp
+  - name: Get timestamp
     shell: "date +%Y-%m-%d-%H-%M-%S"
     register: timestamp
     changed_when: false
 
-  - name: create persisting-state directory
+  - name: Create persisting-state directory
     local_action: file path=/{{datadir_prfx_path}}/{{inventory_hostname}}-{{timestamp.stdout}} state=directory
     changed_when: false
 
-  - name: fetch file list
+  - name: Fetch file list
     fetch: src={{item}} dest=/{{datadir_prfx_path}}/{{inventory_hostname}}-{{timestamp.stdout}}/ flat=true
     with_items: "{{file_list.stdout_lines}}"
     changed_when: false
 
 
-  - name: diff the new files with last ones presisted
+  - name: Diff the new files with last ones presisted
     local_action: shell for file in {{datadir_prfx_path}}/{{inventory_hostname}}-{{timestamp.stdout}}/*; do filename=$(basename $file); diff {{datadir_prfx_path}}/{{inventory_hostname}}-{{timestamp.stdout}}/$filename {{last_dir.stdout.strip(':')}}/$filename; done
     ignore_errors: true
     changed_when: false
     register: file_diff
     when: last_dir is defined and last_dir.stdout != ""
 
-  - name: display diff
+  - name: Display diff
     debug: var=file_diff.stdout_lines
     ignore_errors: true
     changed_when: false
@@ -273,11 +273,11 @@
 
 # clean up: can also be put as handlers
 
-  - name: clean remote temp dir
+  - name: Clean remote temp dir
     file: path={{temp_dir.stdout}} state=absent
     changed_when: false
 
-  - name: clean rpm temp file
+  - name: Clean rpm temp file
     file: path={{localchanges.stdout}} state=absent
     changed_when: false
 

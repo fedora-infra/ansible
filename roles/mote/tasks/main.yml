@@ -1,7 +1,7 @@
 ---
 # Configuration for the mote webapp
 
-- name: install needed packages
+- name: Install needed packages
   package: name={{ item }} state=present
   with_items:
   - mote
@@ -10,7 +10,7 @@
   - packages
   - mote
 
-- name: set the memcached sysconfig file
+- name: Set the memcached sysconfig file
   copy:
     src: memcached.sysconfig
     dest: /etc/sysconfig/memcached
@@ -19,7 +19,7 @@
   notify:
   - restart memcached
 
-- name: make systemd override dir
+- name: Make systemd override dir
   file:
     state: directory
     path: /etc/systemd/system/memcached.service.d
@@ -29,7 +29,7 @@
   tags:
   - mote
 
-- name: make systemd override config
+- name: Make systemd override config
   copy:
     src: memcached.override
     dest: /etc/systemd/system/memcached.service.d/override.conf
@@ -41,7 +41,7 @@
 
 - meta: flush_handlers
 
-- name: start memcached
+- name: Start memcached
   service:
     state: started
     enabled: yes
@@ -49,7 +49,7 @@
   tags:
   - mote
 
-- name: replace the mote configuration file by the one with the normal user
+- name: Replace the mote configuration file by the one with the normal user
   template: src={{ item.file }}
             dest="{{ item.location }}/{{ item.file }}"
             owner=apache group=apache mode=0600
@@ -71,13 +71,13 @@
   tags:
   - mote
 
-- name: start mote-updater service
+- name: Start mote-updater service
   service: name=mote-updater state=started enabled=yes
   tags:
   - services
   - mote
 
-- name: apply selinux type to static files
+- name: Apply selinux type to static files
   file: >
     dest=/usr/lib/python2.7/site-packages/mote/static/
     setype=httpd_sys_content_t
@@ -87,7 +87,7 @@
   - mote
   - selinux
 
-- name: apply selinux type to meetbot files
+- name: Apply selinux type to meetbot files
   file: >
     dest=/srv/web/meetbot/
     setype=httpd_sys_content_t
@@ -97,7 +97,7 @@
   - mote
   - selinux
 
-- name: set sebooleans so apache can use memcached
+- name: Set sebooleans so apache can use memcached
   seboolean: name=httpd_can_network_memcache
                     state=true
                     persistent=true
@@ -105,7 +105,7 @@
   - mote
   - selinux
 
-- name: set sebooleans so apache can use nfs
+- name: Set sebooleans so apache can use nfs
   seboolean: name=httpd_use_nfs
                     state=true
                     persistent=true
@@ -113,7 +113,7 @@
   - mote
   - selinux
 
-- name: apply selinux type to the wsgi file
+- name: Apply selinux type to the wsgi file
   file: >
     dest=/usr/share/mote/mote.wsgi
     setype=httpd_sys_content_t
@@ -121,7 +121,7 @@
   - mote
   - selinux
 
-- name: apply selinux type to the name mappings file
+- name: Apply selinux type to the name mappings file
   file: >
     dest=/usr/share/mote/name_mappings.json
     setype=httpd_sys_content_t
@@ -131,7 +131,7 @@
   - mote
   - selinux
 
-- name: apply selinux type to the category mappings file
+- name: Apply selinux type to the category mappings file
   file: >
     dest=/usr/share/mote/category_mappings.json
     setype=httpd_sys_content_t

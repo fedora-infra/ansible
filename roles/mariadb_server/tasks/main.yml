@@ -1,19 +1,19 @@
 ---
-- name: ensure packages required for mariadb are installed
+- name: Ensure packages required for mariadb are installed
   package:
     state: present
     name:
     - mariadb-server
   when: ansible_cmdline.ostree is not defined
 
-- name: ensure packages required for mariadb are installed (el8)
+- name: Ensure packages required for mariadb are installed (el8)
   package:
     state: present
     name:
     - python3-PyMySQL
   when: ansible_distribution_major_version|int >= 8
 
-- name: copy my.cnf
+- name: Copy my.cnf
   copy: src={{ item }} dest=/etc/my.cnf owner=root group=root mode=0644
   with_first_found:
     - "{{ mariadb_config }}"
@@ -26,10 +26,10 @@
   notify:
     - restart mariadb
 
-- name: enable and start mariadb database
+- name: Enable and start mariadb database
   service: name=mariadb enabled=yes state=started
 
-- name: set mariaddb root user password
+- name: Set mariaddb root user password
   no_log: true
   mysql_user:
     name: root
@@ -40,7 +40,7 @@
     login_unix_socket: /var/lib/mysql/mysql.sock
     check_implicit_admin: true
 
-- name: create .my.cnf file for future logins
+- name: Create .my.cnf file for future logins
   template: src=dotmy.cnf.j2 dest=/root/.my.cnf owner=root group=root mode=0700
 
 - name: Ensure mariadb has a place to backup to
@@ -64,5 +64,5 @@
   - cron
   - mariadb-server
 
-- name: set domain_can_mmap_files so collectd and nagios work
+- name: Set domain_can_mmap_files so collectd and nagios work
   seboolean: name=domain_can_mmap_files state=yes persistent=yes

@@ -1,19 +1,19 @@
 ---
-- name: configure retrace-server
+- name: Configure retrace-server
   template:
     src: etc-retrace-server.conf.j2
     dest: /etc/retrace-server/retrace-server.conf
     mode: "0644"
   notify: restart httpd
 
-- name: retrace-server http config
+- name: Retrace-server http config
   template:
     src: retrace-server-httpd.conf.j2
     dest: /etc/httpd/conf.d/retrace-server-httpd.conf
     mode: "0644"
   notify: restart httpd
 
-- name: configure retrace-server hooks config
+- name: Configure retrace-server hooks config
   template:
     src: etc-retrace-server-hooks.conf.j2
     dest: /etc/retrace-server/retrace-server-hooks.conf

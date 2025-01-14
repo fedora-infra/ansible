@@ -1,5 +1,5 @@
 ---
-- name: install postfix
+- name: Install postfix
   package: name=postfix state=present
   tags:
   - postfix
@@ -21,7 +21,7 @@
   - postfix
   - config
 
-- name: enable postfix to start
+- name: Enable postfix to start
   service: name=postfix state=started enabled=true
   tags:
   - service

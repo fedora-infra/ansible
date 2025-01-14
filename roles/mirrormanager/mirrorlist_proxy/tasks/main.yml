@@ -2,20 +2,20 @@
 # tasklist for setting up the mirrorlist app on the proxies
 
 
-- name: add mirrormanager user - uid {{ mirrormanager_uid }}
+- name: Add mirrormanager user - uid {{ mirrormanager_uid }}
   user: name=mirrormanager uid={{ mirrormanager_uid }} state=present home=/home/mirrormanager createhome=yes
   tags:
   - mirrorlist_proxy
 
 # mirrormanager user ssh key(s)
-- name: add authorized_keys for mirrormanager
+- name: Add authorized_keys for mirrormanager
   authorized_key: key="{{ item }}" user=mirrormanager state=present
   with_file:
   - mm-authorized_key
   tags:
   - mirrorlist_proxy
 
-- name: setup directories
+- name: Setup directories
   file: dest="{{item}}" mode=0755 state=directory
   with_items:
   - /srv/mirrorlist
@@ -26,7 +26,7 @@
   tags:
   - mirrorlist_proxy
 
-- name: make sure the /usr/share/GeoIP/ directory exists
+- name: Make sure the /usr/share/GeoIP/ directory exists
   file:
     path: /usr/share/GeoIP/
     state: directory
@@ -36,14 +36,14 @@
   tags:
   - mirrorlist_proxy
 
-- name: push over the newer geoip db
+- name: Push over the newer geoip db
   copy: src={{ item }} dest=/usr/share/GeoIP/
   with_fileglob:
     - "{{ bigfiles }}/geoip/*.mmdb"
   tags:
   - mirrorlist_proxy
 
-- name: make sure mirrormanager user can write new protobuf based cache file
+- name: Make sure mirrormanager user can write new protobuf based cache file
   file: dest="{{item}}" owner=mirrormanager group=mirrormanager
   with_items:
   - /srv/mirrorlist/data
@@ -52,7 +52,7 @@
   tags:
   - mirrorlist_proxy
 
-- name: for the rust based mirrorlist server chown directories
+- name: For the rust based mirrorlist server chown directories
   file: dest="{{item}}" owner=mirrormanager group=mirrormanager
   with_items:
   - /var/log/mirrormanager
@@ -67,7 +67,7 @@
   tags:
   - mirrorlist_proxy
 
-- name: for the rust based mirrorlist server chown log files
+- name: For the rust based mirrorlist server chown log files
   file: dest="{{item}}" owner=mirrormanager group=mirrormanager
   with_items:
   - /var/log/mirrormanager/mirrorlist1.service.log
@@ -75,17 +75,17 @@
   tags:
   - mirrorlist_proxy
 
-- name: set logrotate_read_inside_containers so logrotate works
+- name: Set logrotate_read_inside_containers so logrotate works
   seboolean: name=logrotate_read_inside_containers state=yes persistent=yes
   tags:
   - mirrorlist_proxy
 
-- name: setup logrotate log for mirrormanager log files
+- name: Setup logrotate log for mirrormanager log files
   copy: src=logrotate-mirrormanager dest=/etc/logrotate.d/mirrormanager
   tags:
   - mirrorlist_proxy
 
-- name: install mirrorlist-server package
+- name: Install mirrorlist-server package
   package: name={{ item }} state=present
   with_items:
   - mirrorlist-server
@@ -117,7 +117,7 @@
   - mirrorlist_proxy
 
 # install our cron script to handle hourly new protbuf cache changes.
-- name: install script to restart mirrorlist processes on protobuf cache changes
+- name: Install script to restart mirrorlist processes on protobuf cache changes
   copy: src=restart-mirrorlist-processes dest=/usr/local/bin/restart-mirrorlist-processes mode=0755
   tags:
   - mirrorlist_proxy
@@ -138,27 +138,27 @@
   - mirrorlist_proxy
 
 # Custom selinux policy to allow logrotate to rotate our mirrorlist logs
-- name: ensure a directory exists for our custom selinux module
+- name: Ensure a directory exists for our custom selinux module
   file: dest=/usr/local/share/mirrorlist-logrotate state=directory
   tags:
   - selinux
   - mirrorlist_proxy
 
-- name: copy over our custom selinux module
+- name: Copy over our custom selinux module
   copy: src=selinux/mirrorlist-logrotate.pp dest=/usr/local/share/mirrorlist-logrotate/mirrorlist-logrotate.pp
   register: selinux_module
   tags:
   - selinux
   - mirrorlist_proxy
 
-- name: install our custom selinux module
+- name: Install our custom selinux module
   command: semodule -i /usr/local/share/mirrorlist-logrotate/mirrorlist-logrotate.pp
   when: selinux_module is changed
   tags:
   - selinux
   - mirrorlist_proxy
 
-- name: check for mirrorlist files
+- name: Check for mirrorlist files
   stat: path=/srv/mirrorlist/data/mirrorlist1/mirrorlist_cache.proto
   register: mirrorlist_cache_status
   tags:

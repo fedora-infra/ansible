@@ -1,7 +1,7 @@
 ---
 # tasklist for setting up Gitolite Fedmsg checks
 
-- name: schedule check execution
+- name: Schedule check execution
   cron: >
     name=git-check-perms
     cron_file=ansible-git-check-perms

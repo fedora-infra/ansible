@@ -2,7 +2,7 @@
 # Tasks to set up fedmsg-gateway-slave
 
 
-- name: install needed packages
+- name: Install needed packages
   package:
     state: present
     name:
@@ -14,7 +14,7 @@
   - fedmsg/gateway/slave
   when: (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int < 8) or (ansible_distribution_major_version|int < 30 and ansible_distribution == 'Fedora')
 
-- name: install needed packages in a python 3 manner
+- name: Install needed packages in a python 3 manner
   package:
     state: present
     name:
@@ -45,7 +45,7 @@
   - fedmsg/gateway
   - fedmsg/gateway/slave
 
-- name: install /etc/fedmsg.d/fedmsg-gateway-slave.py
+- name: Install /etc/fedmsg.d/fedmsg-gateway-slave.py
   template: src={{ item.file }}
             dest={{ item.dest }}
             owner=root group=root mode=0644
@@ -60,7 +60,7 @@
 
 # Stunnel specific bits
 
-- name: create directories
+- name: Create directories
   file: path=/etc/{{ item }} state=directory
   with_items:
   - stunnel
@@ -68,7 +68,7 @@
   - fedmsg/gateway
   - fedmsg/gateway/slave
 
-- name: install stunnel service definition
+- name: Install stunnel service definition
   copy: src=stunnel.service
         dest=/usr/lib/systemd/system/stunnel.service
         owner=root group=root mode=0644
@@ -79,13 +79,13 @@
   - fedmsg/gateway
   - fedmsg/gateway/slave
 
-- name: ensure old stunnel init file is gone
+- name: Ensure old stunnel init file is gone
   file: dest=/etc/init.d/stunnel/stunnel.init state=absent
   tags:
   - fedmsg/gateway
   - fedmsg/gateway/slave
 
-- name: install stunnel.conf
+- name: Install stunnel.conf
   template: src={{ item.file }}
             dest={{ item.dest }}
             owner=root group=root mode=0600
@@ -96,7 +96,7 @@
   - fedmsg/gateway
   - fedmsg/gateway/slave
 
-- name: put our combined cert in place
+- name: Put our combined cert in place
   copy: >
     src={{private}}/files/httpd/wildcard-2024.fedoraproject.org.combined.cert
     dest=/etc/pki/tls/certs/wildcard-2024.fedoraproject.org.combined.cert
@@ -106,27 +106,27 @@
   - fedmsg/gateway
   - fedmsg/gateway/slave
 
-- name: start the gateway for raw zeromq traffic
+- name: Start the gateway for raw zeromq traffic
   service: name=fedmsg-gateway state=started enabled=yes
   tags:
   - fedmsg/gateway
   - fedmsg/gateway/slave
   when: (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int < 8) or (ansible_distribution_major_version|int < 30 and ansible_distribution == 'Fedora')
 
-- name: start the gateway for raw zeromq traffic
+- name: Start the gateway for raw zeromq traffic
   service: name=fedmsg-gateway-3 state=started enabled=yes
   tags:
   - fedmsg/gateway
   - fedmsg/gateway/slave
   when: (ansible_distribution_major_version|int >= 30 and ansible_distribution == 'Fedora') or (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int >= 8)
 
-- name: start stunnel for websockets traffic
+- name: Start stunnel for websockets traffic
   service: name=stunnel state=started enabled=yes
   tags:
   - fedmsg/gateway
   - fedmsg/gateway/slave
 
-- name: ensure that nrpe has rights to monitor us
+- name: Ensure that nrpe has rights to monitor us
   user:
     name: nrpe
     append: yes

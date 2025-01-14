@@ -1,5 +1,5 @@
 ---
-- name: push packages out
+- name: Push packages out
   hosts: bugzilla2fedmsg:bugzilla2fedmsg_stg
   user: root
   vars_files:
@@ -12,17 +12,17 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   tasks:
-  - name: clean all metadata {%if testing%}(with infrastructure-testing on){%endif%}
+  - name: Clean all metadata {%if testing%}(with infrastructure-testing on){%endif%}
     command: yum clean all {%if testing%} --enablerepo=infrastructure-tags-stg {%endif%}
     check_mode: no
-  - name: update bugzilla2fedmsg packages from main repo
+  - name: Update bugzilla2fedmsg packages from main repo
     package: name="python-bugzilla2fedmsg" state=latest
     when: not testing
-  - name: update bugzilla2fedmsg packages from testing repo
+  - name: Update bugzilla2fedmsg packages from testing repo
     yum: name="python-bugzilla2fedmsg" state=latest enablerepo=infrastructure-tags-stg
     when: testing
 
-- name: verify the backend and restart it
+- name: Verify the backend and restart it
   hosts: bugzilla2fedmsg:bugzilla2fedmsg_stg
   user: root
   vars_files:
@@ -33,7 +33,7 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   pre_tasks:
-  - name: tell nagios to shush
+  - name: Tell nagios to shush
     nagios: action=downtime minutes=60 service=host host={{ inventory_hostname_short }}{{ env_suffix }}
     delegate_to: noc01.iad2.fedoraproject.org
     ignore_errors: true
@@ -43,7 +43,7 @@
 
   post_tasks:
   - service: name="moksha-hub" state=restarted
-  - name: tell nagios to unshush
+  - name: Tell nagios to unshush
     nagios: action=unsilence service=host host={{ inventory_hostname_short }}{{ env_suffix }}
     delegate_to: noc01.iad2.fedoraproject.org
     ignore_errors: true

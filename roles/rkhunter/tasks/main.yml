@@ -1,5 +1,5 @@
 ---
-- name: install rkhunter (dnf)
+- name: Install rkhunter (dnf)
   package: name=rkhunter state=present
   notify:
   - run rkhunter
@@ -7,7 +7,7 @@
   - rkhunter
   - packages
 
-- name: rkhunter.conf
+- name: Rkhunter.conf
   template: src=rkhunter.conf.j2 dest=/etc/rkhunter.conf mode=0640
   notify:
   - run rkhunter
@@ -15,7 +15,7 @@
   - rkhunter
   - config
 
-- name: rkhunter sysconfig
+- name: Rkhunter sysconfig
   copy: src=rkhunter.sysconfig dest=/etc/sysconfig/rkhunter mode=0640
   notify:
   - run rkhunter

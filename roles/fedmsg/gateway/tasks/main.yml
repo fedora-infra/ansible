@@ -1,11 +1,11 @@
 ---
-- name: install fedmsg-gateway
+- name: Install fedmsg-gateway
   package: name=fedmsg-gateway state=present
   tags:
   - packages
   - fedmsg/gateway
 
-- name: ensure that nrpe has rights to monitor us
+- name: Ensure that nrpe has rights to monitor us
   file: >
     dest=/var/run/fedmsg/monitoring-fedmsg-gateway.socket
     mode=0775
@@ -16,7 +16,7 @@
   tags:
   - fedmsgmonitor
 
-- name: setup fedmsg-gateway config file
+- name: Setup fedmsg-gateway config file
   copy: src=gateway.py dest=/etc/fedmsg.d/gateway.py
   tags:
   - config
@@ -24,14 +24,14 @@
   notify:
   - restart fedmsg-gateway
 
-- name: create systemd drop-in directory
+- name: Create systemd drop-in directory
   file: >
     dest=/etc/systemd/system/fedmsg-gateway.service.d
     state=directory
   tags:
   - fedmsg/gateway
 
-- name: bump fs limits by installing a drop-in systemd config
+- name: Bump fs limits by installing a drop-in systemd config
   copy: >
     src=fs-limits.conf
     dest=/etc/systemd/system/fedmsg-gateway.service.d/fs-limits.conf
@@ -41,7 +41,7 @@
   notify:
   - restart fedmsg-gateway
 
-- name: enable on boot and start fedmsg-gateway
+- name: Enable on boot and start fedmsg-gateway
   service:
     name: fedmsg-gateway
     state: started
@@ -51,7 +51,7 @@
   - fedmsg/gateway
   when: env != "staging"
 
-- name: disable fedmsg-gateway on staging
+- name: Disable fedmsg-gateway on staging
   service:
     name: fedmsg-gateway
     state: stopped

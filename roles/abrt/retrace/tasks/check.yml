@@ -8,7 +8,7 @@
   set_fact:
     settings_url: "https://{{ hostname }}/settings"
 
-- name: fetch settings
+- name: Fetch settings
   uri:
     url: "{{ settings_url }}"
     return_content: yes

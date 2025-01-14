@@ -1,7 +1,7 @@
 ---
 # Configuration for the ipsilon webapp
 
-- name: install needed packages
+- name: Install needed packages
   package:
     state: present
     update_cache: yes
@@ -94,7 +94,7 @@
   - ipsilon
   - patches
 
-- name: make sure /etc/ipsilon/root is owned correctly
+- name: Make sure /etc/ipsilon/root is owned correctly
   file:
     path: "/etc/ipsilon/root"
     owner: ipsilon
@@ -105,7 +105,7 @@
   - ipsilon
   - config
 
-- name: copy ipsilon configuration
+- name: Copy ipsilon configuration
   template:
     src: "ipsilon.conf"
     dest: "/etc/ipsilon/root/ipsilon.conf"
@@ -118,7 +118,7 @@
   notify:
   - restart apache
 
-- name: copy ipsilon admin configuration
+- name: Copy ipsilon admin configuration
   template:
     src: "configuration.conf"
     dest: "/etc/ipsilon/root/configuration.conf"
@@ -131,7 +131,7 @@
   notify:
   - restart apache
 
-- name: copy ipsilon OIDC client config
+- name: Copy ipsilon OIDC client config
   copy:
     src: "{{ private }}/files/ipsilon/openidc.{{env}}.static"
     dest: /etc/ipsilon/root/openidc.static.cfg
@@ -145,7 +145,7 @@
   notify:
   - restart apache
 
-- name: copy ipsilon httpd config
+- name: Copy ipsilon httpd config
   template:
     src: "httpd.conf.j2"
     dest: /etc/ipsilon/root/idp.conf
@@ -155,7 +155,7 @@
   notify:
   - restart apache
 
-- name: copy OIDC private key
+- name: Copy OIDC private key
   copy:
     src: "{{ private }}/files/ipsilon/openidc{{ env_suffix }}.key"
     dest: /etc/ipsilon/root/openidc.key
@@ -165,7 +165,7 @@
   tags:
   - ipsilon
 
-- name: create SAML2 dir
+- name: Create SAML2 dir
   file:
     path: /etc/ipsilon/root/saml2
     state: directory
@@ -176,7 +176,7 @@
   tags:
   - ipsilon
 
-- name: copy SAML2 private key
+- name: Copy SAML2 private key
   copy:
     src: "{{ private }}/files/saml2/{{ env }}/keys/idp.key"
     dest: /etc/ipsilon/root/saml2/idp.key
@@ -186,7 +186,7 @@
   tags:
   - ipsilon
 
-- name: copy SAML2 public key
+- name: Copy SAML2 public key
   copy:
     src: "{{ private }}/files/saml2/{{ env }}/keys/idp.crt"
     dest: /etc/ipsilon/root/saml2/idp.crt
@@ -196,7 +196,7 @@
   tags:
   - ipsilon
 
-- name: copy saml2 metadata script
+- name: Copy saml2 metadata script
   template:
     src: prepare-saml2-metadata.py
     dest: /usr/local/bin/prepare-saml2-metadata
@@ -206,7 +206,7 @@
   tags:
   - ipsilon
 
-- name: generate the saml2 metadata
+- name: Generate the saml2 metadata
   become_user: ipsilon
   become: yes
   command:
@@ -215,7 +215,7 @@
   tags:
   - ipsilon
 
-- name: set sebooleans so ipsilon can talk to the db
+- name: Set sebooleans so ipsilon can talk to the db
   seboolean:
     name: httpd_can_network_connect_db
     state: true
@@ -223,7 +223,7 @@
   tags:
   - ipsilon
 
-- name: set sebooleans so ipsilon can talk to IPA for the openid extension
+- name: Set sebooleans so ipsilon can talk to IPA for the openid extension
   seboolean:
     name: httpd_can_network_connect
     state: true
@@ -231,7 +231,7 @@
   tags:
   - ipsilon
 
-- name: set sebooleans so ipsilon can talk to sssd
+- name: Set sebooleans so ipsilon can talk to sssd
   seboolean:
     name: httpd_dbus_sssd
     state: true
@@ -239,7 +239,7 @@
   tags:
   - ipsilon
 
-- name: set sebooleans so ipsilon can use python-pam
+- name: Set sebooleans so ipsilon can use python-pam
   seboolean:
     name: "{{ item }}"
     state: true
@@ -250,14 +250,14 @@
   tags:
   - ipsilon
 
-- name: apply selinux type to the wsgi file
+- name: Apply selinux type to the wsgi file
   file:
     dest: /usr/libexec/ipsilon
     setype: httpd_sys_content_t
   tags:
   - ipsilon
 
-- name: copy SSSd configuration
+- name: Copy SSSd configuration
   template:
     src: sssd.conf
     dest: /etc/sssd/sssd.conf

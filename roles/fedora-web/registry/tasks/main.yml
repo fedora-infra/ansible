@@ -1,10 +1,10 @@
 ---
-- name: make registry-signatures dir
+- name: Make registry-signatures dir
   file: state=directory path=/srv/web/registry-signatures owner=apache group=sysadmin-releng mode=2775 setype=httpd_sys_content_t seuser=system_u
   tags:
   - fedora-web
 
-- name: make registry-index dir
+- name: Make registry-index dir
   file: state=directory path=/srv/web/registry-index owner=apache group=apache mode=755 setype=httpd_sys_content_t seuser=system_u
   tags:
   - fedora-web

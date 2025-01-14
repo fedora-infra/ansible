@@ -2,13 +2,13 @@
 # tasklist for setting up postfix/logreport
 # This is the base set of files needed for postfix/logreport
 
-- name: install postfix-perl-scripts package
+- name: Install postfix-perl-scripts package
   package: name=postfix-perl-scripts state=present
   tags:
   - postfix
   - packages
 
-- name: install /usr/sbin/pflogsumm
+- name: Install /usr/sbin/pflogsumm
   copy: src={{ item }} dest="/usr/sbin/{{ item }}" mode=0755
   with_item:
     - pflogsumm
@@ -16,7 +16,7 @@
   - postfix
   - config
 
-- name: install /etc/cron.d/postfix-log.cron
+- name: Install /etc/cron.d/postfix-log.cron
   copy: src={{ item }} dest="/etc/cron.d/{{ item }}"
   with_item:
     - postfix-log.cron

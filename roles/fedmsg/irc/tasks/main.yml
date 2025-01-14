@@ -1,5 +1,5 @@
 ---
-- name: install package for fedmsg-irc
+- name: Install package for fedmsg-irc
   package:
     state: present
     name:
@@ -10,7 +10,7 @@
   - packages
   - fedmsg/irc
 
-- name: ensure that nrpe has rights to monitor us
+- name: Ensure that nrpe has rights to monitor us
   file: >
     dest=/var/run/fedmsg/monitoring-fedmsg-irc.socket
     mode=0775
@@ -21,7 +21,7 @@
   tags:
   - fedmsgmonitor
 
-- name: setup fedmsg-irc config file
+- name: Setup fedmsg-irc config file
   template: src=ircbot.py dest=/etc/fedmsg.d/ircbot.py
   tags:
   - config
@@ -29,7 +29,7 @@
   notify:
   - restart fedmsg-irc
 
-- name: setup fas credentials config file
+- name: Setup fas credentials config file
   template: >
     src=fas-credentials.py
     dest=/etc/fedmsg.d/fas-credentials.py
@@ -42,7 +42,7 @@
   notify:
   - restart fedmsg-irc
 
-- name: enable on boot and start fedmsg-irc
+- name: Enable on boot and start fedmsg-irc
   service: name=fedmsg-irc state=started enabled=true
   tags:
   - services

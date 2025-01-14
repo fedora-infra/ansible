@@ -6,10 +6,10 @@
 - group: name="copr-dist-git" state=present gid=1003
 - group: name="apache" state=present gid=48
 
-- name: create user for git repos and copr-dist-git service
+- name: Create user for git repos and copr-dist-git service
   user: name="copr-dist-git" group=copr-dist-git groups=packager,apache uid=1002
 
-- name: install packages
+- name: Install packages
   dnf:
     state: present
     name:
@@ -24,7 +24,7 @@
   tags:
     - packages
 
-- name: install latest dist-git and copr-dist-git
+- name: Install latest dist-git and copr-dist-git
   dnf:
     state: present
     name:
@@ -32,15 +32,15 @@
       - dist-git-selinux
       - copr-dist-git
 
-- name: switch selinux to enforcing
+- name: Switch selinux to enforcing
   selinux: policy=targeted state=enforcing
 
-- name: make sure directories are owned by copr-dist-git user
+- name: Make sure directories are owned by copr-dist-git user
   file: path={{ item }} owner=copr-dist-git group=copr-dist-git state=directory recurse=yes
   with_items:
   - /var/log/copr-dist-git/
 
-- name: install config for copr-dist-git
+- name: Install config for copr-dist-git
   template: src=copr-dist-git.conf.j2 dest=/etc/copr/copr-dist-git.conf mode=0644
   tags:
   - config
@@ -48,13 +48,13 @@
   notify:
   - restart copr-dist-git
 
-- name: set git variables for copr-dist-git user
+- name: Set git variables for copr-dist-git user
   copy: src=".gitconfig" dest="/home/copr-dist-git/.gitconfig"
 
-- name: set git config username
+- name: Set git config username
   git_config: name=user.name scope=global value="Copr dist git"
 
-- name: install httpd config needed for COPR lookaside cache
+- name: Install httpd config needed for COPR lookaside cache
   copy: src="httpd/dist-git/{{ item }}" dest="/etc/httpd/conf.d/dist-git/{{ item }}"
   with_items:
   - lookaside-copr.conf
@@ -63,13 +63,13 @@
   notify:
   - reload httpd
 
-- name: letsencrypt for copr-dist-git
+- name: Letsencrypt for copr-dist-git
   include_role: name=copr/certbot
   tags:
     - config
     - certbot
 
-- name: install copr-dist-git httpd config
+- name: Install copr-dist-git httpd config
   copy: src="httpd/{{ item }}" dest="/etc/httpd/conf.d/{{ item }}"
   with_items:
   - copr-dist-git.conf
@@ -78,34 +78,34 @@
   notify:
   - reload httpd
 
-- name: install /etc/httpd/conf.d/ssl.conf
+- name: Install /etc/httpd/conf.d/ssl.conf
   template: src="ssl.conf.j2" dest="/etc/httpd/conf.d/ssl.conf" owner=root group=root mode=0644
   notify:
   - reload httpd
 
-- name: temporary logrotation fix until copr-dist-git 0.26 is released & deployed
+- name: Temporary logrotation fix until copr-dist-git 0.26 is released & deployed
   copy: src="logrotate.d/copr-dist-git" dest="/etc/logrotate.d/copr-dist-git"
 
-- name: install /etc/dist-git/dist-git.conf file
+- name: Install /etc/dist-git/dist-git.conf file
   copy: src="dist-git.conf" dest="/etc/dist-git/dist-git.conf" mode=0644
   tags:
   - config
 
-- name: install cgitrc
+- name: Install cgitrc
   template: src="cgitrc" dest="/etc/cgitrc" owner=root group=root mode=0644
 
-- name: allow httpd to run cgit
+- name: Allow httpd to run cgit
   seboolean: name=httpd_enable_cgi state=true persistent=true
 
-- name: install robots.txt
+- name: Install robots.txt
   copy: src="robots.txt" dest="/var/www/html/" mode=0644
   tags:
   - config
 
-- name: set up tmpwatch cron job
+- name: Set up tmpwatch cron job
   cron: name="clean tmp" minute="0" job="/usr/sbin/tmpwatch 2h /tmp/"
 
-- name: ensure that services are enabled and started
+- name: Ensure that services are enabled and started
   service: name="{{ item }}" enabled=yes state=started
   with_items:
   - "httpd"
@@ -113,16 +113,16 @@
   - "copr-dist-git"
   when: not services_disabled|bool
 
-- name: create place for our custom SELinux policy
+- name: Create place for our custom SELinux policy
   file: path=/usr/local/share/selinux state=directory
 
-- name: copy over our custom selinux policy for cgit
+- name: Copy over our custom selinux policy for cgit
   copy: src=git_script_t.pp dest=/usr/local/share/selinux/git_script_t.pp
   register: cgit_selinux_module
   tags:
   - selinux
 
-- name: install our custom selinux policy for cgit
+- name: Install our custom selinux policy for cgit
   command: semodule -i /usr/local/share/selinux/git_script_t.pp
   when: cgit_selinux_module is changed
   tags:
@@ -131,13 +131,13 @@
 - name: Create CGIT config file if it does not exist (takes almost an hour)
   command: /usr/bin/copr-dist-git-refresh-cgit creates=/var/cache/cgit/repo-configuration.rc
 
-- name: ensure that .config directory exists
+- name: Ensure that .config directory exists
   file: path=/home/copr-dist-git/.config state=directory
 
-- name: install .config/copr for copr-dist-git user (required for pruning)
+- name: Install .config/copr for copr-dist-git user (required for pruning)
   template: src="copr.conf" dest="/home/copr-dist-git/.config/copr" owner=copr-dist-git group=copr-dist-git
 
-- name: install the helper cron scripts
+- name: Install the helper cron scripts
   copy:
     src: "{{ item }}"
     dest: "/usr/local/bin/{{ item }}"
@@ -148,19 +148,19 @@
   loop:
     - test-too-soon
 
-- name: install copr-dist-git.daily cron file
+- name: Install copr-dist-git.daily cron file
   copy: src="copr-dist-git.daily" dest="/etc/cron.daily/copr-dist-git" mode=755
   tags:
     - config
     - cron
 
-- name: install copr-dist-git.weekly cron file
+- name: Install copr-dist-git.weekly cron file
   copy: src="copr-dist-git.weekly" dest="/etc/cron.weekly/copr-dist-git" mode=755
   tags:
     - config
     - cron
 
-- name: drop monthly cron job
+- name: Drop monthly cron job
   file:
     path: /etc/cron.monthly/copr-dist-git
     state: absent
@@ -168,5 +168,5 @@
     - config
     - cron
 
-- name: install /etc/gitconfig file
+- name: Install /etc/gitconfig file
   copy: src="gitconfig" dest="/etc/gitconfig"

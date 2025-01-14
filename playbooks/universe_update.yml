@@ -3,7 +3,7 @@
 #
 
 ---
-- name: set downtime
+- name: Set downtime
   hosts: all
   gather_facts: false
   user: root
@@ -11,14 +11,14 @@
 
   tasks:
 
-  - name: silence nagios completely
+  - name: Silence nagios completely
     nagios: action=silence
     delegate_to: noc01.iad2.fedoraproject.org
     ignore_errors: true
     failed_when: no
     when: nonagios is not defined or not "true" in nonagios
 
-- name: update the world
+- name: Update the world
   hosts: all
   gather_facts: true
   user: root
@@ -51,16 +51,16 @@
     poll: 30
     when: package_excludes is defined
 
-- name: run rkhunter if installed
+- name: Run rkhunter if installed
   hosts: all
   user: root
 
   tasks:
-  - name: check for rkhunter
+  - name: Check for rkhunter
     command: /usr/bin/test -f /usr/bin/rkhunter
     register: rkhunter
     ignore_errors: true
 
-  - name: run rkhunter --propupd
+  - name: Run rkhunter --propupd
     command: /usr/bin/rkhunter --propupd
     when: rkhunter is success

@@ -1,18 +1,18 @@
 ---
 # install python-geoIP
-- name: install python-GeoIP
+- name: Install python-GeoIP
   package: name=python-GeoIP state=present
   tags:
   - packages
   when: (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int < 8) or (ansible_distribution_major_version|int < 30 and ansible_distribution == 'Fedora')
 
-- name: install python3-geoip2 (RHEL8)
+- name: Install python3-geoip2 (RHEL8)
   package: name=python3-geoip2 state=present
   tags:
   - packages
   when: (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int >= 8)
 
-- name: make sure the /usr/share/GeoIP/ directory exists
+- name: Make sure the /usr/share/GeoIP/ directory exists
   file:
     path: /usr/share/GeoIP/
     state: directory
@@ -22,14 +22,14 @@
   tags:
   - geoip
 
-- name: push over the older geoip db
+- name: Push over the older geoip db
   copy: src={{ item }} dest=/usr/share/GeoIP/
   with_fileglob:
     - "{{ bigfiles }}/geoip/*.dat"
   tags:
   - geoip
 
-- name: push over the newer geoip db
+- name: Push over the newer geoip db
   copy: src={{ item }} dest=/usr/share/GeoIP/
   with_fileglob:
     - "{{ bigfiles }}/geoip/*.mmdb"
@@ -37,5 +37,5 @@
   - geoip
 
 # comment out 2022-05-19. Script does not work since 2018.
-# - name: geoip syncing script via cron
+# - name: Geoip syncing script via cron
 #  copy: src=geoip_sync dest=/etc/cron.d/geoip_sync mode=0644

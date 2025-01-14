@@ -9,7 +9,7 @@
 # This will move a /etc/hosts in place if it's setup in files for that host/domain
 # Note that if it's not set it will just skip this play and do nothing.
 #
-- name: setup /etc/hosts for some clients that are not on the vpn or are and in iad2
+- name: Setup /etc/hosts for some clients that are not on the vpn or are and in iad2
   copy: src={{ item }} dest=/etc/hosts
   with_first_found:
   - "{{ inventory_hostname }}-hosts"
@@ -23,7 +23,7 @@
   - config
   - hosts
 
-- name: setup /etc/hosts for some clients on the vpn, that are not in iad2
+- name: Setup /etc/hosts for some clients on the vpn, that are not in iad2
   copy: src={{ item }} dest=/etc/hosts
   with_first_found:
   - "{{ inventory_hostname }}-hosts"

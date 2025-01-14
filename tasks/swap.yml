@@ -78,7 +78,7 @@
     - swap
   notify: restart swap.swap
 
-- name: remove zram-generator-defaults
+- name: Remove zram-generator-defaults
   package:
     name: zram-generator-defaults
     state: absent
@@ -87,7 +87,7 @@
     - swap.file.dropzrampackage
     - swap
 
-- name: disable zram0
+- name: Disable zram0
   shell: swapoff /dev/zram0
   tags:
     - swap

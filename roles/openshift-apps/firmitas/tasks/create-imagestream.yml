@@ -1,11 +1,11 @@
 ---
 # generate the templates for project to be created
-- name: create the imagestream template
+- name: Create the imagestream template
   template:
     src: "imagestream.yml.j2"
     dest: "/root/ocp4/openshift-apps/firmitas/imagestream.yml"
     mode: "0770"
 
 # apply created openshift resources
-- name: oc apply resources
+- name: Oc apply resources
   command: "/root/bin/oc apply -f /root/ocp4/openshift-apps/firmitas/imagestream.yml"

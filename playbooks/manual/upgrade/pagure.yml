@@ -6,7 +6,7 @@
 
 # Main task to upgrade pagure
 ---
-- name: upgrade pagure
+- name: Upgrade pagure
   hosts: pagure:pagure_stg
   user: root
   vars_files:
@@ -19,7 +19,7 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   pre_tasks:
-  - name: tell nagios to shush w.r.t. the frontend
+  - name: Tell nagios to shush w.r.t. the frontend
     nagios:
       action=downtime
       minutes=15
@@ -33,13 +33,13 @@
 ##
 
   tasks:
-  - name: yum update pagure packages from main repo
+  - name: Yum update pagure packages from main repo
     yum: name="pagure*"
          state=latest
          update_cache=yes
     when: not testing
 
-  - name: yum update pagure* packages from testing repo
+  - name: Yum update pagure* packages from testing repo
     yum: name="pagure*"
          state=latest
          enablerepo=infrastructure-tags-stg
@@ -47,7 +47,7 @@
     when: testing
 
   # This is needed so the alembic will work.
-  - name: stop the general pagure workers
+  - name: Stop the general pagure workers
     service:
       name: "{{ item }}"
       state: stopped
@@ -60,7 +60,7 @@
       - pagure_webhook
       - pagure_worker
 
-  - name: stop the specific workers on pagure.io
+  - name: Stop the specific workers on pagure.io
     service:
       name: "{{ item }}"
       state: stopped
@@ -83,7 +83,7 @@
 
   post_tasks:
 
-  - name: start the general pagure workers
+  - name: Start the general pagure workers
     service:
       name: "{{ item }}"
       state: started
@@ -96,7 +96,7 @@
       - pagure_webhook
       - pagure_worker
 
-  - name: start_pagure_workers on pagure servers
+  - name: Start_pagure_workers on pagure servers
     service:
       name: "{{ item }}"
       state: started
@@ -115,7 +115,7 @@
 ##
 
 
-  - name: tell nagios to unshush w.r.t. the frontend
+  - name: Tell nagios to unshush w.r.t. the frontend
     nagios:
       action=unsilence
       service=host

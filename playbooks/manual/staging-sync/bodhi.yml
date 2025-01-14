@@ -1,6 +1,6 @@
 # This playbook syncs the production bodhi instance with staging.
 ---
-- name: bring staging services down (httpd)
+- name: Bring staging services down (httpd)
   hosts: bodhi2_stg
   user: root
   vars_files:
@@ -11,7 +11,7 @@
   tasks:
   - service: name=httpd state=stopped
 
-- name: bring staging services down (OpenShift web services)
+- name: Bring staging services down (OpenShift web services)
   hosts: os-control01.stg.iad2.fedoraproject.org
   user: root
   vars_files:
@@ -24,7 +24,7 @@
   - command: oc -n bodhi scale dc/bodhi-consumer --replicas=0
   - command: oc -n bodhi scale dc/bodhi-celery --replicas=0
 
-- name: bring staging services down (messaging)
+- name: Bring staging services down (messaging)
   hosts: bodhi_backend_stg
   user: root
   vars_files:
@@ -41,7 +41,7 @@
     - bodhi-celery
 
 # Here's the meaty part in the middle
-- name: drop and re-create the staging db entirely
+- name: Drop and re-create the staging db entirely
   hosts: db01.stg.iad2.fedoraproject.org
   user: root
   become: yes
@@ -66,7 +66,7 @@
     shell: cat /var/tmp/bodhi2.dump | psql bodhi2
   - file: path=/var/tmp/bodhi2.dump state=absent
 
-- name: bring staging services up (OpenShift web services)
+- name: Bring staging services up (OpenShift web services)
   hosts: os-control01.stg.iad2.fedoraproject.org
   user: root
   vars_files:
@@ -79,7 +79,7 @@
   - command: oc -n bodhi scale dc/bodhi-consumer --replicas=1
   - command: oc -n bodhi scale dc/bodhi-celery --replicas=1
 
-- name: bring staging services up (httpd)
+- name: Bring staging services up (httpd)
   hosts: bodhi2_stg
   user: root
   vars_files:
@@ -90,7 +90,7 @@
   tasks:
   - service: name=httpd state=started
 
-- name: bring staging services up (messaging)
+- name: Bring staging services up (messaging)
   hosts: bodhi_backend_stg
   user: root
   vars_files:

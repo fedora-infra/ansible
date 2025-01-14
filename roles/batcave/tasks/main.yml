@@ -7,13 +7,13 @@
 #
 
 ---
-- name: create /srv/web/pub for nfs mounts
+- name: Create /srv/web/pub for nfs mounts
   file: dest=/srv/web/pub state=directory mode=0755
   tags:
   - batcave
   - config
 
-- name: install packages needed
+- name: Install packages needed
   package: name={{ item }} state=present
   with_items:
   - srm                       # secure rm to delete sensitive files.
@@ -47,7 +47,7 @@
   - config
   when: inventory_hostname.startswith('batcave01')
 
-- name: setup ssh_known_hosts file
+- name: Setup ssh_known_hosts file
   copy: src=ssh_known_hosts dest=/etc/ssh/ssh_known_hosts mode=0644
   tags:
   - batcave
@@ -58,13 +58,13 @@
 # This is our ansible master, setup ansible
 #
 
-- name: setup roots bashrc to note about agents
+- name: Setup roots bashrc to note about agents
   copy: src=root_bashrc dest=/root/.bashrc
   tags:
   - batcave
   - config
 
-- name: run daily logview report for ansible actions.
+- name: Run daily logview report for ansible actions.
   copy: src=logview.cron dest=/etc/cron.daily/logview.cron mode=0755
   tags:
   - batcave
@@ -77,21 +77,21 @@
   - batcave
   - config
 
-- name: setup cron for daily ticketkey reollover
+- name: Setup cron for daily ticketkey reollover
   copy: src=ticketkey.cron dest=/etc/cron.hourly/ticketkey.cron mode=0755
   tags:
   - batcave
   - config
   when: inventory_hostname.startswith('batcave01')
 
-- name: setup cron for removing old pdr requests
+- name: Setup cron for removing old pdr requests
   copy: src=pdr.cron dest=/etc/cron.d/pdr.cron mode=0644
   tags:
   - batcave
   - config
   when: inventory_hostname.startswith('batcave01')
 
-- name: setup cron to expose the rabbitmq certs
+- name: Setup cron to expose the rabbitmq certs
   copy:
     src: make-rabbitmq-certs-public.sh
     dest: /etc/cron.daily/make-rabbitmq-certs-public
@@ -105,7 +105,7 @@
 # Set selinux booleans we need
 #
 
-- name: set selinux booleans
+- name: Set selinux booleans
   seboolean: name={{ item }} persistent=yes state=yes
   with_items:
   - httpd_can_network_connect
@@ -121,21 +121,21 @@
 # batcave
 #
 
-- name: install the fedora-messaging configuration file
+- name: Install the fedora-messaging configuration file
   template: src=batcave-messaging.toml dest=/etc/fedora-messaging/batcave-messaging.toml
   tags:
   - batcave
   - config
   - fedora-messaging
 
-- name: create folder where we'll place the certs
+- name: Create folder where we'll place the certs
   file: path=/etc/pki/rabbitmq/ owner=root group=root mode=0755 state=directory
   tags:
   - batcave
   - config
   - fedora-messaging
 
-- name: install the rabbitmq certificates for batcave
+- name: Install the rabbitmq certificates for batcave
   copy: src={{ item.src }}
       dest=/etc/pki/rabbitmq/{{ item.dest }}
       owner={{ item.owner }} group={{ item.group}} mode={{ item.mode }}
@@ -168,7 +168,7 @@
 # Hook to notify on git commits used in git repos
 #
 
-- name: setup git-notifier script
+- name: Setup git-notifier script
   copy: src=git-notifier dest=/usr/local/bin/git-notifier mode=0755
   tags:
   - batcave
@@ -176,7 +176,7 @@
 
 
 # Hook to republish our bare repos for web viewing.
-- name: setup syncgittree.sh script
+- name: Setup syncgittree.sh script
   copy: src=syncgittree.sh dest=/usr/local/bin/syncgittree.sh mode=0755
   tags:
   - batcave
@@ -193,7 +193,7 @@
 # zodbot_channel=$(git config hooks.zodbotchannel)
 # python $reposource/hooks/zodbot-announce-commits.py $reposource $zodbot_channel $oldrev $newrev ${1#refs/heads/}
 
-- name: install zodbot-announce-commits script
+- name: Install zodbot-announce-commits script
   copy: src=zodbot-announce-commits.py dest=/usr/local/bin/zodbot-announce-commits.py mode=0755
   tags:
   - batcave
@@ -204,7 +204,7 @@
 # This is another script to announce commits, this time to the fedmsg bus
 #
 
-- name: install packages needed
+- name: Install packages needed
   package:
     name: fedora-messaging-git-hook
     state: present
@@ -216,14 +216,14 @@
 # This script checks all the virthosts and logs what guests they are running.
 #
 
-- name: install vmdiff.sh cron
+- name: Install vmdiff.sh cron
   copy: src=vmdiff.sh dest=/etc/cron.hourly/vmdiff.sh mode=0755
   tags:
   - batcave
   - config
   when: inventory_hostname.startswith('batcave01')
 
-- name: install infradocs.sh cron
+- name: Install infradocs.sh cron
   copy: src=infradocs.sh dest=/etc/cron.hourly/infradocs.sh mode=0755
   tags:
   - batcave
@@ -235,7 +235,7 @@
 # Setup public db copy script.
 #
 
-- name: setup public db copy script
+- name: Setup public db copy script
   copy: src=public-db-copy.sh dest=/usr/local/bin/public-db-copy.sh mode=0755
   tags:
   - batcave
@@ -244,7 +244,7 @@
 # Setup public db copy cron.
 #
 
-- name: setup public db copy script
+- name: Setup public db copy script
   copy: src=public-db-copy.cron dest=/etc/cron.d/public-db-copy.cron mode=0644
   tags:
   - batcave
@@ -255,7 +255,7 @@
 # Setup job that runs a check/diff ansible run over all playbooks each night.
 #
 
-- name: setup checkdiff ansible job
+- name: Setup checkdiff ansible job
   copy: src=ansible-playbook-check-diff.cron dest=/etc/cron.daily/ansible-playbook-check-diff.cron mode=0755
   tags:
   - batcave
@@ -266,7 +266,7 @@
 # Setup job that runs letsencrypt on proxies each week
 #
 
-- name: setup letsencrypt run for proxies
+- name: Setup letsencrypt run for proxies
   copy: src=proxy-certs-check-renew.cron dest=/etc/cron.weekly/proxy-certs-check-renew.cron mode=0755
   tags:
   - batcave
@@ -277,7 +277,7 @@
 # Setup rhel8 sync script.
 #
 
-- name: setup rhel8 sync copy script
+- name: Setup rhel8 sync copy script
   copy: src=rhel8-sync dest=/mnt/fedora/app/fi-repo/rhel/rhel8/rhel8-sync mode=0775
   tags:
   - batcave
@@ -287,7 +287,7 @@
 # Setup rhel9 sync script.
 #
 
-- name: setup rhel9 sync copy script
+- name: Setup rhel9 sync copy script
   copy: src=rhel9-sync dest=/mnt/fedora/app/fi-repo/rhel/rhel9/rhel9-sync mode=0775
   tags:
   - batcave
@@ -297,7 +297,7 @@
 #
 # sync-rhn cron job
 #
-- name: setup sync-rhn cron
+- name: Setup sync-rhn cron
   copy: src=sync-rhn dest=/etc/cron.d/sync-rhn mode=0644
   tags:
   - batcave
@@ -308,7 +308,7 @@
 #
 # sync-centos cron job
 #
-- name: setup sync-rhn cron
+- name: Setup sync-rhn cron
   copy: src=sync-centos dest=/etc/cron.d/sync-centos mode=0644
   tags:
   - batcave
@@ -319,7 +319,7 @@
 # Setup centos 9s sync script.
 #
 
-- name: setup centos 9s sync script
+- name: Setup centos 9s sync script
   copy: src=centos-9s-sync dest=/mnt/fedora/app/fi-repo/centos/centos-9s-sync mode=0775
   tags:
   - batcave
@@ -329,7 +329,7 @@
 # Setup centos 10 sync script.
 #
 
-- name: setup centos 10 sync script
+- name: Setup centos 10 sync script
   copy: src=centos-10-sync dest=/mnt/fedora/app/fi-repo/centos/centos-10-sync mode=0775
   tags:
   - batcave
@@ -339,7 +339,7 @@
 #
 # Setup web server config
 #
-- name: install web server config for batcave (mimetypes)
+- name: Install web server config for batcave (mimetypes)
   copy: src=mime-types.conf dest=/etc/httpd/conf.d/mime-types.conf mode=0644
   notify:
   - reload httpd
@@ -348,7 +348,7 @@
   - config
   - httpd
 
-- name: install web server config for batcave (access rules)
+- name: Install web server config for batcave (access rules)
   copy: src=allows dest=/etc/httpd/conf.d/allows mode=0644
   notify:
   - reload httpd
@@ -357,7 +357,7 @@
   - config
   - httpd
 
-- name: install web server config for batcave (main config)
+- name: Install web server config for batcave (main config)
   template: src=infrastructure.fedoraproject.org.conf.j2 dest=/etc/httpd/conf.d/infrastructure.fedoraproject.org.conf mode=0644
   notify:
   - reload httpd
@@ -371,14 +371,14 @@
 # this cron job creates a json file from the rhel repos
 #
 
-- name: create repo2json directory
+- name: Create repo2json directory
   file: dest=/srv/web/repo/json mode=0755 state=directory owner=apache group=apache
   tags:
   - batcave
   - config
   when: inventory_hostname.startswith('batcave01')
 
-- name: create repo2json cron job
+- name: Create repo2json cron job
   copy: src=repo2json.cron dest=/etc/cron.d/repo2json.cron mode=0644
   tags:
   - batcave
@@ -389,7 +389,7 @@
 # ansible utils includes our rbac-playbook
 #
 
-- name: install the ansible_utils/rbac config
+- name: Install the ansible_utils/rbac config
   copy: src={{ private }}/files/rbac/rbac.yaml dest=/etc/ansible_utils/rbac.yaml mode=0540 group=sysadmin
   tags:
   - rbac
@@ -424,7 +424,7 @@
 # set selinux context for /srv/web/infra
 #
 
-- name: check the selinux context of webdir
+- name: Check the selinux context of webdir
   command: matchpathcon /srv/web
   register: webdir
   check_mode: no
@@ -450,7 +450,7 @@
 # set selinux context for public git repos
 #
 
-- name: check the selinux context of ansible
+- name: Check the selinux context of ansible
   command: matchpathcon /srv/git/ansible.git
   register: webdir
   check_mode: no
@@ -472,7 +472,7 @@
   - httpd
   - httpd/website
 
-- name: check the selinux context of badges
+- name: Check the selinux context of badges
   command: matchpathcon /srv/git/badges
   register: webdir
   check_mode: no
@@ -494,7 +494,7 @@
   - httpd
   - httpd/website
 
-- name: check the selinux context of dns
+- name: Check the selinux context of dns
   command: matchpathcon /srv/git/dns
   register: webdir
   check_mode: no
@@ -516,7 +516,7 @@
   - httpd
   - httpd/website
 
-- name: check the selinux context of infra-docs
+- name: Check the selinux context of infra-docs
   command: matchpathcon /srv/git/infra-docs
   register: webdir
   check_mode: no
@@ -556,21 +556,21 @@
   - koji
   - batcave
 
-- name: create some tmp dirs
+- name: Create some tmp dirs
   file: path=/tmp-inst mode=000 owner=root group=root state=directory
   tags:
   - config
   - batcave
   - selinux
 
-- name: create some tmp dirs
+- name: Create some tmp dirs
   file: path=/var/tmp-inst mode=000 owner=root group=root state=directory
   tags:
   - config
   - batcave
   - selinux
 
-- name: put in place namespace.conf file
+- name: Put in place namespace.conf file
   copy: src=namespace.conf dest=/etc/security/namespace.conf mode=644 owner=root group=root
   tags:
   - config
@@ -612,7 +612,7 @@
 # install psql to allow for some ro queries against db-datanommer02
 #
 
-- name: enable the postgresql 12 module for psql on batcave
+- name: Enable the postgresql 12 module for psql on batcave
   copy:
     dest: /etc/dnf/modules.d/postgresql.module
     content: |
@@ -625,7 +625,7 @@
   - batcave
   - postgres
 
-- name: install psql client
+- name: Install psql client
   package: name=postgresql state=present
   tags:
   - batcave
@@ -642,7 +642,7 @@
 #
 # keep this until ansible-core updates to 2.15.x
 #
-- name: apply uri module patch to ansible
+- name: Apply uri module patch to ansible
   ansible.posix.patch:
     src: urls.py.patch
     basedir: /usr/lib/python3.9/site-packages/ansible/module_utils/

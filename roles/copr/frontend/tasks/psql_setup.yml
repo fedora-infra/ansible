@@ -1,5 +1,5 @@
 ---
-- name: install postresql
+- name: Install postresql
   package: state=present pkg={{ item }}
   with_items:
   - "postgresql-server"
@@ -10,11 +10,11 @@
   stat: path=/var/lib/pgsql/data/PG_VERSION
   register: postgres_initialized
 
-- name: init postgresql
+- name: Init postgresql
   shell: "postgresql-setup initdb"
   when: not postgres_initialized.stat.exists
 
-- name: copy pg_hba.conf
+- name: Copy pg_hba.conf
   copy: src="pg/pg_hba.conf" dest=/var/lib/pgsql/data/pg_hba.conf owner=postgres group=postgres mode=0600
   notify:
   - restart postgresql
@@ -43,7 +43,7 @@
   tags:
   - config
 
-- name: enable Pg service
+- name: Enable Pg service
   service: state=started enabled=yes name=postgresql
 
 - name: Create db
@@ -56,7 +56,7 @@
   become: yes
   become_user: postgres
 
-- name: set shared_buffers for PostgreSQL
+- name: Set shared_buffers for PostgreSQL
   lineinfile:
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^shared_buffers ='
@@ -65,7 +65,7 @@
   tags:
   - config
 
-- name: set effective_cache_size for PostgreSQL
+- name: Set effective_cache_size for PostgreSQL
   lineinfile:
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^effective_cache_size ='
@@ -74,7 +74,7 @@
   tags:
   - config
 
-- name: set work_mem for PostgreSQL
+- name: Set work_mem for PostgreSQL
   lineinfile:
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^work_mem ='
@@ -83,7 +83,7 @@
   tags:
   - config
 
-- name: set maintenance_work_mem for PostgreSQL
+- name: Set maintenance_work_mem for PostgreSQL
   lineinfile:
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^maintenance_work_mem ='
@@ -92,7 +92,7 @@
   tags:
   - config
 
-- name: set checkpoint_completion_target for PostgreSQL
+- name: Set checkpoint_completion_target for PostgreSQL
   lineinfile:
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^checkpoint_completion_target ='
@@ -101,7 +101,7 @@
   tags:
   - config
 
-- name: set log_min_duration_statement for PostgreSQL
+- name: Set log_min_duration_statement for PostgreSQL
   lineinfile:
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^log_min_duration_statement ='
@@ -110,7 +110,7 @@
   tags:
   - config
 
-- name: set max_connections for PostgreSQL
+- name: Set max_connections for PostgreSQL
   lineinfile:
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^max_connections ='
@@ -119,7 +119,7 @@
   tags:
   - config
 
-- name: install psqlrc file
+- name: Install psqlrc file
   copy:
     content: |
       \pset linestyle unicode
@@ -134,7 +134,7 @@
     group: copr-fe
     mode: "0600"
 
-- name: install pgpass file
+- name: Install pgpass file
   copy:
     content: |
       localhost:*:coprdb:copr-fe:{{ copr_database_password }}
@@ -146,7 +146,7 @@
 - stat: path="{{ copr_fe_homedir }}/.psql_history"
   register: history_file
 
-- name: install pghistory file
+- name: Install pghistory file
   file: path="{{ copr_fe_homedir }}/.psql_history" state=touch
         owner=copr-fe group=copr-fe mode=0600
   when: not history_file.stat.exists

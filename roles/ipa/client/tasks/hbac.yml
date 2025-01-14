@@ -41,7 +41,7 @@
   loop: "{{ ipa_servers }}"
   when: ipa_servers is defined
 
-- name: print ipa_servers
+- name: Print ipa_servers
   debug: "var=ipa_servers"
 
 - name: "Let everybody run sudo"

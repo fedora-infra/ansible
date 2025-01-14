@@ -1,17 +1,17 @@
 ---
 # tasks file for docker-distribution
 
-- name: install docker-distribution
+- name: Install docker-distribution
   action: "{{ ansible_pkg_mgr }} name=docker-distribution state=present"
   tags:
   - docker-distribution
 
-- name: start and enable docker-distribution
+- name: Start and enable docker-distribution
   service: name=docker-distribution state=started enabled=yes
   tags:
   - docker-distribution
 
-- name: configure docker-distribution
+- name: Configure docker-distribution
   template:
     src: config.yml.j2
     dest: "{{ conf_path }}"
@@ -19,7 +19,7 @@
   tags:
   - docker-distribution
 
-- name: ensure docker certs dir exists
+- name: Ensure docker certs dir exists
   file:
     path: "{{ cert.dest_dir }}"
     state: directory
@@ -31,7 +31,7 @@
   tags:
   - docker-distribution
 
-- name: install tls cert for docker
+- name: Install tls cert for docker
   copy:
     src: "{{ cert.cert_src }}"
     dest: "{{ cert.dest_dir}}/{{ cert.cert_dest }}"
@@ -39,7 +39,7 @@
   tags:
   - docker-distribution
 
-- name: install tls key for docker
+- name: Install tls key for docker
   copy:
     src: "{{ cert.key_src }}"
     dest: "{{ cert.dest_dir}}/{{ cert.key_dest }}"
@@ -47,7 +47,7 @@
   tags:
   - docker-distribution
 
-- name: override the default syslog logrotate file
+- name: Override the default syslog logrotate file
   copy:
     src=syslog-logrotate
     dest=/etc/logrotate.d/rsyslog

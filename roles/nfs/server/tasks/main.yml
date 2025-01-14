@@ -10,13 +10,13 @@
   tags:
   - nfs/server
 
-- name: setup /etc/exports
+- name: Setup /etc/exports
   copy: src={{ inventory_hostname }}-exports dest=/etc/exports
   register: exports
   tags:
   - nfs/server
 
-- name: enable nfs-related services and run them (fedora)
+- name: Enable nfs-related services and run them (fedora)
   service: name={{ item }}  enabled=true state=started
   with_items:
   - rpc-statd
@@ -24,7 +24,7 @@
   tags:
   - nfs/server
 
-- name: enable nfs-related services and run them (rhel)
+- name: Enable nfs-related services and run them (rhel)
   service: name={{ item }}  enabled=true state=started
   with_items:
   - rpcbind
@@ -33,7 +33,7 @@
   tags:
   - nfs/server
 
-- name: enable nfs-related services and run them (rhel) 7/8
+- name: Enable nfs-related services and run them (rhel) 7/8
   service: name={{ item }}  enabled=true state=started
   with_items:
   - nfs-lock

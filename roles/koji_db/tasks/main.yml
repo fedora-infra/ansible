@@ -5,7 +5,7 @@
 #
 # create a koji db user to own the db with the kojidatabasepassword from private
 #
-- name: koji db user
+- name: Koji db user
   postgresql_user: name=koji password={{ aarch64kojidatabasepassword }}
   tags:
   - db
@@ -13,7 +13,7 @@
 #
 # create a koji database if not already created
 #
-- name: databases creation
+- name: Databases creation
   postgresql_db: name=koji owner=koji encoding=UTF-8
   tags:
   - db
@@ -21,7 +21,7 @@
 #
 # Load the initial schema and create a file to note that it's loaded now.
 #
-- name: load initial schema
+- name: Load initial schema
   shell: creates=/var/lib/pgql/koji-schema psql koji koji < /usr/share/doc/koji*/docs/schema.sql
   tags:
   - db

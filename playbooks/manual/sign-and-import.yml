@@ -15,7 +15,7 @@
 # TODO -- other arches than x86_64?
 
 ---
-- name: batch sign and import a directory full of rpms
+- name: Batch sign and import a directory full of rpms
   user: root
   hosts: localhost
   connection: local
@@ -40,34 +40,34 @@
   # TODO -- I'd also like to fail if rpmdir does not exist.
   # TODO -- I'd also like to fail if there are no *.rpm files in there.
 
-  - name: sign all the rpms with our gpg key
+  - name: Sign all the rpms with our gpg key
     shell: /bin/rpm --resign {{ rpmdir }}/*.rpm
 
-  - name: make a directory where we store the rpms afterwards
+  - name: Make a directory where we store the rpms afterwards
     file: path={{ rpmdir }}-old state=directory
 
-  - name: copy the source rpms to the SRPMS dir of {{ repodir }}
+  - name: Copy the source rpms to the SRPMS dir of {{ repodir }}
     copy: src={{ item }} dest={{ repodir }}/SRPMS/
     with_fileglob:
       - "{{ rpmdir }}/*.src.rpm"
 
-  - name: move processed srpms out to {{ rpmdir }}-old
+  - name: Move processed srpms out to {{ rpmdir }}-old
     command: /bin/mv {{ item }} {{ rpmdir }}-old/
     when: not testing
     with_fileglob:
       - "{{ rpmdir }}/*.src.rpm"
 
-  - name: copy the binary rpms to the x86_64 dir of {{ repodir }}
+  - name: Copy the binary rpms to the x86_64 dir of {{ repodir }}
     copy: src={{ item }} dest={{ repodir }}/x86_64/
     with_fileglob:
       - "{{ rpmdir }}/*.rpm"
 
-  - name: copy the binary rpms to the i386 dir of {{ repodir }}
+  - name: Copy the binary rpms to the i386 dir of {{ repodir }}
     copy: src={{ item }} dest={{ repodir }}/i386/
     with_fileglob:
       - "{{ rpmdir }}/*.rpm"
 
-  - name: move processed rpms out to {{ rpmdir }}-old
+  - name: Move processed rpms out to {{ rpmdir }}-old
     command: /bin/mv {{ item }} {{ rpmdir }}-old/
     when: not testing
     with_fileglob:

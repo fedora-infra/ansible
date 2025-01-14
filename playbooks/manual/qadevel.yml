@@ -4,7 +4,7 @@
 #
 
 ---
-- name: make qadevel server
+- name: Make qadevel server
   hosts: qadevel:qadevel_stg
   user: root
   gather_facts: false
@@ -20,7 +20,7 @@
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
-- name: make the box be real
+- name: Make the box be real
   hosts: qadevel:qadevel_stg
   user: root
   gather_facts: true

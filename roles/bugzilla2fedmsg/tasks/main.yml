@@ -1,7 +1,7 @@
 ---
 # Setup a fedmsg-hub
 
-- name: install needed packages
+- name: Install needed packages
   package: name={{ item }} state=present
   with_items:
   - python-moksha-hub
@@ -59,7 +59,7 @@
   tags:
   - bugzilla2fedmsg
 
-- name: moksha-hub service
+- name: Moksha-hub service
   service: name=moksha-hub state=stopped enabled=no
   tags:
   - bugzilla2fedmsg

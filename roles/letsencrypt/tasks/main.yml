@@ -1,5 +1,5 @@
 ---
-- name: setup defaults file
+- name: Setup defaults file
   delegate_to: "certgetter01.iad2.fedoraproject.org"
   copy: >
     dest=/etc/letsencrypt/cli.ini

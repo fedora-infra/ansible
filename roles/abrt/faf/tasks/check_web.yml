@@ -6,7 +6,7 @@
     main_url: "https://{{ ansible_default_ipv4.address }}{{ url_suffix }}"
     problems_url: "https://{{ ansible_default_ipv4.address }}{{ url_suffix }}/problems/"
 
-- name: check main
+- name: Check main
   uri:
     url: "{{ main_url }}"
     return_content: yes
@@ -16,7 +16,7 @@
   delegate_to: localhost
   failed_when: "'ABRT' not in uri_res.content"
 
-- name: fetch problems
+- name: Fetch problems
   uri:
     url: "{{ problems_url }}"
     return_content: yes

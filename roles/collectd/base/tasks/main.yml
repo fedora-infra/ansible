@@ -2,35 +2,35 @@
 
 # install pkg
 ---
-- name: install collectd
+- name: Install collectd
   package: name=collectd state=present
   tags:
   - collectd
   when: ansible_distribution_major_version|int <= 7 and ansible_distribution == 'RedHat'
 
 # install pkg
-- name: install collectd
+- name: Install collectd
   dnf: name=collectd state=present
   tags:
   - collectd
   when: ansible_distribution_major_version|int > 7 and ansible_distribution == 'RedHat'
 
 # install pkg
-- name: install collectd
+- name: Install collectd
   dnf: name=collectd state=present
   tags:
   - collectd
   when: ansible_distribution_major_version|int >= 29 and ansible_distribution == 'Fedora'
 
 # install collectd-disk (it was split out)
-- name: install collectd-disk
+- name: Install collectd-disk
   dnf: name=collectd-disk state=present
   tags:
   - collectd
   when: ansible_distribution_major_version|int > 7 and ansible_distribution == 'RedHat'
 
 # install collectd-disk on F25+ (it was split out)
-- name: install collectd-disk
+- name: Install collectd-disk
   dnf: name=collectd-disk state=present
   tags:
   - collectd
@@ -63,7 +63,7 @@
   when: inventory_hostname.startswith('log')
 
 # apache - localhost only - pretty much any apache server
-- name: install collectd-apache (yum)
+- name: Install collectd-apache (yum)
   package: state=present name=collectd-apache
   tags:
   - collectd
@@ -71,7 +71,7 @@
   - restart collectd
   when: collectd_apache and ansible_distribution_major_version|int <= 7 and ansible_distribution == 'RedHat'
 
-- name: install collectd-apache (dnf)
+- name: Install collectd-apache (dnf)
   dnf: state=present name=collectd-apache
   tags:
   - collectd
@@ -79,7 +79,7 @@
   - restart collectd
   when: collectd_apache and ansible_distribution_major_version|int > 7 and ansible_distribution == 'RedHat'
 
-- name: install collectd-apache (dnf)
+- name: Install collectd-apache (dnf)
   dnf: state=present name=collectd-apache
   tags:
   - collectd
@@ -110,7 +110,7 @@
   - restart collectd
   when: ( collectd_apache is defined ) and ansible_selinux.status != "disabled"
 
-- name: enable collectd nfs module
+- name: Enable collectd nfs module
   copy: src=nfs.conf dest=/etc/collectd.d/nfs.conf
   tags:
   - collectd
@@ -118,13 +118,13 @@
   - restart collectd
 
 # Three tasks for handling our (two) custom selinux modules.
-- name: ensure a directory exists for our custom selinux module
+- name: Ensure a directory exists for our custom selinux module
   file: dest=/usr/share/collectd state=directory
   tags:
   - collectd
   - selinux
 
-- name: copy over our general collectd selinux module
+- name: Copy over our general collectd selinux module
   copy: src=selinux/fi-collectd.pp dest=/usr/share/collectd/fi-collectd.pp
   register: ficgeneral_module
   tags:
@@ -132,7 +132,7 @@
   - selinux
 
 # TODO: consider using selinux_modules from https://galaxy.ansible.com/linux-system-roles/selinux instead
-- name: check to see what version is installed (if any)
+- name: Check to see what version is installed (if any)
   shell: "semodule -l -m | grep fi-collectd | cut -d: -f2"
   register: ficgeneral_installed_version
   check_mode: no
@@ -142,7 +142,7 @@
   - selinux
 
 # This cmd comes from the last example of the semodule man page
-- name: check to see what version we have
+- name: Check to see what version we have
   shell: /usr/libexec/selinux/hll/pp /usr/share/collectd/fi-collectd.pp | sha256sum | cut -d ' ' -f1
   register: ficgeneral_local_version
   check_mode: no
@@ -151,21 +151,21 @@
   - collectd
   - selinux
 
-- name: install our general collectd selinux module
+- name: Install our general collectd selinux module
   command: semodule -i /usr/share/collectd/fi-collectd.pp
   when: ficgeneral_module is changed or ficgeneral_installed_version != ficgeneral_local_version
   tags:
   - collectd
   - selinux
 
-- name: copy over our pstorefs/collectd selinux module (rhel6 has no pstorefs)
+- name: Copy over our pstorefs/collectd selinux module (rhel6 has no pstorefs)
   copy: src=selinux/fi-pstorefs.pp dest=/usr/share/collectd/fi-pstorefs.pp
   register: ficpstorefs_module
   tags:
   - collectd
   - selinux
 
-- name: check to see if its even installed yet
+- name: Check to see if its even installed yet
   shell: semodule -l | grep fi-pstorefs | wc -l
   register: ficpstorefs_grep
   check_mode: no
@@ -174,7 +174,7 @@
   - collectd
   - selinux
 
-- name: install our pstorefs/collectd selinux module
+- name: Install our pstorefs/collectd selinux module
   command: semodule -i /usr/share/collectd/fi-pstorefs.pp
   when: (ficpstorefs_module is changed or ficpstorefs_grep is changed)
   tags:
@@ -205,7 +205,7 @@
 # webproxy
 
 # enable collectd
-- name: enable collectd svc
+- name: Enable collectd svc
   service: state=started enabled=true name=collectd
   tags:
   - collectd

@@ -18,7 +18,7 @@
   - yumrepos
   when: ansible_distribution_major_version|int == 8
 
-- name: install needed packages
+- name: Install needed packages
   package:
     state: present
     name:
@@ -28,7 +28,7 @@
   - rabbitmq_cluster
   - packages
 
-- name: deploy CA certificate
+- name: Deploy CA certificate
   copy: src="{{private}}/files/rabbitmq/{{env}}/pki/ca.crt"
         dest=/etc/rabbitmq/ca.crt
         owner=root group=root mode=0644
@@ -36,13 +36,13 @@
   - rabbitmq_cluster
   - config
 
-- name: create node cert directory
+- name: Create node cert directory
   file: path=/etc/rabbitmq/nodecert/ owner=root group=root mode=0755 state=directory
   tags:
   - rabbitmq_cluster
   - config
 
-- name: deploy node certificate
+- name: Deploy node certificate
   copy: src="{{private}}/files/rabbitmq/{{env}}/pki/issued/{{inventory_hostname}}.crt"
         dest=/etc/rabbitmq/nodecert/node.crt
         owner=root group=root mode=0644
@@ -50,7 +50,7 @@
   - rabbitmq_cluster
   - config
 
-- name: deploy node private key
+- name: Deploy node private key
   copy: src="{{private}}/files/rabbitmq/{{env}}/pki/private/{{inventory_hostname}}.key"
         dest=/etc/rabbitmq/nodecert/node.key
         owner=rabbitmq group=rabbitmq mode=0600
@@ -58,14 +58,14 @@
   - rabbitmq_cluster
   - config
 
-- name: build combined node key
+- name: Build combined node key
   assemble: src=/etc/rabbitmq/nodecert/ dest=/etc/rabbitmq/nodecert.combined.pem
             owner=rabbitmq group=rabbitmq mode=0600
   tags:
   - rabbitmq_cluster
   - config
 
-- name: deploy configuration
+- name: Deploy configuration
   template: src={{item}} dest=/etc/rabbitmq/{{item}} owner=root group=root mode=0644
   with_items:
   - rabbitmq.config
@@ -76,7 +76,7 @@
   - rabbitmq_cluster
   - config
 
-- name: deploy staging cookie
+- name: Deploy staging cookie
   copy: content="{{rabbitmq_cluster_cookie_staging}}" dest=/var/lib/rabbitmq/.erlang.cookie
         owner=rabbitmq group=rabbitmq mode=0400
   when: "env == 'staging'"
@@ -86,7 +86,7 @@
   - rabbitmq_cluster
   - config
 
-- name: deploy production cookie
+- name: Deploy production cookie
   copy: content="{{rabbitmq_cluster_cookie_production}}" dest=/var/lib/rabbitmq/.erlang.cookie
         owner=rabbitmq group=rabbitmq mode=0400
   when: "env == 'production'"
@@ -124,7 +124,7 @@
   - rabbitmq_cluster
   - config
 
-- name: start rabbitmq
+- name: Start rabbitmq
   service: name=rabbitmq-server state=started enabled=yes
   tags:
   - rabbitmq_cluster
@@ -398,13 +398,13 @@
   - rabbitmq_cluster
   - config
 
-- name: create pubsub_federation cert directory
+- name: Create pubsub_federation cert directory
   file: path=/etc/rabbitmq/pubsub_federation/ owner=root group=root mode=0755 state=directory
   tags:
   - rabbitmq_cluster
   - config
 
-- name: deploy pubsub_federation certificate
+- name: Deploy pubsub_federation certificate
   copy: src="{{private}}/files/rabbitmq/{{env}}/pki/issued/pubsub_federation.crt"
         dest=/etc/rabbitmq/pubsub_federation/client_cert.pem
         owner=root group=root mode=0644
@@ -412,7 +412,7 @@
   - rabbitmq_cluster
   - config
 
-- name: deploy node private key
+- name: Deploy node private key
   copy: src="{{private}}/files/rabbitmq/{{env}}/pki/private/pubsub_federation.key"
         dest=/etc/rabbitmq/pubsub_federation/client_key.pem
         owner=rabbitmq group=rabbitmq mode=0600
@@ -461,19 +461,19 @@
     vhost: /public_pubsub
 
 # SELinux: allow the Nagios NRPE plugin to access the management interface
-- name: install the selinux module compilation script
+- name: Install the selinux module compilation script
   copy:
     src: selinux-load.sh
     dest: /etc/nagios/selinux-load.sh
     mode: "0755"
 
-- name: copy over our custom selinux module
+- name: Copy over our custom selinux module
   copy:
     src: nrpe_rabbitmq.te
     dest: /etc/nagios/nrpe_rabbitmq.te
   register: selinux_module
 
-- name: compile and install our custom selinux module
+- name: Compile and install our custom selinux module
   command: /etc/nagios/selinux-load.sh
   when: selinux_module is changed
 

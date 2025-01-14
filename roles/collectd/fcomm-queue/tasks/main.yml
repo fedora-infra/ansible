@@ -1,6 +1,6 @@
 ---
 
-- name: install python-retask
+- name: Install python-retask
   package: name=python-retask state=present
   tags:
   - collectd
@@ -23,20 +23,20 @@
   notify: restart collectd
 
 # Three tasks for handling our custom selinux module.
-- name: ensure a directory exists for our custom selinux module
+- name: Ensure a directory exists for our custom selinux module
   file: dest=/usr/share/collectd state=directory
   tags:
   - collectd
   - selinux
 
-- name: copy over our fcomm collectd selinux module
+- name: Copy over our fcomm collectd selinux module
   copy: src=selinux/fi-collectd-fcomm.pp dest=/usr/share/collectd/fi-collectd-fcomm.pp
   register: ficfcomm_module
   tags:
   - collectd
   - selinux
 
-- name: check to see if its even installed yet
+- name: Check to see if its even installed yet
   shell: semodule -l | grep fi-collectd-fcomm | wc -l
   register: ficfcomm_grep
   check_mode: no
@@ -45,14 +45,14 @@
   - collectd
   - selinux
 
-- name: install our fcomm collectd selinux module
+- name: Install our fcomm collectd selinux module
   command: semodule -i /usr/share/collectd/fi-collectd-fcomm.pp
   when: ficfcomm_module is changed or ficfcomm_grep is changed
   tags:
   - collectd
   - selinux
 
-- name: lastly, set some selinux booleans
+- name: Lastly, set some selinux booleans
   seboolean: name={{item}} persistent=yes state=yes
   with_items:
   - collectd_tcp_network_connect

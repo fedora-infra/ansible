@@ -1,5 +1,5 @@
 ---
-- name: setup pager app config
+- name: Setup pager app config
   copy: src=pager-app.conf dest=/etc/httpd/conf.d/pager-app.conf mode=644
   notify:
   - reload httpd
@@ -7,7 +7,7 @@
   - config
   - pager_server
 
-- name: install pager app
+- name: Install pager app
   copy: src={{ private}}/pager/pager.py dest=/srv/web/pager.py mode=755 setype=httpd_sys_script_exec_t
   tags:
   - config

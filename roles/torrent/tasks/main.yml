@@ -1,7 +1,7 @@
 ---
 # Configuration for the torrent tracker
 
-- name: install needed packages
+- name: Install needed packages
   package: name={{ item }} state=present
   with_items:
   - httpd
@@ -13,12 +13,12 @@
   tags:
   - packages
 
-- name: add torrent group
+- name: Add torrent group
   group: name=torrent state=present system=yes local=true
   tags:
   - config
 
-- name: add torrent user
+- name: Add torrent user
   user: name=torrent state=present home=/var/spool/bittorrent createhome=yes system=yes local=true group=torrent
   tags:
   - config
@@ -35,7 +35,7 @@
   tags:
   - config
 
-- name: install the files for the tracker
+- name: Install the files for the tracker
   copy: src={{ item.file }} dest={{ item.dest }} mode={{ item.mode }}
   with_items:
   - { file: torrent_generator.conf, dest: /etc/torrent_generator.conf, mode: 644 }
@@ -58,17 +58,17 @@
   tags:
   - config
 
-- name: set opentracker-ivp4 to start
+- name: Set opentracker-ivp4 to start
   service: name=opentracker-ipv4 state=started enabled=yes
   tags:
   - config
 
-- name: set opentracker-ivp6 to start
+- name: Set opentracker-ivp6 to start
   service: name=opentracker-ipv6 state=started enabled=yes
   tags:
   - config
 
-- name: check the selinux context of webdir
+- name: Check the selinux context of webdir
   command: matchpathcon /srv/web
   register: webdir
   check_mode: no

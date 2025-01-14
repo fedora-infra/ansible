@@ -3,7 +3,7 @@
 # This role sets up rsyncd on a server
 #
 
-- name: install necessary packages
+- name: Install necessary packages
   package:
     state: present
     name:
@@ -15,7 +15,7 @@
   - rsyncd
   when: ansible_distribution == 'RedHat' and ansible_distribution_major_version|int < 8
 
-- name: install necessary packages
+- name: Install necessary packages
   package:
     state: present
     name:
@@ -27,7 +27,7 @@
   - rsyncd
   when: ansible_distribution == 'RedHat' and ansible_distribution_major_version|int == 8
 
-- name: install necessary packages for fedora or rhel9
+- name: Install necessary packages for fedora or rhel9
   package:
     state: present
     name:
@@ -38,7 +38,7 @@
     - rsyncd
   when: ansible_distribution == 'Fedora' or (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int > 8)
 
-- name: rsyncd.conf file for non download servers
+- name: Rsyncd.conf file for non download servers
   copy: src={{ item }} dest=/etc/rsyncd.conf mode=0644
   with_first_found:
     - "{{ rsyncd_conf }}"
@@ -54,7 +54,7 @@
   - config
   - rsyncd
 
-- name: rsyncd.conf file for download servers
+- name: Rsyncd.conf file for download servers
   template: src=rsyncd.conf.download.j2 dest=/etc/rsyncd.conf mode=0644
   notify:
   - restart daemon
@@ -63,7 +63,7 @@
   - config
   - rsyncd
 
-- name: xinetd rsync file for rhel8
+- name: Xinetd rsync file for rhel8
   copy: src={{ item }} dest=/etc/xinetd.d/rsync mode=0644
   with_first_found:
     - "{{ rsync }}"
@@ -78,7 +78,7 @@
   - config
   - rsyncd
 
-- name: systemd rsync file for fedora and rhel9
+- name: Systemd rsync file for fedora and rhel9
   copy: src=rsyncd.service dest=/usr/lib/systemd/system/rsyncd.service mode=0644
   when: ansible_distribution == 'Fedora' or (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int > 8)
   notify:
@@ -87,21 +87,21 @@
     - config
     - rsyncd
 
-- name: make sure xinetd is started on rhel8
+- name: Make sure xinetd is started on rhel8
   service: name=xinetd state=started enabled=true
   when: ansible_distribution_major_version|int < 9 and ansible_distribution == 'RedHat'
   tags:
   - services
   - rsyncd
 
-- name: make sure rsync daemon is started on Fedora and rhel9
+- name: Make sure rsync daemon is started on Fedora and rhel9
   service: name=rsyncd enabled=true state=started
   when: ansible_distribution == 'Fedora' or (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int > 8)
   tags:
     - services
     - rsyncd
 
-- name: set sebooleans so rsync can read dirs
+- name: Set sebooleans so rsync can read dirs
   seboolean: name=rsync_export_all_ro
                     state=true
                     persistent=true

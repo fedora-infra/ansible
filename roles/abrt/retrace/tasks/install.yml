@@ -1,11 +1,11 @@
 ---
-- name: erase retrace-server packages
+- name: Erase retrace-server packages
   package:
     name: retrace-server
     state: absent
   when: rs_force_reinstall|bool
 
-- name: install retrace-server package
+- name: Install retrace-server package
   package:
     name: retrace-server
     state: present

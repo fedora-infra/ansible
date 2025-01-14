@@ -1,95 +1,95 @@
 ---
-- name: install python3-pandas package
+- name: Install python3-pandas package
   package: state=present name=python3-pandas
   tags:
     - packages
     - web-data
 
-- name: make sure the /usr/local/share/web-data-analysis directory exists
+- name: Make sure the /usr/local/share/web-data-analysis directory exists
   file: path=/usr/local/share/web-data-analysis state=directory
   tags:
     - web-data
 
-- name: make the data directory
+- name: Make the data directory
   file: path=/mnt/fedora_stats/data state=directory mode=0755
   tags:
     - web-data
 
-- name: make the data subdirs
+- name: Make the data subdirs
   file: path=/mnt/fedora_stats/data/{{item}} state=directory mode=0755
   with_items: [mirrors]
   tags:
     - web-data
 
-- name: copy over website index.
+- name: Copy over website index.
   copy: src=html/main-index.html dest=/var/www/html/index.html mode=0644
   tags:
     - web-data
 
-- name: make a css tree
+- name: Make a css tree
   file: path=/var/www/html/css/  state=directory mode=0755
   tags:
     - web-data
 
 
-- name: css files
+- name: Css files
   copy: src={{item}} dest=/var/www/html/css/ mode=0644
   with_items: [html/css/data-reports.css, html/css/normalize.css]
   tags:
     - web-data
 
-- name: make the web directory exists
+- name: Make the web directory exists
   file: path=/var/www/html/csv-reports/  state=directory mode=0755
   tags:
     - web-data
 
-- name: make the web subdirs
+- name: Make the web subdirs
   file: path=/var/www/html/csv-reports/{{item}} state=directory mode=0755
   with_items: [images, mirrors]
   tags:
     - web-data
 
-- name: make the web directory summary.
+- name: Make the web directory summary.
   copy: src=html/summary.html dest=/var/www/html/csv-reports/images/ mode=0644
   tags:
     - web-data
 
-- name: clean out non-useful images
+- name: Clean out non-useful images
   ansible.builtin.file: path="/var/www/html/csv-reports/images/{{item}}" state=absent
   with_items: [hotspot-all.png, fedora-rev-latest-stacked.png]
 
-- name: scripts to condense data down for further processing
+- name: Scripts to condense data down for further processing
   copy: src={{item}} dest=/usr/local/bin/ mode=0755
   with_items: [condense-mirrorlogs.sh]
   tags:
     - web-data
 
-- name: python scripts to calculate various data
+- name: Python scripts to calculate various data
   copy: src={{item}} dest=/usr/local/bin/ mode=0755
   with_items: [mirrorlist.py]
   tags:
     - web-data
 
-- name: awk files for csv creation
+- name: Awk files for csv creation
   copy: src={{item}} dest=/usr/local/share/web-data-analysis mode=0644
   with_items: [mirrors-data.awk]
   tags:
     - web-data
 
-- name: gnuplot file for image creation
+- name: Gnuplot file for image creation
   copy: src={{item}} dest=/usr/local/share/web-data-analysis mode=0644
   with_items: [mirrors-data.gp]
   tags:
     - web-data
 
-- name: daily cron file to run the log files
+- name: Daily cron file to run the log files
   copy: src={{item}} dest=/etc/cron.d/ mode=0644
   with_items: [condense-mirrorlogs.cron]
   tags:
     - web-data
     - cron
 
-- name: install package deps for mirrors-countme
+- name: Install package deps for mirrors-countme
   package:
     # tqdm is optional but it gives nice progress meters for interactive use
     name: ['python3-pip', 'python3-setuptools', 'python3-tqdm']
@@ -98,13 +98,13 @@
     - packages
     - web-data
 
-- name: make countme group
+- name: Make countme group
   group:
     name: countme
   tags:
     - web-data
 
-- name: make countme user
+- name: Make countme user
   user:
     name: countme
     group: countme
@@ -114,7 +114,7 @@
   tags:
     - web-data
 
-- name: install the python3.11-mirrors-countme RPM package
+- name: Install the python3.11-mirrors-countme RPM package
   package:
     name: python3.11-mirrors-countme
     state: present
@@ -123,7 +123,7 @@
     - packages
 
 
-- name: remove local mirrors-countme git repo, scripts and Python package
+- name: Remove local mirrors-countme git repo, scripts and Python package
   # Using `shell` here because `file` doesn't know wild cards
   shell: >-
     shopt -s nullglob;
@@ -143,39 +143,39 @@
   tags:
     - web-data
 
-- name: make countme web subdir
+- name: Make countme web subdir
   file: path=/var/www/html/csv-reports/countme state=directory mode=0775 owner=countme group=countme
   tags:
     - web-data
 
-- name: make countme local data dir
+- name: Make countme local data dir
   file: path=/var/lib/countme state=directory mode=0775 owner=countme group=countme
   tags:
     - web-data
 
-- name: ensure messaging script is installed
+- name: Ensure messaging script is installed
   import_role: name=fedora-messaging-utils
   tags:
     - web-data
     - cron
 
-- name: install countme script to parse new logs & update totals
+- name: Install countme script to parse new logs & update totals
   copy: src=countme-update.sh dest=/usr/local/bin/ mode=0755
   tags:
     - web-data
 
-- name: install CentOS countme script to parse new logs & update totals
+- name: Install CentOS countme script to parse new logs & update totals
   copy: src=countme-centos-update.sh dest=/usr/local/bin/ mode=0755
   tags:
     - web-data
 
-- name: install cron file to run countme-update.sh daily
+- name: Install cron file to run countme-update.sh daily
   copy: src=countme-update.cron dest=/etc/cron.d/ mode=0644
   tags:
     - web-data
     - cron
 
-- name: remove old syncHttpLogs.sh cron script only on log01
+- name: Remove old syncHttpLogs.sh cron script only on log01
   file:
     path: /etc/cron.daily/syncHttpLogs.sh
     state: absent
@@ -184,7 +184,7 @@
     - web-data
     - cron
 
-- name: write configuration file for script to sync httpd logs
+- name: Write configuration file for script to sync httpd logs
   template:
     src: sync-http-logs.yaml.j2
     dest: /etc/sync-http-logs.yaml
@@ -193,7 +193,7 @@
     - web-data
     - config
 
-- name: install a script to sync httpd logs via cron only on log01
+- name: Install a script to sync httpd logs via cron only on log01
   copy:
     src: sync-http-logs.py
     dest: /usr/local/bin/sync-http-logs.py
@@ -203,7 +203,7 @@
     - web-data
     - cron
 
-- name: remove sync-http-logs.py from cron.daily directory
+- name: Remove sync-http-logs.py from cron.daily directory
   file:
     path: /etc/cron.daily/sync-http-logs.py
     state: absent
@@ -212,24 +212,24 @@
     - web-data
     - cron
 
-- name: install awstats package
+- name: Install awstats package
   package: state=present name=awstats
   tags:
     - packages
     - web-data
 
-- name: make the awstats directory
+- name: Make the awstats directory
   file: path=/var/www/html/awstats-reports state=directory
   tags:
     - web-data
 
-- name: proxy log merge script (log01)
+- name: Proxy log merge script (log01)
   copy: src=combineHttpLogs.sh dest=/usr/local/bin/ mode=0755
   tags:
     - config
     - web-data
 
-- name: remove separate daily cron job to merge old logs
+- name: Remove separate daily cron job to merge old logs
   file:
     path: /etc/cron.d/combineHttp.cron
     state: absent
@@ -237,7 +237,7 @@
     - web-data
     - cron
 
-- name: install daily cron job to sync and merge log files
+- name: Install daily cron job to sync and merge log files
   copy:
     src: sync-http-logs-and-merge.sh
     dest: /etc/cron.daily

@@ -1,5 +1,5 @@
 ---
-- name: check/create instance
+- name: Check/create instance
   hosts: copr_pulp_dev_aws:copr_pulp_aws
   gather_facts: false
 
@@ -24,14 +24,14 @@
       - swap_file_size_mb is defined
 
   # TODO Remove in favor of base/tasks/main.yml
-  - name: install platform-python
+  - name: Install platform-python
     package: name={{ item }} state=present
     with_items:
     - platform-python
     become: true
 
   # TODO Remove in favor of base/tasks/main.yml
-  - name: symlink /usr/bin/python to /usr/bin/python3
+  - name: Symlink /usr/bin/python to /usr/bin/python3
     alternatives:
       name: python
       link: /usr/bin/python
@@ -39,13 +39,13 @@
     become: true
 
   # TODO Move this to base/tasks/main.yml
-  - name: install iptables-services
+  - name: Install iptables-services
     package: name=iptables-services state=present
     become: true
 
   # TODO Postfix should have probably been installed by base/tasks/main.yml
   # but it wasn't for this instance
-  - name: install postfix
+  - name: Install postfix
     package: name=postfix state=present
     become: true
 
@@ -55,7 +55,7 @@
       dest: /tmp/pulp_default_admin_password
       mode: "000"
 
-- name: cloud basic setup
+- name: Cloud basic setup
   hosts: copr_pulp_dev_aws:copr_pulp_aws
   become: true
   gather_facts: true
@@ -69,11 +69,11 @@
 
   tasks:
   - import_tasks: "{{ tasks_path }}/cloud_setup_basic.yml"
-  - name: set hostname (required by some services, at least postfix need it)
+  - name: Set hostname (required by some services, at least postfix need it)
     hostname: name="{{copr_hostbase}}.cloud.fedoraproject.org"
     when: datacenter != "aws"
 
-- name: provision instance
+- name: Provision instance
   hosts: copr_pulp_dev_aws:copr_pulp_aws
   become: true
   gather_facts: true

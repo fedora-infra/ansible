@@ -1,7 +1,7 @@
 ---
 # Tasks to set up varnish
 
-- name: install needed packages
+- name: Install needed packages
   package: name={{ item }} state=present
   with_items:
   - varnish
@@ -10,19 +10,19 @@
   - varnish
   - packages
 
-- name: set some varnishd selinux boolean
+- name: Set some varnishd selinux boolean
   seboolean: name=varnishd_connect_any persistent=yes state=yes
   tags:
   - varnish
   - selinux
 
-- name: set domain_can_mmap_files selinux boolean
+- name: Set domain_can_mmap_files selinux boolean
   seboolean: name=domain_can_mmap_files persistent=yes state=yes
   tags:
   - varnish
   - selinux
 
-- name: install varnish /etc/systemd/system/varnish.service file (fedora 29+)
+- name: Install varnish /etc/systemd/system/varnish.service file (fedora 29+)
   template: src=varnish.f29.j2 dest=/etc/systemd/system/varnish.service owner=root group=root
   notify:
   - reload systemd
@@ -31,14 +31,14 @@
   - varnish
   when: ansible_distribution_major_version|int >= 29 and ansible_distribution == 'Fedora'
 
-- name: install /etc/varnish/default.vcl (proxies)
+- name: Install /etc/varnish/default.vcl (proxies)
   template: src={{ varnish_group }}.vcl.j2 dest=/etc/varnish/default.vcl owner=root group=root
   notify:
   - restart varnish
   tags:
   - varnish
 
-- name: make sure varnish is set to enabled on boot
+- name: Make sure varnish is set to enabled on boot
   service: enabled=yes name=varnish
   tags:
   - varnish

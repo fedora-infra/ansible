@@ -1,7 +1,7 @@
 ---
 # tasklist for setting up a SpamAssassin server
 
-- name: install the package
+- name: Install the package
   package: name={{ item }} state=present
   with_items:
   - spamassassin
@@ -9,41 +9,41 @@
   tags:
   - packages
 
-- name: create the specific group
+- name: Create the specific group
   group: name=spammy system=yes
   tags:
   - config
 
-- name: create the specific user
+- name: Create the specific user
   user: name=spammy comment="spamassassin user" home=/home/spammy group=spammy createhome=yes system=yes shell=/sbin/nologin
   tags:
   - config
 
-- name: setup the sysconfig file
+- name: Setup the sysconfig file
   copy: src=sysconfig dest=/etc/sysconfig/spamassassin
   notify:
   - restart spamassassin
   tags:
   - config
 
-- name: setup the config file
+- name: Setup the config file
   copy: src=local.cf dest=/etc/mail/spamassassin/local.cf
   notify:
   - restart spamassassin
   tags:
   - config
 
-- name: setup the cron job
+- name: Setup the cron job
   copy: src=sa-update dest=/etc/cron.d/sa-update
   tags:
   - config
 
-- name: set the service running/enabled
+- name: Set the service running/enabled
   service: name=spamassassin enabled=true state=started
   tags:
   - service
 
-- name: setup logrotate to our needs
+- name: Setup logrotate to our needs
   copy: src="spamassassin.logrotate" dest=/etc/logrotate.d/spamassassin
   tags:
   - config

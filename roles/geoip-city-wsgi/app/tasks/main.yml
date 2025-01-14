@@ -4,7 +4,7 @@
 # This is the role for geoip-city-wsgi.
 #
 # install necessary packages
-- name: install python-paste-deploy geolite2-city python2-iso3166 python2-geoip2
+- name: Install python-paste-deploy geolite2-city python2-iso3166 python2-geoip2
   package:
     name:
       - python-paste-deploy
@@ -14,7 +14,7 @@
     state: present
   when: ansible_distribution_major_version|int < 8 and ansible_distribution == 'RedHat'
 
-- name: install python3-paste-deploy geolite2-city python3-iso3166 python3-geoip2
+- name: Install python3-paste-deploy geolite2-city python3-iso3166 python3-geoip2
   package:
     name:
       - python3-paste-deploy
@@ -25,7 +25,7 @@
   when: ansible_distribution_major_version|int >= 8 and ansible_distribution == 'RedHat'
 
 
-- name: install geoip-city-wsgi.conf file
+- name: Install geoip-city-wsgi.conf file
   copy: >
         src="geoip-city-wsgi.conf"
         dest="/etc/httpd/conf.d/geoip-city-wsgi.conf"
@@ -40,7 +40,7 @@
   - geoip-city-wsgi
   - geoip-city-wsgi/app
 
-- name: setup /usr/share/geoip-city-wsgi directory
+- name: Setup /usr/share/geoip-city-wsgi directory
   file: >
         path=/usr/share/geoip-city-wsgi
         owner=root
@@ -53,7 +53,7 @@
   - geoip-city-wsgi
   - geoip-city-wsgi/app
 
-- name: install geoip-city.wsgi file
+- name: Install geoip-city.wsgi file
   copy: >
         src="geoip-city.wsgi"
         dest="/usr/share/geoip-city-wsgi/geoip-city.wsgi"

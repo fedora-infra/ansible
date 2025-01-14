@@ -1,37 +1,37 @@
 ---
-- name: install tftp server package
+- name: Install tftp server package
   package: state=present name=tftp-server
   tags:
   - packages
   - tftp_server
 
-- name: install syslinux package
+- name: Install syslinux package
   package: state=present name=syslinux
   tags:
   - packages
   - tftp_server
 
-- name: setup pxelinux.cfg dir
+- name: Setup pxelinux.cfg dir
   file: path=/var/lib/tftpboot/pxelinux.cfg mode=755 state=directory
   tags:
   - config
   - tftp_server
 
-- name: setup pxelinux.cfg default file
+- name: Setup pxelinux.cfg default file
   copy: src=default.{{ inventory_hostname }} dest=/var/lib/tftpboot/pxelinux.cfg/default mode=644
   tags:
   - config
   - tftp_server
   when: datacenter != 'iad2'
 
-- name: enable tftp socket service
+- name: Enable tftp socket service
   service: state=started enabled=true name=tftp.socket
   tags:
   - service
   - config
   - tftp_server
 
-- name: fill up the tftpboot directory
+- name: Fill up the tftpboot directory
   synchronize: src="{{ bigfiles }}/tftpboot/" dest=/var/lib/tftpboot/
   tags:
   - tftp_server
@@ -53,7 +53,7 @@
   - tftp_server
   when: datacenter == 'iad2'
 
-# - name: generate custom configs
+# - name: Generate custom configs
 #   template: src=grubhost.cfg.j2 dest="/var/lib/tftpboot/uefi/{{ hostvars[item].install_mac }}"
 #   with_items: "{{ groups['all'] }}"
 #   when: "hostvars[item].install_noc == inventory_hostname"

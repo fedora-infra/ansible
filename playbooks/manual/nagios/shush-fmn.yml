@@ -1,5 +1,5 @@
 ---
-- name: be quiet please...
+- name: Be quiet please...
   hosts: notifs_backend:notifs_backend_stg
   user: root
   vars_files:
@@ -8,7 +8,7 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
-  - name: tell nagios to shush.
+  - name: Tell nagios to shush.
     nagios: action=downtime minutes=15 service=host host={{ inventory_hostname_short }}{{ env_suffix }}
     delegate_to: noc01.iad2.fedoraproject.org
     ignore_errors: true

@@ -1,45 +1,45 @@
 ---
 # Setup a fedmsg-hub
 
-- name: install needed packages - py2
+- name: Install needed packages - py2
   package: name=fedmsg-hub state=present
   tags:
   - packages
   when: "'python34_fedmsg' not in group_names"
 
-- name: install the python34 fedmsg package (yum)
+- name: Install the python34 fedmsg package (yum)
   package: name=python34-fedmsg-core state=present
   when: "'python34_fedmsg' in group_names and ansible_distribution_major_version|int < 22"
   tags: fedmsg/base
 
-- name: install the python3 fedmsg package (dnf)
+- name: Install the python3 fedmsg package (dnf)
   dnf: pkg=python3-fedmsg state=present
   when: "'python34_fedmsg' in group_names and ansible_distribution_major_version|int > 21"
   tags: fedmsg/base
 
-- name: fedmsg-hub service
+- name: Fedmsg-hub service
   service: name=fedmsg-hub state=started enabled=yes
   when: "'python34_fedmsg' not in group_names and env == 'production'"
 
-- name: fedmsg-hub service
+- name: Fedmsg-hub service
   service: name=fedmsg-hub state=stopped enabled=no
   when: "'python34_fedmsg' not in group_names and env == 'staging'"
 
-- name: fedmsg-hub-3 service
+- name: Fedmsg-hub-3 service
   service: name=fedmsg-hub-3 state=started enabled=yes
   when: "'python34_fedmsg' in group_names"
 
-- name: enable the websocket server if we should
+- name: Enable the websocket server if we should
   copy: src=websockets.py dest=/etc/fedmsg.d/websockets.py
   when: enable_websocket_server
   notify: restart fedmsg-hub
 
-- name: disable the websocket server if we should..
+- name: Disable the websocket server if we should..
   file: dest=/etc/fedmsg.d/websockets.py state=absent
   when: not enable_websocket_server
   notify: restart fedmsg-hub
 
-- name: set fedmsg ownership on /var/run/fedmsg
+- name: Set fedmsg ownership on /var/run/fedmsg
   file: >
     dest=/var/run/fedmsg/
     mode=2775
@@ -49,7 +49,7 @@
   tags:
   - fedmsgmonitor
 
-- name: ensure that nrpe has rights to monitor us
+- name: Ensure that nrpe has rights to monitor us
   file: >
     dest=/var/run/fedmsg/monitoring-fedmsg-hub.socket
     mode=0775
@@ -62,7 +62,7 @@
   tags:
   - fedmsgmonitor
 
-- name: create systemd config directoryies
+- name: Create systemd config directoryies
   file: path="/etc/systemd/system/{{ item }}.service.d" state=directory
   with_items:
   - fedmsg-hub
@@ -72,7 +72,7 @@
   tags:
   - fedmsg/hub
 
-- name: install systemd config file
+- name: Install systemd config file
   template:
     src: fedmsg-hub-systemd.conf.j2
     dest: "/etc/systemd/system/{{ item }}.service.d/systemd.conf"

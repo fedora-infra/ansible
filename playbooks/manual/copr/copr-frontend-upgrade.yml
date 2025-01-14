@@ -1,5 +1,5 @@
 ---
-- name: upgrade copr frontend
+- name: Upgrade copr frontend
   hosts: copr_front_dev_aws:copr_front_aws
   user: root
   gather_facts: true
@@ -22,7 +22,7 @@
     changed_when: "frontend_has_update.rc != 0"
     failed_when: false
 
-  - name: make httpd stopped
+  - name: Make httpd stopped
     service: name=httpd state=stopped
     register: httpd_stopped
     when: frontend_has_update.changed
@@ -36,7 +36,7 @@
       - copr-selinux
       - python3-copr-common
 
-  - name: upgrade db to head, logs in /var/log/copr-frontend/migrations.log
+  - name: Upgrade db to head, logs in /var/log/copr-frontend/migrations.log
     shell: alembic-3 upgrade head &> /var/log/copr-frontend/migrations.log
     become: yes
     become_user: copr-fe
@@ -44,7 +44,7 @@
       chdir: /usr/share/copr/coprs_frontend/
     when: frontend_has_update.changed
 
-  - name: make httpd started
+  - name: Make httpd started
     service: name=httpd state=started
     when: httpd_stopped.changed
 

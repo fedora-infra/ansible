@@ -7,7 +7,7 @@
   - fedora-web
   - ostree
 
-- name: make ostree dir
+- name: Make ostree dir
   file: state=directory
         path=/srv/web/ostree
         owner=apache
@@ -20,7 +20,7 @@
   - ostree
   when: env != 'staging'
 
-- name: make ostree dir
+- name: Make ostree dir
   file: state=directory
         path=/srv/web/ostree
         owner=apache
@@ -42,7 +42,7 @@
   - fedora-web
   - ostree
 
-- name: make IoT ostree dir
+- name: Make IoT ostree dir
   file: state=directory
         path=/srv/web/ostree/iot
         owner=apache
@@ -55,7 +55,7 @@
   - ostree
   when: env != 'staging'
 
-- name: make IoT ostree dir
+- name: Make IoT ostree dir
   file: state=directory
         path=/srv/web/ostree/iot
         owner=apache

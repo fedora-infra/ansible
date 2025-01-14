@@ -2,7 +2,7 @@
 #
 # Install packages needed for fedora people
 #
-- name: install packages needed for fedora people
+- name: Install packages needed for fedora people
   package: name={{ item }} state=present
   with_items:
   - cvs
@@ -17,13 +17,13 @@
   - packages
   - people
 
-- name: install main httpd config
+- name: Install main httpd config
   template: src=people.conf dest=/etc/httpd/conf.d/people.conf
   tags:
   - people
   - sslciphers
 
-- name: install httpd config
+- name: Install httpd config
   copy: src={{item}} dest=/etc/httpd/conf.d/{{item}}
   with_items:
   - cgit.conf
@@ -59,12 +59,12 @@
   tags:
   - people
 
-- name: start httpd
+- name: Start httpd
   service: name="httpd" state=started
   tags:
   - people
 
-- name: set selinux booleans needed for people
+- name: Set selinux booleans needed for people
   seboolean: name={{ item }} state=true persistent=true
   with_items:
   - httpd_enable_homedirs
@@ -75,7 +75,7 @@
   tags:
   - people
 
-- name: check the selinux context of the users home git dirs
+- name: Check the selinux context of the users home git dirs
   command: matchpathcon "/home/fedora/someone/public_git"
   register: gitcontext
   check_mode: no
@@ -84,14 +84,14 @@
   - config
   - selinux
 
-- name: set the SELinux policy for the users home git dirs
+- name: Set the SELinux policy for the users home git dirs
   command: semanage fcontext -a -t git_user_content_t "/home/fedora/(.*)/public_git(.*)"
   when: gitcontext.stdout.find('git_user_content_t') == -1
   tags:
   - config
   - selinux
 
-- name: check the selinux context of the project dirs
+- name: Check the selinux context of the project dirs
   command: matchpathcon "/project"
   register: gitcontext
   check_mode: no
@@ -100,14 +100,14 @@
   - config
   - selinux
 
-- name: set the SELinux policy for the project dirs
+- name: Set the SELinux policy for the project dirs
   command: semanage fcontext -a -t httpd_sys_content_t "/project(.*)"
   when: gitcontext.stdout.find('httpd_sys_content_t') == -1
   tags:
   - config
   - selinux
 
-- name: check the selinux context of the web dir
+- name: Check the selinux context of the web dir
   command: matchpathcon "/srv/web"
   register: gitcontext
   check_mode: no
@@ -116,14 +116,14 @@
   - config
   - selinux
 
-- name: set the SELinux policy for the web dir
+- name: Set the SELinux policy for the web dir
   command: semanage fcontext -a -t httpd_sys_content_t "/srv/web(/.*)?"
   when: gitcontext.stdout.find('httpd_sys_content_t') == -1
   tags:
   - config
   - selinux
 
-- name: check the selinux context of the people dir
+- name: Check the selinux context of the people dir
   command: matchpathcon "/srv/people"
   register: gitcontext
   check_mode: no
@@ -132,7 +132,7 @@
   - config
   - selinux
 
-- name: set the SELinux policy for the web dir
+- name: Set the SELinux policy for the web dir
   command: semanage fcontext -a -t httpd_sys_content_t "/srv/people(/.*)?"
   when: gitcontext.stdout.find('httpd_sys_content_t') == -1
   tags:
@@ -141,7 +141,7 @@
 
 # This is a file context alias, to let ansible know that /home and /srv/home
 # are equal as far as contexts are concerned.
-- name: check the selinux context alias of the home dir
+- name: Check the selinux context alias of the home dir
   command: matchpathcon "/srv/home"
   register: gitcontext
   check_mode: no
@@ -150,7 +150,7 @@
   - config
   - selinux
 
-- name: set the SELinux policy alias for the home dir
+- name: Set the SELinux policy alias for the home dir
   command: semanage fcontext -a -e /home /srv/home
   when: gitcontext.stdout.find('home_root_t') == -1
   tags:
@@ -171,7 +171,7 @@
 # This sets the default, it's safe to always run.
 # Default quota for users is 2gb
 #
-- name: set default xfs quotas on /srv
+- name: Set default xfs quotas on /srv
   command: xfs_quota -x -c 'limit bsoft=2g bhard=2g -d' /srv
   check_mode: no
   register: xfs_quotaoutput
@@ -184,7 +184,7 @@
 # This sets quotas for people who requested more than default
 # It's also safe to aways run.
 #
-- name: set quotas for people who have more set
+- name: Set quotas for people who have more set
   command: >-
     xfs_quota -x -c 'limit bsoft={{ item.quota }} bhard={{ item.quota }} {{ item.user }}' /srv
   with_items:
@@ -235,67 +235,67 @@
   - people
   - peoplequotas
 
-- name: create repos directory
+- name: Create repos directory
   file: path=/project/repos state=directory owner=root group=fedora-contributor mode=0775
   tags:
   - people
 
-- name: create repos link
+- name: Create repos link
   file: state=link src=/project/repos dest=/srv/repos
   tags:
   - people
 
-- name: create groups link
+- name: Create groups link
   file: state=link src=/project dest=/srv/groups
   tags:
   - people
 
-- name: setup script to grab download stats for some groups.
+- name: Setup script to grab download stats for some groups.
   copy: src=grab-daily-logs.sh dest=/usr/local/bin/grab-daily-logs.sh mode=0755
   tags:
   - people
 
-- name: setup cron job to gather download stats
+- name: Setup cron job to gather download stats
   copy: src=grab-daily-logs.cron dest=/etc/cron.daily/grab-daily-logs mode=0755
   tags:
   - people
 
-- name: copy robots.txt for fedorapeople.org
+- name: Copy robots.txt for fedorapeople.org
   copy: src=robots.txt dest=/srv/people/site/robots.txt
   tags:
   - people
 
-- name: copy static files to make main fedorapeople.org index page
+- name: Copy static files to make main fedorapeople.org index page
   copy: src=static/ dest=/srv/people/site/static
   tags:
   - people
 
-- name: copy static files for user pages
+- name: Copy static files for user pages
   copy: src=userdefs/ dest=/srv/people/site/userdefs
   tags:
   - people
 
-- name: setup script to make main fedorapeople.org index page
+- name: Setup script to make main fedorapeople.org index page
   copy: src=make-people-page.py dest=/usr/local/bin/make-people-page.py mode=755
   tags:
   - people
 
-- name: setup script check for broken planet confs
+- name: Setup script check for broken planet confs
   copy: src=check-broken-planet.py dest=/usr/local/bin/check-broken-planet.py mode=755
   tags:
   - people
 
-- name: setup cron to run make fedorapeople.org main index page
+- name: Setup cron to run make fedorapeople.org main index page
   copy: src=make-people-page.cron dest=/etc/cron.d/make-people-page.cron mode=644
   tags:
   - people
 
-- name: setup cron to run the check for broken planet confs
+- name: Setup cron to run the check for broken planet confs
   copy: src=check-broken-planet.cron dest=/etc/cron.d/check-broken-planet.cron mode=644
   tags:
   - people
 
-- name: copy SSSd configuration
+- name: Copy SSSd configuration
   template:
     src: sssd.conf
     dest: /etc/sssd/sssd.conf

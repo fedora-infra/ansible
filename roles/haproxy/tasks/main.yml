@@ -1,7 +1,7 @@
 ---
 # Tasks to set up haproxy
 
-- name: install needed packages
+- name: Install needed packages
   package: name={{ item }} state=present
   with_items:
   - haproxy
@@ -10,7 +10,7 @@
   - packages
   - haproxy
 
-- name: install haproxy/cfg
+- name: Install haproxy/cfg
   template: src={{ item.file }}
         dest={{ item.dest }}
         owner=root group=root mode=0600
@@ -21,7 +21,7 @@
   tags:
   - haproxy
 
-- name: install limits.conf and 503.http
+- name: Install limits.conf and 503.http
   copy: src={{ item.file }}
         dest={{ item.dest }}
         owner=root group=root mode=0600
@@ -31,7 +31,7 @@
   tags:
   - haproxy
 
-- name: install pem cert
+- name: Install pem cert
   copy: src={{ item.file }}
         dest={{ item.dest }}
         owner=root group=root mode=0600
@@ -41,14 +41,14 @@
   tags:
   - haproxy
 
-- name: install ocp api pem cert
+- name: Install ocp api pem cert
   copy: src={{ private }}/files/httpd/api-int.ocp{{ env_suffix }}.fedoraproject.org.pem
         dest=/etc/haproxy/ocp4.pem
         owner=root group=root mode=0600
   tags:
   - haproxy
 
-- name: install libsemanage
+- name: Install libsemanage
   package:
     state: present
     name:
@@ -58,7 +58,7 @@
   - selinux
   when: (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int < 8) or (ansible_distribution_major_version|int < 30 and ansible_distribution == 'Fedora')
 
-- name: install libsemanage in a python3 manner
+- name: Install libsemanage in a python3 manner
   package:
     state: present
     name:
@@ -78,20 +78,20 @@
 
 # These following four tasks are used for copying over our custom selinux
 # module.
-- name: ensure a directory exists for our custom selinux module
+- name: Ensure a directory exists for our custom selinux module
   file: dest=/usr/share/haproxy state=directory
   tags:
   - haproxy
   - selinux
 
-- name: copy over our general haproxy selinux module
+- name: Copy over our general haproxy selinux module
   copy: src=selinux/fi-haproxy.pp dest=/usr/share/haproxy/fi-haproxy.pp
   register: fi_haproxy_module
   tags:
   - haproxy
   - selinux
 
-- name: check to see if its even installed yet
+- name: Check to see if its even installed yet
   shell: semodule -l | grep fi-haproxy | wc -l
   register: fi_haproxy_grep
   check_mode: no
@@ -100,7 +100,7 @@
   - haproxy
   - selinux
 
-- name: install our general haproxy selinux module
+- name: Install our general haproxy selinux module
   command: semodule -i /usr/share/haproxy/fi-haproxy.pp
   when: fi_haproxy_module is changed or fi_haproxy_grep is changed
   tags:
@@ -108,7 +108,7 @@
   - selinux
 
 
-- name: check haproxy cfg to make sure it is valid
+- name: Check haproxy cfg to make sure it is valid
   command: haproxy -c -f /etc/haproxy/haproxy.cfg
   check_mode: no
   register: haproxyconfigcheck

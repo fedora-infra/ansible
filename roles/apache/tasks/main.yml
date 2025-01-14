@@ -1,6 +1,6 @@
 ---
 # install apache(httpd)
-- name: install apache (package)
+- name: Install apache (package)
   package:
     state: present
     name:
@@ -11,7 +11,7 @@
   - apache
   when: ansible_cmdline.ostree is not defined
 
-- name: install mod_http2 on rhel8 hosts
+- name: Install mod_http2 on rhel8 hosts
   package:
     state: present
     name:
@@ -21,7 +21,7 @@
   - apache
   when: ansible_distribution_major_version|int >= 8 and ansible_distribution == 'RedHat'
 
-- name: set apache running/enabled
+- name: Set apache running/enabled
   service: name=httpd enabled=yes
   ignore_errors: true
   notify:
@@ -31,7 +31,7 @@
   - apache
 
 # install hash randomization hotfix
-- name: hotfix - copy over new httpd init script
+- name: Hotfix - copy over new httpd init script
   copy: src="{{ files }}/hotfix/httpd/httpd.init" dest=/etc/init.d/httpd
         owner=root group=root mode=0755
   when: ansible_distribution_major_version|int < 30 and ansible_distribution == 'Fedora'
@@ -43,7 +43,7 @@
   - apache
 
 # install hash randomization hotfix
-- name: hotfix - copy over new httpd init script
+- name: Hotfix - copy over new httpd init script
   copy: src="{{ files }}/hotfix/httpd/httpd.init" dest=/etc/init.d/httpd
         owner=root group=root mode=0755
   when: ansible_distribution_major_version|int <= 8 and ansible_distribution == 'RedHat'
@@ -54,7 +54,7 @@
   - hotfix
   - apache
 
-- name: add appserver headers.conf
+- name: Add appserver headers.conf
   template: src="{{ files }}/httpd/headers.conf.j2" dest=/etc/httpd/conf.d/headers.conf
   notify:
   - reload apache
@@ -63,7 +63,7 @@
   - apache
   - apache/headers
 
-- name: add appserver h2.conf
+- name: Add appserver h2.conf
   template: src="{{ files }}/httpd/h2.conf.j2" dest=/etc/httpd/conf.d/h2.conf
   when: ansible_distribution == 'Fedora'
   notify:
@@ -73,7 +73,7 @@
   - apache
   - h2
 
-- name: add apache_status location for collectd
+- name: Add apache_status location for collectd
   template: src="{{ files }}/httpd/apachestatus.conf" dest=/etc/httpd/conf.d/apachestatus.conf
   notify:
   - reload apache
@@ -82,7 +82,7 @@
   - apache
   - apachestatus
 
-- name: setup logrotate to our needs
+- name: Setup logrotate to our needs
   copy: src="{{ files }}/httpd/httpd.logrotate" dest=/etc/logrotate.d/httpd
   tags:
   - config

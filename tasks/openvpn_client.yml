@@ -1,6 +1,6 @@
 ---
 # openvpn - ftw - or something
-- name: install openvpn
+- name: Install openvpn
   package: name=openvpn state=present
   tags:
   - packages
@@ -40,7 +40,7 @@
   notify:
   - restart openvpn
 
-- name: enable openvpn service for rhel 6
+- name: Enable openvpn service for rhel 6
   service: name=openvpn state=started enabled=true
   tags:
   - service

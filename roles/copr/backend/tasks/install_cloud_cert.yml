@@ -1,8 +1,8 @@
 ---
-- name: copy .pem
+- name: Copy .pem
   copy: src=../../files/fedora-cloud/fed-cloud09.pem  dest=/etc/pki/ca-trust/source/anchors/
   register: cloud_pem_copied
 
-- name: update certificates
+- name: Update certificates
   command: /usr/bin/update-ca-trust
   when: cloud_pem_copied.changed

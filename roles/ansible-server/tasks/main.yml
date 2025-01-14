@@ -2,7 +2,7 @@
 #
 # Setup ansible-server instance
 #
-- name: install needed packages
+- name: Install needed packages
   package:
     name:
       - ansible-core
@@ -19,17 +19,17 @@
   - packages
   - ansible-server
 
-- name: generate default ansible config
+- name: Generate default ansible config
   template: src=ansible.cfg.j2 dest=/etc/ansible/ansible.cfg owner=root group=root mode=0644
   tags:
   - ansible-server
 
-- name: installing the phx2 dns check script
+- name: Installing the phx2 dns check script
   copy: src=dns_check.py dest=/usr/local/bin/dns_check owner=root mode=0755
   tags:
   - ansible-server
 
-- name: install required collections
+- name: Install required collections
   command: ansible-galaxy install -r {{ ansible_base }}/ansible/roles/ansible-server/files/requirements.yml
   tags:
   - ansible-server

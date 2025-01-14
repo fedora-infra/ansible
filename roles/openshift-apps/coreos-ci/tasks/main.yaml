@@ -9,7 +9,7 @@
     recurse: true
 
 # generate the templates for project to be created
-- name: create the templates
+- name: Create the templates
   template:
     src: "{{ item }}"
     dest: "/root/ocp4/openshift-apps/{{project_name}}/{{ item }}"
@@ -17,12 +17,12 @@
   with_items: "{{ project_templates }}"
 
 # apply created openshift resources
-- name: oc apply resources
+- name: Oc apply resources
   command: "/root/bin/oc apply -f /root/ocp4/openshift-apps/{{project_name}}/{{ item }}"
   with_items: "{{ project_templates }}"
 
 # create the service account
-- name: create service account
+- name: Create service account
   command: "/root/bin/oc create sa {{ project_service_account }} -n {{ project_name }}"
   register: sa_resource_create
   failed_when: sa_resource_create.stderr != '' and 'already exists' not in sa_resource_create.stderr

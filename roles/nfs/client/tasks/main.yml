@@ -1,6 +1,6 @@
 # Setup our idmapd.conf file. It should be loaded automagically.
 ---
-- name: idmapd.conf
+- name: Idmapd.conf
   copy: src=idmapd.conf dest=/etc/idmapd.conf
   tags:
   - nfs/client
@@ -8,7 +8,7 @@
 # if we need to reload nm, we should do it now, not after roles.
 - meta: flush_handlers
 # on builders re-up eth0 to make sure systemd-resolved has updated info
-- name: nmcli c up eth0 on buildvms
+- name: Nmcli c up eth0 on buildvms
   command: nmcli c up eth0
   check_mode: no
   changed_when: false
@@ -28,7 +28,7 @@
   tags:
   - nfs/client
 
-- name: enable rpcbind services and run them (rhel 7+ and Fedora)
+- name: Enable rpcbind services and run them (rhel 7+ and Fedora)
   service: name={{ item }}  enabled=true state=started
   with_items:
   - rpcbind
@@ -36,7 +36,7 @@
   tags:
   - nfs/client
 
-- name: enable nfs-lock service and run them (rhel 7 and Fedora)
+- name: Enable nfs-lock service and run them (rhel 7 and Fedora)
   service: name={{ item }}  enabled=true state=started
   with_items:
   - nfs-lock
@@ -44,7 +44,7 @@
   tags:
   - nfs/client
 
-- name: nfs mount points (iad2)
+- name: Nfs mount points (iad2)
   mount: >
         name={{ mnt_dir }}
         src=ntap-iad2-c02-fedora01-nfs01a:/{{ nfs_src_dir }}
@@ -57,7 +57,7 @@
   tags:
   - nfs/client
 
-- name: nfs mount points (rdu)
+- name: Nfs mount points (rdu)
   mount: >
         name={{ mnt_dir }}
         src=172.31.1.11:/{{ nfs_src_dir }}
@@ -78,7 +78,7 @@
 # should revisit how this role works.
 #
 
-- name: nfs mount points (stg) staging koji
+- name: Nfs mount points (stg) staging koji
   mount: >
         name=/mnt/fedora_koji
         src=10.3.167.64:/mnt/fedora_koji
@@ -91,7 +91,7 @@
   tags:
   - nfs/client
 
-- name: nfs mount points (stg) production koji ro
+- name: Nfs mount points (stg) production koji ro
   mount: >
         name=/mnt/fedora_koji_prod
         src=ntap-iad2-c02-fedora01-nfs01a:/fedora_koji

@@ -1,7 +1,7 @@
 ---
 #
 # Configuration for the fedora-packages webapp
-- name: install needed packages
+- name: Install needed packages
   package: name={{ item }} state=present
   with_items:
   - fedora-packages
@@ -81,7 +81,7 @@
   - packages
   - packages/web
 
-- name: permanently hotfix the distmappings file
+- name: Permanently hotfix the distmappings file
   copy: >
     src=distmappings.py
     dest="{{pythonsitelib}}/fedoracommunity/search/distmappings.py"
@@ -129,7 +129,7 @@
   - packages/web
   - icon
 
-- name: hotfix the fedmsg-hub executable to pick up forward compat packages
+- name: Hotfix the fedmsg-hub executable to pick up forward compat packages
   copy: src=fedmsg-hub-forward-compat dest=/usr/bin/fedmsg-hub
   tags:
   - packages
@@ -138,7 +138,7 @@
   when: ansible_distribution_major_version|int < 7 and ansible_distribution == 'RedHat'
 
 # Lastly, here's some selinux stuff.
-- name: set some selinux booleans
+- name: Set some selinux booleans
   seboolean: name={{item}} persistent=yes state=yes
   with_items:
   - httpd_tmp_exec

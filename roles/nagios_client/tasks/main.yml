@@ -14,7 +14,7 @@
   - nagios_client
 
 # install pkgs:
-- name: install nagios client pkgs
+- name: Install nagios client pkgs
   package: name={{ item }} state=present
   with_items:
   - nrpe
@@ -30,14 +30,14 @@
   - packages
   - nagios_client
 
-- name: install nagios tcp check for mirrorlist proxies
+- name: Install nagios tcp check for mirrorlist proxies
   package: name=nagios-plugins-tcp state=present
   tags:
   - packages
   - nagios_client
   when: "'mailman' in group_names or 'mirrorlist_proxies' in group_names"
 
-- name: install local nrpe check scripts that are not packaged
+- name: Install local nrpe check scripts that are not packaged
   copy: src="scripts/{{ item }}" dest="{{ libdir }}/nagios/plugins/{{ item }}" mode=0755 owner=nagios group=nagios
   with_items:
   - check_haproxy_conns.py
@@ -64,7 +64,7 @@
   tags:
   - nagios_client
 
-- name: install nrpe check for systemd unit
+- name: Install nrpe check for systemd unit
   copy: src="scripts/{{ item }}" dest="{{ libdir }}/nagios/plugins/{{ item }}" mode=0775 owner=nagios group=nagios
   with_items:
     - check_systemd_units
@@ -82,13 +82,13 @@
 
 
 # Three tasks for handling our custom selinux module
-- name: ensure a directory exists for our custom selinux module
+- name: Ensure a directory exists for our custom selinux module
   file: dest=/usr/share/nrpe state=directory
   tags:
   - config
   - nagios_client
 
-- name: copy over our custom selinux module
+- name: Copy over our custom selinux module
   copy: src=selinux/fi-nrpe.pp dest=/usr/share/nrpe/fi-nrpe.pp
   register: selinux_module
   tags:
@@ -96,7 +96,7 @@
   - nagios_client
   - selinux
 
-- name: install our custom selinux module
+- name: Install our custom selinux module
   command: semodule -i /usr/share/nrpe/fi-nrpe.pp
   when: ansible_distribution_major_version|int == 7 and ansible_distribution == 'RedHat' and selinux_module is changed
   tags:
@@ -104,7 +104,7 @@
   - nagios_client
   - selinux
 
-- name: copy over our custom selinux module for mirrorlist
+- name: Copy over our custom selinux module for mirrorlist
   copy: src=selinux/fi-nrpe.pp dest=/usr/share/nrpe/mirrormanager_container.pp
   register: selinux_module_mirrorlist
   when: "'proxy' in inventory_hostname"
@@ -113,7 +113,7 @@
   - nagios_client
   - selinux
 
-- name: install our custom selinux module for mirrorlist
+- name: Install our custom selinux module for mirrorlist
   command: semodule -i /usr/share/nrpe/mirrormanager_container.pp
   when: "'proxy' in inventory_hostname and selinux_module is changed"
   tags:
@@ -135,7 +135,7 @@
 # The actual items files here end in .j2 (they are templates)
 # So when adding or modifying them change the .j2 version in git.
 #
-- name: install nrpe client configs
+- name: Install nrpe client configs
   template: src={{ item }}.j2 dest=/etc/nrpe.d/{{ item }} owner=root group=root mode=0644
   with_items:
   - check_raid.cfg
@@ -175,7 +175,7 @@
 # The actual items files here end in .j2 (they are templates)
 # So when adding or modifying them change the .j2 version in git.
 #
-- name: install nrpe openvpn check config
+- name: Install nrpe openvpn check config
   template: src=check_openvpn_link.cfg.j2 dest=/etc/nrpe.d/check_openvpn_link.cfg owner=root group=root mode=0644
   when: vpn == true
   notify:
@@ -186,7 +186,7 @@
 # The actual items files here end in .j2 (they are templates)
 # So when adding or modifying them change the .j2 version in git.
 #
-- name: install nrpe merged log check script on log01
+- name: Install nrpe merged log check script on log01
   template: src=check_merged_file_age.cfg.j2 dest=/etc/nrpe.d/check_merged_file_age.cfg owner=root group=root mode=0644
   when: inventory_hostname.startswith('log0')
   notify:
@@ -197,7 +197,7 @@
 # The actual items files here end in .j2 (they are templates)
 # So when adding or modifying them change the .j2 version in git.
 #
-- name: install nrpe check_mysql config for mariadb servers
+- name: Install nrpe check_mysql config for mariadb servers
   template: src=check_mysql.cfg.j2 dest=/etc/nrpe.d/check_mysql.cfg owner=root group=root mode=0644
   when: inventory_hostname.startswith('db03')
   notify:
@@ -205,7 +205,7 @@
   tags:
   - nagios_client
 
-- name: install nrpe checks for mailman01
+- name: Install nrpe checks for mailman01
   template: src={{ item }}.j2 dest=/etc/nrpe.d/{{ item }} owner=root group=root mode=0644
   with_items:
   - check_mailman_api.cfg
@@ -215,7 +215,7 @@
   tags:
   - nagios_client
 
-- name: install nrpe checks for proxies
+- name: Install nrpe checks for proxies
   template: src={{ item }}.j2 dest=/etc/nrpe.d/{{ item }} owner=root group=root mode=0644
   with_items:
   - check_happroxy_conns.cfg
@@ -226,7 +226,7 @@
   tags:
   - nagios_client
 
-- name: install nrpe checks for sigul_bridge
+- name: Install nrpe checks for sigul_bridge
   template: src={{ item }}.j2 dest=/etc/nrpe.d/{{ item }} owner=root group=root mode=0644
   with_items:
   - check_sigul_bridge_proc.cfg
@@ -236,7 +236,7 @@
   tags:
   - nagios_client
 
-- name: install nrpe checks for sundries/websites
+- name: Install nrpe checks for sundries/websites
   template: src={{ item }}.j2 dest=/etc/nrpe.d/{{ item }} owner=root group=root mode=0644
   with_items:
   - check_websites_buildtime.cfg
@@ -246,7 +246,7 @@
   tags:
   - nagios_client
 
-- name: install CRL check for bastions
+- name: Install CRL check for bastions
   when: inventory_hostname.startswith('bastion')
   tags:
   - nagios_client
@@ -262,7 +262,7 @@
   - name: Set facls so nrpe can check the crl (file)
     acl: default=no etype=user entity=nrpe permissions="r" name=/etc/openvpn/server/crl.pem state=present
 
-- name: install nrpe config for the RabbitMQ checks
+- name: Install nrpe config for the RabbitMQ checks
   template:
     src: "rabbitmq_args.ini.j2"
     dest: "/etc/nrpe.d/rabbitmq_args.ini"
@@ -273,7 +273,7 @@
   tags:
   - nagios_client
 
-- name: install nrpe checks for the RabbitMQ cluster
+- name: Install nrpe checks for the RabbitMQ cluster
   template:
     src: "{{ item }}.j2"
     dest: "/etc/nrpe.d/{{ item }}"
@@ -294,13 +294,13 @@
   tags:
   - nagios_client
 
-- name: nrpe service start
+- name: Nrpe service start
   service: name=nrpe state=started enabled=true
   tags:
   - service
   - nagios_client
 
-- name: install nrpe check for rsyslogd
+- name: Install nrpe check for rsyslogd
   template:
     src={{ item }}.j2 dest=/etc/nrpe.d/{{ item }} owner=root group=root mode=0644
   with_items:
@@ -310,7 +310,7 @@
   tags:
     - nagios_client
 
-- name: install nrpe check for systemd units
+- name: Install nrpe check for systemd units
   template:
     src={{ item }}.j2 dest=/etc/nrpe.d/{{ item }} owner=root group=root mode=0644
   with_items:

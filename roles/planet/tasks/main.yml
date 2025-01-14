@@ -2,22 +2,22 @@
 # tasks to setup a planet server
 #
 
-- name: add planet group
+- name: Add planet group
   group: name=planet-user gid=104 system=yes state=present
   tags:
     - planet_server
 
-- name: add planet user
+- name: Add planet user
   user: name=planet-user uid=104 group=planet-user home=/srv/planet comment="People Planet Eater" createhome=yes system=yes shell=/bin/bash
   tags:
     - planet_server
 
-- name: add apache to planet group
+- name: Add apache to planet group
   user: name=apache append=yes groups=planet-user
   tags:
     - planet_server
 
-- name: install the planet packages (and fedora-messaging)
+- name: Install the planet packages (and fedora-messaging)
   package: pkg={{item}} state=present
   with_items:
     - venus
@@ -25,35 +25,35 @@
   tags:
     - planet_server
 
-- name: add base planet config directory
+- name: Add base planet config directory
   file: path=/etc/planet state=directory owner=root group=root mode=0775
   tags:
     - planet_server
 
-- name: copy the planet http config file
+- name: Copy the planet http config file
   template: src=planet.conf dest=/etc/httpd/conf.d/planet.conf
   tags:
     - planet_server
     - sslciphers
 
-- name: copy the run planet-config script into /usr/local/bin
+- name: Copy the run planet-config script into /usr/local/bin
   copy: src=pull-run-planet-config.sh dest=/usr/local/bin/pull-run-planet-config.sh mode=755
   tags:
     - planet_server
 
-- name: copy the planetconfigbuilder.py script into /usr/local/bin
+- name: Copy the planetconfigbuilder.py script into /usr/local/bin
   copy: src=planetconfigbuilder.py dest=/usr/local/bin/planetconfigbuilder.py mode=755
   tags:
     - planet_server
 
-- name: create planet directory
+- name: Create planet directory
   file: path={{ item }} state=directory owner=planet-user group=web mode=0775
   with_items:
     - /srv/planet
     - /srv/planet/site
     - /srv/planet/config
 
-- name: check the selinux context of the planet dir
+- name: Check the selinux context of the planet dir
   command: matchpathcon "/srv/planet"
   register: gitcontext
   check_mode: no
@@ -63,7 +63,7 @@
     - selinux
     - planet_server
 
-- name: set the SELinux policy for the planet dir
+- name: Set the SELinux policy for the planet dir
   command: semanage fcontext -a -t httpd_sys_content_t "/srv/planet(/.*)?"
   when: gitcontext.stdout.find('httpd_sys_content_t') == -1
   tags:
@@ -71,7 +71,7 @@
     - selinux
     - planet_server
 
-- name: copy the run-planet script
+- name: Copy the run-planet script
   copy: src=run-planet dest=/srv/planet/config/run-planet
   tags:
     - planet_server
@@ -80,18 +80,18 @@
 # base planet.fedoraproject.org planet
 #
 
-- name: create planet directory (people)
+- name: Create planet directory (people)
   file: path={{ item }} state=directory owner=planet-user group=web mode=0775
   with_items:
     - /etc/planet/people
     - /srv/planet/config/people
 
-- name: base planet config files
+- name: Base planet config files
   copy: src=people_base_config dest=/etc/planet/people_base_config mode=0644 owner=root group=root
   tags:
     - planet_server
 
-- name: copy the planet cron job (people)
+- name: Copy the planet cron job (people)
   copy: src=planet-cron dest=/etc/cron.d/planet-cron
   tags:
     - planet_server
@@ -100,7 +100,7 @@
 # design
 #
 
-- name: create planet directory (design)
+- name: Create planet directory (design)
   file: path={{ item }} state=directory owner=planet-user group=web mode=0775
   with_items:
     - /etc/planet/design
@@ -108,17 +108,17 @@
     - /srv/planet/config/design/cache
     - /srv/planet/site/design
 
-- name: copy the planet cron job (design)
+- name: Copy the planet cron job (design)
   copy: src=sub-planets/design/planet-group.cron dest=/etc/cron.d/planet-design.cron
   tags:
     - planet_server
 
-- name: copy the planet fpbulder.conf (design)
+- name: Copy the planet fpbulder.conf (design)
   copy: src=sub-planets/design/fpbuilder.conf dest=/etc/planet/design/fpbuilder.conf
   tags:
     - planet_server
 
-- name: copy the planet base_config (design)
+- name: Copy the planet base_config (design)
   copy: src=sub-planets/design/base_config dest=/etc/planet/design/base_config mode=0644 owner=root group=root
   tags:
     - planet_server
@@ -127,7 +127,7 @@
 # desktop
 #
 
-- name: create planet directory (desktop)
+- name: Create planet directory (desktop)
   file: path={{ item }} state=directory owner=planet-user group=web mode=0775
   with_items:
     - /etc/planet/desktop
@@ -135,17 +135,17 @@
     - /srv/planet/config/desktop/cache
     - /srv/planet/site/desktop
 
-- name: copy the planet cron job (desktop)
+- name: Copy the planet cron job (desktop)
   copy: src=sub-planets/desktop/planet-group.cron dest=/etc/cron.d/planet-desktop.cron
   tags:
     - planet_server
 
-- name: copy the planet fpbulder.conf (desktop)
+- name: Copy the planet fpbulder.conf (desktop)
   copy: src=sub-planets/desktop/fpbuilder.conf dest=/etc/planet/desktop/fpbuilder.conf
   tags:
     - planet_server
 
-- name: copy the planet base_config (desktop)
+- name: Copy the planet base_config (desktop)
   copy: src=sub-planets/desktop/base_config dest=/etc/planet/desktop/base_config mode=0644 owner=root group=root
   tags:
     - planet_server
@@ -154,7 +154,7 @@
 # edited
 #
 
-- name: create planet directory (edited)
+- name: Create planet directory (edited)
   file: path={{ item }} state=directory owner=planet-user group=web mode=0775
   with_items:
     - /etc/planet/edited
@@ -162,17 +162,17 @@
     - /srv/planet/config/edited/cache
     - /srv/planet/site/edited
 
-- name: copy the planet cron job (edited)
+- name: Copy the planet cron job (edited)
   copy: src=sub-planets/edited/planet-group.cron dest=/etc/cron.d/planet-edited.cron
   tags:
     - planet_server
 
-- name: copy the planet fpbulder.conf (edited)
+- name: Copy the planet fpbulder.conf (edited)
   copy: src=sub-planets/edited/fpbuilder.conf dest=/etc/planet/edited/fpbuilder.conf
   tags:
     - planet_server
 
-- name: copy the planet base_config (edited)
+- name: Copy the planet base_config (edited)
   copy: src=sub-planets/edited/base_config dest=/etc/planet/edited/base_config mode=0644 owner=root group=root
   tags:
     - planet_server
@@ -181,7 +181,7 @@
 # people
 #
 
-- name: create planet directory (people)
+- name: Create planet directory (people)
   file: path={{ item }} state=directory owner=planet-user group=web mode=0775
   with_items:
     - /etc/planet/people
@@ -189,14 +189,14 @@
     - /srv/planet/config/people/cache
     - /srv/planet/site/people
 
-- name: copy templates (people)
+- name: Copy templates (people)
   copy: src=sub-planets/people/{{ item }} dest=/srv/planet/config/people/ owner=planet-user group=planet-user
   with_items:
   - templates
   tags:
     - planet_server
 
-- name: copy the css and images (people)
+- name: Copy the css and images (people)
   synchronize: src=sub-planets/people/{{ item }}/ dest=/srv/planet/site/{{ item }}/
   with_items:
   - css-v2
@@ -204,7 +204,7 @@
   tags:
     - planet_server
 
-- name: copy the planet fpbulder.conf (people)
+- name: Copy the planet fpbulder.conf (people)
   copy: src=fpbuilder.conf dest=/etc/planet/fpbuilder.conf
   tags:
     - planet_server
@@ -213,7 +213,7 @@
 # security
 #
 
-- name: create planet directory (security)
+- name: Create planet directory (security)
   file: path={{ item }} state=directory owner=planet-user group=web mode=0775
   with_items:
     - /etc/planet/security
@@ -221,17 +221,17 @@
     - /srv/planet/config/security/cache
     - /srv/planet/site/security
 
-- name: copy the planet cron job (security)
+- name: Copy the planet cron job (security)
   copy: src=sub-planets/security/planet-group.cron dest=/etc/cron.d/planet-security.cron
   tags:
     - planet_server
 
-- name: copy the planet fpbulder.conf (security)
+- name: Copy the planet fpbulder.conf (security)
   copy: src=sub-planets/security/fpbuilder.conf dest=/etc/planet/security/fpbuilder.conf
   tags:
     - planet_server
 
-- name: copy the planet base_config (security)
+- name: Copy the planet base_config (security)
   copy: src=sub-planets/security/base_config dest=/etc/planet/security/base_config mode=0644 owner=root group=root
   tags:
     - planet_server
@@ -240,7 +240,7 @@
 # summer-coding
 #
 
-- name: create planet directory (summer-coding)
+- name: Create planet directory (summer-coding)
   file: path={{ item }} state=directory owner=planet-user group=web mode=0775
   with_items:
     - /etc/planet/summer-coding
@@ -248,17 +248,17 @@
     - /srv/planet/config/summer-coding/cache
     - /srv/planet/site/summer-coding
 
-- name: copy the planet cron job (summer-coding)
+- name: Copy the planet cron job (summer-coding)
   copy: src=sub-planets/summer-coding/planet-group.cron dest=/etc/cron.d/planet-summer-coding.cron
   tags:
     - planet_server
 
-- name: copy the planet fpbulder.conf (summer-coding)
+- name: Copy the planet fpbulder.conf (summer-coding)
   copy: src=sub-planets/summer-coding/fpbuilder.conf dest=/etc/planet/summer-coding/fpbuilder.conf
   tags:
     - planet_server
 
-- name: copy the planet base_config (summer-coding)
+- name: Copy the planet base_config (summer-coding)
   copy: src=sub-planets/summer-coding/base_config dest=/etc/planet/summer-coding/base_config mode=0644 owner=root group=root
   tags:
     - planet_server
@@ -267,7 +267,7 @@
 # QA
 #
 
-- name: create planet directory (quality)
+- name: Create planet directory (quality)
   file: path={{ item }} state=directory owner=planet-user group=web mode=0775
   with_items:
     - /etc/planet/quality
@@ -275,17 +275,17 @@
     - /srv/planet/config/quality/cache
     - /srv/planet/site/quality
 
-- name: copy the planet cron job (quality)
+- name: Copy the planet cron job (quality)
   copy: src=sub-planets/quality/planet-group.cron dest=/etc/cron.d/planet-quality.cron
   tags:
     - planet_server
 
-- name: copy the planet fpbulder.conf (quality)
+- name: Copy the planet fpbulder.conf (quality)
   copy: src=sub-planets/quality/fpbuilder.conf dest=/etc/planet/quality/fpbuilder.conf
   tags:
     - planet_server
 
-- name: copy the planet base_config (quality)
+- name: Copy the planet base_config (quality)
   copy: src=sub-planets/quality/base_config dest=/etc/planet/quality/base_config mode=0644 owner=root group=root
   tags:
     - planet_server

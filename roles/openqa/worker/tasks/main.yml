@@ -199,12 +199,12 @@
   - packages
   when: openqa_tap
 
-- name: openQA client config
+- name: OpenQA client config
   template: src=client.conf.j2 dest=/etc/openqa/client.conf owner=_openqa-worker group=root mode=0600
   tags:
   - config
 
-- name: openQA worker config
+- name: OpenQA worker config
   template: src=workers.ini.j2 dest=/etc/openqa/workers.ini owner=_openqa-worker group=root mode=0644
   notify:
   - restart openqa workers
@@ -214,11 +214,11 @@
 - include_tasks: createhdds.yml
   when: openqa_hdds_worker|bool
 
-- name: override kernel scheduler configuration - rhbz#2009585
+- name: Override kernel scheduler configuration - rhbz#2009585
   copy: src=60-block-scheduler.rules dest=/etc/udev/rules.d/60-block-scheduler.rules owner=root group=root mode=0644
   when: "deployment_type is defined"
 
-- name: remove wrongly-named kernel scheduler config file
+- name: Remove wrongly-named kernel scheduler config file
   file: path=/etc/udev/rules.d/60-block-scheduler-override.rules state=absent
 
 - name: Enable and start worker services

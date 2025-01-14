@@ -1,5 +1,5 @@
 ---
-- name: restart worker services on openQA worker hosts (production)
+- name: Restart worker services on openQA worker hosts (production)
   hosts: openqa_workers:openqa_lab_workers
   user: root
   vars_files:
@@ -10,6 +10,6 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   tasks:
-  - name: restart all the worker services
+  - name: Restart all the worker services
     service: name=openqa-worker@{{ item }} state=restarted
     with_sequence: "count={{ openqa_workers }}"

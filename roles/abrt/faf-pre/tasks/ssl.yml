@@ -1,12 +1,12 @@
 ---
-- name: check whether we need to initialize letsencrypt first
+- name: Check whether we need to initialize letsencrypt first
   stat: path="/etc/letsencrypt/live/{{ item.key }}"
   register: le_stat_checks
   with_dict: "{{ letsencrypt.certificates }}"
   when:
   - letsencrypt is defined
 
-- name: stop httpd when letsencrypt has not been run
+- name: Stop httpd when letsencrypt has not been run
   service:
     name: httpd
     state: stopped
@@ -16,12 +16,12 @@
   with_items: "{{ le_stat_checks.results }}"
 
 
-- name: install letsencrypt ssl certificates for dev
+- name: Install letsencrypt ssl certificates for dev
   include_role: name=copr/certbot
   tags:
   - config
 
-- name: install retrace ssl vhost
+- name: Install retrace ssl vhost
   template: src="httpd/retrace_ssl.conf.j2" dest="/etc/httpd/conf.d/retrace_ssl.conf"
   when: letsencrypt is defined
   tags:

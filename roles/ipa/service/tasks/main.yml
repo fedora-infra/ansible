@@ -22,7 +22,7 @@
   - config
   - krb5
 
-- name: fail only when krbprincipalname isn't already defined
+- name: Fail only when krbprincipalname isn't already defined
   fail:
     msg: "Failed to define ipa/service {{ service }}/{{ host }}"
   when:

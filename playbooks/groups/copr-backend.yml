@@ -1,5 +1,5 @@
 ---
-- name: check/create instance
+- name: Check/create instance
   hosts: copr_back_dev_aws:copr_back_aws
   user: root
   gather_facts: false
@@ -23,7 +23,7 @@
       - datacenter == 'aws'
       - swap_file_size_mb is defined
 
-- name: cloud basic setup
+- name: Cloud basic setup
   hosts: copr_back_dev_aws:copr_back_aws
   user: root
   gather_facts: true
@@ -43,7 +43,7 @@
 #    hostname: name="{{copr_hostbase}}.cloud.fedoraproject.org"
 #    when: env != 'production'
 
-- name: provision instance
+- name: Provision instance
   hosts: copr_back_dev_aws:copr_back_aws
   user: root
   gather_facts: true

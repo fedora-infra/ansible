@@ -74,7 +74,7 @@
   tags:
   - fedora-web
 
-- name: make fmw dir
+- name: Make fmw dir
   file:
     state: directory
     path: /srv/web/fmw
@@ -87,7 +87,7 @@
   - fedora-web
   when: env != 'staging'
 
-- name: make fmw dir
+- name: Make fmw dir
   file:
     state: directory
     path: /srv/web/fmw

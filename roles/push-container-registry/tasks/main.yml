@@ -5,7 +5,7 @@
 # Note : push to the candidate-registry is done using docker login
 # see the login-registry role.
 
-- name: install necessary packages
+- name: Install necessary packages
   package:
     name: "{{item}}"
     state: present
@@ -14,14 +14,14 @@
   tags:
   - push-container-registry
 
-- name: ensure cert dir exists
+- name: Ensure cert dir exists
   file:
     path: "{{cert_dest_dir}}"
     state: directory
   tags:
   - push-container-registry
 
-- name: install client cert for registry
+- name: Install client cert for registry
   copy:
     src: "{{cert_src}}"
     dest: "{{cert_dest_dir}}/client.cert"
@@ -31,7 +31,7 @@
   tags:
   - push-container-registry
 
-- name: install client key for registry
+- name: Install client key for registry
   copy:
     src: "{{key_src}}"
     dest: "{{cert_dest_dir}}/client.key"

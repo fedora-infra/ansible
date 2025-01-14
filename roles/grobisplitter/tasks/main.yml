@@ -1,5 +1,5 @@
 ---
-- name: install python packages
+- name: Install python packages
   package: name={{ item }} state=present
   with_items:
     - createrepo_c
@@ -10,12 +10,12 @@
   tags:
     - grobi
 
-- name: make sure that /usr/local/bin exists
+- name: Make sure that /usr/local/bin exists
   file: path=/usr/local/bin state=directory
   tags:
     - grobi
 
-- name: copy local/bin files
+- name: Copy local/bin files
   copy: src={{item}} dest=/usr/local/bin/ mode=0755
   with_items:
     - splitter.py
@@ -23,7 +23,7 @@
   tags:
     - grobi
 
-- name: daily cron job to split and merge repos
+- name: Daily cron job to split and merge repos
   copy: src={{item}} dest=/etc/cron.d/ mode=0644
   with_items:
     - rhel8-split.cron

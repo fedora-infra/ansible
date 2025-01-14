@@ -1,62 +1,62 @@
 ---
 
-- name: enable Copr repo for RHEL
+- name: Enable Copr repo for RHEL
   copy:
     src: group_abrt-faf-el8-epel-8.repo
     dest: /etc/yum.repos.d/
   when: ansible_distribution == 'RedHat'
 
-- name: enable Copr repo for Fedora
+- name: Enable Copr repo for Fedora
   copy:
     src: group_abrt-faf-el8-fedora.repo
     dest: /etc/yum.repos.d/
   when: ansible_distribution == 'Fedora'
 
-- name: erase faf packages
+- name: Erase faf packages
   package:
     name: "faf-*"
     state: absent
   when: faf_force_reinstall|bool
 
-- name: install core faf packages
+- name: Install core faf packages
   package:
     name: "{{ faf_packages }}"
     state: present
 
-- name: install faf problem packages
+- name: Install faf problem packages
   package:
     name: "{{ faf_problem_packages }}"
     state: present
 
-- name: install faf opsys packages
+- name: Install faf opsys packages
   package:
     name: "{{ faf_opsys_packages }}"
     state: present
 
-- name: install faf action packages
+- name: Install faf action packages
   package:
     name: "{{ faf_action_packages }}"
     state: present
 
-- name: install faf bugtracker packages
+- name: Install faf bugtracker packages
   package:
     name: "{{ faf_bugtracker_packages }}"
     state: present
   when: faf_with_bugtrackers|bool
 
-- name: install faf celery packages
+- name: Install faf celery packages
   package:
     name: "{{ faf_celery_packages }}"
     state: present
   when: faf_with_celery|bool
 
-- name: install faf fedmsg packages
+- name: Install faf fedmsg packages
   package:
     name: "{{ faf_fedmsg_packages }}"
     state: present
   when: faf_with_fedmsg|bool
 
-- name: install faf solutionfinder packages
+- name: Install faf solutionfinder packages
   package:
     name: "{{ faf_solutionfinder_packages }}"
     state: present

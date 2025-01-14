@@ -1,12 +1,12 @@
 ---
-- name: install dhcp server package
+- name: Install dhcp server package
   package: state=present name=dhcp-server
   tags:
   - packages
   - base
   - dhcp_server
 
-- name: setup dhcpd.conf
+- name: Setup dhcpd.conf
   copy: src=dhcpd.conf.{{ inventory_hostname }} dest=/etc/dhcp/dhcpd.conf mode=644
   notify:
   - restart dhcpd
@@ -16,7 +16,7 @@
   - sshd
   - dhcp_server
 
-- name: enable dhcpd service
+- name: Enable dhcpd service
   service: state=started enabled=true name=dhcpd
   tags:
   - service

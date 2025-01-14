@@ -1,38 +1,38 @@
 ---
-- name: prepare mount point
+- name: Prepare mount point
   file: state=directory path=/var/lib/copr-keygen
 
-- name: mount up disk of copr repo
+- name: Mount up disk of copr repo
   mount: name=/var/lib/copr-keygen src='LABEL=copr-keygen' fstype=ext4 state=mounted
   register: keychain_mounted
 
-- name: install copr-keygen
+- name: Install copr-keygen
   dnf: state=present name=copr-keygen
   notify:
   - restart haveged
 
-- name: change owner of data to copr-signer
+- name: Change owner of data to copr-signer
   file: path=/var/lib/copr-keygen owner=copr-signer group=copr-signer recurse=yes
   when: keychain_mounted.changed
 
-- name: put keygen vhost for httpd
+- name: Put keygen vhost for httpd
   copy: src="httpd/copr-keygen.conf" dest="/etc/httpd/conf.d/copr-keygen.conf"
   notify:
   - reload httpd
   tags:
   - config
 
-- name: put config for signd
+- name: Put config for signd
   template: src="sign.conf" dest="/etc/sign.conf"
   notify:
   - restart obs-signd
   tags:
   - config
 
-- name: add Install section for signd systemd unit
+- name: Add Install section for signd systemd unit
   lineinfile: dest="/usr/lib/systemd/system/signd.service" line="[Install]"  state=present
 
-- name: ensure services are running
+- name: Ensure services are running
   service: name={{ item }} state=started enabled=yes
   when: not services_disabled|bool
   with_items:
@@ -40,19 +40,19 @@
   - haveged
   - signd
 
-- name: setup backup
+- name: Setup backup
   when: not devel
   import_tasks: "setup_backup.yml"
 
 # Three tasks for handling our custom selinux module
-- name: ensure a directory exists for our custom selinux module
+- name: Ensure a directory exists for our custom selinux module
   file: dest=/usr/local/share/copr state=directory
 
-- name: copy over our custom selinux module
+- name: Copy over our custom selinux module
   copy: src=selinux/copr_rules.pp dest=/usr/local/share/copr/copr_rules.pp
   register: selinux_module
 
-- name: install our custom selinux module
+- name: Install our custom selinux module
   command: semodule -i /usr/local/share/copr/copr_rules.pp
   when: selinux_module is changed
 

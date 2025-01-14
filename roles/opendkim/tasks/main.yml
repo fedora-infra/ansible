@@ -1,53 +1,53 @@
 ---
-- name: install opendkim
+- name: Install opendkim
   package: name=opendkim state=present
   tags:
   - opendkim
   - package
 
-- name: install opendkim.conf
+- name: Install opendkim.conf
   copy: src=opendkim.conf dest=/etc/opendkim.conf
   tags:
   - opendkim
   - config
   - base
 
-- name: install opendkim KeyTable file
+- name: Install opendkim KeyTable file
   copy: src=KeyTable dest=/etc/opendkim/KeyTable mode=644 owner=opendkim group=opendkim
   tags:
   - opendkim
   - config
   - base
 
-- name: install opendkim SigningTable file
+- name: Install opendkim SigningTable file
   copy: src=SigningTable dest=/etc/opendkim/SigningTable mode=644 owner=opendkim group=opendkim
   tags:
   - opendkim
   - config
   - base
 
-- name: install opendkim trusted hosts file
+- name: Install opendkim trusted hosts file
   copy: src=TrustedHosts dest=/etc/opendkim/TrustedHosts
   tags:
   - opendkim
   - config
   - base
 
-- name: install bastion opendkim key from private
+- name: Install bastion opendkim key from private
   copy: src={{ private }}/files/opendkim/bastion.key dest=/etc/opendkim/keys/bastion.key mode=0600 owner=opendkim group=opendkim
   tags:
   - opendkim
   - config
   - base
 
-- name: install bastion-iad opendkim key from private
+- name: Install bastion-iad opendkim key from private
   copy: src={{ private }}/files/opendkim/bastion-iad.key dest=/etc/opendkim/keys/bastion-iad.key mode=0600 owner=opendkim group=opendkim
   tags:
   - opendkim
   - config
   - base
 
-- name: install pagure opendkim key from private
+- name: Install pagure opendkim key from private
   copy: src={{ private }}/files/opendkim/pagure.key dest=/etc/opendkim/keys/pagure.key mode=0600 owner=opendkim group=opendkim
   tags:
   - opendkim

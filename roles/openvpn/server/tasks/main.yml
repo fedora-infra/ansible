@@ -50,14 +50,14 @@
   tags:
   - openvpn
 
-- name: disable old openvpn service for rhel 7 or Fedora
+- name: Disable old openvpn service for rhel 7 or Fedora
   service: name=openvpn@openvpn state=stopped enabled=false
   when: ( ansible_distribution_version[0] == 7 or is_fedora is defined ) and openvpn_master is defined
   tags:
   - service
   - openvpn
 
-- name: enable openvpn service for rhel 7 or Fedora
+- name: Enable openvpn service for rhel 7 or Fedora
   service: name=openvpn-server@openvpn state=started enabled=true
   when: ( ansible_distribution_version[0] == 7 or is_fedora is defined ) and openvpn_master is defined
   tags:

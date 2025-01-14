@@ -15,7 +15,7 @@
       profiles=
       state=enabled
 
-- name: install the needed packages
+- name: Install the needed packages
   package: name={{item}} state=present
   with_items:
   - git
@@ -27,14 +27,14 @@
   tags:
   - distgit
 
-- name: install the mod_auth_openidc configuration
+- name: Install the mod_auth_openidc configuration
   template: src=auth_openidc.conf dest=/etc/httpd/conf.d/auth_openidc.conf
   notify:
   - reload httpd
   tags:
   - distgit
 
-- name: install the http push configuration
+- name: Install the http push configuration
   template: src=httppush.conf dest=/etc/httpd/conf.d/httpush.conf
   notify:
   - reload httpd
@@ -64,7 +64,7 @@
   tags:
   - distgit
 
-- name: install the mod_ssl configuration
+- name: Install the mod_ssl configuration
   copy: src=ssl.conf dest=/etc/httpd/conf.d/ssl.conf
   notify:
   - reload httpd
@@ -80,7 +80,7 @@
   - distgit
   - letsencrypt
 
-- name: install the keytab
+- name: Install the keytab
   copy: src="{{ private }}/files/keytabs/{{env}}/pkgs"
         dest=/etc/httpd.keytab
         owner=apache
@@ -91,12 +91,12 @@
   tags:
   - distgit
 
-- name: allow httpd to access the files on NFS
+- name: Allow httpd to access the files on NFS
   seboolean: name=httpd_use_nfs state=yes persistent=yes
   tags:
   - distgit
 
-- name: allow httpd to access git user content
+- name: Allow httpd to access git user content
   seboolean: name=httpd_read_user_content state=yes persistent=yes
   tags:
   - distgit
@@ -110,7 +110,7 @@
 # We use a wrapper to let packager ssh in while restricting the command they can
 # do, this installs that wrapper (which is otherwise configured in sshd_config)
 
-- name: install the ssh_wrapper wrapper script
+- name: Install the ssh_wrapper wrapper script
   copy: src=ssh_wrapper dest=/usr/local/bin/ssh_wrapper mode=0755
   tags:
     - config
@@ -120,7 +120,7 @@
 
 # -- Dist Git --------------------------------------------
 # This is the Git setup itself: group, root directory, scripts,...
-- name: install dist-git
+- name: Install dist-git
   package: name={{item}} state=present
   with_items:
   - dist-git
@@ -128,7 +128,7 @@
   tags:
   - distgit
 
-- name: install the dist-git config
+- name: Install the dist-git config
   copy: src=dist-git.conf dest=/etc/dist-git/dist-git.conf
   tags:
   - config
@@ -167,13 +167,13 @@
   - distgit
   when: inventory_hostname.startswith('batcave')
 
-- name: create the distgit root directory (/srv/git)
+- name: Create the distgit root directory (/srv/git)
   file: dest=/srv/git state=directory mode=0755
   tags:
   - distgit
 
 # These should all map to pkgdb namespaces
-- name: create our namespace directories inside there..
+- name: Create our namespace directories inside there..
   file: dest=/srv/git/repositories/{{item}} state=directory mode=2775 group=packager
   with_items:
   - rpms
@@ -195,7 +195,7 @@
   tags:
   - distgit
 
-- name: install the DistGit related httpd config
+- name: Install the DistGit related httpd config
   copy: src=git-smart-http.conf dest=/etc/httpd/conf.d/dist-git/git-smart-http.conf
   notify:
   - reload httpd
@@ -209,7 +209,7 @@
   tags:
   - distgit
 
-- name: schedule the update hook check
+- name: Schedule the update hook check
   cron: >
     name="check-update-hooks" cron_file="ansible-check-update-hooks"
     minute=0 hour=0 weekday=3
@@ -223,7 +223,7 @@
   tags:
   - distgit
 
-- name: install the two scripts needed for mass-branching
+- name: Install the two scripts needed for mass-branching
   copy: src={{item}} dest=/usr/local/bin/{{item}} owner=root group=root mode=0755
   with_items:
     - mass-branching-git.py
@@ -235,7 +235,7 @@
 
 # -- Lookaside Cache -------------------------------------
 # This is the annex to Dist Git, where we host source tarballs.
-- name: install the Lookaside Cache httpd configs
+- name: Install the Lookaside Cache httpd configs
   template: src={{item}} dest=/etc/httpd/conf.d/dist-git/{{item}}
   with_items:
   - lookaside.conf
@@ -246,13 +246,13 @@
   - distgit
   - sslciphers
 
-- name: create the Lookaside Cache root directory
+- name: Create the Lookaside Cache root directory
   file: dest=/srv/cache/lookaside/pkgs state=directory
         owner=apache group=apache
   tags:
   - distgit
 
-- name: set the selinux boolean git_cgi_use_nfs
+- name: Set the selinux boolean git_cgi_use_nfs
   seboolean: name=git_cgi_use_nfs persistent=yes state=yes
   tags:
   - distgit
@@ -260,14 +260,14 @@
   - selinux
 
 # Not sure why, but fixes https://fedorahosted.org/fedora-infrastructure/ticket/4825
-- name: set the selinux boolean git_system_enable_homedirs
+- name: Set the selinux boolean git_system_enable_homedirs
   seboolean: name=git_system_enable_homedirs persistent=yes state=yes
   tags:
   - distgit
   - config
   - selinux
 
-- name: check the selinux context of the Lookaside Cache root directory
+- name: Check the selinux context of the Lookaside Cache root directory
   command: matchpathcon /srv/cache
   register: lcachecontext
   check_mode: no
@@ -278,7 +278,7 @@
   - selinux
   - distgit
 
-- name: set the SELinux policy for the Lookaside Cache root directory
+- name: Set the SELinux policy for the Lookaside Cache root directory
   command: semanage fcontext -a -t nfs_t "/srv/cache(/.*)?"
   when: lcachecontext.stdout.find('nfs_t') == -1 and env != "staging"
   tags:
@@ -287,12 +287,12 @@
   - selinux
   - distgit
 
-- name: install the fedora-ca.cert
+- name: Install the fedora-ca.cert
   copy: src={{private}}/files/fedora-ca.cert dest=/etc/httpd/conf/cacert.pem
   tags:
   - distgit
 
-- name: install the pkgs cert
+- name: Install the pkgs cert
   copy: src={{private}}/files/pkgs.fedoraproject.org_key_and_cert.pem
         dest=/etc/httpd/conf/pkgs.fedoraproject.org_key_and_cert.pem
         owner=apache mode=0400
@@ -300,7 +300,7 @@
   tags:
   - distgit
 
-- name: install the pkgs.stg cert
+- name: Install the pkgs.stg cert
   copy: src={{private}}/files/pkgs.stg.fedoraproject.org_key_and_cert.pem
         dest=/etc/httpd/conf/pkgs.fedoraproject.org_key_and_cert.pem
         owner=apache mode=0400
@@ -309,26 +309,26 @@
   - distgit
 
 # Three tasks for handling our selinux policy for upload.cgi
-- name: ensure a directory exists for our SELinux policy
+- name: Ensure a directory exists for our SELinux policy
   file: dest=/usr/local/share/selinux/ state=directory
   tags: selinux
 
-- name: copy over our custom selinux policy
+- name: Copy over our custom selinux policy
   copy: src=upload_cgi.pp dest=/usr/local/share/selinux/upload_cgi.pp
   register: selinux_module
   tags: selinux
 
-- name: install our custom selinux policy
+- name: Install our custom selinux policy
   command: semodule -i /usr/local/share/selinux/upload_cgi.pp
   when: selinux_module is changed
   tags: selinux
 
-- name: copy over our custom nfs selinux policy
+- name: Copy over our custom nfs selinux policy
   copy: src=cgi-nfs.pp dest=/usr/local/share/selinux/cgi-nfs.pp
   register: nfs_selinux_module
   tags: selinux
 
-- name: install our custom nfs selinux policy
+- name: Install our custom nfs selinux policy
   command: semodule -i /usr/local/share/selinux/cgi-nfs.pp
   when: nfs_selinux_module is changed
   tags: selinux
@@ -342,19 +342,19 @@
   tags:
     - selinux
 
-- name: setup grokmirror for repos
+- name: Setup grokmirror for repos
   package: name=python3-grokmirror state=installed
   tags:
   - grokmirror
   - pkgs
 
-- name: make dir for grokmirror manifest
+- name: Make dir for grokmirror manifest
   file: path=/srv/git/grokmirror state=directory owner=root group=packager mode=2775
   tags:
   - grokmirror
   - pkgs
 
-- name: set acls for grokmirror
+- name: Set acls for grokmirror
   acl:
     path: /srv/git/grokmirror
     etype: group
@@ -364,7 +364,7 @@
   - grokmirror
   - pkgs
 
-- name: run initial grokmirror run
+- name: Run initial grokmirror run
   command: /usr/bin/grok-manifest -m /srv/git/grokmirror/manifest.js.gz -t /srv/git/repositories/ creates=/srv/git/grokmirror/manifest.js.gz
   when: env != "staging"
   tags:

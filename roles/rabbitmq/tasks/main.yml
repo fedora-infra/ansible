@@ -1,5 +1,5 @@
 ---
-- name: install needed packages
+- name: Install needed packages
   package: name={{ item }} state=present
   with_items:
   - rabbitmq-server
@@ -7,7 +7,7 @@
   - rabbitmq
   - packages
 
-- name: install the configuration
+- name: Install the configuration
   copy: src={{item}} dest=/etc/rabbitmq/{{item}} owner=root group=root mode=0644
   with_items:
   - rabbitmq.config
@@ -16,6 +16,6 @@
   - rabbitmq
   - config
 
-- name: start rabbitmq
+- name: Start rabbitmq
   service: name=rabbitmq-server state=started enabled=yes
   tags: rabbitmq

@@ -1,5 +1,5 @@
 ---
-- name: install needed packages for blockerbugs
+- name: Install needed packages for blockerbugs
   package: state=present name={{ item }}
   with_items:
   - libselinux-python3
@@ -11,7 +11,7 @@
   - packages
   - blockerbugs
 
-- name: setup blockerbugs apache conf
+- name: Setup blockerbugs apache conf
   copy: src=blockerbugs.conf dest=/etc/httpd/conf.d/blockerbugs.conf mode=644
   notify:
   - reload httpd
@@ -28,7 +28,7 @@
   - blockerbugs
   - config
 
-- name: create the `blockerbugs` user
+- name: Create the `blockerbugs` user
   user:
     name: blockerbugs
     group: blockerbugs
@@ -38,7 +38,7 @@
   - blockerbugs
   - config
 
-- name: setup blockerbugs app settings file
+- name: Setup blockerbugs app settings file
   template: src=blockerbugs-settings.py.j2 dest=/etc/blockerbugs/settings.py mode=640
   notify:
   - reload httpd
@@ -47,7 +47,7 @@
   - httpd
   - blockerbugs
 
-- name: grant blockerbugs and apache read access to the settings file
+- name: Grant blockerbugs and apache read access to the settings file
   acl: name=/etc/blockerbugs/settings.py entity={{ item }} etype=user permissions="r" state=present
   with_items:
   - blockerbugs
@@ -59,19 +59,19 @@
   - httpd
   - blockerbugs
 
-- name: allow httpd to connect to network, enabling openid
+- name: Allow httpd to connect to network, enabling openid
   seboolean: name=httpd_can_network_connect state=true persistent=true
   tags:
   - config
   - blockerbugs
 
-- name: set sebooleans so blockerbugs can talk to the db
+- name: Set sebooleans so blockerbugs can talk to the db
   seboolean: name=httpd_can_network_connect_db state=true persistent=true
   tags:
   - config
   - blockerbugs
 
-- name: setup blockerbugs cron (master node only)
+- name: Setup blockerbugs cron (master node only)
   copy: src=blockerbugs.cron dest=/etc/cron.d/blockerbugs
   when: master_blockerbugs_node
   tags:
@@ -79,7 +79,7 @@
   - blockerbugs
 
 # this is a "short-term" patch that won't be needed for future versions of blockerbugs
-- name: patch bz_interface to work with rhbz changes
+- name: Patch bz_interface to work with rhbz changes
   copy: src=20210914-patched-bz_interface.py dest=/usr/lib/python3.9/site-packages/blockerbugs/util/bz_interface.py
   when: master_blockerbugs_node
   tags:

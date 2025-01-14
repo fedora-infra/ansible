@@ -2,7 +2,7 @@
 # collectd server setup
 
 # install pkg
-- name: install collectd server packages (rhel 7)
+- name: Install collectd server packages (rhel 7)
   package: name={{ item }} state=present
   with_items:
   - collectd-rrdtool
@@ -15,7 +15,7 @@
   - collectd/server
   when: ansible_distribution_major_version|int == 7
 
-- name: install collectd server packages (rhel 8)
+- name: Install collectd server packages (rhel 8)
   package: name={{ item }} state=present
   with_items:
   - collectd-rrdtool
@@ -30,7 +30,7 @@
   when: ansible_distribution_major_version|int == 8
 
 # install collectd types
-- name: install collectd types
+- name: Install collectd types
   copy:
     src: "{{ item }}"
     dest: /usr/share/collectd/{{ item }}
@@ -43,7 +43,7 @@
   - collectd/server
 
 # install collectd configs
-- name: install collectd config
+- name: Install collectd config
   copy:
     src: "{{ item }}"
     dest: /etc/collectd.d/{{ item }}
@@ -58,28 +58,28 @@
   - collectd/server
 
 # install apache config
-- name: install collectd apache config
+- name: Install collectd apache config
   copy: src=collectd.conf dest=/etc/httpd/conf.d/collectd.conf
   tags:
   - config
   - collectd/server
 
 # install upgrade target
-- name: install collect upgrade target to handle v4 clients
+- name: Install collect upgrade target to handle v4 clients
   copy: src=vfive-upgrade.conf dest=/etc/collectd.d/vfive-upgrade.conf
   tags:
   - config
   - collectd/server
 
 # create /var/log/collectd as it's on a larger volume
-- name: create /var/log/collectd
+- name: Create /var/log/collectd
   file: path=/var/log/collectd owner=root group=root mode=0755 state=directory
   tags:
   - config
   - collectd/server
 
 # push our custom config file for the graph CGIs
-- name: push the collection.conf file
+- name: Push the collection.conf file
   copy:
     src: collection.conf
     dest: /etc/collection.conf
@@ -87,7 +87,7 @@
   - config
   - collectd/server
 
-- name: create the service configuration directory
+- name: Create the service configuration directory
   file:
     path: /etc/systemd/system/collectd.service.d
     state: directory
@@ -95,7 +95,7 @@
   - config
   - collectd/server
 
-- name: override the timeout for stopping collectd
+- name: Override the timeout for stopping collectd
   copy:
     src: service.timeout.conf
     dest: /etc/systemd/system/collectd.service.d/timeout.conf

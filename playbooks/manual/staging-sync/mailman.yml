@@ -3,7 +3,7 @@
 
 
 ---
-- name: bring staging services down
+- name: Bring staging services down
   hosts: mailman-stg
   user: root
   vars_files:
@@ -19,7 +19,7 @@
   - service: name=mailman3 state=stopped
 
 
-- name: drop and re-create the staging dbs entirely
+- name: Drop and re-create the staging dbs entirely
   hosts: db01.stg.iad2.fedoraproject.org
   user: root
   become: yes
@@ -80,7 +80,7 @@
     file: path=/var/tmp/prod-mailman-dump/ state=absent
 
 
-- name: convert the data to staging and bring services back up.  This will take a while too.
+- name: Convert the data to staging and bring services back up.  This will take a while too.
   hosts: mailman-stg
   user: root
   vars_files:

@@ -10,11 +10,11 @@
   register: ping_log_check
   tags: copr_ping
 
-- name: create the user ping user
+- name: Create the user ping user
   user: name={{ ping_user }}
   tags: copr_ping
 
-- name: pre-create ping log file
+- name: Pre-create ping log file
   file:
     path: "{{ ping_log }}"
     owner: "{{ ping_user }}"
@@ -25,11 +25,11 @@
   when: not ping_log_check.stat.exists
   tags: copr_ping
 
-- name: install copr-cli package
+- name: Install copr-cli package
   dnf: name=copr-cli state=latest
   tags: copr_ping
 
-- name: install the ping script
+- name: Install the ping script
   template:
     dest: "{{ ping_homedir }}/{{ ping_script }}"
     src: "{{ ping_script }}.j2"
@@ -38,7 +38,7 @@
     mode: "0700"
   tags: copr_ping
 
-- name: install the check script
+- name: Install the check script
   template:
     dest: "/usr/bin/copr-ping-check.py"
     src: "copr-ping-check.py.j2"
@@ -47,7 +47,7 @@
     mode: "0750"
   tags: copr_ping
 
-- name: selinux - allow nrpe_t to read ping_log
+- name: Selinux - allow nrpe_t to read ping_log
   sefcontext:
     target: "{{ ping_log }}"
     setype: nrpe_var_run_t
@@ -55,12 +55,12 @@
   register: semanage_run
   tags: copr_ping
 
-- name: restorecon ping_log
+- name: Restorecon ping_log
   shell: restorecon -irv "{{ ping_log }}"
   when: semanage_run.changed or ping_log_created.changed
   tags: copr_ping
 
-- name: create home/.config dir
+- name: Create home/.config dir
   file:
     path: "{{ ping_homedir }}/.config"
     owner: "{{ ping_user }}"
@@ -69,7 +69,7 @@
     state: directory
   tags: copr_ping
 
-- name: install the Copr API token
+- name: Install the Copr API token
   copy:
     content: |
       [copr-cli]
@@ -84,7 +84,7 @@
   tags: copr_ping
   when: not devel
 
-- name: rebuild the copr-ping package periodically
+- name: Rebuild the copr-ping package periodically
   ansible.builtin.cron:
     # NOTE: sync with CRON_PERIOD in roles/copr/backend/templates/copr-ping-check.py.j2
     name: build the ping package

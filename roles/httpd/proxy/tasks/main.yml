@@ -45,7 +45,7 @@
   - httpd
   - httpd/proxy
 
-- name: set the apache mpm to use event MPM
+- name: Set the apache mpm to use event MPM
   copy: src=00-mpm.conf dest=/etc/httpd/conf.modules.d/00-mpm.conf
   notify:
   - reload proxyhttpd
@@ -53,7 +53,7 @@
   - httpd
   - httpd/proxy
 
-- name: install libsemanage
+- name: Install libsemanage
   package:
     state: present
     name:
@@ -64,7 +64,7 @@
   - selinux
   when: (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int < 8) or (ansible_distribution_major_version|int < 30 and ansible_distribution == 'Fedora')
 
-- name: install libsemanage in a python3 manner
+- name: Install libsemanage in a python3 manner
   package:
     state: present
     name:
@@ -92,21 +92,21 @@
   - httpd
   - httpd/proxy
 
-- name: disable systemd-oomd we do not need or want it
+- name: Disable systemd-oomd we do not need or want it
   service: name=systemd-oomd state=stopped enabled=no
   tags:
   - httpd
   - httpd/proxy
   - disablesystemdoomd
 
-- name: create systemd drop in dir for httpd
+- name: Create systemd drop in dir for httpd
   file: path=/etc/systemd/system/httpd.service.d/ state=directory
   tags:
   - httpd
   - httpd/proxy
   - httpdoverride
 
-- name: create systemd drop in dir for httpd
+- name: Create systemd drop in dir for httpd
   copy: src=httpdoverride.conf dest=/etc/systemd/system/httpd.service.d/httpdoverride.conf
   tags:
   - httpd

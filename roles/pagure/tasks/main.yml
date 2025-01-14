@@ -1,6 +1,6 @@
 ---
 # Configuration for the pagure webapp
-- name: install needed packages
+- name: Install needed packages
   package: name={{ item }} state=present
   with_items:
   - pagure
@@ -34,7 +34,7 @@
   tags:
   - pagure
 
-- name: create the pagure DB user
+- name: Create the pagure DB user
   become_user: postgres
   become: true
   postgresql_user:
@@ -45,7 +45,7 @@
   - postgresql
   when: env != 'pagure-staging'
 
-- name: create the pagure DB user
+- name: Create the pagure DB user
   become_user: postgres
   become: true
   postgresql_user:
@@ -56,7 +56,7 @@
   - postgresql
   when: env != 'pagure-staging'
 
-- name: create the pagure database creation
+- name: Create the pagure database creation
   become_user: postgres
   become: true
   postgresql_db:
@@ -68,7 +68,7 @@
   - postgresql
   when: env != 'pagure-staging'
 
-- name: create the pagure DB user
+- name: Create the pagure DB user
   become_user: postgres
   become: true
   postgresql_user:
@@ -79,7 +79,7 @@
   - postgresql
   when: env == 'pagure-staging'
 
-- name: create the pagure DB user
+- name: Create the pagure DB user
   become_user: postgres
   become: true
   postgresql_user:
@@ -90,7 +90,7 @@
   - postgresql
   when: env == 'pagure-staging'
 
-- name: create the pagure database creation
+- name: Create the pagure database creation
   become_user: postgres
   become: true
   postgresql_db:
@@ -113,14 +113,14 @@
   tags:
   - pagure
 
-- name: create the /attachments folder
+- name: Create the /attachments folder
   file: state=directory
          path=/srv/attachments
          owner=git group=git mode=0775
   tags:
   - pagure
 
-- name: create the /var/log/pagure folder where to store the logs
+- name: Create the /var/log/pagure folder where to store the logs
   file: state=directory
                path=/var/log/pagure
                owner=git group=git mode=0775
@@ -147,7 +147,7 @@
 #   tags:
 #   - gitolite
 
-- name: create all the directories where we store the git repos
+- name: Create all the directories where we store the git repos
   file: state=directory
                path={{ item }}
                owner=git group=git mode=0775
@@ -161,7 +161,7 @@
   tags:
   - pagure
 
-- name: create the /srv/tmp folder where to clone repos
+- name: Create the /srv/tmp folder where to clone repos
   file: state=directory
                path=/srv/tmp
                owner=git group=git mode=0775
@@ -179,7 +179,7 @@
 
 # Set things up for the mirroring feature
 
-- name: create the `paguremirroring` group
+- name: Create the `paguremirroring` group
   group:
     name: paguremirroring
     state: present
@@ -187,7 +187,7 @@
   - pagure
   - mirror
 
-- name: create the `paguremirroring` user
+- name: Create the `paguremirroring` user
   user:
     name: paguremirroring
     group: paguremirroring
@@ -212,7 +212,7 @@
 
 # Override pagure_ev systemd service file
 
-- name: install pagure_ev service definition
+- name: Install pagure_ev service definition
   copy: src=pagure_ev.service
         dest=/usr/lib/systemd/system/pagure_ev.service
         owner=root group=root mode=0644
@@ -225,7 +225,7 @@
 
 # Set-up stunnel for the event source server
 
-- name: install stunnel service definition
+- name: Install stunnel service definition
   copy: src=stunnel.service
         dest=/usr/lib/systemd/system/stunnel.service
         owner=root group=root mode=0644
@@ -236,7 +236,7 @@
   - pagure
   - stunnel
 
-- name: install stunnel.conf
+- name: Install stunnel.conf
   template: src={{ item.file }}
             dest={{ item.dest }}
             owner=root group=root mode=0600
@@ -264,7 +264,7 @@
 
 # setup fedora-messaging
 
-- name: install fedora-messaging as a dependency
+- name: Install fedora-messaging as a dependency
   package: name={{ item }} state=present
   with_items:
   - python3-fedora-messaging
@@ -272,13 +272,13 @@
   - pagure
   - fedora-messaging
 
-- name: create the config folder for fedora-messaging
+- name: Create the config folder for fedora-messaging
   file: path=/etc/fedora-messaging/ owner=root group=root mode=0755 state=directory
   tags:
   - pagure
   - fedora-messaging
 
-- name: install the configuration file for fedora-messaging
+- name: Install the configuration file for fedora-messaging
   template:
     src=fedora-messaging.toml
     dest=/etc/fedora-messaging/config.toml
@@ -286,13 +286,13 @@
   - pagure
   - fedora-messaging
 
-- name: create folder where we'll place the certs
+- name: Create folder where we'll place the certs
   file: path=/etc/pki/rabbitmq/pagurecert/ owner=root group=root mode=0755 state=directory
   tags:
   - pagure
   - fedora-messaging
 
-- name: deploy pagure/rabbitmq certificate
+- name: Deploy pagure/rabbitmq certificate
   copy: src={{ item.src }}
         dest=/etc/pki/rabbitmq/pagurecert/{{ item.dest }}
         owner={{ item.owner }} group={{ item.group}} mode={{ item.mode }}
@@ -317,7 +317,7 @@
   - pagure
   - fedora-messaging
 
-- name: deploy pagure/rabbitmq certificate
+- name: Deploy pagure/rabbitmq certificate
   copy: src={{ item.src }}
         dest=/etc/pki/rabbitmq/pagurecert/{{ item.dest }}
         owner={{ item.owner }} group={{ item.group}} mode={{ item.mode }}
@@ -345,7 +345,7 @@
 
 # Set-up Pagure
 
-- name: create the folders used for releases and archives
+- name: Create the folders used for releases and archives
   file: state=directory
                path={{ item }}
                owner=git group=git mode=0775
@@ -356,7 +356,7 @@
   - pagure
   - web
 
-- name: copy sundry pagure configuration
+- name: Copy sundry pagure configuration
   template: src={{ item.file }}
             dest={{ item.location }}/{{ item.file }}
             owner=git group=postfix mode=0640
@@ -380,7 +380,7 @@
   - pagure
 
 
-- name: create the database scheme
+- name: Create the database scheme
   command: /usr/bin/python3 /usr/share/pagure/pagure_createdb.py
   changed_when: "1 != 1"
   environment:
@@ -417,7 +417,7 @@
   notify:
   - restart apache
 
-- name: let paguremirroring read the pagure config
+- name: Let paguremirroring read the pagure config
   command: /usr/bin/setfacl -m user:paguremirroring:rx /etc/pagure/pagure.cfg
   tags:
   - pagure
@@ -491,7 +491,7 @@
   - service
   - postfix
 
-- name: setup logrotate to our needs
+- name: Setup logrotate to our needs
   copy: src="{{ files }}/httpd/httpd.logrotate" dest=/etc/logrotate.d/httpd
   tags:
   - config
@@ -504,7 +504,7 @@
   - GDPR
   - pagure
 
-- name: override the default syslog logrotate file
+- name: Override the default syslog logrotate file
   copy: src=syslog-logrotate dest=/etc/logrotate.d/syslog
   tags:
   - pagure

@@ -1,5 +1,5 @@
 ---
-- name: remove EOLed opsys
+- name: Remove EOLed opsys
   command: faf releasemod -o "{{ item.opsys | lower }}" --opsys-release "{{ item.release }}" -s EOL
   loop: "{{ eol_opsys }}"
   become: yes
@@ -7,7 +7,7 @@
   failed_when: false
   changed_when: false
 
-- name: remove EOLed packages
+- name: Remove EOLed packages
   command: faf cleanup-packages "{{ item.opsys }}" "{{ item.release }}"
   loop: "{{ eol_opsys }}"
   become: yes
@@ -15,7 +15,7 @@
   failed_when: false
   changed_when: false
 
-- name: remove unassigned packages
+- name: Remove unassigned packages
   command: faf cleanup-unassigned -f
   become: yes
   become_user: faf

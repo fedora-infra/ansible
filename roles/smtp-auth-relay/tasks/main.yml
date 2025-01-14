@@ -1,5 +1,5 @@
 ---
-- name: install the needed packages
+- name: Install the needed packages
   package:
     name:
       - postfix
@@ -8,7 +8,7 @@
   tags:
     - smtp_auth_relay
 
-- name: create the password file
+- name: Create the password file
   copy:
     dest: /etc/postfix/sasl_passwd
     content: "{{ smtp_auth_relay_host }} {{ smtp_auth_relay_user }}:{{ smtp_auth_relay_password }}"
@@ -17,7 +17,7 @@
   tags:
     - smtp_auth_relay
 
-- name: regenerate the password db file
+- name: Regenerate the password db file
   shell: postmap /etc/postfix/sasl_passwd
   when: smtp_relay_password_file.changed
   notify: restart postfix

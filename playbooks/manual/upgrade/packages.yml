@@ -1,5 +1,5 @@
 ---
-- name: push packages out
+- name: Push packages out
   hosts: packages:packages_stg
   user: root
   vars_files:
@@ -12,17 +12,17 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   tasks:
-  - name: clean all metadata {%if testing%}(with infrastructure-testing on){%endif%}
+  - name: Clean all metadata {%if testing%}(with infrastructure-testing on){%endif%}
     command: dnf clean all {%if testing%} --enablerepo=infrastructure-tags-stg {%endif%}
     check_mode: no
-  - name: update fedora-packages packages from main repo
+  - name: Update fedora-packages packages from main repo
     package: name="fedora-packages" state=latest
     when: not testing
-  - name: update fedora-packages packages from testing repo
+  - name: Update fedora-packages packages from testing repo
     dnf: name="fedora-packages" state=latest enablerepo=infrastructure-tags-stg
     when: testing
 
-- name: verify the config and restart it
+- name: Verify the config and restart it
   hosts: packages:packages_stg
   user: root
   vars_files:
@@ -33,7 +33,7 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   pre_tasks:
-  - name: tell nagios to shush
+  - name: Tell nagios to shush
     nagios: action=downtime minutes=60 service=host host={{ inventory_hostname_short }}{{ env_suffix }}
     delegate_to: noc01.iad2.fedoraproject.org
     ignore_errors: true
@@ -48,7 +48,7 @@
   - service: name="httpd" state=started
   - service: name="fedmsg-hub" state=started
 
-  - name: tell nagios to unshush
+  - name: Tell nagios to unshush
     nagios: action=unsilence service=host host={{ inventory_hostname_short }}{{ env_suffix }}
     delegate_to: noc01.iad2.fedoraproject.org
     ignore_errors: true

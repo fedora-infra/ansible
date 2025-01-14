@@ -9,13 +9,13 @@
 # On fedora and rhel larger than 7, all we need is policycoreutils-python-utils,
 # which in turn pulls in python3-policycoreutils
 #
-- name: ensure packages required for semanage are installed (fedora/rhel8)
+- name: Ensure packages required for semanage are installed (fedora/rhel8)
   package: name=policycoreutils-python-utils state=present
   when: ansible_distribution_major_version|int > 7
   tags:
   - selinux
 
-- name: global default packages to install (dnf)
+- name: Global default packages to install (dnf)
   dnf: state=present name="{{ global_pkgs_inst }}"
   tags:
   - packages
@@ -24,7 +24,7 @@
     ansible_distribution_major_version|int >= 8 and
     ansible_distribution == 'RedHat' and ansible_cmdline.ostree is not defined
 
-- name: global default packages to install (dnf)
+- name: Global default packages to install (dnf)
   dnf: state=present name="{{ global_pkgs_inst }}"
   tags:
   - packages
@@ -33,14 +33,14 @@
     ansible_distribution_major_version|int > 29 and
     ansible_distribution == 'Fedora' and ansible_cmdline.ostree is not defined
 
-- name: make sure hostname is set right on all hosts
+- name: Make sure hostname is set right on all hosts
   hostname: name="{{inventory_hostname}}"
 
 #
 # We set builders root password in the koji_builder role, so do not set those here
 #
 
-- name: set root passwd
+- name: Set root passwd
   user: name=root password={{ rootpw }} state=present
   tags:
   - rootpw
@@ -49,7 +49,7 @@
     - not inventory_hostname.startswith(('buildvm-','buildhw-','bkernel','koji','compose'))
     - not inventory_hostname.startswith('copr')
 
-- name: add ansible root key
+- name: Add ansible root key
   authorized_key: user=root key="{{ item }}"
   with_file:
   - ansible-pub-key
@@ -57,7 +57,7 @@
   - config
   - base
 
-- name: dist pkgs to remove (yum)
+- name: Dist pkgs to remove (yum)
   package: state=absent name={{ item }}
   with_items:
     - "{{ base_pkgs_erase }}"
@@ -66,7 +66,7 @@
   - base
   when: ansible_distribution_major_version|int < 8 and ansible_distribution == 'RedHat'
 
-- name: dist pkgs to install (yum)
+- name: Dist pkgs to install (yum)
   package: state=present name={{ item }}
   with_items:
     - "{{ base_pkgs_inst }}"
@@ -75,7 +75,7 @@
   - base
   when: ansible_distribution_major_version|int < 8 and ansible_distribution == 'RedHat'
 
-- name: dist pkgs to remove (dnf)
+- name: Dist pkgs to remove (dnf)
   dnf: state=absent name="{{ base_pkgs_erase }}"
   tags:
   - packages
@@ -84,7 +84,7 @@
     ansible_distribution_major_version|int > 29 and
     ansible_distribution == 'Fedora' and ansible_cmdline.ostree is not defined
 
-- name: dist pkgs to remove (dnf)
+- name: Dist pkgs to remove (dnf)
   dnf: state=absent name="{{ base_pkgs_erase }}"
   tags:
   - packages
@@ -94,7 +94,7 @@
     ansible_distribution == 'RedHat' and
     ansible_cmdline.ostree is not defined
 
-- name: dist pkgs to install (dnf)
+- name: Dist pkgs to install (dnf)
   dnf: state=present name="{{ base_pkgs_inst }}"
   tags:
   - packages
@@ -104,7 +104,7 @@
     ansible_distribution == 'Fedora' and
     ansible_cmdline.ostree is not defined
 
-- name: dist pkgs to install (dnf)
+- name: Dist pkgs to install (dnf)
   dnf: state=present name="{{ base_pkgs_inst }}"
   tags:
   - packages
@@ -114,7 +114,7 @@
     ansible_distribution == 'RedHat' and
     ansible_cmdline.ostree is not defined
 
-- name: dist disabled services
+- name: Dist disabled services
   service: state=stopped enabled=false name={{ item }}
   with_items:
     - "{{ service_disabled }}"
@@ -123,7 +123,7 @@
   - config
   - base
 
-- name: dist enabled services
+- name: Dist enabled services
   service: state=started enabled=true name={{ item }}
   with_items:
     - "{{ service_enabled }}"
@@ -148,7 +148,7 @@
   - packages
   - base
 
-- name: setup builder ipset if this is a new install
+- name: Setup builder ipset if this is a new install
   shell: "/usr/sbin/ipset create osbuildapi hash:ip; touch /etc/sysconfig/ipset-osbuildapi"
   args:
     creates: /etc/sysconfig/ipset-osbuildapi
@@ -157,7 +157,7 @@
     - base
     - iptables
 
-- name: install blocklist update script
+- name: Install blocklist update script
   copy:
     src: "{{ private }}/files/blocklist/blocklist-update.sh"
     dest: /usr/local/bin/blocklist-update.sh
@@ -170,7 +170,7 @@
     - blocklist
   when: "'iad2' not in inventory_hostname or external | bool "
 
-- name: setup blocklist update cron job
+- name: Setup blocklist update cron job
   cron:
     name: blocklist-update
     user: root
@@ -183,7 +183,7 @@
     - iptables
     - blocklist
 
-- name: iptables
+- name: Iptables
   template:
     src: "{{ item }}"
     dest: /etc/sysconfig/iptables
@@ -204,7 +204,7 @@
   - config
   - base
 
-- name: iptables service enabled
+- name: Iptables service enabled
   service: name=iptables state=started enabled=true
   tags:
   - iptables
@@ -212,7 +212,7 @@
   - base
   when: baseiptables|bool
 
-- name: ip6tables
+- name: Ip6tables
   template: src={{ item }} dest=/etc/sysconfig/ip6tables mode=0600 backup=yes
   with_first_found:
     - iptables/ip6tables.{{ datacenter }}
@@ -229,7 +229,7 @@
   - config
   - base
 
-- name: ip6tables service enabled
+- name: Ip6tables service enabled
   service: name=ip6tables state=started enabled=true
   tags:
   - ip6tables
@@ -237,7 +237,7 @@
   - base
   when: baseiptables|bool
 
-- name: enable journald persistence
+- name: Enable journald persistence
   file: path=/var/log/journal state=directory
         owner=root group=systemd-journal mode=2755
   when: ansible_distribution_major_version|int >= 7 and ansible_distribution == 'RedHat'
@@ -248,7 +248,7 @@
   notify:
   - flush journald tmpfiles to persistent store
 
-- name: enable journald persistence
+- name: Enable journald persistence
   file: path=/var/log/journal state=directory
         owner=root group=systemd-journal mode=2755
   when: ansible_distribution_major_version|int >= 29 and ansible_distribution == 'Fedora'
@@ -259,7 +259,7 @@
   notify:
   - flush journald tmpfiles to persistent store
 
-- name: install rh ca for splunk
+- name: Install rh ca for splunk
   copy: src={{ private }}/files/splunk-certs/2022-IT-Root-CA.pem
         dest=/etc/pki/tls/certs/2022-IT-Root-CA.pem
   tags:
@@ -268,7 +268,7 @@
   - base
   when: inventory_hostname.startswith('log01')
 
-- name: ensure packages required for rsyslog are installed
+- name: Ensure packages required for rsyslog are installed
   package: name={{ item }} state=present
   with_items:
   - rsyslog-gnutls
@@ -278,7 +278,7 @@
   - base
   when: inventory_hostname.startswith('log01')
 
-- name: rsyslog.conf
+- name: Rsyslog.conf
   copy: src={{ item }} dest=/etc/rsyslog.conf mode=0644
   with_first_found:
     - rsyslog/rsyslog.conf.{{ inventory_hostname }}
@@ -291,7 +291,7 @@
   - config
   - base
 
-- name: rsyslog log rotate for rsyslog servers
+- name: Rsyslog log rotate for rsyslog servers
   copy: src=rsyslog/merged-rsyslog dest=/etc/logrotate.d/merged-rsyslog mode=0644
   when: inventory_hostname.startswith('log')
   notify:
@@ -301,7 +301,7 @@
   - config
   - base
 
-- name: add rsyslog config to /etc/rsyslog.d
+- name: Add rsyslog config to /etc/rsyslog.d
   copy: src={{ item }} dest=/etc/rsyslog.d/ owner=root group=root mode=0644
   with_fileglob:
     - rsyslog/*.conf
@@ -312,7 +312,7 @@
   - config
   - base
 
-- name: rsyslog-audit.conf
+- name: Rsyslog-audit.conf
   copy: src={{ item }} dest=/etc/rsyslog.d/rsyslog-audit.conf owner=root group=root mode=0644
   with_first_found:
     - rsyslog/rsyslog-audit.conf.{{ datacenter }}
@@ -324,7 +324,7 @@
   - config
   - base
 
-- name: log everything to log01 except on mirrorlist, do not log local4 there.
+- name: Log everything to log01 except on mirrorlist, do not log local4 there.
   copy: src=rsyslog/rsyslog-log01 dest=/etc/rsyslog.d/rsyslog-log01.conf mode=0644
   when: not inventory_hostname.startswith(('mirrorlist','copr'))
   tags:
@@ -332,7 +332,7 @@
   - config
   - base
 
-- name: log everything to log01 except on mirrorlist, do log local4 there.
+- name: Log everything to log01 except on mirrorlist, do log local4 there.
   copy: src=rsyslog/rsyslog-log01-nolocal4 dest=/etc/rsyslog.d/rsyslog-log01.conf mode=0644
   when: inventory_hostname.startswith('mirrorlist')
   tags:
@@ -340,14 +340,14 @@
   - config
   - base
 
-- name: rsyslogd make systemd limits directory for file handles
+- name: Rsyslogd make systemd limits directory for file handles
   file: dest=/etc/systemd/system/rsyslog.service.d/ mode=0755 owner=root group=root state=directory
   when: inventory_hostname.startswith('log') or inventory_hostname.startswith('people')
   tags:
   - rsyslogd
   - config
 
-- name: rsyslogd put systemd limits directory for file handles
+- name: Rsyslogd put systemd limits directory for file handles
   copy: src=rsyslog/rsyslog-limits-systemd
         dest=/etc/systemd/system/rsyslog.service.d/limits.conf mode=0644
   when: inventory_hostname.startswith('log') or inventory_hostname.startswith('people')
@@ -356,14 +356,14 @@
   - config
 
 # Custom selinux policy to allow rsyslog to read and send audit to log01
-- name: ensure a directory exists for our custom selinux module
+- name: Ensure a directory exists for our custom selinux module
   file: dest=/usr/local/share/rsyslog state=directory
   tags:
   - rsyslogd
   - config
   - rsyslog-audit
 
-- name: copy over our custom selinux module
+- name: Copy over our custom selinux module
   copy: src=selinux/rsyslog-audit.pp dest=/usr/local/share/rsyslog/rsyslog-audit.pp
   register: selinux_module
   tags:
@@ -371,7 +371,7 @@
   - config
   - rsyslog-audit
 
-- name: install our custom selinux module
+- name: Install our custom selinux module
   command: semodule -i /usr/local/share/rsyslog/rsyslog-audit.pp
   when: selinux_module is changed and ansible_distribution_major_version|int > 6
   tags:
@@ -380,7 +380,7 @@
   - rsyslog-audit
 
 # Custom selinux policy to allow unix_chkpwd to map PAM database
-- name: copy over our custom selinux module
+- name: Copy over our custom selinux module
   copy: src=selinux/mapchkpwd.pp dest=/usr/local/share/mapchkpwd.pp
   register: selinux_module
   when: ansible_distribution_major_version|int >= 29 and ansible_distribution == 'Fedora'
@@ -389,7 +389,7 @@
   - selinux
 
 # Custom selinux policy to allow unix_chkpwd to map PAM database
-- name: copy over our custom selinux module
+- name: Copy over our custom selinux module
   copy: src=selinux/mapchkpwd.pp dest=/usr/local/share/mapchkpwd.pp
   register: selinux_module
   when: ansible_distribution_major_version|int >= 8 and ansible_distribution == 'RedHat'
@@ -397,7 +397,7 @@
   - config
   - selinux
 
-- name: install our custom selinux module
+- name: Install our custom selinux module
   command: semodule -i /usr/local/share/mapchkpwd.pp
   when: selinux_module is changed
   tags:
@@ -436,7 +436,7 @@
 
 # Set PS1 to show stage environment at PS1
 #
-- name: set PS1 for stage in /etc/profile.d
+- name: Set PS1 for stage in /etc/profile.d
   copy: >
     src=setstgps1.sh
     dest="/etc/profile.d/setstgps1.sh"
@@ -451,7 +451,7 @@
 
 # Set PS1 to show prod environment at PS1
 #
-- name: set PS1 for prod in /etc/profile.d
+- name: Set PS1 for prod in /etc/profile.d
   copy: >
     src=setprodps1.sh
     dest="/etc/profile.d/setprodps1.sh"
@@ -466,7 +466,7 @@
 
 # Set PS1 to show prod-iad2 environment at PS1
 #
-- name: set PS1 for prod in /etc/profile.d
+- name: Set PS1 for prod in /etc/profile.d
   copy: >
     src=setprodiad2ps1.sh
     dest="/etc/profile.d/setprodiad2ps1.sh"
@@ -480,7 +480,7 @@
   - prompt
 
 # Set krb5 conf
-- name: configure krb5
+- name: Configure krb5
   template: src=krb5.conf.j2 dest=/etc/krb5.conf owner=root group=root mode=0644
   when: not inventory_hostname.startswith('ipa')
   tags:
@@ -488,7 +488,7 @@
   - config
   - krb5
 
-- name: configure krb5 (IPA master)
+- name: Configure krb5 (IPA master)
   template: src=krb5.conf.master.j2 dest=/etc/krb5.conf owner=root group=root mode=0644
   when: inventory_hostname.startswith('ipa')
   tags:
@@ -513,7 +513,7 @@
 # rhel8 hosts do not have /usr/bin/python, but there are a few things we call
 # with that because they also run the same on python2 hosts.
 # So, we set python3 to /usr/bin/python on those hosts:
-- name: ensure that platform-python is installed on EL8 boxes
+- name: Ensure that platform-python is installed on EL8 boxes
   package: name={{ item }} state=present
   with_items:
   - platform-python
@@ -524,7 +524,7 @@
   - python3alternative
 
 
-- name: set /usr/bin/python to python3 on rhel8 hosts
+- name: Set /usr/bin/python to python3 on rhel8 hosts
   alternatives:
     name: python
     link: /usr/bin/python
@@ -535,7 +535,7 @@
   - config
   - python3alternative
 
-- name: cron jobs to compress logs under /var/log/hosts and /mnt/fedora_stats
+- name: Cron jobs to compress logs under /var/log/hosts and /mnt/fedora_stats
   copy: src=compress-log.cron dest=/etc/cron.d/ mode=0644
   tags:
   - compress
@@ -544,7 +544,7 @@
 - name: Set crypto-policy to LEGACY on fedora 33 hosts to get 2fa working
   import_tasks: crypto-policies.yml
 
-- name: proxy log rotate for proxy servers
+- name: Proxy log rotate for proxy servers
   copy: src="{{ files }}/common/rsyslog-logrotate" dest=/etc/logrotate.d/rsyslog mode=0644
   when: inventory_hostname.startswith('proxy')
   notify:

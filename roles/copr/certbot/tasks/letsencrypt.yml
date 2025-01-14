@@ -6,18 +6,18 @@
   tags:
     - certbot
 
-- name: install certbot package
+- name: Install certbot package
   package: name=certbot state=present
   tags:
     - certbot
 
-- name: install certbot config
+- name: Install certbot config
   template: src=certbot.j2 dest=/etc/sysconfig/certbot
             mode=0644
   tags:
     - certbot
 
-- name: install certbot deploy script
+- name: Install certbot deploy script
   template: src={{ letsencrypt.predefined_deploy_script }}
             dest=/usr/libexec/auto-certbot-deploy
             mode=0755
@@ -25,14 +25,14 @@
   tags:
     - certbot
 
-- name: check whether we need to initialize letsencrypt first
+- name: Check whether we need to initialize letsencrypt first
   stat: path="/etc/letsencrypt/live/{{ item.key }}"
   register: le_stat_checks
   with_dict: "{{ letsencrypt.certificates }}"
   tags:
     - certbot
 
-- name: check if we already have the backup
+- name: Check if we already have the backup
   delegate_to: localhost
   stat:
     path: "{{ le_backup_path }}/{{ (letsencrypt.certificates|dictsort)[0][0] }}"
@@ -40,7 +40,7 @@
   tags:
     - certbot
 
-- name: restore the certificates from backup (backed up on batcave)
+- name: Restore the certificates from backup (backed up on batcave)
   synchronize:
     src: "{{ le_backup_path }}/{{ (letsencrypt.certificates|dictsort)[0][0] }}/"
     dest: "{{ le_source_path }}"
@@ -52,7 +52,7 @@
     - le_stat_backup_dir.stat.exists
   register: some_cert_restored
 
-- name: initialize certbot configuration
+- name: Initialize certbot configuration
   shell: |
       certbot certonly --standalone \
             -w {{ item.item.value.challenge_dir }} \
@@ -68,7 +68,7 @@
   tags:
     - certbot
 
-- name: configure certbot to use webroot next time
+- name: Configure certbot to use webroot next time
   ini_file: dest="/etc/letsencrypt/renewal/{{ item.item.key }}.conf"
             section=renewalparams
             option=authenticator
@@ -77,7 +77,7 @@
   tags:
     - certbot
 
-- name: configure certbot to use webroot next time
+- name: Configure certbot to use webroot next time
   ini_file: dest="/etc/letsencrypt/renewal/{{ item.item.key }}.conf"
             section=renewalparams
             option=webroot_path
@@ -86,7 +86,7 @@
   tags:
     - certbot
 
-- name: post init script
+- name: Post init script
   shell: |
       /usr/libexec/auto-certbot-deploy \
             --init {{ item.item.key }}
@@ -112,7 +112,7 @@
 # following issues:
 #   https://pagure.io/copr/copr/issue/2001 Resolves:
 #   https://pagure.io/fedora-infrastructure/issue/10391
-- name: allow lighttpd to step into certbots directories
+- name: Allow lighttpd to step into certbots directories
   acl:
     path: "{{ item }}"
     entity: lighttpd
@@ -128,7 +128,7 @@
   tags:
     - certbot
 
-- name: prepare the certbot backup directory on batcave
+- name: Prepare the certbot backup directory on batcave
   delegate_to: localhost
   file:
     path: "{{ le_backup_path }}"
@@ -140,7 +140,7 @@
   tags:
     certbot
 
-- name: backup the letsencrypt certs to batcave directory
+- name: Backup the letsencrypt certs to batcave directory
   synchronize:
     src: "{{ le_source_path }}/"
     dest: "{{ le_backup_path }}/{{ item.key }}"

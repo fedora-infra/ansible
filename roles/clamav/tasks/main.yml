@@ -13,7 +13,7 @@
 # - clamscan_month (optional)
 # - clamscan_weekday (optional)
 
-- name: install the needed packages
+- name: Install the needed packages
   package: name={{item}} state=present
   with_items:
   - clamav
@@ -21,22 +21,22 @@
   - clamav-update
   - cronie-anacron
 
-- name: setup the freshclam configuration
+- name: Setup the freshclam configuration
   copy: src=freshclam.conf dest=/etc/freshclam.conf
 
-- name: enable freshclam by fixing the stupid default sysconfig
+- name: Enable freshclam by fixing the stupid default sysconfig
   copy: src=freshclam-sysconfig dest=/etc/sysconfig/freshclam
 
-- name: setup the freshclam cron job
+- name: Setup the freshclam cron job
   copy: src=freshclam-cron dest=/etc/cron.daily/freshclam
 
-- name: setup the periodic clam scan script
+- name: Setup the periodic clam scan script
   template: >
     src=clamscan.sh.j2
     dest=/usr/local/bin/clamscan.sh
     mode=0755
 
-- name: setup cron job for clam scan
+- name: Setup cron job for clam scan
   cron: >
     name="clamscan"
     user=root

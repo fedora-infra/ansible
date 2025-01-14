@@ -6,7 +6,7 @@
 # need to be periodically updated with new things.
 
 ---
-- name: restart fedmsg-gateway instances
+- name: Restart fedmsg-gateway instances
   hosts: fedmsg_gateways:fedmsg_gateways_stg
   user: root
   gather_facts: false
@@ -17,10 +17,10 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
-  - name: bounce the fedmsg-gateway service
+  - name: Bounce the fedmsg-gateway service
     service: name=fedmsg-gateway state=restarted
 
-- name: restart fedmsg-relay instances
+- name: Restart fedmsg-relay instances
   hosts: fedmsg_relays:fedmsg_relays_stg
   user: root
   gather_facts: false
@@ -31,10 +31,10 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
-  - name: bounce the fedmsg-relay service
+  - name: Bounce the fedmsg-relay service
     service: name=fedmsg-relay state=restarted
 
-- name: restart fedmsg-irc instances
+- name: Restart fedmsg-irc instances
   hosts: fedmsg_ircs:fedmsg_ircs_stg
   user: root
   gather_facts: false
@@ -45,10 +45,10 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
-  - name: bounce the fedmsg-irc service
+  - name: Bounce the fedmsg-irc service
     service: name=fedmsg-irc state=restarted
 
-- name: tell nagios to be quiet about FMN for the moment
+- name: Tell nagios to be quiet about FMN for the moment
   hosts: notifs_backend:notifs_backend_stg
   user: root
   gather_facts: false
@@ -59,14 +59,14 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
-  - name: schedule a 25 minute downtime.  give notifs backend time to start up.
+  - name: Schedule a 25 minute downtime.  give notifs backend time to start up.
     nagios: action=downtime minutes=25 service=host host={{ inventory_hostname_short }}{{ env_suffix }}
     delegate_to: noc01.iad2.fedoraproject.org
     ignore_errors: true
-#  - name: bounce the fmn-digests service
+#  - name: Bounce the fmn-digests service
 #    service: name=fmn-digests@1 state=restarted
 
-- name: restart fedmsg-hub instances
+- name: Restart fedmsg-hub instances
   hosts: fedmsg_hubs:fedmsg_hubs_stg
   user: root
   gather_facts: false
@@ -77,10 +77,10 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
-  - name: bounce the fedmsg-hub service
+  - name: Bounce the fedmsg-hub service
     service: name=fedmsg-hub state=restarted
 
-- name: restart moksha-hub instances
+- name: Restart moksha-hub instances
   hosts: moksha_hubs:moksha_hubs_stg
   user: root
   gather_facts: false
@@ -91,5 +91,5 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
-  - name: bounce the moksha-hub service
+  - name: Bounce the moksha-hub service
     service: name=moksha-hub state=restarted

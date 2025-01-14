@@ -1,10 +1,10 @@
 ---
-- name: install needed packages
+- name: Install needed packages
   package: name={{ item }} state=present
   with_items:
   - redis
   tags: redis
 
-- name: start redis
+- name: Start redis
   service: name=redis state=started enabled=yes
   tags: redis

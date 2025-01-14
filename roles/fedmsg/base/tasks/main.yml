@@ -2,7 +2,7 @@
 # tasklist for setting up fedmsg
 # This is the base set of files needed for fedmsg
 
-- name: install needed packages
+- name: Install needed packages
   package:
     state: present
     name:
@@ -13,27 +13,27 @@
   - fedmsg/base
   when: ansible_distribution_major_version|int < 8
 
-- name: install python2 fedmsg package
+- name: Install python2 fedmsg package
   package: name=fedmsg state=present
   when: "'python34_fedmsg' not in group_names and ansible_distribution_major_version|int < 22"
   tags: fedmsg/base
 
-- name: install python2 fedmsg package
+- name: Install python2 fedmsg package
   dnf: pkg=fedmsg state=present
   when: "'python34_fedmsg' not in group_names and ansible_distribution_major_version|int > 21"
   tags: fedmsg/base
 
-- name: install the python34 fedmsg package (yum)
+- name: Install the python34 fedmsg package (yum)
   package: name=python34-fedmsg-core state=present
   when: "'python34_fedmsg' in group_names and ansible_distribution_major_version|int < 22"
   tags: fedmsg/base
 
-- name: install the python3 fedmsg package (dnf)
+- name: Install the python3 fedmsg package (dnf)
   dnf: pkg=python3-fedmsg state=present
   when: "'python34_fedmsg' in group_names and ansible_distribution_major_version|int > 21"
   tags: fedmsg/base
 
-- name: install needed packages
+- name: Install needed packages
   dnf:
     name: ['libsemanage-python', 'python-psutil']
     state: present
@@ -42,13 +42,13 @@
   - fedmsg/base
   when: ansible_distribution_major_version|int < 31 and ansible_distribution == 'Fedora'
 
-- name: setup /etc/fedmsg.d directory
+- name: Setup /etc/fedmsg.d directory
   file: path=/etc/fedmsg.d owner=root group=root mode=0755 state=directory
   tags:
   - config
   - fedmsg/base
 
-- name: remove any old static endpoints files
+- name: Remove any old static endpoints files
   file: dest="/etc/fedmsg.d/{{item}}" state=absent
   with_items:
   - endpoints-bodhi.py
@@ -68,7 +68,7 @@
 # Our handlers in handlers/restart_services.yml are smart enough to
 # *conditionally* restart these services, only if they are installed on the
 # system.
-- name: setup basic /etc/fedmsg.d/ contents for internal hosts
+- name: Setup basic /etc/fedmsg.d/ contents for internal hosts
   template: >
     src="{{ item }}.j2"
     dest="/etc/fedmsg.d/{{ item }}"
@@ -99,7 +99,7 @@
   - restart fedmsg-irc
   - restart fedmsg-relay
 
-- name: dynamically generate policy from group/host vars.
+- name: Dynamically generate policy from group/host vars.
   template: >
     src="{{ item }}.j2"
     dest="/etc/fedmsg.d/{{ item }}"
@@ -121,7 +121,7 @@
   - restart fedmsg-irc
   - restart fedmsg-relay
 
-- name: setup basic /etc/fedmsg.d/ contents for firewalled/external hosts
+- name: Setup basic /etc/fedmsg.d/ contents for firewalled/external hosts
   template: >
     src="{{ item }}.j2"
     dest="/etc/fedmsg.d/{{ item }}"
@@ -145,7 +145,7 @@
   - restart fedmsg-irc
   - restart fedmsg-relay
 
-- name: install fedmsg-relay in case we're in debug mode.
+- name: Install fedmsg-relay in case we're in debug mode.
   package: name=fedmsg-relay state=present
   when: fedmsg_debug_loopback == true and ansible_distribution_major_version|int < 22
   tags:
@@ -158,7 +158,7 @@
   - restart fedmsg-irc
   - restart fedmsg-relay
 
-- name: install fedmsg-relay in case we're in debug mode.
+- name: Install fedmsg-relay in case we're in debug mode.
   dnf: name=fedmsg-relay state=present
   when: fedmsg_debug_loopback == true and ansible_distribution_major_version|int > 21
   tags:
@@ -171,7 +171,7 @@
   - restart fedmsg-irc
   - restart fedmsg-relay
 
-- name: destroy standard config to make way for debug loopback.
+- name: Destroy standard config to make way for debug loopback.
   file: dest=/etc/fedmsg.d/{{item}} state=absent
   with_items:
   - relay.py
@@ -187,7 +187,7 @@
   - restart fedmsg-irc
   - restart fedmsg-relay
 
-- name: overwrite standard config with local fedmsg debugging loopback
+- name: Overwrite standard config with local fedmsg debugging loopback
   copy: src=relay-debug-loopback.py dest=/etc/fedmsg.d/relay.py
   when: fedmsg_debug_loopback == true
   tags:
@@ -200,20 +200,20 @@
   - restart fedmsg-irc
   - restart fedmsg-relay
 
-- name: start fedmsg-relay, only for loopback testing
+- name: Start fedmsg-relay, only for loopback testing
   service: name=fedmsg-relay state=started
   when: fedmsg_debug_loopback == true
   tags:
   - fedmsg_loopback
   - fedmsg/base
 
-- name: setup /etc/pki/fedmsg directory
+- name: Setup /etc/pki/fedmsg directory
   file: path=/etc/pki/fedmsg owner=root group=root mode=0755 state=directory
   tags:
   - config
   - fedmsg/base
 
-- name: install fedmsg ca.cert
+- name: Install fedmsg ca.cert
   copy: >
     src="{{ private }}/files/fedmsg-certs/keys/ca.crt"
     dest=/etc/pki/fedmsg/ca.crt
@@ -224,7 +224,7 @@
   - config
   - fedmsg/base
 
-- name: fedmsg certs
+- name: Fedmsg certs
   copy: >
     src="{{ private }}/files/fedmsg-certs/keys/{{item['service']}}-{{fedmsg_fqdn | default(inventory_hostname)}}.crt"
     dest=/etc/pki/fedmsg/
@@ -238,7 +238,7 @@
   - config
   - fedmsg/base
 
-- name: fedmsg keys
+- name: Fedmsg keys
   copy: >
     src="{{ private }}/files/fedmsg-certs/keys/{{item['service']}}-{{fedmsg_fqdn | default(inventory_hostname)}}.key"
     dest=/etc/pki/fedmsg/
@@ -253,18 +253,18 @@
   - fedmsg/base
 
 # Three tasks for handling our custom selinux module
-- name: ensure a directory exists for our custom selinux module
+- name: Ensure a directory exists for our custom selinux module
   file: dest=/usr/local/share/fedmsg state=directory
   tags:
   - fedmsg/base
 
-- name: copy over our custom selinux module
+- name: Copy over our custom selinux module
   copy: src=selinux/fedmsg.pp dest=/usr/local/share/fedmsg/fedmsg.pp
   register: selinux_module
   tags:
   - fedmsg/base
 
-- name: install our custom selinux module
+- name: Install our custom selinux module
   command: semodule -i /usr/local/share/fedmsg/fedmsg.pp
   when: selinux_module is changed
   tags:
@@ -272,7 +272,7 @@
 
 # Also, label the ports that we commonly use for fedmsg under mod_wsgi
 # to be http_port_t so selinux lets apache bind there.
-- name: check semanage ports
+- name: Check semanage ports
   command: semanage port -l
   register: semanageoutput
   check_mode: no
@@ -280,7 +280,7 @@
   tags:
   - fedmsg/base
 
-- name: set ports so httpd can bind to fedmsg endpoints
+- name: Set ports so httpd can bind to fedmsg endpoints
   command: semanage port -a -t http_port_t -p tcp 3000-3100
   when: semanageoutput.stdout.find("3000-3100") == -1
   tags:

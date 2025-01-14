@@ -4,13 +4,13 @@
 ---
 - include_vars: dir=/srv/web/infra/ansible/vars/all/ ignore_files=README
 
-- name: check if the server is up, needs to be pre-started
+- name: Check if the server is up, needs to be pre-started
   local_action: shell nc -w 5 {{ inventory_hostname }} 22 < /dev/null
   register: host_is_up
   changed_when: false
   check_mode: no
 
-- name: birthday=on - drop the old known host entries
+- name: Birthday=on - drop the old known host entries
   local_action: known_hosts path={{item}}
                 host={{ inventory_hostname }}
                 state=absent
@@ -18,7 +18,7 @@
   - /root/.ssh/known_hosts
   when: birthday is defined
 
-- name: birthday=on - drop other known host entries
+- name: Birthday=on - drop other known host entries
   local_action: known_hosts path={{ item.0 }}
                 host={{ item.1 }}
                 state=absent
@@ -31,7 +31,7 @@
     - additional_known_hosts_cleanup is defined
     - additional_known_hosts_cleanup[inventory_hostname] is defined
 
-- name: gather the temporary ssh host key from the new instance
+- name: Gather the temporary ssh host key from the new instance
   local_action: command ssh-keyscan -t {{ item }} {{ inventory_hostname }}
   register: hostkey
   loop:
@@ -39,7 +39,7 @@
     - ed25519
   when: birthday is defined
 
-- name: add new ssh host key (until we can sign it)
+- name: Add new ssh host key (until we can sign it)
   local_action: known_hosts path={{item.0}} key="{{ item.1.stdout }}"
                 host={{ inventory_hostname }} state=present
   with_nested:
@@ -47,7 +47,7 @@
     - "{{ hostkey.results }}"
   when: birthday is defined
 
-- name: find old signatures done against the other hostname
+- name: Find old signatures done against the other hostname
   find:
     paths: /etc/ssh
     file_type: file
@@ -58,7 +58,7 @@
     - additional_known_hosts_cleanup is defined
     - additional_known_hosts_cleanup[inventory_hostname] is defined
 
-- name: remove old signed certificates
+- name: Remove old signed certificates
   file:
     path: "{{ item.path }}"
     state: absent
@@ -67,7 +67,7 @@
     - found_ssh_certs is not skipped
 
 # from https://github.com/praiskup/ansible-role-fix-root-ssh
-- name: allow root ssh connections
+- name: Allow root ssh connections
   lineinfile:
     path: /etc/cloud/cloud.cfg
     regexp: '^disable_root:'
@@ -77,7 +77,7 @@
   become_user: root
   when: birthday is defined
 
-- name: use the same authorized_keys
+- name: Use the same authorized_keys
   replace:
     path: /root/.ssh/authorized_keys
     regexp: '.*Please login as the user.* ssh-rsa '
@@ -92,7 +92,7 @@
 # Next we try and gather facts. If the host doesn't have python2 this will fail.
 #
 
-- name: gather facts
+- name: Gather facts
   setup:
   check_mode: no
   ignore_errors: true
@@ -102,7 +102,7 @@
 # If that failed, then we use the raw module to install things
 #
 
-- name: install python3 and dnf stuff
+- name: Install python3 and dnf stuff
   raw: sudo dnf -y install python3-dnf python3-libselinux python3
   when:
   - birthday is defined

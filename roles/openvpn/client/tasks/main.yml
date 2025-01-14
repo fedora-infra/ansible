@@ -43,7 +43,7 @@
   - service
   - openvpn
 
-- name: enable openvpn service for Fedora
+- name: Enable openvpn service for Fedora
   service: name=openvpn-client@openvpn state=started enabled=true
   when: is_fedora is defined
   tags:

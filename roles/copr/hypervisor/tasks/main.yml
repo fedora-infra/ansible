@@ -14,23 +14,23 @@
     - config
     - openstack
 
-# - name: enable swap in fstab
+# - name: Enable swap in fstab
 #   mount: name=none src=LABEL=swap
 #          fstype=swap opts=sw passno=0 dump=0
 #          state=present
 #   register: fstab_swap_entry
 #   tags: swap
 
-# - name: mount the swap
+# - name: Mount the swap
 #   shell: swapon -a
 #   when: fstab_swap_entry.changed
 #   tags: swap
 
-- name: install the default profile script
+- name: Install the default profile script
   copy: src=profile.sh dest=/etc/profile.d/copr-hypervisor.sh
   tags: profile_scripts
 
-- name: install libvirt packages
+- name: Install libvirt packages
   package: name={{ item }} state=present
   with_items:
   - qemu-kvm
@@ -45,7 +45,7 @@
     - packages
     - libvirtd
 
-- name: install libvirtd.conf
+- name: Install libvirtd.conf
   copy: src="{{ files }}/virthost/libvirtd.conf" dest=/etc/libvirt/libvirtd.conf
   notify:
   - restart libvirtd
@@ -56,18 +56,18 @@
 - set_fact: image_pool_dir=/libvirt-images image_pool_name=images
   tags: libvirtd
 
-- name: create libvirt image directory
+- name: Create libvirt image directory
   file: path={{ image_pool_dir }}
         owner=qemu group=qemu mode=ug=rwx,g+s
         state=directory
   tags: libvirtd
 
-- name: mount libvirt image partition
+- name: Mount libvirt image partition
   mount: name={{ image_pool_dir }} src='LABEL=vmvolumes'
          fstype=ext4 state=mounted
   tags: libvirtd
 
-- name: correct selinux
+- name: Correct selinux
   sefcontext:
     target: "{{ image_pool_dir }}(/.*)?"
     setype: virt_image_t
@@ -75,25 +75,25 @@
   register: semanage_run
   tags: libvirtd
 
-- name: restorecon
+- name: Restorecon
   shell: restorecon -irv "{{ image_pool_dir }}"
   when: semanage_run.changed
   tags: libvirtd
 
-- name: check host-bridge in libvirt
+- name: Check host-bridge in libvirt
   shell: virsh net-info host-bridge
   register: libvirt_bridge_exists
   failed_when: false
   changed_when: libvirt_bridge_exists.rc != 0
   tags: libvirtd
 
-- name: copy host-bridge config file to host
+- name: Copy host-bridge config file to host
   copy: src=libvirt-net-bridge.xml
         dest=/root/.tmp-ansible-file.xml
   when: libvirt_bridge_exists.changed
   tags: libvirtd
 
-- name: define host-bridge in libvirt
+- name: Define host-bridge in libvirt
   shell: |
     virsh net-define /root/.tmp-ansible-file.xml
     virsh net-start host-bridge
@@ -102,20 +102,20 @@
   notify: restart libvirtd
   tags: libvirtd
 
-- name: check if image pool exists
+- name: Check if image pool exists
   shell: virsh pool-info "{{ image_pool_name }}"
   register: libvirt_pool_exists
   failed_when: false
   changed_when: libvirt_pool_exists.rc != 0
   tags: libvirtd
 
-- name: copy image pool config file to host
+- name: Copy image pool config file to host
   template: src=libvirt-pool-images.xml
             dest=/root/.tmp-ansible-file.xml
   when: libvirt_pool_exists.changed
   tags: libvirtd
 
-- name: define image pool in libvirt
+- name: Define image pool in libvirt
   shell: |
     virsh pool-define /root/.tmp-ansible-file.xml
     virsh pool-start "{{ image_pool_name }}"
@@ -124,7 +124,7 @@
   notify: restart libvirtd
   tags: libvirtd
 
-- name: allow copr user controlling libvirt
+- name: Allow copr user controlling libvirt
   ini_file:
     path: /usr/lib/systemd/system/libvirtd.socket
     section: Socket
@@ -136,15 +136,15 @@
     - restart libvirtd.socket
   tags: libvirtd
 
-- name: create the copr user
+- name: Create the copr user
   user: name=copr uid=11666 group=libvirt groups=qemu password_lock=true
 
-- name: assure that copr-be can ssh there as copr@...
+- name: Assure that copr-be can ssh there as copr@...
   authorized_key: user=copr key="{{ item }}"
   with_file:
   - buildsys.pub
 
-- name: add @copr keys for sysadmin-main and other allowed users
+- name: Add @copr keys for sysadmin-main and other allowed users
   authorized_key: user=copr key="{{ item }}"
   with_lines:
   - "{{ auth_keys_from_fas }} @sysadmin-copr"
@@ -154,14 +154,14 @@
   - sshkeys
 
 # todo: generate it's own key
-- name: make sure hostA can ssh to hostB
+- name: Make sure hostA can ssh to hostB
   copy:
     src: "{{ private }}/files/copr/buildsys.priv"
     dest: /home/copr/.ssh/id_rsa
     owner: copr
     mode: "0600"
 
-- name: provide pub key, too, so we can install them to generated builder images
+- name: Provide pub key, too, so we can install them to generated builder images
   copy: src=buildsys.pub dest=/home/copr/.ssh/id_rsa.pub
         owner=copr mode=0600
 
@@ -176,13 +176,13 @@
     - update_helpers
     - packages
 
-- name: install the latest helper package
+- name: Install the latest helper package
   package: name=praiskup-helpers state=latest
   tags:
     - update_helpers
     - packages
 
-- name: install configuration for /bin/copr-image
+- name: Install configuration for /bin/copr-image
   copy:
     dest: /etc/eimg/eimg.sh
     content: |
@@ -194,7 +194,7 @@
   tags:
     provision_config
 
-- name: setup provision directory
+- name: Setup provision directory
   include_tasks: "{{ roles_path }}/copr/backend/tasks/setup_provisioning_environment.yml"
   vars:
     provision_directory: /home/copr/provision

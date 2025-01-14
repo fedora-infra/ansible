@@ -4,77 +4,77 @@
   args:
     creates: "/var/lib/pgsql/data/PG_VERSION"
 
-- name: set max_connections for PostgreSQL
+- name: Set max_connections for PostgreSQL
   lineinfile:
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^max_connections ='
     line: 'max_connections = 150'
   notify: restart postgresql
 
-- name: set shared_buffers for PostgreSQL
+- name: Set shared_buffers for PostgreSQL
   lineinfile:
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^shared_buffers ='
     line: 'shared_buffers = 25536MB'
   notify: restart postgresql
 
-- name: set effective_cache_size for PostgreSQL
+- name: Set effective_cache_size for PostgreSQL
   lineinfile:
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^effective_cache_size ='
     line: 'effective_cache_size = 50608MB'
   notify: restart postgresql
 
-- name: set work_mem for PostgreSQL
+- name: Set work_mem for PostgreSQL
   lineinfile:
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^work_mem ='
     line: 'work_mem = 6MB'
   notify: restart postgresql
 
-- name: set maintenance_work_mem for PostgreSQL
+- name: Set maintenance_work_mem for PostgreSQL
   lineinfile:
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^maintenance_work_mem ='
     line: 'maintenance_work_mem = 2GB'
   notify: restart postgresql
 
-- name: set checkpoint_completion_target for PostgreSQL
+- name: Set checkpoint_completion_target for PostgreSQL
   lineinfile:
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^checkpoint_completion_target ='
     line: 'checkpoint_completion_target = 0.9'
   notify: restart postgresql
 
-- name: set wal_buffers for PostgreSQL
+- name: Set wal_buffers for PostgreSQL
   lineinfile:
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^wal_buffers ='
     line: 'wal_buffers = -1'
   notify: restart postgresql
 
-- name: set default_statistics_target for PostgreSQL
+- name: Set default_statistics_target for PostgreSQL
   lineinfile:
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^default_statistics_target ='
     line: 'default_statistics_target = 100'
   notify: restart postgresql
 
-- name: drop faf database
+- name: Drop faf database
   postgresql_db:
     name: faf
     owner: postgres
     state: absent
   when: faf_recreate_database|bool
 
-- name: start service postgresql
+- name: Start service postgresql
   service:
     name: postgresql
     state: started
     enabled: yes
   become: true
 
-- name: pgsql create db faf
+- name: Pgsql create db faf
   postgresql_db:
     name: faf
     owner: postgres
@@ -82,7 +82,7 @@
   become: true
   become_user: postgres
 
-- name: pgsql create user faf
+- name: Pgsql create user faf
   postgresql_user:
     db: faf
     name: faf
@@ -92,7 +92,7 @@
   become: true
   become_user: postgres
 
-- name: create extension for faf
+- name: Create extension for faf
   postgresql_ext:
     name: semver
     db: faf

@@ -1,5 +1,5 @@
 ---
-- name: install needed packages
+- name: Install needed packages
   package: name={{ item }} state=present update_cache=yes
   with_items:
   - bzip2
@@ -17,7 +17,7 @@
 - name: Set httpd_use_nfs seboolean
   seboolean: name=httpd_use_nfs state=yes persistent=yes
 
-- name: check the selinux context rsyncd log
+- name: Check the selinux context rsyncd log
   command: matchpathcon /var/log/rsyncd-fedora.log
   register: rsyncdlog
   check_mode: no
@@ -39,7 +39,7 @@
 - name: Configure logrotate for /var/log/rsyncd-fedora.log
   copy: src=logrotate-rsync-fedora dest=/etc/logrotate.d/rsync-fedora
 
-- name: check the selinux context pubdir
+- name: Check the selinux context pubdir
   command: matchpathcon /srv/pub
   register: pubdir
   check_mode: no

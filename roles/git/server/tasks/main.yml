@@ -1,22 +1,22 @@
 ---
 # tasklist for setting up a git server (git:// access)
 
-- name: install the git-daemon package
+- name: Install the git-daemon package
   package: name=git-daemon state=present
   tags: git/server
 
 # If NOT using xinetd
-- name: delete stock git daemon config
+- name: Delete stock git daemon config
   file: path="/usr/lib/systemd/system/git.service" state=absent
   when: ansible_distribution_major_version|int >= 7 and ansible_distribution == 'RedHat'
   tags: git/server
 
-- name: delete stock git daemon config
+- name: Delete stock git daemon config
   file: path="/usr/lib/systemd/system/git.service" state=absent
   when: ansible_distribution_major_version|int >= 29 and ansible_distribution == 'Fedora'
   tags: git/server
 
-- name: configure git daemon
+- name: Configure git daemon
   template: >
     src="git@.service.j2"
     dest="/usr/lib/systemd/system/git@.service"
@@ -24,7 +24,7 @@
   when: ansible_distribution_major_version|int >= 7 and ansible_distribution == 'RedHat'
   tags: git/server
 
-- name: configure git daemon
+- name: Configure git daemon
   template: >
     src="git@.service.j2"
     dest="/usr/lib/systemd/system/git@.service"
@@ -33,12 +33,12 @@
   tags: git/server
 
 # If using xinetd
-- name: install xinetd
+- name: Install xinetd
   package: name=xinetd state=present
   when: ansible_distribution_major_version|int == 6 and ansible_distribution == 'RedHat'
   tags: git/server
 
-- name: install the xinetd config file
+- name: Install the xinetd config file
   template: >
     src="git.j2"
     dest="/etc/xinetd.d/git"

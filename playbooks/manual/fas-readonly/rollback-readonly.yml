@@ -1,5 +1,5 @@
 ---
-- name: change fas db to writable again
+- name: Change fas db to writable again
   hosts: db-fas01.iad2.fedoraproject.org:db-fas01.stg.iad2.fedoraproject.org
   user: root
   vars_files:
@@ -7,10 +7,10 @@
     - "/srv/private/ansible/vars.yml"
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   tasks:
-  - name: copy the sql script to file
+  - name: Copy the sql script to file
     template: src=rollback.sql dest=/var/lib/pgsql/rollback.sql
 
-  - name: rollback permissions for relevant tables in the fas db
+  - name: Rollback permissions for relevant tables in the fas db
     shell: psql -1 -v ON_ERROR_STOP=1 fas2 </var/lib/pgsql/rollback.sql
     become: yes
     become_user: postgres

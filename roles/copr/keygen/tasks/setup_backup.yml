@@ -1,9 +1,9 @@
 ---
-- name: ensure /backup dir
+- name: Ensure /backup dir
   file: path=/backup state=directory
 
-- name: copy pubkey for backup encryption
+- name: Copy pubkey for backup encryption
   copy: src="{{ private }}/files/copr/keygen/backup_key.asc" dest="/root/backup_key.asc"
 
-- name: copy backup script
+- name: Copy backup script
   copy: src="backup_keyring.sh" dest="/etc/cron.hourly/backup_keyring.sh" owner=root group=root mode=755

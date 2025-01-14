@@ -1,5 +1,5 @@
 ---
-- name: install limnoria package
+- name: Install limnoria package
   package: name={{ item }} state=present enablerepo=epel-testing
   with_items:
   - limnoria
@@ -13,7 +13,7 @@
 
 - set_fact: botname={{ botnames[env] }}
 
-- name: creating zodbot log dir
+- name: Creating zodbot log dir
   file: path={{ item }} state=directory owner=daemon
   with_items:
   - /var/lib/{{ botname }}
@@ -24,19 +24,19 @@
   - /srv/web/meetbot
   tags: supybot
 
-- name: create teams directory
+- name: Create teams directory
   file: path=/srv/web/meetbot/teams state=directory owner=apache group=apache mode=0755
   tags: supybot
 
-- name: create archives directory
+- name: Create archives directory
   file: path=/srv/web/meetbot/archives state=directory owner=apache group=apache mode=0755
   tags: supybot
 
-- name: setup meetings_by_team script
+- name: Setup meetings_by_team script
   copy: src=meetings_by_team.sh dest=/usr/local/bin/meetings_by_team.sh mode=755
   tags: supybot
 
-- name: teams cron job
+- name: Teams cron job
   cron:
     name: meetings-by-team
     hour: "23"
@@ -46,11 +46,11 @@
     state: "{{ 'present' if inventory_hostname.startswith('value02') else 'absent' }}"
   tags: supybot
 
-- name: setup archive script
+- name: Setup archive script
   copy: src=archive.sh dest=/usr/local/bin/archive.sh mode=755
   tags: supybot
 
-- name: teams cron job
+- name: Teams cron job
   cron:
     name: archive
     hour: "23"
@@ -61,11 +61,11 @@
   tags: supybot
   when: inventory_hostname.startswith('value02')
 
-- name: setup meetbot.conf apache config
+- name: Setup meetbot.conf apache config
   copy: src=meetbot.conf dest=/etc/httpd/conf.d/meetbot.conf mode=644
   tags: supybot
 
-- name: check the selinux context of the /srv/web/meetbot dir
+- name: Check the selinux context of the /srv/web/meetbot dir
   command: matchpathcon /srv/web/meetbot
   register: context
   check_mode: no
@@ -162,7 +162,7 @@
   tags:
   - config
 
-- name: setup zodbot systemd service file (prod)
+- name: Setup zodbot systemd service file (prod)
   copy: src=zodbot.service dest=/etc/systemd/system/zodbot.service
   when: env == "production"
   notify:
@@ -171,14 +171,14 @@
   - config
   - supybot
 
-- name: enable zodbot service (prod)
+- name: Enable zodbot service (prod)
   service: name=zodbot state=started enabled=true
   when: env == "production" and inventory_hostname.startswith('value02')
   tags:
   - config
   - supybot
 
-- name: setup ursabot systemd service file (stg)
+- name: Setup ursabot systemd service file (stg)
   copy: src=ursabot.service dest=/etc/systemd/system/ursabot.service
   when: env == "staging"
   notify:
@@ -187,14 +187,14 @@
   - config
   - supybot
 
-- name: enable ursabot service (stg)
+- name: Enable ursabot service (stg)
   service: name=ursabot state=started enabled=true
   when: env == "staging"
   tags:
   - config
   - supybot
 
-- name: setup the SAR script for the meetbot logs
+- name: Setup the SAR script for the meetbot logs
   copy: src=meetbot_sar.py dest=/usr/local/bin/meetbot_sar.py
         owner=root group=root mode=0700
   tags:

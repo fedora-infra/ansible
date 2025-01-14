@@ -2,58 +2,58 @@
 # This is a base koji_builder role.
 #
 ---
-- name: set hostname
+- name: Set hostname
   hostname: name="{{inventory_hostname}}"
   tags:
   - koji_builder
 
-- name: set root passwd
+- name: Set root passwd
   user: name=root password={{ builder_rootpw }} state=present
   tags:
   - koji_builder
   - rootpw
 
-- name: add mock user as 425
+- name: Add mock user as 425
   user: name=mock uid=425 state=present home=/var/lib/mock createhome=yes system=yes
   tags:
   - koji_builder
 
-- name: make mock homedir perms
+- name: Make mock homedir perms
   file: state=directory path=/var/lib/mock mode=2775 owner=root group=mock
   tags:
   - koji_builder
 
-- name: add mock ssh dir
+- name: Add mock ssh dir
   file: state=directory path=/var/lib/mock/.ssh mode=700 owner=mock group=mock
   tags:
   - koji_builder
 
-- name: add mock ssh keys
+- name: Add mock ssh keys
   copy: src=mock_auth_keys dest=/var/lib/mock/.ssh/authorized_keys mode=640 owner=mock group=mock
   tags:
   - koji_builder
 
-- name: add kojibuilder
+- name: Add kojibuilder
   user: name=kojibuilder groups=mock
   tags:
   - koji_builder
 
-- name: add mockbuilder
+- name: Add mockbuilder
   user: name=mockbuilder groups=mock
   tags:
   - koji_builder
 
-- name: mockbuilder .ssh dir
+- name: Mockbuilder .ssh dir
   file: state=directory path=/home/mockbuilder/.ssh mode=700 owner=mockbuilder group=mockbuilder
   tags:
   - koji_builder
 
-- name: mockbuilder ssh key
+- name: Mockbuilder ssh key
   copy: src=ftbfs_auth_keys dest=/home/mockbuilder/.ssh/authorized_keys mode=644 owner=mockbuilder group=mockbuilder
   tags:
   - koji_builder
 
-- name: make a bunch of dirs
+- name: Make a bunch of dirs
   file: state=directory path={{ item }}
   with_items:
     - /pub
@@ -102,7 +102,7 @@
 # rpmautospec plugin
 #
 
-- name: remove koji builder rpmautospec plugin
+- name: Remove koji builder rpmautospec plugin
   package:
     name:
       - koji-builder-plugin-rpmautospec
@@ -114,7 +114,7 @@
   - koji_builder
   - rpmautospec
 
-- name: remove obsolete configuration of rpmautospec
+- name: Remove obsolete configuration of rpmautospec
   file:
     path: "/etc/kojid/plugins/{{ item }}"
     state: absent
@@ -127,12 +127,12 @@
   - koji_builder
   - rpmautospec
 
-- name: install Flatpak builder plugin
+- name: Install Flatpak builder plugin
   package: name=koji-flatpak-builder state=present
   tags:
   - koji_builder
 
-- name: configure flatpak-builder plugin
+- name: Configure flatpak-builder plugin
   template: src=flatpak.conf dest=/etc/kojid/plugins/flatpak.conf
   vars:
     candidate_registry: "candidate-registry{{ env_suffix }}.fedoraproject.org"
@@ -147,12 +147,12 @@
   - koji_builder
   when: "ansible_architecture is defined and ansible_architecture == 'aarch64'"
 
-- name: enable virtlogd service
+- name: Enable virtlogd service
   service: name=virtlogd state=started enabled=yes
   tags:
   - koji_builder
 
-- name: build /etc/kojid/kojid.conf from group vars
+- name: Build /etc/kojid/kojid.conf from group vars
   template: src=kojid.conf dest=/etc/kojid/kojid.conf
   notify:
   - restart kojid
@@ -166,7 +166,7 @@
   - koji_builder
   - koji_builder_osbuild
 
-- name: build /etc/koji-osbuild/builder.conf
+- name: Build /etc/koji-osbuild/builder.conf
   template: src=builder.conf{{env_suffix}} dest=/etc/koji-osbuild/builder.conf
   notify:
   - restart kojid
@@ -174,12 +174,12 @@
   - koji_builder
   - koji_builder_osbuild
 
-- name: build /etc/koji/koji.conf from group vars
+- name: Build /etc/koji/koji.conf from group vars
   template: src=koji.conf dest=/etc/koji.conf
   tags:
   - koji_builder
 
-- name: config for the kojid runroot plugin (only some builders)
+- name: Config for the kojid runroot plugin (only some builders)
   template: src=runroot.conf.j2 dest=/etc/kojid/plugins/runroot.conf
   when: "'runroot' in group_names"
   notify:
@@ -187,7 +187,7 @@
   tags:
   - koji_builder
 
-- name: override kojid.service file to set TasksMax to unlimited
+- name: Override kojid.service file to set TasksMax to unlimited
   copy: src=kojid.service dest=/etc/systemd/system/kojid.service
   notify:
   - reload systemd
@@ -196,29 +196,29 @@
   - koji_builder
 
 # setup for oz/imagefactory
-- name: make .psphere dir
+- name: Make .psphere dir
   file: state=directory path=/root/.psphere mode=775 owner=root group=root
   tags:
   - koji_builder
 
-- name: make .psphere/templates dir
+- name: Make .psphere/templates dir
   file: state=directory path=/root/.psphere/templates mode=775 owner=root group=root
   tags:
   - koji_builder
 
-- name: copy over /root/.psphere/config.yaml
+- name: Copy over /root/.psphere/config.yaml
   copy: src={{ private }}/files/koji/config.yaml dest=/root/.psphere/config.yaml
   tags:
   - koji_builder
 # done oz/imagefactory
 
-- name: copy over /etc/security/limits.conf
+- name: Copy over /etc/security/limits.conf
   copy: src=limits.conf dest=/etc/security/limits.conf
   tags:
   - koji_builder
 
 # oz.cfg  upstream ram and cpu definitions are not enough
-- name: oz.cfg
+- name: Oz.cfg
   template: src=oz.cfg.j2 dest=/etc/oz/oz.cfg
   tags:
   - koji_builder
@@ -229,7 +229,7 @@
 # This provides us with the ability to use virt-manager from non root accounts.
 # This is useful in the oz/imagefactory context for debugging
 
-- name: install libvirtd.conf
+- name: Install libvirtd.conf
   copy: src="{{ files }}/virthost/libvirtd.conf" dest=/etc/libvirt/libvirtd.conf
   tags:
   - koji_builder
@@ -243,7 +243,7 @@
 # away from oz/Imagefactory so we don't need virt instances for image builds
 # anymore.
 
-- name: install libvirt/network.conf
+- name: Install libvirt/network.conf
   copy: src=network.conf dest=/etc/libvirt/network.conf
   notify:
   - restart virtnetworkd
@@ -255,13 +255,13 @@
 # On primary we want to make a /mnt/koji link to /mnt/fedora_koji/koji
 #
 
-- name: make a mnt/koji link
+- name: Make a mnt/koji link
   file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji
   when: koji_hub_nfs is defined and koji_hub_nfs == "fedora_koji" and createrepo == True
   tags:
   - koji_builder
 
-- name: make a mnt/koji link
+- name: Make a mnt/koji link
   file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji force=yes
   when: inventory_hostname.startswith(('buildvm-s390x-11', 'buildvm-s390x-12', 'buildvm-s390x-13'))
   tags:
@@ -271,13 +271,13 @@
 # alternative arch builders however want to link to just /mnt/fedora_koji
 #
 
-- name: make a mnt/koji link
+- name: Make a mnt/koji link
   file: state=link src=/mnt/fedora_koji dest=/mnt/koji
   when: koji_hub_nfs is defined and koji_hub_nfs != "fedora_koji" and createrepo == True
   tags:
   - koji_builder
 
-- name: mock site-defaults.cfg
+- name: Mock site-defaults.cfg
   template: src=builders/site-defaults.cfg dest=/etc/mock/site-defaults.cfg mode=0644 owner=root group=mock
   when: not inventory_hostname.startswith(('bkernel'))
   tags:
@@ -286,7 +286,7 @@
 
 # x86_64 builders run both x86_64 and i686 builds, that requires multilib
 # version of nosync installed to fully take advantage of nosync
-- name: special pkgs for the x86_64 builders
+- name: Special pkgs for the x86_64 builders
   package:
     state: present
     name:
@@ -325,7 +325,7 @@
   - koji_builder
   - removehttpd
 
-- name: make sure we are in permissive selinux mode
+- name: Make sure we are in permissive selinux mode
   selinux: policy=targeted state=permissive
   tags:
   - koji_builder
@@ -343,7 +343,7 @@
   when: env == "staging"
 
 # https://pagure.io/fedora-infrastructure/issue/6636
-- name: install libkcapi to get increased sockets on armv7
+- name: Install libkcapi to get increased sockets on armv7
   dnf: name=libkcapi enablerepo=updates-testing state=present
   tags:
   - koji_builder
@@ -352,7 +352,7 @@
 # set highmem_is_dirtyable in compose armv7 machines.
 # see: https://bugzilla.redhat.com/show_bug.cgi?id=1504264
 #
-- name: set highmem_is_dirtyable on armv7 builders that are in the compose channel.
+- name: Set highmem_is_dirtyable on armv7 builders that are in the compose channel.
   sysctl: name=vm.highmem_is_dirtyable value=1 state=present sysctl_set=yes reload=yes
   tags:
   - koji_builder
@@ -375,25 +375,25 @@
   - koji_builder/rngd
   when: ansible_architecture == 'x86_64'
 
-- name: disable systemd-oomd we do not need or want it
+- name: Disable systemd-oomd we do not need or want it
   systemd: name=systemd-oomd state=stopped enabled=no masked=true
   tags:
   - koji_builder
   - koji_builder/oomd
 
-- name: install script to update osbuild api ip in the firewall
+- name: Install script to update osbuild api ip in the firewall
   template: src=osbuildapi-update.sh dest=/usr/local/bin/osbuildapi-update.sh mode=755
   tags:
   - koji_builder
   - koji_builder/osbuildapi
 
-- name: install cron job to run osbuild api ip update script every minute.
+- name: Install cron job to run osbuild api ip update script every minute.
   template: src=osbuildapi-update.cron dest=/etc/cron.d/osbuildapi-update.cron mode=644
   tags:
   - koji_builder
   - koji_builder/osbuildapi
 
-- name: create override dir for systemd-nspawn containers config
+- name: Create override dir for systemd-nspawn containers config
   file:
     state: directory
     owner: root
@@ -405,7 +405,7 @@
   - koji_builder
   - koji_builder/nspawn
 
-- name: create override config for systemd-nspawn containers to allow coredumps
+- name: Create override config for systemd-nspawn containers to allow coredumps
   template: src=nspawn-override.conf dest=/etc/systemd/system/machine-.scope.d/80-infra.conf mode=0644
   when: inventory_hostname.startswith(('buildhw-a64'))
   tags:

@@ -1,7 +1,7 @@
 ---
 # tasklist for setting up git mail hooks
 
-- name: install needed packages
+- name: Install needed packages
   package:
     state: present
     name:
@@ -17,7 +17,7 @@
   - packages
 
 
-- name: install the git hooks
+- name: Install the git hooks
   copy: src={{item}} dest=/usr/share/git-core/ mode=0755
   with_items:
   - post-receive-chained
@@ -28,7 +28,7 @@
   - git
   - git/hooks
 
-- name: install the git mail hooks
+- name: Install the git mail hooks
   copy: src={{item}} dest=/usr/share/git-core/mail-hooks/ mode=0755
   with_items:
   - util.py

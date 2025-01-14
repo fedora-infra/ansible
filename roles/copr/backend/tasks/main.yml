@@ -1,24 +1,24 @@
 ---
-- name: mount fs
+- name: Mount fs
   import_tasks: "mount_fs.yml"
 
-- name: setup networking
+- name: Setup networking
   import_tasks: "network.yml"
   when: datacenter != 'aws'
 
-- name: create obsrun group for `sign' command
+- name: Create obsrun group for `sign' command
   group: name=obsrun
 
 # pre-create copr user and group with predefined uid and gid
 - group: name=copr gid=986
 - user: name=copr group=copr uid=989 groups=obsrun
 
-- name: install copr-backend and copr-selinux
+- name: Install copr-backend and copr-selinux
   dnf:
     state: present
     name: copr-backend
 
-- name: add additional packages for copr-backend
+- name: Add additional packages for copr-backend
   dnf:
     state: present
     name:
@@ -34,31 +34,31 @@
   tags:
     - packages
 
-# - name: patch for prunerepo, issue 1090
+# - name: Patch for prunerepo, issue 1090
 #  patch: src=patches/prunerepo-dataloss.patch
 #         dest=/usr/bin/prunerepo
 #  tags: patches
 
-- name: install openstackclient for image preparation
+- name: Install openstackclient for image preparation
   dnf: state=present name=python3-openstackclient
   when: devel|bool
 
-- name: make copr dirs
+- name: Make copr dirs
   file: state=directory path={{ item }}
   with_items:
   - /var/lib/copr/jobs
   - /var/lib/copr/public_html/results
 
-- name: setup dirs there
+- name: Setup dirs there
   file: state=directory path="/home/copr/{{ item }}" owner=copr group=copr mode=0700
   with_items:
   - cloud
   - .ssh
 
-- name: setup privkey for copr user
+- name: Setup privkey for copr user
   copy: src="{{ private }}/files/copr/buildsys.priv" dest=/home/copr/.ssh/id_rsa owner=copr group=copr mode=600
 
-- name: setup copr user ssh config file
+- name: Setup copr user ssh config file
   template:
     src: "ssh_config.j2"
     dest: /home/copr/.ssh/config
@@ -69,31 +69,31 @@
     - backend_to_hv_ssh_config
     - provision_config
 
-- name: check known_hosts file
+- name: Check known_hosts file
   command: stat /home/copr/.ssh/known_hosts
   register: hostsstat
   check_mode: no
   changed_when: "1 != 1"
   ignore_errors: yes
 
-- name: create empty known_hosts
+- name: Create empty known_hosts
   file: state=touch dest=/home/copr/.ssh/known_hosts owner=copr group=copr mode=600
   when: hostsstat.rc == 1
 
-- name: replace bashrc for copr user
+- name: Replace bashrc for copr user
   copy: src="copr_bashrc" dest=/home/copr/.bashrc owner=copr group=copr mode=600
 
-- name: auth_key so we can login to localhost as the copr user from the copr user
+- name: Auth_key so we can login to localhost as the copr user from the copr user
   authorized_key: user=copr key="{{ item }}"
   no_log: true
   with_file:
   - "provision/files/buildsys.pub"
 
-- name: copy .boto file
+- name: Copy .boto file
   copy: src="boto" dest=/home/copr/.boto owner=copr group=copr
 
 # setup webserver
-- name: install lighttpd.conf
+- name: Install lighttpd.conf
   template: src="lighttpd/lighttpd.conf" dest=/etc/lighttpd/lighttpd.conf owner=root group=root mode=0644
   notify:
   - restart lighttpd
@@ -101,27 +101,27 @@
   - config
   - lighttpd_config
 
-- name: add gzip content-encoding header by lua script
+- name: Add gzip content-encoding header by lua script
   template: src="lighttpd/content-encoding-gzip-if-exists.lua" dest=/etc/lighttpd/content-encoding-gzip-if-exists.lua owner=root group=root mode=0644
   notify:
   - restart lighttpd
   tags:
   - config
 
-- name: letsencrypt cert
+- name: Letsencrypt cert
   include_role: name=copr/certbot
   tags:
   - config
   - certbot
 
-- name: allow lighttpd set fds limit
+- name: Allow lighttpd set fds limit
   seboolean: name=httpd_setrlimit state=yes persistent=yes
 
-- name: create directory for compress module of lighttpd
+- name: Create directory for compress module of lighttpd
   file: path=/var/cache/lighttpd/compress owner=lighttpd group=lighttpd mode=0644 state=directory
 
 # mime default to text/plain and enable dirlisting for indexes
-- name: update lighttpd configs
+- name: Update lighttpd configs
   copy: src="lighttpd/{{ item }}" dest="/etc/lighttpd/conf.d/{{ item }}" owner=root group=root mode=0644
   with_items:
   - dirlisting.conf
@@ -131,17 +131,17 @@
   tags:
   - config
 
-- name: install custom lighttpd template for directory listings
+- name: Install custom lighttpd template for directory listings
   template: src="lighttpd/dir-generator.php.j2" dest="/var/lib/copr/public_html/dir-generator.php" owner=copr group=copr mode=0755
 
-- name: install resalloc CGI script
+- name: Install resalloc CGI script
   copy:
     src: cgi-resalloc
     dest: /var/www/
     setype: httpd_sys_script_exec_t
     mode: "0755"
 
-- name: install the helper scripts for lighttpd log rotation
+- name: Install the helper scripts for lighttpd log rotation
   copy:
     src: "{{ item }}"
     dest: /usr/local/bin/{{ item }}
@@ -154,20 +154,20 @@
   register: logrotate_scripts
   tags: logrotate
 
-- name: fix selinux context on helper scripts
+- name: Fix selinux context on helper scripts
   command: restorecon -irv /usr/local/bin/copr-lighty*
   when: logrotate_scripts.changed
   tags: logrotate
 
-- name: install custom logrotate config for lighttpd
+- name: Install custom logrotate config for lighttpd
   template: src="logrotate/lighttpd.j2" dest=/etc/logrotate.d/lighttpd owner=root group=root mode=644
   tags: logrotate
 
-- name: start webserver
+- name: Start webserver
   service: state=started enabled=yes name=lighttpd
 
 # setup dirs for the ansible execution off of provisioning
-# - name: dirs from provision
+# - name: Dirs from provision
 #  file: state=directory path="/home/copr/provision/{{ item }}" owner=copr group=copr
 #  with_items:
 #  - action_plugins
@@ -175,7 +175,7 @@
 #  tags:
 #  - provision_config
 #
-- name: calculate the maximum resalloc workers per architecture
+- name: Calculate the maximum resalloc workers per architecture
   set_fact: "max_{{ item }}_workers={{ builders | community.general.json_query('*.'+item+'[0]') | sum() }}"
   with_items:
     - aarch64
@@ -185,12 +185,12 @@
   tags:
   - provision_config
 
-- name: calculate max number of workers
+- name: Calculate max number of workers
   set_fact: "max_workers={{ max_x86_64_workers|int + max_aarch64_workers|int + max_ppc64le_workers|int + max_s390x_workers|int }}"
   tags:
   - provision_config
 
-- name: print max arch workers
+- name: Print max arch workers
   debug: "var=max_{{ item }}_workers"
   with_items:
     - x86_64
@@ -200,23 +200,23 @@
   tags:
   - provision_config
 
-- name: resalloc
+- name: Resalloc
   import_tasks: resalloc.yml
   tags:
   - resalloc
 
-- name: put ansible.cfg for all this into /etc/ansible/ on the system
+- name: Put ansible.cfg for all this into /etc/ansible/ on the system
   copy: src="provision/ansible.cfg" dest=/etc/ansible/ansible.cfg
   tags:
   - provision_config
 
-- name: install .ansible.cfg for copr user
+- name: Install .ansible.cfg for copr user
   copy: src=ansible.cfg dest=/home/copr/.ansible.cfg
         owner=copr group=copr mode=600
   tags:
   - provision_config
 
-- name: setup provision directory
+- name: Setup provision directory
   include_tasks: setup_provisioning_environment.yml
   vars:
     cloud_vars: true
@@ -225,7 +225,7 @@
   tags:
   - always
 
-- name: copy image preparation scripts
+- name: Copy image preparation scripts
   copy: src="{{ item }}" dest=/usr/local/bin/
         owner=root mode=755
   with_fileglob:
@@ -234,11 +234,11 @@
   tags:
   - provision_config
 
-- name: testing fixture
+- name: Testing fixture
   copy: dest="/home/copr/cloud/ec2rc.variable" content=""
   when: devel|bool
 
-- name: copy copr-be.conf
+- name: Copy copr-be.conf
   template: src="copr-be.conf.j2" dest=/etc/copr/copr-be.conf  owner=root group=copr mode=640
   notify:
   - restart copr-backend
@@ -247,13 +247,13 @@
   - copr_infrastructure_password
   - provision_config
 
-- name: create messaging config directory
+- name: Create messaging config directory
   file: dest=/etc/copr/msgbuses state=directory owner=copr group=copr mode=0700
   when: copr_messaging
   tags:
   - config
 
-- name: install messaging config
+- name: Install messaging config
   template: src="fedora-messaging.conf.j2"
             dest=/etc/copr/msgbuses/fedora-messaging.conf
             owner=copr group=copr mode=0600
@@ -263,17 +263,17 @@
   tags:
   - config
 
-- name: copy sign.conf
+- name: Copy sign.conf
   template: src=sign.conf dest=/etc/sign.conf  owner=root group=copr mode=640
   tags:
   - config
 
-- name: get owner for results dir
+- name: Get owner for results dir
   stat: path=/var/lib/copr/public_html
   check_mode: no
   register: copr_results_dir_st
 
-- name: change owner for results dir if it isn't copr
+- name: Change owner for results dir if it isn't copr
   shell: "chown -R copr:copr /var/lib/copr/public_html"
   when: '"copr" not in copr_results_dir_st.stat.pw_name'
 
@@ -282,27 +282,27 @@
   check_mode: no
   changed_when: false
 
-- name: update selinux context for results if root folder does not have proper type
+- name: Update selinux context for results if root folder does not have proper type
   command: "restorecon -vvRF /var/lib/copr/public_html/"
   when: "public_html_ls is defined and 'copr_data_t' not in  public_html_ls.stdout"
 
-# - name: install cert to access fed-cloud09
+# - name: Install cert to access fed-cloud09
 #   # TODO: remove this when fed-cloud09 receives external cert
 #   import_tasks: install_cloud_cert.yml
 
-- name: enable and run copr-backend services
+- name: Enable and run copr-backend services
   service: name="{{ item }}" enabled=yes state=started
   when: not services_disabled|bool
   with_items:
   - redis       # TODO: .service in copr-backend should depend on redis
   - "{{ copr_backend_target }}"
 
-- name: access.redhat.com offline token file
+- name: Access.redhat.com offline token file
   set_fact: "rhn_offline_token_file=/var/lib/resallocserver/.access.redhat.com-copr-team"
   tags:
     - clean_rh_subscriptions
 
-- name: install offline token for copr-team in RHSM
+- name: Install offline token for copr-team in RHSM
   copy:
     content: "{{ copr_red_hat_subscription_offline_token }}"
     dest: "{{ rhn_offline_token_file }}"
@@ -312,7 +312,7 @@
   tags:
     - clean_rh_subscriptions
 
-- name: install cleanup-unused-vms script
+- name: Install cleanup-unused-vms script
   template:
     src: "{{ item }}"
     dest: /usr/local/bin/{{ item }}
@@ -323,28 +323,28 @@
   tags:
     - clean_rh_subscriptions
 
-- name: setup crontab for VMs
+- name: Setup crontab for VMs
   cron: name="cleanup nova VMs periodically"
         job="/usr/bin/cleanup_vm_nova.py"
         minute="*/20"
         user=copr
         state=absent
 
-- name: setup crontab for cleaning up redis
+- name: Setup crontab for cleaning up redis
   cron: name="prune redis VM db periodically"
         job="/usr/local/bin/cleanup-unused-vms-from-redis &>> /var/log/copr-backend/cleanup-redis-vms.log"
         minute="50"
         user=copr
         state=absent
 
-- name: crontab for cleaning resalloc VMs
+- name: Crontab for cleaning resalloc VMs
   cron: name="cleanup nova VMs periodically"
         job="true /usr/local/bin/cleanup-vms-aws-resalloc &>> /var/log/resallocserver/cron-cleanup-vms-aws.log"
         minute="*/10"
         user=resalloc
         state=absent
 
-- name: crontab for cleaning-up unused subscriptions
+- name: Crontab for cleaning-up unused subscriptions
   cron: name="cleanup unused Red Hat subscribed systems"
         job="/usr/local/bin/cleanup-unused-redhat-subscriptions &>> /var/log/resallocserver/cron-cleanup-rh-subscriptions.log"
         minute="*/30"
@@ -352,49 +352,49 @@
   tags:
     - clean_rh_subscriptions
 
-- name: setup monitoring
+- name: Setup monitoring
   import_tasks: "monitoring.yml"
 
 # Three tasks for handling our custom selinux module
-- name: ensure a directory exists for our custom selinux module
+- name: Ensure a directory exists for our custom selinux module
   file: dest=/usr/local/share/copr state=directory
 
-- name: copy over our custom selinux module
+- name: Copy over our custom selinux module
   copy: src=selinux/copr_rules.pp dest=/usr/local/share/copr/copr_rules.pp
   register: selinux_module
 
-- name: install our custom selinux module
+- name: Install our custom selinux module
   command: semodule -i /usr/local/share/copr/copr_rules.pp
   when: selinux_module is changed
 
-- name: setup AWS access
+- name: Setup AWS access
   import_tasks: "aws.yml"
   tags:
   - config
   - aws_config
 
-- name: setup Pulp
+- name: Setup Pulp
   import_tasks: "pulp.yml"
   tags:
   - config
   - pulp
 
-- name: copr-ping-account
+- name: Copr-ping-account
   import_tasks: copr-ping.yml
   tags: copr_ping
 
-- name: add lighttpd user to the resalloc group
+- name: Add lighttpd user to the resalloc group
   user:
     name: lighttpd
     groups: resalloc
     append: yes
 
-- name: install daily custom copr-backend crontab
+- name: Install daily custom copr-backend crontab
   copy: src=cron.daily/copr-backend dest=/etc/cron.daily/
         mode=0755
   tags: [cron_tasks]
 
-- name: configure options in node exporter
+- name: Configure options in node exporter
   lineinfile:
     path: /etc/default/prometheus-node-exporter
     regexp: '^ARGS='

@@ -1,5 +1,5 @@
 ---
-- name: push packages out
+- name: Push packages out
   hosts: value:value_stg
   user: root
   vars_files:
@@ -12,17 +12,17 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   tasks:
-  - name: clean all metadata {%if testing%}(with infrastructure-testing on){%endif%}
+  - name: Clean all metadata {%if testing%}(with infrastructure-testing on){%endif%}
     command: yum clean all {%if testing%} --enablerepo=infrastructure-tags-stg {%endif%}
     check_mode: no
-  - name: update mote packages from main repo
+  - name: Update mote packages from main repo
     package: name="mote" state=latest
     when: not testing
-  - name: update mote packages from testing repo
+  - name: Update mote packages from testing repo
     yum: name="mote" state=latest enablerepo=infrastructure-tags-stg
     when: testing
 
-- name: verify the config and restart it
+- name: Verify the config and restart it
   hosts: value:value_stg
   user: root
   vars_files:
@@ -33,7 +33,7 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   pre_tasks:
-  - name: tell nagios to shush
+  - name: Tell nagios to shush
     nagios: action=downtime minutes=60 service=host host={{ inventory_hostname_short }}{{ env_suffix }}
     delegate_to: noc01.iad2.fedoraproject.org
     ignore_errors: true
@@ -44,7 +44,7 @@
   post_tasks:
   - service: name="httpd" state=restarted
   - service: name="mote-updater" state=restarted
-  - name: tell nagios to unshush
+  - name: Tell nagios to unshush
     nagios: action=unsilence service=host host={{ inventory_hostname_short }}{{ env_suffix }}
     delegate_to: noc01.iad2.fedoraproject.org
     ignore_errors: true

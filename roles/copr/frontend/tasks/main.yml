@@ -1,31 +1,31 @@
 ---
 - import_tasks: "mount_fs.yml"
 
-- name: register security context for pgsql directory
+- name: Register security context for pgsql directory
   command: "ls -dZ /var/lib/pgsql"
   register: pgsql_ls
   changed_when: false  # `ls' command is not changing anything
 
-- name: update selinux context for postgress db dir if it's wrong
+- name: Update selinux context for postgress db dir if it's wrong
   command: "restorecon -vvRF /var/lib/pgsql"
   when: pgsql_ls.stdout is defined and 'postgresql_db_t' not in  pgsql_ls.stdout
 
-- name: install weekly custom copr-frontend-crontab
+- name: Install weekly custom copr-frontend-crontab
   copy: src=cron.weekly/copr-frontend-optional dest=/etc/cron.weekly/
         mode=0755
   tags: [cron_tasks]
 
-- name: install daily custom copr-frontend-crontab
+- name: Install daily custom copr-frontend-crontab
   copy: src=cron.daily/copr-frontend-optional dest=/etc/cron.daily/
         mode=0755
   tags: [cron_tasks]
 
-- name: install hourly custom copr-frontend-crontab
+- name: Install hourly custom copr-frontend-crontab
   copy: src=cron.hourly/copr-frontend-optional dest=/etc/cron.hourly/
         mode=0755
   tags: [cron_tasks]
 
-- name: install copr-frontend and copr-selinux
+- name: Install copr-frontend and copr-selinux
   dnf:
     state: present
     name:
@@ -54,7 +54,7 @@
   - cron_tasks
 
   # we install python-alembic because https://bugzilla.redhat.com/show_bug.cgi?id=1536058
-- name: install additional pkgs for copr-frontend
+- name: Install additional pkgs for copr-frontend
   dnf:
     state: present
     pkg:
@@ -70,20 +70,20 @@
   tags:
   - packages
 
-# - name: patch for issue XXX
+# - name: Patch for issue XXX
 #  patch: src=patches/xxx.patch
 #         dest=/the/patched/file.py
 #  tags: patches
 
-- name: directory for postgresql dumps
+- name: Directory for postgresql dumps
   file: state=directory path=/var/www/html/db_dumps/
         owner=copr-fe mode=755
 
-- name: directory for usage graphs
+- name: Directory for usage graphs
   file: state=directory path=/var/www/html/usage/
         owner=copr-fe mode=755
 
-- name: install copr configs
+- name: Install copr configs
   template: src="copr.conf" dest=/etc/copr/copr.conf mode=600
   notify:
   - reload httpd
@@ -92,7 +92,7 @@
   - config
   - copr_infrastructure_password
 
-- name: install config for 'copr-frontend chroots-template'
+- name: Install config for 'copr-frontend chroots-template'
   copy: src="chroots.conf" dest=/etc/copr/chroots.conf mode=600
         owner=copr-fe group=copr-fe
   register: chroots_conf_installed
@@ -102,7 +102,7 @@
 
 - import_tasks: "psql_setup.yml"
 
-- name: upgrade db to head
+- name: Upgrade db to head
   command: alembic-3 upgrade head
   become: yes
   become_user: copr-fe
@@ -111,7 +111,7 @@
   register: alembic_result
   changed_when: alembic_result.stdout is search("Running upgrade")
 
-- name: apply the config comments
+- name: Apply the config comments
   command: copr-frontend chroots-template
   become: yes
   become_user: copr-fe
@@ -122,7 +122,7 @@
   - config
   - chroots_config
 
-- name: enable and start redis  # TODO: .service in copr-backend should depend on redis
+- name: Enable and start redis  # TODO: .service in copr-backend should depend on redis
   service: name=redis enabled=yes state=started
   when: not services_disabled|bool
 
@@ -135,7 +135,7 @@
     state: no
     persistent: yes
 
-- name: install letsencrypt ssl certificates for dev
+- name: Install letsencrypt ssl certificates for dev
   include_role: name=copr/certbot
   tags:
   - config
@@ -143,23 +143,23 @@
 
 - import_tasks: "httpd.yml"
 
-- name: enable services
+- name: Enable services
   service: state=started enabled=yes name={{ item }}
   with_items:
   - httpd
   - crond
   when: not services_disabled|bool
 
-- name: set dev banner for dev instance
+- name: Set dev banner for dev instance
   when: devel|bool
   copy: src=banner-include.html dest=/var/lib/copr/
 
-- name: disallow robots on dev instance
+- name: Disallow robots on dev instance
   when: devel|bool
   copy: src=robots.txt dest=/var/www/html/
 
 
-- name: register whether indexes rebuild is required
+- name: Register whether indexes rebuild is required
   command: copr-frontend update_indexes_required
   become: yes
   become_user: copr-fe
@@ -167,7 +167,7 @@
   changed_when: false
   failed_when: false
 
-- name: rebuild indexes
+- name: Rebuild indexes
   command: ./manage.py update_indexes
   become: yes
   become_user: copr-fe
@@ -175,45 +175,45 @@
     chdir: /usr/share/copr/coprs_frontend/
   when: update_indexes_required_result.rc != 0
 
-- name: make sure /etc/fedora-messaging directory exists
+- name: Make sure /etc/fedora-messaging directory exists
   file: path=/etc/fedora-messaging state=directory
 
-- name: install fedora messaging config for Copr
+- name: Install fedora messaging config for Copr
   template: src="fedora-messaging/copr_messaging.toml" dest="/etc/fedora-messaging/copr_messaging.toml"
   notify:
   - restart copr-fe-fedora-messaging-reader
   tags:
   - config
 
-- name: detect copr-frontend version
+- name: Detect copr-frontend version
   package_facts: manager=auto
 
-- name: install custom systemd service files
+- name: Install custom systemd service files
   copy: src=systemd dest=/etc
   notify:
   - reload httpd
 
-- name: compress rotated httpd logs
+- name: Compress rotated httpd logs
   copy: src="httpd.logrotate" dest="/etc/logrotate.d/httpd"
   tags: [logrotate_tasks]
 
-- name: start logrotate service
+- name: Start logrotate service
   service: name=logrotate.timer state=started enabled=yes
   when: not services_disabled|bool
 
-- name: start fm-consumer service
+- name: Start fm-consumer service
   service: state=started enabled=yes name="fm-consumer@copr_messaging"
   when:
   - not services_disabled|bool
 
-- name: install bash_profile file to ease some admin tasks
+- name: Install bash_profile file to ease some admin tasks
   copy:
     content: |
       export PGUSER=copr-fe
       export PGDATABASE=coprdb
     dest: "{{ copr_fe_homedir }}/.bash_profile"
 
-- name: configure options in node exporter
+- name: Configure options in node exporter
   lineinfile:
     path: /etc/default/prometheus-node-exporter
     regexp: '^ARGS='
@@ -221,10 +221,10 @@
     backrefs: yes
   notify: restart node_exporter
 
-- name: install nrpe
+- name: Install nrpe
   dnf: name=nrpe state=present
 
-- name: install the check script
+- name: Install the check script
   template:
     dest: "/usr/bin/copr-cdn-check.py"
     src: "copr-cdn-check.py.j2"
@@ -234,7 +234,7 @@
     api_key: "{{ copr_uptimerobot_api_key_ro | default('not-configured') }}"
   tags: copr_cdn
 
-- name: install gai.conf
+- name: Install gai.conf
   copy: src=gai.conf dest=/etc
   notify:
   - reload httpd

@@ -19,7 +19,7 @@
     - httpd
     - httpd/website
 
-  - name: check the selinux context of webdir
+  - name: Check the selinux context of webdir
     command: matchpathcon /srv/web
     register: webdir
     check_mode: no

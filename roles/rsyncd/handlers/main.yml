@@ -1,6 +1,6 @@
 ---
-- name: restart xinetd
+- name: Restart xinetd
   service: name=xinetd state=restarted
 
-- name: restart daemon
+- name: Restart daemon
   service: name=rsyncd daemon_reload=yes state=restarted

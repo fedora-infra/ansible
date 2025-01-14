@@ -22,7 +22,7 @@
   shell: oc apply --validate=strict -f /etc/openshift_apps/{{project_app}}/project.yml
   when: "'not found' in project_exists.stderr"
 
-- name: deployer.yml
+- name: Deployer.yml
   include_role:
     name: openshift/object
   vars:
@@ -30,7 +30,7 @@
     object_objectname: deployer.yml
     object_template_fullpath: "{{roles_path}}/openshift/project/templates/deployer.yml.j2"
 
-- name: imagebuilder.yml
+- name: Imagebuilder.yml
   include_role:
     name: openshift/object
   vars:
@@ -38,7 +38,7 @@
     object_objectname: imagebuilder.yml
     object_template_fullpath: "{{roles_path}}/openshift/project/templates/imagebuilder.yml.j2"
 
-- name: imagepuller.yml
+- name: Imagepuller.yml
   include_role:
     name: openshift/object
   vars:
@@ -46,7 +46,7 @@
     object_objectname: imagepuller.yml
     object_template_fullpath: "{{roles_path}}/openshift/project/templates/imagepuller.yml.j2"
 
-- name: role-appowners.yml
+- name: Role-appowners.yml
   include_role:
     name: openshift/object
   vars:
@@ -54,7 +54,7 @@
     object_objectname: role-appowners.yml
     object_template_fullpath: "{{roles_path}}/openshift/project/templates/role-appowners.yml.j2"
 
-- name: appowners.yml
+- name: Appowners.yml
   include_role:
     name: openshift/object
   vars:
@@ -62,7 +62,7 @@
     object_objectname: appowners.yml
     object_template_fullpath: "{{roles_path}}/openshift/project/templates/appowners.yml.j2"
 
-- name: alertmanager.yml
+- name: Alertmanager.yml
   include_role:
     name: openshift/object
   vars:
@@ -70,7 +70,7 @@
     object_objectname: alertmanager.yml
     object_template_fullpath: "{{roles_path}}/openshift/project/templates/alertmanager.yml.j2"
 
-- name: prometheusRules.yml
+- name: PrometheusRules.yml
   include_role:
     name: openshift/object
   vars:

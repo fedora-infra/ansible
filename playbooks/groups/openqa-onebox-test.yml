@@ -1,5 +1,5 @@
 ---
-- name: setup base openQA host
+- name: Setup base openQA host
   hosts: openqa_onebox_test
   user: root
   gather_facts: true
@@ -29,7 +29,7 @@
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
-- name: configure openQA
+- name: Configure openQA
   hosts: openqa_onebox_test
   user: root
   gather_facts: true

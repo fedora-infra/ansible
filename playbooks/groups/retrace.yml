@@ -15,7 +15,7 @@
 
 
 # fedora-messaging setup
-- name: setup RabbitMQ
+- name: Setup RabbitMQ
   hosts: rabbitmq[0]:rabbitmq_stg[0]
   user: root
   gather_facts: false
@@ -78,7 +78,7 @@
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
-- name: setup FAF server
+- name: Setup FAF server
   hosts: retrace,retrace_stg
   gather_facts: true
 
@@ -98,7 +98,7 @@
         faf_spool_dir: /srv/faf/
     - import_role: name=abrt/faf-post
 
-- name: setup retrace server
+- name: Setup retrace server
   hosts: retrace,retrace_stg
   gather_facts: true
 

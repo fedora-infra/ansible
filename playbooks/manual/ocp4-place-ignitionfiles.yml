@@ -93,7 +93,7 @@
         - kvm_deploy
       when: inventory_hostname in groups['ocp_vms_stg'] or inventory_hostname in groups['ocp_vms']
     - block:
-      - name: ensure the lv for the guest is made
+      - name: Ensure the lv for the guest is made
         lvol: lv={{ inventory_hostname }} vg={{ volgroup }} size={{ lvm_size }} state=present
         delegate_to: "{{ vmhost }}"
         tags:

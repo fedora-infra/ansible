@@ -10,7 +10,7 @@
 
 
 ---
-- name: bring staging services down
+- name: Bring staging services down
   hosts: koji_stg
   user: root
   vars_files:
@@ -25,7 +25,7 @@
   - service: name=kojira state=stopped
 
 
-- name: drop and re-create the staging db entirely
+- name: Drop and re-create the staging db entirely
   hosts: db-koji01.stg.iad2.fedoraproject.org
   user: root
   become: yes
@@ -35,17 +35,17 @@
   - db-sync
   vars:
   - builder_groups:
-    - name: buildvm_stg
+    - name: Buildvm_stg
       arches: i386 x86_64
       extra_channels:
       - container
       - createrepo
       - livemedia
-    - name: buildvm_aarch64_stg
+    - name: Buildvm_aarch64_stg
       arches: aarch64
-    - name: buildvm_ppc64le_stg
+    - name: Buildvm_ppc64le_stg
       arches: ppc64le
-    - name: buildvm_s390x_stg
+    - name: Buildvm_s390x_stg
       arches: s390x
   # Users allowed to use content generators, only in staging
   - cg_users:
@@ -81,12 +81,12 @@
       sed '/COPY buildroot_listing /,/\./d' |
       mbuffer -q -s 16M -m 512M -l /tmp/mbuffer-sed-to-psql.log |
       psql -v ON_ERROR_STOP=1
-  - name: repoint all the prod rpm entries at the secondary volume (and other stuff)
+  - name: Repoint all the prod rpm entries at the secondary volume (and other stuff)
     shell: psql -1 -v ON_ERROR_STOP=1 koji </var/lib/pgsql/koji-reset-staging.sql
-  - name: vacuum database
+  - name: Vacuum database
     shell: psql -v ON_ERROR_STOP=1 koji <<<"VACUUM ANALYZE"
 
-- name: bring staging services up
+- name: Bring staging services up
   hosts: koji_stg
   user: root
   vars_files:
@@ -99,19 +99,19 @@
   - wipe-fs
 
   tasks:
-  - name: stop nfs-server
+  - name: Stop nfs-server
     service: name=nfs-server state=stopped
-  - name: unmount /mnt/fedora_koji/koji/ostree
+  - name: Unmount /mnt/fedora_koji/koji/ostree
     mount: name=/mnt/fedora_koji/koji/ostree state=unmounted
-  - name: unmount /mnt/fedora_koji/koji/compose/ostree
+  - name: Unmount /mnt/fedora_koji/koji/compose/ostree
     mount: name=/mnt/fedora_koji/koji/compose/ostree state=unmounted
-  - name: unmount /mnt/fedora_koji
+  - name: Unmount /mnt/fedora_koji
     mount: name=/mnt/fedora_koji state=unmounted
-  - name: wipe fedora_koji volume
+  - name: Wipe fedora_koji volume
     filesystem: dev=/dev/GuestVolGroup00/fedora_koji fstype=xfs force=yes
-  - name: mount newly-created empty koji filesystem
+  - name: Mount newly-created empty koji filesystem
     mount: name=/mnt/fedora_koji src=/dev/GuestVolGroup00/fedora_koji fstype=xfs state=mounted
-  - name: recreate koji directory structure
+  - name: Recreate koji directory structure
     file: name={{item}} state=directory owner=apache group=apache setype=httpd_sys_rw_content_t
     with_items:
     - /mnt/fedora_koji/koji
@@ -124,16 +124,16 @@
     - /mnt/koji/vol
     - /mnt/koji/work
 # TODO recreate directories under /mnt/koji/compose (which ones?) that composer expects to exist
-  - name: symlink production volume
+  - name: Symlink production volume
     file: src=/mnt/fedora_koji_prod/koji dest=/mnt/koji/vol/prod state=link
-  - name: restart nfs-server
+  - name: Restart nfs-server
     service: name=nfs-server state=started
-  - name: restart httpd
+  - name: Restart httpd
     service: name=httpd state=started
-  - name: restart kojira
+  - name: Restart kojira
     service: name=kojira state=started
 
-- name: remount NFS on builders, composers, bodhi
+- name: Remount NFS on builders, composers, bodhi
   hosts: builders_stg:releng_compose_stg:bodhi_backend_stg
   user: root
   vars_files:
@@ -146,13 +146,13 @@
   - remount-nfs
 
   tasks:
-  - name: remount koji nfs
+  - name: Remount koji nfs
     shell: umount /mnt/fedora_koji && mount /mnt/fedora_koji
     args:
       warn: false
     when: "'.s390.' not in inventory_hostname"
 
-- name: restart kojid on staging builders
+- name: Restart kojid on staging builders
   hosts: builders_stg
   user: root
   vars_files:
@@ -165,7 +165,7 @@
   - restart-kojid
 
   tasks:
-  - name: restart kojid
+  - name: Restart kojid
     service: name=kojid state=restarted
 
 # TODO run createrepo for selected tags

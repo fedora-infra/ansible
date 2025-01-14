@@ -24,7 +24,7 @@
 # - nagios outage stuff didn't seem to work as well as we would want last time.
 
 ---
-- name: preliminary tasks
+- name: Preliminary tasks
   hosts: koji:koji_stg
   user: root
   vars_files:
@@ -33,26 +33,26 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
-  - name: ask admin if an outage ticket was created.
+  - name: Ask admin if an outage ticket was created.
     pause: seconds=30 prompt="Did you file an outage ticket before running this?"
-  - name: ask admin if an outage ticket was reviewed.
+  - name: Ask admin if an outage ticket was reviewed.
     pause: seconds=30 prompt="Did you have someone review that outage ticket?  This is koji we're talking about here..."
-  - name: ask admin if an outage ticket was announced.
+  - name: Ask admin if an outage ticket was announced.
     pause: seconds=30 prompt="Did you send the outage announcement to devel-announce?  People need to know."
 
-  - name: ask admin if no db upgrade script is ok.
+  - name: Ask admin if no db upgrade script is ok.
     pause: seconds=30 prompt="You didn't specify a db_upgrade_file extra-var.  Are you sure there is no db upgrade required?"
     when: db_upgrade_file is undefined
 
-  - name: tell nagios that everything is fine
+  - name: Tell nagios that everything is fine
     nagios: action=downtime minutes=30 service=host host={{ inventory_hostname_short }}{{ env_suffix }}
     delegate_to: noc01.iad2.fedoraproject.org
     ignore_errors: true
 
-  - name: stop httpd on the koji-hubs.
+  - name: Stop httpd on the koji-hubs.
     service: name="httpd" state=stopped
 
-- name: run commands on the database host.
+- name: Run commands on the database host.
   # Note that the hosts are used explicitly here to choose only the "primary".
   # We don't want to run upgrades on both pgbdr nodes at the same time.
   # ... is anything special needed to upgrade pgbdr nodes?
@@ -79,7 +79,7 @@
     package: name=koji state=absent
     when: db_upgrade_file is defined
 
-- name: update and restart the koji hubs before we touch the builders
+- name: Update and restart the koji hubs before we touch the builders
   hosts: koji:koji_stg
   user: root
   vars_files:
@@ -88,14 +88,14 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   tasks:
   - package: name=koji-hub state=latest update_cache=yes
-  - name: restart httpd on the koji-hubs.
+  - name: Restart httpd on the koji-hubs.
     service: name="httpd" state=started
-  - name: unsilence nagios
+  - name: Unsilence nagios
     nagios: action=unsilence service=host host={{ inventory_hostname_short }}{{ env_suffix }}
     delegate_to: noc01.iad2.fedoraproject.org
     ignore_errors: true
 
-- name: update and restart the koji builders, now that we're done with the hubs
+- name: Update and restart the koji builders, now that we're done with the hubs
   hosts: builders:builders_stg
   user: root
   vars_files:
@@ -104,5 +104,5 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
   tasks:
   - package: name=koji-builder state=latest update_cache=yes
-  - name: restart all the builders.  so many.
+  - name: Restart all the builders.  so many.
     service: name="kojid" state=restarted

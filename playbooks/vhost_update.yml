@@ -5,9 +5,9 @@
 #
 
 ---
-- name: find instances
+- name: Find instances
   vars_prompt:
-  - name: target
+  - name: Target
     prompt: What is the target vhost
     private: false
   hosts: "{{ target }}"
@@ -15,21 +15,21 @@
   user: root
 
   tasks:
-  - name: get list of guests
+  - name: Get list of guests
     virt: command=list_vms
     register: vmlist
 
-  - name: add them to myvms_new group
+  - name: Add them to myvms_new group
     local_action: add_host hostname={{ item }} groupname=myvms_new
     with_items: '{{vmlist.list_vms}}'
 
-  - name: add the vmhost to target group
+  - name: Add the vmhost to target group
     local_action: add_host hostname={{ target }} groupname=target
 
 # Call out to another playbook.  Disable any proxies that may live here
 # - include_playbook: update-proxy-dns.yml status=disable proxies=myvms_new:&proxies
 
-- name: set downtime
+- name: Set downtime
   hosts: "target:myvms_new"
   gather_facts: false
   user: root
@@ -37,14 +37,14 @@
 
   tasks:
 
-  - name: schedule regular host downtime
+  - name: Schedule regular host downtime
     nagios: action=downtime minutes=30 service=host host={{ inventory_hostname_short }}{{ env_suffix }}
     delegate_to: noc01.iad2.fedoraproject.org
     ignore_errors: true
     failed_when: no
     when: nonagios is not defined or not "true" in nonagios
 
-- name: update the system
+- name: Update the system
   hosts: "target:myvms_new"
   gather_facts: true
   user: root
@@ -77,16 +77,16 @@
     poll: 30
     when: package_excludes is defined
 
-- name: run rkhunter if installed
+- name: Run rkhunter if installed
   hosts: "target:myvms_new"
   user: root
 
   tasks:
-  - name: check for rkhunter
+  - name: Check for rkhunter
     command: /usr/bin/test -f /usr/bin/rkhunter
     register: rkhunter
     ignore_errors: true
 
-  - name: run rkhunter --propupd
+  - name: Run rkhunter --propupd
     command: /usr/bin/rkhunter --propupd
     when: rkhunter is success

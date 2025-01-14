@@ -1,5 +1,5 @@
 ---
-- name: install packages needed by resalloc server
+- name: Install packages needed by resalloc server
   dnf:
     state: present
     name:
@@ -17,7 +17,7 @@
     - virt-install
     - yq
 
-- name: install IP to YAML spawner script
+- name: Install IP to YAML spawner script
   copy:
     content: |
       #! /bin/sh -ex
@@ -29,7 +29,7 @@
     dest: /usr/local/bin/copr-resalloc-vm-ip-to-yaml
   tags: provision_config
 
-- name: install a copr specific IP checker
+- name: Install a copr specific IP checker
   copy:
     content: |
       #!/usr/bin/sh
@@ -55,14 +55,14 @@
   stat: path=/var/lib/pgsql/data/PG_VERSION
   register: postgres_initialized
 
-- name: init postgresql
+- name: Init postgresql
   shell: "postgresql-setup initdb"
   when: not postgres_initialized.stat.exists
 
-- name: enable PostgreSQL service
+- name: Enable PostgreSQL service
   service: state=started enabled=yes name=postgresql
 
-- name: allow system users to conenct into the database
+- name: Allow system users to conenct into the database
   lineinfile:
     path: /var/lib/pgsql/data/pg_ident.conf
     line: "{{ item }}"
@@ -74,7 +74,7 @@
     - "all resalloc resalloc"
     - "all lighttpd resalloc"
 
-- name: configure access to the resalloc database
+- name: Configure access to the resalloc database
   postgresql_pg_hba:
     dest: /var/lib/pgsql/data/pg_hba.conf
     contype: local
@@ -99,7 +99,7 @@
   tags:
   - always
 
-- name: setup provision directory
+- name: Setup provision directory
   include_tasks: setup_provisioning_environment.yml
   tags:
   - always
@@ -107,18 +107,18 @@
     cloud_vars: true
     provision_user: resalloc
 
-- name: install .ansible.cfg for {{ provision_user }} user
+- name: Install .ansible.cfg for {{ provision_user }} user
   copy: src=ansible.cfg dest=/var/lib/resallocserver/.ansible.cfg
         owner=resalloc group=resalloc mode=600
   tags:
   - provision_config
 
-- name: resalloc, sync resalloc provisioning files
+- name: Resalloc, sync resalloc provisioning files
   synchronize: src="resalloc_provision/" dest="/var/lib/resallocserver/resalloc_provision/"
   tags:
   - provision_config
 
-- name: resalloc, scripts
+- name: Resalloc, scripts
   template: src="resalloc/{{ item }}.j2" dest="/var/lib/resallocserver/resalloc_provision/{{ item }}"
             mode=755
   with_items:
@@ -130,7 +130,7 @@
   tags:
   - provision_config
 
-- name: resalloc, ssh directory
+- name: Resalloc, ssh directory
   file:
     path: /var/lib/resallocserver/.ssh
     state: directory
@@ -138,7 +138,7 @@
     owner: resalloc
     group: resalloc
 
-- name: resalloc, copy backend ssh identity
+- name: Resalloc, copy backend ssh identity
   copy:
     src: "{{ private }}/files/copr/buildsys.priv"
     dest: /var/lib/resallocserver/.ssh/id_rsa
@@ -146,7 +146,7 @@
     group: resalloc
     mode: "0600"
 
-- name: resalloc, ssh config file
+- name: Resalloc, ssh config file
   template:
     src: "ssh_config.j2"
     dest: /var/lib/resallocserver/.ssh/config
@@ -157,7 +157,7 @@
     - backend_to_hv_ssh_config
     - provision_config
 
-- name: resalloc, server config
+- name: Resalloc, server config
   template:
     src: "resalloc/{{ item }}"
     dest: "/etc/resallocserver/{{ item }}"
@@ -171,14 +171,14 @@
   - provision_config
   - resalloc_config
 
-- name: start/enable resalloc server
+- name: Start/enable resalloc server
   service:
     name: resalloc
     state: started
     enabled: yes
   when: not services_disabled|bool
 
-- name: shortcuts around resalloc-aws-start
+- name: Shortcuts around resalloc-aws-start
   template: src="{{ roles_path }}/copr/backend/templates/provision/copr-resalloc-aws-new.j2"
             dest="/usr/local/bin/copr-resalloc-aws-new-{{ item }}"
             mode=0755
@@ -189,7 +189,7 @@
   - provision_config
   - provision_config_resalloc_aws
 
-- name: shortcut for creating s390x images in cloud
+- name: Shortcut for creating s390x images in cloud
   copy:
     src: copr-prepare-s390x-image-builder
     dest: /usr/local/bin/copr-prepare-s390x-image-builder
@@ -197,10 +197,10 @@
   tags:
     - images_s390x
 
-- name: sometimes it is worth having the copr.py ansible plugin
+- name: Sometimes it is worth having the copr.py ansible plugin
   package: name=ansible-collection-community-general state=latest
 
-- name: install IBM Cloud token file
+- name: Install IBM Cloud token file
   copy:
     content: "IBMCLOUD_API_KEY={{ copr_cloud_ibm_token | default('unset') }}"
     dest: "{{ ibmcloud_token_file }}"

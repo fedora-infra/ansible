@@ -17,10 +17,10 @@
     owner: faf
     group: faf
 
-- name: create folders where we place certs for fedora-messaging
+- name: Create folders where we place certs for fedora-messaging
   file: path=/etc/fedora-messaging/faf owner=root group=root mode=0755 state=directory
 
-- name: install certs for fedora-messaging
+- name: Install certs for fedora-messaging
   copy: src={{ item.src }}
         dest=/etc/fedora-messaging/faf/{{ item.dest }}
         owner={{ item.owner }} group=root mode={{ item.mode }}
@@ -42,61 +42,61 @@
     }
 
 # landing page
-- name: install abrt-server-info-page
+- name: Install abrt-server-info-page
   package:
     name: abrt-server-info-page
     state: latest
 
-- name: configure ADMINS
+- name: Configure ADMINS
   lineinfile:
     dest: /usr/lib/python3.6/site-packages/abrt-server-info-page/config.py
     regexp: 'ADMINS ='
     line: '    ADMINS = "infrastructure@lists.fedoraproject.org"'
   notify: restart httpd
 
-- name: configure MORE_FAF
+- name: Configure MORE_FAF
   lineinfile:
     dest: /usr/lib/python3.6/site-packages/abrt-server-info-page/config.py
     regexp: 'MORE_FAF ='
     line: '    MORE_FAF = "https://github.com/abrt/faf/"'
   notify: restart httpd
 
-- name: configure MORE_RS
+- name: Configure MORE_RS
   lineinfile:
     dest: /usr/lib/python3.6/site-packages/abrt-server-info-page/config.py
     regexp: 'MORE_RS ='
     line: '    MORE_RS = "https://github.com/abrt/retrace-server"'
   notify: restart httpd
 
-- name: configure MORE_ABRT
+- name: Configure MORE_ABRT
   lineinfile:
     dest: /usr/lib/python3.6/site-packages/abrt-server-info-page/config.py
     regexp: 'MORE_ABRT ='
     line: '    MORE_ABRT = "https://github.com/abrt/abrt/"'
   notify: restart httpd
 
-- name: configure MORE_GABRT
+- name: Configure MORE_GABRT
   lineinfile:
     dest: /usr/lib/python3.6/site-packages/abrt-server-info-page/config.py
     regexp: 'MORE_GABRT ='
     line: '    MORE_GABRT = "https://github.com/abrt/gnome-abrt/"'
   notify: restart httpd
 
-- name: configure MORE_LR
+- name: Configure MORE_LR
   lineinfile:
     dest: /usr/lib/python3.6/site-packages/abrt-server-info-page/config.py
     regexp: 'MORE_LR ='
     line: '    MORE_LR = "https://github.com/abrt/libreport/"'
   notify: restart httpd
 
-- name: configure MORE_SATYR
+- name: Configure MORE_SATYR
   lineinfile:
     dest: /usr/lib/python3.6/site-packages/abrt-server-info-page/config.py
     regexp: 'MORE_SATYR ='
     line: '    MORE_SATYR = "https://github.com/abrt/satyr/"'
   notify: restart httpd
 
-- name: configure URL_FOR_FAF
+- name: Configure URL_FOR_FAF
   lineinfile:
     dest: /usr/lib/python3.6/site-packages/abrt-server-info-page/config.py
     regexp: 'URL_FOR_FAF ='

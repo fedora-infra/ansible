@@ -1,18 +1,18 @@
 ---
-- name: prepare mount point
+- name: Prepare mount point
   file: state=directory path=/var/lib/dist-git
 
-- name: mount up disk of copr repo
+- name: Mount up disk of copr repo
   mount: name=/var/lib/dist-git src='LABEL=copr-dist-git' fstype=ext4 state=mounted
 
-- name: prepare mount point
+- name: Prepare mount point
   file: state=directory path=/var/lib/copr-dist-git
 
-- name: create symlink for per-task-logs
+- name: Create symlink for per-task-logs
   file:
     state: link
     src: /var/lib/dist-git/per-task-logs
     path: /var/lib/copr-dist-git/per-task-logs
 
-- name: mount tmp on tmpfs
+- name: Mount tmp on tmpfs
   mount: name=/tmp src=tmpfs fstype=tmpfs state=mounted opts=defaults,size=39G,nr_inodes=2g

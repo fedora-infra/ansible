@@ -3,35 +3,35 @@
 # Setup a host to mirror our various git repos with grokmirror
 #
 
-- name: install grokmirror
+- name: Install grokmirror
   package: name=python3-grokmirror state=installed
   tags:
   - grokmirror-mirror
 
-- name: create grokmirror user to own mirrored file and run scripts
+- name: Create grokmirror user to own mirrored file and run scripts
   user: name=grokmirror local=true
 
-- name: create directory to mirror repos to
+- name: Create directory to mirror repos to
   file: dest={{grokmirror_topdir}} mode=0755 state=directory owner=grokmirror
   tags:
   - grokmirror-mirror
 
-- name: create directory to mirror site to
+- name: Create directory to mirror site to
   file: dest={{grokmirror_topdir}}/src.fedoraproject.org mode=0755 state=directory owner=grokmirror
   tags:
   - grokmirror-mirror
 
-- name: install grokmirror config file from template
+- name: Install grokmirror config file from template
   template: src=grokmirror.conf dest={{grokmirror_topdir}}/grokmirror.conf owner=root group=root mode=644
   tags:
   - grokmirror-mirror
 
-- name: install grokmirror repos cron job
+- name: Install grokmirror repos cron job
   template: src=grokmirror.cron dest=/etc/cron.d/grokmirror.cron owner=root group=root mode=644
   tags:
   - grokmirror-mirror
 
-- name: install grokmirror fsck cron job
+- name: Install grokmirror fsck cron job
   template: src=grokfsck.cron dest=/etc/cron.d/grokfsck.cron owner=root group=root mode=644
   tags:
   - grokmirror-mirror

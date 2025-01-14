@@ -1,5 +1,5 @@
 ---
-- name: push packages out
+- name: Push packages out
   hosts:
   - fedmsg-hubs
   - fedmsg-hubs-stg
@@ -34,14 +34,14 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   tasks:
-  - name: clean all metadata {%if testing%}(with infrastructure-testing on){%endif%}
+  - name: Clean all metadata {%if testing%}(with infrastructure-testing on){%endif%}
     command: yum clean all {%if testing%} --enablerepo=infrastructure-tags-stg {%endif%}
     check_mode: no
-  - name: yum update fedmsg packages from the main repo
+  - name: Yum update fedmsg packages from the main repo
     package: name={{item}} state=latest
     when: not testing
     with_items: "{{packages}}"
-  - name: yum update fedmsg packages from testing repo
+  - name: Yum update fedmsg packages from testing repo
     package: name={{item}} state=latest enablerepo=infrastructure-tags-stg
     when: testing
     with_items: "{{packages}}"
@@ -50,7 +50,7 @@
   # - import_tasks: "{{tasks_path}}../restart-fedmsg-services.yml"
 
 # Also restart the frontend web services
-- name: bounce apache
+- name: Bounce apache
   hosts: datagrepper:datagrepper_stg
   user: root
   vars_files:

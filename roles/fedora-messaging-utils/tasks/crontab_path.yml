@@ -3,7 +3,7 @@
 #####################################################
 
 ---
-- name: check if PATH is set in crontab
+- name: Check if PATH is set in crontab
   lineinfile:
     path: /etc/crontab
     state: absent
@@ -12,7 +12,7 @@
   changed_when: false
   register: path_set_in_crontab
 
-- name: add PATH if not set in crontab
+- name: Add PATH if not set in crontab
   lineinfile:
     path: /etc/crontab
     state: present
@@ -20,7 +20,7 @@
     line: 'PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin'
   when: not path_set_in_crontab.found
 
-- name: check if PATH in crontab contains /usr/local/bin
+- name: Check if PATH in crontab contains /usr/local/bin
   lineinfile:
     path: /etc/crontab
     state: absent
@@ -30,7 +30,7 @@
   register: local_in_path_in_crontab
   when: path_set_in_crontab.found
 
-- name: append /usr/local/bin to PATH in crontab if missing
+- name: Append /usr/local/bin to PATH in crontab if missing
   lineinfile:
     path: /etc/crontab
     state: present

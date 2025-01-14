@@ -22,14 +22,14 @@
   become_user: faf
   changed_when: false
 
-- name: cpf
+- name: Cpf
   copy:
     src: ureport_sample
     dest: "{{ faf_spool_dir }}/reports/incoming"
     owner: faf
     group: faf
 
-- name: faf
+- name: Faf
   command: faf {{ item }}
   become: yes
   become_user: faf

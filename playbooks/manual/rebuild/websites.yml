@@ -22,7 +22,7 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
-  - name: rsync each site in to place
+  - name: Rsync each site in to place
     command: /usr/bin/rsync --delete -a --no-owner --no-group sundries01::{{item}}/ /srv/web/{{item}}/
     with_items:
     - getfedora.org

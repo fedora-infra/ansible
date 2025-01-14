@@ -25,24 +25,24 @@
 - block:
 
     # Users
-    - name: create the main DB user
+    - name: Create the main DB user
       postgresql_user:
         name: "{{ datanommerDBUser }}"
         password: "{{ (env == 'production')|ternary(datanommerDBPassword, datanommer_stg_db_password) }}"
 
-    - name: create the RO DB user
+    - name: Create the RO DB user
       postgresql_user:
         name: datanommer_ro
         password: "{{ datanommer_ro_password }}"
 
     # Databases
-    - name: create the datanommer database
+    - name: Create the datanommer database
       postgresql_db:
         name: datanommer2
         owner: "{{ datanommerDBUser }}"
         encoding: UTF-8
 
-    - name: grant datanommer_ro read only access to datanommer2
+    - name: Grant datanommer_ro read only access to datanommer2
       postgresql_privs:
         database: datanommer2
         privs: SELECT
@@ -50,7 +50,7 @@
         roles: datanommer_ro
 
     # Enable timescaledb
-    - name: enable timescaledb
+    - name: Enable timescaledb
       postgresql_ext:
         name: timescaledb
         db: datanommer2

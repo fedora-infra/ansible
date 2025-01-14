@@ -1,5 +1,5 @@
 ---
-- name: backup script
+- name: Backup script
   template:
     src: client-backup-script.sh.j2
     dest: "/usr/local/bin/{{ item.value.command }}"
@@ -10,14 +10,14 @@
   - "{{ rsnapshot_push.cases }}"
   tags: rsnapshot_push
 
-- name: install rsnapshot package
+- name: Install rsnapshot package
   package:
     name: rsnapshot
     state: present
   delegate_to: "{{ rsnapshot_push.server_host }}"
   tags: rsnapshot_push
 
-- name: server-side case-specific backup dir
+- name: Server-side case-specific backup dir
   file:
     path: "{{ '/'.join([rsnapshot_push.backup_dir, item.key]) }}"
     state: directory
@@ -29,7 +29,7 @@
   delegate_to: "{{ rsnapshot_push.server_host }}"
   tags: rsnapshot_push
 
-- name: server-side custom rsnapshot daemon script
+- name: Server-side custom rsnapshot daemon script
   template:
     src: server-daemon.sh.j2
     dest: "{{ '/'.join([rsnapshot_push.backup_dir, item.key, 'sync-daemon']) }}"
@@ -41,7 +41,7 @@
   delegate_to: "{{ rsnapshot_push.server_host }}"
   tags: rsnapshot_push
 
-- name: install authorized key entry
+- name: Install authorized key entry
   authorized_key:
     user: "{{ item.value.user }}"
     state: present
@@ -52,7 +52,7 @@
     - "{{ rsnapshot_push.cases }}"
   tags: rsnapshot_push
 
-- name: rsnapshot call wrapper
+- name: Rsnapshot call wrapper
   template:
     src: server-rsnapshot.py.j2
     dest: "{{ '/'.join([rsnapshot_push.backup_dir, item.key, 'rsnapshot']) }}"
@@ -64,7 +64,7 @@
   delegate_to: "{{ rsnapshot_push.server_host }}"
   tags: rsnapshot_push
 
-- name: cronjob run twice a week to trigger the backup (and rotation)
+- name: Cronjob run twice a week to trigger the backup (and rotation)
   cron:
     name: "rsnapshot_push backup - {{ item.key }}"
     minute: "1"

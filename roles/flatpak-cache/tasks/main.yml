@@ -1,5 +1,5 @@
 ---
-- name: install packages needed
+- name: Install packages needed
   package: name={{ item }} state=present
   with_items:
   - squid

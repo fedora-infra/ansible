@@ -7,7 +7,7 @@
   tags:
     - log_detective_backup
 
-- name: create the log-detective.com backup directory
+- name: Create the log-detective.com backup directory
   ansible.builtin.file:
     path: "{{ ld_backup_path }}"
     state: directory
@@ -17,7 +17,7 @@
   tags:
     - log_detective_backup
 
-- name: install the log-detective-backup package dependencies
+- name: Install the log-detective-backup package dependencies
   package:
     name:
       - wget
@@ -25,7 +25,7 @@
   tags:
     - log_detective_backup
 
-- name: install the backup script
+- name: Install the backup script
   template:
     src: backup.sh.j2
     dest: "{{ ld_backup_script }}"
@@ -33,7 +33,7 @@
   tags:
     - log_detective_backup
 
-- name: install the cron job downloading the log-detective dumps
+- name: Install the cron job downloading the log-detective dumps
   ansible.builtin.cron:
     name: "download log-detective data dump"
     minute: "0"

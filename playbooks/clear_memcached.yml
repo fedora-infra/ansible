@@ -1,8 +1,8 @@
 ---
-- name: clear memcache
+- name: Clear memcache
   hosts: memcached:memcached-stg
   serial: 1
 
   tasks:
-  - name: clear memcache
+  - name: Clear memcache
     command: echo flush_all | nc localhost 11211

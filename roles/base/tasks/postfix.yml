@@ -17,7 +17,7 @@
   - base
   - smtp_auth_relay
 
-- name: install /etc/postfix/master.cf file
+- name: Install /etc/postfix/master.cf file
   copy: src={{ item }} dest=/etc/postfix/master.cf mode=0644
   with_first_found:
     - "postfix/master.cf/master.cf.{{ inventory_hostname }}"
@@ -42,7 +42,7 @@
   - config
   - base
 
-- name: work around s390 privatedevices bug
+- name: Work around s390 privatedevices bug
   ini_file:
     path: /usr/lib/systemd/system/postfix.service
     section: Service
@@ -56,13 +56,13 @@
   - config
   - base
 
-- name: enable postfix to start
+- name: Enable postfix to start
   service: name=postfix state=started enabled=true
   tags:
   - service
   - base
 
-- name: install /etc/postfix/transport file
+- name: Install /etc/postfix/transport file
   copy: src="postfix/{{ postfix_transport_filename }}" dest=/etc/postfix/transport
   when: inventory_hostname.startswith(('smtp-mm','bastion','noc02')) and env != 'staging'
   notify:
@@ -73,7 +73,7 @@
   - base
   - config
 
-- name: install /etc/postfix/bysender file
+- name: Install /etc/postfix/bysender file
   copy: src="postfix/bysender" dest=/etc/postfix/bysender
   when: inventory_hostname.startswith(('bastion')) and env != 'staging'
   notify:
@@ -84,7 +84,7 @@
   - base
   - config
 
-- name: create /etc/postfix/tls_policy
+- name: Create /etc/postfix/tls_policy
   copy: src="postfix/tls_policy" dest=/etc/postfix/tls_policy
   when: inventory_hostname.startswith(('bastion','smtp-mm','pagure')) and env != 'staging'
   notify:
@@ -96,7 +96,7 @@
 # Install gateway tls cert as a pem file.
 # This has: private key, then cert, then intermediate cert
 # This cert is a digicert one, renew it there.
-- name: install /etc/pki/tls/private/gateway-chain.pem
+- name: Install /etc/pki/tls/private/gateway-chain.pem
   copy:
     src="{{private}}/files/smtpd/gateway-chain.pem"
     dest=/etc/pki/tls/private/gateway-chain.pem

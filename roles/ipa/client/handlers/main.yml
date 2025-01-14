@@ -1,6 +1,6 @@
 ---
-- name: clean sss caches
+- name: Clean sss caches
   command: sss_cache -E
 
-- name: restart sssd
+- name: Restart sssd
   shell: systemctl restart sssd

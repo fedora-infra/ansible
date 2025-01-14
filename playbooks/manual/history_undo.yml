@@ -14,7 +14,7 @@
   user: root
 
   tasks:
-  - name: find the ID of the last yum transaction
+  - name: Find the ID of the last yum transaction
     shell: yum history package {{ package }} | sed -n 3p | awk -F "|" '{ print $1 }' | tr -d ' '
     register: transaction_id
 
@@ -23,7 +23,7 @@
   - debug: var=transaction_id.stdout
     when: transaction_id.stderr == ""
 
-  - name: get info on that transaction
+  - name: Get info on that transaction
     command: yum history info {{ transaction_id.stdout }}
     register: transaction_info
     when: transaction_id.stderr == ""

@@ -1,5 +1,5 @@
 ---
-- name: check to see if a compose is going on before we do anything...
+- name: Check to see if a compose is going on before we do anything...
   hosts: bodhi_backend:bodhi_backend_stg
   user: root
   vars_files:
@@ -20,7 +20,7 @@
     any_errors_fatal: true
     when: "composes.stdout != '{\"composes\": []}' and env != 'staging'"
 
-- name: push packages out
+- name: Push packages out
   hosts: bodhi_backend:bodhi_backend_stg
   user: root
   vars_files:
@@ -31,14 +31,14 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   tasks:
-  - name: update bodhi-server packages from main repo
+  - name: Update bodhi-server packages from main repo
     dnf:
       name:
       - bodhi-server
       - bodhi-composer
       state: latest
       update_cache: true
-  - name: update bodhi-server packages from testing repo
+  - name: Update bodhi-server packages from testing repo
     dnf:
       name:
       - bodhi-server
@@ -48,7 +48,7 @@
       update_cache: true
     when: testing
 
-- name: find out if there are migrations to run
+- name: Find out if there are migrations to run
   hosts: bodhi_backend:bodhi_backend_stg
   user: root
   vars_files:
@@ -72,7 +72,7 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   pre_tasks:
-  - name: tell nagios to shush w.r.t. the frontend
+  - name: Tell nagios to shush w.r.t. the frontend
     nagios: action=downtime minutes=15 service=host host={{ inventory_hostname_short }}{{ env_suffix }}
     delegate_to: noc01.iad2.fedoraproject.org
     ignore_errors: true
@@ -85,7 +85,7 @@
     command: oc -n bodhi scale dc/bodhi-web --replicas=0
     when: migrations
 
-- name: verify the backends, stop them, and then upgrade the db
+- name: Verify the backends, stop them, and then upgrade the db
   hosts: bodhi_backend:bodhi_backend_stg
   user: root
   vars_files:
@@ -96,7 +96,7 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   pre_tasks:
-  - name: tell nagios to shush w.r.t. the backend
+  - name: Tell nagios to shush w.r.t. the backend
     nagios: action=downtime minutes=15 service=host host={{ inventory_hostname_short }}{{ env_suffix }}
     delegate_to: noc01.iad2.fedoraproject.org
     ignore_errors: true
@@ -127,12 +127,12 @@
     - bodhi-celery
 
   post_tasks:
-  - name: tell nagios to unshush w.r.t. the backend
+  - name: Tell nagios to unshush w.r.t. the backend
     nagios: action=unsilence service=host host={{ inventory_hostname_short }}{{ env_suffix }}
     delegate_to: noc01.iad2.fedoraproject.org
     ignore_errors: true
 
-- name: restart the frontend
+- name: Restart the frontend
   hosts: os_control[0]:os_control_stg[0]
   user: root
   vars_files:
@@ -169,7 +169,7 @@
     when: env != "staging"
 
   post_tasks:
-  - name: tell nagios to unshush w.r.t. the frontend
+  - name: Tell nagios to unshush w.r.t. the frontend
     nagios: action=unsilence service=host host={{ inventory_hostname_short }}{{ env_suffix }}
     delegate_to: noc01.iad2.fedoraproject.org
     ignore_errors: true

@@ -8,7 +8,7 @@
 
 - block:
 
-    - name: install watchdog
+    - name: Install watchdog
       package: name={{ item }} state=present
       with_items:
       - watchdog
@@ -17,7 +17,7 @@
       - watchdog
       - base
 
-    - name: watchdog device configuration
+    - name: Watchdog device configuration
       copy: src=watchdog.conf dest=/etc/watchdog.conf owner=root group=root mode=0644
       tags:
       - config

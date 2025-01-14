@@ -1,22 +1,22 @@
 ---
-- name: install patch and filterdiff
+- name: Install patch and filterdiff
   dnf:
     name:
       - patch
       - patchutils
 
-- name: prepare the patches directory
+- name: Prepare the patches directory
   file:
     path: /opt/ipsilon-patches
     state: directory
 
-- name: download patches
+- name: Download patches
   copy: >
      src=/srv/web/infra/bigfiles/hotfixes/ipsilon/{{ item }} dest=/opt/ipsilon-patches/{{item}}.patch
      owner=root group=root mode=0644
   loop: "{{ ipsilon_patches }}"
 
-- name: apply patches
+- name: Apply patches
   ansible.builtin.shell:
     chdir: "{{ ansible_facts['python3']['sitelib'] }}"
     cmd: filterdiff --include '?/ipsilon/*' /opt/ipsilon-patches/{{item}}.patch | patch -p1 --forward --fuzz=0 --reject-file=- --batch

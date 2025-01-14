@@ -1,5 +1,5 @@
 ---
-- name: check/create instance
+- name: Check/create instance
   hosts: logdetective
   user: root
   gather_facts: false
@@ -19,7 +19,7 @@
         - datacenter == 'aws'
         - swap_file_size_mb is defined
 
-- name: provision instance
+- name: Provision instance
   hosts: logdetective
   become: true
   become_user: root

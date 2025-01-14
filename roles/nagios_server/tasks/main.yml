@@ -62,7 +62,7 @@
     - mod_ssl
   when: env == "production" and nagios_location == "external"
 
-- name: set sebooleans so nagios can talk to the certgetter01 for ssl certs
+- name: Set sebooleans so nagios can talk to the certgetter01 for ssl certs
   seboolean: name=httpd_can_network_connect
              state=true
              persistent=true
@@ -551,7 +551,7 @@
   - nagios_server
 
 # enable and run the nagios service
-- name: enable and run the nagios service
+- name: Enable and run the nagios service
   service: name=nagios.service state=started enabled=yes
   check_mode: no
   failed_when: false

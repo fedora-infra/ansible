@@ -1,7 +1,7 @@
 # This is a basic playbook
 
 ---
-- name: dole out the basic configuration
+- name: Dole out the basic configuration
   hosts: nfs_servers
   user: root
   gather_facts: true
@@ -49,7 +49,7 @@
         - drives
         - copr
 
-    - name: create copr-be storage
+    - name: Create copr-be storage
       lvol: vg=VG_nfs lv=copr-be size=30t shrink=no
       tags:
         - drives

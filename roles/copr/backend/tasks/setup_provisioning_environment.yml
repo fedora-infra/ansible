@@ -1,5 +1,5 @@
 ---
-- name: default copr_builder_fedora_version
+- name: Default copr_builder_fedora_version
   set_fact:
     copr_builder_fedora_version: 0
   when:
@@ -9,20 +9,20 @@
 
 # Warning: this file is included also from copr-hv playbook(s), so keep the
 # source file arguments absolute (not relative to this role)
-- name: sync copr provisioning files
+- name: Sync copr provisioning files
   synchronize: src="{{ roles_path }}/copr/backend/files/provision/"
                dest="{{ provision_directory }}/"
   tags:
   - provision_config
 
-- name: "sync copr provisioning files [remove mock config leftovers]"
+- name: "Sync copr provisioning files [remove mock config leftovers]"
   synchronize: src="{{ roles_path }}/copr/backend/files/provision/files/mock/"
                dest="{{ provision_directory }}/files/mock/"
                delete=yes
   tags:
   - provision_config
 
-- name: resalloc, generate vars.yml file
+- name: Resalloc, generate vars.yml file
   template:
     src: "{{ roles_path }}/copr/backend/templates/provision/{{ item }}"
     dest: "{{ provision_directory }}/{{ item }}"
@@ -31,7 +31,7 @@
   tags:
   - provision_config
 
-- name: templated provision scripts
+- name: Templated provision scripts
   template:
     src: "{{ roles_path }}/copr/backend/templates/provision/{{ item }}"
     dest: "{{ provision_directory }}/{{ item }}"
@@ -44,7 +44,7 @@
   # for the hypervisor use-case
   - cloud_vars is not defined
 
-- name: templated provision scripts
+- name: Templated provision scripts
   template:
     src: "{{ roles_path }}/copr/backend/templates/provision/{{ item }}"
     dest: "{{ provision_directory }}/{{ item }}"
@@ -56,7 +56,7 @@
   when:
   - cloud_vars is defined and cloud_vars
 
-- name: generate cloud-oriented vars files
+- name: Generate cloud-oriented vars files
   template:
     src: "{{ roles_path }}/copr/backend/templates/provision/{{ item }}"
     dest: "{{ provision_directory }}/{{ item }}"
@@ -67,7 +67,7 @@
   when:
   - cloud_vars is defined and cloud_vars
 
-- name: put copr-rpmbuild configuration file into the provision subdir
+- name: Put copr-rpmbuild configuration file into the provision subdir
   template: src="{{ roles_path }}/copr/backend/templates/provision/copr-rpmbuild/main.ini.j2"
             dest="{{ provision_directory }}/files/main.ini"
   tags:
@@ -75,19 +75,19 @@
   - copr_rpmbuild_main_ini
   when: "'copr_hypervisor' not in group_names"
 
-- name: put rpkg configuration file into the provision subdir
+- name: Put rpkg configuration file into the provision subdir
   template: src="{{ roles_path }}/copr/backend/templates/provision/rpkg.conf.j2"
             dest="{{ provision_directory }}/files/rpkg.conf"
   tags:
   - provision_config
 
-- name: remove currently unused and broken os_nova filter
+- name: Remove currently unused and broken os_nova filter
   file: state=absent
         path="{{ provision_directory }}/filter_plugins/os_nova.py"
   tags:
   - provision_config
 
-- name: install the Oregon State University OpenStack token file on BE/HV
+- name: Install the Oregon State University OpenStack token file on BE/HV
   template:
     src: "{{ roles_path }}/copr/backend/templates/provision/rc-osuosl.sh.j2"
     dest: "{{ provision_directory }}/.rc-osuosl.sh"

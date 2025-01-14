@@ -15,7 +15,7 @@
 # db     => The database name on both database server (must be the same)
 
 ---
-- name: dump the prod db out
+- name: Dump the prod db out
   hosts: "{{ dbhost }}.iad2.fedoraproject.org"
   user: root
   become: yes
@@ -40,7 +40,7 @@
       dest: /var/tmp/
       flat: yes
 
-- name: bring staging services down
+- name: Bring staging services down
   hosts: "{{ server or 'batcave01.iad2.fedoraproject.org' }}"
   user: root
   any_errors_fatal: false
@@ -52,11 +52,11 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   tasks:
-  - name: stop apache
+  - name: Stop apache
     service: name=httpd state=stopped
     when: (server is defined) and (server|length > 0)
 
-- name: drop and re-create the staging db entirely
+- name: Drop and re-create the staging db entirely
   hosts: "{{ dbhost }}.stg.iad2.fedoraproject.org"
   user: root
   become: yes
@@ -72,7 +72,7 @@
 
   tasks:
   # push dump to stg from batcave
-  - name: push the DB dump from batcave to the dbhost in stg
+  - name: Push the DB dump from batcave to the dbhost in stg
     copy:
       src: /var/tmp/{{ db }}.dump.xz
       dest: /var/tmp/{{ db }}.dump.xz
@@ -91,7 +91,7 @@
   - name: Import the prod db.  This will take quite a while.  Go get a snack!
     shell: cat /var/tmp/{{ db }}.dump | psql {{ db }}
 
-- name: bring staging services up
+- name: Bring staging services up
   hosts: "{{ server or 'batcave01.iad2.fedoraproject.org' }}"
   user: root
   any_errors_fatal: false
@@ -103,7 +103,7 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   tasks:
-  - name: restart apache
+  - name: Restart apache
     service: name=httpd state=started
     when: (server is defined) and (server|length > 0)
 
@@ -137,5 +137,5 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   tasks:
-  - name: remove the DB dump from batcave
+  - name: Remove the DB dump from batcave
     command: rm -f /var/tmp/{{ db }}.dump.xz

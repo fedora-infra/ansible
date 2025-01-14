@@ -15,50 +15,50 @@
 # TODO: Figure out how to compare virt info pre and post boot.
 
 ---
-- name: find instances
+- name: Find instances
   hosts: "{{ target }}"
   gather_facts: false
   user: root
 
   tasks:
-  - name: get list of guests
+  - name: Get list of guests
     virt: command=list_vms
     register: vmlist
 
-#  - name: get info on guests (prereboot)
+#  - name: Get info on guests (prereboot)
 #    virt: command=info
 #    register: vminfo_pre
 
-  - name: add them to myvms_new group
+  - name: Add them to myvms_new group
     local_action: add_host hostname={{ item }} groupname=myvms_new
     with_items: "{{ vmlist.list_vms }}"
 
-- name: halt instances
+- name: Halt instances
   hosts: myvms_new
   user: root
   gather_facts: false
   serial: 1
 
   tasks:
-  - name: halt the vm instances - to poweroff
+  - name: Halt the vm instances - to poweroff
     command: /sbin/shutdown -h 1
     ignore_errors: true
     # if one of them is down we don't care
 
-- name: wait for the whole set to die.
+- name: Wait for the whole set to die.
   hosts: myvms_new
   gather_facts: false
   user: root
 
   tasks:
-  - name: wait for them to die
+  - name: Wait for them to die
     local_action: wait_for port=22 delay=30 timeout=300 state=stopped host={{ inventory_hostname }}
 
-- name: reboot vhost
+- name: Reboot vhost
   hosts: "{{ target }}"
   gather_facts: false
   user: root
 
   tasks:
-  - name: halt the virthost
+  - name: Halt the virthost
     command: /sbin/shutdown -h 1

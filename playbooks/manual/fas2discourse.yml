@@ -9,11 +9,11 @@
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   tasks:
-    - name: fas2discourse Role
+    - name: Fas2discourse Role
       include_role:
         name: fas2discourse
         tasks_from: create-keytab
-    - name: fas2discourse Role
+    - name: Fas2discourse Role
       include_role:
         name: fas2discourse
         tasks_from: administration-tasks

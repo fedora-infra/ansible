@@ -1,13 +1,13 @@
 ---
-- name: install the lvm2 package
+- name: Install the lvm2 package
   dnf: state=present name=lvm2
 
-- name: early stat for the ext4 filesystem
+- name: Early stat for the ext4 filesystem
   stat: path=/dev/disk/by-label/copr-repo
   register: stat_repo_fs_early
   tags: mdadm
 
-- name: install LVM and RAID utilities
+- name: Install LVM and RAID utilities
   package:
     name:
       - lvm2
@@ -19,41 +19,41 @@
   tags: mdadm
   when: not stat_repo_fs_early.stat.exists
   block:
-    - name: stat the raid volumes
+    - name: Stat the raid volumes
       stat:
         path: "/dev/disk/by-id/{{ item }}"
       register: stat_raid
       loop: "{{ copr_backend_data_raid10_volumes + copr_backend_data_2_raid1_volumes }}"
 
-    - name: fail if raid volumes do not exist
+    - name: Fail if raid volumes do not exist
       debug: msg=checked
       failed_when: not item.stat.exists
       loop: "{{ stat_raid.results }}"
 
-    - name: stat the ext4 filesystem
+    - name: Stat the ext4 filesystem
       stat: path=/dev/disk/by-label/copr-repo
       register: stat_repo_fs
 
-    - name: scan and assemble raid volumes and activate volume groups
+    - name: Scan and assemble raid volumes and activate volume groups
       when: not stat_repo_fs.stat.exists
       shell: mdadm --assemble --scan && sleep 10 && vgchange -a y && sleep 5 && vgchange copr-backend-data --setautoactivation y && sleep 5
 
-    - name: stat the ext4 filesystem
+    - name: Stat the ext4 filesystem
       stat: path=/dev/disk/by-label/copr-repo
       register: stat_repo_fs
 
-    - name: fail if ext4 filesystem is not found by devmapper
+    - name: Fail if ext4 filesystem is not found by devmapper
       debug: msg=checked
       failed_when: not stat_repo_fs.stat.exists
 
-- name: decrease the RAID checks frequency in AWS
+- name: Decrease the RAID checks frequency in AWS
   tags:
     - mdadm
     - raid
     - raid_check
   when: datacenter == 'aws'
   block:
-    - name: install the drop-in raid-check.timer override
+    - name: Install the drop-in raid-check.timer override
       copy:
         dest: /etc/systemd/system/raid-check.timer
         content: |
@@ -69,11 +69,11 @@
           WantedBy=timers.target
       notify: systemctl daemon-reload
 
-- name: prepare mount point
+- name: Prepare mount point
   file: state=directory path=/var/lib/copr/public_html
 
-- name: mount up disk of copr repo
+- name: Mount up disk of copr repo
   mount: name=/var/lib/copr/public_html src='LABEL=copr-repo' fstype=ext4 state=mounted opts=nofail
 
-- name: mount /tmp/
+- name: Mount /tmp/
   mount: name=/tmp src='tmpfs' fstype=tmpfs state=mounted

@@ -1,7 +1,7 @@
 ---
 # Configuration for the kerneltest webapp
 
-- name: install needed packages
+- name: Install needed packages
   package: name={{ item }} state=present update_cache=yes
   with_items:
   - kerneltest
@@ -35,7 +35,7 @@
   notify:
   - restart apache
 
-- name: create the database scheme
+- name: Create the database scheme
   when: inventory_hostname.startswith('kerneltest01')
   command: /usr/bin/python2 /usr/share/kerneltest/kerneltest_createdb.py
   environment:
@@ -43,19 +43,19 @@
   tags:
   - kerneltest
 
-- name: set sebooleans so the app can talk to the db and send emails
+- name: Set sebooleans so the app can talk to the db and send emails
   seboolean: name=httpd_can_network_connect state=true persistent=true
   tags:
   - kerneltest
   - selinux
 
-- name: set sebooleans so the app can talk to the db and send emails
+- name: Set sebooleans so the app can talk to the db and send emails
   seboolean: name=httpd_can_network_connect_db persistent=yes state=yes
   tags:
   - kerneltest
   - selinux
 
-- name: apply selinux type to log files
+- name: Apply selinux type to log files
   file: >
     dest=/var/www/logs
     setype=httpd_sys_rw_content_t

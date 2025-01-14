@@ -1,40 +1,40 @@
 ---
-- name: allow Apache to remotely connect to mysql
+- name: Allow Apache to remotely connect to mysql
   seboolean: name=httpd_can_network_connect_db state=yes persistent=yes
   tags:
   - mediawiki
 
-- name: allow Apache to remotely connect to wiki
+- name: Allow Apache to remotely connect to wiki
   seboolean: name=httpd_can_network_connect state=yes persistent=yes
   tags:
   - mediawiki
 
-- name: allow Apache to remotely connect to Memcached
+- name: Allow Apache to remotely connect to Memcached
   seboolean: name=httpd_can_network_memcache state=yes persistent=yes
   tags:
   - mediawiki
 
-- name: allow Apache to talk to the wiki uploads dir over nfs
+- name: Allow Apache to talk to the wiki uploads dir over nfs
   seboolean: name=httpd_use_nfs state=yes persistent=yes
   tags:
   - mediawiki
 
-- name: set sebooleans so apache can send emails
+- name: Set sebooleans so apache can send emails
   seboolean: name=httpd_can_sendmail state=yes persistent=yes
   tags:
   - mediawiki
 
-- name: set sebooleans so apache can build svgs
+- name: Set sebooleans so apache can build svgs
   seboolean: name=httpd_setrlimit state=yes persistent=yes
   tags:
   - mediawiki
 
-- name: set sebooleans so apache can map files
+- name: Set sebooleans so apache can map files
   seboolean: name=domain_can_mmap_files state=yes persistent=yes
   tags:
   - mediawiki
 
-- name: install needed packages
+- name: Install needed packages
   package:
     state: present
     name:
@@ -58,7 +58,7 @@
 # mediawiki-OpenIDConnect here is pulled from the infra repo, which is also patched to add
 # the FPCA check, and returns the message to the user:
 # "You need to have signed the FPCA to log into the wiki"
-- name: install needed packages (fedora only)
+- name: Install needed packages (fedora only)
   package: name={{ item }} state=present
   with_items:
   - "{{ wikiver }}-skin-fedora"
@@ -132,7 +132,7 @@
   - mediawiki
   - fedora-messaging
 
-- name: startup apache
+- name: Startup apache
   service: name=httpd enabled=yes state=started
   tags:
   - mediawiki
@@ -143,96 +143,96 @@
   - config
   - mediawiki
 
-- name: creating wiki dir
+- name: Creating wiki dir
   file: path=/srv/web/{{wikiname}}-wiki owner=root group=root mode=755 state=directory
   tags:
   - mediawiki
 
-# - name: creating config dir
+# - name: Creating config dir
 #  file: src=/usr/share/{{ wikiver }}/config dest=/srv/web/{{wikiname}}/config owner=apache group=apache mode=755 state=directory
 #  tags:
 #  - mediawiki
 
 # This doesn't seem to exist anymore in upstream....
-# - name: install utils
+# - name: Install utils
 #  file: src=/usr/share/{{ wikiver }}/install-utils.inc dest=/srv/web/{{wikiname}}-wiki/install-utils.inc state=link
 #  tags:
 #  - mediawiki
 
-- name: install localsettings
+- name: Install localsettings
   template: src=LocalSettings.php.{{wikiname}}.j2 dest=/srv/web/{{wikiname}}-wiki/LocalSettings.php owner=apache group=apache mode=600 setype=httpd_sys_content_t
   notify: reload httpd
   tags:
   - mediawiki
   - localsettings
 
-- name: httpd conf
+- name: Httpd conf
   template: src=mediawiki-app.conf.j2 dest=/etc/httpd/conf.d/{{wikiname}}.conf
   notify: reload httpd
   tags:
   - mediawiki
 
-- name: linking index.php
+- name: Linking index.php
   file: dest=/srv/web/{{wikiname}}-wiki/index.php src=/usr/share/{{ wikiver }}/index.php state=link
   tags:
   - mediawiki
 
-- name: linkng api.php
+- name: Linkng api.php
   file: dest=/srv/web/{{wikiname}}-wiki/api.php src=/usr/share/{{ wikiver }}/api.php state=link
   tags:
   - mediawiki
 
-- name: linking opensearch
+- name: Linking opensearch
   file: dest=/srv/web/{{wikiname}}-wiki/opensearch_desc.php src=/usr/share/{{ wikiver }}/opensearch_desc.php state=link
   tags:
   - mediawiki
 
-- name: linking extensions
+- name: Linking extensions
   file: dest=/srv/web/{{wikiname}}-wiki/extensions src=/usr/share/{{ wikiver }}/extensions state=link
   tags:
   - mediawiki
 
-- name: linking includes
+- name: Linking includes
   file: dest=/srv/web/{{wikiname}}-wiki/includes src=/usr/share/{{ wikiver }}/includes state=link
   tags:
   - mediawiki
 
-- name: linking languages
+- name: Linking languages
   file: dest=/srv/web/{{wikiname}}-wiki/languages src=/usr/share/{{ wikiver }}/languages state=link
   tags:
   - mediawiki
 
-- name: linking maintenance
+- name: Linking maintenance
   file: dest=/srv/web/{{wikiname}}-wiki/maintenance src=/usr/share/{{ wikiver }}/maintenance state=link
   tags:
   - mediawiki
 
-# - name: linking serialized
+# - name: Linking serialized
 #  file: dest=/srv/web/{{wikiname}}-wiki/serialized src=/usr/share/{{ wikiver }}/serialized state=link
 #  tags:
 #  - mediawiki
 
-- name: linking skins
+- name: Linking skins
   file: dest=/srv/web/{{wikiname}}-wiki/skins src=/usr/share/{{ wikiver }}/skins state=link
   tags:
   - mediawiki
 
-- name: linking load
+- name: Linking load
   file: dest=/srv/web/{{wikiname}}-wiki/load.php src=/usr/share/{{ wikiver }}/load.php state=link
   tags:
   - mediawiki
 
-- name: linking resources
+- name: Linking resources
   file: dest=/srv/web/{{wikiname}}-wiki/resources src=/usr/share/{{ wikiver }}/resources state=link
   tags:
   - mediawiki
 
-- name: linking vendor
+- name: Linking vendor
   file: dest=/srv/web/{{wikiname}}-wiki/vendor src=/usr/share/{{ wikiver }}/vendor state=link
   tags:
   - mediawiki
 
-- name: download the Fedora Messaging extension
+- name: Download the Fedora Messaging extension
   git:
     repo: https://github.com/fedora-infra/mediawiki-fedora-messaging.git
     dest: /usr/share/{{ wikiver }}/extensions/FedoraMessaging
@@ -255,7 +255,7 @@
   - mediawiki
   - fedora-messaging
 
-- name: install the php dependencies
+- name: Install the php dependencies
   become: yes
   become_user: apache
   command:
@@ -267,18 +267,18 @@
   - mediawiki
   - fedora-messaging
 
-- name: ensure a directory exists for our SELinux policy
+- name: Ensure a directory exists for our SELinux policy
   file: dest=/usr/local/share/selinux/ state=directory
   tags: selinux
 
-- name: copy over our custom selinux policy
+- name: Copy over our custom selinux policy
   copy: src=selinux/mediawiki.pp dest=/usr/local/share/selinux/mediawiki.pp
   register: selinux_module
   tags:
   - selinux
   - mediawiki
 
-- name: install our custom selinux policy
+- name: Install our custom selinux policy
   command: semodule -i /usr/local/share/selinux/mediawiki.pp
   when: selinux_module is changed
   tags:

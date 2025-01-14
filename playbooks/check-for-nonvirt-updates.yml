@@ -9,25 +9,25 @@
 #
 
 ---
-- name: check for updates (EL)
+- name: Check for updates (EL)
   hosts: virt_host:&distro_RedHat
   gather_facts: false
 
   tasks:
 
-  - name: check for updates (yum)
+  - name: Check for updates (yum)
     yum: list=updates update_cache=true
     register: yumoutput
 
   - debug: msg="{{ inventory_hostname}} {{ yumoutput.results|length }}"
 
-- name: check for updates (Fedora)
+- name: Check for updates (Fedora)
   hosts: virt_host:&distro_Fedora
   gather_facts: false
 
   tasks:
 
-  - name: check for updates (dnf)
+  - name: Check for updates (dnf)
     dnf: list=updates
     register: dnfoutput
 
@@ -37,25 +37,25 @@
 # For some reason ansible detects aarch64/armv7 hosts as virt type "NA"
 #
 
-- name: check for updates (aarch64/armv7) EL
+- name: Check for updates (aarch64/armv7) EL
   hosts: virt_NA:&distro_RedHat
   gather_facts: false
 
   tasks:
 
-  - name: check for updates (yum)
+  - name: Check for updates (yum)
     yum: list=updates update_cache=true
     register: yumoutput
 
   - debug: msg="{{ inventory_hostname}} {{ yumoutput.results|length }}"
 
-- name: check for updates (aarch64/armv7) Fedora
+- name: Check for updates (aarch64/armv7) Fedora
   hosts: virt_NA:&distro_Fedora
   gather_facts: false
 
   tasks:
 
-  - name: check for updates (dnf)
+  - name: Check for updates (dnf)
     dnf: list=updates
     register: dnfoutput
 

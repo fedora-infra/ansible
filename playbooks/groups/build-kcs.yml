@@ -4,7 +4,7 @@
 # covered by this playbook.
 
 ---
-- name: enable an ephemeral builder
+- name: Enable an ephemeral builder
   hosts: build_x86_kcs:build_x86_kcs_stg
   user: root
   gather_facts: false
@@ -19,7 +19,7 @@
     - import_tasks: "{{ tasks_path }}/yumrepos.yml"
 
   tasks:
-    - name: make a keytab dir
+    - name: Make a keytab dir
       file: dest="/etc/kojid-cloud-scheduler/" state=directory
 
   roles:

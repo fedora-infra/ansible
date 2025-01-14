@@ -230,7 +230,7 @@
 # someone other than root and then we'd need another token file for
 # them, as we used to have for the fedmsg user. But for now they run
 # as root and use this one.
-- name: openQA client config
+- name: OpenQA client config
   template: src=client.conf.j2 dest=/etc/openqa/client.conf owner=root group=root mode=0640
   tags:
   - config

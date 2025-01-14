@@ -1,5 +1,5 @@
 ---
-- name: install packages
+- name: Install packages
   package: name={{ item }} state=present
   with_items:
   - bind
@@ -9,7 +9,7 @@
   - packages
   - dns
 
-- name: copy rndc config
+- name: Copy rndc config
   copy: src=rndc.conf dest=/etc/rndc.conf
   notify:
   - restart named
@@ -17,7 +17,7 @@
   - config
   - dns
 
-- name: copy rndc key
+- name: Copy rndc key
   copy: src={{ private }}/files/dns/rndc.key dest=/etc/rndc.key
   notify:
   - restart named
@@ -25,7 +25,7 @@
   - config
   - dns
 
-- name: copy named cache
+- name: Copy named cache
   copy: src=named.ca dest=/var/named/named.ca
   notify:
   - restart named
@@ -33,7 +33,7 @@
   - config
   - dns
 
-- name: copy geoip.py
+- name: Copy geoip.py
   copy: src=geoip.py dest=/usr/local/bin/geoip.py mode=0755
   notify:
   - restart named
@@ -41,7 +41,7 @@
   - config
   - dns
 
-- name: copy GeoIP.sh
+- name: Copy GeoIP.sh
   copy: src=GeoIP.sh dest=/var/named/GeoIP.sh mode=0755
   notify:
   - restart named
@@ -49,7 +49,7 @@
   - config
   - dns
 
-# - name: create GeoIP acl
+# - name: Create GeoIP acl
 #  command: /var/named/GeoIP.sh
 #  changed_when: "1 != 1"
 #  notify:
@@ -57,7 +57,7 @@
 #  tags:
 #  - dns
 
-- name: copy update-dns
+- name: Copy update-dns
   copy: src=update-dns dest=/usr/local/bin/update-dns mode=0755
   notify:
   - restart named
@@ -65,7 +65,7 @@
   - config
   - dns
 
-- name: copy zones
+- name: Copy zones
   copy: src=zones.conf dest=/etc/named/zones.conf owner=root group=root mode=0644
   notify:
   - restart named
@@ -73,7 +73,7 @@
   - config
   - dns
 
-- name: copy named config
+- name: Copy named config
   copy: src=named.conf dest=/etc/named.conf mode=0644 owner=root group=root
   notify:
   - restart named
@@ -81,7 +81,7 @@
   - config
   - dns
 
-- name: update dns
+- name: Update dns
   command: /usr/local/bin/update-dns
   changed_when: "1 != 1"
   notify:
@@ -90,7 +90,7 @@
   - config
   - dns
 
-- name: update dns cron
+- name: Update dns cron
   cron: name="update dns" job="/usr/local/bin/update-dns >/dev/null" minute=0,15,30,45
   tags:
   - dns
@@ -102,7 +102,7 @@
   - config
   - dns
 
-- name: check semanage ports
+- name: Check semanage ports
   command: semanage port -l
   register: semanageoutput
   check_mode: no
@@ -110,7 +110,7 @@
   tags:
   - dns
 
-- name: set ports so bind statistics-channel can bind to 8053
+- name: Set ports so bind statistics-channel can bind to 8053
   command: semanage port -a -t dns_port_t -p tcp 8053
   when: semanageoutput.stdout.find("8053") == -1
   notify:
@@ -118,7 +118,7 @@
   tags:
   - dns
 
-- name: named service
+- name: Named service
   service: name=named state=started enabled=yes
   tags:
   - dns

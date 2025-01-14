@@ -1,11 +1,11 @@
 ---
 # tasklist for setting up a basic gitolite
 
-- name: install the needed packages
+- name: Install the needed packages
   package: name={{item}} state=present
   with_items:
   - gitolite3
   - perl-Sys-Syslog
 
-- name: ensure the /etc/gitolite directory
+- name: Ensure the /etc/gitolite directory
   file: path=/etc/gitolite owner=root group=root mode=0755 state=directory

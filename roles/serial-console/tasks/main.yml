@@ -2,7 +2,7 @@
 # This role sets up serial console on ttyS1
 #
 ---
-- name: check for grub serial setup
+- name: Check for grub serial setup
   shell: grep options /boot/loader/entries/*
   register: serial
   check_mode: no
@@ -11,14 +11,14 @@
   tags:
   - serial-console
 
-- name: set grub to use serial console
+- name: Set grub to use serial console
   command: /sbin/grubby --update-kernel=ALL --args="console=tty0 console=ttyS0,115200 console=ttyS1,115200"
   when: serial is defined and serial.stdout.find("console=tty0 console=ttyS0,115200 console=ttyS1,115200") == -1
   failed_when: '1 != 1'
   tags:
   - serial-console
 
-- name: enable and start getty on both serial ports
+- name: Enable and start getty on both serial ports
   systemd:
     name: serial-getty@ttyS0
     state: started
@@ -27,7 +27,7 @@
   tags:
   - serial-console
 
-- name: enable and start getty on both serial ports
+- name: Enable and start getty on both serial ports
   systemd:
     name: serial-getty@ttyS1
     state: started

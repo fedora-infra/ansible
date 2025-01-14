@@ -11,7 +11,7 @@
     - create-resources
 
 # generate the templates for project to be created
-- name: create the templates
+- name: Create the templates
   template:
     src: "{{ item }}"
     dest: "/root/ocp4/openshift-apps/{{sysadmin_openshift_project_name}}/{{ item }}"
@@ -21,7 +21,7 @@
     - create-resources
 
 # apply created openshift resources
-- name: oc apply resources
+- name: Oc apply resources
   command: "/root/bin/oc apply -f /root/ocp4/openshift-apps/{{sysadmin_openshift_project_name}}/{{ item }}"
   with_items: "{{ sysadmin_openshift_project_templates }}"
   tags:

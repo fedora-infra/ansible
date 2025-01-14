@@ -296,7 +296,7 @@
 # sets it 0640, so we don't enforce ownership here and set mode to
 # 0640 so we don't wind up ping-ponging it between server and
 # dispatcher roles.
-- name: openQA client config
+- name: OpenQA client config
   template: src=client.conf.j2 dest=/etc/openqa/client.conf mode=0640
   tags:
   - config

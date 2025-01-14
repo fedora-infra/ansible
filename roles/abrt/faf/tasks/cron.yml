@@ -1,6 +1,6 @@
 ---
 
-- name: cron save-reports
+- name: Cron save-reports
   cron:
     name: "faf save-reports"
     user: faf
@@ -8,7 +8,7 @@
     minute: "*/5"
     state: present
 
-- name: cron create-problems-speedup
+- name: Cron create-problems-speedup
   cron:
     name: "faf create-problems-speedup with type {{ item }}"
     user: faf
@@ -23,7 +23,7 @@
     - "ruby"
     - "java"
 
-- name: cron create-problems
+- name: Cron create-problems
   cron:
     name: "faf create-problems with type {{ item }}"
     user: faf
@@ -39,7 +39,7 @@
     - "ruby"
     - "java"
 
-- name: cron reposync
+- name: Cron reposync
   cron:
     name: "faf reposync"
     user: faf
@@ -48,7 +48,7 @@
     hour: "3"
     state: present
 
-- name: retrace symbols
+- name: Retrace symbols
   cron:
     name: "retrace symbols with type {{ item.type }}"
     user: faf
@@ -61,7 +61,7 @@
     - { type: "core", day: "2,4,6" }
     - { type: "kerneloops", day: "1,3,5" }
 
-- name: cron - faf find-crashfn
+- name: Cron - faf find-crashfn
   cron:
     name: "cron for faf find-crashfn for {{ item }}"
     user: faf
@@ -76,7 +76,7 @@
     - "ruby"
     - "java"
 
-- name: cron pull-releases
+- name: Cron pull-releases
   cron:
     name: "faf pull-releases {{ item }}"
     user: faf
@@ -86,7 +86,7 @@
     state: present
   loop: "{{ faf_opsys_list }}"
 
-- name: cron pull-components
+- name: Cron pull-components
   cron:
     name: "faf pull-components {{ item }}"
     user: faf
@@ -96,7 +96,7 @@
     state: present
   loop: "{{ faf_opsys_list }}"
 
-- name: cron - faf find-components
+- name: Cron - faf find-components
   cron:
     name: "cron for faf find-components -o {{ item }}"
     user: faf
@@ -106,7 +106,7 @@
     state: present
   loop: "{{ faf_opsys_list }}"
 
-- name: cron - faf match-unknown-packages
+- name: Cron - faf match-unknown-packages
   cron:
     name: "cron for faf match-unknown-packages"
     user: faf

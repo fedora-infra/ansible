@@ -1,5 +1,5 @@
 ---
-- name: make /srv/web/fedora.im dir
+- name: Make /srv/web/fedora.im dir
   file: state=directory
         path=/srv/web/fedora.im
         owner=apache
@@ -23,7 +23,7 @@
   - fedora-web
   - fedora-web/fedora.im
 
-- name: copy in some matrix files
+- name: Copy in some matrix files
   copy: >
     src={{item}} dest=/srv/web/fedora.im/{{item}}
     owner=root group=root mode=0644
@@ -34,7 +34,7 @@
   - fedora-web
   - fedora-web/fedora.im
 
-- name: grab some images from design
+- name: Grab some images from design
   copy: >
     src={{item.src_name}} dest=/srv/web/fedora.im/{{item.dest}}
     owner=root group=root mode=0644

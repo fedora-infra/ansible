@@ -1,12 +1,12 @@
 ---
-- name: install chrony
+- name: Install chrony
   package: name=chrony state=present
   tags:
   - chrony
   - package
   - base
 
-- name: install chrony.conf
+- name: Install chrony.conf
   template: src=chrony.conf.j2 dest=/etc/chrony.conf
   notify:
   - restart chronyd

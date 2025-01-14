@@ -1,18 +1,18 @@
 ---
-- name: start and enable httpd
+- name: Start and enable httpd
   service:
     name: httpd
     state: started
     enabled: yes
 
-- name: start and enable memcached
+- name: Start and enable memcached
   service:
     name: memcached
     state: started
     enabled: yes
   when: faf_web_cache_type == "memcached"
 
-- name: turn off selinux
+- name: Turn off selinux
   selinux:
     state: permissive
     policy: targeted

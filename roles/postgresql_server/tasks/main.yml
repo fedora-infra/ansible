@@ -2,7 +2,7 @@
 #
 # Setup postgresql server.
 #
-- name: on rhel8 hosts enable the postgresql 12 module.
+- name: On rhel8 hosts enable the postgresql 12 module.
   copy:
     dest: /etc/dnf/modules.d/postgresql.module
     content: |
@@ -13,7 +13,7 @@
       state=enabled
   when: ansible_distribution_major_version|int == 8
 
-- name: on db-koji01 and db-riscv-koji01 and db01.stg and db-fas01 and db01 and db-openqa01 enable the postgresql 15 module.
+- name: On db-koji01 and db-riscv-koji01 and db01.stg and db-fas01 and db01 and db-openqa01 enable the postgresql 15 module.
   copy:
     dest: /etc/dnf/modules.d/postgresql.module
     content: |
@@ -24,7 +24,7 @@
       state=enabled
   when: inventory_hostname.startswith(('db-koji01','db-riscv-koji01','db01.stg','db-fas01','db01','db-openqa01'))
 
-- name: install postgresql server packages (EL < 8)
+- name: Install postgresql server packages (EL < 8)
   package:
     state: present
     name:
@@ -38,7 +38,7 @@
   - packages
   - postgresql
 
-- name: install postgresql server packages (Fedora)
+- name: Install postgresql server packages (Fedora)
   package:
     state: present
     name:
@@ -52,7 +52,7 @@
   - packages
   - postgresql
 
-- name: install postgresql server packages (EL >= 8)
+- name: Install postgresql server packages (EL >= 8)
   package:
     state: present
     name:
@@ -104,7 +104,7 @@
   - config
   - postgresql
 
-- name: postgresql config template (el7 / postgresql 9.2)
+- name: Postgresql config template (el7 / postgresql 9.2)
   template: dest=/var/lib/pgsql/data/postgresql.conf src=postgresql.conf
   when: ansible_distribution_major_version|int < 8 and ansible_distribution == 'RedHat'
   notify:
@@ -113,7 +113,7 @@
   - config
   - postgresql
 
-- name: postgresql config template (Fedora / el8 / postgresql 12)
+- name: Postgresql config template (Fedora / el8 / postgresql 12)
   template: dest=/var/lib/pgsql/data/postgresql.conf src=postgresql.conf-12
   when: (ansible_distribution_major_version|int == 8 and ansible_distribution == 'RedHat') or ansible_distribution != 'RedHat'
   notify:
@@ -122,7 +122,7 @@
   - config
   - postgresql
 
-- name: postgresql config template (el9 / postgresql 15)
+- name: Postgresql config template (el9 / postgresql 15)
   template: dest=/var/lib/pgsql/data/postgresql.conf src=postgresql.conf-15
   when: (ansible_distribution_major_version|int == 9 and ansible_distribution == 'RedHat')
   notify:

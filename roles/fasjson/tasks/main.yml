@@ -4,7 +4,7 @@
 # It installs the fasjson-client package and a cron job update.
 #
 
-- name: install fasjson-client
+- name: Install fasjson-client
   package:
     state: present
     name:
@@ -13,21 +13,21 @@
   - packages
   - fasjson
 
-- name: fasjson-aliases script
+- name: Fasjson-aliases script
   template: src=fasjson-aliases.j2 dest=/usr/local/bin/fasjson-aliases owner=root mode=0755
   tags:
   - config
   - fasjson
   when: fasjson_aliases is defined
 
-- name: fasjson-aliases cron job
+- name: Fasjson-aliases cron job
   copy: src=fasjson-aliases.cron dest=/etc/cron.d/fasjson-aliases owner=root mode=0644
   tags:
   - config
   - fasjson
   when: fasjson_aliases is defined
 
-- name: fasjson-aliases base static file
+- name: Fasjson-aliases base static file
   copy: src=aliases.static dest=/etc/aliases.static owner=root mode=0644
   tags:
   - config

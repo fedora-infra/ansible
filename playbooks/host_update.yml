@@ -4,30 +4,30 @@
 
 
 ---
-- name: update the system
+- name: Update the system
   hosts: "{{ target }}"
   gather_facts: false
   user: root
 
   tasks:
-  - name: expire-caches
+  - name: Expire-caches
     command: yum clean expire-cache
 
-  - name: yum -y {{ yumcommand }}
+  - name: Yum -y {{ yumcommand }}
     command: yum -y {{ yumcommand }}
     async: 7200
     poll: 30
 
-- name: run rkhunter if installed
+- name: Run rkhunter if installed
   hosts: "{{ target }}"
   user: root
 
   tasks:
-  - name: check for rkhunter
+  - name: Check for rkhunter
     command: /usr/bin/test -f /usr/bin/rkhunter
     register: rkhunter
     ignore_errors: true
 
-  - name: run rkhunter --propupd
+  - name: Run rkhunter --propupd
     command: /usr/bin/rkhunter --propupd
     when: rkhunter is success

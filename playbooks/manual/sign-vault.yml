@@ -7,7 +7,7 @@
 # Please check with rel-eng before doing anything here.
 
 ---
-- name: make sign-vault server vm (secondary and stg only)
+- name: Make sign-vault server vm (secondary and stg only)
   hosts: sign-vault01.stg.iad2.fedoraproject.org
   user: root
   gather_facts: false
@@ -23,7 +23,7 @@
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
-- name: make sign vault server
+- name: Make sign vault server
   hosts: sign_vault
   user: root
   gather_facts: true

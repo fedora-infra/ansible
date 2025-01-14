@@ -1,25 +1,25 @@
 ---
 # tasklist for setting up the Git checkout seed
 
-- name: make sure packages needed are installed
+- name: Make sure packages needed are installed
   package: name={{ item }} state=present
   with_items:
   - tar
   - python2
 
-- name: create the destination directory
+- name: Create the destination directory
   file: dest=/srv/git_seed owner=root group=root mode=0755 state=directory
   when: env != 'staging'
 
-- name: install the production version of the script and schedule its execution
+- name: Install the production version of the script and schedule its execution
   copy: src=make-git-checkout-seed.sh dest=/usr/local/bin/make-git-checkout-seed.sh mode=0755
   when: env != 'staging'
 
-- name: install the alternative arch report script
+- name: Install the alternative arch report script
   copy: src=alternative_arch_report.py dest=/usr/local/bin/alternative_arch_report.py mode=0755
   when: env != 'staging'
 
-- name: install cron job.
+- name: Install cron job.
   cron: >
     name="make-git-checkout-seed" cron_file="ansible-make-git-checkout-seed"
     minute=0 hour=2

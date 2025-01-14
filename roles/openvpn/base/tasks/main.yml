@@ -39,7 +39,7 @@
   # - restart openvpn (Fedora)
   when: inventory_hostname.startswith('bastion0')
 
-- name: install fix-routes.sh script
+- name: Install fix-routes.sh script
   copy: src=fix-routes.sh
         dest=/etc/openvpn/fix-routes.sh
         owner=root group=root mode=0755

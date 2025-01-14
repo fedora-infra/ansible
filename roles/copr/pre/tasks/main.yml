@@ -1,5 +1,5 @@
 ---
-- name: setup the root password
+- name: Setup the root password
   ansible.builtin.user:
     name: root
     password: "{{ copr_root_passwords[deployment_type][copr_machine_type] }}"
@@ -7,14 +7,14 @@
     - root_password
     - rootpw
 
-- name: create copr-signer group
+- name: Create copr-signer group
   group: name="copr-signer" state=present gid=989
   when: "'copr_keygen_aws' in group_names or 'copr_keygen_dev_aws' in group_names"
 
-- name: pre-create the apache group so it can be assigned to copr-signer
+- name: Pre-create the apache group so it can be assigned to copr-signer
   group: name="apache" state=present gid=48
   when: "'copr_keygen_aws' in group_names or 'copr_keygen_dev_aws' in group_names"
 
-- name: create copr-signer user
+- name: Create copr-signer user
   user: name="copr-signer" group=copr-signer groups=apache uid=992
   when: "'copr_keygen_aws' in group_names or 'copr_keygen_dev_aws' in group_names"

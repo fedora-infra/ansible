@@ -3,16 +3,16 @@
 # This is the base set of files needed for bodhi/composer
 
 # The ftpsync group and user are needed to sync the files to the master mirror
-- name: add ftpsync group
+- name: Add ftpsync group
   group: name=ftpsync gid=263 system=yes state=present
   tags:
   - bodhi
-- name: add ftpsync user
+- name: Add ftpsync user
   user: name=ftpsync uid=263 group=ftpsync createhome=yes system=yes state=present
   tags:
   - bodhi
 
-- name: install needed packages
+- name: Install needed packages
   package:
     name:
       - bodhi-composer
@@ -43,7 +43,7 @@
   - packages
   - bodhi
 
-- name: update bodhi composer
+- name: Update bodhi composer
   when: env == 'staging'
   package:
     name:
@@ -54,7 +54,7 @@
   - bodhi
 
 
-- name: add apache user to the masher group so it can talk to the monitoring socket
+- name: Add apache user to the masher group so it can talk to the monitoring socket
   user: name=apache groups=ftpsync append=yes
   tags:
   - bodhi
@@ -104,14 +104,14 @@
 #
 # cron job that syncs packages to koji
 #
-- name: put owner-sync-pagure in place
+- name: Put owner-sync-pagure in place
   template: src=owner-sync-pagure.j2 dest=/usr/local/bin/owner-sync-pagure mode="0755"
   tags:
   - config
   - bodhi
   - cron
 
-- name: sync packages from pagure-on-dist-git to koji (all branches)
+- name: Sync packages from pagure-on-dist-git to koji (all branches)
   # XXX If you modify this taglist.  Please also modify the other copy in
   # bodhi2/backend/files/koji_sync_listener.py
   # This cronjob runs only once a day.  The listener script runs reactively.
@@ -137,7 +137,7 @@
   set_fact:
     py3ver: "{{ _python3_version_result.stdout | trim }}"
 
-- name: put the koji sync listener script in place
+- name: Put the koji sync listener script in place
   copy:
     src: koji_sync_listener.py
     dest: /usr/lib/python{{ py3ver }}/site-packages/koji_sync_listener.py
@@ -147,7 +147,7 @@
   - bodhi
   - koji-sync
 
-- name: put the koji sync listener config file in place
+- name: Put the koji sync listener config file in place
   template:
     src: koji_sync_listener.toml
     dest: /etc/fedora-messaging/koji_sync_listener.toml
@@ -159,7 +159,7 @@
   - bodhi
   - koji-sync
 
-- name: start the fm-consumer@koji_sync_listener service
+- name: Start the fm-consumer@koji_sync_listener service
   service: name=fm-consumer@koji_sync_listener enabled=yes state=started
   when: env == "production"
   tags:
@@ -169,7 +169,7 @@
 # cron job that syncs updates to master mirror
 #
 
-- name: put new-updates-sync in place
+- name: Put new-updates-sync in place
   copy: src=new-updates-sync dest=/usr/local/bin/new-updates-sync mode="0755"
   when: env == "production"
   tags:
@@ -177,7 +177,7 @@
   - bodhi
   - cron
 
-- name: put bodhi-automated-pushes.py in place
+- name: Put bodhi-automated-pushes.py in place
   copy: src=bodhi-automated-pushes.py dest=/usr/local/bin/bodhi-automated-pushes.py mode="0755"
   when: env == "production"
   tags:
@@ -186,14 +186,14 @@
   - cron
 
 # These next two are used by quick-fedora-mirror
-- name: put update-fullfiletimelist in place
+- name: Put update-fullfiletimelist in place
   copy: src="{{ files }}/scripts/update-fullfiletimelist" dest=/usr/local/bin/update-fullfiletimelist mode="0755"
   when: env == "production"
   tags:
   - config
   - bodhi
   - cron
-- name: add create-filelist script from quick-fedora-mirror
+- name: Add create-filelist script from quick-fedora-mirror
   copy: src="{{ files }}/scripts/create-filelist" dest=/usr/local/bin/create-filelist mode="0755"
   when: env == "production"
   tags:
@@ -218,7 +218,7 @@
   - cron
 
 # This generates https://dl.fedoraproject.org/pub/DIRECTORY_SIZES.txt
-- name: directory sizes update cron job.
+- name: Directory sizes update cron job.
   cron: name="directory-sizes-update" minute="30" hour="19" user="ftpsync"
         job="/usr/bin/find /pub/alt/ /pub/archive/ /pub/fedora-secondary/ /pub/fedora/ /pub/epel/ -type d  ! -path '/pub/alt/screenshots/f21/source' | grep -v snapshot | /usr/bin/xargs -n 1 /usr/bin/du --exclude=.snapshot -sh > /tmp/DIRECTORY_SIZES.txt 2> /dev/null; cp /tmp/DIRECTORY_SIZES.txt /pub/"
         cron_file=directory-sizes-update
@@ -230,7 +230,7 @@
 
 # Bodhi cron jobs, disabled on staging because we replaced them with celery-beat
 
-- name: bodhi-approve-testing cron job.
+- name: Bodhi-approve-testing cron job.
   cron:
     name: bodhi-approve-testing
     minute: "*/3"
@@ -243,7 +243,7 @@
   - bodhi
   - cron
 
-- name: bodhi-check-policies cron job.
+- name: Bodhi-check-policies cron job.
   cron:
     name: bodhi-check-policies
     hour: "*/1"
@@ -257,7 +257,7 @@
   - bodhi
   - cron
 
-- name: bodhi-clean-old-composes cron job.
+- name: Bodhi-clean-old-composes cron job.
   cron:
     name: bodhi-clean-old-composes
     hour: "03"
@@ -271,7 +271,7 @@
   - bodhi
   - cron
 
-- name: bodhi-expire-overrides cron job.
+- name: Bodhi-expire-overrides cron job.
   cron:
     name: bodhi-expire-overrides
     hour: "*"
@@ -381,7 +381,7 @@
   - config
   - bodhi
 
-- name: make a mnt/koji link
+- name: Make a mnt/koji link
   file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji force=yes
   tags:
   - bodhi
@@ -423,12 +423,12 @@
   - bodhi
   - config
 
-- name: ensure apache is disabled on the backend
+- name: Ensure apache is disabled on the backend
   service: name=httpd enabled=no state=stopped
   tags:
   - bodhi
 
-- name: ensure fedora-messaging and celery are enabled and started on the backend
+- name: Ensure fedora-messaging and celery are enabled and started on the backend
   service:
     name: "{{ item }}"
     enabled: yes

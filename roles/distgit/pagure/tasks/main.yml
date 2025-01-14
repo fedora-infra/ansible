@@ -1,7 +1,7 @@
 ---
 # Configuration for the pagure webapp
 
-- name: install needed packages
+- name: Install needed packages
   package: name={{ item }} state=present
   with_items:
   - pagure
@@ -19,7 +19,7 @@
   - pagure
   - packages
 
-- name: install needed packages
+- name: Install needed packages
   package: name={{ item }} state=present
   with_items:
   - pagure-theme-srcfpo
@@ -37,7 +37,7 @@
 
 # Set-up stunnel for the event source server
 
-# - name: install stunnel service definition
+# - name: Install stunnel service definition
 #   copy: src=stunnel.service
 #         dest=/usr/lib/systemd/system/stunnel.service
 #         owner=root group=root mode=0755
@@ -48,14 +48,14 @@
 #   - pagure
 #   - stunnel
 
-# - name: ensure old stunnel init file is gone
+# - name: Ensure old stunnel init file is gone
 #   file: dest=/etc/init.d/stunnel/stunnel.init state=absent
 #   tags:
 #   - pagure
 #   - stunnel
 #   - config
 
-# - name: install stunnel.conf
+# - name: Install stunnel.conf
 #   template: src={{ item.file }}
 #             dest={{ item.dest }}
 #             owner=root group=root mode=0600
@@ -92,7 +92,7 @@
   tags:
   - pagure
 
-- name: create the /var/log/pagure folder where to store the logs
+- name: Create the /var/log/pagure folder where to store the logs
   file: state=directory
                path=/var/log/pagure
                owner=pagure group=packager mode=u+rwx,g+rwxs,o+rx
@@ -112,14 +112,14 @@
   - pagure
   - fix_log
 
-- name: create the /srv/tmp folder where to clone repos
+- name: Create the /srv/tmp folder where to clone repos
   file: state=directory
                path=/srv/tmp
                owner=pagure group=pagure mode=0775
   tags:
   - pagure
 
-- name: copy sundry pagure configuration
+- name: Copy sundry pagure configuration
   template: src={{ item.file }}
             dest={{ item.location }}/{{ item.file }}
             owner=pagure group=postfix mode=0640
@@ -139,7 +139,7 @@
   notify:
   - restart apache
 
-- name: pagure configuration for the hooks
+- name: Pagure configuration for the hooks
   template: src={{ item.file }}
             dest={{ item.location }}/{{ item.file }}
             owner=pagure group=packager mode=0640
@@ -153,7 +153,7 @@
   notify:
   - restart apache
 
-- name: create the database scheme
+- name: Create the database scheme
   command: /usr/bin/python3 /usr/share/pagure/pagure_createdb.py
   changed_when: "1 != 1"
   environment:
@@ -162,7 +162,7 @@
   - web
   - pagure
 
-- name: create all the directories where we store the git repos
+- name: Create all the directories where we store the git repos
   file: state=directory
                path={{ item }}
                owner=root group=packager mode=2775
@@ -175,7 +175,7 @@
   - gitolite
   - pagure
 
-- name: create the remotes folder so pagure can clone remote repos
+- name: Create the remotes folder so pagure can clone remote repos
   file: state=directory
                path={{ item }}
                owner=root group=packager mode=2775
@@ -270,7 +270,7 @@
   notify:
   - restart apache
 
-- name: create the /srv/cache/extras folder for the crons
+- name: Create the /srv/cache/extras folder for the crons
   file: state=directory
                path=/srv/cache/extras
                owner=apache group=apache mode=0775
@@ -312,7 +312,7 @@
 
 # setup fedora-messaging
 
-- name: install fedora-messaging as a dependency
+- name: Install fedora-messaging as a dependency
   package: name={{ item }} state=present
   with_items:
   - fedora-messaging
@@ -320,13 +320,13 @@
   - pagure
   - fedora-messaging
 
-- name: create the config folder for fedora-messaging
+- name: Create the config folder for fedora-messaging
   file: path=/etc/fedora-messaging/ owner=root group=root mode=0755 state=directory
   tags:
   - pagure
   - fedora-messaging
 
-- name: install the configuration file for fedora-messaging
+- name: Install the configuration file for fedora-messaging
   template:
     src=fedora-messaging.toml
     dest=/etc/fedora-messaging/config.toml
@@ -334,13 +334,13 @@
   - pagure
   - fedora-messaging
 
-- name: create folder where we'll place the certs
+- name: Create folder where we'll place the certs
   file: path=/etc/pki/rabbitmq/pagurecert/ owner=root group=root mode=0755 state=directory
   tags:
   - pagure
   - fedora-messaging
 
-- name: deploy pagure/rabbitmq certificate
+- name: Deploy pagure/rabbitmq certificate
   copy: src={{ item.src }}
         dest=/etc/pki/rabbitmq/pagurecert/{{ item.dest }}
         owner={{ item.owner }} group={{ item.group}} mode={{ item.mode }}
@@ -395,7 +395,7 @@
   - GDPR
   - pagure
 
-- name: override the default syslog logrotate file
+- name: Override the default syslog logrotate file
   copy: src=syslog-logrotate dest=/etc/logrotate.d/syslog
   tags:
   - pagure

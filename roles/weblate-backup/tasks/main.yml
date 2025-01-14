@@ -13,7 +13,7 @@
   tags:
   - weblate_backup
 
-- name: create a .ssh dir for that user
+- name: Create a .ssh dir for that user
   file:
     dest: "/home/_backup_weblate/.ssh"
     mode: "0700"

@@ -8,7 +8,7 @@
   - memcached
   notify: restart collectd
 
-- name: lastly, set some selinux booleans
+- name: Lastly, set some selinux booleans
   seboolean: name=collectd_tcp_network_connect persistent=yes state=yes
   tags:
   - collectd/memcached

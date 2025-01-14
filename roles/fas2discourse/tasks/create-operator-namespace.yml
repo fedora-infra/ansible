@@ -1,11 +1,11 @@
 ---
 # generate the templates for project to be created
-- name: create the templates
+- name: Create the templates
   template:
     src: "namespace.yml"
     dest: "/root/ocp4/openshift-apps/fas2discourse-operator/namespace.yml"
     mode: "0770"
 
 # apply created openshift resources
-- name: oc apply resources
+- name: Oc apply resources
   command: "/root/bin/oc apply -f /root/ocp4/openshift-apps/fas2discourse-operator/namespace.yml"
