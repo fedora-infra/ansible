@@ -233,7 +233,6 @@ ostree = {
         "failable": ["x86_64"]
     },
 }
-[% if release.version_int >= 40 %]
 ostree_container = {
     "^Silverblue$": {
         "version": "!VERSION_FROM_VERSION_DATE_RESPIN",
@@ -285,10 +284,9 @@ ostree_container = {
         "treefile": "fedora-onyx.yaml",
         [% endif %]
         "arches": ["x86_64"],
-        "failable": ['*'],
+        "failable": ['*']
     },
 }
-[% endif %]
 [% endif %]
 
 {% endif %}
