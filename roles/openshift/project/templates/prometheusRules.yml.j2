@@ -7,6 +7,7 @@ metadata:
 spec:
   groups:
 {% if 'cronjob' in project_alert_rules %}
+{% raw %}
   - name: CronjobFailed
     rules:
     - alert: CronjobFailed
@@ -17,8 +18,10 @@ spec:
       for: 5m
       labels:
         severity: warning
+{% endraw %}
 {% endif %}
 {% if 'buildconfig' in project_alert_rules %}
+{% raw %}
   - name: BuildFailed
     rules:
     - alert: BuildFailed
@@ -31,8 +34,10 @@ spec:
       for: 5m
       labels:
         severity: warning
+{% endraw %}
 {% endif %}
 {% if 'pod' in project_alert_rules %}
+{% raw %}
   - name: PodFailing
     rules:
     - alert: PodPending
@@ -66,4 +71,5 @@ spec:
       expr: kube_pod_container_status_last_terminated_reason{reason="OOMKilled"} > 0
       labels:
         severity: warning
+{% endraw %}
 {% endif %}
