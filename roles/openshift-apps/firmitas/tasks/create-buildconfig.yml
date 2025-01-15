@@ -2,7 +2,7 @@
 # generate the templates for project to be created
 - name: Create the buildconfig template
   ansible.builtin.template:
-    src: "buildconfig.yml"
+    src: "buildconfig.yml.j2"
     dest: "/root/ocp4/openshift-apps/firmitas/buildconfig.yml"
     mode: "0770"
 

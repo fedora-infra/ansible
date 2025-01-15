@@ -15,7 +15,7 @@
 
 - name: Copy project template
   ansible.builtin.template:
-    src="{{roles_path}}/openshift/project/templates/project.yml"
+    src="{{roles_path}}/openshift/project/templates/project.yml.j2"
     dest=/etc/openshift_apps/{{project_app}}/project.yml
 
 - name: Create project

@@ -2,7 +2,7 @@
 # generate the templates for project to be created
 - name: Create the persistent volume template
   ansible.builtin.template:
-    src: "persistent-volume-claim.yml"
+    src: "persistent-volume-claim.yml.j2"
     dest: "/root/ocp4/openshift-apps/firmitas/persistent-volume-claim.yml"
     mode: "0770"
 
