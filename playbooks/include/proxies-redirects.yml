@@ -917,3 +917,11 @@
     target: https://docs.fedoraproject.org/en-US/quick-docs/bugzilla-file-a-bug
     tags:
       - bugs
+
+  - role: httpd/redirectmatch
+    shortname: 00-cpe-to-cle
+    website: "docs.fedoraproject.org"
+    regex: ^/en-US/cpe/(.*)$
+    target: https://docs.fedoraproject.org/en-US/cle/$1
+    tags:
+      - cle
