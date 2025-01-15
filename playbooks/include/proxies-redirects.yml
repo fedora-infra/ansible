@@ -1,5 +1,5 @@
 ---
-- name: Set up those proxy redirects.  Wow!
+- name: Set up those proxy redirects. Wow!
   hosts: proxies_stg:proxies
   user: root
   gather_facts: true
@@ -853,9 +853,9 @@
 
   - role: httpd/redirectmatch
     shortname: 00-docs-dei
-    website: docs.fedoraproject.org
-    regex: (?i)^/en-US/diversity-inclusion
-    target: https://docs.fedoraproject.org/en-US/dei/
+    website: "docs.fedoraproject.org"
+    regex: ^/en-US/diversity-inclusion/(.*)$
+    target: https://docs.fedoraproject.org/en-US/dei/$1
     tags:
     - docs
 
@@ -925,3 +925,4 @@
     target: https://docs.fedoraproject.org/en-US/cle/$1
     tags:
       - cle
+      - docs
