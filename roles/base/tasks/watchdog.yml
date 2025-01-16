@@ -23,13 +23,13 @@
       - config
       - watchdog
       - base
-      notify: restart watchdog
+      notify: Restart watchdog
 
     - name: Set watchdog to run on boot
       service: name=watchdog enabled=yes
       ignore_errors: true
       notify:
-      - restart watchdog
+      - Restart watchdog
       tags:
       - service
       - watchdog
