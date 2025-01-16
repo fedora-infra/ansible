@@ -137,7 +137,7 @@
   vars:
     candidate_registry: "candidate-registry{{ env_suffix }}.fedoraproject.org"
   notify:
-  - restart kojid
+  - Restart kojid
   tags:
   - koji_builder
 
@@ -155,7 +155,7 @@
 - name: Build /etc/kojid/kojid.conf from group vars
   ansible.builtin.template: src=kojid.conf dest=/etc/kojid/kojid.conf
   notify:
-  - restart kojid
+  - Restart kojid
   tags:
   - koji_builder
   - rpmautospec
@@ -169,7 +169,7 @@
 - name: Build /etc/koji-osbuild/builder.conf
   ansible.builtin.template: src=builder.conf{{env_suffix}} dest=/etc/koji-osbuild/builder.conf
   notify:
-  - restart kojid
+  - Restart kojid
   tags:
   - koji_builder
   - koji_builder_osbuild
@@ -183,7 +183,7 @@
   ansible.builtin.template: src=runroot.conf.j2 dest=/etc/kojid/plugins/runroot.conf
   when: "'runroot' in group_names"
   notify:
-  - restart kojid
+  - Restart kojid
   tags:
   - koji_builder
 
@@ -191,7 +191,7 @@
   ansible.builtin.copy: src=kojid.service dest=/etc/systemd/system/kojid.service
   notify:
   - reload systemd
-  - restart kojid
+  - Restart kojid
   tags:
   - koji_builder
 
