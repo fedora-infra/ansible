@@ -11,6 +11,7 @@ RUN dnf install -y \
         gobject-introspection-devel \
         libmodulemd \
         libmemcached-devel \
+        collectd \
     && dnf clean all
 
 USER 1001
