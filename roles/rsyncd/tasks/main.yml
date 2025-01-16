@@ -48,7 +48,7 @@
     - rsyncd.conf.default
   when: "'download' not in group_names"
   notify:
-  - restart daemon
+  - Restart daemon
   ignore_errors: true
   tags:
   - config
@@ -57,7 +57,7 @@
 - name: Rsyncd.conf file for download servers
   ansible.builtin.template: src=rsyncd.conf.download.j2 dest=/etc/rsyncd.conf mode=0644
   notify:
-  - restart daemon
+  - Restart daemon
   when: "'download' in group_names"
   tags:
   - config
@@ -72,7 +72,7 @@
     - rsync.{{ rsync_group }}
     - rsync.default
   notify:
-  - restart xinetd
+  - Restart xinetd
   when: ansible_distribution_major_version|int < 9 and ansible_distribution == 'RedHat'
   tags:
   - config
@@ -82,7 +82,7 @@
   ansible.builtin.copy: src=rsyncd.service dest=/usr/lib/systemd/system/rsyncd.service mode=0644
   when: ansible_distribution == 'Fedora' or (ansible_distribution == 'RedHat' and ansible_distribution_major_version|int > 8)
   notify:
-    - restart daemon
+    - Restart daemon
   tags:
     - config
     - rsyncd
