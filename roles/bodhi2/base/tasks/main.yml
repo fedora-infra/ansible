@@ -19,7 +19,7 @@
     name: bodhi
     group: bodhi
     comment: Bodhi Server
-    ansible.builtin.shell: /sbin/nologin
+    shell: /sbin/nologin
     home: /usr/share/bodhi
     system: yes
     state: present

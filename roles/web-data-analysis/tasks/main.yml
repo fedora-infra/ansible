@@ -108,7 +108,7 @@
   user:
     name: countme
     group: countme
-    ansible.builtin.shell: /sbin/nologin
+    shell: /sbin/nologin
     home: /srv/countme
     comment: "DNF countme counter"
   tags:

@@ -97,7 +97,7 @@
     home: "/var/lib/openqa"
     createhome: no
     system: yes
-    ansible.builtin.shell: /sbin/nologin
+    shell: /sbin/nologin
   when: "openqa_static_uid is defined"
 
 - name: Remove old scratch repo directory

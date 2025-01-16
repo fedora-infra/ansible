@@ -29,7 +29,7 @@
     system: yes
     home: /etc/robosignatory
     comment: Robosignatory
-    ansible.builtin.shell: /sbin/nologin
+    shell: /sbin/nologin
     uid: 263
   tags:
   - config
