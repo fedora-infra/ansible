@@ -8,7 +8,7 @@
     uid: "{{nrpe_client_uid|default(omit)}}"
     comment: NRPE user for the NRPE service
     home: /var/run/nrpe
-    ansible.builtin.shell: /sbin/nologin
+    shell: /sbin/nologin
     system: true
   tags:
   - nagios_client
