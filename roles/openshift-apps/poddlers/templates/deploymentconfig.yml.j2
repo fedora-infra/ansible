@@ -31,6 +31,21 @@ spec:
           volumeMounts:
             {{ common_volume_mounts() }}
 
+          livenessProbe:
+            timeoutSeconds: 10
+            initialDelaySeconds: 5
+            periodSeconds: 60
+            httpGet:
+              path: "/live"
+              port: 8070
+          readinessProbe:
+            timeoutSeconds: 10
+            initialDelaySeconds: 10
+            periodSeconds: 60
+            httpGet:
+              path: "/ready"
+              port: 8070
+
       volumes:
         {{ common_volumes() }}
 
