@@ -18,6 +18,12 @@
   - fedora-web
   - fedora-web/registry
 
+- name: Copy in the sync-registry-index cronjob
+  ansible.builtin.template: src=cron-sync-registry-index dest=/etc/cron.d/sync-registry-index
+  tags:
+  - fedora-web
+  - fedora-web/registry
+
 - name: Copy over the registry CA
   ansible.builtin.copy: src="{{private}}/files/docker-registry/{{env}}/pki/ca.crt"
         dest="/etc/pki/httpd/registry-ca-{{env}}.cert"
