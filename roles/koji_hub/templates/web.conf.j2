@@ -6,9 +6,12 @@ SiteName = koji
 {% if env == 'staging' %}
 KojiHubURL = https://koji.stg.fedoraproject.org/kojihub
 KojiFilesURL = https://kojipkgs.stg.fedoraproject.org/
-{% else %}
+{% elif env == 'production'  %}
 KojiHubURL = https://koji.fedoraproject.org/kojihub
 KojiFilesURL = https://kojipkgs.fedoraproject.org/
+{% else %}
+KojiHubURL = https://riscv-koji.fedoraproject.org/kojihub
+KojiFilesURL = https://riscv-kojipkgs.fedoraproject.org/
 {% endif %}
 
 # SSL authentication options
@@ -21,8 +24,10 @@ LoginTimeout = 72
 # This must be changed and uncommented before deployment
 {% if env == 'staging' %}
 Secret = {{ kojiSecret }}
-{% else %}
+{% elif env == 'production'  %}
 Secret = {{ kojiStgSecret }}
+{% else %}
+Secret = {{ riscvkojiSecret }}
 {% endif %}
 
 LibPath = /usr/share/koji-web/lib
@@ -32,6 +37,9 @@ loginDisabled = True
 KojiHubCA = /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
 
 {% if env == 'staging' %}
+Tasks = buildContainer,createContainer,flatpakBuild,flatpakBuildArch,runroot,osbuildImage,createKiwiImage,kiwiBuild
+ParentTasks = buildContainer,flatpakBuild,osbuildImage,kiwiBuild
+{% elif env == 'production'  %}
 Tasks = buildContainer,createContainer,flatpakBuild,flatpakBuildArch,runroot,osbuildImage,createKiwiImage,kiwiBuild
 ParentTasks = buildContainer,flatpakBuild,osbuildImage,kiwiBuild
 {% else %}

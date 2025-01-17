@@ -665,6 +665,16 @@
     when: env == "staging"
 
   - role: httpd/reverseproxy
+    website: riscv-koji.fedoraproject.org
+    destname: koji
+    keephost: true
+    balancer_name: riscv-koji
+    balancer_members:
+    - "riscv-koji01.{{ datacenter }}.fedoraproject.org"
+    http_not_https_yes_this_is_insecure_and_i_feel_bad: true
+    when: koji_instance == "secondary"
+
+  - role: httpd/reverseproxy
     website: kojipkgs.fedoraproject.org
     destname: kojipkgs
     proxyurl: http://localhost:10062

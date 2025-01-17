@@ -124,8 +124,8 @@
   - koji_hub
   - fedora-messaging
 
-- name: Deploy koji/rabbitmq certificate
-  ansible.builtin.copy: src={{ item.src }}
+- name: deploy koji/rabbitmq certificate (primary)
+  copy: src={{ item.src }}
         dest=/etc/pki/rabbitmq/kojicert/{{ item.dest }}
         owner={{ item.owner }} group=root mode={{ item.mode }}
   with_items:
@@ -141,6 +141,30 @@
       dest: koji.ca
       owner: apache
       mode: "0644"
+  when: inventory_hostname.startswith('koji')
+  tags:
+  - config
+  - koji_hub
+  - fedora-messaging
+
+- name: deploy koji/rabbitmq certificate (secondary)
+  copy: src={{ item.src }}
+        dest=/etc/pki/rabbitmq/kojicert/{{ item.dest }}
+        owner={{ item.owner }} group=root mode={{ item.mode }}
+  with_items:
+    - src: "{{private}}/files/rabbitmq/{{env}}/pki/issued/riscv-koji{{ env_suffix }}.crt"
+      dest: koji.crt
+      owner: apache
+      mode: "0644"
+    - src: "{{private}}/files/rabbitmq/{{env}}/pki/private/riscv-koji{{ env_suffix }}.key"
+      dest: koji.key
+      owner: apache
+      mode: "600"
+    - src: "{{private}}/files/rabbitmq/{{env}}/pki/ca.crt"
+      dest: koji.ca
+      owner: apache
+      mode: "0644"
+  when: inventory_hostname.startswith('riscv-koji')
   tags:
   - config
   - koji_hub
@@ -203,8 +227,8 @@
 # install keytabs
 #
 
-- name: Install koji-hub keytab
-  ansible.builtin.copy: src={{ private }}/files/keytabs/{{ env }}/koji-hub-{{ fedmsg_koji_instance }} dest=/etc/koji-hub/koji-hub.keytab
+- name: install koji-hub keytab
+  copy: src={{ private }}/files/keytabs/{{ env }}/koji-hub-{{ koji_instance }} dest=/etc/koji-hub/koji-hub.keytab
         owner=apache group=apache mode=0600
   notify:
   - reload httpd
@@ -325,13 +349,19 @@
   - koji_hub
   when: env == "staging" and ansible_hostname.startswith('koji')
 
-- name: Make mnt/koji directory
+- name: make mnt/koji directory (primary)
   ansible.builtin.file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji owner=root group=root
   tags:
   - koji_hub
   when: ansible_hostname.startswith('koji')
 
-- name: Check selinux default context for /mnt/fedora_koji in staging
+- name: make mnt/koji directory (secondary)
+  file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji owner=root group=root
+  tags:
+  - koji_hub
+  when: ansible_hostname.startswith('riscv-koji')
+
+- name: check selinux default context for /mnt/fedora_koji in staging
   ansible.builtin.command: matchpathcon /mnt/fedora_koji
   register: mnt_fedora_koji_context
   when: env == "staging"
@@ -368,7 +398,7 @@
   - koji_hub
   when: ansible_distribution == "RedHat" and ansible_distribution_major_version|int == 7
 
-- name: Make httpd override directory
+- name: make httpd override directory
   ansible.builtin.file:
     state: directory
     path: /etc/systemd/system/httpd.service.d
@@ -421,6 +451,7 @@
   - koji-gc
   - koji-prune-signed-copies
   - koji-sidetag-cleanup
+  when: ansible_hostname.startswith('koji01')
   tags:
   - files
   - koji_hub

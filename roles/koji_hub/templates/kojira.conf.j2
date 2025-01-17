@@ -5,9 +5,15 @@
 
 ; For Kerberos authentication
 ; the principal to connect with
+{% if koji_instance == "secondary" %}
+principal=kojira/riscv-koji{{env_suffix}}.fedoraproject.org@{{ipa_realm}}
+; The location of the keytab for the principal above
+keytab=/etc/krb5.kojira_riscv-koji{{env_suffix}}.fedoraproject.org.keytab
+{% else %}
 principal=kojira/koji{{env_suffix}}.fedoraproject.org@{{ipa_realm}}
 ; The location of the keytab for the principal above
 keytab=/etc/krb5.kojira_koji{{env_suffix}}.fedoraproject.org.keytab
+{% endif %}
 
 ; The URL for the koji hub server
 server={{ koji_server_url }}

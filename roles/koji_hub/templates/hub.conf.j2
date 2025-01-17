@@ -8,15 +8,22 @@ DBHost = db-koji01
 LogLevel = koji._koji_plugin__koji-fedoramessaging:DEBUG
 LogFormat = %(asctime)s [%(levelname)s] m=%(method)s u=%(user_name)s p=%(process)s r=%(remoteaddr)s %(name)s: %(message)s
 DBPass = {{ kojiStgPassword }}
-{% else %}
+AuthPrincipal = host/koji{{env_suffix}}.fedoraproject.org
+{% elif koji_instance = "primary" %}
 DBHost = db-koji01
 DBPass = {{ kojiPassword }}
-{% endif %}
 AuthPrincipal = host/koji{{env_suffix}}.fedoraproject.org
-{% if env == "staging" %}
-ProxyPrincipals = modularity@STG.FEDORAPROJECT.ORG,HTTP/koji.stg.fedoraproject.org@STG.FEDORAPROJECT.ORG,sigul/sign-bridge01.stg.iad2.fedoraproject.org@STG.FEDORAPROJECT.ORG
 {% else %}
+DBHost = db-riscv-koji01
+DBPass = {{ riscvkojiPassword }}
+AuthPrincipal = host/riscv-koji{{env_suffix}}.fedoraproject.org
+{% endif %}
+{% if env == "staging" %}
+ProxyPrincipals = HTTP/koji.stg.fedoraproject.org@STG.FEDORAPROJECT.ORG,sigul/sign-bridge01.stg.iad2.fedoraproject.org@STG.FEDORAPROJECT.ORG
+{% elif koji_instance = "primary" %}
 ProxyPrincipals = HTTP/koji.fedoraproject.org@FEDORAPROJECT.ORG,sigul/sign-bridge01.iad2.fedoraproject.org@FEDORAPROJECT.ORG
+{% else %}
+ProxyPrincipals = HTTP/riscv-koji.fedoraproject.org@FEDORAPROJECT.ORG,sigul/sign-bridge01.iad2.fedoraproject.org@FEDORAPROJECT.ORG
 {% endif %}
 KojiDir = /mnt/koji
 MemoryWarnThreshold = 10000
@@ -31,8 +38,10 @@ SeparateSourceTags = f{{ FedoraRawhideNumber }}-build eln-build
 # Kerb auth
 {% if env == "staging" %}
 HostPrincipalFormat = compile/%s@STG.FEDORAPROJECT.ORG
-{% else %}
+{% elif koji_instance = "primary" %}
 HostPrincipalFormat = compile/%s@FEDORAPROJECT.ORG
+{% else %}
+HostPrincipalFormat = compile-riscv/%s@FEDORAPROJECT.ORG
 {% endif %}
 AuthKeytab = /etc/koji-hub/koji-hub.keytab
 
@@ -50,7 +59,13 @@ ProxyDNs = emailAddress=buildsys@fedoraproject.org,CN=kojiweb,OU=Fedora Builders
 
 ##  Other options  ##
 LoginCreatesUser = On
-KojiWebURL = http://koji.fedoraproject.org/koji
+{% if env == "staging" %}
+KojiWebURL = https://koji.stg.fedoraproject.org/koji
+{% elif koji_instance = "primary" %}
+KojiWebURL = https://koji.fedoraproject.org/koji
+{% else %}
+KojiWebURL = https://riscv-koji.fedoraproject.org/koji
+{% endif %}
 # The domain name that will be appended to Koji usernames
 # when creating email notifications
 EmailDomain = fedoraproject.org
@@ -92,6 +107,8 @@ MissingPolicyOk = False
 #Plugins = koji-disable-builds-plugin
 #Plugins = darkserver-plugin
 {% if env == "staging" %}
+Plugins = osbuild koji-fedoramessaging runroot_hub hub_containerbuild tag2distrepo sidetag_hub save_failed_tree flatpak kiwi
+{% elif koji_instance = "primary" %}
 Plugins = osbuild koji-fedoramessaging runroot_hub hub_containerbuild tag2distrepo sidetag_hub save_failed_tree flatpak kiwi
 {% else %}
 Plugins = osbuild koji-fedoramessaging runroot_hub hub_containerbuild tag2distrepo sidetag_hub save_failed_tree flatpak kiwi
@@ -138,10 +155,6 @@ channel =
        method build chainbuild !! req
        has_perm customchannel :: req
     }
-{% if env == 'staging' %}
-    # kojid-cloud-scheduler tag setup for stg env only
-    tag buildaws && fromtag buildaws && method build :: use buildaws
-{% endif %}
 
 #we want pesign-test-app to always go to the secure-boot channel even for scratch builds
     source */pesign-test-app* && has_perm secure-boot :: use secure-boot

@@ -13,8 +13,13 @@ topic_prefix = "org.fedoraproject.prod"
 
 [tls]
 ca_cert = "/etc/pki/rabbitmq/kojicert/koji.ca"
+{% if koji_instance == "secondary" %}
+keyfile = "/etc/pki/rabbitmq/kojicert/riscv-koji.key"
+certfile = "/etc/pki/rabbitmq/kojicert/riscv-koji.crt"
+{% else %}
 keyfile = "/etc/pki/rabbitmq/kojicert/koji.key"
 certfile = "/etc/pki/rabbitmq/kojicert/koji.crt"
+{% endif %}
 
 [client_properties]
 app = "Koji"

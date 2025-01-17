@@ -36,15 +36,32 @@
   - role: keytab/service
     service: kojira
     host: "koji{{env_suffix}}.fedoraproject.org"
+    when: env != 'secondary'
+  - role: keytab/service
+    service: kojira
+    host: "riscv-koji{{env_suffix}}.fedoraproject.org"
+    when: env == 'secondary'
   - role: keytab/service
     service: koji-gc
     owner_user: apache
     host: "koji{{env_suffix}}.fedoraproject.org"
+    when: env != 'secondary'
+  - role: keytab/service
+    service: koji-gc
+    owner_user: apache
+    host: "riscv-koji{{env_suffix}}.fedoraproject.org"
+    when: env == 'secondary'
   - koji_hub
   - role: keytab/service
     service: HTTP
     owner_user: apache
     host: "koji{{env_suffix}}.fedoraproject.org"
+    when: env != 'secondary'
+  - role: keytab/service
+    service: HTTP
+    owner_user: apache
+    host: "riscv-koji{{env_suffix}}.fedoraproject.org"
+    when: env == 'secondary'
   - {role: nfs/server, when: env == "staging"}
 
     # production nfs mounts from netapp
@@ -92,19 +109,25 @@
     mnt_dir: '/mnt/koji/ostree'
     nfs_src_dir: 'fedora_ostree_content/ostree'
     mount_stg: true
-    when: env != 'staging'
+    when: env == 'production' and inventory_hostname.startswith('koji')
 
   - role: nfs/client
     mnt_dir: '/mnt/koji/compose/ostree'
     mount_stg: true
     nfs_src_dir: 'fedora_ostree_content/compose/ostree'
-    when: env != 'staging'
+    when: env == 'production' and inventory_hostname.startswith('koji')
 
     # In staging, we mount fedora_koji as read only (see nfs_mount_opts)
   - role: nfs/client
     mnt_dir: '/mnt/fedora_koji_prod'
     nfs_src_dir: 'fedora_koji'
     when: env == 'staging' and inventory_hostname.startswith('koji')
+
+  - role: nfs/client
+    mnt_dir: '/mnt/fedora_koji/'
+    mount_stg: true
+    nfs_src_dir: 'fedora_riscv_koji'
+    when: inventory_hostname.startswith('riscv')
 
   - role: nfs/client
     mnt_dir: '/mnt/koji/ostree'
@@ -122,6 +145,12 @@
   - role: rabbit/user
     user_name: "koji{{ env_suffix }}"
     user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.buildsys\..*
+    when: koji_instance != 'secondary'
+
+  - role: rabbit/user
+    user_name: "riscv-koji{{ env_suffix }}"
+    user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.buildsys\..*
+    when: koji_instance == 'secondary'
 
   tasks:
   - import_tasks: "{{ tasks_path }}/motd.yml"
