@@ -783,3 +783,10 @@ sender_dependent_relayhost_maps = hash:/etc/postfix/bysender
 # http://www.postfix.org/BDAT_README.html
 # but does so in a way which is noisy with logs. Turn it off without logging.
 smtpd_discard_ehlo_keywords = chunking, silent-discard
+
+# We don't want to deliver to local users at all here
+# because sssd/ldap shows all existing users as users, but
+# we only want 'contributors' to have aliases.
+# Non contibutor's should have their mail rejected as not existing.
+# contributors we want to send to their aliases.
+local_recipient_maps = $alias_maps
