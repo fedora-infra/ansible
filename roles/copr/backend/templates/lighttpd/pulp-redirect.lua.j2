@@ -1,0 +1,54 @@
+-- Redirect to Pulp so that old backend URLs still work
+
+pulp_content_url = "{{ pulp_content_url }}"
+
+-- SQLite claims to be 35% faster than reading blobs from filesystem
+-- https://www.sqlite.org/fasterthanfs.html
+-- Worth trying out once we hit a bottleneck for reading the file
+file_with_redirects = "/var/lib/copr/pulp-redirect.txt"
+
+
+function line_in_file(searched, file)
+  -- Is searched line in a file?
+  for line in io.lines(file) do
+    if line == searched then
+      return true
+    end
+  end
+  return false
+end
+
+
+function uri_to_fullname(uri)
+  -- Take an URI which can look like this
+  -- /results/@copr/copr-dev/.../copr-cli-1.112-1.fc41.noarch.rpm
+  -- and parse only the project fullname from it, e.g. @copr/copr-dev
+  local first = string.find(uri, "/", 2)
+  local mid = string.find(uri, "/", first + 1)
+  local last = string.find(uri, ":")
+  if not last then
+    last = string.find(uri, "/", mid + 1)
+  end
+  return string.sub(uri, first + 1, last - 1)
+end
+
+
+function redirect(url)
+  lighty.header["Location"] = url
+  return 301
+end
+
+
+function pulp_url(copr_path)
+  if string.sub(copr_path, 1, 9) == "/results/" then
+    copr_path = string.sub(copr_path, 10)
+  end
+  return pulp_content_url .. copr_path
+end
+
+
+local uri = lighty.env["uri.path"]
+local project = uri_to_fullname(uri)
+if line_in_file(project, file_with_redirects) then
+  return redirect(pulp_url(uri))
+end
