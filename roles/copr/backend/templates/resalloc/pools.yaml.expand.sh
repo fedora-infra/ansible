@@ -1,6 +1,10 @@
 #! /bin/bash
 
-# Helper script to expand pools.yaml jinja.
+# Helper script to expand the pools.yaml.j2 file locally (on your box, not on
+# Batcave), before you push the pools.yaml.j2 changes.  How to use:
+#   1. execute this script for the first time to initiate $outdir
+#   2. change the template
+#   3. re-execute the script, and check `git show` in $outdir
 
 pfx=pools-yaml-expander
 pbook=/tmp/playbook-$pfx.yaml

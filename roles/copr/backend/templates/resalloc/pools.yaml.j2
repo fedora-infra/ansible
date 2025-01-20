@@ -2,14 +2,15 @@
 #
 # Notes for Resalloc configuration file:
 #
-# - You do NOT need to restart resalloc server after changing this file, it
-#   automatically reloads this configuration file.
-#
 {% if False %}
 # - This is rather a complex Jinja template.  Feel free to use the helper
 #   script to expand locally before you commit any change to this file:
 #   ./roles/copr/backend/templates/resalloc/pools.yaml.expand.sh
+#
 {% endif %}
+# - You do NOT need to restart resalloc server after changing this file, it
+#   automatically reloads this configuration file.
+#
 # - higher priority pools are used first
 #   default priority is 0
 #   reserved instances in cloud has > 0
