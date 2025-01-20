@@ -1,8 +1,10 @@
----
-- name: Copy .pem
-  ansible.builtin.copy: src=../../files/fedora-cloud/fed-cloud09.pem  dest=/etc/pki/ca-trust/source/anchors/
-  register: cloud_pem_copied
+# TODO: Possibly remove
+# This file is linked in roles/copr/backend/tasks/main.yml, but commented out
+# ---
+# - name: Copy .pem
+#   ansible.builtin.copy: src=../../files/fedora-cloud/fed-cloud09.pem  dest=/etc/pki/ca-trust/source/anchors/
+#   register: cloud_pem_copied
 
-- name: Update certificates
-  ansible.builtin.command: /usr/bin/update-ca-trust
-  when: cloud_pem_copied.changed
+# - name: Update certificates
+#   ansible.builtin.command: /usr/bin/update-ca-trust
+#   when: cloud_pem_copied.changed
