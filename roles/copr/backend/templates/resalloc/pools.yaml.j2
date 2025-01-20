@@ -75,6 +75,8 @@ aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot 
     cmd_new: copr-resalloc-vm-ip-to-yaml copr-resalloc-aws-new-{{ arch }} --instance-type {{ itype }} --additional-volume-size 320 --root-volume-size 18
 {% elif spot %}
     cmd_new: copr-resalloc-vm-ip-to-yaml copr-resalloc-aws-new-{{ arch }} --instance-type {{ itype }} --additional-volume-size 160 --spot-price 0.156
+{% elif on_demand == 'powerful' %}
+    cmd_new: copr-resalloc-vm-ip-to-yaml copr-resalloc-aws-new-{{ arch }} --instance-type {{ itype }} --additional-volume-size 320
 {% else %}
     cmd_new: copr-resalloc-vm-ip-to-yaml copr-resalloc-aws-new-{{ arch }} --instance-type {{ itype }} --additional-volume-size 160
 {% endif %}
