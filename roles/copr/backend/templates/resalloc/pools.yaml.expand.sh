@@ -8,7 +8,7 @@ outdir=/tmp/pools_debugging
 
 sourcedir=$(dirname "$0")
 gitroot=$(cd "$sourcedir" && git rev-parse --show-toplevel)
-pools=$gitroot/roles/copr/backend/templates/resalloc/pools.yaml
+pools=$gitroot/roles/copr/backend/templates/resalloc/pools.yaml.j2
 
 if ! test -d "$outdir"; then
     mkdir -p "$outdir"
