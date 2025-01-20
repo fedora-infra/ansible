@@ -4,6 +4,7 @@
     state: present
     name:
     - mariadb-server
+    - pxz
   when: ansible_cmdline.ostree is not defined
 
 - name: Ensure packages required for mariadb are installed (el8)
