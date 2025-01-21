@@ -5,7 +5,7 @@
   vars:
     myhosts: "buildvm_osbuild_ppc64le:buildvm_osbuild_ppc64le_staging"
 
-- name: make osbuild-worker
+- name: Make osbuild-worker
   hosts: buildvm_osbuild_ppc64le:buildvm_osbuild_ppc64le_staging
   user: root
   gather_facts: true

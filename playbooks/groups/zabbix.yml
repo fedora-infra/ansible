@@ -3,7 +3,7 @@
   vars:
     myhosts: "zabbix_stg:zabbix"
 
-- name: make the box be real
+- name: Make the box be real
   hosts: zabbix_stg:zabbix
   user: root
   gather_facts: true

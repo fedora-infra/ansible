@@ -5,7 +5,7 @@
   vars:
     myhosts: "proxies:proxies_stg:!proxy05.fedoraproject.org:!cloud_aws"
 
-- name: make the box be real
+- name: Make the box be real
   hosts: proxies_stg:proxies
   user: root
   gather_facts: true
@@ -54,7 +54,7 @@
       group: root
       mode: "0644"
 
-  - name: set ip_conntrack_max to a high value as the proxies deal with lots of connections
+  - name: Set ip_conntrack_max to a high value as the proxies deal with lots of connections
     sysctl: name=net.nf_conntrack_max value=26214400 state=present sysctl_set=yes reload=yes
 
   handlers:
@@ -137,7 +137,7 @@
   # If this is an initial deployment, we need the initial ticketkey
   # If it's not, doesn't hurt to copy it over again
   #
-  - name: deploy ticket key
+  - name: Deploy ticket key
     ansible.builtin.copy: src=/root/ticketkey_{{env}}.tkey dest=/etc/httpd/ticketkey_{{env}}.tkey
           owner=root group=root mode=0600
     notify:
@@ -147,11 +147,11 @@
   # If this is an initial deployment, make sure docs are synced over.
   # Do not count these as changed ever
   #
-  - name: make sure docs are synced. This could take a very very very logtime to finish
+  - name: Make sure docs are synced. This could take a very very very logtime to finish
     ansible.builtin.shell: /usr/local/bin/lock-wrapper docs-sync "/usr/local/bin/docs-rsync" >& /dev/null
     changed_when: false
     ignore_errors: true
 
-  - name: make sure selinux contexts are right on srv
+  - name: Make sure selinux contexts are right on srv
     ansible.builtin.command: restorecon -R /srv
     changed_when: false

@@ -8,7 +8,7 @@
   vars:
     myhosts: "github2fedmsg:github2fedmsg_stg"
 
-- name: make the box be real
+- name: Make the box be real
   hosts: github2fedmsg:github2fedmsg_stg
   user: root
   gather_facts: true
@@ -41,7 +41,7 @@
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
-- name: deploy service-specific config
+- name: Deploy service-specific config
   hosts: github2fedmsg:github2fedmsg_stg
   user: root
   gather_facts: true

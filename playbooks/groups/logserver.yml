@@ -3,7 +3,7 @@
   vars:
     myhosts: "logging"
 
-- name: make the box be real
+- name: Make the box be real
   hosts: logging
   user: root
   gather_facts: true
@@ -49,7 +49,7 @@
 # We exclude some dirs from restorecon on updates on logservers as they are very large
 # and it takes a long long time to run restorecon over them.
 #
-  - name: exclude some directories from selinux relabeling on updates
+  - name: Exclude some directories from selinux relabeling on updates
     ansible.builtin.copy: src="{{ files }}/logserver/fixfiles_exclude_dirs" dest=/etc/selinux/fixfiles_exclude_dirs owner=root mode=0644
 
   handlers:
@@ -71,7 +71,7 @@
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
-- name: dole out the service-specific config
+- name: Dole out the service-specific config
   hosts: log01.iad2.fedoraproject.org
   user: root
   gather_facts: true
@@ -90,7 +90,7 @@
     - geoip
 
   tasks:
-    - name: install needed packages
+    - name: Install needed packages
       ansible.builtin.package: name={{ item }} state=present
       with_items:
         - httpd
@@ -103,5 +103,5 @@
         - gnuplot
         - mod_auth_gssapi
 
-    - name: set domain_can_mmap_files so collectd works
+    - name: Set domain_can_mmap_files so collectd works
       seboolean: name=domain_can_mmap_files state=yes persistent=yes

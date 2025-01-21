@@ -3,7 +3,7 @@
   vars:
     myhosts: "pkgs_stg:pkgs"
 
-- name: make the box be real
+- name: Make the box be real
   hosts: pkgs_stg:pkgs
   user: root
   gather_facts: true
@@ -38,7 +38,7 @@
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
-- name: setup users on pkgs
+- name: Setup users on pkgs
   hosts: pkgs_stg:pkgs
   user: root
   gather_facts: true
@@ -54,7 +54,7 @@
     when: env == "staging"
     ## The above should be deleted when we rebuild pkgs02 in future.
 
-- name: setup dist-git on the box
+- name: Setup dist-git on the box
   hosts: pkgs_stg:pkgs
   user: root
   gather_facts: true

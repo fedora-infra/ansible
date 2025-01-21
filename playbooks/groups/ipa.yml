@@ -3,7 +3,7 @@
   vars:
     myhosts: "ipa:ipa_stg"
 
-- name: make the box be real
+- name: Make the box be real
   hosts: ipa:ipa_stg
   user: root
   gather_facts: true
@@ -35,7 +35,7 @@
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
-- name: deploy ipa itself
+- name: Deploy ipa itself
   hosts: ipa:ipa_stg
   user: root
   gather_facts: true
@@ -91,7 +91,7 @@
   #  - ipa/server
   #  - config
 
-- name: do base role once more to revert any resolvconf changes
+- name: Do base role once more to revert any resolvconf changes
   hosts: ipa:ipa_stg
   user: root
   gather_facts: true

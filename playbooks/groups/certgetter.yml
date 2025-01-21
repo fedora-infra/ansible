@@ -3,7 +3,7 @@
   vars:
     myhosts: "certgetter"
 
-- name: make the box be real
+- name: Make the box be real
   hosts: certgetter
   user: root
   gather_facts: true
@@ -31,7 +31,7 @@
   tasks:
   - import_tasks: "{{ tasks_path }}/motd.yml"
 
-  - name: make sure certbot is installed
+  - name: Make sure certbot is installed
     ansible.builtin.package: name=certbot state=installed
 
   handlers:

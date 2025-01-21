@@ -11,5 +11,5 @@
   ansible.builtin.command: "/root/bin/oc apply -f /root/ocp4/openshift-apps/firmitas/buildconfig.yml"
 
 # Start a build
-- name: "oc start-build {{ firmitas_application_name }}-build"
+- name: "Run oc start-build {{ firmitas_application_name }}-build"
   ansible.builtin.command: "/root/bin/oc start-build {{ firmitas_application_name }}-build -n {{ firmitas_namespace }}"

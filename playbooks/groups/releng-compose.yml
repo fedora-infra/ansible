@@ -189,7 +189,7 @@
   # this is how you include other task lists
   - import_tasks: "{{ tasks_path }}/motd.yml"
 
-  - name: install skopeo and buildah for container management
+  - name: Install skopeo and buildah for container management
     ansible.builtin.package:
       name:
         - skopeo
@@ -197,7 +197,7 @@
     tags:
     - containerrebuild
 
-  - name: install ansible for container automated rebuilds
+  - name: Install ansible for container automated rebuilds
     ansible.builtin.package:
       name:
         - ansible
@@ -205,7 +205,7 @@
     tags:
     - containerrebuild
 
-  - name: set releng user keytab
+  - name: Set releng user keytab
     ansible.builtin.copy:
       src: "{{private}}/files/keytabs/{{env}}/releng"
       dest: /etc/krb5.releng.keytab
@@ -215,7 +215,7 @@
     tags:
     - containerrebuild
 
-  - name: copy releng ssh key for rebuild fedpkg/distgit pushes
+  - name: Copy releng ssh key for rebuild fedpkg/distgit pushes
     ansible.builtin.copy:
       src: "{{private}}/files/releng/sshkeys/container-rebuild-{{env}}"
       dest: /etc/pki/releng
@@ -225,7 +225,7 @@
     tags:
     - containerrebuild
 
-  - name: place relengpush script for automatic rebuilds
+  - name: Place relengpush script for automatic rebuilds
     ansible.builtin.copy:
       src: "{{files}}/releng/relengpush"
       dest: "/usr/local/bin/relengpush"
@@ -235,7 +235,7 @@
     tags:
     - containerrebuild
 
-  - name: place relengpush int script for automatic rebuilds
+  - name: Place relengpush int script for automatic rebuilds
     ansible.builtin.copy:
       src: "{{files}}/releng/relengpush-int"
       dest: "/usr/local/bin/relengpush-int"

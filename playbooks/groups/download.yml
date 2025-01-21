@@ -19,7 +19,7 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
 
-- name: post-initial-steps
+- name: Post-initial-steps
   hosts: download
   user: root
   gather_facts: true
@@ -52,39 +52,39 @@
   tasks:
   - import_tasks: "{{ tasks_path }}/motd.yml"
 
-  - name: put in script for syncing fedora on download-ib01
+  - name: Put in script for syncing fedora on download-ib01
     ansible.builtin.copy: src="{{ files }}/download/sync-up-downloads.sh.ib01" dest=/usr/local/bin/sync-up-downloads owner=root group=root mode=755
     when: inventory_hostname == 'download-ib01.fedoraproject.org'
-  - name: put in script for syncing fedora-alt on download-ib01
+  - name: Put in script for syncing fedora-alt on download-ib01
     ansible.builtin.copy: src="{{ files }}/download/sync-up-other.sh.ib01" dest=/usr/local/bin/sync-up-other owner=root group=root mode=755
     when: inventory_hostname == 'download-ib01.fedoraproject.org'
-  - name: put in script for syncing centos on download-ib01
+  - name: Put in script for syncing centos on download-ib01
     ansible.builtin.copy: src="{{ files }}/download/sync-up-centos.sh.ib01" dest=/usr/local/bin/sync-up-centos owner=root group=root mode=755
     when: inventory_hostname == 'download-ib01.fedoraproject.org'
-  - name: put in cron job for syncing
+  - name: Put in cron job for syncing
     ansible.builtin.copy: src="{{ files }}/download/download-sync.cron.ib01"  dest=/etc/cron.d/download-sync owner=root group=root mode=644
     when: inventory_hostname == 'download-ib01.fedoraproject.org'
-  - name: put in last sync scrypt for download-ib01
+  - name: Put in last sync scrypt for download-ib01
     ansible.builtin.copy: src="{{ files}}/download/last-sync" dest=/usr/local/bin/last-sync mode=0755
     when: inventory_hostname == 'download-ib01.fedoraproject.org'
-  - name: install bc so last-sync works.
+  - name: Install bc so last-sync works.
     ansible.builtin.package: name=bc state=present
     when: inventory_hostname == 'download-ib01.fedoraproject.org'
 
-  - name: put in script for syncing on download-cc-rdu01
+  - name: Put in script for syncing on download-cc-rdu01
     ansible.builtin.copy: src="{{ files }}/download/sync-up-downloads.sh.cc-rdu01" dest=/usr/local/bin/sync-up-downloads owner=root group=root mode=755
     when: inventory_hostname == 'download-cc-rdu01.fedoraproject.org'
-  - name: put in script for syncing centos on download-cc-rdu01
+  - name: Put in script for syncing centos on download-cc-rdu01
     ansible.builtin.copy: src="{{ files }}/download/sync-up-centos.sh.cc-rdu01" dest=/usr/local/bin/sync-up-centos owner=root group=root mode=755
     when: inventory_hostname == 'download-cc-rdu01.fedoraproject.org'
-  - name: put in cron job for syncing on download-cc-rdu01
+  - name: Put in cron job for syncing on download-cc-rdu01
     ansible.builtin.copy: src="{{ files }}/download/download-sync.cron.cc-rdu01"  dest=/etc/cron.d/download-sync owner=root group=root mode=644
     when: inventory_hostname == 'download-cc-rdu01.fedoraproject.org'
-  - name: put in last sync scrypt for download-cc-rdu01
+  - name: Put in last sync scrypt for download-cc-rdu01
     ansible.builtin.copy: src="{{ files}}/download/last-sync" dest=/usr/local/bin/last-sync mode=0755
     when: inventory_hostname == 'download-cc-rdu01.fedoraproject.org'
 
-  - name: make a mnt/koji link
+  - name: Make a mnt/koji link
     ansible.builtin.file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji
     when: datacenter == "iad2"
 

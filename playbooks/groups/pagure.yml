@@ -3,7 +3,7 @@
   vars:
     myhosts: "pagure:pagure_stg"
 
-- name: make the boxen be real for real
+- name: Make the boxen be real for real
   hosts: pagure:pagure_stg
   user: root
   gather_facts: true
@@ -34,7 +34,7 @@
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
-- name: deploy pagure itself
+- name: Deploy pagure itself
   hosts: pagure:pagure_stg
   user: root
   gather_facts: true

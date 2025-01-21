@@ -4,7 +4,7 @@
   vars:
     myhosts: "oci_registry:oci_registry_stg"
 
-- name: make the box be real
+- name: Make the box be real
   hosts: oci_registry:oci_registry_stg
   user: root
   gather_facts: true
@@ -53,7 +53,7 @@
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
-- name: setup docker distribution registry
+- name: Setup docker distribution registry
   hosts: oci_registry:oci_registry_stg
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml

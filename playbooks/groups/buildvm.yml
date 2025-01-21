@@ -8,7 +8,7 @@
   vars:
     myhosts: "buildvm:buildvm_stg:buildvm_aarch64:buildvm_ppc64le:buildvm_ppc64le_stg:buildvm_aarch64_stg:buildvm_s390x"
 
-- name: make koji builder(s)
+- name: Make koji builder(s)
   hosts: buildvm:buildvm_stg:buildvm_aarch64:buildvm_ppc64le:buildvm_ppc64le_stg:buildvm_aarch64_stg:buildvm_s390x:buildvm_s390x_stg
   user: root
   gather_facts: true
@@ -76,13 +76,13 @@
     - import_tasks: "{{ tasks_path }}/motd.yml"
       when: not inventory_hostname.startswith('bkernel') and env == 'production'
 
-#    - name: make sure kojid is running
+#    - name: Make sure kojid is running
 #      service: name=kojid state=started enabled=yes
 
   handlers:
     - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
-- name: configure varnish cache
+- name: Configure varnish cache
   hosts: buildvm-s390x-24.s390.fedoraproject.org:buildvm-s390x-01.stg.s390.fedoraproject.org:buildvm-s390x-14.s390.fedoraproject.org
   tags:
     - varnish
@@ -100,7 +100,7 @@
   handlers:
     - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
-- name: configure sshfs on buildvm-s390x
+- name: Configure sshfs on buildvm-s390x
   hosts: buildvm-s390x-11.s390.fedoraproject.org:buildvm-s390x-12.s390.fedoraproject.org:buildvm-s390x-13.s390.fedoraproject.org
   tags:
     - sshfs

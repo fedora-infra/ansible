@@ -6,7 +6,7 @@
   vars:
     myhosts: "people"
 
-- name: make the box be real
+- name: Make the box be real
   hosts: people
   user: root
   gather_facts: yes
@@ -20,7 +20,7 @@
 
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
 
-  - name: mount project volume
+  - name: Mount project volume
     mount: >
         name=/project
         src=/dev/mapper/vg_vm-project
@@ -32,7 +32,7 @@
     tags:
     - mount
 
-  - name: mount srv volume
+  - name: Mount srv volume
     mount: >
         name=/srv
         src=/dev/mapper/vg_vm-srv
@@ -44,10 +44,10 @@
     tags:
     - mount
 
-  - name: create /srv/home directory
+  - name: Create /srv/home directory
     ansible.builtin.file: path=/srv/home state=directory owner=root group=root
 
-  - name: bind mount home volume
+  - name: Bind mount home volume
     mount: >
         name=/home
         src=/srv/home

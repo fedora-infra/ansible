@@ -4,7 +4,7 @@
   vars:
     myhosts: "os_control:os_control_stg"
 
-- name: make the box be real
+- name: Make the box be real
   hosts: os_control:os_control_stg
   user: root
   gather_facts: true
@@ -33,17 +33,17 @@
       group: root
       mode: "0770"
 
-  - name: copy oc rpm
+  - name: Copy oc rpm
     ansible.builtin.copy:
       src: /srv/web/infra/bigfiles/openshiftboot/oc-client/oc-client.rpm
       dest: /root/oc-client.rpm
 
-  - name: make sure oc-client is installed
+  - name: Make sure oc-client is installed
     dnf:
       name: /root/oc-client.rpm
       state: installed
 
-  - name: copy the jobs-summary script
+  - name: Copy the jobs-summary script
     ansible.builtin.copy:
       src: "{{ files }}/scripts/jobs-summary"
       dest: /usr/local/bin/jobs-summary

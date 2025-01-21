@@ -3,7 +3,7 @@
   vars:
     myhosts: "openqa:openqa_lab"
 
-- name: setup base openQA host
+- name: Setup base openQA host
   hosts: openqa:openqa_lab
   user: root
   gather_facts: true
@@ -33,7 +33,7 @@
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
-- name: configure fedora-messaging queues on openQA servers
+- name: Configure fedora-messaging queues on openQA servers
   hosts: openqa:openqa_lab
   user: root
   gather_facts: true
@@ -146,7 +146,7 @@
     tags: ['rabbit']
     when: "fedora_nightlies_amqp_queue is defined"
 
-- name: set up openQA server data NFS mounts (staging)
+- name: Set up openQA server data NFS mounts (staging)
   hosts: openqa_lab
 
   vars_files:
@@ -169,7 +169,7 @@
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
-- name: set up openQA server data NFS mounts (prod)
+- name: Set up openQA server data NFS mounts (prod)
   hosts: openqa
 
   vars_files:
@@ -192,7 +192,7 @@
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
-- name: configure openQA
+- name: Configure openQA
   hosts: openqa:openqa_lab
   user: root
   gather_facts: true

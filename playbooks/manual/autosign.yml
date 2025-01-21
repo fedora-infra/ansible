@@ -9,7 +9,7 @@
   vars:
     myhosts: "autosign_stg"
 
-- name: make the box be real
+- name: Make the box be real
   hosts: autosign:autosign_stg
   user: root
   gather_facts: true

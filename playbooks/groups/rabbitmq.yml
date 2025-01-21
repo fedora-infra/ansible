@@ -3,7 +3,7 @@
   vars:
     myhosts: "rabbitmq:rabbitmq_stg"
 
-- name: make the box be real
+- name: Make the box be real
   hosts: rabbitmq:rabbitmq_stg
   user: root
   gather_facts: true

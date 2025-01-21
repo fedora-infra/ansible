@@ -3,7 +3,7 @@
   vars:
     myhosts: "secondary"
 
-- name: setup secondary arch download server
+- name: Setup secondary arch download server
   hosts: secondary
   user: root
   gather_facts: true
@@ -65,13 +65,13 @@
         - koji
         - python3-productmd
 
-  - name: add create-filelist script from quick-fedora-mirror
+  - name: Add create-filelist script from quick-fedora-mirror
     ansible.builtin.copy: src="{{ files }}/scripts/create-filelist.py2" dest=/usr/local/bin/create-filelist mode=0755
 
-  - name: add cron script to update fullfiletimelist
+  - name: Add cron script to update fullfiletimelist
     ansible.builtin.copy: src="{{ files }}/scripts/update-fullfiletimelist" dest=/usr/local/bin/update-fullfiletimelist mode=0755
 
-  - name: add cron script to prune old logs at /srv/pub/alt/linuxsystemroles/logs
+  - name: Add cron script to prune old logs at /srv/pub/alt/linuxsystemroles/logs
     ansible.builtin.copy: src="{{ files }}/scripts/linuxsystemroles-logs-clean" dest=/usr/local/bin/linuxsystemroles-logs-clean mode=0755
 
   - name: Update fullfiletimelist job

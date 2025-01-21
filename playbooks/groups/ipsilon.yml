@@ -4,7 +4,7 @@
     myhosts: "ipsilon:ipsilon_stg"
 
 
-- name: make the box be real
+- name: Make the box be real
   hosts: ipsilon:ipsilon_stg
   user: root
   gather_facts: true
@@ -44,7 +44,7 @@
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
-- name: deploy ipsilon itself
+- name: Deploy ipsilon itself
   hosts: ipsilon:ipsilon_stg
   user: root
   gather_facts: true
@@ -66,7 +66,7 @@
 
 # This next block configures IPA, it only needs to be run on one member of the cluster.
 # Run it after setting up Ipsilon because the host need to be declared in IPA already.
-- name: setup IPA
+- name: Setup IPA
   hosts: ipa[0]:ipa_stg[0]
   user: root
   gather_facts: true

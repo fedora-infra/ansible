@@ -11,7 +11,7 @@
   tags:
   - fedora-messaging
 
-- name: "create key/cert directory"
+- name: "Create key/cert directory"
   ansible.builtin.file: path=/etc/pki/rabbitmq/{{ item.username }}/
         owner={{ item.username }} group={{ item.username }}
         mode=0700 state=directory
@@ -19,7 +19,7 @@
   tags:
   - fedora-messaging
 
-- name: "copy fedora messaging key"
+- name: "Copy fedora messaging key"
   ansible.builtin.copy: src={{ private }}/files/rabbitmq/{{ env }}/pki/private/{{ item.key }}{% if env == 'staging' %}.stg{% endif %}.key
         dest=/etc/pki/rabbitmq/{{ item.username }}/{{ item.key }}.key
         owner={{ item.username }} group=root mode=0600
@@ -27,7 +27,7 @@
   tags:
   - fedora-messaging
 
-- name: "copy fedora messaging certificate"
+- name: "Copy fedora messaging certificate"
   ansible.builtin.copy: src={{ private }}/files/rabbitmq/{{ env }}/pki/issued/{{ item.key }}{% if env == 'staging' %}.stg{% endif %}.crt
         dest=/etc/pki/rabbitmq/{{ item.username }}/{{ item.key }}.crt
         owner={{ item.username }} group=root mode=0644
@@ -35,7 +35,7 @@
   tags:
   - fedora-messaging
 
-- name: "copy fedora messaging ca.crt for readers"
+- name: "Copy fedora messaging ca.crt for readers"
   ansible.builtin.copy: src={{ private }}/files/rabbitmq/{{ env }}/pki/ca.crt
         dest=/etc/pki/rabbitmq/{{ item.username }}/ca.crt
         owner={{ item.username }} group=root mode=0644
@@ -43,7 +43,7 @@
   tags:
   - fedora-messaging
 
-- name: "install the toml configuration file"
+- name: "Install the toml configuration file"
   ansible.builtin.template: src="messaging.toml.j2" dest="/etc/fedora-messaging/{{ item.username }}.toml"
             owner=root group=root mode=644
   vars:

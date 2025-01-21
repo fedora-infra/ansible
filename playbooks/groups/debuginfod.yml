@@ -3,7 +3,7 @@
   vars:
     myhosts: "debuginfod:debuginfod_stg"
 
-- name: make the box be real
+- name: Make the box be real
   hosts: debuginfod:debuginfod_stg
   user: root
   gather_facts: true
@@ -33,45 +33,45 @@
   tasks:
   - import_tasks: "{{ tasks_path }}/motd.yml"
 
-  - name: install debuginfod
+  - name: Install debuginfod
     ansible.builtin.package: name=elfutils-debuginfod state=present
     tags: debuginfod
 
-  - name: install sqlite for diagnostics
+  - name: Install sqlite for diagnostics
     ansible.builtin.package: name=sqlite state=present
     tags: debuginfod
 
-  - name: install sqlite-analyzer for diagnostics
+  - name: Install sqlite-analyzer for diagnostics
     ansible.builtin.package: name=sqlite-analyzer state=present
     tags: debuginfod
 
-  - name: install sqlite for diagnostics
+  - name: Install sqlite for diagnostics
     ansible.builtin.package: name=sqlite state=present
     tags: debuginfod
 
-  - name: install rsync for data backups
+  - name: Install rsync for data backups
     ansible.builtin.package: name=rsync state=present
     tags: debuginfod
 
-  - name: install debuginfod configuration
+  - name: Install debuginfod configuration
     ansible.builtin.copy: src="{{ files }}/debuginfod/sysconfig.debuginfod" dest=/etc/sysconfig/debuginfod owner=root group=root mode=644
     tags: debuginfod
     notify:
       - restart debuginfod
 
-  - name: ensure systemd drop-in directory exists
+  - name: Ensure systemd drop-in directory exists
     ansible.builtin.file: >
       dest=/etc/systemd/system/debuginfod.service.d
       state=directory
     tags: debuginfod
 
-  - name: install debuginfod systemd drop-in
+  - name: Install debuginfod systemd drop-in
     tags: debuginfod
     ansible.builtin.copy: src="{{ files }}/debuginfod/debuginfod.service.d" dest=/etc/systemd/system/debuginfod.service.d/override.conf owner=root group=root mode=644
     notify:
       - restart debuginfod
 
-  - name: ensure debuginfod is enabled and started
+  - name: Ensure debuginfod is enabled and started
     service:
       name: debuginfod
       state: started
