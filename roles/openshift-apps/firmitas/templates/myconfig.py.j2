@@ -59,7 +59,8 @@ Variables related to probing
 certloca = "/tmp/firmitas/{{ (env == 'staging')|ternary('certificates/staging', 'certificates/production') }}"  # noqa : S108
 
 # The location of the service hostnames and maintainers map
-hostloca = "/tmp/firmitas/{{ (env == 'staging')|ternary('conf', 'conf') }}/certlist.yml"
+# Inside the container you do not have write access to /tmp/firmitas/conf, for that reason, we're using the same location as the certificates.
+hostloca = "/tmp/firmitas/{{ (env == 'staging')|ternary('certificates/staging', 'certificates/production') }}/certlist.yml"
 
 """
 Variables related to logging
