@@ -931,7 +931,7 @@
   - role: httpd/redirectmatch
     shortname: reg-server-stg
     website: registry.fedoraproject.org
-    regex: ^(index\.html|repo(.)*)?$
+    regex: ^/(index\.html|repo(.*))$
     target: https://quay.io/organization/fedora/
     when: env == 'staging'
     tags:
