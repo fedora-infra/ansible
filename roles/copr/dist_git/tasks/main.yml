@@ -102,6 +102,11 @@
   tags:
   - config
 
+- name: Install cgit error message
+  ansible.builtin.copy: src="cgit-error.html" dest="/var/www/html/" mode=0644
+  tags:
+  - config
+
 - name: Set up tmpwatch cron job
   cron: name="clean tmp" minute="0" job="/usr/sbin/tmpwatch 2h /tmp/"
 
