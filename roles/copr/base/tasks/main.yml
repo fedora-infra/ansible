@@ -129,7 +129,7 @@
   ansible.builtin.template: src=copr_nrpe.cfg
             dest=/etc/nrpe.d/copr_nrpe.cfg
   notify:
-  - restart nrpe
+  - Restart nrpe
   tags:
   - nagios_client
   - copr_cdn
