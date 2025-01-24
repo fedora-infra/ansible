@@ -328,7 +328,7 @@
 - name: Copy specialized nrpe.cfg for nagios server
   ansible.builtin.template: src=nrpe/nrpe.cfg.j2 dest=/etc/nagios/nrpe.cfg
   notify:
-  - restart nrpe
+  - Restart nrpe
   tags:
   - config
   - nagios_server

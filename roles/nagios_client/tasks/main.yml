@@ -126,7 +126,7 @@
   ansible.builtin.template: src=nrpe.cfg.j2 dest=/etc/nagios/nrpe.cfg
   when: not inventory_hostname.startswith('noc0')
   notify:
-  - restart nrpe
+  - Restart nrpe
   tags:
   - config
   - nagios_client
@@ -166,7 +166,7 @@
   - check_proxies.cfg
   - check_countme.cfg
   notify:
-  - restart nrpe
+  - Restart nrpe
   tags:
   - config
   - nagios_client
@@ -179,7 +179,7 @@
   ansible.builtin.template: src=check_openvpn_link.cfg.j2 dest=/etc/nrpe.d/check_openvpn_link.cfg owner=root group=root mode=0644
   when: vpn == true
   notify:
-  - restart nrpe
+  - Restart nrpe
   tags:
   - nagios_client
 #
@@ -190,7 +190,7 @@
   ansible.builtin.template: src=check_merged_file_age.cfg.j2 dest=/etc/nrpe.d/check_merged_file_age.cfg owner=root group=root mode=0644
   when: inventory_hostname.startswith('log0')
   notify:
-  - restart nrpe
+  - Restart nrpe
   tags:
   - nagios_client
 #
@@ -201,7 +201,7 @@
   ansible.builtin.template: src=check_mysql.cfg.j2 dest=/etc/nrpe.d/check_mysql.cfg owner=root group=root mode=0644
   when: inventory_hostname.startswith('db03')
   notify:
-  - restart nrpe
+  - Restart nrpe
   tags:
   - nagios_client
 
@@ -211,7 +211,7 @@
   - check_mailman_api.cfg
   when: inventory_hostname.startswith('mailman01')
   notify:
-  - restart nrpe
+  - Restart nrpe
   tags:
   - nagios_client
 
@@ -222,7 +222,7 @@
   - check_varnish_proc.cfg
   when: inventory_hostname.startswith('proxy')
   notify:
-  - restart nrpe
+  - Restart nrpe
   tags:
   - nagios_client
 
@@ -232,7 +232,7 @@
   - check_sigul_bridge_proc.cfg
   when: inventory_hostname.startswith('sign-bridge')
   notify:
-  - restart nrpe
+  - Restart nrpe
   tags:
   - nagios_client
 
@@ -242,7 +242,7 @@
   - check_websites_buildtime.cfg
   when: inventory_hostname.startswith('sundries')
   notify:
-  - restart nrpe
+  - Restart nrpe
   tags:
   - nagios_client
 
@@ -254,7 +254,7 @@
   - name: Install the nrpe template
     ansible.builtin.template: src=check_crl_next_update.cfg.j2 dest=/etc/nrpe.d/check_crl_next_update.cfg owner=root group=root mode=0644
     notify:
-    - restart nrpe
+    - Restart nrpe
 
   - name: Set facls so nrpe can check the crl (dir)
     acl: default=no etype=user entity=nrpe permissions="rx" name=/etc/openvpn/server state=present
@@ -290,7 +290,7 @@
   - check_rabbitmq_queue.cfg
   when: inventory_hostname.startswith('rabbitmq')
   notify:
-  - restart nrpe
+  - Restart nrpe
   tags:
   - nagios_client
 
@@ -306,7 +306,7 @@
   with_items:
     - check_rsyslogd_proc.cfg
   notify:
-    - restart nrpe
+    - Restart nrpe
   tags:
     - nagios_client
 
@@ -317,7 +317,7 @@
     - check_systemd_units.cfg
   when: inventory_hostname.startswith('pagure')
   notify:
-    - restart nrpe
+    - Restart nrpe
   tags:
     - nagios_client
     - pagure
