@@ -9,7 +9,7 @@ LogLevel = koji._koji_plugin__koji-fedoramessaging:DEBUG
 LogFormat = %(asctime)s [%(levelname)s] m=%(method)s u=%(user_name)s p=%(process)s r=%(remoteaddr)s %(name)s: %(message)s
 DBPass = {{ kojiStgPassword }}
 AuthPrincipal = host/koji{{env_suffix}}.fedoraproject.org
-{% elif koji_instance = "primary" %}
+{% elif koji_instance == "primary" %}
 DBHost = db-koji01
 DBPass = {{ kojiPassword }}
 AuthPrincipal = host/koji{{env_suffix}}.fedoraproject.org
