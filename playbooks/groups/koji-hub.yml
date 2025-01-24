@@ -5,12 +5,12 @@
 ---
 - import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
   vars:
-    myhosts: "koji_stg:koji"
+    myhosts: "koji_stg:koji:koji_riscv"
 
 # Once the instance exists, configure it.
 
 - name: Make koji_hub server system
-  hosts: koji_stg:koji
+  hosts: koji_stg:koji:koji_riscv
   user: root
   gather_facts: true
 
