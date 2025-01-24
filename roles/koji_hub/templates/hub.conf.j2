@@ -20,7 +20,7 @@ AuthPrincipal = host/riscv-koji{{env_suffix}}.fedoraproject.org
 {% endif %}
 {% if env == "staging" %}
 ProxyPrincipals = HTTP/koji.stg.fedoraproject.org@STG.FEDORAPROJECT.ORG,sigul/sign-bridge01.stg.iad2.fedoraproject.org@STG.FEDORAPROJECT.ORG
-{% elif koji_instance = "primary" %}
+{% elif koji_instance == "primary" %}
 ProxyPrincipals = HTTP/koji.fedoraproject.org@FEDORAPROJECT.ORG,sigul/sign-bridge01.iad2.fedoraproject.org@FEDORAPROJECT.ORG
 {% else %}
 ProxyPrincipals = HTTP/riscv-koji.fedoraproject.org@FEDORAPROJECT.ORG,sigul/sign-bridge01.iad2.fedoraproject.org@FEDORAPROJECT.ORG
@@ -38,7 +38,7 @@ SeparateSourceTags = f{{ FedoraRawhideNumber }}-build eln-build
 # Kerb auth
 {% if env == "staging" %}
 HostPrincipalFormat = compile/%s@STG.FEDORAPROJECT.ORG
-{% elif koji_instance = "primary" %}
+{% elif koji_instance == "primary" %}
 HostPrincipalFormat = compile/%s@FEDORAPROJECT.ORG
 {% else %}
 HostPrincipalFormat = compile-riscv/%s@FEDORAPROJECT.ORG
@@ -61,7 +61,7 @@ ProxyDNs = emailAddress=buildsys@fedoraproject.org,CN=kojiweb,OU=Fedora Builders
 LoginCreatesUser = On
 {% if env == "staging" %}
 KojiWebURL = https://koji.stg.fedoraproject.org/koji
-{% elif koji_instance = "primary" %}
+{% elif koji_instance == "primary" %}
 KojiWebURL = https://koji.fedoraproject.org/koji
 {% else %}
 KojiWebURL = https://riscv-koji.fedoraproject.org/koji
@@ -108,7 +108,7 @@ MissingPolicyOk = False
 #Plugins = darkserver-plugin
 {% if env == "staging" %}
 Plugins = osbuild koji-fedoramessaging runroot_hub hub_containerbuild tag2distrepo sidetag_hub save_failed_tree flatpak kiwi
-{% elif koji_instance = "primary" %}
+{% elif koji_instance == "primary" %}
 Plugins = osbuild koji-fedoramessaging runroot_hub hub_containerbuild tag2distrepo sidetag_hub save_failed_tree flatpak kiwi
 {% else %}
 Plugins = osbuild koji-fedoramessaging runroot_hub hub_containerbuild tag2distrepo sidetag_hub save_failed_tree flatpak kiwi
