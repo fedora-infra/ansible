@@ -467,13 +467,6 @@
   - files
   when: env != 'staging' and ansible_hostname.startswith('koji02')
 
-- name: Create shadow user
-  user: name=koji_shadow
-  when: "fedmsg_koji_instance != 'primary'"
-  tags:
-  - files
-  - koji_hub
-
 - name: Disable systemd-oomd we do not need or want it
   service: name=systemd-oomd state=stopped enabled=no
   tags:
