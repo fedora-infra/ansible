@@ -1,0 +1,16 @@
+---
+- name: Make the app be real
+  hosts: os_control_stg #:os_control
+  user: root
+  gather_facts: false
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  tasks:
+    - name: Forgejo Role
+      ansible.builtin.include_role:
+        name: openshift-apps/forgejo
+        tasks_from: main
