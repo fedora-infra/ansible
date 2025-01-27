@@ -1,5 +1,8 @@
 ---
 # This is a generic list, monitored by collectd
+custom_rules: ['-A INPUT -p tcp -m tcp -s 10.3.172.21 --dport 5432 -j ACCEPT']
+nft_custom_rules:
+  - 'add rule ip filter INPUT ip saddr 10.3.172.21 tcp dport 5432 counter accept'
 databases:
   - koji
 datacenter: iad2
