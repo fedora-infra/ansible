@@ -36,32 +36,32 @@
   - role: keytab/service
     service: kojira
     host: "koji{{env_suffix}}.fedoraproject.org"
-    when: env != 'secondary'
+    when: koji_instance != 'secondary'
   - role: keytab/service
     service: kojira
     host: "riscv-koji{{env_suffix}}.fedoraproject.org"
-    when: env == 'secondary'
+    when: koji_instance == 'secondary'
   - role: keytab/service
     service: koji-gc
     owner_user: apache
     host: "koji{{env_suffix}}.fedoraproject.org"
-    when: env != 'secondary'
+    when: koji_instance != 'secondary'
   - role: keytab/service
     service: koji-gc
     owner_user: apache
     host: "riscv-koji{{env_suffix}}.fedoraproject.org"
-    when: env == 'secondary'
+    when: koji_instance == 'secondary'
   - koji_hub
   - role: keytab/service
     service: HTTP
     owner_user: apache
     host: "koji{{env_suffix}}.fedoraproject.org"
-    when: env != 'secondary'
+    when: koji_instance != 'secondary'
   - role: keytab/service
     service: HTTP
     owner_user: apache
     host: "riscv-koji{{env_suffix}}.fedoraproject.org"
-    when: env == 'secondary'
+    when: koji_instance == 'secondary'
   - {role: nfs/server, when: env == "staging"}
 
     # production nfs mounts from netapp
