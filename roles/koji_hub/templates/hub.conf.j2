@@ -43,7 +43,13 @@ HostPrincipalFormat = compile/%s@FEDORAPROJECT.ORG
 {% else %}
 HostPrincipalFormat = compile-riscv/%s@FEDORAPROJECT.ORG
 {% endif %}
+{% if koji_instance == "primary" %}
 AuthKeytab = /etc/koji-hub/koji-hub.keytab
+{% elif koji_instance == "secondary" %}
+AuthKeytab = /etc/krb5.HTTP_koji.fedoraproject.org.keytab
+{% else %}
+AuthKeytab = /etc/koji-hub/koji-hub.keytab
+{% endif %}
 
 ##  SSL client certificate auth configuration  ##
 #note: ssl auth may also require editing the httpd config (conf.d/kojihub.conf)

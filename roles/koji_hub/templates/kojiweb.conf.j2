@@ -35,11 +35,7 @@ WSGIDaemonProcess koji lang=C.UTF-8
     AuthType GSSAPI
     GssapiSSLonly Off
     AuthName "GSSAPI Single Sign On Login"
-{% if koji_instance == "secondary" %}
-    GssapiCredStore keytab:/etc/krb5.HTTP_riscv-koji{{env_suffix}}.fedoraproject.org.keytab
-{% else %}
     GssapiCredStore keytab:/etc/krb5.HTTP_koji{{env_suffix}}.fedoraproject.org.keytab
-{% endif %}
     Require valid-user
 </Location>
 
