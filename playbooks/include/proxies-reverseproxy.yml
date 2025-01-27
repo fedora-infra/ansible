@@ -672,7 +672,8 @@
     balancer_members:
     - "riscv-koji01.{{ datacenter }}.fedoraproject.org"
     http_not_https_yes_this_is_insecure_and_i_feel_bad: true
-    when: koji_instance == "secondary"
+    tags:
+    - riscv-koji
 
   - role: httpd/reverseproxy
     website: kojipkgs.fedoraproject.org
