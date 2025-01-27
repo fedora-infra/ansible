@@ -232,6 +232,7 @@
         owner=apache group=apache mode=0600
   notify:
   - reload httpd
+  when: env != 'staging' and ansible_hostname.startswith('koji')
   tags:
   - config
   - koji_hub
@@ -241,6 +242,7 @@
         owner=apache group=apache mode=0600
   notify:
   - reload httpd
+  when: env != 'staging' and ansible_hostname.startswith('koji')
   tags:
   - config
   - koji_hub
