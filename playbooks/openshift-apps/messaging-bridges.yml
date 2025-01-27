@@ -1,7 +1,7 @@
 # Create the RabbitMQ users
 ---
 - name: Setup RabbitMQ
-  hosts: rabbitmq[0]:rabbitmq_stg[0]:rabbitmq01.iad2.fedoraproject.org
+  hosts: rabbitmq[0]
   user: root
   gather_facts: false
 
