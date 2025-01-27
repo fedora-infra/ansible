@@ -6,7 +6,7 @@ SiteName = koji
 {% if env == 'staging' %}
 KojiHubURL = https://koji.stg.fedoraproject.org/kojihub
 KojiFilesURL = https://kojipkgs.stg.fedoraproject.org/
-{% elif env == 'production'  %}
+{% elif koji_instance == "primary"  %}
 KojiHubURL = https://koji.fedoraproject.org/kojihub
 KojiFilesURL = https://kojipkgs.fedoraproject.org/
 {% else %}
@@ -23,9 +23,9 @@ LoginTimeout = 72
 
 # This must be changed and uncommented before deployment
 {% if env == 'staging' %}
-Secret = {{ kojiSecret }}
-{% elif env == 'production'  %}
 Secret = {{ kojiStgSecret }}
+{% elif koji_instance == "primary"  %}
+Secret = {{ kojiSecret }}
 {% else %}
 Secret = {{ riscvkojiSecret }}
 {% endif %}
@@ -39,7 +39,7 @@ KojiHubCA = /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
 {% if env == 'staging' %}
 Tasks = buildContainer,createContainer,flatpakBuild,flatpakBuildArch,runroot,osbuildImage,createKiwiImage,kiwiBuild
 ParentTasks = buildContainer,flatpakBuild,osbuildImage,kiwiBuild
-{% elif env == 'production'  %}
+{% elif koji_instance == "primary"  %}
 Tasks = buildContainer,createContainer,flatpakBuild,flatpakBuildArch,runroot,osbuildImage,createKiwiImage,kiwiBuild
 ParentTasks = buildContainer,flatpakBuild,osbuildImage,kiwiBuild
 {% else %}
