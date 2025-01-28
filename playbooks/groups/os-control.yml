@@ -34,7 +34,7 @@
       mode: "0770"
 
   - name: Install helm if not exists
-      unarchive:
+    unarchive:
         src: https://get.helm.sh/helm-v3.17.0-linux-amd64.tar.gz
         dest: /usr/local/bin
         extra_opts: "--strip-components=1"
@@ -42,7 +42,7 @@
         group: root
         mode: 0755
         remote_src: true
-      args:
+    args:
         creates: /usr/local/bin/helm
 
   - name: Copy oc rpm
