@@ -1010,78 +1010,6 @@ host bvmhost-a64-04 {
      option routers 10.3.170.254;
      option subnet-mask 255.255.255.0;
 }
-host buildhw-a64-07 {
-     hardware ethernet 50:6b:4b:6a:ef:70 ;
-     fixed-address 10.3.170.15;
-     filename "uefi/grubaa64.efi";
-     next-server 10.3.163.10;
-     option routers 10.3.170.254;
-     option subnet-mask 255.255.255.0;
-}
-host buildhw-a64-08 {
-     hardware ethernet 50:6b:4b:6a:ba:60 ;
-     fixed-address 10.3.170.16;
-     filename "uefi/grubaa64.efi";
-     next-server 10.3.163.10;
-     option routers 10.3.170.254;
-     option subnet-mask 255.255.255.0;
-}
-host buildhw-a64-09 {
-     hardware ethernet 50:6b:4b:6b:07:00 ;
-     fixed-address 10.3.170.17;
-     filename "uefi/grubaa64.efi";
-     next-server 10.3.163.10;
-     option routers 10.3.170.254;
-     option subnet-mask 255.255.255.0;
-}
-host buildhw-a64-10 {
-     hardware ethernet 50:6b:4b:6a:c2:00 ;
-     fixed-address 10.3.170.18;
-     filename "uefi/grubaa64.efi";
-     next-server 10.3.163.10;
-     option routers 10.3.170.254;
-     option subnet-mask 255.255.255.0;
-}
-host buildhw-a64-11 {
-     hardware ethernet 50:6b:4b:6a:c9:70 ;
-     fixed-address 10.3.170.19;
-     filename "uefi/grubaa64.efi";
-     next-server 10.3.163.10;
-     option routers 10.3.170.254;
-     option subnet-mask 255.255.255.0;
-}
-host buildhw-a64-12 {
-     hardware ethernet 50:6b:4b:6a:dd:a0 ;
-     fixed-address 10.3.170.20;
-     filename "uefi/grubaa64.efi";
-     next-server 10.3.163.10;
-     option routers 10.3.170.254;
-     option subnet-mask 255.255.255.0;
-}
-host buildhw-a64-13 {
-     hardware ethernet 50:6b:4b:6a:c2:50 ;
-     fixed-address 10.3.170.22;
-     filename "uefi/grubaa64.efi";
-     next-server 10.3.163.10;
-     option routers 10.3.170.254;
-     option subnet-mask 255.255.255.0;
-}
-host buildhw-a64-19 {
-     hardware ethernet f4:e9:d4:cc:2f:f4;
-     fixed-address 10.3.170.139;
-     filename "uefi/grubaa64.efi";
-     next-server 10.3.163.10;
-     option routers 10.3.170.254;
-     option subnet-mask 255.255.255.0;
-}
-host buildhw-a64-20 {
-     hardware ethernet f4:e9:d4:cc:32:b2;
-     fixed-address 10.3.170.140;
-     filename "uefi/grubaa64.efi";
-     next-server 10.3.163.10;
-     option routers 10.3.170.254;
-     option subnet-mask 255.255.255.0;
-}
 host qvmhost-x86-01 {
      hardware ethernet E4:43:4B:A8:C1:FE;
      fixed-address 10.3.174.11;
@@ -1138,20 +1066,6 @@ host openqa-a64-worker03 {
      next-server 10.3.163.10;
      option routers 10.3.174.254;
      option subnet-mask 255.255.255.0;
-}
-
-host buildhw-a64-01 {
-     hardware ethernet 50:6b:4b:6b:08:50;
-     fixed-address 10.3.170.121;
-     option routers 10.3.170.254;
-     option host-name "buildhw-a64-01";
-}
-
-host buildhw-a64-02 {
-     hardware ethernet 50:6b:4b:6a:ec:90;
-     fixed-address 10.3.170.122;
-     option routers 10.3.170.254;
-     option host-name "buildhw-a64-02";
 }
 
 host openqa-a64-worker01-mgmt {
