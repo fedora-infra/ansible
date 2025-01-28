@@ -10,7 +10,7 @@
   - name: Target
     prompt: What is the target vhost
     private: false
-  hosts: "{{ target }}"
+  hosts: "{{ Target }}"
   gather_facts: false
   user: root
 
@@ -24,13 +24,13 @@
     with_items: '{{vmlist.list_vms}}'
 
   - name: Add the vmhost to target group
-    local_action: add_host hostname={{ target }} groupname=target
+    local_action: add_host hostname={{ Target }} groupname=Target
 
 # Call out to another playbook.  Disable any proxies that may live here
 # - include_playbook: update-proxy-dns.yml status=disable proxies=myvms_new:&proxies
 
 - name: Set downtime
-  hosts: "target:myvms_new"
+  hosts: "Target:myvms_new"
   gather_facts: false
   user: root
   serial: 1
@@ -45,7 +45,7 @@
     when: nonagios is not defined or not "true" in nonagios
 
 - name: Update the system
-  hosts: "target:myvms_new"
+  hosts: "Target:myvms_new"
   gather_facts: true
   user: root
 
@@ -78,7 +78,7 @@
     when: package_excludes is defined
 
 - name: Run rkhunter if installed
-  hosts: "target:myvms_new"
+  hosts: "Target:myvms_new"
   user: root
 
   tasks:
