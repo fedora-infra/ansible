@@ -27,9 +27,6 @@
     - { role: sudo, tags: ['sudo'] }
     - apache
 
-  tasks:
-  - import_tasks: "{{ role_path }}/base/tasks/motd.yml"
-
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
