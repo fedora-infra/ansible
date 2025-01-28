@@ -421,12 +421,6 @@
   - base
   - common-scripts
 
-- name: Drop in a little system_identification note
-  ansible.builtin.template: src=system_identification dest=/etc/system_identification
-  tags:
-  - config
-  - base
-
 #
 # Watchdog stuff
 #
