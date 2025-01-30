@@ -27,7 +27,7 @@
     src: "{{ roles_path }}/copr/backend/templates/provision/{{ item }}"
     dest: "{{ provision_directory }}/{{ item }}"
   with_items:
-  - vars.yml
+  - vars.yml.j2
   tags:
   - provision_config
 
