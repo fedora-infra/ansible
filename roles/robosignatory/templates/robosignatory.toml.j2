@@ -179,12 +179,14 @@ handlers = ["console"]
             keyid = "{{ (env == 'production')|ternary('105ef944', 'd300e724') }}"
             file_signing_key = "fedora-42-ima"
 
+            # resigning f42 builds with f43 key before branching. Remove after branching.
             [[consumer_config.koji_instances.primary.tags]]
             from = "f42"
             to = "f42"
-            key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('105ef944', 'd300e724') }}"
-            file_signing_key = "fedora-42-ima"
+            key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('31645531', 'd300e724') }}"
+            file_signing_key = "fedora-43-ima"
+
 
             # Branched
             
