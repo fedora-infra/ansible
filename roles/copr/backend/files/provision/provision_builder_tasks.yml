@@ -174,7 +174,7 @@
 
 - name: check disk space
   include_tasks:
-    ansible.builtin.file: check_path_free_space.yml
+    file: check_path_free_space.yml
   vars:
     path: "{{ item.path }}"
     size: "{{ item.size|int }}"
