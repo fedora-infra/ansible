@@ -102,7 +102,7 @@
   - lighttpd_config
 
 - name: Create a txt file with Pulp redirects
-  file: state=file dest=/var/lib/copr/pulp-redirect.txt owner=copr group=copr mode=644
+  file: dest=/var/lib/copr/pulp-redirect.txt owner=copr group=copr mode=644
 
 - name: Add custom lighttpd lua scripts
   ansible.builtin.template: src="lighttpd/{{ item }}.j2" dest="/etc/lighttpd/{{ item }}" owner=root group=root mode=644
