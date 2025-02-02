@@ -24,7 +24,7 @@ mem_size: 20480
 num_cpus: 8
 virt_install_command: "{{ virt_install_command_ppc64le_one_nic_unsafe }}"
 
-volgroup: /dev/vg_guests
+volgroup: /dev/vg_virt_buildvm_ppc64le_iscsi
 
 notes: |
   Koji service employs a set of virtual machines to build packages for the Fedora project. This group builds packages for ppcle architecture.
