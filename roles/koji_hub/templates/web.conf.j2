@@ -16,8 +16,13 @@ KojiFilesURL = https://riscv-kojipkgs.fedoraproject.org/
 
 # SSL authentication options
 KrbRDNS = False
+{% if koji_instance == "primary"  %}
 WebKeytab = /etc/krb5.HTTP_koji{{env_suffix}}.fedoraproject.org.keytab
 WebPrincipal = HTTP/koji{{env_suffix}}.fedoraproject.org
+{% else %}
+WebKeytab = /etc/krb5.HTTP_riscv-koji{{env_suffix}}.fedoraproject.org.keytab
+WebPrincipal = HTTP/riscv-koji{{env_suffix}}.fedoraproject.org
+{% endif %}
 
 LoginTimeout = 72
 
