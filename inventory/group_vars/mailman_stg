@@ -1,18 +1,6 @@
 ---
 # common items for the releng-* boxes
 deployment_type: prod
-# These are consumed by a task in roles/fedmsg/base/main.yml
-fedmsg_certs:
-  - can_send:
-      - logger.log
-    group: sysadmin
-    owner: root
-    service: shell
-  - can_send:
-      - mailman.receive
-    group: mailman
-    owner: mailman
-    service: mailman
 ipa_client_shell_groups:
   - sysadmin-tools
 ipa_client_sudo_groups:
@@ -59,9 +47,7 @@ num_cpus: 4
 
 # Postfix main.cf
 postfix_group: mailman-stg
-tcp_ports: [25, 80, 443,
-  # For outbound fedmsg
-  3000, 3001, 3002, 3003]
+tcp_ports: [25, 80, 443]
 
 # mailman role variables
 mailman_log_level: debug

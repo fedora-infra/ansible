@@ -2,46 +2,6 @@
 # Define resources for this group of hosts here.
 # For the MOTD
 env: pagure-staging
-# These are consumed by a task in roles/fedmsg/base/main.yml
-fedmsg_certs:
-  - can_send:
-      - logger.log
-    group: sysadmin
-    owner: root
-    service: shell
-  - can_send:
-      - pagure.git.receive
-      - pagure.issue.assigned.added
-      - pagure.issue.assigned.reset
-      - pagure.issue.comment.added
-      - pagure.issue.comment.edited
-      - pagure.issue.dependency.added
-      - pagure.issue.dependency.removed
-      - pagure.issue.drop
-      - pagure.issue.edit
-      - pagure.issue.new
-      - pagure.issue.tag.added
-      - pagure.issue.tag.removed
-      - pagure.project.deleted
-      - pagure.project.edit
-      - pagure.project.forked
-      - pagure.project.group.added
-      - pagure.project.new
-      - pagure.project.tag.edited
-      - pagure.project.tag.removed
-      - pagure.project.user.access.updated
-      - pagure.project.user.added
-      - pagure.pull-request.closed
-      - pagure.pull-request.comment.added
-      - pagure.pull-request.flag.added
-      - pagure.pull-request.flag.updated
-      - pagure.pull-request.new
-      - pagure.request.assigned.added
-    group: apache
-    owner: git
-    service: pagure
-fedmsg_env: stg
-fedmsg_prefix: io.pagure
 freezes: false
 git_basepath: /srv/git/repositories
 git_daemon_user: git
@@ -71,9 +31,7 @@ stunnel_source_port: :::8088
 # the host_vars/$hostname file
 tcp_ports: [22, 25, 80, 443, 9418,
   # Used for the eventsource server
-  8088,
-  # This is for the pagure public fedmsg relay
-  9940]
+  8088]
 vpn: true
 
 notes: |

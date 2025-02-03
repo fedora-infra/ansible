@@ -1,6 +1,4 @@
 ---
-# Setup a fedmsg-hub
-
 - name: Install needed packages
   ansible.builtin.package: name={{ item }} state=present
   with_items:

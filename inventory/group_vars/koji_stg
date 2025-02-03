@@ -1,25 +1,6 @@
 ---
 # Define resources for this group of hosts here.
 docker_registry: "candidate-registry.stg.fedoraproject.org"
-# These are consumed by a task in roles/fedmsg/base/main.yml
-fedmsg_certs:
-  - can_send:
-      - logger.log
-    group: sysadmin
-    owner: root
-    service: shell
-  - can_send:
-      - buildsys.build.state.change
-      - buildsys.package.list.change
-      - buildsys.repo.done
-      - buildsys.repo.init
-      - buildsys.rpm.sign
-      - buildsys.tag
-      - buildsys.task.state.change
-      - buildsys.untag
-    group: apache
-    owner: root
-    service: koji
 ipa_client_shell_groups:
   - fi-apprentice
   - sysadmin-noc
@@ -42,7 +23,5 @@ num_cpus: 8
 source_registry: "registry.stg.fedoraproject.org"
 # for systems that do not match the above - specify the same parameter in
 # the host_vars/$hostname file
-tcp_ports: [80, 443, 111, 2049,
-  # These 8 ports are used by fedmsg.  One for each wsgi thread.
-  3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007]
+tcp_ports: [80, 443, 111, 2049]
 udp_ports: [111, 2049]

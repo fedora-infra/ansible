@@ -9,10 +9,6 @@ custom_rules: [
   '-A INPUT -p tcp -m tcp -s 127.0.0.1 --dport 6081 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 127.0.0.1 --dport 6082 -j ACCEPT',
   # also allow varnish from internal for purge requests
   '-A INPUT -p tcp -m tcp -s 192.168.1.0/24 --dport 6081 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 10.3.163.0/24 --dport 6081 -j ACCEPT',
-  # Allow stg.fedoramagazine.org running at vultr.com to talk inbound fedmsg
-  # Contact cydrobolt about the status of this.  It hasn't hit prod status
-  # yet as of 2015-04-27 (threebean).
-  '-A INPUT -p tcp -m tcp --dport 9941 -s 104.207.133.220 -j ACCEPT',
   '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.115 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.116 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.117 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.118 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.119 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.120 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.121 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.122 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.123 -j ACCEPT']
 nft_custom_rules:
   # Need for rsync from log01 for logs.
@@ -24,11 +20,6 @@ nft_custom_rules:
   # also allow varnish from internal for purge requests
   - 'add rule ip filter INPUT ip saddr 192.168.1.0/24 tcp dport 6081 counter accept'
   - 'add rule ip filter INPUT ip saddr 10.3.163.0/24  tcp dport 6081 counter accept'
-  # Allow stg.fedoramagazine.org running at vultr.com to talk inbound fedmsg
-  # Contact cydrobolt about the status of this.  It hasn't hit prod status
-  # yet as of 2015-04-27 (threebean).
-  #!# FIXME: Keep??
-  - 'add rule ip filter INPUT ip saddr 104.207.133.220 tcp dport 9941 counter accept'
   - 'add rule ip filter INPUT ip saddr 10.3.166.115 tcp dport 22623 counter accept'
   - 'add rule ip filter INPUT ip saddr 10.3.166.116 tcp dport 22623 counter accept'
   - 'add rule ip filter INPUT ip saddr 10.3.166.117 tcp dport 22623 counter accept'
@@ -80,12 +71,6 @@ tcp_ports: [
   15671,
   # This is for TOTP
   8443,
-  # For fedmsg websocket server over stunnel
-  9939,
-  # For fedmsg raw zeromq socket (outbound)
-  9940,
-  # 9941 is closed generally, is for the inbound fedmsg and is covered in
-  # custom_rules
 ]
 varnish_group: proxies
 zabbix_templates: "{{ [] }}" # For the moment we have no proxies external to IAD2, if this changes, put in the changes in the production group.

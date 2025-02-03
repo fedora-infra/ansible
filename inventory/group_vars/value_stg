@@ -19,32 +19,6 @@ nft_custom_rules:
   # batcave01 also needs access to announce commits.
   - 'add rule ip filter INPUT ip saddr 10.3.163.35 tcp dport 5050 counter accept'
 deployment_type: stg
-# These are consumed by a task in roles/fedmsg/base/main.yml
-fedmsg_certs:
-  - can_send:
-      - logger.log
-    group: sysadmin
-    owner: root
-    service: shell
-  - can_send:
-      # cookies!
-      - irc.karma
-      # standard meetbot stuff
-      - meetbot.meeting.complete
-      - meetbot.meeting.start
-      - meetbot.meeting.topic.update
-      # meetbot line items
-      - meetbot.meeting.item.agreed
-      - meetbot.meeting.item.accepted
-      - meetbot.meeting.item.rejected
-      - meetbot.meeting.item.action
-      - meetbot.meeting.item.info
-      - meetbot.meeting.item.idea
-      - meetbot.meeting.item.help
-      - meetbot.meeting.item.link
-    group: daemon
-    owner: root
-    service: supybot
 ipa_client_shell_groups:
   - fi-apprentice
   - sysadmin-mote
@@ -61,9 +35,7 @@ mem_size: 6144
 num_cpus: 2
 # for systems that do not match the above - specify the same parameter in
 # the host_vars/$hostname file
-tcp_ports: [80, 443,
-  # These 16 ports are used by fedmsg.  One for each wsgi thread.
-  3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009, 3010, 3011, 3012, 3013, 3014, 3015]
+tcp_ports: [80, 443]
 
 notes: |
   Hosts staging services which help facilitate communication over IRC and related mediums.

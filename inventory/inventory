@@ -90,17 +90,11 @@ ibiblio05.fedoraproject.org
 [busgateway]
 busgateway01.iad2.fedoraproject.org
 
-[busgateway_stg]
-busgateway01.stg.iad2.fedoraproject.org
-
 [flatpak_cache]
 flatpak-cache01.iad2.fedoraproject.org
 
 [github2fedmsg]
 github2fedmsg01.iad2.fedoraproject.org
-
-[github2fedmsg_stg]
-github2fedmsg01.stg.iad2.fedoraproject.org
 
 [mailman]
 mailman01.iad2.fedoraproject.org
@@ -161,7 +155,6 @@ db-datanommer01.stg.iad2.fedoraproject.org
 # clients that talk to the main postgres stg servers
 [postgres_clients_stg]
 bodhi-backend01.stg.iad2.fedoraproject.org
-busgateway01.stg.iad2.fedoraproject.org
 koji01.stg.iad2.fedoraproject.org
 
 [download_iad2]
@@ -532,7 +525,6 @@ buildvm-x86-02.stg.iad2.fedoraproject.org
 buildvm-x86-03.stg.iad2.fedoraproject.org
 buildvm-x86-04.stg.iad2.fedoraproject.org
 buildvm-x86-05.stg.iad2.fedoraproject.org
-busgateway01.stg.iad2.fedoraproject.org
 compose-x86-01.stg.iad2.fedoraproject.org
 copr-be-dev.aws.fedoraproject.org
 #copr-be-dev-temp.aws.fedoraproject.org
@@ -549,7 +541,6 @@ db.stg.aws.fedoraproject.org
 debuginfod01.stg.iad2.fedoraproject.org
 oci-candidate-registry01.stg.iad2.fedoraproject.org
 oci-registry01.stg.iad2.fedoraproject.org
-github2fedmsg01.stg.iad2.fedoraproject.org
 ipa01.stg.iad2.fedoraproject.org
 ipa02.stg.iad2.fedoraproject.org
 ipa03.stg.iad2.fedoraproject.org
@@ -667,29 +658,15 @@ wiki02.iad2.fedoraproject.org
 busgateway
 pkgs
 
-[fedmsg_hubs_stg:children]
-busgateway_stg
-pkgs_stg
-
 [fedmsg_ircs:children]
 value
-
-[fedmsg_ircs_stg:children]
-value_stg
 
 [fedmsg_relays:children]
 busgateway
 
-[fedmsg_relays_stg:children]
-busgateway_stg
-
 [fedmsg_gateways:children]
 busgateway
 proxies
-
-[fedmsg_gateways_stg:children]
-busgateway_stg
-proxies_stg
 
 [fedmsg_services:children]
 fedmsg_hubs
@@ -697,16 +674,9 @@ fedmsg_ircs
 fedmsg_relays
 fedmsg_gateways
 
-[fedmsg_services_stg:children]
-fedmsg_hubs_stg
-fedmsg_ircs_stg
-fedmsg_relays_stg
-fedmsg_gateways_stg
-
 # These are groups that are using the python34 fedmsg stack.
 [python34_fedmsg:children]
 mailman
-mailman_stg
 
 ## END fedmsg services
 
@@ -1038,10 +1008,8 @@ bodhi_backend_stg
 buildvm_stg
 buildvm_ppc64le_stg
 buildvm_aarch64_stg
-busgateway_stg
 dbserver_stg
 debuginfod_stg
-github2fedmsg_stg
 ipa_stg
 ipsilon_stg
 koji_stg

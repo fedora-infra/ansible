@@ -1,10 +1,10 @@
 ---
 - import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
   vars:
-    myhosts: "busgateway:busgateway_stg"
+    myhosts: "busgateway"
 
 - name: Dole out the generic configuration
-  hosts: busgateway:busgateway_stg
+  hosts: busgateway
   user: root
   gather_facts: true
 
@@ -32,7 +32,7 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
 - name: Dole out the service-specific config
-  hosts: busgateway:busgateway_stg
+  hosts: busgateway
   user: root
   gather_facts: true
 

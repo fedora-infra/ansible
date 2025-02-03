@@ -1,14 +1,6 @@
 datacenter: staging
 eth0_ipv4_gw: 10.3.167.254
 eth0_ipv4_ip: 10.3.167.33
-# These are consumed by a task in roles/fedmsg/base/main.yml
-fedmsg_certs:
-  - group: root
-    owner: root
-    service: shell
-  - group: root
-    owner: root
-    service: bodhi
 koji_hub_nfs: "fedora_koji"
 kojihub_scheme: http
 kojihub_url: koji.stg.fedoraproject.org/kojihub

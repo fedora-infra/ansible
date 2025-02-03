@@ -1,27 +1,6 @@
 ---
 # Define resources for this group of hosts here.
 deployment_type: stg
-# These are consumed by a task in roles/fedmsg/base/main.yml
-fedmsg_certs:
-  - # The shell cert needs to be allowed to send these too so it can do alembic
-    # upgrades that trigger messages.
-    can_send:
-      - fmn.filter.update
-      - fmn.preference.update
-      - fmn.rule.update
-      - fmn.confirmation.update
-      - logger.log
-    group: sysadmin
-    owner: root
-    service: shell
-  - can_send:
-      - fmn.filter.update
-      - fmn.preference.update
-      - fmn.rule.update
-      - fmn.confirmation.update
-    group: fedmsg
-    owner: root
-    service: fmn
 ipa_client_shell_groups:
   - fi-apprentice
   - sysadmin-noc

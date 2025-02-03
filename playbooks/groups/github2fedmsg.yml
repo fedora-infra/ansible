@@ -6,10 +6,10 @@
 ---
 - import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
   vars:
-    myhosts: "github2fedmsg:github2fedmsg_stg"
+    myhosts: "github2fedmsg"
 
 - name: Make the box be real
-  hosts: github2fedmsg:github2fedmsg_stg
+  hosts: github2fedmsg
   user: root
   gather_facts: true
 
@@ -39,7 +39,7 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
 - name: Deploy service-specific config
-  hosts: github2fedmsg:github2fedmsg_stg
+  hosts: github2fedmsg
   user: root
   gather_facts: true
 

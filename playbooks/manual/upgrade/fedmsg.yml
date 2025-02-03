@@ -2,22 +2,16 @@
 - name: Push packages out
   hosts:
   - fedmsg-hubs
-  - fedmsg-hubs-stg
 
   - fedmsg-relays
-  - fedmsg-relays-stg
 
   - fedmsg-ircs
-  - fedmsg-ircs-stg
 
   - fedmsg-gateways
-  - fedmsg-gateways-stg
 
   - moksha-hubs
-  - moksha-hubs-stg
 
   - datagrepper
-  - datagrepper-stg
 
   user: root
   vars_files:

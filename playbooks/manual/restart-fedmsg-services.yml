@@ -7,7 +7,7 @@
 
 ---
 - name: Restart fedmsg-gateway instances
-  hosts: fedmsg_gateways:fedmsg_gateways_stg
+  hosts: fedmsg_gateways
   user: root
   gather_facts: false
 
@@ -21,7 +21,7 @@
     service: name=fedmsg-gateway state=restarted
 
 - name: Restart fedmsg-relay instances
-  hosts: fedmsg_relays:fedmsg_relays_stg
+  hosts: fedmsg_relays
   user: root
   gather_facts: false
 
@@ -35,7 +35,7 @@
     service: name=fedmsg-relay state=restarted
 
 - name: Restart fedmsg-irc instances
-  hosts: fedmsg_ircs:fedmsg_ircs_stg
+  hosts: fedmsg_ircs
   user: root
   gather_facts: false
 
@@ -49,7 +49,7 @@
     service: name=fedmsg-irc state=restarted
 
 - name: Tell nagios to be quiet about FMN for the moment
-  hosts: notifs_backend:notifs_backend_stg
+  hosts: notifs_backend
   user: root
   gather_facts: false
 
@@ -67,7 +67,7 @@
 #    service: name=fmn-digests@1 state=restarted
 
 - name: Restart fedmsg-hub instances
-  hosts: fedmsg_hubs:fedmsg_hubs_stg
+  hosts: fedmsg_hubs
   user: root
   gather_facts: false
 
@@ -81,7 +81,7 @@
     service: name=fedmsg-hub state=restarted
 
 - name: Restart moksha-hub instances
-  hosts: moksha_hubs:moksha_hubs_stg
+  hosts: moksha_hubs
   user: root
   gather_facts: false
 
