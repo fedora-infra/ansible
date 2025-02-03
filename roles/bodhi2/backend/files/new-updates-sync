@@ -26,7 +26,49 @@ FEDORAALTDEST = '/pub/fedora-secondary/updates/'
 EPELDEST = '/pub/epel/'
 OSTREESOURCE = '/mnt/koji/compose/ostree/repo/'
 OSTREEDEST = '/mnt/koji/ostree/repo/'
-RELEASES = {'f41': {'topic': 'fedora',
+RELEASES = {'f42': {'topic': 'fedora',
+                    'version': '42',
+                    'modules': ['fedora', 'fedora-secondary'],
+                    'repos': {'updates': {
+                        'from': 'f42-updates',
+                        'ostrees': [{'ref': 'fedora/42/%(arch)s/updates/silverblue',
+                                     'dest': OSTREEDEST,
+                                     'arches': ['x86_64', 'ppc64le', 'aarch64']},
+                                    {'ref': 'fedora/42/%(arch)s/updates/kinoite',
+                                     'dest': OSTREEDEST,
+                                     'arches': ['x86_64', 'ppc64le', 'aarch64']},
+                                    {'ref': 'fedora/42/%(arch)s/updates/sericea',
+                                     'dest': OSTREEDEST,
+                                     'arches': ['x86_64', 'ppc64le', 'aarch64']},
+                                    {'ref': 'fedora/42/%(arch)s/updates/onyx',
+                                     'dest': OSTREEDEST,
+                                     'arches': ['x86_64', 'ppc64le', 'aarch64']}],
+                        'to': [{'arches': ['x86_64', 'aarch64', 'source'],
+                                'dest': os.path.join(FEDORADEST, '42', 'Everything')},
+                               {'arches': ['ppc64le', 's390x'],
+                                'dest': os.path.join(FEDORAALTDEST, '42', 'Everything')}
+                              ]},
+                              'updates-testing': {
+                        'from': 'f42-updates-testing',
+                        'ostrees': [{'ref': 'fedora/42/%(arch)s/testing/silverblue',
+                                     'dest': OSTREEDEST,
+                                     'arches': ['x86_64', 'ppc64le', 'aarch64']},
+                                    {'ref': 'fedora/42/%(arch)s/testing/kinoite',
+                                     'dest': OSTREEDEST,
+                                     'arches': ['x86_64', 'ppc64le', 'aarch64']},
+                                    {'ref': 'fedora/42/%(arch)s/testing/sericea',
+                                     'dest': OSTREEDEST,
+                                     'arches': ['x86_64', 'ppc64le', 'aarch64']},
+                                    {'ref': 'fedora/42/%(arch)s/testing/onyx',
+                                     'dest': OSTREEDEST,
+                                     'arches': ['x86_64', 'ppc64le', 'aarch64']}],
+                        'to': [{'arches': ['x86_64', 'aarch64', 'source'],
+                                'dest': os.path.join(FEDORADEST, 'testing', '42', 'Everything')},
+                               {'arches': ['ppc64le', 's390x'],
+                                'dest': os.path.join(FEDORAALTDEST, 'testing', '42', 'Everything')}
+                              ]}}
+                   },
+            'f41': {'topic': 'fedora',
                     'version': '41',
                     'modules': ['fedora', 'fedora-secondary'],
                     'repos': {'updates': {

@@ -133,6 +133,13 @@ handlers = ["console"]
             keyid = "{{ (env == 'production')|ternary('47dd8ef9', 'd300e724') }}"
             file_signing_key = "fedora-42-ima"
 
+            [[consumer_config.koji_instances.primary.tags]]
+            from = "f43-infra-candidate"
+            to = "f43-infra-stg"
+            key = "{{ (env == 'production')|ternary('fedora-infra', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('47dd8ef9', 'd300e724') }}"
+            file_signing_key = "fedora-43-ima"
+
             # Gated coreos-pool tag
 
             [[consumer_config.koji_instances.primary.tags]]
@@ -156,8 +163,38 @@ handlers = ["console"]
             keyid = "{{ (env == 'production')|ternary('105ef944', 'd300e724') }}"
             file_signing_key = "fedora-42-ima"
 
+            [[consumer_config.koji_instances.primary.tags]]
+            from = "f43-coreos-signing-pending"
+            to = "coreos-pool"
+            key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('31645531', 'd300e724') }}"
+            file_signing_key = "fedora-43-ima"
+
             # Gated rawhide
 
+            [[consumer_config.koji_instances.primary.tags]]
+            from = "f43-signing-pending"
+            to = "f43-updates-testing-pending"
+            key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('31645531', 'd300e724') }}"
+            file_signing_key = "fedora-43-ima"
+
+            [consumer_config.koji_instances.primary.tags.sidetags]
+            pattern = 'f43-build-side-<seq_id>'
+            from = '<sidetag>-signing-pending'
+            to = '<sidetag>-testing-pending'
+            trusted_taggers = ['bodhi']
+            file_signing_key = "fedora-43-ima"
+
+            [[consumer_config.koji_instances.primary.tags]]
+            from = "f43-pending"
+            to = "f43"
+            key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('31645531', 'd300e724') }}"
+            file_signing_key = "fedora-43-ima"
+
+            # Branched
+            
             [[consumer_config.koji_instances.primary.tags]]
             from = "f42-signing-pending"
             to = "f42-updates-testing-pending"
@@ -172,24 +209,8 @@ handlers = ["console"]
             trusted_taggers = ['bodhi']
             file_signing_key = "fedora-42-ima"
 
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f42-pending"
-            to = "f42"
-            key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('105ef944', 'd300e724') }}"
-            file_signing_key = "fedora-42-ima"
+            # stable releases
 
-            # resigning f42 builds with f43 key before branching. Remove after branching.
-            [[consumer_config.koji_instances.primary.tags]]
-            from = "f42"
-            to = "f42"
-            key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('31645531', 'd300e724') }}"
-            file_signing_key = "fedora-43-ima"
-
-
-            # Branched
-            
             [[consumer_config.koji_instances.primary.tags]]
             from = "f41-signing-pending"
             to = "f41-updates-testing-pending"
@@ -203,8 +224,6 @@ handlers = ["console"]
             to = '<sidetag>-testing-pending'
             trusted_taggers = ['bodhi']
             file_signing_key = "fedora-41-ima"
-
-            # stable releases
 
             [[consumer_config.koji_instances.primary.tags]]
             from = "f40-signing-pending"
@@ -322,6 +341,13 @@ handlers = ["console"]
             # openh264 signing
 
             [[consumer_config.koji_instances.primary.tags]]
+            from = "f43-openh264"
+            to = "f43-openh264"
+            key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('31645531', 'd300e724') }}"
+            file_signing_key = "fedora-43-ima"
+
+            [[consumer_config.koji_instances.primary.tags]]
             from = "f42-openh264"
             to = "f42-openh264"
             key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
@@ -379,17 +405,17 @@ handlers = ["console"]
 
         [consumer_config.ostree_refs."fedora/rawhide/x86_64/iot"]
         directory = "/mnt/fedora_koji/koji/compose/iot/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
         [consumer_config.ostree_refs."fedora/rawhide/aarch64/iot"]
         directory = "/mnt/fedora_koji/koji/compose/iot/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
         
         [consumer_config.ostree_refs."fedora/devel/x86_64/iot"]
         directory = "/mnt/fedora_koji/koji/compose/iot/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-41', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
         [consumer_config.ostree_refs."fedora/devel/aarch64/iot"]
         directory = "/mnt/fedora_koji/koji/compose/iot/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-41', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
 
         [consumer_config.ostree_refs."fedora/stable/x86_64/iot"]
         directory = "/mnt/fedora_koji/koji/compose/iot/repo/"
@@ -474,19 +500,57 @@ handlers = ["console"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
         key = "{{ (env == 'production')|ternary('fedora-41', 'testkey') }}"
 
+        # f42 silveblue ostree refs
+
+        [consumer_config.ostree_refs."fedora/42/x86_64/silverblue"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/aarch64/silverblue"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/ppc64le/silverblue"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/x86_64/updates/silverblue"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/x86_64/testing/silverblue"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/aarch64/updates/silverblue"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/aarch64/testing/silverblue"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/ppc64le/updates/silverblue"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/ppc64le/testing/silverblue"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
         # rawhide silveblue ostree refs
 
         [consumer_config.ostree_refs."fedora/rawhide/aarch64/silverblue"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
 
         [consumer_config.ostree_refs."fedora/rawhide/ppc64le/silverblue"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
 
         [consumer_config.ostree_refs."fedora/rawhide/x86_64/silverblue"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
 
         # f40 kinoite ostree refs
 
@@ -564,20 +628,57 @@ handlers = ["console"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
         key = "{{ (env == 'production')|ternary('fedora-41', 'testkey') }}"
 
+        # f42 kinoite ostree refs
+
+        [consumer_config.ostree_refs."fedora/42/x86_64/kinoite"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/aarch64/kinoite"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/ppc64le/kinoite"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/x86_64/updates/kinoite"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/x86_64/testing/kinoite"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/aarch64/updates/kinoite"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/aarch64/testing/kinoite"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/ppc64le/updates/kinoite"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/ppc64le/testing/kinoite"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
 
         # rawhide kinoite ostree refs
 
         [consumer_config.ostree_refs."fedora/rawhide/aarch64/kinoite"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
 
         [consumer_config.ostree_refs."fedora/rawhide/ppc64le/kinoite"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
 
         [consumer_config.ostree_refs."fedora/rawhide/x86_64/kinoite"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
 
         # f40 sericea ostree refs
 
@@ -655,19 +756,57 @@ handlers = ["console"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
         key = "{{ (env == 'production')|ternary('fedora-41', 'testkey') }}"
 
+        # f42 sericea ostree refs
+
+        [consumer_config.ostree_refs."fedora/42/x86_64/sericea"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/aarch64/sericea"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/ppc64le/sericea"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/x86_64/updates/sericea"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/x86_64/testing/sericea"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/aarch64/updates/sericea"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/aarch64/testing/sericea"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/ppc64le/updates/sericea"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/ppc64le/testing/sericea"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
         # rawhide sericea ostree refs
 
         [consumer_config.ostree_refs."fedora/rawhide/aarch64/sericea"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
 
         [consumer_config.ostree_refs."fedora/rawhide/ppc64le/sericea"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
 
         [consumer_config.ostree_refs."fedora/rawhide/x86_64/sericea"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
 
         # f40 onyx ostree refs
 
@@ -745,19 +884,57 @@ handlers = ["console"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
         key = "{{ (env == 'production')|ternary('fedora-41', 'testkey') }}"
 
+        # f42 onyx ostree refs
+
+        [consumer_config.ostree_refs."fedora/42/x86_64/onyx"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/aarch64/onyx"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/ppc64le/onyx"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/x86_64/updates/onyx"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/x86_64/testing/onyx"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/aarch64/updates/onyx"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/aarch64/testing/onyx"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/ppc64le/updates/onyx"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/ppc64le/testing/onyx"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
         # rawhide onyx ostree refs
 
         [consumer_config.ostree_refs."fedora/rawhide/aarch64/onyx"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
 
         [consumer_config.ostree_refs."fedora/rawhide/ppc64le/onyx"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
 
         [consumer_config.ostree_refs."fedora/rawhide/x86_64/onyx"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+        key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
 
     [consumer_config.coreos]
     bucket = "fcos-builds"
