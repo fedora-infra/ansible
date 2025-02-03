@@ -47,5 +47,20 @@
           </div>
       </div>
   </div>
+    <script>
+      var tables = document.getElementsByTagName("table");
+      for (var i=0; i<tables.length; i++)
+      {
+        var thetable = tables[i];      
+        thetable.setAttribute( "class", "table table-striped" );
+      }
+
+      var tds = document.getElementsByTagName("td");
+      for (var i=0; i<tds.length; i++)
+      {
+        var td = tds[i];
+        td.setAttribute( "align", "" );
+      }
+    </script>
   </body>
 </html>
