@@ -232,17 +232,17 @@
         owner=apache group=apache mode=0600
   notify:
   - reload httpd
-  when: env != 'staging' and ansible_hostname.startswith('koji')
+  when: env != 'staging'
   tags:
   - config
   - koji_hub
 
 - name: Install GSSAPI keytab
-  ansible.builtin.copy: src={{ private }}/files/keytabs/{{ env }}/koji-gssapi dest=/etc/koji-hub/gssapi.keytab
+  ansible.builtin.copy: src={{ private }}/files/keytabs/{{ env }}/koji-gssapi-{{ koji_instance }} dest=/etc/koji-hub/gssapi.keytab
         owner=apache group=apache mode=0600
   notify:
   - reload httpd
-  when: env != 'staging' and ansible_hostname.startswith('koji')
+  when: env != 'staging'
   tags:
   - config
   - koji_hub
