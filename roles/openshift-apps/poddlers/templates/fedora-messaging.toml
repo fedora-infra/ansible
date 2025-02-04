@@ -180,7 +180,7 @@ file_check_url = "https://src{{ env_suffix }}.fedoraproject.org/%(namespace)s/%(
 old_composes_url = "https://kojipkgs{{ env_suffix }}.fedoraproject.org/compose/"
 
 [consumer_config.check_email_overrides]
-email_overrides_url = "https://pagure.io/fedora-infra/ansible/raw/main/f/roles/openshift-apps/toddlers/templates/email_overrides.toml"
+email_overrides_url = "https://pagure.io/fedora-infra/ansible/raw/main/f/roles/openshift-apps/poddlers/templates/email_overrides.toml"
 
 [consumer_config.clean_retired_packages]
 pdc_active_branches = "https://pdc{{ env_suffix }}.fedoraproject.org/extras/active_branches.json"
