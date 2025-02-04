@@ -301,33 +301,33 @@ handlers = ["console"]
             [[consumer_config.koji_instances.primary.tags]]
             from = "eln-signing-pending"
             to = "eln-updates-testing-pending"
-            key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('105ef944', 'd300e724') }}"
-            file_signing_key = "fedora-41-ima"
+            key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('31645531', 'd300e724') }}"
+            file_signing_key = "fedora-43-ima"
 
             [[consumer_config.koji_instances.primary.tags]]
             from = "eln-modular-updates-candidate"
             to = "eln-modular"
-            key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('105ef944', 'd300e724') }}"
+            key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('31645531', 'd300e724') }}"
             type = "modular"
-            file_signing_key = "fedora-42-ima"
+            file_signing_key = "fedora-43-ima"
 
             # ELN Mass Rebuild
 
             [[consumer_config.koji_instances.primary.tags]]
             from = "eln-rebuild"
             to = "eln-rebuild"
-            key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('105ef944', 'd300e724') }}"
-            file_signing_key = "fedora-42-ima"
+            key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('31645531', 'd300e724') }}"
+            file_signing_key = "fedora-43-ima"
 
             [[consumer_config.koji_instances.primary.tags]]
             from = "eln"
             to = "eln"
-            key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('105ef944', 'd300e724') }}"
-            file_signing_key = "fedora-42-ima"
+            key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('31645531', 'd300e724') }}"
+            file_signing_key = "fedora-43-ima"
 
             # ELN Side tags
 
@@ -336,7 +336,7 @@ handlers = ["console"]
             from = '<sidetag>-signing-pending'
             to = '<sidetag>-testing-pending'
             trusted_taggers = ['bodhi']
-            file_signing_key = "fedora-42-ima"
+            file_signing_key = "fedora-43-ima"
             
             # openh264 signing
 
