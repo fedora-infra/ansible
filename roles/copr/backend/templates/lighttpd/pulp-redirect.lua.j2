@@ -19,17 +19,26 @@ function line_in_file(searched, file)
 end
 
 
-function uri_to_fullname(uri)
-  -- Take an URI which can look like this
-  -- /results/@copr/copr-dev/.../copr-cli-1.112-1.fc41.noarch.rpm
-  -- and parse only the project fullname from it, e.g. @copr/copr-dev
-  local first = string.find(uri, "/", 2)
-  local mid = string.find(uri, "/", first + 1)
-  local last = string.find(uri, ":")
-  if not last then
-    last = string.find(uri, "/", mid + 1)
+function string_split(str, separator)
+  -- Split string into an array of strings.
+  -- The separator must be a single character
+  local i = 1
+  local results = {}
+  while true do
+    local j = string.find(str, separator, i)
+    if j then
+      -- The `j` is an index of the separator and we want only the word before
+      -- the separator
+      j = j - 1
+      local value = string.sub(str, i, j)
+      table.insert(results, value)
+      -- Start from where we ended but skip the separator
+      i = j + 2
+    else
+      break
+    end
   end
-  return string.sub(uri, first + 1, last - 1)
+  return results
 end
 
 
@@ -47,8 +56,30 @@ function pulp_url(copr_path)
 end
 
 
-local uri = lighty.env["uri.path"]
-local project = uri_to_fullname(uri)
-if line_in_file(project, file_with_redirects) then
+function main()
+  local uri = lighty.env["uri.path"]
+  local split = string_split(uri, "/")
+  if #(split) < 5 then
+    return
+  end
+
+  local owner, project, chroot = split[3], split[4], split[5]
+  if chroot == "srpm-builds" then
+    return
+  end
+
+  local fullname = owner .. "/" .. project
+  local colon = string.find(fullname, ":")
+  if colon then
+    fullname = string.sub(fullname, 0, colon - 1)
+  end
+
+  if not line_in_file(fullname, file_with_redirects) then
+    return
+  end
+
   return redirect(pulp_url(uri))
 end
+
+
+return main()
