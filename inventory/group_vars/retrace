@@ -6,38 +6,6 @@ nft_custom_rules:
   - 'add rule ip filter INPUT ip saddr 10.5.78.11 tcp dport 2049 counter accept'
   - 'add rule ip filter INPUT ip saddr 10.5.78.11 tcp dport 5432 counter accept'
 env: production
-# Since retrace is on the qa network, it needs to actively connect to our
-# inbound relay.
-fedmsg_active: True
-fedmsg_cert_prefix: faf
-# Declare fedmsg certs that should be put in /etc/pki/fedmsg/
-# These are consumed by a task in roles/fedmsg/base/main.yml
-fedmsg_certs:
-  - can_send:
-      - logger.log
-    group: retrace
-    owner: root
-    service: shell
-  - can_send:
-      - faf.report.threshold1
-      - faf.report.threshold10
-      - faf.report.threshold100
-      - faf.report.threshold1000
-      - faf.report.threshold1000
-      - faf.report.threshold10000
-      - faf.report.threshold100000
-      - faf.report.threshold1000000
-      - faf.problem.threshold1
-      - faf.problem.threshold10
-      - faf.problem.threshold100
-      - faf.problem.threshold1000
-      - faf.problem.threshold1000
-      - faf.problem.threshold10000
-      - faf.problem.threshold100000
-      - faf.problem.threshold1000000
-    group: faf
-    owner: root
-    service: faf
 freezes: false
 ipa_client_shell_groups:
   - retrace

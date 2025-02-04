@@ -64,7 +64,6 @@
   - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
 
   roles:
-  - gitolite/check_fedmsg_hooks
   - {role: git/make_checkout_seed, when: env != "staging"}
   - git/hooks
   - git/checks

@@ -2,23 +2,6 @@
 datacenter: iad2
 eth0_ipv4_gw: 10.3.169.254
 eth0_ipv4_ip: 10.3.169.122
-fedmsg_certs:
-  - can_send:
-      # new school pungi-koji stuff (ask dgilmore)
-      - pungi.compose.phase.start
-      - pungi.compose.phase.stop
-      - pungi.compose.status.change
-      - pungi.compose.createiso.targets
-      - pungi.compose.createiso.imagefail
-      - pungi.compose.createiso.imagedone
-      - pungi.compose.ostree
-      - compose.29.complete
-      - compose.29.start
-      - compose.29.rsync.start
-      - compose.29.rsync.complete
-    group: sysadmin-releng
-    owner: root
-    service: releng
 # This VM is the compose host for IoT Edition
 freezes: false
 koji_hub_nfs: "fedora_koji"

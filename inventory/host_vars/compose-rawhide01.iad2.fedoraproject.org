@@ -1,38 +1,6 @@
 datacenter: iad2
 eth0_ipv4_gw: 10.3.169.254
 eth0_ipv4_ip: 10.3.169.123
-fedmsg_certs:
-  - can_send:
-      - pungi.compose.phase.start
-      - pungi.compose.phase.stop
-      - pungi.compose.status.change
-      - pungi.compose.createiso.targets
-      - pungi.compose.createiso.imagefail
-      - pungi.compose.createiso.imagedone
-      - pungi.compose.ostree
-      - compose.rawhide.complete
-      - compose.rawhide.mash.complete
-      - compose.rawhide.mash.start
-      - compose.rawhide.image.complete
-      - compose.rawhide.image.start
-      - compose.rawhide.pungify.complete
-      - compose.rawhide.pungify.start
-      - compose.rawhide.rsync.complete
-      - compose.rawhide.rsync.start
-      - compose.rawhide.start
-      - compose.bikeshed.complete
-      - compose.bikeshed.mash.complete
-      - compose.bikeshed.mash.start
-      - compose.bikeshed.image.complete
-      - compose.bikeshed.image.start
-      - compose.bikeshed.pungify.complete
-      - compose.bikeshed.pungify.start
-      - compose.bikeshed.rsync.complete
-      - compose.bikeshed.rsync.start
-      - compose.bikeshed.start
-    group: sysadmin-releng
-    owner: root
-    service: releng
 # rawhide is never frozen, the compose box should not be so we can make needed changes
 freezes: false
 koji_hub_nfs: "fedora_koji"

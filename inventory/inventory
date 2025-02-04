@@ -87,14 +87,8 @@ vmhost-x86-cc05.rdu-cc.fedoraproject.org
 ibiblio02.fedoraproject.org
 ibiblio05.fedoraproject.org
 
-[busgateway]
-busgateway01.iad2.fedoraproject.org
-
 [flatpak_cache]
 flatpak-cache01.iad2.fedoraproject.org
-
-[github2fedmsg]
-github2fedmsg01.iad2.fedoraproject.org
 
 [mailman]
 mailman01.iad2.fedoraproject.org
@@ -653,33 +647,6 @@ wiki01.stg.iad2.fedoraproject.org
 wiki01.iad2.fedoraproject.org
 wiki02.iad2.fedoraproject.org
 
-# assorted categories of fedmsg services, for convenience
-[fedmsg_hubs:children]
-busgateway
-pkgs
-
-[fedmsg_ircs:children]
-value
-
-[fedmsg_relays:children]
-busgateway
-
-[fedmsg_gateways:children]
-busgateway
-proxies
-
-[fedmsg_services:children]
-fedmsg_hubs
-fedmsg_ircs
-fedmsg_relays
-fedmsg_gateways
-
-# These are groups that are using the python34 fedmsg stack.
-[python34_fedmsg:children]
-mailman
-
-## END fedmsg services
-
 #[cloud_hardware]
 #virthost-aarch64-os01.fedorainfracloud.org
 #virthost-aarch64-os02.fedorainfracloud.org
@@ -968,7 +935,6 @@ buildvm
 buildvm_aarch64
 buildvm_ppc64le
 bkernel
-busgateway
 bvirthost
 certgetter
 dbserver
@@ -976,7 +942,6 @@ debuginfod
 dns_iad2
 download_iad2
 flatpak_cache
-github2fedmsg
 ipa
 ipsilon
 koji

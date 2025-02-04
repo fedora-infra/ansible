@@ -17,6 +17,6 @@ source_registry: "registry.fedoraproject.org"
 notes: |
   Koji service employs a set of machines to build packages for the Fedora project.
 
-  * Relies on koji-hub, Packages, PkgDB, apache, fedmsg, fas, virthost, and is monitored by nagios
+  * Relies on koji-hub, Packages, PkgDB, apache, fedora messaging, fas, virthost, and is monitored by nagios
   * Several services rely on the builders, including koschei, Bodhi, Tagger, SCM, Darkserver.
   * Produces automated builds of packages for the architecture listed. Builders can be scaled by adding new

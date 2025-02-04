@@ -37,8 +37,6 @@
   - supybot
   - sudo
   - rsyncd
-  - role: collectd/fedmsg-service
-    process: fedmsg-irc
   - {role: nfs/client,
      nfs_mount_opts: "rw,hard,bg,intr,noatime,nodev,nosuid,nfsvers=3",
      mnt_dir: '/srv/',

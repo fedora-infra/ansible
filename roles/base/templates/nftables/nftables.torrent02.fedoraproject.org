@@ -50,13 +50,6 @@ add rule ip filter INPUT ip saddr {{ hostvars[host]['eth0_ip'] }} counter reject
 {% endfor %}
 {% endif %}
 
-# if the host declares a fedmsg-enabled wsgi app, open ports for it
-{% if wsgi_fedmsg_service is defined %}
-{% for i in range(wsgi_procs * wsgi_threads) %}
-add rule ip filter INPUT tcp dport 30{{ '%02d' % i }} counter accept
-{% endfor %}
-{% endif %}
-
 
 # if the host/group defines incoming tcp_ports - allow them
 {% if tcp_ports is defined %}

@@ -1,32 +1,6 @@
 ---
 # common items for the releng-* boxes
 dns: 10.3.163.33
-# These are consumed by a task in roles/fedmsg/base/main.yml
-fedmsg_certs:
-  - can_send:
-      - logger.log
-    group: root
-    owner: root
-    service: shell
-  - can_send:
-      - pungi.compose.phase.start
-      - pungi.compose.phase.stop
-      - pungi.compose.status.change
-      - pungi.compose.createiso.targets
-      - pungi.compose.createiso.imagefail
-      - pungi.compose.createiso.imagedone
-      - pungi.compose.ostree
-      - compose.27.complete
-      - compose.27.start
-      - compose.28.complete
-      - compose.28.rsync.complete
-      - compose.28.rsync.start
-      - compose.28.start
-      - compose.29.complete
-      - compose.29.start
-    group: masher
-    owner: root
-    service: releng
 freezes: true
 host_group: releng
 ipa_client_shell_groups:

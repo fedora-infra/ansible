@@ -91,13 +91,6 @@ nft_custom6_rules: []
 nft_custom_rules: []
 # most of our systems are in IAD2
 datacenter: iad2
-# These are used to:
-#  1) configure mod_wsgi
-#  2) open iptables rules for fedmsg (per wsgi thread)
-#  3) declare enough fedmsg endpoints for the service
-#wsgi_fedmsg_service:  bodhi
-#wsgi_procs: 4
-#wsgi_threads: 4
 
 # Datanommer
 datanommer_db_hostname: db-datanommer02
@@ -120,33 +113,6 @@ env_suffix: ""
 eth0_ipv4_nm: 24
 eth1_ip: 10.0.0.10
 eth1_nm: 255.255.255.0
-# By default, fedmsg hosts are in passive mode.  External hosts are typically
-# active.
-fedmsg_active: False
-# By default, nodes get no fedmsg certs.  They need to declare them explicitly.
-fedmsg_certs: []
-# A special flag that, when set to true, will disconnect the host from the
-# global fedmsg-relay instance and set it up with its own local one.  You can
-# temporarily set this to true for a specific host to do some debugging -- so
-# you can *replay real messages from the datagrepper history without having
-# those broadcast to the rest of the bus*.
-fedmsg_debug_loopback: False
-fedmsg_env: prod
-# By default, fedmsg sends error logs to sysadmin-datanommer-members@fp.o.
-fedmsg_error_recipients:
-  - sysadmin-datanommer-members@fedoraproject.org
-# By default, fedmsg should not log debug info.  Groups can override this.
-fedmsg_loglevel: INFO
-# Amount of time to wait for connections after a socket is first established.
-fedmsg_post_init_sleep: 1.0
-# Other defaults for fedmsg environments
-fedmsg_prefix: org.fedoraproject
-# Everywhere, always, we should sign messages and validate signatures.
-# However, we allow individual hosts and groups to override this.  Use this very
-# carefully.. and never in production (good for testing stuff in staging).
-fedmsg_sign_messages: True
-fedmsg_validate_signatures: True
-#
 # END: Ansible roles_path variables
 #######
 freezes: true

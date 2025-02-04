@@ -65,12 +65,6 @@ add rule ip filter INPUT ip saddr 192.168.100.0/24 udp dport 464 counter accept
 # Reject all further connections from less secure vpn
 add rule ip filter INPUT ip saddr 192.168.100.0/24 counter reject with icmp type host-prohibited
 {% endif %}
-# if the host declares a fedmsg-enabled wsgi app, open ports for it
-{% if wsgi_fedmsg_service is defined %}
-{% for i in range(wsgi_procs * wsgi_threads) %}
-add rule ip filter INPUT tcp dport 30{{ '%02d' % i }} counter accept
-{% endfor %}
-{% endif %}
 
 
 # if the host/group defines incoming tcp_ports - allow them

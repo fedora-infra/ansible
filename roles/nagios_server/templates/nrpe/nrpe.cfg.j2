@@ -328,12 +328,6 @@ command[check_saslauthd]=/usr/lib64/nagios/plugins/check_procs -c 1:10 -C 'sasla
 command[check_readonly_fs]=/usr/lib64/nagios/plugins/check_readonly_fs
 command[check_postfix_queue]=/usr/lib64/nagios/plugins/check_postfix_queue -w 2 -c 5
 command[check_merged_file_age]=/usr/lib64/nagios/plugins/check_file_age -w 120 -c 300 /var/log/merged/messages.log
-command[check_fedmsg_relay_proc]=/usr/lib64/nagios/plugins/check_procs -c 1:1 -C 'fedmsg-relay' -u fedmsg
-command[check_fedmsg_hub_proc]=/usr/lib64/nagios/plugins/check_procs -c 1:1 -C 'fedmsg-hub' -u fedmsg
-command[check_fedmsg_gateway_proc]=/usr/lib64/nagios/plugins/check_procs -c 1:1 -C 'fedmsg-gateway' -u fedmsg
-command[check_fedmsg_irc_proc]=/usr/lib64/nagios/plugins/check_procs -c 1:1 -C 'fedmsg-irc' -u fedmsg
-command[check_fedmsg_tweet_proc]=/usr/lib64/nagios/plugins/check_procs -c 1:1 -C 'fedmsg-tweet' -u fedmsg
-command[check_fedmsg_composer_proc]=/usr/lib64/nagios/plugins/check_procs -c 1:1 -C 'fedmsg-hub-3' -u apache
 command[check_haproxy_conns]=/usr/lib64/nagios/plugins/check_haproxy_conns.py
 command[check_redis_proc]=/usr/lib64/nagios/plugins/check_procs -c 1:1 -C 'redis-server' -u redis
 command[check_openvpn_link]=/usr/lib64/nagios/plugins/check_ping -H 192.168.1.41 -w 375.0,20% -c 500,60%
@@ -342,7 +336,7 @@ command[check_memcache_connect]=/usr/lib64/nagios/plugins/check_memcache_connect
 command[check_mirrorlist_docker_proxy]=/usr/lib64/nagios/plugins/check_tcp -H localhost -p 18081
 command[check_mailman_api]=/usr/lib64/nagios/plugins/check_http -H localhost -p 8001 -u /3.0
 
-# The following are fedmsg/datanommer checks to be run on busgateway01.
+# The following are fedora mesaging/datanommer checks.
 # They check for the time since the latest message in any particular category.
 # The first number is the seconds elapsed until we should raise a warning.
 # The second number is the seconds elapsed until we should raise an error.
@@ -379,36 +373,6 @@ command[check_datanommer_trac]=/usr/lib64/nagios/plugins/check_datanommer_timesi
 command[check_datanommer_rpmsign]=/usr/lib64/nagios/plugins/check_datanommer_timesince.py org.fedoraproject.prod.buildsys.rpm.sign 10800 14400
 command[check_datanommer_wiki]=/usr/lib64/nagios/plugins/check_datanommer_timesince.py wiki 259200 1814400
 
-# Fedmsg checks for consumers and producers
-command[check_fedmsg_cp_busgateway_relay]=/usr/lib64/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-relay RelayConsumer MonitoringProducer
-command[check_fedmsg_cp_busgateway_gateway]=/usr/lib64/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-gateway GatewayConsumer MonitoringProducer
-command[check_fedmsg_cp_app]=/usr/lib64/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-relay RelayConsumer MonitoringProducer
-command[check_fedmsg_cp_value]=/usr/lib64/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-irc IRCBotConsumer MonitoringProducer
-command[check_fedmsg_cp_badges_backend]=/usr/lib64/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-hub FedoraBadgesConsumer MonitoringProducer
-command[check_fedmsg_cp_notifs_backend]=/usr/lib64/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-hub FMNConsumer DigestProducer ConfirmationProducer MonitoringProducer
-command[check_fedmsg_cp_hotness_backend]=/usr/lib64/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-hub BugzillaTicketFiler MonitoringProducer
-command[check_fedmsg_cp_packages_backend]=/usr/lib64/nagios/plugins/check_fedmsg_producers_consumers.py fedmsg-hub CacheInvalidator MonitoringProducer
-
-command[check_fedmsg_cexceptions_busgateway_relay]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_exceptions.py fedmsg-relay RelayConsumer 1 10
-command[check_fedmsg_cexceptions_busgateway_gateway]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_exceptions.py fedmsg-gateway GatewayConsumer 1 10
-command[check_fedmsg_cexceptions_app]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_exceptions.py fedmsg-relay RelayConsumer 1 10
-command[check_fedmsg_cexceptions_value]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_exceptions.py fedmsg-irc IRCBotConsumer 1 10
-command[check_fedmsg_cexceptions_badges_backend]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_exceptions.py fedmsg-hub FedoraBadgesConsumer 1 10
-command[check_fedmsg_cexceptions_notifs_backend]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_exceptions.py fedmsg-hub FMNConsumer 1 10
-command[check_fedmsg_cexceptions_hotness_backend]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_exceptions.py fedmsg-hub BugzillaTicketFiler 1 10
-command[check_fedmsg_cexceptions_packages_backend]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_exceptions.py fedmsg-hub CacheInvalidator 1 10
-
-command[check_fedmsg_cbacklog_busgateway_relay]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_backlog.py fedmsg-relay RelayConsumer 10 50
-command[check_fedmsg_cbacklog_busgateway_gateway]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_backlog.py fedmsg-gateway GatewayConsumer 10 50
-command[check_fedmsg_cbacklog_app]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_backlog.py fedmsg-relay RelayConsumer 10 50
-command[check_fedmsg_cbacklog_value]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_backlog.py fedmsg-irc IRCBotConsumer 10 50
-command[check_fedmsg_cbacklog_badges_backend]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_backlog.py fedmsg-hub FedoraBadgesConsumer 25000 35000
-command[check_fedmsg_cbacklog_notifs_backend]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_backlog.py fedmsg-hub FMNConsumer 10 50
-command[check_fedmsg_cbacklog_hotness_backend]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_backlog.py fedmsg-hub BugzillaTicketFiler 100 500
-command[check_fedmsg_cbacklog_packages_backend_hub]=/usr/lib64/nagios/plugins/check_fedmsg_consumer_backlog.py fedmsg-hub CacheInvalidator 30000 40000
-
-command[check_fedmsg_fmn_digest_last_ran]=/usr/lib64/nagios/plugins/check_fedmsg_producer_last_ran.py fedmsg-hub DigestProducer 90 600
-command[check_fedmsg_fmn_confirm_last_ran]=/usr/lib64/nagios/plugins/check_fedmsg_producer_last_ran.py fedmsg-hub ConfirmationProducer 30 300
 command[check_systemd_units]=/usr/lib64/nagios/plugins/check_systemd_units
 # The following are 'action commands' where by an actual action is performed
 # like restarting httpd

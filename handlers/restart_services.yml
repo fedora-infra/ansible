@@ -17,27 +17,6 @@
 - name: Restart crond
   action: service name=crond state=restarted
 
-- name: Restart fedmsg-gateway
-  ansible.builtin.command: /usr/local/bin/conditional-restart.sh fedmsg-gateway
-
-- name: Restart fedmsg-hub
-  ansible.builtin.command: /usr/local/bin/conditional-restart.sh {{ item }}
-  with_items:
-  - fedmsg-hub
-  - fedmsg-hub-3
-
-- name: Restart fedmsg-hub-3
-  ansible.builtin.command: /usr/local/bin/conditional-restart.sh {{ item }}
-  with_items:
-  - fedmsg-hub
-  - fedmsg-hub-3
-
-- name: Restart fedmsg-irc
-  ansible.builtin.command: /usr/local/bin/conditional-restart.sh fedmsg-irc
-
-- name: Restart fedmsg-relay
-  ansible.builtin.command: /usr/local/bin/conditional-restart.sh fedmsg-relay
-
 - name: Restart fm-consumer@koji_sync_listener
   action: service name=fm-consumer@koji_sync_listener state=restarted enabled=yes
 

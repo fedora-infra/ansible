@@ -1,19 +1,6 @@
 ---
 # Define resources for this group of hosts here.
 deployment_type: prod
-# These are consumed by a task in roles/fedmsg/base/main.yml
-fedmsg_certs:
-  - can_send:
-      - logger.log
-    group: sysadmin
-    owner: root
-    service: shell
-  - can_send:
-      - wiki.article.edit
-      - wiki.upload.complete
-    group: apache
-    owner: root
-    service: mediawiki
 ipa_client_shell_groups:
   - fi-apprentice
   - sysadmin-noc

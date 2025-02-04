@@ -15,19 +15,6 @@ exclude_iad2_hostgroups:
   - zabbix_stg
   - zabbix
   - logdetective
-# These are consumed by a task in roles/fedmsg/base/main.yml
-fedmsg_certs:
-  - can_send:
-      - logger.log
-    group: sysadmin
-    owner: root
-    service: shell
-  - can_send:
-      - nagios.host.state.change
-      - nagios.service.state.change
-    group: nagios
-    owner: root
-    service: nagios
 #iad2_management_slowping:
 #  - ppc8-01-fsp.mgmt.fedoraproject.org
 #  - ppc8-02-fsp.mgmt.fedoraproject.org

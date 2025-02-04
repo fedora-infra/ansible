@@ -14,8 +14,6 @@ exclude_paths:
   - scripts
   # Ignore playbooks with strange error happening in <unicode string>
   - playbooks/groups/copr-db.yml
-  # Exclude playbook that contains only include_playbook
-  - playbooks/fedmsgupdate.yml
   # Some playbooks contains hardcoded paths, so exclude them from check
   - playbooks/list-vms-per-host.yml
   - playbooks/set_root_auth_keys.yml

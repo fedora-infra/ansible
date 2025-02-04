@@ -65,12 +65,6 @@
 # Reject all further connections from less secure vpn
 -A INPUT -s 192.168.100.0/24 -j REJECT --reject-with icmp-host-prohibited
 {% endif %}
-# if the host declares a fedmsg-enabled wsgi app, open ports for it
-{% if wsgi_fedmsg_service is defined %}
-{% for i in range(wsgi_procs * wsgi_threads) %}
--A INPUT -p tcp -m tcp --dport 30{{ '%02d' % i }} -j ACCEPT
-{% endfor %}
-{% endif %}
 
 
 # if the host/group defines incoming tcp_ports - allow them

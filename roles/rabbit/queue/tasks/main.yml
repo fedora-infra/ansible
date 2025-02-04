@@ -78,26 +78,6 @@
     - fedora-messaging
     - rabbitmq_cluster
 
-# This can be removed when we're done with fedmsg and the bridges are retired.
-- name: Bind the {{ queue_name }} queue to the zmq.topic exchange
-  delegate_to: "{{ queue_rabbitmq_server }}"
-  rabbitmq_binding:
-    name: "zmq.topic"
-    destination: "{{ queue_name }}"
-    destination_type: queue
-    routing_key: "{{ routing_key }}"
-    vhost: "{{ queue_vhost }}"
-    state: present
-    login_user: admin
-    login_password: "{{ (env == 'production')|ternary(rabbitmq_admin_password_production, rabbitmq_admin_password_staging) }}"
-  loop: "{{ queue_routing_keys }}"
-  loop_control:
-    loop_var: routing_key
-  when: queue_routing_keys is defined
-  tags:
-    - fedora-messaging
-    - rabbitmq_cluster
-
 - name: Monitor the {{ queue_name }} queue in Nagios (NRPE)
   when: queue_thresholds and env == "production"
   delegate_to: "{{ queue_rabbitmq_server }}"

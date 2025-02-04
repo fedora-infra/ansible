@@ -29,17 +29,6 @@
     extensions:
     - .ico
 
-  - role: fedmsg/crl
-    website: fedoraproject.org
-    path: /fedmsg
-    when: env != "staging"
-
-  - role: fedmsg/gateway/slave
-    stunnel_service: "websockets"
-    stunnel_source_port: 9939
-    stunnel_destination_port: 9938
-    when: env != "staging"
-
   - role: httpd/fingerprints
     website: admin.fedoraproject.org
 

@@ -130,14 +130,6 @@
 
   - role: httpd/reverseproxy
     website: apps.fedoraproject.org
-    destname: github2fedmsg
-    localpath: /github2fedmsg
-    remotepath: /github2fedmsg
-    header_scheme: true
-    proxyurl: http://localhost:10037
-
-  - role: httpd/reverseproxy
-    website: apps.fedoraproject.org
     destname: fedora-notifications
     localpath: /notifications-old
     remotepath: /notifications-old

@@ -8,25 +8,6 @@ nft_custom_rules:
   - 'add rule ip filter INPUT ip daddr 224.0.0.0/8 counter accept'
   - 'add rule ip filter INPUT ip protocol vrrp counter accept'
 docker_registry: "candidate-registry.fedoraproject.org"
-# These are consumed by a task in roles/fedmsg/base/main.yml
-fedmsg_certs:
-  - can_send:
-      - logger.log
-    group: sysadmin
-    owner: root
-    service: shell
-  - can_send:
-      - buildsys.build.state.change
-      - buildsys.package.list.change
-      - buildsys.repo.done
-      - buildsys.repo.init
-      - buildsys.rpm.sign
-      - buildsys.tag
-      - buildsys.task.state.change
-      - buildsys.untag
-    group: apache
-    owner: root
-    service: koji
 ipa_client_shell_groups:
   - sysadmin-releng
 ipa_client_sudo_groups:
@@ -44,8 +25,6 @@ primary_auth_source: ipa
 source_registry: "registry.fedoraproject.org"
 # for systems that do not match the above - specify the same parameter in
 # the host_vars/$hostname file
-tcp_ports: [80, 443, 111, 2049,
-  # These 8 ports are used by fedmsg.  One for each wsgi thread.
-  3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007]
+tcp_ports: [80, 443, 111, 2049]
 udp_ports: [111, 2049]
 virt_install_command: "{{ virt_install_command_two_nic }}"

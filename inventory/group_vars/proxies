@@ -11,10 +11,6 @@ custom_rules: [
   '-A INPUT -p tcp -m tcp -s 127.0.0.1 --dport 6081 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 127.0.0.1 --dport 6082 -j ACCEPT',
   # also allow varnish from internal for purge requests
   '-A INPUT -p tcp -m tcp -s 192.168.1.0/24 --dport 6081 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 10.3.163.0/24 --dport 6081 -j ACCEPT',
-  # Allow happinesspackets.fedorainfracloud.org to talk to inbound fedmsg relay.
-  '-A INPUT -p tcp -m tcp --dport 9941 -s 209.132.184.58 -j ACCEPT',
-  # Allow openqa01 to talk to the inbound fedmsg relay.
-  '-A INPUT -p tcp -m tcp --dport 9941 -s 10.3.174.0/24 -j ACCEPT',
   '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.120 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.121 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.122 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.123 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.124 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.125 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.126 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.65 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.127 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.128 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.129 -j ACCEPT']
 nft_custom_rules:
   # Need for rsync from log01 for logs.
@@ -27,10 +23,6 @@ nft_custom_rules:
   # also allow varnish from internal for purge requests
   - 'add rule ip filter INPUT ip saddr 192.168.1.0/24 tcp dport 6081 counter accept'
   - 'add rule ip filter INPUT ip saddr 10.3.163.0/24  tcp dport 6081 counter accept'
-  # Allow happinesspackets.fedorainfracloud.org to talk to inbound fedmsg relay.
-  - 'add rule ip filter INPUT ip saddr 209.132.184.58 tcp dport 9941 counter accept'
-  # Allow openqa01 to talk to the inbound fedmsg relay.
-  - 'add rule ip filter INPUT ip saddr 10.3.174.0/24 tcp dport 9941 counter accept'
   - 'add rule ip filter INPUT ip saddr 10.3.163.120 tcp dport 22623 counter accept'
   - 'add rule ip filter INPUT ip saddr 10.3.163.121 tcp dport 22623 counter accept'
   - 'add rule ip filter INPUT ip saddr 10.3.163.122 tcp dport 22623 counter accept'
@@ -92,12 +84,6 @@ tcp_ports: [
   15671,
   # This is for TOTP
   8443,
-  # For fedmsg websocket server over stunnel
-  9939,
-  # For fedmsg raw zeromq socket (outbound)
-  9940,
-  # 9941 is closed generally, is for the inbound fedmsg and is covered in
-  # custom_rules
 ]
 varnish_group: proxies
 zabbix_templates:

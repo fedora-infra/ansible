@@ -7,17 +7,6 @@ clamscan_paths:
 # Neeed for rsync from log01 for logs.
 custom_rules: ['-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT']
 nft_custom_rules: ['add rule ip filter INPUT ip saddr 192.168.1.59 tcp dport 873 counter accept']
-fedmsg_certs:
-  - can_send:
-      - logger.log
-    group: sysadmin
-    owner: root
-    service: shell
-  - can_send:
-      - planet.post.new
-    group: planet-user
-    owner: root
-    service: planet
 git_basepath: /
 git_daemon_user: nobody
 git_port: 9418

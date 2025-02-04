@@ -10,19 +10,6 @@ nft_custom_rules:
 # This host is externally reachable
 #
 external: true
-fedmsg_certs:
-  - can_send:
-      - ansible.playbook.complete
-      - ansible.playbook.start
-      - logger.log
-    group: sysadmin
-    owner: root
-    service: shell
-  - can_send:
-      - infragit.receive
-    group: sysadmin
-    owner: root
-    service: scm
 freezes: true
 ipa_client_shell_groups:
   - fi-apprentice

@@ -35,38 +35,6 @@
     state: yes
     persistent: yes
 
-# Set-up stunnel for the event source server
-
-# - name: Install stunnel service definition
-#   ansible.builtin.copy: src=stunnel.service
-#         dest=/usr/lib/systemd/system/stunnel.service
-#         owner=root group=root mode=0755
-#   notify:
-#   - Reload systemd
-#   - Restart stunnel
-#   tags:
-#   - pagure
-#   - stunnel
-
-# - name: Ensure old stunnel init file is gone
-#   ansible.builtin.file: dest=/etc/init.d/stunnel/stunnel.init state=absent
-#   tags:
-#   - pagure
-#   - stunnel
-#   - config
-
-# - name: Install stunnel.conf
-#   ansible.builtin.template: src={{ item.file }}
-#             dest={{ item.dest }}
-#             owner=root group=root mode=0600
-#   with_items:
-#   - { file: stunnel-conf.j2, dest: /etc/stunnel/stunnel.conf }
-#   notify: Restart stunnel
-#   tags:
-#   - pagure
-#   - stunnel
-#   - config
-
 # Set-up Pagure
 
 - name: Create a group pagure we can use
@@ -372,7 +340,6 @@
   with_items:
   - httpd
   - postfix
-  #  - stunnel
   - redis
   - pagure_ev
   - pagure_logcom

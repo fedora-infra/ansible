@@ -19,8 +19,6 @@ ipa_host_group: bodhi
 ipa_host_group_desc: Bodhi update service
 lvm_size: 100000
 mem_size: 16384
-## XXX -- note that the fedmsg_certs declaration does not happen here, but
-# happens instead at the inventory/host_vars/ level s
 nfs_mount_opts: "rw,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3"
 nrpe_procs_crit: 1000
 # With 16 cpus, theres a bunch more kernel threads

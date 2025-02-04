@@ -5,14 +5,6 @@
 amqp_url = "amqps://fmn{{ env_suffix }}:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fpubsub"
 passive_declares = true
 
-# The topic_prefix configuration value will add a prefix to the topics of every sent message.
-# This is used for migrating from fedmsg, and should not be used afterwards.
-{% if env == "staging" %}
-topic_prefix = "org.fedoraproject.stg"
-{% else %}
-topic_prefix = "org.fedoraproject.prod"
-{% endif %}
-
 [tls]
 ca_cert = "/etc/pki/fedora-messaging/ca/cacert.pem"
 certfile = "/etc/pki/fedora-messaging/crt/fmn-cert.pem"

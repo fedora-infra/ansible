@@ -10,7 +10,7 @@ import optparse
 from stat import *
 from subprocess import call, PIPE, Popen
 
-ALL_CHECKS = ['bare', 'shared', 'mail-hook', 'fedmsg-hook', 'perms',
+ALL_CHECKS = ['bare', 'shared', 'mail-hook', 'perms',
               'post-update-hook', 'update-hook']
 DEFAULT_CHECKS = ['bare', 'shared', 'perms', 'post-update-hook']
 
@@ -223,7 +223,6 @@ def set_post_receive_hook_version3(gitdir, fix=False):
     # Remove the old hooks
     hooks = [
         os.path.join(dest_prefix, 'post-receive-email'),
-        os.path.join(dest_prefix, 'post-receive-fedmsg'),
         os.path.join(dest_prefix, 'post-receive-alternativearch'),
         # These two hooks are setup by pagure but are already part of the
         # main post-receive hook
@@ -439,10 +438,6 @@ def main():
         if 'mail-hook' in checks and uses_version1_mail_hook(gitdir):
             error('%s: uses old mail hook' % gitdir)
             if not opts.fix or not set_post_receive_hook_version2(gitdir):
-                problems.append(gitdir)
-
-        if 'fedmsg-hook' in checks:
-            if not set_post_receive_hook_version3(gitdir, fix=opts.fix):
                 problems.append(gitdir)
 
         if 'post-update-hook' in checks and not check_post_update_hook(gitdir,
