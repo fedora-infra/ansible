@@ -21,10 +21,14 @@
       dnf -y install cuda-toolkit-12
       dnf -y module install nvidia-driver:open-dkms
   register: cuda_installation
+  tags:
+    - cuda_installation
 
 - name: Restart the system
   ansible.builtin.reboot:
   when: cuda_installation.changed
+  tags:
+    - cuda_installation
 
 - name: Ensure state of secondary drive
   ignore_errors: true
