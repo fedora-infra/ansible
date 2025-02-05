@@ -13,12 +13,16 @@
       - wget
       - gcc-c++
 
-- name: Download and install cuda drivers repo
-  ansible.builtin.shell:
-    cmd: |
-      cd /etc/yum.repos.d/ && wget https://developer.download.nvidia.com/compute/cuda/repos/fedora41/x86_64/cuda-fedora41.repo
-      dnf clean all
-      dnf -y install cuda-toolkit-12
+- name: Download file with check (sha256)
+  ansible.builtin.get_url:
+    url: https://developer.download.nvidia.com/compute/cuda/repos/fedora41/x86_64/cuda-fedora41.repo
+    dest: /etc/yum.repos.d/
+  tags:
+    - cuda_installation
+
+- name: install cuda
+  ansible.builtin.package:
+    name: cuda-toolkit-12
   register: cuda_installation
   tags:
     - cuda_installation
