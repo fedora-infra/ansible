@@ -13,7 +13,7 @@
       - wget
       - gcc-c++
 
-- name: Download file with check (sha256)
+- name: Download the cuda repofile
   ansible.builtin.get_url:
     url: https://developer.download.nvidia.com/compute/cuda/repos/fedora41/x86_64/cuda-fedora41.repo
     dest: /etc/yum.repos.d/
