@@ -58,6 +58,11 @@
     - role: keytab/service
       kt_location: /etc/kojid/kojid.keytab
       service: compile
+      when: koji_instance != 'secondary'
+    - role: keytab/service
+      kt_location: /etc/kojid/kojid.keytab
+      service: compile-riscv
+      when: koji_instance == 'secondary'
     - role: btrfs
       btrfs_balance_period: weekly
     # push built Flatpaks to candidate registry
@@ -65,12 +70,12 @@
       candidate_registry: "candidate-registry.fedoraproject.org"
       candidate_registry_osbs_username: "{{candidate_registry_osbs_prod_username}}"
       candidate_registry_osbs_password: "{{candidate_registry_osbs_prod_password}}"
-      when: env == "production"
+      when: env == "production" and koji_instance != 'secondary'
     - role: login-registry
       candidate_registry: "candidate-registry.stg.fedoraproject.org"
       candidate_registry_osbs_username: "{{candidate_registry_osbs_stg_username}}"
       candidate_registry_osbs_password: "{{candidate_registry_osbs_stg_password}}"
-      when: env == "staging"
+      when: env == "staging" and koji_instance != 'secondary'
 
   handlers:
     - import_tasks: "{{ handlers_path }}/restart_services.yml"
