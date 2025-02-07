@@ -481,9 +481,9 @@ rules:
 id: "bodhiupdate_bodhipush_coreos"
 product_versions:
   - fedora-{{ FedoraRawhideNumber }}
-{% if FedoraBranched -%}
+{% if FedoraBranched %}
   - fedora-{{ FedoraBranchedNumber }}
-{%- endif %}
+{% endif %}
   - fedora-{{ FedoraCycleNumber }}
 decision_contexts:
   - bodhi_update_push_testing_critical-path-coreos_critpath
