@@ -22,7 +22,7 @@
       - python3-copr-common
       update_cache: true
     notify:
-    - restart haveged
+    - Restart haveged
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"

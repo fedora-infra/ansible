@@ -27,7 +27,7 @@
   - config
   - fedmsg/irc
   notify:
-  - restart fedmsg-irc
+  - Restart fedmsg-irc
 
 - name: Setup fas credentials config file
   ansible.builtin.template: >
@@ -40,7 +40,7 @@
   - config
   - fedmsg/irc
   notify:
-  - restart fedmsg-irc
+  - Restart fedmsg-irc
 
 - name: Enable on boot and start fedmsg-irc
   service: name=fedmsg-irc state=started enabled=true

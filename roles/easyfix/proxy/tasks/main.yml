@@ -11,7 +11,7 @@
     dest=/etc/httpd/conf.d/{{website}}/gather-easyfix.conf
     owner=root group=root mode=0644
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - easyfix
   - easyfix/proxy

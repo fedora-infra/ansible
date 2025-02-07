@@ -189,7 +189,7 @@
 - name: Override kojid.service file to set TasksMax to unlimited
   ansible.builtin.copy: src=kojid.service dest=/etc/systemd/system/kojid.service
   notify:
-  - reload systemd
+  - Reload systemd
   - Restart kojid
   tags:
   - koji_builder
@@ -245,7 +245,7 @@
 - name: Install libvirt/network.conf
   ansible.builtin.copy: src=network.conf dest=/etc/libvirt/network.conf
   notify:
-  - restart virtnetworkd
+  - Restart virtnetworkd
   tags:
   - koji_builder
   when: env != "staging"

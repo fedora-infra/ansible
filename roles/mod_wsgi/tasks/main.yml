@@ -27,6 +27,6 @@
 - name: Wsgi.conf
   ansible.builtin.copy: src="wsgi.conf" dest=/etc/httpd/conf.d/wsgi.conf
   notify:
-  - restart apache
+  - Restart apache
   tags:
   - config

@@ -17,7 +17,7 @@
   tags:
   - mote
   notify:
-  - restart memcached
+  - Restart memcached
 
 - name: Make systemd override dir
   ansible.builtin.file:
@@ -36,8 +36,8 @@
   tags:
   - mote
   notify:
-  - reload systemd
-  - restart memcached
+  - Reload systemd
+  - Restart memcached
 
 - meta: flush_handlers
 
@@ -63,8 +63,8 @@
   - config
   - mote
   notify:
-  - nuke mote json cache
-  - restart apache
+  - Nuke mote json cache
+  - Restart apache
 
 - name: Create /usr/share/httpd/.local for mote-updater to store the fedmsg CRL
   ansible.builtin.file: dest=/usr/share/httpd/.local owner=apache group=apache state=directory
@@ -126,7 +126,7 @@
     dest=/usr/share/mote/name_mappings.json
     setype=httpd_sys_content_t
   notify:
-  - nuke mote json cache
+  - Nuke mote json cache
   tags:
   - mote
   - selinux
@@ -136,7 +136,7 @@
     dest=/usr/share/mote/category_mappings.json
     setype=httpd_sys_content_t
   notify:
-  - nuke mote json cache
+  - Nuke mote json cache
   tags:
   - mote
   - selinux

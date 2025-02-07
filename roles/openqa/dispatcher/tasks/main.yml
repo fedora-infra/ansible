@@ -224,7 +224,7 @@
   ansible.builtin.command: "python3 -m pip install --no-deps /root/fedora_openqa"
   when: "gittools is changed or insttools.rc != 0"
   notify:
-  - restart openqa consumers
+  - Restart openqa consumers
 
 # FIXME: we should probably have the fedora-messaging consumers run as
 # someone other than root and then we'd need another token file for
@@ -241,7 +241,7 @@
 - name: Write schedule.conf
   ansible.builtin.template: src=schedule.conf.j2 dest=/etc/fedora-openqa/schedule.conf owner=root group=root mode=0600
   notify:
-  - restart openqa consumers
+  - Restart openqa consumers
   tags:
   - config
 
@@ -321,7 +321,7 @@
 - name: Configure fedora-messaging scheduler
   ansible.builtin.template: src=fedora_openqa_scheduler.toml.j2 dest=/etc/fedora-messaging/fedora_openqa_scheduler.toml owner=root group=root mode=0640
   notify:
-  - restart openqa scheduler consumer
+  - Restart openqa scheduler consumer
   when: "openqa_amqp_scheduler_queue is defined and openqa_amqp_scheduler_queue"
   tags:
   - config
@@ -329,7 +329,7 @@
 - name: Configure fedora-messaging wiki reporter
   ansible.builtin.template: src=fedora_openqa_wiki_reporter.toml.j2 dest=/etc/fedora-messaging/fedora_openqa_wiki_reporter.toml owner=root group=root mode=0640
   notify:
-  - restart openqa wiki consumer
+  - Restart openqa wiki consumer
   when: "openqa_amqp_wiki_reporter_queue is defined and openqa_amqp_wiki_reporter_queue"
   tags:
   - config
@@ -337,7 +337,7 @@
 - name: Configure fedora-messaging ResultsDB reporter
   ansible.builtin.template: src=fedora_openqa_resultsdb_reporter.toml.j2 dest=/etc/fedora-messaging/fedora_openqa_resultsdb_reporter.toml owner=root group=root mode=0640
   notify:
-  - restart openqa resultsdb consumer
+  - Restart openqa resultsdb consumer
   when: "openqa_amqp_resultsdb_reporter_queue is defined and openqa_amqp_resultsdb_reporter_queue"
   tags:
   - config

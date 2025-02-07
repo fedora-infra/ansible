@@ -55,7 +55,7 @@
     ansible.builtin.copy: src="{{ files }}/debuginfod/sysconfig.debuginfod" dest=/etc/sysconfig/debuginfod owner=root group=root mode=644
     tags: debuginfod
     notify:
-      - restart debuginfod
+      - Restart debuginfod
 
   - name: Ensure systemd drop-in directory exists
     ansible.builtin.file: >
@@ -67,7 +67,7 @@
     tags: debuginfod
     ansible.builtin.copy: src="{{ files }}/debuginfod/debuginfod.service.d" dest=/etc/systemd/system/debuginfod.service.d/override.conf owner=root group=root mode=644
     notify:
-      - restart debuginfod
+      - Restart debuginfod
 
   - name: Ensure debuginfod is enabled and started
     service:

@@ -19,7 +19,7 @@
   - "{{  roles_path  }}/httpd/reverseproxy/templates/reversepassproxy.{{destname}}.conf"
   - "{{  roles_path  }}/httpd/reverseproxy/templates/reversepassproxy.conf"
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - httpd
   - httpd/reverseproxy

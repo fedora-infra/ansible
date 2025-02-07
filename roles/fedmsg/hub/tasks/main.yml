@@ -32,12 +32,12 @@
 - name: Enable the websocket server if we should
   ansible.builtin.copy: src=websockets.py dest=/etc/fedmsg.d/websockets.py
   when: enable_websocket_server
-  notify: restart fedmsg-hub
+  notify: Restart fedmsg-hub
 
 - name: Disable the websocket server if we should..
   ansible.builtin.file: dest=/etc/fedmsg.d/websockets.py state=absent
   when: not enable_websocket_server
-  notify: restart fedmsg-hub
+  notify: Restart fedmsg-hub
 
 - name: Set fedmsg ownership on /var/run/fedmsg
   ansible.builtin.file: >
@@ -68,7 +68,7 @@
   - fedmsg-hub
   - fedmsg-hub-3
   notify:
-  - reload systemd
+  - Reload systemd
   tags:
   - fedmsg/hub
 
@@ -80,7 +80,7 @@
   - fedmsg-hub
   - fedmsg-hub-3
   notify:
-  - reload systemd
-  - restart fedmsg-hub
+  - Reload systemd
+  - Restart fedmsg-hub
   tags:
   - fedmsg/hub

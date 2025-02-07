@@ -48,7 +48,7 @@
 - name: Install libvirtd.conf
   ansible.builtin.copy: src="{{ files }}/virthost/libvirtd.conf" dest=/etc/libvirt/libvirtd.conf
   notify:
-  - restart libvirtd
+  - Restart libvirtd
   tags:
   - libvirtd
   - config
@@ -99,7 +99,7 @@
     virsh net-start host-bridge
     virsh net-autostart host-bridge
   when: libvirt_bridge_exists.changed
-  notify: restart libvirtd
+  notify: Restart libvirtd
   tags: libvirtd
 
 - name: Check if image pool exists
@@ -121,7 +121,7 @@
     virsh pool-start "{{ image_pool_name }}"
     virsh pool-autostart "{{ image_pool_name }}"
   when: libvirt_pool_exists.changed
-  notify: restart libvirtd
+  notify: Restart libvirtd
   tags: libvirtd
 
 - name: Allow copr user controlling libvirt
@@ -132,8 +132,8 @@
     value: libvirt
     backup: yes
   notify:
-    - reload systemd
-    - restart libvirtd.socket
+    - Reload systemd
+    - Restart libvirtd.socket
   tags: libvirtd
 
 - name: Create the copr user

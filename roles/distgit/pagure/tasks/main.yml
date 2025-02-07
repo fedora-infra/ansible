@@ -42,8 +42,8 @@
 #         dest=/usr/lib/systemd/system/stunnel.service
 #         owner=root group=root mode=0755
 #   notify:
-#   - reload systemd
-#   - restart stunnel
+#   - Reload systemd
+#   - Restart stunnel
 #   tags:
 #   - pagure
 #   - stunnel
@@ -61,7 +61,7 @@
 #             owner=root group=root mode=0600
 #   with_items:
 #   - { file: stunnel-conf.j2, dest: /etc/stunnel/stunnel.conf }
-#   notify: restart stunnel
+#   notify: Restart stunnel
 #   tags:
 #   - pagure
 #   - stunnel
@@ -137,7 +137,7 @@
   - web
   - pagure
   notify:
-  - restart apache
+  - Restart apache
 
 - name: Pagure configuration for the hooks
   ansible.builtin.template: src={{ item.file }}
@@ -151,7 +151,7 @@
   - web
   - pagure
   notify:
-  - restart apache
+  - Restart apache
 
 - name: Create the database scheme
   ansible.builtin.command: /usr/bin/python3 /usr/share/pagure/pagure_createdb.py
@@ -204,7 +204,7 @@
   - config
   - pagure
   notify:
-  - restart apache
+  - Restart apache
 
 - name: Install the wsgi file
   ansible.builtin.template: src={{ item }}
@@ -217,7 +217,7 @@
   - web
   - pagure
   notify:
-  - restart apache
+  - Restart apache
 
 - name: Add default facl so apache can read git repos
   acl: default=yes etype=user entity=apache permissions="rx" name=/srv/git state=present
@@ -247,7 +247,7 @@
   - pagure_webhook
   - pagure_worker
   notify:
-  - reload systemd
+  - Reload systemd
   tags:
   - pagure
 
@@ -268,7 +268,7 @@
   - config
   - pagure
   notify:
-  - restart apache
+  - Restart apache
 
 - name: Create the /srv/cache/extras folder for the crons
   ansible.builtin.file: state=directory

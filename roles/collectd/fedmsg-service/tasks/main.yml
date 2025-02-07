@@ -8,7 +8,7 @@
   tags:
   - collectd
   - collectd/fedmsg
-  notify: restart collectd
+  notify: Restart collectd
 
 - name: Copy in /etc/collectd.d/fedmsg-service.conf
   ansible.builtin.template: >
@@ -17,4 +17,4 @@
   tags:
   - collectd
   - collectd/fedmsg
-  notify: restart collectd
+  notify: Restart collectd

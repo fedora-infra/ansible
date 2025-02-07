@@ -71,7 +71,7 @@
   - rabbitmq.config
   - rabbitmq-env.conf
   notify:
-    - restart rabbitmq
+    - Restart rabbitmq
   tags:
   - rabbitmq_cluster
   - config
@@ -81,7 +81,7 @@
         owner=rabbitmq group=rabbitmq mode=0400
   when: "env == 'staging'"
   notify:
-    - restart rabbitmq
+    - Restart rabbitmq
   tags:
   - rabbitmq_cluster
   - config
@@ -91,7 +91,7 @@
         owner=rabbitmq group=rabbitmq mode=0400
   when: "env == 'production'"
   notify:
-    - restart rabbitmq
+    - Restart rabbitmq
   tags:
   - rabbitmq_cluster
   - config
@@ -109,7 +109,7 @@
     content: "[Service]\nLimitNOFILE={{rabbitmq_cluster_file_limit}}\n"
     dest: /etc/systemd/system/rabbitmq-server.service.d/override.conf
   notify:
-    - restart rabbitmq
+    - Restart rabbitmq
   tags:
   - rabbitmq_cluster
   - config

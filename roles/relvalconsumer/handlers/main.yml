@@ -3,9 +3,9 @@
 - name: Conditionally restart relvalconsumer consumer service
   ansible.builtin.command: /usr/local/bin/conditional-restart.sh fm-consumer@relvalconsumer
   listen:
-  - restart relvalconsumer
+  - Restart relvalconsumer
 
 - name: Conditionally restart relvalamiconsumer consumer service
   ansible.builtin.command: /usr/local/bin/conditional-restart.sh fm-consumer@relvalamiconsumer
   listen:
-  - restart relvalamiconsumer
+  - Restart relvalamiconsumer

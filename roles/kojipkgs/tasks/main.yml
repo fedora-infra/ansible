@@ -9,7 +9,7 @@
   with_items:
   - infrastructure.conf
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - kojipkgs
 
@@ -18,14 +18,14 @@
   with_items:
   - kojipkgs.conf
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - kojipkgs
 
 - name: Make sure httpd listens on port 8080
   lineinfile: dest=/etc/httpd/conf/httpd.conf state=present regexp="^Listen 80" line="Listen 8080"
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - kojipkgs
 
@@ -51,7 +51,7 @@
   ansible.builtin.copy: dest=/etc/systemd/system/varnish.service.d/restart-on-fail.conf
         src=restart-on-fail.conf
   notify:
-    - reload systemd
-    - reload varnish
+    - Reload systemd
+    - Reload varnish
   tags:
   - kojipkgs

@@ -2,7 +2,7 @@
 - name: Install mod_ssl
   ansible.builtin.package: name=mod_ssl state=present
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - httpd
   - httpd/mod_ssl
@@ -15,7 +15,7 @@
     group=root
     mode=0644
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - httpd
   - httpd/certificate

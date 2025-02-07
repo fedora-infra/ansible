@@ -261,7 +261,7 @@
   tags:
     - mailman
     - hyperkitty
-  notify: handle static files
+  notify: Handle static files
 
 - name: Create the hyperkitty templates override dirs
   ansible.builtin.file:
@@ -588,7 +588,7 @@
     - webui-qcluster
     - webui-warm-up-cache
   notify:
-    - systemctl daemon-reload
+    - Systemctl daemon-reload
   tags:
     - config
     - mailman
@@ -600,7 +600,7 @@
     dest: "/etc/systemd/system/hyperkitty.target"
     mode: "0644"
   notify:
-    - systemctl daemon-reload
+    - Systemctl daemon-reload
   tags:
     - config
     - mailman
@@ -620,7 +620,7 @@
     - hyperkitty-weekly
     - hyperkitty-yearly
   notify:
-    - systemctl daemon-reload
+    - Systemctl daemon-reload
   tags:
     - config
     - mailman
@@ -640,7 +640,7 @@
     - hyperkitty-weekly
     - hyperkitty-yearly
   notify:
-    - systemctl daemon-reload
+    - Systemctl daemon-reload
   tags:
     - config
     - mailman
@@ -655,7 +655,7 @@
   with_items:
     - mailmanweb.conf
   notify:
-    - reload apache
+    - Reload apache
   tags:
     - config
     - httpd

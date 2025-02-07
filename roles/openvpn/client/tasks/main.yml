@@ -18,7 +18,7 @@
   - install
   - openvpn
 #  notify:
-#  - restart openvpn (Fedora)
+#  - Restart openvpn (Fedora)
 
 - name: Install configuration files (rhel and fedora)
   ansible.builtin.copy: src={{ item.file }}
@@ -35,7 +35,7 @@
   - install
   - openvpn
 #  notify:
-#  - restart openvpn (Fedora)
+#  - Restart openvpn (Fedora)
 
 - name: Make sure openvpn is running in rhel 8+
   service: name=openvpn-client@openvpn state=started enabled=true

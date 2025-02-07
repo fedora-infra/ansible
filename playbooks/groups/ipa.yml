@@ -50,7 +50,7 @@
     service: HTTP
     host: "id{{env_suffix}}.fedoraproject.org"
     notify:
-    - combine IPA http keytabs
+    - Combine IPA http keytabs
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"

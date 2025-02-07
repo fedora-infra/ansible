@@ -40,7 +40,7 @@
 
 - name: Configure crond
   ansible.builtin.copy: src=sysconfig.crond dest=/etc/sysconfig/crond
-  notify: restart crond
+  notify: Restart crond
 
 - name: Install base copr packages
   ansible.builtin.package:
@@ -66,7 +66,7 @@
               state=present
               line='MAILTO=copr-team@redhat.com'
               regexp="^MAILTO"
-  notify: restart crond
+  notify: Restart crond
 
 - name: Override the default rsyslog logrotate file
   ansible.builtin.copy: src=syslog-logrotate dest=/etc/logrotate.d/rsyslog

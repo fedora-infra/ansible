@@ -1,6 +1,6 @@
 ---
-- name: reload httpd
+- name: Reload httpd
   service: name="httpd" state="restarted"
 
-- name: restart copr-dist-git
+- name: Restart copr-dist-git
   service: name="copr-dist-git" state="restarted"

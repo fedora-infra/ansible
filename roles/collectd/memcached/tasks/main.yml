@@ -6,7 +6,7 @@
   - collectd/memcached
   - collectd
   - memcached
-  notify: restart collectd
+  notify: Restart collectd
 
 - name: Lastly, set some selinux booleans
   seboolean: name=collectd_tcp_network_connect persistent=yes state=yes

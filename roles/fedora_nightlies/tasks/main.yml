@@ -101,7 +101,7 @@
   ansible.builtin.command: "python3 -m pip install --no-deps /root/fedora_nightlies"
   when: "gitfn is changed or instfn.rc != 0"
   notify:
-  - restart fedora_nightlies
+  - Restart fedora_nightlies
 
 - name: Create /etc/pki/fedora-messaging
   ansible.builtin.file:
@@ -145,7 +145,7 @@
 - name: Configure fedora-messaging fedora_nightlies
   ansible.builtin.template: src=fedora_nightlies.toml.j2 dest=/etc/fedora-messaging/fedora_nightlies.toml owner=root group=root mode=0640
   notify:
-  - restart fedora_nightlies
+  - Restart fedora_nightlies
   tags:
   - config
 

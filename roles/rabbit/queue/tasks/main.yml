@@ -107,7 +107,7 @@
     owner: root
     group: root
     mode: "0644"
-  notify: restart nrpe on rabbitmq
+  notify: Restart nrpe on rabbitmq
   tags:
     - fedora-messaging
     - rabbitmq_cluster
@@ -118,7 +118,7 @@
   ansible.builtin.template:
     src: nagios.cfg.j2
     dest: /etc/nagios/services/rabbitmq-queue-{{ queue_name }}.cfg
-#  notify: restart nagios on noc
+#  notify: Restart nagios on noc
   tags:
     - fedora-messaging
     - rabbitmq_cluster

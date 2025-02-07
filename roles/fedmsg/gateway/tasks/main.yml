@@ -22,7 +22,7 @@
   - config
   - fedmsg/gateway
   notify:
-  - restart fedmsg-gateway
+  - Restart fedmsg-gateway
 
 - name: Create systemd drop-in directory
   ansible.builtin.file: >
@@ -39,7 +39,7 @@
   - config
   - fedmsg/gateway
   notify:
-  - restart fedmsg-gateway
+  - Restart fedmsg-gateway
 
 - name: Enable on boot and start fedmsg-gateway
   service:

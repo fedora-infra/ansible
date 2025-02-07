@@ -17,7 +17,7 @@
   - "{{  roles_path  }}/httpd/domainrewrite/templates/domainrewrite.{{destname}}.conf"
   - "{{  roles_path  }}/httpd/domainrewrite/templates/domainrewrite.conf"
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - httpd
   - httpd/domainrewrite

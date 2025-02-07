@@ -246,7 +246,7 @@
   - config
   - base
   notify:
-  - flush journald tmpfiles to persistent store
+  - Flush journald tmpfiles to persistent store
 
 - name: Enable journald persistence
   ansible.builtin.file: path=/var/log/journal state=directory
@@ -257,7 +257,7 @@
   - config
   - base
   notify:
-  - flush journald tmpfiles to persistent store
+  - Flush journald tmpfiles to persistent store
 
 - name: Install rh ca for splunk
   ansible.builtin.copy: src={{ private }}/files/splunk-certs/2022-IT-Root-CA.pem

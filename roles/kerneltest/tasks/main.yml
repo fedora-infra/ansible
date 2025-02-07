@@ -33,7 +33,7 @@
   - config
   - kerneltest
   notify:
-  - restart apache
+  - Restart apache
 
 - name: Create the database scheme
   when: inventory_hostname.startswith('kerneltest01')

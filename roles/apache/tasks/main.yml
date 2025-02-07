@@ -25,7 +25,7 @@
   service: name=httpd enabled=yes
   ignore_errors: true
   notify:
-  - reload apache
+  - Reload apache
   tags:
   - service
   - apache
@@ -36,7 +36,7 @@
         owner=root group=root mode=0755
   when: ansible_distribution_major_version|int < 30 and ansible_distribution == 'Fedora'
   notify:
-  - reload apache
+  - Reload apache
   tags:
   - config
   - hotfix
@@ -48,7 +48,7 @@
         owner=root group=root mode=0755
   when: ansible_distribution_major_version|int <= 8 and ansible_distribution == 'RedHat'
   notify:
-  - reload apache
+  - Reload apache
   tags:
   - config
   - hotfix
@@ -57,7 +57,7 @@
 - name: Add appserver headers.conf
   ansible.builtin.template: src="{{ files }}/httpd/headers.conf.j2" dest=/etc/httpd/conf.d/headers.conf
   notify:
-  - reload apache
+  - Reload apache
   tags:
   - config
   - apache
@@ -67,7 +67,7 @@
   ansible.builtin.template: src="{{ files }}/httpd/h2.conf.j2" dest=/etc/httpd/conf.d/h2.conf
   when: ansible_distribution == 'Fedora'
   notify:
-  - reload apache
+  - Reload apache
   tags:
   - config
   - apache
@@ -76,7 +76,7 @@
 - name: Add apache_status location for collectd
   ansible.builtin.template: src="{{ files }}/httpd/apachestatus.conf" dest=/etc/httpd/conf.d/apachestatus.conf
   notify:
-  - reload apache
+  - Reload apache
   tags:
   - config
   - apache

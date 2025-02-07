@@ -5,7 +5,7 @@
     dest=/etc/httpd/conf.d/{{website}}/geoip-city-wsgi-proxy.conf
     owner=root group=root mode=0644
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - geoip-city-wsgi
   - geoip-city-wsgi/proxy

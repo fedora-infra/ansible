@@ -15,7 +15,7 @@
     regexp: ^shared_preload_libraries =
     line: "shared_preload_libraries = 'timescaledb'"
   notify:
-  - restart postgresql
+  - Restart postgresql
   tags:
   - datanommer
   - postgresql

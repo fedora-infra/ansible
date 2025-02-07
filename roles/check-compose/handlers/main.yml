@@ -3,4 +3,4 @@
 - name: Conditionally restart check-compose consumer service
   ansible.builtin.command: /usr/local/bin/conditional-restart.sh fm-consumer@check-compose
   listen:
-  - restart check-compose
+  - Restart check-compose

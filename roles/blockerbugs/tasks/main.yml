@@ -14,7 +14,7 @@
 - name: Setup blockerbugs apache conf
   ansible.builtin.copy: src=blockerbugs.conf dest=/etc/httpd/conf.d/blockerbugs.conf mode=644
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - config
   - httpd
@@ -41,7 +41,7 @@
 - name: Setup blockerbugs app settings file
   ansible.builtin.template: src=blockerbugs-settings.py.j2 dest=/etc/blockerbugs/settings.py mode=640
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - config
   - httpd
@@ -53,7 +53,7 @@
   - blockerbugs
   - apache
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - config
   - httpd

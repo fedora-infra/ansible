@@ -3,14 +3,14 @@
   ansible.builtin.copy: src=/root/ticketkey_{{env}}.tkey dest=/etc/httpd/ticketkey_{{env}}.tkey
         owner=root group=root mode=0600
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
 
 - name: Copy in the main httpd.conf file for proxy nodes
   ansible.builtin.template: >
     src=httpd.conf.j2 dest=/etc/httpd/conf/httpd.conf
     owner=root group=root mode=0644
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - httpd
   - httpd/proxy
@@ -32,7 +32,7 @@
   - 02-ticketkey.conf
   - 03-reqtimeout.conf
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - httpd
   - httpd/proxy
@@ -40,7 +40,7 @@
 - name: Remove the keepalives configuration
   ansible.builtin.file: path=/etc/httpd/conf.d/01-keepalives.conf state=absent
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - httpd
   - httpd/proxy
@@ -48,7 +48,7 @@
 - name: Set the apache mpm to use event MPM
   ansible.builtin.copy: src=00-mpm.conf dest=/etc/httpd/conf.modules.d/00-mpm.conf
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - httpd
   - httpd/proxy
@@ -113,4 +113,4 @@
   - httpd/proxy
   - httpdoverride
   notify:
-  - reload systemd
+  - Reload systemd

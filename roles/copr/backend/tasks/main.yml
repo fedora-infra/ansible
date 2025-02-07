@@ -96,7 +96,7 @@
 - name: Install lighttpd.conf
   ansible.builtin.template: src="lighttpd/lighttpd.conf" dest=/etc/lighttpd/lighttpd.conf owner=root group=root mode=0644
   notify:
-  - restart lighttpd
+  - Restart lighttpd
   tags:
   - config
   - lighttpd_config
@@ -110,7 +110,7 @@
     - content-encoding-gzip-if-exists.lua
     - pulp-redirect.lua
   notify:
-  - restart lighttpd
+  - Restart lighttpd
   tags:
   - config
 
@@ -133,7 +133,7 @@
   - dirlisting.conf
   - mime.conf
   notify:
-  - restart lighttpd
+  - Restart lighttpd
   tags:
   - config
 
@@ -247,7 +247,7 @@
 - name: Copy copr-be.conf
   ansible.builtin.template: src="copr-be.conf.j2" dest=/etc/copr/copr-be.conf  owner=root group=copr mode=640
   notify:
-  - restart copr-backend
+  - Restart copr-backend
   tags:
   - config
   - copr_infrastructure_password
@@ -265,7 +265,7 @@
             owner=copr group=copr mode=0600
   when: copr_messaging
   notify:
-  - restart copr-backend
+  - Restart copr-backend
   tags:
   - config
 
@@ -406,6 +406,6 @@
     regexp: '^ARGS='
     line: 'ARGS=--collector.systemd'
     backrefs: yes
-  notify: restart node_exporter
+  notify: Restart node_exporter
   tags:
     - prometheus_node_exporter

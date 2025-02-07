@@ -74,7 +74,7 @@
 - name: Sshd_config
   ansible.builtin.template: src=sshd_config dest=/etc/ssh/sshd_config mode=0600
   notify:
-  - restart sshd
+  - Restart sshd
   tags:
   - basessh
   - sshd_config
@@ -217,7 +217,7 @@
   with_items: "{{certs_to_sign}}"
   register: certcopy
   notify:
-  - restart sshd
+  - Restart sshd
   tags:
   - basessh
   - sshd_cert

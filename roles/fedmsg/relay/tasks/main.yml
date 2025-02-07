@@ -33,7 +33,7 @@
   - services
   - fedmsg/relay
   notify:
-  - restart fedmsg-relay
+  - Restart fedmsg-relay
   when: env != "staging"
 
 - name: Enable on boot and start fedmsg-relay
@@ -42,5 +42,5 @@
   - services
   - fedmsg/relay
   notify:
-  - restart fedmsg-relay
+  - Restart fedmsg-relay
   when: env == "staging"

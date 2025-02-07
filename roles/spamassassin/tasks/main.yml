@@ -22,14 +22,14 @@
 - name: Setup the sysconfig file
   ansible.builtin.copy: src=sysconfig dest=/etc/sysconfig/spamassassin
   notify:
-  - restart spamassassin
+  - Restart spamassassin
   tags:
   - config
 
 - name: Setup the config file
   ansible.builtin.copy: src=local.cf dest=/etc/mail/spamassassin/local.cf
   notify:
-  - restart spamassassin
+  - Restart spamassassin
   tags:
   - config
 

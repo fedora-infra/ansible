@@ -19,7 +19,7 @@
         dest=/etc/httpd/conf.d/apps.fedoraproject.org/fedora-releng-dash.conf
         state=absent
       tags: releng-dash
-      notify: reload proxyhttpd
+      notify: Reload proxyhttpd
 
   roles:
 

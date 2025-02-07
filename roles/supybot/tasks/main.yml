@@ -166,7 +166,7 @@
   ansible.builtin.copy: src=zodbot.service dest=/etc/systemd/system/zodbot.service
   when: env == "production"
   notify:
-  - reload systemd
+  - Reload systemd
   tags:
   - config
   - supybot
@@ -182,7 +182,7 @@
   ansible.builtin.copy: src=ursabot.service dest=/etc/systemd/system/ursabot.service
   when: env == "staging"
   notify:
-  - reload systemd
+  - Reload systemd
   tags:
   - config
   - supybot

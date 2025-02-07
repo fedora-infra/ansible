@@ -103,7 +103,7 @@
     tags:
     - collectd
     - config
-    notify: restart collectd
+    notify: Restart collectd
 
   - name: Let collectd talk to the RabbitMQ management interface
     ansible.posix.seboolean:

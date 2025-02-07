@@ -93,11 +93,11 @@
   - fedmsgdconfig
   - fedmsg/base
   notify:
-  - reload httpd
-  - restart fedmsg-gateway
-  - restart fedmsg-hub
-  - restart fedmsg-irc
-  - restart fedmsg-relay
+  - Reload httpd
+  - Restart fedmsg-gateway
+  - Restart fedmsg-hub
+  - Restart fedmsg-irc
+  - Restart fedmsg-relay
 
 - name: Dynamically generate policy from group/host vars.
   ansible.builtin.template: >
@@ -115,11 +115,11 @@
   - fedmsgdpolicy
   - fedmsg/base
   notify:
-  - reload httpd
-  - restart fedmsg-gateway
-  - restart fedmsg-hub
-  - restart fedmsg-irc
-  - restart fedmsg-relay
+  - Reload httpd
+  - Restart fedmsg-gateway
+  - Restart fedmsg-hub
+  - Restart fedmsg-irc
+  - Restart fedmsg-relay
 
 - name: Setup basic /etc/fedmsg.d/ contents for firewalled/external hosts
   ansible.builtin.template: >
@@ -139,11 +139,11 @@
   - fedmsgdconfig
   - fedmsg/base
   notify:
-  - reload httpd
-  - restart fedmsg-gateway
-  - restart fedmsg-hub
-  - restart fedmsg-irc
-  - restart fedmsg-relay
+  - Reload httpd
+  - Restart fedmsg-gateway
+  - Restart fedmsg-hub
+  - Restart fedmsg-irc
+  - Restart fedmsg-relay
 
 - name: Install fedmsg-relay in case we're in debug mode.
   ansible.builtin.package: name=fedmsg-relay state=present
@@ -152,11 +152,11 @@
   - fedmsg_loopback
   - fedmsg/base
   notify:
-  - reload httpd
-  - restart fedmsg-gateway
-  - restart fedmsg-hub
-  - restart fedmsg-irc
-  - restart fedmsg-relay
+  - Reload httpd
+  - Restart fedmsg-gateway
+  - Restart fedmsg-hub
+  - Restart fedmsg-irc
+  - Restart fedmsg-relay
 
 - name: Install fedmsg-relay in case we're in debug mode.
   dnf: name=fedmsg-relay state=present
@@ -165,11 +165,11 @@
   - fedmsg_loopback
   - fedmsg/base
   notify:
-  - reload httpd
-  - restart fedmsg-gateway
-  - restart fedmsg-hub
-  - restart fedmsg-irc
-  - restart fedmsg-relay
+  - Reload httpd
+  - Restart fedmsg-gateway
+  - Restart fedmsg-hub
+  - Restart fedmsg-irc
+  - Restart fedmsg-relay
 
 - name: Destroy standard config to make way for debug loopback.
   ansible.builtin.file: dest=/etc/fedmsg.d/{{item}} state=absent
@@ -181,11 +181,11 @@
   - fedmsg_loopback
   - fedmsg/base
   notify:
-  - reload httpd
-  - restart fedmsg-gateway
-  - restart fedmsg-hub
-  - restart fedmsg-irc
-  - restart fedmsg-relay
+  - Reload httpd
+  - Restart fedmsg-gateway
+  - Restart fedmsg-hub
+  - Restart fedmsg-irc
+  - Restart fedmsg-relay
 
 - name: Overwrite standard config with local fedmsg debugging loopback
   ansible.builtin.copy: src=relay-debug-loopback.py dest=/etc/fedmsg.d/relay.py
@@ -194,11 +194,11 @@
   - fedmsg_loopback
   - fedmsg/base
   notify:
-  - reload httpd
-  - restart fedmsg-gateway
-  - restart fedmsg-hub
-  - restart fedmsg-irc
-  - restart fedmsg-relay
+  - Reload httpd
+  - Restart fedmsg-gateway
+  - Restart fedmsg-hub
+  - Restart fedmsg-irc
+  - Restart fedmsg-relay
 
 - name: Start fedmsg-relay, only for loopback testing
   service: name=fedmsg-relay state=started

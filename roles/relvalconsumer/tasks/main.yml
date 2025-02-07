@@ -152,7 +152,7 @@
   ansible.builtin.command: "python3 -m pip install --no-deps /root/relvalconsumer"
   when: "gitrvc is changed or instrvc.rc != 0"
   notify:
-  - restart relvalconsumer
+  - Restart relvalconsumer
 
 - name: Create /etc/pki/fedora-messaging
   ansible.builtin.file:
@@ -214,14 +214,14 @@
 - name: Configure fedora-messaging relvalconsumer
   ansible.builtin.template: src=relvalconsumer.toml.j2 dest=/etc/fedora-messaging/relvalconsumer.toml owner=root group=root mode=0640
   notify:
-  - restart relvalconsumer
+  - Restart relvalconsumer
   tags:
   - config
 
 - name: Configure fedora-messaging relvalamiconsumer
   ansible.builtin.template: src=relvalamiconsumer.toml.j2 dest=/etc/fedora-messaging/relvalamiconsumer.toml owner=root group=root mode=0640
   notify:
-  - restart relvalamiconsumer
+  - Restart relvalamiconsumer
   tags:
   - config
 

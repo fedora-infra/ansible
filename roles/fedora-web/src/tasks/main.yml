@@ -4,7 +4,7 @@
   ansible.builtin.package: name=mod_auth_gssapi
            state=present
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - fedora-web
   - fedora-web/src
@@ -16,7 +16,7 @@
         group=apache
         mode=0600
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - fedora-web
   - fedora-web/src
@@ -28,7 +28,7 @@
   with_items:
   - expires.conf
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - fedora-web
   - fedora-web/src

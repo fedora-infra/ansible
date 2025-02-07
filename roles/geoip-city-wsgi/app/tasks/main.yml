@@ -33,7 +33,7 @@
         group=root
         mode=0644
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - geoip_config
   - config
@@ -61,7 +61,7 @@
         group=root
         mode=0775
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - geoip_config
   - config

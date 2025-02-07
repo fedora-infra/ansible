@@ -9,7 +9,7 @@
   - collectd-web
   - collectd-rabbitmq-data
   notify:
-  - restart collectd
+  - Restart collectd
   tags:
   - config
   - collectd/server
@@ -23,7 +23,7 @@
   - collectd-rabbitmq-data
   - collectd-ipa-data
   notify:
-  - restart collectd
+  - Restart collectd
   tags:
   - config
   - collectd/server
@@ -37,7 +37,7 @@
   loop:
   - fmn-types.db
   notify:
-  - restart collectd
+  - Restart collectd
   tags:
   - config
   - collectd/server
@@ -52,7 +52,7 @@
   - fmn.conf
   - unixsock.conf
   notify:
-  - restart collectd
+  - Restart collectd
   tags:
   - config
   - collectd/server
@@ -100,7 +100,7 @@
     src: service.timeout.conf
     dest: /etc/systemd/system/collectd.service.d/timeout.conf
   notify:
-  - reload systemd
+  - Reload systemd
   tags:
   - config
   - collectd/server

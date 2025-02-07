@@ -73,8 +73,8 @@
         dest=/usr/lib/systemd/system/stunnel.service
         owner=root group=root mode=0644
   notify:
-  - reload systemd
-  - restart stunnel
+  - Reload systemd
+  - Restart stunnel
   tags:
   - fedmsg/gateway
   - fedmsg/gateway/slave
@@ -91,7 +91,7 @@
             owner=root group=root mode=0600
   with_items:
   - { file: stunnel-conf.j2, dest: /etc/stunnel/stunnel.conf }
-  notify: restart stunnel
+  notify: Restart stunnel
   tags:
   - fedmsg/gateway
   - fedmsg/gateway/slave
@@ -101,7 +101,7 @@
     src={{private}}/files/httpd/wildcard-2024.fedoraproject.org.combined.cert
     dest=/etc/pki/tls/certs/wildcard-2024.fedoraproject.org.combined.cert
     owner=root group=root mode=0644
-  notify: restart stunnel
+  notify: Restart stunnel
   tags:
   - fedmsg/gateway
   - fedmsg/gateway/slave

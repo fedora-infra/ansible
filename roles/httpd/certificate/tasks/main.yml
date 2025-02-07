@@ -14,7 +14,7 @@
     mode=0644
   when: SSLCertificateChainFile is defined
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - httpd
   - httpd/certificate
@@ -30,7 +30,7 @@
   - "{{private}}/files/httpd/{{cert}}.cert"
   - "{{private}}/files/httpd/{{certname}}.cert"
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - httpd
   - httpd/certificate
@@ -46,7 +46,7 @@
   - "{{private}}/files/httpd/{{key}}.key"
   - "{{private}}/files/httpd/{{certname}}.key"
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - httpd
   - httpd/certificate

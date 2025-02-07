@@ -8,6 +8,6 @@
 - name: Copy httpd config
   ansible.builtin.copy: src=security-txt.conf dest=/etc/httpd/conf.d/admin.fedoraproject.org/security-txt.conf owner=root group=root mode=755
   notify:
-  - reload apache
+  - Reload apache
   tags:
   - security.txt

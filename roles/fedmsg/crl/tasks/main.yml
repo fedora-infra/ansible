@@ -38,7 +38,7 @@
     dest=/etc/httpd/conf.d/{{website}}/fedmsg.conf
     owner=root group=root mode=0644
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - fedmsg
   - fedmsg/crl

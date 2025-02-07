@@ -1,9 +1,9 @@
 ---
-- name: restart nagios on noc
+- name: Restart nagios on noc
   ansible.builtin.shell: nagios -v /etc/nagios/nagios.cfg && systemctl restart nagios
   delegate_to: "{{ queue_nagios_server }}"
 
-- name: restart nrpe on rabbitmq
+- name: Restart nrpe on rabbitmq
   service:
     name: nrpe
     state: restarted

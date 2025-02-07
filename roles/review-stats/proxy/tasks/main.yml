@@ -11,7 +11,7 @@
     dest=/etc/httpd/conf.d/{{website}}/review-stats.conf
     owner=root group=root mode=0644
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - review-stats
   - review-stats/proxy

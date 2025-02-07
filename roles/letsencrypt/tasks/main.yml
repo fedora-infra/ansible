@@ -67,7 +67,7 @@
     group=root
     mode=0644
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - letsencrypt
 
@@ -79,7 +79,7 @@
     group=root
     mode=0644
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - letsencrypt
 
@@ -91,7 +91,7 @@
     group=root
     mode=0600
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - letsencrypt
 
@@ -103,7 +103,7 @@
     group=root
     mode=0644
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - letsencrypt
   delegate_to: "{{ certbot_addhost }}"
@@ -118,7 +118,7 @@
     group=root
     mode=0644
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - letsencrypt
   delegate_to: "{{ certbot_addhost }}"
@@ -133,7 +133,7 @@
     group=root
     mode=0600
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - letsencrypt
   delegate_to: "{{ certbot_addhost }}"
@@ -148,7 +148,7 @@
     group=root
     mode=0644
   notify:
-  - restart stunnel
+  - Restart stunnel
   tags:
   - letsencrypt
   delegate_to: "{{ certbot_bundlehost }}"

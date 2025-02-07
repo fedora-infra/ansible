@@ -134,7 +134,7 @@
   ansible.builtin.command: "python3 -m pip install --no-deps /root/check-compose"
   when: "gitcc is changed or instcc.rc != 0"
   notify:
-  - restart check-compose
+  - Restart check-compose
 
 - name: Create /etc/pki/fedora-messaging
   ansible.builtin.file:
@@ -179,7 +179,7 @@
 - name: Configure fedora-messaging check-compose consumer
   ansible.builtin.template: src=check-compose.toml.j2 dest=/etc/fedora-messaging/check-compose.toml owner=root group=root mode=0640
   notify:
-  - restart check-compose
+  - Restart check-compose
   tags:
   - config
 

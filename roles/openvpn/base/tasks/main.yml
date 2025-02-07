@@ -26,7 +26,7 @@
   - install
   - openvpn
   # notify:
-  # - restart openvpn (Fedora)
+  # - Restart openvpn (Fedora)
 
 - name: Install certificate and key (rhel or fedora) for server
   ansible.builtin.copy: src={{ private }}/files/vpn/pki/ca.crt
@@ -36,7 +36,7 @@
   - install
   - openvpn
   # notify:
-  # - restart openvpn (Fedora)
+  # - Restart openvpn (Fedora)
   when: inventory_hostname.startswith('bastion0')
 
 - name: Install fix-routes.sh script

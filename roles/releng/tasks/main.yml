@@ -426,7 +426,7 @@
     group: root
     mode: "644"
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - config
   when: inventory_hostname.startswith('compose-x86-01')

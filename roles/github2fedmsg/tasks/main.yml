@@ -30,7 +30,7 @@
   - config
   - github2fedmsg
   notify:
-  - restart apache
+  - Restart apache
 
 - name: Copy github2fedmsg wsgi script
   ansible.builtin.copy: >
@@ -42,7 +42,7 @@
   - config
   - github2fedmsg
   notify:
-  - restart apache
+  - Restart apache
 
 - name: Copy github2fedmsg httpd config
   ansible.builtin.template: >
@@ -54,7 +54,7 @@
   - config
   - github2fedmsg
   notify:
-  - restart apache
+  - Restart apache
 
 - name: Hotfix - allow velruse to do stateless openid
   ansible.builtin.copy: >
@@ -65,7 +65,7 @@
   - hotfix
   - github2fedmsg
   notify:
-  - restart apache
+  - Restart apache
 
   # Fix for https://pagure.io/fedora-infrastructure/issue/11776
 - name: Hotfix - Fix the KeyError when looking for user in github event
@@ -76,7 +76,7 @@
   - hotfix
   - github2fedmsg
   notify:
-  - restart apache
+  - Restart apache
 
 - name: Ensure selinux lets httpd talk to postgres
   seboolean: name=httpd_can_network_connect_db persistent=yes state=yes

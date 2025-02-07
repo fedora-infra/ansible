@@ -2,7 +2,7 @@
 - name: Install rkhunter (dnf)
   ansible.builtin.package: name=rkhunter state=present
   notify:
-  - run rkhunter
+  - Run rkhunter
   tags:
   - rkhunter
   - packages
@@ -10,7 +10,7 @@
 - name: Rkhunter.conf
   ansible.builtin.template: src=rkhunter.conf.j2 dest=/etc/rkhunter.conf mode=0640
   notify:
-  - run rkhunter
+  - Run rkhunter
   tags:
   - rkhunter
   - config
@@ -18,7 +18,7 @@
 - name: Rkhunter sysconfig
   ansible.builtin.copy: src=rkhunter.sysconfig dest=/etc/sysconfig/rkhunter mode=0640
   notify:
-  - run rkhunter
+  - Run rkhunter
   tags:
   - rkhunter
   - config

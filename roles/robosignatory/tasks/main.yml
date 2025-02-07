@@ -187,7 +187,7 @@
     mode: "0644"
   when: env == 'staging'
   notify:
-  - reload systemd
+  - Reload systemd
   - Restart robosignatory
   tags:
   - config
@@ -212,7 +212,7 @@
     mode: "0755"
   when: env != 'staging'
   notify:
-  - reload systemd
+  - Reload systemd
   tags:
   - config
   - robosignatory
@@ -226,7 +226,7 @@
     mode: "0644"
   when: env != 'staging'
   notify:
-  - reload systemd
+  - Reload systemd
   tags:
   - config
   - robosignatory

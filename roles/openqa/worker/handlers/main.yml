@@ -4,4 +4,4 @@
   ansible.builtin.command: /usr/local/bin/conditional-restart.sh openqa-worker@{{ item }}
   loop: "{{ range(1, openqa_workers + 1)|list }}"
   listen:
-  - restart openqa workers
+  - Restart openqa workers

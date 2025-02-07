@@ -9,7 +9,7 @@
 - name: Install copr-keygen
   dnf: state=present name=copr-keygen
   notify:
-  - restart haveged
+  - Restart haveged
 
 - name: Change owner of data to copr-signer
   ansible.builtin.file: path=/var/lib/copr-keygen owner=copr-signer group=copr-signer recurse=yes
@@ -17,14 +17,14 @@
 - name: Put keygen vhost for httpd
   ansible.builtin.copy: src="httpd/copr-keygen.conf" dest="/etc/httpd/conf.d/copr-keygen.conf"
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - config
 
 - name: Put config for signd
   ansible.builtin.template: src="sign.conf" dest="/etc/sign.conf"
   notify:
-  - restart obs-signd
+  - Restart obs-signd
   tags:
   - config
 

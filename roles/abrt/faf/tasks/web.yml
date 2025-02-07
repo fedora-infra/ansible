@@ -29,11 +29,11 @@
     src: etc-faf-plugins-web.conf.j2
     dest: /etc/faf/plugins/web.conf
   notify:
-  - restart httpd
+  - Restart httpd
 
 - name: Put webfaf on root (/) if configured
   ansible.builtin.template:
     src: etc-httpd-conf.d-faf-web.conf.j2
     dest: /etc/httpd/conf.d/faf-web.conf
   notify:
-  - restart httpd
+  - Restart httpd

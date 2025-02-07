@@ -9,7 +9,7 @@
 - name: Install chrony.conf
   ansible.builtin.template: src=chrony.conf.j2 dest=/etc/chrony.conf
   notify:
-  - restart chronyd
+  - Restart chronyd
   tags:
   - chrony
   - config

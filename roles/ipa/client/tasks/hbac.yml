@@ -14,7 +14,7 @@
     state: present
     group:
       - sysadmin-main
-  notify: clean sss caches
+  notify: Clean sss caches
   no_log: true
   loop: "{{ ipa_servers }}"
   when: ipa_servers is defined
@@ -25,7 +25,7 @@
     name: "usergroup/sysadmin-main"
     ipaadmin_password: "{{ ipa_server_admin_passwords[item] }}"
     state: enabled
-  notify: clean sss caches
+  notify: Clean sss caches
   no_log: true
   loop: "{{ ipa_servers }}"
   when: ipa_servers is defined
@@ -36,7 +36,7 @@
     name: allow_all
     ipaadmin_password: "{{ ipa_server_admin_passwords[item] }}"
     state: disabled
-  notify: clean sss caches
+  notify: Clean sss caches
   no_log: true
   loop: "{{ ipa_servers }}"
   when: ipa_servers is defined
@@ -55,7 +55,7 @@
     usercategory: "all"
     hbacsvcgroup:
       - sudo
-  notify: clean sss caches
+  notify: Clean sss caches
   no_log: true
   loop: "{{ ipa_servers }}"
   when: ipa_servers is defined
@@ -117,6 +117,6 @@
     action: member
     state: present
     group: "{{ ipa_server_host_groups_dict[item[0]][item[1]]['shell_groups'] }}"
-  notify: clean sss caches
+  notify: Clean sss caches
   loop: "{{ ipa_server_host_groups }}"
   when: ipa_server_host_groups is defined and ipa_server_host_groups_dict[item[0]][item[1]]['shell_groups'] is defined

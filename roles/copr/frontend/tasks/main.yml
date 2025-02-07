@@ -86,8 +86,8 @@
 - name: Install copr configs
   ansible.builtin.template: src="copr.conf" dest=/etc/copr/copr.conf mode=600
   notify:
-  - reload httpd
-  - restart copr-fe-fedora-messaging-reader
+  - Reload httpd
+  - Restart copr-fe-fedora-messaging-reader
   tags:
   - config
   - copr_infrastructure_password
@@ -181,7 +181,7 @@
 - name: Install fedora messaging config for Copr
   ansible.builtin.template: src="fedora-messaging/copr_messaging.toml" dest="/etc/fedora-messaging/copr_messaging.toml"
   notify:
-  - restart copr-fe-fedora-messaging-reader
+  - Restart copr-fe-fedora-messaging-reader
   tags:
   - config
 
@@ -191,7 +191,7 @@
 - name: Install custom systemd service files
   ansible.builtin.copy: src=systemd dest=/etc
   notify:
-  - reload httpd
+  - Reload httpd
 
 - name: Compress rotated httpd logs
   ansible.builtin.copy: src="httpd.logrotate" dest="/etc/logrotate.d/httpd"
@@ -219,7 +219,7 @@
     regexp: '^ARGS='
     line: 'ARGS=--collector.textfile.directory="/var/lib/prometheus/node-exporter" --collector.systemd'
     backrefs: yes
-  notify: restart node_exporter
+  notify: Restart node_exporter
 
 - name: Install nrpe
   dnf: name=nrpe state=present
@@ -237,4 +237,4 @@
 - name: Install gai.conf
   ansible.builtin.copy: src=gai.conf dest=/etc
   notify:
-  - reload httpd
+  - Reload httpd

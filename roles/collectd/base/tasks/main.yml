@@ -42,7 +42,7 @@
   tags:
   - collectd
   notify:
-  - restart collectd
+  - Restart collectd
 
 # install collectd-network config
 - name: /etc/collectd.d/network.conf
@@ -50,7 +50,7 @@
   tags:
   - collectd
   notify:
-  - restart collectd
+  - Restart collectd
   when: not inventory_hostname.startswith('log')
 
 # install collectd-network config
@@ -59,7 +59,7 @@
   tags:
   - collectd
   notify:
-  - restart collectd
+  - Restart collectd
   when: inventory_hostname.startswith('log')
 
 # apache - localhost only - pretty much any apache server
@@ -68,7 +68,7 @@
   tags:
   - collectd
   notify:
-  - restart collectd
+  - Restart collectd
   when: collectd_apache and ansible_distribution_major_version|int <= 7 and ansible_distribution == 'RedHat'
 
 - name: Install collectd-apache (dnf)
@@ -76,7 +76,7 @@
   tags:
   - collectd
   notify:
-  - restart collectd
+  - Restart collectd
   when: collectd_apache and ansible_distribution_major_version|int > 7 and ansible_distribution == 'RedHat'
 
 - name: Install collectd-apache (dnf)
@@ -84,7 +84,7 @@
   tags:
   - collectd
   notify:
-  - restart collectd
+  - Restart collectd
   when: collectd_apache and ansible_distribution_major_version|int >= 29 and ansible_distribution == 'Fedora'
 
 - name: /etc/collectd/apache.conf
@@ -92,7 +92,7 @@
   tags:
   - collectd
   notify:
-  - restart collectd
+  - Restart collectd
   when: collectd_apache
 
 - name: Install libsemanage-python so we can set an sebool below
@@ -107,7 +107,7 @@
   - collectd
   ignore_errors: true
   notify:
-  - restart collectd
+  - Restart collectd
   when: ( collectd_apache is defined ) and ansible_selinux.status != "disabled"
 
 - name: Enable collectd nfs module
@@ -115,7 +115,7 @@
   tags:
   - collectd
   notify:
-  - restart collectd
+  - Restart collectd
 
 # Three tasks for handling our (two) custom selinux modules.
 - name: Ensure a directory exists for our custom selinux module

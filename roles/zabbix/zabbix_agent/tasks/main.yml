@@ -60,7 +60,7 @@
   ansible.builtin.template:
     src: zabbix_agentd.conf.j2
     dest: "{{ zabbix_agentd }}"
-  notify: restart_zabbix_agent
+  notify: Restart zabbix agent
   tags:
     - zabbix_agent
 
@@ -102,7 +102,7 @@
     dest: "{{ zabbix_agentd_dir }}/{{ item }}"
     owner: zabbix
     mode: "0666"
-  notify: restart_zabbix_agent
+  notify: Restart zabbix agent
   with_items:
     - interface-alias.conf
   tags:

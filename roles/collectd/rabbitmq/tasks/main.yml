@@ -25,7 +25,7 @@
   tags:
   - collectd
   - config
-  notify: restart collectd
+  notify: Restart collectd
 
 - name: Let collectd talk to the RabbitMQ management interface
   seboolean: name=collectd_tcp_network_connect state=yes persistent=yes

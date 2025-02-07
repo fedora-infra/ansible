@@ -199,7 +199,7 @@
     dest: /etc/httpd/conf.d/ipa-rewrite.conf
     mode: "0644"
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - ipa/server
   - config
@@ -216,7 +216,7 @@
   changed_when: "'Disabling plugin' in output.stdout"
   failed_when: "'Plugin is already disabled' not in output.stdout and output.rc != 0"
   notify:
-  - restart ipa
+  - Restart ipa
 
 - name: Disable the nis tree
   ansible.builtin.shell: |
@@ -229,7 +229,7 @@
   changed_when: "'Disabling plugin' in output.stdout"
   failed_when: "'Plugin is already disabled' not in output.stdout and output.rc != 0"
   notify:
-  - restart ipa
+  - Restart ipa
 
 - name: Set the expiration date for the admin user
   community.general.ipa_user:
@@ -741,7 +741,7 @@
     dest: /etc/httpd/conf.d/referer-override.conf
     mode: "0644"
   notify:
-  - reload apache
+  - Reload apache
   tags:
   - ipa/server
   - config

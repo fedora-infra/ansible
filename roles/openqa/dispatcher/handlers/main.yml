@@ -3,17 +3,17 @@
 - name: Conditionally restart openQA scheduler consumer
   ansible.builtin.command: /usr/local/bin/conditional-restart.sh fm-consumer@fedora_openqa_scheduler
   listen:
-  - restart openqa consumers
-  - restart openqa scheduler consumer
+  - Restart openqa consumers
+  - Restart openqa scheduler consumer
 
 - name: Conditionally restart openQA ResultsDB reporter consumer
   ansible.builtin.command: /usr/local/bin/conditional-restart.sh fm-consumer@fedora_openqa_resultsdb_reporter
   listen:
-  - restart openqa consumers
-  - restart openqa resultsdb consumer
+  - Restart openqa consumers
+  - Restart openqa resultsdb consumer
 
 - name: Conditionally restart openQA wiki reporter consumer
   ansible.builtin.command: /usr/local/bin/conditional-restart.sh fm-consumer@fedora_openqa_wiki_reporter
   listen:
-  - restart openqa consumers
-  - restart openqa wiki consumer
+  - Restart openqa consumers
+  - Restart openqa wiki consumer

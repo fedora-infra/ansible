@@ -46,4 +46,4 @@
   when: ansible_distribution_major_version|int == 6 and ansible_distribution == 'RedHat'
   tags: git/server
   notify:
-  - restart xinetd
+  - Restart xinetd

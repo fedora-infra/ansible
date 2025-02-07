@@ -82,7 +82,7 @@
     state: latest
     enablerepo: "{{ openqa_repo }}"
   notify:
-  - restart openqa workers
+  - Restart openqa workers
   tags:
   - packages
 
@@ -207,7 +207,7 @@
 - name: OpenQA worker config
   ansible.builtin.template: src=workers.ini.j2 dest=/etc/openqa/workers.ini owner=_openqa-worker group=root mode=0644
   notify:
-  - restart openqa workers
+  - Restart openqa workers
   tags:
   - config
 

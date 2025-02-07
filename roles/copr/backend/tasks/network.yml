@@ -10,7 +10,7 @@
     value: ifcfg-rh
     backup: yes
   notify:
-  - restart NetworkManager
+  - Restart NetworkManager
 
 - name: Set up gateway
   lineinfile: dest=/etc/sysconfig/network line="GATEWAYDEV=eth0"

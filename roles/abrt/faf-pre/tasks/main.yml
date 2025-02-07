@@ -52,53 +52,53 @@
     dest: /usr/lib/python3.6/site-packages/abrt-server-info-page/config.py
     regexp: 'ADMINS ='
     line: '    ADMINS = "infrastructure@lists.fedoraproject.org"'
-  notify: restart httpd
+  notify: Restart httpd
 
 - name: Configure MORE_FAF
   lineinfile:
     dest: /usr/lib/python3.6/site-packages/abrt-server-info-page/config.py
     regexp: 'MORE_FAF ='
     line: '    MORE_FAF = "https://github.com/abrt/faf/"'
-  notify: restart httpd
+  notify: Restart httpd
 
 - name: Configure MORE_RS
   lineinfile:
     dest: /usr/lib/python3.6/site-packages/abrt-server-info-page/config.py
     regexp: 'MORE_RS ='
     line: '    MORE_RS = "https://github.com/abrt/retrace-server"'
-  notify: restart httpd
+  notify: Restart httpd
 
 - name: Configure MORE_ABRT
   lineinfile:
     dest: /usr/lib/python3.6/site-packages/abrt-server-info-page/config.py
     regexp: 'MORE_ABRT ='
     line: '    MORE_ABRT = "https://github.com/abrt/abrt/"'
-  notify: restart httpd
+  notify: Restart httpd
 
 - name: Configure MORE_GABRT
   lineinfile:
     dest: /usr/lib/python3.6/site-packages/abrt-server-info-page/config.py
     regexp: 'MORE_GABRT ='
     line: '    MORE_GABRT = "https://github.com/abrt/gnome-abrt/"'
-  notify: restart httpd
+  notify: Restart httpd
 
 - name: Configure MORE_LR
   lineinfile:
     dest: /usr/lib/python3.6/site-packages/abrt-server-info-page/config.py
     regexp: 'MORE_LR ='
     line: '    MORE_LR = "https://github.com/abrt/libreport/"'
-  notify: restart httpd
+  notify: Restart httpd
 
 - name: Configure MORE_SATYR
   lineinfile:
     dest: /usr/lib/python3.6/site-packages/abrt-server-info-page/config.py
     regexp: 'MORE_SATYR ='
     line: '    MORE_SATYR = "https://github.com/abrt/satyr/"'
-  notify: restart httpd
+  notify: Restart httpd
 
 - name: Configure URL_FOR_FAF
   lineinfile:
     dest: /usr/lib/python3.6/site-packages/abrt-server-info-page/config.py
     regexp: 'URL_FOR_FAF ='
     line: '    URL_FOR_FAF = "https://{{ faf_server_name }}"'
-  notify: restart httpd
+  notify: Restart httpd

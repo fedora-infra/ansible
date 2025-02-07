@@ -1,16 +1,16 @@
 ---
-- name: chmod_key
+- name: Chmod_key
   ansible.builtin.file: path=/etc/lighttpd/copr-be.fedoraproject.org.pem owner=root group=root mode=0600
 
-- name: restart copr-backend
+- name: Restart copr-backend
   service: name="{{ copr_backend_target }}" state=restarted
   when: not services_disabled
 
-- name: systemctl daemon-reload
+- name: Systemctl daemon-reload
   ansible.builtin.command: /usr/bin/systemctl daemon-reload
 
-- name: restart lighttpd
+- name: Restart lighttpd
   action: service name=lighttpd state=restarted
 
-- name: restart node_exporter
+- name: Restart node_exporter
   action: service name=node_exporter state=restarted

@@ -1,14 +1,14 @@
 ---
 - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
-- name: restart postgresql
+- name: Restart postgresql
   service: name=postgresql
            state=restarted
 
-- name: restart copr-fe-fedora-messaging-reader
+- name: Restart copr-fe-fedora-messaging-reader
   service: name="fm-consumer@copr_messaging"
            state=restarted
   when: not services_disabled|bool
 
-- name: restart node_exporter
+- name: Restart node_exporter
   action: service name=node_exporter state=restarted

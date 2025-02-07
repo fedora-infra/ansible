@@ -16,7 +16,7 @@
     - "{{ roles_path }}/base/files/postfix/main.cf/main.cf.{{ datacenter }}"
     - "{{ roles_path }}/base/files/postfix/main.cf/main.cf"
   notify:
-  - restart postfix
+  - Restart postfix
   tags:
   - postfix
   - config

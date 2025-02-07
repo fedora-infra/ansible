@@ -1,7 +1,7 @@
 ---
-- name: restart_zabbix_agent
+- name: Restart zabbix agent
   service: name=zabbix-agent state=restarted
 
-- name: reload custom selinux files
+- name: Reload custom selinux files
   ansible.builtin.shell: /usr/sbin/semodule -u "/etc/selinux/centos/centos-zabbix-agent.pp"
   when: ansible_selinux.mode == "enforcing"

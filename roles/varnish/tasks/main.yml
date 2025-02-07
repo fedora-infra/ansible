@@ -25,8 +25,8 @@
 - name: Install varnish /etc/systemd/system/varnish.service file (fedora 29+)
   ansible.builtin.template: src=varnish.f29.j2 dest=/etc/systemd/system/varnish.service owner=root group=root
   notify:
-  - reload systemd
-  - restart varnish
+  - Reload systemd
+  - Restart varnish
   tags:
   - varnish
   when: ansible_distribution_major_version|int >= 29 and ansible_distribution == 'Fedora'
@@ -34,7 +34,7 @@
 - name: Install /etc/varnish/default.vcl (proxies)
   ansible.builtin.template: src={{ varnish_group }}.vcl.j2 dest=/etc/varnish/default.vcl owner=root group=root
   notify:
-  - restart varnish
+  - Restart varnish
   tags:
   - varnish
 

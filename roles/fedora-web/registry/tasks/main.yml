@@ -13,7 +13,7 @@
   ansible.builtin.copy: src="{{ private }}/files/fedora-ca.cert" dest=/etc/pki/httpd/fedora-server-ca.cert
         owner=root group=root mode=0644
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - fedora-web
   - fedora-web/registry
@@ -29,7 +29,7 @@
         dest="/etc/pki/httpd/registry-ca-{{env}}.cert"
         owner=root group=root mode=0644
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - fedora-web
   - fedora-web/registry
@@ -38,7 +38,7 @@
   ansible.builtin.copy: src="passwd-{{env}}" dest=/etc/httpd/conf.d/registry.fedoraproject.org/passwd
         owner=root group=root mode=0644
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - fedora-web
   - fedora-web/registry

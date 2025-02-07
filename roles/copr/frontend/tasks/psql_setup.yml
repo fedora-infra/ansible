@@ -17,7 +17,7 @@
 - name: Copy pg_hba.conf
   ansible.builtin.copy: src="pg/pg_hba.conf" dest=/var/lib/pgsql/data/pg_hba.conf owner=postgres group=postgres mode=0600
   notify:
-  - restart postgresql
+  - Restart postgresql
   tags:
   - config
 
@@ -61,7 +61,7 @@
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^shared_buffers ='
     line: 'shared_buffers = 8096MB'
-  notify: restart postgresql
+  notify: Restart postgresql
   tags:
   - config
 
@@ -70,7 +70,7 @@
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^effective_cache_size ='
     line: 'effective_cache_size = 2048MB'
-  notify: restart postgresql
+  notify: Restart postgresql
   tags:
   - config
 
@@ -79,7 +79,7 @@
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^work_mem ='
     line: 'work_mem = 4MB'
-  notify: restart postgresql
+  notify: Restart postgresql
   tags:
   - config
 
@@ -88,7 +88,7 @@
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^maintenance_work_mem ='
     line: 'maintenance_work_mem = 500MB'
-  notify: restart postgresql
+  notify: Restart postgresql
   tags:
   - config
 
@@ -97,7 +97,7 @@
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^checkpoint_completion_target ='
     line: 'checkpoint_completion_target = 0.9'
-  notify: restart postgresql
+  notify: Restart postgresql
   tags:
   - config
 
@@ -106,7 +106,7 @@
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^log_min_duration_statement ='
     line: 'log_min_duration_statement = 500'
-  notify: restart postgresql
+  notify: Restart postgresql
   tags:
   - config
 
@@ -115,7 +115,7 @@
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^max_connections ='
     line: 'max_connections = 200'
-  notify: restart postgresql
+  notify: Restart postgresql
   tags:
   - config
 

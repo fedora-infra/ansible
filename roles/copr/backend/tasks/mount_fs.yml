@@ -67,7 +67,7 @@
 
           [Install]
           WantedBy=timers.target
-      notify: systemctl daemon-reload
+      notify: Systemctl daemon-reload
 
 - name: Prepare mount point
   ansible.builtin.file: state=directory path=/var/lib/copr/public_html

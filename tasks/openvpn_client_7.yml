@@ -10,35 +10,35 @@
   tags:
   - config
   notify:
-  - restart openvpn 7
+  - Restart openvpn 7
 
 # - name: /etc/openvpn/crl.pem from vpn/openvpn/keys/crl.pem
 #  ansible.builtin.copy: src="{{ private }}/vpn/openvpn/keys/crl.pem" dest=/etc/openvpn/crl.pem mode=0644 owner=root group=root
 #  tags:
 #  - config
 #  notify:
-#  - restart openvpn
+#  - Restart openvpn
 
 - name: /etc/openvpn/openvpn.conf
   ansible.builtin.copy: src="{{ files }}/openvpn/client.conf" dest=/etc/openvpn/openvpn.conf
   tags:
   - config
   notify:
-  - restart openvpn 7
+  - Restart openvpn 7
 
 - name: /etc/openvpn/client.crt
   ansible.builtin.copy: src="{{ private }}/files/vpn/openvpn/keys/{{ inventory_hostname }}.crt" dest=/etc/openvpn/client.crt mode=0600 owner=root group=root
   tags:
   - config
   notify:
-  - restart openvpn 7
+  - Restart openvpn 7
 
 - name: /etc/openvpn/client.key
   ansible.builtin.copy: src="{{ private }}/files/vpn/openvpn/keys/{{ inventory_hostname }}.key" dest=/etc/openvpn/client.key mode=0600 owner=root group=root
   tags:
   - config
   notify:
-  - restart openvpn 7
+  - Restart openvpn 7
 
 - name: Enable openvpn service for rhel or fedora
   service: name=openvpn@openvpn state=started enabled=true

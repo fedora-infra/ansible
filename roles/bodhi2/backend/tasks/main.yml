@@ -153,8 +153,8 @@
     dest: /etc/fedora-messaging/koji_sync_listener.toml
   when: env == "production"
   notify:
-  - reload systemd
-  - restart fm-consumer@koji_sync_listener
+  - Reload systemd
+  - Restart fm-consumer@koji_sync_listener
   tags:
   - bodhi
   - koji-sync
@@ -405,7 +405,7 @@
     group: root
     mode: "0644"
   notify:
-  - reload systemd
+  - Reload systemd
   tags:
   - bodhi
   - config
@@ -418,7 +418,7 @@
     group: root
     mode: "0644"
   notify:
-  - reload systemd
+  - Reload systemd
   tags:
   - bodhi
   - config

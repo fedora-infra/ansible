@@ -70,7 +70,7 @@
   sysctl: name=kernel.shmmax value={{ kernel_shmmax }}
   when: kernel_shmmax is defined
   notify:
-  - restart postgresql
+  - Restart postgresql
   tags:
   - postgresql
 
@@ -78,7 +78,7 @@
   ansible.builtin.command: /usr/bin/postgresql-setup initdb
            creates=/var/lib/pgsql/data/postgresql.conf
   notify:
-  - restart postgresql
+  - Restart postgresql
   tags:
   - postgresql
 
@@ -86,7 +86,7 @@
   service: name=postgresql enabled=yes
   ignore_errors: true
   notify:
-  - restart postgresql
+  - Restart postgresql
   tags:
   - service
   - postgresql
@@ -99,7 +99,7 @@
   with_items:
   - pg_hba.conf
   notify:
-  - restart postgresql
+  - Restart postgresql
   tags:
   - config
   - postgresql
@@ -108,7 +108,7 @@
   ansible.builtin.template: dest=/var/lib/pgsql/data/postgresql.conf src=postgresql.conf
   when: ansible_distribution_major_version|int < 8 and ansible_distribution == 'RedHat'
   notify:
-  - restart postgresql
+  - Restart postgresql
   tags:
   - config
   - postgresql
@@ -117,7 +117,7 @@
   ansible.builtin.template: dest=/var/lib/pgsql/data/postgresql.conf src=postgresql.conf-12
   when: (ansible_distribution_major_version|int == 8 and ansible_distribution == 'RedHat') or ansible_distribution != 'RedHat'
   notify:
-  - restart postgresql
+  - Restart postgresql
   tags:
   - config
   - postgresql
@@ -126,7 +126,7 @@
   ansible.builtin.template: dest=/var/lib/pgsql/data/postgresql.conf src=postgresql.conf-15
   when: (ansible_distribution_major_version|int == 9 and ansible_distribution == 'RedHat')
   notify:
-  - restart postgresql
+  - Restart postgresql
   tags:
   - config
   - postgresql

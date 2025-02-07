@@ -25,9 +25,9 @@
 - name: Generate testdays config
   ansible.builtin.template: src=settings.py.j2 dest=/etc/testdays/settings.py owner=root group=root mode=0644
   notify:
-    - reload httpd
+    - Reload httpd
 
 - name: Generate testdays apache config
   ansible.builtin.template: src=testdays.conf.j2 dest=/etc/httpd/conf.d/testdays.conf owner=root group=root mode=0644
   notify:
-    - reload httpd
+    - Reload httpd

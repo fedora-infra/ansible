@@ -1,7 +1,7 @@
 ---
-- name: restart httpd
+- name: Restart httpd
   service: name=httpd state=restarted
 
-- name: restart postgresql
+- name: Restart postgresql
   service: name=postgresql
            state=restarted

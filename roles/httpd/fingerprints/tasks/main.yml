@@ -1,7 +1,7 @@
 ---
 - ansible.builtin.copy: src=fingerprints.html dest=/srv/web/fingerprints.html
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - fingerprints
   - httpd
@@ -9,7 +9,7 @@
 
 - ansible.builtin.copy: src=fingerprints.conf dest=/etc/httpd/conf.d/{{website}}/fingerprints.conf
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - fingerprints
   - httpd

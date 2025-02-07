@@ -9,56 +9,56 @@
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^max_connections ='
     line: 'max_connections = 150'
-  notify: restart postgresql
+  notify: Restart postgresql
 
 - name: Set shared_buffers for PostgreSQL
   lineinfile:
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^shared_buffers ='
     line: 'shared_buffers = 25536MB'
-  notify: restart postgresql
+  notify: Restart postgresql
 
 - name: Set effective_cache_size for PostgreSQL
   lineinfile:
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^effective_cache_size ='
     line: 'effective_cache_size = 50608MB'
-  notify: restart postgresql
+  notify: Restart postgresql
 
 - name: Set work_mem for PostgreSQL
   lineinfile:
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^work_mem ='
     line: 'work_mem = 6MB'
-  notify: restart postgresql
+  notify: Restart postgresql
 
 - name: Set maintenance_work_mem for PostgreSQL
   lineinfile:
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^maintenance_work_mem ='
     line: 'maintenance_work_mem = 2GB'
-  notify: restart postgresql
+  notify: Restart postgresql
 
 - name: Set checkpoint_completion_target for PostgreSQL
   lineinfile:
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^checkpoint_completion_target ='
     line: 'checkpoint_completion_target = 0.9'
-  notify: restart postgresql
+  notify: Restart postgresql
 
 - name: Set wal_buffers for PostgreSQL
   lineinfile:
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^wal_buffers ='
     line: 'wal_buffers = -1'
-  notify: restart postgresql
+  notify: Restart postgresql
 
 - name: Set default_statistics_target for PostgreSQL
   lineinfile:
     path: /var/lib/pgsql/data/postgresql.conf
     regexp: '^default_statistics_target ='
     line: 'default_statistics_target = 100'
-  notify: restart postgresql
+  notify: Restart postgresql
 
 - name: Drop faf database
   postgresql_db:

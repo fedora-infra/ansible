@@ -3,4 +3,4 @@
 - name: Conditionally restart fedora_nightlies consumer service
   ansible.builtin.command: /usr/local/bin/conditional-restart.sh fm-consumer@fedora_nightlies
   listen:
-  - restart fedora_nightlies
+  - Restart fedora_nightlies

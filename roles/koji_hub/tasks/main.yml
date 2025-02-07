@@ -27,7 +27,7 @@
   with_items:
   - koji-osbuild-hub
   notify:
-  - restart kojira
+  - Restart kojira
   tags:
   - packages
   - koji_hub
@@ -48,7 +48,7 @@
 - name: Fedmenu shim
   ansible.builtin.template: src=fedmenu-extra-footer.html dest=/usr/share/koji-web/static/extra-footer.html
   tags: koji_hub
-  notify: reload httpd
+  notify: Reload httpd
   # XXX - we only want to do this in staging for now because it requires a patch
   # to koji itself to include the extra-footer.html file in a sufficiently
   # advanced way.
@@ -58,7 +58,7 @@
 - name: Set the apache mpm to use event MPM
   ansible.builtin.copy: src=00-mpm.conf dest=/etc/httpd/conf.modules.d/00-mpm.conf
   notify:
-  - reload proxyhttpd
+  - Reload proxyhttpd
   tags:
   - config
   - koji_hub
@@ -69,14 +69,14 @@
   - config
   - koji_hub
   - koji_hub_osbuild
-  notify: reload httpd
+  notify: Reload httpd
 
 - name: Kojiweb config
   ansible.builtin.template: src=web.conf.j2 dest=/etc/kojiweb/web.conf owner=apache group=apache mode=600
   tags:
   - config
   - koji_hub
-  notify: reload httpd
+  notify: Reload httpd
 
 - name: Enable httpd_can_network_connect SELinux boolean for fedmsg
   seboolean: name=httpd_can_network_connect state=yes persistent=yes
@@ -177,7 +177,7 @@
   - koji-fedoramessaging
   - python3-koji-fedoramessaging-messages
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - packages
   - koji_hub
@@ -231,7 +231,7 @@
   copy: src={{ private }}/files/keytabs/{{ env }}/koji-hub-{{ koji_instance }} dest=/etc/koji-hub/koji-hub.keytab
         owner=apache group=apache mode=0600
   notify:
-  - reload httpd
+  - Reload httpd
   when: env != 'staging'
   tags:
   - config
@@ -241,7 +241,7 @@
   ansible.builtin.copy: src={{ private }}/files/keytabs/{{ env }}/koji-gssapi-{{ koji_instance }} dest=/etc/koji-hub/gssapi.keytab
         owner=apache group=apache mode=0600
   notify:
-  - reload httpd
+  - Reload httpd
   when: env != 'staging'
   tags:
   - config
@@ -253,7 +253,7 @@
 - name: Install kojiweb_cert_key.pem
   ansible.builtin.copy: src={{ private }}/files/koji/kojiweb_cert_key.pem dest=/etc/pki/tls/private/kojiweb_cert_key.pem owner=apache mode=600
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - config
   - koji_hub
@@ -262,7 +262,7 @@
 - name: Install production koji_cert.pem
   ansible.builtin.copy: src={{ private }}/files/koji/koji_cert.pem dest=/etc/pki/tls/certs/koji_cert.pem owner=apache mode=600
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - config
   - koji_hub
@@ -271,7 +271,7 @@
 - name: Install production koji_key.pem
   ansible.builtin.copy: src={{ private }}/files/koji/koji_key.pem dest=/etc/pki/tls/private/koji_key.pem owner=apache mode=600
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - config
   - koji_hub
@@ -303,7 +303,7 @@
   tags:
   - config
   - koji_hub
-  notify: reload httpd
+  notify: Reload httpd
 
 - name: Koji web hub specific config files
   ansible.builtin.template: src={{ item }}.j2 dest=/etc/httpd/conf.d/{{ item }} owner=root group=root
@@ -313,14 +313,14 @@
   tags:
   - config
   - koji_hub
-  notify: reload httpd
+  notify: Reload httpd
 
 - name: Koji web staging config files
   ansible.builtin.copy: src=kojiweb.conf.stg dest=/etc/httpd/conf.d/kojiweb-stg.conf owner=root group=root
   tags:
   - config
   - koji_hub
-  notify: reload httpd
+  notify: Reload httpd
   when: env == "staging"
 
 - name: Koji robots.txt config
@@ -328,7 +328,7 @@
   tags:
   - config
   - koji_hub
-  notify: reload httpd
+  notify: Reload httpd
 
 - name: Kojira log dir
   ansible.builtin.file: dest=/var/log/kojira owner=root group=root mode=0750 state=directory
@@ -343,7 +343,7 @@
   - config
   - koji_hub
   notify:
-  - restart kojira
+  - Restart kojira
 
 - name: Make an empty /mnt/fedora_koji for stg.
   ansible.builtin.file: state=directory path=/mnt/fedora_koji/koji owner=root group=root
@@ -414,7 +414,7 @@
 - name: Set httpd service override for fedora-messaging to work
   ansible.builtin.copy: src=httpd-override.conf dest=/etc/systemd/system/httpd.service.d/override.conf
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - service
   - koji_hub
@@ -424,7 +424,7 @@
   service: name=httpd enabled=yes
   ignore_errors: true
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - service
   - koji_hub

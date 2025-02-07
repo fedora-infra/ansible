@@ -25,7 +25,7 @@
     - my.cnf.{{ ansible_distribution_version }}
     - my.cnf.default
   notify:
-    - restart mariadb
+    - Restart mariadb
 
 - name: Enable and start mariadb database
   service: name=mariadb enabled=yes state=started

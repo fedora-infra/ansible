@@ -76,7 +76,7 @@
   tags:
     - swap.file.swapon
     - swap
-  notify: restart swap.swap
+  notify: Restart swap.swap
 
 - name: Remove zram-generator-defaults
   ansible.builtin.package:

@@ -2,7 +2,7 @@
 - name: Setup pager app config
   ansible.builtin.copy: src=pager-app.conf dest=/etc/httpd/conf.d/pager-app.conf mode=644
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - config
   - pager_server

@@ -71,7 +71,7 @@
   - config
   - sslciphers
   notify:
-  - reload httpd
+  - Reload httpd
 
 - name: Make sure apache autoindex.conf is replaced with ours
   ansible.builtin.copy: src=httpd/dl.fedoraproject.org/autoindex.conf dest=/etc/httpd/conf.d/autoindex.conf
@@ -79,7 +79,7 @@
   - httpd
   - config
   notify:
-  - reload httpd
+  - Reload httpd
 
 - name: Configure httpd dl sub conf
   ansible.builtin.copy: src=httpd/dl.fedoraproject.org/ dest=/etc/httpd/conf.d/dl.fedoraproject.org/
@@ -87,7 +87,7 @@
   - httpd
   - config
   notify:
-  - reload httpd
+  - Reload httpd
 
 - name: Install haveged for entropy
   ansible.builtin.package: name=haveged state=present

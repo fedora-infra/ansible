@@ -12,7 +12,7 @@
 - name: Copy rndc config
   ansible.builtin.copy: src=rndc.conf dest=/etc/rndc.conf
   notify:
-  - restart named
+  - Restart named
   tags:
   - config
   - dns
@@ -20,7 +20,7 @@
 - name: Copy rndc key
   ansible.builtin.copy: src={{ private }}/files/dns/rndc.key dest=/etc/rndc.key
   notify:
-  - restart named
+  - Restart named
   tags:
   - config
   - dns
@@ -28,7 +28,7 @@
 - name: Copy named cache
   ansible.builtin.copy: src=named.ca dest=/var/named/named.ca
   notify:
-  - restart named
+  - Restart named
   tags:
   - config
   - dns
@@ -36,7 +36,7 @@
 - name: Copy geoip.py
   ansible.builtin.copy: src=geoip.py dest=/usr/local/bin/geoip.py mode=0755
   notify:
-  - restart named
+  - Restart named
   tags:
   - config
   - dns
@@ -44,7 +44,7 @@
 - name: Copy GeoIP.sh
   ansible.builtin.copy: src=GeoIP.sh dest=/var/named/GeoIP.sh mode=0755
   notify:
-  - restart named
+  - Restart named
   tags:
   - config
   - dns
@@ -53,14 +53,14 @@
 #  ansible.builtin.command: /var/named/GeoIP.sh
 #  changed_when: "1 != 1"
 #  notify:
-#  - restart named
+#  - Restart named
 #  tags:
 #  - dns
 
 - name: Copy update-dns
   ansible.builtin.copy: src=update-dns dest=/usr/local/bin/update-dns mode=0755
   notify:
-  - restart named
+  - Restart named
   tags:
   - config
   - dns
@@ -68,7 +68,7 @@
 - name: Copy zones
   ansible.builtin.copy: src=zones.conf dest=/etc/named/zones.conf owner=root group=root mode=0644
   notify:
-  - restart named
+  - Restart named
   tags:
   - config
   - dns
@@ -76,7 +76,7 @@
 - name: Copy named config
   ansible.builtin.copy: src=named.conf dest=/etc/named.conf mode=0644 owner=root group=root
   notify:
-  - restart named
+  - Restart named
   tags:
   - config
   - dns
@@ -85,7 +85,7 @@
   ansible.builtin.command: /usr/local/bin/update-dns
   changed_when: "1 != 1"
   notify:
-  - restart named
+  - Restart named
   tags:
   - config
   - dns
@@ -114,7 +114,7 @@
   ansible.builtin.command: semanage port -a -t dns_port_t -p tcp 8053
   when: semanageoutput.stdout.find("8053") == -1
   notify:
-  - restart named
+  - Restart named
   tags:
   - dns
 

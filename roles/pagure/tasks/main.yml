@@ -30,7 +30,7 @@
   ansible.builtin.command: /usr/bin/postgresql-setup initdb
            creates=/var/lib/pgsql/data
   notify:
-  - restart postgresql
+  - Restart postgresql
   tags:
   - pagure
 
@@ -207,8 +207,8 @@
   - pagure
   - postfix
   notify:
-  - restart postfix
-  - restart pagure_milter
+  - Restart postfix
+  - Restart pagure_milter
 
 # Override pagure_ev systemd service file
 
@@ -217,8 +217,8 @@
         dest=/usr/lib/systemd/system/pagure_ev.service
         owner=root group=root mode=0644
   notify:
-  - reload systemd
-  - restart pagure_ev
+  - Reload systemd
+  - Restart pagure_ev
   tags:
   - pagure
   - pagure_ev
@@ -230,8 +230,8 @@
         dest=/usr/lib/systemd/system/stunnel.service
         owner=root group=root mode=0644
   notify:
-  - reload systemd
-  - restart stunnel
+  - Reload systemd
+  - Restart stunnel
   tags:
   - pagure
   - stunnel
@@ -242,7 +242,7 @@
             owner=root group=root mode=0600
   with_items:
   - {file: stunnel-conf.j2, dest: /etc/stunnel/stunnel.conf}
-  notify: restart stunnel
+  notify: Restart stunnel
   tags:
   - pagure
   - stunnel
@@ -258,7 +258,7 @@
   - pagure_slow_worker
   - pagure_mirror
   notify:
-  - reload systemd
+  - Reload systemd
   tags:
   - pagure
 
@@ -368,7 +368,7 @@
   - web
   - pagure
   notify:
-  - restart apache
+  - Restart apache
 
 - name: Install client_secrets for ipsilon
   ansible.builtin.template: src=client_secrets.json
@@ -401,7 +401,7 @@
   - pagure
   - sslciphers
   notify:
-  - restart apache
+  - Restart apache
 
 - name: Install the wsgi file
   ansible.builtin.template: src={{ item }}
@@ -415,7 +415,7 @@
   - web
   - pagure
   notify:
-  - restart apache
+  - Restart apache
 
 - name: Let paguremirroring read the pagure config
   ansible.builtin.command: /usr/bin/setfacl -m user:paguremirroring:rx /etc/pagure/pagure.cfg
@@ -456,7 +456,7 @@
   - pagure
   - hotfix
   notify:
-  - restart pagure_ev
+  - Restart pagure_ev
 
 # Ensure all the services are up and running
 

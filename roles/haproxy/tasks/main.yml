@@ -17,7 +17,7 @@
   with_items:
   - { file: haproxy.cfg, dest: /etc/haproxy/haproxy.cfg }
   notify:
-  - restart haproxy
+  - Restart haproxy
   tags:
   - haproxy
 

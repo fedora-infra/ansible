@@ -35,6 +35,6 @@
 - name: Set up Apache config
   ansible.builtin.copy: src=testcase_stats.conf.httpd dest=/etc/httpd/conf.d/01-testcase_stats.conf owner=root group=root mode=0644
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - config

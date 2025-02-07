@@ -39,8 +39,8 @@
     dest=/etc/fedoracommunity/production.ini
     owner=apache group=fedmsg mode=0440
   notify:
-  - reload httpd
-  - restart fedmsg-hub
+  - Reload httpd
+  - Restart fedmsg-hub
   tags:
   - packages
   - packages/web
@@ -51,7 +51,7 @@
     dest=/etc/httpd/conf.d/fedora-packages.conf
     owner=root group=root mode=644
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - packages
   - packages/web
@@ -62,7 +62,7 @@
     dest=/etc/fedmsg.d/fedoracommunity.py
     owner=root group=root mode=644
   notify:
-  - restart fedmsg-hub
+  - Restart fedmsg-hub
   tags:
   - packages
   - packages/web
@@ -87,8 +87,8 @@
     dest="{{pythonsitelib}}/fedoracommunity/search/distmappings.py"
     owner=root group=root mode=0644
   notify:
-  - reload httpd
-  - restart fedmsg-hub
+  - Reload httpd
+  - Restart fedmsg-hub
   tags:
   - packages
   - packages/web

@@ -342,7 +342,7 @@
 - name: Install web server config for batcave (mimetypes)
   ansible.builtin.copy: src=mime-types.conf dest=/etc/httpd/conf.d/mime-types.conf mode=0644
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - batcave
   - config
@@ -351,7 +351,7 @@
 - name: Install web server config for batcave (access rules)
   ansible.builtin.copy: src=allows dest=/etc/httpd/conf.d/allows mode=0644
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - batcave
   - config
@@ -360,7 +360,7 @@
 - name: Install web server config for batcave (main config)
   ansible.builtin.template: src=infrastructure.fedoraproject.org.conf.j2 dest=/etc/httpd/conf.d/infrastructure.fedoraproject.org.conf mode=0644
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - batcave
   - config

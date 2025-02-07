@@ -30,14 +30,14 @@
 - name: Install the mod_auth_openidc configuration
   ansible.builtin.template: src=auth_openidc.conf dest=/etc/httpd/conf.d/auth_openidc.conf
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - distgit
 
 - name: Install the http push configuration
   ansible.builtin.template: src=httppush.conf dest=/etc/httpd/conf.d/httpush.conf
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - distgit
 
@@ -67,7 +67,7 @@
 - name: Install the mod_ssl configuration
   ansible.builtin.copy: src=ssl.conf dest=/etc/httpd/conf.d/ssl.conf
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - distgit
 
@@ -87,7 +87,7 @@
         group=apache
         mode=0600
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - distgit
 
@@ -198,14 +198,14 @@
 - name: Install the DistGit related httpd config
   ansible.builtin.copy: src=git-smart-http.conf dest=/etc/httpd/conf.d/dist-git/git-smart-http.conf
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - distgit
 
 - name: Symlink pkgs-git-repos-list
   ansible.builtin.copy: src=repolist.conf dest=/etc/httpd/conf.d/dist-git/repolist.conf
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - distgit
 
@@ -241,7 +241,7 @@
   - lookaside.conf
   - lookaside-upload.conf
   notify:
-  - reload httpd
+  - Reload httpd
   tags:
   - distgit
   - sslciphers

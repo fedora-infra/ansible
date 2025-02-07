@@ -15,7 +15,7 @@
   ansible.builtin.template:
     src: config.yml.j2
     dest: "{{ conf_path }}"
-  notify: restart docker-distribution
+  notify: Restart docker-distribution
   tags:
   - docker-distribution
 
