@@ -1,5 +1,0 @@
----
-- name: Add builder infra yum repo
-  ansible.builtin.file: dest=/etc/yum.repos.d/builder-infrastructure.repo state=absent
-  tags:
-  - builder_infra
