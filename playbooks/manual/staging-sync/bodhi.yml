@@ -59,7 +59,8 @@
   - ansible.builtin.copy:
       src: /srv/web/infra/db-dumps/bodhi2.dump.xz
       dest: /var/tmp/bodhi2.dump.xz
-      owner: postgres group=postgres
+      owner: postgres
+      group: postgres
   - ansible.builtin.command: unxz /var/tmp/bodhi2.dump.xz
              creates=/var/tmp/bodhi2.dump
   - ansible.builtin.command: dropdb bodhi2
