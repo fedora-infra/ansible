@@ -46,7 +46,7 @@ HostPrincipalFormat = compile-riscv/%s@FEDORAPROJECT.ORG
 {% if koji_instance == "primary" %}
 AuthKeytab = /etc/koji-hub/koji-hub.keytab
 {% elif koji_instance == "secondary" %}
-AuthKeytab = /etc/krb5.HTTP_koji.fedoraproject.org.keytab
+AuthKeytab = /etc/krb5.HTTP_riscv-koji.fedoraproject.org.keytab
 {% else %}
 AuthKeytab = /etc/koji-hub/koji-hub.keytab
 {% endif %}
