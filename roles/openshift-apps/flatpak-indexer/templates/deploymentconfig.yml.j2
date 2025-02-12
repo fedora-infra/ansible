@@ -226,7 +226,7 @@ spec:
       from:
         kind: ImageStreamTag
         name: redis:latest
-{{% if env == 'staging'%}}
+{% if env == 'staging' %}
 ---
 kind: DeploymentConfig
 apiVersion: apps.openshift.io/v1
@@ -383,4 +383,4 @@ spec:
       from:
         kind: ImageStreamTag
         name: flatpak-indexer:latest
-{{%endif%}}
+{% endif %}
