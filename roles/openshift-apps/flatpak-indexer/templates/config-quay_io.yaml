@@ -1,0 +1,85 @@
+redis_url: ${REDIS_URL}
+redis_password: ${REDIS_PASSWORD}
+koji_config: fedora
+deltas_dir: ${OUTPUT_DIR}/deltas/
+icons_dir: ${OUTPUT_DIR}/icons/
+{% if env == 'staging' %}
+deltas_uri: https://quay.io/fedora-testing/flatpak/deltas/
+icons_uri: https://quay.io/fedora-testing/flatpak/app-icons/
+{% else %}
+deltas_uri: https://quay.io/fedora/flatpak/deltas/
+icons_uri: https://quay.io/fedora/flatpak/app-icons/
+{% endif %}
+clean_files_after: 1d
+daemon:
+    update_interval: 30m
+registries:
+    fedora:
+        public_url: https://quay.io/fedora-testing/flatpak/
+        datasource: fedora
+        force_flatpak_token: true
+indexes:
+    latest:
+        output: ${OUTPUT_DIR}/fedora/flatpak-latest.json
+        registry: fedora
+        tag: latest
+        bodhi_status: stable
+        extract_icons: True
+        delta_keep: 30d
+    latest-annotations:
+        output: ${OUTPUT_DIR}/fedora/flatpak-latest-annotations.json
+        registry: fedora
+        tag: latest
+        bodhi_status: stable
+        extract_icons: True
+        delta_keep: 30d
+        flatpak_annotations: True
+{% for architecture in [ 'amd64', 'arm64', 'ppc64le' ] %}
+    latest-{{ architecture }}:
+        output: ${OUTPUT_DIR}/fedora/flatpak-latest-{{ architecture }}.json
+        registry: fedora
+        architecture: {{ architecture }}
+        tag: latest
+        bodhi_status: stable
+        extract_icons: True
+        delta_keep: 30d
+    latest-{{ architecture }}-annotations:
+        output: ${OUTPUT_DIR}/fedora/flatpak-latest-{{ architecture }}-annotations.json
+        registry: fedora
+        architecture: {{ architecture }}
+        tag: latest
+        bodhi_status: stable
+        extract_icons: True
+        delta_keep: 30d
+        flatpak_annotations: True
+{% endfor %}
+    testing:
+        output: ${OUTPUT_DIR}/fedora/flatpak-testing.json
+        registry: fedora
+        tag: testing
+        bodhi_status: testing
+        extract_icons: True
+    testing-annotations:
+        output: ${OUTPUT_DIR}/fedora/flatpak-testing-annotations.json
+        registry: fedora
+        tag: testing
+        bodhi_status: testing
+        extract_icons: True
+        flatpak_annotations: True
+{% for architecture in [ 'amd64', 'arm64', 'ppc64le' ] %}
+    testing-{{ architecture }}:
+        output: ${OUTPUT_DIR}/fedora/flatpak-testing-{{ architecture }}.json
+        registry: fedora
+        architecture: {{ architecture }}
+        tag: testing
+        bodhi_status: testing
+        extract_icons: True
+    testing-{{ architecture }}-annotations:
+        output: ${OUTPUT_DIR}/fedora/flatpak-testing-{{ architecture }}-annotations.json
+        registry: fedora
+        architecture: {{ architecture }}
+        tag: testing
+        bodhi_status: testing
+        extract_icons: True
+        flatpak_annotations: True
+{% endfor %}

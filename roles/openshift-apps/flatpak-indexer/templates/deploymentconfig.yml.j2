@@ -4,7 +4,7 @@ apiVersion: apps.openshift.io/v1
 metadata:
   labels:
     app: flatpak-indexer
-  name: flatpak-indexer
+  name: flatpak-indexer-registry-fedora
 spec:
   replicas: 1
   selector:
@@ -55,7 +55,7 @@ spec:
       volumes:
       - configMap:
           defaultMode: 420
-          name: indexer-config
+          name: indexer-registry-fedora-config
         name: indexer-config-volume
       - configMap:
           defaultMode: 420
@@ -81,7 +81,7 @@ apiVersion: apps.openshift.io/v1
 metadata:
   labels:
     app: flatpak-indexer-differ
-  name: flatpak-indexer-differ
+  name: flatpak-indexer-differ-registry-fedora
 spec:
   replicas: 1
   revisionHistoryLimit: 10
@@ -138,7 +138,7 @@ spec:
       volumes:
       - configMap:
           defaultMode: 420
-          name: indexer-config
+          name: indexer-registry-fedora-config
         name: indexer-config-volume
       - name: index-output-volume
         persistentVolumeClaim:
@@ -226,3 +226,161 @@ spec:
       from:
         kind: ImageStreamTag
         name: redis:latest
+{{% if env == 'staging'%}}
+---
+kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  labels:
+    app: flatpak-indexer
+  name: flatpak-indexer-quay-io
+spec:
+  replicas: 1
+  selector:
+    app: flatpak-indexer
+    deploymentconfig: flatpak-indexer
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      labels:
+        app: flatpak-indexer
+        deploymentconfig: flatpak-indexer
+    spec:
+      containers:
+      - env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-password
+              key: password
+        - name: REDIS_URL
+          value: redis://redis.flatpak-indexer.svc.cluster.local:6379
+        image: flatpak-indexer:latest
+        name: flatpak-indexer
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}
+        volumeMounts:
+        - mountPath: /etc/flatpak-indexer
+          name: indexer-config-volume
+          readOnly: true
+        - mountPath: /etc/koji.conf
+          name: koji-conf-volume
+          readOnly: true
+        - mountPath: /var/www/flatpaks
+          name: index-output-volume
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: indexer-quay-io-config
+        name: indexer-config-volume
+      - configMap:
+          defaultMode: 420
+          name: koji-conf
+        name: koji-conf-volume
+      - name: index-output-volume
+        persistentVolumeClaim:
+          claimName: flatpak-indexer-storage{{ '-stg' if env == 'staging' else '' }}
+  test: false
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+    imageChangeParams:
+      automatic: true
+      containerNames:
+      - flatpak-indexer
+      from:
+        kind: ImageStreamTag
+        name: flatpak-indexer:latest
+---
+kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  labels:
+    app: flatpak-indexer-differ
+  name: flatpak-indexer-differ-quay-io
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    app: flatpak-indexer-differ
+    deploymentconfig: flatpak-indexer-differ
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      labels:
+        app: flatpak-indexer-differ
+        deploymentconfig: flatpak-indexer-differ
+    spec:
+      containers:
+      - env:
+        - name: FLATPAK_INDEXER_COMMAND
+          value: differ
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-password
+              key: password
+        - name: REDIS_URL
+          value: redis://redis.flatpak-indexer.svc.cluster.local:6379
+        image: flatpak-indexer:latest
+        name: flatpak-indexer-differ
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources:
+          requests:
+            cpu: 2
+            memory: 1Gi
+          limits:
+            cpu: 2
+            memory: 3Gi
+        volumeMounts:
+        - mountPath: /etc/flatpak-indexer
+          name: indexer-config-volume
+          readOnly: true
+        - mountPath: /var/www/flatpaks
+          name: index-output-volume
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: indexer-quay-io-config
+        name: indexer-config-volume
+      - name: index-output-volume
+        persistentVolumeClaim:
+          claimName: flatpak-indexer-storage{{ '-stg' if env == 'staging' else '' }}
+  test: false
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+    imageChangeParams:
+      automatic: true
+      containerNames:
+      - flatpak-indexer-differ
+      from:
+        kind: ImageStreamTag
+        name: flatpak-indexer:latest
+{{%endif%}}
