@@ -11,8 +11,16 @@ SERVER=centos-master01.iad2.fedoraproject.org
 ## Mirror CentOS-10-Stream
 
 RSYNC_DESTDIR=/mnt/fedora/app/fi-repo/centos/centos-10/
+RSYNC_SNAPDIR=/mnt/fedora/app/fi-repo/centos/centos-10-snapshot/
 RSYNC_MOD="CentOS-Stream-Ref/10-stream/"
 
-mkdir -p ${RSYNC_DESTDIR}
+mkdir -p ${RSYNC_DESTDIR} ${RSYNC_SNAPDIR}
 
 ${RSYNC} ${RS_OPT} ${RS_DEADLY} ${CENT_EXCLUDES} ${SERVER}::${RSYNC_MOD} ${RSYNC_DESTDIR}
+
+# Duplicate the sync directory.  Before CentOS 10 starts getting RHEL 10.1
+# changes, we need to comment this out to have a snapshot of CentOS 10 that
+# resembles RHEL 10.0 for the epel10.0-build tag to use temporarily until the
+# actual RHEL 10.0 is released.
+# https://pagure.io/fedora-infrastructure/issue/12394
+${RSYNC} ${RS_OPT} ${RS_DEADLY} --link-dest=${RSYNC_DESTDIR} ${RSYNC_DESTDIR} ${RSYNC_SNAPDIR}
