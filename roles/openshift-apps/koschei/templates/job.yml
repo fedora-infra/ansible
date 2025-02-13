@@ -2,17 +2,17 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "job-{{name}}"
+  name: "job-{{job_name}}"
 spec:
   template:
     spec:
       containers:
-      - name: "job-{{name}}"
+      - name: "job-{{job_name}}"
         image: "image-registry.openshift-image-registry.svc:5000/koschei/koschei:latest"
-        command: ["/bin/bash", "-euxc", "{{command}}"]
+        command: ["/bin/bash", "-euxc", "{{job_command}}"]
         env:
           - name: SUDO_USER
-            value: "job-{{name}}"
+            value: "job-{{job_name}}"
           - name: KRB5_CONFIG
             value: /etc/koschei/krb5.conf
           - name: KRB5_CLIENT_KTNAME
