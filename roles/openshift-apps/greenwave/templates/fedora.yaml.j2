@@ -181,8 +181,7 @@ decision_contexts:
 subject_type: bodhi_update
 rules:
 # This list needs to stay synced with openQA if tests are added or renamed.
-# uncomment in ~Jan 2025
-#  - !PassingTestCaseRule {test_case_name: update.kiwi_build, scenario: "fedora.updates-container.x86_64.64bit"}
+  - !PassingTestCaseRule {test_case_name: update.kiwi_build, scenario: "fedora.updates-container.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.podman, scenario: "fedora.updates-container.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.podman, scenario: "fedora.updates-container.aarch64.aarch64"}
   - !PassingTestCaseRule {test_case_name: update.podman_client, scenario: "fedora.updates-container.x86_64.64bit"}
@@ -304,7 +303,6 @@ rules:
 # This list needs to stay synced with openQA if tests are added or renamed.
   - !PassingTestCaseRule {test_case_name: update.install_default_update_live, scenario: "fedora.updates-workstation-live-iso.x86_64.64bit"}
   - !PassingTestCaseRule {test_case_name: update.install_default_update_live, scenario: "fedora.updates-workstation-live-iso.x86_64.bios"}
-  - !PassingTestCaseRule {test_case_name: update.live_build, scenario: "fedora.updates-workstation-live-iso.x86_64.64bit"}
 
 --- !Policy
 id: "bodhiupdate_bodhipush_openqa_kde"
