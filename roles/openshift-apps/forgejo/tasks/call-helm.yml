@@ -2,11 +2,11 @@
 # From git
 - name: Git clone stable repo on HEAD
   ansible.builtin.git:
-    repo: "http://github.com/helm/charts.git"
-    dest: /tmp/helm_repo
+    repo: "https://codeberg.org/fedora/forgejo-helm.git"
+    dest: /tmp/forgejo-helm_repo
 
 - name: Deploy Grafana chart from local path
   kubernetes.core.helm:
     name: test
-    chart_ref: /tmp/helm_repo/stable/grafana
-    release_namespace: test-helm
+    chart_ref: /tmp/forgejo-helm_repo/
+    release_namespace: forgejo
