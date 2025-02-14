@@ -30,3 +30,21 @@
   - Restart apache
   tags:
   - config
+
+# These next two should eventually be: install mod_wsgi-dnf5-actions
+- name: Install libdnf actions plugin
+  ansible.builtin.package:
+    name: libdnf5-plugin-actions
+    state: present
+  tags:
+  - packages
+  # This is currently Fedora-40+ ... no RHEL, no EPEL
+  when: ansible_distribution == 'Fedora'
+
+- name: Wsgi libdnf actions
+  ansible.builtin.copy: src="mod_wsgi.actions" dest=/etc/dnf/libdnf5-plugins/actions.d
+  tags:
+  - config
+  # This does nothing without the above plugin, although we could install it
+  # everywhere.
+  when: ansible_distribution == 'Fedora'

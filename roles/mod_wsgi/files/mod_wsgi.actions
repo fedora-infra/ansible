@@ -1,0 +1,19 @@
+# Requirements: yum install libdnf5-plugin-actions
+
+# At the end of the DNF transaction
+#    if python3-mod_wsgi has (re)installed/(up|down)graded then
+#        restart HTTPD
+#    if python3-libs has (re)installed/(up|down)graded then
+#        restart HTTPD
+#  (will run the cmd twice on if they both change on (up/down)grades)
+# Doesn't do anything if either are removed.
+post_transaction:python3-mod_wsgi:in:enabled=host-only:/bin/systemctl try-restart --no-block httpd.service
+post_transaction:python3-libs:in:enabled=host-only:/bin/systemctl try-restart --no-block httpd.service
+
+# Uncomment this line to do the same thing when it's removed
+#  (will run the cmd twice on (up/down)grades)
+# post_transaction:python3-mod_wsgi:out:enabled=host-only:/bin/systemctl try-restart --no-block httpd.service
+
+# This is for python2-mod_wsgi ... probably DNF5 doesn't exist, or this package
+# doesn't.
+# post_transaction:python2-mod_wsgi:in:enabled=host-only:/bin/systemctl try-restart --no-block httpd.service
