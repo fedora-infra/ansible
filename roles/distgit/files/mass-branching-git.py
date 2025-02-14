@@ -18,7 +18,6 @@ import subprocess
 import sys
 
 _base_path = '/srv/git/repositories'
-_branch_from = 'rawhide' # For rpms namespace only
 
 
 def _get_arguments():
@@ -30,17 +29,22 @@ def _get_arguments():
     parser.add_argument(
         'inputfile',
         help='The input file listing the repositories to update')
+    parser.add_argument(
+        'branchfrom',
+        help='Which branch to use as base, defaults to rawhide',
+        nargs='?',
+        default='rawhide')
 
     return parser.parse_args()
 
 
-def create_git_branch(path, gitbranch):
+def create_git_branch(path, gitbranch, branchfrom):
     """ Create the specified git branch in the specified git repository. """
     if not os.path.isdir(path):
         print('   ERROR: %s does not appear to be a directory' % path)
         return
 
-    cmd = ['git', 'branch', gitbranch, _branch_from]
+    cmd = ['git', 'branch', gitbranch, branchfrom]
     return subprocess.check_output(
         cmd, stderr=subprocess.STDOUT, shell=False, cwd=path)
 
@@ -70,7 +74,7 @@ def main():
         path = os.path.join(_base_path, '%s.git' % entry)
         print('Processing %s' % path)
         try:
-            create_git_branch(path, args.gitbranch)
+            create_git_branch(path, args.gitbranch, args.branchfrom)
         except subprocess.CalledProcessError as err:
             print(
                 '  ERROR: %s failed to branch, return code: %s\n      %s' % (
