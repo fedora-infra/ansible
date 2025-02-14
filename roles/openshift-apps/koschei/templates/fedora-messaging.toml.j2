@@ -1,4 +1,5 @@
 amqp_url = "amqps://koschei{{ env_suffix }}:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fpubsub"
+topic_prefix = "org.fedoraproject.{{ fedmsg_env }}"
 passive_declares = true
 
 [tls]

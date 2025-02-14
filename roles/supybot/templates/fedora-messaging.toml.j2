@@ -3,6 +3,14 @@ amqp_url = "amqps://{{ botname }}:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2
 # Just check if the queue exist, don't try to create it (the server does not allow it).
 passive_declares = true
 
+# The topic_prefix configuration value will add a prefix to the topics of every sent message.
+# This is used for migrating from fedmsg, and should not be used afterwards.
+{% if env == "staging" %}
+topic_prefix = "org.fedoraproject.stg"
+{% else %}
+topic_prefix = "org.fedoraproject.prod"
+{% endif %}
+
 [tls]
 ca_cert = "/etc/pki/fedora-messaging/rabbitmq-ca.crt"
 keyfile = "/etc/pki/fedora-messaging/{{ botname }}.key"
