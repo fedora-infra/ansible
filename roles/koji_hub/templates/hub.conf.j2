@@ -211,7 +211,7 @@ package_list =
         # Stable releases: only adding and unblocking is allowed.
         tag f{{FedoraCycleNumber}} f{{FedoraPreviousCycleNumber}} && match action add unblock :: allow
         # EPEL: adding, blocking, and unblocking are allowed 
-        tag epel8 epel9 epel9-next epel10.0 && match action add unblock block :: allow	
+        tag epel8 epel9 epel9-next epel10.0 epel10.1 && match action add unblock block :: allow
     }
     # Infra people can themselves add/block/unblock packages in their
     # tags without bothering admins.
@@ -232,6 +232,7 @@ sidetag =
     tag f40-build :: allow
     tag f39-build :: allow
     tag eln-build :: allow
+    tag epel10.1-build :: allow
     tag epel10.0-build :: allow
     tag epel9-next-build :: allow
     tag epel9-build :: allow

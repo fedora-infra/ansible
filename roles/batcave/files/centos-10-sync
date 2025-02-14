@@ -23,4 +23,4 @@ ${RSYNC} ${RS_OPT} ${RS_DEADLY} ${CENT_EXCLUDES} ${SERVER}::${RSYNC_MOD} ${RSYNC
 # resembles RHEL 10.0 for the epel10.0-build tag to use temporarily until the
 # actual RHEL 10.0 is released.
 # https://pagure.io/fedora-infrastructure/issue/12394
-${RSYNC} ${RS_OPT} ${RS_DEADLY} --link-dest=${RSYNC_DESTDIR} ${RSYNC_DESTDIR} ${RSYNC_SNAPDIR}
+#${RSYNC} ${RS_OPT} ${RS_DEADLY} --link-dest=${RSYNC_DESTDIR} ${RSYNC_DESTDIR} ${RSYNC_SNAPDIR}

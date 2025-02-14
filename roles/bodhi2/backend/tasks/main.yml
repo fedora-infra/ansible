@@ -116,7 +116,7 @@
   # bodhi2/backend/files/koji_sync_listener.py
   # This cronjob runs only once a day.  The listener script runs reactively.
   cron: name="owner-sync" minute="15" hour="4" user="root"
-      job="/usr/local/bin/lock-wrapper owner-sync '/usr/local/bin/owner-sync-pagure f43 f42 f41 f40 epel10.0 epel9 epel9-next epel8'"
+      job="/usr/local/bin/lock-wrapper owner-sync '/usr/local/bin/owner-sync-pagure f43 f42 f41 f40 epel10.1 epel10.0 epel9 epel9-next epel8'"
       cron_file=update-koji-owner
       user=apache
   when: env == "production"
