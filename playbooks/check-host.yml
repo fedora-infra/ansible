@@ -1,6 +1,6 @@
 # tags defined: [check], services, updates, restart, fileverify, iptables, selinux
 # for the fix part, I guess its better to include the role(s) for particular host that brings the system
-# to the desired state in terms of: services, updates, file verification, iptables, and selinux
+# to the desired state in terms of: services, updates, file verification, iptables, nftables, and selinux
 ---
 - hosts: "{{ target }}"
   user: root
@@ -185,8 +185,23 @@
       - check
       - iptables
 
+  - name: Check if using nftables
+    ansible.builtin.shell: /sbin/nft list ruleset
+    register: nftablesn
+    changed_when: false
+    tags:
+      - check
+      - iptables
+
   - name: Show iptables rules
     ansible.builtin.shell: echo "{{iptablesn.stdout_lines}}" >> {{ temp_dir.stdout }}/iptables
+    changed_when: false
+    tags:
+      - check
+      - iptables
+
+  - name: Show nftables rules
+    ansible.builtin.shell: echo "{{nftablesn.stdout_lines}}" >> {{ temp_dir.stdout }}/nftables
     changed_when: false
     tags:
       - check

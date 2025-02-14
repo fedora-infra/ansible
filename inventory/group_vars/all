@@ -87,8 +87,6 @@ createrepo: True
 # Groups and individual hosts should override them with specific info.
 custom6_rules: []
 custom_rules: []
-nft_custom6_rules: []
-nft_custom_rules: []
 # most of our systems are in IAD2
 datacenter: iad2
 
@@ -151,6 +149,11 @@ nagios_Check_Services:
   sshd: true
   swap: true
 nat_rules: []
+# Do we want to use nftables instead of iptables
+nftables: false
+# nftables variants of custom*_rules
+nft_custom6_rules: []
+nft_custom_rules: []
 # default network block device encryption settings for linux-system-roles/nbde_client
 nbde: true
 nbde_device: /dev/md2

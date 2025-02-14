@@ -141,22 +141,34 @@
   tags:
   - packages
   - base
+  when: not nftables
+
+- name: Ensure nftables is installed
+  ansible.builtin.package: state=present name=nftables
+  tags:
+  - packages
+  - base
+  when: nftables
 
 - name: Ensure ipset is installed
   ansible.builtin.package: state=present name=ipset
   tags:
   - packages
   - base
+  when: not nftables
 
 - name: Setup builder ipset if this is a new install
   ansible.builtin.shell: "/usr/sbin/ipset create osbuildapi hash:ip; touch /etc/sysconfig/ipset-osbuildapi"
   args:
     creates: /etc/sysconfig/ipset-osbuildapi
-  when: "'osbuild' in group_names"
+  when:
+  - "'osbuild' in group_names"
+  - not nftables
   tags:
     - base
     - iptables
 
+# Note that these should do both iptables/ipset and nftables...
 - name: Install blocklist update script
   ansible.builtin.copy:
     src: "{{ private }}/files/blocklist/blocklist-update.sh"
@@ -195,7 +207,9 @@
     - iptables/iptables.{{ host_group }}
     - iptables/iptables.{{ env }}
     - iptables/iptables
-  when: baseiptables|bool
+  when:
+  - baseiptables|bool
+  - not nftables
   notify:
   - Restart iptables
   - Reload libvirtd
@@ -210,7 +224,19 @@
   - iptables
   - service
   - base
-  when: baseiptables|bool
+  when:
+  - baseiptables|bool
+  - not nftables
+
+- name: Nftables service enabled
+  service: name=nftables state=started enabled=true
+  tags:
+  - iptables
+  - service
+  - base
+  when:
+  - baseiptables|bool
+  - nftables
 
 - name: Ip6tables
   ansible.builtin.template: src={{ item }} dest=/etc/sysconfig/ip6tables mode=0600 backup=yes
@@ -220,7 +246,9 @@
     - iptables/ip6tables.{{ host_group }}
     - iptables/ip6tables.{{ env }}
     - iptables/ip6tables
-  when: baseiptables|bool
+  when:
+  - baseiptables|bool
+  - not nftables
   notify:
   - Restart ip6tables
   - Reload libvirtd
@@ -235,7 +263,9 @@
   - ip6tables
   - service
   - base
-  when: baseiptables|bool
+  when:
+  - baseiptables|bool
+  - not nftables
 
 - name: Enable journald persistence
   ansible.builtin.file: path=/var/log/journal state=directory
