@@ -15,7 +15,7 @@ NEWIPS=`echo "$RESOLVEQUERY" | grep link | sed -E 's/.* ([0-9]+\.[0-9]+\.[0-9]+\
 
 for j in $NEWIPS
 do
-     /usr/sbin/ipset add osbuildapi $j
+     /usr/sbin/ipset add osbuildapi $j 2> /dev/null
 done
 
 # both stage and prod authenticate using sso.redhat.com
@@ -26,5 +26,5 @@ NEWIDENTITYIPS=`echo "$RESOLVEQUERY" | grep link | sed -E 's/.* ([0-9]+\.[0-9]+\
 
 for j in $NEWIDENTITYIPS
 do
-     /usr/sbin/ipset add osbuildapi $j
+     /usr/sbin/ipset add osbuildapi $j 2> /dev/null
 done
