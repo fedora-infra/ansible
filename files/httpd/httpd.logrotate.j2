@@ -1,4 +1,8 @@
-/var/log/httpd/*log {
+/var/log/httpd/*log 
+{% if ansible_hostname.startswith("kojipkgs") %}
+/var/log/httpd/*.log.????-??-??
+{% endif %}
+{
     daily
     rotate 7
     missingok
