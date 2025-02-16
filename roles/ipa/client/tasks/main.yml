@@ -74,7 +74,7 @@
   run_once: yes
 
 - name: Ensure that nss knows to skip certain users (f41/rhel)
-  ansible.builtin.template: src=fedora-nss-ignore.conf.j2 dest=/etc/sssd/conf.d/fedora-nss-ignore.conf mode=600 owner=root group=sssd
+  ansible.builtin.template: src=fedora-nss-ignore.conf.j2 dest=/etc/sssd/conf.d/fedora-nss-ignore.conf mode=640 owner=root group=sssd
   tags:
   - ipa/client
   - config
