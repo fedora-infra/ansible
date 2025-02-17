@@ -6,10 +6,10 @@
 ---
 - import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
   vars:
-    myhosts: "releng_compose:releng_compose_stg:releng_compose_eln"
+    myhosts: "releng_compose:releng_compose_stg:releng_compose_eln:releng_compose_riscv"
 
 - name: Setup releng compose hosts
-  hosts: releng_compose:releng_compose_stg:releng_compose_eln
+  hosts: releng_compose:releng_compose_stg:releng_compose_eln:releng_compose_riscv
   user: root
   gather_facts: true
   tags:
@@ -48,9 +48,16 @@
     service: compose
     host: "koji{{env_suffix}}.fedoraproject.org"
     owner_group: releng-team
+    when: env == "staging" or koji_instance == "primary"
+  - role: keytab/service
+    service: compose
+    host: "riscv-koji.fedoraproject.org"
+    owner_group: sysadmin-riscv
+    when: koji_instance == "secondary"
   - role: keytab/service
     service: mash
     host: "koji{{env_suffix}}.fedoraproject.org"
+    when: env == "staging" or koji_instance == "primary"
   - role: releng
     tags:
     - releng
@@ -81,6 +88,10 @@
     mnt_dir: '/pub'
     nfs_src_dir: 'fedora_ftp/fedora.redhat.com/pub'
     when: "'releng_compose' or 'releng_compose_eln' in group_names"
+  - role: nfs/client
+    mnt_dir: '/mnt/fedora_riscv_koji'
+    nfs_src_dir: "{{ koji_hub_nfs }}"
+    when: "'releng_compose_riscv' in group_names"
 
 # staging composer nfs mounts
 
@@ -148,12 +159,14 @@
   - role: rabbit/user
     user_name: "pungi{{ env_suffix }}"
     user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.(pungi|compose|logger)\..*
+    when: koji_instance == "production" or env == "staging"
 
   - {
     role: "push-container-registry",
     cert_dest_dir: "/etc/docker/certs.d/registry.stg.fedoraproject.org",
     cert_src: "{{private}}/files/docker-registry/staging/pki/issued/containerstable.crt",
     key_src: "{{private}}/files/docker-registry/staging/pki/private/containerstable.key",
+    when: env == "staging"
   }
   - {
     role: "push-container-registry",
