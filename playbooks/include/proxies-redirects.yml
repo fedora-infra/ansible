@@ -929,10 +929,9 @@
 
   # old registry.fedoraproject.org web interface
   - role: httpd/redirectmatch
-    shortname: reg-server-stg
+    shortname: reg-server
     website: registry.fedoraproject.org
     regex: ^/(index\.html|repo(.*))$
     target: https://quay.io/organization/fedora/
-    when: env == 'staging'
     tags:
       - registry
