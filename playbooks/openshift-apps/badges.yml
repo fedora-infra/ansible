@@ -196,20 +196,24 @@
 
     - role: openshift/start-build
       start_build_app: badges
-      start_build_buildname: "{{ item }}"
+      start_build_buildname: "{{ dcname }}"
       loop:
-        - fedbadges
-        - tahrir
+      - fedbadges
+      - tahrir
+      loop_control:
+        loop_var: dcname
       tags:
       - never
       - build
 
     - role: openshift/rollout
       rollout_app: badges
-      rollout_dcname: "{{ item }}"
+      rollout_dcname: "{{ dcname }}"
       loop:
-        - fedbadges
-        - tahrir
+      - fedbadges
+      - tahrir
+      loop_control:
+        loop_var: dcname
       tags:
       - never
       - rollout
