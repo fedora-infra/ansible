@@ -111,7 +111,7 @@ define service {
 define service {
   host_name             proxy01.fedoraproject.org, proxy10.fedoraproject.org
   service_description   http-oci-registry-webui
-  check_command         check_website_ssl!registry.fedoraproject.org!/repo/fedora/tags/!rawhide
+  check_command         check_website_ssl!registry.fedoraproject.org!/v2/fedora/tags/list!rawhide
   use                   websitetemplate
 }
 
