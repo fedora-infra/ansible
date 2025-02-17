@@ -33,7 +33,7 @@
   - ipa/client
   - collectd/base
   - apache
-  - mod_wsgi
+  - role: mod_wsgi
     when: env == 'staging'
   - role: keytab/service
     service: kojira
