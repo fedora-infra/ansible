@@ -33,8 +33,7 @@
   - ipa/client
   - collectd/base
   - apache
-  - role: mod_wsgi
-    when: env == 'staging'
+  - mod_wsgi
   - role: keytab/service
     service: kojira
     host: "koji{{env_suffix}}.fedoraproject.org"
