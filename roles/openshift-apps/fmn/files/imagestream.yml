@@ -7,11 +7,11 @@ items:
     kind: ImageStream
     metadata:
       name: fmn
-  # The Python 3.10 builder image
+  # The Python 3.12 builder image
   - apiVersion: image.openshift.io/v1
     kind: ImageStream
     metadata:
-      name: python-310
+      name: python-312
     spec:
       lookupPolicy:
         local: false
@@ -19,16 +19,16 @@ items:
         - name: latest
           from:
             kind: DockerImage
-            name: quay.io/fedora/python-310:latest
+            name: quay.io/fedora/python-312:latest
           importPolicy:
             scheduled: true
           referencePolicy:
             type: Source
-  # The Python 3.10 builder image plus collectd
+  # The Python builder image plus collectd
   - apiVersion: image.openshift.io/v1
     kind: ImageStream
     metadata:
-      name: python-310-collectd
+      name: python-312-collectd
   # Sendria (to view email notifications in staging)
   - apiVersion: image.openshift.io/v1
     kind: ImageStream

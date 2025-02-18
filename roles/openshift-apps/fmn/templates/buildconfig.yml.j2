@@ -3,10 +3,10 @@
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
-  name: python-310-collectd
+  name: python-312-collectd
   labels:
     app: fmn
-    build: python-310-collectd
+    build: python-312-collectd
 spec:
   runPolicy: Serial
   source:
@@ -18,11 +18,11 @@ spec:
     dockerStrategy:
       from:
         kind: ImageStreamTag
-        name: python-310:latest
+        name: python-312:latest
   output:
     to:
       kind: ImageStreamTag
-      name: python-310-collectd:latest
+      name: python-312-collectd:latest
   triggers:
   - type: ImageChange
 ---
@@ -47,7 +47,7 @@ spec:
       from:
         kind: ImageStreamTag
         # Our own ImageStream with collectd added to it
-        name: python-310-collectd:latest
+        name: python-312-collectd:latest
       env:
       # The .s2i/bin/assemble script uses this to build the frontend with the
       # correct API and Ipsilon addresses.
