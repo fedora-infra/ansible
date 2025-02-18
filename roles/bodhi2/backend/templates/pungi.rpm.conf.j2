@@ -26,7 +26,7 @@ comps_file = {
     'scm': 'git',
     'repo': 'https://pagure.io/fedora-comps.git',
     'branch': 'main', # defaults to cvs/HEAD or git/main
-    'file': 'comps-[[ release.branch ]].xml',
+    'file': 'comps-epel[[ release.version | int ]].xml',
     'command': 'make',
 }
 variants_file='variants.xml'
