@@ -87,7 +87,7 @@
   - role: nfs/client
     mnt_dir: '/pub'
     nfs_src_dir: 'fedora_ftp/fedora.redhat.com/pub'
-    when: "'releng_compose' or 'releng_compose_eln' in group_names and koji_instance == 'primary'"
+    when: "'releng_compose' in group_names and koji_instance != 'secondary'"
   - role: nfs/client
     mnt_dir: '/mnt/fedora_riscv_koji'
     nfs_src_dir: "{{ koji_hub_nfs }}"
