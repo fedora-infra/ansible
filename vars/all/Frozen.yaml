@@ -1,2 +1,7 @@
 ---
-Frozen: True
+# is the infrastructure freeze currently in place?
+InfraFrozen: True
+# is the pending release (Branched) currently frozen?
+NextReleaseFrozen: True
+# for 'backwards compatibility'
+Frozen: {{ InfraFrozen }}

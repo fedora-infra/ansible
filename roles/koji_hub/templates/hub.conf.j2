@@ -207,7 +207,7 @@ package_list =
         # Rawhide adding, unblocking and blocking is allowed.
         tag f{{FedoraRawhideNumber}} && match action add unblock block :: allow
         # In branched blocking is allowed only before final freeze.
-        tag f{{FedoraBranchedNumber}} && match action add unblock {{ 'block' if not Frozen or FedoraBranchedBodhi != 'postbeta' else '' }} :: allow
+        tag f{{FedoraBranchedNumber}} && match action add unblock {{ 'block' if not NextReleaseFrozen or FedoraBranchedBodhi != 'postbeta' else '' }} :: allow
         # Stable releases: only adding and unblocking is allowed.
         tag f{{FedoraCycleNumber}} f{{FedoraPreviousCycleNumber}} && match action add unblock :: allow
         # EPEL: adding, blocking, and unblocking are allowed 
