@@ -26,7 +26,11 @@ comps_file = {
     'scm': 'git',
     'repo': 'https://pagure.io/fedora-comps.git',
     'branch': 'main', # defaults to cvs/HEAD or git/main
+[% if release.id_prefix == 'FEDORA-EPEL' %]
     'file': 'comps-epel[[ release.version | int ]].xml',
+[% else %]
+    'file': 'comps-[[ release.branch ]].xml',
+[% endif %]
     'command': 'make',
 }
 variants_file='variants.xml'
