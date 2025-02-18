@@ -30,7 +30,7 @@ spec:
                   secretKeyRef:
                     name: fmn
                     key: redis-password
-              - name: CACHE__SETUP_ARGS__HASH_KEY
+              - name: CACHE__SETUP_ARGS__SECRET
                 valueFrom:
                   secretKeyRef:
                     name: fmn
@@ -75,7 +75,7 @@ spec:
                   secretKeyRef:
                     name: fmn
                     key: redis-password
-              - name: CACHE__SETUP_ARGS__HASH_KEY
+              - name: CACHE__SETUP_ARGS__SECRET
                 valueFrom:
                   secretKeyRef:
                     name: fmn
