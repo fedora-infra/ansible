@@ -794,3 +794,11 @@
   tags:
     - ipa/server
     - config
+
+- name: Include toddlers setup
+  ansible.builtin.import_tasks: toddlers.yml
+  when: env == 'staging'
+  tags:
+  - ipa/server
+  - config
+  - toddlers

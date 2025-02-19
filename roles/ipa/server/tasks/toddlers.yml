@@ -1,0 +1,43 @@
+# Toddlers capabilities
+
+- name: Create toddlers toddlers-sync-groups service
+  ansible.builtin.include_role:
+    name: "keytab/service" # noqa role-name[path]
+  vars:
+    host: os-control01{{ env_suffix }}.fedoraproject.org # noqa: var-naming[no-role-prefix]
+    service: toddlers-sync-group # noqa: var-naming[no-role-prefix]
+
+- name: Create the privilege
+  ansible.builtin.command:
+    argv:
+      - ipa
+      - privilege-add
+      - Group Membership Synchronization
+      - --desc=Toddler to synchronize group memberships
+  register: output
+  changed_when: "'already exists' not in output.stderr"
+  failed_when: "'already exists' not in output.stderr and output.rc != 0"
+
+- name: Setup the privilege
+  ansible.builtin.command:
+    argv:
+      - ipa
+      - privilege-add-permission
+      - Group Membership Synchronization
+      - "--permissions=System: Modify Group Membership"
+  register: output
+  changed_when: "'Number of permissions added 0' not in output.stdout"
+  failed_when: "'Number of permissions added 0' not in output.stdout and output.rc != 0"
+
+- name: Create the role
+  community.general.ipa_role:
+    name: Group Membership Synchronization
+    description: "Toddler role to synchronize group memberships"
+    privilege:
+    - Group Membership Synchronization
+    service:
+    - os-control01{{ env_suffix }}.fedoraproject.org/toddlers-sync-group
+    ipa_host: "{{ inventory_hostname }}"
+    ipa_user: admin
+    ipa_pass: "{{ ipa_admin_password }}"
+    validate_certs: no
