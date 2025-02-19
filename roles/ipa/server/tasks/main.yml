@@ -658,6 +658,14 @@
   - ipa/server
   - config
 
+- name: Include toddlers setup
+  ansible.builtin.import_tasks: toddlers.yml
+  when: env == 'staging'
+  tags:
+  - ipa/server
+  - config
+  - toddlers
+
 - name: Destroy admin ticket
   ansible.builtin.command: kdestroy -A
   changed_when: true
@@ -794,11 +802,3 @@
   tags:
     - ipa/server
     - config
-
-- name: Include toddlers setup
-  ansible.builtin.import_tasks: toddlers.yml
-  when: env == 'staging'
-  tags:
-  - ipa/server
-  - config
-  - toddlers
