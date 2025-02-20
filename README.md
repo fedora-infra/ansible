@@ -136,7 +136,7 @@ work closely with other to ensure that the downtime is properly scheduled:
 - https://status.fedoraproject.org is updated (see https://docs.fedoraproject.org/en-US/infra/sysadmin_guide/status-fedora/)
 
 Applications on critical path: pagure, mirrormanager, toddlers, bodhi, noggin, mdapi, rpmautospec, 
-pagure-dist-git, monitor-gating, mirror_from_pagure, fedora-messaging, dist-git, PDC/FPDC, FMN, sigul
+pagure-dist-git, mirror_from_pagure, fedora-messaging, dist-git, PDC/FPDC, FMN, sigul
 robosignatory, tag2distrepo, ci-resultsdb-listener, stylo, mirrorlist
 resultsdb, Nagios, koschei, wiki / mediawiki, wiki / moin, waiverdb, 
 greenwave, ODCS, Mailman3 / HK, mailman 2, OSBS, pungi, koji, MBS, 
