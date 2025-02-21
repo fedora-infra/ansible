@@ -61,6 +61,8 @@ key_aliases =
     0608B895    fedora-epel-6
     352C64E5    fedora-epel-7
     2F86D6A1    fedora-epel-8
+    3228467C    fedora-epel-9
+    E37ED158    fedora-epel-10
     A3CC4E62    fedora-modularity
 
 unprotected_keys =
@@ -98,6 +100,8 @@ unprotected_keys =
     fedora-epel-6
     fedora-epel-7
     fedora-epel-8
+    fedora-epel-9
+    fedora-epel-10
     fedora-modularity
 
 server = {{ koji_server_url }}
@@ -163,6 +167,8 @@ policy =
     sig fedora-epel-6 && age < 12 weeks :: keep
     sig fedora-epel-7 && age < 12 weeks :: keep
     sig fedora-epel-8 && age < 12 weeks :: keep
+    sig fedora-epel-9 && age < 12 weeks :: keep
+    sig fedora-epel-10 && age < 12 weeks :: keep
 
     # Do not GC stuff in pending tags, it is likely just going out in an update
     tag *pending :: keep
