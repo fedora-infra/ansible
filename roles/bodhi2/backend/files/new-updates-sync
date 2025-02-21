@@ -474,7 +474,7 @@ def get_epel_release_rel_path(release, epel_next=False):
     else:
         for path in sorted(Path(RELEASES[release]['repos']['epel']['to'][0]['dest']).rglob('epel-release*noarch*')):
             if 'Packages' in str(path) and 'x86_64' in str(path):
-                abs_path = path
+                abs_path = str(path)
                 pkg_relpath = os.path.relpath(path,EPELDEST)
     return abs_path, pkg_relpath
 
@@ -504,14 +504,14 @@ def update_epel_release_latest(releases):
                 # For next's epel release, use the subpackage rpm from epel repo instead of
                 # epel next repo
                 release = release[:-1]
-                path, pkg_relpath = get_epel_release_rel_path(release, True)
+                abs_path, pkg_relpath = get_epel_release_rel_path(release, True)
             else:
                 dest = '/pub/epel/epel-release-latest-' + major + '.noarch.rpm'
-                path, pkg_relpath = get_epel_release_rel_path(release)
+                abs_path, pkg_relpath = get_epel_release_rel_path(release)
 
             if os.path.lexists(dest) and os.path.islink(dest):
                 origin_dest = os.path.join(EPELDEST,os.readlink(dest))
-                if origin_dest != str(path):
+                if os.path.split(origin_dest)[-1] != os.path.split(abs_path)[-1]:
                     os.remove(dest)
                     os.symlink(pkg_relpath, dest)
             elif os.path.lexists(dest) and not os.path.islink(dest):
