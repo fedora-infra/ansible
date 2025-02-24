@@ -18,7 +18,9 @@ test $? -eq 0 || exit $?
 NEWIDENTITYIPS=`echo "$RESOLVEQUERY" | grep link | sed -E 's/.* ([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+).*/\1/g' | sort -n`
 
 # Empty the filter: We do this at the end for a small window.`
-nft flush set global osbuildapi
+# NOTE: We aren't flushing old entries anymore.
+# See commit: e7b50aaee469fdded0ea650c7e7f4dd06e929609
+# nft flush set global osbuildapi
 
 # Add the IPs...
 for j in $NEWIPS
