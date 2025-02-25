@@ -46,11 +46,17 @@
       tags:
         - appowners
 
+    # Keytabs
     - role: openshift/keytab
       keytab_app: poddlers
       keytab_key: service.keytab
       keytab_secret_name: keytab
       keytab_service: toddlers
+    - role: openshift/keytab
+      keytab_app: poddlers
+      keytab_key: sync-group.keytab
+      keytab_secret_name: sync-group-keytab
+      keytab_service: toddlers-sync-group
 
     - role: openshift/ipa-client
       ipa_client_app: poddlers

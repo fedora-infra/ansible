@@ -2,7 +2,7 @@
 
 - name: Create toddlers toddlers-sync-groups service
   ansible.builtin.include_role:
-    name: "keytab/service" # noqa role-name[path]
+    name: "ipa/service" # noqa role-name[path]
   vars:
     host: os-control01{{ env_suffix }}.fedoraproject.org # noqa: var-naming[no-role-prefix]
     service: toddlers-sync-group # noqa: var-naming[no-role-prefix]
