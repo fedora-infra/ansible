@@ -27,6 +27,10 @@ spec:
             - name: FEDORA_MESSAGING_CONF
               value: /etc/fedora-messaging/{{ toddler.name }}.toml
             {{ common_env() }}
+            {% if toddler.name == "clean-packagers-groups" %}
+            - name: KRB5_CLIENT_KTNAME
+              value: /etc/sync-group-keytabs/sync-group.keytab
+            {%- endif %}
 
           volumeMounts:
             {{ common_volume_mounts() }}
