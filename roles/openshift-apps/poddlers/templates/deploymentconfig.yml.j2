@@ -34,19 +34,19 @@ spec:
 
           volumeMounts:
             {{ common_volume_mounts() }}
-	    {% if toddler.name == "clean-packagers-groups" %}
+            {% if toddler.name == "clean-packagers-groups" %}
             - name: sync-group-keytab-volume
               mountPath: /etc/sync-group-keytabs
               readOnly: true
-	    {% endif %}
+            {% endif %}
 
       volumes:
         {{ common_volumes() }}
-	{% if toddler.name == "clean-packagers-groups" %}
+        {% if toddler.name == "clean-packagers-groups" %}
         - name: sync-group-keytab-volume
           secret:
             secretName: sync-group-keytab
-	{% endif %}
+        {% endif %}
 
   triggers:
     - type: ConfigChange
