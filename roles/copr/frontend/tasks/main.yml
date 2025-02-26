@@ -143,6 +143,12 @@
 
 - import_tasks: "httpd.yml"
 
+# One of the key features of this role is an automatic httpd restart after
+# python3-libs or any other breaking dependency is updated
+- name: Install Fedora Infra mod_wsgi role
+  include_role: name=mod_wsgi
+  when: devel|bool
+
 - name: Enable services
   service: state=started enabled=yes name={{ item }}
   with_items:
