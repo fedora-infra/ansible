@@ -1,5 +1,5 @@
 # {{ ansible_managed }}
-*add table ip filter
+add table ip filter
 add chain ip filter   INPUT { type filter hook input priority 0; policy drop; }
 add chain ip filter FORWARD { type filter hook forward priority 0; policy drop; }
 add chain ip filter  OUTPUT { type filter hook output priority 0; policy drop; }
