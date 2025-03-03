@@ -32,8 +32,7 @@ add rule ip filter INPUT ip saddr {{ ip }} counter drop
 #!# WARNING: This is very different...
 # -A OUTPUT -p tcp --dport 443 -m set --match-set osbuildapi dst -j ACCEPT
 
-add table inet global
-add set inet global osbuildapi { type ipv4_addr ; size 65536; }
+add set  ip filter osbuildapi { type ipv4_addr ; size 65536; }
 
 add rule ip filter OUTPUT tcp dport 443 ip daddr @osbuildapi accept
 

@@ -20,15 +20,15 @@ NEWIDENTITYIPS=`echo "$RESOLVEQUERY" | grep link | sed -E 's/.* ([0-9]+\.[0-9]+\
 # Empty the filter: We do this at the end for a small window.`
 # NOTE: We aren't flushing old entries anymore.
 # See commit: e7b50aaee469fdded0ea650c7e7f4dd06e929609
-# nft flush set global osbuildapi
+# nft flush set ip filter osbuildapi
 
 # Add the IPs...
 for j in $NEWIPS
 do
-     nft add element ip global osbuildapi { $j }
+     nft add element ip filter osbuildapi { $j }
 done
 
 for j in $NEWIDENTITYIPS
 do
-     nft add element ip global osbuildapi { $j }
+     nft add element ip filter osbuildapi { $j }
 done
