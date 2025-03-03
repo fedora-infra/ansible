@@ -382,12 +382,28 @@
 
 - name: Install script to update osbuild api ip in the firewall
   ansible.builtin.template: src=osbuildapi-update.sh dest=/usr/local/bin/osbuildapi-update.sh mode=755
+  when: not nftables
   tags:
   - koji_builder
   - koji_builder/osbuildapi
 
 - name: Install cron job to run osbuild api ip update script every minute.
   ansible.builtin.template: src=osbuildapi-update.cron dest=/etc/cron.d/osbuildapi-update.cron mode=644
+  when: not nftables
+  tags:
+  - koji_builder
+  - koji_builder/osbuildapi
+
+- name: Install script to update osbuild api ip in the firewall (nftables)
+  ansible.builtin.template: src=osbuildapi-update-nft.sh dest=/usr/local/bin/osbuildapi-update-nft.sh mode=755
+  when: nftables
+  tags:
+  - koji_builder
+  - koji_builder/osbuildapi
+
+- name: Install cron job to run osbuild api ip update script every minute. (nftables)
+  ansible.builtin.template: src=osbuildapi-update-nft.cron dest=/etc/cron.d/osbuildapi-update-nft.cron mode=644
+  when: nftables
   tags:
   - koji_builder
   - koji_builder/osbuildapi
