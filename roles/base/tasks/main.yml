@@ -218,6 +218,29 @@
   - config
   - base
 
+- name: Nftables
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: /etc/sysconfig/nftables.conf
+    mode: '0600'
+    validate: "/sbin/nft --check --file %s"
+  with_first_found:
+    - nftables/nftables.{{ datacenter }}
+    - nftables/nftables.{{ inventory_hostname }}
+    - nftables/nftables.{{ host_group }}
+    - nftables/nftables.{{ env }}
+    - nftables/nftables
+  when:
+  - baseiptables|bool
+  - nftables
+  notify:
+  - Restart nftables
+  - Reload libvirtd
+  tags:
+  - iptables
+  - config
+  - base
+
 - name: Iptables service enabled
   service: name=iptables state=started enabled=true
   tags:

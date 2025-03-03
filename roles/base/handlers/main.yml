@@ -9,6 +9,9 @@
 - name: Restart iptables
   service: name=iptables state=restarted
 
+- name: Restart nftables
+  service: name=nftables state=restarted
+
 - name: Restart ip6tables
   service: name=ip6tables state=restarted
 

@@ -26,6 +26,9 @@
 - name: Restart iptables
   action: service name=iptables state=restarted
 
+- name: Restart nftables
+  action: service name=nftables state=restarted
+
 - name: Restart ip6tables
   action: service name=ip6tables state=restarted
 
