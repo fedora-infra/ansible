@@ -218,10 +218,10 @@
   - config
   - base
 
-- name: Nftables
+- name: Nftables ipv4
   ansible.builtin.template:
     src: "{{ item }}"
-    dest: /etc/sysconfig/nftables.conf
+    dest: /etc/nftables/fedora-infra-ipv4.nft
     mode: '0600'
     validate: "/sbin/nft --check --file %s"
   with_first_found:
@@ -287,6 +287,48 @@
   - Reload libvirtd
   tags:
   - ip6tables
+  - config
+  - base
+
+- name: Nftables ipv6
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: /etc/nftables/fedora-infra-ipv6.nft
+    mode: '0600'
+    validate: "/sbin/nft --check --file %s"
+  with_first_found:
+    - nftables/nftables-ipv6.{{ datacenter }}
+    - nftables/nftables-ipv6.{{ inventory_hostname }}
+    - nftables/nftables-ipv6.{{ host_group }}
+    - nftables/nftables-ipv6.{{ env }}
+    - nftables/nftables-ipv6
+  when:
+  - baseiptables|bool
+  - nftables
+  notify:
+  - Restart nftables
+  - Reload libvirtd
+  tags:
+  - ip6tables
+  - config
+  - base
+
+- name: Nftables sysconfig
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: /etc/sysconfig/nftables.conf
+    mode: '0600'
+    validate: "/sbin/nft --check --file %s"
+  with_first_found:
+    - nftables/sysconfig.conf
+  when:
+  - baseiptables|bool
+  - nftables
+  notify:
+  - Restart nftables
+  - Reload libvirtd
+  tags:
+  - iptables
   - config
   - base
 
