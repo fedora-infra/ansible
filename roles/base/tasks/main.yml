@@ -251,6 +251,16 @@
   - baseiptables|bool
   - not nftables
 
+- name: Iptables service disabled
+  service: name=iptables state=stopped enabled=false
+  tags:
+  - iptables
+  - service
+  - base
+  when:
+  - baseiptables|bool
+  - nftables
+
 - name: Nftables service enabled
   service: name=nftables state=started enabled=true
   tags:
@@ -289,6 +299,16 @@
   when:
   - baseiptables|bool
   - not nftables
+
+- name: Ip6tables service disabled
+  service: name=ip6tables state=stopped enabled=false
+  tags:
+  - ip6tables
+  - service
+  - base
+  when:
+  - baseiptables|bool
+  - nftables
 
 - name: Enable journald persistence
   ansible.builtin.file: path=/var/log/journal state=directory

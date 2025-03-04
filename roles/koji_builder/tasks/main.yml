@@ -394,6 +394,13 @@
   - koji_builder
   - koji_builder/osbuildapi
 
+- name: Remove cron job to run osbuild api ip update script.
+  ansible.builtin.file: path=/etc/cron.d/osbuildapi-update.cron state=absent
+  when: nftables
+  tags:
+  - koji_builder
+  - koji_builder/osbuildapi
+
 - name: Install script to update osbuild api ip in the firewall (nftables)
   ansible.builtin.template: src=osbuildapi-update-nft.sh dest=/usr/local/bin/osbuildapi-update-nft.sh mode=755
   when: nftables
