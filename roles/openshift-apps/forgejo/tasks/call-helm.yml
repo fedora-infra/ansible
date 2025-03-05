@@ -1,12 +1,21 @@
 ---
-# From git
-- name: Git clone stable repo on HEAD
+- name: Generate the values.yaml from template
+  ansible.builtin.template:
+    src: "values.yaml.j2"
+    dest: "/root/ocp4/openshift-apps/forgejo/helm-values.yaml"
+    mode: "0770"
+
+
+- name: Git clone the Fedora Forgejo Helm Chart
   ansible.builtin.git:
     repo: "https://codeberg.org/fedora/forgejo-helm.git"
     dest: /tmp/forgejo-helm_repo
 
 - name: Deploy Grafana chart from local path
   kubernetes.core.helm:
-    name: test
+    name: forgejo
+    create_namespace: true
     chart_ref: /tmp/forgejo-helm_repo/
     release_namespace: forgejo
+    values_files:
+      - "/root/ocp4/openshift-apps/forgejo/helm-values.yaml"
