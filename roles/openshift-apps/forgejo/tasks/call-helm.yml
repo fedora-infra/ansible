@@ -11,12 +11,12 @@
     repo: "https://codeberg.org/fedora/forgejo-helm.git"
     dest: /tmp/forgejo-helm_repo
 
-- name: Deploy Grafana chart from local path
+- name: Deploy Forgejo chart from local path
   kubernetes.core.helm:
     name: forgejo
     create_namespace: true
-    dependency_update: true
     chart_ref: /tmp/forgejo-helm_repo/
+    release_name: forgejo
     release_namespace: forgejo
     values_files:
       - "/root/ocp4/openshift-apps/forgejo/helm-values.yaml"
