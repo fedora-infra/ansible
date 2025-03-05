@@ -15,6 +15,7 @@
   kubernetes.core.helm:
     name: forgejo
     create_namespace: true
+    dependency_update: true
     chart_ref: /tmp/forgejo-helm_repo/
     release_namespace: forgejo
     values_files:
