@@ -1,3 +1,6 @@
+#
+# ResultsDB CI Listener
+#
 ---
 - name: Make the app be real
   hosts: os_control[0]:os_control_stg[0]
@@ -35,6 +38,7 @@
         - vmaljulin
         - lrossett
         - kevin
+        - gwmngilfen
       tags:
         - apply-appowners
 
@@ -55,6 +59,15 @@
       secret_file_secret_name: resultsdb-ci-listener-fedora-messaging-ca
       secret_file_key: resultsdb-ci-listener.ca
       secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+
+    - role: openshift/imagestream
+      imagestream_app: resultsdb-ci-listener
+      imagestream_imagename: resultsdb-ci-listener
+
+    - role: openshift/object
+      object_app: resultsdb-ci-listener
+      object_template: buildconfig.yml.j2
+      object_objectname: buildconfig.yml
 
     - role: openshift/object
       object_app: resultsdb-ci-listener

@@ -1,0 +1,10 @@
+---
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: resultsdb-ci-listener
+spec:
+  lookupPolicy:
+    local: false
+status:
+  dockerImageRepository: ""

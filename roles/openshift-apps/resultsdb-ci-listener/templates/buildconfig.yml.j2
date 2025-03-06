@@ -1,0 +1,30 @@
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: resultsdb-ci-listener
+  labels:
+    app: resultsdb-ci-listener
+    build: resultsdb-ci-listener
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: resultsdb-ci-listener:latest
+  source:
+    type: Git
+    git:
+      # Using my fork for testing S2I builds, swap back after
+      # uri: https://pagure.io/ci-resultsdb-listener.git
+      uri: https://pagure.io/forks/gwmngilfen/ci-resultsdb-listener.git
+      ref: "{{ env }}"
+  strategy:
+    type: Source
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        namespace: openshift
+        name: python:3.11-ubi9
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
