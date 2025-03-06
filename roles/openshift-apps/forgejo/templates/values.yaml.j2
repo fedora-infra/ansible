@@ -433,8 +433,9 @@ gitea:
       key: "{{ (env == 'production') | ternary(forgejo_oidc_key, forgejo_stg_oidc_key) }}"
       secret: "{{ (env == 'production') | ternary(forgejo_oidc_secret, forgejo_stg_oidc_secret) }}"
       autoDiscoverUrl: "{{ (env == 'production') | ternary(forgejo_oidc_autodiscoverurl, forgejo_stg_oidc_autodiscoverurl) }}"
-      requiredClaimName: "groups"
-      requiredClaimValue: "sysadmin-main"
+      admin-group: "groups"
+      restricted-group: "sysadmin-main"
+      group-team-map: '{"sysadmin-main":{"Packages":["Owners"], "Infrastructure":["Owners"]}, "provenpackager": {"Packages": ["provenpackager"]}}'
 
     # - name: 'OAuth 1'
     #   provider:
