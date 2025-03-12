@@ -10,7 +10,7 @@
 
 - name: Load s3 credentials
   ansible.builtin.include_vars:
-    ansible.builtin.file: "{{ private }}/files/websites/s3_fedoraproject_{{ env_short }}.yml"
+    file: "{{ private }}/files/websites/s3_fedoraproject_{{ env_short }}.yml"
   ignore_errors: true
   tags:
   - fedora-web
