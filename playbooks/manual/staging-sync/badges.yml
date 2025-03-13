@@ -43,7 +43,7 @@
     ansible.builtin.shell: cat /var/tmp/{{ badges_db_name }}.dump | psql {{ badges_db_name }}
   - ansible.builtin.file: path=/var/tmp/{{ badges_db_name }}.dump state=absent
   - name: rename prod users to staging users
-    ansible.builtin.shell: psql -v ON_ERROR_STOP=1 koji <<< "UPDATE persons SET email = REPLACE(email, '@fedoraproject.org', '@stg.fedoraproject.org')"
+    ansible.builtin.shell: psql -v ON_ERROR_STOP=1 {{ badges_db_name }} <<< "UPDATE persons SET email = REPLACE(email, '@fedoraproject.org', '@stg.fedoraproject.org')"
 
 - name: Bring staging services up
   hosts: os-control01.stg.iad2.fedoraproject.org
