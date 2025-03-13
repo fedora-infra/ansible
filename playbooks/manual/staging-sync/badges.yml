@@ -1,0 +1,57 @@
+# This playbook syncs the production badges instance with staging.
+---
+- name: Bring staging services down
+  hosts: os-control01.stg.iad2.fedoraproject.org
+  user: root
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  tasks:
+  - ansible.builtin.command: oc -n badges scale dc/frontend --replicas=0
+  - ansible.builtin.command: oc -n badges scale dc/consumer --replicas=0
+
+# Here's the meaty part in the middle
+- name: Drop and re-create the staging db entirely
+  hosts: db01.stg.iad2.fedoraproject.org
+  user: root
+  become: yes
+  become_user: postgres
+  become_method: sudo
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+  handlers:
+  - import_tasks: "{{ handlers_path }}/restart_services.yml"
+
+  tasks:
+  - ansible.builtin.copy:
+      src: /srv/web/infra/db-dumps/{{ badges_db_name }}.dump.xz
+      dest: /var/tmp/{{ badges_db_name }}.dump.xz
+      owner: postgres
+      group: postgres
+  - ansible.builtin.command: unxz /var/tmp/{{ badges_db_name }}.dump.xz
+    args:
+      creates: /var/tmp/{{ badges_db_name }}.dump
+  - ansible.builtin.command: dropdb {{ badges_db_name }}
+  - ansible.builtin.command: createdb -O {{ tahrirDBUser }} {{ badges_db_name }}
+  - name: Import the prod db.
+    ansible.builtin.shell: cat /var/tmp/{{ badges_db_name }}.dump | psql {{ badges_db_name }}
+  - ansible.builtin.file: path=/var/tmp/{{ badges_db_name }}.dump state=absent
+  - name: rename prod users to staging users
+    ansible.builtin.shell: psql -v ON_ERROR_STOP=1 koji <<< "UPDATE persons SET email = REPLACE(email, '@fedoraproject.org', '@stg.fedoraproject.org')"
+
+- name: Bring staging services up
+  hosts: os-control01.stg.iad2.fedoraproject.org
+  user: root
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  tasks:
+  - ansible.builtin.command: oc -n badges scale dc/frontend --replicas=1
+  - ansible.builtin.command: oc -n badges scale dc/consumer --replicas=1
