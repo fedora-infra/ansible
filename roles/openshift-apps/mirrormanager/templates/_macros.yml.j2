@@ -2,6 +2,9 @@
             - name: config
               mountPath: "/etc/mirrormanager"
               readOnly: true
+            - name: secrets
+              mountPath: "/etc/mirrormanager-secrets"
+              readOnly: true
             - name: scripts
               mountPath: "/opt/scripts"
               readOnly: true
@@ -39,6 +42,9 @@
         - name: config
           configMap:
             name: config
+        - name: secrets
+          secret:
+            secretName: secrets
         - name: var-lib
           persistentVolumeClaim:
             claimName: data

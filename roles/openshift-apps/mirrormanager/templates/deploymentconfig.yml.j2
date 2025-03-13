@@ -56,15 +56,9 @@ spec:
 
           volumeMounts:
             {{ common_volume_mounts() }}
-            - name: secrets
-              mountPath: "/etc/mirrormanager-secrets"
-              readOnly: true
 
       volumes:
         {{ common_volumes() }}
-        - name: secrets
-          secret:
-            secretName: secrets
       {{ security_context() }}
 
   triggers:
