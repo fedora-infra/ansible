@@ -15,6 +15,7 @@ spec:
   concurrencyPolicy: Forbid
   schedule: "{{ cronjob.schedule }}"
   startingDeadlineSeconds: 500
+  suspend: {{ (env == "staging")|ternary("true", "false") }}
   jobTemplate:
     spec:
       template:
@@ -60,6 +61,7 @@ spec:
   concurrencyPolicy: Forbid
   schedule: "56 23 * * *"
   startingDeadlineSeconds: 500
+  suspend: false
   jobTemplate:
     spec:
       template:
@@ -87,41 +89,4 @@ spec:
             - name: logs
               persistentVolumeClaim:
                 claimName: logs
-          {{ security_context() | indent(4) }}
----
-#
-### Download GeoIP database
-#
-apiVersion: batch/v1
-kind: CronJob
-metadata:
-  name: download-geoip-db
-spec:
-  successfulJobsHistoryLimit: 3
-  failedJobsHistoryLimit: 3
-  concurrencyPolicy: Forbid
-  schedule: "48 * * * *"
-  startingDeadlineSeconds: 500
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          restartPolicy: Never
-          containers:
-            - name: mirrormanager
-              image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
-              command:
-                - "curl"
-                - "--create-dirs"
-                - "--output-dir"
-                - "/var/lib/mirrormanager/geoip"
-                - "-O"
-                - "https://infrastructure.fedoraproject.org/infra/bigfiles/geoip/GeoLite2-City.mmdb"
-              volumeMounts:
-                - name: var-lib
-                  mountPath: "/var/lib/mirrormanager"
-          volumes:
-            - name: var-lib
-              persistentVolumeClaim:
-                claimName: data
           {{ security_context() | indent(4) }}

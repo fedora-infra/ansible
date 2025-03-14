@@ -10,6 +10,7 @@ spec:
   concurrencyPolicy: Forbid
   schedule: "0,15,30,45 * * * *"
   startingDeadlineSeconds: 500
+  suspend: false
   jobTemplate:
     spec:
       template:
@@ -38,6 +39,7 @@ spec:
   concurrencyPolicy: Forbid
   schedule: "30 0 * * *"
   startingDeadlineSeconds: 500
+  suspend: false
   jobTemplate:
     spec:
       template:
@@ -54,37 +56,39 @@ spec:
           volumes:
             {{ common_volumes() | indent(4) }}
           {{ security_context() | indent(4) }}
----
-# Run the script for Internet2 netblocks very late to
-# make sure the files are all there. The script is
-# looking in date dependent directories and depending
-# on the timezone of the remote server the files appear late.
-apiVersion: batch/v1
-kind: CronJob
-metadata:
-  name: netblocks-internet2
-spec:
-  successfulJobsHistoryLimit: 3
-  failedJobsHistoryLimit: 3
-  concurrencyPolicy: Forbid
-  schedule: "0 23 * * *"
-  startingDeadlineSeconds: 500
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          restartPolicy: Never
-          containers:
-            - name: mirrormanager
-              image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
-              command: ["mm2_get-netblocks", "--debug", "internet2", "/var/cache/mirrorlist/i2_netblocks.txt"]
-              env:
-                {{ common_env() | indent(4) }}
-              volumeMounts:
-                {{ common_volume_mounts() | indent(4) }}
-          volumes:
-            {{ common_volumes() | indent(4) }}
-          {{ security_context() | indent(4) }}
+# ---
+# ===== DISABLED because the source is not published anymore =====
+# # Run the script for Internet2 netblocks very late to
+# # make sure the files are all there. The script is
+# # looking in date dependent directories and depending
+# # on the timezone of the remote server the files appear late.
+# apiVersion: batch/v1
+# kind: CronJob
+# metadata:
+#   name: netblocks-internet2
+# spec:
+#   successfulJobsHistoryLimit: 3
+#   failedJobsHistoryLimit: 3
+#   concurrencyPolicy: Forbid
+#   schedule: "0 23 * * *"
+#   startingDeadlineSeconds: 500
+#   suspend: false
+#   jobTemplate:
+#     spec:
+#       template:
+#         spec:
+#           restartPolicy: Never
+#           containers:
+#             - name: mirrormanager
+#               image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
+#               command: ["mm2_get-netblocks", "--debug", "internet2", "/var/cache/mirrorlist/i2_netblocks.txt"]
+#               env:
+#                 {{ common_env() | indent(4) }}
+#               volumeMounts:
+#                 {{ common_volume_mounts() | indent(4) }}
+#           volumes:
+#             {{ common_volumes() | indent(4) }}
+#           {{ security_context() | indent(4) }}
 ---
 # Amazon EC2 netblocks
 apiVersion: batch/v1
@@ -97,6 +101,7 @@ spec:
   concurrencyPolicy: Forbid
   schedule: "30 1 * * *"
   startingDeadlineSeconds: 500
+  suspend: false
   jobTemplate:
     spec:
       template:
