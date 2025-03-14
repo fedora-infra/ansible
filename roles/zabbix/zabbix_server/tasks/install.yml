@@ -19,19 +19,18 @@
   tags:
     - configure-dnf
 
-- name: Install the zabbix rpm (staging)
+- name: Install the zabbix rpm
   ansible.builtin.command: "rpm -Uvh https://repo.zabbix.com/zabbix/7.0/rhel/9/x86_64/zabbix-release-latest-7.0.el9.noarch.rpm"
-  when: env == "staging"
   ignore_errors: true
   tags:
     - packages
 
-- name: Install the zabbix rpm (non-staging)
-  ansible.builtin.command: "rpm -Uvh https://repo.zabbix.com/zabbix/6.0/rhel/9/x86_64/zabbix-release-latest.el9.noarch.rpm"
-  when: env != "staging"
-  ignore_errors: true
-  tags:
-    - packages
+#- name: Install the zabbix rpm (non-staging)
+#  ansible.builtin.command: "rpm -Uvh https://repo.zabbix.com/zabbix/6.0/rhel/9/x86_64/zabbix-release-latest.el9.noarch.rpm"
+#  when: env != "staging"
+#  ignore_errors: true
+#  tags:
+#    - packages
 
 - name: Installing required pkgs for Zabbix
   ansible.builtin.dnf:
