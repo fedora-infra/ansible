@@ -49,11 +49,11 @@ clusterDomain: cluster.local
 ## @param image.rootless Wether or not to pull the rootless version of Forgejo
 ## @param image.fullOverride Completely overrides the image registry, path/image, tag and digest. **Adjust `image.rootless` accordingly and review [Rootless defaults](#rootless-defaults).**
 image:
-  registry: code.forgejo.org
-  repository: forgejo/forgejo
+  registry: quay.io
+  repository: konflux-fedora/fedora-infra-tenant/forgejo-oci-images
   # Overrides the image tag whose default is the chart appVersion.
   tag: ''
-  digest: ''
+  digest: 'sha256:f716da57351d75bd81c1f46c40a1f49f19e36e80702efea870212b0a90d426e7'
   pullPolicy: IfNotPresent
   rootless: true
   fullOverride: ''
@@ -197,7 +197,7 @@ ingress:
 route:
   enabled: true
   annotations: {}
-  host:
+  host: "forgejo.apps.ocp.stg.fedoraproject.org"
   wildcardPolicy:
   tls:
     termination: edge
