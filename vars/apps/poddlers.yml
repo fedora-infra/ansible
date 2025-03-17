@@ -25,6 +25,11 @@ poddlers_toddlers:
     topics:
       - "org.fedoraproject.*.toddlers.trigger.clean_retired_packages"
 
+  - name: cleaning-packager-groups
+    callback: cleaning_packager_groups:CleanPackagerGroups
+    topics:
+      - "org.fedoraproject.*.fas.group.member.removed"
+
   - name: distgit-bugzilla-sync
     callback: distgit_bugzilla_sync:DistgitBugzillaSync
     topics:
