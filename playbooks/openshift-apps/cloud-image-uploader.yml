@@ -106,6 +106,12 @@
     secret_file_key: registry-fedoraproject.key
     secret_file_privatefile: "docker-registry/{{env}}/pki/private/containerstable.key"
 
+  - role: openshift/secret-file
+    secret_file_app: cloud-image-uploader
+    secret_file_secret_name: cloud-image-uploader-google-cloud-key
+    secret_file_key: google_cloud_image_uploader.json
+    secret_file_privatefile: "files/gcp/{{env}}/image_uploader.json"
+
   - role: openshift/object
     object_app: cloud-image-uploader
     object_template: secret.yml.j2
