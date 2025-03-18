@@ -25,6 +25,8 @@ koschei_pgsql_admin_password: "{{ koscheiadmin_stg_db_password }}"
 koschei_oidc_client_secret: "{{ koschei_oidc_client_secret_stg }}"
 koschei_oidc_crypto_secret: "{{ koschei_oidc_crypto_secret_stg }}"
 
+koschei_topic_prefix: org.fedoraproject.stg
+
 koschei_frontend_replicas: 2
 
 koschei_backend_services:

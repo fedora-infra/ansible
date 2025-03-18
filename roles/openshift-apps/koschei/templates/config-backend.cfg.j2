@@ -101,7 +101,7 @@ config = {
     "plugins": ['fedmsg'],
     {% endif %}
     "fedmsg": {
-        "topic": "org.fedoraproject.{{ fedmsg_env }}.buildsys",
+        "topic": "{{ koschei_topic_prefix }}.buildsys",
     },
     "fedmsg-publisher": {
         "enabled": True,
@@ -139,7 +139,7 @@ config = {
         "config_path": "/etc/koschei/copr-config",
         "overriding_by_exclusions": False,
         "max_builds": 2,
-        "fedmsg_topic": "org.fedoraproject.{{ fedmsg_env }}.copr.build.end",
+        "fedmsg_topic": "{{ koschei_topic_prefix }}.copr.build.end",
         "default_schedule_count": 8,
         "name_prefix": "k",
         "require_admin": True,

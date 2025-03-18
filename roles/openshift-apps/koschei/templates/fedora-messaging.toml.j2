@@ -1,5 +1,5 @@
 amqp_url = "amqps://koschei{{ env_suffix }}:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fpubsub"
-topic_prefix = "org.fedoraproject.{{ fedmsg_env }}"
+topic_prefix = "{{ koschei_topic_prefix }}"
 passive_declares = true
 
 [tls]
@@ -23,6 +23,6 @@ arguments = {}
 queue = "koschei{{ env_suffix }}"
 exchange = "amq.topic"
 routing_keys = [
-  "org.fedoraproject.{{ fedmsg_env }}.buildsys.tag",
-  "org.fedoraproject.{{ fedmsg_env }}.buildsys.task.state.change",
+  "{{ koschei_topic_prefix }}.buildsys.tag",
+  "{{ koschei_topic_prefix }}.buildsys.task.state.change",
 ]
