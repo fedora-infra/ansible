@@ -16,7 +16,7 @@ config = {
         "topurl": "https://{{ koschei_kojipkgs }}",
         "login_method": "gssapi_login",
         {% if env == 'staging' %}
-        "max_builds": 16,
+        "max_builds": 2,
         "build_arches": ['x86_64'],
         "load_threshold": 0.8,
         "task_priority": 30,
