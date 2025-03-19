@@ -13,6 +13,16 @@
       - wget
       - gcc-c++
 
+# For some reason, Podman containers cannot reach internet on F41
+# It is somehow related to the iptables vs nftables change
+# See https://fedoraproject.org/wiki/Changes/NetavarkNftablesDefault
+- name: Configure podman network
+  community.general.ini_file:
+    path: /etc/containers/containers.conf.d/50-netavark-nftables.conf
+    section: network
+    option: firewall_driver
+    value: "iptables"
+
 - name: Download the cuda repofile
   ansible.builtin.get_url:
     url: https://developer.download.nvidia.com/compute/cuda/repos/fedora41/x86_64/cuda-fedora41.repo
