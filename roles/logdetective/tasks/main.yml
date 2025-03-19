@@ -92,3 +92,10 @@
 #  - name: "set hostname (required by some services, at least postfix need it)"
 #    hostname: name="{{copr_hostbase}}.cloud.fedoraproject.org"
 #    when: env != 'production'
+
+- name: Podman cache on the secondary drive
+  community.general.ini_file:
+    path: /etc/containers/containers.conf.d/50-storage.conf
+    section: storage
+    option: graphroot
+    value: "/mnt/srv/containers_storage"
