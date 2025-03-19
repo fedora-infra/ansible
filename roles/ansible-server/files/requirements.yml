@@ -7,4 +7,21 @@ roles:
   # Needed for Zabbix playbooks
   - name: community.zabbix
     version: 3.0.0
-  
+  # Needed for copr
+  - name: amazon.aws
+    version: 4.1.0
+  # Needed for logview and fedora-messaging plugins
+  - name: ansible.utils
+    version: 4.1.0
+  # Needed for efs mgmt for communishift
+  - name: community.aws
+    version: 4.1.1
+  # Needed by ipa roles
+  - name: community.general
+    version: 9.5.5
+  # Needed by communishift
+  - name: community.okd
+    version: 2.2.0
+  # Needed for helm/forgejo deployment
+  - name: kubernetes.core
+    version: 2.3.2
