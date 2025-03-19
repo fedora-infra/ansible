@@ -62,6 +62,7 @@
         - createrepo
         - koji
         - python3-productmd
+        - isomd5sum
 
   - name: Add create-filelist script from quick-fedora-mirror
     ansible.builtin.copy: src="{{ files }}/scripts/create-filelist.py2" dest=/usr/local/bin/create-filelist mode=0755
