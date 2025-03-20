@@ -101,3 +101,9 @@
     path: /usr/share/containers/storage.conf
     regexp: '^graphroot = '
     line: 'graphroot = "/mnt/srv/containers_storage"'
+
+- name: Allow accessing 8080 from the outside
+  ansible.posix.firewalld:
+    port: 8080
+    permanent: true
+    state: enabled
