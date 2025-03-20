@@ -4,6 +4,7 @@
   ansible.builtin.shell: echo "{{ipa_admin_password}}" | kinit admin
   check_mode: no
   changed_when: "1 != 1"
+  no_log: true
   tags:
   - config
   - krb5

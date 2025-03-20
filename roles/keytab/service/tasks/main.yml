@@ -31,6 +31,7 @@
   delegate_to: "{{ ipa_server }}"
   ansible.builtin.shell: echo "{{ipa_admin_password}}" | kinit admin
   check_mode: no
+  no_log: true
   changed_when: "1 != 1"
   tags:
   - keytab

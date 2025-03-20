@@ -164,6 +164,7 @@
     ansible.builtin.shell: set -o pipefail && echo "{{ ipa_admin_password }}" | kinit admin
     delegate_to: "{{ ipa_server }}"
     changed_when: false
+    no_log: true
 
     # Replication agreement needs to be removed from ipa cluster
     # before installing the replica
@@ -249,6 +250,7 @@
     set -o pipefail
     echo "{{ ipa_admin_password }}" | kinit admin
   changed_when: false
+  no_log: true
   tags:
   - ipa/server
   - config
