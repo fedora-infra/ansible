@@ -108,6 +108,6 @@
 
 - name: Allow accessing 8080 from the outside
   ansible.posix.firewalld:
-    port: 8080
+    port: 8080/tcp
     permanent: true
     state: enabled
