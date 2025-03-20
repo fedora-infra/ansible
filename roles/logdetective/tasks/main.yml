@@ -89,6 +89,10 @@
         path: /etc/profile.d/cudapath.sh
         line: export PATH=/usr/local/cuda-12.8/bin${PATH:+:${PATH}}
 
+    # TODO Configure Podman to store data on our secondary drive in
+    # /mnt/srv/containers_storage/
+    # I couldn't figure how to do this, so I enlarged our primary disk from
+    # 20G to 50G, but this is not an ideal solution
 
 
 # this should be set to ansible_hostname
