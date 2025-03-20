@@ -12,6 +12,7 @@
       - podman-compose
       - wget
       - gcc-c++
+      - firewalld
 
 # For some reason, Podman containers cannot reach internet on F41
 # It is somehow related to the iptables vs nftables change
@@ -102,10 +103,11 @@
     regexp: '^graphroot = '
     line: 'graphroot = "/mnt/srv/containers_storage"'
 
+- name: Start firewalld so that we can allow ports more easily
+  systemd: state=started name=firewalld enabled=yes
+
 - name: Allow accessing 8080 from the outside
-  ansible.builtin.iptables:
-    chain: INPUT
-    protocol: tcp
-    destination_ports:
-      - "8080"
-    jump: ACCEPT
+  ansible.posix.firewalld:
+    port: 8080
+    permanent: true
+    state: enabled
