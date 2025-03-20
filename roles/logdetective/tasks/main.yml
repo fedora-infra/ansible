@@ -93,9 +93,11 @@
 #    hostname: name="{{copr_hostbase}}.cloud.fedoraproject.org"
 #    when: env != 'production'
 
+# We should ideally configure this in /etc but I am not sure where and how.
+# I would expect a drop-in config in /etc/containers/containers.conf.d/ to work
+# but it doesn't.
 - name: Podman cache on the secondary drive
-  community.general.ini_file:
-    path: /etc/containers/containers.conf.d/50-storage.conf
-    section: storage
-    option: graphroot
-    value: "/mnt/srv/containers_storage"
+  ansible.builtin.lineinfile:
+    path: /usr/share/containers/storage.conf
+    regexp: '^graphroot = '
+    line: 'graphroot = "/mnt/srv/containers_storage"'
