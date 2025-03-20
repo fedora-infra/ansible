@@ -103,7 +103,9 @@
     line: 'graphroot = "/mnt/srv/containers_storage"'
 
 - name: Allow accessing 8080 from the outside
-  ansible.posix.firewalld:
-    port: 8080
-    permanent: true
-    state: enabled
+  ansible.builtin.iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_ports:
+      - "8080"
+    jump: ACCEPT
