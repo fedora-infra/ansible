@@ -87,7 +87,9 @@
     - name: Set up CUDA binary paths
       ansible.builtin.lineinfile:
         path: /etc/profile.d/cudapath.sh
-        line: export PATH=/usr/local/cuda-12.6/bin${PATH:+:${PATH}}
+        line: export PATH=/usr/local/cuda-12.8/bin${PATH:+:${PATH}}
+
+
 
 # this should be set to ansible_hostname
 #  - name: "set hostname (required by some services, at least postfix need it)"
