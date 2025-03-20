@@ -21,7 +21,7 @@
     path: /etc/containers/containers.conf.d/50-netavark-nftables.conf
     section: network
     option: firewall_driver
-    value: "iptables"
+    value: '"iptables"'
 
 - name: Download the cuda repofile
   ansible.builtin.get_url:
