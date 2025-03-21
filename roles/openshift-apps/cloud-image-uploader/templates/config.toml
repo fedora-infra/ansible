@@ -141,15 +141,17 @@ credential_prefix = "QUAY_IO_"
 {% endif %}
 
 # Google Cloud Engine
-{% if env == "staging" %}
-
 [consumer_config.gcp]
+{% if env == "staging" %}
 project = "fedora-cloud-devel"
 bucket_name = "fedora-cloud-image-upload-devel"
+{% else %}
+project = "fedora-cloud"
+bucket_name = "fedora-cloud-image-upload"
+{% endif %}
 storage_locations = ["us"]
 publish_amqp_messages = true
 
-{% endif %}
 
 [qos]
 prefetch_size = 0
