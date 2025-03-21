@@ -14,9 +14,7 @@ spec:
   source:
     type: Git
     git:
-      # Using my fork for testing S2I builds, swap back after
-      # uri: https://pagure.io/ci-resultsdb-listener.git
-      uri: https://pagure.io/forks/gwmngilfen/ci-resultsdb-listener.git
+      uri: https://pagure.io/ci-resultsdb-listener.git
       ref: "{{ env }}"
   strategy:
     type: Source
