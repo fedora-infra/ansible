@@ -93,6 +93,7 @@
       ansible.builtin.lineinfile:
         path: /etc/profile.d/models.sh
         line: export MODELS_PATH=/mnt/srv/models/
+        create: true
 
     # TODO Configure Podman to store data on our secondary drive in
     # /mnt/srv/containers_storage/
