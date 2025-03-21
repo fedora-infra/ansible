@@ -7,6 +7,9 @@ metadata:
     app: resultsdb
 data:
   resultsdb.conf: |-
+    ServerLimit 25
+    MaxRequestWorkers 500
+
     <IfModule !auth_basic_module>
       LoadModule auth_basic_module '{{ resultsdb_mod_wsgi_dir }}/mod_auth_basic.so'
     </IfModule>
