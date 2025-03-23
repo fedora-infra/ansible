@@ -965,6 +965,14 @@ handlers = ["console"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
         key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
 
+        [consumer_config.ostree_refs."fedora/42/aarch64/cosmic-atomic"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/x86_64/cosmic-atomic"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
     [consumer_config.coreos]
     bucket = "fcos-builds"
     {% if env == "staging" %}
