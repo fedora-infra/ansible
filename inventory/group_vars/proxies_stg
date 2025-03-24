@@ -29,7 +29,6 @@ nft_custom_rules:
   - 'add rule ip filter INPUT ip saddr 10.3.166.121 tcp dport 22623 counter accept'
   - 'add rule ip filter INPUT ip saddr 10.3.166.122 tcp dport 22623 counter accept'
   - 'add rule ip filter INPUT ip saddr 10.3.166.123 tcp dport 22623 counter accept'
-nftables: true
 external: true
 ipa_client_shell_groups:
   - fi-apprentice

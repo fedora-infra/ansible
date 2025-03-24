@@ -24,8 +24,6 @@ lvm_size: 150000
 max_mem_size: "{{ mem_size }}"
 mem_size: 10240
 nfs_mount_opts: "rw,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=4"
-# Do we want to use nftables instead of iptables
-nftables: true
 num_cpus: 4
 resolvconf: "resolv.conf/iad2"
 source_registry: "registry.fedoraproject.org"
