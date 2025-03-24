@@ -135,7 +135,6 @@ poddlers_cronjobs:
     command: check-commit-rights
   - name: pagure-fas-groups-sync
     schedule: "0 4 * * *"
-    only_env: staging
     command: pagure_fas_groups_sync
   - name: koji-block-retired
     schedule: "30 5 * * *"
