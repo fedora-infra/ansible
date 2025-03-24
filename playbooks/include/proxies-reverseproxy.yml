@@ -669,9 +669,8 @@
 
   - role: httpd/reverseproxy
     website: riscv-kojipkgs.fedoraproject.org
-    destname: kojipkgs
+    destname: riscv-kojipkgs
     keephost: true
-    proxyurl: http://riscv-koji01.{{ datacenter }}.fedoraproject.org
     balancer_name: riscv-kojipkgs
     balancer_members:
     - "riscv-koji01.{{ datacenter }}.fedoraproject.org"
