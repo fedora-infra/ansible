@@ -8,9 +8,10 @@
 - name: Find instances
   vars_prompt:
   - name: target
-    prompt: What is the target vhost
+    prompt: What is the target vhost (to upgrade)
     private: false
-  hosts: "{{ target }}"
+  # Use a simple regexp to ignore spaces people might accidentally paste.
+  hosts: "{{ target | regex_search('[-a-z0-9.]+')}}"
   gather_facts: false
   user: root
 
