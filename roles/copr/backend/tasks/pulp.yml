@@ -14,15 +14,14 @@
 
 - name: Install Pulp auth certificates
   ansible.builtin.copy:
-    src: "{{ private }}/files/copr/pulp/{{ item }}"
-    dest: "/home/copr/.config/pulp/"
+    src: "{{ private }}/files/copr/pulp/copr-pulp-{% if env == 'production' %}prod{% else %}stg{% endif %}.{{ item }}"
+    dest: "/home/copr/.config/pulp/copr-pulp.{{ item }}"
     owner: copr
     group: copr
     mode: "0600"
   with_items:
-  - copr-pulp-prod.crt
-  - copr-pulp-prod.key
-  when: env == "production"
+  - crt
+  - key
 
 - name: Install Pulp config file
   ansible.builtin.template:
