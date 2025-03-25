@@ -485,7 +485,9 @@ gitea:
     RUN_MODE: prod
 
     ## @param gitea.config.repository General repository settings
-    repository: {}
+    repository:
+      MAX_CREATION_LIMIT: 0
+      ALLOW_FORK_WITHOUT_MAXIMUM_LIMIT: true
 
     ## @param gitea.config.cors Cross-origin resource sharing settings
     cors: {}
