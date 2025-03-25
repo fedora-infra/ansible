@@ -6,7 +6,7 @@ password = ""
 {% if env == "production" %}
 domain = "public-copr"
 {% else %}
-domain = "copr-stage"
+domain = "public-copr-stage"
 {% endif %}
 cert = "/home/copr/.config/pulp/copr-pulp.crt"
 key = "/home/copr/.config/pulp/copr-pulp.key"
