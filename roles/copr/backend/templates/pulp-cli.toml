@@ -1,6 +1,9 @@
-{% if env == "production" %}
 [cli]
+{% if env == "production" %}
 base_url = "https://mtls.internal.console.redhat.com"
+{% else %}
+base_url = "https://pulp.stage.devshift.net"
+{% endif %}
 api_root = "/api/pulp/"
 username = ""
 password = ""
@@ -12,18 +15,3 @@ format = "json"
 dry_run = false
 timeout = 0
 verbose = 0
-{% else %}
-[cli]
-base_url = "https://pulp.stage.devshift.net"
-api_root = "/api/pulp/"
-username = "copr"
-password = "{{ copr_hosted_pulp_dev_password }}"
-domain = "copr"
-cert = ""
-key = ""
-verify_ssl = false
-format = "json"
-dry_run = false
-timeout = 0
-verbose = 0
-{% endif %}
