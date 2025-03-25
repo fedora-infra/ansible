@@ -29,6 +29,7 @@
       nfs_src_dir: 'fedora_backups' }
   - grokmirror_mirror
   - weblate-backup
+  - serial-console
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
