@@ -29,6 +29,7 @@
       nfs_src_dir: 'fedora_backups' }
   - grokmirror_mirror
   - weblate-backup
+  - {role: linux-system-roles.nbde_client, tags: ['nbde_client']}
   - serial-console
 
   pre_tasks:
