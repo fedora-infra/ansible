@@ -52,7 +52,14 @@ function pulp_url(copr_path)
   if string.sub(copr_path, 1, 9) == "/results/" then
     copr_path = string.sub(copr_path, 10)
   end
-  return pulp_content_url .. copr_path
+
+  local url = pulp_content_url
+  if string.sub(url, -1) ~= "/" then
+    url = url .. "/"
+  end
+
+  url = url .. copr_path
+  return url
 end
 
 
