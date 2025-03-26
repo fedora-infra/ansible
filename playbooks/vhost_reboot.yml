@@ -40,7 +40,8 @@
     with_items: "{{ vmlist.list_vms }}"
 
   - name: add the vmhost to target group
-    local_action: add_host hostname={{ target }} groupname=target
+    # Use a simple regexp to ignore spaces people might accidentally paste.
+    local_action: add_host hostname={{ target | regex_search('[-a-z0-9.]+') }} groupname=target
 
 # Call out to another playbook.  Disable any proxies that may live here
 - name: update proxy dns if needed
