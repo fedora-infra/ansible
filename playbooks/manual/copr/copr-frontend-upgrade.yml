@@ -28,14 +28,8 @@
     when: frontend_has_update.changed
 
   - name: Upgrade copr-frontend packages
-    dnf:
-      state: latest
-      name:
-      - copr-frontend
-      - copr-frontend-fedora
-      - copr-selinux
-      - python3-copr-common
-      update_cache: true
+    ansible.builtin.shell: dnf update -y copr-frontend copr-frontend-fedora copr-selinux python3-copr-common
+    when: frontend_has_update.changed
 
   - name: Upgrade db to head, logs in /var/log/copr-frontend/migrations.log
     ansible.builtin.shell: alembic-3 upgrade head &> /var/log/copr-frontend/migrations.log
