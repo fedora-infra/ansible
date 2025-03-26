@@ -523,7 +523,8 @@ gitea:
     queue: {}
 
     ## @param gitea.config.admin Admin user settings
-    admin: {}
+    admin:
+      DISABLE_REGULAR_ORG_CREATION: true
 
     ## @param gitea.config.security Site security settings
     security: {}
