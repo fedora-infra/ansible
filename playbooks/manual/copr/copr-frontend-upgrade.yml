@@ -17,7 +17,7 @@
     import_tasks: _generic_tasks.yml
 
   - name: Check for copr-frontend update
-    ansible.builtin.shell: dnf clean expire-cache ; dnf check-update copr-frontend
+    ansible.builtin.shell: dnf clean all ; dnf check-update copr-frontend
     register: frontend_has_update
     changed_when: "frontend_has_update.rc != 0"
     failed_when: false
