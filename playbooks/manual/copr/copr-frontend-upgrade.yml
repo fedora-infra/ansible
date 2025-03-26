@@ -35,6 +35,7 @@
       - copr-frontend-fedora
       - copr-selinux
       - python3-copr-common
+      update_cache: true
 
   - name: Upgrade db to head, logs in /var/log/copr-frontend/migrations.log
     ansible.builtin.shell: alembic-3 upgrade head &> /var/log/copr-frontend/migrations.log
