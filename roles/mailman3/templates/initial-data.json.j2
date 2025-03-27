@@ -14,7 +14,7 @@
     "fields": {
         "name": "{{ service_data.display_name }}",
         "sites": [
-            {% for host in mailman_domains %}
+            {% for host in mailman3_domains %}
             {{ loop.index }}{% if not loop.last %},{% endif %}
             {% endfor %}
         ],
