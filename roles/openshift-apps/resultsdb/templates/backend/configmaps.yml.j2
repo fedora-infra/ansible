@@ -10,6 +10,11 @@ data:
     ServerLimit 50
     MaxRequestWorkers 500
 
+    LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+    CustomLog /dev/stdout combined
+    ErrorLog /dev/stderr
+    LogLevel info
+
     <IfModule !auth_basic_module>
       LoadModule auth_basic_module '{{ resultsdb_mod_wsgi_dir }}/mod_auth_basic.so'
     </IfModule>
