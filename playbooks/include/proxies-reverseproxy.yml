@@ -660,6 +660,7 @@
     website: riscv-koji.fedoraproject.org
     destname: koji
     keephost: true
+    ocp4: false
     balancer_name: riscv-koji
     balancer_members:
     - "riscv-koji01.{{ datacenter }}.fedoraproject.org"
@@ -672,6 +673,7 @@
     destname: riscv-kojipkgs
     keephost: true
     balancer_name: riscv-kojipkgs
+    ocp4: false
     balancer_members:
     - "riscv-koji01.{{ datacenter }}.fedoraproject.org"
     http_not_https_yes_this_is_insecure_and_i_feel_bad: true
