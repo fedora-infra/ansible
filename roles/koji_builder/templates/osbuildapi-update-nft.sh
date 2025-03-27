@@ -1,5 +1,32 @@
 #!/bin/bash
 
+#  Allow koji builders to speak to api.openshift.com or api.stage.openshift.com
+#  Also allow them to speak to sso.redhat.com
+#  Works by adding the IPs to a set "osbuildapi" in the nft table "ip filter"
+# then the nft rules for the host use that set to allow traffic.
+
+#  Unlike iptables we don't create the set here, because it's created as the
+# nftables service starts ... so it's possible we run this script and the set
+# isn't created yet (possibly means nftables service isn't up yet, but more
+# likely it isn't configured as an osbuild machine).
+#  So that leaves a few options:
+#    1. Checking if it exists and exiting quietly, if it doesn't.
+#    2. Checking if it exists and failing with a "nice" message, if it doesn't.
+#    3. Waiting for it to exist.
+
+# if ! nft list set ip filter osbuildapi >& /dev/null; then
+#   exit 0
+# fi
+
+if ! nft list set ip filter osbuildapi >& /dev/null; then
+  echo "OSBUILD: nft set ip filter osbuildapi: Doesn't exist" 1>&2;
+  exit 2
+fi
+
+while ! nft list set ip filter osbuildapi >& /dev/null; do
+  sleep 10
+done
+
 # in staging we need to allow api.stage and in prod api.
 {% if env == 'staging' %}
 RESOLVEQUERY=`resolvectl -4 --cache=no --legend=no query api.stage.openshift.com 2> /dev/null`
