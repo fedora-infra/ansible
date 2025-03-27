@@ -10,11 +10,11 @@ RequestHeader set X-Forwarded-Proto 'https' env=HTTPS
 # The timeout should happen on gunicorn side, HTTP proxy should just wait
 Timeout 3600
 
-Alias /favicon.ico {{ mailman_webui_basedir }}/static/favicon.ico
-Alias /robots.txt  {{ mailman_webui_basedir }}/static/robots.txt
-Alias /static      {{ mailman_webui_basedir }}/static
+Alias /favicon.ico {{ mailman3_webui_basedir }}/static/favicon.ico
+Alias /robots.txt  {{ mailman3_webui_basedir }}/static/robots.txt
+Alias /static      {{ mailman3_webui_basedir }}/static
 
-<Directory "{{ mailman_webui_basedir }}/static">
+<Directory "{{ mailman3_webui_basedir }}/static">
     Order deny,allow
     Allow from all
     Require all granted
@@ -48,8 +48,8 @@ RewriteRule .* - [F,L]
 
 # Old static archives
 
-Alias /pipermail/ {{ mailman_webui_basedir }}/old-archives/pipermail/
-<Directory {{ mailman_webui_basedir }}/old-archives/pipermail>
+Alias /pipermail/ {{ mailman3_webui_basedir }}/old-archives/pipermail/
+<Directory {{ mailman3_webui_basedir }}/old-archives/pipermail>
     Options FollowSymLinks
     AllowOverride None
     Require all granted

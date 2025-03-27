@@ -30,7 +30,7 @@
 
 - name: Initialize authentication providers
   ansible.builtin.command:
-    cmd: mailman-web loaddata "{{ mailman_webui_confdir }}/initial-data.json"
+    cmd: mailman-web loaddata "{{ mailman3_webui_confdir }}/initial-data.json"
     chdir: /etc/mailman3
   become_user: mailman
   become: true

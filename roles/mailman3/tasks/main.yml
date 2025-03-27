@@ -121,7 +121,7 @@
 #
 - name: Ensuring log directory exists
   ansible.builtin.file:
-    path: "{{ mailman_log_directory }}"
+    path: "{{ mailman3_log_directory }}"
     state: directory
     owner: mailman
     group: mailman
@@ -201,7 +201,7 @@
 - name: Install the hyperkitty/postorius settings file
   ansible.builtin.template:
     src: "{{ item }}.j2"
-    dest: "{{ mailman_webui_confdir }}/{{ item }}"
+    dest: "{{ mailman3_webui_confdir }}/{{ item }}"
     mode: "0644"
   with_items:
     - settings.py
@@ -216,7 +216,7 @@
 - name: Install the hyperkitty/postorius urls file
   ansible.builtin.copy:
     src: urls.py
-    dest: "{{ mailman_webui_confdir }}/urls.py"
+    dest: "{{ mailman3_webui_confdir }}/urls.py"
     mode: "0644"
   tags:
     - config
@@ -227,7 +227,7 @@
 
 - name: Create the fulltext index dir
   ansible.builtin.file:
-    path: "{{ mailman_webui_basedir }}/fulltext_index"
+    path: "{{ mailman3_webui_basedir }}/fulltext_index"
     state: directory
     owner: mailman
     group: mailman
@@ -238,7 +238,7 @@
 
 - name: Create the hyperkitty static files dirs
   ansible.builtin.file:
-    path: "{{ mailman_webui_basedir }}/{{ item }}"
+    path: "{{ mailman3_webui_basedir }}/{{ item }}"
     state: directory
     owner: mailman
     group: mailman
@@ -253,7 +253,7 @@
 
 - name: Create the fedora-specific hyperkitty img dir
   ansible.builtin.file:
-    path: "{{ mailman_webui_basedir }}/static-fedora/hyperkitty/img"
+    path: "{{ mailman3_webui_basedir }}/static-fedora/hyperkitty/img"
     state: directory
     owner: mailman
     group: mailman
@@ -265,7 +265,7 @@
 
 - name: Create the hyperkitty templates override dirs
   ansible.builtin.file:
-    path: "{{ mailman_webui_basedir }}/templates/{{ item }}"
+    path: "{{ mailman3_webui_basedir }}/templates/{{ item }}"
     state: directory
     owner: mailman
     group: mailman
@@ -280,7 +280,7 @@
 - name: Copy the initial user fixture
   ansible.builtin.template:
     src: initial-data.json.j2
-    dest: "{{ mailman_webui_confdir }}/initial-data.json"
+    dest: "{{ mailman3_webui_confdir }}/initial-data.json"
     owner: root
     group: mailman
     mode: "0640"
@@ -296,7 +296,7 @@
 - name: Replace the top.html template in hyperkitty/postorius to change banner
   ansible.builtin.copy:
     src: top.html
-    dest: "{{ mailman_webui_basedir }}/templates/hyperkitty/top.html"
+    dest: "{{ mailman3_webui_basedir }}/templates/hyperkitty/top.html"
     mode: "0644"
   notify:
     - Restart mailmanweb
@@ -308,7 +308,7 @@
 - name: Install our fedora-specific logo
   ansible.builtin.copy:
     src: logo-hyperkitty-fedora.png
-    dest: "{{ mailman_webui_basedir }}/static-fedora/logo-hyperkitty-fedora.png"
+    dest: "{{ mailman3_webui_basedir }}/static-fedora/logo-hyperkitty-fedora.png"
     mode: "0644"
   tags:
     - mailman
@@ -317,7 +317,7 @@
 - name: Install our fedora-specific favicon
   ansible.builtin.copy:
     src: favicon.ico
-    dest: "{{ mailman_webui_basedir }}/static-fedora/favicon.ico"
+    dest: "{{ mailman3_webui_basedir }}/static-fedora/favicon.ico"
     mode: "0644"
   tags:
     - mailman
@@ -326,7 +326,7 @@
 - name: Install our fedora-specific robots.txt
   ansible.builtin.copy:
     src: robots.txt
-    dest: "{{ mailman_webui_basedir }}/static-fedora/robots.txt"
+    dest: "{{ mailman3_webui_basedir }}/static-fedora/robots.txt"
     mode: "0644"
   tags:
     - mailman
@@ -335,7 +335,7 @@
 - name: Install our fedora-specific brand template override
   ansible.builtin.copy:
     src: navbar-brand.html
-    dest: "{{ mailman_webui_basedir }}/templates/hyperkitty/navbar-brand.html"
+    dest: "{{ mailman3_webui_basedir }}/templates/hyperkitty/navbar-brand.html"
     mode: "0644"
   tags:
     - mailman
@@ -344,7 +344,7 @@
 - name: Install our fedora-specific page headers
   ansible.builtin.copy:
     src: headers.html
-    dest: "{{ mailman_webui_basedir }}/templates/hyperkitty/headers.html"
+    dest: "{{ mailman3_webui_basedir }}/templates/hyperkitty/headers.html"
     mode: "0644"
   tags:
     - mailman
@@ -353,7 +353,7 @@
 - name: Install our fedora-specific login page extension
   ansible.builtin.copy:
     src: login_extra_top.html
-    dest: "{{ mailman_webui_basedir }}/templates/django_mailman3/login_extra_top.html"
+    dest: "{{ mailman3_webui_basedir }}/templates/django_mailman3/login_extra_top.html"
     mode: "0644"
   tags:
     - mailman
@@ -361,7 +361,7 @@
 
 - name: Create dirs for signup_closed page
   ansible.builtin.file:
-    path: "{{ mailman_webui_basedir }}/templates/account"
+    path: "{{ mailman3_webui_basedir }}/templates/account"
     state: directory
     owner: root
     group: root
@@ -373,7 +373,7 @@
 - name: Install our fedora-specific signup_closed page
   ansible.builtin.copy:
     src: signup_closed.html
-    dest: "{{ mailman_webui_basedir }}/templates/account/signup_closed.html"
+    dest: "{{ mailman3_webui_basedir }}/templates/account/signup_closed.html"
     mode: "0644"
   tags:
     - mailman
@@ -382,7 +382,7 @@
 - name: Install our fedmenu js hook
   ansible.builtin.template:
     src: bottom.html
-    dest: "{{ mailman_webui_basedir }}/templates/hyperkitty/bottom.html"
+    dest: "{{ mailman3_webui_basedir }}/templates/hyperkitty/bottom.html"
     mode: "0644"
   tags:
     - mailman
@@ -393,7 +393,7 @@
   ansible.builtin.command:
     cmd: |
       mailman-web migrate
-      --pythonpath {{ mailman_webui_confdir }}
+      --pythonpath {{ mailman3_webui_confdir }}
       --settings settings_admin
       --no-input
     chdir: /etc/mailman3
@@ -410,7 +410,7 @@
 - name: Install the fedora-specific modules
   ansible.builtin.copy:
     src: django_fedora_nosignup.py
-    dest: "{{ mailman_webui_confdir }}/django_fedora_nosignup.py"
+    dest: "{{ mailman3_webui_confdir }}/django_fedora_nosignup.py"
     owner: root
     group: root
     mode: "0644"
@@ -501,9 +501,21 @@
     - mailman
     - hyperkitty
 
+- name: Copy the configuration for gunicorn
+  ansible.builtin.copy:
+    src: gunicorn.conf.py
+    dest: /etc/mailman3/gunicorn.conf.py
+    owner: mailman
+    group: mailman
+    mode: "0640"
+  notify: Restart mailmanweb
+  tags:
+    - mailman
+    - hyperkitty
+
 - name: Systemd unit to start postorius/hyperkitty through gunicorn
-  ansible.builtin.template:
-    src: mailmanweb.service.j2
+  ansible.builtin.copy:
+    src: systemd/mailmanweb.service
     dest: /etc/systemd/system/mailmanweb.service
     mode: "0644"
   register: mailmanweb_systemd
@@ -530,7 +542,7 @@
 
 - name: Create the scripts dir
   ansible.builtin.file:
-    path: "{{ mailman_webui_basedir }}/bin"
+    path: "{{ mailman3_webui_basedir }}/bin"
     state: directory
     owner: root
     group: root
@@ -542,7 +554,7 @@
 - name: Install the scripts
   ansible.builtin.copy:
     src: "{{ item }}"
-    dest: "{{ mailman_webui_basedir }}/bin/{{ item }}"
+    dest: "{{ mailman3_webui_basedir }}/bin/{{ item }}"
     owner: root
     group: root
     mode: "0755"
@@ -558,7 +570,7 @@
 
 - name: Run the DMARC mitigation script
   ansible.builtin.command:
-    cmd: "python {{ mailman_webui_basedir }}/bin/enable_dmarc_mitigation.py"
+    cmd: "python {{ mailman3_webui_basedir }}/bin/enable_dmarc_mitigation.py"
   register: dmarc_output
   vars:
     pattern: "^Updated rows: [1-9]\\d*"
@@ -571,7 +583,7 @@
 - name: Install the staging-sync script
   ansible.builtin.copy:
     src: prod-to-stg.py
-    dest: "{{ mailman_webui_basedir }}/bin/prod-to-stg.py"
+    dest: "{{ mailman3_webui_basedir }}/bin/prod-to-stg.py"
     mode: "0755"
   when: env == "staging"
   tags: mailman
@@ -685,7 +697,7 @@
 
 - name: Set the SELinux policy for the static files directory
   community.general.sefcontext:
-    target: "{{ mailman_webui_basedir }}/static(/.*)?"
+    target: "{{ mailman3_webui_basedir }}/static(/.*)?"
     setype: httpd_sys_content_t
     state: present
   tags:
@@ -694,7 +706,7 @@
 
 - name: Set the SELinux policy for the templates override directory
   community.general.sefcontext:
-    target: "{{ mailman_webui_basedir }}/templates(/.*)?"
+    target: "{{ mailman3_webui_basedir }}/templates(/.*)?"
     setype: httpd_sys_content_t
     state: present
   tags:
@@ -702,7 +714,7 @@
     - selinux
 
 - name: Apply SELinux changes
-  ansible.builtin.command: restorecon -irv "{{ mailman_webui_basedir }}"
+  ansible.builtin.command: restorecon -irv "{{ mailman3_webui_basedir }}"
   register: restorecon_output
   changed_when: restorecon_output.stdout is defined and restorecon_output.stdout | length > 0
   tags:

@@ -9,12 +9,12 @@ ipa_host_group: mailman
 ipa_host_group_desc: Mailing list services
 lvm_size: 950000
 # Used by the mailman role
-mailman_db_server: db01.iad2.fedoraproject.org
-mailman_domains:
+mailman3_db_server: db01.iad2.fedoraproject.org
+mailman3_domains:
   - lists.fedoraproject.org
   - lists.fedorahosted.org
   - lists.pagure.io
-mailman_login:
+mailman3_login:
   facebook:
     display_name: Facebook
     provider: facebook
@@ -57,11 +57,11 @@ primary_auth_source: ipa
 tcp_ports: [25, 80, 443]
 
 # mailman role variables
-mailman_rest_api_username: "{{ mailman_rest_api_user }}"
-mailman_rest_api_password: "{{ mailman_rest_api_pass }}"
-mailman_mailman_db_pass: "{{ mailman_mm_db_pass }}"
-mailman_hyperkitty_admin_db_pass: "{{ mailman_hk_admin_db_pass }}"
-mailman_hyperkitty_db_pass: "{{ mailman_hk_db_pass }}"
-mailman_hyperkitty_cookie_key: "{{ mailman_hk_cookie_key }}"
-mailman_hyperkitty_archiver_key: "{{ mailman_hk_archiver_key }}"
-mailman_smtp_port: 587
+mailman3_rest_api_username: "{{ mailman_rest_api_user }}"
+mailman3_rest_api_password: "{{ mailman_rest_api_pass }}"
+mailman3_mailman_db_pass: "{{ mailman_mm_db_pass }}"
+mailman3_hyperkitty_admin_db_pass: "{{ mailman_hk_admin_db_pass }}"
+mailman3_hyperkitty_db_pass: "{{ mailman_hk_db_pass }}"
+mailman3_hyperkitty_cookie_key: "{{ mailman_hk_cookie_key }}"
+mailman3_hyperkitty_archiver_key: "{{ mailman_hk_archiver_key }}"
+mailman3_smtp_port: 587

@@ -16,7 +16,7 @@ listinfo_url = /admin/
 # Set the paths to be Fedora-compliant
 layout: fhs
 
-{% if mailman_debug %}
+{% if mailman3_debug %}
 [devmode]
 enabled: yes
 recipient: ""
@@ -33,7 +33,7 @@ pid_file: /run/mailman3/master.pid
 
 [database]
 class: mailman.database.postgresql.PostgreSQLDatabase
-url: postgresql://mailmanadmin:{{ mailman_mailman_db_pass }}@{{ mailman_db_server }}/mailman
+url: postgresql://mailmanadmin:{{ mailman3_mailman_db_pass }}@{{ mailman3_db_server }}/mailman
 
 [archiver.hyperkitty]
 class: mailman_hyperkitty.Archiver
@@ -50,23 +50,23 @@ enable: yes
 [webservice]
 hostname: localhost
 port: 8001
-admin_user: {{ mailman_rest_api_username }}
-admin_pass: {{ mailman_rest_api_password }}
-workers: {{ mailman_rest_api_workers }}
+admin_user: {{ mailman3_rest_api_username }}
+admin_pass: {{ mailman3_rest_api_password }}
+workers: {{ mailman3_rest_api_workers }}
 
 [logging.root]
-level: {{ mailman_log_level }}
-path: {{ mailman_log_directory }}/mailman.log
+level: {{ mailman3_log_level }}
+path: {{ mailman3_log_directory }}/mailman.log
 
 [logging.database]
 level: warning
-path: {{ mailman_log_directory }}/database.log
+path: {{ mailman3_log_directory }}/database.log
 
-{% for item in mailman_log_items %}
+{% for item in mailman3_log_items %}
 
 [logging.{{ item }}]
-level: {{ mailman_log_level }}
-path: {{ mailman_log_directory }}/{{ item }}.log
+level: {{ mailman3_log_level }}
+path: {{ mailman3_log_directory }}/{{ item }}.log
 
 {% endfor %}
 
@@ -95,7 +95,7 @@ jump_chain: discard
 
 [mta]
 # Email is sent on the submission port to bypass spam checking.
-smtp_port: {{ mailman_smtp_port }}
+smtp_port: {{ mailman3_smtp_port }}
 # Remove DKIM signatures in the email headers.
 remove_dkim_headers: yes
 # Don't process old stale bounces

@@ -1,5 +1,5 @@
 [
-{% for host in mailman_domains %}
+{% for host in mailman3_domains %}
 {
     "fields": {
         "domain": "{{ host }}",
@@ -9,7 +9,7 @@
     "pk": {{ loop.index }}
 },
 {% endfor %}
-{% for service_name, service_data in mailman_login.items() %}
+{% for service_name, service_data in mailman3_login.items() %}
 {
     "fields": {
         "name": "{{ service_data.display_name }}",
