@@ -27,3 +27,9 @@ collections:
   # Needed for helm/forgejo deployment
   - name: kubernetes.core
     version: 2.3.2
+  # Needed for misc playbooks
+  - name: ansible.netcommon
+    version: 6.1.3
+  # Needed because other collections pull in 2.0.0, which we do not want
+  - name: ansible.posix
+    version: 1.6.1
