@@ -87,11 +87,6 @@
 
     - role: openshift/object
       object_app: waiverdb
-      object_template: buildconfig.yml.j2
-      object_objectname: buildconfig.yml
-
-    - role: openshift/object
-      object_app: waiverdb
       object_template: configmap.yml.j2
       object_objectname: configmap.yml
 
