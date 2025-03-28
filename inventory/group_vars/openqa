@@ -11,7 +11,7 @@ openqa_amqp_this_username: "{{ openqa_amqp_prod_username }}"
 openqa_amqp_scheduler_queue: "{{ openqa_amqp_prod_username }}_scheduler"
 
 # auth stuff
-openqa_auth_method: OpenID
+openqa_auth_method: OAuth2
 openqa_oauth2_secret: "{{ openqa_prod_oidc_secret }}"
 
 openqa_compose_arches: x86_64,aarch64
