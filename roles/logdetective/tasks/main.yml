@@ -124,3 +124,12 @@
     port: 8080/tcp
     permanent: true
     state: enabled
+
+- name: Allow HTTP and HTTPS in firewall
+  ansible.posix.firewalld:
+    service: "{{ item }}"
+    permanent: true
+    state: enabled
+  with_items:
+    - http
+    - https
