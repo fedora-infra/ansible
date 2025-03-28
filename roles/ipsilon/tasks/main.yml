@@ -145,6 +145,22 @@
   - oidc-config
   notify:
   - Restart apache
+  when: "env != 'staging'"
+
+- name: Template ipsilon OIDC client config
+  ansible.builtin.template:
+    src: "openidc.{{env}}.static.j2"
+    dest: /etc/ipsilon/root/openidc.static.cfg
+    owner: ipsilon
+    group: ipsilon
+    mode: "0600"
+  tags:
+  - ipsilon
+  - config
+  - oidc-config
+  notify:
+  - Restart apache
+  when: "env == 'staging'"
 
 - name: Copy ipsilon httpd config
   ansible.builtin.template:
