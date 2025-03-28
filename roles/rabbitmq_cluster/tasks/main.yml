@@ -477,13 +477,6 @@
   ansible.builtin.command: /etc/nagios/selinux-load.sh
   when: selinux_module is changed
 
-- name: /var/log/rabbitmq selinux file context
-  ansible.builtin.command: semanage fcontext -a -t var_log_t "/var/log/rabbitmq(/.*)?"
-  register: semanage_rabbit
-  changed_when: "'already defined' not in semanage_rabbit.stdout"
-  tags:
-    - selinux_module
-
 # Individual applications accounts & queues
 - import_tasks: apps.yml
   tags:
