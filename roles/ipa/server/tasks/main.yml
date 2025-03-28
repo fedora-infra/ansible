@@ -690,6 +690,14 @@
 - name: Include script.yml
   ansible.builtin.import_tasks: scripts.yml
 
+- name: Include journal-to-fedora-messaging setup
+  ansible.builtin.import_tasks: journal2fedmsg.yml
+  when: env == 'staging'
+  tags:
+  - ipa/server
+  - config
+  - toddlers
+
 
 # User groups
 

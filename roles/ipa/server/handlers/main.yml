@@ -1,3 +1,8 @@
 ---
 - name: Restart ipa
   ansible.builtin.command: ipactl restart
+
+- name: Restart journal-to-fedora-messaging
+  systemd:
+    name: journal-to-fedora-messaging
+    state: restarted

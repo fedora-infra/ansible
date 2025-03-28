@@ -1,0 +1,74 @@
+## Fedora Messaging configuration for journal-to-fedora-messaging
+
+# Broker address
+amqp_url = "amqps://ipa{{ env_suffix }}:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fpubsub"
+passive_declares = true
+
+# The topic_prefix configuration value will add a prefix to the topics of every sent message.
+{% if env == "staging" %}
+topic_prefix = "org.fedoraproject.stg"
+{% else %}
+topic_prefix = "org.fedoraproject.prod"
+{% endif %}
+
+
+# Authentication is TLS-based
+[tls]
+ca_cert = "/etc/pki/fedora-messaging/ca.crt"
+keyfile = "/etc/pki/fedora-messaging/ipa{{ env_suffix }}.key"
+certfile = "/etc/pki/fedora-messaging/ipa{{ env_suffix }}.crt"
+
+[consumer_config]
+
+    journalctl_command = ["journalctl"]
+
+    [[consumer_config.logs]]
+    schema = "journal.ipa.group_add_member.v1"
+    [consumer_config.logs.filters]
+    IPA_API_COMMAND = "group_add_member"
+
+    [[consumer_config.logs]]
+    schema = "journal.ipa.group_remove_member.v1"
+    [consumer_config.logs.filters]
+    IPA_API_COMMAND = "group_remove_member"
+
+
+[client_properties]
+app = "journal-to-fedora-messaging"
+app_url = "https://github.com/fedora-infra/journal-to-fedora-messaging"
+
+
+[log_config]
+version = 1
+disable_existing_loggers = true
+
+[log_config.formatters.simple]
+format = "[%(name)s %(levelname)s] %(message)s"
+
+[log_config.handlers.console]
+class = "logging.StreamHandler"
+formatter = "simple"
+stream = "ext://sys.stdout"
+
+[log_config.loggers.pika]
+level = "WARNING"
+propagate = false
+handlers = ["console"]
+
+[log_config.loggers.fedora_messaging]
+level = "INFO"
+propagate = false
+handlers = ["console"]
+
+[log_config.loggers.journal_to_fedora_messaging]
+{% if env == "staging" %}
+level = "DEBUG"
+{% else %}
+level = "INFO"
+{% endif %}
+propagate = false
+handlers = ["console"]
+
+[log_config.root]
+level = "WARNING"
+handlers = ["console"]

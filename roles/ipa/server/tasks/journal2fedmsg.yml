@@ -1,0 +1,80 @@
+- name: Install needed packages
+  ansible.builtin.package:
+    name: journal-to-fedora-messaging
+    state: present
+  tags:
+  - config
+  - ipa/server
+  - fedora-messaging
+
+- name: Create /etc/pki/fedora-messaging
+  ansible.builtin.file:
+    dest: /etc/pki/fedora-messaging
+    mode: "0775"
+    owner: root
+    group: root
+    state: directory
+  tags:
+  - config
+  - ipa/server
+  - fedora-messaging
+
+- name: Deploy the fedora-messaging CA
+  ansible.builtin.copy:
+    src: "{{ private }}/files/rabbitmq/{{env}}/pki/ca.crt"
+    dest: /etc/pki/fedora-messaging/ca.crt
+    mode: "0644"
+    owner: root
+    group: root
+  tags:
+  - config
+  - ipa/server
+  - fedora-messaging
+
+- name: Deploy the fedora-messaging cert
+  ansible.builtin.copy:
+    src: "{{ private }}/files/rabbitmq/{{env}}/pki/issued/ipa{{env_suffix}}.crt"
+    dest: /etc/pki/fedora-messaging/ipa{{env_suffix}}.crt
+    mode: "0644"
+    owner: root
+    group: root
+  tags:
+  - config
+  - ipa/server
+  - fedora-messaging
+
+- name: Deploy the fedora-messaging key
+  ansible.builtin.copy:
+    src: "{{ private }}/files/rabbitmq/{{env}}/pki/private/ipa{{env_suffix}}.key"
+    dest: /etc/pki/fedora-messaging/ipa{{env_suffix}}.key
+    mode: "0640"
+    owner: root
+    group: journal2fedmsg
+  tags:
+  - config
+  - ipa/server
+  - fedora-messaging
+
+- name: Install fedora-messaging config
+  ansible.builtin.template:
+    src: fedora-messaging.conf.j2
+    dest: /etc/fedora-messaging/config.toml
+    mode: "0644"
+    owner: root
+    group: journal2fedmsg
+  notify:
+  - Restart journal-to-fedora-messaging
+  tags:
+  - ipa/server
+  - config
+  - fedora-messaging
+
+- name: Enable journal-to-fedora-messaging
+  ansible.builtin.service:
+    name: journal-to-fedora-messaging
+    state: started
+    enabled: yes
+  tags:
+  - ipa/server
+  - config
+  - fedora-messaging

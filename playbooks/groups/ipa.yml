@@ -25,6 +25,11 @@
   - ipa/client
   - rsyncd
   - sudo
+  # Set up for fedora-messaging
+  - role: rabbit/user
+    user_name: "ipa{{ env_suffix }}"
+    user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.ipa\..*
+    when: inventory_hostname.startswith('ipa01')
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
