@@ -24,6 +24,10 @@ openqa_amqp_this_url: "{{ openqa_amqp_stg_url }}"
 openqa_amqp_this_username: "{{ openqa_amqp_stg_username }}"
 openqa_amqp_scheduler_queue: "{{ openqa_amqp_prod_username }}_scheduler_stg"
 
+# auth stuff
+openqa_auth_method: OAuth2
+openqa_oauth2_secret: "{{ openqa_stg_oidc_secret }}"
+
 openqa_assetsize_updates_aarch64: 50
 openqa_assetsize_ppc: 300
 openqa_assetsize_updates_ppc: 100

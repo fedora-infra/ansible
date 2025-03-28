@@ -9,6 +9,11 @@ openqa_amqp_this_keyfile: "{{ openqa_amqp_prod_keyfile }}"
 openqa_amqp_this_url: "{{ openqa_amqp_prod_url }}"
 openqa_amqp_this_username: "{{ openqa_amqp_prod_username }}"
 openqa_amqp_scheduler_queue: "{{ openqa_amqp_prod_username }}_scheduler"
+
+# auth stuff
+openqa_auth_method: OpenID
+openqa_oauth2_secret: "{{ openqa_prod_oidc_secret }}"
+
 openqa_compose_arches: x86_64,aarch64
 openqa_dbname: openqa
 openqa_dbpassword: "{{ prod_openqa_dbpassword }}"

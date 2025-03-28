@@ -77,6 +77,12 @@
 ##               the share (they need write access to be able to decompress
 ##               compressed disk images on the fly). If not defined, the
 ##               factory dir will not be shared via NFS at all.
+# - openqa_auth_method
+##      string - authentication method to use (Fake, OpenID, OAuth2)
+##      default - Fake
+# - openqa_oauth2_secret
+##      string - the secret to use for OAuth2 authentcation. Required if
+##               openqa_auth_method is OAuth2
 
 # If openqa_dbhost is set, the other openqa_db* variables must be too,
 # and the server will be configured to use a pgsql database accordingly.
@@ -225,7 +231,7 @@
   - config
 
 - name: OpenQA config
-  ansible.builtin.template: src=openqa.ini.j2 dest=/etc/openqa/openqa.ini owner=geekotest group=root mode=0644
+  ansible.builtin.template: src=openqa.ini.j2 dest=/etc/openqa/openqa.ini owner=geekotest group=root mode=0640
   tags:
   - config
 

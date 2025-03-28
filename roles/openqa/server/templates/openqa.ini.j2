@@ -33,14 +33,31 @@ needle = 7
 other = 7
 
 [auth]
-method=OpenID
+method = {{ openqa_auth_method }}
 
 [logging]
-level=info
+level = info
 
 [misc_limits]
 asset_cleanup_max_free_percentage = 20
 
+{% if openqa_auth_method == 'OpenID' %}
 [openid]
 provider = https://id.fedoraproject.org/
 httpsonly = 1
+{% endif %}
+
+{% if openqa_auth_method == 'OAuth2' %}
+[oauth2]
+provider = custom
+authorize_url = https://id{{openqa_env_suffix}}.fedoraproject.org/openidc/Authorization?response_type=code
+token_url = https://id{{openqa_env_suffix}}.fedoraproject.org/openidc/Token
+user_url = https://id{{openqa_env_suffix}}.fedoraproject.org/openidc/UserInfo
+token_scope = openid profile email
+token_label = Bearer
+id_from = preferred_username
+nickname_from = nickname
+unique_name = FAS
+key = openqa
+secret = {{ openqa_oauth2_secret }}
+{% endif %}
