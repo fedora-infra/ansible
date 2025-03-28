@@ -55,6 +55,18 @@
   - ipa/server
   - fedora-messaging
 
+- name: Create /etc/fedora-messaging
+  ansible.builtin.file:
+    dest: /etc/fedora-messaging
+    mode: "0755"
+    owner: root
+    group: root
+    state: directory
+  tags:
+  - config
+  - ipa/server
+  - fedora-messaging
+
 - name: Install fedora-messaging config
   ansible.builtin.template:
     src: fedora-messaging.conf.j2
