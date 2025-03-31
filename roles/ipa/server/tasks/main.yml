@@ -122,9 +122,10 @@
 
 - name: Ask admin if they are OK reinstalling this ipa server replica
   ansible.builtin.pause:
-    prompt: "Do you want to reinstall replica for {{ item }} (ignored for master node and any node with /var/log/ipainstall.log)? (yes/no)"
+    prompt: "Do you want to reinstall replica for {{ item }}? (yes/no)"
   register: confirm_replica
   with_items: "{{ play_hosts }}"
+  when: not ipa_initial or not check_replica.stat.exists
   tags:
   - ipa/server
   - config
