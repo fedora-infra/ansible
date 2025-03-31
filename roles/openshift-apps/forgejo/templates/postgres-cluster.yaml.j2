@@ -4,6 +4,12 @@ metadata:
   name: forgejo-ha
   namespace: forgejo
 spec:
+  spec:
+  users:
+    - name: gitea
+      databases:
+        - gitea
+      options: 'SUPERUSER'
   postgresVersion: 17
   instances:
     - name: forgejo-ha
