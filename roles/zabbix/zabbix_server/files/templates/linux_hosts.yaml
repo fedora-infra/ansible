@@ -1,0 +1,354 @@
+zabbix_export:
+  version: '7.0'
+  template_groups:
+    - uuid: a333cbd6a3ad44baaa4eee4b0c0b1bec
+      name: Fedora
+  templates:
+    - uuid: 28d6d64b3a5041b7a5d2d166b26f25a8
+      template: 'Linux Hosts'
+      name: 'Linux Hosts'
+      description: 'Builds upon "Linux Autoregistration" to enable the remaining triggers / prototypes for non-Koji hosts'
+      templates:
+        - name: 'Linux Autoregistration'
+      groups:
+        - name: Fedora
+      discovery_rules:
+        - uuid: 34e769e2da244b338e7d3b1126e6bcc1
+          name: 'Block devices discovery'
+          type: ZABBIX_ACTIVE
+          key: vfs.dev.discovery
+          delay: 1h
+          filter:
+            evaltype: AND
+            conditions:
+              - macro: '{#DEVNAME}'
+                value: '{$VFS.DEV.DEVNAME.MATCHES}'
+                formulaid: A
+              - macro: '{#DEVNAME}'
+                value: '{$VFS.DEV.DEVNAME.NOT_MATCHES}'
+                operator: NOT_MATCHES_REGEX
+                formulaid: B
+              - macro: '{#DEVTYPE}'
+                value: disk
+                formulaid: C
+          lifetime: 30d
+          enabled_lifetime_type: DISABLE_NEVER
+          item_prototypes:
+            - uuid: 9a0448cf8a184d52a7872df410f25d6c
+              name: '{#DEVNAME}: Disk average queue size (avgqu-sz)'
+              type: DEPENDENT
+              key: 'vfs.dev.queue_size[{#DEVNAME}]'
+              delay: '0'
+              history: 7d
+              value_type: FLOAT
+              description: 'The current average disk queue; the number of requests outstanding on the disk while the performance data is being collected.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$[10]'
+                - type: CHANGE_PER_SECOND
+                  parameters:
+                    - ''
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.001'
+              master_item:
+                key: 'vfs.file.contents[/sys/block/{#DEVNAME}/stat]'
+              tags:
+                - tag: component
+                  value: storage
+                - tag: disk
+                  value: '{#DEVNAME}'
+            - uuid: 1b3559f0d90948f0a72c2fdfdc80930c
+              name: '{#DEVNAME}: Disk read request avg waiting time (r_await)'
+              type: CALCULATED
+              key: 'vfs.dev.read.await[{#DEVNAME}]'
+              history: 7d
+              value_type: FLOAT
+              units: '!ms'
+              params: '(last(//vfs.dev.read.time.rate[{#DEVNAME}])/(last(//vfs.dev.read.rate[{#DEVNAME}])+(last(//vfs.dev.read.rate[{#DEVNAME}])=0)))*1000*(last(//vfs.dev.read.rate[{#DEVNAME}]) > 0)'
+              description: 'This formula contains two Boolean expressions that evaluate to 1 or 0 in order to set the calculated metric to zero and to avoid the exception - division by zero.'
+              tags:
+                - tag: component
+                  value: storage
+                - tag: disk
+                  value: '{#DEVNAME}'
+            - uuid: 3bb5f84b2e954c28843fa1fb3898c035
+              name: '{#DEVNAME}: Disk read rate'
+              type: DEPENDENT
+              key: 'vfs.dev.read.rate[{#DEVNAME}]'
+              delay: '0'
+              history: 7d
+              value_type: FLOAT
+              units: '!r/s'
+              description: 'r/s (read operations per second) - the number (after merges) of read requests completed per second for the device.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$[0]'
+                - type: CHANGE_PER_SECOND
+                  parameters:
+                    - ''
+              master_item:
+                key: 'vfs.file.contents[/sys/block/{#DEVNAME}/stat]'
+              tags:
+                - tag: component
+                  value: storage
+                - tag: disk
+                  value: '{#DEVNAME}'
+            - uuid: df02934521b54864b2538b764c5d549c
+              name: '{#DEVNAME}: Disk read time (rate)'
+              type: DEPENDENT
+              key: 'vfs.dev.read.time.rate[{#DEVNAME}]'
+              delay: '0'
+              history: 7d
+              value_type: FLOAT
+              description: 'The rate of total read time counter; used in `r_await` calculation.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$[3]'
+                - type: CHANGE_PER_SECOND
+                  parameters:
+                    - ''
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.001'
+              master_item:
+                key: 'vfs.file.contents[/sys/block/{#DEVNAME}/stat]'
+              tags:
+                - tag: component
+                  value: storage
+                - tag: disk
+                  value: '{#DEVNAME}'
+            - uuid: 72546bd5eefb4ac7a0b2992a25e5f0c6
+              name: '{#DEVNAME}: Disk utilization'
+              type: DEPENDENT
+              key: 'vfs.dev.util[{#DEVNAME}]'
+              delay: '0'
+              history: 7d
+              value_type: FLOAT
+              units: '%'
+              description: 'This item is the percentage of elapsed time during which the selected disk drive was busy while servicing read or write requests.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$[9]'
+                - type: CHANGE_PER_SECOND
+                  parameters:
+                    - ''
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.1'
+              master_item:
+                key: 'vfs.file.contents[/sys/block/{#DEVNAME}/stat]'
+              tags:
+                - tag: component
+                  value: storage
+                - tag: disk
+                  value: '{#DEVNAME}'
+            - uuid: 8422c37735774134996be62580e7bf10
+              name: '{#DEVNAME}: Disk write request avg waiting time (w_await)'
+              type: CALCULATED
+              key: 'vfs.dev.write.await[{#DEVNAME}]'
+              history: 7d
+              value_type: FLOAT
+              units: '!ms'
+              params: '(last(//vfs.dev.write.time.rate[{#DEVNAME}])/(last(//vfs.dev.write.rate[{#DEVNAME}])+(last(//vfs.dev.write.rate[{#DEVNAME}])=0)))*1000*(last(//vfs.dev.write.rate[{#DEVNAME}]) > 0)'
+              description: 'This formula contains two Boolean expressions that evaluate to 1 or 0 in order to set the calculated metric to zero and to avoid the exception - division by zero.'
+              tags:
+                - tag: component
+                  value: storage
+                - tag: disk
+                  value: '{#DEVNAME}'
+            - uuid: 4ba78909402d4bb8ab32f12c679ea3dc
+              name: '{#DEVNAME}: Disk write rate'
+              type: DEPENDENT
+              key: 'vfs.dev.write.rate[{#DEVNAME}]'
+              delay: '0'
+              history: 7d
+              value_type: FLOAT
+              units: '!w/s'
+              description: 'w/s (write operations per second) - the number (after merges) of write requests completed per second for the device.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$[4]'
+                - type: CHANGE_PER_SECOND
+                  parameters:
+                    - ''
+              master_item:
+                key: 'vfs.file.contents[/sys/block/{#DEVNAME}/stat]'
+              tags:
+                - tag: component
+                  value: storage
+                - tag: disk
+                  value: '{#DEVNAME}'
+            - uuid: 7717dd9841004fa08b35b0e9f42bffae
+              name: '{#DEVNAME}: Disk write time (rate)'
+              type: DEPENDENT
+              key: 'vfs.dev.write.time.rate[{#DEVNAME}]'
+              delay: '0'
+              history: 7d
+              value_type: FLOAT
+              description: 'The rate of total write time counter; used in `w_await` calculation.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$[7]'
+                - type: CHANGE_PER_SECOND
+                  parameters:
+                    - ''
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.001'
+              master_item:
+                key: 'vfs.file.contents[/sys/block/{#DEVNAME}/stat]'
+              tags:
+                - tag: component
+                  value: storage
+                - tag: disk
+                  value: '{#DEVNAME}'
+            - uuid: 39877664726f4886aa88f3d1592bbcb2
+              name: '{#DEVNAME}: Get stats'
+              type: ZABBIX_ACTIVE
+              key: 'vfs.file.contents[/sys/block/{#DEVNAME}/stat]'
+              history: '0'
+              value_type: TEXT
+              trends: '0'
+              description: 'The contents of get `/sys/block/{#DEVNAME}/stat` to get the disk statistics.'
+              preprocessing:
+                - type: JAVASCRIPT
+                  parameters:
+                    - 'return JSON.stringify(value.trim().split(/ +/));'
+              tags:
+                - tag: component
+                  value: raw
+          trigger_prototypes:
+            - uuid: e7d0c8f816de481b8790709b24c44c81
+              expression: 'min(/Linux Hosts/vfs.dev.read.await[{#DEVNAME}],15m) > {$VFS.DEV.READ.AWAIT.WARN:"{#DEVNAME}"} or min(/Linux Hosts/vfs.dev.write.await[{#DEVNAME}],15m) > {$VFS.DEV.WRITE.AWAIT.WARN:"{#DEVNAME}"}'
+              name: '{#DEVNAME}: Disk read/write request responses are too high'
+              event_name: '{#DEVNAME}: Disk read/write request responses are too high (read > {$VFS.DEV.READ.AWAIT.WARN:"{#DEVNAME}"} ms for 15m or write > {$VFS.DEV.WRITE.AWAIT.WARN:"{#DEVNAME}"} ms for 15m)'
+              priority: WARNING
+              description: 'This trigger might indicate the disk {#DEVNAME} saturation.'
+              manual_close: 'YES'
+              tags:
+                - tag: scope
+                  value: performance
+          graph_prototypes:
+            - uuid: feca6a365b8d49d2a66ff4bfac089fc9
+              name: '{#DEVNAME}: Disk average waiting time'
+              graph_items:
+                - color: 199C0D
+                  item:
+                    host: 'Linux Hosts'
+                    key: 'vfs.dev.read.await[{#DEVNAME}]'
+                - sortorder: '1'
+                  drawtype: GRADIENT_LINE
+                  color: F63100
+                  item:
+                    host: 'Linux Hosts'
+                    key: 'vfs.dev.write.await[{#DEVNAME}]'
+            - uuid: b136583f822a4d48a52a17f4bb0d07d8
+              name: '{#DEVNAME}: Disk read/write rates'
+              graph_items:
+                - color: 199C0D
+                  item:
+                    host: 'Linux Hosts'
+                    key: 'vfs.dev.read.rate[{#DEVNAME}]'
+                - sortorder: '1'
+                  drawtype: GRADIENT_LINE
+                  color: F63100
+                  item:
+                    host: 'Linux Hosts'
+                    key: 'vfs.dev.write.rate[{#DEVNAME}]'
+            - uuid: 8863772fb82b49a891ea50cbec5cdd06
+              name: '{#DEVNAME}: Disk utilization and queue'
+              graph_items:
+                - color: 199C0D
+                  yaxisside: RIGHT
+                  item:
+                    host: 'Linux Hosts'
+                    key: 'vfs.dev.queue_size[{#DEVNAME}]'
+                - sortorder: '1'
+                  drawtype: GRADIENT_LINE
+                  color: F63100
+                  item:
+                    host: 'Linux Hosts'
+                    key: 'vfs.dev.util[{#DEVNAME}]'
+          preprocessing:
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1h
+  triggers:
+    - uuid: cd709f79294341b4ad24213adc2cbfd5
+      expression: 'min(/Linux Hosts/system.cpu.util,5m)>{$CPU.UTIL.CRIT}'
+      name: 'Linux: High CPU utilization'
+      event_name: 'Linux: High CPU utilization (over {$CPU.UTIL.CRIT}% for 5m)'
+      opdata: 'Current utilization: {ITEM.LASTVALUE1}'
+      priority: WARNING
+      description: 'The CPU utilization is too high. The system might be slow to respond.'
+      dependencies:
+        - name: 'Linux: Load average is too high'
+          expression: |
+            min(/Linux Hosts/system.cpu.load[all,avg1],5m)/last(/Linux Hosts/system.cpu.num)>{$LOAD_AVG_PER_CPU.MAX.WARN}
+            and last(/Linux Hosts/system.cpu.load[all,avg5])>0
+            and last(/Linux Hosts/system.cpu.load[all,avg15])>0
+      tags:
+        - tag: scope
+          value: performance
+    - uuid: d3e1eaa726cc4ab8b2dcadae64a0fd55
+      expression: 'min(/Linux Hosts/vm.memory.utilization,5m)>{$MEMORY.UTIL.MAX}'
+      name: 'Linux: High memory utilization'
+      event_name: 'Linux: High memory utilization (>{$MEMORY.UTIL.MAX}% for 5m)'
+      priority: AVERAGE
+      description: 'The system is running out of free memory.'
+      dependencies:
+        - name: 'Linux: Lack of available memory'
+          expression: 'max(/Linux Hosts/vm.memory.size[available],5m)<{$MEMORY.AVAILABLE.MIN} and last(/Linux Hosts/vm.memory.size[total])>0'
+      tags:
+        - tag: scope
+          value: capacity
+        - tag: scope
+          value: performance
+    - uuid: 61ce552ec3774a01b89de3edce1d00ae
+      expression: 'max(/Linux Hosts/system.swap.size[,pfree],5m)<{$SWAP.PFREE.MIN.WARN} and last(/Linux Hosts/system.swap.size[,total])>0'
+      name: 'Linux: High swap space usage'
+      event_name: 'Linux: High swap space usage (less than {$SWAP.PFREE.MIN.WARN}% free)'
+      opdata: 'Free: {ITEM.LASTVALUE1}, total: {ITEM.LASTVALUE2}'
+      priority: WARNING
+      description: 'If there is no swap configured, this trigger is ignored.'
+      dependencies:
+        - name: 'Linux: High memory utilization'
+          expression: 'min(/Linux Hosts/vm.memory.utilization,5m)>{$MEMORY.UTIL.MAX}'
+        - name: 'Linux: Lack of available memory'
+          expression: 'max(/Linux Hosts/vm.memory.size[available],5m)<{$MEMORY.AVAILABLE.MIN} and last(/Linux Hosts/vm.memory.size[total])>0'
+      tags:
+        - tag: scope
+          value: capacity
+    - uuid: 6e638060373b44398dd22b01564bc326
+      expression: 'max(/Linux Hosts/vm.memory.size[available],5m)<{$MEMORY.AVAILABLE.MIN} and last(/Linux Hosts/vm.memory.size[total])>0'
+      name: 'Linux: Lack of available memory'
+      event_name: 'Linux: Lack of available memory (<{$MEMORY.AVAILABLE.MIN} of {ITEM.VALUE2})'
+      opdata: 'Available: {ITEM.LASTVALUE1}, total: {ITEM.LASTVALUE2}'
+      priority: AVERAGE
+      tags:
+        - tag: scope
+          value: capacity
+        - tag: scope
+          value: performance
+    - uuid: cebd3b42cd2042b8a76eac570ce70b4c
+      expression: |
+        min(/Linux Hosts/system.cpu.load[all,avg1],5m)/last(/Linux Hosts/system.cpu.num)>{$LOAD_AVG_PER_CPU.MAX.WARN}
+        and last(/Linux Hosts/system.cpu.load[all,avg5])>0
+        and last(/Linux Hosts/system.cpu.load[all,avg15])>0
+      name: 'Linux: Load average is too high'
+      event_name: 'Linux: Load average is too high (per CPU load over {$LOAD_AVG_PER_CPU.MAX.WARN} for 5m)'
+      opdata: 'Load averages(1m 5m 15m): ({ITEM.LASTVALUE1} {ITEM.LASTVALUE3} {ITEM.LASTVALUE4}), # of CPUs: {ITEM.LASTVALUE2}'
+      priority: AVERAGE
+      description: 'The load average per CPU is too high. The system may be slow to respond.'
+      tags:
+        - tag: scope
+          value: capacity
+        - tag: scope
+          value: performance

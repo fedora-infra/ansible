@@ -1,0 +1,163 @@
+---
+# Use a block so we can specify the connection vars once
+- name: API Block
+  vars:
+    ansible_zabbix_auth_key: "{{ (env == 'staging') | ternary(zabbix_stg_hostname, zabbix_hostname) }}"
+    ansible_network_os: community.zabbix.zabbix
+    ansible_connection: httpapi
+    ansible_httpapi_port: 443
+    ansible_httpapi_use_ssl: true
+    ansible_httpapi_validate_certs: false
+    ansible_host: "{{ (env == 'staging') | ternary(zabbix_stg_hostname, zabbix_hostname) }}"
+    ansible_zabbix_url_path: ""  # If Zabbix WebUI runs on non-default (zabbix) path ,e.g. http://<FQDN>/zabbixeu
+  block:
+    - name: Create a webhook mediatype
+      community.zabbix.zabbix_mediatype:
+        name: Matrix
+        type: "webhook"
+        description: "Matrix webhook - See https://github.com/jooola/zabbix-matrix-webhook#readme"
+        webhook_script: "{{ lookup('file', './matrix_mediatype.js') }}"
+        webhook_params:
+          - name: alert_message
+            value: "{ALERT.MESSAGE}"
+          - name: alert_subject
+            value: "{ALERT.SUBJECT}"
+          - name: enable_colors
+            value: "true"
+          - name: enable_icons
+            value: "true"
+          - name: event_is_problem
+            value: "{EVENT.VALUE}"
+          - name: event_is_update
+            value: "{EVENT.UPDATE.STATUS}"
+          - name: event_severity
+            value: "{EVENT.NSEVERITY}"
+          - name: event_url
+            value: "https://{{ (env == 'staging') | ternary(zabbix_stg_hostname, zabbix_hostname) }}/tr_events.php?triggerid={TRIGGER.ID}&eventid={EVENT.ID}"
+          - name: http_proxy
+            value: ""
+          - name: matrix_room
+            value: "{ALERT.SENDTO}"
+          - name: matrix_token
+            value: "{{ (env == 'staging') | ternary(zabbix_stg_matrix_token, zabbix_matrix_token) }}"
+          - name: matrix_url
+            value: "https://fedora.ems.host"
+        message_templates:
+          - subject: "{EVENT.NAME} ({EVENT.ID})"
+            body: "Severity: {EVENT.SEVERITY} started at {EVENT.DATE} {EVENT.TIME} on {HOST.NAME}"
+            eventsource: triggers
+            recovery: operations
+          - subject: "{EVENT.NAME} [{EVENT.DURATION}] ({EVENT.ID})"
+            body: "Severity: {EVENT.SEVERITY} resolved at {EVENT.RECOVERY.DATE} {EVENT.RECOVERY.TIME} on {HOST.NAME}"
+            eventsource: triggers
+            recovery: recovery_operations
+          - subject: "{EVENT.NAME} ({EVENT.AGE})"
+            body: |
+              {USER.FULLNAME} {EVENT.UPDATE.ACTION} problem at {EVENT.UPDATE.DATE} {EVENT.UPDATE.TIME}
+              {EVENT.UPDATE.MESSAGE}
+
+              Current problem status: {EVENT.STATUS}
+              Age: {EVENT.AGE}
+              Acknowledged: {EVENT.ACK.STATUS}
+            eventsource: triggers
+            recovery: update_operations
+      tags:
+        - zabbix_configuration
+        - zabbix_triggers
+
+    - name: Create a new Zabbix user for Matrix triggers
+      community.zabbix.zabbix_user:
+        username: matrix-bot
+        name: Matrix
+        surname: Bot
+        usrgrps:
+          - Zabbix administrators
+        passwd: "{{ (env == 'staging') | ternary(zabbix_stg_botuser_pwd, zabbix_botuser_pwd) }}"
+        user_medias:
+          - mediatype: Matrix
+            sendto: "{{ (env == 'staging') | ternary(zabbix_stg_matrix_roomid, zabbix_matrix_roomid) }}"
+            period: 1-7,00:00-24:00
+            severity:
+              not_classified: yes
+              information: yes
+              warning: yes
+              average: yes
+              high: yes
+              disaster: yes
+            active: yes
+        state: present
+      tags:
+        - zabbix_configuration
+        - zabbix_users
+
+    - name: Send alerts to Matrix
+      community.zabbix.zabbix_action:
+        name: "Send alerts to Matrix"
+        event_source: "trigger"
+        state: present
+        status: enabled
+        esc_period: 1m
+        conditions:
+          - type: "trigger_severity"
+            operator: ">="
+            value: "Information"
+        operations:
+          - type: send_message
+            media_type: "Matrix"
+            send_to_users:
+              - "matrix-bot"
+        recovery_operations:
+          - type: send_message
+            media_type: "Matrix"
+            send_to_users:
+              - "matrix-bot"
+      tags:
+        - zabbix_configuration
+        - zabbix_users
+        - zabbix_triggers
+
+    # Templates seem to always report a change :/
+    - name: Import Base Auto-registration template
+      community.zabbix.zabbix_template:
+        template_yaml: "{{ lookup('file', 'templates/linux_autoregister.yaml') }}"
+        state: present
+      tags:
+        - zabbix_configuration
+        - zabbix_templates
+
+    # Templates seem to always report a change :/
+    - name: Import dependant Linux Host template
+      community.zabbix.zabbix_template:
+        template_yaml: "{{ lookup('file', 'templates/linux_hosts.yaml') }}"
+        state: present
+      tags:
+        - zabbix_configuration
+        - zabbix_templates
+
+    # PSK config: this can't be checked so it will always report a change
+    - name: Construct PSK filename
+      ansible.builtin.set_fact:
+        psk_file: "{{ private }}/files/zabbix/fedora{{ env_suffix }}.psk"
+    - name: Configure autoregistration via PSK
+      community.zabbix.zabbix_autoregister:
+        tls_accept:
+          - tls_with_psk
+        tls_psk_identity: "{{ zabbix_tls_psk_identity }}"
+        tls_psk: "{{ lookup('ansible.builtin.file', psk_file) }}"
+      tags:
+        - zabbix_configuration
+
+    - name: Configure autoregistration action
+      community.zabbix.zabbix_action:
+        name: "Add host to base template"
+        event_source: "auto_registration"
+        state: present
+        status: enabled
+        esc_period: 1m
+        operations:
+          - type: add_host
+          - type: link_to_template
+            templates:
+              - Linux Autoregistration
+      tags:
+        - zabbix_configuration
