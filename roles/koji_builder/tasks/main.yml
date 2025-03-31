@@ -415,6 +415,13 @@
   - koji_builder
   - koji_builder/osbuildapi
 
+- name: Remove cron job to run osbuild api ip update script every minute. (nftables)
+  ansible.builtin.file: path=/etc/cron.d/osbuildapi-update-nft.cron state=absent
+  when: not nftables
+  tags:
+  - koji_builder
+  - koji_builder/osbuildapi
+
 - name: Create override dir for systemd-nspawn containers config
   ansible.builtin.file:
     state: directory
