@@ -17,7 +17,7 @@
   - fedora-web/main
 
 - name: Copy in the sync-fedora-web-v3 cronjob
-  ansible.builtin.copy:
+  ansible.builtin.template:
     src: cron-sync-fedora-web-v3
     dest: /etc/cron.d/sync-fedora-web
   tags:
