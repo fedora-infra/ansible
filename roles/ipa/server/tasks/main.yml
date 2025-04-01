@@ -678,7 +678,6 @@
 
 - name: Include journal-to-fedora-messaging setup
   ansible.builtin.import_tasks: journal2fedmsg.yml
-  when: env == 'staging'
   tags:
   - ipa/server
   - config
