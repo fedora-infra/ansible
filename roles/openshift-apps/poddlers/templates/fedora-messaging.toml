@@ -413,6 +413,9 @@ pagure_api_key = "{{ toddlers_pagure_fas_groups_sync_token }}"
 infra-sig = 'fedora-infra'
 metrics-sig = 'metrics'
 
+[consumer_config.clean_packagers_groups]
+watched_groups = ["packager"]
+
 [qos]
 prefetch_size = 0
 prefetch_count = 1
