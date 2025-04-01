@@ -120,21 +120,26 @@ def parse_json_output(project_name):
     return jobs, statuses
 
 
-def main():
-    parser = ArgumentParser()
-    parser.add_argument("project_name")
-    args = parser.parse_args()
-    jobs, statuses = parse_json_output(args.project_name)
+def project_report(project_name):
+    jobs, statuses = parse_json_output(project_name)
     for name in sorted(jobs):
         full_name = jobs[name]
         status, details = statuses[name]
-        showlogs = f"oc -n {args.project_name} logs job/{full_name}"
+        showlogs = f"oc -n {project_name} logs job/{full_name}"
         if status == Status.ACTIVE:
             showlogs += " -f --since 1s"
         else:
             showlogs += " | less"
         print(f"{Color.BOLD}→ {name}:{Color.END} {status.value} {details or ''}")
         print(showlogs)
+
+
+def main():
+    parser = ArgumentParser()
+    parser.add_argument("project_name", nargs="+")
+    args = parser.parse_args()
+    for project_name in args.project_name:
+        project_report(project_name)
 
 
 if __name__ == "__main__":
