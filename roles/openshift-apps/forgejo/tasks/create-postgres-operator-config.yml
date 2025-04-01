@@ -1,0 +1,22 @@
+---
+- name: Generate the postgres-cluster.yaml from template
+  ansible.builtin.template:
+    src: "postgres-cluster.yaml.j2"
+    dest: "/root/ocp4/openshift-apps/forgejo/postgres-cluster.yaml"
+    mode: "0770"
+
+- name: Generate the postgres-secret.yaml from template
+  ansible.builtin.template:
+    src: "postgres-secret.yaml.j2"
+    dest: "/root/ocp4/openshift-apps/forgejo/postgres-secret.yaml"
+    mode: "0770"
+
+- name: Deploy the postgres-cluster.yaml config
+  kubernetes.core.k8s:
+    state: present
+    src: "/root/ocp4/openshift-apps/forgejo/postgres-cluster.yaml"
+
+- name: Deploy the postgres-secret.yaml secret
+  kubernetes.core.k8s:
+    state: present
+    src: "/root/ocp4/openshift-apps/forgejo/postgres-secret.yaml"
