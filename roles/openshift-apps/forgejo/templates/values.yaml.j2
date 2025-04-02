@@ -745,6 +745,7 @@ redis:
 ## @descriptionEnd
 #
 ## @param postgresql-ha.enabled Enable PostgreSQL HA chart
+## @param postgresql-ha.crunchydataOperator Indicate that we are using the crunchydata Operator to deploy PostgreSQL HA
 ## @param postgresql-ha.postgresql.password Password for the `gitea` user (overrides `auth.password`)
 ## @param postgresql-ha.global.postgresql.database Name for a custom database to create (overrides `auth.database`)
 ## @param postgresql-ha.global.postgresql.username Name for a custom user to create (overrides `auth.username`)
@@ -760,7 +761,8 @@ postgresql-ha:
       database: gitea
       password: gitea
       username: gitea
-  enabled: true
+  enabled: false
+  crunchydataOperator: true
   postgresql:
     repmgrPassword: changeme2
     postgresPassword: changeme1
