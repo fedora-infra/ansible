@@ -21,12 +21,20 @@ type="directory"
 url="/srv/pub/epel/"
 
 [[repository_mapping]]
-regex="^pub/epel/testing/\\d+(?:\\.\\d+)?/Everything/"
+regex="^pub/epel/testing/\\d+/Everything/"
 prefix="testing-epel"
 
 [[repository_mapping]]
-regex="^pub/epel/\\d+(?:\\.\\d+)?/Everything/"
+regex="^pub/epel/\\d+/Everything/"
 prefix="epel"
+
+[[repository_mapping]]
+regex="^pub/epel/testing/\\d+\\.\\d+/Everything/"
+prefix="epel-z-testing"
+
+[[repository_mapping]]
+regex="^pub/epel/\\d+\\.\\d+/Everything/"
+prefix="epel-z"
 
 [[repository_mapping]]
 regex="pub/epel/[\\d]/Modular/.*"
