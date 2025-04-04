@@ -8,6 +8,9 @@ zabbix_db_name: zabbix     # OVERRIDE
 zabbix_db_user: zabbix     # OVERRIDE
 zabbix_db_pass: zabbix     # OVERRIDE
 
+# This is to configure matching PSK identity to the agents
+zabbix_tls_psk_identity: "Fedora" # OVERRIDE
+
 zabbix_server_pkgs:
   - zabbix-server-pgsql
   - zabbix-web-pgsql

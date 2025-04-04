@@ -65,30 +65,33 @@
         - zabbix_configuration
         - zabbix_triggers
 
-    - name: Create a new Zabbix user for Matrix triggers
-      community.zabbix.zabbix_user:
-        username: matrix-bot
-        name: Matrix
-        surname: Bot
-        usrgrps:
-          - Zabbix administrators
-        passwd: "{{ (env == 'staging') | ternary(zabbix_stg_botuser_pwd, zabbix_botuser_pwd) }}"
-        user_medias:
-          - mediatype: Matrix
-            sendto: "{{ (env == 'staging') | ternary(zabbix_stg_matrix_roomid, zabbix_matrix_roomid) }}"
-            period: 1-7,00:00-24:00
-            severity:
-              not_classified: yes
-              information: yes
-              warning: yes
-              average: yes
-              high: yes
-              disaster: yes
-            active: yes
-        state: present
-      tags:
-        - zabbix_configuration
-        - zabbix_users
+# Breaks on second run with community.zabbix < 3.3.0
+# See https://github.com/ansible-collections/community.zabbix/commit/8a962bfc046353db60a594ddc259fae396fc20a9
+# Revisit after freeze is over - don't delete the user or the next task will fail
+#    - name: Create a new Zabbix user for Matrix triggers
+#      community.zabbix.zabbix_user:
+#        username: matrix-bot
+#        name: Matrix
+#        surname: Bot
+#        usrgrps:
+#          - Zabbix administrators
+#        passwd: "{{ (env == 'staging') | ternary(zabbix_stg_botuser_pwd, zabbix_botuser_pwd) }}"
+#        user_medias:
+#          - mediatype: Matrix
+#            sendto: "{{ (env == 'staging') | ternary(zabbix_stg_matrix_roomid, zabbix_matrix_roomid) }}"
+#            period: 1-7,00:00-24:00
+#            severity:
+#              not_classified: yes
+#              information: yes
+#              warning: yes
+#              average: yes
+#              high: yes
+#              disaster: yes
+#            active: yes
+#        state: present
+#      tags:
+#        - zabbix_configuration
+#        - zabbix_users
 
     - name: Send alerts to Matrix
       community.zabbix.zabbix_action:
