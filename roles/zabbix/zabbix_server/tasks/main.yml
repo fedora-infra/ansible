@@ -7,7 +7,7 @@
 - name: Configure Zabbix via api
   ansible.builtin.include_tasks: configure_api.yml
   tags:
-  - zabbix-configuration
+  - zabbix_configuration
   when: env == "staging"
 
 # - include_tasks: plugins.yml

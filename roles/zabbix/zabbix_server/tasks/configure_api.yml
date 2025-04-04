@@ -2,7 +2,7 @@
 # Use a block so we can specify the connection vars once
 - name: API Block
   vars:
-    ansible_zabbix_auth_key: "{{ (env == 'staging') | ternary(zabbix_stg_hostname, zabbix_hostname) }}"
+    ansible_zabbix_auth_key: "{{ (env == 'staging') | ternary(zabbix_stg_apikey, zabbix_apikey) }}"
     ansible_network_os: community.zabbix.zabbix
     ansible_connection: httpapi
     ansible_httpapi_port: 443
