@@ -82,18 +82,33 @@ spec:
             - name: fedora-messaging-config-volume
               mountPath: /etc/fedora-messaging
               readOnly: true
-          readinessProbe:
-            timeoutSeconds: 1
-            initialDelaySeconds: 5
+
+          startupProbe:
+            timeoutSeconds: 5
+            periodSeconds: 5
+            failureThreshold: 30
             httpGet:
               path: /api/v2.0/healthcheck
               port: 5001
+
           livenessProbe:
             timeoutSeconds: 5
-            initialDelaySeconds: 30
+            periodSeconds: 60
+            failureThreshold: 3
+            successThreshold: 1
             httpGet:
               path: /api/v2.0/healthcheck
               port: 5001
+
+          readinessProbe:
+            timeoutSeconds: 1
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            httpGet:
+              path: /api/v2.0
+              port: 5001
+
           resources:
             limits:
               memory: 500Mi
