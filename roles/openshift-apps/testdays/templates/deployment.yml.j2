@@ -58,6 +58,10 @@ spec:
           value: "1"
         - name: IS_OPENSHIFT
           value: "1"
+        volumeMounts:
+        - name: testdays-secret-volume
+          mountPath: /opt/app-root/secret/
+          readOnly: true
         readinessProbe:
           timeoutSeconds: 1
           initialDelaySeconds: 5
@@ -70,6 +74,10 @@ spec:
           httpGet:
             path: /
             port: 8080
+      volumes:
+      - name: testdays-secret-volume
+        secret:
+          secretName: testdays-secret
 ---
 apiVersion: apps/v1
 kind: Deployment
