@@ -38,6 +38,18 @@ spec:
           value: "db01{{ env_suffix }}.iad2.fedoraproject.org"
         - name: POSTGRESQL_SERVICE_PORT
           value: "5432"
+        - name: DB_DRIVER
+          value: "postgresql+psycopg2"
+        - name: DB_USER
+          value: "{{ testdays_db_user }}"
+        - name: DB_PASSWORD
+          value: "{{ testdays_db_pass }}"
+        - name: DB_DATABASE
+          value: "{{ testdays_db_name }}"
+        - name: DB_HOST
+          value: "db01{{ env_suffix }}.iad2.fedoraproject.org"
+        - name: DB_PORT
+          value: "5432"
         - name: SECRET_KEY
           value: "{{ testdays_secret_key }}"
         - name: RESULTSDB_URL
