@@ -91,6 +91,11 @@
 
   - role: openshift/object
     object_app: testdays
+    object_template: secret.yml.j2
+    object_objectname: secret.yml
+
+  - role: openshift/object
+    object_app: testdays
     object_file: service.yml
     object_objectname: service.yml
 

@@ -44,6 +44,8 @@ spec:
           value: "http://resultsdb.testdays.svc.cluster.local:8080/api/v2.0"
         - name: OPENSHIFT_PROD
           value: "1"
+        - name: IS_OPENSHIFT
+          value: "1"
         readinessProbe:
           timeoutSeconds: 1
           initialDelaySeconds: 5
