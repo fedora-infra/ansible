@@ -389,14 +389,16 @@
 
 - name: Install cron job to run osbuild api ip update script every minute.
   ansible.builtin.template: src=osbuildapi-update.cron dest=/etc/cron.d/osbuildapi-update.cron mode=644
-  when: not nftables
+  when:
+  - not nftables
+  - 'osbuild' in group_names
   tags:
   - koji_builder
   - koji_builder/osbuildapi
 
 - name: Remove cron job to run osbuild api ip update script.
   ansible.builtin.file: path=/etc/cron.d/osbuildapi-update.cron state=absent
-  when: nftables
+  when: nftables or 'osbuild' not in group_names
   tags:
   - koji_builder
   - koji_builder/osbuildapi
@@ -410,14 +412,16 @@
 
 - name: Install cron job to run osbuild api ip update script every minute. (nftables)
   ansible.builtin.template: src=osbuildapi-update-nft.cron dest=/etc/cron.d/osbuildapi-update-nft.cron mode=644
-  when: nftables
+  when:
+  - nftables
+  - 'osbuild' in group_names
   tags:
   - koji_builder
   - koji_builder/osbuildapi
 
 - name: Remove cron job to run osbuild api ip update script every minute. (nftables)
   ansible.builtin.file: path=/etc/cron.d/osbuildapi-update-nft.cron state=absent
-  when: not nftables
+  when: not nftables or 'osbuild' not in group_names
   tags:
   - koji_builder
   - koji_builder/osbuildapi
