@@ -37,44 +37,9 @@
   - config
   when: "env == 'production'"
 
-- name: Create CA certs directory
-  ansible.builtin.file:
-    path: /etc/rabbitmq/cacerts/
-    owner: root
-    group: root
-    mode: 0755
-    state: directory
-  tags:
-  - rabbitmq_cluster
-  - config
-
 - name: Deploy CA certificate
   ansible.builtin.copy:
-    src: "{{private}}/files/rabbitmq/{{env}}/pki/ca.crt"
-    dest: /etc/rabbitmq/cacerts/ca.crt
-    owner: root
-    group: root
-    mode: 0644
-  tags:
-  - rabbitmq_cluster
-  - config
-  when: "env == 'staging'"
-
-- name: Deploy CA certificate
-  ansible.builtin.copy:
-    src: "{{private}}/files/rabbitmq/{{env}}.old-2025-04/pki/ca.crt"
-    dest: /etc/rabbitmq/cacerts/ca.old.crt
-    owner: root
-    group: root
-    mode: 0644
-  tags:
-  - rabbitmq_cluster
-  - config
-  when: "env == 'staging'"
-
-- name: Build combined CA cert
-  ansible.builtin.assemble:
-    src: /etc/rabbitmq/cacerts/
+    content: "{{ lookup('file', private+'/files/rabbitmq/+env+'/pki/ca.crt') }}\n{{ lookup('file', private+'/files/rabbitmq/+env+'.new/pki/ca.crt') }}"
     dest: /etc/rabbitmq/ca.crt
     owner: root
     group: root
