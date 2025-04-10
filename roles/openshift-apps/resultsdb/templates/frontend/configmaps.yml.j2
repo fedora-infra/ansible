@@ -35,6 +35,11 @@ data:
     WSGIScriptAlias / /usr/share/resultsdb_frontend/resultsdb_frontend.wsgi
     WSGISocketPrefix /tmp/wsgi
 
+    LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+    CustomLog /dev/stdout combined
+    ErrorLog /dev/stderr
+    LogLevel info
+
     <Directory /usr/share/resultsdb_frontend>
         WSGIProcessGroup resultsdb_frontend
         WSGIApplicationGroup %{GLOBAL}
