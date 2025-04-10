@@ -1,4 +1,4 @@
-amqp_url = "amqps://pungi{{ env_suffix }}:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fpubsub"
+amqp_url = "amqps://planet{{ env_suffix }}:@rabbitmq{{ env_suffix }}.fedoraproject.org/%2Fpubsub"
 
 {% if env == "staging" %}
 topic_prefix = "org.fedoraproject.stg"
