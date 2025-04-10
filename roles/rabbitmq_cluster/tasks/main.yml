@@ -39,7 +39,7 @@
 
 - name: Deploy CA certificate
   ansible.builtin.copy:
-    content: "{{ lookup('file', private+'/files/rabbitmq/+env+'/pki/ca.crt') }}\n{{ lookup('file', private+'/files/rabbitmq/+env+'.new/pki/ca.crt') }}"
+    src: "{{private}}/files/rabbitmq/{{env}}/ca-combined.crt"
     dest: /etc/rabbitmq/ca.crt
     owner: root
     group: root
