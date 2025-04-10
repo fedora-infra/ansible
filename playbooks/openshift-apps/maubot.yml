@@ -88,7 +88,7 @@
     secret_file_app: maubot
     secret_file_secret_name: maubot-fedora-messaging-ca
     secret_file_key: maubot.ca
-    secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    secret_file_privatefile: "rabbitmq/{{env}}/ca-combined.crt"
 
   - role: openshift/start-build
     start_build_app: maubot

@@ -151,7 +151,7 @@
     secret_file_app: openscanhub
     secret_file_secret_name: openscanhub-fedora-messaging-ca
     secret_file_key: fedora-messaging-openscanhub-ca.crt
-    secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    secret_file_privatefile: "rabbitmq/{{env}}/ca-combined.crt"
   - role: openshift/secret-file
     secret_file_app: openscanhub
     secret_file_secret_name: openscanhub-fedora-messaging-key

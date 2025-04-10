@@ -83,7 +83,7 @@
     secret_file_app: elections
     secret_file_secret_name: elections-fedora-messaging-ca
     secret_file_key: elections.ca
-    secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    secret_file_privatefile: "rabbitmq/{{env}}/ca-combined.crt"
 
   - role: openshift/object
     object_app: elections

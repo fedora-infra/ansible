@@ -87,7 +87,7 @@
     - src: "{{ private }}/files/rabbitmq/staging/pki/private/mailman.stg.key"
       dest: mailman.key
       mode: "440"
-    - src: "{{ private }}/files/rabbitmq/staging/pki/ca.crt"
+    - src: "{{ private }}/files/rabbitmq/staging/ca-combined.crt"
       dest: mailman.ca
       mode: "444"
   tags:
@@ -109,7 +109,7 @@
     - src: "{{ private }}/files/rabbitmq/production/pki/private/mailman.key"
       dest: mailman.key
       mode: "440"
-    - src: "{{ private }}/files/rabbitmq/production/pki/ca.crt"
+    - src: "{{ private }}/files/rabbitmq/production/ca-combined.crt"
       dest: mailman.ca
       mode: "444"
   tags:

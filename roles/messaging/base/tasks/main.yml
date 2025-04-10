@@ -36,7 +36,7 @@
   - fedora-messaging
 
 - name: "Copy fedora messaging ca.crt for readers"
-  ansible.builtin.copy: src={{ private }}/files/rabbitmq/{{ env }}/pki/ca.crt
+  ansible.builtin.copy: src={{ private }}/files/rabbitmq/{{ env }}/ca-combined.crt
         dest=/etc/pki/rabbitmq/{{ item.username }}/ca.crt
         owner={{ item.username }} group=root mode=0644
   with_items: "{{ messaging.certificates }}"

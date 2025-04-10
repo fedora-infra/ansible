@@ -303,7 +303,7 @@
 
 - name: Deploy the fedora-messaging CA
   ansible.builtin.copy:
-    src: "{{ private }}/files/rabbitmq/{{env}}/pki/ca.crt"
+    src: "{{ private }}/files/rabbitmq/{{env}}/ca-combined.crt"
     dest: /etc/pki/fedora-messaging/rabbitmq-ca.crt
     mode: "0644"
     owner: root

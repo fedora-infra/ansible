@@ -49,7 +49,7 @@
     secret_file_app: greenwave
     secret_file_secret_name: greenwave-fedora-messaging-ca
     secret_file_key: greenwave.ca
-    secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    secret_file_privatefile: "rabbitmq/{{env}}/ca-combined.crt"
 
   - role: openshift/object
     object_app: greenwave

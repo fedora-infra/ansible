@@ -57,7 +57,7 @@
       owner: mirror_pagure_ansible
       group: mirror_pagure_ansible
       mode: "0600"
-    - src: "{{private}}/files/rabbitmq/production/pki/ca.crt"
+    - src: "{{private}}/files/rabbitmq/production/ca-combined.crt"
       dest: cacert.pem
       owner: mirror_pagure_ansible
       group: mirror_pagure_ansible

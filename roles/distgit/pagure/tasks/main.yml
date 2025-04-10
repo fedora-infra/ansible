@@ -323,7 +323,7 @@
       owner: pagure
       group: packager
       mode: "440"
-    - src: "{{private}}/files/rabbitmq/{{env}}/pki/ca.crt"
+    - src: "{{private}}/files/rabbitmq/{{env}}/ca-combined.crt"
       dest: src.fp.o.ca
       owner: pagure
       group: packager

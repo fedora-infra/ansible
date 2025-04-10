@@ -137,7 +137,7 @@
       dest: koji.key
       owner: apache
       mode: "600"
-    - src: "{{private}}/files/rabbitmq/{{env}}/pki/ca.crt"
+    - src: "{{private}}/files/rabbitmq/{{env}}/ca-combined.crt"
       dest: koji.ca
       owner: apache
       mode: "0644"
@@ -160,7 +160,7 @@
       dest: koji.key
       owner: apache
       mode: "600"
-    - src: "{{private}}/files/rabbitmq/{{env}}/pki/ca.crt"
+    - src: "{{private}}/files/rabbitmq/{{env}}/ca-combined.crt"
       dest: koji.ca
       owner: apache
       mode: "0644"

@@ -46,7 +46,7 @@
     secret_file_app: fedocal
     secret_file_secret_name: fedocal-fedora-messaging-ca
     secret_file_key: fedocal.ca
-    secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    secret_file_privatefile: "rabbitmq/{{env}}/ca-combined.crt"
 
   - role: openshift/object
     object_app: fedocal

@@ -78,7 +78,7 @@
       secret_file_app: waiverdb
       secret_file_secret_name: waiverdb-fedora-messaging-ca
       secret_file_key: waiverdb.ca
-      secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+      secret_file_privatefile: "rabbitmq/{{env}}/ca-combined.crt"
 
     - role: openshift/object
       object_app: waiverdb

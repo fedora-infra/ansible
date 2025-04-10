@@ -58,7 +58,7 @@
       secret_file_app: resultsdb-ci-listener
       secret_file_secret_name: resultsdb-ci-listener-fedora-messaging-ca
       secret_file_key: resultsdb-ci-listener.ca
-      secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+      secret_file_privatefile: "rabbitmq/{{env}}/ca-combined.crt"
 
     - role: openshift/imagestream
       imagestream_app: resultsdb-ci-listener

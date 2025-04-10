@@ -57,7 +57,7 @@
     secret_file_app: mdapi
     secret_file_secret_name: mdapi-fedora-messaging-ca
     secret_file_key: mdapi.ca
-    secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    secret_file_privatefile: "rabbitmq/{{env}}/ca-combined.crt"
 
   - role: openshift/object
     object_app: mdapi

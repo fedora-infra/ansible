@@ -83,7 +83,7 @@
       secret_file_app: poddlers
       secret_file_secret_name: toddlers-fedora-messaging-ca
       secret_file_key: toddlers.ca
-      secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+      secret_file_privatefile: "rabbitmq/{{env}}/ca-combined.crt"
 
     - role: openshift/object
       object_app: poddlers

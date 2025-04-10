@@ -308,7 +308,7 @@
       owner: git
       group: root
       mode: "440"
-    - src: "{{private}}/files/rabbitmq/staging/pki/ca.crt"
+    - src: "{{private}}/files/rabbitmq/staging/ca-combined.crt"
       dest: pagure.ca
       owner: git
       group: root
@@ -333,7 +333,7 @@
       owner: git
       group: root
       mode: "440"
-    - src: "{{private}}/files/rabbitmq/production/pki/ca.crt"
+    - src: "{{private}}/files/rabbitmq/production/ca-combined.crt"
       dest: pagure.ca
       owner: git
       group: root

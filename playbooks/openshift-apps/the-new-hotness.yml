@@ -49,7 +49,7 @@
     secret_file_app: the-new-hotness
     secret_file_secret_name: the-new-hotness-fedora-messaging-ca
     secret_file_key: fedora-messaging-the-new-hotness-ca.crt
-    secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    secret_file_privatefile: "rabbitmq/{{env}}/ca-combined.crt"
 
   - role: openshift/secret-file
     secret_file_app: the-new-hotness

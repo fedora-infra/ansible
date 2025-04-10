@@ -23,7 +23,7 @@
     secret_file_app: release-monitoring
     secret_file_secret_name: release-monitoring-fedora-messaging-ca
     secret_file_key: fedora-messaging-release-monitoring-ca.crt
-    secret_file_privatefile: "rabbitmq/{{env}}/pki/ca.crt"
+    secret_file_privatefile: "rabbitmq/{{env}}/ca-combined.crt"
   - role: openshift/secret-file
     secret_file_app: release-monitoring
     secret_file_secret_name: release-monitoring-fedora-messaging-key
