@@ -2,8 +2,8 @@ RewriteEngine On
 RewriteRule ^/$ /koji/  [R,L]
 KeepAlive On
 
-ServerLimit 800
-MaxRequestWorkers 800
+ServerLimit 2000
+MaxRequestWorkers 2000
 MaxConnectionsPerChild 1000
 
 #We use wsgi by default
