@@ -514,7 +514,15 @@ gitea:
       OFFLINE_MODE: false
 
     ## @param gitea.config.database Database configuration (only necessary with an [externally managed DB](https://code.forgejo.org/forgejo-helm/forgejo-helm#external-database)).
-    database: {}
+    database:
+      HOST: "{{ forgejo_database_host }}"
+      NAME: "{{ forgejo_database_name }}"
+      USER: "{{ forgejo_database_user }}"
+      PASSWD: "{{ forgejo_database_password }}"
+      SCHEMA: "{{ forgejo_database_schema }}"
+      SSL_MODE: "require"
+      DB_TYPE: "postgres"
+
 
     ## @param gitea.config.indexer Settings for what content is indexed and how
     indexer: {}
