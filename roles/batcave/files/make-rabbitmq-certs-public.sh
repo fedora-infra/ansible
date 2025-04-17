@@ -9,6 +9,7 @@ set -e
 for env in staging production; do
     dest_dir=${BASE_DEST_DIR}/${env}
     mkdir -p ${dest_dir}
+    cp -a ${BASE_SRC_DIR}/${env}/ca-combined.crt ${dest_dir}/ca.crt
     > ${dest_dir}/${EXPIRATION_FILE}
     for cert in `ls ${BASE_SRC_DIR}/${env}/pki/issued/*.crt`; do
         cp -a $cert ${dest_dir}/
