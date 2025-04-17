@@ -28,7 +28,7 @@ poddlers_toddlers:
   - name: cleaning-packager-groups
     callback: cleaning_packager_groups:CleanPackagerGroups
     topics:
-      - "org.fedoraproject.*.fas.group.member.removed"
+      - "org.fedoraproject.*.ipa.group_remove_member.v1"
     replicas: 0
 
   - name: distgit-bugzilla-sync
@@ -73,7 +73,7 @@ poddlers_toddlers:
   - name: pagure-fas-groups-sync
     callback: pagure_fas_groups_sync:PagureFASGroupsSync
     topics:
-      - "org.fedoraproject.*.fas.group.member.sponsor"
+      - "org.fedoraproject.*.ipa.group_add_member.v1"
       - "org.fedoraproject.*.toddlers.trigger.pagure_fas_groups_sync"
 
   # - name: pdc-import-compose
