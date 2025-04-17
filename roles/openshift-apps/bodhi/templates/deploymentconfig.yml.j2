@@ -45,8 +45,8 @@ items:
         - name: bodhi-web
           image: bodhi-base:latest
           command: ["gunicorn"]
-	  # Don't use --preload, it causes threading errors with Fedora Messaging on Python 3.13
-	  # https://github.com/fedora-infra/fedora-messaging/issues/431
+          # Don't use --preload, it causes threading errors with Fedora Messaging on Python 3.13
+          # https://github.com/fedora-infra/fedora-messaging/issues/431
           args: ["--paste", "/etc/bodhi/production.ini", "-b", "0.0.0.0:8080", "-w", "4", "--log-level", "DEBUG", "-k", "gthread", "--threads", "2", "--log-file=-"]
           ports:
           - containerPort: 8080
