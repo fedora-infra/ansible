@@ -26,4 +26,11 @@ RUN ln -s $(python3 -Ic "import sysconfig; print(sysconfig.get_path('purelib', '
 RUN rm -f /etc/krb5.conf && \
     ln -sf /etc/bodhi/krb5.conf /etc/krb5.conf && \
     ln -sf /etc/keytabs/koji-keytab /etc/krb5.bodhi_bodhi{{ env_suffix }}.fedoraproject.org.keytab
+
+{% if env == "staging" %}
+# To help debug things
+RUN chmod -R a+w $(python3 -Ic "import sysconfig; print(sysconfig.get_path('purelib', 'rpm_prefix'))")
+RUN dnf install -y procps-ng fpaste
+{% endif %}
+
 ENV USER=openshift
