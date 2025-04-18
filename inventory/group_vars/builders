@@ -12,4 +12,6 @@ nagios_Check_Services:
   mail: false
   nrpe: false
   swap: false
+# Move from iptables to nftables for all builders in prod...
+nftables: True
 primary_auth_source: ipa
