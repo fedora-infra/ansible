@@ -1,0 +1,5 @@
+---
+- name: Reload virtlogd
+  ansible.builtin.service:
+    name: virtlogd
+    state: reloaded

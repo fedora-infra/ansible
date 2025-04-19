@@ -200,3 +200,14 @@
     provision_directory: /home/copr/provision
     provision_user: copr
   tags: always
+
+- name: Deploy virtlogd.conf
+  ansible.builtin.copy:
+    src: virtlogd.conf
+    dest: /etc/libvirt/virtlogd.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Reload virtlogd
+  tags:
+    - config
