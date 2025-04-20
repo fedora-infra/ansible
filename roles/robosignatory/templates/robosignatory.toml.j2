@@ -941,6 +941,32 @@ handlers = ["console"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
         key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
 
+        # f42 cosmic-atomic ostree refs
+
+        [consumer_config.ostree_refs."fedora/42/x86_64/cosmic-atomic"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/aarch64/cosmic-atomic"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/x86_64/updates/cosmic-atomic"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/x86_64/testing/cosmic-atomic"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/aarch64/updates/cosmic-atomic"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
+        [consumer_config.ostree_refs."fedora/42/aarch64/testing/cosmic-atomic"]
+        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
+        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
+
         # rawhide onyx ostree refs
 
         [consumer_config.ostree_refs."fedora/rawhide/aarch64/onyx"]
@@ -964,14 +990,6 @@ handlers = ["console"]
         [consumer_config.ostree_refs."fedora/rawhide/x86_64/cosmic-atomic"]
         directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
         key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
-
-        [consumer_config.ostree_refs."fedora/42/aarch64/cosmic-atomic"]
-        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
-
-        [consumer_config.ostree_refs."fedora/42/x86_64/cosmic-atomic"]
-        directory = "/mnt/fedora_koji/koji/compose/ostree/repo/"
-        key = "{{ (env == 'production')|ternary('fedora-42', 'testkey') }}"
 
     [consumer_config.coreos]
     bucket = "fcos-builds"
