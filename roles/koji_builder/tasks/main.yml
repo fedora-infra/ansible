@@ -97,6 +97,17 @@
   tags:
   - koji_builder
   - koji_builder_osbuild
+
+- name: Install packages needed by koji_builders for image-builder
+  ansible.builtin.package:
+    state: present
+    name:
+    - koji-image-builder-builder
+  when: env == 'staging'
+  tags:
+  - koji_builder
+  - koji_builder_image_builder
+
 #
 # rpmautospec plugin
 #

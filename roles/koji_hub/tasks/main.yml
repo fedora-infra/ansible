@@ -20,9 +20,9 @@
   - koji_hub
 
 #
-# Setup koji hub osbuild plugin.
+# Setup koji hub osbuild and image-builder plugin.
 #
-- name: Install image builder server packages
+- name: Install osbuild server packages
   ansible.builtin.package: name={{ item }} state=present
   with_items:
   - koji-osbuild-hub
@@ -32,6 +32,18 @@
   - packages
   - koji_hub
   - koji_hub_osbuild
+
+- name: Install image-builder server packages
+  ansible.builtin.package: name={{ item }} state=present
+  with_items:
+  - koji-image-builder-hub
+  when: env == 'staging'
+  notify:
+  - Restart kojira
+  tags:
+  - packages
+  - koji_hub
+  - koji_hub_image_builder
 
 - name: Make koji pki directory
   ansible.builtin.file: state=directory path=/etc/pki/koji/ owner=root group=root
@@ -69,6 +81,7 @@
   - config
   - koji_hub
   - koji_hub_osbuild
+  - koji_hub_image_builder
   notify: Reload httpd
 
 - name: Kojiweb config

@@ -113,7 +113,7 @@ MissingPolicyOk = False
 #Plugins = koji-disable-builds-plugin
 #Plugins = darkserver-plugin
 {% if env == "staging" %}
-Plugins = osbuild koji-fedoramessaging runroot_hub tag2distrepo sidetag_hub save_failed_tree flatpak kiwi
+Plugins = osbuild koji-fedoramessaging runroot_hub tag2distrepo sidetag_hub save_failed_tree flatpak kiwi image_builder
 {% elif koji_instance == "primary" %}
 Plugins = osbuild koji-fedoramessaging runroot_hub tag2distrepo sidetag_hub save_failed_tree flatpak kiwi
 {% else %}

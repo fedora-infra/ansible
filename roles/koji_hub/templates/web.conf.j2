@@ -42,8 +42,8 @@ loginDisabled = True
 KojiHubCA = /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
 
 {% if env == 'staging' %}
-Tasks = flatpakBuild,flatpakBuildArch,runroot,osbuildImage,createKiwiImage,kiwiBuild
-ParentTasks = flatpakBuild,osbuildImage,kiwiBuild
+Tasks = flatpakBuild,flatpakBuildArch,runroot,osbuildImage,createKiwiImage,kiwiBuild,imageBuilderBuildArch,imageBuilderBuild
+ParentTasks = flatpakBuild,osbuildImage,kiwiBuild,imageBuilderBuild
 {% elif koji_instance == "primary"  %}
 Tasks = flatpakBuild,flatpakBuildArch,runroot,osbuildImage,createKiwiImage,kiwiBuild
 ParentTasks = flatpakBuild,osbuildImage,kiwiBuild
