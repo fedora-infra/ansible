@@ -29,15 +29,6 @@
   - packages
 
 - name: Deploy CA certificate
-  ansible.builtin.copy: src="{{private}}/files/rabbitmq/{{env}}/pki/ca.crt"
-        dest=/etc/rabbitmq/ca.crt
-        owner=root group=root mode=0644
-  tags:
-  - rabbitmq_cluster
-  - config
-  when: "env == 'production'"
-
-- name: Deploy CA certificate
   ansible.builtin.copy:
     src: "{{private}}/files/rabbitmq/{{env}}/ca-combined.crt"
     dest: /etc/rabbitmq/ca.crt
@@ -47,7 +38,6 @@
   tags:
   - rabbitmq_cluster
   - config
-  when: "env == 'staging'"
 
 - name: Create node cert directory
   ansible.builtin.file: path=/etc/rabbitmq/nodecert/ owner=root group=root mode=0755 state=directory
