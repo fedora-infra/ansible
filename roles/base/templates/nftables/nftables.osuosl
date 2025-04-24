@@ -25,7 +25,7 @@ add rule ip filter INPUT ip saddr {{ ip }} counter drop
 # vpn in from tun0
 add rule ip filter INPUT iifname "tun0" ip saddr 192.168.0.0/24 ct state new tcp dport 22 counter accept
 # external ip for iad2
-add rule ip filter INPUT iifname "tun0" ip saddr 38.145.60.0/24 ct state new tcp dport 22 counter accept
+add rule ip filter INPUT iifname "br0" ip saddr 38.145.60.0/24 ct state new tcp dport 22 counter accept
 
 # for nrpe - allow it from nocs
 add rule ip filter INPUT ip saddr 192.168.1.10  tcp dport 5666 counter accept
