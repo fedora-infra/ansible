@@ -107,7 +107,7 @@ add rule ip filter INPUT ip saddr 10.3.163.10 tcp dport {{ port }} counter accep
 add rule ip filter INPUT   counter reject with icmp type host-prohibited
 add rule ip filter FORWARD counter reject with icmp type host-prohibited
 
-{% if nft_nat_rules %}
+{% if nft_nat_rules is defined %}
 
 add table ip nat
 add chain ip nat  PREROUTING { type nat hook prerouting priority -100; policy accept; }
