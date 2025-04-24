@@ -398,6 +398,20 @@ subnet 10.3.176.0 netmask 255.255.255.0 {
 
 }
 
+subnet 10.16.160.0 netmask 255.255.255.0 {
+    allow booting;
+    allow bootp;
+
+    option domain-name "mgmt.rdu3.fedoraproject.org";
+    option routers 10.16.160.254;
+    option domain-name-servers 10.16.163.33, 10.16.163.34;
+    option log-servers 10.16.163.39;
+    option ntp-servers 10.16.163.31, 10.16.163.32;
+
+    range 10.16.160.200 10.16.160.249;
+
+}
+
 # Prod Network
 host vmhost-x86-01 {
      hardware ethernet E4:43:4B:B1:70:88;
@@ -1700,6 +1714,247 @@ host openqa-p09-worker02 {
      next-server 10.3.163.10;
      option routers 10.3.174.254;
      option subnet-mask 255.255.255.0;
+}
+
+# rdu3 mgmt interfaces
+host autosign01.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:61:CE:FC;
+     fixed-address 10.16.160.134;
+     option host-name "autosign01.mgmt.rdu3.fedoraproject.org";
+}
+
+host sign-vault01.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:61:C5:BA;
+     fixed-address 10.16.160.132;
+     option host-name "sign-vault01.mgmt.rdu3.fedoraproject.org";
+}
+
+host buildhw-x86-01.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:61:C9:7A;
+     fixed-address 10.16.160.12;
+     option host-name "buildhw-x86-01.mgmt.rdu3.fedoraproject.org";
+}
+
+host buildhw-x86-02.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:61:C9:C2;
+     fixed-address 10.16.160.13;
+     option host-name "buildhw-x86-02.mgmt.rdu3.fedoraproject.org";
+}
+
+host autosign02.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:61:CE:F6;
+     fixed-address 10.16.160.134;
+     option host-name "autosign02.mgmt.rdu3.fedoraproject.org";
+}
+
+host sign-vault02.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:62:65:B6;
+     fixed-address 10.16.160.133;
+     option host-name "sign-vault02.mgmt.rdu3.fedoraproject.org";
+}
+
+host buildhw-x86-03.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:61:C8:F6;
+     fixed-address 10.16.160.14;
+     option host-name "buildhw-x86-03.mgmt.rdu3.fedoraproject.org";
+}
+
+host qvmhost-x86-01.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:61:CF:02 ;
+     fixed-address 10.16.160.135;
+     option host-name "qvmhost-x86-01.mgmt.rdu3.fedoraproject.org";
+}
+
+host backup01.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:61:D0:04;
+     fixed-address 10.16.160.99;
+     option host-name "backup01.mgmt.rdu3.fedoraproject.org";
+}
+
+host bvmhost-x86-01.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:62:6A:CC;
+     fixed-address 10.16.160.91;
+     option host-name "bvmhost-x86-01.mgmt.rdu3.fedoraproject.org";
+}
+
+host bvmhost-x86-02.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:61:D0:0A;
+     fixed-address 10.16.160.92;
+     option host-name "bvmhost-x86-02.mgmt.rdu3.fedoraproject.org";
+}
+
+host bvmhost-x86-03.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:61:C8:FC;
+     fixed-address 10.16.160.93;
+     option host-name "bvmhost-x86-03.mgmt.rdu3.fedoraproject.org";
+}
+
+host bvmhost-x86-04.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:61:CA:1C;
+     fixed-address 10.16.160.94;
+     option host-name "bvmhost-x86-04.mgmt.rdu3.fedoraproject.org";
+}
+
+host bvmhost-x86-05.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:61:C8:B4;
+     fixed-address 10.16.160.95;
+     option host-name "bvmhost-x86-05.mgmt.rdu3.fedoraproject.org";
+}
+
+host bvmhost-x86-06.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:62:6A:CC;
+     fixed-address 10.16.160.96;
+     option host-name "bvmhost-x86-06.mgmt.rdu3.fedoraproject.org";
+}
+
+host bvmhost-x86-01-stg.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:61:C4:E2;
+     fixed-address 10.16.160.191;
+     option host-name "bvmhost-x86-01-stg.mgmt.rdu3.fedoraproject.org";
+}
+
+host bvmhost-x86-02-stg.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:61:C7:3A;
+     fixed-address 10.16.160.192;
+     option host-name "bvmhost-x86-02-stg.mgmt.rdu3.fedoraproject.org";
+}
+
+host bvmhost-x86-03-stg.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:61:C4:BE;
+     fixed-address 10.16.160.193;
+     option host-name "bvmhost-x86-03-stg.mgmt.rdu3.fedoraproject.org";
+}
+
+host worker01.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:62:64:AE;
+     fixed-address 10.16.160.180;
+     option host-name "worker01.mgmt.rdu3.fedoraproject.org";
+}
+host worker02.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:62:64:84;
+     fixed-address 10.16.160.181;
+     option host-name "worker02.mgmt.rdu3.fedoraproject.org";
+}
+host worker03.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:62:64:A2;
+     fixed-address 10.16.160.182;
+     option host-name "worker03.mgmt.rdu3.fedoraproject.org";
+}
+host worker04.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:61:CF:E6;
+     fixed-address 10.16.160.51;
+     option host-name "worker04.mgmt.rdu3.fedoraproject.org";
+}
+host worker05.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:62:65:AA;
+     fixed-address 10.16.160.40;
+     option host-name "worker05.mgmt.rdu3.fedoraproject.org";
+}
+host worker01-stg.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:61:C3:98;
+     fixed-address 10.16.160.183;
+     option host-name "worker01-stg.mgmt.rdu3.fedoraproject.org";
+}
+host worker02-stg.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:62:63:40;
+     fixed-address 10.16.160.184;
+     option host-name "worker02-stg.mgmt.rdu3.fedoraproject.org";
+}
+host worker03-stg.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:62:62:A4;
+     fixed-address 10.16.160.184;
+     option host-name "worker03-stg.mgmt.rdu3.fedoraproject.org";
+}
+
+host vmhost-x86-01.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:61:C8:C0;
+     fixed-address 10.16.160.71;
+     option host-name "vmhost-x86-01.mgmt.rdu3.fedoraproject.org";
+}
+host vmhost-x86-02.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:61:C4:B8;
+     fixed-address 10.16.160.72;
+     option host-name "vmhost-x86-02.mgmt.rdu3.fedoraproject.org";
+}
+host vmhost-x86-03.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:62:65:C8;
+     fixed-address 10.16.160.73;
+     option host-name "vmhost-x86-03.mgmt.rdu3.fedoraproject.org";
+}
+host vmhost-x86-04.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:62:5F:8C;
+     fixed-address 10.16.160.74;
+     option host-name "vmhost-x86-04.mgmt.rdu3.fedoraproject.org";
+}
+host vmhost-x86-05.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:62:67:1E;
+     fixed-address 10.16.160.75;
+     option host-name "vmhost-x86-05.mgmt.rdu3.fedoraproject.org";
+}
+host vmhost-x86-01-stg.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:62:68:F8;
+     fixed-address 10.16.160.57;
+     option host-name "vmhost-x86-01-stg.mgmt.rdu3.fedoraproject.org";
+}
+host vmhost-x86-02-stg.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:62:5F:AA;
+     fixed-address 10.16.160.33;
+     option host-name "vmhost-x86-02-stg.mgmt.rdu3.fedoraproject.org";
+}
+host vmhost-x86-03-stg.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:62:61:72;
+     fixed-address 10.16.160.34;
+     option host-name "vmhost-x86-03-stg.mgmt.rdu3.fedoraproject.org";
+}
+host vmhost-x86-04-stg.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:61:C7:FA;
+     fixed-address 10.16.160.35;
+     option host-name "vmhost-x86-04-stg.mgmt.rdu3.fedoraproject.org";
+}
+host vmhost-x86-05-stg.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:62:60:B8;
+     fixed-address 10.16.160.36;
+     option host-name "vmhost-x86-05-stg.mgmt.rdu3.fedoraproject.org";
+}
+host bvmhost-x86-riscv01.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:62:69:82 ;
+     fixed-address 10.16.160.55;
+     option host-name "vmhost-x86-riscv01.mgmt.rdu3.fedoraproject.org";
+}
+host openqa-x86-worker01.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:62:63:46;
+     fixed-address 10.16.160.137;
+     option host-name "openqa-x86-worker01.mgmt.rdu3.fedoraproject.org";
+}
+host openqa-x86-worker02.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:61:C9:02;
+     fixed-address 10.16.160.138;
+     option host-name "openqa-x86-worker02.mgmt.rdu3.fedoraproject.org";
+}
+host openqa-x86-worker03.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:61:CE:12;
+     fixed-address 10.16.160.58;
+     option host-name "openqa-x86-worker03.mgmt.rdu3.fedoraproject.org";
+}
+host openqa-x86-worker04.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:61:C4:5E;
+     fixed-address 10.16.160.53;
+     option host-name "openqa-x86-worker04.mgmt.rdu3.fedoraproject.org";
+}
+host openqa-x86-worker05.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet D0:46:0C:61:CA:22;
+     fixed-address 10.16.160.54;
+     option host-name "openqa-x86-worker05.mgmt.rdu3.fedoraproject.org";
+}
+host centos-x86-01.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet A8:3C:A5:4C:C1:C1;
+     fixed-address 10.16.160.69;
+     option host-name "centos-x86-02.mgmt.rdu3.fedoraproject.org";
+}
+host centos-x86-02.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet A8:3C:A5:4C:22:BF;
+     fixed-address 10.16.160.70;
+     option host-name "centos-x86-02.mgmt.rdu3.fedoraproject.org";
 }
 
 ## End of file
