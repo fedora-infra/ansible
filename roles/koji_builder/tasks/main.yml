@@ -103,7 +103,6 @@
     state: present
     name:
     - koji-image-builder-builder
-  when: env == 'staging'
   tags:
   - koji_builder
   - koji_builder_image_builder

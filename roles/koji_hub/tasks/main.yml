@@ -37,7 +37,6 @@
   ansible.builtin.package: name={{ item }} state=present
   with_items:
   - koji-image-builder-hub
-  when: env == 'staging'
   notify:
   - Restart kojira
   tags:
