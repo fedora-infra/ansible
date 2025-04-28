@@ -18,21 +18,22 @@ keyfile = "/etc/pki/rabbitmq/key/cloud-image-uploader.key"
 certfile = "/etc/pki/rabbitmq/cert/cloud-image-uploader.crt"
 
 [client_properties]
-app = "Fedora Cloud Image Uploader"
+app = "Fedora Cloud Image Uploader ({{ queue_suffix }})"
 app_url = "https://pagure.io/cloud-image-uploader"
 app_contacts_email = "cloud@lists.fedoraproject.org"
 
 [[bindings]]
-queue = "cloud-image-uploader{{ env_suffix }}"
+queue = "cloud-image-uploader{{ env_suffix }}-{{ queue_suffix }}"
 exchange = "amq.topic"
 routing_keys = ["org.fedoraproject.*.pungi.compose.status.change"]
 
-[queues."cloud-image-uploader{{ env_suffix }}"]
+[queues."cloud-image-uploader{{ env_suffix }}-{{ queue_suffix }}"]
 durable = true
 auto_delete = false
 exclusive = false
 arguments = {}
 
+{% if queue_suffix == "aws" %}
 [consumer_config.aws]
 base_region = "us-east-1"
 ami_volume_dev_name = "/dev/sda1"
@@ -68,6 +69,10 @@ s3_bucket_name = "fedora-s3-bucket-fedimg-staging"
 s3_bucket_name = "fedora-s3-bucket-fedimg"
 {% endif %}
 
+# End of AWS config
+{% endif %}
+
+{% if queue_suffix == "azure" %}
 [consumer_config.azure]
 location = "eastus"
 {% if env == "staging" %}
@@ -105,7 +110,11 @@ storage_account_type = "Standard_ZRS"
 
 {% endif %}
 
+# End of Azure config
+{% endif %}
 
+
+{% if queue_suffix == "containers" %}
 [consumer_config.container]
 publish_amqp_messages = true
 
@@ -139,6 +148,10 @@ credential_prefix = "QUAY_IO_"
 
 {% endif %}
 
+# End of Containers config
+{% endif %}
+
+{% if queue_suffix == "gcp" %}
 # Google Cloud Engine
 [consumer_config.gcp]
 {% if env == "staging" %}
@@ -150,6 +163,9 @@ bucket_name = "fedora-cloud-image-upload"
 {% endif %}
 storage_locations = ["us"]
 publish_amqp_messages = true
+
+# End of Google Cloud config
+{% endif %}
 
 
 [qos]

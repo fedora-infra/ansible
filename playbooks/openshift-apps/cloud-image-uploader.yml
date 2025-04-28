@@ -16,11 +16,38 @@
 
   - role: rabbit/queue
     queue_username: "cloud-image-uploader{{ env_suffix }}"
-    queue_name: "cloud-image-uploader{{ env_suffix }}"
+    queue_name: "cloud-image-uploader{{ env_suffix }}-aws"
     queue_routing_keys:
       - "org.fedoraproject.*.pungi.compose.status.change"
     queue_thresholds:
-      warning: 10
+      warning: 25
+      critical: 50
+
+  - role: rabbit/queue
+    queue_username: "cloud-image-uploader{{ env_suffix }}"
+    queue_name: "cloud-image-uploader{{ env_suffix }}-azure"
+    queue_routing_keys:
+      - "org.fedoraproject.*.pungi.compose.status.change"
+    queue_thresholds:
+      warning: 25
+      critical: 50
+
+  - role: rabbit/queue
+    queue_username: "cloud-image-uploader{{ env_suffix }}"
+    queue_name: "cloud-image-uploader{{ env_suffix }}-containers"
+    queue_routing_keys:
+      - "org.fedoraproject.*.pungi.compose.status.change"
+    queue_thresholds:
+      warning: 25
+      critical: 50
+
+  - role: rabbit/queue
+    queue_username: "cloud-image-uploader{{ env_suffix }}"
+    queue_name: "cloud-image-uploader{{ env_suffix }}-gcp"
+    queue_routing_keys:
+      - "org.fedoraproject.*.pungi.compose.status.change"
+    queue_thresholds:
+      warning: 25
       critical: 50
 
   - role: openshift/project

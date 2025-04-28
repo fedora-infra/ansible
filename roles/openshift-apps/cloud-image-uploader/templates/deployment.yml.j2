@@ -42,7 +42,7 @@ spec:
             - secret:
                 name: registry-fedoraproject-key
       containers:
-        - name: cloud-image-uploader
+        - name: azure-image-uploader
           image: image-registry.openshift-image-registry.svc:5000/cloud-image-uploader/cloud-image-uploader:latest
           imagePullPolicy: Always
           workingDir: /srv/cloud-uploader/
@@ -67,6 +67,26 @@ spec:
                 secretKeyRef:
                   name: azure-credentials
                   key: subscription_id
+            - name: FEDORA_MESSAGING_CONF
+              value: "/etc/fedora-messaging/azure-config.toml"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/fedora-messaging
+              readOnly: true
+            - name: fedora-messaging-ca-volume
+              mountPath: /etc/pki/rabbitmq/ca
+              readOnly: true
+            - name: fedora-messaging-key-volume
+              mountPath: /etc/pki/rabbitmq/key
+              readOnly: true
+            - name: fedora-messaging-cert-volume
+              mountPath: /etc/pki/rabbitmq/cert
+              readOnly: true
+        - name: aws-image-uploader
+          image: image-registry.openshift-image-registry.svc:5000/cloud-image-uploader/cloud-image-uploader:latest
+          imagePullPolicy: Always
+          workingDir: /srv/cloud-uploader/
+          env:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
@@ -77,6 +97,28 @@ spec:
                 secretKeyRef:
                   name: aws-credentials
                   key: secret_access_key
+            - name: FEDORA_MESSAGING_CONF
+              value: "/etc/fedora-messaging/aws-config.toml"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/fedora-messaging
+              readOnly: true
+            - name: fedora-messaging-ca-volume
+              mountPath: /etc/pki/rabbitmq/ca
+              readOnly: true
+            - name: fedora-messaging-key-volume
+              mountPath: /etc/pki/rabbitmq/key
+              readOnly: true
+            - name: fedora-messaging-cert-volume
+              mountPath: /etc/pki/rabbitmq/cert
+              readOnly: true
+        - name: container-image-uploader
+          image: image-registry.openshift-image-registry.svc:5000/cloud-image-uploader/cloud-image-uploader:latest
+          imagePullPolicy: Always
+          workingDir: /srv/cloud-uploader/
+          env:
+            - name: FEDORA_MESSAGING_CONF
+              value: "/etc/fedora-messaging/container-config.toml"
             - name: FEDORA_REGISTRY_USER
               valueFrom:
                 secretKeyRef:
@@ -89,8 +131,6 @@ spec:
                   key: fedoraproject_registry_password
             - name: FEDORA_REGISTRY_CERT_DIR
               value: "/etc/pki/registry-fedoraproject-org/"
-            - name: GOOGLE_APPLICATION_CREDENTIALS
-              value: "/etc/pki/google-cloud/google_cloud_image_uploader.json"
             - name: QUAY_IO_USER
               valueFrom:
                 secretKeyRef:
@@ -116,6 +156,28 @@ spec:
               readOnly: true
             - name: registry-fedoraproject
               mountPath: /etc/pki/registry-fedoraproject-org/
+              readOnly: true
+        - name: google-cloud-image-uploader
+          image: image-registry.openshift-image-registry.svc:5000/cloud-image-uploader/cloud-image-uploader:latest
+          imagePullPolicy: Always
+          workingDir: /srv/cloud-uploader/
+          env:
+            - name: FEDORA_MESSAGING_CONF
+              value: "/etc/fedora-messaging/gcp-config.toml"
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: "/etc/pki/google-cloud/google_cloud_image_uploader.json"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/fedora-messaging
+              readOnly: true
+            - name: fedora-messaging-ca-volume
+              mountPath: /etc/pki/rabbitmq/ca
+              readOnly: true
+            - name: fedora-messaging-key-volume
+              mountPath: /etc/pki/rabbitmq/key
+              readOnly: true
+            - name: fedora-messaging-cert-volume
+              mountPath: /etc/pki/rabbitmq/cert
               readOnly: true
             - name: google-cloud-key-volume
               mountPath: /etc/pki/google-cloud/

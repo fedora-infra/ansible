@@ -11,5 +11,11 @@ items:
     labels:
       app: cloud-image-uploader
   data:
-    config.toml: |-
-      {{ lookup('template', 'config.toml') | indent(6) }}
+    aws-config.toml: |-
+      {{ lookup('template', 'config.toml', template_vars={"queue_suffix": "aws"}) | indent(6) }}
+    azure-config.toml: |-
+      {{ lookup('template', 'config.toml', template_vars={"queue_suffix": "azure"}) | indent(6) }}
+    container-config.toml: |-
+      {{ lookup('template', 'config.toml', template_vars={"queue_suffix": "containers"}) | indent(6) }}
+    gcp-config.toml: |-
+      {{ lookup('template', 'config.toml', template_vars={"queue_suffix": "gcp"}) | indent(6) }}
