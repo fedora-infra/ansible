@@ -180,7 +180,7 @@
     - base
     - iptables
     - blocklist
-  when: "'iad2' not in inventory_hostname or external | bool "
+  when: "'iad2' not in inventory_hostname or (external is defined and external | bool)"
 
 - name: Setup blocklist update cron job
   cron:
@@ -189,7 +189,7 @@
     minute: 15
     hour: "*/2"
     job: "/usr/local/bin/blocklist-update.sh force >& /dev/null"
-  when: "'iad2' not in inventory_hostname or external | bool"
+  when: "'iad2' not in inventory_hostname or (external is defined and external | bool)"
   tags:
     - base
     - iptables
