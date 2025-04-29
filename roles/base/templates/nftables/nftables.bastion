@@ -94,6 +94,13 @@ add rule ip filter INPUT ip saddr 216.205.24.0/24  tcp dport 25 counter accept
 add rule ip filter INPUT ip saddr 63.128.21.0/24   tcp dport 25 counter accept
 add rule ip filter INPUT ip saddr 207.211.30.40/26 tcp dport 25 counter accept
 
+{% if nft_block_rules is defined %}
+# if there are block rules - put them in as-is
+{% for rule in nft_block_rules %}
+{{ rule }}
+{% endfor %}
+{% endif %}
+
 # if the host/group defines incoming tcp_ports - allow them
 {% if tcp_ports is defined %}
 {% for port in tcp_ports %}
