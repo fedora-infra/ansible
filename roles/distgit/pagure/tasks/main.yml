@@ -55,6 +55,15 @@
   tags:
   - pagure
 
+# https://pagure.io/pagure/pull-request/5525
+- name: Fix the API call with token
+  ansible.posix.patch:
+    src: files/api_project.patch
+    dest: /usr/lib/python3.6/site-packages/pagure/api/project.py
+  tags:
+  - pagure
+  - hotfix
+
 - name: Create the "git" user
   ansible.builtin.command:
     cmd: useradd --create-home --home-dir=/srv/git/  git
