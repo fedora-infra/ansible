@@ -7,12 +7,13 @@ custom_rules: [
     '-A INPUT -s 47.76.209.138/32 -j REJECT',
     '-A INPUT -s 47.76.99.127/32 -j REJECT'
 ]
-nft_custom_rules:
+nft_block_rules:
   - 'add rule ip filter INPUT ip saddr 81.69.171.38   counter reject'
   - 'add rule ip filter INPUT ip saddr 175.24.248.206 counter reject'
   - 'add rule ip filter INPUT ip saddr 47.76.0.0/14  counter reject'
   - 'add rule ip filter INPUT ip saddr 47.80.0.0/13  counter reject'
   - 'add rule ip filter INPUT ip saddr 47.74.0.0/15  counter reject'
+  - 'add rule ip filter INPUT ip saddr 66.249.64.0/24  counter reject'
 # For the MOTD
 db_backup_dir: ['/backups']
 dbs_to_backup: ['pagure']
