@@ -139,6 +139,8 @@
     - name: Construct PSK filename
       ansible.builtin.set_fact:
         psk_file: "{{ private }}/files/zabbix/fedora{{ env_suffix }}.psk"
+      tags:
+        - zabbix_configuration
     - name: Configure autoregistration via PSK
       community.zabbix.zabbix_autoregister:
         tls_accept:
