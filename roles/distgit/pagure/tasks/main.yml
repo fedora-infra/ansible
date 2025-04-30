@@ -263,7 +263,7 @@
   tags:
   - pagure
 
-- nanme: Configure SELinux in dist-git/pagure
+- name: Configure SELinux in dist-git/pagure
   ansible.builtin.import_tasks: selinux.yml
   tags:
   - selinux
