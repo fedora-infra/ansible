@@ -2,7 +2,9 @@
 # Configuration for the pagure webapp
 
 - name: Install needed packages
-  ansible.builtin.package: name={{ item }} state=present
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
   with_items:
   - pagure
   - pagure-ev
@@ -20,7 +22,9 @@
   - packages
 
 - name: Install needed packages
-  ansible.builtin.package: name={{ item }} state=present
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
   with_items:
   - pagure-theme-srcfpo
   tags:
@@ -30,7 +34,7 @@
 - name: >-
     Set httpd_can_network_connect flag on and keep it persistent across reboots so apache can talk
     to redis
-  seboolean:
+  ansible.posix.seboolean:
     name: httpd_can_network_connect
     state: yes
     persistent: yes
@@ -38,32 +42,43 @@
 # Set-up Pagure
 
 - name: Create a group pagure we can use
-  group: name=pagure
+  ansible.builtin.group:
+    name: pagure
   tags:
   - pagure
 
 - name: Create an user we can run pagure under
-  user: name=pagure group=packager append=yes
+  ansible.builtin.user:
+    name: pagure
+    group: packager
+    append: yes
   tags:
   - pagure
 
 - name: Create the "git" user
-  ansible.builtin.command: useradd --create-home --home-dir=/srv/git/  git
-           creates=/srv/git/
+  ansible.builtin.command:
+    cmd: useradd --create-home --home-dir=/srv/git/  git
+    creates: /srv/git/
   when: env == 'staging'
   tags:
   - pagure
 
 - name: Add the git user to the packager group
-  user: name=git group=packager append=yes
+  ansible.builtin.user:
+    name: git
+    group: packager
+    append: yes
   when: env == 'staging'
   tags:
   - pagure
 
 - name: Create the /var/log/pagure folder where to store the logs
-  ansible.builtin.file: state=directory
-               path=/var/log/pagure
-               owner=pagure group=packager mode=u+rwx,g+rwxs,o+rx
+  ansible.builtin.file:
+    state: directory
+    path: /var/log/pagure
+    owner: pagure
+    group: packager
+    mode: u+rwx,g+rwxs,o+rx
   tags:
   - pagure
   - hotfix
@@ -81,16 +96,22 @@
   - fix_log
 
 - name: Create the /srv/tmp folder where to clone repos
-  ansible.builtin.file: state=directory
-               path=/srv/tmp
-               owner=pagure group=pagure mode=0775
+  ansible.builtin.file:
+    state: directory
+    path: /srv/tmp
+    owner: pagure
+    group: pagure
+    mode: "0775"
   tags:
   - pagure
 
 - name: Copy sundry pagure configuration
-  ansible.builtin.template: src={{ item.file }}
-            dest={{ item.location }}/{{ item.file }}
-            owner=pagure group=postfix mode=0640
+  ansible.builtin.template:
+    src: "{{ item.file }}"
+    dest: "{{ item.location }}/{{ item.file }}"
+    owner: pagure
+    group: postfix
+    mode: "0640"
   with_items:
   - file: pagure.cfg
     location: /etc/pagure
@@ -108,9 +129,12 @@
   - Restart apache
 
 - name: Pagure configuration for the hooks
-  ansible.builtin.template: src={{ item.file }}
-            dest={{ item.location }}/{{ item.file }}
-            owner=pagure group=packager mode=0640
+  ansible.builtin.template:
+    src: "{{ item.file }}"
+    dest: "{{ item.location }}/{{ item.file }}"
+    owner: pagure
+    group: packager
+    mode: "0640"
   with_items:
   - file: pagure_hook.cfg
     location: /etc/pagure
@@ -131,9 +155,12 @@
   - pagure
 
 - name: Create all the directories where we store the git repos
-  ansible.builtin.file: state=directory
-               path={{ item }}
-               owner=root group=packager mode=2775
+  ansible.builtin.file:
+    state: directory
+    path: "{{ item }}"
+    owner: root
+    group: packager
+    mode: "2775"
   with_items:
   - /srv/git/repositories/
   - /srv/git/repositories/forks
@@ -144,9 +171,12 @@
   - pagure
 
 - name: Create the remotes folder so pagure can clone remote repos
-  ansible.builtin.file: state=directory
-               path={{ item }}
-               owner=root group=packager mode=2775
+  ansible.builtin.file:
+    state: directory
+    path: "{{ item }}"
+    owner: root
+    group: packager
+    mode: "2775"
   with_items:
   - /srv/git/remotes
   tags:
@@ -155,7 +185,7 @@
 
 # On RHEL 8.8 and newer, git operations fail because of dubious ownership. This should fix it.
 - name: Configure git directories as safe
-  git_config:
+  community.general.git_config:
     name: safe.directory
     scope: system
     value: "*"
@@ -163,8 +193,12 @@
   - pagure
 
 - name: Install the apache configuration file
-  ansible.builtin.template: src={{ item }} dest=/etc/httpd/conf.d/{{ item }}
-            owner=root group=root mode=0644
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "/etc/httpd/conf.d/{{ item }}"
+    owner: root
+    group: root
+    mode: "0644"
   with_items:
   - z_pagure.conf
   tags:
@@ -175,9 +209,12 @@
   - Restart apache
 
 - name: Install the wsgi file
-  ansible.builtin.template: src={{ item }}
-            dest=/var/www/{{ item }}
-            owner=pagure group=pagure mode=0644
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "/var/www/{{ item }}"
+    owner: pagure
+    group: pagure
+    mode: "0644"
   with_items:
   - pagure.wsgi
   tags:
@@ -188,27 +225,25 @@
   - Restart apache
 
 - name: Add default facl so apache can read git repos
-  acl: default=yes etype=user entity=apache permissions="rx" name=/srv/git state=present
+  ansible.posix.acl:
+    default: yes
+    etype: user
+    entity: apache
+    permissions: "rx"
+    name: /srv/git
+    state: present
+    recursive: yes
   register: acl_updates
   tags:
   - pagure
 
-- name: Manually fix current default ACLs since Ansible doesnt know recursive acls
-  when: acl_updates.changed
-  ansible.builtin.command: /usr/bin/setfacl -Rdm user:apache:rx /srv/git
-  tags:
-  - pagure
-
-- name: Manually fix current ACLs since Ansible doesnt know recursive acls
-  when: acl_updates.changed
-  ansible.builtin.command: /usr/bin/setfacl -Rm user:apache:rx /srv/git
-  tags:
-  - pagure
-
 - name: Override the default pagure_worker.service file to change the user it is run under
-  ansible.builtin.copy: src={{ item }}.service
-        dest=/etc/systemd/system/{{ item }}.service
-        owner=root group=root mode=0755
+  ansible.builtin.copy:
+    src: "{{ item }}.service"
+    dest: "/etc/systemd/system/{{ item }}.service"
+    owner: root
+    group: root
+    mode: "0755"
   with_items:
   - pagure_ev
   - pagure_logcom
@@ -219,16 +254,19 @@
   tags:
   - pagure
 
-# Configure SELinux in dist-git/pagure
-
-- import_tasks: selinux.yml
+- nanme: Configure SELinux in dist-git/pagure
+  ansible.builtin.import_tasks: selinux.yml
   tags:
   - selinux
 
 # Cron job to export extras information from the pagure DB
 - name: Install the apache configuration file for /extras
-  ansible.builtin.copy: src={{ item }} dest=/etc/httpd/conf.d/{{ item }}
-             owner=root group=root mode=0644
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/etc/httpd/conf.d/{{ item }}"
+    owner: root
+    group: root
+    mode: "0644"
   with_items:
   - pagure_cron.conf
   tags:
@@ -239,14 +277,17 @@
   - Restart apache
 
 - name: Create the /srv/cache/extras folder for the crons
-  ansible.builtin.file: state=directory
-               path=/srv/cache/extras
-               owner=apache group=apache mode=0775
+  ansible.builtin.file:
+    state: directory
+    path: /srv/cache/extras
+    owner: apache
+    group: apache
+    mode: "0775"
   tags:
   - pagure
 
 - name: Configure cron job for a hourly pagure_poc
-  cron:
+  ansible.builtin.cron:
     name: pagure-poc
     user: root
     minute: 0
@@ -257,7 +298,7 @@
   - pagure
 
 - name: Configure cron job for a hourly pagure_bz
-  cron:
+  ansible.builtin.cron:
     name: pagure-poc
     user: root
     minute: 0
@@ -268,7 +309,7 @@
   - pagure
 
 - name: Configure cron job for a hourly pagure_owner_alias
-  cron:
+  ansible.builtin.cron:
     name: pagure-poc
     user: root
     minute: 0
@@ -281,7 +322,9 @@
 # setup fedora-messaging
 
 - name: Install fedora-messaging as a dependency
-  ansible.builtin.package: name={{ item }} state=present
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
   with_items:
   - fedora-messaging
   tags:
@@ -289,41 +332,55 @@
   - fedora-messaging
 
 - name: Create the config folder for fedora-messaging
-  ansible.builtin.file: path=/etc/fedora-messaging/ owner=root group=root mode=0755 state=directory
+  ansible.builtin.file:
+    path: /etc/fedora-messaging/
+    owner: root
+    group: root
+    mode: "0755"
+    state: directory
   tags:
   - pagure
   - fedora-messaging
 
 - name: Install the configuration file for fedora-messaging
   ansible.builtin.template:
-    src=fedora-messaging.toml
-    dest=/etc/fedora-messaging/config.toml
+    src: fedora-messaging.toml
+    dest: /etc/fedora-messaging/config.toml
+    mode: "0644"
   tags:
   - pagure
   - fedora-messaging
 
 - name: Create folder where we'll place the certs
-  ansible.builtin.file: path=/etc/pki/rabbitmq/pagurecert/ owner=root group=root mode=0755 state=directory
+  ansible.builtin.file:
+    path: /etc/pki/rabbitmq/pagurecert/
+    owner: root
+    group: root
+    mode: "0755"
+    state: directory
   tags:
   - pagure
   - fedora-messaging
 
 - name: Deploy pagure/rabbitmq certificate
-  ansible.builtin.copy: src={{ item.src }}
-        dest=/etc/pki/rabbitmq/pagurecert/{{ item.dest }}
-        owner={{ item.owner }} group={{ item.group}} mode={{ item.mode }}
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "/etc/pki/rabbitmq/pagurecert/{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
   with_items:
-    - src: "{{private}}/files/rabbitmq/{{env}}/pki/issued/pagure{{ env_suffix }}.crt"
+    - src: "{{ private }}/files/rabbitmq/{{ env }}/pki/issued/pagure{{ env_suffix }}.crt"
       dest: src.fp.o.crt
       owner: pagure
       group: packager
       mode: "444"
-    - src: "{{private}}/files/rabbitmq/{{env}}/pki/private/pagure{{ env_suffix }}.key"
+    - src: "{{ private }}/files/rabbitmq/{{ env }}/pki/private/pagure{{ env_suffix }}.key"
       dest: src.fp.o.key
       owner: pagure
       group: packager
       mode: "440"
-    - src: "{{private}}/files/rabbitmq/{{env}}/ca-combined.crt"
+    - src: "{{ private }}/files/rabbitmq/{{ env }}/ca-combined.crt"
       dest: src.fp.o.ca
       owner: pagure
       group: packager
@@ -336,7 +393,10 @@
 # Ensure all the services are up and running
 
 - name: Start and enable httpd, postfix, pagure_milter
-  service: name={{ item }} enabled=yes state=started
+  ansible.builtin.service:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
   with_items:
   - httpd
   - postfix
@@ -354,16 +414,21 @@
   - postfix
 
 - name: Add SAR script for pagure
-  ansible.builtin.copy: src={{ roles_path }}/pagure/files/pagure_sar.py
-        dest=/usr/local/bin/pagure_sar.py
-        owner=root mode=0700
+  ansible.builtin.copy:
+    src: "{{ roles_path }}/pagure/files/pagure_sar.py"
+    dest: /usr/local/bin/pagure_sar.py
+    owner: root
+    mode: "0700"
   tags:
   - SAR
   - GDPR
   - pagure
 
 - name: Override the default syslog logrotate file
-  ansible.builtin.copy: src=syslog-logrotate dest=/etc/logrotate.d/syslog
+  ansible.builtin.copy:
+    src: syslog-logrotate
+    dest: /etc/logrotate.d/syslog
+    mode: "0644"
   tags:
   - pagure
   - logrotate

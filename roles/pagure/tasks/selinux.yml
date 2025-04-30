@@ -10,13 +10,13 @@
   - selinux
 
 - name: Show the output of distgitcontext
-  debug:
+  ansible.builtin.debug:
     var: distgitcontext.stdout
   tags:
     - selinux
 
 - name: Show if we find gitosis_var_lib_t in distgitcontext
-  debug:
+  ansible.builtin.debug:
     var: distgitcontext.stdout.find('gitosis_var_lib_t')
   tags:
     - selinux
@@ -24,6 +24,7 @@
 - name: Set the SELinux policy for the distgit root directory
   ansible.builtin.command: semanage fcontext -a -t gitosis_var_lib_t "/srv/git(/.*)?"
   when: distgitcontext.stdout.find('gitosis_var_lib_t') == -1
+  changed_when: false
   tags:
   - config
   - pagure
@@ -43,13 +44,14 @@
 - name: Set the SELinux policy for the releases directory
   ansible.builtin.command: semanage fcontext -a -t httpd_sys_rw_content_t "/var/www/releases(/.*)?"
   when: distgitcontext.stdout.find('httpd_sys_rw_content_t') == -1
+  changed_when: false
   tags:
   - config
   - pagure
   - selinux
 
 - name: Install the pagure SELinux policy
-  include_role:
+  ansible.builtin.include_role:
     name: selinux/module
   vars:
     policy_file: files/selinux/pagure.te
@@ -60,45 +62,50 @@
     - pagure
 
 - name: Set sebooleans so pagure can talk to the network (db + redis)
-  seboolean: name=httpd_can_network_connect
-                    state=true
-                    persistent=true
+  ansible.posix.seboolean:
+    name: httpd_can_network_connect
+    state: true
+    persistent: true
   tags:
   - config
   - selinux
   - pagure
 
 - name: Set sebooleans so apache can send emails
-  seboolean: name=httpd_can_sendmail
-                    state=true
-                    persistent=true
+  ansible.posix.seboolean:
+    name: httpd_can_sendmail
+    state: true
+    persistent: true
   tags:
   - config
   - selinux
   - pagure
 
 - name: Set sebooleans so pygit2 can read the git repos
-  seboolean: name=httpd_execmem
-                    state=true
-                    persistent=true
+  ansible.posix.seboolean:
+    name: httpd_execmem
+    state: true
+    persistent: true
   tags:
   - config
   - selinux
   - pagure
 
 - name: Set sebooleans so ssh can retrieve access info from apache
-  seboolean: name=nis_enabled
-                    state=true
-                    persistent=true
+  ansible.posix.seboolean:
+    name: nis_enabled
+    state: true
+    persistent: true
   tags:
   - config
   - selinux
   - pagure
 
 - name: Set sebooleans so allow nagios/nrpe to call sudo from NRPE utils scripts
-  seboolean: name=nagios_run_sudo
-                    state=true
-                    persistent=true
+  ansible.posix.seboolean:
+    name: nagios_run_sudo
+    state: true
+    persistent: true
   tags:
   - config
   - selinux
