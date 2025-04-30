@@ -1,0 +1,46 @@
+- name: make some keytabs
+  hosts: riscv-koji01.iad2.fedoraproject.org
+
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - "/srv/private/ansible/vars.yml"
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+
+  tasks:
+
+    - name: create directory to store keytabs
+      ansible.builtin.file:
+        state: directory
+        path: /etc/builder-keytabs
+        mode: "700"
+        owner: root
+        group: root
+
+    - name: make all the keytabs for builders
+      include_role:
+        name: keytab/service
+      vars:
+       kt_location: "/etc/builder-keytabs/{{ item }}.keytab"
+       service: compile-riscv
+       host: "{{ item }}"
+      with_items:
+      - buildhw-riscv-01.fedoraproject.org
+      - buildhw-riscv-02.fedoraproject.org
+      - buildhw-riscv-03.fedoraproject.org
+      - buildhw-riscv-04.fedoraproject.org
+      - buildhw-riscv-05.fedoraproject.org
+      - buildhw-riscv-06.fedoraproject.org
+      - buildhw-riscv-07.fedoraproject.org
+      - buildhw-riscv-08.fedoraproject.org
+      - buildhw-riscv-09.fedoraproject.org
+      - buildhw-riscv-10.fedoraproject.org
+      - buildhw-riscv-11.fedoraproject.org
+      - buildhw-riscv-12.fedoraproject.org
+      - buildhw-riscv-13.fedoraproject.org
+      - buildhw-riscv-14.fedoraproject.org
+      - buildhw-riscv-15.fedoraproject.org
+      - buildhw-riscv-16.fedoraproject.org
+      - buildhw-riscv-17.fedoraproject.org
+      - buildhw-riscv-18.fedoraproject.org
+      - buildhw-riscv-19.fedoraproject.org
+      - buildhw-riscv-20.fedoraproject.org
