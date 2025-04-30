@@ -1,12 +1,5 @@
-diff --git a/pagure/api/project.py b/pagure/api/project.py
-index 80e0f22..02991fd 100644
---- a/pagure/api/project.py
-+++ b/pagure/api/project.py
-@@ -1449,6 +1449,7 @@ def api_new_project():
- 
-     if (
-         pagure_config["PAGURE_AUTH"] == "oidc"
-+        and hasattr(flask.g.fas_user, "can_create")
-         and flask.g.fas_user.can_create is False
-     ):
-         raise pagure.exceptions.APIError(
+1455,1456c1455
+< 
+<     if pagure_config["PAGURE_AUTH"] == 'oidc' and flask.g.fas_user.can_create is False:
+---
+>     if pagure_config["PAGURE_AUTH"] == 'oidc' and hasattr(flask.g.fas_user, "can_create") and flask.g.fas_user.can_create is False:
