@@ -1,0 +1,23 @@
+---
+# This applies any host-level overrides to macro (variable) values in Zabbix.
+# It's applied through the base agent role, but will work for the macros in
+# *any* template, since unused macros will be ignored anyway.
+
+- name: Set Host-level macros
+  loop: "{{ lookup('dict', zabbix_macros, wantlist=True) }}"
+  vars:
+    ansible_zabbix_auth_key: "{{ (env == 'staging') | ternary(zabbix_stg_apikey, zabbix_apikey) }}"
+    ansible_network_os: community.zabbix.zabbix
+    ansible_connection: httpapi
+    ansible_httpapi_port: 443
+    ansible_httpapi_use_ssl: true
+    ansible_httpapi_validate_certs: false
+    ansible_host: "{{ (env == 'staging') | ternary(zabbix_stg_hostname, zabbix_hostname) }}"
+    ansible_zabbix_url_path: ""
+  community.zabbix.zabbix_hostmacro:
+    host_name: "{{ inventory_hostname }}"
+    macro_name: "{{ item.key }}"
+    macro_value: "{{ item.value }}"
+    state: "{{ 'absent' if item.value == 'absent' else 'present' }}"
+  tags:
+    - zabbix_macros

@@ -109,7 +109,7 @@
     - zabbix_agent
 
 - name: Enabling Zabbix service
-  service:
+  ansible.builtin.service:
     name: "{{ item }}"
     state: started
     enabled: yes
@@ -118,4 +118,10 @@
   tags:
     - zabbix_agent
 
-- include_tasks: tools.yml
+- name: Configure Zabbix tools
+  ansible.builtin.include_tasks: tools.yml
+
+- name: Configure Zabbix macros / variables
+  ansible.builtin.include_tasks: macros.yml
+  tags:
+    - zabbix_macros
