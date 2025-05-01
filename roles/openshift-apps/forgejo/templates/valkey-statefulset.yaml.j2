@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: valkey
+  namespace: forgejo
+spec:
+  serviceName: valkey-headless
+  replicas: 3
+  selector:
+    matchLabels:
+      app: valkey
+  template:
+    metadata:
+      labels:
+        app: valkey
+    spec:
+      containers:
+        - name: valkey
+          image: valkey/valkey:7.2.5
+          args: ["/etc/valkey/valkey.conf"]
+          ports:
+            - containerPort: 6379
+              name: valkey
+          volumeMounts:
+            - name: config
+              mountPath: /etc/valkey/valkey.conf
+              subPath: valkey.conf
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: config
+          configMap:
+            name: valkey-config
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: standard
+        resources:
+          requests:
+            storage: 1Gi

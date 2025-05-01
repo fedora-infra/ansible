@@ -1,0 +1,29 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: valkey-config
+  namespace: forgejo
+data:
+  valkey.conf: |
+    bind 0.0.0.0
+    port 6379
+    requirepass valkeypassword
+    masterauth valkeypassword
+    protected-mode no
+    dir /data
+    dbfilename dump.rdb
+    save 900 1
+    save 300 10
+    save 60 10000
+    logfile /data/valkey.log
+  sentinel.conf: |
+    port 26379
+    dir /data
+    logfile /data/sentinel.log
+    protected-mode no
+    sentinel monitor mymaster valkey-0.valkey-headless.default.svc.cluster.local 6379 2
+    sentinel auth-pass mymaster valkeypassword
+    sentinel down-after-milliseconds mymaster 5000
+    sentinel parallel-syncs mymaster 1
+    sentinel failover-timeout mymaster 180000
