@@ -284,6 +284,14 @@ wsgi_wants_apache: true
 x_forward: false
 #
 
+# Template defaults are defined in the template macros. If we need a specific
+# host to have different values for a macro, define it here. Use the macro name
+# as it is in Zabbix so we can search for it easily. If you remove a key,
+# Zabbix is *not* updated - set the value to "absent" instead.
+
+# This is overriden at the host_var level, this is empty just so the var exists
+zabbix_macros: {}
+
 notes: |
   Unspecified.
     * What hosts/services does this rely on?
