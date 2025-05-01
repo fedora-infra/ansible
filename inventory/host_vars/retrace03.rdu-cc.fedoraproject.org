@@ -21,6 +21,45 @@ faf_opsys_list:
   - fedora
   - centos
 faf_repos:
+  # Fedora 42 repositories ------------------------------------------------
+  - arch: src
+    name: fedora-42-source
+    opsys: Fedora 42
+    url:
+      - http://dl01.fedoraproject.org/pub/fedora/linux/releases/42/Everything/source/tree/
+      - http://dl01.fedoraproject.org/pub/fedora/linux/development/42/Everything/source/tree/
+  - arch: x86_64
+    name: fedora-42-x86_64
+    opsys: Fedora 42
+    url:
+      - http://dl01.fedoraproject.org/pub/fedora/linux/releases/42/Everything/x86_64/os/
+      - http://dl01.fedoraproject.org/pub/fedora/linux/development/42/Everything/x86_64/os/
+  - arch: x86_64
+    name: fedora-42-x86_64-debug
+    opsys: Fedora 42
+    url:
+      - http://dl01.fedoraproject.org/pub/fedora/linux/releases/42/Everything/x86_64/debug/tree/
+      - http://dl01.fedoraproject.org/pub/fedora/linux/development/42/Everything/x86_64/debug/tree/
+  - arch: x86_64
+    name: fedora-42-x86_64-updates
+    opsys: Fedora 42
+    url:
+      - http://dl01.fedoraproject.org/pub/fedora/linux/updates/42/Everything/x86_64/
+  - arch: x86_64
+    name: fedora-42-x86_64-updates-debug
+    opsys: Fedora 42
+    url:
+      - http://dl01.fedoraproject.org/pub/fedora/linux/updates/42/Everything/x86_64/debug/
+  - arch: x86_64
+    name: fedora-42-x86_64-testing
+    opsys: Fedora 42
+    url:
+      - http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/42/Everything/x86_64/
+  - arch: x86_64
+    name: fedora-42-x86_64-testing-debug
+    opsys: Fedora 42
+    url:
+      - http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/42/Everything/x86_64/debug/
   # Fedora 41 repositories ------------------------------------------------
   - arch: src
     name: fedora-41-source
