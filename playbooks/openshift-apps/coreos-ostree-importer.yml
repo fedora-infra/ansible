@@ -89,15 +89,8 @@
 
   - role: openshift/object
     object_app: coreos-ostree-importer
-    object_template: deploymentconfig.yml.j2
-    object_objectname: deploymentconfig.yml
-    when: env == "production"
-
-  - role: openshift/object
-    object_app: coreos-ostree-importer
     object_template: deployment.yml.j2
     object_objectname: deployment.yml
-    when: env == "staging"
 
   - role: openshift/object
     object_app: coreos-ostree-importer
