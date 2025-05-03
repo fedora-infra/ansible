@@ -2,7 +2,7 @@
 DEBUGINFOD_PORT="8002"
 #DEBUGINFOD_VERBOSE="-vv"
 
-DEBUGINFOD_PATHS="--fdcache-mintmp=15 --fdcache-mbs=100000 --fdcache-prefetch-fds=1024 -t43200 -g604800 -C20 -c6 -vv -r --koji-sigcache -R /mnt/fedora_koji_prod/koji/packages -X /data/ -I \.(module_f|fc)(35|36|37|38|39|4.)[.+].*\.rpm"
+DEBUGINFOD_PATHS="--cors --fdcache-mintmp=15 --fdcache-mbs=100000 --fdcache-prefetch-fds=1024 -t43200 -g604800 -C20 -c6 -vv -r --koji-sigcache -R /mnt/fedora_koji_prod/koji/packages -X /data/ -I \.(module_f|fc)(35|36|37|38|39|4.)[.+].*\.rpm"
 
 # to age old fedoras, change the -I regex
 
