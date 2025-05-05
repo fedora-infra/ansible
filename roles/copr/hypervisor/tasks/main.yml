@@ -210,3 +210,5 @@
     user: root
     job: |
       find /var/log/libvirt/qemu -maxdepth 1 -type f -name '*.log' -mtime +30 -delete
+    tags:
+      - cron
