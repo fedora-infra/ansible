@@ -400,7 +400,7 @@ copr_osuosl_p09_{% if devel %}dev{% else %}prod{% endif %}:
 
 {% if not devel %}
 # reserved instance
-{{ aws('aarch64', 27, 20, 27, priority=21, reserved=True) }}
+{{ aws('aarch64', 33, 20, 33, priority=21, reserved=True) }}
 {% endif %}
 
 {{ aws('aarch64', builders.aws_spot.aarch64[0], builders.aws_spot.aarch64[1],
