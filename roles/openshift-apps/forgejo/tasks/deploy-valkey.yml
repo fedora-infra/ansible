@@ -37,25 +37,6 @@
   - valkey
 
 
-- name: Create the valkey sentinel service template
-  ansible.builtin.template:
-    src: "valkey-sentinel-service.yaml.j2"
-    dest: "/root/ocp4/openshift-apps/forgejo/valkey-sentinel-service.yaml"
-    mode: "0770"
-  tags:
-  - valkey
-
-# apply created openshift resources
-- name: Oc apply resources
-  ansible.builtin.command: "/root/bin/oc apply -f /root/ocp4/openshift-apps/forgejo/valkey-sentinel-service.yaml"
-  retries: 3
-  delay: 5
-  register: deployment_result
-  until: deployment_result.rc == 0
-  tags:
-  - valkey
-
-
 - name: Create the valkey statefulset template
   ansible.builtin.template:
     src: "valkey-statefulset.yaml.j2"
@@ -74,21 +55,3 @@
   tags:
   - valkey
 
-
-- name: Create the valkey sentinel statefulset template
-  ansible.builtin.template:
-    src: "valkey-sentinel-statefulset.yaml.j2"
-    dest: "/root/ocp4/openshift-apps/forgejo/valkey-sentinel-statefulset.yaml"
-    mode: "0770"
-  tags:
-  - valkey
-
-# apply created openshift resources
-- name: Oc apply resources
-  ansible.builtin.command: "/root/bin/oc apply -f /root/ocp4/openshift-apps/forgejo/valkey-sentinel-statefulset.yaml"
-  retries: 3
-  delay: 5
-  register: deployment_result
-  until: deployment_result.rc == 0
-  tags:
-  - valkey
