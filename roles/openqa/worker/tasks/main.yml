@@ -127,12 +127,6 @@
   - packages
   when: "ansible_architecture is defined and ansible_architecture == 'aarch64'"
 
-- name: Install arm UEFI firmware package (aarch64 only)
-  ansible.builtin.package: name=edk2-arm state=present
-  tags:
-  - packages
-  when: "ansible_architecture is defined and ansible_architecture == 'aarch64'"
-
 # Encoding with ffmpeg gives us better videos, but it seems like it
 # doesn't work well on aarch64, it overwhelms the CPU and makes tests
 # often fail
