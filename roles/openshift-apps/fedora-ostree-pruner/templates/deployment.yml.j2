@@ -27,7 +27,7 @@ spec:
           volumeMounts:
             - name: fedora-ostree-content-volume
               mountPath: /mnt/koji
-          image: ""
+          image: "fedora-ostree-pruner-img:latest"
           imagePullPolicy: IfNotPresent
           resources: {}
       # The files in the ostree volumes are created with group ownership of 263.
