@@ -12,6 +12,8 @@ spec:
   selector:
     matchLabels:
       app: fedora-ostree-pruner
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
