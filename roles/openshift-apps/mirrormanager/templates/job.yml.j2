@@ -16,7 +16,7 @@ spec:
       containers:
         - name: mirrormanager
           image: image-registry.openshift-image-registry.svc:5000/mirrormanager/mirrormanager2:latest
-          command: ["/bin/bash", "-euxc", "{{command}}"]
+          command: ["/bin/bash", "-euxc", "{{ job_command }}"]
           env:
             {{ common_env() }}
           volumeMounts:
