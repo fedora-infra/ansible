@@ -14,6 +14,22 @@ nft_block_rules:
   - 'add rule ip filter INPUT ip saddr 47.80.0.0/13  counter reject'
   - 'add rule ip filter INPUT ip saddr 47.74.0.0/15  counter reject'
   - 'add rule ip filter INPUT ip saddr 66.249.64.0/24  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.134.64.0/18  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.134.0.0/18  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.134.224.0/19  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.159.41.0/24  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.163.8.0/24  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.128.64.0/18  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.156.0.0/18  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.128.64.0/18  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.133.32.0/19  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.134.128.0/18  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.159.37.0/24  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.153.192.0/18  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.159.32.0/24  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.156.64.0/18  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.163.0.0/24  counter reject'
+  - 'add rule ip filter INPUT ip saddr 14.153.15.174  counter reject'
 # For the MOTD
 db_backup_dir: ['/backups']
 dbs_to_backup: ['pagure']
