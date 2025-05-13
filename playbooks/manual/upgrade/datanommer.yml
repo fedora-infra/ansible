@@ -53,7 +53,7 @@
 - name: Upgrade the database
   role: openshift/object
   object_app: datanommer
-  object_template: job.yml
+  object_template: job.yml.j2
   object_objectname: job.yml
 
 - name: Wait for the db-upgrade completion
