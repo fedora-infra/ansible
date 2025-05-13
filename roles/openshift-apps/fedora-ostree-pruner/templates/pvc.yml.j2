@@ -9,7 +9,7 @@ metadata:
   name: fedora-ostree-content-volume
 spec:
 # ocs-storagecluster-cephfs to use `ReadWriteMany` functionality
-storageClassName: "ocs-storagecluster-cephfs"
+  storageClassName: "ocs-storagecluster-cephfs"
   # fedora-ostree-content-volume-2 is one of two PVs that share
   # the fedora-ostree-content NetApp volume
 {% if env == "production" %}
