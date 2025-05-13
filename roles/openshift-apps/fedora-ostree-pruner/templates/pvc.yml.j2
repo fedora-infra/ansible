@@ -12,12 +12,12 @@ spec:
 storageClassName: "ocs-storagecluster-cephfs"
   # fedora-ostree-content-volume-2 is one of two PVs that share
   # the fedora-ostree-content NetApp volume
-  {% if env == "production" %}
+{% if env == "production" %}
   volumeName: "fedora-ostree-content-volume-2"
-  {% elif env == "staging" %}
+{% elif env == "staging" %}
   # fedora-ostree-content-volume-2 is not available in staging
   volumeName: "fedora-ostree-content-volume-1"
-  {% endif %}
+{% endif %}
   # These values are mostly ignored since we're using a named
   # volume, but are required.
   accessModes:
