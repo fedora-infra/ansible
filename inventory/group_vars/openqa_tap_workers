@@ -13,4 +13,4 @@ nat_rules: [
   '-A POSTROUTING -o {{ openqa_tap_iface }} -j MASQUERADE']
 nft_nat_rules: [
   # masquerade for openQA openvswitch workers to reach the outside
-  'add rule ip filter POSTROUTING oifname "{{ openqa_tap_iface }}" counter masquerade']
+  'add rule ip nat POSTROUTING oifname "{{ openqa_tap_iface }}" counter masquerade']
