@@ -5,7 +5,6 @@ nft_custom_rules:
   - 'add rule ip filter FORWARD iifname "br0" counter accept'
   - 'add rule ip filter FORWARD iifname "{{ openqa_tap_iface }}" oifname "br0" ct state related,established counter accept'
   - 'add rule ip filter INPUT iifname "br0" counter accept'
-nftables: False
 # for iptables rules...maybe other stuff in future? both staging
 # and prod workers are in this group
 host_group: openqa-tap-workers
