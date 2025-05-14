@@ -1,0 +1,21 @@
+#!/usr/bin/bash
+
+RELEASEVERS=('10.0')
+ARCHES=('aarch64' 'ppc64le' 's390x' 'x86_64')
+REPOS=('baseos' 'appstream' 'crb')
+
+for releasever in ${RELEASEVERS[@]}; do
+    for arch in ${ARCHES[@]}; do
+        for repo in ${REPOS[@]}; do
+            echo "syncing $releasever $arch $repo"
+            dnf \
+                --config /srv/web/repo/rhel/rhel10/dnf.conf \
+                --releasever $releasever \
+                --repo $repo \
+                reposync \
+                --download-metadata \
+                --downloadcomps \
+                --download-path /srv/web/repo/rhel/rhel10/$releasever/repos/$arch &> /dev/null
+        done
+    done
+done

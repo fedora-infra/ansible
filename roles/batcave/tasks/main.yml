@@ -294,6 +294,16 @@
   - config
   when: inventory_hostname.startswith('batcave01')
 
+- name: Setup rhel10 sync copy script
+  ansible.builtin.copy:
+    src: rhel10-sync
+    dest: /mnt/fedora/app/fi-repo/rhel/rhel10/rhel10-sync
+    mode: '0775'
+  tags:
+  - batcave
+  - config
+  when: inventory_hostname.startswith('batcave01')
+
 #
 # sync-rhn cron job
 #
