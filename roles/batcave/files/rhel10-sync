@@ -11,6 +11,7 @@ for releasever in ${RELEASEVERS[@]}; do
             dnf \
                 --config /srv/web/repo/rhel/rhel10/dnf.conf \
                 --releasever $releasever \
+                --forcearch $arch \
                 --repo $repo \
                 reposync \
                 --download-metadata \
