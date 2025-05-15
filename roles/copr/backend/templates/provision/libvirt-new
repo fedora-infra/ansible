@@ -63,6 +63,12 @@ class LibvirtSpawner:
         self.log.debug("Logging to %s", self.connection)
         self.cleanup_actions = {}
 
+        # This is not needed by our standard x86_64, only experimental bootc
+        # builders. Eventually, we should either make them smaller or use this
+        # larger volume size for all architectures.
+        if self.arch == "x86_64":
+            self.root_vol_size = "11GB"
+
     def call(self, cmd, *args, **kwargs):
         """
         Run CMD, and log info.
