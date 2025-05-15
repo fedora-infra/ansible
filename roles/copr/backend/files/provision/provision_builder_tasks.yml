@@ -103,7 +103,7 @@
     - preparing_image
 
 - name: install copr-builder and other latest packages
-  dnf: state=latest pkg={{ packages }} disable_gpg_check=true
+  dnf: state=latest pkg={{ packages }} disable_gpg_check=true use_backend=dnf5
   vars:
     packages:
       - copr-builder
