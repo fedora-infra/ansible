@@ -35,6 +35,11 @@ nft_block_rules:
   - 'add rule ip filter INPUT ip saddr 43.156.64.0/18  counter reject'
   - 'add rule ip filter INPUT ip saddr 43.163.0.0/24  counter reject'
   - 'add rule ip filter INPUT ip saddr 14.153.15.174  counter reject'
+  - 'add rule ip filter INPUT ip saddr 47.246.0.0/16  counter reject'
+  - 'add rule ip filter INPUT ip saddr 47.236.0.0/14  counter reject'
+  - 'add rule ip filter INPUT ip saddr 47.235.0.0/16  counter reject'
+  - 'add rule ip filter INPUT ip saddr 47.240.0.0/14  counter reject'
+  - 'add rule ip filter INPUT ip saddr 47.244.0.0/15  counter reject'
 nft_custom_rules:
   # Need for rsync from log01 for logs.
   - 'add rule ip filter INPUT ip saddr 10.3.163.39     tcp dport 873 counter accept'
