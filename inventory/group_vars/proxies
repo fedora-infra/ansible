@@ -12,6 +12,29 @@ custom_rules: [
   # also allow varnish from internal for purge requests
   '-A INPUT -p tcp -m tcp -s 192.168.1.0/24 --dport 6081 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 10.3.163.0/24 --dport 6081 -j ACCEPT',
   '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.120 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.121 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.122 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.123 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.124 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.125 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.126 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.65 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.127 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.128 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.163.129 -j ACCEPT']
+nft_block_rules:
+  - 'add rule ip filter INPUT ip saddr 81.69.171.38   counter reject'
+  - 'add rule ip filter INPUT ip saddr 175.24.248.206 counter reject'
+  - 'add rule ip filter INPUT ip saddr 47.76.0.0/14  counter reject'
+  - 'add rule ip filter INPUT ip saddr 47.80.0.0/13  counter reject'
+  - 'add rule ip filter INPUT ip saddr 47.74.0.0/15  counter reject'
+  - 'add rule ip filter INPUT ip saddr 66.249.64.0/24  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.134.64.0/18  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.134.0.0/18  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.134.224.0/19  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.159.41.0/24  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.163.8.0/24  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.128.64.0/18  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.156.0.0/18  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.128.64.0/18  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.133.32.0/19  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.134.128.0/18  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.159.37.0/24  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.153.192.0/18  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.159.32.0/24  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.156.64.0/18  counter reject'
+  - 'add rule ip filter INPUT ip saddr 43.163.0.0/24  counter reject'
+  - 'add rule ip filter INPUT ip saddr 14.153.15.174  counter reject'
 nft_custom_rules:
   # Need for rsync from log01 for logs.
   - 'add rule ip filter INPUT ip saddr 10.3.163.39     tcp dport 873 counter accept'
