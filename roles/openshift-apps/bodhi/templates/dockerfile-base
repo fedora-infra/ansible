@@ -1,7 +1,7 @@
 {% if env == "staging" %}
-FROM fedora:41
+FROM fedora:42
 {% else %}
-FROM fedora:40
+FROM fedora:42
 {% endif %}
 LABEL \
     name="bodhi-base" \
@@ -14,9 +14,9 @@ RUN curl -o /etc/yum.repos.d/infra-tags-stg.repo https://infrastructure.fedorapr
 RUN curl -o /etc/yum.repos.d/infra-tags.repo https://infrastructure.fedoraproject.org/infra/ansible/files/common/fedora-infra-tags.repo
 {% endif %}
 {% if env == "staging" %}
-RUN dnf install -y bodhi-server python3-pyramid_sawing python3-gunicorn sed --refresh
+RUN dnf install -y bodhi-server python3-pyramid_sawing python3-koji-fedoramessaging-messages python3-gunicorn sed --refresh
 {% else %}
-RUN dnf install -y bodhi-server-{{bodhi_version}} python3-pyramid_sawing python3-gunicorn sed
+RUN dnf install -y bodhi-server-{{bodhi_version}} python3-pyramid_sawing python3-koji-fedoramessaging-messages python3-gunicorn sed
 {% endif %}
 
 # link the static files for a simpler httpd.conf
