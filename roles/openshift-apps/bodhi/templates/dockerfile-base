@@ -1,7 +1,7 @@
 {% if env == "staging" %}
 FROM fedora:42
 {% else %}
-FROM fedora:42
+FROM fedora:40
 {% endif %}
 LABEL \
     name="bodhi-base" \
