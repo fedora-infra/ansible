@@ -153,7 +153,8 @@ copr_builder_images:
   hypervisor:
     # n-1: ppc64le: copr-builder-ppc64le-20240201_144151
     # n-1: x86_64: copr-builder-x86_64-20240201_144216
-    ppc64le: copr-builder-ppc64le-20241119_171239
+    # ppc64le: copr-builder-ppc64le-20241119_171239  # Production
+    ppc64le: copr-builder-ppc64le-20250518_175056  # Bootc experiment
     # x86_64: copr-builder-x86_64-20241119_172236  # Production
     x86_64: copr-builder-x86_64-20250515_154219  # Bootc experiment
   ibm_cloud:
@@ -166,7 +167,8 @@ copr_builder_images:
       s390x: r014-9ba4feec-ce45-4401-acea-f123114685b5
   osuosl:
     # ppc64le: copr-builder-ppc64le-20240206_143009
-    ppc64le: copr-builder-ppc64le-20241119_171239
+    # ppc64le: copr-builder-ppc64le-20241119_171239  # Production
+    ppc64le: copr-builder-ppc64le-20250518_175056  # Bootc experiment
 
 copr_messaging: true
 datacenter: aws
