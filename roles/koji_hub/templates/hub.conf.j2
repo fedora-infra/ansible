@@ -149,6 +149,12 @@ tag =
     tag *infra* && fromtag *infra* && has_perm infra :: allow
     fromtag *infra* :: deny
     all :: allow
+# This rule is to make sure OpenH264 builds never make it to inappropriate tags
+    package openh264 :: {
+        tag *-openh264 :: allow
+        is_sidetag && is_sidetag_owner :: allow
+        all :: deny Tagging OpenH264 to non-openh264 tags is forbidden.
+    }
 
 channel =
     method osbuildImage :: use osbuild
