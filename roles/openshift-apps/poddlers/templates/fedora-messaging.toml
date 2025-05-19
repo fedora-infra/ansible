@@ -229,6 +229,14 @@ monitor_choices = ['no-monitoring', 'monitoring', 'monitoring-with-scratch']
 validation_comment = "valid"
 # Text for the ping if the ticket needs to be manually verified
 ping_comment = "This request wants to skip bugzilla validation! {maintainers} could you check if this is correct? If yes, please respond to this ticket with 'valid' comment"
+# Anitya access token and endpoint for managing project in release-monitoring
+{% if env == "staging" %}
+anitya_endpoint = "https://stg.release-monitoring.org"
+anitya_access_token = "{{ toddlers_stg_anitya_api_key }}"
+{% else %}
+anitya_endpoint = "https://release-monitoring.org"
+anitya_access_token = "{{ toddlers_anitya_api_key }}"
+{% endif %}
 
 # Pagure mapping to bugzilla
 [consumer_config.scm_request_processor.pagure_namespace_to_component]
