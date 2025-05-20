@@ -34,12 +34,12 @@
 
   - role: openshift/object
     object_app: coreos-cincinnati
-    object_template: imagestream.yml
+    object_template: imagestream.yml.j2
     object_objectname: imagestream.yml
 
   - role: openshift/object
     object_app: coreos-cincinnati
-    object_template: buildconfig.yml
+    object_template: buildconfig.yml.j2
     object_objectname: buildconfig.yml
 
   - role: openshift/start-build
@@ -49,7 +49,7 @@
 
   - role: openshift/object
     object_app: coreos-cincinnati
-    object_template: config-stub.yml
+    object_template: config-stub.yml.j2
     object_objectname: config-stub.yml
 
   - role: openshift/object
@@ -64,12 +64,12 @@
 
   - role: openshift/object
     object_app: coreos-cincinnati
-    object_template: service.yml
+    object_template: service.yml.j2
     object_objectname: service.yml
 
   - role: openshift/object
     object_app: coreos-cincinnati
-    object_template: servicemonitor.yml
+    object_template: servicemonitor.yml.j2
     object_objectname: servicemonitor.yml
 
   - role: openshift/route
