@@ -31,6 +31,8 @@ spec:
             "-v",
             "-c", "/etc/cincinnati/graph-builder.toml",
           ]
+          image: "coreos-cincinnati-img:latest"
+          imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: stub-config
               mountPath: /etc/cincinnati/
@@ -41,6 +43,8 @@ spec:
             "-v",
             "-c", "/etc/cincinnati/policy-engine.toml",
           ]
+          image: "coreos-cincinnati-img:latest"
+          imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: stub-config
               mountPath: /etc/cincinnati/
