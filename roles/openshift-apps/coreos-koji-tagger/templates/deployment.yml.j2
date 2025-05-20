@@ -13,7 +13,7 @@ spec:
     matchLabels:
       app: coreos-koji-tagger
   strategy:
-    resources: {}
+    type: RollingUpdate
   template:
     metadata:
       labels:
