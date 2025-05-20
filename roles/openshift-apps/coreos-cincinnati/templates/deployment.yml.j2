@@ -26,7 +26,6 @@ spec:
     spec:
       containers:
         - name: fcos-graph-builder
-          image: ""
           args: [
             "/usr/local/bin/fcos-graph-builder",
             "-v",
@@ -37,7 +36,6 @@ spec:
               mountPath: /etc/cincinnati/
               readOnly: true
         - name: fcos-policy-engine
-          image: ""
           args: [
             "/usr/local/bin/fcos-policy-engine",
             "-v",
