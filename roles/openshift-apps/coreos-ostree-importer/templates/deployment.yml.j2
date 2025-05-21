@@ -13,7 +13,7 @@ spec:
     matchLabels:
       app: coreos-ostree-importer
   strategy:
-    resources: {}
+    type: Recreate
   template:
     metadata:
       labels:
@@ -44,9 +44,8 @@ spec:
               mountPath: "/etc/pki/fedora-messaging/{{ fedora_messaging_key_file }}"
               subPath: "{{ fedora_messaging_key_file }}"
               readOnly: true
-          image: ""
+          image: "coreos-ostree-importer-img:latest"
           imagePullPolicy: IfNotPresent
-          resources: {}
       # The files in the ostree volumes are created with group ownership of 263.
       # We need to have 263 in our supplemental groups. See https://pagure.io/releng/issue/8811#comment-629051
       securityContext:
