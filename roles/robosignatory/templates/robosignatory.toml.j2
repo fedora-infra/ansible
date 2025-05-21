@@ -376,6 +376,14 @@ handlers = ["console"]
             keyid = "{{ (env == 'production')|ternary('e99d6ad1', 'd300e724') }}"
             file_signing_key = "fedora-41-ima"
 
+            # F43 Python Side tag (f43-python)
+            [[consumer_config.koji_instances.primary.tags]]
+            from = "f43-python"
+            to = "f43-python"
+            key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('31645531', 'd300e724') }}"
+            file_signing_key = "fedora-43-ima"
+
     [consumer_config.ostree_refs]
 
         # iot ostree refs
