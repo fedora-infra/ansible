@@ -577,7 +577,7 @@
     owner=root
     group=root
     mode=0644
-  when: env == 'production' and datacenter != 'iad2'
+  when: env == 'production' and ( datacenter != 'iad2' or datacenter != 'rdu3' )
   tags:
   - base
   - config
@@ -593,6 +593,21 @@
     group=root
     mode=0644
   when: env == 'production' and datacenter == 'iad2'
+  tags:
+  - base
+  - config
+  - prompt
+
+# Set PS1 to show prod-rdu3 environment at PS1
+#
+- name: Set PS1 for prod rdu3 in /etc/profile.d
+  ansible.builtin.copy: >
+    src=setprodrdu3ps1.sh
+    dest="/etc/profile.d/setprodrud3ps1.sh"
+    owner=root
+    group=root
+    mode=0644
+  when: env == 'production' and datacenter == 'rdu3'
   tags:
   - base
   - config
