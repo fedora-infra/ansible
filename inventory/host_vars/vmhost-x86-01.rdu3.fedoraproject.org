@@ -47,10 +47,10 @@ network_connections:
      controller: bond0
      state: up
      mtu: 9000
-    # Port profile for the 2nd Ethernet device
-    - name: bond0-port2
-      mac: "{{ mac3 }}"
-      type: ethernet
-      controller: bond0
-      state: up
-      mtu: 9000
+   # Port profile for the 2nd Ethernet device
+   - name: bond0-port2
+     mac: "{{ mac3 }}"
+     type: ethernet
+     controller: bond0
+     state: up
+     mtu: 9000
