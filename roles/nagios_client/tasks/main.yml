@@ -238,7 +238,7 @@
   - nagios_client
 
 - name: Install CRL check for bastions
-  when: inventory_hostname.startswith('bastion')
+  when: inventory_hostname.startswith('bastion') and datacenter == 'iad2'
   tags:
   - nagios_client
   block:
