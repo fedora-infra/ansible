@@ -21,7 +21,7 @@
   - rkhunter
   - nagios_client
   - { role: openvpn/client,
-      when: datacenter != 'iad2' or datacenter != 'rdu3' }
+      when: datacenter != 'iad2' and datacenter != 'rdu3' }
   - ipa/client
   - collectd/base
   - collectd/bind

@@ -577,7 +577,7 @@
     owner=root
     group=root
     mode=0644
-  when: env == 'production' and ( datacenter != 'iad2' or datacenter != 'rdu3' )
+  when: env == 'production' and ( datacenter != 'iad2' and datacenter != 'rdu3' )
   tags:
   - base
   - config
