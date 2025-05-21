@@ -31,6 +31,9 @@ network_connections:
         - "{{ dns_search1 }}"
         - "{{ dns_search2 }}"
       gateway4: "{{ br0_ipv4_gw }}"
+      bridge:
+        stp:
+	  enabled: false
    # Bond profile
    - name: bond0
      type: bond
@@ -39,7 +42,6 @@ network_connections:
      controller: br0
      bond:
        mode: 802.3ad
-       state: up
    # Port profile for the 1st Ethernet device
    - name: bond0-port1
      mac: "{{ mac2 }}"
