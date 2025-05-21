@@ -1,3 +1,3 @@
 # IoT stable compose
 MAILTO=releng-cron@lists.fedoraproject.org
-00 12 * * * root touch /tmp/fedora-compose-stable-iot && TMPDIR=`mktemp -d /tmp/stable.XXXXXX` && cd $TMPDIR && git clone https://pagure.io/fedora-iot/pungi-iot.git && cd pungi-iot && git checkout f41 && ./twoweek-nightly.sh RC-$(date "+\%Y\%m\%d").0 && rm /tmp/fedora-compose-stable-iot
+00 11 * * * root touch /tmp/fedora-compose-stable-iot && TMPDIR=`mktemp -d /tmp/stable.XXXXXX` && cd $TMPDIR && git clone https://pagure.io/fedora-iot/pungi-iot.git && cd pungi-iot && git checkout f42 && ./twoweek-nightly.sh RC-$(date "+\%Y\%m\%d").0 && rm /tmp/fedora-compose-stable-iot
