@@ -50,10 +50,10 @@ clusterDomain: cluster.local
 ## @param image.fullOverride Completely overrides the image registry, path/image, tag and digest. **Adjust `image.rootless` accordingly and review [Rootless defaults](#rootless-defaults).**
 image:
   registry: quay.io
-  repository: konflux-fedora/fedora-infra-tenant/forgejo-oci-images
+  repository:  konflux-fedora/fedora-infra-tenant/forgejo-oci-images-main-stable
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ''
-  digest: 'sha256:4f29a06ab8ad2d2a86025a8176e1088a583306597813a14447d34f8dbfb7a439'
+  tag: 'latest'
+  digest: ''
   pullPolicy: IfNotPresent
   rootless: true
   fullOverride: ''
