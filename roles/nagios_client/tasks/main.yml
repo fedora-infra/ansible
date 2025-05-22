@@ -10,7 +10,9 @@
     home: /var/run/nrpe
     shell: /sbin/nologin
     system: true
-    local: true
+    # See: https://github.com/ansible/ansible/issues/76376
+    # libuser and lgroupmod isn't installed on wiki01/wiki02 currently.
+    # local: true
   tags:
   - nagios_client
 
