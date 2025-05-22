@@ -22,10 +22,10 @@
   - rkhunter
   - nagios_client
   - hosts
-  - { role: openvpn/client, when: env != "staging" }
+  - { role: openvpn/client, when: env != "staging" or datacenter == 'rdu3' }
   - ipa/client
   - collectd/base
-  - { role: rsyncd, when: datacenter == 'iad2' }
+  - { role: rsyncd, when: datacenter == 'iad2' or datacenter == 'rdu3' }
   - sudo
   - apache
   # - mod_wsgi
@@ -40,7 +40,7 @@
     owner_group: apache
     service: HTTP
     host: "nagios-external{{env_suffix}}.fedoraproject.org"
-    when: datacenter != 'iad2'
+    when: datacenter == 'ibiblio'
   - { role: letsencrypt, site_name: 'nagios-external.fedoraproject.org', when: inventory_hostname.startswith('noc02') }
 
   handlers:
@@ -60,9 +60,9 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   roles:
-  - { role: dhcp_server, when: datacenter == 'iad2' }
-  - { role: tftp_server, when: datacenter == 'iad2' }
-  - { role: nagios_server }
+  - { role: dhcp_server, when: datacenter == 'iad2' or datacenter == 'rdu3' }
+  - { role: tftp_server, when: datacenter == 'iad2' or datacenter == 'rdu3' }
+  - { role: nagios_server, when: datacenter == 'iad2' or datacenter == 'ibiblio' }
 
   tasks:
   - name: Install some packages which arent in playbooks
