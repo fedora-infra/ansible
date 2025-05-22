@@ -22,7 +22,7 @@
   - rkhunter
   - nagios_client
   - hosts
-  - { role: openvpn/client, when: env != "staging" or datacenter == 'rdu3' }
+  - { role: openvpn/client, when: env != "staging" or datacenter != 'rdu3' }
   - ipa/client
   - collectd/base
   - { role: rsyncd, when: datacenter == 'iad2' or datacenter == 'rdu3' }
