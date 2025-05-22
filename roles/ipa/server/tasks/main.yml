@@ -163,6 +163,7 @@
     ansible.builtin.command:
       argv:
         - ipa-replica-install
+        - --setup-kra
         - --setup-ca
         - --admin-password={{ ipa_admin_password }}
         - --no-host-dns
