@@ -233,9 +233,13 @@ ping_comment = "This request wants to skip bugzilla validation! {maintainers} co
 {% if env == "staging" %}
 anitya_endpoint = "https://stg.release-monitoring.org"
 anitya_access_token = "{{ toddlers_stg_anitya_api_key }}"
+# This is a OIDC token that allows pagure_user to push changes to dist git
+oidc_distgit_token = "{{ toddlers_stg_oidc_dist_git_token }}"
 {% else %}
 anitya_endpoint = "https://release-monitoring.org"
 anitya_access_token = "{{ toddlers_anitya_api_key }}"
+# This is a OIDC token that allows pagure_user to push changes to dist git
+oidc_distgit_token = "{{ toddlers_oidc_dist_git_token }}"
 {% endif %}
 
 # Pagure mapping to bugzilla
