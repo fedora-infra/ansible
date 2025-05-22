@@ -224,11 +224,17 @@ versions = ["epel10", "epel9", "epel8"]
 # Configuration section for scm_request_processor
 [consumer_config.scm_request_processor]
 # Monitoring choices for release-monitoring.org
-monitor_choices = ['no-monitoring', 'monitoring', 'monitoring-with-scratch']
-# What we should look for in validation comment
-validation_comment = "valid"
+monitor_choices = [
+    'no-monitoring',
+    'monitoring',
+    'monitoring-with-scratch',
+    'monitoring-all',
+    'monitoring-all-scratch',
+    'monitoring-stable',
+    'monitoring-stable-scratch'
+]
 # Text for the ping if the ticket needs to be manually verified
-ping_comment = "This request wants to skip bugzilla validation! {maintainers} could you check if this is correct? If yes, please respond to this ticket with 'valid' comment"
+ping_comment = "This request wants to skip bugzilla validation! {maintainers} could you check if this is correct? If yes, please respond to this ticket with '@releng-bot valid' comment"
 # Anitya access token and endpoint for managing project in release-monitoring
 {% if env == "staging" %}
 anitya_endpoint = "https://stg.release-monitoring.org"
