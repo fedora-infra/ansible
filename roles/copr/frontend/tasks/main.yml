@@ -191,6 +191,19 @@
   - config
   - pagure_events
 
+- name: Deploy fedora-messaging CA certificates
+  ansible.builtin.get_url:
+    url: "{{ item.url }}"
+    dest: "/etc/fedora-messaging/{{ item.filename }}"
+    mode: "0644"
+  with_items:
+    - { url: "https://infrastructure.fedoraproject.org/infra/rabbitmq-certs/production/ca.crt", filename: "cacert.pem" }
+    - { url: "https://infrastructure.fedoraproject.org/infra/rabbitmq-certs/staging/ca.crt", filename: "stg-cacert.pem" }
+  notify:
+    - Restart copr-fe-fedora-messaging-reader
+  tags:
+    - config
+
 - name: Detect copr-frontend version
   package_facts: manager=auto
 
