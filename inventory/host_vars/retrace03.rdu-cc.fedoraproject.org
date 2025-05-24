@@ -99,100 +99,6 @@ faf_repos:
     opsys: Fedora 41
     url:
       - http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/41/Everything/x86_64/debug/
-  # Fedora 40 repositories ------------------------------------------------
-  - arch: src
-    name: fedora-40-source
-    opsys: Fedora 40
-    url:
-      - http://dl01.fedoraproject.org/pub/fedora/linux/releases/40/Everything/source/tree/
-      - http://dl01.fedoraproject.org/pub/fedora/linux/development/40/Everything/source/tree/
-  - arch: x86_64
-    name: fedora-40-x86_64
-    opsys: Fedora 40
-    url:
-      - http://dl01.fedoraproject.org/pub/fedora/linux/releases/40/Everything/x86_64/os/
-      - http://dl01.fedoraproject.org/pub/fedora/linux/development/40/Everything/x86_64/os/
-  - arch: x86_64
-    name: fedora-40-x86_64-debug
-    opsys: Fedora 40
-    url:
-      - http://dl01.fedoraproject.org/pub/fedora/linux/releases/40/Everything/x86_64/debug/tree/
-      - http://dl01.fedoraproject.org/pub/fedora/linux/development/40/Everything/x86_64/debug/tree/
-  - arch: x86_64
-    name: fedora-40-x86_64-updates
-    opsys: Fedora 40
-    url:
-      - http://dl01.fedoraproject.org/pub/fedora/linux/updates/40/Everything/x86_64/
-  - arch: x86_64
-    name: fedora-40-x86_64-updates-debug
-    opsys: Fedora 40
-    url:
-      - http://dl01.fedoraproject.org/pub/fedora/linux/updates/40/Everything/x86_64/debug/
-  - arch: x86_64
-    name: fedora-40-x86_64-testing
-    opsys: Fedora 40
-    url:
-      - http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/40/Everything/x86_64/
-  - arch: x86_64
-    name: fedora-40-x86_64-testing-debug
-    opsys: Fedora 40
-    url:
-      - http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/40/Everything/x86_64/debug/
-  # Fedora Rawhide repositories -------------------------------------------
-  - arch: src
-    name: fedora-rawhide-source
-    opsys: Fedora rawhide
-    url:
-      - http://dl01.fedoraproject.org/pub/fedora/linux/development/rawhide/Everything/source/tree/
-  - arch: x86_64
-    name: fedora-rawhide-x86_64
-    opsys: Fedora rawhide
-    url: 
-      - http://dl01.fedoraproject.org/pub/fedora/linux/development/rawhide/Everything/x86_64/
-  - arch: x86_64
-    name: fedora-rawhide-x86_64-debug
-    opsys: Fedora rawhide
-    url:
-      - http://dl01.fedoraproject.org/pub/fedora/linux/development/rawhide/Everything/x86_64/debug/tree/
-  # Fedora 39 repositories ------------------------------------------------
-  - arch: src
-    name: fedora-39-source
-    opsys: Fedora 39
-    url:
-      - http://dl01.fedoraproject.org/pub/fedora/linux/releases/39/Everything/source/tree/
-      - http://dl01.fedoraproject.org/pub/fedora/linux/development/39/Everything/source/tree/
-  - arch: x86_64
-    name: fedora-39-x86_64
-    opsys: Fedora 39
-    url:
-      - http://dl01.fedoraproject.org/pub/fedora/linux/releases/39/Everything/x86_64/os/
-      - http://dl01.fedoraproject.org/pub/fedora/linux/development/39/Everything/x86_64/os/
-  - arch: x86_64
-    name: fedora-39-x86_64-debug
-    opsys: Fedora 39
-    url:
-      - http://dl01.fedoraproject.org/pub/fedora/linux/releases/39/Everything/x86_64/debug/tree/
-      - http://dl01.fedoraproject.org/pub/fedora/linux/development/39/Everything/x86_64/debug/tree/
-  - arch: x86_64
-    name: fedora-39-x86_64-updates
-    opsys: Fedora 39
-    url:
-      - http://dl01.fedoraproject.org/pub/fedora/linux/updates/39/Everything/x86_64/
-  - arch: x86_64
-    name: fedora-39-x86_64-updates-debug
-    opsys: Fedora 39
-    url:
-      - http://dl01.fedoraproject.org/pub/fedora/linux/updates/39/Everything/x86_64/debug/
-  - arch: x86_64
-    name: fedora-39-x86_64-testing
-    opsys: Fedora 39
-    url:
-      - http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/39/Everything/x86_64/
-  - arch: x86_64
-    name: fedora-39-x86_64-testing-debug
-    opsys: Fedora 39
-    url:
-      - http://dl01.fedoraproject.org/pub/fedora/linux/updates/testing/39/Everything/x86_64/debug/
 faf_server_name: retrace.fedoraproject.org/faf
 # consumed by roles/copr/certbot
 has_ipv4: true
@@ -236,8 +142,8 @@ rs_internal_arch_list:
 - source
 - x86_64
 rs_internal_centos_vers: [7, 8]
-rs_internal_fedora_vers: [39, 40, 41, rawhide]
-rs_internal_fedora_vers_removed: [30, 31, 32, 33, 34, 35, 36, 37, 38]
+rs_internal_fedora_vers: [41, 42, rawhide]
+rs_internal_fedora_vers_removed: [30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40]
 rs_use_faf_packages: true
 sar_output_file: faf.json
 sar_script: /usr/bin/faf sar
