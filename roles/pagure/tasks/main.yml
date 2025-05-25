@@ -491,7 +491,7 @@
   - postfix
 
 - name: Setup logrotate to our needs
-  ansible.builtin.copy: src="{{ files }}/httpd/httpd.logrotate" dest=/etc/logrotate.d/httpd
+  ansible.builtin.template: src="{{ files }}/httpd/httpd.logrotate.j2" dest=/etc/logrotate.d/httpd
   tags:
   - config
   - apache
