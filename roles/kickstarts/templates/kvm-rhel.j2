@@ -1,0 +1,80 @@
+text
+skipx
+# License Agreement
+eula --agreed
+# Network information
+
+# Setup Repository info
+url --url=https://infrastructure.fedoraproject.org/repo/rhel/RHEL9-x86_64/
+repo --name=epel --baseurl=https://infrastructure.fedoraproject.org/pub/epel/9/Everything/x86_64/
+repo --name="net-baseos"     --baseurl=https://infrastructure.fedoraproject.org/repo/rhel/rhel9/x86_64/rhel-9-for-x86_64-baseos-rpms/
+repo --name="net-appstream"  --baseurl=https://infrastructure.fedoraproject.org/repo/rhel/rhel9/x86_64/rhel-9-for-x86_64-appstream-rpms/
+repo --name="net-crb" --baseurl=https://infrastructure.fedoraproject.org/repo/rhel/rhel9/x86_64/codeready-builder-for-rhel-9-x86_64-rpms/
+# Run the Setup Agent on first boot
+firstboot --disable
+# Keyboard layouts
+keyboard --vckeymap=us --xlayouts='us'
+# System language
+lang en_US.UTF-8 --addsupport=en_GB.UTF-8
+# System authorization information
+auth --enableshadow --passalgo=sha512
+# Root password
+rootpw --iscrypted "{{ kickstart_initial_password_encrypted }}"
+# System timezone
+timezone UTC --utc
+# System bootloader configuration
+zerombr
+bootloader --append="net.ifnames=0 crashkernel=auto" --location=mbr --boot-drive=vda
+# Partition clearing information
+clearpart --initlabel --all
+# Filesystem Data
+reqpart --add-boot
+part pv.100 --fstype="lvmpv" --size=1000 --grow
+volgroup vg_vm --pesize=4096 pv.100
+logvol /     --fstype="xfs"  --size=10000 --name=LogVol00 --vgname=vg_vm --grow
+logvol swap  --fstype="swap" --size=8192  --name=LogVol01 --vgname=vg_vm
+# What to do at the end
+reboot
+
+%packages
+@core
+authselect-compat
+bash-completion
+bind-utils
+cronie-noanacron
+crontabs
+dhclient
+iptables-services
+nfs-utils
+nmap-ncat
+openssh-clients
+openssh-server
+patch
+postfix
+python3
+python3-libselinux
+rsync
+rsyslog
+strace
+telnet
+tmpwatch
+tmux
+traceroute
+vim-enhanced
+yum
+yum-utils
+zsh
+-biosdevname
+-cronie-anacron
+-subscription-manager
+-insights-client
+-rhc
+-iwl*
+-yum-rhn-plugin
+%end
+
+%post --nochroot --log=/mnt/sysimage/root/post.output --erroronfail
+mkdir /mnt/sysimage/root/tmp
+chroot /mnt/sysimage /usr/bin/curl https://infrastructure.fedoraproject.org/rhel/ks/post/rhel9-post.sh -o /root/tmp/rhel9-post.sh
+chroot /mnt/sysimage /bin/bash /root/tmp/rhel9-post.sh
+%end

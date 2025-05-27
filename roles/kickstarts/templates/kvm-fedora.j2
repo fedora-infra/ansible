@@ -1,0 +1,54 @@
+text
+lang en_US.UTF-8
+rootpw --iscrypted "$6$guz8Ahbu7dooMee7$mMECodGBXWD16v6hSiyWTbSzrbW0qldF4QrX8wlGfFlnqNc7xid9A60BAerNy6/vZS3.V.qywdRQ2TTKeSzOX0"
+firewall --enable --ssh
+timezone --utc UTC
+keyboard us
+selinux --enforcing
+skipx
+reboot
+
+clearpart --all --initlabel
+bootloader
+reqpart --add-boot
+part btrfs.007 --size=2000 --fstype=btrfs --grow
+btrfs none --label=fedora btrfs.007
+btrfs /     --subvol --name=root LABEL=fedora
+
+url --metalink "https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&arch=$basearch"
+repo --name=updates --metalink "https://mirrors.fedoraproject.org/metalink?repo=updates-released-f$releasever&arch=$basearch"
+
+%packages
+kernel-core
+-kernel
+bind-utils
+-cronie-anacron
+chrony
+cronie-noanacron
+crontabs
+dhcp-client
+iptables
+iptables-services
+python3-libselinux
+mailx
+nc
+nfs-utils
+openssh-clients
+openssh-server
+patch
+postfix
+rsyslog
+rsync
+screen
+tmux
+strace
+traceroute
+vim-enhanced
+xz
+%end
+
+%post --nochroot --log=/mnt/sysimage/root/post.output --erroronfail
+mkdir /mnt/sysimage/root/tmp
+chroot /mnt/sysimage /usr/bin/curl https://infrastructure.fedoraproject.org/rhel/ks/post/buildvm-post.sh -o /root/tmp/fedora-post.sh
+chroot /mnt/sysimage /bin/bash /root/tmp/fedora-post.sh
+%end

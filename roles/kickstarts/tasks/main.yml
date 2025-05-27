@@ -1,0 +1,24 @@
+---
+- name: Copy kickstart templates to published dir for use
+  ansible.builtin.template:
+    src="{{ item }}".j2
+    dest="/srv/web/repo/rhel/ks/{{ item }}"
+  with_items:
+    - kvm-fedora
+    - kvm-rhel
+    - hardware-rhel-9-08disk
+    - hardware-rhel-9-06disk
+  tags:
+  - config
+  - kickstarts
+
+- name: Copy post install files to published dir for use
+  ansible.builtin.copy:
+    src="{{ item }}"
+    dest="/srv/web/repo/rhel/ks/post/{{ item }}"
+  with_items:
+    - rhel9-post.sh
+    - fedora-post.sh
+  tags:
+  - config
+  - kickstarts
