@@ -1,0 +1,46 @@
+---
+datacenter: rdu3
+dns1: 10.16.163.33
+dns2: 10.16.163.34
+dns_search1: "rdu3.fedoraproject.org"
+dns_search2: "vpn.fedoraproject.org"
+dns_search3: "fedoraproject.org"
+eth0_ipv4: 10.16.163.74
+eth0_ipv4_gw: 10.16.163.254
+#
+# This host is externally reachable
+#
+external: true
+freezes: true
+has_ipv4: yes
+ks_repo: https://infrastructure.fedoraproject.org/pub/fedora/linux/releases/42/Server/x86_64/os/
+ks_url: https://infrastructure.fedoraproject.org/repo/rhel/ks/kvm-fedora
+lvm_size: 100000
+mem_size: 32768
+network_connections:
+  - autoconnect: yes
+    ip:
+      address:
+        - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
+      dhcp4: no
+      dns:
+        - "{{ dns1 }}"
+        - "{{ dns2 }}"
+      dns_search:
+        - "{{ dns_search1 }}"
+        - "{{ dns_search2 }}"
+        - "{{ dns_search3 }}"
+      gateway4: "{{ eth0_ipv4_gw }}"
+    mac: "{{ ansible_default_ipv4.macaddress }}"
+    name: eth0
+    state: up
+    type: ethernet
+    mtu: 9000
+nrpe_procs_crit: 1400
+nrpe_procs_warn: 1200
+num_cpus: 8
+# This is consumed by the roles/fedora-web/main role
+sponsor: redhat
+vmhost: vmhost-x86-01.rdu3.fedoraproject.org
+volgroup: /dev/vg_guests
+vpn: true
