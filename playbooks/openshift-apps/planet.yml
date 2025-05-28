@@ -25,7 +25,7 @@
     keytab_key: http
     keytab_secret_name: planet-keytab-http
     keytab_service: HTTP
-    keytab_host: "planet.apps.ocp{{env_suffix}}.fedoraproject.org"
+    keytab_host: "{{env_prefix}}fedoraplanet.org"
 
   - role: openshift/imagestream
     imagestream_app: planet
