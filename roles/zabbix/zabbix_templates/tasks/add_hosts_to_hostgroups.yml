@@ -3,7 +3,7 @@
   community.zabbix.zabbix_host:
     host_name: "{{ inventory_hostname }}"
     host_groups: "{{ item['hostgroup']}}"
-    visible_name: "{{ inventory_hostname_short }}"
+    visible_name: "{{ inventory_hostname }}"
 #    link_templates: "{{ item['template'] }}"
     force: false
   with_items: "{{ zabbix_templates }}"
