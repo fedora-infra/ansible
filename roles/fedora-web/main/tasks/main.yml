@@ -29,7 +29,7 @@
 - name: Create fedoraproject-sync script
   ansible.builtin.template:
     src: fedoraproject-sync
-    dest: /usr/local/sbin/fedoraproject-sync
+    dest: /usr/local/bin/fedoraproject-sync
     mode: "0700"
   tags:
   - fedora-web
