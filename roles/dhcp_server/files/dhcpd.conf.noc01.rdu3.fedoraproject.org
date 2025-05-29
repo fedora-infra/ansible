@@ -3,7 +3,7 @@
 #   see /usr/share/doc/dhcp*/dhcpd.conf.example
 #   see dhcpd.conf(5) man page
 #
-server-identifier noc01.rdu3.fedoraproject.org;
+server-identifier 10.16.163.10
 ddns-update-style none;
 authoritative;
 
@@ -204,16 +204,16 @@ subnet 10.16.169.0 netmask 255.255.255.0 {
     }
 }
 
-subnet 10.3.170.0 netmask 255.255.255.0 {
+subnet 10.16.170.0 netmask 255.255.255.0 {
     allow booting;
     allow bootp;
     option domain-name "rdu3.fedoraproject.org";
-    option routers 10.3.170.254;
+    option routers 10.16.170.254;
     option domain-name-servers 10.16.163.33, 10.16.163.34;
     option log-servers 10.16.163.39;
     option ntp-servers 10.16.163.31, 10.16.163.32;
 
-    range 10.3.170.200 10.3.170.249;
+    range 10.16.170.200 10.16.170.249;
 
     class "pxeclients" {
           match if substring (option vendor-class-identifier, 0, 9) = "PXEClient";
@@ -229,68 +229,16 @@ subnet 10.3.170.0 netmask 255.255.255.0 {
     }
 }
 
-subnet 10.3.171.0 netmask 255.255.255.0 {
+subnet 10.16.171.0 netmask 255.255.255.0 {
     allow booting;
     allow bootp;
     option domain-name "rdu3.fedoraproject.org";
-    option routers 10.3.171.254;
+    option routers 10.16.171.254;
     option domain-name-servers 10.16.163.33, 10.16.163.34;
     option log-servers 10.16.163.39;
     option ntp-servers 10.16.163.31, 10.16.163.32;
 
-    range 10.3.171.200 10.3.171.249;
-
-    class "pxeclients" {
-          match if substring (option vendor-class-identifier, 0, 9) = "PXEClient";
-          next-server 10.16.163.10;
-
-          if option architecture-type = 00:07 or option architecture-type = 00:09 {
-                    filename "uefi/grubx64.efi";
-          } else if option architecture-type = 00:0b {
-                    filename "uefi/grubaa64.efi";
-          } else {
-                    filename "pxelinux/pxelinux.0";
-          }
-    }
-
-}
-
-subnet 10.3.172.0 netmask 255.255.255.0 {
-    allow booting;
-    allow bootp;
-    option domain-name "rdu3.fedoraproject.org";
-    option routers 10.3.172.254;
-    option domain-name-servers 10.16.163.33, 10.16.163.34;
-    option log-servers 10.16.163.39;
-    option ntp-servers 10.16.163.31, 10.16.163.32;
-
-    range 10.3.172.220 10.3.172.249;
-    class "pxeclients" {
-          match if substring (option vendor-class-identifier, 0, 9) = "PXEClient";
-          next-server 10.16.163.10;
-
-          if option architecture-type = 00:07 or option architecture-type = 00:09 {
-                    filename "uefi/grubx64.efi";
-          } else if option architecture-type = 00:0b {
-                    filename "uefi/grubaa64.efi";
-          } else {
-                    filename "pxelinux/pxelinux.0";
-          }
-    }
-
-
-}
-
-subnet 10.3.173.0 netmask 255.255.255.0 {
-    allow booting;
-    allow bootp;
-    option domain-name "rdu3.fedoraproject.org";
-    option routers 10.3.173.254;
-    option domain-name-servers 10.16.163.33, 10.16.163.34;
-    option log-servers 10.16.163.39;
-    option ntp-servers 10.16.163.31, 10.16.163.32;
-
-    range 10.3.173.220 10.3.173.249;
+    range 10.16.171.200 10.16.171.249;
 
     class "pxeclients" {
           match if substring (option vendor-class-identifier, 0, 9) = "PXEClient";
@@ -307,16 +255,42 @@ subnet 10.3.173.0 netmask 255.255.255.0 {
 
 }
 
-subnet 10.3.174.0 netmask 255.255.255.0 {
+subnet 10.16.172.0 netmask 255.255.255.0 {
     allow booting;
     allow bootp;
     option domain-name "rdu3.fedoraproject.org";
-    option routers 10.3.174.254;
+    option routers 10.16.172.254;
     option domain-name-servers 10.16.163.33, 10.16.163.34;
     option log-servers 10.16.163.39;
     option ntp-servers 10.16.163.31, 10.16.163.32;
 
-    range 10.3.174.220 10.3.174.249;
+    range 10.16.172.220 10.16.172.249;
+    class "pxeclients" {
+          match if substring (option vendor-class-identifier, 0, 9) = "PXEClient";
+          next-server 10.16.163.10;
+
+          if option architecture-type = 00:07 or option architecture-type = 00:09 {
+                    filename "uefi/grubx64.efi";
+          } else if option architecture-type = 00:0b {
+                    filename "uefi/grubaa64.efi";
+          } else {
+                    filename "pxelinux/pxelinux.0";
+          }
+    }
+
+
+}
+
+subnet 10.16.173.0 netmask 255.255.255.0 {
+    allow booting;
+    allow bootp;
+    option domain-name "rdu3.fedoraproject.org";
+    option routers 10.16.173.254;
+    option domain-name-servers 10.16.163.33, 10.16.163.34;
+    option log-servers 10.16.163.39;
+    option ntp-servers 10.16.163.31, 10.16.163.32;
+
+    range 10.16.173.220 10.16.173.249;
 
     class "pxeclients" {
           match if substring (option vendor-class-identifier, 0, 9) = "PXEClient";
@@ -333,16 +307,16 @@ subnet 10.3.174.0 netmask 255.255.255.0 {
 
 }
 
-subnet 10.3.175.0 netmask 255.255.255.0 {
+subnet 10.16.174.0 netmask 255.255.255.0 {
     allow booting;
     allow bootp;
     option domain-name "rdu3.fedoraproject.org";
-    option routers 10.3.175.254;
+    option routers 10.16.174.254;
     option domain-name-servers 10.16.163.33, 10.16.163.34;
     option log-servers 10.16.163.39;
     option ntp-servers 10.16.163.31, 10.16.163.32;
 
-    range 10.3.175.220 10.3.175.249;
+    range 10.16.174.220 10.16.174.249;
 
     class "pxeclients" {
           match if substring (option vendor-class-identifier, 0, 9) = "PXEClient";
@@ -359,16 +333,42 @@ subnet 10.3.175.0 netmask 255.255.255.0 {
 
 }
 
-subnet 10.3.176.0 netmask 255.255.255.0 {
+subnet 10.16.175.0 netmask 255.255.255.0 {
     allow booting;
     allow bootp;
     option domain-name "rdu3.fedoraproject.org";
-    option routers 10.3.176.254;
+    option routers 10.16.175.254;
     option domain-name-servers 10.16.163.33, 10.16.163.34;
     option log-servers 10.16.163.39;
     option ntp-servers 10.16.163.31, 10.16.163.32;
 
-    range 10.3.176.220 10.3.176.249;
+    range 10.16.175.220 10.16.175.249;
+
+    class "pxeclients" {
+          match if substring (option vendor-class-identifier, 0, 9) = "PXEClient";
+          next-server 10.16.163.10;
+
+          if option architecture-type = 00:07 or option architecture-type = 00:09 {
+                    filename "uefi/grubx64.efi";
+          } else if option architecture-type = 00:0b {
+                    filename "uefi/grubaa64.efi";
+          } else {
+                    filename "pxelinux/pxelinux.0";
+          }
+    }
+
+}
+
+subnet 10.16.176.0 netmask 255.255.255.0 {
+    allow booting;
+    allow bootp;
+    option domain-name "rdu3.fedoraproject.org";
+    option routers 10.16.176.254;
+    option domain-name-servers 10.16.163.33, 10.16.163.34;
+    option log-servers 10.16.163.39;
+    option ntp-servers 10.16.163.31, 10.16.163.32;
+
+    range 10.16.176.220 10.16.176.249;
     class "pxeclients" {
           match if substring (option vendor-class-identifier, 0, 9) = "PXEClient";
           next-server 10.16.163.10;
@@ -884,15 +884,6 @@ host sign-vault01 {
 host buildhw-x86-01 {
      hardware ethernet c4:70:bd:c8:ce:dc;
      fixed-address 10.16.169.31;
-     filename "uefi/shimx64.efi";
-     next-server 10.16.163.10;
-     option routers 10.16.169.254;
-     option subnet-mask 255.255.255.0;
-}
-
-host autosign01 {
-     hardware ethernet EC:F4:BB:D2:85:48 ;
-     fixed-address 10.16.169.28;
      filename "uefi/shimx64.efi";
      next-server 10.16.163.10;
      option routers 10.16.169.254;
