@@ -712,7 +712,7 @@ host bvmhost-a64-01-stg.mgmt.rdu3.fedoraproject.org {
 host bvmhost-x86-01 {
      hardware ethernet c4:70:bd:a4:09:84;
      fixed-address 10.16.169.11;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.169.254;
      option subnet-mask 255.255.255.0;
@@ -721,7 +721,7 @@ host bvmhost-x86-01 {
 host bvmhost-x86-02 {
      hardware ethernet c4:70:bd:aa:5d:04;
      fixed-address 10.16.169.12;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.169.254;
      option subnet-mask 255.255.255.0;
@@ -730,7 +730,7 @@ host bvmhost-x86-02 {
 host bvmhost-x86-03 {
      hardware ethernet c4:70:bd:c8:cf:96;
      fixed-address 10.16.169.13;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.169.254;
      option subnet-mask 255.255.255.0;
@@ -739,7 +739,7 @@ host bvmhost-x86-03 {
 host bvmhost-x86-04 {
      hardware ethernet c4:70:bd:c8:cf:fc;
      fixed-address 10.16.169.14;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.169.254;
      option subnet-mask 255.255.255.0;
@@ -748,7 +748,7 @@ host bvmhost-x86-04 {
 host bvmhost-x86-05 {
      hardware ethernet c4:70:bd:a4:0c:0c;
      fixed-address 10.16.169.15;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.169.254;
      option subnet-mask 255.255.255.0;
@@ -757,7 +757,7 @@ host bvmhost-x86-05 {
 host bvmhost-x86-06 {
      hardware ethernet E4:43:4B:AC:E1:54 ;
      fixed-address 10.16.169.16;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.169.254;
      option subnet-mask 255.255.255.0;
@@ -766,7 +766,7 @@ host bvmhost-x86-06 {
 host bvmhost-x86-01-stg {
      hardware ethernet c4:70:bd:a4:0b:a0;
      fixed-address 10.16.167.11;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.167.254;
      option subnet-mask 255.255.255.0;
@@ -775,7 +775,7 @@ host bvmhost-x86-01-stg {
 host bvmhost-x86-02-stg {
      hardware ethernet c4:70:bd:aa:5c:3e;
      fixed-address 10.16.167.12;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.167.254;
      option subnet-mask 255.255.255.0;
@@ -784,7 +784,7 @@ host bvmhost-x86-02-stg {
 host bvmhost-x86-03-stg {
      hardware ethernet c4:70:bd:b7:7c:76;
      fixed-address 10.16.167.13;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.167.254;
      option subnet-mask 255.255.255.0;
@@ -793,7 +793,7 @@ host bvmhost-x86-03-stg {
 host worker01 {
      hardware ethernet c4:70:bd:b7:7c:1c;
      fixed-address 10.16.163.123;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.163.254;
      option subnet-mask 255.255.255.0;
@@ -802,7 +802,7 @@ host worker01 {
 host worker02 {
      hardware ethernet c4:70:bd:b7:7b:1a;
      fixed-address 10.16.163.124;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.163.254;
      option subnet-mask 255.255.255.0;
@@ -811,7 +811,7 @@ host worker02 {
 host worker03 {
      hardware ethernet c4:70:bd:b7:7b:50;
      fixed-address 10.16.163.125;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.163.254;
      option subnet-mask 255.255.255.0;
@@ -820,7 +820,7 @@ host worker03 {
 host worker04 {
      hardware ethernet c4:70:bd:b7:7b:aa;
      fixed-address 10.16.163.127;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.163.254;
      option subnet-mask 255.255.255.0;
@@ -829,7 +829,7 @@ host worker04 {
 host worker05 {
      hardware ethernet c4:70:bd:b7:7c:64;
      fixed-address 10.16.163.128;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.163.254;
      option subnet-mask 255.255.255.0;
@@ -838,7 +838,7 @@ host worker05 {
 host worker01-stg {
      hardware ethernet c4:70:bd:b7:7c:82;
      fixed-address 10.16.166.118;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.166.254;
      option subnet-mask 255.255.255.0;
@@ -847,7 +847,7 @@ host worker01-stg {
 host worker02-stg {
      hardware ethernet c4:70:bd:b7:7b:e6;
      fixed-address 10.16.166.119;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.166.254;
      option subnet-mask 255.255.255.0;
@@ -856,7 +856,7 @@ host worker02-stg {
 host worker03-stg {
      hardware ethernet c4:70:bd:c8:c6:66;
      fixed-address 10.16.166.120;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.166.254;
      option subnet-mask 255.255.255.0;
@@ -865,7 +865,7 @@ host worker03-stg {
 host autosign01 {
      hardware ethernet EC:F4:BB:D2:85:48 ;
      fixed-address 10.16.169.28;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.169.254;
      option subnet-mask 255.255.255.0;
@@ -875,7 +875,7 @@ host sign-vault01 {
      hardware ethernet c4:70:bd:c8:ce:ca;
      option host-name "sign-vault01";
      fixed-address 10.16.169.26;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.169.254;
      option subnet-mask 255.255.255.0;
@@ -884,7 +884,7 @@ host sign-vault01 {
 host buildhw-x86-01 {
      hardware ethernet c4:70:bd:c8:ce:dc;
      fixed-address 10.16.169.31;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.169.254;
      option subnet-mask 255.255.255.0;
@@ -893,7 +893,7 @@ host buildhw-x86-01 {
 host vmhost-x86-01 {
      hardware ethernet c4:70:bd:c8:cc:60;
      fixed-address 10.16.163.11;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.163.254;
      option subnet-mask 255.255.255.0;
@@ -902,7 +902,7 @@ host vmhost-x86-01 {
 host vmhost-x86-02 {
      hardware ethernet c4:70:bd:b7:7b:fe;
      fixed-address 10.16.163.12;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.163.254;
      option subnet-mask 255.255.255.0;
@@ -911,7 +911,7 @@ host vmhost-x86-02 {
 host vmhost-x86-03 {
      hardware ethernet c4:70:bd:aa:6a:c6;
      fixed-address 10.16.163.13;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.163.254;
      option subnet-mask 255.255.255.0;
@@ -920,7 +920,7 @@ host vmhost-x86-03 {
 host vmhost-x86-04 {
      hardware ethernet c4:70:bd:aa:6a:9c;
      fixed-address 10.16.163.14;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.163.254;
      option subnet-mask 255.255.255.0;
@@ -929,7 +929,7 @@ host vmhost-x86-04 {
 host vmhost-x86-05 {
      hardware ethernet c4:70:bd:aa:70:24;
      fixed-address 10.16.163.15;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.163.254;
      option subnet-mask 255.255.255.0;
@@ -938,7 +938,7 @@ host vmhost-x86-05 {
 host vmhost-x86-01-stg {
      hardware ethernet c4:70:bd:aa:71:14;
      fixed-address 10.16.166.11;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.166.254;
      option subnet-mask 255.255.255.0;
@@ -947,7 +947,7 @@ host vmhost-x86-01-stg {
 host vmhost-x86-02-stg {
      hardware ethernet c4:70:bd:aa:69:ca;
      fixed-address 10.16.166.12;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.166.254;
      option subnet-mask 255.255.255.0;
@@ -956,7 +956,7 @@ host vmhost-x86-02-stg {
 host vmhost-x86-03-stg {
      hardware ethernet c4:70:bd:aa:6a:72;
      fixed-address 10.16.166.13;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.166.254;
      option subnet-mask 255.255.255.0;
@@ -965,7 +965,7 @@ host vmhost-x86-03-stg {
 host vmhost-x86-04-stg {
      hardware ethernet c4:70:bd:aa:6a:ae;
      fixed-address 10.16.166.14;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.166.254;
      option subnet-mask 255.255.255.0;
@@ -974,7 +974,7 @@ host vmhost-x86-04-stg {
 host vmhost-x86-05-stg {
      hardware ethernet c4:70:bd:aa:71:2c;
      fixed-address 10.16.166.15;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.166.254;
      option subnet-mask 255.255.255.0;
@@ -984,7 +984,7 @@ host bvmhost-x86-riscv01 {
      hardware ethernet c4:70:bd:b7:7a:72;
      fixed-address 10.16.168.11;
      option host-name "bvmhost-x86-riscv01.rdu3.fedoraproject.org";
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.168.254;
      option subnet-mask 255.255.255.0;
@@ -993,7 +993,7 @@ host bvmhost-x86-riscv01 {
 host openqa-x86-worker01 {
      hardware ethernet E4:43:4B:A7:98:66 ;
      fixed-address 10.16.174.21;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.174.254;
      option subnet-mask 255.255.255.0;
@@ -1002,7 +1002,7 @@ host openqa-x86-worker01 {
 host openqa-x86-worker02 {
      hardware ethernet E4:43:4B:23:E8:CC ;
      fixed-address 10.16.174.22;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.174.254;
      option subnet-mask 255.255.255.0;
@@ -1011,7 +1011,7 @@ host openqa-x86-worker02 {
 host openqa-x86-worker03 {
      hardware ethernet c4:70:bd:c8:c7:98;
      fixed-address 10.16.174.23;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.174.254;
      option subnet-mask 255.255.255.0;
@@ -1020,7 +1020,7 @@ host openqa-x86-worker03 {
 host openqa-x86-worker04 {
      hardware ethernet E4:43:4B:24:10:AA ;
      fixed-address 10.16.174.24;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.174.254;
      option subnet-mask 255.255.255.0;
@@ -1029,7 +1029,7 @@ host openqa-x86-worker04 {
 host openqa-x86-worker05 {
      hardware ethernet c4:70:bd:c8:c7:6e;
      fixed-address 10.16.174.25;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.174.254;
      option subnet-mask 255.255.255.0;
@@ -1038,7 +1038,7 @@ host openqa-x86-worker05 {
 host autosign02 {
      hardware ethernet c4:70:bd:c8:c7:62;
      fixed-address 10.16.169.47;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.169.254;
      option subnet-mask 255.255.255.0;
@@ -1048,7 +1048,7 @@ host sign-vault02 {
      hardware ethernet c4:70:bd:c8:cf:cc;
      option host-name "sign-vault02";
      fixed-address 10.16.169.27;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.169.254;
      option subnet-mask 255.255.255.0;
@@ -1057,7 +1057,7 @@ host sign-vault02 {
 host buildhw-x86-03 {
      hardware ethernet c4:70:bd:c8:cf:a8;
      fixed-address 10.16.169.33;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.169.254;
      option subnet-mask 255.255.255.0;
@@ -1066,7 +1066,7 @@ host buildhw-x86-03 {
 host qvmhost-x86-01 {
      hardware ethernet c4:70:bd:c8:cf:d2;
      fixed-address 10.16.174.11;
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.174.254;
      option subnet-mask 255.255.255.0;
@@ -1076,7 +1076,7 @@ host backup01 {
      hardware ethernet c4:70:bd:c8:c7:68;
      fixed-address 10.16.163.40;
      option host-name "backup01.rdu3.fedoraproject.org";
-     filename "uefi/shimx64.efi";
+     filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.163.254;
      option subnet-mask 255.255.255.0;
