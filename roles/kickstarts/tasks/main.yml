@@ -1,7 +1,7 @@
 ---
 - name: Copy kickstart templates to published dir for use
   ansible.builtin.template:
-    src="{{ item }}".j2
+    src="{{ item }}.j2"
     dest="/srv/web/repo/rhel/ks/{{ item }}"
   with_items:
     - kvm-fedora
