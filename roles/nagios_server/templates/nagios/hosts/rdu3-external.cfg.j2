@@ -1,0 +1,9 @@
+{% for host in vars["rdu3_external"]|sort %}
+define host {
+  host_name               {{ host }}
+  alias                   {{ host }}
+  use                     mincheck
+  address                 {{ host }}
+  parents                 rdu3-gw
+}
+{% endfor %}

@@ -1,0 +1,19 @@
+{% for host in vars['rdu3_management_hosts']|sort %}
+define host {
+  host_name               {{ host }}
+  alias                   {{ host }}
+  use                     mincheck
+  address                 {{ host }}
+  parents                 rdu3-gw
+}
+{% endfor %}
+
+{% for host in vars['rdu3_management_limited']|sort %}
+define host {
+  host_name               {{ host }}
+  alias                   {{ host }}
+  use                     mincheck
+  address                 {{ host }}
+  parents                 rdu3-gw
+}
+{% endfor %}

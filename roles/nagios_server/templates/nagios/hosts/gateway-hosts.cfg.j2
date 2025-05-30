@@ -24,10 +24,26 @@ define host {
 {% if vars['nagios_location'] == 'iad2_internal' %}
   address                      10.3.163.254
 {% elif vars['nagios_location'] == 'external' %}
-  address                      209.132.185.206
+  address                      38.145.60.3
   parents                      ibiblio-gw
 {% endif %}
 
+}
+
+
+#Mark Note to Self: Come back and correct these later
+# 'rdu3'
+define host {
+  host_name                    rdu3-gw
+  alias                        rdu3 gateway
+  use                          mincheck
+  check_command                check-host-alive4
+{% if vars['nagios_location'] == 'rdu3_internal' %}
+  address                      10.16.163.254
+{% elif vars['nagios_location'] == 'external' %}
+  address                      38.145.32.3
+  parents                      ibiblio-gw
+{% endif %}
 }
 
 
