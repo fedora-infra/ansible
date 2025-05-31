@@ -1,0 +1,118 @@
+#
+## This kickstart is for Dell systems with 8 disks. It will build either a virthost or cloud.
+##
+
+# System authorization information
+auth --enableshadow --passalgo=sha512
+# Use network installation
+vnc --password "{{ kickstart_vnc_password }}"
+# Use network install
+url --url=http://infrastructure.fedoraproject.org/repo/rhel/RHEL10-x86_64/
+repo --name=epel --baseurl=http://infrastructure.fedoraproject.org/pub/epel/10/Everything/x86_64/
+repo --name="net-baseos"     --baseurl=http://infrastructure.fedoraproject.org/repo/rhel/rhel10/10.0/repos/x86_64/baseos/
+repo --name="net-appstream"     --baseurl=http://infrastructure.fedoraproject.org/repo/rhel/rhel10/10.0/repos/x86_64/appstream/
+repo --name="net-crb"     --baseurl=http://infrastructure.fedoraproject.org/repo/rhel/rhel10/10.0/repos/x86_64/crb/
+
+# Firewall configuration
+firewall --disabled
+firstboot --disable
+ignoredisk --only-use=sda,sdb,sdc,sdd,sde,sdf,sdg,sdh
+# Keyboard layouts
+# old format: keyboard us
+# new format:
+keyboard --vckeymap=us --xlayouts=''
+# System language
+lang en_US.UTF-8
+
+# Network information
+#network  --bootproto=dhcp --device=br0 --bridgeslaves=eth0 --ipv6=off --activate --hostname=localhost.localdomain
+#network  --bootproto=dhcp --device=br1 --bridgeslaves=eth1 --ipv6=off --onboot=off 
+# Reboot after installation
+reboot
+# Root password
+rootpw --iscrypted "{{ kickstart_initial_password_encrypted }}"
+# SELinux configuration
+selinux --enforcing
+# System services
+services --disabled="firewalld,kdump" --enabled="postfix,rsyslog,chronyd"
+# Do not configure the X Window System
+skipx
+# System timezone
+timezone UTC --utc
+# System bootloader configuration
+ignoredisk --only-use=sda,sdb,sdc,sdd,sde,sdf,sdg,sdh
+bootloader --location=mbr --boot-drive=sda --append="net.ifnames=0" --driveorder=sda,sdb,sdc,sdd,sde,sdf,sdh
+zerombr
+clearpart --drives=sda,sdb,sdc,sdd,sde,sdf,sdg,sdh --all --initlabel
+
+# Disk partitioning information
+part raid.200 --fstype="mdmember" --ondisk=sda --size=1000
+part raid.210 --fstype="mdmember" --ondisk=sdb --size=1000
+part raid.220 --fstype="mdmember" --ondisk=sdc --size=1000
+part raid.230 --fstype="mdmember" --ondisk=sdd --size=1000
+part raid.240 --fstype="mdmember" --ondisk=sde --size=1000
+part raid.250 --fstype="mdmember" --ondisk=sdf --size=1000
+part raid.260 --fstype="mdmember" --ondisk=sdg --size=1000
+part raid.270 --fstype="mdmember" --ondisk=sdh --size=1000
+part raid.300 --fstype="mdmember" --ondisk=sda --size=477
+part raid.310 --fstype="mdmember" --ondisk=sdb --size=477
+part raid.320 --fstype="mdmember" --ondisk=sdc --size=477
+part raid.330 --fstype="mdmember" --ondisk=sdd --size=477
+part raid.340 --fstype="mdmember" --ondisk=sde --size=477
+part raid.350 --fstype="mdmember" --ondisk=sdf --size=477
+part raid.360 --fstype="mdmember" --ondisk=sdg --size=477
+part raid.370 --fstype="mdmember" --ondisk=sdh --size=477
+part raid.400 --fstype="mdmember" --ondisk=sda --size=65536 --grow
+part raid.410 --fstype="mdmember" --ondisk=sdb --size=65536 --grow
+part raid.420 --fstype="mdmember" --ondisk=sdc --size=65536 --grow
+part raid.430 --fstype="mdmember" --ondisk=sdd --size=65536 --grow
+part raid.440 --fstype="mdmember" --ondisk=sde --size=65536 --grow
+part raid.450 --fstype="mdmember" --ondisk=sdf --size=65536 --grow
+part raid.460 --fstype="mdmember" --ondisk=sdg --size=65536 --grow
+part raid.470 --fstype="mdmember" --ondisk=sdh --size=65536 --grow
+
+raid /boot     --device=0 --fstype="ext4"    --level=RAID1  raid.200 raid.210 raid.220 raid.230 raid.240 raid.250 raid.260 raid.270
+raid /boot/efi --device=1 --fstype="efi" --level=RAID1 --fsoptions="umask=0077,shortname=winnt" raid.300 raid.310 raid.320 raid.330 raid.340 raid.350 raid.360 raid.370
+raid pv.610 --device=2 --fstype="lvmpv" --level=RAID6 --encrypted --passphrase="{{ luks_initial_password }}" --chunksize=512 raid.400 raid.410 raid.420 raid.430 raid.440 raid.450 raid.460 raid.470
+
+volgroup vg_guests --pesize=4096 pv.610
+
+logvol /     --fstype="xfs"  --size=100000 --name=LogVol00 --vgname=vg_guests
+logvol swap  --fstype="swap" --size=64000  --name=LogVol01 --vgname=vg_guests
+
+%packages
+-geolite2-city
+-iwl*firmware
+-subscription-manager
+bash-completion
+bind-utils
+clevis*
+cronie-noanacron
+crontabs
+dhclient
+grubby
+iptables-services
+nfs-utils
+nmap-ncat
+openssh-clients
+openssh-server
+patch
+postfix
+rsync
+screen
+strace
+s-nail
+tmpwatch
+tmux
+traceroute
+vim-enhanced
+zsh
+-insights-client
+-rhc
+%end
+
+%post --nochroot --log=/mnt/sysimage/root/post.output --erroronfail
+mkdir /mnt/sysimage/root/tmp
+chroot /mnt/sysimage /usr/bin/curl https://infrastructure.fedoraproject.org/rhel/ks/post/rhel10-post.sh -o /root/tmp/rhel10-post.sh
+chroot /mnt/sysimage sh /root/tmp/rhel10-post.sh
+%end
