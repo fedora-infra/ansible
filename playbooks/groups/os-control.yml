@@ -25,6 +25,16 @@
 
   tasks:
 
+  - name: Install unzip
+    ansible.builtin.package:
+      name: unzip
+      state: present
+
+  - name: Install tar
+    ansible.builtin.package:
+      name: tar
+      state: present
+
   - name: Create the directories to hold the templates
     ansible.builtin.file:
       path: "/etc/openshift_apps"
