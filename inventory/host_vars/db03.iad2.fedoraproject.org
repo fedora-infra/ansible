@@ -19,7 +19,7 @@ ks_url: https://infrastructure.fedoraproject.org/repo/rhel/ks/kvm-rhel
 lvm_size: 500000
 mariadb_root_password: "{{ db03_mysql_root_password }}"
 mem_size: 16384
-num_cpus: 4
+num_cpus: 8
 shared_buffers: "4GB"
 tcp_ports: [5432, 443, 3306]
 vmhost: vmhost-x86-08.iad2.fedoraproject.org
