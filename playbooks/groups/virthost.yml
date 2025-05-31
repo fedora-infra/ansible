@@ -40,7 +40,7 @@
   roles:
   - base
   - {role: rkhunter, when: ansible_distribution_major_version|int < 10}
-  - {role: nagios_client}
+  - {role: nagios_client, when: ansible_distribution_major_version|int < 10}
   - zabbix/zabbix_agent
   - hosts
   - {role: openvpn/client, when: vpn|bool}
