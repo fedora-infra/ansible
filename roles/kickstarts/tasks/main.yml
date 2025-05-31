@@ -18,6 +18,7 @@
     src="{{ item }}"
     dest="/srv/web/repo/rhel/ks/post/{{ item }}"
   with_items:
+    - rhel10-post.sh
     - rhel9-post.sh
     - fedora-post.sh
   tags:
