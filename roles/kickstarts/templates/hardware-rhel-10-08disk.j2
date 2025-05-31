@@ -2,8 +2,6 @@
 ## This kickstart is for Dell systems with 8 disks. It will build either a virthost or cloud.
 ##
 
-# System authorization information
-auth --enableshadow --passalgo=sha512
 # Use network installation
 vnc --password "{{ kickstart_vnc_password }}"
 # Use network install
