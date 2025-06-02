@@ -71,19 +71,6 @@
     ipa_initial and ansible_distribution_major_version|int > 8 and
     ansible_distribution == 'RedHat'
 
-- name: Install IPA vault
-  ansible.builtin.command:
-    argv:
-      - ipa-kra-install
-      - --password={{ ipa_dm_password }}
-      - --unattended
-      - --log-file=/var/log/ipakrainstall.log
-    creates: /var/log/ipakrainstall.log
-  tags:
-  - ipa/server
-  - config
-  when: ipa_initial
-
 - name: Create LDIF directory
   ansible.builtin.file:
     path: /root/ldif
@@ -163,7 +150,6 @@
     ansible.builtin.command:
       argv:
         - ipa-replica-install
-        - --setup-kra
         - --setup-ca
         - --admin-password={{ ipa_admin_password }}
         - --no-host-dns
