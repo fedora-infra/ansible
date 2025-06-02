@@ -29,7 +29,6 @@ poddlers_toddlers:
     callback: cleaning_packager_groups:CleanPackagerGroups
     topics:
       - "org.fedoraproject.*.ipa.group_remove_member.v1"
-    replicas: 0
 
   - name: distgit-bugzilla-sync
     callback: distgit_bugzilla_sync:DistgitBugzillaSync
