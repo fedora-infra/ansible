@@ -1,0 +1,26 @@
+#
+# This playbook rename a user in staging for the Fedora Username Change project
+#
+
+---
+- name: Rename user on stg
+  hosts: ipa_stg[0]
+  user: root
+  tasks:
+
+  # this is just basic verification for usernale to avoid argument injection in the command
+  # tested with:
+  #  ansible-playbook playbooks/rename_user_stg.yml -i localhost,  -c local -e old_name=misc -e new_name=notmisc
+  #  ansible-playbook playbooks/rename_user_stg.yml -i localhost,  -c local -e old_name=misc -e new_name=--notmisc
+  #  ansible-playbook playbooks/rename_user_stg.yml -i localhost,  -c local -e old_name=misc -e "new_name='not|reboot'"
+  #  ansible-playbook playbooks/rename_user_stg.yml -i localhost,  -c local -e old_name=misc -e "new_name='not misc'"
+  - name: Check arguments
+    ansible.builtin.fail:
+      msg: "Incorrect argument: {{ item }}"
+    when: "not (item | regex_search('^\\w+$'))"
+    with_items:
+    - "{{ old_name }}"
+    - "{{ new_name }}"
+
+  - name: Rename the user
+    ansible.builtin.command: ipa user-mod "{{ old_name }}" --rename "{{ new_name }}"
