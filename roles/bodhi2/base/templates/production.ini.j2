@@ -685,9 +685,13 @@ pyramid.debug_notfound = false
 pyramid.debug_routematch = false
 pyramid.default_locale_name = en
 
+{% if env == 'production' %}
 pyramid.includes =
     pyramid_sawing
 pyramid_sawing.file = /etc/bodhi/logging.yaml
+{% elif env == 'staging' %}
+# pyramid.includes =
+{% endif %}
 
 debugtoolbar.hosts = 127.0.0.1 ::1
 
@@ -764,3 +768,67 @@ port = 6543
 [pshell]
 m = bodhi.server.models
 #db = bodhi.server.util.pshell_db
+
+{% if env == 'staging' %}
+# Logging
+[loggers]
+keys = root, bodhi, gunicorn, sqlalchemy, celery, celery_worker_job
+
+[handlers]
+keys = console, smtp
+
+[formatters]
+keys = generic
+
+[logger_root]
+level = INFO
+handlers = console, smtp
+
+[logger_bodhi]
+level = DEBUG
+handlers = console, smtp
+qualname = bodhi
+
+[logger_gunicorn]
+level = DEBUG
+handlers = console, smtp
+qualname = gunicorn
+
+[logger_sqlalchemy]
+level = INFO
+handlers = console, smtp
+qualname = sqlalchemy.engine
+# "level = INFO" logs SQL queries.
+# "level = DEBUG" logs SQL queries and results.
+# "level = WARN" logs neither.  (Recommended for production systems.)
+
+[logger_celery]
+level = DEBUG
+handlers = console, smtp
+qualname = celery
+
+[logger_celery_worker_job]
+level = INFO
+handlers = console, smtp
+qualname = celery.worker.job
+propagate = 1
+
+[handler_console]
+class = StreamHandler
+args = (sys.stderr,)
+level = DEBUG
+formatter = generic
+
+[handler_smtp]
+class = SMTPHandler
+level = ERROR
+formatter = generic
+mailhost = bastion
+fromaddr = updates@stg.fedoraproject.org
+toaddrs = bodhiadmin-members@fedoraproject.org
+subject = Bodhi error
+
+[formatter_generic]
+format = %(asctime)s %(levelname)-5.5s [%(name)s][%(threadName)s] %(message)s
+
+{% endif %}
