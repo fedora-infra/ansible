@@ -124,6 +124,7 @@ Plugins = osbuild koji-fedoramessaging runroot_hub tag2distrepo sidetag_hub save
 tag =
     # We don't want to allow any draft builds to be tagged yet
     is_draft :: deny
+{% if koji_instance == "primary" %}
     user bodhi && tag *-override && package kernel shim grub2 pesign fwupd fwupd-efi :: allow
     has_perm autosign && fromtag *-pending && package kernel shim grub2 pesign fwupd fwupd-efi :: allow
     has_perm autosign && fromtag *-candidate && package kernel shim grub2 pesign fwupd fwupd-efi :: allow
@@ -155,6 +156,7 @@ tag =
         is_sidetag && is_sidetag_owner :: allow
         all :: deny Tagging OpenH264 to non-openh264 tags is forbidden.
     }
+{% endif %}
 
 channel =
     method osbuildImage :: use osbuild
@@ -168,11 +170,14 @@ channel =
        has_perm customchannel :: req
     }
 
+{% if koji_instance == "primary" %}
 #we want pesign-test-app to always go to the secure-boot channel even for scratch builds
     source */pesign-test-app* && has_perm secure-boot :: use secure-boot
+{% endif %}
 #make sure all scratch builds go to default channel
     method build && bool scratch :: use default
 
+{% if koji_instance == "primary" %}
 #policys to deal with secure boot allowing only people in the secure-boot group to build the packages
     source */kernel* && has_perm secure-boot :: use secure-boot
     source */shim* && has_perm secure-boot :: use secure-boot
@@ -189,6 +194,7 @@ channel =
     source */webkitgtk* :: use heavybuilder
     source */webkit2gtk4* :: use heavybuilder
     source */firefox* :: use heavybuilder
+{% endif %}
 
     is_child_task :: parent
     all :: use default
