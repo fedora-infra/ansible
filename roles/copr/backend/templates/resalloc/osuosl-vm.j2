@@ -8,9 +8,33 @@ set -e
 set -x
 test -n "$RESALLOC_NAME"
 
-flavor=db5a95e1-5bf6-4bb4-9489-70362d936cd1 # name: 'fedora.copr'
+# default flavor; name: 'fedora.copr'
+flavor=db5a95e1-5bf6-4bb4-9489-70362d936cd1
 network=a5bd5b53-1dc4-423c-a854-aa1cc9ee5456 # name: 'public'
 playbook="{{ provision_directory }}/libvirt-provision.yml"
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -f | --flavor)
+            if [ -n "$2" ]; then
+                flavor="$2"
+                shift 2
+            else
+                echo "Error: --flavor requires argument (--flavor VALUE)" >&2
+                exit 1
+            fi
+            ;;
+        --flavor=*)
+            flavor="${1#--flavor=}"
+            shift
+            ;;
+        *)
+            echo "Error: Unknown option '$1'" >&2
+            echo "Usage: $0 [--flavor FLAVOR_ID]" >&2
+            exit 1
+            ;;
+    esac
+done
 
 resalloc-openstack-new \
     --image "{{ copr_builder_images.osuosl.ppc64le  }}" \

@@ -120,6 +120,69 @@ aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot 
       Thank you Amazon Web Services, Inc. for sponsoring these builders.
 {% endmacro %}
 
+{% macro osuosl_p09(on_demand=none) %}
+{% if on_demand == 'powerful' %}
+{% set itype='7a93cfcf-7f2e-4dd0-84c6-2e5029daee22' %}
+{% endif %}
+{% if on_demand is none %}
+# Power9 VMs in openpower-controller.osuosl.org
+{% else %}
+# Power9 VMs in openpower-controller.osuosl.org for on-demand {{ on_demand }}
+{% endif %}
+copr_osuosl_p09_{% if on_demand %}{{ on_demand }}_{% endif %}{% if devel %}dev{% else %}prod{% endif %}:
+{% if on_demand == 'powerful' %}
+{% if devel %}
+  # just for testing, turned off by default
+  max: 0
+{% else %}
+  max: 3
+{% endif %}
+  max_starting: 1
+{% else %}
+{% if devel %}
+  max: 3
+  max_prealloc: 1
+  max_starting: 1
+{% else %}
+  max: 15
+  max_prealloc: 6
+  max_starting: 4
+{% endif %}
+{% endif %}
+  tags:
+    - copr_builder
+    - name: arch_noarch
+      priority: -25
+    - name: arch_ppc64le
+      priority: -10
+    - arch_ppc64le_native
+    - in_osuosl
+    - name: arch_power9
+      priority: -10
+
+{% if on_demand == 'powerful' %}
+  tags_on_demand:
+    - on_demand_{{ on_demand }}
+
+  # name: p9.xxlarge
+  cmd_new: 'copr-resalloc-vm-ip-to-yaml /var/lib/resallocserver/resalloc_provision/osuosl-vm --flavor {{ itype }}'
+{% else %}
+  cmd_new: 'copr-resalloc-vm-ip-to-yaml /var/lib/resallocserver/resalloc_provision/osuosl-vm'
+{% endif %}
+  cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
+  cmd_livecheck: "resalloc-check-vm-ip"
+  cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
+  cmd_list: '/var/lib/resallocserver/resalloc_provision/osuosl-list'
+  livecheck_period: 180
+  reuse_opportunity_time: 90
+  reuse_max_count: 8
+  reuse_max_time: 1800
+  description: >
+    A pool of {% if on_demand == 'powerful' %}powerful {% endif %}ppc64le instances on hypervisors in the OSU Open Source Lab.
+    These machines have POWER9 processors.
+    Thank you Oregon State University for sponsoring these builders.
+{% endmacro %}
+
 # x86_64 hypervisors
 {% for hv in ["01", "02", "03", "04"] %}
 {% if "x86_hypervisor_" + hv in builders %}
@@ -344,40 +407,11 @@ copr_ic_s390x_{{ zone }}_{% if devel %}dev{% else %}prod{% endif %}:
 
 {% endfor %}
 
-# Power9 VMs in openpower-controller.osuosl.org
-copr_osuosl_p09_{% if devel %}dev{% else %}prod{% endif %}:
-{% if devel %}
-  max: 3
-  max_prealloc: 1
-  max_starting: 1
-{% else %}
-  max: 15
-  max_prealloc: 6
-  max_starting: 4
-{% endif %}
-  tags:
-    - copr_builder
-    - name: arch_noarch
-      priority: -25
-    - name: arch_ppc64le
-      priority: -10
-    - arch_ppc64le_native
-    - in_osuosl
-    - name: arch_power9
-      priority: -10
-  cmd_new: 'copr-resalloc-vm-ip-to-yaml /var/lib/resallocserver/resalloc_provision/osuosl-vm'
-  cmd_delete: "/var/lib/resallocserver/resalloc_provision/vm-delete"
-  cmd_livecheck: "resalloc-check-vm-ip"
-  cmd_release: "/var/lib/resallocserver/resalloc_provision/vm-release"
-  cmd_list: '/var/lib/resallocserver/resalloc_provision/osuosl-list'
-  livecheck_period: 180
-  reuse_opportunity_time: 90
-  reuse_max_count: 8
-  reuse_max_time: 1800
-  description: >
-    A pool of ppc64le instances on hypervisors in the OSU Open Source Lab.
-    These machines have POWER9 processors.
-    Thank you Oregon State University for sponsoring these builders.
+# Power9 builders in OSU osuosl
+{{ osuosl_p09() }}
+
+# High-performance power9 builders in OSU osuosl
+{{ osuosl_p09(on_demand='powerful') }}
 
 #### AWS x86_64
 # on-premise HV has priority 0 and above
