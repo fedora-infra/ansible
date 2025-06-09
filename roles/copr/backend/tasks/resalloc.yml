@@ -160,7 +160,7 @@
 - name: Resalloc, server config
   ansible.builtin.template:
     src: "resalloc/{{ item }}"
-    dest: "/etc/resallocserver/{{ item }}"
+    dest: "/etc/resallocserver/{{ item | replace('.j2', '') }}"
     mode: "0640"
     owner: resalloc
     group: resalloc

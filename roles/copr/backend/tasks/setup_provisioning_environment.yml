@@ -25,7 +25,7 @@
 - name: Resalloc, generate vars.yml file
   ansible.builtin.template:
     src: "{{ roles_path }}/copr/backend/templates/provision/{{ item }}"
-    dest: "{{ provision_directory }}/{{ item }}"
+    dest: "{{ provision_directory }}/{{ item | replace('.j2', '') }}"
   with_items:
   - vars.yml.j2
   tags:
@@ -59,7 +59,7 @@
 - name: Generate cloud-oriented vars files
   ansible.builtin.template:
     src: "{{ roles_path }}/copr/backend/templates/provision/{{ item }}"
-    dest: "{{ provision_directory }}/{{ item }}"
+    dest: "{{ provision_directory }}/{{ item | replace('.j2', '') }}"
   with_items:
   - aws_cloud_vars.yml.j2
   tags:
