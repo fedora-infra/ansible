@@ -149,6 +149,7 @@ tag =
 # These two rules makes sure people can't build srpms in infra tags and tag them into distribution tags
     tag *infra* && fromtag *infra* && has_perm infra :: allow
     fromtag *infra* :: deny
+{% endif %}
     all :: allow
 # This rule is to make sure OpenH264 builds never make it to inappropriate tags
     package openh264 :: {
@@ -156,7 +157,6 @@ tag =
         is_sidetag && is_sidetag_owner :: allow
         all :: deny Tagging OpenH264 to non-openh264 tags is forbidden.
     }
-{% endif %}
 
 channel =
     method osbuildImage :: use osbuild
