@@ -49,6 +49,6 @@ xz
 
 %post --nochroot --log=/mnt/sysimage/root/post.output --erroronfail
 mkdir /mnt/sysimage/root/tmp
-chroot /mnt/sysimage /usr/bin/curl https://infrastructure.fedoraproject.org/rhel/ks/post/buildvm-post.sh -o /root/tmp/fedora-post.sh
+chroot /mnt/sysimage /usr/bin/curl https://infrastructure.fedoraproject.org/rhel/ks/post/fedora-post.sh -o /root/tmp/fedora-post.sh
 chroot /mnt/sysimage /bin/bash /root/tmp/fedora-post.sh
 %end
