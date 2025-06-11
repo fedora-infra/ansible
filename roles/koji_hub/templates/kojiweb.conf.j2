@@ -86,7 +86,7 @@ Alias /kojira "/mnt/koji/kojira/"
     Require all granted
 </Directory>
 
-{% if env == "production"  %}
+{% if env == "production" and koji_instance == "primary"  %}
 # use redirects for compose and packages locations
 RewriteRule ^/compose(.+) https://kojipkgs.fedoraproject.org/compose$1  [R=301,L]
 RewriteRule ^/packages(.+) https://kojipkgs.fedoraproject.org/packages$1  [R=301,L]
