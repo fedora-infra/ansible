@@ -45,7 +45,7 @@
     mnt_dir: '/mnt/fedora_koji'
     nfs_src_dir: 'fedora_koji'
 
-  - { role: bodhi2/backend, when: datacenter != 'rdu3 }
+  - { role: bodhi2/backend, when: datacenter != 'rdu3' }
 
   - role: nfs/client
     mnt_dir: '/mnt/koji/ostree'
