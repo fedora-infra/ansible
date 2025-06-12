@@ -49,7 +49,7 @@
           get_url:
             dest: /var/www/html/rhcos/
             mode: "0755"
-            url: "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/{{ rhcos_version }}/{{ item }}"
+            url: "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/{{ item }}"
 #          run_once: true
           ignore_errors: true
           with_items:
@@ -71,7 +71,7 @@
       get_url:
         dest: /srv/web/infra/bigfiles/tftpboot/rhcos/
         mode: "0755"
-        url: "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/{{ rhcos_version }}/{{ item }}"
+        url: "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/{{ item }}"
       run_once: true
       ignore_errors: true
       with_items:
