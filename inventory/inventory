@@ -836,16 +836,19 @@ pagure-stg01.fedoraproject.org
 os_control
 ocp_controlplane
 ocp_workers
-#ocp_boostrap
+ocp_boostrap
 
 [ocp_vms:children]
-#ocp_boostrap
+ocp_boostrap
 ocp_controlplane
 
 [ocp_controlplane]
-ocp01.ocp.iad2.fedoraproject.org
-ocp02.ocp.iad2.fedoraproject.org
-ocp03.ocp.iad2.fedoraproject.org
+#ocp01.ocp.iad2.fedoraproject.org
+#ocp02.ocp.iad2.fedoraproject.org
+#ocp03.ocp.iad2.fedoraproject.org
+ocp01.ocp.rdu3.fedoraproject.org
+ocp02.ocp.rdu3.fedoraproject.org
+ocp03.ocp.rdu3.fedoraproject.org
 
 [ocp_workers]
 worker01.ocp.iad2.fedoraproject.org
@@ -855,8 +858,8 @@ worker04.ocp.iad2.fedoraproject.org
 worker05.ocp.iad2.fedoraproject.org
 worker06.ocp.iad2.fedoraproject.org
 
-#[ocp_boostrap]
-#bootstrap.ocp.iad2.fedoraproject.org
+[ocp_boostrap]
+bootstrap.ocp.rdu3.fedoraproject.org
 
 [ocp_stg:children]
 os_control_stg
