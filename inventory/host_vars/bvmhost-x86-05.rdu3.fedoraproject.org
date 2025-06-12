@@ -1,0 +1,56 @@
+---
+br0_ipv4: 10.16.169.15
+br0_ipv4_gw: 10.16.169.254
+br0_ipv4_nm: 24
+br0_port0_mac: "{{ mac1 }}"
+datacenter: rdu3
+dns1: 10.16.163.33
+dns2: 10.16.163.34
+dns_search1: "rdu3.fedoraproject.org"
+dns_search2: "fedoraproject.org"
+dns_search3: "iad2.fedoraproject.org"
+has_ipv4: yes
+mac0: c4:cb:e1:e1:60:fc
+mac1: c4:cb:e1:e1:60:fd
+mac2: c4:70:bd:a4:0c:0c
+mac3: c4:70:bd:a4:0c:0d
+network_connections:
+   # Bridge profile
+   - name: br0
+     state: up
+     type: bridge
+     mtu: 9000
+     autoconnect: yes
+     ip:
+      address:
+        - "{{ br0_ipv4 }}/{{ br0_ipv4_nm }}"
+      dhcp4: no
+      dns:
+        - "{{ dns1 }}"
+        - "{{ dns2 }}"
+      dns_search:
+        - "{{ dns_search1 }}"
+        - "{{ dns_search2 }}"
+      gateway4: "{{ br0_ipv4_gw }}"
+   # Bond profile
+   - name: bond0
+     type: bond
+     interface_name: bond0
+     mtu: 9000
+     controller: br0
+     bond:
+       mode: 802.3ad
+   # Port profile for the 1st Ethernet device
+   - name: bond0-port1
+     mac: "{{ mac2 }}"
+     type: ethernet
+     controller: bond0
+     state: up
+     mtu: 9000
+   # Port profile for the 2nd Ethernet device
+   - name: bond0-port2
+     mac: "{{ mac3 }}"
+     type: ethernet
+     controller: bond0
+     state: up
+     mtu: 9000
