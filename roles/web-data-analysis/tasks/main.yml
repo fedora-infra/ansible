@@ -4,6 +4,7 @@
   tags:
     - packages
     - web-data
+  when: ansible_distribution_major_version|int <= 9
 
 - name: Make sure the /usr/local/share/web-data-analysis directory exists
   ansible.builtin.file: path=/usr/local/share/web-data-analysis state=directory

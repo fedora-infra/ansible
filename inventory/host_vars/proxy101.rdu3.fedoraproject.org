@@ -11,7 +11,7 @@ freezes: true
 has_ipv4: yes
 ks_repo: https://infrastructure.fedoraproject.org/pub/fedora/linux/releases/42/Server/x86_64/os/
 ks_url: https://infrastructure.fedoraproject.org/repo/rhel/ks/kvm-fedora
-mac0: 52:54:00:1F:48:0A
+mac0: "{{ ansible_default_ipv4.macaddress }}"
 mem_size: 16384
 network_connections:
   - autoconnect: yes
