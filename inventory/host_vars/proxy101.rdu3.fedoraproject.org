@@ -5,7 +5,7 @@ dns2: 10.16.163.34
 dns_search1: "rdu3.fedoraproject.org"
 dns_search2: "vpn.fedoraproject.org"
 dns_search3: "fedoraproject.org"
-eth0_ipv4: 10.16.163.76
+eth0_ipv4_ip: 10.16.163.76
 eth0_ipv4_gw: 10.16.163.254
 freezes: true
 has_ipv4: yes
@@ -17,7 +17,7 @@ network_connections:
   - autoconnect: yes
     ip:
       address:
-        - "{{ eth0_ipv4 }}/{{ eth0_ipv4_nm }}"
+        - "{{ eth0_ipv4_ip }}/{{ eth0_ipv4_nm }}"
       dhcp4: no
       dns:
         - "{{ dns1 }}"
