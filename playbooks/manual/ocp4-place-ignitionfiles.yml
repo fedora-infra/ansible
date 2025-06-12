@@ -60,7 +60,7 @@
         - name: == OCP KVM provisioning == Ensuring symlink for correct version {{ rhcos_version }}
           ansible.builtin.file:
             state: link
-            src: "/var/www/html/rhcos/rhcos-{{ rhcos_version }}-x86_64-metal.x86_64.raw.gz"
+            src: "/var/www/html/rhcos/rhcos-metal.x86_64.raw.gz"
             dest: "/var/www/html/rhcos/rhcos-metal.raw"
       tags:
         - ignition
