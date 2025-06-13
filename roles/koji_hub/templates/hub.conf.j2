@@ -166,7 +166,7 @@ channel =
     user zuul :: use ci
 {% if koji_instance == "secondary" %}
 # Some special policy for riscv koji to send generic tasks to x86 builders.
-    method build :: use generic
+#    method build :: use generic
     method tagBuild :: use generic
 {% endif %}
     has req_channel :: {
