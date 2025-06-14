@@ -745,7 +745,7 @@
     keephost: true
     tags:
     - ocp-rdu3.fedoraproject.org
-    when: env == "production" and datacenter == 'rdu3'
+    when: env == "production" and datacenter == "rdu3"
 
   - role: httpd/reverseproxy
     website: "apps.ocp-rdu3{{ env_suffix }}.fedoraproject.org"
@@ -758,7 +758,7 @@
     keephost: true
     tags:
     - apps.ocp-rdu3.fedoraproject.org
-    when: env == "production" and datacenter == 'rdu3'
+    when: env == "production" and datacenter == "rdu3"
 
   - role: httpd/reverseproxy
     website: "provision{{ env_suffix }}.fedoraproject.org"
