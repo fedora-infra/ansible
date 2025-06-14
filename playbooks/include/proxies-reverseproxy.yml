@@ -749,7 +749,7 @@
 
   - role: httpd/reverseproxy
     website: "apps.ocp-rdu3{{ env_suffix }}.fedoraproject.org"
-    destname: apps.ocp-rdu3
+    destname: apps-ocp-rdu3
     balancer_name: apps-ocp-rdu3
     balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_rdu3_stg, ocp_nodes_rdu3) }}"
     targettype: openshift
