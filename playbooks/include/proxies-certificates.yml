@@ -54,6 +54,12 @@
     - apps.ocp.fedoraproject.org
 
   - role: httpd/certificate
+    certname: wildcard-2025.apps.ocp-rdu3.fedoraproject.org
+    SSLCertificateChainFile: wildcard-2025.apps.ocp-rdu3.fedoraproject.org.intermediate.cert
+    tags:
+    - apps.ocp-rdu3.fedoraproject.org
+
+  - role: httpd/certificate
     certname: getfedora.org
     SSLCertificateChainFile: getfedora.org.intermediate.cert
     tags:
