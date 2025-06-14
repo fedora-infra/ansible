@@ -741,6 +741,7 @@
     balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_rdu3_stg, ocp_nodes_rdu3) }}"
     targettype: openshift
     ocp4-rdu3: true
+    ocp4: false
     keephost: true
     tags:
     - ocp-rdu3.fedoraproject.org
@@ -753,6 +754,7 @@
     balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_rdu3_stg, ocp_nodes_rdu3) }}"
     targettype: openshift
     ocp4-rdu3: true
+    ocp4: false
     keephost: true
     tags:
     - apps.ocp-rdu3.fedoraproject.org
