@@ -740,7 +740,7 @@
     balancer_name: ocp-rdu3
     balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_rdu3_stg, ocp_nodes_rdu3) }}"
     targettype: openshift
-    ocp4-rdu3: true
+    ocp4_rdu3: true
     ocp4: false
     keephost: true
     tags:
@@ -753,7 +753,7 @@
     balancer_name: apps-ocp-rdu3
     balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_rdu3_stg, ocp_nodes_rdu3) }}"
     targettype: openshift
-    ocp4-rdu3: true
+    ocp4_rdu3: true
     ocp4: false
     keephost: true
     tags:
