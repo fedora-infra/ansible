@@ -735,6 +735,30 @@
     when: env == "production"
 
   - role: httpd/reverseproxy
+    website: "ocp-rdu3{{ env_suffix }}.fedoraproject.org"
+    destname: ocp-rdu3
+    balancer_name: ocp-rdu3
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_rdu3_stg, ocp_nodes_rdu3) }}"
+    targettype: openshift
+    ocp4-rdu3: true
+    keephost: true
+    tags:
+    - ocp-rdu3.fedoraproject.org
+    when: env == "production" and datacenter == 'rdu3'
+
+  - role: httpd/reverseproxy
+    website: "apps.ocp-rdu3{{ env_suffix }}.fedoraproject.org"
+    destname: apps.ocp-rdu3
+    balancer_name: apps-ocp-rdu3
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_rdu3_stg, ocp_nodes_rdu3) }}"
+    targettype: openshift
+    ocp4-rdu3: true
+    keephost: true
+    tags:
+    - apps.ocp-rdu3.fedoraproject.org
+    when: env == "production" and datacenter == 'rdu3'
+
+  - role: httpd/reverseproxy
     website: "provision{{ env_suffix }}.fedoraproject.org"
     destname: zezere
     balancer_name: app-os

@@ -210,11 +210,18 @@ ocp_nodes:
   - worker04.ocp.iad2.fedoraproject.org
   - worker05.ocp.iad2.fedoraproject.org
   - worker06.ocp.iad2.fedoraproject.org
+ocp_nodes_rdu3:
+  - worker01.ocp.rdu3.fedoraproject.org
 ocp_wildcard_cert_file: wildcard-2024.apps.ocp.fedoraproject.org.cert
 # This is the openshift wildcard cert for ocp
 ocp_wildcard_cert_name: wildcard-2024.apps.ocp.fedoraproject.org
 ocp_wildcard_int_file: wildcard-2024.apps.ocp.fedoraproject.org.intermediate.cert
 ocp_wildcard_key_file: wildcard-2024.apps.ocp.fedoraproject.org.key
+# rdu3 ocp cert while we are not yet moved
+ocp_rdu3_wildcard_cert_file: wildcard-2025.apps.ocp-rdu3.fedoraproject.org.cert
+ocp_rdu3_wildcard_cert_name: wildcard-2025.apps.ocp-rdu3.fedoraproject.org
+ocp_rdu3_wildcard_int_file: wildcard-2025.apps.ocp-rdu3.fedoraproject.org.intermediate.cert
+ocp_rdu3_wildcard_key_file: wildcard-2025.apps.ocp-rdu3.fedoraproject.org.key
 # Path to the openshift-ansible checkout as external git repo brought into
 # Fedora Infra
 openshift_ansible: /srv/web/infra/openshift-ansible/
