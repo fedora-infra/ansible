@@ -6,9 +6,9 @@ metadata:
   annotations:
     image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"openvpn:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"setup\")].image"},{"from":{"kind":"ImageStreamTag","name":"openvpn:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"openvpn\")].image"}]'
 spec:
-{% if datacenter == 'iad2' }
+{% if datacenter == 'iad2' %}
   replicas: {{ ocp_nodes | length }}
-{% elif datacenter == 'rdu3' }
+{% elif datacenter == 'rdu3' %}
   replicas: {{ ocp_nodes_rdu3 | length }}
 {% endif %}
   selector:
