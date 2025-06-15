@@ -128,8 +128,12 @@ ocp_nodes:
   - worker05.vpn.fedoraproject.org
   - worker06.vpn.fedoraproject.org
 # once vpn is up on rdu3 openshift we can switch this to use vpn
-#ocp_nodes_rdu3:
-#  - worker01-rdu3.vpn.fedoraproject.org
+ocp_nodes_rdu3:
+  - worker01-rdu3.vpn.fedoraproject.org
+  - worker02-rdu3.vpn.fedoraproject.org
+  - worker03-rdu3.vpn.fedoraproject.org
+  - worker04-rdu3.vpn.fedoraproject.org
+  - worker05-rdu3.vpn.fedoraproject.org
 postvpnservices:
   - haproxy
   - varnish
