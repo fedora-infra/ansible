@@ -1,7 +1,7 @@
 ---
 - name: Make the app be real
   # We don't have any VPN set up on stg
-  hosts: os_control[0]
+  hosts: os_control[0]:os-control01.rdu3.fedoraproject.org
   user: root
   gather_facts: false
 
