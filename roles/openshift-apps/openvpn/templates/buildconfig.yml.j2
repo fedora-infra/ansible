@@ -15,7 +15,7 @@ spec:
   runPolicy: Serial
   source:
     dockerfile: |-
-      FROM registry.fedoraproject.org/fedora:latest
+      FROM quay.io/fedora/fedora:latest
       RUN dnf -y install \
           openvpn && \
           dnf clean all
