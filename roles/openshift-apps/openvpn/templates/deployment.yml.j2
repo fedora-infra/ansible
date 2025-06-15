@@ -67,7 +67,7 @@ spec:
       - name: all-certs
         secret:
           secretName: openvpn-certs
-          defaultMode: "0400"
+          defaultMode: 0400
       - configMap:
           name: openvpn-config
         name: openvpn-config
