@@ -127,13 +127,14 @@ ocp_nodes:
   - worker04.vpn.fedoraproject.org
   - worker05.vpn.fedoraproject.org
   - worker06.vpn.fedoraproject.org
-# once vpn is up on rdu3 openshift we can switch this to use vpn
+# On most proxies we want to use the vpn to access the rdu3 compute nodes.
+# We override this for the rdu3 proxies themseleves, they go direct.
 ocp_nodes_rdu3:
-  - worker01.ocp.rdu3.fedoraproject.org
-  - worker02.ocp.rdu3.fedoraproject.org
-  - worker03.ocp.rdu3.fedoraproject.org
-  - worker04.ocp.rdu3.fedoraproject.org
-  - worker05.ocp.rdu3.fedoraproject.org
+  - worker01-rdu3.vpn.fedoraproject.org
+  - worker02-rdu3.vpn.fedoraproject.org
+  - worker03-rdu3.vpn.fedoraproject.org
+  - worker04-rdu3.vpn.fedoraproject.org
+  - worker05-rdu3.vpn.fedoraproject.org
 postvpnservices:
   - haproxy
   - varnish
