@@ -1,7 +1,7 @@
 ---
 - import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
   vars:
-    myhosts: "download_ibiblio:download_cc_rdu:download_iad2"
+    myhosts: "download_ibiblio:download_cc_rdu:download_iad2:download_rdu3"
 
 - name: Download servers
   hosts: download
@@ -84,7 +84,7 @@
 
   - name: Make a mnt/koji link
     ansible.builtin.file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji
-    when: datacenter == "iad2"
+    when: datacenter == "iad2" or datacenter == "rdu3"
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"

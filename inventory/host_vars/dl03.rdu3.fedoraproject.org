@@ -1,0 +1,22 @@
+---
+datacenter: rdu3
+dns1: 10.16.163.33
+dns2: 10.16.163.34
+dns_search1: "rdu3.fedoraproject.org"
+dns_search3: "fedoraproject.org"
+eth0_ipv4_gw: 10.16.163.254
+eth0_ipv4_ip: 10.16.163.51
+ks_repo: https://infrastructure.fedoraproject.org/repo/rhel/RHEL9-x86_64/
+ks_url: https://infrastructure.fedoraproject.org/repo/rhel/ks/kvm-rhel
+lvm_size: 20000
+max_mem_size: 20480
+mem_size: 16384
+nrpe_procs_crit: 1400
+nrpe_procs_warn: 1200
+num_cpus: 8
+public_hostname: dl-rdu01.fedoraproject.org
+tcp_ports: [80, 443, 873]
+virt_install_command: "{{ virt_install_command_one_nic }}"
+vmhost: vmhost-x86-03.rdu3.fedoraproject.org
+volgroup: /dev/vg_guests
+vpn: false

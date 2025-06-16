@@ -1,0 +1,15 @@
+---
+blocked_ips: []
+datacenter: rdu3
+dns: 10.16.163.33
+#
+# This host is externally reachable
+#
+external: true
+host_group: download-rdu3
+# nfs mount options, overrides the all/default
+nfs_mount_opts: "ro,hard,bg,intr,noatime,nodev,nosuid,actimeo=600,nfsvers=4"
+nrpe_procs_crit: 1000
+nrpe_procs_warn: 900
+rsyncd_conf: "rsyncd.conf.download-{{ datacenter }}"
+tcp_ports: [80, 443, 873]
