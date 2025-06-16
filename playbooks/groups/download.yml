@@ -40,9 +40,9 @@
   - apache
   - download
   - rsyncd
-  - { role: nfs/client, when: datacenter == "iad2" or datacenter == "rdu", mnt_dir: '/srv/pub', nfs_src_dir: 'fedora_ftp/fedora.redhat.com/pub' }
-  - { role: nfs/client, when: datacenter == "iad2" or datacenter == "rdu", mnt_dir: '/srv/pub/archive', nfs_src_dir: 'fedora_ftp_archive' }
-  - { role: nfs/client, when: datacenter == "iad2", mnt_dir: '/mnt/fedora_koji', nfs_src_dir: 'fedora_koji' } # needed for internal sync
+  - { role: nfs/client, when: datacenter == "iad2" or datacenter == "rdu" or datacenter == "rdu3" , mnt_dir: '/srv/pub', nfs_src_dir: 'fedora_ftp/fedora.redhat.com/pub' }
+  - { role: nfs/client, when: datacenter == "iad2" or datacenter == "rdu" or datacenter == "rdu3" , mnt_dir: '/srv/pub/archive', nfs_src_dir: 'fedora_ftp_archive' }
+  - { role: nfs/client, when: datacenter == "iad2" or datacenter == "rdu3" , mnt_dir: '/mnt/fedora_koji', nfs_src_dir: 'fedora_koji' } # needed for internal sync
   - sudo
 
   pre_tasks:
