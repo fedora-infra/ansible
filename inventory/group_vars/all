@@ -201,6 +201,8 @@ nrpe_procs_warn: 250
 num_cpus: 2
 # ocp4 is default now in some proxy roles
 ocp4: true
+# ocp4_rdu3 is not default yet, only set it for things that have moved to rdu3
+ocp4_rdu3: false
 # All the ocp production workers.
 # This is used by the openvpn openshift app to make sure there's a vpn pod on each node.
 ocp_nodes:
