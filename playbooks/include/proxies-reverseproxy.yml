@@ -720,7 +720,6 @@
     keephost: true
     tags:
     - ocp.fedoraproject.org
-    when: env == "production" and datacenter != 'rdu3'
 
   - role: httpd/reverseproxy
     website: "apps.ocp{{ env_suffix }}.fedoraproject.org"
@@ -732,33 +731,6 @@
     keephost: true
     tags:
     - apps.ocp.fedoraproject.org
-    when: env == "production" and datacenter != 'rdu3'
-
-  - role: httpd/reverseproxy
-    website: "ocp{{ env_suffix }}.fedoraproject.org"
-    destname: ocp
-    balancer_name: ocp
-    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
-    targettype: openshift
-    ocp4_rdu3: true
-    ocp4: false
-    keephost: true
-    tags:
-    - ocp.fedoraproject.org
-    when: env == "production" and datacenter == 'rdu3'
-
-  - role: httpd/reverseproxy
-    website: "apps.ocp{{ env_suffix }}.fedoraproject.org"
-    destname: apps.ocp
-    balancer_name: apps-ocp
-    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
-    targettype: openshift
-    ocp4_rdu3: true
-    ocp4: false
-    keephost: true
-    tags:
-    - apps.ocp.fedoraproject.org
-    when: env == "production" and datacenter == 'rdu3'
 
   - role: httpd/reverseproxy
     website: "ocp-rdu3{{ env_suffix }}.fedoraproject.org"
@@ -771,7 +743,6 @@
     keephost: true
     tags:
     - ocp-rdu3.fedoraproject.org
-    when: env == "production" and datacenter == "rdu3"
 
   - role: httpd/reverseproxy
     website: "apps.ocp-rdu3{{ env_suffix }}.fedoraproject.org"
@@ -784,7 +755,6 @@
     keephost: true
     tags:
     - apps.ocp-rdu3.fedoraproject.org
-    when: env == "production" and datacenter == "rdu3"
 
   - role: httpd/reverseproxy
     website: "provision{{ env_suffix }}.fedoraproject.org"
