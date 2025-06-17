@@ -640,17 +640,18 @@ host centos-x86-02.mgmt.rdu3.fedoraproject.org {
 
 # power10 in rdu3
 
-host bvmhost-p10-01.mgmt.rdu3.fedoraproject.org {
+host bvmhost-p10-centos01.mgmt.rdu3.fedoraproject.org {
      hardware ethernet 08:94:ef:85:2e:a6;
      fixed-address 10.16.160.139;
+     option host-name "bvmhost-p10-centos01.mgmt.rdu3.fedoraproject.org";
+}
+
+host bvmhost-p10-01.mgmt.rdu3.fedoraproject.org {
+     hardware ethernet 08:94:ef:85:3d:82;
+     fixed-address 10.16.160.140;
      option host-name "bvmhost-p10-01.mgmt.rdu3.fedoraproject.org";
 }
 
-host bvmhost-p10-02.mgmt.rdu3.fedoraproject.org {
-     hardware ethernet 08:94:ef:85:3d:82;
-     fixed-address 10.16.160.140;
-     option host-name "bvmhost-p10-02.mgmt.rdu3.fedoraproject.org";
-}
 
 # aarch64 in rdu3
 
@@ -760,6 +761,14 @@ host bvmhost-x86-06 {
      filename "uefi/shim.efi";
      next-server 10.16.163.10;
      option routers 10.16.169.254;
+     option subnet-mask 255.255.255.0;
+}
+
+host bvmhost-p10-01 {
+     hardware ethernet b8:e9:24:23:e5:b4
+     fixed-address 10.16.171.25;
+     next-server 10.16.163.10;
+     option routers 10.16.171.254;
      option subnet-mask 255.255.255.0;
 }
 
