@@ -1,0 +1,75 @@
+text
+lang en_US.UTF-8
+rootpw --iscrypted "{{ kickstart_initial_password_encrypted }}"
+firewall --enable --ssh
+timezone --utc UTC
+keyboard us
+selinux --enforcing
+skipx
+reboot
+
+clearpart --all --initlabel
+bootloader
+reqpart --add-boot
+
+# Disk partitioning information
+part None --fstype prepboot --ondrive=nvme0n1 --size=8
+part None --fstype prepboot --ondrive=nvme1n1 --size=8
+part None --fstype prepboot --ondrive=nvme2n1 --size=8
+part None --fstype prepboot --ondrive=nvme3n1 --size=8
+
+part raid.200 --fstype="mdmember" --ondisk=nvme0n1 --size=2048
+part raid.210 --fstype="mdmember" --ondisk=nvme1n1 --size=2048
+part raid.220 --fstype="mdmember" --ondisk=nvme2n1 --size=2048
+part raid.230 --fstype="mdmember" --ondisk=nvme3n1 --size=2048
+
+part raid.400 --fstype="mdmember" --ondisk=nvme0n1 --size=65536 --grow
+part raid.410 --fstype="mdmember" --ondisk=nvme1n1 --size=65536 --grow
+part raid.420 --fstype="mdmember" --ondisk=nvme2n1 --size=65536 --grow
+part raid.430 --fstype="mdmember" --ondisk=nvme3n1 --size=65536 --grow
+
+raid /boot  --device=0 --fstype="ext4"   --level=RAID1                 raid.200 raid.210 raid.220 raid.230
+raid pv.610 --device=2 --fstype="lvmpv" --level=RAID6 --chunksize=512 raid.400 raid.410 raid.420 raid.430
+
+volgroup vg_guests --pesize=4096 pv.610
+
+logvol /     --fstype="xfs" --size=102400 --name=LogVol00 --vgname=vg_guests
+logvol swap  --fstype="swap" --size=65536  --name=LogVol01 --vgname=vg_guests
+
+url --metalink "https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&arch=$basearch"
+repo --name=updates --metalink "https://mirrors.fedoraproject.org/metalink?repo=updates-released-f$releasever&arch=$basearch"
+
+%packages
+kernel-core
+-kernel
+bind-utils
+-cronie-anacron
+chrony
+cronie-noanacron
+crontabs
+dhcp-client
+iptables
+iptables-services
+python3-libselinux
+mailx
+nc
+nfs-utils
+openssh-clients
+openssh-server
+patch
+postfix
+rsyslog
+rsync
+screen
+tmux
+strace
+traceroute
+vim-enhanced
+xz
+%end
+
+%post --nochroot --log=/mnt/sysimage/root/post.output --erroronfail
+mkdir /mnt/sysimage/root/tmp
+chroot /mnt/sysimage /usr/bin/curl https://infrastructure.fedoraproject.org/rhel/ks/post/fedora-post.sh -o /root/tmp/fedora-post.sh
+chroot /mnt/sysimage /bin/bash /root/tmp/fedora-post.sh
+%end
