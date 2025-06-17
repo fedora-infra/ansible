@@ -30,11 +30,11 @@ spec:
           readOnly: true
         resources:
           requests:
-            cpu: 500m
-            memory: 1536Mi
+            cpu: 1000m
+            memory: 2048Mi
           limits:
-            cpu: 3000m
-            memory: 3072Mi
+            cpu: 6000m
+            memory: 8192Mi
         readinessProbe:
           timeoutSeconds: 10
           initialDelaySeconds: 5
