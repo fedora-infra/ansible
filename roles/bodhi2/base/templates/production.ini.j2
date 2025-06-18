@@ -814,13 +814,13 @@ qualname = celery.worker.job
 propagate = 1
 
 [handler_console]
-class = StreamHandler
+class = logging.StreamHandler
 args = (sys.stderr,)
 level = DEBUG
 formatter = generic
 
 [handler_smtp]
-class = SMTPHandler
+class = logging.handlers.SMTPHandler
 level = ERROR
 formatter = generic
 mailhost = bastion
