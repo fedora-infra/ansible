@@ -1,0 +1,102 @@
+# Use network installation
+vnc --password install
+# Use network install
+repo --name=epel --baseurl=https://infrastructure.fedoraproject.org/pub/epel/9/Everything/$basearch/
+repo --name="net-baseos"     --baseurl=https://infrastructure.fedoraproject.org/repo/rhel/rhel9/$basearch/rhel-9-for-$basearch-baseos-rpms/
+repo --name="net-appstream"  --baseurl=https://infrastructure.fedoraproject.org/repo/rhel/rhel9/$basearch/rhel-9-for-$basearch-appstream-rpms/
+repo --name="net-crb" --baseurl=https://infrastructure.fedoraproject.org/repo/rhel/rhel9/$basearch/codeready-builder-for-rhel-9-$basearch-rpms/
+
+# Firewall configuration
+firewall --disabled
+firstboot --disable
+ignoredisk --only-use=nvme0n1,nvme1n1,nvme2n1,nvme3n1,nvme4n1,nvme5n1
+# Keyboard layouts
+# old format: keyboard us
+# new format:
+keyboard --vckeymap=us --xlayouts=''
+# System language
+lang en_US.UTF-8
+
+# Network information
+# Reboot after installation
+reboot
+# Root password
+rootpw --iscrypted "{{ kickstart_initial_password_encrypted }}"
+# SELinux configuration
+selinux --enforcing
+# System services
+services --disabled="firewalld,kdump" --enabled="postfix,rsyslog,chronyd"
+# Do not configure the X Window System
+skipx
+# System timezone
+timezone UTC --utc
+# System bootloader configuration
+bootloader --location=mbr --boot-drive=nvme0n1 --append="net.ifnames=0" --driveorder=nvme0n1,nvme1n1,nvme2n1,nvme3n1,nvme4n1,nvme5n1
+zerombr
+clearpart --drives=nvme0n1,nvme1n1,nvme2n1,nvme3n1,nvme4n1,nvme5n1 --all --initlabel
+
+# Disk partitioning information
+part raid.200 --fstype="mdmember" --ondisk=nvme0n1 --size=1000
+part raid.210 --fstype="mdmember" --ondisk=nvme1n1 --size=1000
+part raid.220 --fstype="mdmember" --ondisk=nvme2n1 --size=1000
+part raid.230 --fstype="mdmember" --ondisk=nvme3n1 --size=1000
+part raid.240 --fstype="mdmember" --ondisk=nvme4n1 --size=1000
+part raid.250 --fstype="mdmember" --ondisk=nvme5n1 --size=1000
+part raid.300 --fstype="mdmember" --ondisk=nvme0n1 --size=477
+part raid.310 --fstype="mdmember" --ondisk=nvme1n1 --size=477
+part raid.320 --fstype="mdmember" --ondisk=nvme2n1 --size=477
+part raid.330 --fstype="mdmember" --ondisk=nvme3n1 --size=477
+part raid.340 --fstype="mdmember" --ondisk=nvme4n1 --size=477
+part raid.350 --fstype="mdmember" --ondisk=nvme5n1 --size=477
+part raid.400 --fstype="mdmember" --ondisk=nvme0n1 --size=65536 --grow
+part raid.410 --fstype="mdmember" --ondisk=nvme1n1 --size=65536 --grow
+part raid.420 --fstype="mdmember" --ondisk=nvme2n1 --size=65536 --grow
+part raid.430 --fstype="mdmember" --ondisk=nvme3n1 --size=65536 --grow
+part raid.440 --fstype="mdmember" --ondisk=nvme4n1 --size=65536 --grow
+part raid.450 --fstype="mdmember" --ondisk=nvme5n1 --size=65536 --grow
+
+raid /boot     --device=0 --fstype="ext4"    --level=RAID1  raid.200 raid.210 raid.220 raid.230 raid.240 raid.250
+raid /boot/efi --device=1 --fstype="efi" --level=RAID1 --fsoptions="umask=0077,shortname=winnt" raid.300 raid.310 raid.320 raid.330 raid.340 raid.350
+raid pv.610 --device=2 --fstype="lvmpv" --level=RAID6 --encrypted --passphrase="{{ luks_initial_password }}" --chunksize=512 raid.400 raid.410 raid.420 raid.430 raid.440 raid.450
+
+volgroup vg_guests --pesize=4096 pv.610
+
+logvol /     --fstype="xfs"  --size=32768 --name=LogVol00 --vgname=vg_guests
+logvol swap  --fstype="swap" --size=8192  --name=LogVol01 --vgname=vg_guests
+
+%packages
+-geolite2-city
+-iwl*firmware
+-subscription-manager
+bash-completion
+bind-utils
+clevis*
+cronie-noanacron
+crontabs
+dhclient
+grubby
+iptables-services
+nfs-utils
+nmap-ncat
+openssh-clients
+openssh-server
+patch
+postfix
+rsync
+screen
+strace
+s-nail
+tmpwatch
+tmux
+traceroute
+vim-enhanced
+zsh
+-insights-client
+-rhc
+%end
+
+%post --nochroot --log=/mnt/sysimage/root/post.output --erroronfail
+mkdir /mnt/sysimage/root/tmp
+chroot /mnt/sysimage /usr/bin/curl https://infrastructure.fedoraproject.org/rhel/ks/post/rhel9-post.sh -o /root/tmp/rhel9-post.sh
+chroot /mnt/sysimage sh /root/tmp/rhel9-post.sh
+%end
