@@ -1,0 +1,107 @@
+##
+## This kickstart is for openQA worker hosts with 8 sdX-style disks.
+##
+
+# Use text mode install
+text
+
+# Use network installation
+# metalink here should give internal mirrors in iad2 and external ones outside
+url --metalink "https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&arch=$basearch"
+repo --name=updates --metalink "https://mirrors.fedoraproject.org/metalink?repo=updates-released-f$releasever&arch=$basearch"
+
+# Firewall configuration
+firewall --disabled
+firstboot --disable
+# Keyboard layouts
+# old format: keyboard us
+# new format:
+keyboard --vckeymap=us --xlayouts=''
+# System language
+lang en_US.UTF-8
+
+
+# Reboot after installation
+reboot
+# Root password
+rootpw --iscrypted "{{ kickstart_initial_password_encrypted }}"
+# SELinux configuration
+selinux --enforcing
+# System services
+services --disabled="firewalld,kdump" --enabled="postfix,rsyslog,chronyd"
+# Do not configure the X Window System
+skipx
+# System timezone
+timezone UTC --utc
+
+# Partition clearing information
+ignoredisk --only-use=sda,sdb,sdc,sdd,sde,sdf,sdg,sdh
+
+clearpart --all --initlabel
+bootloader
+reqpart
+
+part raid.200 --fstype="mdmember" --ondisk=sda --size=1000
+part raid.210 --fstype="mdmember" --ondisk=sdb --size=1000
+part raid.220 --fstype="mdmember" --ondisk=sdc --size=1000
+part raid.230 --fstype="mdmember" --ondisk=sdd --size=1000
+part raid.240 --fstype="mdmember" --ondisk=sde --size=1000
+part raid.250 --fstype="mdmember" --ondisk=sdf --size=1000
+part raid.260 --fstype="mdmember" --ondisk=sdg --size=1000
+part raid.270 --fstype="mdmember" --ondisk=sdh --size=1000
+
+part raid.400 --fstype="mdmember" --ondisk=sda --size=65536 --grow
+part raid.410 --fstype="mdmember" --ondisk=sdb --size=65536 --grow
+part raid.420 --fstype="mdmember" --ondisk=sdc --size=65536 --grow
+part raid.430 --fstype="mdmember" --ondisk=sdd --size=65536 --grow
+part raid.440 --fstype="mdmember" --ondisk=sde --size=65536 --grow
+part raid.450 --fstype="mdmember" --ondisk=sdf --size=65536 --grow
+part raid.460 --fstype="mdmember" --ondisk=sdg --size=65536 --grow
+part raid.470 --fstype="mdmember" --ondisk=sdh --size=65536 --grow
+
+raid /boot     --device=0 --fstype="ext4" --level=RAID1 raid.200 raid.210 raid.220 raid.230 raid.240 raid.250 raid.260 raid.270
+raid btrfs.1010 --device=2 --level=RAID10 --encrypted --passphrase=temppass --chunksize=512 raid.400 raid.410 raid.420 raid.430 raid.440 raid.450 raid.460 raid.470
+
+btrfs none --label=fedora btrfs.1010
+btrfs /     --subvol --name=root LABEL=fedora
+
+
+%packages
+-cronie-anacron
+bind-utils
+clevis*
+chrony
+cronie-noanacron
+crontabs
+dhcp-client
+iptables
+iptables-services
+kernel-core
+kernel-modules
+kernel-modules-extra
+mailx
+nc
+nfs-utils
+openssh-clients
+openssh-server
+patch
+postfix
+python3-libselinux
+rsync
+rsyslog
+screen
+strace
+tmpwatch
+tmux
+traceroute
+vim-enhanced
+xz
+%end
+
+%post --nochroot --log=/mnt/sysimage/root/post.output --erroronfail
+/mnt/sysimage/usr/sbin/ip addr | grep 10.3.1 && echo '10.3.163.35 infrastructure.fedoraproject.org' >> /mnt/sysimage/etc/hosts
+cat /mnt/sysimage/etc/hosts 
+mkdir /mnt/sysimage/root/tmp
+chroot /mnt/sysimage /usr/bin/curl https://infrastructure.fedoraproject.org/rhel/ks/post/fedora-post.sh -o /root/tmp/fedora-post.sh
+chroot /mnt/sysimage /bin/bash /root/tmp/fedora-post.sh
+%end
