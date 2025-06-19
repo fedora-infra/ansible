@@ -26,15 +26,15 @@ spec:
           env:
             - name: FEDORA_MESSAGING_CONF
               value: /etc/fedora-messaging/{{ toddler.name }}.toml
-            {% if toddler.name == "cleaning-packager-groups" %}
+            {% if toddler.name == "cleaning-packager-groups" -%}
             - name: KRB5_CLIENT_KTNAME
               value: /etc/sync-group-keytabs/sync-group.keytab
-            {% endif %}
+            {%- endif %}
             {{ common_env() }}
 
           volumeMounts:
             {{ common_volume_mounts() }}
-            {% if toddler.name == "clean-packagers-groups" %}
+            {% if toddler.name == "cleaning-packager-groups" %}
             - name: sync-group-keytab-volume
               mountPath: /etc/sync-group-keytabs
               readOnly: true
@@ -42,7 +42,7 @@ spec:
 
       volumes:
         {{ common_volumes() }}
-        {% if toddler.name == "clean-packagers-groups" %}
+        {% if toddler.name == "cleaning-packager-groups" %}
         - name: sync-group-keytab-volume
           secret:
             secretName: sync-group-keytab
