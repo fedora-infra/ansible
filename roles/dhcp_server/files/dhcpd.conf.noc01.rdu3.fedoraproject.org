@@ -991,11 +991,11 @@ host vmhost-x86-05-stg {
 
 host bvmhost-x86-riscv01 {
      hardware ethernet c4:70:bd:b7:7a:72;
-     fixed-address 10.16.168.11;
+     fixed-address 10.16.172.11;
      option host-name "bvmhost-x86-riscv01.rdu3.fedoraproject.org";
      filename "uefi/shim.efi";
      next-server 10.16.163.10;
-     option routers 10.16.168.254;
+     option routers 10.16.172.254;
      option subnet-mask 255.255.255.0;
 }
 
