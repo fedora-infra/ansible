@@ -29,7 +29,7 @@ spec:
             {% if toddler.name == "cleaning-packager-groups" -%}
             - name: KRB5_CLIENT_KTNAME
               value: /etc/sync-group-keytabs/sync-group.keytab
-            {%- endif %}
+            {% endif -%}
             {{ common_env() }}
 
           volumeMounts:
