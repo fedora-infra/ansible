@@ -32,13 +32,14 @@ retrace03.rdu-cc.fedoraproject.org
 certgetter01.iad2.fedoraproject.org
 certgetter01.rdu3.fedoraproject.org
 
+[certgetter_rdu3]
+certgetter01.rdu3.fedoraproject.org
+
+[certgetter_iad2]
+certgetter01.iad2.fedoraproject.org
+
 [backup]
 backup01.iad2.fedoraproject.org
-
-[basset]
-
-[basset_stg]
-# basset01.stg.iad2.fedoraproject.org
 
 [bastion]
 bastion01.iad2.fedoraproject.org
@@ -63,11 +64,7 @@ centos-ipa-client02.stg.iad2.fedoraproject.org
 centos-ipa-client03.stg.iad2.fedoraproject.org
 centos-ipa-client04.stg.iad2.fedoraproject.org
 
-#[data_reports]
-#data-reports01.iad2.fedoraproject.org
-
 [bvirthost]
-# bvirthost01.stg.iad2.fedoraproject.org
 bvmhost-x86-01.iad2.fedoraproject.org
 bvmhost-x86-02.iad2.fedoraproject.org
 bvmhost-x86-03.iad2.fedoraproject.org
@@ -80,6 +77,31 @@ bvmhost-x86-02.stg.iad2.fedoraproject.org
 bvmhost-x86-03.stg.iad2.fedoraproject.org
 bvmhost-x86-05.stg.iad2.fedoraproject.org
 bvmhost-x86-riscv01.iad2.fedoraproject.org
+bvmhost-x86-01.rdu3.fedoraproject.org
+bvmhost-x86-02.rdu3.fedoraproject.org
+bvmhost-x86-03.rdu3.fedoraproject.org
+bvmhost-x86-04.rdu3.fedoraproject.org
+bvmhost-x86-05.rdu3.fedoraproject.org
+bvmhost-x86-06.rdu3.fedoraproject.org
+bvmhost-x86-01.stg.rdu3.fedoraproject.org
+bvmhost-x86-02.stg.rdu3.fedoraproject.org
+bvmhost-x86-03.stg.rdu3.fedoraproject.org
+
+[bvirthost_iad2]
+bvmhost-x86-01.iad2.fedoraproject.org
+bvmhost-x86-02.iad2.fedoraproject.org
+bvmhost-x86-03.iad2.fedoraproject.org
+bvmhost-x86-04.iad2.fedoraproject.org
+bvmhost-x86-05.iad2.fedoraproject.org
+bvmhost-x86-06.iad2.fedoraproject.org
+bvmhost-x86-07.iad2.fedoraproject.org
+bvmhost-x86-01.stg.iad2.fedoraproject.org
+bvmhost-x86-02.stg.iad2.fedoraproject.org
+bvmhost-x86-03.stg.iad2.fedoraproject.org
+bvmhost-x86-05.stg.iad2.fedoraproject.org
+bvmhost-x86-riscv01.iad2.fedoraproject.org
+
+[bvirthost_rdu3]
 bvmhost-x86-01.rdu3.fedoraproject.org
 bvmhost-x86-02.rdu3.fedoraproject.org
 bvmhost-x86-03.rdu3.fedoraproject.org
@@ -120,6 +142,12 @@ mailman01.stg.iad2.fedoraproject.org
 bodhi-backend01.iad2.fedoraproject.org
 bodhi-backend01.rdu3.fedoraproject.org
 
+[bodhi_backend_iad2]
+bodhi-backend01.iad2.fedoraproject.org
+
+[bodhi_backend_rdu3]
+bodhi-backend01.rdu3.fedoraproject.org
+
 [bodhi_backend_stg]
 bodhi-backend01.stg.iad2.fedoraproject.org
 
@@ -127,6 +155,14 @@ bodhi-backend01.stg.iad2.fedoraproject.org
 sign-bridge01.iad2.fedoraproject.org
 sign-bridge01.stg.iad2.fedoraproject.org
 sign-bridge01.rdu3.fedoraproject.org
+
+[sign_bridge_iad2]
+sign-bridge01.iad2.fedoraproject.org
+sign-bridge01.stg.iad2.fedoraproject.org
+
+[sign_bridge_rdu3]
+sign-bridge01.rdu3.fedoraproject.org
+
 #
 # sign vault servers don't listen to ssh by default.
 #
@@ -140,6 +176,12 @@ sign-vault01.rdu3.fedoraproject.org
 autosign01.rdu3.fedoraproject.org
 autosign02.iad2.fedoraproject.org
 
+[autosign_rdu3]
+autosign01.rdu3.fedoraproject.org
+
+[autosign_iad2]
+autosign02.iad2.fedoraproject.org
+
 [autosign_stg]
 autosign01.stg.iad2.fedoraproject.org
 
@@ -151,6 +193,17 @@ db-datanommer02.iad2.fedoraproject.org
 db-koji01.iad2.fedoraproject.org
 db-openqa01.iad2.fedoraproject.org
 db-riscv-koji01.iad2.fedoraproject.org
+
+[dbserver_iad2]
+db01.iad2.fedoraproject.org
+db03.iad2.fedoraproject.org
+db-fas01.iad2.fedoraproject.org
+db-datanommer02.iad2.fedoraproject.org
+db-koji01.iad2.fedoraproject.org
+db-openqa01.iad2.fedoraproject.org
+db-riscv-koji01.iad2.fedoraproject.org
+
+[dbserver_rdu3]
 
 [dbserver_stg]
 db-fas01.stg.iad2.fedoraproject.org
@@ -204,12 +257,6 @@ download_cc_rdu
 download_iad2
 download_rdu3
 
-[fas]
-# fas01.phx2.fedoraproject.org
-
-[fas_stg]
-# fas01.stg.iad2.fedoraproject.org
-
 [kernel_qa]
 kernel02.iad2.fedoraproject.org
 
@@ -238,17 +285,31 @@ noc-cc01.rdu-cc.fedoraproject.org
 log01.iad2.fedoraproject.org
 log01.rdu3.fedoraproject.org
 
+[logging_iad2]
+log01.iad2.fedoraproject.org
+
+[logging_rdu3]
+log01.rdu3.fedoraproject.org
+
 [batcave]
 batcave01.iad2.fedoraproject.org
-#batcave13.rdu2.fedoraproject.org
 
 [batcave_iad2]
 batcave01.iad2.fedoraproject.org
+
+[batcave_rdu3]
 
 [ipa]
 ipa01.iad2.fedoraproject.org
 ipa02.iad2.fedoraproject.org
 ipa03.iad2.fedoraproject.org
+
+[ipa_iad2]
+ipa01.iad2.fedoraproject.org
+ipa02.iad2.fedoraproject.org
+ipa03.iad2.fedoraproject.org
+
+[ipa_rdu3]
 
 [ipa_stg]
 ipa01.stg.iad2.fedoraproject.org
@@ -258,12 +319,33 @@ ipa01.stg.rdu3.fedoraproject.org
 ipa02.stg.rdu3.fedoraproject.org
 ipa03.stg.rdu3.fedoraproject.org
 
+[ipa_stg_iad2]
+ipa01.stg.iad2.fedoraproject.org
+ipa02.stg.iad2.fedoraproject.org
+ipa03.stg.iad2.fedoraproject.org
+
+[ipa_stg_rdu3]
+ipa01.stg.rdu3.fedoraproject.org
+ipa02.stg.rdu3.fedoraproject.org
+ipa03.stg.rdu3.fedoraproject.org
+
 [ipsilon_stg]
 ipsilon01.stg.iad2.fedoraproject.org
+
+[ipsilon_stg_iad2]
+ipsilon01.stg.iad2.fedoraproject.org
+
+[ipsilon_stg_rdu3]
 
 [ipsilon]
 ipsilon01.iad2.fedoraproject.org
 ipsilon02.iad2.fedoraproject.org
+
+[ipsilon_iad2]
+ipsilon01.iad2.fedoraproject.org
+ipsilon02.iad2.fedoraproject.org
+
+[ipsilon_rdu3]
 
 [nagios]
 noc01.iad2.fedoraproject.org
@@ -281,6 +363,11 @@ noc-cc01.rdu-cc.fedoraproject.org
 
 [memcached]
 memcached02.iad2.fedoraproject.org
+
+[memcached_iad2]
+memcached02.iad2.fedoraproject.org
+
+[memcached_rdu3]
 
 [memcached_stg]
 memcached02.stg.iad2.fedoraproject.org
@@ -328,11 +415,24 @@ tang01.iad2.fedoraproject.org
 tang02.iad2.fedoraproject.org
 tang01.rdu3.fedoraproject.org
 
+[tang_iad2]
+tang01.iad2.fedoraproject.org
+tang02.iad2.fedoraproject.org
+
+[tang_rdu3]
+tang01.rdu3.fedoraproject.org
+
 [torrent]
 torrent01.fedoraproject.org
 
 [secondary]
 secondary01.iad2.fedoraproject.org
+secondary01.rdu3.fedoraproject.org
+
+[secondary_iad2]
+secondary01.iad2.fedoraproject.org
+
+[secondary_rdu3]
 secondary01.rdu3.fedoraproject.org
 
 [dns]
@@ -440,13 +540,13 @@ openqa_lab
 openqa_tap1_workers
 openqa_tap2_workers
 
-[packages]
-
-[packages_stg]
-# packages03.stg.iad2.fedoraproject.org
-
 [pkgs]
 pkgs01.iad2.fedoraproject.org
+
+[pkgs_iad2]
+pkgs01.iad2.fedoraproject.org
+
+[pkgs_rdu3]
 
 [pkgs_stg]
 pkgs01.stg.iad2.fedoraproject.org
@@ -550,6 +650,11 @@ smtp-auth-cc-rdu01.fedoraproject.org
 
 [zabbix]
 zabbix01.iad2.fedoraproject.org
+
+[zabbix_iad2]
+zabbix01.iad2.fedoraproject.org
+
+[zabbix_rdu3]
 
 [zabbix_stg]
 zabbix01.stg.iad2.fedoraproject.org
@@ -692,12 +797,25 @@ sundries02.iad2.fedoraproject.org
 sundries01.rdu3.fedoraproject.org
 sundries02.rdu3.fedoraproject.org
 
+[sundries_iad2]
+sundries01.iad2.fedoraproject.org
+sundries02.iad2.fedoraproject.org
+
+[sundries_rdu3]
+sundries01.rdu3.fedoraproject.org
+sundries02.rdu3.fedoraproject.org
+
 [sundries_stg]
 sundries01.stg.iad2.fedoraproject.org
 sundries02.stg.iad2.fedoraproject.org
 
 [value]
 value02.iad2.fedoraproject.org
+
+[value_iad2]
+value02.iad2.fedoraproject.org
+
+[value_rdu3]
 
 [value_stg]
 value02.stg.iad2.fedoraproject.org
@@ -732,16 +850,37 @@ vmhost-x86-03.stg.rdu3.fedoraproject.org
 vmhost-x86-04.stg.rdu3.fedoraproject.org
 vmhost-x86-05.stg.rdu3.fedoraproject.org
 
-#[virthost_cloud]
-#virthost-aarch64-os01.fedorainfracloud.org
-#virthost-aarch64-os02.fedorainfracloud.org
-#virthost-cloud01.fedorainfracloud.org
-#virthost-os01.fedorainfracloud.org
-#virthost-os02.fedorainfracloud.org
-#virthost-os03.fedorainfracloud.org
-#storinator01.fedorainfracloud.org
-#cloudvmhost-aarch64-01.fedorainfracloud.org
+[virthost_iad2]
+vmhost-x86-01.stg.iad2.fedoraproject.org
+vmhost-x86-02.stg.iad2.fedoraproject.org
+vmhost-x86-05.stg.iad2.fedoraproject.org
+vmhost-x86-06.stg.iad2.fedoraproject.org
+vmhost-x86-07.stg.iad2.fedoraproject.org
+vmhost-x86-08.stg.iad2.fedoraproject.org
+vmhost-x86-09.stg.iad2.fedoraproject.org
+vmhost-x86-11.stg.iad2.fedoraproject.org
+vmhost-x86-12.stg.iad2.fedoraproject.org
+vmhost-x86-01.iad2.fedoraproject.org
+vmhost-x86-02.iad2.fedoraproject.org
+vmhost-x86-03.iad2.fedoraproject.org
+vmhost-x86-04.iad2.fedoraproject.org
+vmhost-x86-05.iad2.fedoraproject.org
+vmhost-x86-06.iad2.fedoraproject.org
+vmhost-x86-08.iad2.fedoraproject.org
+qvmhost-x86-01.iad2.fedoraproject.org
+qvmhost-x86-02.iad2.fedoraproject.org
 
+[virthost_rdu3]
+vmhost-x86-01.rdu3.fedoraproject.org
+vmhost-x86-02.rdu3.fedoraproject.org
+vmhost-x86-03.rdu3.fedoraproject.org
+vmhost-x86-04.rdu3.fedoraproject.org
+vmhost-x86-05.rdu3.fedoraproject.org
+vmhost-x86-01.stg.rdu3.fedoraproject.org
+vmhost-x86-02.stg.rdu3.fedoraproject.org
+vmhost-x86-03.stg.rdu3.fedoraproject.org
+vmhost-x86-04.stg.rdu3.fedoraproject.org
+vmhost-x86-05.stg.rdu3.fedoraproject.org
 
 [wiki_stg]
 wiki01.stg.iad2.fedoraproject.org
@@ -750,11 +889,11 @@ wiki01.stg.iad2.fedoraproject.org
 wiki01.iad2.fedoraproject.org
 wiki02.iad2.fedoraproject.org
 
-#[cloud_hardware]
-#virthost-aarch64-os01.fedorainfracloud.org
-#virthost-aarch64-os02.fedorainfracloud.org
-#virthost-cloud01.fedorainfracloud.org
-#copr-vmhost01.fedorainfracloud.org
+[wiki_iad2]
+wiki01.iad2.fedoraproject.org
+wiki02.iad2.fedoraproject.org
+
+[wiki_rdu3]
 
 [maintainer_test]
 f40-test.fedorainfracloud.org
@@ -767,9 +906,9 @@ ppc64le-test02.fedorainfracloud.org
 aarch64-test01.fedorainfracloud.org
 aarch64-test02.fedorainfracloud.org
 
-#[aarch64_test]
-#aarch64-test01.fedorainfracloud.org
-#aarch64-test02.fedorainfracloud.org
+[aarch64_test]
+aarch64-test01.fedorainfracloud.org
+aarch64-test02.fedorainfracloud.org
 
 [osuosl]
 proxy06.fedoraproject.org
@@ -777,8 +916,6 @@ proxy06.fedoraproject.org
 [groupa:children]
 download
 bvirthost
-packages
-# not yet created
 koji
 dbserver
 
@@ -788,7 +925,6 @@ secondary01.rdu3.fedoraproject.org
 
 
 [groupb:children]
-fas
 proxies
 dns
 bastion
@@ -814,7 +950,6 @@ colo_virt
 virthost
 bvirthost
 buildvmhost
-#virthost_cloud
 
 [logdetective]
 logdetective01.fedorainfracloud.org
@@ -887,6 +1022,11 @@ db.stg.aws.fedoraproject.org
 [debuginfod]
 debuginfod01.iad2.fedoraproject.org
 
+[debuginfod_iad2]
+debuginfod01.iad2.fedoraproject.org
+
+[debuginfod_rdu3]
+
 [debuginfod_stg]
 debuginfod01.stg.iad2.fedoraproject.org
 
@@ -910,9 +1050,9 @@ ocp_controlplane
 #ocp01.ocp.iad2.fedoraproject.org
 #ocp02.ocp.iad2.fedoraproject.org
 #ocp03.ocp.iad2.fedoraproject.org
-ocp01.ocp.rdu3.fedoraproject.org
-ocp02.ocp.rdu3.fedoraproject.org
-ocp03.ocp.rdu3.fedoraproject.org
+#ocp01.ocp.rdu3.fedoraproject.org
+#ocp02.ocp.rdu3.fedoraproject.org
+#ocp03.ocp.rdu3.fedoraproject.org
 
 [ocp_workers]
 worker01.ocp.iad2.fedoraproject.org
@@ -954,8 +1094,20 @@ worker05.ocp.stg.iad2.fedoraproject.org
 os-control01.stg.iad2.fedoraproject.org
 os-control01.stg.rdu3.fedoraproject.org
 
+[os_control_stg_iad2]
+os-control01.stg.iad2.fedoraproject.org
+
+[os_control_stg_rdu3]
+os-control01.stg.rdu3.fedoraproject.org
+
 [os_control]
 os-control01.iad2.fedoraproject.org
+os-control01.rdu3.fedoraproject.org
+
+[os_control_iad2]
+os-control01.iad2.fedoraproject.org
+
+[os_control_rdu3]
 os-control01.rdu3.fedoraproject.org
 
 # registries
@@ -964,9 +1116,22 @@ oci-registry01.iad2.fedoraproject.org
 oci-registry02.iad2.fedoraproject.org
 oci-candidate-registry01.iad2.fedoraproject.org
 
+[oci_registry_iad2]
+oci-registry01.iad2.fedoraproject.org
+oci-registry02.iad2.fedoraproject.org
+oci-candidate-registry01.iad2.fedoraproject.org
+
+[oci_registry_rdu3]
+
 [oci_registry_stg]
 oci-registry01.stg.iad2.fedoraproject.org
 oci-candidate-registry01.stg.iad2.fedoraproject.org
+
+[oci_registry_stg_iad2]
+oci-registry01.stg.iad2.fedoraproject.org
+oci-candidate-registry01.stg.iad2.fedoraproject.org
+
+[oci_registry_stg_rdu3]
 
 ## Not the candidate just the top registry
 [moby_registry]
@@ -979,7 +1144,6 @@ oci-registry01.stg.iad2.fedoraproject.org
 [webservers:children]
 proxies
 ipa
-fas
 
 #
 # Hosts in this group have zombie processes for various reasons
@@ -1005,22 +1169,6 @@ pkgs01.iad2.fedoraproject.org
 
 [nfs_servers]
 storinator01.rdu-cc.fedoraproject.org
-
-# communishift -- community openshift
-# [virthost_communishift]
-# virthost-os01.fedorainfracloud.org
-# virthost-os02.fedorainfracloud.org
-# virthost-os03.fedorainfracloud.org
-# os-storage-node12.fedorainfracloud.org
-# os-storage-node13.fedorainfracloud.org
-# os-storage-node14.fedorainfracloud.org
-# virthost-ppc64le-os01.fedorainfracloud.org
-# virthost-aarch64-os01.fedorainfracloud.org
-# virthost-aarch64-os02.fedorainfracloud.org
-
-# [os_proxies]
-# os-proxy01.fedorainfracloud.org
-# os-proxy02.fedorainfracloud.org
 
 #
 # These are hosts and groups that do not use linux-system-roles/network for configuring network
@@ -1079,6 +1227,73 @@ virthost
 wiki
 
 [iad2_staging:children]
+bastion_stg
+bodhi_backend_stg
+buildvm_stg
+buildvm_ppc64le_stg
+buildvm_aarch64_stg
+dbserver_stg
+debuginfod_stg
+ipa_stg
+ipsilon_stg
+koji_stg
+memcached_stg
+oci_registry_stg
+pkgs_stg
+proxies_stg
+rabbitmq_stg
+releng_compose_stg
+sundries_stg
+value_stg
+wiki_stg
+zabbix_stg
+
+[rdu3:children]
+rdu3_production
+rdu3_staging
+
+[rdu3_production:children]
+backup
+bastion_rdu3
+batcave_rdu3
+bodhi_backend_rdu3
+buildhw
+buildvm
+buildvm_aarch64
+buildvm_ppc64le
+bvirthost_rdu3
+certgetter_rdu3
+dbserver_rdu3
+debuginfod_rdu3
+dns_rdu3
+download_rdu3
+flatpak_cache
+ipa_rdu3
+ipsilon_rdu3
+koji
+kojipkgs
+logging
+mailman
+memcached
+nagios_iad2
+oci_registry
+openqa
+openqa_lab
+openqa_lab_workers
+openqa_workers
+pkgs
+proxies_iad2
+qahardware
+rabbitmq
+releng_compose
+secondary
+sundries
+tang
+value
+virthost
+wiki
+
+[rdu3_staging:children]
 bastion_stg
 bodhi_backend_stg
 buildvm_stg
