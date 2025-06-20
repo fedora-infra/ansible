@@ -117,16 +117,6 @@
   - rabbitmq_cluster
   - config
 
-- name: Enable the HTTP management console and SSL authentication plugins
-  rabbitmq_plugin:
-    names: "rabbitmq_management,\
-            rabbitmq_auth_mechanism_ssl,\
-            rabbitmq_federation,\
-            rabbitmq_federation_management"
-  tags:
-  - rabbitmq_cluster
-  - config
-
 - name: Start rabbitmq
   service: name=rabbitmq-server state=started enabled=yes
   tags:
@@ -134,6 +124,17 @@
 
 - name: Nope. No standard users. Even if we use TLS auth
   rabbitmq_user: user=guest state=absent
+  tags:
+  - rabbitmq_cluster
+  - config
+
+# This require a running server...
+- name: Enable the HTTP management console and SSL authentication plugins
+  rabbitmq_plugin:
+    names: "rabbitmq_management,\
+            rabbitmq_auth_mechanism_ssl,\
+            rabbitmq_federation,\
+            rabbitmq_federation_management"
   tags:
   - rabbitmq_cluster
   - config
