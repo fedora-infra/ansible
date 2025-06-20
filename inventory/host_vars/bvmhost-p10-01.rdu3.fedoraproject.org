@@ -4,7 +4,6 @@ br0_ipv4_gw: 10.16.163.254
 br0_ipv4_nm: 24
 br0_port0_mac: "{{ mac1 }}"
 br1_ipv4_ip: 10.16.171.25
-br1_ipv4_gw: 10.16.171.254
 br1_ipv4_nm: 24
 datacenter: rdu3
 dns1: 10.16.163.33
@@ -50,7 +49,7 @@ network_connections:
       dns_search:
         - "{{ dns_search1 }}"
         - "{{ dns_search2 }}"
-      gateway4: "{{ br1_ipv4_gw }}"
+      auto_gateway: no
      parent: br0
      state: up
    # Bond profile
