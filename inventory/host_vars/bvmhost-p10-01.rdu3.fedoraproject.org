@@ -51,8 +51,8 @@ network_connections:
         - "{{ dns_search1 }}"
         - "{{ dns_search2 }}"
       gateway4: "{{ br1_ipv4_gw }}"
-      parent: br0
-      state: up
+     parent: br0
+     state: up
    # Bond profile
    - name: bond0
      type: bond
