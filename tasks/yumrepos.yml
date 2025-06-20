@@ -167,7 +167,7 @@
 
 - name: Put RabbitMQ CentOS-9 SIG repos on el systems
   ansible.builtin.copy: src="{{ files }}/common/centos9s-rabbitmq38.repo" dest="/etc/yum.repos.d/centos9s-rabbitmq38.repo"
-  when: inventory_hostname.startswith('rabbitmq') and (ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS')) and ansible_distribution_major_version|int == 9
+  when: inventory_hostname.startswith('rabbitmq') and (ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS') and ansible_distribution_major_version|int == 9
   tags:
   - config
   - packages
@@ -175,7 +175,7 @@
 
 - name: Put RabbitMQ CentOS-9 SIG gpg key on el systems
   ansible.builtin.copy: src="{{ files }}/common/RPM-GPG-KEY-CentOS-SIG-Messaging" dest="/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Messaging"
-  when: inventory_hostname.startswith('rabbitmq') and (ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS')) and ansible_distribution_major_version|int == 9
+  when: inventory_hostname.startswith('rabbitmq') and (ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS') and ansible_distribution_major_version|int == 9
   tags:
   - config
   - packages
