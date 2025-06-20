@@ -17,7 +17,13 @@
     template_json: "{{ lookup('file', item['template'] ) }}"
     state: present
   with_items: "{{ zabbix_templates }}" # Templates specific to an ansible group, can be overwridden in inventory/group_vars/group_name
-  when: "{{ item['custom_template'] }}"
+  # 2025-06-20: ansible started warning with:
+  # [WARNING]: conditional statements should not include jinja2 templating delimiters such as {{ }} or {% %}.
+  # Found: {{ item['custom_template'] }}
+  # So try changing this:
+  # when: "{{ item['custom_template'] }}"
+  # To:
+  when: item.custom_template
   tags:
     - zabbix_add_templates
     - zabbix_templates
