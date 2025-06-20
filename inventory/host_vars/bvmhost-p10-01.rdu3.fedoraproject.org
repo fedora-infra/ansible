@@ -65,7 +65,14 @@ network_connections:
      interface_name: bond1
      mtu: 9000
      controller: br1
-     parent: bond0
+     bond:
+       mode: 802.3ad
+   # Bond profile
+   - name: bond0
+     type: bond
+     interface_name: bond0
+     mtu: 9000
+     controller: br0
      bond:
        mode: 802.3ad
    # Port profile for the 1st Ethernet device
