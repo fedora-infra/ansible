@@ -34,11 +34,12 @@ network_connections:
         - "{{ dns_search1 }}"
         - "{{ dns_search2 }}"
       gateway4: "{{ br0_ipv4_gw }}"
-   # builder vlan
+   # Bridge profile
    - name: br1
-     type: vlan
-     vlan:
-         id: 711
+     state: up
+     type: bridge
+     mtu: 9000
+     autoconnect: yes
      ip:
       address:
         - "{{ br1_ipv4_ip }}/{{ br1_ipv4_nm }}"
@@ -50,14 +51,21 @@ network_connections:
         - "{{ dns_search1 }}"
         - "{{ dns_search2 }}"
       auto_gateway: no
-     parent: br0
+   # builder vlan
+   - name: 711_vlan
+     type: vlan
+     vlan:
+         id: 711
+     parent: bond1
+     controller: br1
      state: up
    # Bond profile
-   - name: bond0
+   - name: bond1
      type: bond
-     interface_name: bond0
+     interface_name: bond1
      mtu: 9000
-     controller: br0
+     controller: br1
+     parent: bond0
      bond:
        mode: 802.3ad
    # Port profile for the 1st Ethernet device
