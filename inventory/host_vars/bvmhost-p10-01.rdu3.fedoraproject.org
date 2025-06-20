@@ -3,6 +3,9 @@ br0_ipv4_ip: 10.16.163.135
 br0_ipv4_gw: 10.16.163.254
 br0_ipv4_nm: 24
 br0_port0_mac: "{{ mac1 }}"
+br1_ipv4_ip: 10.16.171.25
+br1_ipv4_gw: 10.16.171.254
+br1_ipv4_nm: 24
 datacenter: rdu3
 dns1: 10.16.163.33
 dns2: 10.16.163.34
@@ -32,6 +35,24 @@ network_connections:
         - "{{ dns_search1 }}"
         - "{{ dns_search2 }}"
       gateway4: "{{ br0_ipv4_gw }}"
+   # builder vlan
+   - name: br1
+     type: vlan
+        vlan:
+         id: 711
+     ip:
+      address:
+        - "{{ br1_ipv4_ip }}/{{ br1_ipv4_nm }}"
+      dhcp4: no
+      dns:
+        - "{{ dns1 }}"
+        - "{{ dns2 }}"
+      dns_search:
+        - "{{ dns_search1 }}"
+        - "{{ dns_search2 }}"
+      gateway4: "{{ br1_ipv4_gw }}"
+      parent: br0
+      state: up
    # Bond profile
    - name: bond0
      type: bond
