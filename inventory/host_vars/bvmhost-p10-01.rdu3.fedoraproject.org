@@ -51,20 +51,12 @@ network_connections:
         - "{{ dns_search1 }}"
         - "{{ dns_search2 }}"
       auto_gateway: no
-   # Bond profile
-   - name: bond1
-     type: bond
-     interface_name: bond1
-     mtu: 9000
-     controller: br1
-     bond:
-       mode: 802.3ad
    # builder vlan
    - name: 711_vlan
      type: vlan
      vlan:
          id: 711
-     parent: bond1
+     parent: bond0
      controller: br1
      state: up
    # Bond profile
