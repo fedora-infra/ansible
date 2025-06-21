@@ -1,4 +1,6 @@
---
+---
+nbde: true
+nbde_device: /dev/md2
 nbde_client_bindings:
   - device: "{{ nbde_device }}"
     encryption_password: "{{ nbde_password }}"
