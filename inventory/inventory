@@ -1369,6 +1369,7 @@ buildhw_iad2
 buildvm_iad2
 buildvm_aarch64_iad2
 buildvm_ppc64le_iad2
+buildvmhost_iad2
 bkernel
 bvirthost_iad2
 certgetter_iad2
@@ -1408,6 +1409,7 @@ bodhi_backend_stg_iad2
 buildvm_stg_iad2
 buildvm_ppc64le_stg_iad2
 buildvm_aarch64_stg_iad2
+buildvmhost_stg_iad2
 dbserver_stg_iad2
 debuginfod_stg_iad2
 ipa_stg_iad2
@@ -1439,6 +1441,7 @@ buildhw_rdu3
 buildvm_rdu3
 buildvm_aarch64_rdu3
 buildvm_ppc64le_rdu3
+buildvmhost_rdu3
 bvirthost_rdu3
 certgetter_rdu3
 dbserver_rdu3
@@ -1472,8 +1475,9 @@ wiki_rdu3
 [rdu3_staging:children]
 bodhi_backend_stg_rdu3
 buildvm_stg_rdu3
-buildvm_ppc64le_stg
-buildvm_aarch64_stg
+buildvm_ppc64le_stg_rdu3
+buildvm_aarch64_stg_rdu3
+buildvmhost_stg_rdu3
 dbserver_stg_rdu3
 debuginfod_stg_rdu3
 ipa_stg_rdu3
