@@ -40,12 +40,12 @@
   roles:
   - base
   - {role: rkhunter, when: ansible_distribution_major_version|int < 10}
-  - {role: nagios_client, when: ansible_distribution_major_version|int < 10}
+  - role: nagios_client
   - {role: zabbix/zabbix_agent, when: ansible_distribution_major_version|int < 10}
   - hosts
   - {role: openvpn/client, when: vpn|bool}
   - ipa/client
-  - {role: collectd/base, when: ansible_distribution_major_version|int < 10}
+  - role: collectd/base
   - {role: iscsi_client, when: "inventory_hostname.startswith(('bvmhost-x86-06', 'bvmhost-x86-07', 'bvmhost-p09')) and datacenter == 'iad2'"}
   - sudo
   - virthost
