@@ -6,10 +6,30 @@ rabbitmq01.rdu3.fedoraproject.org
 rabbitmq02.rdu3.fedoraproject.org
 rabbitmq03.rdu3.fedoraproject.org
 
+[rabbitmq_iad2]
+rabbitmq01.iad2.fedoraproject.org
+rabbitmq02.iad2.fedoraproject.org
+rabbitmq03.iad2.fedoraproject.org
+
+[rabbitmq_rdu3]
+rabbitmq01.rdu3.fedoraproject.org
+rabbitmq02.rdu3.fedoraproject.org
+rabbitmq03.rdu3.fedoraproject.org
+
 [rabbitmq_stg]
 rabbitmq01.stg.iad2.fedoraproject.org
 rabbitmq02.stg.iad2.fedoraproject.org
 rabbitmq03.stg.iad2.fedoraproject.org
+rabbitmq01.stg.rdu3.fedoraproject.org
+rabbitmq02.stg.rdu3.fedoraproject.org
+# rabbitmq03.stg.rdu3.fedoraproject.org
+
+[rabbitmq_stg_iad2]
+rabbitmq01.stg.iad2.fedoraproject.org
+rabbitmq02.stg.iad2.fedoraproject.org
+rabbitmq03.stg.iad2.fedoraproject.org
+
+[rabbitmq_stg_rdu3]
 rabbitmq01.stg.rdu3.fedoraproject.org
 rabbitmq02.stg.rdu3.fedoraproject.org
 # rabbitmq03.stg.rdu3.fedoraproject.org
@@ -26,8 +46,21 @@ compose-eln01.iad2.fedoraproject.org
 [releng_compose_riscv]
 compose-x86-riscv01.iad2.fedoraproject.org
 
+[releng_compose_iad2]
+compose-branched01.iad2.fedoraproject.org
+compose-iot01.iad2.fedoraproject.org
+compose-rawhide01.iad2.fedoraproject.org
+compose-x86-01.iad2.fedoraproject.org
+
+[releng_compose_rdu3]
+
 [releng_compose_stg]
 compose-x86-01.stg.iad2.fedoraproject.org
+
+[releng_compose_stg_iad2]
+compose-x86-01.stg.iad2.fedoraproject.org
+
+[releng_compose_stg_rdu3]
 
 [retrace]
 retrace03.rdu-cc.fedoraproject.org
@@ -46,6 +79,12 @@ certgetter01.iad2.fedoraproject.org
 
 [backup]
 backup01.iad2.fedoraproject.org
+backup01.rdu3.fedoraproject.org
+
+[backup_iad2]
+backup01.iad2.fedoraproject.org
+
+[backup_rdu3]
 backup01.rdu3.fedoraproject.org
 
 [bastion]
@@ -143,8 +182,18 @@ flatpak-cache01.iad2.fedoraproject.org
 [mailman]
 mailman01.iad2.fedoraproject.org
 
+[mailman_iad2]
+mailman01.iad2.fedoraproject.org
+
+[mailman_rdu3]
+
 [mailman_stg]
 mailman01.stg.iad2.fedoraproject.org
+
+[mailman_stg_iad2]
+mailman01.stg.iad2.fedoraproject.org
+
+[mailman_stg_rdu3]
 
 [bodhi_backend]
 # This one handles the mashing/releng stuff
@@ -160,6 +209,11 @@ bodhi-backend01.rdu3.fedoraproject.org
 [bodhi_backend_stg]
 bodhi-backend01.stg.iad2.fedoraproject.org
 
+[bodhi_backend_stg_iad2]
+bodhi-backend01.stg.iad2.fedoraproject.org
+
+[bodhi_backend_stg_rdu3]
+
 [sign_bridge]
 sign-bridge01.iad2.fedoraproject.org
 sign-bridge01.stg.iad2.fedoraproject.org
@@ -172,6 +226,11 @@ sign-bridge01.stg.iad2.fedoraproject.org
 [sign_bridge_rdu3]
 sign-bridge01.rdu3.fedoraproject.org
 
+[sign_bridge_stg_iad2]
+sign-bridge01.stg.iad2.fedoraproject.org
+
+[sign_bridge_stg_rdu3]
+
 #
 # sign vault servers don't listen to ssh by default.
 #
@@ -179,6 +238,13 @@ sign-bridge01.rdu3.fedoraproject.org
 sign-vault01.stg.iad2.fedoraproject.org
 sign-vault01.iad2.fedoraproject.org
 sign-vault02.iad2.fedoraproject.org
+sign-vault01.rdu3.fedoraproject.org
+
+[sign_vault_iad2]
+sign-vault01.iad2.fedoraproject.org
+sign-vault02.iad2.fedoraproject.org
+
+[sign_vault_rdu3]
 sign-vault01.rdu3.fedoraproject.org
 
 [autosign]
@@ -193,6 +259,10 @@ autosign02.iad2.fedoraproject.org
 
 [autosign_stg]
 autosign01.stg.iad2.fedoraproject.org
+
+[autosign_stg_iad2]
+
+[autosign_stg_rdu3]
 
 [dbserver]
 db01.iad2.fedoraproject.org
@@ -221,6 +291,16 @@ db03.stg.iad2.fedoraproject.org
 db-datanommer01.stg.iad2.fedoraproject.org
 db-koji01.stg.iad2.fedoraproject.org
 db.stg.aws.fedoraproject.org
+
+[dbserver_stg_iad2]
+db-fas01.stg.iad2.fedoraproject.org
+db01.stg.iad2.fedoraproject.org
+db03.stg.iad2.fedoraproject.org
+db-datanommer01.stg.iad2.fedoraproject.org
+db-koji01.stg.iad2.fedoraproject.org
+db.stg.aws.fedoraproject.org
+
+[dbserver_stg_rdu3]
 
 [datanommer_dbserver]
 db-datanommer02.iad2.fedoraproject.org
@@ -273,11 +353,22 @@ kernel02.iad2.fedoraproject.org
 koji01.iad2.fedoraproject.org
 koji02.iad2.fedoraproject.org
 
+[koji_iad2]
+koji01.iad2.fedoraproject.org
+koji02.iad2.fedoraproject.org
+
+[koji_rdu3]
+
 [koji_riscv]
 riscv-koji01.iad2.fedoraproject.org
 
 [koji_stg]
 koji01.stg.iad2.fedoraproject.org
+
+[koji_stg_iad2]
+koji01.stg.iad2.fedoraproject.org
+
+[koji_stg_rdu3]
 
 [kojipkgs]
 kojipkgs01.iad2.fedoraproject.org
@@ -391,6 +482,11 @@ memcached02.rdu3.fedoraproject.org
 
 [memcached_stg]
 memcached02.stg.iad2.fedoraproject.org
+
+[memcached_stg_iad2]
+memcached02.stg.iad2.fedoraproject.org
+
+[memcached_stg_rdu3]
 
 [mirrorlist_proxies]
 proxy01.iad2.fedoraproject.org
@@ -573,6 +669,11 @@ pkgs01.iad2.fedoraproject.org
 [pkgs_stg]
 pkgs01.stg.iad2.fedoraproject.org
 
+[pkgs_stg_iad2]
+pkgs01.stg.iad2.fedoraproject.org
+
+[pkgs_stg_rdu3]
+
 [proxies_external]
 proxy01.iad2.fedoraproject.org
 proxy01.rdu3.fedoraproject.org
@@ -634,6 +735,14 @@ proxy02.stg.rdu3.fedoraproject.org
 proxy01.stg.iad2.fedoraproject.org
 proxy02.stg.iad2.fedoraproject.org
 
+[proxies_stg_iad2]
+proxy01.stg.rdu3.fedoraproject.org
+proxy02.stg.rdu3.fedoraproject.org
+
+[proxies_stg_rdu3]
+proxy01.stg.iad2.fedoraproject.org
+proxy02.stg.iad2.fedoraproject.org
+
 [relvalconsumer_common]
 openqa01.iad2.fedoraproject.org
 openqa-lab01.iad2.fedoraproject.org
@@ -680,6 +789,11 @@ zabbix01.iad2.fedoraproject.org
 
 [zabbix_stg]
 zabbix01.stg.iad2.fedoraproject.org
+
+[zabbix_stg_iad2]
+zabbix01.stg.iad2.fedoraproject.org
+
+[zabbix_stg_rdu3]
 
 [spare]
 #
@@ -835,6 +949,12 @@ sundries02.rdu3.fedoraproject.org
 sundries01.stg.iad2.fedoraproject.org
 sundries02.stg.iad2.fedoraproject.org
 
+[sundries_stg_iad2]
+sundries01.stg.iad2.fedoraproject.org
+sundries02.stg.iad2.fedoraproject.org
+
+[sundries_stg_rdu3]
+
 [value]
 value02.iad2.fedoraproject.org
 
@@ -845,6 +965,11 @@ value02.iad2.fedoraproject.org
 
 [value_stg]
 value02.stg.iad2.fedoraproject.org
+
+[value_stg_iad2]
+value02.stg.iad2.fedoraproject.org
+
+[value_stg_rdu3]
 
 [virthost]
 vmhost-x86-01.stg.iad2.fedoraproject.org
@@ -877,15 +1002,6 @@ vmhost-x86-04.stg.rdu3.fedoraproject.org
 vmhost-x86-05.stg.rdu3.fedoraproject.org
 
 [virthost_iad2]
-vmhost-x86-01.stg.iad2.fedoraproject.org
-vmhost-x86-02.stg.iad2.fedoraproject.org
-vmhost-x86-05.stg.iad2.fedoraproject.org
-vmhost-x86-06.stg.iad2.fedoraproject.org
-vmhost-x86-07.stg.iad2.fedoraproject.org
-vmhost-x86-08.stg.iad2.fedoraproject.org
-vmhost-x86-09.stg.iad2.fedoraproject.org
-vmhost-x86-11.stg.iad2.fedoraproject.org
-vmhost-x86-12.stg.iad2.fedoraproject.org
 vmhost-x86-01.iad2.fedoraproject.org
 vmhost-x86-02.iad2.fedoraproject.org
 vmhost-x86-03.iad2.fedoraproject.org
@@ -896,12 +1012,25 @@ vmhost-x86-08.iad2.fedoraproject.org
 qvmhost-x86-01.iad2.fedoraproject.org
 qvmhost-x86-02.iad2.fedoraproject.org
 
+[virthost_stg_iad2]
+vmhost-x86-01.stg.iad2.fedoraproject.org
+vmhost-x86-02.stg.iad2.fedoraproject.org
+vmhost-x86-05.stg.iad2.fedoraproject.org
+vmhost-x86-06.stg.iad2.fedoraproject.org
+vmhost-x86-07.stg.iad2.fedoraproject.org
+vmhost-x86-08.stg.iad2.fedoraproject.org
+vmhost-x86-09.stg.iad2.fedoraproject.org
+vmhost-x86-11.stg.iad2.fedoraproject.org
+vmhost-x86-12.stg.iad2.fedoraproject.org
+
 [virthost_rdu3]
 vmhost-x86-01.rdu3.fedoraproject.org
 vmhost-x86-02.rdu3.fedoraproject.org
 vmhost-x86-03.rdu3.fedoraproject.org
 vmhost-x86-04.rdu3.fedoraproject.org
 vmhost-x86-05.rdu3.fedoraproject.org
+
+[virthost_stg_rdu3]
 vmhost-x86-01.stg.rdu3.fedoraproject.org
 vmhost-x86-02.stg.rdu3.fedoraproject.org
 vmhost-x86-03.stg.rdu3.fedoraproject.org
@@ -910,6 +1039,11 @@ vmhost-x86-05.stg.rdu3.fedoraproject.org
 
 [wiki_stg]
 wiki01.stg.iad2.fedoraproject.org
+
+[wiki_stg_iad2]
+wiki01.stg.iad2.fedoraproject.org
+
+[wiki_stg_rdu3]
 
 [wiki]
 wiki01.iad2.fedoraproject.org
@@ -1055,6 +1189,10 @@ debuginfod01.iad2.fedoraproject.org
 
 [debuginfod_stg]
 debuginfod01.stg.iad2.fedoraproject.org
+
+[debuginfod_stg_iad2]
+
+[debuginfod_stg_rdu3]
 
 [pagure]
 pagure02.fedoraproject.org
@@ -1211,82 +1349,84 @@ iad2_production
 iad2_staging
 
 [iad2_production:children]
-backup
+backup_iad2
 bastion_iad2
 batcave_iad2
-bodhi_backend
-buildhw
-buildvm
-buildvm_aarch64
-buildvm_ppc64le
+bodhi_backend_iad2
+buildhw_iad2
+buildvm_iad2
+buildvm_aarch64_iad2
+buildvm_ppc64le_iad2
 bkernel
-bvirthost
-certgetter
-dbserver
-debuginfod
+bvirthost_iad2
+certgetter_iad2
+dbserver_iad2
+debuginfod_iad2
 dns_iad2
 download_iad2
 flatpak_cache
-ipa
-ipsilon
-koji
+ipa_iad2
+ipsilon_iad2
+koji_iad2
 kojipkgs_iad2
-logging
-mailman
+logging_iad2
+mailman_iad2
 memcached_iad2
 nagios_iad2
-oci_registry
+oci_registry_iad2
 openqa
 openqa_lab
 openqa_lab_workers
 openqa_workers
-pkgs
+os_control_iad2
+pkgs_iad2
 proxies_iad2
 qahardware
-rabbitmq
-releng_compose
-secondary
-sundries
-tang
-value
-virthost
-wiki
+rabbitmq_iad2
+releng_compose_iad2
+secondary_iad2
+sundries_iad2
+tang_iad2
+value_iad2
+virthost_iad2
+wiki_iad2
 
 [iad2_staging:children]
-bastion_stg
-bodhi_backend_stg
-buildvm_stg
-buildvm_ppc64le_stg
-buildvm_aarch64_stg
-dbserver_stg
-debuginfod_stg
-ipa_stg
-ipsilon_stg
-koji_stg
-memcached_stg
-oci_registry_stg
-pkgs_stg
-proxies_stg
-rabbitmq_stg
-releng_compose_stg
-sundries_stg
-value_stg
-wiki_stg
-zabbix_stg
+bodhi_backend_stg_iad2
+buildvm_stg_iad2
+buildvm_ppc64le_stg_iad2
+buildvm_aarch64_stg_iad2
+dbserver_stg_iad2
+debuginfod_stg_iad2
+ipa_stg_iad2
+ipsilon_stg_iad2
+koji_stg_iad2
+memcached_stg_iad2
+oci_registry_stg_iad2
+os_control_stg_iad2
+pkgs_stg_iad2
+proxies_stg_iad2
+rabbitmq_stg_iad2
+releng_compose_stg_iad2
+sundries_stg_iad2
+value_stg_iad2
+virthost_stg_iad2
+wiki_stg_iad2
+zabbix_stg_iad2
 
 [rdu3:children]
 rdu3_production
 rdu3_staging
 
 [rdu3_production:children]
-backup
+backup_rdu3
 bastion_rdu3
 batcave_rdu3
 bodhi_backend_rdu3
-buildhw
-buildvm
-buildvm_aarch64
-buildvm_ppc64le
+buildhw_rdu3
+buildvm_rdu3
+buildvm_aarch64_rdu3
+buildvm_ppc64le_rdu3
 bvirthost_rdu3
 certgetter_rdu3
 dbserver_rdu3
@@ -1296,47 +1436,47 @@ download_rdu3
 flatpak_cache
 ipa_rdu3
 ipsilon_rdu3
-koji
+koji_rdu3
 kojipkgs_rdu3
-logging
-mailman
+logging_rdu3
+mailman_rdu3
 memcached_rdu3
-nagios_iad2
-oci_registry
-openqa
-openqa_lab
-openqa_lab_workers
-openqa_workers
-pkgs
-proxies_iad2
+nagios_rdu3
+oci_registry_rdu3
+os_control_rdu3
+pkgs_rdu3
+proxies_rdu3
 qahardware
-rabbitmq
-releng_compose
-secondary
-sundries
-tang
-value
-virthost
-wiki
+rabbitmq_rdu3
+releng_compose_rdu3
+secondary_rdu3
+sign_bridge_rdu3
+sundries_rdu3
+tang_rdu3
+value_rdu3
+virthost_rdu3
+wiki_rdu3
 
 [rdu3_staging:children]
-bastion_stg
-bodhi_backend_stg
-buildvm_stg
+bodhi_backend_stg_rdu3
+buildvm_stg_rdu3
 buildvm_ppc64le_stg
 buildvm_aarch64_stg
-dbserver_stg
-debuginfod_stg
-ipa_stg
-ipsilon_stg
-koji_stg
-memcached_stg
-oci_registry_stg
-pkgs_stg
-proxies_stg
-rabbitmq_stg
-releng_compose_stg
-sundries_stg
-value_stg
-wiki_stg
-zabbix_stg
+dbserver_stg_rdu3
+debuginfod_stg_rdu3
+ipa_stg_rdu3
+ipsilon_stg_rdu3
+koji_stg_rdu3
+memcached_stg_rdu3
+oci_registry_stg_rdu3
+os_control_stg_rdu3
+pkgs_stg_rdu3
+proxies_stg_rdu3
+rabbitmq_stg_rdu3
+releng_compose_stg_rdu3
+sign_bridge_stg_rdu3
+sundries_stg_rdu3
+value_stg_rdu3
+virthost_stg_rdu3
+wiki_stg_rdu3
+zabbix_stg_rdu3

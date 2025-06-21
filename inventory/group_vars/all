@@ -155,17 +155,6 @@ nftables: True
 nft_custom6_rules: []
 nft_custom_rules: []
 nft_nat_rules: []
-# default network block device encryption settings for linux-system-roles/nbde_client
-nbde: true
-nbde_device: /dev/md2
-nbde_client_bindings:
-  - device: "{{ nbde_device }}"
-    encryption_password: "{{ nbde_password }}"
-    password_temporary: no
-    threshold: 1
-    servers:
-      - http://tang01.iad2.fedoraproject.org
-      - http://tang02.iad2.fedoraproject.org
 # usually we do not want to enable nested virt, only on some virthosts
 nested: false
 network_allow_restart: yes

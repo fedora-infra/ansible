@@ -1,0 +1,11 @@
+---
+nbde: true
+nbde_device: /dev/md2
+nbde_client_bindings:
+  - device: "{{ nbde_device }}"
+    encryption_password: "{{ nbde_password }}"
+    password_temporary: no
+    threshold: 1
+    servers:
+      - http://tang01.rdu3.fedoraproject.org
+      - http://tang02.rdu3.fedoraproject.org
