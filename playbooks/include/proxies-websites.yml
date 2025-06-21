@@ -935,6 +935,13 @@
     cert_name: "{{wildcard_cert_name}}"
 
   - role: httpd/website
+    site_name: nagios-rdu3.fedoraproject.org
+    server_aliases: [nagios-rdu3.stg.fedoraproject.org]
+    SSLCertificateChainFile: wildcard-2024.fedoraproject.org.intermediate.cert
+    sslonly: true
+    cert_name: "{{wildcard_cert_name}}"
+
+  - role: httpd/website
     site_name: zabbix.fedoraproject.org
     sslonly: true
     # server_aliases: [zabbix.fedoraproject.org]

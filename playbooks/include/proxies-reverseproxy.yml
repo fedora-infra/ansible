@@ -52,6 +52,12 @@
     proxyurl: http://noc01.{{ datacenter }}.fedoraproject.org
 
   - role: httpd/reverseproxy
+    website: nagios-rdu3.fedoraproject.org
+    destname: nagios-rdu3
+    remotepath: /
+    proxyurl: http://noc01.rdu3.fedoraproject.org
+
+  - role: httpd/reverseproxy
     website: zabbix.fedoraproject.org
     destname: zabbix
     remotepath: /
