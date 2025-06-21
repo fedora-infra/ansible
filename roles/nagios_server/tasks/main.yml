@@ -180,7 +180,7 @@
   notify: Restart nagios
 
 ## Copy over the services
-- name: Copy /etc/nagios/services (PHX2 specific files)
+- name: Copy /etc/nagios/services (IAD2 specific files)
   ansible.builtin.copy: src=nagios/services/iad2_internal/{{ item }} dest=/etc/nagios/services/{{ item }}
   with_items:
     - basset.cfg
@@ -434,10 +434,23 @@
   ansible.builtin.template: src=nagios/hosts/{{item}}.j2 dest=/etc/nagios/hosts/{{item}} mode=0644 owner=root group=root
   with_items:
     - iad2-hosts.cfg
-    - rdu3-hosts.cfg
     - iad2-mgmt-hosts.cfg
     - staging-hosts.cfg
   when: env == "production" and nagios_location == 'iad2_internal'
+  tags:
+  - nagios_server
+  - nagios_config
+  - nagios_hosts
+  notify: Restart nagios
+
+## These are only available to the internal server
+- name: Build out nagios host templates (production)
+  ansible.builtin.template: src=nagios/hosts/{{item}}.j2 dest=/etc/nagios/hosts/{{item}} mode=0644 owner=root group=root
+  with_items:
+    - rdu3-hosts.cfg
+    - rdu3-mgmt-hosts.cfg
+    - staging-hosts.cfg
+  when: env == "production" and nagios_location == 'rdu3_internal'
   tags:
   - nagios_server
   - nagios_config
@@ -450,14 +463,24 @@
   - nagios_config
   - nagios_server
 
-
 ## These are only available to the internal server
 - name: Build out nagios host templates (production)
   ansible.builtin.template: src=nagios/hosts/{{item}}.j2 dest=/etc/nagios/hosts/{{item}} mode=0644 owner=root group=root
   with_items:
     - iad2-hosts.cfg
-    - rdu3-hosts.cfg
   when: env == "production" and nagios_location == 'iad2_internal'
+  tags:
+  - nagios_server
+  - nagios_config
+  - nagios_hosts
+  notify: Restart nagios
+
+## These are only available to the internal server
+- name: Build out nagios host templates (production)
+  ansible.builtin.template: src=nagios/hosts/{{item}}.j2 dest=/etc/nagios/hosts/{{item}} mode=0644 owner=root group=root
+  with_items:
+    - rdu3-hosts.cfg
+  when: env == "production" and nagios_location == 'rdu3_internal'
   tags:
   - nagios_server
   - nagios_config

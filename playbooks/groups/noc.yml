@@ -62,7 +62,7 @@
   roles:
   - { role: dhcp_server, when: datacenter == 'iad2' or datacenter == 'rdu3' }
   - { role: tftp_server, when: datacenter == 'iad2' or datacenter == 'rdu3' }
-  - { role: nagios_server, when: datacenter == 'iad2' or datacenter == 'ibiblio' }
+  - { role: nagios_server, when: datacenter == 'iad2' or datacenter == 'ibiblio' or datacenter == 'rdu3' }
 
   tasks:
   - name: Install some packages which arent in playbooks
