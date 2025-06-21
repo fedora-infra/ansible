@@ -293,6 +293,13 @@ build_from_scm =
         match scm_repository /fork/*/fedora-kickstarts.git :: allow
         match scm_repository /fedora-kiwi-descriptions.git :: allow
     }
+{% if koji_instance == "secondary" %}
+    match scm_host fedora.riscv.rocks:3000 :: {
+        bool scratch :: allow
+        match scm_repository /rpms/* :: allow
+        match scm_repository /davidit/* :: allow
+    }
+{% endif %}
     all :: deny
 {% endif %}
 
