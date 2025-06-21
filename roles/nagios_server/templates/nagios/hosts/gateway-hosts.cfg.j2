@@ -38,7 +38,7 @@ define host {
   alias                        rdu3 gateway
   use                          mincheck
   check_command                check-host-alive4
-{% if vars['nagios_location'] == 'rdu3_internal' %}
+{% if vars['nagios_location'] == 'rdu3_internal' or vars['nagios_location'] == 'iad2_internal' %}
   address                      10.16.163.254
 {% elif vars['nagios_location'] == 'external' %}
   address                      209.132.181.204
