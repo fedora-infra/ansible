@@ -295,9 +295,9 @@ build_from_scm =
     }
 {% if koji_instance == "secondary" %}
     match scm_host fedora.riscv.rocks:3000 :: {
-        bool scratch :: allow
-        match scm_repository /rpms/* :: allow
-        match scm_repository /davidit/* :: allow
+        bool scratch :: allow fedpkg sources
+        match scm_repository /rpms/* :: allow fedpkg sources
+        match scm_repository /davidlt/* :: allow fedpkg sources
     }
 {% endif %}
     all :: deny
