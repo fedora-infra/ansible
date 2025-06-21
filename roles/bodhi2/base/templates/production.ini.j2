@@ -795,12 +795,12 @@ handlers = console, smtp
 qualname = gunicorn
 
 [logger_sqlalchemy]
-level = INFO
+level = WARNING
 handlers = console, smtp
 qualname = sqlalchemy.engine
 # "level = INFO" logs SQL queries.
 # "level = DEBUG" logs SQL queries and results.
-# "level = WARN" logs neither.  (Recommended for production systems.)
+# "level = WARNING" logs neither.  (Recommended for production systems.)
 
 [logger_celery]
 level = DEBUG
