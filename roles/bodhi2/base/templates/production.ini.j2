@@ -821,7 +821,7 @@ formatter = generic
 
 [handler_smtp]
 class = logging.handlers.SMTPHandler
-kwargs = {'mailhost'='bastion', 'fromaddr'='updates@stg.fedoraproject.org', 'toaddrs'=['bodhiadmin-members@fedoraproject.org'], 'subject'='Bodhi error'}
+kwargs = {'mailhost':'bastion', 'fromaddr':'updates@stg.fedoraproject.org', 'toaddrs':['bodhiadmin-members@fedoraproject.org'], 'subject':'Bodhi error'}
 level = ERROR
 formatter = generic
 
