@@ -3,7 +3,7 @@
 ###############
 ## {{ env }}
 {% for key, value in groups.items()|sort %}
-{% if groups[key] != [] and key not in vars['exclude_iad2_hostgroups'] %}
+{% if groups[key] != [] and key not in vars['exclude_iad2_hostgroups'] and '_iad2' in key %}
 define hostgroup{
        hostgroup_name {{ key }}
        alias          {{ key }}
