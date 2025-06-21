@@ -507,7 +507,7 @@
     - checkswap.cfg
     - checkraid.cfg
     - other.cfg
-  when: nagios_location == 'iad2_internal' or nagios_location = 'rdu3_internal'
+  when: nagios_location == 'iad2_internal' or nagios_location == 'rdu3_internal'
   tags:
   - nagios_server
   - nagios_config
