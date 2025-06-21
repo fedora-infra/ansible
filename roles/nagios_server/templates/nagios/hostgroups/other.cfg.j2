@@ -1,4 +1,4 @@
-
+{% if datacenter == 'iad2' %}
 define hostgroup {
         hostgroup_name  oneproxy
         alias           just one proxy
@@ -12,3 +12,18 @@ define hostgroup {
         members         proxy01.stg.iad2.fedoraproject.org
 
 }
+{% elif datacenter == 'rdu3' %}
+define hostgroup {
+        hostgroup_name  oneproxy
+        alias           just one proxy
+        members         proxy01.rdu3.fedoraproject.org
+
+}
+
+define hostgroup {
+        hostgroup_name  oneproxy-stg
+        alias           just one proxy in staging
+        members         proxy01.stg.rdu3.fedoraproject.org
+
+}
+{% endif %}
