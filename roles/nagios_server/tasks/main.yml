@@ -434,6 +434,7 @@
   ansible.builtin.template: src=nagios/hosts/{{item}}.j2 dest=/etc/nagios/hosts/{{item}} mode=0644 owner=root group=root
   with_items:
     - iad2-hosts.cfg
+    - rdu3-hosts.cfg
     - iad2-mgmt-hosts.cfg
     - staging-hosts.cfg
   when: env == "production" and nagios_location == 'iad2_internal'
@@ -455,6 +456,7 @@
   ansible.builtin.template: src=nagios/hosts/{{item}}.j2 dest=/etc/nagios/hosts/{{item}} mode=0644 owner=root group=root
   with_items:
     - iad2-hosts.cfg
+    - rdu3-hosts.cfg
   when: env == "production" and nagios_location == 'iad2_internal'
   tags:
   - nagios_server
