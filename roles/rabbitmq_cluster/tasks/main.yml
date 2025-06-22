@@ -122,12 +122,6 @@
   tags:
   - rabbitmq_cluster
 
-- name: Nope. No standard users. Even if we use TLS auth
-  rabbitmq_user: user=guest state=absent
-  tags:
-  - rabbitmq_cluster
-  - config
-
 # This require a running server...
 - name: Enable the HTTP management console and SSL authentication plugins
   rabbitmq_plugin:
@@ -135,6 +129,13 @@
             rabbitmq_auth_mechanism_ssl,\
             rabbitmq_federation,\
             rabbitmq_federation_management"
+  tags:
+  - rabbitmq_cluster
+  - config
+
+# This requires the HTTPS management server to be running...`
+- name: Nope. No standard users. Even if we use TLS auth
+  rabbitmq_user: user=guest state=absent
   tags:
   - rabbitmq_cluster
   - config
