@@ -1,0 +1,13 @@
+---
+datacenter: rdu3
+eth0_ipv4_gw: 10.16.163.254
+eth0_ipv4_ip: 10.16.163.110
+host_backup_targets: ['/srv', '/var/lib/zodbot']
+ks_repo: https://infrastructure.fedoraproject.org/repo/rhel/RHEL9-x86_64/
+ks_url: https://infrastructure.fedoraproject.org/repo/rhel/ks/kvm-rhel
+sar_output_file: meetbot.json
+# GDPR SAR variables - meetbot
+sar_script: /usr/local/bin/meetbot_sar.py
+sar_script_user: root
+vmhost: vmhost-x86-04.rdu3.fedoraproject.org
+volgroup: /dev/vg_guests
