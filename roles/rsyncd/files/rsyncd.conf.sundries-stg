@@ -12,7 +12,7 @@ path = /var/log
 uid = root
 gid = root
 read only = yes
-hosts allow = 10.3.163.39 192.168.1.59
+hosts allow = 10.3.163.39 192.168.1.59 10.16.163.39
 
 [docs]
 comment = Docs Site
@@ -20,7 +20,7 @@ path = /srv/docs
 uid = root
 gid = root
 read only = yes
-hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0
+hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0 10.16.160.0/255.255.224.0
 
 [review-stats]
 comment = Package Review Stats
@@ -28,7 +28,7 @@ path = /srv/web/review-stats
 uid = root
 gid = root
 read only = yes
-hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0
+hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0 10.16.160.0/255.255.224.0
 
 [gather-easyfix]
 comment = Gather easyfix available in Fedora
@@ -36,7 +36,7 @@ path = /srv/web/easyfix
 uid = root
 gid = root
 read only = yes
-hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0
+hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0 10.16.160.0/255.255.224.0
 
 [fedoraproject.org]
 comment = fedoraproject.org
@@ -44,7 +44,7 @@ path = /srv/web/fedoraproject.org
 uid = root
 gid = root
 read only = yes
-hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0
+hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0 10.16.160.0/255.255.224.0
 
 [talk.fedoraproject.org]
 comment = talk.fedoraproject.org
@@ -52,7 +52,7 @@ path = /srv/web/talk.fedoraproject.org
 uid = root
 gid = root
 read only = yes
-hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0
+hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0 10.16.160.0/255.255.224.0
 
 [start.fedoraproject.org]
 comment = start.fedoraproject.org
@@ -60,7 +60,7 @@ path = /srv/websites/start.fedoraproject.org
 uid = root
 gid = root
 read only = yes
-hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0
+hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0 10.16.160.0/255.255.224.0
 
 [mirrors.fedoraproject.org]
 comment = mirrors.fedoraproject.org
@@ -68,7 +68,7 @@ path = /srv/web/mirrors.fedoraproject.org
 uid = root
 gid = root
 read only = yes
-hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0
+hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0 10.16.160.0/255.255.224.0
 
 [fedoracommunity.org]
 comment = fedoracommunity.org
@@ -76,7 +76,7 @@ path = /srv/websites/fedoracommunity.org
 uid = root
 gid = root
 read only = yes
-hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0
+hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0 10.16.160.0/255.255.224.0
 
 [flocktofedora.org]
 comment = flocktofedora.org
@@ -84,7 +84,7 @@ path = /srv/websites/flocktofedora.org
 uid = root
 gid = root
 read only = yes
-hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0
+hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0 10.16.160.0/255.255.224.0
 
 [getfedora.org]
 comment = getfedora.org
@@ -92,7 +92,7 @@ path = /srv/websites/getfedora.org
 uid = root
 gid = root
 read only = yes
-hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0
+hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0 10.16.160.0/255.255.224.0
 
 [labs.fedoraproject.org]
 comment = labs.fedoraproject.org
@@ -100,7 +100,7 @@ path = /srv/websites/labs.fedoraproject.org
 uid = root
 gid = root
 read only = yes
-hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0
+hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0 10.16.160.0/255.255.224.0
 
 [budget.fedoraproject.org]
 comment = budget.fedoraproject.org
@@ -108,7 +108,7 @@ path = /srv/web/budget.fedoraproject.org
 uid = root
 gid = root
 read only = yes
-hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0
+hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0 10.16.160.0/255.255.224.0
 
 [iot.fedoraproject.org]
 comment = iot.fedoraproject.org
@@ -116,7 +116,7 @@ path = /srv/web/iot.fedoraproject.org
 uid = root
 gid = root
 read only = yes
-hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0
+hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0 10.16.160.0/255.255.224.0
 
 [developer.fedoraproject.org]
 comment = developer.fedoraproject.org
@@ -124,7 +124,7 @@ path = /srv/web/developer.fedoraproject.org
 uid = root
 gid = root
 read only = yes
-hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0
+hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0 10.16.160.0/255.255.224.0
 
 [codecs.fedoraproject.org]
 comment = codecs.fedoraproject.org
@@ -132,7 +132,7 @@ path = /srv/web/codecs.fedoraproject.org
 uid = root
 gid = root
 read only = yes
-hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0
+hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0 10.16.160.0/255.255.224.0
 
 [alt.fedoraproject.org]
 comment = alt.fedoraproject.org
@@ -140,7 +140,7 @@ path = /srv/websites/alt.fedoraproject.org
 uid = root
 gid = root
 read only = yes
-hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0
+hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0 10.16.160.0/255.255.224.0
 
 [fmw]
 comment = fmw
@@ -148,7 +148,7 @@ path = /srv/web/fmw
 uid = root
 gid = root
 read only = yes
-hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0
+hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0 10.16.160.0/255.255.224.0
 
 [registry-signatures]
 comment = registry-signatures
@@ -156,7 +156,7 @@ path = /srv/web/registry-signatures
 uid = root
 gid = root
 read only = yes
-hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0
+hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0 10.16.160.0/255.255.224.0
 
 [flatpak-index]
 comment = flatpak-indexer output
@@ -164,7 +164,7 @@ path = /srv/web/registry-index
 uid = root
 gid = root
 read only = yes
-hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0
+hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0 10.16.160.0/255.255.224.0
 
 [docs-redirects]
 comment = Docs Site Redirects
@@ -172,7 +172,7 @@ path = /srv/web/docs-redirects
 uid = root
 gid = root
 read only = yes
-hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0
+hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0 10.16.160.0/255.255.224.0
 
 [fedoraloveskde.org]
 comment = fedoraloveskde.org
@@ -180,4 +180,4 @@ path = /srv/web/fedoraloveskde.org
 uid = root
 gid = root
 read only = yes
-hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0
+hosts allow = 10.3.160.0/255.255.224.0 192.168.0.0/255.255.0.0 10.16.160.0/255.255.224.0
