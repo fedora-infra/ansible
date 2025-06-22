@@ -727,7 +727,6 @@
     use_h2: false
     tags:
     - ocp-rdu3.fedoraproject.org
-    when: env == "production" and datacenter == "rdu3"
 
   - role: httpd/website
     site_name: apps.ocp-rdu3.fedoraproject.org
@@ -740,7 +739,6 @@
     use_h2: false
     tags:
     - apps.ocp-rdu3.fedoraproject.org
-    when: env == "production" and datacenter == "rdu3"
 
   - role: httpd/website
     site_name: registry.fedoraproject.org
