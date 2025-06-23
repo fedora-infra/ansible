@@ -498,10 +498,10 @@
   - nagios_config
   notify: Restart nagios
 
-- name: Build out nagios hostgroup templates (iad2)
+- name: Build out nagios hostgroup templates
   ansible.builtin.template: src=nagios/hostgroups/{{item}}.j2 dest=/etc/nagios/hostgroups/{{item}} mode=0644 owner=root group=root
   with_items:
-    - "all.cfg.{{datacenter}}"
+    - all.cfg
     - vpnclients.cfg
     - nomail.cfg
     - checkswap.cfg
