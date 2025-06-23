@@ -4,7 +4,7 @@
   ansible.builtin.include_role:
     name: "ipa/service" # noqa role-name[path]
   vars:
-    host: os-control01{{ env_suffix }}.fedoraproject.org # noqa: var-naming[no-role-prefix]
+    host: os-control01{{ env_suffix }}.{{ datacenter }}.fedoraproject.org # noqa: var-naming[no-role-prefix]
     service: toddlers-sync-group # noqa: var-naming[no-role-prefix]
 
 - name: Create the privilege
@@ -36,7 +36,7 @@
     privilege:
     - Group Membership Synchronization
     service:
-    - toddlers-sync-group/os-control01{{ env_suffix }}.fedoraproject.org
+    - toddlers-sync-group/os-control01{{ env_suffix }}.{{ datacenter }}.fedoraproject.org
     ipa_host: "{{ inventory_hostname }}"
     ipa_user: admin
     ipa_pass: "{{ ipa_admin_password }}"
