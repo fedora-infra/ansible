@@ -15,14 +15,14 @@ define hostgroup {
 define hostgroup {
         hostgroup_name proxies
         alias          Web Servers
-        members         {% for host in groups["proxies_external"]|sort %} {{ hostvars[host]["inventory_hostname_short"] }}.fedoraproject.org {% if not loop.last %}, {% endif %} {% endfor %}
+        members         {% for host in groups["proxies_external"]|sort if hostvars[host].datacenter == datacenter %} {{ hostvars[host]["inventory_hostname_short"] }}.fedoraproject.org {% if not loop.last %}, {% endif %} {% endfor %}
 
 }
 
 define hostgroup {
         hostgroup_name proxies_ocp4
         alias          OCP Web Servers
-        members         {% for host in groups["proxies_ocp4"]|sort %} {{ hostvars[host]["inventory_hostname_short"] }}.fedoraproject.org {% if not loop.last %}, {% endif %} {% endfor %}
+        members         {% for host in groups["proxies_ocp4"]|sort if hostvars[host].datacenter == datacenter %} {{ hostvars[host]["inventory_hostname_short"] }}.fedoraproject.org {% if not loop.last %}, {% endif %} {% endfor %}
 
 }
 
