@@ -17,7 +17,7 @@ network_connections:
      autoconnect: yes
      ip:
       address:
-        - "{{ br0_ipv4 }}/{{ br0_ipv4_nm }}"
+        - "{{ br0_ipv4_ip }}/{{ br0_ipv4_nm }}"
       dhcp4: no
       dns:
         - "{{ dns1 }}"
