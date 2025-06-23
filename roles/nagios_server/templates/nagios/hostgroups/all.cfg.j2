@@ -48,9 +48,9 @@ define hostgroup{
 # Management hardware
 #
 define hostgroup {
-        hostgroup_name  iad2_mgmt_systems
-        alias           iad2_mgmt_systems
-        members         {% for host in vars['iad2_management_hosts']|sort %}{{host}}{% if not loop.last %},{% endif %} {% endfor %} 
+        hostgroup_name  {{datacenter}}_mgmt_systems
+        alias           {{datacenter}}_mgmt_systems
+        members         {% for host in vars[datacenter+'_management_hosts']|sort %}{{host}}{% if not loop.last %},{% endif %} {% endfor %} 
 
 }
 
