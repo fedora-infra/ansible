@@ -21,10 +21,8 @@
     state: present
   with_items:
   - haveged
-# Till https://issues.redhat.com/browse/RHEL-97591 is resolved we need to install
-# older version
-  - ipa-server-4.12.2-14.el9_6
-  - ipa-server-dns-4.12.2-14.el9_6
+  - ipa-server
+  - ipa-server-dns
   - ipa-fas
   tags:
   - ipa/server
