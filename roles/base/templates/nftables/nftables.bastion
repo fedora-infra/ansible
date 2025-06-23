@@ -71,7 +71,13 @@ add rule ip filter INPUT ip saddr 192.168.100.0/24 tcp dport 25 counter accept
 add rule ip filter INPUT ip saddr 192.168.1.0/24   tcp dport 25 counter accept
 add rule ip filter INPUT ip saddr 192.168.0.0/24   tcp dport 25 counter accept
 
+{% if datacenter == 'rdu3' %}
+# Greg: This is a nasty hack and we need to fix it properly after the DC move, but right
+# now I don't see where we'd get the right ip/netmask from in vars
+add rule ip filter INPUT ip saddr 10.16.160.0/19    tcp dport 25 counter accept
+{% else %}
 add rule ip filter INPUT ip saddr 10.3.160.0/19    tcp dport 25 counter accept
+{% endif %}
 
 # s390x builders/virthost
 add rule ip filter INPUT ip saddr 10.1.102.0/24    tcp dport 25 counter accept
