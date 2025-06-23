@@ -36,7 +36,7 @@
     privilege:
     - Group Membership Synchronization
     service:
-    - os-control01{{ env_suffix }}.fedoraproject.org/toddlers-sync-group
+    - toddlers-sync-group/os-control01{{ env_suffix }}.fedoraproject.org
     ipa_host: "{{ inventory_hostname }}"
     ipa_user: admin
     ipa_pass: "{{ ipa_admin_password }}"
