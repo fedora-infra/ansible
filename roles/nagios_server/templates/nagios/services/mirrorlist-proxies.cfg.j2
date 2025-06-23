@@ -1,4 +1,4 @@
-{% for host in groups['mirrorlist_proxies'] %}
+{% for host in groups['mirrorlist_proxies'] if hostvars[host].datacenter == datacenter %}
 define service {
   host_name             {{ host }}
   service_description   {{ host }} mirrorlist docker container
