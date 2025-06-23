@@ -7,7 +7,7 @@ define service {
 }
 
 define service {
-  host_name             bastion01.iad2.fedoraproject.org
+  host_name             bastion01.{{datacenter}}.fedoraproject.org
   service_description   mail_queue_redhat
   check_command         check_by_nrpe!check_postfix_redhat
   max_check_attempts    7
