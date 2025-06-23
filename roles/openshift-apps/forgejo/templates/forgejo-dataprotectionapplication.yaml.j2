@@ -1,0 +1,43 @@
+apiVersion: oadp.openshift.io/v1alpha1
+kind: DataProtectionApplication
+metadata:
+  name: oadp-dpa-config
+  namespace: openshift-adp
+spec:
+spec:
+  backupImages: false
+  backupLocations:
+  - name: default
+    velero:
+      config:
+        checksumAlgorithm: CRC32
+        enableSharedConfig: "true"
+        insecureSkipTLSVerify: "true"
+        kmsKeyId: "{{ (env == 'production') | ternary(forgejo_backup_kms_id, forgejo_stg_backup_kms_id) }}"
+        profile: default
+        region: "{{ (env == 'production') | ternary(forgejo_backup_region, forgejo_stg_backup_region) }}"
+        s3ForcePathStyle: "true"
+        serverSideEncryption: AES256
+        tagging: fedora-infra-forgejo-backups
+      credential:
+        key: cloud
+        name: cloud-credentials
+      default: true
+      objectStorage:
+        bucket: "{{ (env == 'production') | ternary(forgejo_backup_bucket, forgejo_stg_backup_bucket) }}"
+      provider: aws
+  configuration:
+    velero:
+      defaultPlugins:
+      - openshift
+      - aws
+      resourceTimeout: 10m
+  snapshotLocations:
+  - velero:
+      config:
+        profile: default
+        region: us-east-1
+      credential:
+        key: cloud
+        name: cloud-credentials
+      provider: aws
