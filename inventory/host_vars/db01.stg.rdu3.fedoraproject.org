@@ -1,0 +1,43 @@
+---
+#
+# We should narrow this down at some point
+#
+nft_custom_rules: ['add rule ip filter INPUT tcp dport 5432 counter accept']
+# This is a generic list, monitored by collectd
+databases:
+  - askfedora
+  - blockerbugs
+  - bodhi
+  - elections
+  - fedocal
+  - kerneltest
+  - mailman
+  - mirrormanager
+  - notifications
+  - tahrir
+datacenter: rdu3
+# Group vars beg:
+dns1: 10.16.163.33
+dns2: 10.16.163.34
+dns_search1: "rdu3.fedoraproject.org"
+dns_search2: "fedoraproject.org"
+dns_search3: "iad2.fedoraproject.org"
+# end
+effective_cache_size: "12GB"
+eth0_ipv4_gw: 10.16.166.254
+eth0_ipv4_ip: 10.16.166.32
+ks_repo: https://infrastructure.fedoraproject.org/repo/rhel/RHEL9-x86_64/
+ks_url: https://infrastructure.fedoraproject.org/repo/rhel/ks/kvm-rhel
+# These are normally group variables, but in this case db servers are often
+# different
+lvm_size: 500000
+mem_size: 16384
+nrpe_procs_crit: 900
+#
+# db01 handles lots of apps, could have many procs if they are busy.
+#
+nrpe_procs_warn: 800
+num_cpus: 4
+shared_buffers: "4GB"
+vmhost: vmhost-x86-02.stg.rdu3.fedoraproject.org
+volgroup: /dev/vg_guests
