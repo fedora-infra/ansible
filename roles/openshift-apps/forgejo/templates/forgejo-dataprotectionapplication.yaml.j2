@@ -36,7 +36,7 @@ spec:
   - velero:
       config:
         profile: default
-        region: us-east-1
+        region: "{{ (env == 'production') | ternary(forgejo_backup_region, forgejo_stg_backup_region) }}"
       credential:
         key: cloud
         name: cloud-credentials
