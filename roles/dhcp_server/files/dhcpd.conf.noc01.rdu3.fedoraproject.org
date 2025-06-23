@@ -1112,3 +1112,53 @@ host ocp03 {
      option routers 10.16.163.254;
      option subnet-mask 255.255.255.0;
 }
+# These are for aarch64 boxes to initially provision on their 1g interfaces
+host bvmhost-a64-01-provision {
+     hardware ethernet d8:5e:d3:e6:20:b0;
+     fixed-address 10.16.163.150;
+     next-server 10.16.163.10;
+     option routers 10.16.163.254;
+     option subnet-mask 255.255.255.0;
+}
+host bvmhost-a64-02-provision {
+     hardware ethernet D8:5E:D3:E6:25:A0;
+     fixed-address 10.16.163.151;
+     next-server 10.16.163.10;
+     option routers 10.16.163.254;
+     option subnet-mask 255.255.255.0;
+}
+host bvmhost-a64-03-provision {
+     hardware ethernet D8:5E:D3:E6:23:00;
+     fixed-address 10.16.163.152;
+     next-server 10.16.163.10;
+     option routers 10.16.163.254;
+     option subnet-mask 255.255.255.0;
+}
+host bvmhost-a64-04-provision {
+     hardware ethernet d8:5e:d3:e6:25:80;
+     fixed-address 10.16.163.153;
+     next-server 10.16.163.10;
+     option routers 10.16.163.254;
+     option subnet-mask 255.255.255.0;
+}
+host buildhw-a64-01-provision {
+     hardware ethernet D8:5E:D3:E6:24:34;
+     fixed-address 10.16.163.154;
+     next-server 10.16.163.10;
+     option routers 10.16.163.254;
+     option subnet-mask 255.255.255.0;
+}
+host buildhw-a64-02-provision {
+     hardware ethernet  D8:5E:D3:E6:21:A4;
+     fixed-address 10.16.163.155;
+     next-server 10.16.163.10;
+     option routers 10.16.163.254;
+     option subnet-mask 255.255.255.0;
+}
+host bvmhost-a64-01-stg-provision {
+     hardware ethernet  D8:5E:D3:E6:25:98;
+     fixed-address 10.16.163.156;
+     next-server 10.16.163.10;
+     option routers 10.16.163.254;
+     option subnet-mask 255.255.255.0;
+}
