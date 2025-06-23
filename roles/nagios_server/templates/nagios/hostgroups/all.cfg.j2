@@ -33,7 +33,7 @@ define hostgroup{
 define hostgroup{
        hostgroup_name mincheckgrp
        alias          mincheckgrp
-       members        {% for host in groups['all']|sort %}{% if hostvars[host].nagios_Check_Services['nrpe'] != true and hostvars[host].nagios_Can_Connect == true %}{{host}}, {% endif %}{% endfor %} 
+       members        {% for host in groups['all']|sort %}{% if hostvars[host].datacenter == datacenter and hostvars[host].nagios_Check_Services['nrpe'] != true and hostvars[host].nagios_Can_Connect == true %}{{host}}, {% endif %}{% endfor %} 
 
 }
 
