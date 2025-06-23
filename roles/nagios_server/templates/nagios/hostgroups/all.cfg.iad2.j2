@@ -7,7 +7,7 @@
 define hostgroup{
        hostgroup_name {{ key }}
        alias          {{ key }}
-{%- for host in groups[key]|sort if hostvars[host].nagios_Can_Connect == true %}
+{%- for host in groups[key]|sort if hostvars[host].nagios_Can_Connect == true and hostvars[host].datacenter == 'iad2' %}
 {% if loop.first +%}
        members        {{ host }}{% else %}, {{ host }}{% endif %}
 {% endfor +%}
