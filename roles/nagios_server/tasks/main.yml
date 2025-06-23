@@ -280,7 +280,7 @@
   tags:
   - nagios_config
   - nagios_server
-  when: nagios_location == 'iad2_internal'
+  when: nagios_location == 'iad2_internal' or nagios_location == 'rdu3_internal'
   notify: Restart nagios
 
 ## Copy over the servicegroups
