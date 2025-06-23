@@ -1,0 +1,32 @@
+---
+# common items for the buildvm-* koji builders
+dns: 10.16.163.33
+docker_registry: "candidate-registry.fedoraproject.org"
+eth0_ipv4_gw: 10.16.169.254
+# for systems that do not match the above - specify the same parameter in
+# the host_vars/$hostname file
+host_group: kojibuilder
+koji_hub: "koji.fedoraproject.org/kojihub"
+koji_hub_nfs: "fedora_koji"
+koji_instance: "primary"
+koji_root: "koji.fedoraproject.org/koji"
+koji_server_url: "https://koji.fedoraproject.org/kojihub"
+koji_topurl: "https://kojipkgs.fedoraproject.org/"
+koji_weburl: "https://koji.fedoraproject.org/koji"
+ks_repo: https://infrastructure.fedoraproject.org/pub/fedora/linux/releases/42/Server/x86_64/os/
+ks_url: https://infrastructure.fedoraproject.org/repo/rhel/ks/kvm-fedora
+lvm_size: 300000
+max_mem_size: "{{ mem_size }}"
+mem_size: 30720
+num_cpus: 8
+source_registry: "registry.fedoraproject.org"
+virt_install_command: "{{ virt_install_command_one_nic_unsafe }}"
+volgroup: /dev/vg_guests
+
+notes: |
+  Koji service employs a set of machines to build packages for the Fedora project. This playbook builds vm builders.
+
+  * VMs built on top of buildvmhost
+  * Relies on koji-hub, Packages, PkgDB, apache, fedora messaging, fas, virthost, and is monitored by nagios
+  * Several services rely on the builders, including koschei, Bodhi, Tagger, SCM, Darkserver.
+  * Produces automated builds of packages for the architecture listed. Builders can be scaled by adding new
