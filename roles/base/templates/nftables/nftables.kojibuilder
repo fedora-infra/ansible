@@ -105,6 +105,8 @@ add rule ip filter OUTPUT ip daddr 10.16.163.35 tcp dport 443 counter accept
 # temp allow external iad2 infra until after the move
 add rule ip filter OUTPUT ip daddr 38.145.60.16 tcp dport  80 counter accept
 add rule ip filter OUTPUT ip daddr 38.145.60.16 tcp dport 443 counter accept
+add rule ip filter OUTPUT ip daddr 38.145.60.20 tcp dport 443 counter accept
+add rule ip filter OUTPUT ip daddr 38.145.60.21 tcp dport 443 counter accept
 
 # rsyslog out to log01
 add rule ip filter OUTPUT ip daddr 10.16.163.39 tcp dport 514 counter accept
