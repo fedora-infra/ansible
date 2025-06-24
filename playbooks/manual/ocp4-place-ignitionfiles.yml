@@ -56,7 +56,7 @@
             - "rhcos-live-initramfs.x86_64.img"
             - "rhcos-live-rootfs.x86_64.img"
             - "rhcos-metal.x86_64.raw.gz"
-            - "rhcos-live-kernel-x86_64"
+            - "rhcos-live-kernel.x86_64"
         - name: == OCP KVM provisioning == Ensuring symlink for correct version {{ rhcos_version }}
           ansible.builtin.file:
             state: link

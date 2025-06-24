@@ -1319,16 +1319,19 @@ worker06.ocp.iad2.fedoraproject.org
 os_control_stg
 ocp_controlplane_stg
 ocp_workers_stg
-#ocp_boostrap_stg
+ocp_boostrap_stg
 
 [ocp_vms_stg:children]
-#ocp_boostrap_stg
+ocp_boostrap_stg
 ocp_controlplane_stg
 
 [ocp_controlplane_stg]
 ocp01.ocp.stg.iad2.fedoraproject.org
 ocp02.ocp.stg.iad2.fedoraproject.org
 ocp03.ocp.stg.iad2.fedoraproject.org
+ocp01.ocp.stg.rdu3.fedoraproject.org
+ocp02.ocp.stg.rdu3.fedoraproject.org
+ocp03.ocp.stg.rdu3.fedoraproject.org
 
 [ocp_workers_stg]
 worker01.ocp.stg.iad2.fedoraproject.org
@@ -1337,8 +1340,8 @@ worker03.ocp.stg.iad2.fedoraproject.org
 worker04.ocp.stg.iad2.fedoraproject.org
 worker05.ocp.stg.iad2.fedoraproject.org
 
-#[ocp_boostrap_stg]
-#bootstrap.ocp.stg.iad2.fedoraproject.org
+[ocp_boostrap_stg]
+bootstrap.ocp.stg.rdu3.fedoraproject.org
 
 [os_control_stg]
 os-control01.stg.iad2.fedoraproject.org
