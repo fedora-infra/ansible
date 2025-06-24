@@ -73,6 +73,19 @@
   with_items:
   - rabbitmq.config
   - rabbitmq-env.conf
+  when: "datacenter == 'iad2'"
+  notify:
+    - Restart rabbitmq
+  tags:
+  - rabbitmq_cluster
+  - config
+
+- name: Deploy configuration
+  ansible.builtin.template: src={{item}} dest=/etc/rabbitmq/{{item}} owner=root group=root mode=0644
+  with_items:
+  - rabbitmq.conf
+  - rabbitmq-env.conf
+  when: "datacenter == 'rdu3'"
   notify:
     - Restart rabbitmq
   tags:
