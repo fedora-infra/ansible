@@ -76,7 +76,7 @@
       ignore_errors: true
       with_items:
         - "rhcos-live-initramfs.x86_64.img"
-        - "rhcos-live-kernel-x86_64"
+        - "rhcos-live-kernel.x86_64"
       delegate_to: 127.0.0.1
       tags:
         - ignition
