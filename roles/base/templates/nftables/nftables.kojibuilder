@@ -145,11 +145,14 @@ add rule ip filter OUTPUT ip daddr 8.43.85.76 tcp dport 443 counter accept
 # 10.3.163.31  = bastion01
 # 10.3.163.10  = noc01
 
-# NFS (in storage.neta-002.prod.iad2.dc.redhat.co)
+# NFS (in storage.neta-002.prod.iad2.dc.redhat.com)
 # 10.3.162.11 = ntap-iad2-c02-fedora01-nfs01a
 # 10.3.162.12 = ntap-iad2-c02-fedora01-nfs01b
 # 10.3.162.13 = ntap-iad2-c02-fedora01-nfs02a
 # 10.3.162.14 = ntap-iad2-c02-fedora01-nfs02b
+# Dito...
+# 10.16.162.11 =ntap-rdu3-c02-fedora01-nfs01a .neta-002.prod.rdu2.dc.redhat.com
+
 
 {% if host in groups['builders_iad2'] %}
 # admin.fedoraproject.org  for fas (proyx(1)01 and proxy(1)10)
@@ -226,6 +229,19 @@ add rule ip filter  INPUT ip daddr 10.3.167.64 tcp dport 2049 counter accept
 add rule ip filter OUTPUT ip daddr 10.3.167.64 tcp dport 2049 counter accept
 {% endif %}
 
+# NFS for iad2
+
+# a little to wide-open - but kinda necessary
+add rule ip filter  INPUT ip saddr 10.3.162.11 counter accept
+add rule ip filter OUTPUT ip daddr 10.3.162.11 counter accept
+#!# NOTE: tcp/udp doesn't translate without a port??
+add rule ip filter  INPUT ip saddr 10.3.162.12 counter accept
+add rule ip filter OUTPUT ip daddr 10.3.162.12 counter accept
+add rule ip filter  INPUT ip saddr 10.3.162.13 counter accept
+add rule ip filter OUTPUT ip daddr 10.3.162.13 counter accept
+add rule ip filter  INPUT ip saddr 10.3.162.14 counter accept
+add rule ip filter OUTPUT ip daddr 10.3.162.14 counter accept
+
 # ntp
 add rule ip filter OUTPUT ip daddr 10.3.163.31 udp dport 123 counter accept
 add rule ip filter OUTPUT ip daddr 10.3.163.32 udp dport 123 counter accept
@@ -239,20 +255,6 @@ add rule ip filter OUTPUT ip daddr 10.3.0.0/16 tcp sport 22 counter accept
 {% endif %}
 
 # End of IAD2
-
-# NFS for both iad2 and rdu3
-
-#nfs to vtap-fedora-nfs01.storage.phx2.redhat.com - a little to wide-open - but 
-# kinda necessary
-add rule ip filter  INPUT ip saddr 10.3.162.11 counter accept
-add rule ip filter OUTPUT ip daddr 10.3.162.11 counter accept
-#!# NOTE: tcp/udp doesn't translate without a port??
-add rule ip filter  INPUT ip saddr 10.3.162.12 counter accept
-add rule ip filter OUTPUT ip daddr 10.3.162.12 counter accept
-add rule ip filter  INPUT ip saddr 10.3.162.13 counter accept
-add rule ip filter OUTPUT ip daddr 10.3.162.13 counter accept
-add rule ip filter  INPUT ip saddr 10.3.162.14 counter accept
-add rule ip filter OUTPUT ip daddr 10.3.162.14 counter accept
 
 {% if host in groups['builders_rdu3'] %}
 # admin.fedoraproject.org  for fas (proyx(1)01 and proxy(1)10)
@@ -331,6 +333,19 @@ add rule ip filter OUTPUT ip daddr 10.16.163.104 udp dport  53 counter accept
 add rule ip filter  INPUT ip daddr 10.16.167.64 tcp dport 2049 counter accept
 add rule ip filter OUTPUT ip daddr 10.16.167.64 tcp dport 2049 counter accept
 {% endif %}
+
+# NFS for rdu3
+
+# a little to wide-open - but kinda necessary
+add rule ip filter  INPUT ip saddr 10.16.162.11 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.162.11 counter accept
+#!# NOTE: tcp/udp doesn't translate without a port??
+add rule ip filter  INPUT ip saddr 10.16.162.12 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.162.12 counter accept
+add rule ip filter  INPUT ip saddr 10.16.162.13 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.162.13 counter accept
+add rule ip filter  INPUT ip saddr 10.16.162.14 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.162.14 counter accept
 
 # ntp
 add rule ip filter OUTPUT ip daddr 10.16.163.31 udp dport 123 counter accept
