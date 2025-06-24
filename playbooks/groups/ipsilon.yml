@@ -98,7 +98,7 @@
     ipahbacrule:
       name: ipsilon
       action: member
-      host: "{{ (env == 'production')|ternary('ipsilon.iad2.centos.org', 'ipsilon.stg.iad2.centos.org') }}"
+      host: "{{ (env == 'production')|ternary(['ipsilon.iad2.centos.org', 'ipsilon.rdu3.centos.org'], ['ipsilon.stg.iad2.centos.org', 'ipsilon.stg.rdu3.centos.org']) }}"
       ipaadmin_password: "{{ ipa_admin_password }}"
     tags:
     - ipsilon
