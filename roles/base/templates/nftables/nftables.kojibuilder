@@ -109,6 +109,9 @@ add rule ip filter OUTPUT ip daddr 10.16.163.39 tcp dport 514 counter accept
 # SSH
 add rule ip filter  INPUT ip saddr 10.16.160.0/19 tcp dport 22 counter accept
 add rule ip filter OUTPUT ip daddr 10.16.160.0/19 tcp sport 22 counter accept
+# add iad2 ansible control host for now
+add rule ip filter  INPUT ip saddr 10.3.163.35/32 tcp dport 22 counter accept
+add rule ip filter OUTPUT ip daddr 10.3.163.35/19 tcp sport 22 counter accept
 {% endif %}
 
 # End of RDU3

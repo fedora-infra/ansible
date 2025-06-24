@@ -26,14 +26,18 @@ add rule ip filter INPUT ip saddr {{ ip }} counter drop
 add rule ip filter INPUT iifname "tun0" ip saddr 192.168.0.0/24 ct state new tcp dport 22 counter accept
 # external ip for iad2
 add rule ip filter INPUT ip saddr 38.145.60.0/24 ct state new tcp dport 22 counter accept
+# external ip for rdu3
+add rule ip filter INPUT ip saddr 38.145.32.0/24 ct state new tcp dport 22 counter accept
 
 # for nrpe - allow it from nocs
 add rule ip filter INPUT ip saddr 192.168.1.10  tcp dport 5666 counter accept
 add rule ip filter INPUT ip saddr 192.168.1.166 tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 192.168.1.66 tcp dport 5666 counter accept
 # FIXME - this is the global nat-ip and we need the noc01-specific ip
 add rule ip filter INPUT ip saddr 38.145.60.15 tcp dport 5666 counter accept
 add rule ip filter INPUT ip saddr 38.145.60.16 tcp dport 5666 counter accept
-add rule ip filter INPUT ip saddr 10.3.163.10  tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 38.145.32.15 tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 38.145.32.16 tcp dport 5666 counter accept
 
 # if the host/group defines incoming tcp_ports - allow them
 {% if tcp_ports is defined %}
