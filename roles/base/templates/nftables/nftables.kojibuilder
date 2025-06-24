@@ -1,8 +1,12 @@
 # {{ ansible_managed }}
+# Setup an ip filter table with default drop policy.
+
 add table ip filter
 add chain ip filter   INPUT { type filter hook input priority 0; policy drop; }
 add chain ip filter FORWARD { type filter hook forward priority 0; policy drop; }
 add chain ip filter  OUTPUT { type filter hook output priority 0; policy drop; }
+
+# Std. allow rules for the drop policy
 
 # loopback allowed
 add rule ip filter  INPUT iifname "lo" counter accept
@@ -20,12 +24,7 @@ add rule ip filter OUTPUT ip protocol icmp counter accept
 add rule ip filter  INPUT ct state related,established counter accept
 add rule ip filter OUTPUT ct state related,established counter accept
 
-# if the blocked_ips is defined - drop them
-{% if blocked_ips is defined %}
-{% for ip in blocked_ips %}
-add rule ip filter INPUT ip saddr {{ ip }} counter drop
-{% endfor %}
-{% endif %}
+{% include '_nft_blocked_ips' %}
 
 {% if host in groups['osbuild'] %}
 # osbuild api for osbuild koji plugin
@@ -55,6 +54,9 @@ add rule ip filter OUTPUT ip daddr 10.3.169.106 tcp dport 80 counter accept
 add rule ip filter OUTPUT ip daddr 10.3.169.107 tcp dport 80 counter accept
 {% endif %}
 
+#  Now we need to allow iad2 to speak to iad2 and rdu3 to speak to rdu3
+# but not cross the streams.
+
 {% if host in groups['builders_iad2'] %}
 # tang for buildhw
 add rule ip filter OUTPUT ip daddr 10.3.163.37 tcp dport 80 counter accept
@@ -80,6 +82,9 @@ add rule ip filter OUTPUT ip daddr 10.3.163.39 tcp dport 514 counter accept
 add rule ip filter  INPUT ip saddr 10.3.160.0/19 tcp dport 22 counter accept
 add rule ip filter OUTPUT ip daddr 10.3.160.0/19 tcp sport 22 counter accept
 {% endif %}
+
+# End of IAD2
+
 {% if host in groups['builders_rdu3'] %}
 # tang for buildhw
 add rule ip filter OUTPUT ip daddr 10.16.163.37 tcp dport 80 counter accept
@@ -106,6 +111,8 @@ add rule ip filter  INPUT ip saddr 10.16.160.0/19 tcp dport 22 counter accept
 add rule ip filter OUTPUT ip daddr 10.16.160.0/19 tcp sport 22 counter accept
 {% endif %}
 
+# End of RDU3
+
 {% if inventory_hostname.startswith (('buildvm-s390x-11', 'buildvm-s390x-12', 'buildvm-s390x-13')) %}
 # Allow SSHFS binding to koji01
 add rule ip filter OUTPUT ip daddr 10.3.169.104 tcp dport 22 counter accept
@@ -117,6 +124,34 @@ add rule ip filter OUTPUT ip daddr 10.3.169.104 tcp dport 22 counter accept
 # https git on pagure,io
 add rule ip filter OUTPUT ip daddr 8.43.85.76 tcp dport 443 counter accept
 
+#  Now we need to allow iad2 to speak to iad2 and rdu3 to speak to rdu3
+# but not cross the streams.
+
+# IP Helper:
+# 10.3.        = .ida2.
+# 10.16.       = .rdu3.
+# 10.3.166.74  = proxy01.stg
+# 10.3.166.75  = proxy02.stg
+# 10.3.163.74  = proxy01
+# 10.3.163.75  = proxy02
+# 10.3.163.76  = proxy101
+# 10.3.163.77  = proxy110
+# 10.3.166.21  = ipa01.stg
+# 10.3.166.63  = ipa02.stg
+# 10.3.163.54  = ipa01
+# 10.3.163.55  = ipa02
+# 10.3.163.104 = ipa03
+# 10.3.167.64  = koji01.stg (there is no koji01.stg.rdu3 atm)
+# 10.3.163.31  = bastion01
+# 10.3.163.10  = noc01
+
+# NFS (in storage.neta-002.prod.iad2.dc.redhat.co)
+# 10.3.162.11 = ntap-iad2-c02-fedora01-nfs01a
+# 10.3.162.12 = ntap-iad2-c02-fedora01-nfs01b
+# 10.3.162.13 = ntap-iad2-c02-fedora01-nfs02a
+# 10.3.162.14 = ntap-iad2-c02-fedora01-nfs02b
+
+{% if host in groups['builders_iad2'] %}
 # admin.fedoraproject.org  for fas (proyx(1)01 and proxy(1)10)
 {% if host in groups['staging'] %}
 add rule ip filter OUTPUT ip daddr 10.3.166.74 tcp dport  80 counter accept
@@ -155,6 +190,7 @@ add rule ip filter OUTPUT ip daddr 10.3.166.63 udp dport 464 counter accept
 add rule ip filter OUTPUT ip daddr 10.3.166.21 udp dport  53 counter accept
 add rule ip filter OUTPUT ip daddr 10.3.166.63 udp dport  53 counter accept
 {% else %}
+# ipa client ports - prod
 add rule ip filter OUTPUT ip daddr 10.3.163.54  tcp dport  80 counter accept
 add rule ip filter OUTPUT ip daddr 10.3.163.55  tcp dport  80 counter accept
 add rule ip filter OUTPUT ip daddr 10.3.163.104 tcp dport  80 counter accept
@@ -189,6 +225,23 @@ add rule ip filter OUTPUT ip daddr 10.3.163.104 udp dport  53 counter accept
 add rule ip filter  INPUT ip daddr 10.3.167.64 tcp dport 2049 counter accept
 add rule ip filter OUTPUT ip daddr 10.3.167.64 tcp dport 2049 counter accept
 {% endif %}
+
+# ntp
+add rule ip filter OUTPUT ip daddr 10.3.163.31 udp dport 123 counter accept
+add rule ip filter OUTPUT ip daddr 10.3.163.32 udp dport 123 counter accept
+
+# dhcp
+add rule ip filter OUTPUT ip daddr 10.3.163.10 udp dport 67 counter accept
+
+# s390x builders ssh
+add rule ip filter  INPUT ip saddr 10.3.0.0/16 tcp dport 22 counter accept
+add rule ip filter OUTPUT ip daddr 10.3.0.0/16 tcp sport 22 counter accept
+{% endif %}
+
+# End of IAD2
+
+# NFS for both iad2 and rdu3
+
 #nfs to vtap-fedora-nfs01.storage.phx2.redhat.com - a little to wide-open - but 
 # kinda necessary
 add rule ip filter  INPUT ip saddr 10.3.162.11 counter accept
@@ -201,16 +254,94 @@ add rule ip filter OUTPUT ip daddr 10.3.162.13 counter accept
 add rule ip filter  INPUT ip saddr 10.3.162.14 counter accept
 add rule ip filter OUTPUT ip daddr 10.3.162.14 counter accept
 
+{% if host in groups['builders_rdu3'] %}
+# admin.fedoraproject.org  for fas (proyx(1)01 and proxy(1)10)
+{% if host in groups['staging'] %}
+add rule ip filter OUTPUT ip daddr 10.16.166.74 tcp dport  80 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.166.74 tcp dport 443 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.166.75 tcp dport  80 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.166.75 tcp dport 443 counter accept
+{% endif %}
+
+add rule ip filter OUTPUT ip daddr 10.16.163.74 tcp dport  80 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.74 tcp dport 443 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.75 tcp dport  80 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.75 tcp dport 443 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.76 tcp dport  80 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.76 tcp dport 443 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.77 tcp dport  80 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.77 tcp dport 443 counter accept
+
+# ipa client ports
+{% if host in groups['staging'] %}
+add rule ip filter OUTPUT ip daddr 10.16.166.21 tcp dport  80 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.166.63 tcp dport  80 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.166.21 tcp dport 443 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.166.63 tcp dport 443 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.166.21 tcp dport 389 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.166.63 tcp dport 389 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.166.21 tcp dport 636 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.166.63 tcp dport 636 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.166.21 tcp dport  88 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.166.63 tcp dport  88 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.166.21 udp dport  88 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.166.63 udp dport  88 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.166.21 tcp dport 464 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.166.63 tcp dport 464 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.166.21 udp dport 464 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.166.63 udp dport 464 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.166.21 udp dport  53 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.166.63 udp dport  53 counter accept
+{% else %}
+# ipa client ports - prod
+add rule ip filter OUTPUT ip daddr 10.16.163.54  tcp dport  80 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.55  tcp dport  80 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.104 tcp dport  80 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.54  tcp dport 443 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.55  tcp dport 443 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.104 tcp dport 443 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.54  tcp dport 389 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.55  tcp dport 389 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.104 tcp dport 389 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.54  tcp dport 636 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.55  tcp dport 636 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.104 tcp dport 636 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.54  tcp dport  88 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.55  tcp dport  88 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.104 tcp dport  88 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.54  udp dport  88 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.55  udp dport  88 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.104 udp dport  88 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.54  tcp dport 464 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.55  tcp dport 464 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.104 tcp dport 464 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.54  udp dport 464 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.55  udp dport 464 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.104 udp dport 464 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.54  udp dport  53 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.55  udp dport  53 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.104 udp dport  53 counter accept
+{% endif %}
+
+{% if host in groups['staging'] %}
+# Allow nfs from koji01
+# ****
+# NOTE: There is NO koji01.stg.rdu3.fedoraproject.org YET
+# ****
+add rule ip filter  INPUT ip daddr 10.16.167.64 tcp dport 2049 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.167.64 tcp dport 2049 counter accept
+{% endif %}
+
 # ntp
-add rule ip filter OUTPUT ip daddr 10.3.163.31 udp dport 123 counter accept
-add rule ip filter OUTPUT ip daddr 10.3.163.32 udp dport 123 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.31 udp dport 123 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.32 udp dport 123 counter accept
 
 # dhcp
-add rule ip filter OUTPUT ip daddr 10.3.163.10 udp dport 67 counter accept
+add rule ip filter OUTPUT ip daddr 10.16.163.10 udp dport 67 counter accept
 
 # s390x builders ssh
-add rule ip filter  INPUT ip saddr 10.3.0.0/16 tcp dport 22 counter accept
-add rule ip filter OUTPUT ip daddr 10.3.0.0/16 tcp sport 22 counter accept
+add rule ip filter  INPUT ip saddr 10.16.0.0/16 tcp dport 22 counter accept
+{% endif %}
 
 # if the host/group defines incoming tcp_ports - allow them
 {% for port in tcp_ports %}
