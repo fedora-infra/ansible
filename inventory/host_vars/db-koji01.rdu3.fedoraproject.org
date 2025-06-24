@@ -1,0 +1,55 @@
+---
+#
+# Only allow postgresql access from the frontend node.
+#
+nft_custom_rules:
+  - 'add rule ip filter INPUT ip saddr 10.16.169.104 tcp dport 5432 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.16.169.105 tcp dport 5432 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.16.169.10  tcp dport 5432 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.16.163.10  tcp dport 5432 counter accept'
+# This is a generic list, monitored by collectd
+databases:
+  - koji
+datacenter: rdu3
+# Group vars beg:
+dns1: 10.16.163.33
+dns2: 10.16.163.34
+dns_search1: "rdu3.fedoraproject.org"
+dns_search2: "fedoraproject.org"
+dns_search3: "iad2.fedoraproject.org"
+# end
+db_backup_dir: ['/backups']
+# This is a more strict list, to be made publicly available
+dbs_to_backup:
+  - koji
+effective_cache_size: "100GB"
+effective_io_concurrency: 20
+eth0_ipv4_gw: 10.16.169.254
+eth0_ipv4_ip: 10.16.169.103
+# kernel SHMMAX value
+kernel_shmmax: 68719476736
+ks_repo: https://infrastructure.fedoraproject.org/repo/rhel/RHEL9-x86_64/
+ks_url: https://infrastructure.fedoraproject.org/repo/rhel/ks/kvm-rhel
+# These are normally group variables, but in this case db servers are often different
+lvm_size: 2500g
+max_cpu: 96
+max_mem_size: 327680
+max_parallel_maintenance_workers: 4
+max_parallel_workers: 40
+max_parallel_workers_per_gather: 10
+max_stack_depth: "6MB"
+max_worker_processes: 60
+mem_size: 262140
+nagios_Check_Services:
+  swap: false
+nrpe_procs_crit: 700
+#
+# Large updates pushes cause lots of db threads doing the tag moves, so up this from default.
+#
+nrpe_procs_warn: 600
+num_cpus: 64
+shared_buffers: "64GB"
+swap: false
+temp_buffers: "192MB"
+vmhost: bvmhost-x86-01.rdu3.fedoraproject.org
+volgroup: /dev/vg_guests
