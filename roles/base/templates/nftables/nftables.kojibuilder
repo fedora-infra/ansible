@@ -179,7 +179,7 @@ add rule ip filter OUTPUT ip daddr 10.3.163.77 tcp dport  80 counter accept
 add rule ip filter OUTPUT ip daddr 10.3.163.77 tcp dport 443 counter accept
 
 # ipa client ports
-{% if host in groups['[iad2_staging'] %}
+{% if host in groups['iad2_staging'] %}
 add rule ip filter OUTPUT ip daddr 10.3.166.21 tcp dport  80 counter accept
 add rule ip filter OUTPUT ip daddr 10.3.166.63 tcp dport  80 counter accept
 add rule ip filter OUTPUT ip daddr 10.3.166.21 tcp dport 443 counter accept
@@ -198,7 +198,7 @@ add rule ip filter OUTPUT ip daddr 10.3.166.21 udp dport 464 counter accept
 add rule ip filter OUTPUT ip daddr 10.3.166.63 udp dport 464 counter accept
 add rule ip filter OUTPUT ip daddr 10.3.166.21 udp dport  53 counter accept
 add rule ip filter OUTPUT ip daddr 10.3.166.63 udp dport  53 counter accept
-{% elif host in groups['[iad2_production]' %}
+{% elif host in groups['iad2_production'] %}
 # ipa client ports - prod
 add rule ip filter OUTPUT ip daddr 10.3.163.54  tcp dport  80 counter accept
 add rule ip filter OUTPUT ip daddr 10.3.163.55  tcp dport  80 counter accept
@@ -280,7 +280,7 @@ add rule ip filter OUTPUT ip daddr 10.16.163.76 tcp dport 443 counter accept
 add rule ip filter OUTPUT ip daddr 10.16.163.77 tcp dport  80 counter accept
 add rule ip filter OUTPUT ip daddr 10.16.163.77 tcp dport 443 counter accept
 
-{% if host in groups['rdu3_staging]' %}
+{% if host in groups['rdu3_staging'] %}
 # ipa client ports
 add rule ip filter OUTPUT ip daddr 10.3.166.21 tcp dport  80 counter accept
 add rule ip filter OUTPUT ip daddr 10.3.166.63 tcp dport  80 counter accept
@@ -319,7 +319,7 @@ add rule ip filter OUTPUT ip daddr 10.16.166.21 udp dport 464 counter accept
 add rule ip filter OUTPUT ip daddr 10.16.166.63 udp dport 464 counter accept
 add rule ip filter OUTPUT ip daddr 10.16.166.21 udp dport  53 counter accept
 add rule ip filter OUTPUT ip daddr 10.16.166.63 udp dport  53 counter accept
-{% elif host in groups['rdu3_production]' %}
+{% elif host in groups['rdu3_production'] %}
 # ipa client ports - prod
 add rule ip filter OUTPUT ip daddr 10.3.163.54  tcp dport  80 counter accept
 add rule ip filter OUTPUT ip daddr 10.3.163.55  tcp dport  80 counter accept
