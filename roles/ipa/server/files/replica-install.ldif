@@ -2,3 +2,8 @@ dn: cn=config
 changetype: modify
 replace: nsslapd-maxsasliosize
 nsslapd-maxsasliosize: 3145728
+
+dn: cn=config
+changetype: modify
+replace: nsslapd-sizelimit
+nsslapd-sizelimit: 100000
