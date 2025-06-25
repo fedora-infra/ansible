@@ -18,7 +18,8 @@ spec:
         region: "{{ (env == 'production') | ternary(forgejo_backup_region, forgejo_stg_backup_region) }}"
         s3ForcePathStyle: "true"
         serverSideEncryption: AES256
-        tagging: fedora-infra-forgejo-backups
+        tagging:
+        - fedora-infra-forgejo-backups
       credential:
         key: cloud
         name: cloud-credentials
@@ -27,6 +28,8 @@ spec:
         bucket: "{{ (env == 'production') | ternary(forgejo_backup_bucket, forgejo_stg_backup_bucket) }}"
       provider: aws
   configuration:
+    nodeAgent:
+      uploaderType: restic
     velero:
       defaultPlugins:
       - openshift
