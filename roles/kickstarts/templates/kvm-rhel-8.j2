@@ -1,0 +1,80 @@
+#version=RHEL8
+install
+text
+skipx
+# License Agreement
+eula --agreed
+# Network information
+
+# Setup Repository info
+repo --name="BaseOS"     --baseurl=https://infrastructure.fedoraproject.org/repo/rhel/rhel8/x86_64/rhel-8-for-x86_64-baseos-rpms/
+repo --name="AppStream"  --baseurl=https://infrastructure.fedoraproject.org/repo/rhel/rhel8/x86_64/rhel-8-for-x86_64-appstream-rpms/
+repo --name="PowerTools" --baseurl=https://infrastructure.fedoraproject.org/repo/rhel/rhel8/x86_64/codeready-builder-for-rhel-8-x86_64-rpms/
+# Run the Setup Agent on first boot
+firstboot --disable
+# Keyboard layouts
+keyboard --vckeymap=us --xlayouts='us'
+# System language
+lang en_US.UTF-8 --addsupport=en_GB.UTF-8
+# System authorization information
+auth --enableshadow --passalgo=sha512
+# Root password
+rootpw --iscrypted "{{ kickstart_initial_password_encrypted }}"
+# System timezone
+timezone Etc/GMT --isUtc --nontp
+# System bootloader configuration
+zerombr
+bootloader --append="net.ifnames=0 crashkernel=auto" --location=mbr --boot-drive=vda
+# Partition clearing information
+clearpart --initlabel --all
+# Filesystem Data
+part /boot --fstype xfs --size=512
+part swap --fstype swap --size=2048
+part pv.01 --size=100 --grow
+volgroup GuestVolGroup00 pv.01
+logvol / --fstype xfs --size=100 --vgname=GuestVolGroup00 --name=root --grow
+# What to do at the end
+reboot
+
+%packages
+@core
+authselect-compat
+bash-completion
+bind-utils
+cronie-noanacron
+crontabs
+dhclient
+iptables-services
+mailx
+nfs-utils
+nmap-ncat
+openssh-clients
+openssh-server
+patch
+python36
+postfix
+python3
+python3-libselinux
+rsync
+rsyslog
+strace
+telnet
+tmpwatch
+tmux
+traceroute
+vim-enhanced
+yum
+yum-utils
+zsh
+-biosdevname
+-cronie-anacron
+-subscription-manager
+-iwl*
+-yum-rhn-plugin
+%end
+
+%post --nochroot --log=/mnt/sysimage/root/post.output --erroronfail
+mkdir /mnt/sysimage/root/tmp
+chroot /mnt/sysimage /usr/bin/curl http://infrastructure.fedoraproject.org/rhel/ks/post/rhel8-post.sh -o /root/tmp/rhel8-post.sh
+chroot /mnt/sysimage /bin/bash /root/tmp/rhel8-post.sh
+%end
