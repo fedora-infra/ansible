@@ -76,6 +76,6 @@ zsh
 
 %post --nochroot --log=/mnt/sysimage/root/post.output --erroronfail
 mkdir /mnt/sysimage/root/tmp
-chroot /mnt/sysimage /usr/bin/curl http://infrastructure.fedoraproject.org/rhel/ks/post/rhel8-post.sh -o /root/tmp/rhel8-post.sh
+chroot /mnt/sysimage /usr/bin/curl https://infrastructure.fedoraproject.org/rhel/ks/post/rhel8-post.sh -o /root/tmp/rhel8-post.sh
 chroot /mnt/sysimage /bin/bash /root/tmp/rhel8-post.sh
 %end
