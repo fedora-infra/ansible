@@ -262,23 +262,6 @@
   - rabbitmq_cluster
   - config
 
-- name: Add a policy to remove after a week of no use for /bodhi
-  run_once: true
-  delegate_to: "rabbitmq01{{ env_suffix }}.{{ item }}.fedoraproject.org"
-  with_items: "{{ datacenter }}"
-  rabbitmq_policy:
-    apply_to: queues
-    name: bodhi_sweeper
-    state: present
-    pattern: ".*"
-    tags:
-      # Unused queues are killed after 1000 * 60 * 60 * 7 milliseconds (~a week)
-      expires: 25200000
-    vhost: /bodhi
-  tags:
-  - rabbitmq_cluster
-  - config
-
 - name: Create the admin user for the {{ item }} vhost
   rabbitmq_user:
     user: admin
