@@ -1,0 +1,77 @@
+---
+br0_ipv4: 10.16.174.23
+br0_ipv4_gw: 10.16.174.254
+br0_ipv4_nm: 24
+br0_port0_mac: "{{ mac1 }}"
+datacenter: rdu3
+dns1: 10.16.163.33
+dns2: 10.16.163.34
+dns_search1: "rdu3.fedoraproject.org"
+dns_search2: "fedoraproject.org"
+dns_search3: "iad2.fedoraproject.org"
+freezes: false
+has_ipv4: yes
+mac0: c4:cb:e1:e1:45:ca
+mac1: c4:cb:e1:e1:45:cb
+mac2: c4:70:bd:c8:c7:98
+mac3: c4:70:bd:c8:c7:99
+
+# NOTE network configuration beyond the scope of linux-system-roles on
+# this host is performed by the openqa/worker role
+network_connections:
+  # Bridge profile
+  - name: br0
+    state: up
+    type: bridge
+    mtu: 9000
+    autoconnect: yes
+    ip:
+      address:
+        - "{{ br0_ipv4 }}/{{ br0_ipv4_nm }}"
+      dhcp4: no
+      dns:
+        - "{{ dns1 }}"
+        - "{{ dns2 }}"
+      dns_search:
+        - "{{ dns_search1 }}"
+        - "{{ dns_search2 }}"
+      gateway4: "{{ br0_ipv4_gw }}"
+  # Bond profile
+  - name: bond0
+    type: bond
+    interface_name: bond0
+    mtu: 9000
+    controller: br0
+    bond:
+      mode: 802.3ad
+  # Port profile for the 1st Ethernet device
+  - name: bond0-port1
+    mac: "{{ mac2 }}"
+    type: ethernet
+    controller: bond0
+    state: up
+    mtu: 9000
+  # Port profile for the 2nd Ethernet device
+  - name: bond0-port2
+    mac: "{{ mac3 }}"
+    type: ethernet
+    controller: bond0
+    state: up
+    mtu: 9000
+
+nrpe_procs_crit: 1600
+nrpe_procs_warn: 1400
+# Has a hardware RNG
+openqa_rngd: true
+openqa_tap_iface: eno1np0
+# this is a powerful machine, can handle more openQA workers
+openqa_workers: 30
+# also means we need to bump the load average threshold
+openqa_critical_threshold: 60
+sudoers: "{{ private }}/files/sudo/qavirt-sudoers"
+# firewall ports for server->worker websockets connections
+# this port is 'QEMUPORT plus 1'
+# QEMUPORT is:
+# $ENV{QEMUPORT} = ($options{instance}) * 10 + 20002;
+# so for worker 1 it's 20012, for worker 2 it's 20022, etc etc
+tcp_ports: ['20013', '20023', '20033', '20043', '20053', '20063', '20073', '20083', '20093', '20103', '20113', '20123', '20133', '20143', '20153', '20163', '20173', '20183', '20193', '20203', '20213', '20223', '20233', '20243', '20253', '20263', '20273', '20283', '20293', '20303']
