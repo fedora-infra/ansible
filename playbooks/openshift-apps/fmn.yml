@@ -100,6 +100,21 @@
         - fedora-messaging
         - rabbitmq_cluster
 
+    - name: Add a policy to expire messages in the fmn queue
+      community.rabbitmq.rabbitmq_policy:
+        name: fmn_sweeper
+        apply_to: queues
+        state: present
+        pattern: "fmn"
+        tags:
+          # Expire messages after 1 day
+          message-ttl: 86400000
+        vhost: /pubsub
+      tags:
+        - rabbitmq_cluster
+        - config
+        - fedora-messaging
+
 - name: Make the app be real
   hosts: os_control_stg:os_control
   user: root
