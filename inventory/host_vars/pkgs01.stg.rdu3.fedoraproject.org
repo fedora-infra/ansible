@@ -1,0 +1,14 @@
+---
+# temp fix to get htis box working
+baseiptables: False
+datacenter: rdu3
+eth0_ipv4_gw: 10.16.167.254
+eth0_ipv4_ip: 10.16.167.74
+ks_repo: https://infrastructure.fedoraproject.org/repo/rhel/RHEL8-x86_64/
+ks_url: https://infrastructure.fedoraproject.org/repo/rhel/ks/kvm-rhel
+# DB used by pagure
+pagure_db_host: db01.stg.rdu3.fedoraproject.org
+ssh_hostnames:
+  - pkgs.stg.fedoraproject.org
+vmhost: bvmhost-x86-03.stg.rdu3.fedoraproject.org
+volgroup: /dev/vg_guests
