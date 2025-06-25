@@ -1,0 +1,19 @@
+%% Inter-node communication over TLS
+%% https://www.rabbitmq.com/docs/clustering-ssl#linux-strategy-two
+[
+  {server, [
+    {cacertfile, "/etc/rabbitmq/ca.crt"},
+    {certfile,   "/etc/rabbitmq/nodecert/node.crt"},
+    {keyfile,    "/etc/rabbitmq/nodecert/node.key"},
+    {secure_renegotiate, true},
+    {verify, verify_peer},
+    {fail_if_no_peer_cert, true}
+  ]},
+  {client, [
+    {cacertfile, "/etc/rabbitmq/ca.crt"},
+    {certfile,   "/etc/rabbitmq/nodecert/node.crt"},
+    {keyfile,    "/etc/rabbitmq/nodecert/node.key"},
+    {secure_renegotiate, true},
+    {verify, verify_peer}
+  ]}
+].

@@ -1,17 +1,17 @@
-{% if ansible_distribution_major_version|int >= 9 and ansible_distribution == 'RedHat' %}
-#  Not obvious why this is now needed with el9, but we go out of our
-# way to remove the user and el9 fails to start because of SELinux
-# access problems on /home/fedora/rabbitmq/.erlang.cookie (which
-# doesn't exit, but even if it does and contains the cookie SELinux
-# fails).
-HOME=/var/lib/rabbitmq
-{% endif %}
-
 NODENAME="rabbit"
 USE_LONGNAME="true"
 
-ERL_SSL_PATH="/usr/lib64/erlang/lib/ssl-7.3.3.2/ebin"
+ERL_SSL_PATH="{{ erlang_ssl_path }}"
 
+{% if ansible_distribution_major_version|int >= 9 and ansible_distribution == 'RedHat' %}
+SERVER_ADDITIONAL_ERL_ARGS="-pa $ERL_SSL_PATH
+  -proto_dist inet_tls
+  -ssl_dist_optfile /etc/rabbitmq/inter_node_tls.config"
+
+CTL_ERL_ARGS="-pa $ERL_SSL_PATH
+  -proto_dist inet_tls
+  -ssl_dist_optfile /etc/rabbitmq/inter_node_tls.config"
+{% else %}
 SERVER_ADDITIONAL_ERL_ARGS="-pa $ERL_SSL_PATH \
 -proto_dist inet_tls \
 -ssl_dist_opt server_certfile /etc/rabbitmq/nodecert.combined.pem \
@@ -21,3 +21,4 @@ CTL_ERL_ARGS="-pa $ERL_SSL_PATH \
 -proto_dist inet_tls \
 -ssl_dist_opt server_certfile /etc/rabbitmq/nodecert.combined.pem \
 -ssl_dist_opt server_secure_renegotiate true client_secure_renegotiate true"
+{% endif %}

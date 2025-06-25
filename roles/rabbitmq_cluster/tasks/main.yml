@@ -68,8 +68,31 @@
   - rabbitmq_cluster
   - config
 
+- name: Find the erlang SSL path
+  ansible.builtin.command:
+    argv:
+      - erl
+      - -noinput
+      - -eval
+      - 'io:format("ERL_SSL_PATH=~s~n", [filename:dirname(code:which(inet_tls_dist))])'
+      - -s
+      - init
+      - stop
+  register: _erlang_ssl_path_result
+  changed_when: false
+  tags:
+  - rabbitmq_cluster
+  - config
+
+- name: Set the Erlang SSL path fact
+  set_fact:
+    erlang_ssl_path: "{{ _erlang_ssl_path_result.stdout | trim }}"
+  tags:
+  - rabbitmq_cluster
+  - config
+
 - name: Deploy configuration
-  ansible.builtin.template: src={{item}} dest=/etc/rabbitmq/{{item}} owner=root group=root mode=0644
+  ansible.builtin.template: src={{item}}.j2 dest=/etc/rabbitmq/{{item}} owner=root group=root mode=0644
   with_items:
   - rabbitmq.config
   - rabbitmq-env.conf
@@ -81,10 +104,11 @@
   - config
 
 - name: Deploy configuration
-  ansible.builtin.template: src={{item}} dest=/etc/rabbitmq/{{item}} owner=root group=root mode=0644
+  ansible.builtin.template: src={{item}}.j2 dest=/etc/rabbitmq/{{item}} owner=root group=root mode=0644
   with_items:
   - rabbitmq.conf
   - rabbitmq-env.conf
+  - inter_node_tls.config
   when: "datacenter == 'rdu3'"
   notify:
     - Restart rabbitmq
