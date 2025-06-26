@@ -1,14 +1,14 @@
-datacenter: iad2
-eth0_ipv4_gw: 10.3.172.254
-eth0_ipv4_ip: 10.3.172.22
+datacenter: rdu3
+eth0_ipv4_gw: 10.16.172.254
+eth0_ipv4_ip: 10.16.172.22
 # eln is never frozen, the compose box should not be so we can make needed changes
 freezes: false
 koji_hub_nfs: "fedora_riscv_koji"
 kojihub_scheme: https
 kojihub_url: riscv-koji.fedoraproject.org/kojihub
 kojipkgs_url: riscv-kojipkgs.fedoraproject.org
-ks_repo: https://infrastructure.fedoraproject.org/pub/fedora/linux/releases/41/Server/x86_64/os/
+ks_repo: https://infrastructure.fedoraproject.org/pub/fedora/linux/releases/42/Server/x86_64/os/
 ks_url: https://infrastructure.fedoraproject.org/repo/rhel/ks/kvm-fedora
 virt_install_command: "{{ virt_install_command_one_nic_unsafe }}"
-vmhost: bvmhost-x86-riscv01.iad2.fedoraproject.org
+vmhost: bvmhost-x86-riscv01.rdu3.fedoraproject.org
 volgroup: /dev/vg_guests

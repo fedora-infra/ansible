@@ -1,18 +1,18 @@
 ---
 # This is a generic list, monitored by collectd
-custom_rules: ['-A INPUT -p tcp -m tcp -s 10.3.172.21 --dport 5432 -j ACCEPT']
+custom_rules: ['-A INPUT -p tcp -m tcp -s 10.16.172.21 --dport 5432 -j ACCEPT']
 nft_custom_rules:
-  - 'add rule ip filter INPUT ip saddr 10.3.172.21 tcp dport 5432 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.16.172.21 tcp dport 5432 counter accept'
 databases:
   - koji
-datacenter: iad2
+datacenter: rdu3
 db_backup_dir: ['/backups']
 dbs_to_backup:
   - koji
-dns1: 10.3.163.33
+dns1: 10.16.163.33
 effective_cache_size: "6GB"
-eth0_ipv4_gw: 10.3.172.254
-eth0_ipv4_ip: 10.3.172.20
+eth0_ipv4_gw: 10.16.172.254
+eth0_ipv4_ip: 10.16.172.20
 ks_repo: https://infrastructure.fedoraproject.org/repo/rhel/RHEL9-x86_64/
 ks_url: https://infrastructure.fedoraproject.org/repo/rhel/ks/kvm-rhel
 # These are normally group variables, but in this case db servers are often different
@@ -27,5 +27,5 @@ nrpe_procs_warn: 600
 num_cpus: 8
 shared_buffers: "2GB"
 temp_buffers: "8MB"
-vmhost: bvmhost-x86-riscv01.iad2.fedoraproject.org
+vmhost: bvmhost-x86-riscv01.rdu3.fedoraproject.org
 volgroup: /dev/vg_guests

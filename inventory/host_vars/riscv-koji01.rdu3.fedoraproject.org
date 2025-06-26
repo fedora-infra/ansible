@@ -1,14 +1,14 @@
 ---
-datacenter: iad2
-eth0_ipv4_gw: 10.3.172.254
-eth0_ipv4_ip: 10.3.172.21
+datacenter: rdu3
+eth0_ipv4_gw: 10.16.172.254
+eth0_ipv4_ip: 10.16.172.21
 koji_instance: secondary
 koji_server_url: "https://riscv-koji.fedoraproject.org/kojihub"
 koji_topurl: "https://riscv-koji.fedoraproject.org/"
 koji_weburl: "https://riscv-koji.fedoraproject.org/koji"
-ks_repo: https://infrastructure.fedoraproject.org/pub/fedora/linux/releases/41/Server/x86_64/os/
+ks_repo: https://infrastructure.fedoraproject.org/pub/fedora/linux/releases/42/Server/x86_64/os/
 ks_url: https://infrastructure.fedoraproject.org/repo/rhel/ks/kvm-fedora
 nrpe_procs_crit: 1000
 nrpe_procs_warn: 900
-vmhost: bvmhost-x86-riscv01.iad2.fedoraproject.org
+vmhost: bvmhost-x86-riscv01.rdu3.fedoraproject.org
 volgroup: /dev/vg_guests
