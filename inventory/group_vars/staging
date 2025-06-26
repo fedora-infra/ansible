@@ -1,8 +1,8 @@
 ---
 datanommer_db_hostname: db-datanommer01
 deployment_type: stg
-dns_search1: "stg.iad2.fedoraproject.org"
-dns_search2: "iad2.fedoraproject.org"
+dns_search1: "stg.rdu3.fedoraproject.org"
+dns_search2: "rdu3.fedoraproject.org"
 dns_search3: "fedoraproject.org"
 env: staging
 env_prefix: stg.
@@ -14,11 +14,8 @@ host_group: staging
 ipa_admin_password: "{{ ipa_stg_admin_password }}"
 ipa_realm: STG.FEDORAPROJECT.ORG
 # IPA details
-ipa_server: ipa01.stg.iad2.fedoraproject.org
+ipa_server: ipa01.stg.rdu3.fedoraproject.org
 ipa_server_nodes:
-  - ipa01.stg.iad2.fedoraproject.org
-  - ipa02.stg.iad2.fedoraproject.org
-  - ipa03.stg.iad2.fedoraproject.org
   - ipa01.stg.rdu3.fedoraproject.org
   - ipa02.stg.rdu3.fedoraproject.org
   - ipa03.stg.rdu3.fedoraproject.org
