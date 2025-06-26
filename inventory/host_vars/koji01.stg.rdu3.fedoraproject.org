@@ -1,0 +1,22 @@
+---
+datacenter: rdu3
+# Group vars beg:
+dns1: 10.16.163.33
+dns2: 10.16.163.34
+dns_search1: "rdu3.fedoraproject.org"
+dns_search2: "fedoraproject.org"
+dns_search3: "iad2.fedoraproject.org"
+# end
+eth0_ipv4_gw: 10.16.167.254
+eth0_ipv4_ip: 10.16.167.64
+koji_instance: primary
+koji_server_url: "https://koji.stg.fedoraproject.org/kojihub"
+koji_topurl: "https://kojipkgs.stg.fedoraproject.org/"
+koji_weburl: "https://koji.stg.fedoraproject.org/koji"
+ks_repo: https://infrastructure.fedoraproject.org/pub/fedora/linux/releases/42/Server/x86_64/os/
+ks_url: https://infrastructure.fedoraproject.org/repo/rhel/ks/kvm-fedora
+lvm_size: 1.5t
+nrpe_procs_crit: 1000
+nrpe_procs_warn: 900
+vmhost: bvmhost-x86-01.stg.rdu3.fedoraproject.org
+volgroup: /dev/vg_guests
