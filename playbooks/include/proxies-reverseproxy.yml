@@ -700,9 +700,10 @@
     website: "ocp{{ env_suffix }}.fedoraproject.org"
     destname: ocp
     balancer_name: ocp
-    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_rdu3_stg, ocp_nodes_rdu3) }}"
     targettype: openshift
-    ocp4: true
+    ocp4: false
+    ocp4_rdu3: true
     keephost: true
     tags:
     - ocp.stg.fedoraproject.org
@@ -712,9 +713,10 @@
     website: "apps.ocp{{ env_suffix }}.fedoraproject.org"
     destname: apps.ocp
     balancer_name: apps-ocp
-    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_rdu3_stg, ocp_nodes_rdu3) }}"
     targettype: openshift
-    ocp4: true
+    ocp4: false
+    ocp4_rdu3: true
     keephost: true
     tags:
     - apps.ocp.stg.fedoraproject.org
