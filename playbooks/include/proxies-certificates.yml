@@ -48,6 +48,12 @@
     - apps.ocp.stg.fedoraproject.org
 
   - role: httpd/certificate
+    certname: wildcard-2025.apps.ocp-rdu3.stg.fedoraproject.org
+    SSLCertificateChainFile: wildcard-2025.apps.ocp-rdu3.stg.fedoraproject.org.intermediate.cert
+    tags:
+    - apps.ocp-rdu3.stg.fedoraproject.org
+
+  - role: httpd/certificate
     certname: wildcard-2024.apps.ocp.fedoraproject.org
     SSLCertificateChainFile: wildcard-2024.apps.ocp.fedoraproject.org.intermediate.cert
     tags:
