@@ -368,13 +368,13 @@ handlers = ["console"]
             keyid = "{{ (env == 'production')|ternary('e99d6ad1', 'd300e724') }}"
             file_signing_key = "fedora-41-ima"
 
-            # F41 Perl Side tag (f41-perl)
+            # F43 Perl Side tag (f43-perl)
             [[consumer_config.koji_instances.primary.tags]]
-            from = "f41-perl"
-            to = "f41-perl"
-            key = "{{ (env == 'production')|ternary('fedora-41', 'testkey') }}"
-            keyid = "{{ (env == 'production')|ternary('e99d6ad1', 'd300e724') }}"
-            file_signing_key = "fedora-41-ima"
+            from = "f43-perl"
+            to = "f43-perl"
+            key = "{{ (env == 'production')|ternary('fedora-43', 'testkey') }}"
+            keyid = "{{ (env == 'production')|ternary('31645531', 'd300e724') }}"
+            file_signing_key = "fedora-43-ima"
 
             # F43 Python Side tag (f43-python)
             [[consumer_config.koji_instances.primary.tags]]
