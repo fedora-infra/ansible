@@ -173,33 +173,20 @@
 
 # This is probably bad, I guess the plugin code isn't compatible anymore?
 # We can do it by hand, it's probably slower but fine.
-- name: Enable the HTTP management console
-  ansible.builtin.command: rabbitmq-plugins enable rabbitmq_management
+- name: Enable the plugins
+  ansible.builtin.command: rabbitmq-plugins enable {{item}}
   when: ansible_distribution_major_version|int >= 9
+  register: result
+  changed_when: "'Plugin configuration unchanged.' not in result.stdout"
+  with_items:
+    - rabbitmq_management
+    - rabbitmq_auth_mechanism_ssl
+    - rabbitmq_federation
+    - rabbitmq_federation_management
   tags:
   - rabbitmq_cluster
   - config
 
-- name: Enable the HTTP SSL authentication plugins
-  ansible.builtin.command: rabbitmq-plugins enable rabbitmq_auth_mechanism_ssl
-  when: ansible_distribution_major_version|int >= 9
-  tags:
-  - rabbitmq_cluster
-  - config
-
-- name: Enable the RabbitMQ federation plugin
-  ansible.builtin.command: rabbitmq-plugins enable rabbitmq_federation
-  when: ansible_distribution_major_version|int >= 9
-  tags:
-  - rabbitmq_cluster
-  - config
-
-- name: Enable the RabbitMQ federation management plugin
-  ansible.builtin.command: rabbitmq-plugins enable rabbitmq_federation_management
-  when: ansible_distribution_major_version|int >= 9
-  tags:
-  - rabbitmq_cluster
-  - config
 
 # This requires the HTTPS management server to be running...`
 - name: Nope. No standard users. Even if we use TLS auth
