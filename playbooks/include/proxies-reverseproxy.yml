@@ -697,6 +697,8 @@
     destname: kojipkgs
     proxyurl: http://localhost:10062
     keephost: true
+    tags:
+    - kojipkgs-proxy
 
   - role: httpd/reverseproxy
     website: "ocp{{ env_suffix }}.fedoraproject.org"
