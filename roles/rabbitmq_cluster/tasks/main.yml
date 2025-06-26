@@ -291,8 +291,15 @@
   - rabbitmq_cluster
   - config
 
+# VirtualHost /centos-odcs
+- import_tasks: vhost-centos-odcs.yml
+  tags:
+  - rabbitmq_cluster
+  - config
+
 # Users with the "monitoring" tag have read-only access vhosts, connections,
 # channels, node-level resource usage, and cluster stats.
+# (this needs to be done after all vhost that the user has access to have been created)
 - name: Create the Nagios monitoring user in staging
   rabbitmq_user:
     user: nagios-monitoring
@@ -535,12 +542,6 @@
 
 # Individual applications accounts & queues
 - import_tasks: apps.yml
-  tags:
-  - rabbitmq_cluster
-  - config
-
-# VirtualHost /centos-odcs
-- import_tasks: vhost-centos-odcs.yml
   tags:
   - rabbitmq_cluster
   - config
