@@ -445,7 +445,7 @@
     vhost: /public_pubsub
   vars:
     federation_upstream_value:
-      uri: "amqps://pubsub_federation:@rabbitmq01{{env_suffix}}.{{datacenter}}.fedoraproject.org/%2Fpubsub?cacertfile=%2Fetc%2Frabbitmq%2Fca.crt&certfile=%2Fetc%2Frabbitmq%2Fpubsub_federation%2Fclient_cert.pem&keyfile=%2Fetc%2Frabbitmq%2Fpubsub_federation%2Fclient_key.pem&verify=verify_peer&fail_if_no_peer_cert=true&server_name_indication=rabbitmq{{env_suffix}}.fedoraproject.org&auth_mechanism=external"
+      uri: "amqps://pubsub_federation:@rabbitmq01{{env_suffix}}.{{datacenter}}.fedoraproject.org/%2Fpubsub?cacertfile=%2Fetc%2Frabbitmq%2Fca.crt&certfile=%2Fetc%2Frabbitmq%2Fpubsub_federation%2Fclient_cert.pem&keyfile=%2Fetc%2Frabbitmq%2Fpubsub_federation%2Fclient_key.pem&verify=verify_peer&server_name_indication=rabbitmq{{env_suffix}}.fedoraproject.org&auth_mechanism=external"
       ack-mode: "on-confirm"
 
 - name: Configure a policy to federate the pubsub topic exchange to public_pubsub
