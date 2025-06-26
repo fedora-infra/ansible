@@ -431,16 +431,10 @@
 # This is the connection from our public vhost to the private pubsub vhost.
 # Note that at present they live on the same cluster, but they don't need to.
 #
-# Note that the reason we set the value in the "vars" module first is that if you
+# Note that the reason we set the value in the "vars" attribute is that if you
 # use a variable in the "value" json string, it causes Ansible to produce invalid
 # JSON which will choke up rabbitmq_parameters.
 # https://github.com/ansible-collections/community.rabbitmq/issues/153#issuecomment-1505586927
-
-- vars:
-    federation_upstream_value:
-      uri: "amqps://pubsub_federation:@rabbitmq01{{env_suffix}}.{{datacenter}}.fedoraproject.org/%2Fpubsub?cacertfile=%2Fetc%2Frabbitmq%2Fca.crt&certfile=%2Fetc%2Frabbitmq%2Fpubsub_federation%2Fclient_cert.pem&keyfile=%2Fetc%2Frabbitmq%2Fpubsub_federation%2Fclient_key.pem&verify=verify_peer&fail_if_no_peer_cert=true&server_name_indication=rabbitmq{{env_suffix}}.fedoraproject.org&auth_mechanism=external"
-      ack-mode: "on-confirm"
-
 - name: Configure federation upstream from pubsub to the public_pubsub vhost
   when: inventory_hostname.startswith('rabbitmq01')
   rabbitmq_parameter:
@@ -449,6 +443,10 @@
     value: "{{ federation_upstream_value|to_json }}"
     state: present
     vhost: /public_pubsub
+  vars:
+    federation_upstream_value:
+      uri: "amqps://pubsub_federation:@rabbitmq01{{env_suffix}}.{{datacenter}}.fedoraproject.org/%2Fpubsub?cacertfile=%2Fetc%2Frabbitmq%2Fca.crt&certfile=%2Fetc%2Frabbitmq%2Fpubsub_federation%2Fclient_cert.pem&keyfile=%2Fetc%2Frabbitmq%2Fpubsub_federation%2Fclient_key.pem&verify=verify_peer&fail_if_no_peer_cert=true&server_name_indication=rabbitmq{{env_suffix}}.fedoraproject.org&auth_mechanism=external"
+      ack-mode: "on-confirm"
 
 - name: Configure a policy to federate the pubsub topic exchange to public_pubsub
   when: inventory_hostname.startswith('rabbitmq01')
