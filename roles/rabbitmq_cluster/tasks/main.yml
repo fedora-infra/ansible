@@ -219,9 +219,7 @@
 
 # This is the publicly accessible virtual host
 - name: Configure the publicly accessible vhost
-  run_once: true
-  delegate_to: "rabbitmq01{{ env_suffix }}.{{ item }}.fedoraproject.org"
-  with_items: "{{ datacenter }}"
+  when: inventory_hostname.startswith('rabbitmq01')
   rabbitmq_vhost:
     name: /public_pubsub
     state: present
@@ -244,9 +242,7 @@
   - config
 
 - name: Add a policy to limit queues to 1GB and remove after a month of no use for /pubsub
-  run_once: true
-  delegate_to: "rabbitmq01{{ env_suffix }}.{{ item }}.fedoraproject.org"
-  with_items: "{{ datacenter }}"
+  when: inventory_hostname.startswith('rabbitmq01')
   rabbitmq_policy:
     apply_to: queues
     name: pubsub_sweeper
@@ -402,9 +398,7 @@
   - config
 
 - name: Configure a policy to ensure the public vhost stays swept up and tidy
-  run_once: true
-  delegate_to: "rabbitmq01{{ env_suffix }}.{{ item }}.fedoraproject.org"
-  with_items: "{{ datacenter }}"
+  when: inventory_hostname.startswith('rabbitmq01')
   rabbitmq_policy:
     apply_to: queues
     name: sweeper
@@ -425,9 +419,7 @@
 #   * permission to read anything since users need to read exchanges for bindings
 #     read queues for consuming
 - name: Create a user for public access
-  run_once: true
-  delegate_to: "rabbitmq01{{ env_suffix }}.{{ item }}.fedoraproject.org"
-  with_items: "{{ datacenter }}"
+  when: inventory_hostname.startswith('rabbitmq01')
   rabbitmq_user:
     user: "fedora{{ env_suffix }}"
     permissions:
@@ -446,9 +438,7 @@
 # This user needs permissions to create a new exchange, bind an exchange to an
 # exchange, create a queue, and bind a queue to an exchange.
 - name: Create a user for federation
-  run_once: true
-  delegate_to: "rabbitmq01{{ env_suffix }}.{{ item }}.fedoraproject.org"
-  with_items: "{{ datacenter }}"
+  when: inventory_hostname.startswith('rabbitmq01')
   rabbitmq_user:
     user: pubsub_federation
     permissions:
@@ -497,9 +487,7 @@
       ack-mode: "on-confirm"
 
 - name: Configure federation upstream from pubsub to the public_pubsub vhost
-  run_once: true
-  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
-  when: "env == 'production' and datacenter == 'iad2'"
+  when: inventory_hostname.startswith('rabbitmq01')
   rabbitmq_parameter:
     component: "federation-upstream"
     name: "pubsub-to-public_pubsub"
@@ -508,8 +496,7 @@
     vhost: /public_pubsub
 
 - name: Configure a policy to federate the pubsub topic exchange to public_pubsub
-  run_once: true
-  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
+  when: inventory_hostname.startswith('rabbitmq01')
   rabbitmq_policy:
     apply_to: exchanges
     name: pubsub-to-public_pubsub
