@@ -1,7 +1,6 @@
 ---
 - name: Configure the centos-odcs virtual host
-  run_once: true
-  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
+  when: inventory_hostname.startswith('rabbitmq01')
   rabbitmq_vhost:
     name: /centos-odcs
     state: present
@@ -9,8 +8,7 @@
   - centos-odcs
 
 - name: Configure the HA policy for the centos-odcs queues
-  run_once: true
-  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
+  when: inventory_hostname.startswith('rabbitmq01')
   rabbitmq_policy:
     name: HA
     apply_to: queues
@@ -24,8 +22,7 @@
   - centos-odcs
 
 - name: Add a policy to limit queues to 1GB and remove after a month of no use
-  run_once: true
-  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
+  when: inventory_hostname.startswith('rabbitmq01')
   rabbitmq_policy:
     apply_to: queues
     name: pubsub_sweeper
@@ -41,8 +38,7 @@
   - centos-odcs
 
 - name: Create the centos-odcs-admin user for the centos-odcs vhost (prod)
-  run_once: true
-  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
+  when: inventory_hostname.startswith('rabbitmq01')
   rabbitmq_user:
     user: centos-odcs-admin
     password: "{{ (env == 'production')|ternary(rabbitmq_centos_odcs_admin_password_production, rabbitmq_centos_odcs_admin_password_staging) }}"
@@ -54,8 +50,7 @@
   - centos-odcs
 
 - name: Dump the admin password in a file for administrative operations
-  run_once: true
-  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
+  when: inventory_hostname.startswith('rabbitmq01')
   ansible.builtin.copy:
     dest: /root/.centos-odcs-rabbitmqpass
     content: "{{ (env == 'production')|ternary(rabbitmq_centos_odcs_admin_password_production, rabbitmq_centos_odcs_admin_password_staging) }}"
@@ -66,8 +61,7 @@
   - centos-odcs
 
 - name: Grant the admin user access to the centos-odcs vhost
-  run_once: true
-  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
+  when: inventory_hostname.startswith('rabbitmq01')
   rabbitmq_user:
     user: admin
     vhost: /centos-odcs
@@ -79,8 +73,7 @@
   - centos-odcs
 
 - name: Create a user for centos-odcs access
-  run_once: true
-  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
+  when: inventory_hostname.startswith('rabbitmq01')
   rabbitmq_user:
     user: "centos-odcs-private-queue{{ env_suffix }}"
     vhost: /centos-odcs
@@ -92,8 +85,7 @@
   - centos-odcs
 
 - name: Create the user in RabbitMQ
-  run_once: true
-  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
+  when: inventory_hostname.startswith('rabbitmq01')
   rabbitmq_user:
     user: centos-odcs
     vhost: /centos-odcs
