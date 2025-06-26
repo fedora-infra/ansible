@@ -91,7 +91,7 @@
 # should revisit how this role works.
 #
 
-- name: Nfs mount points (stg) staging koji
+- name: Nfs mount points (stg) staging koji (iad2)
   mount: >
         name=/mnt/fedora_koji
         src=10.3.167.64:/mnt/fedora_koji
@@ -100,11 +100,11 @@
         passno=0
         dump=0
         state=mounted
-  when: env == 'staging' and 'koji' in mnt_dir and '.s390.' not in inventory_hostname and not inventory_hostname.startswith('koji')
+  when: datacenter == 'iad2' and env == 'staging' and 'koji' in mnt_dir and '.s390.' not in inventory_hostname and not inventory_hostname.startswith('koji')
   tags:
   - nfs/client
 
-- name: Nfs mount points (stg) production koji ro
+- name: Nfs mount points (stg) production koji ro (iad2)
   mount: >
         name=/mnt/fedora_koji_prod
         src=ntap-iad2-c02-fedora01-nfs01a:/fedora_koji
@@ -113,6 +113,32 @@
         passno=0
         dump=0
         state=mounted
-  when: env == 'staging' and 'koji' in mnt_dir and '.s390.' not in inventory_hostname
+  when: datacenter == 'iad2' and env == 'staging' and 'koji' in mnt_dir and '.s390.' not in inventory_hostname
+  tags:
+  - nfs/client
+
+- name: Nfs mount points (stg) staging koji (rdu3)
+  mount: >
+        name=/mnt/fedora_koji
+        src=10.16.167.64:/mnt/fedora_koji
+        fstype=nfs4
+        opts=rw,hard,bg,intr,noatime,nodev,nosuid,nfsvers=4
+        passno=0
+        dump=0
+        state=mounted
+  when: datacenter == 'rdu3' and env == 'staging' and 'koji' in mnt_dir and '.s390.' not in inventory_hostname and not inventory_hostname.startswith('koji')
+  tags:
+  - nfs/client
+
+- name: Nfs mount points (stg) production koji ro (rdu3)
+  mount: >
+        name=/mnt/fedora_koji_prod
+        src=ntap-rdu3-c02-fedora01-nfs01a.neta-002.prod.rdu2.dc.redhat.com:/fedora_koji
+        fstype=nfs
+        opts=ro,hard,bg,intr,noatime,nodev,nosuid,nfsvers=3
+        passno=0
+        dump=0
+        state=mounted
+  when: datacenter == 'iad2' and env == 'staging' and 'koji' in mnt_dir and '.s390.' not in inventory_hostname
   tags:
   - nfs/client
