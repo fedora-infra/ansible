@@ -29,12 +29,12 @@
   - role: nfs/client
     mnt_dir: '/srv/registry'
     nfs_src_dir: "oci_registry"
-    when: inventory_hostname.startswith(('oci-registry01.iad2', 'oci-registry02.iad2'))
+    when: inventory_hostname.startswith(('oci-registry01', 'oci-registry02') and env != staging)
 
   - role: nfs/client
     mnt_dir: '/srv/registry'
     nfs_src_dir: "oci_candidate_registry"
-    when: inventory_hostname.startswith(('oci-candidate-registry01.iad2'))
+    when: inventory_hostname.startswith(('oci-candidate-registry01') and env != staging)
 
   pre_tasks:
   - name: Create /srv/registry on staging since it does not use NFS
