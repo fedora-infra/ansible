@@ -2,13 +2,13 @@
 custom_rules: [
   '-A INPUT -p tcp -m tcp -s 192.168.1.20 --dport 5666 -j ACCEPT',
   # needed to allow rsync from log01
-  '-A INPUT -p tcp -m tcp -s 10.3.163.39 --dport 873 -j ACCEPT',
+  '-A INPUT -p tcp -m tcp -s 10.16.163.39 --dport 873 -j ACCEPT',
   '-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT'
   ]
 nft_custom_rules:
   - 'add rule ip filter INPUT ip saddr 192.168.1.20 tcp dport 5666 counter accept'
   # needed to allow rsync from log01
-  - 'add rule ip filter INPUT ip saddr 10.3.163.39  tcp dport 873 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.16.163.39  tcp dport 873 counter accept'
   - 'add rule ip filter INPUT ip saddr 192.168.1.59 tcp dport 873 counter accept'
 datacenter: rdu3
 eth0_ipv4_gw: 10.16.163.254
