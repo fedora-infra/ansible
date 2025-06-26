@@ -50,7 +50,7 @@
 - name: Create an user we can run pagure under
   ansible.builtin.user:
     name: pagure
-    group: packager
+    groups: packager
     append: yes
   tags:
   - pagure
