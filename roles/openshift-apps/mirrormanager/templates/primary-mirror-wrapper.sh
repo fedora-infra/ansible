@@ -52,7 +52,7 @@ else
 fi
 
 if [ "${1}" ==  "centos" ]; then
-	CENTOS_PRIMARY="mref1-priv.iad2.centos.org"
+	CENTOS_PRIMARY="mref-mm.centos.org"
 	# Find the most recent COMPOSE_ID
 	for version in ${CENTOS_STREAM_VERSIONS}; do
 		# check if a sync is currently in process
