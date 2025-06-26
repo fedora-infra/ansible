@@ -737,6 +737,16 @@
     - iot.fedoraproject.org
     - fedoraproject.org
 
+  # provision is dead, go to iot infra#12601
+  - role: httpd/redirect
+    shortname: 02-iot
+    website: "provision.fedoraproject.org"
+    path: /
+    target: https://fedoraproject.org/iot
+    tags:
+    - iot.fedoraproject.org
+    - fedoraproject.org
+
   # coreos redirects
   - role: httpd/redirect
     shortname: 01-coreos
