@@ -7,6 +7,7 @@ nft_custom_rules:
   - 'add rule ip filter INPUT ip saddr 192.168.1.59 tcp dport 873 counter accept'
 ipa_host_group: ipsilon
 ipa_host_group_desc: Ipsilon SSO application
+ipsilon_db_host: "db-fas01.rdu3.fedoraproject.org"
 lvm_size: 50000
 mem_size: 32768
 num_cpus: 2
