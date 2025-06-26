@@ -36,11 +36,6 @@ arguments = {}
 queue = "{{ checkcompose_amqp_queue }}"
 exchange = "amq.topic"
 routing_keys = [{% for key in checkcompose_amqp_routing_keys %}"{{ key }}",{% endfor %}]
-# need this to receive messages from ZMQ->AMQP bridge
-[[bindings]]
-queue = "{{ checkcompose_amqp_queue }}"
-exchange = "zmq.topic"
-routing_keys = [{% for key in checkcompose_amqp_routing_keys %}"{{ key }}",{% endfor %}]
 
 [consumer_config]
 checkcomp_prod = {{ checkcompose_prod|lower }}

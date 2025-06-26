@@ -6,7 +6,7 @@ user_publish_only: true
 # Read privileges:
 # If publish_only: no reading. Otherwise, read from queues prefixed
 # with their name and bind to the topic exchange
-user_read_priv: "{{ user_publish_only|ternary('^$', '^(zmq\\.topic)|^(amq\\.topic)|(' + user_name + '.*)$') }}"
+user_read_priv: "{{ user_publish_only|ternary('^$', '^(amq\\.topic)|(' + user_name + '.*)$') }}"
 
 # Write privileges:
 # If publish_only: only write to the exchange. Otherwise, write to
