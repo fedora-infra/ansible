@@ -66,7 +66,10 @@
     when: env == 'staging' and 'runroot' in group_names
 
   - koji_builder
-  - { role: bkernel, when: "inventory_hostname.startswith(('bkernel', 'buildhw-x86-01.rdu3'))" }
+
+  - role: bkernel
+    when: "inventory_hostname.startswith(('bkernel', 'buildhw-x86-01.rdu3'))"
+
   - { role: linux-system-roles.nbde_client, when: "inventory_hostname.startswith(('bkernel', 'buildhw'))" }
   - { role: serial-console, when: "inventory_hostname.startswith(('bkernel', 'buildhw-x86'))" }
   - hosts
