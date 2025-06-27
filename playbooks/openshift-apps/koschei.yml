@@ -28,7 +28,7 @@
     keytab_secret_name: keytab
     keytab_key: krb5.keytab
     keytab_service: koschei
-    keytab_host: "koschei-backend01{{ env_suffix }}.iad2.fedoraproject.org"
+    keytab_host: "koschei-backend01{{ env_suffix }}.{{datacenter}}.fedoraproject.org"
 
   - role: openshift/route
     route_app: "{{ app }}"

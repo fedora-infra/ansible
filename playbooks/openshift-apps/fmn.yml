@@ -4,7 +4,7 @@
 
 ---
 - name: Setup the database
-  hosts: db01.iad2.fedoraproject.org:db01.stg.iad2.fedoraproject.org
+  hosts: apps_dbserver:apps_dbserver_stg
   gather_facts: no
   become: yes
   become_user: postgres
@@ -25,7 +25,7 @@
         encoding: UTF-8
 
 - name: Setup RabbitMQ
-  hosts: rabbitmq[0]:rabbitmq_stg[0]
+  hosts: rabbitmq_iad2[0]:rabbitmq_stg_iad2[0]:rabbitmq_rdu3[0]:rabbitmq_stg_rdu3[0]
   user: root
   gather_facts: false
 

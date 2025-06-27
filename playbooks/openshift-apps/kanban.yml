@@ -1,6 +1,6 @@
 ---
 - name: Prepare setting up the database
-  hosts: db01.iad2.fedoraproject.org:db01.stg.iad2.fedoraproject.org
+  hosts: apps_dbserver:apps_dbserver_stg
   gather_facts: no
   user: root
 
@@ -13,7 +13,7 @@
     - packages
 
 - name: Setup PROD database
-  hosts: db01.iad2.fedoraproject.org
+  hosts: apps_dbserver
   gather_facts: no
   become: yes
   become_user: postgres
@@ -39,7 +39,7 @@
       encoding: UTF-8
 
 - name: Setup STG database
-  hosts: db01.stg.iad2.fedoraproject.org
+  hosts: apps_dbserver_stg
   gather_facts: no
   become: yes
   become_user: postgres

@@ -350,6 +350,14 @@ db-koji01.stg.rdu3.fedoraproject.org
 db01.stg.rdu3.fedoraproject.org
 db03.stg.rdu3.fedoraproject.org
 
+[apps_dbserver]
+db01.iad2.fedoraproject.org
+db01.rdu3.fedoraproject.org
+
+[apps_dbserver_stg]
+db01.stg.iad2.fedoraproject.org
+db01.stg.rdu3.fedoraproject.org
+
 [datanommer_dbserver]
 db-datanommer02.iad2.fedoraproject.org
 db-datanommer02.rdu3.fedoraproject.org
@@ -1319,7 +1327,7 @@ pagure02.fedoraproject.org
 pagure-stg01.fedoraproject.org
 
 [ocp:children]
-os_control
+s_control
 ocp_controlplane
 ocp_workers
 #ocp_boostrap
