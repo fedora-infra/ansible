@@ -150,8 +150,12 @@
   tags:
   - koji_builder
 
+# edk2-arm is dead as of F42 ...
+#  From: https://src.fedoraproject.org/rpms/edk2/
+#  commit 53fa21dafcef14a7d264a89c2977cdbef58df770
+# edk2-aarch64 says: UEFI firmware for aarch64 virtual machines 
 - name: Install arm UEFI firmware package (aarch64 only)
-  ansible.builtin.package: name=edk2-arm state=present
+  ansible.builtin.package: name=edk2-aarch64 state=present
   tags:
   - koji_builder
   when: "ansible_architecture is defined and ansible_architecture == 'aarch64'"
