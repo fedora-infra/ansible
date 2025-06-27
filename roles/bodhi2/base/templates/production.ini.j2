@@ -344,7 +344,7 @@ fedora_epel_test_announce_list = epel-devel@lists.fedoraproject.org
 admin_groups = proventesters security_respons bodhiadmin sysadmin-main bodhi_update_bots
 
 # Users that we don't want to show up in the "leaderboard(s)"
-stats_blacklist = bodhi anonymous autoqa taskotron bpeck/jenkins-continuous-infra.apps.ci.centos.org packagerbot/os-control01.iad2.fedoraproject.org distrobuildsync-eln/jenkins-continuous-infra.apps.ci.centos.org
+stats_blacklist = bodhi anonymous autoqa taskotron bpeck/jenkins-continuous-infra.apps.ci.centos.org packagerbot/os-control01.{{ datacenter }}.fedoraproject.org distrobuildsync-eln/jenkins-continuous-infra.apps.ci.centos.org
 
 # A list of non-person users
 # system_users = bodhi
@@ -704,9 +704,9 @@ debugtoolbar.hosts = 127.0.0.1 ::1
 # example, postgresql://username:password@hostname/database_name
 # sqlalchemy.url = sqlite:////var/cache/bodhi.db
 {% if env == 'production' %}
-sqlalchemy.url = postgresql://bodhi2:{{ bodhi2Password }}@db-bodhi.iad2.fedoraproject.org/bodhi2
+sqlalchemy.url = postgresql://bodhi2:{{ bodhi2Password }}@db-bodhi.{{ datacenter }}.fedoraproject.org/bodhi2
 {% elif env == 'staging' %}
-sqlalchemy.url = postgresql://bodhi2:{{ bodhi2PasswordSTG }}@db01.stg.iad2.fedoraproject.org/bodhi2
+sqlalchemy.url = postgresql://bodhi2:{{ bodhi2PasswordSTG }}@db01.stg.{{ datacenter }}.fedoraproject.org/bodhi2
 {% endif %}
 # sqlalchemy_extra.statement_timeout = 30000
 

@@ -38,7 +38,7 @@
 
 - name: Configure the bodhi virtual host
   run_once: true
-  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
+  delegate_to: "rabbitmq01{{ env_suffix }}.{{ datacenter }}.fedoraproject.org"
   rabbitmq_vhost:
     name: /bodhi
     state: present
@@ -49,7 +49,7 @@
 
 - name: Configure the HA policy for the bodhi queues
   run_once: true
-  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
+  delegate_to: "rabbitmq01{{ env_suffix }}.{{ datacenter }}.fedoraproject.org"
   rabbitmq_policy:
     name: HA
     apply_to: queues
@@ -66,7 +66,7 @@
 
 - name: Grant the admin user access to the bodhi vhost
   run_once: true
-  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
+  delegate_to: "rabbitmq01{{ env_suffix }}.{{ datacenter }}.fedoraproject.org"
   rabbitmq_user:
     user: admin
     vhost: /bodhi
@@ -81,7 +81,7 @@
 
 - name: Grant the nagios-monitoring user access to the bodhi vhost
   run_once: true
-  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
+  delegate_to: "rabbitmq01{{ env_suffix }}.{{ datacenter }}.fedoraproject.org"
   rabbitmq_user:
     user: nagios-monitoring
     vhost: /bodhi
@@ -112,7 +112,7 @@
 
 - name: Grant the bodhi user access to the bodhi vhost
   run_once: true
-  delegate_to: "rabbitmq01{{ env_suffix }}.iad2.fedoraproject.org"
+  delegate_to: "rabbitmq01{{ env_suffix }}.{{ datacenter }}.fedoraproject.org"
   rabbitmq_user:
     user: "bodhi{{ env_suffix }}"
     vhost: /bodhi
@@ -132,8 +132,7 @@
 
 - name: Add a policy to remove after a week of no use for /bodhi
   run_once: true
-  delegate_to: "rabbitmq01{{ env_suffix }}.{{ item }}.fedoraproject.org"
-  with_items: "{{ datacenter }}"
+  delegate_to: "rabbitmq01{{ env_suffix }}.{{ datacenter }}.fedoraproject.org"
   rabbitmq_policy:
     apply_to: queues
     name: bodhi_sweeper
