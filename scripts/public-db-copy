@@ -4,14 +4,31 @@
 # A simple script to copy database dumps over to public space on batcave01
 # Only the most recent dump is published
 #
-scp db-datanommer02.iad2.fedoraproject.org:/backups/datanommer2-$(date +%F).dump.xz /srv/web/infra/db-dumps/datanommer2.dump.xz
-scp db-koji01.iad2.fedoraproject.org:/backups/koji-$(date +%F).dump.xz /srv/web/infra/db-dumps/koji.dump.xz
-scp db01.iad2.fedoraproject.org:/backups/pkgdb2-$(date +%F).dump.xz /srv/web/infra/db-dumps/pkgdb2.dump.xz
-scp db01.iad2.fedoraproject.org:/backups/koschei-$(date +%F).dump.xz /srv/web/infra/db-dumps/koschei.dump.xz
-scp db01.iad2.fedoraproject.org:/backups/bodhi2-$(date +%F).dump.xz /srv/web/infra/db-dumps/bodhi2.dump.xz
-scp db01.iad2.fedoraproject.org:/backups/anitya-public-$(date +%F).dump.xz /srv/web/infra/db-dumps/anitya.dump.xz
-scp db01.iad2.fedoraproject.org:/backups/mailman-$(date +%F).dump.xz /srv/web/infra/db-dumps/mailman.dump.xz
-scp db01.iad2.fedoraproject.org:/backups/hyperkitty-$(date +%F).dump.xz /srv/web/infra/db-dumps/hyperkitty.dump.xz
-scp db01.iad2.fedoraproject.org:/backups/resultsdb-$(date +%F).dump.xz /srv/web/infra/db-dumps/resultsdb.dump.xz
-scp db01.iad2.fedoraproject.org:/backups/waiverdb-$(date +%F).dump.xz /srv/web/infra/db-dumps/waiverdb.dump.xz
-scp db01.iad2.fedoraproject.org:/backups/tahrir-$(date +%F).dump.xz /srv/web/infra/db-dumps/tahrir.dump.xz
+
+# This changes really often ;)
+bkup_domain=rdu3.fedoraproject.org
+
+scp db-datanommer02.${bkup_domain}:/backups/datanommer2-$(date +%F).dump.xz \
+    /srv/web/infra/db-dumps/datanommer2.dump.xz
+
+scp db-koji01.${bkup_domain}:/backups/koji-$(date +%F).dump.xz \
+    /srv/web/infra/db-dumps/koji.dump.xz
+
+scp db01.${bkup_domain}:/backups/pkgdb2-$(date +%F).dump.xz \
+    /srv/web/infra/db-dumps/pkgdb2.dump.xz
+scp db01.${bkup_domain}:/backups/koschei-$(date +%F).dump.xz \
+    /srv/web/infra/db-dumps/koschei.dump.xz
+scp db01.${bkup_domain}:/backups/bodhi2-$(date +%F).dump.xz \
+    /srv/web/infra/db-dumps/bodhi2.dump.xz
+scp db01.${bkup_domain}:/backups/anitya-public-$(date +%F).dump.xz \
+    /srv/web/infra/db-dumps/anitya.dump.xz
+scp db01.${bkup_domain}:/backups/mailman-$(date +%F).dump.xz \
+    /srv/web/infra/db-dumps/mailman.dump.xz
+scp db01.${bkup_domain}:/backups/hyperkitty-$(date +%F).dump.xz \
+    /srv/web/infra/db-dumps/hyperkitty.dump.xz
+scp db01.${bkup_domain}:/backups/resultsdb-$(date +%F).dump.xz \
+    /srv/web/infra/db-dumps/resultsdb.dump.xz
+scp db01.${bkup_domain}:/backups/waiverdb-$(date +%F).dump.xz \
+    /srv/web/infra/db-dumps/waiverdb.dump.xz
+scp db01.${bkup_domain}:/backups/tahrir-$(date +%F).dump.xz \
+    /srv/web/infra/db-dumps/tahrir.dump.xz
