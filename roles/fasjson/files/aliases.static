@@ -124,8 +124,11 @@ sysadmin-main: sysadmin-main-members
 # For vendors to email us
 vendor-support: vendor-support-members
 
-cpe-managers: pfrields@redhat.com,blc@redhat.com,ashcrow@redhat.com,ancarrol@redhat.com,jbley@redhat.com
-
+# Red Hat managers of Red Hat associates working in the Community Linux Engineering (CLE) team under Global Engineering.
+# This alias is primarily used for billing information related to cloud services that need prompt attention and action.
+cle-managers: pfrields@redhat.com,blc@redhat.com,ashcrow@redhat.com,ancarrol@redhat.com,jbley@redhat.com,mattdm@redhat.com
+# formerly known as Community Platform Engineering (CPE)
+cpe-managers: cle-managers
 
 ## Cruft aliases because we used cvs
 cvsextras: scm-commits@lists.fedoraproject.org
@@ -146,15 +149,15 @@ legal-cla-archive: /dev/null
 vendors: distribution-members
 
 # Fedora Council
-legal: bsutula@redhat.com, rfontana@redhat.com, mattdm@redhat.com
-fpl: chair
+legal: fpl, bsutula@redhat.com, rfontana@redhat.com
 board: council-private@lists.fedoraproject.org
-chairman: chair
+chair: fpl
+chairman: fpl
 directors: board
 
 ## Fedora Project Leader (FPL)
 ## https://docs.fedoraproject.org/en-US/council/fpl/
-chair: mattdm
+fpl: jspaleta
 
 ## Fedora Community Architect
 ## https://docs.fedoraproject.org/en-US/council/fca/
@@ -254,7 +257,7 @@ codeberg: humaton,kevin,dkirwan
 server-wg: sgallagh,jperrin,davidstrauss,tuanta,duffy,mitr,simo,johannbg
 
 # Amazon cloud account, ticket #1903
-community-cloud: mattdm@redhat.com,cpe-managers,dustymabe
+community-cloud: cle-managers,dustymabe
 
 # People always confuse things this is a special case
 dgilmore: ausil
@@ -316,7 +319,7 @@ opentracker: admin
 dnsadmin: sysadmin-dns-members
 
 # docker trusted email
-fedora-docker-trusted: scollier,lsm5,mattdm
+fedora-docker-trusted: fpl,scollier,lsm5,mattdm
 
 # Fedora-qa-devel alias
 fedoraqa-devel-admin: tflink,kparal,frantisekz
