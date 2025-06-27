@@ -164,10 +164,14 @@
     website: "accounts{{ env_suffix }}.fedoraproject.org"
     destname: noggin
     balancer_name: apps-ocp
-    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_rdu3_stg, ocp_nodes) }}"
     targettype: openshift
     keephost: true
-    ocp4: true
+    ocp4: "{{ (env == 'production') | bool }}"
+    ocp4_rdu3: "{{ (env == 'staging') | bool }}"
+    # When prod has moved to rdu3:
+    #ocp4: false
+    #ocp4_rdu3: true
     tags:
     - noggin
 
