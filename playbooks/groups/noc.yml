@@ -34,7 +34,7 @@
     owner_group: apache
     service: HTTP
     host: "nagios{{env_suffix}}.fedoraproject.org"
-    when: datacenter == 'iad2'
+    when: datacenter == 'iad2' or datacenter == 'rdu3'
   - role: keytab/service
     owner_user: apache
     owner_group: apache
