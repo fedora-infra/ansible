@@ -1,4 +1,7 @@
 {% from "_macros.yml.j2" import common_volume_mounts, common_volumes, common_env, security_context with context %}
+
+# Can't talk to the prod proxies in the mirrorlist_proxies group
+{% if env == "staging" %}
 ---
 apiVersion: batch/v1
 kind: CronJob
@@ -27,6 +30,7 @@ spec:
           volumes:
             {{ common_volumes(with_ssh=True) | indent(4) }}
           {{ security_context() | indent(4) }}
+{% endif %}
 ---
 # Sync netblocks list once a day
 apiVersion: batch/v1
