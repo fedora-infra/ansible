@@ -52,7 +52,6 @@
     owner_user: apache
     host: "riscv-koji{{env_suffix}}.fedoraproject.org"
     when: koji_instance == 'secondary'
-  - koji_hub
   - role: keytab/service
     service: HTTP
     owner_user: apache
@@ -105,6 +104,9 @@
     mnt_dir: '/mnt/fedora_koji/koji/vol/fedora_koji_archive06'
     nfs_src_dir: 'fedora_koji_archive06'
     when: env == 'production' and inventory_hostname.startswith('koji')
+
+  # This needs /mnt/fedora_koji/koji to exist.
+  - koji_hub
 
   - role: nfs/client
     mnt_dir: '/mnt/koji/ostree'
