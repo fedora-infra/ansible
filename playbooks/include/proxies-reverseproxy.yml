@@ -148,10 +148,14 @@
     website: "notifications{{ env_suffix }}.fedoraproject.org"
     destname: fmn
     balancer_name: apps-ocp
-    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_rdu3_stg, ocp_nodes) }}"
     targettype: openshift
     keephost: true
-    ocp4: true
+    ocp4: "{{ (env == 'production') | bool }}"
+    ocp4_rdu3: "{{ (env == 'staging') | bool }}"
+    # When prod has moved to rdu3:
+    #ocp4: false
+    #ocp4_rdu3: true
     tags:
     - fmn
 
@@ -179,10 +183,14 @@
     website: "fasjson{{ env_suffix }}.fedoraproject.org"
     destname: fasjson
     balancer_name: apps-ocp
-    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_rdu3_stg, ocp_nodes) }}"
     targettype: openshift
     keephost: true
-    ocp4: true
+    ocp4: "{{ (env == 'production') | bool }}"
+    ocp4_rdu3: "{{ (env == 'staging') | bool }}"
+    # When prod has moved to rdu3:
+    #ocp4: false
+    #ocp4_rdu3: true
     tags:
     - fasjson
 
@@ -235,10 +243,14 @@
     remotepath: /datagrepper
     localpath: /datagrepper
     balancer_name: apps-ocp
-    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_rdu3_stg, ocp_nodes) }}"
     targettype: openshift
-    ocp4: true
     keephost: true
+    ocp4: "{{ (env == 'production') | bool }}"
+    ocp4_rdu3: "{{ (env == 'staging') | bool }}"
+    # When prod has moved to rdu3:
+    #ocp4: false
+    #ocp4_rdu3: true
     tags:
     - datagrepper
 
@@ -246,10 +258,14 @@
     website: "badges.fedoraproject.org"
     destname: badges
     balancer_name: apps-ocp
-    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_rdu3_stg, ocp_nodes) }}"
     targettype: openshift
     keephost: true
-    ocp4: true
+    ocp4: "{{ (env == 'production') | bool }}"
+    ocp4_rdu3: "{{ (env == 'staging') | bool }}"
+    # When prod has moved to rdu3:
+    #ocp4: false
+    #ocp4_rdu3: true
     tags:
     - badges
 
@@ -257,10 +273,14 @@
     website: kerneltest.fedoraproject.org
     destname: kerneltest
     balancer_name: apps-ocp
-    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_rdu3_stg, ocp_nodes) }}"
     targettype: openshift
-    ocp4: true
     keephost: true
+    ocp4: "{{ (env == 'production') | bool }}"
+    ocp4_rdu3: "{{ (env == 'staging') | bool }}"
+    # When prod has moved to rdu3:
+    #ocp4: false
+    #ocp4_rdu3: true
     header_scheme: true
     tags: kerneltest
 
@@ -312,22 +332,15 @@
     website: bodhi.fedoraproject.org
     destname: bodhi
     balancer_name: apps-ocp
-    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_rdu3_stg, ocp_nodes) }}"
     targettype: openshift
     keephost: true
-    ocp4: true
+    ocp4: "{{ (env == 'production') | bool }}"
+    ocp4_rdu3: "{{ (env == 'staging') | bool }}"
+    # When prod has moved to rdu3:
+    #ocp4: false
+    #ocp4_rdu3: true
     tags: bodhi
-    when: env == "staging"
-  - role: httpd/reverseproxy
-    website: bodhi.fedoraproject.org
-    destname: bodhi
-    balancer_name: apps-ocp
-    targettype: openshift
-    balancer_members: "{{ocp_nodes}}"
-    ocp4: true
-    keephost: true
-    tags: bodhi
-    when: env != "staging"
 
 #
 # fedora core os routes
@@ -452,10 +465,14 @@
     website: "mirrormanager{{ env_suffix }}.fedoraproject.org"
     destname: mirrormanager
     balancer_name: apps-ocp
-    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_rdu3_stg, ocp_nodes) }}"
     targettype: openshift
     keephost: true
-    ocp4: true
+    ocp4: "{{ (env == 'production') | bool }}"
+    ocp4_rdu3: "{{ (env == 'staging') | bool }}"
+    # When prod has moved to rdu3:
+    #ocp4: false
+    #ocp4_rdu3: true
     tags:
     - mirrormanager
 
@@ -936,9 +953,13 @@
     website: ipsilon-project.org
     destname: ipsilon-website
     balancer_name: apps-ocp
-    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_rdu3_stg, ocp_nodes) }}"
     targettype: openshift
-    ocp4: true
+    ocp4: "{{ (env == 'production') | bool }}"
+    ocp4_rdu3: "{{ (env == 'staging') | bool }}"
+    # When prod has moved to rdu3:
+    #ocp4: false
+    #ocp4_rdu3: true
     keephost: true
     tags: ipsilon-website
 
@@ -979,10 +1000,14 @@
     website: "fedoraplanet.org"
     destname: fedoraplanet
     balancer_name: apps-ocp
-    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_rdu3_stg, ocp_nodes) }}"
     targettype: openshift
     keephost: true
-    ocp4: true
+    ocp4: "{{ (env == 'production') | bool }}"
+    ocp4_rdu3: "{{ (env == 'staging') | bool }}"
+    # When prod has moved to rdu3:
+    #ocp4: false
+    #ocp4_rdu3: true
     tags:
     - fedoraplanet
 
@@ -990,9 +1015,13 @@
     website: "webhook{{ env_suffix }}.fedoraproject.org"
     destname: webhook2fedmsg
     balancer_name: apps-ocp
-    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_rdu3_stg, ocp_nodes) }}"
     targettype: openshift
     keephost: true
-    ocp4: true
+    ocp4: "{{ (env == 'production') | bool }}"
+    ocp4_rdu3: "{{ (env == 'staging') | bool }}"
+    # When prod has moved to rdu3:
+    #ocp4: false
+    #ocp4_rdu3: true
     tags:
     - webhook2fedmsg
