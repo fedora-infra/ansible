@@ -54,7 +54,7 @@ spec:
   accessModes:
   - ReadOnlyMany
   nfs:
-    server: ntap-iad2-c02-fedora01-nfs01a
+    server: ntap-rdu3-c02-fedora01-nfs01a
     path: /fedora_ftp/fedora.redhat.com/pub
   persistentVolumeReclaimPolicy: Retain
 ---
@@ -68,7 +68,7 @@ spec:
   accessModes:
   - ReadOnlyMany
   nfs:
-    server: ntap-iad2-c02-fedora01-nfs01a
+    server: ntap-rdu3-c02-fedora01-nfs01a
     path: /fedora_ftp_archive
   persistentVolumeReclaimPolicy: Retain
 ---
@@ -82,7 +82,7 @@ spec:
   accessModes:
   - ReadOnlyMany
   nfs:
-    server: ntap-iad2-c02-fedora01-nfs01a
+    server: ntap-rdu3-c02-fedora01-nfs01a
     path: /openshift_prod_codecs
   persistentVolumeReclaimPolicy: Retain
 ---

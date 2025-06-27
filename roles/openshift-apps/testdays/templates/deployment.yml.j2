@@ -35,7 +35,7 @@ spec:
         - name: POSTGRESQL_DATABASE
           value: "{{ testdays_db_name }}"
         - name: POSTGRESQL_SERVICE_HOST
-          value: "db01{{ env_suffix }}.iad2.fedoraproject.org"
+          value: "db01{{ env_suffix }}.{{datacenter}}.fedoraproject.org"
         - name: POSTGRESQL_SERVICE_PORT
           value: "5432"
         - name: DB_DRIVER
@@ -47,7 +47,7 @@ spec:
         - name: DB_DATABASE
           value: "{{ testdays_db_name }}"
         - name: DB_HOST
-          value: "db01{{ env_suffix }}.iad2.fedoraproject.org"
+          value: "db01{{ env_suffix }}.{{datacenter}}.fedoraproject.org"
         - name: DB_PORT
           value: "5432"
         - name: SECRET_KEY
@@ -115,7 +115,7 @@ spec:
         - name: POSTGRESQL_DATABASE
           value: "{{ resultsdb_testdays_db_name }}"
         - name: POSTGRESQL_SERVICE_HOST
-          value: "db01{{ env_suffix }}.iad2.fedoraproject.org"
+          value: "db01{{ env_suffix }}.{{datacenter}}.fedoraproject.org"
         - name: POSTGRESQL_SERVICE_PORT
           value: "5432"
         - name: SECRET_KEY

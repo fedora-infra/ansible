@@ -29,7 +29,7 @@ spec:
             - name: POSTGRESQL_DATABASE
               value: "blockerbugs"
             - name: POSTGRESQL_SERVICE_HOST
-              value: "db01{{ env_suffix }}.iad2.fedoraproject.org"
+              value: "db01{{ env_suffix }}.{{datacenter}}.fedoraproject.org"
             - name: POSTGRESQL_SERVICE_PORT
               value: "5432"
 {% if env == 'staging' %}

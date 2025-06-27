@@ -23,10 +23,10 @@ DATABASES = {
         'USER': 'openscanhub',
 {% if env == 'staging' %}
         'PASSWORD': '{{ openscanhub_db_password_stg }}',
-        'HOST': 'db01.stg.iad2.fedoraproject.org',
+        'HOST': 'db01.stg.{{datacenter}}.fedoraproject.org',
 {% else %}
         'PASSWORD': '{{ openscanhub_db_password }}',
-        'HOST': 'db01.iad2.fedoraproject.org',
+        'HOST': 'db01.{{datacenter}}.fedoraproject.org',
 {% endif %}
         'PORT': '5432',
     },

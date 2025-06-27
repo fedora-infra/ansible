@@ -5,7 +5,7 @@ project_appowners:
 koschei_container_image: quay.io/koschei/koschei:fedora-stage
 
 koschei_topurl: https://koschei.stg.fedoraproject.org
-koschei_pgsql_hostname: db01.stg.iad2.fedoraproject.org
+koschei_pgsql_hostname: db01.stg.{{datacenter}}.fedoraproject.org
 koschei_koji_hub: koji.stg.fedoraproject.org
 koschei_kojipkgs: koji.stg.fedoraproject.org
 koschei_koji_web: koji.stg.fedoraproject.org

@@ -123,10 +123,10 @@ lookaside_url = "https://src.fedoraproject.org/lookaside"
 
 # Credentials for koji session
 {% if env == 'staging' %}
-principal = "toddlers/os-control01.stg.iad2.fedoraproject.org@STG.FEDORAPROJECT.ORG"
+principal = "toddlers/os-control01.stg.{{datacenter}}.fedoraproject.org@STG.FEDORAPROJECT.ORG"
 keytab = "/etc/keytabs/service.keytab"
 {% else %}
-principal = "toddlers/os-control01.iad2.fedoraproject.org@FEDORAPROJECT.ORG"
+principal = "toddlers/os-control01.{{datacenter}}.fedoraproject.org@FEDORAPROJECT.ORG"
 keytab = "/etc/keytabs/service.keytab"
 {% endif %}
 

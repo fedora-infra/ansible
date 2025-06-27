@@ -1,5 +1,5 @@
 ---
-database: postgresql://maubot:{{ (env == 'production')|ternary(maubot_prod_db_password, maubot_stg_db_password) }}@db01{{ env_suffix }}.iad2.fedoraproject.org/maubot
+database: postgresql://maubot:{{ (env == 'production')|ternary(maubot_prod_db_password, maubot_stg_db_password) }}@db01{{ env_suffix }}.{{datacenter}}.fedoraproject.org/maubot
 
 crypto_database: default
 

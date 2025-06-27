@@ -11,6 +11,6 @@
 - name: DB_PASSWORD
   value: "{{ (env == 'production')|ternary(kanban_db_pass, kanban_db_pass_stg) }}"
 - name: DB_HOST
-  value: "db01{{ env_suffix }}.iad2.fedoraproject.org"
+  value: "db01{{ env_suffix }}.{{datacenter}}.fedoraproject.org"
 - name: DB_PORT
   value: "5432"

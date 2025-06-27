@@ -36,7 +36,7 @@ spec:
         - name: POSTGRESQL_DATABASE
           value: "{{ oraculum_db_name }}"
         - name: POSTGRESQL_SERVICE_HOST
-          value: "db01{{ env_suffix }}.iad2.fedoraproject.org"
+          value: "db01{{ env_suffix }}.{{datacenter}}.fedoraproject.org"
         - name: POSTGRESQL_SERVICE_PORT
           value: "5432"
         # Redis
@@ -63,7 +63,7 @@ spec:
         - name: ADMIN_EMAILS
           value: "fzatlouk@redhat.com"
         - name: SMTP_CONFIG
-          value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard{{ env_suffix }}.fedoraproject.org;"
+          value: "bastion.{{datacenter}}.fedoraproject.org;;;watchdog@packager-dashboard{{ env_suffix }}.fedoraproject.org;"
         - name: BZ_API_KEY
           value: "{{ oraculum_bz_api_key }}"
         volumeMounts:
@@ -127,7 +127,7 @@ spec:
         - name: POSTGRESQL_DATABASE
           value: "{{ oraculum_db_name }}"
         - name: POSTGRESQL_SERVICE_HOST
-          value: "db01{{ env_suffix }}.iad2.fedoraproject.org"
+          value: "db01{{ env_suffix }}.{{datacenter}}.fedoraproject.org"
         - name: POSTGRESQL_SERVICE_PORT
           value: "5432"
         # Redis
@@ -154,7 +154,7 @@ spec:
         - name: ADMIN_EMAILS
           value: "fzatlouk@redhat.com"
         - name: SMTP_CONFIG
-          value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard{{ env_suffix }}.fedoraproject.org;"
+          value: "bastion.{{datacenter}}.fedoraproject.org;;;watchdog@packager-dashboard{{ env_suffix }}.fedoraproject.org;"
         - name: BZ_API_KEY
           value: "{{ oraculum_bz_api_key }}"
         volumeMounts:
@@ -202,7 +202,7 @@ spec:
         - name: POSTGRESQL_DATABASE
           value: "{{ oraculum_db_name }}"
         - name: POSTGRESQL_SERVICE_HOST
-          value: "db01{{ env_suffix }}.iad2.fedoraproject.org"
+          value: "db01{{ env_suffix }}.{{datacenter}}.fedoraproject.org"
         - name: POSTGRESQL_SERVICE_PORT
           value: "5432"
         # Redis
@@ -229,7 +229,7 @@ spec:
         - name: ADMIN_EMAILS
           value: "fzatlouk@redhat.com"
         - name: SMTP_CONFIG
-          value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard{{ env_suffix }}.fedoraproject.org;"
+          value: "bastion.{{datacenter}}.fedoraproject.org;;;watchdog@packager-dashboard{{ env_suffix }}.fedoraproject.org;"
         - name: BZ_API_KEY
           value: "{{ oraculum_bz_api_key }}"
         volumeMounts:
@@ -279,7 +279,7 @@ spec:
         - name: POSTGRESQL_DATABASE
           value: "{{ oraculum_db_name }}"
         - name: POSTGRESQL_SERVICE_HOST
-          value: "db01{{ env_suffix }}.iad2.fedoraproject.org"
+          value: "db01{{ env_suffix }}.{{datacenter}}.fedoraproject.org"
         - name: POSTGRESQL_SERVICE_PORT
           value: "5432"
         # Redis
@@ -306,7 +306,7 @@ spec:
         - name: ADMIN_EMAILS
           value: "fzatlouk@redhat.com"
         - name: SMTP_CONFIG
-          value: "bastion.iad2.fedoraproject.org;;;watchdog@packager-dashboard{{ env_suffix }}.fedoraproject.org;"
+          value: "bastion.{{datacenter}}.fedoraproject.org;;;watchdog@packager-dashboard{{ env_suffix }}.fedoraproject.org;"
         - name: BZ_API_KEY
           value: "{{ oraculum_bz_api_key }}"
         volumeMounts:

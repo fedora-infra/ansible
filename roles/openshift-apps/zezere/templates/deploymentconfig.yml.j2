@@ -61,7 +61,7 @@ spec:
           - name: DATABASE_engine
             value: "django.db.backends.postgresql_psycopg2"
           - name: DATABASE_host
-            value: "db01{{ env_suffix }}.iad2.fedoraproject.org"
+            value: "db01{{ env_suffix }}.{{datacenter}}.fedoraproject.org"
           - name: DATABASE_name
             value: "zezere"
           - name: DATABASE_user

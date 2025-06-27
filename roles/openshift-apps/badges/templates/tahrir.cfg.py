@@ -14,7 +14,7 @@ SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SECURE = True
 
 {% if env == 'staging' %}
-SQLALCHEMY_DATABASE_URI = "postgresql://{{tahrirDBUser}}:{{tahrirstgDBPassword}}@db01.stg.iad2.fedoraproject.org/tahrir"
+SQLALCHEMY_DATABASE_URI = "postgresql://{{tahrirDBUser}}:{{tahrirstgDBPassword}}@db01.stg.{{datacenter}}.fedoraproject.org/tahrir"
 TAHRIR_TITLE = "Fedora Badges (staging!)"
 {% else %}
 SQLALCHEMY_DATABASE_URI = "postgresql://{{tahrirDBUser}}:{{tahrirDBPassword}}@db-tahrir/tahrir"
