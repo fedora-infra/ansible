@@ -16,7 +16,7 @@
   roles:
   - base
   - rkhunter
-  - { role: openvpn/server, when: datacenter == 'iad2' }
+  - openvpn/server
   - ipa/client
   - nagios_client
   - hosts
