@@ -129,7 +129,7 @@
       mount: path="/mnt/fedora_koji"
         state=present
         fstype=fuse.sshfs
-        src="root@koji01{{ env_suffix }}.iad2.fedoraproject.org:/mnt/fedora_koji"
+        src="root@koji01{{ env_suffix }}.{{ datacenter }}.fedoraproject.org:/mnt/fedora_koji"
         opts="noauto,_netdev,ServerAliveInterval=20,IdentityFile=/etc/primary-s390x-sshfs"
       tags:
         - sshfs
