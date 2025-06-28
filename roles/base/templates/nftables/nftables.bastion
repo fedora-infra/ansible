@@ -25,6 +25,11 @@ add rule ip filter INPUT ip saddr 38.145.60.16  tcp dport 5666 counter accept
 add rule ip filter INPUT ip saddr 38.145.60.15  tcp dport 5666 counter accept
 add rule ip filter INPUT ip saddr 10.3.163.10   tcp dport 5666 counter accept
 add rule ip filter INPUT ip saddr 10.3.166.10   tcp dport 5666 counter accept
+# add rdu3 ips
+add rule ip filter INPUT ip saddr 38.145.32.16  tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 38.145.32.15  tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 10.16.163.10  tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 10.16.166.10  tcp dport 5666 counter accept
 # zabbix01
 add rule ip filter INPUT                        tcp dport 10051 counter accept
 add rule ip filter INPUT ip saddr 10.3.163.198  tcp dport 10050 counter accept
