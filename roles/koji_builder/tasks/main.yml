@@ -64,9 +64,9 @@
   - koji_builder
 
 - name: Remove openh264 repo, because it's external and oz suggests it
-  ansible.builtin.file:
-    path: /etc/yum.repos.d/fedora-cisco-openh264.repo
-    state: absent
+  ansible.builtin.copy:
+    content: '# No external data'
+    dest: /etc/yum.repos.d/fedora-cisco-openh264.repo
 
 - name: Install packages needed by koji_builders
   ansible.builtin.package:
