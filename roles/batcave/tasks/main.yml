@@ -16,7 +16,6 @@
 - name: Install packages needed
   ansible.builtin.package: name={{ item }} state=present
   with_items:
-  - srm                       # secure rm to delete sensitive files.
   - ansible-core              # This is our ansible master, needs ansible installed.
   - ansible_utils             # Needed for rbac-playbook
   - createrepo_c              # Needed for rhn sync
