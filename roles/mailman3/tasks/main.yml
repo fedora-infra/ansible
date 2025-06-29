@@ -130,11 +130,14 @@
     - logging
     - mailman
 
+  # Only one for prod. See below and playbooks/groups/mailman
+  # Maybe allow stg too?
 - name: Ensuring mailman-core is started
   ansible.builtin.service:
     name: mailman3
     state: started
     enabled: yes
+  when: inventory_hostname.startswith('mailman01.iad2')
   tags:
     - mailman
 
@@ -743,6 +746,7 @@
 
   # Don't actually do emails from anything but _the_ host, this is also
   # done in playbooks/groups/mailman
+  # Maybe allow stg too?
 - name: Start services (sending emails)
   ansible.builtin.systemd:
     state: started
