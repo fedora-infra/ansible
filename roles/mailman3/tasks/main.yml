@@ -734,11 +734,24 @@
     - hyperkitty-quarter_hourly.timer
     - hyperkitty-weekly.timer
     - hyperkitty-yearly.timer
-    - mailman3
     - mailmanweb
-    - postfix
     - webui-qcluster
     - webui-warm-up-cache
+  tags:
+    - mailman
+    - hyperkitty
+
+  # Don't actually do emails from anything but _the_ host, this is also
+  # done in playbooks/groups/mailman
+- name: Start services (sending emails)
+  ansible.builtin.systemd:
+    state: started
+    enabled: yes
+    name: "{{ item }}"
+  with_items:
+    - mailman3
+    - postfix
+  when: inventory_hostname.startswith('mailman01.iad2')
   tags:
     - mailman
     - hyperkitty
