@@ -678,22 +678,9 @@ openqa-x86-worker01.rdu3.fedoraproject.org
 openqa-lab01.rdu3.fedoraproject.org
 
 [openqa_lab_workers]
-# old, busted emags
-# this seems to have some broken RAM so it's powered off
-openqa-a64-worker01.iad2.fedoraproject.org
-openqa-a64-worker02.iad2.fedoraproject.org
-openqa-a64-worker03.iad2.fedoraproject.org
-openqa-p09-worker01.iad2.fedoraproject.org
-openqa-p09-worker02.iad2.fedoraproject.org
-# xeon gold 6130 (second best)
-openqa-x86-worker04.iad2.fedoraproject.org
-# xeon e5-2683v4 (third best)
-openqa-x86-worker05.iad2.fedoraproject.org
-# prod used to have 01, 02, 03 and lab had 04, 05, 06 which was nice
-# and clean, but 03 is weaker hardware and seems to be struggling
-# lately, so we swapped 03 and 06 to give prod the best hw
-# xeon e5-2680 (worst)
-openqa-x86-worker03.iad2.fedoraproject.org
+openqa-x86-worker04.rdu3.fedoraproject.org
+openqa-x86-worker05.rdu3.fedoraproject.org
+openqa-a64-worker02.rdu3.fedoraproject.org
 
 # the workers that can run networked jobs. each server should have *one* of these per arch
 # per tap worker class defined in os-autoinst-distri-fedora (currently there are two
@@ -704,17 +691,16 @@ openqa-x86-worker03.iad2.fedoraproject.org
 openqa-x86-worker01.iad2.fedoraproject.org
 openqa-a64-worker04.iad2.fedoraproject.org
 # lab
-openqa-x86-worker04.iad2.fedoraproject.org
-openqa-a64-worker03.iad2.fedoraproject.org
-openqa-p09-worker01.iad2.fedoraproject.org
+openqa-x86-worker04.rdu3.fedoraproject.org
 [openqa_tap2_workers]
 # prod
 openqa-x86-worker02.iad2.fedoraproject.org
 openqa-a64-worker05.iad2.fedoraproject.org
+# these do both tap and tap2 - we only have one a64 worker host per
+# instance ATM, so they have to
+[openqa_tap12_workers]
 # lab
-openqa-x86-worker05.iad2.fedoraproject.org
-openqa-a64-worker02.iad2.fedoraproject.org
-openqa-p09-worker02.iad2.fedoraproject.org
+openqa-a64-worker02.rdu3.fedoraproject.org
 
 # the workers that run createhdds to create the base disk images. Again,
 # only one per arch per instance should be present.
@@ -723,9 +709,8 @@ openqa-p09-worker02.iad2.fedoraproject.org
 openqa-x86-worker01.iad2.fedoraproject.org
 openqa-a64-worker04.iad2.fedoraproject.org
 # lab
-openqa-x86-worker04.iad2.fedoraproject.org
-openqa-a64-worker03.iad2.fedoraproject.org
-openqa-p09-worker01.iad2.fedoraproject.org
+openqa-x86-worker04.rdu3.fedoraproject.org
+openqa-a64-worker02.rdu3.fedoraproject.org
 
 # common group for variables shared between all openQA boxes
 [openqa_all_common:children]
