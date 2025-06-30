@@ -2,23 +2,21 @@
 ############################################################
 # networking
 ############################################################
-datacenter: iad2
-eth0_ipv4_gw: 10.3.174.254
-eth0_ipv4_ip: 10.3.174.57
-ks_repo: https://infrastructure.fedoraproject.org/pub/fedora/linux/releases/32/Server/x86_64/os/
+datacenter: rdu3
+eth0_ipv4_gw: 10.16.174.254
+eth0_ipv4_ip: 10.16.174.57
+ks_repo: https://infrastructure.fedoraproject.org/pub/fedora/linux/releases/42/Server/x86_64/os/
 ############################################################
 # install
 ############################################################
-ks_url: https://infrastructure.fedoraproject.org/repo/rhel/ks/kvm-fedora-32-iad2
+ks_url: https://infrastructure.fedoraproject.org/repo/rhel/ks/kvm-fedora
 ############################################################
 # virtual machine
 ############################################################
-lvm_size: 1750000
-max_cpu: 60
-max_mem_size: 383216
-mem_size: 262144
-nrpe_procs_crit: 1200
-nrpe_procs_warn: 1000
-num_cpus: 60
-vmhost: qvmhost-x86-01.iad2.fedoraproject.org
+lvm_size: 800000
+mem_size: 16384
+nrpe_procs_crit: 300
+nrpe_procs_warn: 250
+num_cpus: 8
+vmhost: qvmhost-x86-01.rdu3.fedoraproject.org
 volgroup: /dev/vg_guests

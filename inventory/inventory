@@ -675,7 +675,7 @@ openqa-x86-worker01.rdu3.fedoraproject.org
 
 # openqa-lab and openqa-lab-workers are pseudo-stg, see group_vars/openqa-stg for more details
 [openqa_lab]
-openqa-lab01.iad2.fedoraproject.org
+openqa-lab01.rdu3.fedoraproject.org
 
 [openqa_lab_workers]
 # old, busted emags
@@ -837,25 +837,25 @@ proxy02.stg.rdu3.fedoraproject.org
 
 [relvalconsumer_common]
 openqa01.iad2.fedoraproject.org
-openqa-lab01.iad2.fedoraproject.org
+openqa-lab01.rdu3.fedoraproject.org
 
 # This group should only ever contain *ONE* system
 [relvalconsumer]
 openqa01.iad2.fedoraproject.org
 
 [relvalconsumer_test]
-openqa-lab01.iad2.fedoraproject.org
+openqa-lab01.rdu3.fedoraproject.org
 
 [checkcompose_common]
 openqa01.iad2.fedoraproject.org
-#openqa-lab01.iad2.fedoraproject.org
+#openqa-lab01.rdu3.fedoraproject.org
 
 # This group should only ever contain *ONE* system
 [checkcompose]
 openqa01.iad2.fedoraproject.org
 
 [checkcompose_stg]
-#openqa-lab01.iad2.fedoraproject.org
+#openqa-lab01.rdu3.fedoraproject.org
 
 [fedora_nightlies]
 openqa01.iad2.fedoraproject.org
@@ -1025,8 +1025,7 @@ log01.iad2.fedoraproject.org
 log01.rdu3.fedoraproject.org
 ns01.iad2.fedoraproject.org
 ns02.iad2.fedoraproject.org
-#openqa-lab01.iad2.fedoraproject.org
-openqa-lab01.iad2.fedoraproject.org
+openqa-lab01.rdu3.fedoraproject.org
 proxy01.iad2.fedoraproject.org
 proxy01.rdu3.fedoraproject.org
 proxy101.iad2.fedoraproject.org
