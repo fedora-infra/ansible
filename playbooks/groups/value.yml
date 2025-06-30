@@ -26,12 +26,14 @@
      owner_user: daemon,
      owner_group: daemon,
      service: ursabot,
-     when: inventory_hostname.startswith('value02.stg')}
+     when: env == "staging"
+    }
   - {role: keytab/service,
      owner_user: daemon,
      owner_group: daemon,
      service: zodbot,
-     when: inventory_hostname.startswith('value02.iad2')}
+     when: env == "production"
+    }
   - collectd/base
   - apache
   - supybot
