@@ -165,6 +165,12 @@
       ansible.builtin.command: "dnf -y install python3-dnf"
       when: "p3dnf.rc != 0"
 
+- name: Remove cisco repository to avoid issues with it, nothing in infra needs it
+  ansible.builtin.copy:
+    content: '# Unneeded, causes problems sometimes, and builders especially should use no external data'
+    dest: /etc/yum.repos.d/fedora-cisco-openh264.repo
+  when: "ansible_distribution == 'Fedora'
+
 - name: Put RabbitMQ CentOS-9 SIG repos on el systems
   ansible.builtin.copy: src="{{ files }}/common/centos9s-rabbitmq38.repo" dest="/etc/yum.repos.d/centos9s-rabbitmq38.repo"
   when: inventory_hostname.startswith('rabbitmq') and (ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS') and ansible_distribution_major_version|int == 9
