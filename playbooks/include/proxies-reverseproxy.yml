@@ -50,6 +50,7 @@
     destname: nagios
     remotepath: /
     proxyurl: http://noc01.{{ datacenter }}.fedoraproject.org
+    tags: nagios
 
   - role: httpd/reverseproxy
     website: nagios-rdu3.fedoraproject.org
