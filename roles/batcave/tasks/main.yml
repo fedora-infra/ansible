@@ -622,6 +622,12 @@
   - batcave
   - dns
 
+- name: Let the private repo dir be writeable by sysadmin-main
+  ansible.builtin.command: setfacl -R -m d:g:sysadmin-main:rwx -m g:sysadmin-main:rwx /srv/git/ansible-private
+  tags:
+  - batcave
+  - private
+
 #
 # install psql to allow for some ro queries against db-datanommer02
 #
