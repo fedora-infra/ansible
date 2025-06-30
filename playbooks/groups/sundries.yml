@@ -31,6 +31,7 @@
   - mod_wsgi
   - geoip
   - geoip-city-wsgi/app
+  - apache
   - role: easyfix/gather
     when: master_sundries_node|bool
   - role: bz_review_report
