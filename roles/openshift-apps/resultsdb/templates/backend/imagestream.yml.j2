@@ -11,7 +11,7 @@ spec:
     from:
       kind: DockerImage
 {% if env == 'staging' %}
-      name: "{{ stg_resultsdb_image }}"
+      name: "{{ resultsdb_image }}"
 {% else %}
-      name: "{{ prod_resultsdb_image }}"
+      name: "{{ resultsdb_image }}"
 {% endif %}

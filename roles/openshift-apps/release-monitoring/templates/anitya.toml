@@ -14,7 +14,7 @@ preferred_url_scheme = "https"
 permanent_session_lifetime = 604800
 
 {% if env == 'staging' %}
-db_url = "postgresql://{{ anitya_stg_db_user }}:{{ anitya_stg_db_pass }}@{{ anitya_stg_db_host }}/{{ anitya_stg_db_name }}"
+db_url = "postgresql://{{ anitya_db_user }}:{{ anitya_stg_db_pass }}@{{ anitya_db_host }}/{{ anitya_db_name }}"
 {% else %}
 db_url = "postgresql://{{ anitya_db_user }}:{{ anitya_db_pass }}@{{ anitya_db_host }}/{{ anitya_db_name }}"
 {% endif %}
