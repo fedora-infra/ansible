@@ -88,7 +88,7 @@ createrepo: True
 custom6_rules: []
 custom_rules: []
 # most of our systems are in IAD2
-datacenter: iad2
+datacenter: rdu3
 
 # Datanommer
 datanommer_db_hostname: db-datanommer02
@@ -96,18 +96,18 @@ datanommer_db_hostname: db-datanommer02
 dbs_to_backup: []
 # dnf-automatic-install.service mode default: security-only
 dnf_automatic_type: security
-dns: "10.3.163.33"
-dns1: "10.3.163.33"
-dns2: "10.3.163.34"
-dns_search1: "iad2.fedoraproject.org"
+dns: "10.16.163.33"
+dns1: "10.16.163.33"
+dns2: "10.16.163.34"
+dns_search1: "rdu3.fedoraproject.org"
 dns_search2: "fedoraproject.org"
 # env is staging or production, we default it to production here.
 env: production
 env_prefix: ""
 env_short: prod
 env_suffix: ""
-# Default netmask. All of our iad2 nets are /24's. Almost all of our
-# non-iad2 sites are less than a /24.
+# Default netmask. All of our rdu3 nets are /24's. Almost all of our
+# non-rdu3 sites are less than a /24.
 eth0_ipv4_nm: 24
 eth1_ip: 10.0.0.10
 eth1_nm: 255.255.255.0
@@ -195,12 +195,11 @@ ocp4_rdu3: false
 # All the ocp production workers.
 # This is used by the openvpn openshift app to make sure there's a vpn pod on each node.
 ocp_nodes:
-  - worker01.ocp.iad2.fedoraproject.org
-  - worker02.ocp.iad2.fedoraproject.org
-  - worker03.ocp.iad2.fedoraproject.org
-  - worker04.ocp.iad2.fedoraproject.org
-  - worker05.ocp.iad2.fedoraproject.org
-  - worker06.ocp.iad2.fedoraproject.org
+  - worker01.ocp.rdu3.fedoraproject.org
+  - worker02.ocp.rdu3.fedoraproject.org
+  - worker03.ocp.rdu3.fedoraproject.org
+  - worker04.ocp.rdu3.fedoraproject.org
+  - worker05.ocp.rdu3.fedoraproject.org
 ocp_nodes_rdu3:
   - worker01.ocp.rdu3.fedoraproject.org
   - worker02.ocp.rdu3.fedoraproject.org
@@ -223,7 +222,7 @@ openshift_ansible: /srv/web/infra/openshift-ansible/
 postfix_group: "none"
 # This is a list of services that need to wait for VPN to be up before getting started.
 postvpnservices: []
-preferred_dc: iad2
+preferred_dc: rdu3
 primary_auth_source: ipa
 #
 # Set a redirectmatch variable we can use to disable some redirectmatches
