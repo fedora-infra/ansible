@@ -85,15 +85,16 @@
       'fedora_sourcecache',
       nfs_mount_opts='ro,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3' # yamllint disable-line rule:commas rule:indentation
   }
+  # Set up for fedora-messaging
+  - role: rabbit/user
+    user_name: "pkgs{{ env_suffix }}"
+    user_sent_topics:
+      ^org\.fedoraproject\.{{ env_short }}\.(pagure|git|logger)\..*
+
   - role: distgit/pagure
   - role: distgit
     tags: distgit
   - {role: hosts, when: env == "staging"}
-  # Set up for fedora-messaging
-  - role: rabbit/user
-    user_name: "pagure{{ env_suffix }}"
-    user_sent_topics:
-      ^(io\.pagure\.{{ env_short }}|org\.fedoraproject\.{{ env_short }}\.(pagure|git|logger))\..*
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
