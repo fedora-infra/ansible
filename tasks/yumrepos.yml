@@ -169,7 +169,7 @@
   ansible.builtin.copy:
     content: '# Unneeded, causes problems sometimes, and builders especially should use no external data'
     dest: /etc/yum.repos.d/fedora-cisco-openh264.repo
-  when: "ansible_distribution == 'Fedora'
+  when: "ansible_distribution == 'Fedora'"
 
 - name: Put RabbitMQ CentOS-9 SIG repos on el systems
   ansible.builtin.copy: src="{{ files }}/common/centos9s-rabbitmq38.repo" dest="/etc/yum.repos.d/centos9s-rabbitmq38.repo"
