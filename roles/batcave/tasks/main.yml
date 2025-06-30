@@ -616,6 +616,11 @@
   - batcave
   - openshiftboot
 
+- name: Let the dns repo dir be writeable by sysadmin-dns
+  ansible.builtin.command: setfacl -R -m d:g:sysadmin-dns:rwx -m g:sysadmin-dns:rwx /srv/git/dns
+  tags:
+  - batcave
+  - dns
 
 #
 # install psql to allow for some ro queries against db-datanommer02
