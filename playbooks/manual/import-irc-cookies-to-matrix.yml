@@ -15,7 +15,7 @@
     - name: Add the pgpass file
       ansible.builtin.copy:
         content: |
-          db01{{ env_suffix }}.iad2.fedoraproject.org:*:maubot:maubot:{{ (env == 'production')|ternary(maubot_prod_db_password, maubot_stg_db_password) }}
+          db01{{ env_suffix }}.rdu3.fedoraproject.org:*:maubot:maubot:{{ (env == 'production')|ternary(maubot_prod_db_password, maubot_stg_db_password) }}
         dest: /root/.pgpass
         owner: root
         group: root
