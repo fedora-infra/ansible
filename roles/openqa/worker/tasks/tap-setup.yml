@@ -24,23 +24,23 @@
 - name: Create openvswitch bridge
   community.general.nmcli:
     conn_name: ovs-br
-    ifname: br0
+    ifname: openqabr0
     type: ovs-bridge
     state: present
 
 - name: Create openvswitch port for openvswitch bridge
   community.general.nmcli:
     conn_name: ovs-br-port
-    ifname: br0
-    master: br0
+    ifname: openqabr0
+    master: openqabr0
     type: ovs-port
     state: present
 
 - name: Create openvswitch interface for openvswitch bridge
   community.general.nmcli:
     conn_name: ovs-br-if
-    ifname: br0
-    master: br0
+    ifname: openqabr0
+    master: openqabr0
     ip4: '172.16.2.2/15'
     type: ovs-interface
     state: present
@@ -49,7 +49,7 @@
   community.general.nmcli:
     conn_name: ovs-tap{{ item }}-port
     ifname: tap{{ item }}
-    master: br0
+    master: openqabr0
     type: ovs-port
     state: present
   with_sequence: start=0 end={{ openqa_workers | int }}

@@ -1,10 +1,10 @@
 # firewall rules to allow openQA openvswitch guests to communicate
 # uses interface definition from host vars
-custom_rules: ['-A FORWARD -i br0 -j ACCEPT', '-A FORWARD -m state -i {{ openqa_tap_iface }} -o br0 --state RELATED,ESTABLISHED -j ACCEPT', '-A INPUT -i br0 -j ACCEPT']
+custom_rules: ['-A FORWARD -i openqabr0 -j ACCEPT', '-A FORWARD -m state -i {{ openqa_tap_iface }} -o openqabr0 --state RELATED,ESTABLISHED -j ACCEPT', '-A INPUT -i openqabr0 -j ACCEPT']
 nft_custom_rules:
-  - 'add rule ip filter FORWARD iifname "br0" counter accept'
-  - 'add rule ip filter FORWARD iifname "{{ openqa_tap_iface }}" oifname "br0" ct state related,established counter accept'
-  - 'add rule ip filter INPUT iifname "br0" counter accept'
+  - 'add rule ip filter FORWARD iifname "openqabr0" counter accept'
+  - 'add rule ip filter FORWARD iifname "{{ openqa_tap_iface }}" oifname "openqabr0" ct state related,established counter accept'
+  - 'add rule ip filter INPUT iifname "openqabr0" counter accept'
 # for iptables rules...maybe other stuff in future? both staging
 # and prod workers are in this group
 host_group: openqa-tap-workers
