@@ -53,7 +53,7 @@
 
 - name: Install the ccd files (rdu3)
   synchronize:
-    src: ccd/
+    src: ccd-rdu3/
     dest: /etc/openvpn/server/ccd/
     delete: yes
   tags:
