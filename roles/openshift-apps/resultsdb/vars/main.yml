@@ -1,6 +1,6 @@
 # backend vars
 ---
-resultsdb_image:   "quay.io/fedora/resultsdb:{{ (env == 'production')|ternary('prod-fedora', 'latest') }}"
+resultsdb_image:   "quay.io/factory2/resultsdb:{{ (env == 'production')|ternary('prod-fedora', 'latest') }}"
 
 resultsdb_publish: true
 resultsdb_mod_wsgi_dir: '${MOD_WSGI_MODULES_DIRECTORY}'
@@ -10,7 +10,7 @@ resultsdb_mod_wsgi_dir: '${MOD_WSGI_MODULES_DIRECTORY}'
 resultsdb_additional_result_outcomes: ['CRASHED', 'QUEUED', 'RUNNING']
 
 # frontend vars
-resultsdb_frontend_image:   "quay.io/fedora/resultsdb_frontend:{{ (env == 'production')|ternary('prod-fedora', 'latest') }}"
+resultsdb_frontend_image:   "quay.io/factory2/resultsdb_frontend:{{ (env == 'production')|ternary('prod-fedora', 'latest') }}"
 resultsdb_frontend_api_url: 'http://resultsdb-api.resultsdb.svc.cluster.local:5001/api/v2.0'
 
 # Database
