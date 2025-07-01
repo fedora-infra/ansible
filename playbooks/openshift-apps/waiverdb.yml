@@ -113,17 +113,6 @@
       object_template: deploymentconfig.yml.j2
       object_objectname: deploymentconfig.yml
 
-    # Remove no longer needed intermediate image build
-    - role: openshift/object-delete
-      object_delete_app: waiverdb
-      object_delete_objecttype: buildconfig
-      object_delete_objectname: waiverdb-docker-build
-
-    - role: openshift/object-delete
-      object_delete_app: waiverdb
-      object_delete_objecttype: imagestream
-      object_delete_objectname: waiverdb-upstream
-
     - role: openshift/rollout
       rollout_app: waiverdb
       rollout_dcname: waiverdb-web
