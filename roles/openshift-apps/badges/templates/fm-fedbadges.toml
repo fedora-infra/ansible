@@ -61,7 +61,7 @@ database_uri = "postgresql://{{ tahrirDBUser }}:{{ (env == 'production')|ternary
 email_domain = "{{ env_prefix }}fedoraproject.org"
 
 # Datanommer database URI
-datanommer_db_uri = "postgresql://{{ tahrirDBUser }}:{{ (env == 'production')|ternary(tahrirDBPassword, tahrirstgDBPassword) }}@{{ datanommer_db_hostname }}{{ env_suffix }}/datanommer2"
+datanommer_db_uri = "postgresql://{{ tahrirDBUser }}:{{ (env == 'production')|ternary(tahrirDBPassword, tahrirstgDBPassword) }}@{{ datanommer_db_hostname }}{{ env_suffix }}.{{ datacenter }}.fedoraproject.org/datanommer2"
 datagrepper_url = "https://apps{{ env_suffix }}.fedoraproject.org/datagrepper"
 distgit_hostname = "src{{ env_suffix }}.fedoraproject.org"
 id_provider_hostname = "id{{ env_suffix }}.fedoraproject.org"

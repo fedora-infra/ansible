@@ -1,5 +1,5 @@
 ---
-badges_db_host: "db01{{ env_suffix }}"
+badges_db_host: "db01{{ env_suffix }}.{{ datacenter }}.fedoraproject.org"
 badges_db_name: "tahrir"
 badges_award_cronjobs:
   - name: group-membership
