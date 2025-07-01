@@ -2,18 +2,7 @@
 #
 # Setup postgresql server.
 #
-- name: On db-koji01 and db-riscv-koji01 and db01.stg and db-fas01 and db01 and db-openqa01 enable the postgresql 15 module.
-  ansible.builtin.copy:
-    dest: /etc/dnf/modules.d/postgresql.module
-    content: |
-      [postgresql]
-      name=postgresql
-      stream=15
-      profiles=
-      state=enabled
-  when: inventory_hostname.startswith(('db-koji01','db-riscv-koji01','db01.stg','db-fas01','db01','db-openqa01'))
-
-- name: On stg db-koji01 and db-riscv-koji01 and db01.stg and db-fas01 and db01 and db-openqa01 enable the postgresql 16 module.
+- name: On db-koji01 and db-riscv-koji01 and db01.stg and db-fas01 and db01 and db-openqa01 enable the postgresql 16 module.
   ansible.builtin.copy:
     dest: /etc/dnf/modules.d/postgresql.module
     content: |
@@ -22,7 +11,7 @@
       stream=16
       profiles=
       state=enabled
-  when: inventory_hostname.startswith(('db-koji01.stg','db-riscv-koji01.stg','db01.stg','db-fas01.stg','db-openqa01.stg'))
+  when: inventory_hostname.startswith(('db-koji01','db-riscv-koji01','db01.stg','db-fas01','db01','db-openqa01'))
 
 - name: Install postgresql server packages (Fedora)
   ansible.builtin.package:
