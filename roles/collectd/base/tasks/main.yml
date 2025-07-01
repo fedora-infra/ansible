@@ -36,6 +36,13 @@
   - collectd
   when: ansible_distribution_major_version|int > 24 and ansible_distribution == 'Fedora'
 
+# install collectd-rrdtool (it was split out)
+- name: Install collectd-disk
+  dnf: name=collectd-rrdtool state=present
+  tags:
+  - collectd
+  when: ansible_distribution_major_version|int > 8 and ansible_distribution == 'RedHat'
+
 # install collected.conf
 - name: /etc/collectd.conf
   ansible.builtin.template: src=collectd.conf.j2 dest=/etc/collectd.conf
