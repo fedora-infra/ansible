@@ -8,22 +8,23 @@
     - /srv/web/infra/ansible/vars/global.yml
     - /srv/private/ansible/vars.yml
     - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/roles/openshift-apps/resultsdb/vars/main.yml
 
   tasks:
     - name: Resultsdb DB user - prod
       community.postgresql.postgresql_user:
-        name: "resultsdb"
+        name: "{{ resultsdb_db_user }}"
         password: "{{ prod_resultsdb_db_password }}"
       when: env != 'staging'
     - name: Resultsdb DB user - staging
       community.postgresql.postgresql_user:
-        name: "resultsdb"
+        name: "{{ resultsdb_db_user }}"
         password: "{{ stg_resultsdb_db_password }}"
       when: env == 'staging'
     - name: Resultsdb database creation
       community.postgresql.postgresql_db:
-        name: "resultsdb"
-        owner: "resultsdb"
+        name: "{{ resultsdb_db_name }}"
+        owner: "{{ resultsdb_db_user }}"
         encoding: UTF-8
 
 

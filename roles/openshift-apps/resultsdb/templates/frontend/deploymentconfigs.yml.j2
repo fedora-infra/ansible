@@ -21,11 +21,7 @@ spec:
     spec:
       containers:
         - name: webapp
-{% if env == 'staging' %}
-          image: "{{ stg_resultsdb_frontend_image }}"
-{% else %}
-          image: "{{ prod_resultsdb_frontend_image }}"
-{% endif %}
+          image: "{{ resultsdb_frontend_image }}"
           imagePullPolicy: Always
           ports:
             - containerPort: 5002

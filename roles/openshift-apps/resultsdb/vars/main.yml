@@ -1,7 +1,6 @@
 # backend vars
 ---
-prod_resultsdb_image: quay.io/factory2/resultsdb:prod-fedora
-stg_resultsdb_image: quay.io/factory2/resultsdb:latest
+resultsdb_image:   "quay.io/fedora/resultsdb:{{ (env == 'production')|ternary('prod-fedora', 'latest') }}"
 
 resultsdb_publish: true
 resultsdb_mod_wsgi_dir: '${MOD_WSGI_MODULES_DIRECTORY}'
@@ -11,7 +10,11 @@ resultsdb_mod_wsgi_dir: '${MOD_WSGI_MODULES_DIRECTORY}'
 resultsdb_additional_result_outcomes: ['CRASHED', 'QUEUED', 'RUNNING']
 
 # frontend vars
-stg_resultsdb_frontend_image: 'quay.io/factory2/resultsdb_frontend:latest'
-prod_resultsdb_frontend_image: 'quay.io/factory2/resultsdb_frontend:prod-fedora'
-prod_resultsdb_frontend_api_url: 'http://resultsdb-api.resultsdb.svc.cluster.local:5001/api/v2.0'
-stg_resultsdb_frontend_api_url: 'http://resultsdb-api.resultsdb.svc.cluster.local:5001/api/v2.0'
+resultsdb_frontend_image:   "quay.io/fedora/resultsdb_frontend:{{ (env == 'production')|ternary('prod-fedora', 'latest') }}"
+resultsdb_frontend_api_url: 'http://resultsdb-api.resultsdb.svc.cluster.local:5001/api/v2.0'
+
+# Database
+resultsdb_db_user: "{{ (env == 'production')|ternary('prodresultsdbuser', 'stgresultsdb') }}"
+resultsdb_db_host: db01{{ env_suffix }}.{{ datacenter }}.fedoraproject.org
+resultsdb_db_port: 5432
+resultsdb_db_name: resultsdb

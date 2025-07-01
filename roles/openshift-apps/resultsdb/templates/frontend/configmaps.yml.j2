@@ -9,11 +9,7 @@ metadata:
 data:
   settings.py: |-
     import os
-{% if env == 'staging' %}
-    RDB_URL = '{{ stg_resultsdb_frontend_api_url }}'
-{% else %}
-    RDB_URL = '{{ prod_resultsdb_frontend_api_url }}'
-{% endif %}
+    RDB_URL = '{{ resultsdb_frontend_api_url }}'
     SECRET_KEY = os.environ['RESULTSDB_FRONTEND_SECRET_KEY']
 
     FILE_LOGGING = False

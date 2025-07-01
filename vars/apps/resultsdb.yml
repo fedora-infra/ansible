@@ -1,6 +1,0 @@
----
-resultsdb_db_user: "{{ (env == 'production')|ternary('prodresultsdbuser', 'stgresultsdb') }}"
-resultsdb_db_host: db01{{ env_suffix }}.{{ datacenter }}.fedoraproject.org
-resultsdb_db_port: 5432
-resultsdb_db_name: resultsdb
-resultsdb_image:   "quay.io/fedora/resultsdb:latest"
