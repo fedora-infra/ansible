@@ -536,6 +536,7 @@
     balancer_members: ['openqa-lab01.rdu3.fedoraproject.org:80']
     http_not_https_yes_this_is_insecure_and_i_feel_bad: true
     when: env == "staging"
+    tags: openqa-stg
 
   - role: httpd/reverseproxy
     website: admin.fedoraproject.org
