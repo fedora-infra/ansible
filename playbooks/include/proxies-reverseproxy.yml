@@ -679,6 +679,8 @@
     - "koji01.{{ datacenter }}.fedoraproject.org"
     - "koji02.{{ datacenter }}.fedoraproject.org"
     http_not_https_yes_this_is_insecure_and_i_feel_bad: true
+    tags:
+    - koji-prod
     when: env == "production"
 
   - role: httpd/reverseproxy
@@ -689,6 +691,8 @@
     balancer_members:
     - "koji01.stg.{{ datacenter }}.fedoraproject.org"
     http_not_https_yes_this_is_insecure_and_i_feel_bad: true
+    tags:
+    - koji-stg
     when: env == "staging"
 
   - role: httpd/reverseproxy
