@@ -8,6 +8,11 @@
     mode: "0770"
     recurse: yes
 
+- name: Install needed packages
+  ansible.builtin.package:
+      name: git
+      state: present
+
 - include_tasks: create-operator-namespace.yml
 - include_tasks: create-keytab-secret.yml
 - include_tasks: create-discourse-apikey-secret.yml
