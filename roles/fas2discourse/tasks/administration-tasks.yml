@@ -10,10 +10,19 @@
 
 - name: Install needed packages
   ansible.builtin.package:
-      name: git
+      name:
+          - git
+          - make
       state: present
 
 - include_tasks: create-operator-namespace.yml
 - include_tasks: create-keytab-secret.yml
 - include_tasks: create-discourse-apikey-secret.yml
 - include_tasks: deploy-fas2discourse-operator.yml
+
+- name: Remove potentially dangerous packages that are not needed anymore
+  ansible.builtin.package:
+      name:
+          - git
+          - make
+      state: absent
