@@ -36,8 +36,8 @@
   - collectd
   when: ansible_distribution_major_version|int > 24 and ansible_distribution == 'Fedora'
 
-# install collectd-rrdtool (it was split out)
-- name: Install collectd-disk
+# install collectd-rrdtool on el9+ (it was split out)
+- name: Install collectd-rrdtool
   dnf: name=collectd-rrdtool state=present
   tags:
   - collectd
