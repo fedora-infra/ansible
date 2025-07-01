@@ -17,7 +17,7 @@ SESSION_COOKIE_SECURE = True
 SQLALCHEMY_DATABASE_URI = "postgresql://{{tahrirDBUser}}:{{tahrirstgDBPassword}}@db01{{env_suffix}}.{{datacenter}}.fedoraproject.org/tahrir"
 TAHRIR_TITLE = "Fedora Badges (staging!)"
 {% else %}
-SQLALCHEMY_DATABASE_URI = "postgresql://{{tahrirDBUser}}:{{tahrirDBPassword}}@db01{{env_suffix}.{{datacenter}}.fedoraproject.org/tahrir"
+SQLALCHEMY_DATABASE_URI = "postgresql://{{tahrirDBUser}}:{{tahrirDBPassword}}@db01{{env_suffix}}.{{datacenter}}.fedoraproject.org/tahrir"
 TAHRIR_TITLE = "Fedora Badges"
 {% endif %}
 OIDC_CLIENT_SECRETS = "/etc/badges/client_secrets.json"
