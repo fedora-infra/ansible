@@ -73,6 +73,7 @@
 
   # Set up for fedora-messaging
   - role: rabbit/user
+    datacenter: rdu3
     user_name: "pagure{{ env_suffix }}"
     user_sent_topics:
       ^io\.pagure\.{{ env_short }}\..*
