@@ -13,12 +13,12 @@
   tasks:
   - name: Kerneltest DB user
     community.postgresql.postgresql_user:
-      name: "{{ (env == 'production') | ternary(kerneltest_db_user, kerneltest_stg_db_user) }}"
+      name: "{{ kerneltest_db_user }}"
       password: "{{ (env == 'production') | ternary(kerneltest_db_pass, kerneltest_stg_db_pass) }}"
   - name: Kerneltest database creation
     community.postgresql.postgresql_db:
       name: "{{ kerneltest_db_name }}"
-      owner: "{{ (env == 'production') | ternary(kerneltest_db_user, kerneltest_stg_db_user) }}"
+      owner: "{{ kerneltest_db_user }}"
       encoding: UTF-8
 
 
