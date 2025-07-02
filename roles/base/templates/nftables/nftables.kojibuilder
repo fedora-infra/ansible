@@ -128,7 +128,6 @@ add rule ip filter OUTPUT ip daddr 8.43.85.76 tcp dport 443 counter accept
 # Dito...
 # 10.16.162.11 =ntap-rdu3-c02-fedora01-nfs01a .neta-002.prod.rdu2.dc.redhat.com
 
-{% if host in groups['builders_rdu3'] %}
 # admin.fedoraproject.org  for fas (proyx(1)01 and proxy(1)10)
 {% if host in groups['staging'] %}
 add rule ip filter OUTPUT ip daddr 10.16.166.74 tcp dport  80 counter accept
@@ -247,7 +246,6 @@ add rule ip filter OUTPUT ip daddr 10.16.163.10 udp dport 67 counter accept
 
 # s390x builders ssh
 add rule ip filter  INPUT ip saddr 10.16.0.0/16 tcp dport 22 counter accept
-{% endif %}
 
 # if the host/group defines incoming tcp_ports - allow them
 {% for port in tcp_ports %}
