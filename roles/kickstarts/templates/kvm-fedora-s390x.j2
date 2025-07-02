@@ -15,7 +15,7 @@ part btrfs.007 --size=2000 --fstype=btrfs --grow
 btrfs none --label=fedora btrfs.007
 btrfs /     --subvol --name=root LABEL=fedora
 
-url --url "https://infrastructure.fedoraproject.org/pub/fedora-secondary/releases/$releasever/Server/$basearch"
+url --url "https://infrastructure.fedoraproject.org/pub/fedora-secondary/releases/$releasever/Server/$basearch/os"
 url --url "https://infrastructure.fedoraproject.org/pub/fedora-secondary/updates/$releasever/Everything/$basearch"
 
 %packages
