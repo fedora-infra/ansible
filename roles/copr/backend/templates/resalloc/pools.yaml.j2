@@ -419,7 +419,7 @@ copr_ic_s390x_{{ zone }}_{% if devel %}dev{% else %}prod{% endif %}:
 
 # reserved instances
 {% if not devel %}
-{{ aws('x86_64', 35, 20, 35, priority=20, reserved=True) }}
+{{ aws('x86_64', 41, 20, 41, priority=20, reserved=True) }}
 {% endif %}
 
 {{ aws('x86_64', builders.aws_spot.x86_64[0], builders.aws_spot.x86_64[1],
