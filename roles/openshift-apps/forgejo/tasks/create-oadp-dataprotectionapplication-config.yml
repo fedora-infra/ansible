@@ -7,7 +7,7 @@
 
 - name: Generate the forgejo-oadp-secret.yaml from template
   ansible.builtin.template:
-    src: "forgejo-oadp-secret.yaml.j2"
+    src: "forgejo-oadp-secret.j2"
     dest: "/root/ocp4/openshift-apps/forgejo/forgejo-oadp-secret.yaml"
     mode: "0770"
 
