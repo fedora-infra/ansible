@@ -5,6 +5,7 @@
     dest="/srv/web/repo/rhel/ks/{{ item }}"
   with_items:
     - kvm-fedora
+    - kvm-fedora-s390x
     - kvm-rhel
     - kvm-rhel-8
     - hardware-rhel-9-08disk
