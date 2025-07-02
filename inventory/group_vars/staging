@@ -40,7 +40,7 @@ network_connections:
     mac: "{{ ansible_default_ipv4.macaddress }}"
     name: eth0
     type: ethernet
-    mtu: 9000
+    mtu: 1500
 # Do we want to use nftables instead of iptables
 nftables: true
 ocp_wildcard_cert_file: wildcard-2024.apps.ocp.stg.fedoraproject.org.cert

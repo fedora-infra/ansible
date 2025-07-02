@@ -19,7 +19,7 @@ network_connections:
     name: br0
     state: up
     type: bridge
-    mtu: 9000
+    mtu: 1500
     ip:
       address:
         - '{{ br0_ipv4 }}/{{ br0_ipv4_nm }}'
@@ -38,7 +38,7 @@ network_connections:
     master: br0
     state: up
     type: ethernet
-    mtu: 9000
+    mtu: 1500
 nrpe_procs_crit: 1300
 nrpe_procs_warn: 1250
 postfix_group: vpn

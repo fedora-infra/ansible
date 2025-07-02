@@ -22,7 +22,7 @@ network_connections:
    - name: br0
      state: up
      type: bridge
-     mtu: 9000
+     mtu: 1500
      autoconnect: yes
      ip:
       address:
@@ -39,7 +39,7 @@ network_connections:
    - name: br1
      state: up
      type: bridge
-     mtu: 9000
+     mtu: 1500
      autoconnect: yes
      ip:
       address:
@@ -56,7 +56,7 @@ network_connections:
    - name: bond0
      type: bond
      interface_name: bond0
-     mtu: 9000
+     mtu: 1500
      controller: br0
      bond:
        mode: 802.3ad
@@ -74,13 +74,13 @@ network_connections:
      type: ethernet
      controller: bond0
      state: up
-     mtu: 9000
+     mtu: 1500
    # Port profile for the 2nd Ethernet device
    - name: bond0-port2
      mac: "{{ mac1 }}"
      type: ethernet
      controller: bond0
      state: up
-     mtu: 9000
+     mtu: 1500
 nrpe_procs_crit: 3500
 nrpe_procs_warn: 3000
