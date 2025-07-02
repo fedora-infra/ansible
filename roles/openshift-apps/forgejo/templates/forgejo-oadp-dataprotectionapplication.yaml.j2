@@ -18,8 +18,6 @@ spec:
         region: "{{ (env == 'production') | ternary(forgejo_backup_region, forgejo_stg_backup_region) }}"
         s3ForcePathStyle: "true"
         serverSideEncryption: AES256
-        tagging:
-        - fedora-infra-forgejo-backups
       credential:
         key: cloud
         name: cloud-credentials
