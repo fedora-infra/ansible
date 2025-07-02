@@ -8,5 +8,5 @@
 
 # apply created openshift resources
 - name: Oc apply resources
-  ansible.builtin.command: "/root/bin/oc apply -f /root/ocp4/openshift-apps/firmitas/persistent-volume-claim.yml"
+  ansible.builtin.command: "oc apply -f /root/ocp4/openshift-apps/firmitas/persistent-volume-claim.yml"
   ignore_errors: true

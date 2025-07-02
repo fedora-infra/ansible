@@ -8,4 +8,4 @@
 
 # apply created openshift resources
 - name: Oc apply resources
-  ansible.builtin.command: "/root/bin/oc apply -f /root/ocp4/openshift-apps/firmitas/namespace.yml"
+  ansible.builtin.command: "oc apply -f /root/ocp4/openshift-apps/firmitas/namespace.yml"

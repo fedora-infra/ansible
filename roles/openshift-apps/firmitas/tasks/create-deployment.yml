@@ -8,7 +8,7 @@
 
 # apply created openshift resources
 - name: Oc apply resources
-  ansible.builtin.command: "/root/bin/oc apply -f /root/ocp4/openshift-apps/firmitas/deployment.yml"
+  ansible.builtin.command: "oc apply -f /root/ocp4/openshift-apps/firmitas/deployment.yml"
   retries: 3
   delay: 5
   register: deployment_result

@@ -8,8 +8,8 @@
 
 # apply created openshift resources
 - name: Oc apply resources
-  ansible.builtin.command: "/root/bin/oc apply -f /root/ocp4/openshift-apps/firmitas/buildconfig.yml"
+  ansible.builtin.command: "oc apply -f /root/ocp4/openshift-apps/firmitas/buildconfig.yml"
 
 # Start a build
 - name: "Run oc start-build {{ firmitas_application_name }}-build"
-  ansible.builtin.command: "/root/bin/oc start-build {{ firmitas_application_name }}-build -n {{ firmitas_namespace }}"
+  ansible.builtin.command: "oc start-build {{ firmitas_application_name }}-build -n {{ firmitas_namespace }}"
