@@ -176,8 +176,8 @@
 - name: Install required packages
   ansible.builtin.package:
     name: ['fedora-messaging', 'python3-fedfind', 'python3-wikitcms', 'python3-openqa_client',
-           'python3-requests', 'python3-resultsdb_api', 'python3-resultsdb_conventions-fedora',
-           'python3-six', 'python3-pip']
+           'python3-requests', 'python3-resultsdb_api', 'python3-resultsdb_conventions',
+           'python3-resultsdb_conventions-fedora', 'python3-six', 'python3-pip']
     state: present
   tags:
   - packages
