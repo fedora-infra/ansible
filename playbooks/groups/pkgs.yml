@@ -50,8 +50,6 @@
       uid: "{{ pagure_static_uid }}"
       shell: /sbin/nologin
       comment: "Pagure User"
-    when: env == "staging"
-    ## The above should be deleted when we rebuild pkgs02 in future.
 
 - name: Setup dist-git on the box
   hosts: pkgs_stg:pkgs
