@@ -1,0 +1,22 @@
+---
+############################################################
+# networking
+############################################################
+datacenter: rdu3
+eth0_ipv4_gw: 10.16.174.254
+eth0_ipv4_ip: 10.16.174.52
+ks_repo: https://infrastructure.fedoraproject.org/pub/fedora/linux/releases/42/Server/x86_64/os/
+############################################################
+# install
+############################################################
+ks_url: https://infrastructure.fedoraproject.org/repo/rhel/ks/kvm-fedora
+############################################################
+# virtual machine
+############################################################
+lvm_size: 800000
+mem_size: 16384
+nrpe_procs_crit: 300
+nrpe_procs_warn: 250
+num_cpus: 8
+vmhost: qvmhost-x86-01.rdu3.fedoraproject.org
+volgroup: /dev/vg_guests

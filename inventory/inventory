@@ -650,23 +650,15 @@ ns01.rdu3.fedoraproject.org
 ns02.rdu3.fedoraproject.org
 
 [openqa]
-openqa01.iad2.fedoraproject.org
+openqa01.rdu3.fedoraproject.org
 
+# all x86 workers (prod and stg) are 64-core EPYC 9354 / 512G RAM / NVMe beefcakes (yay)
+# all a64 workers (prod and stg) are 128-core Altra Max / 512G RAM / NVMe beefcakes (also yay)
 [openqa_workers]
-# xeon gold 5218 (best)
-openqa-x86-worker01.iad2.fedoraproject.org
-# xeon gold 6130 (second best)
-openqa-x86-worker02.iad2.fedoraproject.org
-# swapped from lab as 03 is kinda poorly
-# xeon e5-2683v4 (third best)
-openqa-x86-worker06.iad2.fedoraproject.org
-# 2023 newer, more powerful box
-openqa-a64-worker04.iad2.fedoraproject.org
-# older emags. they're helping! they're helping!
-openqa-a64-worker05.iad2.fedoraproject.org
-openqa-a64-worker06.iad2.fedoraproject.org
-# new rdu3 workers
 openqa-x86-worker01.rdu3.fedoraproject.org
+openqa-x86-worker02.rdu3.fedoraproject.org
+openqa-x86-worker03.rdu3.fedoraproject.org
+openqa-a64-worker01.rdu3.fedoraproject.org
 
 # openqa-lab and openqa-lab-workers are pseudo-stg, see group_vars/openqa-stg for more details
 [openqa_lab]
@@ -683,26 +675,25 @@ openqa-a64-worker02.rdu3.fedoraproject.org
 # multiple workers)
 [openqa_tap1_workers]
 # prod
-openqa-x86-worker01.iad2.fedoraproject.org
-openqa-a64-worker04.iad2.fedoraproject.org
+openqa-x86-worker01.rdu3.fedoraproject.org
 # lab
 openqa-x86-worker04.rdu3.fedoraproject.org
 [openqa_tap2_workers]
 # prod
-openqa-x86-worker02.iad2.fedoraproject.org
-openqa-a64-worker05.iad2.fedoraproject.org
+openqa-x86-worker02.rdu3.fedoraproject.org
 # these do both tap and tap2 - we only have one a64 worker host per
 # instance ATM, so they have to
 [openqa_tap12_workers]
 # lab
+openqa-a64-worker01.rdu3.fedoraproject.org
 openqa-a64-worker02.rdu3.fedoraproject.org
 
 # the workers that run createhdds to create the base disk images. Again,
 # only one per arch per instance should be present.
 [openqa_hdds_workers]
 # prod
-openqa-x86-worker01.iad2.fedoraproject.org
-openqa-a64-worker04.iad2.fedoraproject.org
+openqa-x86-worker01.rdu3.fedoraproject.org
+openqa-a64-worker01.rdu3.fedoraproject.org
 # lab
 openqa-x86-worker04.rdu3.fedoraproject.org
 openqa-a64-worker02.rdu3.fedoraproject.org
@@ -816,32 +807,32 @@ proxy01.stg.rdu3.fedoraproject.org
 proxy02.stg.rdu3.fedoraproject.org
 
 [relvalconsumer_common]
-openqa01.iad2.fedoraproject.org
+openqa01.rdu3.fedoraproject.org
 openqa-lab01.rdu3.fedoraproject.org
 
 # This group should only ever contain *ONE* system
 [relvalconsumer]
-openqa01.iad2.fedoraproject.org
+openqa01.rdu3.fedoraproject.org
 
 [relvalconsumer_test]
 openqa-lab01.rdu3.fedoraproject.org
 
 [checkcompose_common]
-openqa01.iad2.fedoraproject.org
+openqa01.rdu3.fedoraproject.org
 #openqa-lab01.rdu3.fedoraproject.org
 
 # This group should only ever contain *ONE* system
 [checkcompose]
-openqa01.iad2.fedoraproject.org
+openqa01.rdu3.fedoraproject.org
 
 [checkcompose_stg]
 #openqa-lab01.rdu3.fedoraproject.org
 
 [fedora_nightlies]
-openqa01.iad2.fedoraproject.org
+openqa01.rdu3.fedoraproject.org
 
 [testcase_stats]
-openqa01.iad2.fedoraproject.org
+openqa01.rdu3.fedoraproject.org
 
 [smtp_mm]
 smtp-mm-ib01.fedoraproject.org
@@ -1504,10 +1495,6 @@ mailman_iad2
 memcached_iad2
 nagios_iad2
 oci_registry_iad2
-openqa
-openqa_lab
-openqa_lab_workers
-openqa_workers
 os_control_iad2
 pkgs_iad2
 proxies_iad2
@@ -1579,8 +1566,10 @@ mailman_rdu3
 memcached_rdu3
 nagios_rdu3
 oci_registry_rdu3
+openqa
 openqa_lab
 openqa_lab_workers
+openqa_workers
 os_control_rdu3
 pkgs_rdu3
 proxies_rdu3
