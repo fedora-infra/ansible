@@ -1,8 +1,8 @@
 ---
-br0_ipv4: 10.16.174.62
-br0_ipv4_gw: 10.16.174.254
-br0_ipv4_nm: 24
-br0_port0_mac: "{{ mac1 }}"
+bondbr0_ipv4: 10.16.174.62
+bondbr0_ipv4_gw: 10.16.174.254
+bondbr0_ipv4_nm: 24
+bondbr0_port0_mac: "{{ mac1 }}"
 datacenter: rdu3
 dns1: 10.16.163.33
 dns2: 10.16.163.34
@@ -20,14 +20,14 @@ mac3: b8:ce:f6:51:8c:ed
 # this host is performed by the openqa/worker role
 network_connections:
   # Bridge profile
-  - name: br0
+  - name: bondbr0
     state: up
     type: bridge
     mtu: 1500
     autoconnect: yes
     ip:
       address:
-        - "{{ br0_ipv4 }}/{{ br0_ipv4_nm }}"
+        - "{{ bondbr0_ipv4 }}/{{ bondbr0_ipv4_nm }}"
       dhcp4: no
       dns:
         - "{{ dns1 }}"
@@ -35,13 +35,13 @@ network_connections:
       dns_search:
         - "{{ dns_search1 }}"
         - "{{ dns_search2 }}"
-      gateway4: "{{ br0_ipv4_gw }}"
+      gateway4: "{{ bondbr0_ipv4_gw }}"
   # Bond profile
   - name: bond0
     type: bond
     interface_name: bond0
     mtu: 1500
-    controller: br0
+    controller: bondbr0
     bond:
       mode: 802.3ad
   # Port profile for the 1st Ethernet device
@@ -63,7 +63,7 @@ nrpe_procs_crit: 1600
 nrpe_procs_warn: 1400
 # Has a hardware RNG
 openqa_rngd: true
-openqa_tap_iface: br0
+openqa_tap_iface: bondbr0
 # this is a very powerful machine, can handle so many openQA workers
 openqa_workers: 60
 # also means we need to bump the load average threshold
