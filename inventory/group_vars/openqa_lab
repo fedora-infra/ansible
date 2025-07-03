@@ -31,7 +31,7 @@ openqa_oauth2_secret: "{{ openqa_stg_oidc_secret }}"
 openqa_assetsize_updates_aarch64: 50
 openqa_assetsize_ppc: 300
 openqa_assetsize_updates_ppc: 100
-openqa_compose_arches: x86_64,aarch64,ppc64le
+openqa_compose_arches: x86_64,aarch64
 openqa_dbname: openqa-stg
 openqa_dbpassword: "{{ stg_openqa_dbpassword }}"
 openqa_dbuser: openqastg
@@ -47,7 +47,7 @@ openqa_resultsdb_url: https://resultsdb.stg.fedoraproject.org/api/v2.0/
 openqa_resultsdb_user: "{{ stg_resultsdb_httpd_user }}"
 openqa_resultsdb_password: "{{ stg_resultsdb_httpd_password }}"
 openqa_secret: "{{ stg_openqa_apisecret }}"
-openqa_update_arches: ['aarch64', 'x86_64', 'ppc64le']
+openqa_update_arches: ['aarch64', 'x86_64']
 openqa_webapi_plugins: FedoraMessaging
 openqa_wikitcms_hostname: stg.fedoraproject.org
 wikitcms_token: "{{ private }}/files/openidc/staging/wikitcms.json"
