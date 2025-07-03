@@ -31,3 +31,16 @@
   seboolean: name=collectd_tcp_network_connect state=yes persistent=yes
   tags:
   - collectd
+  notify: Restart collectd
+
+- name: Remove the useless collectd plugins
+  ansible.builtin.file:
+    path: /etc/collectd.d/{{item}}.conf
+    state: absent
+  with_items:
+  - apache
+  - rrdtool
+  tags:
+  - collectd
+  - config
+  notify: Restart collectd
