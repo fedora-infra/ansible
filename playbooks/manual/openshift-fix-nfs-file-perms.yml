@@ -1,0 +1,47 @@
+# This playbook fixes the file permissions on NFS mounted volumes in case of OpenShift userid change, which happens on datacenter moves or when openshift is reinstalled.
+#
+# It can take quite some time as there are a lot of files to check on these volumes
+#
+
+- name: Fix file permissions on value
+  hosts: value:value_stg
+  user: root
+  gather_facts: false
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - /srv/private/ansible/vars.yml
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/roles/openshift-apps/maubot/vars/main.yml
+
+  tasks:
+    - name: Fix meeting logs permissions
+      ansible.builtin.file:
+        path: /srv/web/meetbot
+        state: directory
+        owner: "{{ openshift_user_id }}"
+        group: "{{ openshift_user_id }}"
+        recurse: true
+
+- name: Fix file permissions on sundries
+  hosts: sundries[0]
+  user: root
+  gather_facts: false
+  vars_files:
+    - /srv/web/infra/ansible/vars/global.yml
+    - /srv/private/ansible/vars.yml
+    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
+    - /srv/web/infra/ansible/roles/openshift-apps/fedora-packages-static/vars/main.yml
+
+  tasks:
+    - name: Fix file permissions
+      ansible.builtin.file:
+        path: /srv/{{item}}
+        state: directory
+        owner: "{{ openshift_user_id }}"
+        group: "{{ openshift_user_id }}"
+        recurse: true
+      with_items:
+        - solr-storage
+        - fedora-packages-static-storage
+        - fedora-packages-static-db-storage
+

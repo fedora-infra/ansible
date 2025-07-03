@@ -1,27 +1,4 @@
 ---
-- name: Fix mounted file permissions
-  hosts: sundries[0]
-  user: root
-  gather_facts: false
-  vars_files:
-    - /srv/web/infra/ansible/vars/global.yml
-    - /srv/private/ansible/vars.yml
-    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
-    - /srv/web/infra/ansible/roles/openshift-apps/fedora-packages-static/vars/main.yml
-
-  tasks:
-    - name: Fix file permissions
-      ansible.builtin.file:
-        path: /srv/{{item}}
-        state: directory
-        owner: "{{ openshift_user_id }}"
-        group: "{{ openshift_user_id }}"
-        recurse: true
-      with_items:
-        - solr-storage
-        - fedora-packages-static-storage
-        - fedora-packages-static-db-storage
-
 - name: Make fedora-packages-static
   hosts: os_control[0]:os_control_stg[0]
   user: root

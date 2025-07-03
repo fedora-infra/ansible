@@ -21,25 +21,6 @@
         owner: maubot
         encoding: UTF-8
 
-- name: Fix meeting logs permissions
-  hosts: value:value_stg
-  user: root
-  gather_facts: false
-  vars_files:
-    - /srv/web/infra/ansible/vars/global.yml
-    - /srv/private/ansible/vars.yml
-    - /srv/web/infra/ansible/vars/{{ ansible_distribution }}.yml
-    - /srv/web/infra/ansible/roles/openshift-apps/maubot/vars/main.yml
-
-  tasks:
-    - name: Fix meeting logs permissions
-      ansible.builtin.file:
-        path: /srv/web/meetbot
-        state: directory
-        owner: "{{ openshift_user_id }}"
-        group: "{{ openshift_user_id }}"
-        recurse: true
-
 - name: Make the app be real
   hosts: os_control_stg:os_control
   user: root
