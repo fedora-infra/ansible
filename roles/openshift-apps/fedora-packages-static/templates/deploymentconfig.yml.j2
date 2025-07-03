@@ -57,6 +57,9 @@ spec:
           httpGet:
             path: /
             port: 8080
+      # oc describe project/fedora-packages-static | grep supplemental-groups
+      securityContext:
+        supplementalGroups: [1001200000]
       volumes:
       - name: data-volume
         persistentVolumeClaim:
@@ -126,8 +129,9 @@ spec:
             path: /
             port: 8983
       # Add solr's default gid to nfs group
+      # oc describe project/fedora-packages-static | grep supplemental-groups
       securityContext:
-        supplementalGroups: [8983]
+        supplementalGroups: [8983,1001200000]
       volumes:
       - name: data-volume
         persistentVolumeClaim:
