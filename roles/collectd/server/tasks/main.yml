@@ -27,7 +27,7 @@
   tags:
   - config
   - collectd/server
-  when: ansible_distribution_major_version|int == 8
+  when: ansible_distribution_major_version|int >= 8
 
 # install collectd types
 - name: Install collectd types
