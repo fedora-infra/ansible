@@ -68,4 +68,7 @@ LoadPlugin vmem
 </Plugin>
 
 {% endif %}
-Include "/etc/collectd.d"
+
+<Include "/etc/collectd.d">
+  Filter "*.conf"
+</Include>
