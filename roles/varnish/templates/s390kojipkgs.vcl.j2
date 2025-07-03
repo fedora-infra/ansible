@@ -17,7 +17,7 @@ acl purge {
 
 {% if env == 'staging' %}
 backend koji01 {
-    .host = "koji01.stg.iad2.fedoraproject.org";
+    .host = "koji01.stg.rdu3.fedoraproject.org";
     .probe = {
         .url = "/work/";
         .timeout = 3600s;
@@ -31,7 +31,7 @@ backend koji01 {
 }
 {% else %}
 backend kojipkgs01 {
-    .host = "kojipkgs01.iad2.fedoraproject.org";
+    .host = "kojipkgs01.rdu3.fedoraproject.org";
     .probe = {
         .url = "/";
         .timeout = 3600s;
@@ -45,7 +45,7 @@ backend kojipkgs01 {
 }
 
 backend kojipkgs02 {
-    .host = "kojipkgs02.iad2.fedoraproject.org";
+    .host = "kojipkgs02.rdu3.fedoraproject.org";
     .probe = {
         .url = "/";
         .timeout = 3600s;
