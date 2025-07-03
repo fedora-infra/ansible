@@ -1,4 +1,4 @@
-{% if inventory_hostname == 'db-datanommer02.iad2.fedoraproject.org' %}
+{% if inventory_hostname == 'db-datanommer02.rdu3.fedoraproject.org' %}
 0 0 * * * postgres /usr/local/bin/lock-wrapper backup-database "/usr/local/bin/backup-database {{ item }} |& grep -Ev 'warning:|hypertable|chunk|restore|data-only|continuous_agg'"
 {% else %}
 0 0 * * * postgres /usr/local/bin/backup-database {{ item }}
