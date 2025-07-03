@@ -19,11 +19,11 @@ DBPass = {{ riscvkojiPassword }}
 AuthPrincipal = host/riscv-koji{{env_suffix}}.fedoraproject.org
 {% endif %}
 {% if env == "staging" %}
-ProxyPrincipals = HTTP/koji.stg.fedoraproject.org@STG.FEDORAPROJECT.ORG,sigul/sign-bridge01.stg.iad2.fedoraproject.org@STG.FEDORAPROJECT.ORG
+ProxyPrincipals = HTTP/koji.stg.fedoraproject.org@STG.FEDORAPROJECT.ORG,sigul/sign-bridge01.stg.rdu3.fedoraproject.org@STG.FEDORAPROJECT.ORG
 {% elif koji_instance == "primary" %}
-ProxyPrincipals = HTTP/koji.fedoraproject.org@FEDORAPROJECT.ORG,sigul/sign-bridge01.iad2.fedoraproject.org@FEDORAPROJECT.ORG
+ProxyPrincipals = HTTP/koji.fedoraproject.org@FEDORAPROJECT.ORG,sigul/sign-bridge01.rdu3.fedoraproject.org@FEDORAPROJECT.ORG
 {% else %}
-ProxyPrincipals = HTTP/riscv-koji.fedoraproject.org@FEDORAPROJECT.ORG,sigul/sign-bridge01.iad2.fedoraproject.org@FEDORAPROJECT.ORG
+ProxyPrincipals = HTTP/riscv-koji.fedoraproject.org@FEDORAPROJECT.ORG,sigul/sign-bridge01.rdu3.fedoraproject.org@FEDORAPROJECT.ORG
 {% endif %}
 KojiDir = /mnt/koji
 MemoryWarnThreshold = 10000
