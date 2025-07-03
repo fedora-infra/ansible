@@ -50,52 +50,48 @@
   - role: nfs/client
     mnt_dir: '/mnt/koji/ostree'
     nfs_src_dir: 'fedora_ostree_content/ostree'
-    when: env != 'staging' and datacenter == 'iad2'
+    when: env != 'staging'
 
   - role: nfs/client
     mnt_dir: '/mnt/koji/compose/ostree'
     nfs_src_dir: 'fedora_ostree_content/compose/ostree'
-    when: env != 'staging' and datacenter == 'iad2'
+    when: env != 'staging'
 
   - role: nfs/client
     mnt_dir: '/mnt/koji/ostree'
     nfs_src_dir: 'fedora_ostree_content_stg/ostree'
-    when: env == 'staging' and datacenter == 'iad2'
+    when: env == 'staging'
 
   - role: nfs/client
     mnt_dir: '/mnt/koji/compose/ostree'
     nfs_src_dir: 'fedora_ostree_content_stg/compose/ostree'
-    when: env == 'staging' and datacenter == 'iad2'
+    when: env == 'staging'
 
     # In staging, we mount fedora_koji as read only (see nfs_mount_opts)
   - role: nfs/client
     mnt_dir: '/mnt/fedora_koji_prod'
     nfs_src_dir: 'fedora_koji'
-    when: env == 'staging' and datacenter == 'iad2'
+    when: env == 'staging'
 
   - role: nfs/client
     mnt_dir: '/pub/'
     nfs_src_dir: 'fedora_ftp/fedora.redhat.com/pub/'
-    when: datacenter == 'iad2'
 
   - role: nfs/client
     mnt_dir: '/pub/archive'
     nfs_src_dir: 'fedora_ftp_archive'
-    when: datacenter == 'iad2'
 
   - role: keytab/service
     owner_user: apache
     owner_group: apache
     service: bodhi
     host: "bodhi{{ env_suffix }}.fedoraproject.org"
-    when: datacenter == 'iad2'
 
   - role: push-container-registry
     cert_dest_dir: "/etc/docker/certs.d/registry{{ env_suffix }}.fedoraproject.org"
     cert_src: "{{private}}/files/docker-registry/{{env}}/pki/issued/containerstable.crt"
     key_src: "{{private}}/files/docker-registry/{{env}}/pki/private/containerstable.key"
     certs_group: apache
-    when: datacenter == 'iad2'
 
   - role: rabbit/queue
     queue_username: "bodhi{{ env_suffix }}"
@@ -105,7 +101,6 @@
       warning: 10
       critical: 100
     user_sent_topics: "{{ bodhi_sent_topics }}"
-    when: datacenter == 'iad2'
 
   - role: rabbit/queue
     queue_username: "bodhi{{ env_suffix }}"
@@ -117,17 +112,16 @@
       critical: 100
     # We have to repeat this line for now (only the last one counts)
     user_sent_topics: "{{ bodhi_sent_topics }}"
-    when: datacenter == 'iad2'
 
   tasks:
   - name: Create secondary volume dir for stg bodhi
     ansible.builtin.file: dest=/mnt/koji/vol state=directory owner=apache group=apache mode=0755
     tags: bodhi
-    when: env == 'staging' and datacenter == 'iad2'
+    when: env == 'staging'
   - name: Create symlink for stg/prod secondary volume
     ansible.builtin.file: src=/mnt/fedora_koji_prod/koji dest=/mnt/koji/vol/prod state=link
     tags: bodhi
-    when: env == 'staging' and datacenter == 'iad2'
+    when: env == 'staging'
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
