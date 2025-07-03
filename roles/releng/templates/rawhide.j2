@@ -1,4 +1,4 @@
-{% if datacenter == 'iad2' %}
+{% if datacenter == 'rdu3' %}
 # rawhide compose
 MAILTO=releng-cron@lists.fedoraproject.org
 15 5 * * * root touch /tmp/fedora-compose-rawhide && TMPDIR=`mktemp -d /tmp/rawhide.XXXXXX` && chmod 755 $TMPDIR && cd $TMPDIR && git clone https://pagure.io/pungi-fedora.git && cd pungi-fedora && /usr/local/bin/lock-wrapper rawhide-compose "LANG=en_US.UTF-8 ./nightly.sh" && sudo -u ftpsync /usr/local/bin/update-fullfiletimelist -l /pub/fedora-secondary/update-fullfiletimelist.lock -t /pub fedora fedora-secondary && rm /tmp/fedora-compose-rawhide

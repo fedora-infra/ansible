@@ -6,7 +6,7 @@
 text
 
 # Use network installation
-# metalink here should give internal mirrors in iad2 and external ones outside
+# metalink here should give internal mirrors in rdu3 and external ones outside
 url --metalink "https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&arch=$basearch"
 repo --name=updates --metalink "https://mirrors.fedoraproject.org/metalink?repo=updates-released-f$releasever&arch=$basearch"
 
@@ -99,7 +99,7 @@ xz
 %end
 
 %post --nochroot --log=/mnt/sysimage/root/post.output --erroronfail
-/mnt/sysimage/usr/sbin/ip addr | grep 10.3.1 && echo '10.3.163.35 infrastructure.fedoraproject.org' >> /mnt/sysimage/etc/hosts
+/mnt/sysimage/usr/sbin/ip addr | grep 10.16.1 && echo '10.16.163.35 infrastructure.fedoraproject.org' >> /mnt/sysimage/etc/hosts
 cat /mnt/sysimage/etc/hosts 
 mkdir /mnt/sysimage/root/tmp
 chroot /mnt/sysimage /usr/bin/curl https://infrastructure.fedoraproject.org/rhel/ks/post/fedora-post.sh -o /root/tmp/fedora-post.sh

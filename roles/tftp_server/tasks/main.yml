@@ -22,7 +22,7 @@
   tags:
   - config
   - tftp_server
-  when: datacenter != 'iad2'
+  when: datacenter != 'rdu3'
 
 - name: Enable tftp socket service
   service: state=started enabled=true name=tftp.socket
@@ -42,7 +42,7 @@
     mode: '0755'
   tags:
   - tftp_server
-  when: datacenter == 'iad2'
+  when: datacenter == 'rdu3'
 
 - name: Copy rhcos files to images folder
   ansible.builtin.copy:
@@ -51,7 +51,7 @@
     remote_src: yes
   tags:
   - tftp_server
-  when: datacenter == 'iad2'
+  when: datacenter == 'rdu3'
 
 # - name: Generate custom configs
 #   ansible.builtin.template: src=grubhost.cfg.j2 dest="/var/lib/tftpboot/uefi/{{ hostvars[item].install_mac }}"

@@ -10,16 +10,16 @@ dns_external:
 # to add that group to this list. Other items on this list are ones
 # where it is an enormous group not needed.
 # Exclude these ansible host groups in hostgroups/all.cfg
-exclude_iad2_hostgroups:
+exclude_rdu3_hostgroups:
   - centos_ipa_client_stg
   - zabbix_stg
   - zabbix
   - logdetective
-#iad2_management_slowping:
+#rdu3_management_slowping:
 #  - ppc8-01-fsp.mgmt.fedoraproject.org
 #  - ppc8-02-fsp.mgmt.fedoraproject.org
 #  - ppc8-03-fsp.mgmt.fedoraproject.org
-iad2_external:
+rdu3_external:
   - bastion01.fedoraproject.org
   - bastion02.fedoraproject.org
   - dl-iad01.fedoraproject.org
@@ -37,95 +37,10 @@ iad2_external:
   - proxy10.fedoraproject.org
   - secondary01.fedoraproject.org
 #
-# This is a list of hosts which are in the IAD2 160 mgmt network
+# This is a list of hosts which are in the RDU3 160 mgmt network
 # we do not have them in ansible because it tries to connect
 # and they don't do ansible
 #
-iad2_management_hosts:
-  - autosign02.mgmt.iad2.fedoraproject.org
-  - backup01.mgmt.iad2.fedoraproject.org
-  - bkernel01.mgmt.iad2.fedoraproject.org
-  - bkernel02.mgmt.iad2.fedoraproject.org
-  - bvmhost-a64-01.mgmt.iad2.fedoraproject.org.
-  - bvmhost-a64-02.mgmt.iad2.fedoraproject.org.
-  - bvmhost-a64-03.mgmt.iad2.fedoraproject.org.
-  - bvmhost-a64-04.mgmt.iad2.fedoraproject.org.
-  - bvmhost-p09-01.mgmt.iad2.fedoraproject.org.
-  - bvmhost-p09-02.mgmt.iad2.fedoraproject.org.
-  - bvmhost-p09-03.mgmt.iad2.fedoraproject.org.
-  - bvmhost-p09-04.mgmt.iad2.fedoraproject.org.
-  - bvmhost-x86-01.mgmt.iad2.fedoraproject.org
-  - bvmhost-x86-02.mgmt.iad2.fedoraproject.org
-  - bvmhost-x86-03.mgmt.iad2.fedoraproject.org
-  - bvmhost-x86-04.mgmt.iad2.fedoraproject.org
-  - bvmhost-x86-05.mgmt.iad2.fedoraproject.org
-  - bvmhost-x86-06.mgmt.iad2.fedoraproject.org
-  - bvmhost-x86-07.mgmt.iad2.fedoraproject.org
-  - dell-fx01-fc01.mgmt.iad2.fedoraproject.org
-  - dell-fx01-fc02.mgmt.iad2.fedoraproject.org
-  - dell-fx01-fc03.mgmt.iad2.fedoraproject.org
-  - dell-fx01-fc04.mgmt.iad2.fedoraproject.org
-  - dell-fx01-fc05.mgmt.iad2.fedoraproject.org
-  - dell-fx01-fc06.mgmt.iad2.fedoraproject.org
-  - dell-fx01-fc07.mgmt.iad2.fedoraproject.org
-  - dell-fx01-fc08.mgmt.iad2.fedoraproject.org
-  - dell-fx01.mgmt.iad2.fedoraproject.org
-  - dell-fx02-fc01.mgmt.iad2.fedoraproject.org
-  - dell-fx02-fc02.mgmt.iad2.fedoraproject.org
-  - dell-fx02-fc03.mgmt.iad2.fedoraproject.org
-  - dell-fx02-fc04.mgmt.iad2.fedoraproject.org
-  - dell-fx02-fc05.mgmt.iad2.fedoraproject.org
-  - dell-fx02-fc06.mgmt.iad2.fedoraproject.org
-  - dell-fx02-fc07.mgmt.iad2.fedoraproject.org
-  - dell-fx02-fc08.mgmt.iad2.fedoraproject.org
-  - dell-fx02.mgmt.iad2.fedoraproject.org
-  - openqa-a64-worker01.mgmt.iad2.fedoraproject.org
-  - openqa-a64-worker02.mgmt.iad2.fedoraproject.org
-  - openqa-a64-worker03.mgmt.iad2.fedoraproject.org
-  - openqa-p09-worker01.mgmt.iad2.fedoraproject.org
-  - openqa-p09-worker02.mgmt.iad2.fedoraproject.org
-  - openqa-x86-worker01.mgmt.iad2.fedoraproject.org
-  - openqa-x86-worker02.mgmt.iad2.fedoraproject.org
-  - openqa-x86-worker03.mgmt.iad2.fedoraproject.org
-  - openqa-x86-worker04.mgmt.iad2.fedoraproject.org
-  - openqa-x86-worker05.mgmt.iad2.fedoraproject.org
-  - openqa-x86-worker06.mgmt.iad2.fedoraproject.org
-  - qvmhost-x86-01.mgmt.iad2.fedoraproject.org
-  - qvmhost-x86-02.mgmt.iad2.fedoraproject.org
-  - sign-vault01.mgmt.iad2.fedoraproject.org
-  - sign-vault02.mgmt.iad2.fedoraproject.org
-  - vmhost-x86-01.mgmt.iad2.fedoraproject.org
-  - vmhost-x86-02.mgmt.iad2.fedoraproject.org
-  - vmhost-x86-03.mgmt.iad2.fedoraproject.org
-  - vmhost-x86-04.mgmt.iad2.fedoraproject.org
-  - vmhost-x86-05.mgmt.iad2.fedoraproject.org
-  - vmhost-x86-06.mgmt.iad2.fedoraproject.org
-  - vmhost-x86-08.mgmt.iad2.fedoraproject.org
-  - bvmhost-a64-01-stg.mgmt.iad2.fedoraproject.org
-  - bvmhost-x86-01-stg.mgmt.iad2.fedoraproject.org
-  - bvmhost-x86-02-stg.mgmt.iad2.fedoraproject.org
-  - bvmhost-x86-03-stg.mgmt.iad2.fedoraproject.org
-  - bvmhost-x86-05-stg.mgmt.iad2.fedoraproject.org
-  - vmhost-x86-01-stg.mgmt.iad2.fedoraproject.org
-  - vmhost-x86-02-stg.mgmt.iad2.fedoraproject.org
-  - vmhost-x86-05-stg.mgmt.iad2.fedoraproject.org
-  - vmhost-x86-06-stg.mgmt.iad2.fedoraproject.org
-  - vmhost-x86-07-stg.mgmt.iad2.fedoraproject.org
-  - vmhost-x86-08-stg.mgmt.iad2.fedoraproject.org
-  - vmhost-x86-09-stg.mgmt.iad2.fedoraproject.org
-  - vmhost-x86-11-stg.mgmt.iad2.fedoraproject.org
-  - vmhost-x86-12-stg.mgmt.iad2.fedoraproject.org
-  - worker01.mgmt.iad2.fedoraproject.org
-  - worker02.mgmt.iad2.fedoraproject.org
-  - worker03.mgmt.iad2.fedoraproject.org
-  - worker04.mgmt.iad2.fedoraproject.org
-  - worker05.mgmt.iad2.fedoraproject.org
-  - worker06.mgmt.iad2.fedoraproject.org
-  - worker01-stg.mgmt.iad2.fedoraproject.org
-  - worker02-stg.mgmt.iad2.fedoraproject.org
-  - worker03-stg.mgmt.iad2.fedoraproject.org
-  - worker04-stg.mgmt.iad2.fedoraproject.org
-  - worker05-stg.mgmt.iad2.fedoraproject.org
 rdu3_management_hosts:
   - autosign01.mgmt.rdu3.fedoraproject.org
   - backup01.mgmt.rdu3.fedoraproject.org
@@ -175,8 +90,8 @@ rdu3_management_hosts:
 # These are management interfaces we only want
 # to test ping against. No http/https
 #
-iad2_management_limited:
-  - opengear01.mgmt.iad2.fedoraproject.org
+rdu3_management_limited:
+  - opengear01.mgmt.rdu3.fedoraproject.org
 ipa_client_shell_groups:
   - sysadmin-noc
   - sysadmin-veteran

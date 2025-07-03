@@ -7,7 +7,6 @@
 
 # This changes really often ;)
 bkup_domain=rdu3.fedoraproject.org
-bkup_domain=iad2.fedoraproject.org
 
 scp db-datanommer02.${bkup_domain}:/backups/datanommer2-$(date +%F).dump.xz \
     /srv/web/infra/db-dumps/datanommer2.dump.xz

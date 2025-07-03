@@ -1,0 +1,21 @@
+# HTTP
+
+{% for host in vars['rdu3_management_hosts']|sort %}
+ define service {
+   host_name             {{ host }}
+   service_description   {{ host }}-http
+   check_command         check_http!{{ host }}
+   use                   defaulttemplate
+   servicegroups	 mgmt-http
+ }
+ 
+ define service {
+   host_name             {{ host }}
+   service_description   {{ host }}-https
+   check_command         check_https!{{ host }}
+   use                   defaulttemplate
+   servicegroups	 mgmt-https
+ }
+ 
+
+{% endfor %}

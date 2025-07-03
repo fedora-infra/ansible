@@ -96,7 +96,7 @@ nrpe_group=nrpe
 # NOTE: This option is ignored if NRPE is running under either inetd or xinetd
 
 #allowed_hosts=127.0.0.1,192.168.0.2
-allowed_hosts=10.3.163.10,10.16.163.10,127.0.0.1,192.168.1.10,192.168.1.20,192.168.1.166,38.145.60.15
+allowed_hosts=10.16.163.10,127.0.0.1,192.168.1.10,192.168.1.20,192.168.1.166,38.145.32.15
 
 
 
@@ -395,4 +395,4 @@ command[service_rsyslog_restart]=/usr/bin/sudo /sbin/service rsyslog restart
 #command[check_disk]=/usr/lib64/nagios/plugins/check_disk -w $ARG1$ -c $ARG2$ -p $ARG3$
 #command[check_procs]=/usr/lib64/nagios/plugins/check_procs -w $ARG1$ -c $ARG2$ -s $ARG3$
 
-command[check_pgsql_backup]=/usr/lib64/nagios/plugins/check_file_age -w 86400 -c 129600 -f /backups/db-fas01.iad2.fedoraproject.org/fas2.db
+command[check_pgsql_backup]=/usr/lib64/nagios/plugins/check_file_age -w 86400 -c 129600 -f /backups/db-fas01.rdu3.fedoraproject.org/fas2.db

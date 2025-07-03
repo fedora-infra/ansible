@@ -22,10 +22,10 @@ add rule ip filter INPUT ct state related,established counter accept
 add rule ip filter INPUT ip saddr 192.168.1.10  tcp dport 5666 counter accept
 add rule ip filter INPUT ip saddr 192.168.1.166 tcp dport 5666 counter accept
 # FIXME - this is the global nat-ip and we need the noc01-specific ip
-add rule ip filter INPUT ip saddr 38.145.60.16 tcp dport 5666 counter accept
-add rule ip filter INPUT ip saddr 38.145.60.15 tcp dport 5666 counter accept
-add rule ip filter INPUT ip saddr 10.3.163.10  tcp dport 5666 counter accept
-add rule ip filter INPUT ip saddr 10.3.166.10  tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 38.145.32.16 tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 38.145.32.15 tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 10.16.163.10  tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 10.16.166.10  tcp dport 5666 counter accept
 # add rdu3 ips
 add rule ip filter INPUT ip saddr 38.145.32.16  tcp dport 5666 counter accept
 add rule ip filter INPUT ip saddr 38.145.32.15  tcp dport 5666 counter accept
@@ -33,7 +33,7 @@ add rule ip filter INPUT ip saddr 10.16.163.10  tcp dport 5666 counter accept
 add rule ip filter INPUT ip saddr 10.16.166.10  tcp dport 5666 counter accept
 # Zabbix
 add rule ip filter INPUT tcp dport 10051 counter accept
-add rule ip filter INPUT ip saddr 10.3.163.198 tcp dport 10050 counter accept
+add rule ip filter INPUT ip saddr 10.16.163.198 tcp dport 10050 counter accept
 
 # if the blocked_ips is defined - drop them
 {% if blocked_ips is defined %}
@@ -52,7 +52,7 @@ add rule ip filter INPUT ip saddr 192.168.100.0/24 tcp dport 22 counter reject w
 add rule ip filter INPUT tcp dport 22 counter accept
 
 # Allow all netapp traffic
-add rule ip filter INPUT ip saddr 10.3.162.0/24 counter accept
+add rule ip filter INPUT ip saddr 10.16.162.0/24 counter accept
 
 
 # Custom Services

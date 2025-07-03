@@ -9,31 +9,11 @@ define host {
   alias                        ibiblio gateway
   use                          mincheck
   check_command                check-host-alive4
-{% if vars['nagios_location'] == 'iad2_internal' %}
-  parents                      iad2-gw
-{% elif vars['nagios_location'] == 'rdu3_internal' %}
+{% if vars['nagios_location'] == 'rdu3_internal' %}
   parents                      rdu3-gw
 {% endif %}
   address                      152.19.134.129
 }
-
-#'iad2'
-define host {
-  host_name                    iad2-gw
-  alias                        iad2 cage gateway
-  use                          mincheck
-  check_command                check-host-alive4
-{% if vars['nagios_location'] == 'iad2_internal' %}
-  address                      10.3.163.254
-{% elif vars['nagios_location'] == 'rdu3_internal' %}
-  address                      209.132.185.206
-{% elif vars['nagios_location'] == 'external' %}
-  address                      209.132.185.206
-  parents                      ibiblio-gw
-{% endif %}
-
-}
-
 
 #Mark Note to Self: Come back and correct these later
 # 'rdu3'
@@ -42,9 +22,7 @@ define host {
   alias                        rdu3 gateway
   use                          mincheck
   check_command                check-host-alive4
-{% if vars['nagios_location'] == 'iad2_internal' %}
-  address                      209.132.181.204
-{% elif vars['nagios_location'] == 'rdu3_internal' %}
+{% if vars['nagios_location'] == 'rdu3_internal' %}
   address                      10.16.163.254
 {% elif vars['nagios_location'] == 'external' %}
   address                      209.132.181.204
@@ -60,9 +38,7 @@ define host {
   use                          mincheck
   check_command                check-host-alive4
   address                      67.219.144.65
-{% if vars['nagios_location'] == 'iad2_internal' %}
-  parents                      iad2-gw
-{% elif vars['nagios_location'] == 'rdu3_internal' %}
+{% if vars['nagios_location'] == 'rdu3_internal' %}
   parents                      rdu3-gw
 {% elif vars['nagios_location'] == 'external' %}
   parents                      ibiblio-gw
@@ -77,9 +53,7 @@ define host {
   use                          mincheck
   check_command                check-host-alive4
   address                      185.141.164.1
-{% if vars['nagios_location'] == 'iad2_internal' %}
-  parents                      iad2-gw
-{% elif vars['nagios_location'] == 'rdu3_internal' %}
+{% if vars['nagios_location'] == 'rdu3_internal' %}
   parents                      rdu3-gw
 {% elif vars['nagios_location'] == 'external' %}
   parents                      ibiblio-gw
@@ -94,9 +68,7 @@ define host {
   use                          mincheck
   check_command                check-host-alive4
   address                      85.236.55.1
-{% if vars['nagios_location'] == 'iad2_internal' %}
-  parents                      iad2-gw
-{% elif vars['nagios_location'] == 'rdu3_internal' %}
+{% if vars['nagios_location'] == 'rdu3_internal' %}
   parents                      rdu3-gw
 {% elif vars['nagios_location'] == 'external' %}
   parents                      ibiblio-gw
@@ -111,9 +83,7 @@ define host {
   use                          mincheck
   check_command                check-host-alive4
   address                      140.211.169.193
-{% if vars['nagios_location'] == 'iad2_internal' %}
-  parents                      iad2-gw
-{% elif vars['nagios_location'] == 'rdu3_internal' %}
+{% if vars['nagios_location'] == 'rdu3_internal' %}
   parents                      rdu3-gw
 {% elif vars['nagios_location'] == 'external' %}
   parents                      ibiblio-gw
@@ -128,9 +98,7 @@ define host {
   use                          mincheck
   check_command                check-host-alive4
   address                      209.132.190.196
-{% if vars['nagios_location'] == 'iad2_internal' %}
-  parents                      iad2-gw
-{% elif vars['nagios_location'] == 'rdu3_internal' %}
+{% if vars['nagios_location'] == 'rdu3_internal' %}
   parents                      rdu3-gw
 {% elif vars['nagios_location'] == 'external' %}
   parents                      ibiblio-gw
@@ -145,9 +113,7 @@ define host {
   use                          mincheck
   check_command                check-host-alive4
   address                      8.43.85.254
-{% if vars['nagios_location'] == 'iad2_internal' %}
-  parents                      iad2-gw
-{% elif vars['nagios_location'] == 'rdu3_internal' %}
+{% if vars['nagios_location'] == 'rdu3_internal' %}
   parents                      rdu3-gw
 {% elif vars['nagios_location'] == 'external' %}
   parents                      ibiblio-gw

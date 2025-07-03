@@ -22,15 +22,15 @@ add rule ip filter INPUT ip saddr 192.168.1.10  tcp dport 5666 counter accept
 add rule ip filter INPUT ip saddr 192.168.1.166 tcp dport 5666 counter accept
 add rule ip filter INPUT ip saddr 192.168.1.66 tcp dport 5666 counter accept
 # FIXME - this is the global nat-ip and we need the noc01-specific ip
-add rule ip filter INPUT ip saddr 38.145.60.16  tcp dport 5666 counter accept
-add rule ip filter INPUT ip saddr 38.145.60.15  tcp dport 5666 counter accept
 add rule ip filter INPUT ip saddr 38.145.32.16  tcp dport 5666 counter accept
 add rule ip filter INPUT ip saddr 38.145.32.15  tcp dport 5666 counter accept
-add rule ip filter INPUT ip saddr 10.3.163.10   tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 38.145.32.16  tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 38.145.32.15  tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 10.16.163.10   tcp dport 5666 counter accept
 add rule ip filter INPUT ip saddr 10.16.163.10   tcp dport 5666 counter accept
 # zabbix01.stg
 add rule ip filter INPUT tcp dport 10051 counter accept
-add rule ip filter INPUT ip saddr 10.3.166.61 tcp dport 10050 counter accept
+add rule ip filter INPUT ip saddr 10.16.166.61 tcp dport 10050 counter accept
 
 
 # if the host/group defines incoming tcp_ports - allow them

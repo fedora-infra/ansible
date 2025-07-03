@@ -42,7 +42,7 @@
 #
 
 - name: Prepare setting up the database
-  hosts: db01.iad2.fedoraproject.org:db01.stg.iad2.fedoraproject.org:db01.rdu3.fedoraproject.org:db01.stg.rdu3.fedoraproject.org
+  hosts: db01.rdu3.fedoraproject.org:db01.stg.rdu3.fedoraproject.org
   gather_facts: no
   user: root
 
@@ -53,7 +53,7 @@
     - packages
 
 - name: Setup the database
-  hosts: db01.iad2.fedoraproject.org:db01.stg.iad2.fedoraproject.org:db01.rdu3.fedoraproject.org:db01.stg.rdu3.fedoraproject.org
+  hosts: db01.rdu3.fedoraproject.org:db01.stg.rdu3.fedoraproject.org
   gather_facts: no
   become: yes
   become_user: postgres

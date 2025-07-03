@@ -8,7 +8,7 @@
 
 ---
 - name: Make sign-vault server vm (secondary and stg only)
-  hosts: sign-vault01.stg.iad2.fedoraproject.org
+  hosts: sign-vault01.stg.rdu3.fedoraproject.org
   user: root
   gather_facts: false
 
@@ -36,8 +36,8 @@
   roles:
   - base
   - rkhunter
-  - { role: linux-system-roles.nbde_client, when: datacenter == 'iad2' or datacenter == 'rdu3' }
-  - { role: serial-console, when: datacenter == 'iad2' or datacenter == 'rdu3' }
+  - { role: linux-system-roles.nbde_client, when: datacenter == 'rdu3' }
+  - { role: serial-console, when: datacenter == 'rdu3' }
   - sigul/server
 
   pre_tasks:

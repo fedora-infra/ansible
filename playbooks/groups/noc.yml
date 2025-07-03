@@ -25,7 +25,7 @@
   - { role: openvpn/client, when: env != "staging" }
   - ipa/client
   - collectd/base
-  - { role: rsyncd, when: datacenter == 'iad2' or datacenter == 'rdu3' }
+  - { role: rsyncd, when: datacenter == 'rdu3' }
   - sudo
   - apache
   # - mod_wsgi
@@ -34,7 +34,7 @@
     owner_group: apache
     service: HTTP
     host: "nagios{{env_suffix}}.fedoraproject.org"
-    when: datacenter == 'iad2' or datacenter == 'rdu3'
+    when: datacenter == 'rdu3'
   - role: keytab/service
     owner_user: apache
     owner_group: apache
@@ -60,9 +60,9 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
   roles:
-  - { role: dhcp_server, when: datacenter == 'iad2' or datacenter == 'rdu3' }
-  - { role: tftp_server, when: datacenter == 'iad2' or datacenter == 'rdu3' }
-  - { role: nagios_server, when: datacenter == 'iad2' or datacenter == 'ibiblio' or datacenter == 'rdu3' }
+  - { role: dhcp_server, when: datacenter == 'rdu3' }
+  - { role: tftp_server, when: datacenter == 'rdu3' }
+  - { role: nagios_server, when: datacenter == 'ibiblio' or datacenter == 'rdu3' }
 
   tasks:
   - name: Install some packages which arent in playbooks

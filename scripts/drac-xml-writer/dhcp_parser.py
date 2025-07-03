@@ -5,7 +5,7 @@ import pandas as pd
 
 # File paths
 ips_csv = './hostnames.csv'
-dhcp_data = '/srv/web/infra/ansible/roles/dhcp_server/files/dhcpd.conf.noc01.iad2.fedoraproject.org'
+dhcp_data = '/srv/web/infra/ansible/roles/dhcp_server/files/dhcpd.conf.noc01.rdu3.fedoraproject.org'
 
 # Read the CSV
 ips = pd.read_csv(ips_csv)

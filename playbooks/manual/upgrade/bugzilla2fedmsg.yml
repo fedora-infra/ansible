@@ -35,7 +35,7 @@
   pre_tasks:
   - name: Tell nagios to shush
     nagios: action=downtime minutes=60 service=host host={{ inventory_hostname_short }}{{ env_suffix }}
-    delegate_to: noc01.iad2.fedoraproject.org
+    delegate_to: noc01.rdu3.fedoraproject.org
     ignore_errors: true
 
   roles:
@@ -45,5 +45,5 @@
   - service: name="moksha-hub" state=restarted
   - name: Tell nagios to unshush
     nagios: action=unsilence service=host host={{ inventory_hostname_short }}{{ env_suffix }}
-    delegate_to: noc01.iad2.fedoraproject.org
+    delegate_to: noc01.rdu3.fedoraproject.org
     ignore_errors: true

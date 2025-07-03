@@ -1,6 +1,6 @@
 ---
 - name: Create the release tags in koji.
-  hosts: compose-x86-01.stg.iad2.fedoraproject.org
+  hosts: compose-x86-01.stg.rdu3.fedoraproject.org
   gather_facts: no
   vars_files:
     - /srv/web/infra/ansible/vars/all/00-FedoraCycleNumber.yaml

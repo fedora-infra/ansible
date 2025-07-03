@@ -1,13 +1,13 @@
 # common items for the buildvm-* koji builders
 # These variables are pushed into /etc/system_identification by the base role.
 # Groups and individual hosts should ovveride them with specific info.
-datacenter: iad2
-dns: 10.3.163.33
-eth0_ipv4_gw: 10.3.171.254
+datacenter: rdu3
+dns: 10.16.163.33
+eth0_ipv4_gw: 10.16.171.254
 # for systems that do not match the above - specify the same parameter in
 # the host_vars/$hostname file
 host_group: kojibuilder
-ipa_server: ipa01.iad2.fedoraproject.org
+ipa_server: ipa01.rdu3.fedoraproject.org
 koji_hub_nfs: "fedora_koji"
 koji_instance: "primary"
 koji_server_url: "https://koji.fedoraproject.org/kojihub"

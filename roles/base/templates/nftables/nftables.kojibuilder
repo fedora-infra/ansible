@@ -70,11 +70,6 @@ add rule ip filter OUTPUT ip daddr 10.16.163.31 tcp dport 25 counter accept
 # infra.fp.o
 add rule ip filter OUTPUT ip daddr 10.16.163.35 tcp dport  80 counter accept
 add rule ip filter OUTPUT ip daddr 10.16.163.35 tcp dport 443 counter accept
-# temp allow external iad2 infra until after the move
-add rule ip filter OUTPUT ip daddr 38.145.60.16 tcp dport  80 counter accept
-add rule ip filter OUTPUT ip daddr 38.145.60.16 tcp dport 443 counter accept
-add rule ip filter OUTPUT ip daddr 38.145.60.20 tcp dport 443 counter accept
-add rule ip filter OUTPUT ip daddr 38.145.60.21 tcp dport 443 counter accept
 
 # rsyslog out to log01
 add rule ip filter OUTPUT ip daddr 10.16.163.39 tcp dport 514 counter accept
@@ -99,11 +94,8 @@ add rule ip filter OUTPUT ip daddr 10.16.169.104 tcp dport 22 counter accept
 # https git on pagure,io
 add rule ip filter OUTPUT ip daddr 8.43.85.76 tcp dport 443 counter accept
 
-#  Now we need to allow iad2 to speak to iad2 and rdu3 to speak to rdu3
-# but not cross the streams.
-
 # IP Helper:
-# 10.16.        = .ida2.
+# 10.3.        = .iad2.
 # 10.16.       = .rdu3.
 # 10.16.166.74  = proxy01.stg
 # 10.16.166.75  = proxy02.stg
@@ -120,13 +112,11 @@ add rule ip filter OUTPUT ip daddr 8.43.85.76 tcp dport 443 counter accept
 # 10.16.163.31  = bastion01
 # 10.16.163.10  = noc01
 
-# NFS (in storage.neta-002.prod.iad2.dc.redhat.com)
-# 10.16.162.11 = ntap-iad2-c02-fedora01-nfs01a
-# 10.16.162.12 = ntap-iad2-c02-fedora01-nfs01b
-# 10.16.162.13 = ntap-iad2-c02-fedora01-nfs02a
-# 10.16.162.14 = ntap-iad2-c02-fedora01-nfs02b
-# Dito...
-# 10.16.162.11 =ntap-rdu3-c02-fedora01-nfs01a .neta-002.prod.rdu2.dc.redhat.com
+# NFS (in storage neta-002.prod.rdu2.dc.redhat.com)
+# 10.16.162.11 = ntap-rdu3-c02-fedora01-nfs01a
+# 10.16.162.12 = ntap-rdu3-c02-fedora01-nfs01b
+# 10.16.162.13 = ntap-rdu3-c02-fedora01-nfs02a
+# 10.16.162.14 = ntap-rdu3-c02-fedora01-nfs02b
 
 # admin.fedoraproject.org  for fas (proyx(1)01 and proxy(1)10)
 {% if host in groups['staging'] %}

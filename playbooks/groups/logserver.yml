@@ -55,7 +55,7 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
 - name: Cloud Image stats
-  hosts: log01.iad2.fedoraproject.org
+  hosts: log01.rdu3.fedoraproject.org
   user: root
   gather_facts: false
 
@@ -71,7 +71,7 @@
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
 
 - name: Dole out the service-specific config
-  hosts: log01.iad2.fedoraproject.org:log01.rdu3.fedoraproject.org
+  hosts: log01.rdu3.fedoraproject.org
   user: root
   gather_facts: true
   vars_files:

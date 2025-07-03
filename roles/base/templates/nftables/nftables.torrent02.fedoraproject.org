@@ -28,10 +28,10 @@ add rule ip filter INPUT ct state new tcp dport 22 counter accept
 add rule ip filter INPUT ip saddr 192.168.1.10  tcp dport 5666 counter accept
 add rule ip filter INPUT ip saddr 192.168.1.166 tcp dport 5666 counter accept
 # FIXME - this is the global nat-ip and we need the noc01-specific ip
-add rule ip filter INPUT ip saddr 38.145.60.16 tcp dport 5666 counter accept
-add rule ip filter INPUT ip saddr 38.145.60.15 tcp dport 5666 counter accept
-add rule ip filter INPUT ip saddr 10.3.163.10  tcp dport 5666 counter accept
-# NOTE: This doesn't include 10.3.166.10
+add rule ip filter INPUT ip saddr 38.145.32.16 tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 38.145.32.15 tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 10.16.163.10  tcp dport 5666 counter accept
+# NOTE: This doesn't include 10.16.166.10
 # NOTE: This doesn't include zabbix.
 
 {% if env != 'staging' and datacenter == 'phx2' and inventory_hostname not in groups['staging_friendly'] %}

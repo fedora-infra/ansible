@@ -1,6 +1,6 @@
 ---
 - name: Install /etc/hosts for VPN clients
-  when: "(vpn | default(false)) and (datacenter | default('iad2')) != 'iad2'"
+  when: "(vpn | default(false)) and (datacenter | default('rdu3')) != 'rdu3'"
   include_role:
     name: hosts
     apply:

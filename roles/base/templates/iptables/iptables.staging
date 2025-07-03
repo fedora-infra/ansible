@@ -21,12 +21,12 @@
 -A INPUT -p tcp -m tcp --dport 5666 -s 192.168.1.10 -j ACCEPT
 -A INPUT -p tcp -m tcp --dport 5666 -s 192.168.1.166 -j ACCEPT
 # FIXME - this is the global nat-ip and we need the noc01-specific ip
--A INPUT -p tcp -m tcp --dport 5666  -s 38.145.60.16 -j ACCEPT
--A INPUT -p tcp -m tcp --dport 5666  -s 38.145.60.15 -j ACCEPT
--A INPUT -p tcp -m tcp --dport 5666 -s 10.3.163.10 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 5666  -s 38.145.32.16 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 5666  -s 38.145.32.15 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 5666 -s 10.16.163.10 -j ACCEPT
 # zabbix01.stg
 -A INPUT -p tcp -m tcp --dport 10051 -j ACCEPT
--A INPUT -p tcp -m tcp --dport 10050 -s 10.3.166.61 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 10050 -s 10.16.166.61 -j ACCEPT
 
 
 # if the host/group defines incoming tcp_ports - allow them

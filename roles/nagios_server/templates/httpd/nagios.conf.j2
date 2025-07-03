@@ -42,7 +42,7 @@ Alias /robots.txt /var/www/robots.txt
 {% if vars['nagios_location'] == 'external' %}
     Require ip 2600:2701:4000:5211:dead:beef:00fe:fed9
 {% else %}
-    Require ip 10.3.163.10
+    Require ip 10.16.163.10
 {% endif %}
     Require ip 127.0.0.1
     Require ip ::1

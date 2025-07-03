@@ -38,36 +38,36 @@
 -A OUTPUT -p tcp -m tcp -d 10.16.0.35 --dport 80 -j ACCEPT
 -A OUTPUT -p tcp -m tcp -d 10.1.102.24 --dport 80 -j ACCEPT
 -A OUTPUT -p tcp -m tcp -d 10.1.102.50 --dport 80 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.169.106 --dport 80 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.169.107 --dport 80 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.169.106 --dport 80 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.169.107 --dport 80 -j ACCEPT
 {% endif %}
 
 # tang for buildhw
--A OUTPUT -p tcp -m tcp -d 10.3.163.37 --dport 80 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.38 --dport 80 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.37 --dport 80 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.38 --dport 80 -j ACCEPT
 
 # DNS
--A OUTPUT -p udp -m udp -d 10.3.163.33 --dport 53 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.33 --dport 53 -j ACCEPT
--A OUTPUT -p udp -m udp -d 10.3.163.34 --dport 53 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.34 --dport 53 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.16.163.33 --dport 53 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.33 --dport 53 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.16.163.34 --dport 53 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.34 --dport 53 -j ACCEPT
 
 # bastion smtp
--A OUTPUT -p tcp -m tcp -d 10.3.163.31 --dport 25 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.31 --dport 25 -j ACCEPT
 
 # infra.fp.o
--A OUTPUT -p tcp -m tcp -d 10.3.163.35 --dport 80 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.35 --dport 443 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.35 --dport 80 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.35 --dport 443 -j ACCEPT
 
 # rsyslog out to log01
--A OUTPUT -p tcp -m tcp -d 10.3.163.39 --dport 514 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.39 --dport 514 -j ACCEPT
 
 # SSH
--A INPUT -p tcp -m tcp -s 10.3.160.0/19 --dport 22 -j ACCEPT 
--A OUTPUT -p tcp -m tcp -d 10.3.160.0/19 --sport 22  -j ACCEPT
+-A INPUT -p tcp -m tcp -s 10.16.160.0/19 --dport 22 -j ACCEPT 
+-A OUTPUT -p tcp -m tcp -d 10.16.160.0/19 --sport 22  -j ACCEPT
 {% if inventory_hostname.startswith (('buildvm-s390x-11', 'buildvm-s390x-12', 'buildvm-s390x-13')) %}
 # Allow SSHFS binding to koji01
--A OUTPUT -p tcp -m tcp -d 10.3.169.104 --dport 22  -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.169.104 --dport 22  -j ACCEPT
 {% endif %}
 
 # http to pull sources from pkgs lookaside
@@ -78,104 +78,104 @@
 
 # admin.fedoraproject.org  for fas (proyx(1)01 and proxy(1)10)
 {% if host in groups['staging'] %}
--A OUTPUT -p tcp -m tcp -d 10.3.166.74 --dport 80 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.166.74 --dport 443 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.166.75 --dport 80 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.166.75 --dport 443 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.166.74 --dport 80 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.166.74 --dport 443 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.166.75 --dport 80 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.166.75 --dport 443 -j ACCEPT
 {% endif %}
--A OUTPUT -p tcp -m tcp -d 10.3.163.74 --dport 80 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.74 --dport 443 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.75 --dport 80 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.75 --dport 443 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.76 --dport 80 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.76 --dport 443 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.77 --dport 80 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.77 --dport 443 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.74 --dport 80 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.74 --dport 443 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.75 --dport 80 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.75 --dport 443 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.76 --dport 80 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.76 --dport 443 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.77 --dport 80 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.77 --dport 443 -j ACCEPT
 
 # ipa client ports
 {% if host in groups['staging'] %}
--A OUTPUT -p tcp -m tcp -d 10.3.166.21 --dport 80 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.166.63 --dport 80 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.166.21 --dport 443 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.166.63 --dport 443 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.166.21 --dport 389 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.166.63 --dport 389 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.166.21 --dport 636 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.166.63 --dport 636 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.166.21 --dport 88 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.166.63 --dport 88 -j ACCEPT
--A OUTPUT -p udp -m udp -d 10.3.166.21 --dport 88 -j ACCEPT
--A OUTPUT -p udp -m udp -d 10.3.166.63 --dport 88 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.166.21 --dport 464 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.166.63 --dport 464 -j ACCEPT
--A OUTPUT -p udp -m udp -d 10.3.166.21 --dport 464 -j ACCEPT
--A OUTPUT -p udp -m udp -d 10.3.166.63 --dport 464 -j ACCEPT
--A OUTPUT -p udp -m udp -d 10.3.166.21 --dport 53 -j ACCEPT
--A OUTPUT -p udp -m udp -d 10.3.166.63 --dport 53 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.166.21 --dport 80 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.166.63 --dport 80 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.166.21 --dport 443 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.166.63 --dport 443 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.166.21 --dport 389 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.166.63 --dport 389 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.166.21 --dport 636 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.166.63 --dport 636 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.166.21 --dport 88 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.166.63 --dport 88 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.16.166.21 --dport 88 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.16.166.63 --dport 88 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.166.21 --dport 464 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.166.63 --dport 464 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.16.166.21 --dport 464 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.16.166.63 --dport 464 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.16.166.21 --dport 53 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.16.166.63 --dport 53 -j ACCEPT
 {% else %}
--A OUTPUT -p tcp -m tcp -d 10.3.163.54 --dport 80 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.55 --dport 80 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.104 --dport 80 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.54 --dport 443 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.55 --dport 443 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.104 --dport 443 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.54 --dport 389 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.55 --dport 389 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.104 --dport 389 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.54 --dport 636 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.55 --dport 636 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.104 --dport 636 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.54 --dport 88 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.55 --dport 88 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.104 --dport 88 -j ACCEPT
--A OUTPUT -p udp -m udp -d 10.3.163.54 --dport 88 -j ACCEPT
--A OUTPUT -p udp -m udp -d 10.3.163.55 --dport 88 -j ACCEPT
--A OUTPUT -p udp -m udp -d 10.3.163.104 --dport 88 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.54 --dport 464 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.55 --dport 464 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.163.104 --dport 464 -j ACCEPT
--A OUTPUT -p udp -m udp -d 10.3.163.54 --dport 464 -j ACCEPT
--A OUTPUT -p udp -m udp -d 10.3.163.55 --dport 464 -j ACCEPT
--A OUTPUT -p udp -m udp -d 10.3.163.104 --dport 464 -j ACCEPT
--A OUTPUT -p udp -m udp -d 10.3.163.54 --dport 53 -j ACCEPT
--A OUTPUT -p udp -m udp -d 10.3.163.55 --dport 53 -j ACCEPT
--A OUTPUT -p udp -m udp -d 10.3.163.104 --dport 53 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.54 --dport 80 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.55 --dport 80 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.104 --dport 80 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.54 --dport 443 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.55 --dport 443 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.104 --dport 443 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.54 --dport 389 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.55 --dport 389 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.104 --dport 389 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.54 --dport 636 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.55 --dport 636 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.104 --dport 636 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.54 --dport 88 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.55 --dport 88 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.104 --dport 88 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.16.163.54 --dport 88 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.16.163.55 --dport 88 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.16.163.104 --dport 88 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.54 --dport 464 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.55 --dport 464 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.163.104 --dport 464 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.16.163.54 --dport 464 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.16.163.55 --dport 464 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.16.163.104 --dport 464 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.16.163.54 --dport 53 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.16.163.55 --dport 53 -j ACCEPT
+-A OUTPUT -p udp -m udp -d 10.16.163.104 --dport 53 -j ACCEPT
 {% endif %}
 
 {% if host in groups['staging'] %}
 # Allow nfs from koji01
--A INPUT -p tcp -m tcp -d 10.3.167.64 --dport 2049 -j ACCEPT
--A OUTPUT -p tcp -m tcp -d 10.3.167.64 --dport 2049 -j ACCEPT
+-A INPUT -p tcp -m tcp -d 10.16.167.64 --dport 2049 -j ACCEPT
+-A OUTPUT -p tcp -m tcp -d 10.16.167.64 --dport 2049 -j ACCEPT
 {% endif %}
 #nfs to vtap-fedora-nfs01.storage.phx2.redhat.com - a little to wide-open - but 
 # kinda necessary
--A INPUT -m tcp -p tcp -s 10.3.162.11 -j ACCEPT
--A OUTPUT -m tcp -p tcp -d 10.3.162.11 -j ACCEPT
--A INPUT -m udp -p udp -s 10.3.162.11 -j ACCEPT
--A OUTPUT -m udp -p udp -d 10.3.162.11 -j ACCEPT
--A INPUT -m tcp -p tcp -s 10.3.162.12 -j ACCEPT
--A OUTPUT -m tcp -p tcp -d 10.3.162.12 -j ACCEPT
--A INPUT -m udp -p udp -s 10.3.162.12 -j ACCEPT
--A OUTPUT -m udp -p udp -d 10.3.162.12 -j ACCEPT
--A INPUT -m tcp -p tcp -s 10.3.162.13 -j ACCEPT
--A OUTPUT -m tcp -p tcp -d 10.3.162.13 -j ACCEPT
--A INPUT -m udp -p udp -s 10.3.162.13 -j ACCEPT
--A OUTPUT -m udp -p udp -d 10.3.162.13 -j ACCEPT
--A INPUT -m tcp -p tcp -s 10.3.162.14 -j ACCEPT
--A OUTPUT -m tcp -p tcp -d 10.3.162.14 -j ACCEPT
--A INPUT -m udp -p udp -s 10.3.162.14 -j ACCEPT
--A OUTPUT -m udp -p udp -d 10.3.162.14 -j ACCEPT
+-A INPUT -m tcp -p tcp -s 10.16.162.11 -j ACCEPT
+-A OUTPUT -m tcp -p tcp -d 10.16.162.11 -j ACCEPT
+-A INPUT -m udp -p udp -s 10.16.162.11 -j ACCEPT
+-A OUTPUT -m udp -p udp -d 10.16.162.11 -j ACCEPT
+-A INPUT -m tcp -p tcp -s 10.16.162.12 -j ACCEPT
+-A OUTPUT -m tcp -p tcp -d 10.16.162.12 -j ACCEPT
+-A INPUT -m udp -p udp -s 10.16.162.12 -j ACCEPT
+-A OUTPUT -m udp -p udp -d 10.16.162.12 -j ACCEPT
+-A INPUT -m tcp -p tcp -s 10.16.162.13 -j ACCEPT
+-A OUTPUT -m tcp -p tcp -d 10.16.162.13 -j ACCEPT
+-A INPUT -m udp -p udp -s 10.16.162.13 -j ACCEPT
+-A OUTPUT -m udp -p udp -d 10.16.162.13 -j ACCEPT
+-A INPUT -m tcp -p tcp -s 10.16.162.14 -j ACCEPT
+-A OUTPUT -m tcp -p tcp -d 10.16.162.14 -j ACCEPT
+-A INPUT -m udp -p udp -s 10.16.162.14 -j ACCEPT
+-A OUTPUT -m udp -p udp -d 10.16.162.14 -j ACCEPT
 
 # ntp
--A OUTPUT -m udp -p udp --dport 123 -d 10.3.163.31 -j ACCEPT
--A OUTPUT -m udp -p udp --dport 123 -d 10.3.163.32 -j ACCEPT
+-A OUTPUT -m udp -p udp --dport 123 -d 10.16.163.31 -j ACCEPT
+-A OUTPUT -m udp -p udp --dport 123 -d 10.16.163.32 -j ACCEPT
 
 # dhcp
--A OUTPUT -m udp -p udp --dport 67 -d 10.3.163.10 -j ACCEPT
+-A OUTPUT -m udp -p udp --dport 67 -d 10.16.163.10 -j ACCEPT
 
 # s390x builders ssh
--A INPUT -p tcp -m tcp -s 10.3.0.0/16 --dport 22 -j ACCEPT 
--A OUTPUT -p tcp -m tcp -d 10.3.0.0/16 --sport 22  -j ACCEPT
+-A INPUT -p tcp -m tcp -s 10.16.0.0/16 --dport 22 -j ACCEPT 
+-A OUTPUT -p tcp -m tcp -d 10.16.0.0/16 --sport 22  -j ACCEPT
 
 # if the host/group defines incoming tcp_ports - allow them
 {% for port in tcp_ports %}

@@ -21,10 +21,10 @@ add rule ip filter INPUT ct state new tcp dport 22 counter accept
 add rule ip filter INPUT ip saddr 192.168.1.10  tcp dport 5666 counter accept
 add rule ip filter INPUT ip saddr 192.168.1.166 tcp dport 5666 counter accept
 # FIXME - this is the global nat-ip and we need the noc01-specific ip
-add rule ip filter INPUT ip saddr 38.145.60.16  tcp dport 5666 counter accept
-add rule ip filter INPUT ip saddr 38.145.60.15  tcp dport 5666 counter accept
-add rule ip filter INPUT ip saddr 10.3.163.10   tcp dport 5666 counter accept
-add rule ip filter INPUT ip saddr 10.3.166.10   tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 38.145.32.16  tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 38.145.32.15  tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 10.16.163.10   tcp dport 5666 counter accept
+add rule ip filter INPUT ip saddr 10.16.166.10   tcp dport 5666 counter accept
 # add rdu3 ips
 add rule ip filter INPUT ip saddr 38.145.32.16  tcp dport 5666 counter accept
 add rule ip filter INPUT ip saddr 38.145.32.15  tcp dport 5666 counter accept
@@ -32,25 +32,25 @@ add rule ip filter INPUT ip saddr 10.16.163.10  tcp dport 5666 counter accept
 add rule ip filter INPUT ip saddr 10.16.166.10  tcp dport 5666 counter accept
 # zabbix01
 add rule ip filter INPUT                        tcp dport 10051 counter accept
-add rule ip filter INPUT ip saddr 10.3.163.198  tcp dport 10050 counter accept
+add rule ip filter INPUT ip saddr 10.16.163.198  tcp dport 10050 counter accept
 
-{% if env != 'staging' and datacenter == 'iad2' and inventory_hostname not in groups['staging_friendly'] %}
+{% if env != 'staging' and datacenter == 'rdu3' and inventory_hostname not in groups['staging_friendly'] %}
 #
-# In the iad2 datacenter, both production and staging hosts are in different
+# In the rdu3 datacenter, both production and staging hosts are in different
 # vlans, and different subnets. However, just as a precaution, we want prod machines to
 # reject connections from any staging host just in case there's some globally enabled port.
 # There are however a few hosts in production we have marked 'staging-friendly'
 # that we do allow staging to talk to for mostly read-only data they need.
 #
-add rule ip filter INPUT ip saddr 10.3.166.0/24 counter reject with icmp type host-prohibited
-add rule ip filter INPUT ip saddr 10.3.167.0/24 counter reject with icmp type host-prohibited
+add rule ip filter INPUT ip saddr 10.16.166.0/24 counter reject with icmp type host-prohibited
+add rule ip filter INPUT ip saddr 10.16.167.0/24 counter reject with icmp type host-prohibited
 {% endif %}
 
 {% if vpn %}
 #
 # We want to have all vpn hosts reject most things from the 'less secure' vpn network
 #
-{% if inventory_hostname == 'log01.iad2.fedoraproject.org' %}
+{% if inventory_hostname == 'log01.rdu3.fedoraproject.org' %}
 # Allow all vpn hosts to talk to the log server for rsyslog
 add rule ip filter INPUT ip saddr 192.168.100.0/24 tcp dport   514 counter accept
 add rule ip filter INPUT ip saddr 192.168.100.0/24 udp dport 25826 counter accept
@@ -81,7 +81,7 @@ add rule ip filter INPUT ip saddr 192.168.0.0/24   tcp dport 25 counter accept
 # now I don't see where we'd get the right ip/netmask from in vars
 add rule ip filter INPUT ip saddr 10.16.160.0/19    tcp dport 25 counter accept
 {% else %}
-add rule ip filter INPUT ip saddr 10.3.160.0/19    tcp dport 25 counter accept
+add rule ip filter INPUT ip saddr 10.16.160.0/19    tcp dport 25 counter accept
 {% endif %}
 
 # s390x builders/virthost
@@ -137,7 +137,7 @@ add rule ip filter INPUT ip saddr {{ hostvars[proxy]['ansible_tun0']['ipv4']['ad
 {% endif %}
 {% endfor %}
 # nagios
-add rule ip filter INPUT ip saddr 10.3.163.10 tcp dport {{ port }} counter accept
+add rule ip filter INPUT ip saddr 10.16.163.10 tcp dport {{ port }} counter accept
 {% endfor %}
 {% endif %}
 

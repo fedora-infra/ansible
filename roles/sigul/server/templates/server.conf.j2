@@ -6,9 +6,9 @@
 {% if env == "production" %}
 bridge-hostname: sign-bridge.{{datacenter}}.fedoraproject.org
 {% else %}
-bridge-hostname: sign-bridge01.stg.iad2.fedoraproject.org
+bridge-hostname: sign-bridge01.stg.rdu3.fedoraproject.org
 {% endif %}
-server-cert-nickname: sign-vault{{ env_suffix }}.iad2.fedoraproject.org
+server-cert-nickname: sign-vault{{ env_suffix }}.rdu3.fedoraproject.org
 
 # Port on which the bridge expects server connections
 bridge-port: 44333
@@ -68,7 +68,7 @@ pkcs11_yubikey_sv03_privkey: pkcs11:serial=8f2a341e00d7a665;id=%03;type=private
 pkcs11_yubikey_sv04_privkey: pkcs11:serial=b38ee13e56b3b987;id=%03;type=private
 {% elif inventory_hostname.startswith('sign-vault05') %}
 pkcs11_yubikey_sv05_privkey: pkcs11:serial=e8dae68ae187ff13;id=%03;type=private
-{% elif inventory_hostname.startswith('sign-vault06') or inventory_hostname == "sign-vault01.iad2.fedoraproject.org" %}
+{% elif inventory_hostname.startswith('sign-vault06') or inventory_hostname == "sign-vault01.rdu3.fedoraproject.org" %}
 pkcs11_yubikey_sv06_privkey: pkcs11:serial=e3c4804a6631dd5f;id=%03;type=private
 {% endif %}
 {% endif %}

@@ -22,10 +22,10 @@
   - nagios_client
   - role: zabbix/zabbix_agent
     # Zabbix is not deployed in staging RDU3 yet
-    when: datacenter == "iad2" or env == "production"
+    when: env == "production"
   - role: zabbix/zabbix_templates
     # Zabbix is not deployed in staging RDU3 yet
-    when: datacenter == "iad2" or env == "production"
+    when: env == "production"
   - hosts
   - ipa/client
   - collectd/base

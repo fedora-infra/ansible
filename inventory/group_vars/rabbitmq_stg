@@ -1,20 +1,20 @@
 ---
 custom_rules: [
   # Neeed for rsync from log01 for logs.
-  '-A INPUT -p tcp -m tcp -s 10.3.163.39 --dport 873 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT',
+  '-A INPUT -p tcp -m tcp -s 10.16.163.39 --dport 873 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT',
   # Inter-node traffic
-  '-A INPUT -p tcp -m tcp -s 10.3.166.78 --dport 25672 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 10.3.166.79 --dport 25672 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 10.3.166.80 --dport 25672 -j ACCEPT',
+  '-A INPUT -p tcp -m tcp -s 10.16.166.78 --dport 25672 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 10.16.166.79 --dport 25672 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 10.16.166.80 --dport 25672 -j ACCEPT',
   # Same but in RDU3
   '-A INPUT -p tcp -m tcp -s 10.16.166.78 --dport 25672 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 10.16.166.79 --dport 25672 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 10.16.166.80 --dport 25672 -j ACCEPT',
 ]
 nft_custom_rules:
   # Neeed for rsync from log01 for logs.
-  - 'add rule ip filter INPUT ip saddr 10.3.163.39  tcp dport 873 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.16.163.39  tcp dport 873 counter accept'
   - 'add rule ip filter INPUT ip saddr 192.168.1.59 tcp dport 873 counter accept'
   # Inter-node traffic
-  - 'add rule ip filter INPUT ip saddr 10.3.166.78 tcp dport 25672 counter accept'
-  - 'add rule ip filter INPUT ip saddr 10.3.166.79 tcp dport 25672 counter accept'
-  - 'add rule ip filter INPUT ip saddr 10.3.166.80 tcp dport 25672 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.16.166.78 tcp dport 25672 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.16.166.79 tcp dport 25672 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.16.166.80 tcp dport 25672 counter accept'
   # In RDU3
   - 'add rule ip filter INPUT ip saddr 10.16.166.78 tcp dport 25672 counter accept'
   - 'add rule ip filter INPUT ip saddr 10.16.166.79 tcp dport 25672 counter accept'

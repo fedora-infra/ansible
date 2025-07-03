@@ -44,19 +44,6 @@
   tags:
   - nfs/client
 
-- name: Nfs mount points (iad2)
-  mount: >
-        name={{ mnt_dir }}
-        src=ntap-iad2-c02-fedora01-nfs01a:/{{ nfs_src_dir }}
-        fstype=nfs
-        opts={{nfs_mount_opts}}
-        passno=0
-        dump=0
-        state=mounted
-  when: ( datacenter == 'iad2' or datacenter == 'staging' ) and (env != 'staging' or mount_stg is defined)
-  tags:
-  - nfs/client
-
 - name: Nfs mount points (rdu3)
   mount: >
         name={{ mnt_dir }}
@@ -91,32 +78,6 @@
 # should revisit how this role works.
 #
 
-- name: Nfs mount points (stg) staging koji (iad2)
-  mount: >
-        name=/mnt/fedora_koji
-        src=10.3.167.64:/mnt/fedora_koji
-        fstype=nfs4
-        opts=rw,hard,bg,intr,noatime,nodev,nosuid,nfsvers=4
-        passno=0
-        dump=0
-        state=mounted
-  when: datacenter == 'iad2' and env == 'staging' and 'koji' in mnt_dir and '.s390.' not in inventory_hostname and not inventory_hostname.startswith('koji')
-  tags:
-  - nfs/client
-
-- name: Nfs mount points (stg) production koji ro (iad2)
-  mount: >
-        name=/mnt/fedora_koji_prod
-        src=ntap-iad2-c02-fedora01-nfs01a:/fedora_koji
-        fstype=nfs
-        opts=ro,hard,bg,intr,noatime,nodev,nosuid,nfsvers=3
-        passno=0
-        dump=0
-        state=mounted
-  when: datacenter == 'iad2' and env == 'staging' and 'koji' in mnt_dir and '.s390.' not in inventory_hostname
-  tags:
-  - nfs/client
-
 - name: Nfs mount points (stg) staging koji (rdu3)
   mount: >
         name=/mnt/fedora_koji
@@ -139,6 +100,6 @@
         passno=0
         dump=0
         state=mounted
-  when: datacenter == 'iad2' and env == 'staging' and 'koji' in mnt_dir and '.s390.' not in inventory_hostname
+  when: datacenter == 'rdu3' and env == 'staging' and 'koji' in mnt_dir and '.s390.' not in inventory_hostname
   tags:
   - nfs/client

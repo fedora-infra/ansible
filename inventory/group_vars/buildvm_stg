@@ -1,13 +1,13 @@
 ---
 # common items for the buildvm-* koji builders
-datacenter: iad2
-dns1: 10.3.163.33
+datacenter: rdu3
+dns1: 10.16.163.33
 docker_registry: "candidate-registry.stg.fedoraproject.org"
-eth0_ipv4_gw: 10.3.167.254
+eth0_ipv4_gw: 10.16.167.254
 # for systems that do not match the above - specify the same parameter in
 # the host_vars/$hostname file
 host_group: kojibuilder
-ipa_server: ipa01.stg.iad2.fedoraproject.org
+ipa_server: ipa01.stg.rdu3.fedoraproject.org
 koji_hub: "koji.stg.fedoraproject.org/kojihub"
 koji_hub_nfs: "fedora_koji"
 koji_instance: "primary"
@@ -25,7 +25,7 @@ max_mem_size: "{{ mem_size }}"
 mem_size: 10240
 nfs_mount_opts: "rw,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=4"
 num_cpus: 4
-resolvconf: "resolv.conf/iad2"
+resolvconf: "resolv.conf/rdu3"
 source_registry: "registry.fedoraproject.org"
 virt_install_command: "{{ virt_install_command_one_nic_unsafe }}"
 volgroup: /dev/vg_guests

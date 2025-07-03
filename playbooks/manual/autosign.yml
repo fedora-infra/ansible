@@ -36,22 +36,22 @@
   - role: nfs/client
     mnt_dir: '/mnt/fedora_koji/koji/ostree'
     nfs_src_dir: 'fedora_ostree_content/ostree'
-    when: env != 'staging' and datacenter == 'iad2'
+    when: env != 'staging'
 
   - role: nfs/client
     mnt_dir: '/mnt/fedora_koji/koji/compose/ostree'
     nfs_src_dir: 'fedora_ostree_content/compose/ostree'
-    when: env != 'staging' and datacenter == 'iad2'
+    when: env != 'staging'
 
   - role: nfs/client
     mnt_dir: '/mnt/fedora_koji/koji/ostree'
     nfs_src_dir: 'fedora_ostree_content/ostree'
-    when: env != 'staging' and datacenter == 'iad2'
+    when: env != 'staging'
 
   - role: nfs/client
     mnt_dir: '/mnt/fedora_koji/koji/compose/ostree'
     nfs_src_dir: 'fedora_ostree_content/compose/ostree'
-    when: env != 'staging' and datacenter == 'iad2'
+    when: env != 'staging'
 
 #  - role: nfs/client
 #    mnt_dir: '/mnt/fedora_koji/koji/ostree'
@@ -79,8 +79,8 @@
     owner_user: robosignatory
     owner_group: robosignatory
 
-  - {role: linux-system-roles.nbde_client, when: datacenter == 'iad2' and env != 'staging' }
-  - {role: serial-console, when: datacenter == 'iad2'}
+  - {role: linux-system-roles.nbde_client, when: env != 'staging' }
+  - role: serial-console
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"

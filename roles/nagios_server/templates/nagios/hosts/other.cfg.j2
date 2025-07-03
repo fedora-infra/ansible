@@ -3,8 +3,8 @@ define host {
   alias                        status.fedoraproject.org
   use                          mincheck
   address                      d6tcqd4og8l21.cloudfront.net
-{% if vars['nagios_location'] == 'iad2_internal' %}
-  parents                      iad2-gw
+{% if vars['nagios_location'] == 'rdu3_internal' %}
+  parents                      rdu3-gw
 {% else %}
   parents                      ibiblio-gw
 {% endif %}
@@ -15,8 +15,8 @@ define host {
   alias                        download.copr.fedorainfracloud.org
   use                          mincheck
   address                      d1nld9ovj32u75.cloudfront.net
-{% if vars['nagios_location'] == 'iad2_internal' %}
-  parents                      iad2-gw
+{% if vars['nagios_location'] == 'rdu3_internal' %}
+  parents                      rdu3-gw
 {% else %}
   parents                      ibiblio-gw
 {% endif %}
@@ -27,8 +27,8 @@ define host {
   alias                        cdn.registry.fedoraproject.org
   use                          mincheck
   address                      cdn.registry.fedoraproject.org
-{% if vars['nagios_location'] == 'iad2_internal' %}
-  parents                      iad2-gw
+{% if vars['nagios_location'] == 'rdu3_internal' %}
+  parents                      rdu3-gw
 {% else %}
   parents                      ibiblio-gw
 {% endif %}
@@ -39,8 +39,8 @@ define host {
   alias                        lists.fedoraproject.org
   use                          mincheck
   address                      lists.fedoraproject.org
-{% if vars['nagios_location'] == 'iad2_internal' %}
-  parents                      iad2-gw
+{% if vars['nagios_location'] == 'rdu3_internal' %}
+  parents                      rdu3-gw
 {% else %}
   parents                      ibiblio-gw
 {% endif %}
@@ -51,5 +51,5 @@ define host {
   alias                        retrace.fedoraproject.org
   use                          mincheck
   address                      retrace.fedoraproject.org
-  parents                      iad2-gw
+  parents                      rdu3-gw
 }

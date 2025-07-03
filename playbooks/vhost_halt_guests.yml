@@ -42,7 +42,7 @@
   tasks:
   - name: Tell nagios to shush
     nagios: action=silence host={{ inventory_hostname_short }}
-    delegate_to: noc01.iad2.fedoraproject.org
+    delegate_to: noc01.rdu3.fedoraproject.org
 
   - name: Echo-y
     ansible.builtin.command: /sbin/halt -p

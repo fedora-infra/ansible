@@ -5,7 +5,7 @@
 # Use network installation
 vnc --password "{{ kickstart_vnc_password }}"
 # Use network install
-# metalink here should give internal mirrors in iad2 and external ones outside
+# metalink here should give internal mirrors in rdu3 and external ones outside
 url --metalink "https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&arch=$basearch"
 repo --name=updates --metalink "https://mirrors.fedoraproject.org/metalink?repo=updates-released-f$releasever&arch=$basearch"
 

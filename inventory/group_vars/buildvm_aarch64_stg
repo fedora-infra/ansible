@@ -1,10 +1,10 @@
 ---
 # common items for the buildvm-* koji builders
 createrepo: True
-datacenter: iad2
-dns: 10.3.163.33
+datacenter: rdu3
+dns: 10.16.163.33
 docker_registry: "candidate-registry.stg.fedoraproject.org"
-eth0_ipv4_gw: 10.3.167.254
+eth0_ipv4_gw: 10.16.167.254
 # for systems that do not match the above - specify the same parameter in
 # the host_vars/$hostname file
 host_group: kojibuilder

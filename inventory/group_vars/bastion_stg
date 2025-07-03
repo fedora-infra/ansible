@@ -50,7 +50,7 @@ udp_ports: [1194]
 
 notes: |
   SSH proxy to access STAGING infrastructure not exposed to the web
-  * Provides ssh access to all iad2/vpn connected servers.
+  * Provides ssh access to all rdu3/vpn connected servers.
   * Bastion is the hub for all infrastructure's VPN connections.
-  * All incoming SMTP from iad2 and VPN, as well as outgoing SMTP, pass or are filtered here.
+  * All incoming SMTP from rdu3 and VPN, as well as outgoing SMTP, pass or are filtered here.
   * Bastion does not accept any mail outside phx2/vpn.

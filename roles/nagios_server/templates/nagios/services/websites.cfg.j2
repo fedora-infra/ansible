@@ -149,7 +149,7 @@ define service {
   use                   websitetemplate
 }
 
-{% if vars['nagios_location'] == 'iad2_internal' %}
+{% if vars['nagios_location'] == 'rdu3_internal' %}
 ##
 ## Other Frontend Websites
 
@@ -256,12 +256,12 @@ define service {
 
 {% endif %}
 
-{% if vars['nagios_location'] == 'iad2_internal' %}
+{% if vars['nagios_location'] == 'rdu3_internal' %}
 
 define service {
-  host_name             mailman01.iad2.fedoraproject.org
+  host_name             mailman01.rdu3.fedoraproject.org
   service_description   http-mailman-internal
-  check_command         check_website!mailman01.iad2.fedoraproject.org!/archives/!Fedora Mailing-Lists
+  check_command         check_website!mailman01.rdu3.fedoraproject.org!/archives/!Fedora Mailing-Lists
   use                   websitetemplate
 }
 

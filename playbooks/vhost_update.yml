@@ -41,7 +41,7 @@
 
   - name: Schedule regular host downtime
     nagios: action=downtime minutes=30 service=host host={{ inventory_hostname_short }}{{ env_suffix }}
-    delegate_to: noc01.iad2.fedoraproject.org
+    delegate_to: noc01.rdu3.fedoraproject.org
     ignore_errors: true
     failed_when: no
     when: nonagios is not defined or not "true" in nonagios

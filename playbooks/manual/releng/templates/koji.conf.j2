@@ -19,11 +19,11 @@ krbservice = compose
 {% if env == "staging" %}
 principal = compose/koji.stg.fedoraproject.org@STG.FEDORAPROJECT.ORG
 krb_server_realm = STG.FEDORAPROJECT.ORG
-keytab = /etc/krb5.compose_koji.stg.iad2.fedoraproject.org.keytab
+keytab = /etc/krb5.compose_koji.stg.rdu3.fedoraproject.org.keytab
 {% else %}
 principal = compose/koji.fedoraproject.org@FEDORAPROJECT.ORG
 krb_server_realm = FEDORAPROJECT.ORG
-keytab = /etc/krb5.compose_koji.iad2.fedoraproject.org.keytab
+keytab = /etc/krb5.compose_koji.rdu3.fedoraproject.org.keytab
 {%endif%}
 
 ;enable to lookup dns canonical hostname for krb auth

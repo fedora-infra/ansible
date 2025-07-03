@@ -21,31 +21,31 @@
 -A INPUT -p tcp -m tcp --dport 5666 -s 192.168.1.10 -j ACCEPT
 -A INPUT -p tcp -m tcp --dport 5666 -s 192.168.1.166 -j ACCEPT
 # FIXME - this is the global nat-ip and we need the noc01-specific ip
--A INPUT -p tcp -m tcp --dport 5666  -s 38.145.60.16 -j ACCEPT
--A INPUT -p tcp -m tcp --dport 5666  -s 38.145.60.15 -j ACCEPT
--A INPUT -p tcp -m tcp --dport 5666 -s 10.3.163.10 -j ACCEPT
--A INPUT -p tcp -m tcp --dport 5666 -s 10.3.166.10 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 5666  -s 38.145.32.16 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 5666  -s 38.145.32.15 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 5666 -s 10.16.163.10 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 5666 -s 10.16.166.10 -j ACCEPT
 # zabbix01
 -A INPUT -p tcp -m tcp --dport 10051 -j ACCEPT
--A INPUT -p tcp -m tcp --dport 10050 -s 10.3.163.198 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 10050 -s 10.16.163.198 -j ACCEPT
 
-{% if env != 'staging' and datacenter == 'iad2' and inventory_hostname not in groups['staging_friendly'] %}
+{% if env != 'staging' and datacenter == 'rdu3' and inventory_hostname not in groups['staging_friendly'] %}
 #
-# In the iad2 datacenter, both production and staging hosts are in different
+# In the rdu3 datacenter, both production and staging hosts are in different
 # vlans, and different subnets. However, just as a precaution, we want prod machines to
 # reject connections from any staging host just in case there's some globally enabled port.
 # There are however a few hosts in production we have marked 'staging-friendly'
 # that we do allow staging to talk to for mostly read-only data they need.
 #
--A INPUT -s 10.3.166.0/24 -j REJECT --reject-with icmp-host-prohibited
--A INPUT -s 10.3.167.0/24 -j REJECT --reject-with icmp-host-prohibited
+-A INPUT -s 10.16.166.0/24 -j REJECT --reject-with icmp-host-prohibited
+-A INPUT -s 10.16.167.0/24 -j REJECT --reject-with icmp-host-prohibited
 {% endif %}
 
 {% if vpn %}
 #
 # We want to have all vpn hosts reject most things from the 'less secure' vpn network
 #
-{% if inventory_hostname == 'log01.iad2.fedoraproject.org' %}
+{% if inventory_hostname == 'log01.rdu3.fedoraproject.org' %}
 # Allow all vpn hosts to talk to the log server for rsyslog
 -A INPUT -s 192.168.100.0/24 -m tcp -p tcp --dport 514 -j ACCEPT
 -A INPUT -s 192.168.100.0/24 -m udp -p udp --dport 25826 -j ACCEPT
@@ -92,7 +92,7 @@
 {% endif %}
 {% endfor %}
 # nagios
--A INPUT -p tcp -m tcp --dport {{ port }} --src  10.3.163.10 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport {{ port }} --src  10.16.163.10 -j ACCEPT
 {% endfor %}
 {% endif %}
 

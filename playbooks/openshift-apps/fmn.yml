@@ -25,7 +25,7 @@
         encoding: UTF-8
 
 - name: Setup RabbitMQ
-  hosts: rabbitmq_iad2[0]:rabbitmq_stg_iad2[0]:rabbitmq_rdu3[0]:rabbitmq_stg_rdu3[0]
+  hosts: rabbitmq_rdu3[0]:rabbitmq_stg_rdu3[0]
   user: root
   gather_facts: false
 

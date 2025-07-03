@@ -42,15 +42,6 @@
   - install
   - openvpn
 
-- name: Install the ccd files (iad2)
-  synchronize:
-    src: ccd/
-    dest: /etc/openvpn/server/ccd/
-    delete: yes
-  tags:
-  - openvpn
-  when: datacenter == 'iad2'
-
 - name: Install the ccd files (rdu3)
   synchronize:
     src: ccd-rdu3/

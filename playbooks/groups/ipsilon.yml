@@ -58,7 +58,7 @@
 # This next block configures IPA, it only needs to be run on one member of the cluster.
 # Run it after setting up Ipsilon because the host need to be declared in IPA already.
 - name: Setup IPA
-  hosts: ipa_iad2[0]:ipa_rdu3[0]:ipa_stg_iad2[0]:ipa_stg_rdu3[0]
+  hosts: ipa_rdu3[0]:ipa_stg_rdu3[0]
   user: root
   gather_facts: true
 
@@ -92,7 +92,7 @@
     ipahbacrule:
       name: ipsilon
       action: member
-      host: "{{ (env == 'production')|ternary(['ipsilon.iad2.centos.org', 'ipsilon.rdu3.centos.org'], ['ipsilon.stg.iad2.centos.org', 'ipsilon.stg.rdu3.centos.org']) }}"
+      host: "{{ (env == 'production')|ternary(['ipsilon.rdu3.centos.org'], ['ipsilon.stg.rdu3.centos.org']) }}"
       ipaadmin_password: "{{ ipa_admin_password }}"
     tags:
     - ipsilon

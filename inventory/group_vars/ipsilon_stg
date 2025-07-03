@@ -1,9 +1,9 @@
 ---
 # Define resources for this group of hosts here.
 # Neeed for rsync from log01 for logs.
-custom_rules: ['-A INPUT -p tcp -m tcp -s 10.3.163.39 --dport 873 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT']
+custom_rules: ['-A INPUT -p tcp -m tcp -s 10.16.163.39 --dport 873 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT']
 nft_custom_rules:
-  - 'add rule ip filter INPUT ip saddr 10.3.163.39  tcp dport 873 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.16.163.39  tcp dport 873 counter accept'
   - 'add rule ip filter INPUT ip saddr 192.168.1.59 tcp dport 873 counter accept'
 ipa_host_group: ipsilon
 ipa_host_group_desc: Ipsilon SSO application
@@ -11,7 +11,7 @@ ipa_client_shell_groups:
   - sysadmin-noc
 ipa_client_sudo_groups:
   - sysadmin-noc
-ipsilon_db_host: "db-fas01.stg.iad2.fedoraproject.org"
+ipsilon_db_host: "db-fas01.stg.rdu3.fedoraproject.org"
 lvm_size: 20000
 mem_size: 4096
 num_cpus: 2

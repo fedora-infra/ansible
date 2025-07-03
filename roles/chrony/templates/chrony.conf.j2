@@ -1,12 +1,9 @@
 # setup our servers
-{% if ( datacenter == 'iad2' or datacenter == 'staging' ) and not ansible_hostname.startswith('bastion') %}
-server bastion01.iad2.fedoraproject.org iburst
-server bastion02.iad2.fedoraproject.org iburst
-{% elif datacenter == 'cloud'  and not ansible_hostname.startswith('cloud-noc') %}
-server cloud-noc01.fedorainfracloud.org port 124
-{% elif datacenter == 'rdu3'  and not ansible_hostname.startswith('bastion') %}
+{% if ( datacenter == 'rdu3' or datacenter == 'staging' ) and not ansible_hostname.startswith('bastion') %}
 server bastion01.rdu3.fedoraproject.org iburst
 server bastion02.rdu3.fedoraproject.org iburst
+{% elif datacenter == 'cloud'  and not ansible_hostname.startswith('cloud-noc') %}
+server cloud-noc01.fedorainfracloud.org port 124
 {% elif datacenter == 'cloud'  and ansible_hostname.startswith('cloud-noc') %}
 server 0.rhel.pool.ntp.org iburst
 server 1.rhel.pool.ntp.org iburst

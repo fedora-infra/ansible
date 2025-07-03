@@ -36,7 +36,7 @@
         dest={{ item.dest }}
         owner=root group=root mode=0600
   with_items:
-  - { file: "ipa.{{env}}-iad2.pem", dest: /etc/haproxy/ipa.pem }
+  - { file: "ipa.{{env}}-rdu3.pem", dest: /etc/haproxy/ipa.pem }
   - { file: "ocp.{{env_short}}-rdu3.pem", dest: "/etc/haproxy/ocp-{{env_short}}.pem" }
   - { file: "ocp.{{env_short}}-rdu3.pem", dest: "/etc/haproxy/ocp-{{env_short}}-rdu3.pem" }
   tags:

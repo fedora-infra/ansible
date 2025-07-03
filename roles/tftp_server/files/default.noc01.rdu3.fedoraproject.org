@@ -8,26 +8,26 @@ label linux-x86
   menu label ^Install system x86_64
   menu default
   kernel images/RHEL/8.5/x86_64/vmlinuz
-  append initrd=images/RHEL/8.5/x86_64/initrd.img ip=dhcp inst.repo=http://10.3.163.35/repo/RHEL/8.2/x86_64/
+  append initrd=images/RHEL/8.5/x86_64/initrd.img ip=dhcp inst.repo=http://10.16.163.35/repo/RHEL/8.2/x86_64/
 label linux-a64
   menu label ^Install system aarch64
   menu default
   kernel images/RHEL/8.5/aarch64/vmlinuz
-  append initrd=images/RHEL/8.5/aarch64/initrd.img ip=dhcp inst.repo=http://10.3.163.35/repo/rhel/RHEL/8.2/aarch64/
+  append initrd=images/RHEL/8.5/aarch64/initrd.img ip=dhcp inst.repo=http://10.16.163.35/repo/rhel/RHEL/8.2/aarch64/
 label linux-ppc64le-p09
   menu label ^Install system fedora ppc64le p09
   menu default
   kernel images/Fedora/40/ppc64le/vmlinuz
-  append initrd=http://10.3.163.35/infra/bigfiles/tftpboot/images/Fedora/40/ppc64le/initrd.img ip=dhcp inst.ks=http://10.3.163.35/repo/rhel/ks/hardware-fedora-40-ppc64le-08disk inst.repo=http://10.3.163.35/pub/fedora-secondary/releases/40/Server/ppc64le/os nameserver=10.3.163.33 console=tty0 console=ttyS0,115200 console=ttyS1,115200 net.ifnames=0
+  append initrd=http://10.16.163.35/infra/bigfiles/tftpboot/images/Fedora/40/ppc64le/initrd.img ip=dhcp inst.ks=http://10.16.163.35/repo/rhel/ks/hardware-fedora-40-ppc64le-08disk inst.repo=http://10.16.163.35/pub/fedora-secondary/releases/40/Server/ppc64le/os nameserver=10.16.163.33 console=tty0 console=ttyS0,115200 console=ttyS1,115200 net.ifnames=0
 label openqa-worker-08disk ppc64le
   menu label ^Install openqa system fedora ppc64le p09
   menu default
   kernel images/Fedora/40/ppc64le/vmlinuz
-  append initrd=images/Fedora/40/ppc64le/initrd.img ip=dhcp inst.ks=http://10.3.163.35/repo/rhel/ks/openqa-worker-fedora-08disk inst.repo=http://10.3.163.35/pub/fedora-secondary/releases/40/Server/ppc64le/os
+  append initrd=images/Fedora/40/ppc64le/initrd.img ip=dhcp inst.ks=http://10.16.163.35/repo/rhel/ks/openqa-worker-fedora-08disk inst.repo=http://10.16.163.35/pub/fedora-secondary/releases/40/Server/ppc64le/os
 label vesa
   menu label Install system with ^basic video driver
   kernel images/RHEL/8.5/x86_64/vmlinuz
-  append initrd=images/RHEL/8.5/x86_64/initrd.img ip=dhcp inst.xdriver=vesa nomodeset inst.repo=http://10.3.163.35/repo/RHEL/8.2/x86_64/
+  append initrd=images/RHEL/8.5/x86_64/initrd.img ip=dhcp inst.xdriver=vesa nomodeset inst.repo=http://10.16.163.35/repo/RHEL/8.2/x86_64/
 label rescue
   menu label ^Rescue installed x86_64 system
   kernel images/RHEL/8.5/x86_64/vmlinuz

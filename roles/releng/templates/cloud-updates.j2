@@ -1,4 +1,4 @@
-{% if datacenter == 'iad2' %}
+{% if datacenter == 'rdu3' %}
 # Fedora {{ FedoraCycleNumber }} Cloud nightly compose
 MAILTO=releng-cron@lists.fedoraproject.org
 15 7 * * * root touch /tmp/fedora-compose-cloud-updates && TMPDIR=`mktemp -d /tmp/CloudF{{ FedoraCycleNumber }}.XXXXXX` && chmod 755 $TMPDIR && pushd $TMPDIR && git clone -n https://pagure.io/pungi-fedora.git && cd pungi-fedora && git checkout f{{ FedoraCycleNumber }} && LANG=en_US.UTF-8 ./cloud-nightly.sh RC-$(date "+\%Y\%m\%d").0 && popd && rm -rf $TMPDIR && rm /tmp/fedora-compose-cloud-updates

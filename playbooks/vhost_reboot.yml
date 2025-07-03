@@ -61,7 +61,7 @@
 
   - name: schedule regular host downtime
     nagios: action=downtime minutes=30 service=host host={{ inventory_hostname_short }}{{ env_suffix }}
-    delegate_to: noc01.iad2.fedoraproject.org
+    delegate_to: noc01.rdu3.fedoraproject.org
     ignore_errors: true
     when: nonagios is not defined or not nonagios
 
@@ -87,7 +87,7 @@
   tasks:
   - name: tell nagios to shush
     nagios: action=downtime minutes=60 service=host host={{ inventory_hostname_short }}{{ env_suffix }}
-    delegate_to: noc01.iad2.fedoraproject.org
+    delegate_to: noc01.rdu3.fedoraproject.org
     ignore_errors: true
     when: nonagios is not defined or not nonagios
 
@@ -111,7 +111,7 @@
 
   - name: tell nagios to unshush
     nagios: action=unsilence service=host host={{ inventory_hostname_short }}{{ env_suffix }}
-    delegate_to: noc01.iad2.fedoraproject.org
+    delegate_to: noc01.rdu3.fedoraproject.org
     ignore_errors: true
     when: nonagios is not defined or not nonagios
 

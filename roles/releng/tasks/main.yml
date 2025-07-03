@@ -252,7 +252,7 @@
     - rpm-ostree
   tags:
   - releng
-  when: inventory_hostname.startswith('compose-rawhide01.iad2')
+  when: inventory_hostname.startswith('compose-rawhide01.rdu3')
 
 - name: Add pkgs from infrastructure testing repo
   ansible.builtin.dnf:
@@ -300,7 +300,7 @@
     src: branched.j2
     dest: /etc/cron.d/branched
     mode: "644"
-  when: inventory_hostname.startswith('compose-branched01.iad2')
+  when: inventory_hostname.startswith('compose-branched01.rdu3')
 
 # put cron job in for rawhide compose
 - name: Rawhide compose cron
@@ -308,7 +308,7 @@
     src: rawhide
     dest: /etc/cron.d/rawhide
     mode: "644"
-  when: inventory_hostname.startswith('compose-rawhide01.iad2')
+  when: inventory_hostname.startswith('compose-rawhide01.rdu3')
 
 # put cron job in for cloud nightly compose
 - name: Cloud updates compose cron
@@ -316,7 +316,7 @@
     src: cloud-updates.j2
     dest: /etc/cron.d/cloud-updates
     mode: "644"
-  when: inventory_hostname.startswith('compose-x86-01.iad2')
+  when: inventory_hostname.startswith('compose-x86-01.rdu3')
 
 # put cron job in for docker nightly compose
 - name: Docker compose cron
@@ -324,7 +324,7 @@
     src: container-updates.j2
     dest: /etc/cron.d/container-updates
     mode: "644"
-  when: inventory_hostname.startswith('compose-x86-01.iad2')
+  when: inventory_hostname.startswith('compose-x86-01.rdu3')
 
 # put cron job in for IoT stable compose
 - name: IoT stable compose cron
@@ -332,7 +332,7 @@
     src: stable-iot
     dest: /etc/cron.d/stable-iot
     mode: "644"
-  when: inventory_hostname.startswith('compose-iot01.iad2')
+  when: inventory_hostname.startswith('compose-iot01.rdu3')
 
 # put cron job in for IoT rawhide compose
 - name: IoT rawhide compose cron
@@ -340,7 +340,7 @@
     src: rawhide-iot
     dest: /etc/cron.d/rawhide-iot
     mode: "644"
-  when: inventory_hostname.startswith('compose-iot01.iad2')
+  when: inventory_hostname.startswith('compose-iot01.rdu3')
 
 # put cron job in for ELN compose
 - name: ELN compose cron
@@ -348,7 +348,7 @@
     src: eln
     dest: /etc/cron.d/eln
     mode: "644"
-  when: inventory_hostname.startswith('compose-eln01.iad2')
+  when: inventory_hostname.startswith('compose-eln01.rdu3')
 
 # put cron job in for enforcing FESCo SIG Policy
 # https://docs.fedoraproject.org/en-US/fesco/SIG_policy/
@@ -357,7 +357,7 @@
     src: sig_policy.j2
     dest: /etc/cron.d/sig_policy
     mode: "644"
-  when: inventory_hostname.startswith('compose-x86-01.iad2')
+  when: inventory_hostname.startswith('compose-x86-01.rdu3')
   tags:
   - cronjob
 

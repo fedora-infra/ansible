@@ -180,8 +180,8 @@
   notify: Restart nagios
 
 ## Copy over the services
-- name: Copy /etc/nagios/services (IAD2 specific files)
-  ansible.builtin.copy: src=nagios/services/iad2_internal/{{ item }} dest=/etc/nagios/services/{{ item }}
+- name: Copy /etc/nagios/services (RDU3 specific files)
+  ansible.builtin.copy: src=nagios/services/rdu3_internal/{{ item }} dest=/etc/nagios/services/{{ item }}
   with_items:
     - basset.cfg
     - certgetter.cfg
@@ -198,11 +198,11 @@
   - nagios_config
   - nagios_server
   - nagios_hostgroups
-  when: env == "production" and nagios_location == 'iad2_internal'
+  when: env == "production" and nagios_location == 'rdu3_internal'
   notify: Restart nagios
 
-- name: Copy /etc/nagios/services (IAD2 specific files)
-  ansible.builtin.copy: src=nagios/services/iad2_internal/{{ item }} dest=/etc/nagios/services/{{ item }}
+- name: Copy /etc/nagios/services (RDU3 specific files)
+  ansible.builtin.copy: src=nagios/services/rdu3_internal/{{ item }} dest=/etc/nagios/services/{{ item }}
   with_items:
     - basset.cfg
     - certgetter.cfg
@@ -220,7 +220,7 @@
   - nagios_config
   - nagios_server
   - nagios_hostgroups
-  when: env == "production" and nagios_location == 'iad2_internal'
+  when: env == "production" and nagios_location == 'rdu3_internal'
   notify: Restart nagios
 
 - name: Copy /etc/nagios/services (internal files)
@@ -246,7 +246,7 @@
   - nagios_config
   - nagios_server
   - nagios_hostgroups
-  when: nagios_location == 'iad2_internal' or nagios_location == 'rdu3_internal'
+  when: nagios_location == 'rdu3_internal' or nagios_location == 'rdu3_internal'
   notify: Restart nagios
 
 ## Copy over the services
@@ -280,7 +280,7 @@
   tags:
   - nagios_config
   - nagios_server
-  when: nagios_location == 'iad2_internal' or nagios_location == 'rdu3_internal'
+  when: nagios_location == 'rdu3_internal' or nagios_location == 'rdu3_internal'
   notify: Restart nagios
 
 ## Copy over the servicegroups
@@ -390,7 +390,7 @@
   with_items:
     - ipa.cfg
     - mirrorlist-proxies.cfg
-  when: env == "production" and nagios_location == 'iad2_internal'
+  when: env == "production" and nagios_location == 'rdu3_internal'
   tags:
   - nagios_server
   - nagios_config
@@ -420,7 +420,7 @@
     - other.cfg
     - rdu-cc-hosts.cfg
     - rdu-hosts.cfg
-    - iad2-external.cfg
+    - rdu3-external.cfg
     - aws-hosts.cfg
   when: env == "production"
   tags:
@@ -433,10 +433,10 @@
 - name: Build out nagios host templates (production)
   ansible.builtin.template: src=nagios/hosts/{{item}}.j2 dest=/etc/nagios/hosts/{{item}} mode=0644 owner=root group=root
   with_items:
-    - iad2-hosts.cfg
-    - iad2-mgmt-hosts.cfg
+    - rdu3-hosts.cfg
+    - rdu3-mgmt-hosts.cfg
     - staging-hosts.cfg
-  when: env == "production" and nagios_location == 'iad2_internal'
+  when: env == "production" and nagios_location == 'rdu3_internal'
   tags:
   - nagios_server
   - nagios_config
@@ -467,8 +467,8 @@
 - name: Build out nagios host templates (production)
   ansible.builtin.template: src=nagios/hosts/{{item}}.j2 dest=/etc/nagios/hosts/{{item}} mode=0644 owner=root group=root
   with_items:
-    - iad2-hosts.cfg
-  when: env == "production" and nagios_location == 'iad2_internal'
+    - rdu3-hosts.cfg
+  when: env == "production" and nagios_location == 'rdu3_internal'
   tags:
   - nagios_server
   - nagios_config
@@ -490,7 +490,7 @@
 - name: Build out nagios host templates (production)
   ansible.builtin.template: src=nagios/hosts/{{item}}.j2 dest=/etc/nagios/hosts/{{item}} mode=0644 owner=root group=root
   with_items:
-    - iad2-external.cfg
+    - rdu3-external.cfg
     - ibiblio-hosts-ipv6.cfg
   when: env == "production" and nagios_location == "external"
   tags:
@@ -507,7 +507,7 @@
     - checkswap.cfg
     - checkraid.cfg
     - other.cfg
-  when: nagios_location == 'iad2_internal' or nagios_location == 'rdu3_internal'
+  when: nagios_location == 'rdu3_internal' or nagios_location == 'rdu3_internal'
   tags:
   - nagios_server
   - nagios_config
@@ -528,8 +528,8 @@
 - name: Build out nagios services templates
   ansible.builtin.template: src=nagios/services/{{item}}.j2 dest=/etc/nagios/services/{{item}} mode=0644 owner=root group=root
   with_items:
-    - iad2-mgmt.cfg
-  when: nagios_location == 'iad2_internal'
+    - rdu3-mgmt.cfg
+  when: nagios_location == 'rdu3_internal'
   tags:
   - nagios_server
   - nagios_config

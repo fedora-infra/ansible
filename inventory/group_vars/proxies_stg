@@ -4,31 +4,31 @@ collectd_apache: true
 # For the MOTD
 custom_rules: [
   # Need for rsync from log01 for logs.
-  '-A INPUT -p tcp -m tcp -s 10.3.163.39 --dport 873 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT',
+  '-A INPUT -p tcp -m tcp -s 10.16.163.39 --dport 873 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 192.168.1.59 --dport 873 -j ACCEPT',
   # allow varnish from localhost
   '-A INPUT -p tcp -m tcp -s 127.0.0.1 --dport 6081 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 127.0.0.1 --dport 6082 -j ACCEPT',
   # also allow varnish from internal for purge requests
-  '-A INPUT -p tcp -m tcp -s 192.168.1.0/24 --dport 6081 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 10.3.163.0/24 --dport 6081 -j ACCEPT',
-  '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.115 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.116 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.117 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.118 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.119 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.120 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.121 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.122 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.3.166.123 -j ACCEPT']
+  '-A INPUT -p tcp -m tcp -s 192.168.1.0/24 --dport 6081 -j ACCEPT', '-A INPUT -p tcp -m tcp -s 10.16.163.0/24 --dport 6081 -j ACCEPT',
+  '-A INPUT -p tcp -m tcp --dport 22623 -s 10.16.166.115 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.16.166.116 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.16.166.117 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.16.166.118 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.16.166.119 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.16.166.120 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.16.166.121 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.16.166.122 -j ACCEPT', '-A INPUT -p tcp -m tcp --dport 22623 -s 10.16.166.123 -j ACCEPT']
 nft_custom_rules:
   # Need for rsync from log01 for logs.
-  - 'add rule ip filter INPUT ip saddr 10.3.163.39  tcp dport 873 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.16.163.39  tcp dport 873 counter accept'
   - 'add rule ip filter INPUT ip saddr 192.168.1.59 tcp dport 873 counter accept'
   # allow varnish from localhost
   - 'add rule ip filter INPUT ip saddr 127.0.0.1 tcp dport 6081 counter accept'
   - 'add rule ip filter INPUT ip saddr 127.0.0.1 tcp dport 6082 counter accept'
   # also allow varnish from internal for purge requests
   - 'add rule ip filter INPUT ip saddr 192.168.1.0/24 tcp dport 6081 counter accept'
-  - 'add rule ip filter INPUT ip saddr 10.3.163.0/24  tcp dport 6081 counter accept'
-  - 'add rule ip filter INPUT ip saddr 10.3.166.115 tcp dport 22623 counter accept'
-  - 'add rule ip filter INPUT ip saddr 10.3.166.116 tcp dport 22623 counter accept'
-  - 'add rule ip filter INPUT ip saddr 10.3.166.117 tcp dport 22623 counter accept'
-  - 'add rule ip filter INPUT ip saddr 10.3.166.118 tcp dport 22623 counter accept'
-  - 'add rule ip filter INPUT ip saddr 10.3.166.119 tcp dport 22623 counter accept'
-  - 'add rule ip filter INPUT ip saddr 10.3.166.120 tcp dport 22623 counter accept'
-  - 'add rule ip filter INPUT ip saddr 10.3.166.121 tcp dport 22623 counter accept'
-  - 'add rule ip filter INPUT ip saddr 10.3.166.122 tcp dport 22623 counter accept'
-  - 'add rule ip filter INPUT ip saddr 10.3.166.123 tcp dport 22623 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.16.163.0/24  tcp dport 6081 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.16.166.115 tcp dport 22623 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.16.166.116 tcp dport 22623 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.16.166.117 tcp dport 22623 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.16.166.118 tcp dport 22623 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.16.166.119 tcp dport 22623 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.16.166.120 tcp dport 22623 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.16.166.121 tcp dport 22623 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.16.166.122 tcp dport 22623 counter accept'
+  - 'add rule ip filter INPUT ip saddr 10.16.166.123 tcp dport 22623 counter accept'
   # Need for rsync from log01 for logs.
   - 'add rule ip filter INPUT ip saddr 10.16.163.39  tcp dport 873 counter accept'
   - 'add rule ip filter INPUT ip saddr 192.168.1.50 tcp dport 873 counter accept'
@@ -66,10 +66,10 @@ maxrequestworkers: 900
 mem_size: 8192
 num_cpus: 2
 ocp_masters_stg:
-  # - bootstrap.ocp.stg.iad2.fedoraproject.org
-  - ocp01.ocp.stg.iad2.fedoraproject.org
-  - ocp02.ocp.stg.iad2.fedoraproject.org
-  - ocp03.ocp.stg.iad2.fedoraproject.org
+  # - bootstrap.ocp.stg.rdu3.fedoraproject.org
+  - ocp01.ocp.stg.rdu3.fedoraproject.org
+  - ocp02.ocp.stg.rdu3.fedoraproject.org
+  - ocp03.ocp.stg.rdu3.fedoraproject.org
 ocp_nodes_stg:
   - worker01.ocp.stg.rdu3.fedoraproject.org
   - worker02.ocp.stg.rdu3.fedoraproject.org
@@ -97,7 +97,7 @@ tcp_ports: [
   8443,
 ]
 varnish_group: proxies
-zabbix_templates: "{{ [] }}" # For the moment we have no proxies external to IAD2, if this changes, put in the changes in the production group.
+zabbix_templates: "{{ [] }}" # For the moment we have no proxies external to RDU3, if this changes, put in the changes in the production group.
 
 notes: |
   * Provides frontend (reverse) proxy for most web applications

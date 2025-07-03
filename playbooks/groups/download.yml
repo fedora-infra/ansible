@@ -1,7 +1,7 @@
 ---
 - import_playbook: "/srv/web/infra/ansible/playbooks/include/virt-create.yml"
   vars:
-    myhosts: "download_ibiblio:download_cc_rdu:download_iad2:download_rdu3"
+    myhosts: "download_ibiblio:download_cc_rdu:download_rdu3"
 
 - name: Download servers
   hosts: download
@@ -40,9 +40,9 @@
   - apache
   - download
   - rsyncd
-  - { role: nfs/client, when: datacenter == "iad2" or datacenter == "rdu" or datacenter == "rdu3" , mnt_dir: '/srv/pub', nfs_src_dir: 'fedora_ftp/fedora.redhat.com/pub' }
-  - { role: nfs/client, when: datacenter == "iad2" or datacenter == "rdu" or datacenter == "rdu3" , mnt_dir: '/srv/pub/archive', nfs_src_dir: 'fedora_ftp_archive' }
-  - { role: nfs/client, when: datacenter == "iad2" or datacenter == "rdu3" , mnt_dir: '/mnt/fedora_koji', nfs_src_dir: 'fedora_koji' } # needed for internal sync
+  - { role: nfs/client, when: datacenter == "rdu" or datacenter == "rdu3" , mnt_dir: '/srv/pub', nfs_src_dir: 'fedora_ftp/fedora.redhat.com/pub' }
+  - { role: nfs/client, when: datacenter == "rdu" or datacenter == "rdu3" , mnt_dir: '/srv/pub/archive', nfs_src_dir: 'fedora_ftp_archive' }
+  - { role: nfs/client, when: datacenter == "rdu3" , mnt_dir: '/mnt/fedora_koji', nfs_src_dir: 'fedora_koji' } # needed for internal sync
   - sudo
 
   pre_tasks:
@@ -84,7 +84,7 @@
 
   - name: Make a mnt/koji link
     ansible.builtin.file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji
-    when: datacenter == "iad2" or datacenter == "rdu3"
+    when: datacenter == "rdu3"
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"

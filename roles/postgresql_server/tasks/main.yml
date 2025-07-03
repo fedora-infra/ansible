@@ -104,7 +104,7 @@
 
 - name: Copy over backup scriplet
   ansible.builtin.copy: src=backup-database dest=/usr/local/bin/backup-database mode=0755
-  when: not inventory_hostname.startswith(('db-koji01.iad2', 'db-koji01.rdu3', 'db-datanommer'))
+  when: not inventory_hostname.startswith(('db-koji01.rdu3', 'db-datanommer'))
   tags:
   - postgresql
 
@@ -112,13 +112,13 @@
   # backup script. Smaller koji's are fine with the default N backups.
 - name: Copy over backup scriplet
   ansible.builtin.copy: src=backup-database.db-koji01 dest=/usr/local/bin/backup-database mode=0755
-  when: inventory_hostname.startswith(('db-koji01.iad2', 'db-koji01.rdu3'))
+  when: inventory_hostname.startswith('db-koji01.rdu3')
   tags:
   - postgresql
 
 - name: Copy over backup scriplet
   ansible.builtin.copy: src=backup-database.db-datanommer02 dest=/usr/local/bin/backup-database mode=0755
-  when: inventory_hostname.startswith(('db-datanommer02.iad2', 'db-datanommer02.rdu3'))
+  when: inventory_hostname.startswith('db-datanommer02.rdu3')
   tags:
   - postgresql
 
@@ -126,13 +126,13 @@
   ansible.builtin.copy: src=backup-database.anitya dest=/usr/local/bin/backup-database.anitya mode=0755
   tags:
   - postgresql
-  when: inventory_hostname.startswith(('db01.iad2', 'db01.rdu3'))
+  when: inventory_hostname.startswith('db01.rdu3')
 
 - name: Copy over anitya public backup cron
   ansible.builtin.copy: src=cron-backup-anitya-public dest=/etc/cron.d/cron-backup-anitya-public mode=0644
   tags:
   - postgresql
-  when: inventory_hostname.startswith(('db01.iad2', 'db01.rdu3'))
+  when: inventory_hostname.startswith('db01.rdu3')
 
 - name: Set up some cronjobs to backup databases as configured
   ansible.builtin.template: >

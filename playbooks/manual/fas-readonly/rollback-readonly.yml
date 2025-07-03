@@ -1,6 +1,6 @@
 ---
 - name: Change fas db to writable again
-  hosts: db-fas01.iad2.fedoraproject.org:db-fas01.stg.iad2.fedoraproject.org
+  hosts: db-fas01.rdu3.fedoraproject.org:db-fas01.stg.rdu3.fedoraproject.org
   user: root
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml

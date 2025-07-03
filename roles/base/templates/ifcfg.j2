@@ -10,10 +10,10 @@ OPTIONS="layer2=1 portno=0"
 DEFROUTE=yes
 GATEWAY="{{ gw }}"
 {% endif %}
-{% if hostvars[inventory_hostname].datacenter == 'iad2' and env == 'production' %}
-DOMAIN="iad2.fedoraproject.org vpn.fedoraproject.org fedoraproject.org"
-{% elif hostvars[inventory_hostname].datacenter == 'iad2' and env == 'staging' %}
-DOMAIN="stg.iad2.fedoraproject.org iad2.fedoraproject.org vpn.fedoraproject.org fedoraproject.org"
+{% if hostvars[inventory_hostname].datacenter == 'rdu3' and env == 'production' %}
+DOMAIN="rdu3.fedoraproject.org vpn.fedoraproject.org fedoraproject.org"
+{% elif hostvars[inventory_hostname].datacenter == 'rdu3' and env == 'staging' %}
+DOMAIN="stg.rdu3.fedoraproject.org rdu3.fedoraproject.org vpn.fedoraproject.org fedoraproject.org"
 {% else %}
 DOMAIN="vpn.fedoraproject.org fedoraproject.org"
 {% endif %}

@@ -46,11 +46,10 @@
   - {role: openvpn/client, when: vpn|bool}
   - ipa/client
   - role: collectd/base
-  - {role: iscsi_client, when: "inventory_hostname.startswith(('bvmhost-x86-06', 'bvmhost-x86-07', 'bvmhost-p09')) and datacenter == 'iad2'"}
   - sudo
   - virthost
-  - {role: linux-system-roles.nbde_client, tags: ['nbde_client'], when: (datacenter == 'iad2' and nbde|bool) or ( datacenter == 'rdu3' and nbde|bool) }
-  - {role: serial-console, when: datacenter == 'iad2' and ansible_architecture != 's390x'}
+  - {role: linux-system-roles.nbde_client, tags: ['nbde_client'], when: (datacenter == 'rdu3' and nbde|bool) or ( datacenter == 'rdu3' and nbde|bool) }
+  - {role: serial-console, when: datacenter == 'rdu3' and ansible_architecture != 's390x'}
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"

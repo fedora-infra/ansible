@@ -27,8 +27,8 @@
       mnt_dir: '/fedora_backups',
       nfs_mount_opts: "rw,hard,bg,intr,noatime,nodev,nosuid,sec=sys,nfsvers=3",
       nfs_src_dir: 'fedora_backups' }
-  - {role: grokmirror_mirror, when: datacenter == 'iad2'}
-  - {role: weblate-backup, when: datacenter == 'iad2'}
+  - role: grokmirror_mirror
+  - role: weblate-backup
   - {role: linux-system-roles.nbde_client, tags: ['nbde_client']}
   - serial-console
 

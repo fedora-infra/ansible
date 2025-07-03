@@ -46,7 +46,7 @@
 
   - name: Tell nagios that everything is fine
     nagios: action=downtime minutes=30 service=host host={{ inventory_hostname_short }}{{ env_suffix }}
-    delegate_to: noc01.iad2.fedoraproject.org
+    delegate_to: noc01.rdu3.fedoraproject.org
     ignore_errors: true
 
   - name: Stop httpd on the koji-hubs.
@@ -56,7 +56,7 @@
   # Note that the hosts are used explicitly here to choose only the "primary".
   # We don't want to run upgrades on both pgbdr nodes at the same time.
   # ... is anything special needed to upgrade pgbdr nodes?
-  hosts: db-koji01.iad2.fedoraproject.org:db-koji01.stg.iad2.fedoraproject.org
+  hosts: db-koji01.rdu3.fedoraproject.org:db-koji01.stg.rdu3.fedoraproject.org
   user: root
   vars_files:
     - /srv/web/infra/ansible/vars/global.yml
@@ -92,7 +92,7 @@
     service: name="httpd" state=started
   - name: Unsilence nagios
     nagios: action=unsilence service=host host={{ inventory_hostname_short }}{{ env_suffix }}
-    delegate_to: noc01.iad2.fedoraproject.org
+    delegate_to: noc01.rdu3.fedoraproject.org
     ignore_errors: true
 
 - name: Update and restart the koji builders, now that we're done with the hubs
