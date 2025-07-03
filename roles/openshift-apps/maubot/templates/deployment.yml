@@ -60,7 +60,7 @@ spec:
               path: /
               port: 8080
       securityContext:
-        supplementalGroups: [2]
+        supplementalGroups: [{{ openshift_user_id }}]
       volumes:
         - name: config
           configMap:

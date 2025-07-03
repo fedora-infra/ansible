@@ -69,4 +69,4 @@ spec:
               secret:
                 secretName: fedora-messaging-crt
           securityContext:
-            supplementalGroups: [1001050000]
+            supplementalGroups: [{{ openshift_user_id }}]

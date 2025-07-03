@@ -86,6 +86,24 @@
     mount_stg: false
     nfs_mount_opts: 'rw,bg,nfsvers=4'
     when: master_sundries_node|bool and env != "staging"
+  - role: nfs/client
+    mnt_dir: '/srv/solr-storage'
+    nfs_src_dir: 'solr-storage'
+    mount_stg: false
+    nfs_mount_opts: 'rw,bg,nfsvers=4'
+    when: master_sundries_node|bool and env != "staging"
+  - role: nfs/client
+    mnt_dir: '/srv/fedora-packages-static-storage'
+    nfs_src_dir: 'fedora-packages-static-storage'
+    mount_stg: false
+    nfs_mount_opts: 'rw,bg,nfsvers=4'
+    when: master_sundries_node|bool and env != "staging"
+  - role: nfs/client
+    mnt_dir: '/srv/fedora-packages-static-db-storage'
+    nfs_src_dir: 'fedora-packages-static-db-storage'
+    mount_stg: false
+    nfs_mount_opts: 'rw,bg,nfsvers=4'
+    when: master_sundries_node|bool and env != "staging"
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
