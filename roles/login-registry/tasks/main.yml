@@ -7,8 +7,12 @@
   ansible.builtin.package:
     name: podman
     state: present
+  tags:
+   - login-registry
 
 - name: Login into a registry
   ansible.builtin.command: podman login {{candidate_registry}} -u {{candidate_registry_osbs_username}} -p {{candidate_registry_osbs_password}} --authfile .docker/config.json
   args:
     creates: .docker/config.json
+  tags:
+  - login-registry
