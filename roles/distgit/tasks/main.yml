@@ -134,38 +134,35 @@
   - config
   - distgit
 
-- name: Make sure apache can access the fedora-messaging ca
-  acl:
-    path: /etc/pki/rabbitmq/git-hooks.ca
-    entity: apache
-    etype: group
-    permissions: r
-    state: present
+- name: Dploy the Fedora messaging config. file for uploads
+  ansible.builtin.copy: src=git-hooks-messaging.toml dest=/etc/fedora-messaging/git-hooks-messaging.toml
   tags:
+  - config
   - distgit
-  when: inventory_hostname.startswith('batcave')
 
-- name: Make sure apache can access the fedora-messaging crt
-  acl:
-    path: /etc/pki/rabbitmq/git-hooks.crt
-    entity: apache
-    etype: group
-    permissions: r
-    state: present
+- name: Deploy the Fedora messaging certificate
+  ansible.builtin.copy: src={{ item.src }}
+        dest=/etc/pki/rabbitmq/{{ item.dest }}
+        owner={{ item.owner }} group={{ item.group}} mode={{ item.mode }}
+  with_items:
+    - src: "{{private}}/files/rabbitmq/production/pki/issued/git-hooks.crt"
+      dest: git-hooks.crt
+      owner: root
+      group: root
+      mode: "444"
+    - src: "{{private}}/files/rabbitmq/production/pki/private/git-hooks.key"
+      dest: git-hooks.key
+      owner: root
+      group: root
+      mode: "440"
+    - src: "{{private}}/files/rabbitmq/production/pki/reqs/git-hooks.req"
+      dest: git-hooks.ca
+      owner: root
+      group: root
+      mode: "444"
   tags:
   - distgit
-  when: inventory_hostname.startswith('batcave')
-
-- name: Make sure apache can access the fedora-messaging key
-  acl:
-    path: /etc/pki/rabbitmq/git-hooks.key
-    entity: apache
-    etype: group
-    permissions: r
-    state: present
-  tags:
-  - distgit
-  when: inventory_hostname.startswith('batcave')
+  - fedora-messaging
 
 - name: Create the distgit root directory (/srv/git)
   ansible.builtin.file: dest=/srv/git state=directory mode=0755
