@@ -740,7 +740,7 @@
   # provision is dead, go to iot infra#12601
   - role: httpd/redirect
     shortname: 02-iot
-    website: "provision.fedoraproject.org"
+    website: "provision{{ env_suffix }}.fedoraproject.org"
     path: /
     target: https://fedoraproject.org/iot
     tags:
