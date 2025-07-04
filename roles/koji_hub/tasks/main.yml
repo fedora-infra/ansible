@@ -254,7 +254,6 @@
         owner=apache group=apache mode=0600
   notify:
   - Reload httpd
-  when: env != 'staging'
   tags:
   - config
   - koji_hub
