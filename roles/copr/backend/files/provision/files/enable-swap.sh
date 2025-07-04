@@ -25,15 +25,26 @@ if test -f /config/resalloc-vars.sh; then
     # VMs on our hypervisors have this file created, providing some basic info
     # about the "pool ID" (== particular hypervisor).
     generic_mount
-elif grep POWER9 /proc/cpuinfo; then
-    # OpenStack Power9 only for now.  We have only one large volume there.
+elif grep -E 'POWER9|POWER10' /proc/cpuinfo; then
+    # OpenStack Power9/Power10 setup. We have only one large volume there.
     # Partitioning using cloud-init isn't trival, especially considering we
     # share the Power8 and Power9 builder images so we create a swap file
     # on / filesystem.
     file=/sub-mounts-file
     swap_device_base=loop5
     swap_device=/dev/$swap_device_base
-    truncate -s 164G "$file"
+    
+    if grep POWER10 /proc/cpuinfo; then
+        # WARNING/TODO: this is for powerful builders only, but it's hardcoded
+        # and will stop working once we switch to p10. The setup should be done
+        # generically, as stated in the comment above, so the large swap file
+        # is created automatically upon the on_demand_powerful tag configuration.
+        truncate -s 320G "$file"
+    else
+        # regular builder
+        truncate -s 164G "$file"
+    fi
+    
     losetup "$swap_device_base" "$file"
 elif test -e /dev/xvda1 && test -e /dev/nvme0n1; then
     # AWS aarch64 machine.  We use separate volume allocation as the default
