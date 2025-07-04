@@ -112,7 +112,7 @@
     destname: meetbot
     remotepath: /meetbot/
     # Talk directly to the app server, not haproxy
-    proxyurl: http://value02
+    proxyurl: http://value01
     when: env != "staging"
 
   # The place for the fancy mote view
@@ -132,7 +132,7 @@
     destname: meetbot
     remotepath: /meetbot/
     # Talk directly to the app server, not haproxy
-    proxyurl: http://value02
+    proxyurl: http://value01
     when: env == "staging"
 
   - role: httpd/reverseproxy
