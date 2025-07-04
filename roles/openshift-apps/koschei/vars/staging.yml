@@ -27,9 +27,10 @@ koschei_oidc_crypto_secret: "{{ koschei_oidc_crypto_secret_stg }}"
 
 koschei_topic_prefix: org.fedoraproject.stg
 
-koschei_frontend_replicas: 2
+koschei_frontend_replicas: 1
 
-koschei_backend_services:
+koschei_backend_services: []
+prev_koschei_backend_services:
   - { name: polling,        cpu: [ 1000, 1500 ],  memory: [  512, 1024 ] } # yamllint disable-line rule:commas rule:brackets
   - { name: scheduler,      cpu: [  200,  500 ],  memory: [  128,  256 ] } # yamllint disable-line rule:commas rule:brackets
   - { name: build-resolver, cpu: [ 1000, 2000 ],  memory: [ 1536, 4096 ] } # yamllint disable-line rule:commas rule:brackets
@@ -38,7 +39,8 @@ koschei_backend_services:
   - { name: copr-resolver,  cpu: [ 2000, 8000 ],  memory: [ 1024, 4096 ] } # yamllint disable-line rule:commas rule:brackets
   - { name: copr-scheduler, cpu: [ 1000, 2000 ],  memory: [ 1024, 2048 ] } # yamllint disable-line rule:commas rule:brackets
 
-koschei_cron_jobs:
+koschei_cron_jobs: []
+prev_koschei_cron_jobs:
   - name: db-cleanup
     schedule: "0 3 * * *"
     command: "koschei-admin cleanup --older-than 2"
