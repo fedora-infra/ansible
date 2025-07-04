@@ -120,16 +120,16 @@ aws_{{ arch }}_{{ on_demand + '_' if on_demand is not none else '' }}{% if spot 
       Thank you Amazon Web Services, Inc. for sponsoring these builders.
 {% endmacro %}
 
-{% macro osuosl_p09(on_demand=none) %}
+{% macro osuosl_p09_p10(on_demand=none, cpu="p09") %}
 {% if on_demand == 'powerful' %}
 {% set itype='321a7d9a-ecb7-4592-a8b4-a4bb78481e2e' %}
 {% endif %}
 {% if on_demand is none %}
-# Power9 VMs in openpower-controller.osuosl.org
+# Power{% if cpu == "p10" %}10{% else %}9{% endif %} VMs in openpower-controller.osuosl.org
 {% else %}
-# Power9 VMs in openpower-controller.osuosl.org for on-demand {{ on_demand }}
+# Power{% if cpu == "p10" %}10{% else %}9{% endif %} VMs in openpower-controller.osuosl.org for on-demand {{ on_demand }}
 {% endif %}
-copr_osuosl_p09_{% if on_demand %}{{ on_demand }}_{% endif %}{% if devel %}dev{% else %}prod{% endif %}:
+copr_osuosl_{% if cpu == "p10" %}p10{% else %}p09{% endif %}_{% if on_demand %}{{ on_demand }}_{% endif %}{% if devel %}dev{% else %}prod{% endif %}:
 {% if on_demand == 'powerful' %}
 {% if devel %}
   # just for testing, turned off by default
@@ -157,14 +157,15 @@ copr_osuosl_p09_{% if on_demand %}{{ on_demand }}_{% endif %}{% if devel %}dev{%
       priority: -10
     - arch_ppc64le_native
     - in_osuosl
-    - name: arch_power9
+{% set suffix = "10" if cpu == "p10" else "9" %}
+    - name: arch_power{{ suffix }}
       priority: -10
 
 {% if on_demand == 'powerful' %}
   tags_on_demand:
     - on_demand_{{ on_demand }}
 
-  # name: p9.xxlarge
+  # name: p10.nvme.c16m64d320
   cmd_new: 'copr-resalloc-vm-ip-to-yaml /var/lib/resallocserver/resalloc_provision/osuosl-vm --flavor {{ itype }}'
 {% else %}
   cmd_new: 'copr-resalloc-vm-ip-to-yaml /var/lib/resallocserver/resalloc_provision/osuosl-vm'
@@ -179,7 +180,7 @@ copr_osuosl_p09_{% if on_demand %}{{ on_demand }}_{% endif %}{% if devel %}dev{%
   reuse_max_time: 1800
   description: >
     A pool of {% if on_demand == 'powerful' %}powerful {% endif %}ppc64le instances on hypervisors in the OSU Open Source Lab.
-    These machines have POWER9 processors.
+    These machines have POWER{% if cpu == "p10" %}10{% else %}9{% endif %} processors.
     Thank you Oregon State University for sponsoring these builders.
 {% endmacro %}
 
@@ -408,10 +409,10 @@ copr_ic_s390x_{{ zone }}_{% if devel %}dev{% else %}prod{% endif %}:
 {% endfor %}
 
 # Power9 builders in OSU osuosl
-{{ osuosl_p09() }}
+{{ osuosl_p09_p10() }}
 
-# High-performance power9 builders in OSU osuosl
-{{ osuosl_p09(on_demand='powerful') }}
+# High-performance power10 builders in OSU osuosl
+{{ osuosl_p09_p10(on_demand='powerful', cpu="p10") }}
 
 #### AWS x86_64
 # on-premise HV has priority 0 and above
