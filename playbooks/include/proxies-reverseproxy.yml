@@ -351,9 +351,8 @@
     website: "updates.coreos{{ env_suffix }}.fedoraproject.org"
     destname: cincinnati
     balancer_name: apps-ocp
-    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_rdu3_stg, ocp_nodes_rdu3) }}"
-    ocp4_rdu3: true
-    ocp4: false
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    ocp4: true
     targettype: openshift
     keephost: true
     tags:
@@ -364,9 +363,8 @@
     website: "status.updates.coreos{{ env_suffix }}.fedoraproject.org"
     destname: cincinnati
     balancer_name: apps-ocp
-    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_rdu3_stg, ocp_nodes_rdu3) }}"
-    ocp4_rdu3: true
-    ocp4: false
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    ocp4: true
     targettype: openshift
     keephost: true
     tags:
@@ -377,9 +375,8 @@
     website: "raw-updates.coreos{{ env_suffix }}.fedoraproject.org"
     destname: cincinnati
     balancer_name: apps-ocp
-    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_rdu3_stg, ocp_nodes_rdu3) }}"
-    ocp4_rdu3: true
-    ocp4: false
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    ocp4: true
     targettype: openshift
     keephost: true
     tags:
@@ -390,9 +387,8 @@
     website: "status.raw-updates.coreos{{ env_suffix }}.fedoraproject.org"
     destname: cincinnati
     balancer_name: apps-ocp
-    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_rdu3_stg, ocp_nodes_rdu3) }}"
-    ocp4_rdu3: true
-    ocp4: false
+    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
+    ocp4: true
     targettype: openshift
     keephost: true
     tags:
