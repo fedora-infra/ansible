@@ -626,6 +626,8 @@
     sslonly: true
     gzip: true
     cert_name: "{{wildcard_cert_name}}"
+    tags:
+    - apps.fedoraproject.org
 
   - role: httpd/website
     site_name: "notifications{{ env_suffix }}.fedoraproject.org"
@@ -992,6 +994,7 @@
     sslonly: true
     server_aliases: [greenwave.stg.fedoraproject.org]
     cert_name: "{{wildcard_cert_name}}"
+    tags: greenwave
 
   - role: httpd/website
     site_name: koschei.fedoraproject.org
@@ -1005,6 +1008,7 @@
     sslonly: true
     server_aliases: [waiverdb.stg.fedoraproject.org]
     cert_name: "{{wildcard_cert_name}}"
+    tags: waiverdb
 
   - role: httpd/website
     site_name: silverblue.fedoraproject.org
