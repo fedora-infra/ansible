@@ -304,8 +304,8 @@
 
 # put cron job in for rawhide compose
 - name: Rawhide compose cron
-  ansible.builtin.copy:
-    src: rawhide
+  ansible.builtin.template:
+    src: rawhide.j2
     dest: /etc/cron.d/rawhide
     mode: "644"
   when: inventory_hostname.startswith('compose-rawhide01.rdu3')
