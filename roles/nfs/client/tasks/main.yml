@@ -83,7 +83,7 @@
         name=/mnt/fedora_koji
         src=10.16.167.64:/mnt/fedora_koji
         fstype=nfs4
-        opts=rw,hard,bg,intr,noatime,nodev,nosuid,nfsvers=4
+        opts=rw,hard,bg,noatime,nodev,nosuid,nfsvers=4
         passno=0
         dump=0
         state=mounted
@@ -96,7 +96,7 @@
         name=/mnt/fedora_koji_prod
         src=ntap-rdu3-c02-fedora01-nfs01a.neta-002.prod.rdu2.dc.redhat.com:/fedora_koji
         fstype=nfs
-        opts=ro,hard,bg,intr,noatime,nodev,nosuid,nfsvers=3
+        opts=ro,hard,bg,noatime,nodev,nosuid,nfsvers=3
         passno=0
         dump=0
         state=mounted

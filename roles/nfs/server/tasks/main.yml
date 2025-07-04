@@ -20,6 +20,7 @@
   service: name={{ item }}  enabled=true state=started
   with_items:
   - rpc-statd
+  - nfs-server
   when: ansible_distribution == 'Fedora'
   tags:
   - nfs/server
@@ -29,7 +30,6 @@
   with_items:
   - rpcbind
   - nfs-server
-  when: ansible_distribution == 'RedHat'
   tags:
   - nfs/server
 
