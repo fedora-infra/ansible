@@ -308,7 +308,6 @@
 - name: Koji web common config files
   ansible.builtin.copy: src={{ item }} dest=/etc/httpd/conf.d/{{ item }} owner=root group=root
   with_items:
-  - mash.conf
   - rel-eng.conf
   - repo.conf
   tags:
