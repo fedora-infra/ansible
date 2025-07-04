@@ -42,16 +42,6 @@
       warning: 10
       critical: 100
     user_sent_topics: ^$
-  - role: rabbit/queue
-    queue_username: "mirror_pagure_ansible{{ env_suffix }}"
-    queue_name: "mirror_pagure_ansible{{ env_suffix }}_13"
-    queue_routing_keys:
-    - "io.pagure.*.pagure.git.receive"
-    queue_thresholds:
-      warning: 10
-      critical: 100
-    user_sent_topics: ^$
-    when: datacenter != 'rdu3'
   - batcave
   - role: grobisplitter
     when: datacenter == 'rdu3'
