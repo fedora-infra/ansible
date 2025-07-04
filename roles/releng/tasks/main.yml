@@ -265,7 +265,7 @@
     state: present
     name:
     - pungi-utils
-  when: "'releng_compose' in group_names or 'eln_compose' in group_names"
+  when: "'releng_compose' in group_names or 'releng_compose_eln' in group_names"
 
 - name: Custom compose-koji
   ansible.builtin.template:
