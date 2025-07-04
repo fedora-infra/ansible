@@ -39,7 +39,7 @@ elif grep -E 'POWER9|POWER10' /proc/cpuinfo; then
         # and will stop working once we switch to p10. The setup should be done
         # generically, as stated in the comment above, so the large swap file
         # is created automatically upon the on_demand_powerful tag configuration.
-        truncate -s 320G "$file"
+        truncate -s 310G "$file"
     else
         # regular builder
         truncate -s 164G "$file"
