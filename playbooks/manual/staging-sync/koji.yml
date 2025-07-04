@@ -68,7 +68,6 @@
   - postgresql_user: name=backup
   - postgresql_db: name=koji state=absent
 # buildroot_listing is excluded from the sync to save some time
-# TODO: install mbuffer on db-koji.stg
   - name: Import the prod db.  This will take quite a while.  Go get a snack!
     ansible.builtin.shell: >
       curl -s -S https://infrastructure.fedoraproject.org/infra/db-dumps/koji.dump.xz |
