@@ -120,7 +120,7 @@
     - /mnt/koji/work
 # TODO recreate directories under /mnt/koji/compose (which ones?) that composer expects to exist
   - name: Mount NFS on hub
-    ansible.builtin.mount: name={{item}} state=mounted
+    ansible.builtin.mount: name={{item}} state=remounted
     with_items:
     - /mnt/fedora_koji_prod
     - /mnt/koji/ostree
