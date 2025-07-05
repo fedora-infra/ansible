@@ -49,7 +49,7 @@
     vars:
       job_app: "{{ app }}"
       job_name: db-create
-      job_command: "koschei-admin create-db && koschei-admin create-collection f41 --display-name 'Fedora Rawhide' --target f41 --bugzilla-product Fedora --bugzilla-version rawhide && koschei-admin create-group php"
+      job_command: "koschei-admin create-db && koschei-admin create-collection f43 --display-name 'Fedora Rawhide' --target f43 --bugzilla-product Fedora --bugzilla-version rawhide && koschei-admin create-group php"
 
   - name: Resume all deployments
     ansible.builtin.shell: oc -n koschei rollout resume deploy
