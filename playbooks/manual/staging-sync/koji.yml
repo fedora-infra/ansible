@@ -98,7 +98,7 @@
   - name: Stop nfs-server
     service: name=nfs-server state=stopped
   - name: Unmount NFS on hub
-    ansible.builtin.mount: name={{item}} state=unmounted
+    ansible.builtin.shell: mount {{item}}
     with_items:
     - /mnt/fedora_koji_prod
     - /mnt/koji/ostree
