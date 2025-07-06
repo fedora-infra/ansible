@@ -284,7 +284,7 @@
     state: link
     src: /mnt/fedora_koji/koji
     dest: /mnt/koji
-  when: "'releng_compose' in group_names or 'releng_compose_stg' in group_names"
+  when: "'releng_compose' in group_names or 'releng_compose_eln' in group_names"
 
 # Add skopeo for OCI Image management, only in stage first for testing
 - name: Add pkgs for OCI Image management
