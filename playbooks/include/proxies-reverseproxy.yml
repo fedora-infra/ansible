@@ -798,17 +798,6 @@
     - apps.ocp-rdu3.fedoraproject.org
 
   - role: httpd/reverseproxy
-    website: "provision{{ env_suffix }}.fedoraproject.org"
-    destname: zezere
-    balancer_name: app-os
-    balancer_members: "{{ (env == 'staging')|ternary(ocp_nodes_stg, ocp_nodes) }}"
-    targettype: openshift
-    ocp4: true
-    keephost: true
-    tags:
-    - zezere
-
-  - role: httpd/reverseproxy
     website: greenwave.fedoraproject.org
     destname: greenwave
     balancer_name: app-os
