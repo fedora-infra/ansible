@@ -352,7 +352,7 @@ elections ipsilon_internal={"type":"static","client_id":"elections","trusted":tr
 
 fedocal client_name="fedocal"
 fedocal client_secret="{{ fedocal_oidc_client_secret_stg }}"
-fedocal redirect_uris=["https://calendar.stg.fedoraproject.org/oidc_callback"]
+fedocal redirect_uris=["https://calendar.stg.fedoraproject.org/oidc_callback", "https://calendar.stg.fedoraproject.org/authorize"]
 fedocal client_uri="https://calendar.stg.fedoraproject.org/"
 fedocal ipsilon_internal={"type":"static","client_id":"fedocal","trusted":true}
 fedocal contacts=["admin@fedoraproject.org"]
