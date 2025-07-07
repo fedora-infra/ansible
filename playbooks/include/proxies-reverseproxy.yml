@@ -114,6 +114,7 @@
     # Talk directly to the app server, not haproxy
     proxyurl: http://value01
     when: env != "staging"
+    tags: meetbot-raw
 
   # The place for the fancy mote view
   - role: httpd/reverseproxy
@@ -133,6 +134,7 @@
     remotepath: /meetbot/
     # Talk directly to the app server, not haproxy
     proxyurl: http://value01
+    tags: meetbot-raw
     when: env == "staging"
 
   - role: httpd/reverseproxy
