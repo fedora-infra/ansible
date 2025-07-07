@@ -281,11 +281,11 @@
   - koji_builder
 
 #
-# alternative arch builders however want to link to just /mnt/fedora_koji
+# alternative arch builders however want to link to /mnt/fedora_koji/koji
 #
 
 - name: Make a mnt/koji link
-  ansible.builtin.file: state=link src=/mnt/fedora_koji dest=/mnt/koji
+  ansible.builtin.file: state=link src=/mnt/fedora_koji/koji dest=/mnt/koji
   when: koji_hub_nfs is defined and koji_hub_nfs != "fedora_koji" and createrepo == True
   tags:
   - koji_builder
