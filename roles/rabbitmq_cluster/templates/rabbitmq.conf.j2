@@ -92,9 +92,9 @@ net_ticktime = 120
 
 # Maximum time for consumers to process and acknowledge messages (in ms)
 # Defaults to 30 minutes. Package signing in robosignatory can take more
-# than 1 hour, set the max to 2h.
+# than 1 hour, set the max to 6h.
 # https://www.rabbitmq.com/docs/consumers#acknowledgement-timeout
-consumer_timeout = 7200000
+consumer_timeout = 21600000
 
 
 ## Logging settings.
