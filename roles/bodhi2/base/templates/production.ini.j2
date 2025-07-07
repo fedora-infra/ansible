@@ -298,7 +298,7 @@ fedora_40_primary_arches = aarch64 x86_64
 # The hostname of an SMTP server Bodhi can use to deliver e-mail.
 # smtp_server =
 {% if env == "production" %}
-smtp_server = bastion
+smtp_server = bastion.fedoraproject.org
 {% endif %}
 
 # The updates system itself. This e-mail address is used as the From address for e-mails that Bodhi
@@ -821,7 +821,7 @@ formatter = generic
 
 [handler_smtp]
 class = logging.handlers.SMTPHandler
-kwargs = {'mailhost':'bastion', 'fromaddr':'updates@stg.fedoraproject.org', 'toaddrs':['bodhiadmin-members@fedoraproject.org'], 'subject':'Bodhi error'}
+kwargs = {'mailhost':'bastion.fedoraproject.org', 'fromaddr':'updates@stg.fedoraproject.org', 'toaddrs':['bodhiadmin-members@fedoraproject.org'], 'subject':'Bodhi error'}
 level = ERROR
 formatter = generic
 

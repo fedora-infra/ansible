@@ -22,7 +22,7 @@ handlers:
     level: ERROR
     formatter: generic
     filters: [rate_limit]
-    mailhost: "bastion"
+    mailhost: "bastion.fedoraproject.org"
 {% if env == "production" %}
     fromaddr: "updates@fedoraproject.org"
 {% else %}
