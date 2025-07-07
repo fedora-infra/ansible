@@ -141,7 +141,7 @@
   - role: rabbit/queue
     queue_username: "openscanhub{{ env_suffix }}"
     queue_name: "openscanhub{{ env_suffix }}"
-    queue_routing_keys: "org.fedoraproject.*.openscanhub.scan.started"
+    queue_routing_keys: ["org.fedoraproject.*.openscanhub.scan.started"]
     queue_thresholds:
       warning: 10
       critical: 100
