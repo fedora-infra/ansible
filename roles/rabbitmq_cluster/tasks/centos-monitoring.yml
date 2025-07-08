@@ -1,0 +1,22 @@
+- name: Copy over the check script
+  ansible.builtin.copy:
+    src: send-rabbitmq-queue.py
+    dest: /usr/local/bin/send-rabbitmq-queue
+    mode: 0750
+    owner: root
+    group: nrpe
+
+- name: Setup systemd unit files
+  ansible.builtin.copy:
+    src: send-rabbitmq-queue.{{item}}
+    dest: /etc/systemd/system/send-rabbitmq-queue.{{item}}
+  with_items:
+    - service
+    - timer
+  notify:
+  - Reload systemd
+
+- name: Enable systemd timer
+  service:
+    name: send-rabbitmq-queue.timer
+    enabled: yes

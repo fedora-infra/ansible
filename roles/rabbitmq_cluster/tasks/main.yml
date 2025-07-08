@@ -449,6 +449,13 @@
   ansible.builtin.command: /etc/nagios/selinux-load.sh
   when: selinux_module is changed
 
+# Queue monitoring for CentOS Zabbix
+- import_tasks: centos-monitoring.yml
+  when: inventory_hostname.startswith('rabbitmq03')
+  tags:
+  - rabbitmq_cluster
+  - config
+
 # Individual applications accounts & queues
 - import_tasks: apps.yml
   tags:

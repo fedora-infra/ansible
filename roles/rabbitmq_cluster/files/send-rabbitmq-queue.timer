@@ -1,0 +1,12 @@
+[Unit]
+Description=Send queue metrics to Zabbix
+ConditionPathExists=/etc/nrpe.d/rabbitmq_args.ini
+Wants=network-online.target
+
+[Timer]
+OnCalendar=5min
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+

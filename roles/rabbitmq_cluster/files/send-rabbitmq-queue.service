@@ -1,0 +1,8 @@
+[Unit]
+Description=Send queue metrics to Zabbix
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/send-rabbitmq-queue --tls-psk-identity foo --tls-psk-file bar centos-stream-robosignatory
+User=nrpe
+Group=nrpe
