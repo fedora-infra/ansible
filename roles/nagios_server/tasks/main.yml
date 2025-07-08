@@ -183,7 +183,6 @@
 - name: Copy /etc/nagios/services (RDU3 specific files)
   ansible.builtin.copy: src=nagios/services/rdu3_internal/{{ item }} dest=/etc/nagios/services/{{ item }}
   with_items:
-    - basset.cfg
     - certgetter.cfg
     - db_backups.cfg
     - disk.cfg
@@ -204,7 +203,6 @@
 - name: Copy /etc/nagios/services (RDU3 specific files)
   ansible.builtin.copy: src=nagios/services/rdu3_internal/{{ item }} dest=/etc/nagios/services/{{ item }}
   with_items:
-    - basset.cfg
     - certgetter.cfg
     - db_backups.cfg
     - disk.cfg

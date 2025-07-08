@@ -135,9 +135,6 @@
 - name: Reload NetworkManager-connections
   ansible.builtin.command: nmcli c reload
 
-- name: Restart basset-worker
-  service: name=basset-worker state=restarted
-
 - name: Apply interface-changes
   ansible.builtin.command: nmcli con up {{ item.split()[1] }}
   async: 1
