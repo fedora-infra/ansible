@@ -432,10 +432,16 @@
   - GDPR
   - pagure
 
-- name: Override the default syslog logrotate file
+- name: Remove the default syslog logrotate file
+  ansible.builtin.file: dest=/etc/logrotate.d/syslog state=absent
+  tags:
+  - pagure
+  - logrotate
+
+- name: Add our rsyslog logrotate file
   ansible.builtin.copy:
-    src: syslog-logrotate
-    dest: /etc/logrotate.d/syslog
+    src: rsyslog-logrotate
+    dest: /etc/logrotate.d/rsyslog
     mode: "0644"
   tags:
   - pagure
