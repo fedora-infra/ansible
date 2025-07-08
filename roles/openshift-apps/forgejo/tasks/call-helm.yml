@@ -18,5 +18,6 @@
     chart_ref: /tmp/forgejo-helm_repo/
     release_name: forgejo
     release_namespace: forgejo
+    dependency_update: true
     values_files:
       - "/root/ocp4/openshift-apps/forgejo/helm-values.yaml"
