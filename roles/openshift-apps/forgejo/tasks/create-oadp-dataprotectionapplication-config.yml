@@ -28,10 +28,18 @@
     state: present
     src: "/root/ocp4/openshift-apps/forgejo/forgejo-oadp-dataprotectionapplication.yaml"
 
-# - name: Deploy the forgejo-oadp-secret.yaml secret
-#  kubernetes.core.k8s:
-#    state: present
-#    src: "/root/ocp4/openshift-apps/forgejo/forgejo-oadp-secret.yaml"
+- name: Create the OADP secret
+    kubernetes.core.k8s:
+      state: present
+      definition:
+        apiVersion: v1
+        kind: Secret
+        type: Opaque
+        metadata:
+          name: "cloud-credentials"
+          namespace: "forgejo"
+        data:
+          cloud: "{{ lookup('template', '/root/ocp4/openshift-apps/forgejo/forgejo-oadp-secret' ) | b64encode }}"
 
 - name: Deploy the forgejo-oadp-backup.yaml secret
   kubernetes.core.k8s:
