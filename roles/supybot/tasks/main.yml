@@ -8,7 +8,7 @@
   - supybot-notify
   - supybot-meetbot
   - python3-sgmllib3k
-  when: inventory_hostname.startswith('value02')
+  when: inventory_hostname.startswith('value01')
   tags: supybot
 
 - set_fact: botname={{ botnames[env] }}
@@ -43,7 +43,7 @@
     minute: "0"
     user: apache
     job: "/usr/local/bin/meetings_by_team.sh"
-    state: "{{ 'present' if inventory_hostname.startswith('value02') else 'absent' }}"
+    state: "{{ 'present' if inventory_hostname.startswith('value01') else 'absent' }}"
   tags: supybot
 
 - name: Setup archive script
@@ -57,9 +57,9 @@
     minute: "30"
     user: apache
     job: "/usr/local/bin/archive.sh >& /dev/null"
-    state: "{{ 'present' if inventory_hostname.startswith('value02') else 'absent' }}"
+    state: "{{ 'present' if inventory_hostname.startswith('value01') else 'absent' }}"
   tags: supybot
-  when: inventory_hostname.startswith('value02')
+  when: inventory_hostname.startswith('value01')
 
 - name: Setup meetbot.conf apache config
   ansible.builtin.copy: src=meetbot.conf dest=/etc/httpd/conf.d/meetbot.conf mode=644
@@ -102,7 +102,7 @@
     user_name: "{{ botnames[env] }}"
     user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.meetbot\..*
   when:
-  - inventory_hostname.startswith('value02')
+  - inventory_hostname.startswith('value01')
 
 - name: Create /etc/pki/fedora-messaging
   ansible.builtin.file:
@@ -110,7 +110,7 @@
     mode: "0775"
     state: directory
   when:
-  - inventory_hostname.startswith('value02')
+  - inventory_hostname.startswith('value01')
   tags:
   - config
 
@@ -122,7 +122,7 @@
     owner: daemon
     group: daemon
   when:
-  - inventory_hostname.startswith('value02')
+  - inventory_hostname.startswith('value01')
   tags:
   - config
 
@@ -134,7 +134,7 @@
     owner: daemon
     group: daemon
   when:
-  - inventory_hostname.startswith('value02')
+  - inventory_hostname.startswith('value01')
   tags:
   - config
 
@@ -146,7 +146,7 @@
     owner: daemon
     group: daemon
   when:
-  - inventory_hostname.startswith('value02')
+  - inventory_hostname.startswith('value01')
   tags:
   - config
 
@@ -158,7 +158,7 @@
     group: daemon
     mode: "0600"
   when:
-  - inventory_hostname.startswith('value02')
+  - inventory_hostname.startswith('value01')
   tags:
   - config
 
@@ -173,7 +173,7 @@
 
 - name: Enable zodbot service (prod)
   service: name=zodbot state=started enabled=true
-  when: env == "production" and inventory_hostname.startswith('value02')
+  when: env == "production" and inventory_hostname.startswith('value01')
   tags:
   - config
   - supybot
