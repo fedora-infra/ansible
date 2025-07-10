@@ -105,10 +105,28 @@
     - config
     notify: Restart collectd
 
-  - name: Let collectd talk to the RabbitMQ management interface
+  - name: Let collectd talk to the REST API
     ansible.posix.seboolean:
       name: collectd_tcp_network_connect
       state: yes
       persistent: yes
     tags:
     - collectd
+
+
+#
+# Nagios monitoring
+#
+- name: Create the service for nagios monitoring
+  ansible.builtin.include_role:
+    name: "keytab/service" # noqa role-name[path]
+    apply:
+      tags:
+      - ipa/server
+      - config
+      - keytab
+  vars:
+    host: "{{ ipa_server }}" # noqa: var-naming[no-role-prefix]
+    service: monitoring # noqa: var-naming[no-role-prefix]
+    owner_user: nagios
+    owner_group: nagios
