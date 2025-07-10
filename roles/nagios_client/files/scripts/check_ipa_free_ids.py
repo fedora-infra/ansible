@@ -52,7 +52,7 @@ def get_free_ids(config, connection):
     return free_ids
 
 
-def get_nagios_result(free_ids):
+def get_nagios_result(free_ids, thresholds):
     # Testcases:
     # free_ids={"host1": 0, "host2": 0, "host3": 20}
     # free_ids={"host1": 10, "host2": 0, "host3": 20}
@@ -60,36 +60,25 @@ def get_nagios_result(free_ids):
     # free_ids={}
 
     perfdata = " ".join(f"{host}={free_ids[host]}" for host in sorted(free_ids))
-    if set(free_ids.values()) == {0}:
-        msg = "CRITICAL: no free ID left"
-        exit_code = 2
-    elif 0 in set(free_ids.values()):
-        full_servers = [host for host in sorted(free_ids) if free_ids[host] == 0]
-        msg = " ".join(
-            [
-                "WARNING:",
-                str(len(full_servers)),
-                "server has" if len(full_servers) == 1 else "servers have",
-                "no free ID left:",
-                ", ".join(full_servers),
-            ]
-        )
-        exit_code = 1
-    elif any(value < 1000 for value in free_ids.values()):
-        full_servers = [host for host in sorted(free_ids) if free_ids[host] < 1000]
-        msg = " ".join(
-            [
-                "WARNING:",
-                str(len(full_servers)),
-                "server has" if len(full_servers) == 1 else "servers have",
-                "almost no free ID left:",
-                ", ".join(full_servers),
-            ]
-        )
-        exit_code = 1
-    else:
-        msg = "OK: there are free IDs left"
-        exit_code = 0
+
+    msg = "OK: there are free IDs left"
+    exit_code = 0
+
+    for threshold, threshold_exit_code in thresholds:
+        if any(value < threshold for value in free_ids.values()):
+            bad_servers = [host for host in sorted(free_ids) if free_ids[host] < threshold]
+            msg = " ".join(
+                [
+                    str(len(bad_servers)),
+                    "server has" if len(bad_servers) == 1 else "servers have",
+                    "less than",
+                    str(threshold),
+                    "free IDs left:",
+                    ", ".join(bad_servers),
+                ]
+            )
+            exit_code = threshold_exit_code
+            break
     return f"{msg}|{perfdata}", exit_code
 
 
@@ -100,6 +89,8 @@ def exit_nagios(output, exit_code):
 
 def parse_args():
     parser = ArgumentParser()
+    parser.add_argument("-w", "--warning", type=int, default=1000, help="warning threshold")
+    parser.add_argument("-c", "--critical", type=int, default=1, help="critical threshold")
     parser.add_argument(
         "-k", "--keytab", help="use this keytab for GSSAPI authentication"
     )
@@ -126,7 +117,11 @@ def main():
             STATUS_UNKNOWN,
         )
 
-    exit_nagios(*get_nagios_result(free_ids))
+    thresholds = (
+        (args.critical, STATUS_CRITICAL),
+        (args.warning, STATUS_WARNING),
+    )
+    exit_nagios(*get_nagios_result(free_ids, thresholds))
 
 
 if __name__ == "__main__":
