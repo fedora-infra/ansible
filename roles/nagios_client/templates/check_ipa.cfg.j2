@@ -1,2 +1,2 @@
 command[check_ipa_replication]={{ libdir }}/nagios/plugins/check_ipa_replication -u ldaps://localhost/
-command[check_ipa_free_ids]={{ libdir }}/nagios/plugins/check_ipa_free_ids.py
+command[check_ipa_free_ids]={{ libdir }}/nagios/plugins/check_ipa_free_ids.py -k /etc/krb5.stage-users_{{ ipa_server }}.keytab
