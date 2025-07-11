@@ -92,6 +92,10 @@ rdu3_management_hosts:
 #
 rdu3_management_limited:
   - opengear01.mgmt.rdu3.fedoraproject.org
+
+# These hosts only respond on https, not http
+rdu3_management_no_http:
+  - bvmhost-p10-01.mgmt.rdu3.fedoraproject.org.
 ipa_client_shell_groups:
   - sysadmin-noc
   - sysadmin-veteran

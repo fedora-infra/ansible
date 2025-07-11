@@ -1,6 +1,8 @@
 # HTTP
 
 {% for host in vars['rdu3_management_hosts']|sort %}
+
+{% if 'rdu3_management_no_http' not in group_names %}
  define service {
    host_name             {{ host }}
    service_description   {{ host }}-http
@@ -8,6 +10,7 @@
    use                   defaulttemplate
    servicegroups	 mgmt-http
  }
+{% endif %}
  
  define service {
    host_name             {{ host }}
@@ -16,6 +19,5 @@
    use                   defaulttemplate
    servicegroups	 mgmt-https
  }
- 
 
 {% endfor %}
