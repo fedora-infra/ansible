@@ -11,6 +11,10 @@ spec:
   # fedora-ostree-content-volume-2 is one of two PVs that share
   # the fedora-ostree-content NetApp volume
   volumeName: "fedora-ostree-content-volume-2"
+  # Set the storageClassName to the empty string, otherwise it
+  # will get the cluster default storageClass and it won't match
+  # the named volume that already exists for us.
+  storageClassName: ""
   # These values are mostly ignored since we're using a named
   # volume, but are required.
   accessModes:
