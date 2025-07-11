@@ -81,3 +81,11 @@
   tags:
   - config
   - selinux
+
+- name: Apply SELinux changes
+  ansible.builtin.command: restorecon -irv "/srv/web/freemedia/"
+  register: restorecon_output
+  changed_when: restorecon_output.stdout is defined and restorecon_output.stdout | length > 0
+  tags:
+    - mailman
+    - selinux
