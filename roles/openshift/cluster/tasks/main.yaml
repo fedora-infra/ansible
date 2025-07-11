@@ -19,7 +19,7 @@
   with_items:
     - sysadmin-openshift-group.yml
     - sysadmin-openshift-rolebinding.yml
-    - webhooks-rolebinding.yml
+    - webhooks-clusterrolebinding.yml
   register: cluster_template_result
   tags:
     - create-resources
