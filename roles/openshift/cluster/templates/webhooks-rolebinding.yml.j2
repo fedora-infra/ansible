@@ -1,0 +1,17 @@
+---
+# Allow unauthenticated webhooks to kick off builds
+# https://docs.redhat.com/en/documentation/openshift_container_platform/4.17/html/builds_using_buildconfig/triggering-builds-build-hooks
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: webhook-access-unauthenticated
+  annotations:
+    rbac.authorization.kubernetes.io/autoupdate: "true"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: "system:webhook"
+subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: "system:unauthenticated"

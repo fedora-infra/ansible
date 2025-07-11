@@ -1,0 +1,33 @@
+---
+- name: Create the directories to hold the templates
+  ansible.builtin.file:
+    path: "{{ cluster_filepath }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0770"
+    recurse: yes
+  tags:
+    - create-resources
+
+# generate the templates for project to be created
+- name: Copy the templates
+  ansible.builtin.template:
+    src: "{{ item }}.j2"
+    dest: "{{ cluster_filepath }}/{{ item }}"
+    mode: "0770"
+  with_items:
+    - sysadmin-openshift-group.yml
+    - sysadmin-openshift-rolebinding.yml
+    - webhooks-rolebinding.yml
+  register: cluster_template_result
+  tags:
+    - create-resources
+
+# apply created openshift resources
+- name: Oc apply resources
+  ansible.builtin.command: "oc apply --validate=strict -f {{ item.dest }}"
+  with_items: "{{ cluster_template_result.results }}"
+  when: item.changed
+  tags:
+    - create-resources
