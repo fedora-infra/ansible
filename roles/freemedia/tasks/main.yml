@@ -68,19 +68,11 @@
   tags:
   - config
 
-- name: Check the selinux context freemedia
-  ansible.builtin.command: matchpathcon /srv/web/freemedia
-  register: freemediacontext
-  check_mode: no
-  changed_when: "1 != 1"
-  ignore_errors: true
-  tags:
-  - config
-  - selinux
-
 - name: /srv/web/freemedia file contexts
-  ansible.builtin.command: semanage fcontext -a -t httpd_sys_content_t "/srv/web/freemedia(/.*)?"
-  when: freemediacontext.stdout.find('httpd_sys_content_t') == -1
+  ansible.community.general.sefcontext:
+    target: "/srv/web/freemedia(/.*)?"
+    setype: httpd_sys_content_t
+    state: present
   tags:
   - config
   - selinux
