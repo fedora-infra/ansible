@@ -74,7 +74,7 @@
   - config
 
 - name: /srv/web/freemedia file contexts
-  ansible.community.general.sefcontext:
+  community.general.sefcontext:
     target: "/srv/web/freemedia(/.*)?"
     setype: httpd_sys_content_t
     state: present
