@@ -1,0 +1,18 @@
+# This is a service not a mount because we need to retry on failure
+# https://github.com/systemd/systemd/issues/4468
+[Unit]
+Description=Mount openQA shared assets
+ConditionPathExists=/var/lib/openqa/share
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=mount -t nfs openqa-lab01.rdu3.fedoraproject.org:/var/lib/openqa/share /var/lib/openqa/share
+ExecReload=/bin/true
+ExecStop=umount /var/lib/openqa/share
+RemainAfterExit=yes
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=remote-fs.target
