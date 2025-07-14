@@ -7,6 +7,8 @@ After=network.target
 WantedBy=multi-user.target
 
 [Service]
+Restart=on-failure
+RestartSec=5s
 Type=simple
 User=mailman
 Group=mailman
