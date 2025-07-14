@@ -233,32 +233,9 @@ SOCIALACCOUNT_PROVIDERS = {
         "server_url": "{{ mailman3_openidc_server_url }}",
         "token_auth_method": "client_secret_post",
     },
-    'openid': {
-        'SERVERS': [
-            dict(id='yahoo',
-                 name='Yahoo',
-                 openid_url='http://me.yahoo.com'),
-        ],
-    },
     'google': {
         'SCOPE': ['profile', 'email'],
         'AUTH_PARAMS': {'access_type': 'online'},
-    },
-    'facebook': {
-       'METHOD': 'oauth2',
-       'SCOPE': ['email'],
-       'FIELDS': [
-           'email',
-           'name',
-           'first_name',
-           'last_name',
-           'locale',
-           'timezone',
-           ],
-       'VERSION': 'v2.4',
-    },
-    'stackexchange': {
-        'SITE': 'stackoverflow',
     },
 }
 
