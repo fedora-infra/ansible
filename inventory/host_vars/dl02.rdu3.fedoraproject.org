@@ -6,6 +6,29 @@ dns_search1: "rdu3.fedoraproject.org"
 dns_search3: "fedoraproject.org"
 eth0_ipv4_gw: 10.16.163.254
 eth0_ipv4_ip: 10.16.163.50
+eth0_ipv6_gw: 2620:52:6:1121::1
+eth0_ipv6_ip: 2620:52:6:1121:bead:cafe:feed:fed8
+eth0_ipv6_nm: 64
+network_connections:
+  - autoconnect: yes
+    ip:
+      address:
+        - "{{ eth0_ipv4_ip }}/{{ eth0_ipv4_nm }}"
+        - "{{ eth0_ipv6_ip }}/{{ eth0_ipv6_nm }}"
+      dhcp4: no
+      dns:
+        - "{{ dns1 }}"
+        - "{{ dns2 }}"
+      dns_search:
+        - "{{ dns_search1 }}"
+        - "{{ dns_search2 }}"
+      gateway4: "{{ eth0_ipv4_gw }}"
+      gateway6: "{{ eth0_ipv6_gw }}"
+    mac: "{{ ansible_default_ipv4.macaddress }}"
+    name: eth0
+    type: ethernet
+    state: up
+    mtu: 1500
 ks_repo: https://infrastructure.fedoraproject.org/repo/rhel/RHEL9-x86_64/
 ks_url: https://infrastructure.fedoraproject.org/repo/rhel/ks/kvm-rhel
 lvm_size: 20000

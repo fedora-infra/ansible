@@ -4,6 +4,29 @@ additional_host_keytabs:
 datacenter: rdu3
 eth0_ipv4_gw: 10.16.169.254
 eth0_ipv4_ip: 10.16.169.116
+eth0_ipv6_gw: 2620:52:6:1141::1
+eth0_ipv6_ip: 2620:52:6:1141:bead:cafe:feed:fed1
+eth0_ipv6_nm: 64
+network_connections:
+  - autoconnect: yes
+    ip:
+      address:
+        - "{{ eth0_ipv4_ip }}/{{ eth0_ipv4_nm }}"
+        - "{{ eth0_ipv6_ip }}/{{ eth0_ipv6_nm }}"
+      dhcp4: no
+      dns:
+        - "{{ dns1 }}"
+        - "{{ dns2 }}"
+      dns_search:
+        - "{{ dns_search1 }}"
+        - "{{ dns_search2 }}"
+      gateway4: "{{ eth0_ipv4_gw }}"
+      gateway6: "{{ eth0_ipv6_gw }}"
+    mac: "{{ ansible_default_ipv4.macaddress }}"
+    name: eth0
+    type: ethernet
+    state: up
+    mtu: 1500
 host_backup_targets: ['/srv/cache/lookaside']
 ks_repo: https://infrastructure.fedoraproject.org/repo/rhel/RHEL8-x86_64/
 ks_url: https://infrastructure.fedoraproject.org/repo/rhel/ks/kvm-rhel-8

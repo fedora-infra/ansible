@@ -5,6 +5,29 @@ dns1: 10.16.163.33
 dns2: 10.16.163.34
 eth0_ipv4_gw: 10.16.166.254
 eth0_ipv4_ip: 10.16.166.75
+eth0_ipv6_gw: 2620:52:6:1131::1
+eth0_ipv6_ip: 2620:52:6:1131:bead:cafe:feed:fed2
+eth0_ipv6_nm: 64
+network_connections:
+  - autoconnect: yes
+    ip:
+      address:
+        - "{{ eth0_ipv4_ip }}/{{ eth0_ipv4_nm }}"
+        - "{{ eth0_ipv6_ip }}/{{ eth0_ipv6_nm }}"
+      dhcp4: no
+      dns:
+        - "{{ dns1 }}"
+        - "{{ dns2 }}"
+      dns_search:
+        - "{{ dns_search1 }}"
+        - "{{ dns_search2 }}"
+      gateway4: "{{ eth0_ipv4_gw }}"
+      gateway6: "{{ eth0_ipv6_gw }}"
+    mac: "{{ ansible_default_ipv4.macaddress }}"
+    name: eth0
+    type: ethernet
+    state: up
+    mtu: 1500
 external: true 
 ks_repo: https://infrastructure.fedoraproject.org/pub/fedora/linux/releases/42/Server/x86_64/os/
 ks_url: https://infrastructure.fedoraproject.org/repo/rhel/ks/kvm-fedora
