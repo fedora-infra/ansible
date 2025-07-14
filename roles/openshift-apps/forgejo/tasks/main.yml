@@ -4,7 +4,7 @@
     path: "/root/ocp4/openshift-apps/forgejo/"
     state: directory
 
+- include_tasks: create-forgejo-pvc.yml
 - include_tasks: create-postgres-operator-config.yml
-- include_tasks: create-oadp-dataprotectionapplication-config.yml
 #- include_tasks: deploy-valkey.yml
 - include_tasks: call-helm.yml

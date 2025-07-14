@@ -1,0 +1,25 @@
+---
+# PVC to mount the fedora-ostree-content-volume NFS share
+# that has been mapped in to OpenShift by Fedora Infra for
+# us from the NetApp. This corresponds to the fedora-ostree-content{,-stg}
+# NetApp volumes which are mounted in other places as well.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gitea-shared-storage-pvc
+  namespace: forgejo
+spec:
+  # fedora-ostree-content-volume-2 is one of two PVs that share
+  # the fedora-ostree-content NetApp volume
+  volumeName: "gitea-shared-storage"
+  # Set the storageClassName to the empty string, otherwise it
+  # will get the cluster default storageClass and it won't match
+  # the named volume that already exists for us.
+  storageClassName: ""
+  # These values are mostly ignored since we're using a named
+  # volume, but are required.
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Gi
