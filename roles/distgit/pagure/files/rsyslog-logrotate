@@ -4,13 +4,13 @@
 /var/log/secure
 /var/log/spooler
 {
-    missingok
     sharedscripts
     postrotate
-        /usr/bin/systemctl reload rsyslog.service >/dev/null 2>&1 || true
+	/bin/kill -HUP `cat /var/run/rsyslogd.pid 2> /dev/null` 2> /dev/null || true
     endscript
     daily
     rotate 7
+    missingok
     ifempty
     compress
     compresscmd /usr/bin/xz
