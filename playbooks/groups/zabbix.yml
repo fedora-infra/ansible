@@ -21,19 +21,11 @@
   - collectd/base
   - sudo
   - zabbix/zabbix_server
+  - zabbix/zabbix_agent
   - { role: openvpn/client, when: env != "staging" }
 
   pre_tasks:
   - import_tasks: "{{ tasks_path }}/yumrepos.yml"
-
-  tasks:
-  - name: Sync sysadmin-noc membership to the zabbix server
-    include_role:
-      name: zabbix/zabbix_server
-      tasks_from: sync_sysadmin_noc
-      apply:
-        tags:
-          - sync_users
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"

@@ -1,14 +1,29 @@
 ---
 
-- include_tasks: install.yml
+- name: Install Zabbix
+  ansible.builtin.include_tasks: install.yml
   tags:
-  - zabbix-configuration
+  - zabbix
+  - zabbix_install
 
-- name: Configure Zabbix via api
-  ansible.builtin.include_tasks: configure_api.yml
-  tags:
-  - zabbix_configuration
+- name: Things being tested on Staging
   when: env == "staging"
+  block:
+    - name: Configure Zabbix via api
+      ansible.builtin.include_tasks: configure_api.yml
+      tags:
+      - zabbix
+      - zabbix_configuration
+    - name: Sync membership of sysadmin-noc
+      ansible.builtin.include_tasks: sync_sysadmin_noc.yml
+      tags:
+      - zabbix
+      - zabbix_configuration
+      - sync_users
 
 # - include_tasks: plugins.yml
-- include_tasks: start_services.yml
+
+- name: Start Zabbix
+  ansible.builtin.include_tasks: start_services.yml
+  tags:
+  - zabbix
