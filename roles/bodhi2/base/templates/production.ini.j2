@@ -709,6 +709,9 @@ sqlalchemy.url = postgresql://bodhi2:{{ bodhi2Password }}@db-bodhi.{{ datacenter
 sqlalchemy.url = postgresql://bodhi2:{{ bodhi2PasswordSTG }}@db01.stg.{{ datacenter }}.fedoraproject.org/bodhi2
 {% endif %}
 # sqlalchemy_extra.statement_timeout = 30000
+# Due to firewalls between vlans, we want to recycle any db connection thats sitting idle
+# for more than 600 seconds. If we don't the firewall kills them and composes fail.
+sqlalchemy.pool_recycle = 600
 
 ##
 ## Templates
