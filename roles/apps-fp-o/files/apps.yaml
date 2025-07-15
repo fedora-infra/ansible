@@ -487,19 +487,6 @@ children:
             A simple web service running <a
             href="https://github.com/fedora-infra/geoip-city-wsgi">geoip-city-wsgi</a>
             that will return geoip information to you.
-      - name: Easyfix
-        data:
-          url: https://fedoraproject.org/easyfix
-          source_url: https://github.com/fedora-infra/fedora-gather-easyfix
-          bugs_url: https://github.com/fedora-infra/fedora-gather-easyfix/issues
-          docs_url: https://github.com/fedora-infra/fedora-gather-easyfix/blob/master/README
-          sops:
-            - https://infrastructure.fedoraproject.org/infra/docs/gather-easyfix.rst
-          description: >
-            A list of easy-to-fix problems for the different projects in
-            Fedora.  Interested in getting into helping out with sysadmin
-            work or web application development?  This should be useful
-            to you.
       - name: DataGrepper
         data:
           icon: fedmsg.png
