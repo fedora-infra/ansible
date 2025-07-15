@@ -21,7 +21,7 @@
   - collectd/base
   - sudo
   - zabbix/zabbix_server
-  - zabbix/zabbix_agent
+#  - zabbix/zabbix_agent
   - { role: openvpn/client, when: env != "staging" }
 
   pre_tasks:
