@@ -36,6 +36,8 @@
   - role: rabbit/user
     user_name: "logging{{ env_suffix }}"
     user_sent_topics: ^org\.fedoraproject\.{{ env_short }}\.logging\.stats\..*
+  # Used by countme
+  - fedora-messaging-utils
   - logging
 
   pre_tasks:
