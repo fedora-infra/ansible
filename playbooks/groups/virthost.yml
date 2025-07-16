@@ -50,6 +50,7 @@
   - virthost
   - {role: linux-system-roles.nbde_client, tags: ['nbde_client'], when: (datacenter == 'rdu3' and nbde|bool) or ( datacenter == 'rdu3' and nbde|bool) }
   - {role: serial-console, when: datacenter == 'rdu3' and ansible_architecture != 's390x'}
+  - {role: iscsi_client, when: datacenter == 'rdu3' and inventory_hostname.startswith('bvmhost-p10-01') }
 
   handlers:
   - import_tasks: "{{ handlers_path }}/restart_services.yml"
