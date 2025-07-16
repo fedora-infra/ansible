@@ -228,6 +228,7 @@
     - dns.cfg
     - haproxy.cfg
     - memcached.cfg
+    - mail_queue.cfg
     - nagios.cfg
     - pagure_redis.cfg
     - ping.cfg
@@ -398,7 +399,6 @@
   ansible.builtin.template: src=nagios/services/{{item}}.j2 dest=/etc/nagios/services/{{item}} mode=0644 owner=root group=root
   with_items:
     - websites.cfg
-    - mail_queue.cfg
   when: env == "production"
   tags:
   - nagios_server
