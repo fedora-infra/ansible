@@ -13,6 +13,8 @@
     ansible_httpapi_validate_certs: false
     ansible_host: "{{ (env == 'staging') | ternary(zabbix_stg_hostname, zabbix_hostname) }}"
     ansible_zabbix_url_path: ""  # If Zabbix WebUI runs on non-default (zabbix) path ,e.g. http://<FQDN>/zabbixeu
+  tags:
+    - zabbix_configuration
   block:
     # SAML Configuration to talk to Ipsilon
     # Depends on the IDP cert in install.yml and the SAML config in
@@ -23,8 +25,32 @@
         saml_case_sensitive: false
         saml_jit_status: true
         disabled_usrgroup: Disabled
-      tags:
-        - zabbix_configuration
+
+    - name: Create Sysadmin-noc user group with permissions
+      community.zabbix.zabbix_usergroup:
+        name: Sysadmin-noc
+        hostgroup_rights:
+          - host_group: Discovered hosts
+            permission: read-write
+          - host_group: Zabbix servers
+            permission: read-write
+        templategroup_rights:
+          - template_group: Fedora
+            permission: read-write
+        state: present
+
+    - name: Create Guests user group with permissions
+      community.zabbix.zabbix_usergroup:
+        name: Guests
+        hostgroup_rights:
+          - host_group: Discovered hosts
+            permission: read-only
+          - host_group: Zabbix servers
+            permission: read-only
+        templategroup_rights:
+          - template_group: Fedora
+            permission: read-only
+        state: present
 
     - name: Create SAML setup for Fedora Ipsilon
       community.zabbix.zabbix_user_directory:
@@ -39,16 +65,18 @@
         nameid_format: urn:oasis:names:tc:SAML:2.0:nameid-format:transient
         group_name: groups
         provision_groups:
+          - name: '*sysadmin-main*'
+            role: Super admin role
+            user_groups:
+              - Zabbix administrators
           - name: '*sysadmin-noc*'
             role: Admin role
             user_groups:
-              - Zabbix administrators
+              - Sysadmin-noc
           - name: '*'
             role: Guest role
             user_groups:
               - Guests
-      tags:
-        - zabbix_configuration
 
     # PSK config: this can't be checked so it will always report a change
     # Use a fact to store the value of the constructed filename
@@ -59,8 +87,6 @@
           - tls_with_psk
         tls_psk_identity: "{{ zabbix_tls_psk_identity }}"
         tls_psk: "{{ lookup('ansible.builtin.file', private + '/files/zabbix/fedora' + env_suffix + '.psk') }}"
-      tags:
-        - zabbix_configuration
 
     - name: Configure autoregistration action
       community.zabbix.zabbix_action:
@@ -74,9 +100,6 @@
           - type: link_to_template
             templates:
               - Linux Autoregistration
-      tags:
-        - zabbix_configuration
-
 
     - name: Create a webhook mediatype
       community.zabbix.zabbix_mediatype:
@@ -129,7 +152,6 @@
             eventsource: triggers
             recovery: update_operations
       tags:
-        - zabbix_configuration
         - zabbix_triggers
 
     - name: Create a new Zabbix user for Matrix triggers
@@ -155,7 +177,6 @@
             active: yes
         state: present
       tags:
-        - zabbix_configuration
         - zabbix_users
 
     - name: Send alerts to Matrix
@@ -180,7 +201,6 @@
             send_to_users:
               - "matrix-bot"
       tags:
-        - zabbix_configuration
         - zabbix_users
         - zabbix_triggers
 
@@ -190,7 +210,6 @@
         template_yaml: "{{ lookup('ansible.builtin.file', 'templates/linux_autoregister.yaml') }}"
         state: present
       tags:
-        - zabbix_configuration
         - zabbix_templates
 
     # Templates seem to always report a change :/
@@ -199,5 +218,4 @@
         template_yaml: "{{ lookup('ansible.builtin.file', 'templates/linux_hosts.yaml') }}"
         state: present
       tags:
-        - zabbix_configuration
         - zabbix_templates
