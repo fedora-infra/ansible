@@ -143,8 +143,22 @@
   - base
   when: not nftables
 
+- name: Ensure nftables is not installed
+  ansible.builtin.package: state=absent name=nftables
+  tags:
+  - packages
+  - base
+  when: not nftables
+
 - name: Ensure nftables is installed
   ansible.builtin.package: state=present name=nftables
+  tags:
+  - packages
+  - base
+  when: nftables
+
+- name: Ensure iptables is not installed
+  ansible.builtin.package: state=absent name=iptables
   tags:
   - packages
   - base
@@ -251,16 +265,6 @@
   - baseiptables|bool
   - not nftables
 
-- name: Iptables service disabled
-  service: name=iptables state=stopped enabled=false
-  tags:
-  - iptables
-  - service
-  - base
-  when:
-  - baseiptables|bool
-  - nftables
-
 - name: Nftables service enabled
   service: name=nftables state=started enabled=true
   tags:
@@ -270,16 +274,6 @@
   when:
   - baseiptables|bool
   - nftables
-
-- name: Nftables service disabled
-  service: name=nftables state=started enabled=false
-  tags:
-  - iptables
-  - service
-  - base
-  when:
-  - baseiptables|bool
-  - not nftables
 
 - name: Ip6tables
   ansible.builtin.template: src={{ item }} dest=/etc/sysconfig/ip6tables mode=0600 backup=yes
