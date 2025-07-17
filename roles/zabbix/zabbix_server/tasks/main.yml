@@ -6,20 +6,11 @@
   - zabbix
   - zabbix_install
 
-- name: Things being tested on Staging
-  when: env == "staging"
-  block:
-    - name: Configure Zabbix via api
-      ansible.builtin.include_tasks: configure_api.yml
-      tags:
-      - zabbix
-      - zabbix_configuration
-    - name: Sync membership of sysadmin-noc
-      ansible.builtin.include_tasks: sync_sysadmin_noc.yml
-      tags:
-      - zabbix
-      - zabbix_configuration
-      - sync_users
+- name: Configure Zabbix Server via api
+  ansible.builtin.include_tasks: configure_api.yml
+  tags:
+  - zabbix
+  - zabbix_configuration
 
 # - include_tasks: plugins.yml
 

@@ -1,4 +1,7 @@
 ---
+# Configure the Zabbix server with all the necessary parts
+# Creates the SAML config, Matrix messenger, PSK authentication for agents, and so on
+
 # Use a block so we can specify the connection vars once
 - name: API Block
   vars:
@@ -11,12 +14,76 @@
     ansible_host: "{{ (env == 'staging') | ternary(zabbix_stg_hostname, zabbix_hostname) }}"
     ansible_zabbix_url_path: ""  # If Zabbix WebUI runs on non-default (zabbix) path ,e.g. http://<FQDN>/zabbixeu
   block:
+    # SAML Configuration to talk to Ipsilon
+    # Depends on the IDP cert in install.yml and the SAML config in
+    # roles/ipsilon/templates/saml2_data(_stg)
+    - name: Update all authentication setting (Zabbix >= 6.4)
+      community.zabbix.zabbix_authentication:
+        saml_auth_enabled: true
+        saml_case_sensitive: false
+        saml_jit_status: true
+        disabled_usrgroup: Disabled
+      tags:
+        - zabbix_configuration
+
+    - name: Create new user directory with SAML IDP or update existing info (Zabbix >= 6.4)
+      community.zabbix.zabbix_user_directory:
+        state: present
+        name: FedoraSaml
+        idp_type: saml
+        provision_status: true
+        idp_entityid: "https://{{ (env == 'staging') | ternary(zabbix_stg_hostname, zabbix_hostname) }}/saml2/metadata"
+        sso_url: "htps://{{ (env == 'staging') | ternary(zabbix_stg_hostname, zabbix_hostname) }}/saml2/SSO/Redirect"
+        username_attribute: preferred_username
+        sp_entityid: "https://{{ (env == 'staging') | ternary(zabbix_stg_hostname, zabbix_hostname) }}"
+        nameid_format: urn:oasis:names:tc:SAML:2.0:nameid-format:transient
+        group_name: groups
+        provision_groups:
+          - name: '*sysadmin-noc*'
+            role: Admin role
+            user_groups:
+              - Zabbix administrators
+          - name: '*'
+            role: Guest role
+            user_groups:
+              - Guests
+      tags:
+        - zabbix_configuration
+
+    # PSK config: this can't be checked so it will always report a change
+    # Use a fact to store the value of the constructed filename
+    # (stg or prod) and then read it with lookup
+    - name: Configure autoregistration via PSK
+      community.zabbix.zabbix_autoregister:
+        tls_accept:
+          - tls_with_psk
+        tls_psk_identity: "{{ zabbix_tls_psk_identity }}"
+        tls_psk: "{{ lookup('ansible.builtin.file', private + '/files/zabbix/fedora' + env_suffix + '.psk') }}"
+      tags:
+        - zabbix_configuration
+
+    - name: Configure autoregistration action
+      community.zabbix.zabbix_action:
+        name: "Add host to base template"
+        event_source: "auto_registration"
+        state: present
+        status: enabled
+        esc_period: 1m
+        operations:
+          - type: add_host
+          - type: link_to_template
+            templates:
+              - Linux Autoregistration
+      tags:
+        - zabbix_configuration
+
+
     - name: Create a webhook mediatype
       community.zabbix.zabbix_mediatype:
         name: Matrix
         type: "webhook"
         description: "Matrix webhook - See https://github.com/jooola/zabbix-matrix-webhook#readme"
-        webhook_script: "{{ lookup('file', './matrix_mediatype.js') }}"
+        webhook_script: "{{ lookup('ansible.builtin.file', './matrix_mediatype.js') }}"
         webhook_params:
           - name: alert_message
             value: "{ALERT.MESSAGE}"
@@ -120,7 +187,7 @@
     # Templates seem to always report a change :/
     - name: Import Base Auto-registration template
       community.zabbix.zabbix_template:
-        template_yaml: "{{ lookup('file', 'templates/linux_autoregister.yaml') }}"
+        template_yaml: "{{ lookup('ansible.builtin.file', 'templates/linux_autoregister.yaml') }}"
         state: present
       tags:
         - zabbix_configuration
@@ -129,38 +196,8 @@
     # Templates seem to always report a change :/
     - name: Import dependant Linux Host template
       community.zabbix.zabbix_template:
-        template_yaml: "{{ lookup('file', 'templates/linux_hosts.yaml') }}"
+        template_yaml: "{{ lookup('ansible.builtin.file', 'templates/linux_hosts.yaml') }}"
         state: present
       tags:
         - zabbix_configuration
         - zabbix_templates
-
-    # PSK config: this can't be checked so it will always report a change
-    - name: Construct PSK filename
-      ansible.builtin.set_fact:
-        psk_file: "{{ private }}/files/zabbix/fedora{{ env_suffix }}.psk"
-      tags:
-        - zabbix_configuration
-    - name: Configure autoregistration via PSK
-      community.zabbix.zabbix_autoregister:
-        tls_accept:
-          - tls_with_psk
-        tls_psk_identity: "{{ zabbix_tls_psk_identity }}"
-        tls_psk: "{{ lookup('ansible.builtin.file', psk_file) }}"
-      tags:
-        - zabbix_configuration
-
-    - name: Configure autoregistration action
-      community.zabbix.zabbix_action:
-        name: "Add host to base template"
-        event_source: "auto_registration"
-        state: present
-        status: enabled
-        esc_period: 1m
-        operations:
-          - type: add_host
-          - type: link_to_template
-            templates:
-              - Linux Autoregistration
-      tags:
-        - zabbix_configuration
