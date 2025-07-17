@@ -20,7 +20,7 @@
   - ipa/client
   - collectd/base
   - sudo
-  - zabbix/zabbix_server
+  - { role: zabbix/zabbix_server, tags: zabbix_server }
 #  - zabbix/zabbix_agent
   - { role: openvpn/client, when: env != "staging" }
 

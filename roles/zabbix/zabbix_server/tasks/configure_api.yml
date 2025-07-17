@@ -17,7 +17,7 @@
     # SAML Configuration to talk to Ipsilon
     # Depends on the IDP cert in install.yml and the SAML config in
     # roles/ipsilon/templates/saml2_data(_stg)
-    - name: Update all authentication setting (Zabbix >= 6.4)
+    - name: Setup basic auth params
       community.zabbix.zabbix_authentication:
         saml_auth_enabled: true
         saml_case_sensitive: false
@@ -26,14 +26,14 @@
       tags:
         - zabbix_configuration
 
-    - name: Create new user directory with SAML IDP or update existing info (Zabbix >= 6.4)
+    - name: Create SAML setup for Fedora Ipsilon
       community.zabbix.zabbix_user_directory:
-        state: present
         name: FedoraSaml
+        state: present
         idp_type: saml
         provision_status: true
-        idp_entityid: "https://{{ (env == 'staging') | ternary(zabbix_stg_hostname, zabbix_hostname) }}/saml2/metadata"
-        sso_url: "htps://{{ (env == 'staging') | ternary(zabbix_stg_hostname, zabbix_hostname) }}/saml2/SSO/Redirect"
+        idp_entityid: "https://id{{ env_suffix }}.fedoraproject.org/saml2/metadata"
+        sso_url: "https://id{{ env_suffix }}.fedoraproject.org/saml2/SSO/Redirect"
         username_attribute: preferred_username
         sp_entityid: "https://{{ (env == 'staging') | ternary(zabbix_stg_hostname, zabbix_hostname) }}"
         nameid_format: urn:oasis:names:tc:SAML:2.0:nameid-format:transient
