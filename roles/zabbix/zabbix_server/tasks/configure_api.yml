@@ -16,6 +16,22 @@
   tags:
     - zabbix_configuration
   block:
+    # Templates seem to always report a change :/
+    - name: Import Base Auto-registration template
+      community.zabbix.zabbix_template:
+        template_yaml: "{{ lookup('ansible.builtin.file', 'templates/linux_autoregister.yaml') }}"
+        state: present
+      tags:
+        - zabbix_templates
+
+    # Templates seem to always report a change :/
+    - name: Import dependant Linux Host template
+      community.zabbix.zabbix_template:
+        template_yaml: "{{ lookup('ansible.builtin.file', 'templates/linux_hosts.yaml') }}"
+        state: present
+      tags:
+        - zabbix_templates
+
     # SAML Configuration to talk to Ipsilon
     # Depends on the IDP cert in install.yml and the SAML config in
     # roles/ipsilon/templates/saml2_data(_stg)
@@ -203,19 +219,3 @@
       tags:
         - zabbix_users
         - zabbix_triggers
-
-    # Templates seem to always report a change :/
-    - name: Import Base Auto-registration template
-      community.zabbix.zabbix_template:
-        template_yaml: "{{ lookup('ansible.builtin.file', 'templates/linux_autoregister.yaml') }}"
-        state: present
-      tags:
-        - zabbix_templates
-
-    # Templates seem to always report a change :/
-    - name: Import dependant Linux Host template
-      community.zabbix.zabbix_template:
-        template_yaml: "{{ lookup('ansible.builtin.file', 'templates/linux_hosts.yaml') }}"
-        state: present
-      tags:
-        - zabbix_templates
