@@ -67,7 +67,7 @@ default_user_tags.administrator = true
 ## Clustering
 ## =====================
 ##
-cluster_name = {{env_prefix}}{{datacenter}}.fedoraproject.org
+cluster_name = {{env_prefix}}rdu3.fedoraproject.org
 cluster_partition_handling = autoheal
 
 ## Make clustering happen *automatically* at startup. Only applied
@@ -77,9 +77,9 @@ cluster_partition_handling = autoheal
 ##
 
 cluster_formation.peer_discovery_backend     = rabbit_peer_discovery_classic_config
-cluster_formation.classic_config.nodes.1 = rabbit@rabbitmq01{{env_suffix}}.{{datacenter}}.fedoraproject.org
-cluster_formation.classic_config.nodes.2 = rabbit@rabbitmq02{{env_suffix}}.{{datacenter}}.fedoraproject.org
-cluster_formation.classic_config.nodes.3 = rabbit@rabbitmq03{{env_suffix}}.{{datacenter}}.fedoraproject.org
+cluster_formation.classic_config.nodes.1 = rabbit@rabbitmq01{{env_suffix}}.rdu3.fedoraproject.org
+cluster_formation.classic_config.nodes.2 = rabbit@rabbitmq02{{env_suffix}}.rdu3.fedoraproject.org
+cluster_formation.classic_config.nodes.3 = rabbit@rabbitmq03{{env_suffix}}.rdu3.fedoraproject.org
 
 ## This node's type can be configured. If you are not sure
 ## what node type to use, always use 'disc'.

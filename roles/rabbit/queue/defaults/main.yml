@@ -1,5 +1,5 @@
 ---
-queue_rabbitmq_server: "rabbitmq01{{ env_suffix }}.{{ datacenter }}.fedoraproject.org"
+queue_rabbitmq_server: "rabbitmq01{{ env_suffix }}.rdu3.fedoraproject.org"
 queue_vhost: /pubsub
 queue_default_exchange: amq.topic
 queue_routing_keys: []
@@ -8,4 +8,4 @@ queue_max_priority: null
 queue_thresholds:
   warning: 10000
   critical: 100000
-queue_nagios_server: noc01.{{ datacenter }}.fedoraproject.org
+queue_nagios_server: noc01.rdu3.fedoraproject.org
